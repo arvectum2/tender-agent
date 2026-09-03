@@ -242,3 +242,6 @@ def test_execute_blocks_when_document_set_is_incomplete(tmp_path: Path):
 
     assert caught.value.code == "documents_required"
     assert caught.value.details["run_id"] == "toa-run-test"
+    assert caught.value.details["registry_number"] == "2222222222222222222"
+    assert caught.value.details["source_url"] == "https://zakupki.gov.ru/high"
+    assert caught.value.details["title"] == "High candidate"

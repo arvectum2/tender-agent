@@ -500,7 +500,12 @@ def execute(
             "Selected procurement does not have a complete automatically retrievable document set",
             details={
                 "run_id": run_id,
+                # Preserve the selected procurement identity even when the
+                # document gate fails closed. This keeps the attempt auditable
+                # without inferring facts from a partial runtime record.
                 "registry_number": selected.registry_number,
+                "source_url": selected.card.get("source_url"),
+                "title": selected.card.get("title"),
                 "selection_history_path": str(history_path.resolve()),
                 "attachments_status": run_payload.get("attachments_status"),
                 "downloaded_files_count": run_payload.get("downloaded_files_count"),
