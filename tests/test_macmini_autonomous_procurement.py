@@ -249,14 +249,23 @@ def test_execute_blocks_when_document_set_is_incomplete(tmp_path: Path):
     assert caught.value.details["title"] == "High candidate"
 
 
-def test_main_preserves_query_and_law_for_safe_block(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]):
+def test_main_preserves_query_and_law_for_safe_block(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    tmp_path: Path,
+):
     def _blocked(*args, **kwargs):
         raise E2EBlocked("documents_required", "incomplete")
 
     monkeypatch.setattr("scripts.run_macmini_autonomous_procurement.execute", _blocked)
 
-    assert main(["--query", "кабель", "--law", "44fz"]) == 20
+    assert main(["--query", "кабель", "--law", "44fz", "--output-dir", str(tmp_path)]) == 20
 
     payload = json.loads(capsys.readouterr().out)
     assert payload["query"] == "кабель"
     assert payload["law"] == "44fz"
+    evidence = Path(payload["evidence_path"])
+    assert evidence.is_file()
+    rendered = evidence.read_text(encoding="utf-8")
+    assert "query: кабель" in rendered
+    assert "PO verdict: PENDING_REVIEW" in rendered
