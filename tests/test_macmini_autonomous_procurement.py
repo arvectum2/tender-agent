@@ -1,4 +1,5 @@
 from datetime import date
+import json
 from pathlib import Path
 
 import pytest
@@ -12,6 +13,7 @@ from scripts.run_macmini_autonomous_procurement import (
     _recent_publication_window,
     choose_candidate,
     execute,
+    main,
 )
 
 
@@ -245,3 +247,16 @@ def test_execute_blocks_when_document_set_is_incomplete(tmp_path: Path):
     assert caught.value.details["registry_number"] == "2222222222222222222"
     assert caught.value.details["source_url"] == "https://zakupki.gov.ru/high"
     assert caught.value.details["title"] == "High candidate"
+
+
+def test_main_preserves_query_and_law_for_safe_block(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]):
+    def _blocked(*args, **kwargs):
+        raise E2EBlocked("documents_required", "incomplete")
+
+    monkeypatch.setattr("scripts.run_macmini_autonomous_procurement.execute", _blocked)
+
+    assert main(["--query", "кабель", "--law", "44fz"]) == 20
+
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["query"] == "кабель"
+    assert payload["law"] == "44fz"
