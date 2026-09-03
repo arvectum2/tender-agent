@@ -501,6 +501,8 @@ def execute(
             details={
                 "run_id": run_id,
                 "registry_number": selected.registry_number,
+                "source_url": selected.card.get("source_url"),
+                "title": selected.card.get("title"),
                 "selection_history_path": str(history_path.resolve()),
                 "attachments_status": run_payload.get("attachments_status"),
                 "downloaded_files_count": run_payload.get("downloaded_files_count"),
