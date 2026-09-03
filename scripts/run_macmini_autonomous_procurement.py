@@ -631,6 +631,8 @@ def main(argv: list[str] | None = None) -> int:
                 {
                     "status": "blocked",
                     "marker": "MACMINI_AUTONOMOUS_PROCUREMENT_E2E_BLOCKED",
+                    "query": args.query,
+                    "law": args.law,
                     "code": exc.code,
                     "message": exc.message,
                     "details": exc.details,
