@@ -37,6 +37,18 @@ _THEME_SPECS: dict[str, dict[str, tuple[str, ...]]] = {
         "detect": (r"\bдоставк",),
         "evidence": (r"\bдоставк",),
     },
+    "delivery_price_inclusion": {
+        # Mentioning delivery alone does not support an economic conclusion
+        # about its price inclusion, unloading, or margin impact.
+        "detect": (
+            r"(?:доставк|разгруз)[^.\n]{0,120}(?:включен|цен|марж)",
+            r"(?:включен|цен|марж)[^.\n]{0,120}(?:доставк|разгруз)",
+        ),
+        "evidence": (
+            r"(?:доставк|разгруз)[^.\n]{0,120}(?:включен|цен|марж)",
+            r"(?:включен|цен|марж)[^.\n]{0,120}(?:доставк|разгруз)",
+        ),
+    },
     "unloading": {"detect": (r"разгруз",), "evidence": (r"разгруз",)},
     "packaging": {"detect": (r"упаков",), "evidence": (r"упаков",)},
     "stock": {
@@ -115,6 +127,7 @@ _THEME_SPECS: dict[str, dict[str, tuple[str, ...]]] = {
 _THEME_LABELS = {
     "delivery_deadline": "срок исполнения/поставки",
     "delivery_logistics": "условия доставки",
+    "delivery_price_inclusion": "включение доставки/разгрузки в цену",
     "unloading": "разгрузка",
     "packaging": "упаковка",
     "stock": "складской остаток/наличие",

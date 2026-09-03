@@ -185,3 +185,35 @@ def test_d04_output_sanitizer_removes_pilot_regression_templates():
     assert sanitized["final_recommendation"]["grounding_status"] == "source_bound"
     assert sanitized["trace"]["grounding_policy"] == "source_bound_v1"
     assert "INSUFFICIENT_EVIDENCE" in json.dumps(sanitized, ensure_ascii=False)
+
+
+def test_d04_delivery_mention_does_not_ground_price_or_margin_claim():
+    documents = [_document("Поставка запчастей осуществляется самовывозом заказчика.")]
+    outputs = {
+        "economics": {
+            "metrics": [
+                {"label": "Что запросить", "value": "Включены ли доставка и разгрузка в цену предложения?"}
+            ]
+        },
+        "contract_risks": {
+            "risks": [
+                {
+                    "risk": "Логистика и разгрузка не включены в цену",
+                    "impact": "Маржа может снизиться, если доставка, барабаны и разгрузка не учтены.",
+                    "mitigation": "Уточнить состав цены и включение доставки/разгрузки в КП.",
+                }
+            ]
+        },
+    }
+
+    sanitized = _sanitize_fallback_outputs(
+        outputs,
+        documents=documents,
+        corpus=_source_corpus(documents),
+        category="GOODS",
+    )
+    rendered = json.dumps(sanitized, ensure_ascii=False).lower()
+
+    assert "не включены в цену" not in rendered
+    assert "барабаны" not in rendered
+    assert "insufficient_evidence" in rendered
