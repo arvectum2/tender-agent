@@ -20,11 +20,15 @@ from src.modules.benchmark_pipeline import (
 
 PREPARED = "2026-09-06T08:00:00+00:00"
 EVALUATED = "2026-09-06T08:01:00+00:00"
-ANALYSIS_COMPLETED = "2026-09-06T09:00:00+00:00"
+FROZEN = "2026-09-06T08:02:00+00:00"
+ANALYSIS_COMPLETED = "2026-09-06T08:03:00+00:00"
 
 
 def _write_json(path: Path, value: dict) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _case(tmp_path: Path) -> tuple[Path, Path]:
@@ -153,7 +157,7 @@ class _FakeClient:
                 "trace": "fixture trace",
             },
             "events": [
-                {"event_type": "analysis_started", "timestamp": "2026-09-06T08:59:00+00:00"},
+                {"event_type": "analysis_started", "timestamp": "2026-09-06T08:02:30+00:00"},
                 {"event_type": "analysis_completed", "timestamp": ANALYSIS_COMPLETED},
             ],
         }
@@ -164,11 +168,16 @@ class _FakeClient:
         return {"run_id": run_id}
 
 
-def _install_fake_backend(monkeypatch: pytest.MonkeyPatch, *, analysis_preexists: bool = False) -> None:
+def _install_fake_backend(
+    monkeypatch: pytest.MonkeyPatch,
+    *,
+    analysis_preexists: bool = False,
+) -> None:
     _FakeClient.analyzed = False
     _FakeClient.analysis_preexists = analysis_preexists
     monkeypatch.setattr(runner, "BackendClient", _FakeClient)
     monkeypatch.setattr(runner, "_auth_credentials_from_env", lambda: None)
+    monkeypatch.setattr(runner, "_now_iso", lambda: FROZEN)
 
 
 def test_phase_b_runner_freezes_before_analysis_and_packages_audited_result(tmp_path, monkeypatch):
