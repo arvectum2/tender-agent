@@ -43,6 +43,7 @@ from src.modules.benchmark_pipeline import (  # noqa: E402
     load_artifact,
     verify_manifest_source_files,
 )
+from src.modules.benchmark_pipeline.workflow import verify_frozen_labels  # noqa: E402
 
 IMMUTABLE_ARTIFACTS: tuple[tuple[str, str], ...] = (
     ("case_manifest.json", "case_manifest"),
@@ -77,6 +78,24 @@ def _artifact_file_digests(case_dir: Path) -> dict[str, str]:
     return {name: _sha256_file(case_dir / name) for name, _kind in IMMUTABLE_ARTIFACTS}
 
 
+def _verify_frozen_case(
+    *,
+    manifest: dict[str, Any],
+    evaluator: dict[str, Any],
+    discovery: dict[str, Any],
+    truth: dict[str, Any],
+    freeze: dict[str, Any],
+    case_dir: Path,
+) -> None:
+    verify_manifest_source_files(manifest, case_dir)
+    verify_frozen_labels(freeze, evaluator, discovery, truth)
+    if canonical_sha256(manifest) != freeze["case_manifest_sha256"]:
+        raise E2EBlocked(
+            "control_manifest_changed_after_freeze",
+            "Case manifest does not match the manifest digest bound by the frozen label receipt.",
+        )
+
+
 def copy_frozen_case(source_case_dir: Path, output_dir: Path) -> dict[str, Any]:
     """Copy only immutable benchmark inputs; never copy prior SUT/comparison artifacts."""
 
@@ -94,10 +113,14 @@ def copy_frozen_case(source_case_dir: Path, output_dir: Path) -> dict[str, Any]:
     )
     truth = load_artifact(source_case_dir / "blind_document_truth.json", "blind_document_truth")
     freeze = load_artifact(source_case_dir / "frozen_label.json", "frozen_label")
-    verify_manifest_source_files(manifest, source_case_dir)
-
-    # Load all immutable artifacts before any copy to fail closed on schema errors.
-    _ = evaluator, discovery, truth, freeze
+    _verify_frozen_case(
+        manifest=manifest,
+        evaluator=evaluator,
+        discovery=discovery,
+        truth=truth,
+        freeze=freeze,
+        case_dir=source_case_dir,
+    )
     before = _artifact_file_digests(source_case_dir)
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -106,7 +129,20 @@ def copy_frozen_case(source_case_dir: Path, output_dir: Path) -> dict[str, Any]:
         shutil.copy2(source_case_dir / name, output_dir / name)
 
     copied_manifest = load_artifact(output_dir / "case_manifest.json", "case_manifest")
-    verify_manifest_source_files(copied_manifest, output_dir)
+    copied_evaluator = load_artifact(output_dir / "evaluator_bundle.json", "evaluator_bundle")
+    copied_discovery = load_artifact(
+        output_dir / "blind_discovery_label.json", "blind_discovery_label"
+    )
+    copied_truth = load_artifact(output_dir / "blind_document_truth.json", "blind_document_truth")
+    copied_freeze = load_artifact(output_dir / "frozen_label.json", "frozen_label")
+    _verify_frozen_case(
+        manifest=copied_manifest,
+        evaluator=copied_evaluator,
+        discovery=copied_discovery,
+        truth=copied_truth,
+        freeze=copied_freeze,
+        case_dir=output_dir,
+    )
     after = _artifact_file_digests(output_dir)
     if before != after:
         raise E2EBlocked(
@@ -122,9 +158,9 @@ def expected_source_hashes(manifest: dict[str, Any]) -> Counter[str]:
 
 
 def runtime_source_hashes(
-    client: BackendClient,
     *,
     backend_url: str,
+    run_id: str,
     run_payload: dict[str, Any],
     credentials: tuple[str, str] | None,
     timeout_seconds: int,
@@ -138,7 +174,7 @@ def runtime_source_hashes(
             continue
         payload = _download_bytes(
             backend_url,
-            f"/api/demo/tender-agent/runs/{run_payload['run_id']}/files/{file_id}/download",
+            f"/api/demo/tender-agent/runs/{run_id}/files/{file_id}/download",
             credentials=credentials,
             timeout_seconds=timeout_seconds,
         )
@@ -215,8 +251,8 @@ def run_control(
     pre_analysis = client.get_run(run_id)
     assert_source_only_run(pre_analysis)
     observed = runtime_source_hashes(
-        client,
         backend_url=backend_url,
+        run_id=run_id,
         run_payload=pre_analysis,
         credentials=credentials,
         timeout_seconds=timeout_seconds,
