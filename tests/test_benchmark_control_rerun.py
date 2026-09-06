@@ -95,6 +95,8 @@ def _build_frozen_case(case_dir: Path) -> dict:
                 "field": "procurement_subject",
                 "value": "Source-only procurement",
                 "materiality": "MATERIAL",
+                "confidence": 0.99,
+                "abstention": "ASSERTED",
                 "evidence": [{"source_ref": "source/notice.txt", "locator": "document"}],
             }
         ],
