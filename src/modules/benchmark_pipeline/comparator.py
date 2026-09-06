@@ -3,11 +3,12 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
+from .calibration import discovery_context_is_bound, discovery_context_sha256
 from .contract import CONTRACT_VERSION, BenchmarkContractError, canonical_json, validate_artifact
 from .workflow import verify_frozen_labels, verify_sut_after_freeze
 
 
-COMPARATOR_VERSION = "1.1.0"
+COMPARATOR_VERSION = "1.1.1"
 UNCLASSIFIED_MATERIAL = "UNCLASSIFIED_MATERIAL_DISAGREEMENT"
 
 
@@ -37,9 +38,21 @@ def compare_case(
 
     expected_label = discovery_label["label"]
     actual_label = sut_output["discovery"]["label"]
+    expected_discovery_context = discovery_context_sha256(evaluator_bundle)
     if expected_label == "UNCLEAR":
         discovery_outcome = "NOT_SCORABLE"
+    elif expected_discovery_context is not None and not discovery_context_is_bound(
+        evaluator_bundle, sut_ref
+    ):
+        # A supplier/query-relative relevance label is meaningful only when the
+        # tested search/ranking output was produced under that exact frozen
+        # context. Do not turn a missing or different context into a product
+        # mismatch.
+        discovery_outcome = "NOT_SCORABLE"
     else:
+        # Legacy 1.1.0 cases without an explicit discovery context retain their
+        # historical comparator behavior. New real calibration cases should
+        # always bind a benchmark_discovery_context before blind evaluation.
         discovery_outcome = "MATCH" if expected_label == actual_label else "MISMATCH"
 
     truth_fields = [fact["field"] for fact in document_truth["facts"]]
