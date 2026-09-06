@@ -49,7 +49,6 @@ from src.modules.benchmark_pipeline import (  # noqa: E402
     load_artifact,
     normalize_runtime_response,
     route_review,
-    validate_artifact,
     validate_blind_label_consistency,
     verify_frozen_labels,
     verify_manifest_source_files,
@@ -186,8 +185,7 @@ def _freeze_or_resume(
         verify_frozen_labels(freeze, evaluator, discovery, truth)
         return freeze, False
 
-    # This is the critical anti-circularity boundary. If analysis already exists,
-    # there is no valid way to create a blind freeze retroactively.
+    # Critical anti-circularity boundary: blind truth cannot be frozen retroactively.
     assert_source_only_run(run_before_freeze)
     freeze = freeze_blind_labels(evaluator, discovery, truth, frozen_at=_now_iso())
     write_artifact(freeze_path, freeze, "frozen_label")
@@ -318,7 +316,7 @@ def run_phase_b(
     )
     write_artifact(case_dir / "review_state.json", review, "review_state")
 
-    archive = _package_case(case_dir)
+    archive_path = case_dir.parent / f"{case_dir.name}-phase-b-artifacts.zip"
     result = {
         "status": "BENCHMARK_CALIBRATION_PHASE_B_COMPLETE",
         "case_id": manifest["case_id"],
@@ -334,20 +332,27 @@ def run_phase_b(
         "discovery": comparison["discovery"],
         "document": {
             key: comparison["document"][key]
-            for key in ("tp", "fp", "fn", "abstention_matches", "unscored_extras", "precision", "recall", "f1")
+            for key in (
+                "tp",
+                "fp",
+                "fn",
+                "abstention_matches",
+                "unscored_extras",
+                "precision",
+                "recall",
+                "f1",
+            )
         },
         "review_state": review["state"],
         "review_reasons": review["reasons"],
-        "artifact_zip": str(archive),
-        "artifact_zip_sha256": _sha256_file(archive),
+        "artifact_zip": str(archive_path),
         "next_action": "STOP. Return the result and complete artifact ZIP to the Product Owner.",
     }
+    # Keep the in-archive summary non-self-referential. The archive SHA is added
+    # only to stdout/return after the immutable archive has been created.
     _write_json(case_dir / "phase-b-result.json", result)
-    # Repackage once so phase-b-result.json itself is included, then update its
-    # externally reported digest without trying to self-embed the archive digest.
     archive = _package_case(case_dir)
     result["artifact_zip_sha256"] = _sha256_file(archive)
-    _write_json(case_dir / "phase-b-result.json", result)
     return result
 
 
