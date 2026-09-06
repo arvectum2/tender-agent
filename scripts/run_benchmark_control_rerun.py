@@ -39,6 +39,7 @@ from scripts.run_macmini_autonomous_procurement import (  # noqa: E402
     _auth_credentials_from_env,
 )
 from src.modules.benchmark_pipeline import (  # noqa: E402
+    BenchmarkContractError,
     canonical_sha256,
     load_artifact,
     verify_manifest_source_files,
@@ -87,8 +88,15 @@ def _verify_frozen_case(
     freeze: dict[str, Any],
     case_dir: Path,
 ) -> None:
-    verify_manifest_source_files(manifest, case_dir)
-    verify_frozen_labels(freeze, evaluator, discovery, truth)
+    try:
+        verify_manifest_source_files(manifest, case_dir)
+        verify_frozen_labels(freeze, evaluator, discovery, truth)
+    except BenchmarkContractError as exc:
+        raise E2EBlocked(
+            "control_frozen_case_invalid",
+            "Frozen benchmark inputs failed contract/hash verification.",
+            details={"error": str(exc)},
+        ) from exc
     if canonical_sha256(manifest) != freeze["case_manifest_sha256"]:
         raise E2EBlocked(
             "control_manifest_changed_after_freeze",
@@ -318,7 +326,7 @@ def main() -> int:
             search_days=max(1, int(args.search_days)),
             timeout_seconds=max(1, int(args.timeout_seconds)),
         )
-    except (E2EBlocked, FileNotFoundError, json.JSONDecodeError) as exc:
+    except (E2EBlocked, BenchmarkContractError, FileNotFoundError, json.JSONDecodeError) as exc:
         if isinstance(exc, E2EBlocked):
             payload = {
                 "status": "BENCHMARK_CONTROL_BLOCKED",
