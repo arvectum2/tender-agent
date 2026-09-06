@@ -98,8 +98,14 @@ def test_document_grounded_questions_for_software_procurement_have_no_training_n
     assert "преподав" not in joined
     assert "аудитор" not in joined
     assert "обучени" not in joined
-    assert any("смэв" in item.lower() for item in questions)
+    assert any("интеграц" in item.lower() for item in questions)
     assert any("лиценз" in item.lower() for item in questions)
+    # No source documents means named procurement-specific systems must not be
+    # manufactured by the generic software question catalogue.
+    assert "смэв" not in joined
+    assert "ерн" not in joined
+    assert "медицин" not in joined
+    assert "минобороны" not in joined
 
 
 def test_document_grounded_requirements_capture_software_blocks():
@@ -119,7 +125,7 @@ def test_document_grounded_requirements_capture_software_blocks():
     rows = _build_document_grounded_requirements(documents, "mixed")
     titles = [row["title"] for row in rows]
     assert "Интеграция с ЕРН через СМЭВ" in titles
-    assert "Передача лицензии и прав на обновленный модуль" in titles
+    assert "Лицензионные требования и передача прав" in titles
 
 
 def test_preliminary_analysis_for_software_procurement_has_work_rows_and_no_training_summary():
