@@ -2,147 +2,126 @@
 
 ## Status
 
-Implementation hardening and repository-side real-calibration preparation are complete on contract `1.1.0`; both GitHub/CI gates are **PASS**.
+The shared blind benchmark contract is implemented on `1.1.0`, and the first real 44-FZ calibration completed the required source -> blind label -> freeze -> SUT ordering. The real Phase B run exposed two benchmark-harness gaps, so #52 remains open and corpus growth is still blocked.
 
-Canonical merges:
+Canonical completed merges:
 
-- PR `#56` — `BENCHMARK-PIPELINE-001: harden blind benchmark contract`;
-  - merge SHA: `dec002926f0a996c537c854548e3636e905140ba`;
-  - CI run `33982587200`: `completed / success`.
-- PR `#57` — `BENCHMARK-PIPELINE-001: add safe real calibration Phase A`;
-  - merge SHA: `0958505576cdcd8a7edeb0a5d4973bf07f43cf76`;
-  - CI run `33985540698`: `completed / success`.
+- PR `#56` — blind benchmark contract hardening; merge `dec002926f0a996c537c854548e3636e905140ba`; CI PASS.
+- PR `#57` — safe source-only real-calibration Phase A; merge `0958505576cdcd8a7edeb0a5d4973bf07f43cf76`; CI PASS.
+- docs baseline after Phase A helper: `c22803c4b38400bf7be2393c5c66c28f6d754288`.
 
-The only remaining acceptance gate is execution of the first real-source calibration on the Mac mini and independent evaluation of the generated source-only bundle. Do **not** start autonomous 30–50 procurement corpus growth yet.
+Current hardening after real Phase B adds discovery-context binding and repository-owned runtime normalization. Do not mark this increment complete until its PR/CI passes and the same procurement is rerun as a fresh uniquely identified calibration case.
 
-The first calibration target is fixed to a real **44-FZ** Cybox/SciBox case so it can use the already accepted Mac mini public-source path without expanding source scope:
+## First real calibration evidence
 
-- primary: procurement `0848300045426000620` — МКУ «Служба кладбищ» Одинцовского городского округа, ИИ-ассистенты on the «Сайбокс» platform;
-- fallback: another previously reviewed 44-FZ Cybox/SciBox case if the primary public bundle can no longer be acquired completely;
-- RSL `32616312799` is **not** the first calibration case because it is 223-FZ and the accepted autonomous source path currently supports 44-FZ only. Adding a 223-FZ source path remains outside this task.
+Primary real case:
 
-## Implemented in GitHub
+- law: 44-FZ;
+- registry number: `0848300045426000620`;
+- source bundle: eight original public files acquired through the accepted read-only path;
+- Phase A produced no Tender Agent analysis before blind evaluation;
+- independent labels were frozen before SUT generation;
+- the real SUT output was generated after freeze and remained bound to the frozen source and label digests.
 
-- strict Draft 2020-12 JSON Schema for all benchmark artifacts;
-- exact discovery labels required by #52: `RELEVANT`, `PARTIALLY_RELEVANT`, `IRRELEVANT`, `UNCLEAR`;
-- source-bundle hashing and real source-file hash verification;
-- source-only evaluator bundle with recursive SUT-leakage rejection;
-- blind-label evidence/reference consistency checks;
-- immutable freeze receipt binding manifest, evaluator bundle, discovery label and document truth hashes;
-- Tender Agent output must be bound to the frozen label set and produced strictly after freeze;
-- deterministic discovery/document comparator with explicit abstention and uncertainty semantics;
-- mechanically classifiable SUT errors are scored without automatically invalidating benchmark truth;
-- material unresolved assertions/unlabeled extras route to review instead of becoming guessed false positives;
-- explicit `AI_CURATED_SILVER`, `NEEDS_REVIEW`, `HUMAN_VERIFIED_GOLD` transitions;
-- Product Owner gold promotion requires explicit identity and approval note and does not rewrite frozen truth;
-- deterministic CLI plus batch comparator/aggregate scorecard;
-- focused workflow calibration tests;
-- dedicated `scripts/prepare_benchmark_calibration_phase_a.py` helper for the first real case. It selects the exact registry number, explicitly forces `analyze_after_download=false`, rejects any pre-freeze analysis/recommendation leakage, copies exact source bytes, hashes them, validates the v1.1.0 manifest, builds the source-only evaluator bundle and packages only blind-evaluator inputs into a ZIP.
+The original calibration run must be preserved as evidence and must not have its frozen truth rewritten.
+
+### Finding 1 — discovery context was not bound
+
+The independent discovery judgment was supplier-relative, but the document-analysis SUT run had no loaded supplier profile. Contract `1.1.0` originally froze source data and labels but did not explicitly bind the supplier/query context used to interpret relevance. The resulting discovery mismatch was therefore not an apples-to-apples product score.
+
+Hardening rule for every new real discovery-scored case:
+
+- bind a complete sanitized supplier-profile snapshot before blind evaluation;
+- bind its canonical SHA-256 plus query/candidate-selection/source/law/`as_of` semantics into `procurement.benchmark_discovery_context`;
+- let that context flow into the evaluator bundle and therefore the frozen manifest/evaluator digests;
+- score discovery only when the SUT artifact declares the exact same `discovery_context_sha256`;
+- otherwise return `NOT_SCORABLE`, not `MISMATCH`.
+
+The context is prepared with:
+
+```bash
+python3 scripts/benchmark_calibration.py bind-context \
+  --case-dir <fresh-phase-a-case-dir> \
+  --case-id <new-unique-calibration-case-id> \
+  --supplier-profile demo_data/tender_operator_agent/supplier_profile_electrical.json
+```
+
+This command must run after source-only Phase A and before the evaluator ZIP is sent for blind labeling.
+
+### Finding 2 — Phase B normalization silently omitted runtime claims
+
+The first local Phase B projector normalized only a small subset of the real runtime response. That made document false negatives mix true Tender Agent misses with normalizer coverage omissions.
+
+The repository now owns the calibration projector in `scripts/benchmark_calibration.py normalize-phase-b` / `src/modules/benchmark_pipeline/calibration.py`. It:
+
+- maps known canonical facts deterministically;
+- maps explicit `НМЦК:` economics output to `initial_max_price_rub`;
+- preserves unmapped material economics/requirement/risk claims as `runtime_claim.*` facts;
+- records intentionally ignored questions/operator instructions/workflow decisions in `normalization_audit.json`;
+- fails closed when a new `final_recommendation` output surface has no classification;
+- binds the audit digest into `tender_agent_output_ref`;
+- derives `produced_at` from the actual analysis-completion event when available.
+
+This is required so unsupported or contaminated material claims become visible to the comparator instead of disappearing before scoring.
+
+### Finding 3 — genuine SUT quality failures were also observed
+
+Independently of the normalization gap, the real runtime contained unrelated domain claims and propagated the procurement organizer as `customer_name` instead of the actual customer. Keep these as DOCUMENT-QA evidence. They are product-quality failures, not a reason to rewrite frozen independent truth.
+
+The first calibration also showed that free-text truth values intended for exact deterministic comparison must be source-canonical rather than evaluator paraphrases. Do not mutate the already frozen truth. In the fresh rerun, the independent evaluator should copy canonical source wording for exact-text fields and use structured facts for semantic scope/category assertions.
+
+## Review-state semantics
+
+`AI_CURATED_SILVER` is a state of the independent truth set, not a Tender Agent pass/fail flag. A mechanically classifiable SUT error can coexist with silver truth. `NEEDS_REVIEW` is reserved for benchmark/source uncertainty or unclassified material disagreement. Product Owner promotion to `HUMAN_VERIFIED_GOLD` changes review metadata only and never rewrites frozen truth.
 
 ## Anti-circularity contract
 
 Canonical order:
 
-`public source bundle -> source-only evaluator bundle -> independent labels -> freeze -> Tender Agent output -> comparator -> review routing`
+`public source bundle -> context-bound source-only evaluator bundle -> independent labels -> freeze -> Tender Agent output -> audited normalization -> comparator -> review routing`
 
-The following are fail-closed:
+Fail closed when:
 
-1. evaluator bundle contains ranking, scores, report/output references or other SUT-derived fields;
-2. blind evidence points outside the frozen source bundle;
-3. labels are created before evaluator-bundle preparation or changed after freeze;
-4. manifest/evaluator/source digests change after freeze;
-5. Tender Agent output is generated at/before freeze or against another source/label digest;
-6. normalized runtime output does not match its declared digest;
-7. Phase A detects a non-`not_started` analysis mode, a final recommendation, or analysis/LLM/fallback events before independent labels are frozen.
+1. evaluator input contains SUT/ranking/report leakage;
+2. evidence points outside the source bundle;
+3. labels predate evaluator-bundle preparation or mutate after freeze;
+4. manifest/evaluator/source digests mutate after freeze;
+5. SUT output is generated at/before freeze or against another source/label digest;
+6. normalized output does not match its declared digest;
+7. Phase A sees analysis/recommendation events before freeze;
+8. a new real discovery case lacks a frozen supplier/query context;
+9. a context-relative SUT result claims a different context hash;
+10. Phase B runtime introduces an unclassified decision-bearing output surface.
 
-## Comparator and review-state rule
+## Next real rerun
 
-Benchmark quality and SUT quality are intentionally separated.
+Use the same procurement first. Do not add a second case until this rerun is clean.
 
-A high-confidence, source-grounded label remains `AI_CURATED_SILVER` even if Tender Agent makes a mechanically classifiable error; the comparator records the mismatch/contradiction as a SUT error. `NEEDS_REVIEW` is reserved for benchmark uncertainty or disagreements that cannot safely be classified without semantic review.
+1. Run `scripts/prepare_benchmark_calibration_phase_a.py` into a **fresh** case directory.
+2. Run `scripts/benchmark_calibration.py bind-context` with a **new unique case id** and the source-controlled supplier profile.
+3. Send only the regenerated context-bound evaluator ZIP to the independent evaluator.
+4. Freeze the new labels.
+5. Run the real Tender Agent after freeze.
+6. Save its raw response as `sut_runtime_response.json`.
+7. Run repository-owned `normalize-phase-b`.
+8. Run comparator and review routing.
+9. Inspect the artifacts before considering a second/third 44-FZ calibration case.
 
-This prevents circularity where Tender Agent's own failure could cause its independent truth to be rewritten.
+If the document-analysis runtime has no separately context-bound search/relevance result, do not fabricate one: omit `--discovery-result`, which normalizes discovery as `UNCLEAR` and leaves context-relative discovery unscored. DISCOVERY-QA can later supply a real search/ranking result bound to the same context.
 
-## GitHub/CI gates — PASS
+## Scope boundary
 
-Both #56 and #57 completed the normal repository CI successfully. The second gate includes the dedicated network-free Phase A tests plus the existing dependency-lock, security, migrations, quality, Redis, Postgres/R8 acceptance and Arvectum OS bridge jobs.
+223-FZ/RSL `32616312799` is not part of this task's accepted source path. Do not route it through 44-FZ merely to enlarge the corpus. Supplier/TKP acceptance and external procurement actions also remain out of scope.
 
-## Real calibration gate
+## Exit criteria before 30–50 cases
 
-Use **one case first**. Add a second or third only after inspecting the first end-to-end result.
+Do not grow the corpus until all are true:
 
-### Phase A — local source preparation; STOP before SUT
-
-With the Tender Agent backend already running on the Mac mini, fast-forward the local checkout to canonical `main` at or after `0958505576cdcd8a7edeb0a5d4973bf07f43cf76`, then run:
-
-```bash
-python3 scripts/prepare_benchmark_calibration_phase_a.py \
-  --registry-number 0848300045426000620 \
-  --backend-url http://127.0.0.1:8000
-```
-
-Expected successful marker:
-
-`BENCHMARK_CALIBRATION_PHASE_A_READY`
-
-Default case directory:
-
-`company_agent_runs/benchmark_calibration/calibration-44fz-0848300045426000620/`
-
-Blind evaluator package:
-
-`company_agent_runs/benchmark_calibration/calibration-44fz-0848300045426000620-blind-evaluator-input.zip`
-
-The ZIP contains only:
-
-- `case_manifest.json`;
-- `evaluator_bundle.json`;
-- exact acquired public files under `source/**`.
-
-The helper itself performs the accepted read-only 44-FZ search/intake, exact-registry selection, source-byte copy, raw SHA-256 hashing, manifest/source verification and evaluator-bundle packaging. It explicitly disables automatic Tender Agent analysis.
-
-After the helper reports READY: **STOP. Do not call the analysis endpoint, do not create any SUT output and do not freeze labels. Return/upload the evaluator ZIP to the independent evaluator first.**
-
-### Independent evaluator boundary
-
-The independent evaluator creates:
-
-- `blind_discovery_label.json`;
-- `blind_document_truth.json`.
-
-These must be source-grounded against the exact Phase A bundle. Prior prose reviews and prior Tender Agent reports are not benchmark truth and must not be used as evidence.
-
-### Phase B — local freeze, SUT, comparator
-
-Only after the independent labels exist:
-
-1. validate and freeze them with `scripts/benchmark_pipeline.py freeze`;
-2. run the real Tender Agent against the exact same frozen source bundle;
-3. persist `normalized_sut_output.json` and `tender_agent_output_ref.json`, bound to the exact source digest and frozen label-set digest and timestamped strictly after freeze;
-4. run `compare`;
-5. run `route-review`;
-6. return the complete case artifacts for Product Owner inspection.
-
-## Local Mac mini boundary
-
-Only local-machine/runtime work remains:
-
-- start/use the already accepted Tender Agent backend on the Mac mini;
-- execute the Phase A helper above against the real public source;
-- return the generated evaluator ZIP;
-- after independent labels are frozen, execute the real Tender Agent runtime and deterministic Phase B commands.
-
-Contract design, schemas, semantic benchmark truth, comparator semantics, review routing, tests, source-only Phase A orchestration and batch tooling are already repository-owned and must not be reimplemented or semantically decided by the local runner.
-
-## Exit criteria before corpus growth
-
-Do not proceed to 30–50 cases until all are true:
-
-- GitHub/CI gates remain green on canonical main;
-- at least one and no more than three real calibration cases complete the exact blind order;
-- no evaluator bundle contains SUT leakage;
-- frozen digests detect tampering and source mismatch;
-- schemas reject invalid/ambiguous artifacts fail-closed;
-- comparator outcomes for abstention, contradictions, misses and unlabeled extras are sensible on real data;
-- review states route uncertain/conflicting provenance to `NEEDS_REVIEW` and keep ordinary SUT errors separate;
-- Product Owner can inspect final artifacts and explicitly promote verified cases to gold without rewriting source truth.
+- current hardening is merged with green CI;
+- at least one fresh real calibration case completes the full blind order with context binding and audited normalization;
+- source/evaluator/freeze/SUT hashes detect tampering and mismatch;
+- discovery becomes either legitimately scored under an identical frozen context or explicitly `NOT_SCORABLE`;
+- normalization cannot silently drop material final runtime claims;
+- comparator outcomes on real data distinguish true SUT errors from harness omissions;
+- review-state behavior remains separate from SUT pass/fail;
+- Product Owner can inspect the final artifacts and promote verified truth to gold without rewriting it.
