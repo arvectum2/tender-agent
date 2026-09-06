@@ -31,7 +31,7 @@ _SUPPORTED_EXTENSIONS = (
 
 
 def extract_text(local_path: str, max_chars: int = 2_000_000) -> tuple[str, str]:
-    ext = Path(local_path).suffix.lower()
+    declared_ext = Path(local_path).suffix.lower()
     try:
         with open(local_path, "rb") as f:
             content = f.read()
@@ -39,12 +39,46 @@ def extract_text(local_path: str, max_chars: int = 2_000_000) -> tuple[str, str]
         return FAILED_STATUS, f"File read error: {e}"
     if not content:
         return EMPTY_STATUS, ""
+
+    # Public EIS attachments are not guaranteed to have a trustworthy suffix.
+    # Prefer deterministic file signatures/container members where they identify
+    # a supported format unambiguously; otherwise preserve the declared suffix.
+    detected_ext = _sniff_supported_extension(content)
+    ext = detected_ext or declared_ext
     result = _extract_by_ext(ext, content, max_chars, local_path=local_path)
     if result is None or not result.strip():
         if _is_unsupported_ext(ext):
             return UNSUPPORTED_STATUS, (result or "")
         return EMPTY_STATUS, (result or "")
     return EXTRACTED_STATUS, result[:max_chars]
+
+
+def _sniff_supported_extension(content: bytes) -> str | None:
+    """Identify supported PDF/OOXML formats without trusting the filename.
+
+    Only deterministic signatures are accepted.  ZIP containers are inspected
+    through their canonical OOXML member names and are never unpacked here.
+    """
+
+    if content.startswith(b"%PDF-"):
+        return ".pdf"
+    if not content.startswith(b"PK"):
+        return None
+    try:
+        with zipfile.ZipFile(io.BytesIO(content)) as archive:
+            try:
+                archive.getinfo("word/document.xml")
+                return ".docx"
+            except KeyError:
+                pass
+            try:
+                archive.getinfo("xl/workbook.xml")
+                return ".xlsx"
+            except KeyError:
+                pass
+    except (OSError, zipfile.BadZipFile, zipfile.LargeZipFile):
+        return None
+    return None
 
 
 def _extract_by_ext(
