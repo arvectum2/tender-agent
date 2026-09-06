@@ -27,6 +27,9 @@ from src.modules.tender_operator_agent_demo.d07_scope_output_binding import (
 from src.modules.tender_operator_agent_demo.d09_scope_consistent_operator_output import (
     install as _install_d09_scope_consistent_operator_output,
 )
+from src.modules.tender_operator_agent_demo.document_qa_runtime_patch import (
+    install as _install_document_qa_runtime_patch,
+)
 
 _install_decision_useful_runtime_patch()
 _install_decision_useful_output_patch()
@@ -35,5 +38,7 @@ _install_grounded_fallback_followup()
 _install_grounded_fallback_evidence_binding()
 _install_grounded_fallback_runtime_contract()
 _install_d07_scope_output_binding()
-# Must be installed last: D09 reconciles all operator-facing category semantics.
+# D09 reconciles all operator-facing category semantics.
 _install_d09_scope_consistent_operator_output()
+# DOCUMENT-QA must be final so it guards every legacy/fallback presentation layer.
+_install_document_qa_runtime_patch()
