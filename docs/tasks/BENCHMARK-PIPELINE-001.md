@@ -2,83 +2,153 @@
 
 ## Status
 
-The shared blind benchmark contract is implemented on `1.1.0`, and the first real 44-FZ calibration completed the required source -> blind label -> freeze -> SUT ordering. The real Phase B run exposed two benchmark-harness gaps, so #52 remains open and corpus growth is still blocked.
+The blind benchmark contract and the first methodologically clean real 44-FZ baseline are complete. The pipeline is now being used as intended: the clean baseline exposed concrete Tender Agent product defects, DOCUMENT-QA fixes were merged, and the next gate is a **same-case control rerun against the exact same frozen truth**.
 
-Canonical completed merges:
+Canonical merges:
 
 - PR `#56` — blind benchmark contract hardening; merge `dec002926f0a996c537c854548e3636e905140ba`; CI PASS.
 - PR `#57` — safe source-only real-calibration Phase A; merge `0958505576cdcd8a7edeb0a5d4973bf07f43cf76`; CI PASS.
-- docs baseline after Phase A helper: `c22803c4b38400bf7be2393c5c66c28f6d754288`.
+- PR `#58` — discovery-context binding + repository-owned audited normalization; merge `b8d22ce044c02fa034f7f13d8a260f55dbd9f2f1`; CI PASS.
+- PR `#60` — first benchmark-driven DOCUMENT-QA product fixes; merge `ab8ca415e1f08edfcb9edd28633d7958396af6d4`; CI PASS.
 
-Current hardening after real Phase B adds discovery-context binding and repository-owned runtime normalization. Do not mark this increment complete until its PR/CI passes and the same procurement is rerun as a fresh uniquely identified calibration case.
+#52 remains open. Do not grow the corpus until the post-#60 control rerun is complete and inspected.
 
-## First real calibration evidence
+## Clean first real baseline
 
-Primary real case:
+Case:
 
+- case id: `calibration-44fz-0848300045426000620-rerun-20260906-01`;
 - law: 44-FZ;
 - registry number: `0848300045426000620`;
-- source bundle: eight original public files acquired through the accepted read-only path;
-- Phase A produced no Tender Agent analysis before blind evaluation;
-- independent labels were frozen before SUT generation;
-- the real SUT output was generated after freeze and remained bound to the frozen source and label digests.
+- frozen product revision: `33cbc7b285dad5faa0ad21b46cd5823499d58ea5`;
+- source bundle: eight original public source files;
+- labels were generated independently and frozen before Tender Agent analysis;
+- discovery context was bound before blind evaluation;
+- runtime normalization was repository-owned and audit-bound;
+- discovery was correctly `NOT_SCORABLE` because no separately context-bound discovery SUT result was supplied.
 
-The original calibration run must be preserved as evidence and must not have its frozen truth rewritten.
+Document baseline:
 
-### Finding 1 — discovery context was not bound
+- TP: 2;
+- FP: 1;
+- FN: 24;
+- precision: 0.6667;
+- recall: 0.0769;
+- F1: 0.1379;
+- 14 material runtime extras preserved;
+- contradiction: `customer_name`;
+- review: `NEEDS_REVIEW` / `UNCLASSIFIED_MATERIAL_DISAGREEMENT`.
 
-The independent discovery judgment was supplier-relative, but the document-analysis SUT run had no loaded supplier profile. Contract `1.1.0` originally froze source data and labels but did not explicitly bind the supplier/query context used to interpret relevance. The resulting discovery mismatch was therefore not an apples-to-apples product score.
+This case is now the frozen control baseline. Its source files, evaluator bundle, blind labels and `frozen_label.json` must not be regenerated or edited for the post-fix comparison.
 
-Hardening rule for every new real discovery-scored case:
+## Product defects exposed by the baseline
 
-- bind a complete sanitized supplier-profile snapshot before blind evaluation;
-- bind its canonical SHA-256 plus query/candidate-selection/source/law/`as_of` semantics into `procurement.benchmark_discovery_context`;
-- let that context flow into the evaluator bundle and therefore the frozen manifest/evaluator digests;
-- score discovery only when the SUT artifact declares the exact same `discovery_context_sha256`;
-- otherwise return `NOT_SCORABLE`, not `MISMATCH`.
+The clean baseline separated harness defects from Tender Agent defects and exposed four product-quality classes:
 
-The context is prepared with:
+1. **document parsing/source acquisition** — EIS attachments can contain OOXML under misleading or misspelled suffixes;
+2. **source-role/entity resolution** — organizer was propagated as `customer_name` instead of the actual customer;
+3. **reasoning/presentation contamination** — legacy healthcare/ЕРН/СМЭВ/СЭМД/Минобороны/СВО templates leaked into an unrelated software procurement;
+4. **structured-fact coverage** — the normalized product output exposed far fewer canonical procurement facts than the frozen source truth contains.
+
+PR #60 addresses the first three classes with source-bound parsing/entity/output fixes. The fourth class must be measured again after those fixes rather than guessed from the old baseline.
+
+## Frozen-truth control rerun
+
+The control rerun is **not** a new calibration case and must not execute Phase A again. It reuses the immutable benchmark inputs from the clean baseline and produces only a fresh SUT side of the comparison.
+
+Repository helper:
 
 ```bash
-python3 scripts/benchmark_calibration.py bind-context \
-  --case-dir <fresh-phase-a-case-dir> \
-  --case-id <new-unique-calibration-case-id> \
-  --supplier-profile demo_data/tender_operator_agent/supplier_profile_electrical.json
+python3 scripts/run_benchmark_control_rerun.py \
+  --source-case-dir <clean-baseline-case-dir> \
+  --output-dir <new-empty-control-dir> \
+  --runtime-version <current-main-sha> \
+  --backend-url http://127.0.0.1:8000
 ```
 
-This command must run after source-only Phase A and before the evaluator ZIP is sent for blind labeling.
+The helper fails closed before analysis unless all of the following are true:
 
-### Finding 2 — Phase B normalization silently omitted runtime claims
+- the original case manifest, evaluator bundle, blind labels and freeze receipt validate;
+- the current case manifest hash still matches the digest bound by `frozen_label.json`;
+- source files still match the frozen manifest hashes;
+- only immutable benchmark inputs are copied into the new control directory;
+- copied immutable artifacts remain byte-identical;
+- the fresh backend run has not begun analysis;
+- the fresh backend source-file SHA-256 multiset exactly equals the frozen source-file hash multiset.
 
-The first local Phase B projector normalized only a small subset of the real runtime response. That made document false negatives mix true Tender Agent misses with normalizer coverage omissions.
+Only after those checks does it call the existing Tender Agent analysis endpoint and save `sut_runtime_response.json`. It never generates evaluator input, labels or a freeze receipt.
 
-The repository now owns the calibration projector in `scripts/benchmark_calibration.py normalize-phase-b` / `src/modules/benchmark_pipeline/calibration.py`. It:
+Expected marker:
+
+`BENCHMARK_CONTROL_RUNTIME_READY`
+
+## Post-runtime normalization and comparison
+
+After the helper returns READY, keep discovery unscored unless a genuine context-bound discovery result exists. For the current document-only control, omit `--discovery-result`.
+
+```bash
+CONTROL=<new-empty-control-dir>
+RUNTIME_VERSION=<current-main-sha>
+
+python3 scripts/benchmark_calibration.py normalize-phase-b \
+  --case-dir "$CONTROL" \
+  --runtime-version "$RUNTIME_VERSION"
+
+python3 scripts/benchmark_pipeline.py compare \
+  --bundle "$CONTROL/evaluator_bundle.json" \
+  --discovery "$CONTROL/blind_discovery_label.json" \
+  --truth "$CONTROL/blind_document_truth.json" \
+  --freeze "$CONTROL/frozen_label.json" \
+  --sut-ref "$CONTROL/tender_agent_output_ref.json" \
+  --sut-output "$CONTROL/normalized_sut_output.json" \
+  --output "$CONTROL/comparison_result.json"
+
+python3 scripts/benchmark_pipeline.py route-review \
+  --manifest "$CONTROL/case_manifest.json" \
+  --discovery "$CONTROL/blind_discovery_label.json" \
+  --truth "$CONTROL/blind_document_truth.json" \
+  --freeze "$CONTROL/frozen_label.json" \
+  --comparison "$CONTROL/comparison_result.json" \
+  --output "$CONTROL/review_state.json"
+```
+
+Preserve both the original baseline directory and the new control directory. The comparison to inspect is baseline revision `33cbc7...` versus the current post-#60 main under the same source and same frozen truth.
+
+## Discovery-context rule
+
+Every *new* real discovery-scored case must bind a complete sanitized supplier/query context before blind evaluation. Discovery is scorable only when the SUT artifact declares the exact same `discovery_context_sha256`; otherwise comparator outcome is `NOT_SCORABLE`, not `MISMATCH`.
+
+The post-#60 control does not invent a discovery result. Its purpose is DOCUMENT-QA/product regression measurement.
+
+## Normalization rule
+
+Repository-owned `scripts/benchmark_calibration.py normalize-phase-b` remains mandatory. It:
 
 - maps known canonical facts deterministically;
 - maps explicit `НМЦК:` economics output to `initial_max_price_rub`;
 - preserves unmapped material economics/requirement/risk claims as `runtime_claim.*` facts;
 - records intentionally ignored questions/operator instructions/workflow decisions in `normalization_audit.json`;
-- fails closed when a new `final_recommendation` output surface has no classification;
+- fails closed when a new decision-bearing `final_recommendation` surface is unclassified;
 - binds the audit digest into `tender_agent_output_ref`;
 - derives `produced_at` from the actual analysis-completion event when available.
 
-This is required so unsupported or contaminated material claims become visible to the comparator instead of disappearing before scoring.
-
-### Finding 3 — genuine SUT quality failures were also observed
-
-Independently of the normalization gap, the real runtime contained unrelated domain claims and propagated the procurement organizer as `customer_name` instead of the actual customer. Keep these as DOCUMENT-QA evidence. They are product-quality failures, not a reason to rewrite frozen independent truth.
-
-The first calibration also showed that free-text truth values intended for exact deterministic comparison must be source-canonical rather than evaluator paraphrases. Do not mutate the already frozen truth. In the fresh rerun, the independent evaluator should copy canonical source wording for exact-text fields and use structured facts for semantic scope/category assertions.
+Unsupported or contaminated material claims therefore remain visible to the comparator instead of disappearing in projection.
 
 ## Review-state semantics
 
-`AI_CURATED_SILVER` is a state of the independent truth set, not a Tender Agent pass/fail flag. A mechanically classifiable SUT error can coexist with silver truth. `NEEDS_REVIEW` is reserved for benchmark/source uncertainty or unclassified material disagreement. Product Owner promotion to `HUMAN_VERIFIED_GOLD` changes review metadata only and never rewrites frozen truth.
+`AI_CURATED_SILVER` describes independent truth quality, not whether Tender Agent passed. `NEEDS_REVIEW` is used for benchmark/source uncertainty or unclassified material disagreement. Product Owner promotion to `HUMAN_VERIFIED_GOLD` changes review metadata only and never rewrites frozen truth.
+
+Do not promote the current clean baseline truth to gold implicitly. Promotion still requires explicit Product Owner approval.
 
 ## Anti-circularity contract
 
-Canonical order:
+Canonical new-case order remains:
 
 `public source bundle -> context-bound source-only evaluator bundle -> independent labels -> freeze -> Tender Agent output -> audited normalization -> comparator -> review routing`
+
+The control-rerun order is deliberately different because truth is already frozen:
+
+`existing frozen source/truth -> immutable copy + hash verification -> fresh source-only backend run -> exact source-byte equality -> Tender Agent output -> audited normalization -> comparator -> review routing`
 
 Fail closed when:
 
@@ -89,39 +159,27 @@ Fail closed when:
 5. SUT output is generated at/before freeze or against another source/label digest;
 6. normalized output does not match its declared digest;
 7. Phase A sees analysis/recommendation events before freeze;
-8. a new real discovery case lacks a frozen supplier/query context;
+8. a new discovery-scored case lacks a frozen supplier/query context;
 9. a context-relative SUT result claims a different context hash;
-10. Phase B runtime introduces an unclassified decision-bearing output surface.
-
-## Next real rerun
-
-Use the same procurement first. Do not add a second case until this rerun is clean.
-
-1. Run `scripts/prepare_benchmark_calibration_phase_a.py` into a **fresh** case directory.
-2. Run `scripts/benchmark_calibration.py bind-context` with a **new unique case id** and the source-controlled supplier profile.
-3. Send only the regenerated context-bound evaluator ZIP to the independent evaluator.
-4. Freeze the new labels.
-5. Run the real Tender Agent after freeze.
-6. Save its raw response as `sut_runtime_response.json`.
-7. Run repository-owned `normalize-phase-b`.
-8. Run comparator and review routing.
-9. Inspect the artifacts before considering a second/third 44-FZ calibration case.
-
-If the document-analysis runtime has no separately context-bound search/relevance result, do not fabricate one: omit `--discovery-result`, which normalizes discovery as `UNCLEAR` and leaves context-relative discovery unscored. DISCOVERY-QA can later supply a real search/ranking result bound to the same context.
+10. Phase B runtime introduces an unclassified decision-bearing output surface;
+11. a control rerun attempts to regenerate/copy prior SUT artifacts instead of reusing only immutable truth/source inputs;
+12. a fresh control backend run does not reproduce the exact frozen source-byte hash multiset before analysis.
 
 ## Scope boundary
 
-223-FZ/RSL `32616312799` is not part of this task's accepted source path. Do not route it through 44-FZ merely to enlarge the corpus. Supplier/TKP acceptance and external procurement actions also remain out of scope.
+223-FZ/RSL `32616312799` is still outside this task's accepted source path. Do not route it through 44-FZ to enlarge the corpus. Supplier/TKP acceptance and external procurement actions remain out of scope.
 
-## Exit criteria before 30–50 cases
+## Exit criteria before a second procurement / 30–50 cases
 
 Do not grow the corpus until all are true:
 
-- current hardening is merged with green CI;
-- at least one fresh real calibration case completes the full blind order with context binding and audited normalization;
-- source/evaluator/freeze/SUT hashes detect tampering and mismatch;
-- discovery becomes either legitimately scored under an identical frozen context or explicitly `NOT_SCORABLE`;
-- normalization cannot silently drop material final runtime claims;
-- comparator outcomes on real data distinguish true SUT errors from harness omissions;
+- PR #60 product fixes are represented in the tested runtime revision;
+- the same real procurement completes the frozen-truth control rerun;
+- baseline vs fixed revision can be compared without changing source/truth labels;
+- source/evaluator/freeze/SUT hashes remain tamper-evident;
+- discovery is either legitimately context-scored or explicitly `NOT_SCORABLE`;
+- normalization cannot silently drop material runtime claims;
+- the three fixed defect classes are verified as fixed or re-opened with concrete evidence;
+- remaining structured-fact recall is measured and classified;
 - review-state behavior remains separate from SUT pass/fail;
-- Product Owner can inspect the final artifacts and promote verified truth to gold without rewriting it.
+- Product Owner can inspect the final artifacts before any corpus expansion.
