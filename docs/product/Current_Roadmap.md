@@ -1,339 +1,185 @@
 # Tender Agent — Current Roadmap
 
-Updated: 2026-09-05
-Product-code baseline at Procurement Intelligence pivot: `df7a50192fb5de9a006de7a6ddea06bb8e3e3471`
+Updated: 2026-09-10
+Canonical repository: `arvectum2/tender-agent`
+Product-code baseline before this roadmap update: `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`
 
-## 1. Executive status
+## 1. Migration / recovery status
 
-Tender Agent is past architecture recovery, Commercial MVP packaging, single-case proof-of-capability, the main PILOT-001 analysis hardening cycle, and the first Supplier Engine integration sequence.
+The previous GitHub account was blocked. The repository has been restored from the mirror into the new canonical GitHub owner `arvectum2`.
 
-Current product capabilities include:
+The git history is preserved through current product baseline `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`, but GitHub-native issue/PR metadata did not migrate with the clone. Historical issue/PR numbers embedded in commit messages and older docs remain provenance references to the previous repository only.
 
-- recovered canonical business registry `M-001..M-055`;
-- Commercial MVP v1 and restricted-pilot packages;
-- real Mac mini read-only procurement E2E;
-- governed ARV-001 quality acceptance;
-- PILOT-001 hardening through D04..D09.1;
-- Supplier Engine increments `SUPPLIER-ENGINE-001`, `002`, `002.1`, `003`, and `004` merged.
+Current canonical tracking recreated in this repository:
 
-`SUPPLIER-ENGINE-004` provides a comparison-ready per-position offer read model that can combine public-web offers and formal quotation/TKP inputs while preserving provenance, unknown commercial fields, and a controlled M-021 handoff. Public ranking cannot create a formal supplier recommendation by itself.
+- #1 `BENCHMARK-PIPELINE-001 — resume frozen-truth control rerun`;
+- #2 `DISCOVERY-QA-001 — procurement search quality benchmark and relevance hardening`;
+- #3 `DOCUMENT-QA-001 — source-grounded document analysis quality benchmark`.
 
-The next **real Supplier/TKP/Economics acceptance is temporarily input-blocked** because no genuine TKP is currently available. This is not an engineering failure and does not justify fabricating acceptance with synthetic TKP data. Synthetic quotations remain acceptable for regression/edge-case tests only.
+## 2. Executive product status
 
-Therefore the active product phase is:
+Tender Agent is past architecture recovery, Commercial MVP packaging, ARV-001 quality acceptance, real Mac mini read-only E2E, PILOT-001 analysis hardening, and Supplier Engine integration through `SUPPLIER-ENGINE-004`.
+
+The real Supplier/TKP/Economics acceptance remains `WAITING_FOR_REAL_TKP / INPUT-BLOCKED`. Do not substitute synthetic quotations for real commercial acceptance; synthetic data remains valid only for regression and edge-case tests.
+
+The active product phase is therefore:
 
 **PROCUREMENT INTELLIGENCE QUALITY — SEARCH + DOCUMENTATION**
 
-The immediate objective is to improve and measure two upstream capabilities on real public 44-FZ procurements:
+The Product Owner is not expected to manually label 30–50 procurements. Benchmark construction is AI-assisted and source-grounded, with blind independent evaluation and final Product-Owner verification.
 
-1. finding the right procurements;
-2. extracting and analysing their documentation accurately, completely, and with source-grounded evidence.
+## 3. Benchmark programme — what is already complete
 
-The Product Owner is **not** expected to manually label 30–50 procurements. Benchmark creation is now designed as an AI-assisted, independently evaluated pipeline with final Product-Owner verification.
+`BENCHMARK-PIPELINE-001` has progressed materially beyond the initial design stage.
 
-The product remains operator-assisted and restricted. No autonomous bid submission, EDS/signature, supplier email automation, purchase/order execution, or uncontrolled external action is authorized.
+Completed in preserved git history:
 
-## 2. Current roadmap decision
+- benchmark package and versioned contract;
+- JSON schemas and validation;
+- blind-evaluation ordering and anti-circularity controls;
+- deterministic comparator and scorecard;
+- review-state routing (`AI_CURATED_SILVER / NEEDS_REVIEW / HUMAN_VERIFIED_GOLD`);
+- source-only real calibration Phase A;
+- discovery-context binding;
+- repository-owned audited Phase B normalization;
+- safe one-command real Phase B runner;
+- first methodologically clean real 44-FZ baseline;
+- first benchmark-driven DOCUMENT-QA product fixes;
+- dedicated frozen-truth control-rerun helper.
 
-### Temporarily parked acceptance gate
+Canonical new-case order remains:
 
-`REAL SUPPLIER + TKP + ECONOMICS + RISK + GO/NO-GO VALIDATION`
+`public source bundle -> context-bound source-only evaluator bundle -> independent labels -> freeze -> Tender Agent output -> audited normalization -> comparator -> review routing`
 
-State: `WAITING_FOR_REAL_TKP / INPUT-BLOCKED`.
+The evaluator must not see Tender Agent ranking/report/output before its first-pass labels are frozen.
 
-Resume trigger: at least one real supplier TKP/quotation suitable for a real GOODS procurement becomes available. Prefer several independent real quotations before broad commercial-quality claims.
+## 4. First real frozen baseline
 
-### Active P0 programme
+Registry: `0848300045426000620`
 
-`PROCUREMENT INTELLIGENCE QUALITY`
+Case id: `calibration-44fz-0848300045426000620-rerun-20260906-01`
 
-Canonical tasks:
+Frozen baseline runtime revision: `33cbc7b285dad5faa0ad21b46cd5823499d58ea5`
 
-- `BENCHMARK-PIPELINE-001` — autonomous corpus collection, blind AI labeling and human verification (#52);
-- `DISCOVERY-QA-001` — procurement search quality benchmark and relevance hardening (#50);
-- `DOCUMENT-QA-001` — source-grounded document analysis quality benchmark (#51).
+Source bundle: 8 original public source files.
 
-The operating principle is **benchmark first, implementation second**. Baseline quality must be measured on a fixed corpus before search weights, extraction logic, prompts, ranking rules, or report heuristics are changed.
+Document baseline:
 
-## 3. Benchmark governance — canonical model
+- TP: 2;
+- FP: 1;
+- FN: 24;
+- precision: 0.6667;
+- recall: 0.0769;
+- F1: 0.1379;
+- 14 material runtime extras preserved;
+- contradiction: `customer_name`;
+- review: `NEEDS_REVIEW / UNCLASSIFIED_MATERIAL_DISAGREEMENT`.
 
-### 3.1 Why this model
+Discovery was correctly `NOT_SCORABLE` because no separately context-bound discovery SUT result was supplied.
 
-The benchmark should scale to `30–50` cases initially and `50–100+` later without requiring the Product Owner to perform repetitive manual extraction and labeling.
+The frozen source bundle, evaluator bundle, blind labels and `frozen_label.json` are immutable benchmark evidence and must not be regenerated for the control comparison.
 
-The benchmark therefore uses three review states:
+## 5. Defects exposed by the baseline
 
-- `AI_CURATED_SILVER` — independently AI-labeled, source-grounded, structurally valid, not yet individually Product-Owner verified;
-- `NEEDS_REVIEW` — material uncertainty, source conflict, weak provenance, schema failure, or material evaluator/system disagreement;
-- `HUMAN_VERIFIED_GOLD` — case/fields explicitly reviewed and approved by the Product Owner.
+The first clean baseline separated benchmark-harness defects from Tender Agent product defects and exposed four product-quality classes:
 
-An AI-generated label must never be described as human gold without explicit Product-Owner verification.
+1. document parsing/source acquisition — EIS attachments may contain OOXML under misleading or misspelled suffixes;
+2. source-role/entity resolution — organizer was propagated as `customer_name` instead of the actual customer;
+3. reasoning/presentation contamination — unrelated legacy healthcare / ЕРН / СМЭВ / СЭМД / Минобороны / СВО claims leaked into an unrelated software procurement;
+4. structured-fact coverage — normalized output exposed far fewer canonical procurement facts than frozen source truth.
 
-The **final benchmark release and scorecard** must be reviewed and explicitly verified by the Product Owner before it becomes the accepted quality baseline. This final verification does not require the Product Owner to manually reconstruct every case from scratch.
+Historical product fix commit `ab8ca415e1f08edfcb9edd28633d7958396af6d4` addressed the first three classes. The fourth class still needs post-fix measurement rather than assumption.
 
-### 3.2 Anti-circularity / blind evaluation
+## 6. CURRENT GATE — frozen-truth control rerun
 
-The system under test must not influence the independent first-pass label.
+This is where work stopped before the GitHub account block.
 
-Required per-case order:
+Current product baseline already contains the control-rerun helper:
 
-`public source bundle -> blind independent evaluator label -> freeze label -> Tender Agent output -> automatic comparator -> review routing`
+`81f77d5f97ae92733f5887136aa0c1f67ceb22ae — BENCHMARK-PIPELINE-001: add frozen-truth control rerun`
 
-The independent evaluator must not see Tender Agent ranking, extracted facts, report text, or score reasons before its first-pass label is frozen.
+The next action is **not new coding and not a new procurement**. It is one local same-case replay against the exact frozen truth.
 
-### 3.3 Roles
+Run on the Mac mini against the preserved baseline artifacts:
 
-#### Tender Agent
+```bash
+python3 scripts/run_benchmark_control_rerun.py \
+  --source-case-dir <clean-baseline-case-dir> \
+  --output-dir <new-empty-control-dir> \
+  --runtime-version 81f77d5f97ae92733f5887136aa0c1f67ceb22ae \
+  --backend-url http://127.0.0.1:8000
+```
 
-- discovers real public procurements;
-- collects accepted public-source metadata/document bundles;
-- produces normal search and analysis outputs;
-- remains the system under test.
+Expected marker: `BENCHMARK_CONTROL_RUNTIME_READY`.
 
-#### Local runner / Codex
+Then execute repository-owned `normalize-phase-b`, comparator and `route-review` exactly as documented in `docs/tasks/BENCHMARK-PIPELINE-001.md`.
 
-Codex is used only for work that must run on the local machine:
+Control-rerun methodology:
 
-- run/update local Tender Agent runtime;
-- collect/download public procurement artifacts through the accepted product path;
-- create bundle manifests/hashes;
-- prepare evaluator input bundles;
-- execute benchmark/comparator commands;
-- persist local outputs/reports.
+`existing frozen source/truth -> immutable copy + hash verification -> fresh source-only backend run -> exact source-byte equality -> Tender Agent output -> audited normalization -> comparator -> review routing`
 
-Codex/local runner is not the semantic source of truth.
+Do not rerun Phase A, regenerate evaluator labels, edit frozen truth, or invent a discovery result.
 
-#### Independent evaluator (ChatGPT)
+## 7. Exit gate before corpus growth
 
-- reviews the source bundle independently;
-- labels procurement relevance;
-- extracts source-grounded document truth under a strict schema;
-- uses `UNKNOWN` / `INSUFFICIENT_EVIDENCE` rather than guessing;
-- preserves source references where technically reliable;
-- exposes confidence and uncertainty.
+Do not add a second procurement or grow toward 30–50 cases until all are true:
 
-#### Product Owner
+- post-fix product code is present in the tested runtime;
+- the same procurement completes the frozen-truth control rerun;
+- baseline and current revision are compared against identical source/truth;
+- source/evaluator/freeze/SUT hashes remain tamper-evident;
+- discovery is either genuinely context-scored or explicitly `NOT_SCORABLE`;
+- normalization does not silently drop material runtime claims;
+- the three fixed defect classes are verified as fixed or reopened with concrete evidence;
+- remaining structured-fact recall is measured and classified;
+- review-state semantics remain separate from SUT pass/fail;
+- Product Owner inspects the control artifacts and decision before corpus expansion.
 
-- reviews the final benchmark/release and scorecard;
-- verifies/rejects benchmark conclusions;
-- reviews disputed/material cases where needed;
-- may promote reviewed cases/fields to `HUMAN_VERIFIED_GOLD`.
+## 8. P0 after control gate
 
-### 3.4 Calibration cases
+### #2 DISCOVERY-QA-001
 
-The three procurements previously reviewed with the Product Owner — two Cybox cases and the RSL procurement — are the preferred initial calibration set **once their original public source materials are imported into the same benchmark bundle/schema**.
+After #1 passes, build the real 44-FZ discovery corpus through the blind benchmark pipeline. Target 30–50 AI-curated real cases, scalable to 50–100+.
 
-Prior prose reviews are calibration context only. Their truth labels must be regenerated from the source bundles under the new blind-evaluation contract.
+Minimum metrics: Precision@5, Precision@10, Recall@K, nDCG/equivalent, top-K false-positive rate, missed-relevant rate, duplicate rate, status/deadline correctness where source-backed, explainability coverage.
 
-## 4. First-wave lifecycle — actual maturity
+Only benchmark-measured failures justify changes to subject/title/OKPD2/document/profile matching, aliases/transliteration, article/model/brand/manufacturer signals, category penalties, lifecycle/deadline filters, duplicate handling or score breakdown.
 
-The first-wave business target remains:
+### #3 DOCUMENT-QA-001
 
-`tender -> analysis -> supplier-side -> economics/risk -> owner approval -> bid package -> manual submission -> receipt -> outcome`
+After #1 passes, grow the truth-set corpus and measure factual accuracy, material-fact recall, grounding precision, unsupported material claim rate, contradiction rate, correct abstention and completeness classification.
 
-### Block A — Platform skeleton
-
-Status: **implemented and operationally exercised**.
-
-Deal/status/document/audit foundations, workflow/runtime contours, controlled access, storage/readiness, operator workspace, evidence and report flows are present.
-
-### Block B — Intake & analysis
-
-Status: **most mature; active quality-hardening target**.
-
-Current real 44-FZ path:
-
-`public search -> relevance selection -> document intake -> completeness -> evidence-grounded analysis -> human report`.
-
-PILOT-001 already hardened evidence binding, numeric values/units, source-fact recall/retention, procurement scope semantics, downstream semantic consistency and RFQ presentation consistency.
-
-The next maturity step is a reusable benchmark across many real procurements rather than another isolated case-by-case fix.
-
-Known source robustness debt remains:
-
-- D05 — incomplete document sets; safe fail-closed behavior is correct, but upstream EIS incompleteness vs intake coverage gap still needs classification;
-- D06 — one EIS `unsupported_layout` occurrence; reproduce/classify before parser changes.
-
-### Block C — Supplier Engine
-
-Status: **core integration sequence implemented through SE-004; real business acceptance waiting for genuine TKP**.
-
-Merged sequence:
-
-- `SUPPLIER-ENGINE-001` — position-level supplier offer matching;
-- `SUPPLIER-ENGINE-002` — public offer discovery adapter;
-- `SUPPLIER-ENGINE-002.1` — RU/EN identifier evidence normalization;
-- `SUPPLIER-ENGINE-003` — bounded product-page enrichment;
-- `SUPPLIER-ENGINE-004` — comparison-ready offer set + M-021/TKP handoff.
-
-Engineering may still exercise this contour with public offers and synthetic edge-case quotations, but the **real commercial acceptance gate remains open until genuine TKP input exists**.
-
-### Block D — Finance / risk / approval
-
-Status: **implemented in bounded operator form; real integrated validation waiting for real TKP**.
-
-Existing commercial workspace includes manual TKP registration, quote comparison, deterministic cost model, cash-gap estimate, financing strategy, finance memo, contract risk, CEO approval package and bid-readiness state.
-
-Required future acceptance:
-
-`real supplier offers/TKP -> comparison -> economics -> contract risk -> integrated GO/NO-GO -> owner decision record`.
-
-### Block E — Bid / submission / outcome
-
-Status: **canonical/recovery coverage exists; external execution remains restricted**.
-
-Bid document collection, package skeleton and completeness/readiness state exist. Final submission remains manual; no ETP mutation/login, EDS/signature, or autonomous submission is open.
-
-## 5. P0 — BENCHMARK-PIPELINE-001 (#52)
-
-### Goal
-
-Build the shared, batchable benchmark infrastructure used by both search and document QA so that a 30–50 case corpus can be collected and independently labeled with minimal Product-Owner manual work.
-
-### Required artifacts
-
-At minimum version:
-
-1. `case_manifest` — procurement identity, source URLs, acquisition timestamp, document hashes, source scope;
-2. `blind_discovery_label` — `RELEVANT | PARTIALLY_RELEVANT | IRRELEVANT | UNCLEAR`, reason/evidence/confidence;
-3. `blind_document_truth` — structured material facts with evidence/confidence/abstention;
-4. `tender_agent_output_ref` — tested runtime/version and output refs;
-5. `comparison_result` — TP/FP/FN, unsupported claims, contradictions, misses and ranking deltas;
-6. `review_state` — `AI_CURATED_SILVER | NEEDS_REVIEW | HUMAN_VERIFIED_GOLD` plus reviewer metadata;
-7. aggregate scorecard.
-
-### Acceptance
-
-- blind-label-before-system-output is enforced by workflow/tests, not only documentation;
-- Tender Agent output cannot leak into first-pass evaluator bundles;
-- corpus collection/comparison is batchable without Product-Owner per-case orchestration;
-- uncertainty/review routing is explicit;
-- final benchmark release can be verified by the Product Owner without rewriting all labels manually;
-- calibration cases use the same pipeline as future cases.
-
-## 6. P0 — DISCOVERY-QA-001 (#50)
-
-### Goal
-
-Make procurement search measurably better at surfacing tenders relevant to the configured supplier/company profile while reducing false positives and preserving explainability.
-
-### Corpus
-
-Use #52 to collect at least `30–50` real public 44-FZ query/candidate cases, designed to grow to `50–100+`.
-
-Include clear relevant cases, near misses, hard negatives, GOODS/WORKS/SERVICES/RENTAL lookalikes, duplicates/versioned notices, and lifecycle/deadline mismatches where source evidence permits.
-
-### Minimum metrics
-
-- Precision@5;
-- Precision@10;
-- Recall@K;
-- nDCG@K or documented equivalent;
-- top-K false-positive rate;
-- missed-relevant rate;
-- duplicate rate;
-- status/deadline correctness where applicable;
-- score-reason/explainability coverage.
-
-### Hardening policy
-
-Only measured failure classes drive changes. Candidate areas include normalized subject/title/OKPD2/document/profile matching, aliases/transliteration, article/model/brand/manufacturer signals for GOODS, category mismatch penalties, lifecycle/status/deadline filtering, duplicate/version handling and explicit score breakdown.
-
-LLM reranking is not the first move. Consider it only after a stable deterministic benchmark demonstrates a residual gap.
-
-## 7. P0 — DOCUMENT-QA-001 (#51)
-
-### Goal
-
-Measure and improve how accurately and completely Tender Agent extracts material facts from real public tender documentation while minimizing unsupported material conclusions.
-
-### Truth fields
-
-Where present in sources, capture:
-
-- procurement subject/category/scope;
-- positions, quantity and unit;
-- article/model/brand/manufacturer;
-- GOST/TU/standards and technical requirements;
-- delivery/performance place and deadline;
-- payment;
-- warranty;
-- security/guarantee;
-- acceptance;
-- penalties/liability;
-- licenses/SRO/certificates/eligibility;
-- bid-document requirements;
-- material contract terms.
-
-Preserve source document plus page/line/fragment reference where reliable. Never invent source coordinates.
-
-### Minimum metrics
-
-- factual accuracy;
-- material-fact recall;
-- grounding precision;
-- unsupported material claim rate;
-- contradiction rate;
-- correct abstention rate;
-- completeness classification accuracy.
-
-### Error taxonomy
+Error taxonomy remains:
 
 `source acquisition -> completeness -> parsing -> extraction -> scope/category -> evidence binding -> reasoning -> serialization/reporting`
 
-D05 and D06 are folded into this diagnostic programme without weakening fail-closed behavior.
+D05 incomplete document sets and D06 `unsupported_layout` remain diagnostic targets inside this programme without weakening fail-closed behavior.
 
-Deterministic and local-LLM analysis may later be compared on the **same frozen truth set**. The LLM path must not weaken grounding or abstention rules.
+## 9. Supplier / Finance branch
 
-## 8. P1 — integrated Procurement Intelligence acceptance
+Supplier Engine is implemented through `SUPPLIER-ENGINE-004`: position matching, public discovery, RU/EN identifier normalization, bounded product-page enrichment, comparison-ready offer set and controlled M-021/TKP handoff.
 
-After #52, #50 and #51 have stable baselines, run one integrated evaluation:
+Real integrated acceptance remains parked until genuine TKP input exists:
 
-`query -> ranked top-K -> selected procurement -> document package -> completeness -> frozen independent truth -> Tender Agent analysis/report -> comparator -> Product Owner verification`
+`real supplier offers/TKP -> comparison -> economics -> contract risk -> GO/NO-GO -> owner decision record`
 
-This must attribute quality loss to the correct stage rather than letting downstream analysis tuning hide upstream search/source failures.
+Public-offer dry runs and synthetic quotation regressions may continue, but they are not a substitute for real business acceptance.
 
-No real TKP is required for this phase.
+## 10. First-wave lifecycle maturity
 
-## 9. Useful parallel work while real TKP is unavailable
+- Platform skeleton — implemented and operationally exercised.
+- Intake & analysis — most mature; active quality-hardening target.
+- Supplier Engine — implemented through SE-004; real TKP validation pending.
+- Finance / risk / approval — implemented in bounded operator form; real integrated validation pending TKP.
+- Bid package / completeness — canonical coverage exists.
+- Submission — manual only.
+- Outcome audit — follows manual submission path.
 
-### P1 — public-offer Supplier Engine dry runs
+First-wave business target remains:
 
-Exercise SE-001..004 on real GOODS procurements using only public offer evidence. This validates discovery, matching, evidence retention, enrichment and comparison-read-model behavior but is not real Supplier/TKP commercial acceptance.
+`tender -> analysis -> supplier-side -> economics/risk -> owner approval -> bid package -> manual submission -> receipt -> outcome`
 
-### P1 — real-TKP readiness package
-
-Prepare/validate the input template so the first genuine TKP can be registered immediately: supplier identity, position mapping, price/currency, VAT, MOQ, delivery, validity, source artifact and unresolved fields.
-
-### P1 — controlled local-LLM multi-case reliability
-
-Measure repeated local LLM completion using the DOCUMENT-QA truth set instead of weakening deterministic fallback/evidence rules.
-
-### P2 — electrical/domain ontology
-
-Improve aliases, model/article normalization, standards, characteristic names and truth packs because they can improve procurement relevance, technical extraction and supplier matching simultaneously.
-
-### P2 — operator UX / explainability
-
-Improve evidence-backed operator friction only: search score breakdown, why-result-matched, completeness reason, fact provenance, missing-data state and review/audit links.
-
-### P2 — source expansion
-
-223-FZ and private industrial procurement remain planned but should not dilute the current 44-FZ quality benchmark. Establish the 44-FZ baseline first, then add each source through a separate connector/acceptance contract.
-
-### P2 — repository governance
-
-`main` branch protection / required checks remain a separate engineering-hygiene item and are not the current product P0.
-
-### P3 — historical P8.05 SOAP temporal health
-
-Keep separate from the current public-read-only product path.
-
-## 10. Governance debt
-
-Historical PILOT-001 issue #23 remains formally open/stale while later development proceeded on the assumption that the pilot hardening gate had passed. Reconcile against final PO replay evidence, but do not restart product work solely because issue bookkeeping is stale.
-
-## 11. Deferred / not authorized
+## 11. Deferred / boundaries
 
 Do not open yet:
 
@@ -345,66 +191,44 @@ Do not open yet:
 - unattended external execution;
 - broad agent autonomy;
 - self-serve SaaS claims;
-- multi-tenant SaaS hardening before repeat-use evidence;
-- broad M-049/M-050 runtime expansion;
-- promotion of M-052..M-055 to full runtime modules without a separately approved phase.
+- 223-FZ expansion before the 44-FZ quality baseline is stable.
 
 ## 12. Updated critical path
 
 ```text
-ARV-001 quality freeze ✅
-  ↓
-Mac mini real E2E ✅
-  ↓
-PILOT-001 D04..D09.1 hardening ✅
-  ↓
 Supplier Engine 001..004 ✅
   ↓
 REAL TKP ACCEPTANCE — WAITING FOR INPUT
-  │
-  ├──────────── while waiting ─────────────┐
-  ↓                                       ↓
-BENCHMARK-PIPELINE-001 (#52)          Supplier public-offer dry runs
+
+PROCUREMENT INTELLIGENCE QUALITY
   ↓
-blind AI labeling + review states
+BENCHMARK-PIPELINE core + first real baseline ✅
   ↓
-  ├───────────────────┐
-  ↓                   ↓
-DISCOVERY-QA-001   DOCUMENT-QA-001
-search quality      document quality
-  └─────────┬─────────┘
+first benchmark-driven DOCUMENT-QA fixes ✅
+  ↓
+frozen-truth control helper ✅
+  ↓
+SAME-CASE CONTROL RERUN ← CURRENT
+  ↓
+PRODUCT OWNER INSPECTION
+  ↓
+  ├────────────────────┐
+  ↓                    ↓
+DISCOVERY-QA (#2)   DOCUMENT-QA (#3)
+30–50 corpus        truth-set growth
+  └─────────┬──────────┘
             ↓
 INTEGRATED SEARCH -> DOCS -> ANALYSIS ACCEPTANCE
             ↓
-PRODUCT OWNER FINAL BENCHMARK VERIFICATION
-            ↓
 when genuine TKP arrives
             ↓
-REAL SUPPLIER + TKP + ECONOMICS + RISK + GO/NO-GO
+SUPPLIER -> ECONOMICS -> RISK -> GO/NO-GO
             ↓
-CONTROLLED BID PACKAGE + COMPLETENESS
-            ↓
-MANUAL SUBMISSION + RECEIPT + OUTCOME AUDIT
-            ↓
-FIRST-WAVE BUSINESS LIFECYCLE PROVEN
-            ↓
-REPEATED REAL COMMERCIAL PILOTS
-            ↓
-SOURCE EXPANSION + PRODUCT HARDENING
-            ↓
-ONLY THEN: broader automation / SaaS / external-execution review
+BID PACKAGE -> MANUAL SUBMISSION -> OUTCOME
 ```
 
 ## 13. Immediate next step
 
-Implement **BENCHMARK-PIPELINE-001 (#52)** before collecting 30–50 cases.
+Execute issue #1 locally on the Mac mini: reconcile local clone to exact canonical `arvectum2/tender-agent` main, locate the preserved frozen baseline case directory for registry `0848300045426000620`, run the same-case frozen-truth control replay, then return the generated comparison/review artifacts for Product Owner inspection.
 
-The first deliverable is the benchmark contract and blind-evaluation workflow, not a large corpus and not search tuning:
-
-`schemas -> bundle boundaries -> blind evaluator input -> frozen label -> Tender Agent output ref -> comparator -> review state -> scorecard`
-
-After this skeleton is tested on 1–3 calibration cases, scale collection automatically and start the DISCOVERY-QA / DOCUMENT-QA baselines.
-
-## 14. Roadmap principle
-
-While a downstream gate is blocked only by unavailable real-world input, move engineering effort to the highest-leverage upstream quality work that can be independently validated. Automate repetitive benchmark construction, keep evaluator/system independence, preserve source grounding, and retain explicit Product-Owner verification for the accepted benchmark release.
+No further product-code change should be made before that measurement unless the local migration/reconciliation itself exposes a concrete blocker.
