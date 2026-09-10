@@ -56,6 +56,37 @@ _ACCEPTANCE_TABLE = re.compile(
     r"\t\s*подписание\s*\t\s*заказчик",
     re.IGNORECASE,
 )
+_SERVICE_PERIOD = re.compile(
+    r"срок\s+начала\s+оказания\s+услуг\s+исполнителем\*{0,2}\s*[:|]\s*"
+    r"(?P<start>[^;\n]{3,240})\s*;\s*"
+    r"срок\s+окончания\s+оказания\s+услуг\s+исполнителем\*{0,2}\s*[:|]\s*"
+    r"(?P<deadline>[^;\n]{3,240})",
+    re.IGNORECASE,
+)
+_CONTRACT_END_DATE = re.compile(
+    r"дата\s+окончания\s+исполнения\s+контракта\s*(?:[:|]|\t+)\s*"
+    r"(?P<date>[^\n\t]{3,120})",
+    re.IGNORECASE,
+)
+_PERFORMANCE_PLACE = re.compile(
+    r"место\s+оказания\s+услуг\s*:\s*(?P<place>[^\n]{3,400})",
+    re.IGNORECASE,
+)
+_WARRANTY_TERM = re.compile(
+    r"срок\s*,?\s*на\s+который\s+предоставляется\s+гарантия[^—\n]{0,300}"
+    r"[—-]\s*(?P<term>\d+\s+месяц(?:а|ев)?\s+с\s+даты\s+при[её]мки\s+оказанных\s+услуг)",
+    re.IGNORECASE,
+)
+_WARRANTY_SECURITY = re.compile(
+    r"требуется\s+обеспечение\s+исполнения\s+обязательств\s+по\s+предоставленной\s+"
+    r"гарантии\s+качества\s+товаров?\s*,?\s*работ\s*,?\s*услуг\s*(?:[:|]|\t+)\s*"
+    r"(?P<required>да|нет)",
+    re.IGNORECASE,
+)
+_WARRANTY_SECURITY_NOT_REQUIRED = re.compile(
+    r"требовани[ея]\s+к\s+обеспечению\s+гарантийных\s+обязательств\s+не\s+установлен[ыо]",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -84,6 +115,10 @@ class ContractTermFact:
 
 def _clean(value: str) -> str:
     return " ".join(value.split()).strip(" .;:")
+
+
+def _clean_preserving_period(value: str) -> str:
+    return " ".join(value.split()).strip(" ;:")
 
 
 def _fact(document: Any, field: str, value: Any, start: int, end: int) -> ContractTermFact:
@@ -185,16 +220,110 @@ def _extract_from_contract(document: Any) -> list[ContractTermFact]:
                     acceptance_table.end(),
                 )
             )
+
+    service_period = _SERVICE_PERIOD.search(text)
+    if service_period:
+        facts.extend(
+            (
+                _fact(
+                    document,
+                    "service_start",
+                    _clean(service_period.group("start")),
+                    service_period.start(),
+                    service_period.end(),
+                ),
+                _fact(
+                    document,
+                    "service_deadline",
+                    _clean(service_period.group("deadline")),
+                    service_period.start(),
+                    service_period.end(),
+                ),
+            )
+        )
+
+    contract_end_date = _CONTRACT_END_DATE.search(text)
+    if contract_end_date:
+        facts.append(
+            _fact(
+                document,
+                "contract_end_date",
+                _clean(contract_end_date.group("date")),
+                contract_end_date.start(),
+                contract_end_date.end(),
+            )
+        )
+
+    warranty_security = _WARRANTY_SECURITY.search(text)
+    if warranty_security:
+        facts.append(
+            _fact(
+                document,
+                "warranty_security_required",
+                warranty_security.group("required").lower() == "да",
+                warranty_security.start(),
+                warranty_security.end(),
+            )
+        )
+    else:
+        warranty_security_absent = _WARRANTY_SECURITY_NOT_REQUIRED.search(text)
+        if warranty_security_absent:
+            facts.append(
+                _fact(
+                    document,
+                    "warranty_security_required",
+                    False,
+                    warranty_security_absent.start(),
+                    warranty_security_absent.end(),
+                )
+            )
+    return facts
+
+
+def _extract_from_technical_spec(document: Any) -> list[ContractTermFact]:
+    text = str(getattr(document, "text", "") or "")
+    if not text:
+        return []
+
+    facts: list[ContractTermFact] = []
+    performance_place = _PERFORMANCE_PLACE.search(text)
+    if performance_place:
+        facts.append(
+            _fact(
+                document,
+                "performance_place",
+                _clean_preserving_period(performance_place.group("place")),
+                performance_place.start(),
+                performance_place.end(),
+            )
+        )
+
+    warranty_term = _WARRANTY_TERM.search(text)
+    if warranty_term:
+        facts.append(
+            _fact(
+                document,
+                "warranty_term",
+                _clean(warranty_term.group("term")),
+                warranty_term.start(),
+                warranty_term.end(),
+            )
+        )
     return facts
 
 
 def extract_contract_term_facts(documents: list[Any]) -> tuple[dict[str, ContractTermFact], list[str]]:
-    """Return explicit contract facts, omitting fields with source conflicts."""
+    """Return explicit contract and technical-spec facts, omitting conflicts."""
     candidates: dict[str, list[ContractTermFact]] = {}
     for document in documents:
-        if getattr(document, "role", None) != "contract_draft":
-            continue
-        for fact in _extract_from_contract(document):
+        role = getattr(document, "role", None)
+        if role == "contract_draft":
+            extracted = _extract_from_contract(document)
+        elif role == "technical_spec":
+            extracted = _extract_from_technical_spec(document)
+        else:
+            extracted = []
+        for fact in extracted:
             candidates.setdefault(fact.field, []).append(fact)
 
     agreed: dict[str, ContractTermFact] = {}

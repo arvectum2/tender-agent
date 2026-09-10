@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
 from src.modules.tender_operator_agent_demo.contract_term_facts import (
     extract_contract_term_facts,
@@ -127,3 +129,113 @@ def test_postpayment_is_not_advance_payment() -> None:
     )
 
     assert "advance_payment" not in facts
+
+
+def test_extracts_execution_and_warranty_terms_with_source_roles() -> None:
+    facts, conflicts = extract_contract_term_facts(
+        [
+            _document(
+                "Срок начала оказания услуг Исполнителем**: 0 дн. от даты заключения контракта;"
+                "Срок окончания оказания услуг Исполнителем**: 30.11.2026 (МСК);\n"
+                "Дата окончания исполнения контракта\t23.12.2026 (МСК)\n"
+                "Требуется обеспечение исполнения обязательств по предоставленной гарантии качества "
+                "товаров, работ, услуг\tНет"
+            ),
+            _document(
+                "Место оказания услуг: Московская область, г. Одинцово, ул. Молодёжная д. 18, помещение 3/3.\n"
+                "Срок, на который предоставляется гарантия и (или) требования к объему предоставления "
+                "гарантий качества товара, работы, услуги — 12 месяцев с даты приёмки оказанных услуг.",
+                role="technical_spec",
+                name="Техническое задание.docx",
+            ),
+        ]
+    )
+
+    assert conflicts == []
+    assert {field: facts[field].value for field in (
+        "service_start", "service_deadline", "contract_end_date", "performance_place", "warranty_term", "warranty_security_required"
+    )} == {
+        "service_start": "0 дн. от даты заключения контракта",
+        "service_deadline": "30.11.2026 (МСК)",
+        "contract_end_date": "23.12.2026 (МСК)",
+        "performance_place": "Московская область, г. Одинцово, ул. Молодёжная д. 18, помещение 3/3.",
+        "warranty_term": "12 месяцев с даты приёмки оказанных услуг",
+        "warranty_security_required": False,
+    }
+    assert facts["performance_place"].source_document == "Техническое задание.docx"
+    assert facts["service_start"].source_document == "Проект контракта.docx"
+
+
+def test_execution_and_warranty_terms_do_not_fabricate_or_match_wrong_semantics() -> None:
+    facts, _ = extract_contract_term_facts(
+        [
+            _document(
+                "Дата публикации извещения: 30.11.2026.\n"
+                "Срок подачи заявок: 23.12.2026.\n"
+                "Обеспечение исполнения контракта: 10%.\n"
+                "Обеспечение заявки: 1%.\n"
+                "Гарантия предоставляется в соответствии с контрактом.\n"
+                "Срок оказания услуг: 30.11.2026."
+            ),
+            _document(
+                "Адрес заказчика: Московская область, г. Одинцово.\n"
+                "Гарантия предоставляется без указания срока.",
+                role="technical_spec",
+                name="Техническое задание.docx",
+            ),
+        ]
+    )
+
+    assert set(facts).isdisjoint({
+        "service_start", "service_deadline", "contract_end_date", "performance_place", "warranty_term", "warranty_security_required"
+    })
+
+
+@pytest.mark.parametrize(
+    ("field", "first", "second", "role"),
+    [
+        (
+            "service_start",
+            "Срок начала оказания услуг Исполнителем: 0 дн. от даты заключения контракта;Срок окончания оказания услуг Исполнителем: 30.11.2026 (МСК);",
+            "Срок начала оказания услуг Исполнителем: 1 дн. от даты заключения контракта;Срок окончания оказания услуг Исполнителем: 30.11.2026 (МСК);",
+            "contract_draft",
+        ),
+        (
+            "service_deadline",
+            "Срок начала оказания услуг Исполнителем: 0 дн. от даты заключения контракта;Срок окончания оказания услуг Исполнителем: 30.11.2026 (МСК);",
+            "Срок начала оказания услуг Исполнителем: 0 дн. от даты заключения контракта;Срок окончания оказания услуг Исполнителем: 01.12.2026 (МСК);",
+            "contract_draft",
+        ),
+        ("contract_end_date", "Дата окончания исполнения контракта | 30.11.2026 (МСК)", "Дата окончания исполнения контракта | 01.12.2026 (МСК)", "contract_draft"),
+        ("performance_place", "Место оказания услуг: г. Одинцово.", "Место оказания услуг: г. Москва.", "technical_spec"),
+        ("warranty_term", "Срок, на который предоставляется гарантия — 12 месяцев с даты приёмки оказанных услуг.", "Срок, на который предоставляется гарантия — 24 месяцев с даты приёмки оказанных услуг.", "technical_spec"),
+        ("warranty_security_required", "Требуется обеспечение исполнения обязательств по предоставленной гарантии качества товаров, работ, услуг | Нет", "Требуется обеспечение исполнения обязательств по предоставленной гарантии качества товаров, работ, услуг | Да", "contract_draft"),
+    ],
+)
+def test_conflicting_execution_and_warranty_terms_fail_closed(field: str, first: str, second: str, role: str) -> None:
+    facts, conflicts = extract_contract_term_facts(
+        [_document(first, role=role, name="Первый.docx"), _document(second, role=role, name="Второй.docx")]
+    )
+
+    assert field not in facts
+    assert field in conflicts
+
+
+def test_execution_and_warranty_terms_do_not_leak_from_non_eligible_roles() -> None:
+    facts, _ = extract_contract_term_facts(
+        [
+            _document(
+                "Срок начала оказания услуг Исполнителем: 0 дн. от даты заключения контракта;"
+                "Срок окончания оказания услуг Исполнителем: 30.11.2026 (МСК);\n"
+                "Дата окончания исполнения контракта | 23.12.2026 (МСК)\n"
+                "Требуется обеспечение исполнения обязательств по предоставленной гарантии качества товаров, работ, услуг | Нет\n"
+                "Место оказания услуг: г. Одинцово.\n"
+                "Срок, на который предоставляется гарантия — 12 месяцев с даты приёмки оказанных услуг.",
+                role="supporting",
+            )
+        ]
+    )
+
+    assert set(facts).isdisjoint({
+        "service_start", "service_deadline", "contract_end_date", "performance_place", "warranty_term", "warranty_security_required"
+    })
