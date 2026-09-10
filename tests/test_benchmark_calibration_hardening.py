@@ -252,6 +252,65 @@ def test_runtime_normalizer_fails_closed_on_new_decision_payload_shape():
         )
 
 
+def test_runtime_normalizer_maps_explicit_contract_terms_from_analysis_context():
+    runtime = {
+        "runtime_analysis": {
+            "analysis_context": {
+                "payment_terms": {"payment": "100% after acceptance", "deadline": "5 working days"},
+                "advance_payment": False,
+                "performance_security_percent": 10.0,
+                "acceptance_terms": {
+                    "executor_submission": "5 working days after completion",
+                    "customer_acceptance": "5 working days after receipt",
+                },
+            }
+        },
+        "final_recommendation": {},
+    }
+
+    output, audit = normalize_runtime_response(
+        runtime_response=runtime,
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+    facts = {item["field"]: item for item in output["facts"]}
+
+    assert facts["payment_terms"]["value"] == runtime["runtime_analysis"]["analysis_context"]["payment_terms"]
+    assert facts["advance_payment"]["value"] is False
+    assert facts["performance_security_percent"]["value"] == 10.0
+    assert facts["acceptance_terms"]["value"] == runtime["runtime_analysis"]["analysis_context"]["acceptance_terms"]
+    assert {entry["source_path"] for entry in audit["entries"]} >= {
+        "runtime_analysis.analysis_context.payment_terms",
+        "runtime_analysis.analysis_context.advance_payment",
+        "runtime_analysis.analysis_context.performance_security_percent",
+        "runtime_analysis.analysis_context.acceptance_terms",
+    }
+
+
+def test_runtime_normalizer_does_not_extract_contract_terms_from_prose():
+    runtime = {
+        "runtime_analysis": {
+            "analysis_context": {},
+            "trace": {
+                "source_excerpt": (
+                    "Выплата аванса не предусмотрена. Размер обеспечения исполнения контракта, % от НМЦК | 10"
+                )
+            },
+        },
+        "final_recommendation": {},
+    }
+
+    output, _ = normalize_runtime_response(
+        runtime_response=runtime,
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+
+    assert {item["field"] for item in output["facts"]}.isdisjoint(
+        {"payment_terms", "advance_payment", "performance_security_percent", "acceptance_terms"}
+    )
+
+
 def test_runtime_timestamp_and_sut_ref_use_actual_analysis_completion_and_audit_binding():
     runtime = {
         "events": [
