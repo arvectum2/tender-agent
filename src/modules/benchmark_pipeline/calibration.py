@@ -257,6 +257,63 @@ def normalize_runtime_response(
             action="MAPPED",
         )
 
+    runtime_analysis = runtime_response.get("runtime_analysis")
+    analysis_context = runtime_analysis.get("analysis_context") if isinstance(runtime_analysis, dict) else None
+    if isinstance(analysis_context, dict):
+        payment_terms = analysis_context.get("payment_terms")
+        if (
+            isinstance(payment_terms, dict)
+            and isinstance(payment_terms.get("payment"), str)
+            and payment_terms["payment"].strip()
+            and isinstance(payment_terms.get("deadline"), str)
+            and payment_terms["deadline"].strip()
+        ):
+            add_fact(
+                "payment_terms",
+                payment_terms,
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.payment_terms",
+                action="MAPPED",
+            )
+
+        advance_payment = analysis_context.get("advance_payment")
+        if isinstance(advance_payment, bool):
+            add_fact(
+                "advance_payment",
+                advance_payment,
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.advance_payment",
+                action="MAPPED",
+            )
+
+        performance_security_percent = analysis_context.get("performance_security_percent")
+        if isinstance(performance_security_percent, (int, float)) and not isinstance(
+            performance_security_percent, bool
+        ):
+            add_fact(
+                "performance_security_percent",
+                performance_security_percent,
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.performance_security_percent",
+                action="MAPPED",
+            )
+
+        acceptance_terms = analysis_context.get("acceptance_terms")
+        if (
+            isinstance(acceptance_terms, dict)
+            and isinstance(acceptance_terms.get("executor_submission"), str)
+            and acceptance_terms["executor_submission"].strip()
+            and isinstance(acceptance_terms.get("customer_acceptance"), str)
+            and acceptance_terms["customer_acceptance"].strip()
+        ):
+            add_fact(
+                "acceptance_terms",
+                acceptance_terms,
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.acceptance_terms",
+                action="MAPPED",
+            )
+
     recommendation = runtime_response.get("final_recommendation")
     if recommendation is None:
         recommendation = {}

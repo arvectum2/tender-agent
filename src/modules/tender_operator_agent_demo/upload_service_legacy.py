@@ -42,6 +42,7 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
     extract_goods_source_facts,
     semantic_procurement_role,
 )
+from src.modules.tender_operator_agent_demo.contract_term_facts import extract_contract_term_facts
 from src.modules.supplier_search.internet_supplier_search import search_suppliers
 from src.modules.supplier_search.yandex_search_client import YandexSearchClient
 from src.shared.config.settings import get_settings
@@ -3542,6 +3543,7 @@ def _build_output_payloads(
         else grounded_requirement_rows or _extract_requirement_rows(requirements, core_complete, procurement_kind)
     )
     source_facts = extract_goods_source_facts(documents)
+    contract_term_facts, contract_term_conflicts = extract_contract_term_facts(documents)
     rich_documents = [doc for doc in documents if doc.text and detect_procurement_richness(doc)]
     quote_files_present = quote_inputs_present
     output_warnings = list(metadata.get("warnings", []))
@@ -3675,6 +3677,9 @@ def _build_output_payloads(
             "extraction_warnings": output_warnings,
             "known_contract_terms": preliminary_analysis.get("contract_highlights", []) if contract_draft_text else [],
             "unknown_contract_terms": (["payment", "acceptance", "penalties", "security", "liability"] if not contract_draft_text else []),
+            "contract_term_facts": [fact.as_dict() for fact in contract_term_facts.values()],
+            "contract_term_conflicts": contract_term_conflicts,
+            **{field: fact.value for field, fact in contract_term_facts.items()},
             "supplier_profile": None,
             "commercial_inputs": economics or {},
             "evidence_map": [item.get("evidence_ids", []) for item in preliminary_analysis.get("service_items", [])],
