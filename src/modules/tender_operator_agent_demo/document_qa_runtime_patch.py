@@ -21,6 +21,27 @@ _ORIGINAL_OUTPUT_PAYLOADS: Any = None
 
 _SOFTWARE_SCOPES = {"mixed", "software_modification", "integration", "license"}
 
+# Contract-party role labels that act as field boundaries when followed by ":".
+# These must not leak into an extracted customer candidate.
+_CUSTOMER_BOUNDARY_RE = re.compile(
+    r"\s+(?:Исполнитель|Поставщик|Подрядчик)\s*:",
+)
+
+
+def _clean_explicit_customer_value(value: str) -> str:
+    """Trim trailing contract-party labels from an explicit customer candidate.
+
+    When DOCX/table extraction places the next signature-party field on the
+    same logical line, the ``Заказчик:`` pattern may consume:
+
+        <actual customer> Исполнитель:________________
+
+    This helper strips such trailing role-label boundaries while preserving
+    legitimate organization names that happen to contain the role word.
+    """
+    cleaned = _CUSTOMER_BOUNDARY_RE.split(value, maxsplit=1)[0]
+    return cleaned.strip(" ,.;:")
+
 
 def _document_text(documents: list[Any]) -> str:
     return "\n".join(str(getattr(document, "text", "") or "") for document in documents).lower()
@@ -71,21 +92,23 @@ def _extract_explicit_customer_name(*texts: str | None) -> str | None:
 
         direct = customer_name_tag.search(text)
         if direct:
-            value = html.unescape(direct.group(1)).strip()
+            value = _clean_explicit_customer_value(html.unescape(direct.group(1)).strip())
             if value:
                 return value
 
         for block_match in customer_block.finditer(text):
             scoped = scoped_name_tag.search(block_match.group(1))
             if scoped:
-                value = html.unescape(scoped.group(1)).strip()
+                value = _clean_explicit_customer_value(html.unescape(scoped.group(1)).strip())
                 if value:
                     return value
 
         for pattern in text_patterns:
             match = pattern.search(text)
             if match:
-                value = " ".join(html.unescape(match.group(1)).split()).strip(" ,.;")
+                value = _clean_explicit_customer_value(
+                    " ".join(html.unescape(match.group(1)).split()).strip(" ,.;")
+                )
                 if value:
                     return value
     return None
