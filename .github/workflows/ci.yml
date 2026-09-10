@@ -52,7 +52,7 @@ jobs:
       - name: Checkout arvectum-os
         uses: actions/checkout@v4
         with:
-          repository: arvectum1/arvectum-os
+          repository: arvectum2/arvectum-os
           ref: 0e0fcac9a2fbf43920799ba96110a0db149cb85b
           path: arvectum-os-ref
       - uses: actions/setup-python@v5
