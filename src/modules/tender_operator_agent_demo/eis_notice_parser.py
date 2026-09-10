@@ -203,12 +203,32 @@ def extract_notice_attachments(xml_text: str) -> list[dict[str, str | None]]:
     return attachments
 
 
+_DEFAULT_PRIORITY: list[tuple[str, str]] = [
+    ("eis_notice", "notice_meta"),
+    ("card", "card_meta"),
+    ("documents", "doc_meta"),
+]
+
+# EIS <placer> can identify the procurement organizer rather than the
+# actual customer.  An explicitly extracted document customer therefore
+# has higher semantic authority for customer_name.
+_CUSTOMER_NAME_PRIORITY: list[tuple[str, str]] = [
+    ("documents", "doc_meta"),
+    ("eis_notice", "notice_meta"),
+    ("card", "card_meta"),
+]
+
+_FIELD_SOURCE_PRIORITY: dict[str, list[tuple[str, str]]] = {
+    "customer_name": _CUSTOMER_NAME_PRIORITY,
+}
+
+
 def merge_structured_metadata(
     notice_meta: dict[str, Any],
     card_meta: dict[str, Any],
     doc_meta: dict[str, Any],
 ) -> dict[str, Any]:
-    priority_sources = [
+    default_sources = [
         ("eis_notice", notice_meta),
         ("card", card_meta),
         ("documents", doc_meta),
@@ -236,8 +256,22 @@ def merge_structured_metadata(
         "documents": "документы закупки",
     }
 
+    meta_by_source = {
+        "eis_notice": notice_meta,
+        "card": card_meta,
+        "documents": doc_meta,
+    }
+
     for notice_key, output_key in fields:
-        for source_name, meta in priority_sources:
+        priority = _FIELD_SOURCE_PRIORITY.get(notice_key)
+        if priority is not None:
+            sources = [
+                (src, meta_by_source[src]) for src, _ in priority
+            ]
+        else:
+            sources = default_sources
+
+        for source_name, meta in sources:
             value = meta.get(notice_key)
             if value is not None:
                 result[output_key] = {
