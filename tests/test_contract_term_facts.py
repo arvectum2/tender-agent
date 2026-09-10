@@ -41,7 +41,8 @@ def test_extracts_explicit_contract_terms_with_provenance() -> None:
         "deadline": "5 раб. дн. от даты подписания документа-предшественника «Документ о приемке (функция ДОП)»",
     }
     assert facts["advance_payment"].value is False
-    assert facts["performance_security_percent"].value == 10.0
+    assert facts["performance_security_percent"].value == 10
+    assert type(facts["performance_security_percent"].value) is int
     assert facts["acceptance_terms"].value == {
         "executor_submission": "5 раб. дн. от даты окончания исполнения обязательства",
         "customer_acceptance": "5 раб. дн. от даты получения документа",
@@ -70,7 +71,7 @@ def test_extracts_contract_table_terms_without_table_labels_in_values() -> None:
     assert facts["payment_terms"].value["deadline"] == (
         "5 раб. дн. от даты подписания документа-предшественника «Документ о приемке (функция ДОП)»"
     )
-    assert facts["performance_security_percent"].value == 10.0
+    assert facts["performance_security_percent"].value == 10
     assert facts["acceptance_terms"].value == {
         "executor_submission": "5 раб. дн. от даты окончания исполнения обязательства",
         "customer_acceptance": "5 раб. дн. от даты получения документа",

@@ -145,11 +145,12 @@ def _extract_from_contract(document: Any) -> list[ContractTermFact]:
 
     security = _PERFORMANCE_SECURITY.search(text) or _PERFORMANCE_SECURITY_TABLE.search(text)
     if security:
+        percent = float(security.group("percent").replace(",", "."))
         facts.append(
             _fact(
                 document,
                 "performance_security_percent",
-                float(security.group("percent").replace(",", ".")),
+                int(percent) if percent.is_integer() else percent,
                 security.start(),
                 security.end(),
             )
