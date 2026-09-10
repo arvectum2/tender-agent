@@ -311,6 +311,28 @@ def test_runtime_normalizer_does_not_extract_contract_terms_from_prose():
     )
 
 
+def test_runtime_normalizer_maps_execution_and_warranty_terms_only_from_typed_context():
+    values = {
+        "service_start": "0 days after contract signing",
+        "service_deadline": "2026-11-30",
+        "contract_end_date": "2026-12-23",
+        "performance_place": "One address",
+        "warranty_term": "12 months after acceptance",
+        "warranty_security_required": False,
+    }
+    output, audit = normalize_runtime_response(
+        runtime_response={"runtime_analysis": {"analysis_context": values}, "final_recommendation": {}},
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+    facts = {item["field"]: item["value"] for item in output["facts"]}
+
+    assert {field: facts[field] for field in values} == values
+    assert {entry["source_path"] for entry in audit["entries"]} >= {
+        f"runtime_analysis.analysis_context.{field}" for field in values
+    }
+
+
 def test_runtime_timestamp_and_sut_ref_use_actual_analysis_completion_and_audit_binding():
     runtime = {
         "events": [

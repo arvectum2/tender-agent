@@ -314,6 +314,33 @@ def normalize_runtime_response(
                 action="MAPPED",
             )
 
+        for field in (
+            "service_start",
+            "service_deadline",
+            "contract_end_date",
+            "performance_place",
+            "warranty_term",
+        ):
+            value = analysis_context.get(field)
+            if isinstance(value, str) and value.strip():
+                add_fact(
+                    field,
+                    value,
+                    materiality="MATERIAL",
+                    source_path=f"runtime_analysis.analysis_context.{field}",
+                    action="MAPPED",
+                )
+
+        warranty_security_required = analysis_context.get("warranty_security_required")
+        if isinstance(warranty_security_required, bool):
+            add_fact(
+                "warranty_security_required",
+                warranty_security_required,
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.warranty_security_required",
+                action="MAPPED",
+            )
+
     recommendation = runtime_response.get("final_recommendation")
     if recommendation is None:
         recommendation = {}
