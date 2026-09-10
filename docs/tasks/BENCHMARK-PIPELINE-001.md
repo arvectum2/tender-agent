@@ -4,167 +4,149 @@
 
 ## Status
 
-The blind benchmark contract and the first methodologically clean real 44-FZ baseline are complete. The pipeline has already exposed concrete Tender Agent product defects, the first DOCUMENT-QA fixes were merged, and the current gate is a **same-case control rerun against the exact same frozen truth**.
+The blind benchmark contract and first methodologically clean real 44-FZ baseline are complete. A same-case frozen-truth control rerun was completed on 2026-09-10 with source-byte equality PASS, but the **product-quality gate did not pass**: scored document metrics were unchanged and the `customer_name` contradiction remained.
 
-Current canonical issue: `#1`.
+Canonical issue: `#1`.
 
-Last product-code baseline before migration-only documentation commits: `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
+Product-code baseline before migration/docs commits: `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
 
-Historical canonical merges preserved in git history:
+Current phase: **baseline-vs-control diagnosis before any corpus growth**.
+
+## Historical completed implementation
+
+Preserved git history includes:
 
 - old PR `#56` — blind benchmark contract hardening; merge `dec002926f0a996c537c854548e3636e905140ba`; CI PASS;
 - old PR `#57` — safe source-only real-calibration Phase A; merge `0958505576cdcd8a7edeb0a5d4973bf07f43cf76`; CI PASS;
-- old PR `#58` — discovery-context binding + repository-owned audited normalization; merge `b8d22ce044c02fa034f7f13d8a260f55dbd9f2f1`; CI PASS;
+- old PR `#58` — discovery-context binding + audited normalization; merge `b8d22ce044c02fa034f7f13d8a260f55dbd9f2f1`; CI PASS;
 - old PR `#60` — first benchmark-driven DOCUMENT-QA product fixes; merge `ab8ca415e1f08edfcb9edd28633d7958396af6d4`; CI PASS;
 - old PR `#61` — frozen-truth control-rerun helper; merge `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
 
-Do not grow the corpus until the control rerun is complete and inspected.
-
-## Clean first real baseline
+## Frozen baseline
 
 Case:
 
 - case id: `calibration-44fz-0848300045426000620-rerun-20260906-01`;
 - law: 44-FZ;
-- registry number: `0848300045426000620`;
-- frozen product revision: `33cbc7b285dad5faa0ad21b46cd5823499d58ea5`;
-- source bundle: eight original public source files;
-- labels were generated independently and frozen before Tender Agent analysis;
-- discovery context was bound before blind evaluation;
-- runtime normalization was repository-owned and audit-bound;
-- discovery was correctly `NOT_SCORABLE` because no separately context-bound discovery SUT result was supplied.
+- registry: `0848300045426000620`;
+- baseline revision: `33cbc7b285dad5faa0ad21b46cd5823499d58ea5`;
+- source bundle: 8 original public files;
+- discovery: `NOT_SCORABLE`.
 
-Document baseline:
+Baseline document score:
 
-- TP: 2;
-- FP: 1;
-- FN: 24;
-- precision: 0.6667;
-- recall: 0.0769;
-- F1: 0.1379;
-- 14 material runtime extras preserved;
-- contradiction: `customer_name`;
-- review: `NEEDS_REVIEW / UNCLASSIFIED_MATERIAL_DISAGREEMENT`.
+- TP 2;
+- FP 1;
+- FN 24;
+- precision 0.6667;
+- recall 0.0769;
+- F1 0.1379;
+- runtime extras 14;
+- contradiction `customer_name`;
+- review `NEEDS_REVIEW / UNCLASSIFIED_MATERIAL_DISAGREEMENT`.
 
-This case is the frozen control baseline. Its source files, evaluator bundle, blind labels and `frozen_label.json` must not be regenerated or edited for the post-fix comparison.
+Frozen source/evaluator/labels/freeze are immutable.
 
-## Product defects exposed by the baseline
+## Defects exposed by baseline
 
-The clean baseline exposed four product-quality classes:
+1. misleading/misspelled file suffix with OOXML payload;
+2. organizer propagated as `customer_name` instead of actual customer;
+3. unrelated healthcare/ЕРН/СМЭВ/СЭМД/Минобороны/СВО template contamination;
+4. low structured-fact coverage.
 
-1. **document parsing/source acquisition** — EIS attachments can contain OOXML under misleading or misspelled suffixes;
-2. **source-role/entity resolution** — organizer was propagated as `customer_name` instead of the actual customer;
-3. **reasoning/presentation contamination** — legacy healthcare/ЕРН/СМЭВ/СЭМД/Минобороны/СВО templates leaked into an unrelated software procurement;
-4. **structured-fact coverage** — normalized product output exposed far fewer canonical procurement facts than frozen source truth contains.
+Old PR #60 / commit `ab8ca415...` attempted fixes for 1–3.
 
-Historical PR #60 / commit `ab8ca415e1f08edfcb9edd28633d7958396af6d4` addresses the first three classes. The fourth class must be measured again after those fixes rather than guessed from the old baseline.
+## Frozen-truth control rerun — completed
 
-## Frozen-truth control rerun — CURRENT
+Control runtime revision: `7d78cb5d49177fa8a1e07c9cbb444a65be148e01`.
 
-The control rerun is **not** a new calibration case and must not execute Phase A again. It reuses immutable benchmark inputs from the clean baseline and produces only a fresh SUT side of the comparison.
+Integrity:
 
-Before running, reconcile the local clone to canonical `arvectum2/tender-agent` `main`, require a clean tracked tree, and verify that changes after product-code baseline `81f77d5...` are migration/documentation-only.
+- remote: `https://github.com/arvectum2/tender-agent.git`;
+- tree clean;
+- post-`81f77d5...` tracked product diff: migration/docs only;
+- status: `BENCHMARK_CONTROL_RUNTIME_READY`;
+- exact source bytes: PASS 8/8;
+- same frozen truth reused;
+- no Phase A / truth regeneration.
 
-Repository helper:
+Control result:
 
-```bash
-RUNTIME_VERSION=$(git rev-parse HEAD)
-python3 scripts/run_benchmark_control_rerun.py \
-  --source-case-dir <clean-baseline-case-dir> \
-  --output-dir <new-empty-control-dir> \
-  --runtime-version "$RUNTIME_VERSION" \
-  --backend-url http://127.0.0.1:8000
-```
+- TP 2;
+- FP 1;
+- FN 24;
+- precision 0.6667;
+- recall 0.0769;
+- F1 0.1379;
+- runtime extras 13;
+- contradiction still present:
+  - actual `МКЦ Одинцовского ГО`;
+  - expected `МК "Служба кладбищ" Одинцовского ГО`;
+- review `NEEDS_REVIEW / UNCLASSIFIED_MATERIAL_DISAGREEMENT`.
 
-The helper fails closed before analysis unless:
+Interpretation: benchmark methodology passed, but expected product-quality improvement was not demonstrated.
 
-- the original case manifest, evaluator bundle, blind labels and freeze receipt validate;
-- the current case manifest hash still matches the digest bound by `frozen_label.json`;
-- source files still match frozen manifest hashes;
-- only immutable benchmark inputs are copied into the new control directory;
-- copied immutable artifacts remain byte-identical;
-- the fresh backend run has not begun analysis;
-- the fresh backend source-file SHA-256 multiset exactly equals the frozen source-file hash multiset.
+## Product Owner inspection decision
 
-Only after those checks does it call Tender Agent analysis and save `sut_runtime_response.json`. It never generates evaluator input, labels or a freeze receipt.
+**DO NOT CLOSE #1. DO NOT GROW CORPUS.**
 
-Expected marker:
+The control proves that the benchmark harness can safely compare the same immutable truth across revisions. It does not prove the intended DOCUMENT-QA fixes work on the real case.
 
-`BENCHMARK_CONTROL_RUNTIME_READY`
+Specific current conclusions:
 
-## Post-runtime normalization and comparison
+- OOXML fix: not accepted from this aggregate result alone;
+- customer/organizer fix: current real evidence indicates it is still ineffective or bypassed;
+- legacy contamination fix: cannot be accepted until the 13 runtime extras are semantically diffed against the baseline 14;
+- structured-fact recall: no scored improvement; 24/26 expected facts remain false negatives.
 
-For the current document-only control, omit `--discovery-result` unless a genuine context-bound discovery result exists.
+## CURRENT next action — diagnostic only
 
-```bash
-CONTROL=<new-empty-control-dir>
-RUNTIME_VERSION=$(git rev-parse HEAD)
+Before any code changes, compare the baseline and control artifacts and trace each disagreement to its stage.
 
-python3 scripts/benchmark_calibration.py normalize-phase-b \
-  --case-dir "$CONTROL" \
-  --runtime-version "$RUNTIME_VERSION"
+Required local diagnostic:
 
-python3 scripts/benchmark_pipeline.py compare \
-  --bundle "$CONTROL/evaluator_bundle.json" \
-  --discovery "$CONTROL/blind_discovery_label.json" \
-  --truth "$CONTROL/blind_document_truth.json" \
-  --freeze "$CONTROL/frozen_label.json" \
-  --sut-ref "$CONTROL/tender_agent_output_ref.json" \
-  --sut-output "$CONTROL/normalized_sut_output.json" \
-  --output "$CONTROL/comparison_result.json"
+1. Verify the backend process used for the control actually loaded post-`ab8ca415...` code and the `document_qa_runtime_patch` install path; record executable, cwd, imported module path and loaded function/module identity where practical.
+2. Diff baseline vs control `normalized_sut_output.json`, `normalization_audit.json` and raw `sut_runtime_response.json`.
+3. Trace `customer_name` end-to-end: source text -> extraction -> intermediate payload -> final runtime payload -> benchmark normalizer. Identify the exact function/surface where `МКЦ Одинцовского ГО` enters or survives.
+4. Identify exactly which runtime extra disappeared between 14 and 13. List all remaining control extras and flag any healthcare/ЕРН/СМЭВ/СЭМД/Минобороны/СВО contamination.
+5. For all 24 false-negative truth fields, classify the loss stage:
+   - source acquisition
+   - parsing
+   - extraction
+   - reasoning
+   - serialization
+   - benchmark normalization
+6. Specifically determine whether canonical facts are already present in raw runtime but omitted by `normalize-phase-b`.
+7. Do not edit frozen truth, do not add a second procurement, and do not tune search/document logic during diagnosis.
 
-python3 scripts/benchmark_pipeline.py route-review \
-  --manifest "$CONTROL/case_manifest.json" \
-  --discovery "$CONTROL/blind_discovery_label.json" \
-  --truth "$CONTROL/blind_document_truth.json" \
-  --freeze "$CONTROL/frozen_label.json" \
-  --comparison "$CONTROL/comparison_result.json" \
-  --output "$CONTROL/review_state.json"
-```
+Return an evidence table with one row per contradiction/FN/runtime-extra delta and exact source/runtime field references.
 
-Preserve both the original baseline directory and the new control directory. Inspect baseline revision `33cbc7...` versus the current post-fix runtime under exactly the same source and frozen truth.
+## Exit criteria before another frozen rerun
 
-## Discovery-context rule
+A code/normalizer fix is justified only after diagnostic attribution identifies the smallest responsible surface. Then rerun the exact same frozen case again.
 
-Every new discovery-scored case must bind a complete sanitized supplier/query context before blind evaluation. Discovery is scorable only when the SUT artifact declares the exact same `discovery_context_sha256`; otherwise the comparator outcome is `NOT_SCORABLE`, not `MISMATCH`.
+## Exit criteria before second procurement / 30–50 corpus
 
-The current control does not invent a discovery result. Its purpose is DOCUMENT-QA regression measurement.
+Do not grow until:
 
-## Normalization rule
-
-Repository-owned `scripts/benchmark_calibration.py normalize-phase-b` remains mandatory. It maps known canonical facts, preserves unmapped material claims as runtime facts, records intentionally ignored non-material workflow surfaces, fails closed on unclassified decision-bearing output, binds the normalization audit digest and keeps unsupported/contaminated material claims visible to the comparator.
-
-## Review-state semantics
-
-`AI_CURATED_SILVER` describes independent truth quality, not whether Tender Agent passed. `NEEDS_REVIEW` is for benchmark/source uncertainty or unclassified material disagreement. `HUMAN_VERIFIED_GOLD` requires explicit Product Owner review and changes review metadata only; it never rewrites frozen truth.
+- customer contradiction is precisely attributed and corrected/reclassified;
+- legacy contamination is explicitly checked from runtime claims;
+- all 24 FNs are stage-classified;
+- benchmark normalization is proven not to hide already-extracted facts;
+- the smallest evidence-backed fix is applied;
+- another same-frozen-truth control demonstrates the intended correction without new unsupported claims;
+- Product Owner explicitly approves corpus expansion.
 
 ## Anti-circularity contract
 
-Canonical new-case order:
+New case:
 
 `public source bundle -> context-bound source-only evaluator bundle -> independent labels -> freeze -> Tender Agent output -> audited normalization -> comparator -> review routing`
 
-Control-rerun order:
+Control case:
 
 `existing frozen source/truth -> immutable copy + hash verification -> fresh source-only backend run -> exact source-byte equality -> Tender Agent output -> audited normalization -> comparator -> review routing`
 
-Fail closed on leakage, evidence outside bundle, pre-freeze SUT output, digest mutation, discovery-context mismatch, unclassified decision-bearing output, copied prior SUT artifacts, or source-byte mismatch.
-
 ## Scope boundary
 
-223-FZ/RSL `32616312799` remains outside this accepted 44-FZ path. Supplier/TKP acceptance and external procurement actions remain out of scope.
-
-## Exit criteria before a second procurement / 30–50 cases
-
-Do not grow the corpus until all are true:
-
-- post-fix product code is present in the tested runtime;
-- the same real procurement completes the frozen-truth control rerun;
-- baseline vs fixed revision is compared without changing source/truth labels;
-- source/evaluator/freeze/SUT hashes remain tamper-evident;
-- discovery is either legitimately context-scored or explicitly `NOT_SCORABLE`;
-- normalization cannot silently drop material runtime claims;
-- the three fixed defect classes are verified as fixed or reopened with concrete evidence;
-- remaining structured-fact recall is measured/classified;
-- review-state behavior remains separate from SUT pass/fail;
-- Product Owner inspects final artifacts before corpus expansion.
+223-FZ/RSL `32616312799` remains outside this accepted 44-FZ benchmark path. Supplier/TKP acceptance and external procurement actions remain out of scope.
