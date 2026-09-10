@@ -8,12 +8,12 @@ The blind benchmark contract and the first methodologically clean real 44-FZ bas
 
 Current canonical issue: `#1`.
 
-Current product-code baseline before migration-doc commits: `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
+Last product-code baseline before migration-only documentation commits: `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
 
 Historical canonical merges preserved in git history:
 
 - old PR `#56` — blind benchmark contract hardening; merge `dec002926f0a996c537c854548e3636e905140ba`; CI PASS;
-- old PR `#57` — safe source-only real-calibration Phase A; merge `0958505576cdcd8a7ed0a5d4973bf07f43cf76`; CI PASS;
+- old PR `#57` — safe source-only real-calibration Phase A; merge `0958505576cdcd8a7edeb0a5d4973bf07f43cf76`; CI PASS;
 - old PR `#58` — discovery-context binding + repository-owned audited normalization; merge `b8d22ce044c02fa034f7f13d8a260f55dbd9f2f1`; CI PASS;
 - old PR `#60` — first benchmark-driven DOCUMENT-QA product fixes; merge `ab8ca415e1f08edfcb9edd28633d7958396af6d4`; CI PASS;
 - old PR `#61` — frozen-truth control-rerun helper; merge `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
@@ -63,13 +63,16 @@ Historical PR #60 / commit `ab8ca415e1f08edfcb9edd28633d7958396af6d4` addresses 
 
 The control rerun is **not** a new calibration case and must not execute Phase A again. It reuses immutable benchmark inputs from the clean baseline and produces only a fresh SUT side of the comparison.
 
+Before running, reconcile the local clone to canonical `arvectum2/tender-agent` `main`, require a clean tracked tree, and verify that changes after product-code baseline `81f77d5...` are migration/documentation-only.
+
 Repository helper:
 
 ```bash
+RUNTIME_VERSION=$(git rev-parse HEAD)
 python3 scripts/run_benchmark_control_rerun.py \
   --source-case-dir <clean-baseline-case-dir> \
   --output-dir <new-empty-control-dir> \
-  --runtime-version 81f77d5f97ae92733f5887136aa0c1f67ceb22ae \
+  --runtime-version "$RUNTIME_VERSION" \
   --backend-url http://127.0.0.1:8000
 ```
 
@@ -95,7 +98,7 @@ For the current document-only control, omit `--discovery-result` unless a genuin
 
 ```bash
 CONTROL=<new-empty-control-dir>
-RUNTIME_VERSION=81f77d5f97ae92733f5887136aa0c1f67ceb22ae
+RUNTIME_VERSION=$(git rev-parse HEAD)
 
 python3 scripts/benchmark_calibration.py normalize-phase-b \
   --case-dir "$CONTROL" \
