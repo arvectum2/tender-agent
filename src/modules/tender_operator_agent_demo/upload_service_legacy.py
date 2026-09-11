@@ -37,6 +37,7 @@ from src.modules.tender_operator_agent_demo.event_log import (
 from src.modules.tender_operator_agent_demo.procurement_discovery import get_supplier_profile
 from src.modules.tender_operator_agent_demo.relevance_scoring import score_procurement_document_text
 from src.modules.tender_operator_agent_demo.goods_source_facts import (
+    build_complete_goods_positions,
     build_goods_requirements_from_source_facts,
     detect_procurement_richness,
     extract_goods_source_facts,
@@ -3568,6 +3569,7 @@ def _build_output_payloads(
     # Preserve individual rows: merging them here would reintroduce adapter
     # values before FieldSourceResolver gets to decide each field.
     direct_extracted_items = _collect_unmerged_source_items(documents)
+    goods_positions = build_complete_goods_positions(direct_extracted_items)
     direct_fragments = StructuredFragmentCollector().collect_supply_items(metadata.get("procurement_id"), direct_extracted_items)
     canonical_graph_model = (
         legacy_rows_to_canonical_model(metadata.get("procurement_id"), procurement_kind, graph_input_rows)
@@ -3669,6 +3671,7 @@ def _build_output_payloads(
             "okpd2": _service_okpd2_from_sources(notice_text, documents) if procurement_kind == "services" else None,
             "okpd2_codes": metadata.get("okpd2_codes") or (metadata.get("procurement") or {}).get("okpd2_codes", []),
             "nmck": _extract_notice_price(metadata, notice_text, contract_draft_text),
+            "positions": goods_positions,
             "currency": "RUB",
             "service_items": preliminary_analysis.get("service_items", []),
             "document_inventory": [doc.display_name for doc in documents],

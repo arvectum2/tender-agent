@@ -340,6 +340,15 @@ def normalize_runtime_response(
                 source_path="runtime_analysis.analysis_context.warranty_security_required",
                 action="MAPPED",
             )
+        positions = analysis_context.get("positions")
+        if _is_positions_contract(positions):
+            add_fact(
+                "positions",
+                [{key: row[key] for key in ("position", "name", "quantity", "unit", "classification_code")} for row in positions],
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.positions",
+                action="MAPPED",
+            )
 
     recommendation = runtime_response.get("final_recommendation")
     if recommendation is None:
@@ -487,6 +496,30 @@ def _parse_nmck(value: str) -> float | None:
         return float(normalized)
     except ValueError:
         return None
+
+
+def _is_positions_contract(value: Any) -> bool:
+    required = {
+        "position": (int, str),
+        "name": str,
+        "quantity": (int, float),
+        "unit": str,
+        "classification_code": (str, type(None)),
+        "source_document": str,
+        "source_row_number": int,
+        "evidence_id": str,
+    }
+    if not isinstance(value, list) or not value:
+        return False
+    for row in value:
+        if not isinstance(row, dict) or not all(
+            isinstance(row.get(field), kind) and row[field].strip()
+            if kind is str
+            else isinstance(row.get(field), kind)
+            for field, kind in required.items()
+        ):
+            return False
+    return True
 
 
 def _require_timezone(value: str, label: str) -> None:
