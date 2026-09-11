@@ -333,6 +333,39 @@ def test_runtime_normalizer_maps_execution_and_warranty_terms_only_from_typed_co
     }
 
 
+def test_runtime_normalizer_maps_complete_typed_positions_only():
+    positions = [
+        {"name": "Cable", "okpd2_ktru": "27.32.13.111", "position": 1, "quantity": 30, "unit": "m"},
+        {"name": "Cable", "okpd2_ktru": "27.32.13.111", "position": 2, "quantity": 50, "unit": "m"},
+    ]
+    output, audit = normalize_runtime_response(
+        runtime_response={"runtime_analysis": {"analysis_context": {"positions": positions}}, "final_recommendation": {}},
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+
+    assert next(fact for fact in output["facts"] if fact["field"] == "positions")["value"] == positions
+    assert "runtime_analysis.analysis_context.positions" in {
+        entry["source_path"] for entry in audit["entries"]
+    }
+
+
+def test_runtime_normalizer_does_not_map_position_prose_or_partial_rows():
+    output, _ = normalize_runtime_response(
+        runtime_response={
+            "runtime_analysis": {
+                "analysis_context": {"positions": [{"name": "Cable", "quantity": 30, "unit": "m"}]},
+                "trace": {"source_excerpt": "1 Cable 27.32.13.111 30 m"},
+            },
+            "final_recommendation": {},
+        },
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+
+    assert "positions" not in {fact["field"] for fact in output["facts"]}
+
+
 def test_runtime_timestamp_and_sut_ref_use_actual_analysis_completion_and_audit_binding():
     runtime = {
         "events": [

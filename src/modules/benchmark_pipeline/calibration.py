@@ -341,6 +341,29 @@ def normalize_runtime_response(
                 action="MAPPED",
             )
 
+        positions = analysis_context.get("positions")
+        if isinstance(positions, list) and positions and all(
+            isinstance(position, dict)
+            and set(position) == {"name", "okpd2_ktru", "position", "quantity", "unit"}
+            and isinstance(position["name"], str)
+            and position["name"].strip()
+            and isinstance(position["okpd2_ktru"], str)
+            and position["okpd2_ktru"].strip()
+            and isinstance(position["position"], int)
+            and not isinstance(position["quantity"], bool)
+            and isinstance(position["quantity"], (int, float))
+            and isinstance(position["unit"], str)
+            and position["unit"].strip()
+            for position in positions
+        ):
+            add_fact(
+                "positions",
+                positions,
+                materiality="MATERIAL",
+                source_path="runtime_analysis.analysis_context.positions",
+                action="MAPPED",
+            )
+
     recommendation = runtime_response.get("final_recommendation")
     if recommendation is None:
         recommendation = {}
