@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import re
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
 from typing import Any
 
 _STANDARD = re.compile(
@@ -252,3 +253,74 @@ def build_goods_requirements_from_source_facts(
             "evidence_candidate": {"evidence_id": fact.fact_id, "file_id": fact.file_id, "source_document": fact.source_document, "locator": fact.locator, "text": fact.excerpt},
         })
     return rows
+
+
+def build_complete_goods_positions(items: list[Any]) -> list[dict[str, Any]]:
+    """Project one complete NMCK line-item table without merging source rows.
+
+    Position claims are material only when a single structured table supplies
+    every row identity and its source locator.  Fallback facts and reconciled
+    presentation rows are intentionally not eligible.
+    """
+    tables: dict[str, list[Any]] = {}
+    for item in items:
+        if (
+            getattr(item, "source_kind", None) == "nmck_xlsx"
+            and getattr(item, "item_type", None) == "goods"
+            and getattr(item, "record_type", None) == "line_item"
+        ):
+            source_document = str(getattr(item, "source_document", "") or "")
+            if source_document:
+                tables.setdefault(source_document, []).append(item)
+
+    if len(tables) != 1:
+        return []
+    source_document, rows = next(iter(tables.items()))
+    if len(rows) < 2:
+        return []
+
+    if not all(
+        isinstance(getattr(item, "source_row_number", None), int) for item in rows
+    ):
+        return []
+    rows.sort(key=lambda item: item.source_row_number)
+    expected_row_numbers = list(range(1, len(rows) + 1))
+    if (
+        [getattr(item, "source_row_number", None) for item in rows]
+        != expected_row_numbers
+    ):
+        return []
+
+    positions: list[dict[str, Any]] = []
+    for item in rows:
+        item_no = str(getattr(item, "item_no", "") or "").strip()
+        name = str(getattr(item, "name", "") or "").strip()
+        quantity_raw = str(getattr(item, "quantity", "") or "").strip()
+        unit_raw = str(getattr(item, "unit", "") or "").strip()
+        evidence_id = str(getattr(item, "evidence_id", "") or "").strip()
+        row_number = getattr(item, "source_row_number", None)
+        try:
+            quantity_decimal = Decimal(quantity_raw.replace(",", "."))
+        except InvalidOperation:
+            return []
+        if not quantity_decimal.is_finite():
+            return []
+        quantity = int(quantity_decimal) if quantity_decimal == quantity_decimal.to_integral() else float(quantity_decimal)
+        unit = {"шт.": "шт", "штука": "шт", "штук": "шт", "рул": "рул.", "рул.": "рул."}.get(unit_raw.lower(), unit_raw)
+        if not all((item_no, name, unit, evidence_id)) or not isinstance(
+            row_number, int
+        ):
+            return []
+        positions.append(
+            {
+                "position": int(item_no) if item_no.isdigit() else item_no,
+                "name": name,
+                "quantity": quantity,
+                "unit": unit,
+                "classification_code": getattr(item, "ktru", None) or getattr(item, "okpd2", None),
+                "source_document": source_document,
+                "source_row_number": row_number,
+                "evidence_id": evidence_id,
+            }
+        )
+    return positions

@@ -12,6 +12,9 @@ from src.modules.tender_operator_agent_demo import upload_service_legacy as lega
 from src.modules.tender_operator_agent_demo.document_qa_runtime_patch import (
     _guard_operator_output,
 )
+from src.modules.tender_operator_agent_demo.goods_source_facts import (
+    build_complete_goods_positions,
+)
 from src.tender_research.document_text_extractor import EXTRACTED_STATUS, extract_text
 
 
@@ -175,3 +178,133 @@ def test_final_output_guard_drops_named_domain_claims_absent_from_source() -> No
     assert "медицин" not in rendered
     assert "региональным поисковым сервисом" in rendered
     assert "критерии приемки" in rendered
+
+
+def test_complete_nmck_positions_preserve_row_provenance() -> None:
+    rows = [
+        legacy.SupplyItem(
+            "1", "Кабель", "10", "м", [], [], None, "НМЦК.docx", "nmck_xlsx", "high",
+            "1\tКабель\tм\t10", source_row_number=1, evidence_id="ev-1",
+        ),
+        legacy.SupplyItem(
+            "2", "Розетка", "5", "шт", [], [], None, "НМЦК.docx", "nmck_xlsx", "high",
+            "2\tРозетка\tшт\t5", source_row_number=2, evidence_id="ev-2", ktru="27.33.13",
+        ),
+    ]
+
+    assert build_complete_goods_positions(rows) == [
+        {
+            "position": 1, "name": "Кабель", "quantity": 10, "unit": "м",
+            "classification_code": None, "source_document": "НМЦК.docx",
+            "source_row_number": 1, "evidence_id": "ev-1",
+        },
+        {
+            "position": 2, "name": "Розетка", "quantity": 5, "unit": "шт",
+            "classification_code": "27.33.13", "source_document": "НМЦК.docx",
+            "source_row_number": 2, "evidence_id": "ev-2",
+        },
+    ]
+
+
+def test_incomplete_or_competing_nmck_tables_do_not_emit_positions() -> None:
+    incomplete = legacy.SupplyItem(
+        "1", "Кабель", None, "м", [], [], None, "НМЦК.docx", "nmck_xlsx", "high", "",
+        source_row_number=1, evidence_id="ev-1",
+    )
+    competing = legacy.SupplyItem(
+        "2", "Розетка", "5", "шт", [], [], None, "Другая НМЦК.docx", "nmck_xlsx",
+        "high", "", source_row_number=1, evidence_id="ev-2",
+    )
+
+    assert build_complete_goods_positions([incomplete]) == []
+    assert build_complete_goods_positions([incomplete, competing]) == []
+
+
+def _canonical_rows() -> list:
+    return [
+        legacy.SupplyItem(
+            "1", "Кабель", "10", "м", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "1\tКабель\tм\t10", source_row_number=1, evidence_id="ev-1",
+        ),
+        legacy.SupplyItem(
+            "2", "Розетка", "5", "шт.", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "2\tРозетка\tшт.\t5", source_row_number=2, evidence_id="ev-2",
+            ktru="27.33.13",
+        ),
+    ]
+
+
+def test_canonical_positions_use_semantic_keys_without_legacy_aliases() -> None:
+    positions = build_complete_goods_positions(_canonical_rows())
+
+    assert [row["position"] for row in positions] == [1, 2]
+    assert positions[1]["classification_code"] == "27.33.13"
+    for row in positions:
+        assert isinstance(row["quantity"], int)
+        assert "item_no" not in row
+        assert "ktru" not in row
+        assert "okpd2" not in row
+        assert row["source_document"] == "НМЦК.docx"
+        assert row["evidence_id"]
+    assert positions[1]["unit"] == "шт"
+
+
+def test_canonical_quantity_decimal_and_ambiguous() -> None:
+    decimal_rows = [
+        legacy.SupplyItem(
+            "1", "Кабель", "30,5", "м", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=1, evidence_id="ev-1",
+        ),
+        legacy.SupplyItem(
+            "2", "Розетка", "4", "шт", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=2, evidence_id="ev-2",
+        ),
+    ]
+    positions = build_complete_goods_positions(decimal_rows)
+    assert positions[0]["quantity"] == 30.5
+    assert isinstance(positions[0]["quantity"], float)
+
+    ambiguous_rows = [
+        legacy.SupplyItem(
+            "1", "Кабель", "около 10", "м", [], [], None, "НМЦК.docx",
+            "nmck_xlsx", "high", "", source_row_number=1, evidence_id="ev-1",
+        ),
+        legacy.SupplyItem(
+            "2", "Розетка", "5", "шт", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=2, evidence_id="ev-2",
+        ),
+    ]
+    assert build_complete_goods_positions(ambiguous_rows) == []
+
+
+def test_canonical_unit_variants_and_unknown_preserved() -> None:
+    rows = [
+        legacy.SupplyItem(
+            "1", "Кабель", "10", "рул", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=1, evidence_id="ev-1",
+        ),
+        legacy.SupplyItem(
+            "2", "Розетка", "5", "компл", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=2, evidence_id="ev-2",
+        ),
+    ]
+    positions = build_complete_goods_positions(rows)
+    assert positions[0]["unit"] == "рул."
+    assert positions[1]["unit"] == "компл"
+
+
+def test_classification_code_prefers_ktru_over_okpd2() -> None:
+    rows = [
+        legacy.SupplyItem(
+            "1", "Кабель", "10", "м", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=1, evidence_id="ev-1",
+            ktru="27.33.13", okpd2="27.33.13.120",
+        ),
+        legacy.SupplyItem(
+            "2", "Розетка", "5", "шт", [], [], None, "НМЦК.docx", "nmck_xlsx",
+            "high", "", source_row_number=2, evidence_id="ev-2", okpd2="27.33.13.190",
+        ),
+    ]
+    positions = build_complete_goods_positions(rows)
+    assert positions[0]["classification_code"] == "27.33.13"
+    assert positions[1]["classification_code"] == "27.33.13.190"

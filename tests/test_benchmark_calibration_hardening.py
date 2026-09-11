@@ -333,6 +333,68 @@ def test_runtime_normalizer_maps_execution_and_warranty_terms_only_from_typed_co
     }
 
 
+def test_runtime_normalizer_maps_only_explicit_runtime_positions_contract():
+    positions = [
+        {
+            "position": 1,
+            "name": "Кабель",
+            "quantity": 10,
+            "unit": "м",
+            "classification_code": None,
+            "source_document": "Обоснование НМЦК.docx",
+            "source_row_number": 1,
+            "evidence_id": "ev-position-1",
+        }
+    ]
+    expected = [
+        {
+            "position": 1,
+            "name": "Кабель",
+            "quantity": 10,
+            "unit": "м",
+            "classification_code": None,
+        }
+    ]
+    output, audit = normalize_runtime_response(
+        runtime_response={
+            "final_recommendation": {},
+            "runtime_analysis": {"analysis_context": {"positions": positions}},
+        },
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+
+    assert output["facts"] == [
+        {
+            "field": "positions",
+            "value": expected,
+            "status": "ASSERTED",
+            "materiality": "MATERIAL",
+        }
+    ]
+    assert audit["entries"] == [
+        {
+            "source_path": "runtime_analysis.analysis_context.positions",
+            "action": "MAPPED",
+            "normalized_field": "positions",
+        }
+    ]
+
+
+def test_runtime_normalizer_rejects_incomplete_positions_contract():
+    output, audit = normalize_runtime_response(
+        runtime_response={
+            "final_recommendation": {},
+            "runtime_analysis": {"analysis_context": {"positions": [{"position": 1}]}},
+        },
+        case_id="calibration-context-1",
+        source_bundle_sha256="b" * 64,
+    )
+
+    assert output["facts"] == []
+    assert audit["counts"]["mapped"] == 0
+
+
 def test_runtime_timestamp_and_sut_ref_use_actual_analysis_completion_and_audit_binding():
     runtime = {
         "events": [
