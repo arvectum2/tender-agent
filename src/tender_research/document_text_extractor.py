@@ -3,7 +3,9 @@ from __future__ import annotations
 import io
 import os
 import subprocess
+import tempfile
 import zipfile
+from html.parser import HTMLParser
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -14,6 +16,18 @@ UNSUPPORTED_STATUS = "unsupported"
 EMPTY_STATUS = "empty"
 _MACOS_TEXTUTIL = Path("/usr/bin/textutil")
 _TEXTUTIL_TIMEOUT_SECONDS = 30
+# Bounded, fixed locations for the wvHtml legacy-Word converter.  The binary
+# is never resolved through PATH and never influenced by document content.
+_WVHTML_CANDIDATES = (
+    Path("/opt/homebrew/bin/wvHtml"),
+    Path("/usr/local/bin/wvHtml"),
+    Path("/usr/bin/wvHtml"),
+)
+_WVHTML_TIMEOUT_SECONDS = 30
+# Generated HTML is parsed, never rendered.  The bound guards the HTML parser
+# against pathological converter output; ordinary procurement documents are
+# orders of magnitude smaller.
+_WVHTML_MAX_HTML_BYTES = 16 * 1024 * 1024
 _SUPPORTED_EXTENSIONS = (
     ".txt",
     ".doc",
@@ -92,7 +106,7 @@ def _extract_by_ext(
         return _extract_txt(content)
     if ext in (".doc", ".rtf"):
         return (
-            _extract_legacy_office(local_path, max_chars)
+            _extract_legacy_office(local_path, max_chars, ext=ext)
             if local_path is not None
             else ""
         )
@@ -126,14 +140,22 @@ def _extract_txt(content: bytes) -> str:
     return content.decode("utf-8", errors="replace")
 
 
-def _extract_legacy_office(local_path: str, max_chars: int) -> str:
-    """Convert legacy Word/RTF through the native macOS textutil boundary.
+def _extract_legacy_office(local_path: str, max_chars: int, *, ext: str = ".doc") -> str:
+    """Extract legacy Word text, preferring table structure for .doc files.
 
-    The converter is addressed by its fixed system path and invoked without a
-    shell. The source file is read-only; converted text is returned on stdout.
-    Other platforms fail closed with an empty extraction result.
+    Legacy ``.doc`` files first attempt a structure-preserving wvHtml
+    conversion whose tables are projected into the same tab-separated row
+    convention used by native DOCX/XLSX extraction.  Any wvHtml failure
+    (missing binary, timeout, nonzero exit, oversized or table-less output)
+    falls back to the pre-existing textutil plain-text conversion.  ``.rtf``
+    keeps the textutil path.  No table geometry is ever inferred from flat
+    prose: only real ``<tr>`` rows with real ``<td>``/``<th>`` cells qualify.
     """
 
+    if ext == ".doc":
+        structured = _extract_legacy_word_with_wvhtml(local_path, max_chars)
+        if structured:
+            return structured
     if not _MACOS_TEXTUTIL.is_file():
         return ""
     try:
@@ -156,6 +178,163 @@ def _extract_legacy_office(local_path: str, max_chars: int) -> str:
     if completed.returncode != 0 or not completed.stdout:
         return ""
     return _extract_txt(completed.stdout)[:max_chars]
+
+
+def _resolve_wvhtml() -> Path | None:
+    """Return the first usable fixed-location wvHtml binary, if any."""
+
+    for candidate in _WVHTML_CANDIDATES:
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _extract_legacy_word_with_wvhtml(local_path: str, max_chars: int) -> str:
+    """Project legacy Word tables through wvHtml into tab-separated rows.
+
+    The source file is copied into a temporary directory first because wvHtml
+    may emit sidecar files (e.g. ``.wmf``) next to its inputs; the original
+    stays read-only and every generated file is discarded with the directory.
+    Returns an empty string unless at least one multi-cell table row survives
+    projection, in which case callers fall back to plain-text extraction.
+    """
+
+    executable = _resolve_wvhtml()
+    if executable is None:
+        return ""
+    try:
+        with open(local_path, "rb") as handle:
+            source_bytes = handle.read()
+    except OSError:
+        return ""
+    if not source_bytes:
+        return ""
+    try:
+        with tempfile.TemporaryDirectory(prefix="wvhtml-") as workdir:
+            work_path = Path(workdir)
+            input_path = work_path / f"source{Path(local_path).suffix.lower() or '.doc'}"
+            output_path = work_path / "converted.html"
+            try:
+                input_path.write_bytes(source_bytes)
+            except OSError:
+                return ""
+            try:
+                completed = subprocess.run(
+                    [str(executable), str(input_path), str(output_path)],
+                    capture_output=True,
+                    check=False,
+                    timeout=_WVHTML_TIMEOUT_SECONDS,
+                )
+            except (OSError, subprocess.SubprocessError):
+                return ""
+            # A nonzero exit (wvHtml is known to segfault on some files) may
+            # still leave partial HTML behind.  Never consume it.
+            if completed.returncode != 0:
+                return ""
+            try:
+                if not output_path.is_file():
+                    return ""
+                if output_path.stat().st_size == 0:
+                    return ""
+                if output_path.stat().st_size > _WVHTML_MAX_HTML_BYTES:
+                    return ""
+                html_bytes = output_path.read_bytes()
+            except OSError:
+                return ""
+            return _project_wvhtml_tables(html_bytes, max_chars)
+    except OSError:
+        return ""
+
+
+class _WvHtmlTableProjector(HTMLParser):
+    """Project wvHtml tables into the shared tab-separated row convention.
+
+    Table rows become ``cell1<TAB>cell2...`` lines; prose paragraphs outside
+    tables remain newline-separated text.  Script/style content is ignored,
+    entities are decoded by the parser, and nested inline markup inside a
+    cell contributes its text.  Links, images and converter sidecars are
+    never interpreted.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.lines: list[str] = []
+        self.table_row_count = 0
+        self._table_depth = 0
+        self._current_row: list[str] | None = None
+        self._current_cell: list[str] | None = None
+        self._current_paragraph: list[str] | None = None
+        self._ignored_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        normalized = tag.lower()
+        if normalized in ("script", "style"):
+            self._ignored_depth += 1
+        elif normalized == "table":
+            self._table_depth += 1
+        elif normalized == "tr" and self._table_depth:
+            self._current_row = []
+        elif normalized in ("td", "th") and self._current_row is not None:
+            self._current_cell = []
+        elif normalized == "p" and not self._table_depth:
+            self._current_paragraph = []
+        elif normalized == "br":
+            self._flush_paragraph()
+
+    def handle_endtag(self, tag: str) -> None:
+        normalized = tag.lower()
+        if normalized in ("script", "style"):
+            self._ignored_depth = max(0, self._ignored_depth - 1)
+        elif normalized in ("td", "th") and self._current_cell is not None:
+            self._current_row.append(" ".join("".join(self._current_cell).split()))
+            self._current_cell = None
+        elif normalized == "tr" and self._current_row is not None:
+            cells = [cell for cell in self._current_row if cell]
+            if len(cells) >= 2:
+                self.lines.append("\t".join(cells))
+                self.table_row_count += 1
+            elif cells:
+                # A single-cell table row carries no column structure; keep
+                # its text as ordinary prose instead of dropping it.
+                self.lines.append(cells[0])
+            self._current_row = None
+        elif normalized == "table":
+            self._table_depth = max(0, self._table_depth - 1)
+        elif normalized == "p":
+            self._flush_paragraph()
+
+    def handle_data(self, data: str) -> None:
+        if self._ignored_depth:
+            return
+        if self._current_cell is not None:
+            self._current_cell.append(data)
+        elif self._current_paragraph is not None:
+            self._current_paragraph.append(data)
+
+    def _flush_paragraph(self) -> None:
+        if self._current_paragraph is not None:
+            text = " ".join("".join(self._current_paragraph).split())
+            if text:
+                self.lines.append(text)
+            self._current_paragraph = None
+
+
+def _project_wvhtml_tables(html_bytes: bytes, max_chars: int) -> str:
+    """Return projected text, or "" when no multi-cell table row survives."""
+
+    try:
+        html = html_bytes.decode("utf-8", errors="replace")
+    except (LookupError, ValueError):
+        return ""
+    projector = _WvHtmlTableProjector()
+    try:
+        projector.feed(html)
+    except Exception:  # noqa: BLE001 - any malformed converter HTML fails closed
+        return ""
+    projector._flush_paragraph()
+    if projector.table_row_count < 1:
+        return ""
+    return "\n".join(projector.lines)[:max_chars]
 
 
 def _extract_docx(content: bytes) -> str:

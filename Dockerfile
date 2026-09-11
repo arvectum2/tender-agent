@@ -14,6 +14,12 @@ COPY demo_data ./demo_data
 COPY migrations ./migrations
 COPY arvectum-landing/public/assets ./arvectum-landing/public/assets
 
+# wvHtml converts legacy OLE Word (.doc) tables into structure-preserving HTML
+# for the document text extractor. No LibreOffice or other converters needed.
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends wv \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir .
 

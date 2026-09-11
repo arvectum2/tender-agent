@@ -53,6 +53,7 @@ def test_legacy_doc_extraction_uses_fixed_textutil_boundary(
         )
 
     monkeypatch.setattr(extractor, "_MACOS_TEXTUTIL", converter)
+    monkeypatch.setattr(extractor, "_resolve_wvhtml", lambda: None)
     monkeypatch.setattr(extractor.subprocess, "run", fake_run)
 
     status, text = extractor.extract_text(str(source), max_chars=12)
