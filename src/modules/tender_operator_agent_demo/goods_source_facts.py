@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
+from src.shared.procurement_units import canonicalize_typed_position_unit
+
 _STANDARD = re.compile(
     r"\b(?:ГОСТ(?:\s+Р)?|ТУ|ТР\s+ТС|ISO|IEC|DIN|СП|СНиП)\s*[№N]?\s*\d+(?:[./-]\d+)*\b",
     re.IGNORECASE,
@@ -306,7 +308,7 @@ def build_complete_goods_positions(items: list[Any]) -> list[dict[str, Any]]:
         if not quantity_decimal.is_finite():
             return []
         quantity = int(quantity_decimal) if quantity_decimal == quantity_decimal.to_integral() else float(quantity_decimal)
-        unit = {"шт.": "шт", "штука": "шт", "штук": "шт", "рул": "рул.", "рул.": "рул."}.get(unit_raw.lower(), unit_raw)
+        unit = canonicalize_typed_position_unit(unit_raw)
         if not all((item_no, name, unit, evidence_id)) or not isinstance(
             row_number, int
         ):

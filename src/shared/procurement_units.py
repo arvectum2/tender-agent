@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Final
 
-
 _TYPED_POSITION_UNIT_ALIASES: Final[dict[str, str]] = {
     "шт": "шт",
     "шт.": "шт",

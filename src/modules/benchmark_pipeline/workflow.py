@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from enum import StrEnum
 from typing import Any
 
+from src.shared.procurement_units import canonicalize_typed_position_unit
+
 from .contract import (
     CONTRACT_VERSION,
     BenchmarkContractError,
@@ -187,6 +189,45 @@ def validate_blind_label_consistency(
     _validate_evidence_refs(evaluator_bundle, discovery_label, document_truth)
 
 
+def validate_typed_position_units_for_freeze(document_truth: dict[str, Any]) -> None:
+    """Reject noncanonical typed-position units before a NEW label freeze.
+
+    Blind truth ``positions`` rows carry FINAL typed-position semantics, so
+    their ``unit`` values must already use the shared canonical spelling
+    (e.g. ``шт``, not ``шт.``).  Truth is never rewritten here; a violation
+    raises and the evaluator must relabel.  Historical frozen receipts are
+    unaffected: this gate runs only on the forward freeze path, never inside
+    schema validation, consistency checks, or frozen-label verification.
+    """
+
+    for fact in document_truth.get("facts") or []:
+        if not isinstance(fact, dict):
+            continue
+        if fact.get("field") != "positions" or fact.get("abstention") != "ASSERTED":
+            continue
+        value = fact.get("value")
+        if not isinstance(value, list):
+            raise BenchmarkContractError(
+                "blind_document_truth positions value must be a list of row objects"
+            )
+        for index, row in enumerate(value):
+            if not isinstance(row, dict):
+                raise BenchmarkContractError(
+                    f"blind_document_truth positions[{index}] must be an object"
+                )
+            unit = row.get("unit")
+            if not isinstance(unit, str) or not unit.strip():
+                raise BenchmarkContractError(
+                    f"blind_document_truth positions[{index}].unit must be a non-empty string"
+                )
+            canonical = canonicalize_typed_position_unit(unit)
+            if unit != canonical:
+                raise BenchmarkContractError(
+                    f"blind_document_truth positions[{index}].unit is not canonical: "
+                    f"{unit!r} -> {canonical!r}"
+                )
+
+
 def freeze_blind_labels(
     evaluator_bundle: dict[str, Any],
     discovery_label: dict[str, Any],
@@ -195,6 +236,7 @@ def freeze_blind_labels(
     frozen_at: str | None = None,
 ) -> dict[str, Any]:
     validate_blind_label_consistency(evaluator_bundle, discovery_label, document_truth)
+    validate_typed_position_units_for_freeze(document_truth)
     frozen_at = frozen_at or _utcnow()
 
     prepared = _parse_time(evaluator_bundle["prepared_at"])
