@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import re
-import subprocess
 import tempfile
 import time
 from urllib.parse import urlparse
@@ -658,22 +657,24 @@ def _extract_document_text(file_name: str, content: bytes) -> tuple[str | None, 
 
 
 def _extract_text_from_legacy_doc(content: bytes) -> str | None:
+    """Extract legacy Word bytes through the shared structured-first path.
+
+    Previously this helper ran textutil directly and flattened every table,
+    bypassing the wvHtml structured extraction in the shared document text
+    extractor.  Delegating keeps one format boundary: wvHtml table projection
+    first, textutil plain-text fallback, fail-closed empty otherwise.
+    """
+
     try:
         with tempfile.TemporaryDirectory(prefix="toa-doc-") as tmp_dir:
             source_path = Path(tmp_dir) / "source.doc"
-            output_path = Path(tmp_dir) / "source.txt"
             source_path.write_bytes(content)
-            completed = subprocess.run(
-                ["textutil", "-convert", "txt", "-output", str(output_path), str(source_path)],
-                check=False,
-                capture_output=True,
-                text=True,
-            )
-            if completed.returncode != 0 or not output_path.is_file():
-                return None
-            return _decode_text(output_path.read_bytes())
+            status, extracted = extract_document_text_from_path(str(source_path))
     except Exception:
         return None
+    if status != DOC_EXTRACTED_STATUS or not (extracted or "").strip():
+        return None
+    return extracted
 
 
 def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocument]:
@@ -1745,6 +1746,37 @@ def _is_ktru_or_okpd(value: str | None) -> bool:
     return bool(re.fullmatch(r"\d{2,3}(?:\.\d{2,3}){1,4}(?:-\d+(?:-\d+)*)?", compact))
 
 
+_TRAILING_CLASSIFICATION_RE = re.compile(
+    r"^(?P<name>.+?)\s+(?P<label>КТРУ|ОКПД\s*2?)\s*[:-]?\s*"
+    r"(?P<code>\d{2,3}(?:\.\d{2,3}){1,4}(?:-\d+(?:-\d+)*)?)\s*$",
+    re.IGNORECASE,
+)
+
+
+def _split_trailing_classification(raw_name: str | None) -> tuple[str | None, str | None, str | None]:
+    """Split a labelled classification suffix off a product name cell.
+
+    Legacy NMCK layouts often place the identifier inside the name cell
+    (``<name> КТРУ <code>``, ``<name> КТРУ-<code>``, ``<name> ОКПД 2-<code>``).
+    Returns ``(clean_name, ktru, okpd2)``.  Only an explicit КТРУ/ОКПД label
+    qualifies; an unlabeled trailing number is never interpreted, and the
+    caller keeps the untouched original line in ``raw_fragment``.
+    """
+
+    cleaned = _cleanup_tabular_value(raw_name) or ""
+    match = _TRAILING_CLASSIFICATION_RE.match(cleaned)
+    if not match:
+        return raw_name, None, None
+    code = match.group("code")
+    if not _is_ktru_or_okpd(code):
+        return raw_name, None, None
+    label = re.sub(r"\s+", "", match.group("label")).upper()
+    name = (match.group("name") or "").strip(" -") or cleaned
+    if label == "КТРУ":
+        return name, code, None
+    return name, None, code
+
+
 def _normalize_quantity_value(value: str | None) -> str | None:
     cleaned = _cleanup_tabular_value(value)
     if not cleaned:
@@ -1924,8 +1956,6 @@ def _extract_supply_items_from_spec_text(text: str, source_document: str) -> lis
         )
         if item.name:
             items.append(item)
-        if len(items) >= 24:
-            break
     return items
 
 
@@ -1957,7 +1987,12 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
                 elif any(marker in cell_lower for marker in ("ктру", "окпд", "есклп")):
                     column_map["identifier"] = index
             continue
-        if any(token in lowered for token in ("используемый метод", "коммерческие предложения", "коэффициент", "лист", "sheet")):
+        if any(token in lowered for token in ("используемый метод", "коммерческие предложения", "коэффициент")):
+            continue
+        # "лист"/"sheet" skip workbook page headers, but only as standalone
+        # words: a substring match would discard products such as
+        # "Разделитель листов" whose name merely contains those letters.
+        if re.search(r"(?<!\w)(лист|sheet)(?!\w)", lowered):
             continue
         if "наименование" in lowered and ("коли" in lowered or "кол-во" in lowered):
             continue
@@ -1971,6 +2006,13 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
                 continue
             identifier_index = column_map.get("identifier")
             ktru = cells[identifier_index] if identifier_index is not None and identifier_index < len(cells) else None
+            okpd2 = None
+            if not _is_ktru_or_okpd(ktru):
+                ktru = None
+                clean_name, suffix_ktru, suffix_okpd2 = _split_trailing_classification(raw_name)
+                if suffix_ktru is not None or suffix_okpd2 is not None:
+                    raw_name = clean_name
+                    ktru, okpd2 = suffix_ktru, suffix_okpd2
             numeric_tail = [_parse_float(value) for value in cells[column_map["quantity"] + 1:] if value]
             numeric_tail = [value for value in numeric_tail if value is not None]
             total_value = numeric_tail[-1] if numeric_tail else None
@@ -1983,19 +2025,28 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
                 total_price=_format_decimal_price(total_value), source_documents=[source_document],
                 quantity_status="specified", source_row_number=len(items) + 1,
                 evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items)+1}|{raw_name}|{quantity}|{unit_raw}'.encode('utf-8')).hexdigest()[:16]}",
-                ktru=ktru if _is_ktru_or_okpd(ktru) else None,
+                ktru=ktru,
+                okpd2=okpd2,
             )
             items.append(item)
             continue
         raw_name = meaningful[1]
-        name = _normalize_supply_name(raw_name)
-        if not _is_line_item_name(name):
-            continue
         value_offset = 2
         ktru = None
+        okpd2 = None
         if _is_ktru_or_okpd(meaningful[value_offset]):
             ktru = meaningful[value_offset]
             value_offset += 1
+        else:
+            # A labelled code embedded in the name cell is fallback evidence
+            # only; a dedicated identifier column always takes precedence.
+            clean_name, suffix_ktru, suffix_okpd2 = _split_trailing_classification(raw_name)
+            if suffix_ktru is not None or suffix_okpd2 is not None:
+                raw_name = clean_name
+                ktru, okpd2 = suffix_ktru, suffix_okpd2
+        name = _normalize_supply_name(raw_name)
+        if not _is_line_item_name(name):
+            continue
         if len(meaningful) <= value_offset + 1:
             continue
         unit_raw = meaningful[value_offset]
@@ -2030,10 +2081,9 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
             source_row_number=len(items) + 1,
             evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items) + 1}|{name}|{quantity}|{unit}'.encode('utf-8')).hexdigest()[:16]}",
             ktru=ktru,
+            okpd2=okpd2,
         )
         items.append(item)
-        if len(items) >= 24:
-            break
     return items
 
 
