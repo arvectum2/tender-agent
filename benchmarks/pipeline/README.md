@@ -118,6 +118,16 @@ The first real Phase B calibration also showed that an ad-hoc local projector ca
 
 If no separately produced discovery result is supplied, the analysis runtime normalizes discovery as `UNCLEAR`; a context-bound discovery case therefore stays unscored rather than pretending the document-analysis run executed supplier-relative search scoring.
 
+### Canonical typed-position units
+
+`positions.unit` in blind truth is the FINAL typed-position unit, not raw punctuation copied from a source document. The product projection (`build_complete_goods_positions`) and the blind-label freeze gate share one policy in `src/shared/procurement_units.py`:
+
+- `шт.` -> `шт`, `штука` -> `шт`, `шт` -> `шт`
+- `упак.` -> `упак`, `упаковка` -> `упак`, `упак` -> `упак`
+- `рул` -> `рул.`, `рул.` -> `рул.`
+
+Unknown units are preserved, never guessed. New freezes reject known noncanonical aliases (e.g. `шт.`, `упак.`, `рул`) with a precise `positions[i].unit` error instead of rewriting truth. Historical frozen cases are never retroactively changed or invalidated: schema validation and frozen-label verification remain spelling-agnostic. The normalizer and comparator remain strict 1:1 and unchanged.
+
 ## Review routing
 
 `NEEDS_REVIEW` is used for benchmark-quality uncertainty, including:
