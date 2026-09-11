@@ -37,6 +37,7 @@ from src.modules.tender_operator_agent_demo.event_log import (
 from src.modules.tender_operator_agent_demo.procurement_discovery import get_supplier_profile
 from src.modules.tender_operator_agent_demo.relevance_scoring import score_procurement_document_text
 from src.modules.tender_operator_agent_demo.goods_source_facts import (
+    build_goods_positions_from_source_items,
     build_goods_requirements_from_source_facts,
     detect_procurement_richness,
     extract_goods_source_facts,
@@ -1983,6 +1984,9 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
                 quantity_status="specified", source_row_number=len(items) + 1,
                 evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items)+1}|{raw_name}|{quantity}|{unit_raw}'.encode('utf-8')).hexdigest()[:16]}",
                 ktru=ktru if _is_ktru_or_okpd(ktru) else None,
+                # DOCX text extraction removes the terminal dot from "Рул.";
+                # retain the source unit spelling in the typed position value.
+                unit_original=f"{unit_raw}." if _normalize_supply_unit(unit_raw) == "рул" else unit_raw,
             )
             items.append(item)
             continue
@@ -2029,6 +2033,7 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
             source_row_number=len(items) + 1,
             evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items) + 1}|{name}|{quantity}|{unit}'.encode('utf-8')).hexdigest()[:16]}",
             ktru=ktru,
+            unit_original=unit_raw,
         )
         items.append(item)
         if len(items) >= 24:
@@ -3568,6 +3573,11 @@ def _build_output_payloads(
     # Preserve individual rows: merging them here would reintroduce adapter
     # values before FieldSourceResolver gets to decide each field.
     direct_extracted_items = _collect_unmerged_source_items(documents)
+    positions, position_provenance = (
+        build_goods_positions_from_source_items(direct_extracted_items)
+        if procurement_kind == "goods"
+        else ([], [])
+    )
     direct_fragments = StructuredFragmentCollector().collect_supply_items(metadata.get("procurement_id"), direct_extracted_items)
     canonical_graph_model = (
         legacy_rows_to_canonical_model(metadata.get("procurement_id"), procurement_kind, graph_input_rows)
@@ -3671,6 +3681,8 @@ def _build_output_payloads(
             "nmck": _extract_notice_price(metadata, notice_text, contract_draft_text),
             "currency": "RUB",
             "service_items": preliminary_analysis.get("service_items", []),
+            "positions": positions,
+            "position_provenance": position_provenance,
             "document_inventory": [doc.display_name for doc in documents],
             "document_coverage": "partial" if procurement_kind == "services" and not contract_draft_text else "available",
             "missing_documents": [] if contract_draft_status in {"present", "parse_failed"} else preliminary_analysis.get("missing_documents", []),

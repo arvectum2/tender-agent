@@ -25,6 +25,8 @@ _PLACE = re.compile(r"\bместо поставки\s*[:—-]?\s*(.{8,220})", re
 _WARRANTY = re.compile(r"\b(?:гарантийн\w*\s+(?:срок|обязательств\w*)|гарантия)\b.{0,120}?\b(?:не менее\s+)?\d+\s+(?:месяц(?:ев|а)?|лет|года?)\b", re.IGNORECASE)
 _PRODUCT = re.compile(r"\b(?:наименование (?:поставляемого )?товара|товар)\s*[:—-]\s*([^\n]{3,240})", re.IGNORECASE)
 _UNIT = re.compile(r"^(шт\.?|штук|ед\.?|м|мм|кг|л|компл(?:ект)?(?:а)?|упак(?:овка)?(?:и)?)$", re.IGNORECASE)
+_POSITION_NUMBER = re.compile(r"^[1-9]\d*$")
+_IDENTIFIER = re.compile(r"^\d{2,3}(?:\.\d{2,3}){1,4}(?:-\d+(?:-\d+)*)?$")
 
 
 @dataclass(frozen=True)
@@ -252,3 +254,59 @@ def build_goods_requirements_from_source_facts(
             "evidence_candidate": {"evidence_id": fact.fact_id, "file_id": fact.file_id, "source_document": fact.source_document, "locator": fact.locator, "text": fact.excerpt},
         })
     return rows
+
+
+def build_goods_positions_from_source_items(items: list[Any]) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+    """Project one complete NMCK source table without reconciling its rows.
+
+    A position table is emitted only when one document provides a contiguous,
+    fully typed sequence.  This keeps duplicate names and their row-level
+    quantities separate, and makes competing or partial tables review material.
+    """
+    candidates: dict[str, list[Any]] = {}
+    for item in items:
+        if getattr(item, "item_type", "goods") != "goods" or getattr(item, "source_kind", "") != "nmck_xlsx":
+            continue
+        item_no = str(getattr(item, "item_no", "") or "").strip()
+        name = str(getattr(item, "name", "") or "").strip()
+        quantity = str(getattr(item, "quantity", "") or "").strip()
+        unit = str(getattr(item, "unit_original", "") or getattr(item, "unit", "") or "").strip()
+        identifier = str(getattr(item, "okpd2", "") or getattr(item, "ktru", "") or "").strip()
+        if not (_POSITION_NUMBER.fullmatch(item_no) and name and quantity and unit and _IDENTIFIER.fullmatch(identifier)):
+            continue
+        candidates.setdefault(str(getattr(item, "source_document", "") or ""), []).append(item)
+
+    complete: list[tuple[str, list[Any]]] = []
+    for source_document, source_items in candidates.items():
+        ordered = sorted(source_items, key=lambda item: int(str(item.item_no)))
+        numbers = [int(str(item.item_no)) for item in ordered]
+        if numbers == list(range(1, len(ordered) + 1)):
+            complete.append((source_document, ordered))
+    if len(complete) != 1:
+        return [], []
+
+    source_document, ordered = complete[0]
+    positions: list[dict[str, Any]] = []
+    provenance: list[dict[str, str]] = []
+    for item in ordered:
+        quantity = str(item.quantity).replace(",", ".")
+        numeric_quantity: int | float = float(quantity) if "." in quantity else int(quantity)
+        identifier = str(item.okpd2 or item.ktru)
+        positions.append(
+            {
+                "name": str(item.name).strip(),
+                "okpd2_ktru": identifier,
+                "position": int(str(item.item_no)),
+                "quantity": numeric_quantity,
+                "unit": str(item.unit_original or item.unit).strip(),
+            }
+        )
+        provenance.append(
+            {
+                "position": str(item.item_no),
+                "source_document": source_document,
+                "locator": f"row:{item.source_row_number or item.item_no}",
+                "evidence_id": str(item.evidence_id or ""),
+            }
+        )
+    return positions, provenance
