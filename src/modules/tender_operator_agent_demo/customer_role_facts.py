@@ -55,10 +55,13 @@ _SCOPED_NAME_TAG_RE = re.compile(
     r"<(?:[A-Za-z_][\w.-]*:)?(?:fullName|name)\b[^>]*>([^<]+)</(?:[A-Za-z_][\w.-]*:)?(?:fullName|name)>",
     re.IGNORECASE,
 )
+# Official protocols frequently use either singular "Заказчик" or plural
+# form "Заказчик(и)".  Treat both as the same explicit customer-role token.
+_CUSTOMER_ROLE_TOKEN = r"Заказчик(?:[ \t]*\(и\))?"
 # Same-line "Заказчик: <org>".  Horizontal whitespace only: the value must
 # sit on the same flattened line, never leak into the following line.
 _CUSTOMER_LABEL_LINE_RE = re.compile(
-    r"(?im)^\s*Заказчик\b[ \t]*[:\-][ \t]*([^\n\t]{4,240})"
+    r"(?im)^\s*" + _CUSTOMER_ROLE_TOKEN + r"[ \t]*[:\-][ \t]*([^\n\t]{4,240})"
 )
 # Table-cell merge without a colon: "Заказчик <Org ...>" on one flattened
 # line.  The value must start with an uppercase letter or quote so verb
@@ -66,10 +69,12 @@ _CUSTOMER_LABEL_LINE_RE = re.compile(
 # Case-SENSITIVE on purpose: the inline (?i) used elsewhere would defeat the
 # uppercase guard.
 _CUSTOMER_ROLE_CELL_RE = re.compile(
-    r"(?m)^\s*Заказчик\b[ \t]+([А-ЯA-Z«\"][^\n\t]{3,239})"
+    r"(?m)^\s*" + _CUSTOMER_ROLE_TOKEN + r"[ \t]+([А-ЯA-Z«\"][^\n\t]{3,239})"
 )
 # Bare role label line whose organization follows on a neighboring line.
-_CUSTOMER_ROLE_LINE_RE = re.compile(r"(?im)^\s*Заказчик\b[ \t]*:?[ \t]*$")
+_CUSTOMER_ROLE_LINE_RE = re.compile(
+    r"(?im)^\s*" + _CUSTOMER_ROLE_TOKEN + r"[ \t]*:?[ \t]*$"
+)
 # The organization starts with an uppercase letter (never a quote: that would
 # let a match begin inside a preceding counterparty clause) and never spans
 # another role-assignment clause.  Role assignment has three generic surface
@@ -128,9 +133,23 @@ def _strip_counterparty_boundary(value: str) -> str:
     return _COUNTERPARTY_BOUNDARY_RE.split(value, maxsplit=1)[0].strip(" ,.;:")
 
 
+def _has_balanced_identity_delimiters(value: str) -> bool:
+    """Reject obviously truncated identity fragments before projection."""
+
+    if value.count("(") != value.count(")"):
+        return False
+    if value.count("«") != value.count("»"):
+        return False
+    return value.count('"') % 2 == 0
+
+
 def _accept(value: str | None, *, evidence_kind: str, source_role: str) -> _Candidate | None:
     cleaned = _strip_counterparty_boundary(_clean_text(value))
-    if not cleaned or _is_counterparty_value(cleaned):
+    if (
+        not cleaned
+        or _is_counterparty_value(cleaned)
+        or not _has_balanced_identity_delimiters(cleaned)
+    ):
         return None
     return _Candidate(
         value=cleaned,
@@ -201,17 +220,37 @@ _LOCALITY_PREFIX_RE = re.compile(
     r"\s+[А-ЯA-ZЁ][^\s]*\s+(?=[А-ЯA-ZЁ«\"])",
     re.IGNORECASE,
 )
-# An uppercase word directly continuing "р.п. " / "г. " / ... is the place
-# name of a signing header, not the start of the organization.
+# An uppercase word directly continuing "р.п. " / "г. " / ... is normally a
+# place name, not the start of the organization.  A year suffix such as
+# "2026 г." is not locality evidence and must not suppress the following
+# organization start.
 _PLACE_AFTER_ABBR_RE = re.compile(
     r"(?:" + _LOCALITY_ABBR + r")\s+$",
     re.IGNORECASE,
 )
+_YEAR_SUFFIX_RE = re.compile(r"\b\d{4}\s*г\.\s+$", re.IGNORECASE)
+_YEAR_BEFORE_ABBR_RE = re.compile(r"\b\d{4}\s*$")
+_YEAR_HEADER_BOUNDARY_RE = re.compile(
+    r"\b\d{4}\s*г\.\s+(?=[А-ЯA-ZЁ«\"])",
+    re.IGNORECASE,
+)
+
+
+def _looks_like_place_name_after_abbr(prefix: str) -> bool:
+    if _YEAR_SUFFIX_RE.search(prefix):
+        return False
+    return bool(_PLACE_AFTER_ABBR_RE.search(prefix))
+
+
+def _is_year_abbreviation_start(text: str, position: int) -> bool:
+    return bool(_YEAR_BEFORE_ABBR_RE.search(text[:position]))
 
 
 def _strip_leading_locality(capture: str) -> str:
     stripped = _LOCALITY_PREFIX_RE.sub("", capture, count=1).strip()
     return stripped or capture
+
+
 _UPPERCASE_START_RE = re.compile(r"[А-ЯA-Z]")
 # A place-of-signing header ("р.п. Краснообск") precedes the organization on
 # the same flattened line.  These lowercase starts exist only so the locality
@@ -236,6 +275,8 @@ _SENTENCE_BREAK_RE = re.compile(r"[.!?;]|_{2,}")
 
 
 def _has_sentence_break(capture: str) -> bool:
+    if _YEAR_HEADER_BOUNDARY_RE.search(capture):
+        return True
     return bool(_SENTENCE_BREAK_RE.search(_ABBREVIATION_RE.sub("", capture)))
 
 
@@ -272,11 +313,12 @@ def _preamble_candidates(text: str, source_role: str) -> list[_Candidate]:
             for match in _UPPERCASE_START_RE.finditer(flattened, window_start, role.start())
             if not _inside_quotes(match.start())
             and not _LOCALITY_PREFIX_RE.match(flattened[match.start():])
-            and not _PLACE_AFTER_ABBR_RE.search(flattened[: match.start()])
+            and not _looks_like_place_name_after_abbr(flattened[: match.start()])
         ]
         positions.extend(
             match.start()
             for match in _LOCALITY_START_RE.finditer(flattened, window_start, role.start())
+            if not _is_year_abbreviation_start(flattened, match.start())
         )
         return sorted(set(positions))
 
