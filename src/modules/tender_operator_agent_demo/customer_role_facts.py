@@ -140,9 +140,7 @@ def _has_balanced_identity_delimiters(value: str) -> bool:
         return False
     if value.count("«") != value.count("»"):
         return False
-    if value.count('"') % 2:
-        return False
-    return True
+    return value.count('"') % 2 == 0
 
 
 def _accept(value: str | None, *, evidence_kind: str, source_role: str) -> _Candidate | None:
@@ -231,12 +229,21 @@ _PLACE_AFTER_ABBR_RE = re.compile(
     re.IGNORECASE,
 )
 _YEAR_SUFFIX_RE = re.compile(r"\b\d{4}\s*г\.\s+$", re.IGNORECASE)
+_YEAR_BEFORE_ABBR_RE = re.compile(r"\b\d{4}\s*$")
+_YEAR_HEADER_BOUNDARY_RE = re.compile(
+    r"\b\d{4}\s*г\.\s+(?=[А-ЯA-ZЁ«\"])",
+    re.IGNORECASE,
+)
 
 
 def _looks_like_place_name_after_abbr(prefix: str) -> bool:
     if _YEAR_SUFFIX_RE.search(prefix):
         return False
     return bool(_PLACE_AFTER_ABBR_RE.search(prefix))
+
+
+def _is_year_abbreviation_start(text: str, position: int) -> bool:
+    return bool(_YEAR_BEFORE_ABBR_RE.search(text[:position]))
 
 
 def _strip_leading_locality(capture: str) -> str:
@@ -268,6 +275,8 @@ _SENTENCE_BREAK_RE = re.compile(r"[.!?;]|_{2,}")
 
 
 def _has_sentence_break(capture: str) -> bool:
+    if _YEAR_HEADER_BOUNDARY_RE.search(capture):
+        return True
     return bool(_SENTENCE_BREAK_RE.search(_ABBREVIATION_RE.sub("", capture)))
 
 
@@ -309,6 +318,7 @@ def _preamble_candidates(text: str, source_role: str) -> list[_Candidate]:
         positions.extend(
             match.start()
             for match in _LOCALITY_START_RE.finditer(flattened, window_start, role.start())
+            if not _is_year_abbreviation_start(flattened, match.start())
         )
         return sorted(set(positions))
 
