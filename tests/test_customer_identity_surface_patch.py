@@ -48,3 +48,10 @@ def test_defined_abbreviation_without_parentheses_is_not_rewritten():
     source = 'Заказчик: Государственное учреждение «Центр» — ГУ «Центр»'
 
     assert value(supporting_texts=[source]) == 'Государственное учреждение «Центр» — ГУ «Центр»'
+
+
+def test_alias_variant_does_not_create_equal_strength_false_conflict():
+    plain = 'Заказчик: Государственное учреждение «Центр»'
+    aliased = 'Заказчик: Государственное учреждение «Центр» (далее - ГУ «Центр»)'
+
+    assert value(supporting_texts=[plain, aliased]) == 'Государственное учреждение «Центр»'
