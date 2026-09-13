@@ -30,6 +30,9 @@ from src.modules.tender_operator_agent_demo.d09_scope_consistent_operator_output
 from src.modules.tender_operator_agent_demo.document_qa_runtime_patch import (
     install as _install_document_qa_runtime_patch,
 )
+from src.modules.tender_operator_agent_demo.customer_identity_surface_patch import (
+    install as _install_customer_identity_surface_patch,
+)
 
 _install_decision_useful_runtime_patch()
 _install_decision_useful_output_patch()
@@ -42,3 +45,5 @@ _install_d07_scope_output_binding()
 _install_d09_scope_consistent_operator_output()
 # DOCUMENT-QA must be final so it guards every legacy/fallback presentation layer.
 _install_document_qa_runtime_patch()
+# Keep source-faithful customer legal identity separate from source-defined shorthand.
+_install_customer_identity_surface_patch()
