@@ -5035,30 +5035,34 @@ def _is_missing_metadata_value(value: Any) -> bool:
 
 
 def _extract_customer_name_from_text(*texts: str | None) -> str | None:
-    xml_patterns = (
-        r"<(?:\w+:)?customerName>([^<]+)</(?:\w+:)?customerName>",
-        r"<(?:\w+:)?fullName>([^<]+)</(?:\w+:)?fullName>",
+    """Legacy positional wrapper around the role-evidence customer resolver.
+
+    Historical call order is ``(combined, notice, contract, technical_spec,
+    *supporting)``.  Role-specific texts keep their authority; the combined
+    text is only a lowest-priority fallback for explicit customer-role
+    patterns.  Generic unscoped organization names are never promoted.
+    """
+
+    from src.modules.tender_operator_agent_demo.customer_role_facts import (
+        resolve_customer_name,
     )
-    text_patterns = (
-        r"(?im)^\s*Заказчик(?:а|у|ом|е)?\s*[:\-]\s*([^\n]{4,200})",
-        r"(?im)^\s*([А-ЯA-Z][^\n]{3,180})\s+в лице[^\n]+именуем[а-яё ]+«Заказчик»",
-    )
-    for raw_text in texts:
-        if not raw_text:
-            continue
-        for pattern in xml_patterns:
-            match = re.search(pattern, raw_text)
-            if match:
-                candidate = _normalize_report_text(html.unescape(match.group(1)))
-                if candidate:
-                    return candidate
-        for pattern in text_patterns:
-            match = re.search(pattern, raw_text)
-            if match:
-                candidate = _normalize_report_text(html.unescape(match.group(1) if match.groups() else match.group(0)))
-                if candidate:
-                    return candidate
-    return None
+
+    padded = (*texts, None, None, None, None, None)
+    combined_text, notice_text, contract_draft_text, technical_spec_text = padded[:4]
+    supporting = tuple(item for item in padded[4:] if item)
+    if len(texts) == 1:
+        # Single-text callers (mostly tests) get the full explicit-pattern
+        # set against that one source.
+        resolution = resolve_customer_name(combined_text=texts[0])
+    else:
+        resolution = resolve_customer_name(
+            notice_text=notice_text,
+            contract_draft_text=contract_draft_text,
+            technical_spec_text=technical_spec_text,
+            supporting_texts=supporting,
+            combined_text=combined_text,
+        )
+    return resolution.value if resolution is not None else None
 
 
 def _extract_updated_date_from_text(*texts: str | None) -> str | None:
@@ -5111,8 +5115,20 @@ def _enrich_procurement_metadata_from_documents(
         "procedure_type": procurement.get("procedure_type"),
     }
 
+    from src.modules.tender_operator_agent_demo.customer_role_facts import (
+        resolve_customer_name,
+    )
+
     doc_meta: dict[str, Any] = {}
-    customer_candidate = _extract_customer_name_from_text(combined_text, notice_text, contract_draft_text, technical_spec_text)
+    # Role-specific texts keep their authority; the combined text is only a
+    # lowest-priority fallback for explicit customer-role patterns.
+    customer_resolution = resolve_customer_name(
+        notice_text=notice_text,
+        contract_draft_text=contract_draft_text,
+        technical_spec_text=technical_spec_text,
+        combined_text=combined_text,
+    )
+    customer_candidate = customer_resolution.value if customer_resolution is not None else None
     if customer_candidate:
         doc_meta["customer_name"] = customer_candidate
         if metadata.get("mode") == "procurement_search_intake" or _is_missing_metadata_value(metadata.get("customer_name")):
