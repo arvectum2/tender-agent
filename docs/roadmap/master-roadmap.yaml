@@ -1,0 +1,2586 @@
+version: 1
+repository: arvectum2/tender-agent
+canonical_role: master_product_roadmap
+restored_at: '2026-09-14T17:55:00Z'
+historical_source:
+  file_name: Arvectum_Backlog_Roadmap_2026-07-30_v9_storage_cleanup.xlsx
+  snapshot_date: '2026-07-30'
+  sheet: Полный бэклог
+  rows: 5:97
+  registry_contract: BASE-001..BASE-018 plus ARV-001..ARV-075, with IDs preserved exactly as recorded
+  note: Recovered from the latest canonical backlog workbook available to the Owner session; workbook values below are preserved as a historical
+    snapshot and are not silently rewritten by current reconciliation.
+governance:
+  master_roadmap_is_canonical_for_scope_and_history: true
+  legacy_snapshot_is_immutable_history: true
+  current_reconciliation_is_overlay_only: true
+  preserve_existing_ids: true
+  do_not_fill_id_gaps_by_inference: true
+  execution_queue: /.agent/execution-queue.yaml
+  execution_queue_role: filtered executable projection only
+  queue_admission_is_explicit: true
+  queue_must_not_expand_authority: true
+  id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
+id_conflicts:
+- id: ARV-073
+  historical_meaning: 'R9 Operational Hardening: завершить инженерную отладку и заморозить ядро'
+  later_reuse: ODS local AI infrastructure in docs/product/Product_Backlog.md
+  resolution: unresolved; historical meaning preserved, later reuse is not admitted under this ID automatically
+- id: ARV-074
+  historical_meaning: ODS/Hermes-инфраструктура Mac mini и устранение дублирующихся локальных сервисов
+  later_reuse: Obsidian Mind memory pilot in docs/product/Product_Backlog.md
+  resolution: unresolved; historical meaning preserved, later reuse is not admitted under this ID automatically
+post_snapshot_observed:
+- id: ARV-076
+  title: Docker/Colima backup and restore
+  state: implementation_present_acceptance_followup
+  evidence:
+  - commit: c5d4018
+    detail: 'feat(ops): implement ARV-076 Docker/Colima backup and restore (#83)'
+  - path: docs/product/Product_Backlog.md
+    detail: Current backlog keeps ARV-076 acceptance/restore evidence follow-up.
+  admission: not inferred into execution queue
+- id: ARV-096
+  title: Real EIS document-set acceptance
+  state: observed_post_snapshot_work
+  evidence:
+  - path: docs/local/ARV-096_EIS_DOCUMENT_SET_ACCEPTANCE.md
+    detail: Read-only local EIS document-set acceptance runbook.
+  admission: not inferred into execution queue; gaps ARV-077..ARV-095 are not invented
+current_programs:
+- task_id: BENCHMARK-PIPELINE-001
+  state: done
+  source: 'issue #1'
+  roadmap_mapping: null
+- task_id: DOCUMENT-QA-004
+  state: done
+  source: 'issue #11'
+  roadmap_mapping: null
+- task_id: DOCUMENT-QA-005
+  state: in_progress
+  source: 'issue #16; latest exposed blind acceptance issue #36'
+  roadmap_mapping: null
+- task_id: BUILD-DOCKER-CONTEXT-001
+  state: ready
+  source: 'issue #19'
+  roadmap_mapping: null
+- task_id: DISCOVERY-QA-001
+  state: blocked_review
+  source: 'issue #2'
+  roadmap_mapping: null
+- task_id: DOCUMENT-QA-NEXT-INCREMENT
+  state: deferred_review
+  source: 'issue #3 strategy'
+  roadmap_mapping: null
+legacy_registry:
+- id: BASE-001
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: ООО «Арвектум» зарегистрировано, реквизиты и корпоративный контур оформлены
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 176
+    completed_summary: Юрлицо зарегистрировано 24.06.2026; есть банковские реквизиты, УКЭП и рабочая корпоративная почта.
+    next_result: Поддерживать актуальность реквизитов и документов.
+    dependencies: []
+    source: https://arvectum.com
+    comment: Фундамент для договоров, интеграций и пилотов.
+    dependencies_raw: —
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-002
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Фирменный стиль, логотип и брендбук
+    status: Готово
+    priority: P1
+    urgency: 3
+    importance: 4
+    complexity: 2
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 86
+    completed_summary: Утверждены логотип, цвета, типографика и шаблоны цифровых носителей.
+    next_result: Применять единый стиль в продукте, отчётах и сайте.
+    dependencies: []
+    source: https://arvectum.com
+    comment: 'В книге использована палитра бренда: Mint / Deep Navy / Graphite.'
+    dependencies_raw: —
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-003
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Сайт arvectum.com и базовые digital-каналы
+    status: Базовый контур готов
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 75
+    score: 90
+    completed_summary: Работает сайт, языковые версии, соцсети, privacy/cookies и продуктовый CTA.
+    next_result: Перестроить сайт вокруг продукта и пилота.
+    dependencies:
+    - ARV-038
+    source: https://arvectum.com
+    comment: Технический сайт готов, продуктовая упаковка ещё не завершена.
+    dependencies_raw: ARV-038
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-004
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI'
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: Создан основной backend-контур, миграции БД, тестовая инфраструктура, роли и базовые страницы продукта.
+    next_result: Укреплять production-ready слой без смены архитектуры.
+    dependencies: []
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Основной технический фундамент продукта.
+    dependencies_raw: —
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-005
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: PostgreSQL + pgvector + RAG-контур
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: Выполнен переход с SQLite на PostgreSQL; добавлены document_chunks, embeddings и retriever.
+    next_result: Оптимизировать индексы после замера реальных объёмов.
+    dependencies:
+    - ARV-009
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: PostgreSQL остаётся источником истины.
+    dependencies_raw: ARV-009
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-006
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Публичный поиск 44-ФЗ и точный поиск по номеру
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: Работает live-поиск 44-ФЗ, пагинация и точный поиск по номеру; стабилизирован exact-number flow.
+    next_result: Поддерживать регрессионными тестами.
+    dependencies: []
+    source: https://github.com/arutyunoveth/ai-corporation/commit/07a923be8c22afcdad0b34cb90f7c7cde94dee70
+    comment: Ключевой пользовательский вход в продукт.
+    dependencies_raw: —
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-007
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Рабочий SOAP-контур ЕИС для машиночитаемых данных
+    status: Базовый контур готов
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 85
+    score: 169
+    completed_summary: Подтверждена работа getDocsIP / getDocsByReestrNumber; зарегистрировано юрлицо-получатель; токен используется без постоянного
+      Рутокена.
+    next_result: Закрепить production-smoke, сертификаты и эксплуатационный runbook.
+    dependencies:
+    - ARV-010
+    - ARV-014
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Legacy int44 не считается рабочим основным маршрутом.
+    dependencies_raw: ARV-010, ARV-014
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-008
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Загрузка закупки и формирование отчётов
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 4
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 174
+    completed_summary: Есть upload-flow, wizard поиска, обработка документации и экспорт HTML/MD/DOCX/PDF/PPTX.
+    next_result: Довести качество содержания до golden report.
+    dependencies:
+    - ARV-001
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Форматный контур готов, качество анализа развивается.
+    dependencies_raw: ARV-001
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-009
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Извлечение товарных позиций и характеристик
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: На реальных закупках извлекаются позиции, объёмы, ГОСТы, сроки и адреса; выполнены smoke-тесты.
+    next_result: Расширять golden-набор категорий и edge cases.
+    dependencies:
+    - ARV-001
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Уже подтверждено на электротехнической закупке.
+    dependencies_raw: ARV-001
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-010
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Разделение demo/live и отказ от тихих синтетических fallback
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 4
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 174
+    completed_summary: Исправлены source defaults, fallback-поведение и поддержка live-источников в основных сервисах.
+    next_result: Не допустить возврата demo-данных регрессионными тестами.
+    dependencies:
+    - ARV-002
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Критически важное исправление доверия к продукту.
+    dependencies_raw: ARV-002
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-011
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'Hermes H1–H4: базовая память, quality gates и feedback'
+    status: Базовый контур готов
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 70
+    score: 169
+    completed_summary: Есть HermesClient, fallback, профили категорий, нормализация, risk classifier, bid decision и self-improvement заготовки.
+    next_result: Связать в production-loop с реальными пользовательскими исправлениями.
+    dependencies:
+    - ARV-004
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Базовая реализация есть, полноценный автономный цикл ещё не завершён.
+    dependencies_raw: ARV-004
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-012
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'Quality R1–R5: golden loop, provenance и source graph'
+    status: Базовый контур готов
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 80
+    score: 172
+    completed_summary: Создан изолированный golden quality loop; проведена проверка на 5 реальных закупках; зафиксированы source graph и provenance
+      baseline.
+    next_result: Расширить выборку до 10–20 закупок и закрыть оставшиеся ложные/пропущенные выводы.
+    dependencies:
+    - ARV-001
+    - ARV-005
+    source: https://github.com/arutyunoveth/ai-corporation/commit/c0e7c7dbfb65765e5a918318d784115b00b4ce06
+    comment: Последняя подтверждённая baseline-интеграция — 21.07.2026.
+    dependencies_raw: ARV-001, ARV-005
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-013
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Демо- и пилотный пакет документов
+    status: Готово
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 90
+    completed_summary: Подготовлены demo script, one-pager, pilot scope, runbook и материалы для демонстрации.
+    next_result: Обновить под новый продуктовый фокус и реальные метрики пилота.
+    dependencies:
+    - ARV-042
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Материалы готовы как основа, но требуют синхронизации с текущим продуктом.
+    dependencies_raw: ARV-042
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-014
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'Базовый личный кабинет: клиенты, проекты и мастер поиска'
+    status: Базовый контур готов
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 4
+    dependency_readiness: 5
+    progress_pct: 65
+    score: 88
+    completed_summary: Есть Clients/Projects UI и сценарий «Найти закупку по номеру».
+    next_result: Добавить канбан, чек-листы, роли и multi-tenant изоляцию.
+    dependencies:
+    - ARV-019
+    - ARV-043
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Основа интерфейса есть, рабочее место тендерщика ещё не завершено.
+    dependencies_raw: ARV-019, ARV-043
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-015
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: Стабильный рендер PDF на Linux
+    status: Готово
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 90
+    completed_summary: Исправлен Unicode-шрифт PDF и добавлена CI-регрессия рендера.
+    next_result: Проверить на будущей VPS-конфигурации.
+    dependencies:
+    - ARV-012
+    source: https://github.com/arutyunoveth/ai-corporation/commit/c2aa53e5d924fea0f3dce3961bb7ea3938cffb10
+    comment: Снижает риск поломки отчётов при переезде на Linux.
+    dependencies_raw: ARV-012
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-016
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'R7 controlled pilot baseline: deployment, artifacts, backup/restore и recovery'
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: R7 merged в main и заморожен на commit 8bb5259; tag r7-controlled-pilot-2026-07-22. Реализованы isolated localhost deployment,
+      pgvector, private networks, EIS trust preflight, persistent PDF, verified backup/restore и recovery.
+    next_result: Изменения R7 — только отдельным hotfix от release tag; развитие продолжается в R8.
+    dependencies: []
+    source: https://github.com/arutyunoveth/ai-corporation/commit/8bb52591372475dde63dc32260cd2a0c4cf0e422
+    comment: Канонический production-like baseline проекта на 22.07.2026.
+    dependencies_raw: —
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-017
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'R8 Customer Pilot Workspace: изолированный клиентский жизненный цикл'
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: R8 merged в main на commit e0cb0ffdf0f10c75fb92f74be698c61f4f32cdce. Реализованы Customer → Project → ProcurementCase →
+      AnalysisRun, tenant isolation, immutable review, idempotency и canonical artifact bindings.
+    next_result: Использовать как frozen baseline для R9 и реального пилота.
+    dependencies:
+    - BASE-016
+    source: https://github.com/arutyunoveth/ai-corporation/commit/e0cb0ffdf0f10c75fb92f74be698c61f4f32cdce
+    comment: Завершён 23.07.2026.
+    dependencies_raw: BASE-016
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: BASE-018
+  legacy_snapshot:
+    queue_order: 0
+    block: 0. База проекта
+    title: 'R9 Operational Hardening: fail-closed recovery, concurrency и backup/restore'
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: 'PR #16 merged: deterministic startup, application/PostgreSQL restart, idempotency, publication concurrency, interrupted-state
+      classification, reconciliation/recovery и compensated cross-store backup/restore contract.'
+    next_result: Использовать как frozen operational baseline для R10 и контролируемого пилота.
+    dependencies:
+    - BASE-017
+    source: https://github.com/arutyunoveth/ai-corporation/commit/58bef2da2342bff1e6f63215ee2697e96fefe6f7
+    comment: 'Final CI: quality, migrations, security, PostgreSQL integration и acceptance integration — success.'
+    dependencies_raw: BASE-017
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-050
+  legacy_snapshot:
+    queue_order: 0
+    block: 1. Качество ядра
+    title: 'R8: изолированное рабочее пространство клиентского пилота'
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 172
+    completed_summary: 'R8 Customer Pilot Workspace merged в main на commit e0cb0ffdf0f10c75fb92f74be698c61f4f32cdce: Customer → Project → ProcurementCase
+      → AnalysisRun, tenant isolation, idempotency, immutable review и canonical artifacts.'
+    next_result: Считать R8 замороженным baseline; изменения только отдельными R9+ задачами или hotfix.
+    dependencies:
+    - BASE-016
+    source: https://github.com/arutyunoveth/ai-corporation/commit/e0cb0ffdf0f10c75fb92f74be698c61f4f32cdce
+    comment: Этап завершён 23.07.2026 и больше не является активным блокером.
+    dependencies_raw: BASE-016
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-073
+  legacy_snapshot:
+    queue_order: 0
+    block: 1. Качество ядра
+    title: 'R9 Operational Hardening: завершить инженерную отладку и заморозить ядро'
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 100
+    score: 169
+    completed_summary: 'R9 Operational Hardening merged в main через PR #16 на merge commit 58bef2da2342bff1e6f63215ee2697e96fefe6f7. Final head
+      30d558f1b1fb057bbb53fabc0ec6759c1dd76a99; all five CI jobs green; full suite 1680 passed / 188 skipped.'
+    next_result: Считать R9 frozen baseline. Изменения operational contracts — только отдельными релизами или hotfix с регрессией.
+    dependencies:
+    - BASE-017
+    source: https://github.com/arutyunoveth/ai-corporation/pull/16
+    comment: R9 канонически закрыт 24.07.2026.
+    dependencies_raw: BASE-017
+  reconciliation:
+    state: id_conflict
+    verified_at: '2026-09-14'
+    evidence:
+    - path: docs/product/Product_Backlog.md
+      detail: Later backlog reuses ARV-073 for ODS local AI infrastructure.
+    notes: Historical canonical snapshot assigns ARV-073 to completed R9 Operational Hardening. Do not silently overwrite or renumber; Owner reconciliation
+      required before future admission under this ID.
+- id: ARV-002
+  legacy_snapshot:
+    queue_order: 0
+    block: 1. Качество ядра
+    title: Стабильный live end-to-end pipeline без скрытых fallback
+    status: Базовый контур готов
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 90
+    score: 172
+    completed_summary: Live exact-number flow, production source graph, persistent artifacts, recovery и controlled-pilot deployment подтверждены
+      в R7.
+    next_result: Включить live E2E flow в финальный R9 integration gate и затем использовать как production-like baseline пилота.
+    dependencies:
+    - ARV-073
+    source: https://github.com/arutyunoveth/ai-corporation/commit/8bb52591372475dde63dc32260cd2a0c4cf0e422
+    comment: После R9 это не отдельный этап отладки, а регрессионный gate каждого релиза.
+    dependencies_raw: ARV-073
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-009
+  legacy_snapshot:
+    queue_order: 0
+    block: 2. Источники и production
+    title: Оценить объём данных, pgvector и требования к диску
+    status: Готово
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 100
+    score: 176
+    completed_summary: 'ARV-009 закрыт PR #34. Для Mac mini pilot утверждён SSD 4 ТБ: измеренный 44-ФЗ 30-day volume 175.7 GiB; base required
+      463.6 GiB; 90-day estimate ~1.06 TB; 180-day estimate ~1.91 TB.'
+    next_result: Использовать 4 ТБ как pilot storage baseline; новые измерения только при изменении retention/source scope.
+    dependencies:
+    - BASE-018
+    source: https://github.com/arutyunoveth/ai-corporation/pull/34
+    comment: 'PR #20 закрыт без merge как исследовательская история; дальнейшее измерение отменено.'
+    dependencies_raw: BASE-018
+  reconciliation:
+    state: confirmed_done
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: 7b9d260
+      detail: 'docs(ops): close ARV-009 with 4tb pilot storage decision'
+    notes: Historical done state is supported by explicit closure history.
+- id: ARV-007
+  legacy_snapshot:
+    queue_order: 0
+    block: 2. Источники и production
+    title: Redis как очередь, lock, cache и rate-limit слой
+    status: Готово
+    priority: P0
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 100
+    score: 165
+    completed_summary: 'Redis foundation merged: lazy client, health diagnostics, distributed locks, idempotency, TTL cache, rate limiting, queue
+      envelope и start_run integration; PostgreSQL остаётся source of truth.'
+    next_result: Использовать как frozen foundation для ARV-008 workers.
+    dependencies:
+    - BASE-018
+    source: https://github.com/arutyunoveth/ai-corporation/pull/43
+    comment: Workers, retries и durable execution остаются отдельной задачей ARV-008.
+    dependencies_raw: BASE-018
+  reconciliation:
+    state: confirmed_done
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: '8841060'
+      detail: 'ARV-007: Redis foundation (#43)'
+    notes: Historical done state is supported by repository implementation history.
+- id: ARV-042
+  legacy_snapshot:
+    queue_order: 0
+    block: 3. Коммерческий MVP
+    title: Пилотная программа и критерии успешности
+    status: Готово
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 3
+    dependency_readiness: 4
+    progress_pct: 100
+    score: 98
+    completed_summary: 'Пилотная программа merged: 4 недели, до 15 кейсов, минимум 10 завершённых, onboarding, calibration, KPI scorecard, escalation
+      и ценовые гипотезы.'
+    next_result: Использовать как канонический pilot operating model; корректировать по результатам ARV-005.
+    dependencies:
+    - ARV-005
+    source: https://github.com/arutyunoveth/ai-corporation/pull/39
+    comment: Цены остаются гипотезой до валидации.
+    dependencies_raw: ARV-005
+  reconciliation:
+    state: confirmed_done
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: cb64781
+      detail: 'ARV-042: complete managed pilot program and success criteria (#39)'
+    notes: Historical done state is supported by explicit implementation history.
+- id: ARV-052
+  legacy_snapshot:
+    queue_order: 0
+    block: 3. Коммерческий MVP
+    title: 'Human-in-the-loop: экспертная проверка и эскалация сложного отчёта'
+    status: Готово
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 100
+    score: 76
+    completed_summary: 'Tenant-scoped expert escalation реализована end-to-end: Sev-1/2/3 routing, assignment, immutable outcomes, PilotFeedback/new-run
+      loop, commercial boundary и append-only audit chain.'
+    next_result: Использовать в ARV-005; полный RBAC остаётся ARV-043.
+    dependencies:
+    - ARV-042
+    source: https://github.com/arutyunoveth/ai-corporation/pull/45
+    comment: Внешнее исполнение не автоматизировано.
+    dependencies_raw: ARV-042
+  reconciliation:
+    state: confirmed_done
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: 8a62641
+      detail: 'ARV-052: productize expert review and escalation workflow (#45)'
+    notes: Historical done state is supported by explicit implementation history.
+- id: ARV-075
+  legacy_snapshot:
+    queue_order: 1
+    block: 2. Источники и production
+    title: 'Аудит и разгрузка системного диска Mac mini: удалить мусор и перенести данные Арвектум на внешний SSD'
+    status: Запланировано
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 2
+    dependency_readiness: 5
+    progress_pct: 0
+    score: 178
+    completed_summary: Внешний SSD 4 ТБ уже подключён и утверждён как пилотное хранилище базы данных.
+    next_result: Снять baseline свободного места и крупнейших каталогов; оценить временные файлы, старые клоны/worktrees, build/test caches, Docker
+      layers, логи, выгрузки и архивы; разделить на DELETE / MOVE / KEEP; сделать backup; удалить только подтверждённый мусор; нужные тяжёлые
+      данные перенести на внешний SSD с корректными путями/симлинками; проверить Git, Docker, PostgreSQL, тесты и свободное место до/после.
+    dependencies:
+    - ARV-009
+    source: local://Mac-mini/storage-audit
+    comment: Высший quick-win. Не переносить активную БД, рабочий репозиторий, secrets, системные каталоги и кеши вслепую. Сначала dry-run и отчёт,
+      затем подтверждённое удаление/перенос. Выполнять OpenCode локально параллельно ARV-003.
+    dependencies_raw: ARV-009
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-003
+  legacy_snapshot:
+    queue_order: 2
+    block: 1. Качество ядра
+    title: 'R10.1: production LLM-анализ с evidence map и confidence'
+    status: В работе
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 97
+    score: 169
+    completed_summary: 'R10.1 repository-side contour продвинут до main 3dcb9e9c0e7d937aaf347f9de488d18968aa6570: deterministic batching, compact-safe
+      wire, server-owned fragment grounding, schema-constrained llama.cpp responses, reasoning disabled, sanitized diagnostics и exact-tokenizer-shaped
+      one-call probe. PR #80 exact-head CI success.'
+    next_result: Локально выполнить exact-tokenizer synthetic probe. Только при full compact contract pass — два controlled real-provider запуска
+      на approved dataset и независимая проверка citations, confidence, semantic identity, usage, latency, cost и cleanup.
+    dependencies:
+    - BASE-018
+    source: https://github.com/arutyunoveth/ai-corporation/pull/80
+    comment: Кодовая часть почти закрыта; оставшийся gate зависит от локального llama/provider runtime, а не от нового repository scope.
+    dependencies_raw: BASE-018
+  reconciliation:
+    state: accepted_evidence_present_needs_status_revalidation
+    verified_at: '2026-09-14'
+    evidence:
+    - path: docs/local/ARV-096_EIS_DOCUMENT_SET_ACCEPTANCE.md
+      detail: Current runbook explicitly protects the accepted ARV-003 bundle.
+    - commit: f96e358
+      detail: ARV-003 controlled runner metadata contract hardening after R10.1 work.
+    notes: Repository contains multiple references to an accepted ARV-003 bundle, while the older R10.1 backlog file still shows Gate 5 pending.
+      Preserve both facts and do not silently declare full closure without reconciling the stale status document.
+- id: ARV-001
+  legacy_snapshot:
+    queue_order: 3
+    block: 1. Качество ядра
+    title: 'R10.2: Quality & Product Readiness — golden report и release gates'
+    status: Запланировано
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 5
+    progress_pct: 85
+    score: 172
+    completed_summary: Golden quality loop, provenance/source graph и проверки реальных закупок приняты; R7 controlled-pilot baseline заморожен.
+    next_result: 'После реального Gate 5 закрепить golden report и release gates: evidence coverage, false-positive/omission matrix, deterministic
+      rerun, budget limits и human escalation.'
+    dependencies:
+    - ARV-003
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Следующий последовательный core gate; не начинать до real-provider evidence.
+    dependencies_raw: ARV-003
+  reconciliation:
+    state: completed_governed
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: 7060e99
+      detail: 'ARV-001: decision-useful document analysis (#18)'
+    - commit: f6e9e23
+      detail: 'docs(e2e): reflect ARV-001 governed closure'
+    notes: Current git history records governed closure after the historical R10.2 snapshot.
+- id: ARV-004
+  legacy_snapshot:
+    queue_order: 4
+    block: 1. Качество ядра
+    title: 'R10.3: production-loop Hermes и customer-scoped feedback'
+    status: Запланировано
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 66
+    score: 169
+    completed_summary: Hermes runtime context, quality gates, память, self-improvement и fallback включены в существующий контур; R7 образ содержит
+      agent context modules.
+    next_result: После ARV-001 связать Hermes feedback/memory с Customer/Project/Case и immutable review, не меняя frozen R9 contracts.
+    dependencies:
+    - ARV-003
+    - ARV-001
+    source: https://github.com/arutyunoveth/ai-corporation/commit/8bb52591372475dde63dc32260cd2a0c4cf0e422
+    comment: Идёт после стабилизации production LLM и критериев качества.
+    dependencies_raw: ARV-003, ARV-001
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-005
+  legacy_snapshot:
+    queue_order: 5
+    block: 1. Качество ядра
+    title: 'R10.4: контролируемый пилот на 10–20 реальных закупках'
+    status: Запланировано
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 45
+    score: 171
+    completed_summary: Пять реальных закупок прошли readiness-проверку; R7 дал контролируемое развёртывание, backup/restore и сохранение клиентских
+      PDF.
+    next_result: После R10.1–R10.3 провести 10–20 реальных закупок, фиксируя качество, стоимость, latency, ручные исправления и agreement с экспертным
+      решением.
+    dependencies:
+    - ARV-001
+    - ARV-003
+    - ARV-004
+    source: https://github.com/arutyunoveth/ai-corporation/pull/12
+    comment: Главный gate перед Commercial MVP и платным пилотом.
+    dependencies_raw: ARV-001, ARV-003, ARV-004
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-008
+  legacy_snapshot:
+    queue_order: 6
+    block: 2. Источники и production
+    title: Фоновые задания и workers с прогрессом и повторным запуском
+    status: Запланировано
+    priority: P0
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 25
+    score: 163
+    completed_summary: Redis queue/lock/idempotency foundation готов; pipeline разбит на этапы и покрыт тестами.
+    next_result: Добавить отдельный worker process, durable consumer, retries/backoff, restart recovery, pause/cancel/resume, per-tenant concurrency
+      и cost budgets.
+    dependencies:
+    - ARV-007
+    - ARV-010
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Можно начинать отдельной веткой после фиксации ownership map; не смешивать с ARV-003 Gate 5.
+    dependencies_raw: ARV-007, ARV-010
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-067
+  legacy_snapshot:
+    queue_order: 7
+    block: 1. Качество ядра
+    title: Вертикальные онтологии и настраиваемые схемы извлечения по категориям
+    status: На проверке
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 90
+    score: 85
+    completed_summary: Electrical ontology v1, 15 detailed profiles, 28-section Rosseti taxonomy, 2400 reproducible truth-pack items и gated shadow
+      runtime находятся в main. Feature off, kill switch on, accepted profiles 0/15.
+    next_result: Провести независимую экспертную приёмку 15 профилей, разблокировать release gate и запустить ограниченный shadow pilot; production
+      activation только после evidence.
+    dependencies:
+    - ARV-003
+    - ARV-001
+    - ARV-016
+    source: https://github.com/arutyunoveth/ai-corporation/pull/66
+    comment: Production effect отсутствует; писать новые профили раньше acceptance не нужно.
+    dependencies_raw: ARV-003, ARV-001, ARV-016
+  reconciliation:
+    state: review
+    verified_at: '2026-09-14'
+    evidence:
+    - path: tests/test_arv067_electrical_ontology.py
+      detail: Current repository validates ARV-067 electrical ontology and asserts it is not wired into production runtime.
+    - commit: '8229545'
+      detail: 'ARV-067I: gated electrical ontology shadow runtime (#66)'
+    notes: Bounded electrical ontology/equipment knowledge assets exist; production activation remains gated by expert acceptance/evidence.
+- id: ARV-072
+  legacy_snapshot:
+    queue_order: 8
+    block: 9. Управление разработкой
+    title: Регрессионный competitive benchmark на одинаковых реальных закупках
+    status: В работе
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 35
+    score: 101
+    completed_summary: 'Benchmark protocol готов: rubric, cohort, public-surface snapshot, 5-case manifest, evidence schema, validator и report
+      template.'
+    next_result: После accepted ARV-003 output и frozen ARV-001 gates выполнить live benchmark минимум по 5 продуктам и 5 truth packs.
+    dependencies:
+    - ARV-003
+    - ARV-001
+    source: https://github.com/arutyunoveth/ai-corporation/pull/42
+    comment: Протокол готов; live execution и итоговый рейтинг ещё не выполнены.
+    dependencies_raw: ARV-003, ARV-001
+  reconciliation:
+    state: in_progress
+    verified_at: '2026-09-14'
+    evidence:
+    - path: docs/product/Product_Backlog.md
+      detail: Current backlog retains ARV-072 controlled competitive benchmark as open.
+    - commit: 1cb8410
+      detail: ARV-072 reproducible competitive benchmark protocol (#42)
+    notes: Protocol exists; live benchmark execution remains a follow-up.
+- id: ARV-010
+  legacy_snapshot:
+    queue_order: 9
+    block: 2. Источники и production
+    title: Production-наблюдаемость, безопасность и восстановление
+    status: В работе
+    priority: P0
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 93
+    score: 165
+    completed_summary: 'PR #35 merged на main commit da7b0785db82eb3728552081e70a8beccacc2e43: storage health snapshot, warning/critical/protected
+      thresholds, fail-closed mass-ingestion gate, sync/background/worker enforcement и readiness diagnostics.'
+    next_result: Добавить alerting/monitoring, backup freshness, disk threshold notifications и incident runbook; не расширять scope R10.1.
+    dependencies:
+    - BASE-018
+    - ARV-008
+    source: https://github.com/arutyunoveth/ai-corporation/pull/35
+    comment: Storage guardrails завершены; umbrella ARV-010 остаётся открытой из-за monitoring и эксплуатационных алертов.
+    dependencies_raw: BASE-018, ARV-008
+  reconciliation:
+    state: in_progress
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: da7b078
+      detail: 'ARV-010 storage capacity ingestion guardrails (PR #35)'
+    notes: Implementation exists, but the historical umbrella explicitly retained monitoring/alerting follow-up; no later closure evidence was
+      asserted here.
+- id: ARV-051
+  legacy_snapshot:
+    queue_order: 10
+    block: 9. Управление разработкой
+    title: Протокол параллельной разработки Codex / OpenCode
+    status: Базовый контур готов
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 2
+    dependency_readiness: 5
+    progress_pct: 98
+    score: 178
+    completed_summary: 'Repository-versioned agent layer merged: root/scoped AGENTS.md, 19 skills, OpenCode subagents/commands и development guide.'
+    next_result: Локально проверить discovery skills/subagents/commands в Codex и OpenCode; затем закрыть задачу.
+    dependencies:
+    - BASE-018
+    source: https://github.com/arutyunoveth/ai-corporation/pull/37
+    comment: Repository-side scope завершён; осталась локальная smoke-проверка.
+    dependencies_raw: BASE-018
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-041
+  legacy_snapshot:
+    queue_order: 11
+    block: 4. Go-to-market
+    title: Добить юридическую обвязку SaaS и пилота
+    status: На проверке
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 95
+    score: 96
+    completed_summary: 'Юридический пакет подготовлен и merged: privacy, consent, cookies, B2B offer, pilot agreement, NDA, SLA, AI disclaimer
+      и правила работы с email/документами.'
+    next_result: Получить approval директора, проверку российского юриста и сверку с фактической инфраструктурой/Роскомнадзором.
+    dependencies:
+    - ARV-042
+    source: https://github.com/arutyunoveth/ai-corporation/pull/40
+    comment: Документарный scope завершён; legal release gate не пройден.
+    dependencies_raw: ARV-042
+  reconciliation:
+    state: human_gate
+    verified_at: '2026-09-14'
+    evidence:
+    - path: docs/legal/README.md
+      detail: Legal package status READY_FOR_COUNSEL_APPROVAL; director/counsel/Roskomnadzor/localization/retention gates remain.
+    - commit: ade3e1f
+      detail: ARV-041 legal package assembled.
+    notes: Document package is implemented, but legal release approval is explicitly not complete.
+- id: ARV-061
+  legacy_snapshot:
+    queue_order: 12
+    block: 1. Качество ядра
+    title: 'Commercial MVP v1: быстрый cited-преданализ'
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 5
+    score: 90
+    completed_summary: Есть полный pipeline и GO/NO-GO; отдельного дешёвого fast-path пока нет.
+    next_result: 'После первых 5–10 pilot cases сделать fast-path по URL/номеру: предмет, дедлайн, стоп-факторы, fit и переход к полному анализу.'
+    dependencies:
+    - ARV-005
+    - ARV-003
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: AiTender и browser-extension продукты снижают трение до одного клика.
+    dependencies_raw: ARV-005, ARV-003
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-018
+  legacy_snapshot:
+    queue_order: 13
+    block: 3. Коммерческий MVP
+    title: 'Commercial MVP v1: карточка GO / NO-GO / NEEDS REVIEW'
+    status: В работе
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 3
+    dependency_readiness: 4
+    progress_pct: 60
+    score: 98
+    completed_summary: Bid decision уже рассчитывается; отчёт содержит риски и supplier relevance.
+    next_result: 'Собрать одноэкранное решение из результатов R10: evidence, confidence, qualification, economics, причины и next action.'
+    dependencies:
+    - ARV-005
+    - ARV-061
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Ответ на ТЕНвизор и узкие Go/No-Go-анализаторы; решение должно быть объяснимым.
+    dependencies_raw: ARV-005, ARV-061
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-020
+  legacy_snapshot:
+    queue_order: 14
+    block: 3. Коммерческий MVP
+    title: 'Commercial MVP v1: чек-лист готовности заявки'
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 3
+    dependency_readiness: 4
+    progress_pct: 20
+    score: 92
+    completed_summary: Есть acceptance checklist и quality gates.
+    next_result: На основе pilot defects автоматизировать проверку обязательных документов, форм, обеспечения, сертификатов и сроков.
+    dependencies:
+    - ARV-005
+    - ARV-018
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Прямой ответ на TendRO и Tenderman, которые монетизируют готовый пакет заявки.
+    dependencies_raw: ARV-005, ARV-018
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-006
+  legacy_snapshot:
+    queue_order: 15
+    block: 2. Источники и production
+    title: Добавить полноценную работу с 223-ФЗ
+    status: Запланировано
+    priority: P0
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 10
+    score: 166
+    completed_summary: Архитектура 44-ФЗ и единая модель закупки уже дают основу.
+    next_result: Поиск, номер, лоты, позиции, документы, изменения, разъяснения, протоколы и статусы 223-ФЗ.
+    dependencies:
+    - ARV-002
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Ключевой рынок для фокуса Арвектум.
+    dependencies_raw: ARV-002
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-074
+  legacy_snapshot:
+    queue_order: 16
+    block: 2. Источники и production
+    title: ODS/Hermes-инфраструктура Mac mini и устранение дублирующихся локальных сервисов
+    status: Исследование
+    priority: P1
+    urgency: 3
+    importance: 4
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 5
+    score: 71
+    completed_summary: 'Документационный PR #72 подготовлен, но ошибочно использует уже занятый ID ARV-073.'
+    next_result: Исправить ID на ARV-074; инвентаризировать локальные AI/LLM-сервисы, закрепить ODS и Hermes в целевой архитектуре, выявить дубли,
+      подготовить backup/rollback и безопасную миграцию без затрагивания FastAPI, PostgreSQL, Redis и данных Арвектум.
+    dependencies:
+    - ARV-051
+    - ARV-010
+    source: https://github.com/arutyunoveth/ai-corporation/pull/72
+    comment: Не блокирует R10.1. Любые удаления и замены сервисов — только после локальной инвентаризации.
+    dependencies_raw: ARV-051, ARV-010
+  reconciliation:
+    state: id_conflict
+    verified_at: '2026-09-14'
+    evidence:
+    - path: docs/product/Product_Backlog.md
+      detail: Later backlog reuses ARV-074 for Obsidian Mind memory pilot.
+    notes: Historical canonical snapshot assigns ARV-074 to ODS/Hermes Mac mini infrastructure. Do not silently overwrite or renumber; Owner reconciliation
+      required before future admission under this ID.
+- id: ARV-058
+  legacy_snapshot:
+    queue_order: 17
+    block: 2. Источники и production
+    title: Возобновляемая синхронизация, локальный кэш и идемпотентный импорт
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 4
+    progress_pct: 10
+    score: 88
+    completed_summary: В R7 есть persistent volumes, recovery и idempotent run-механизмы; ingestion sync ещё не выделен как общий контракт.
+    next_result: Cursors/checkpoints, resume после сбоя, content hashes, локальный raw-cache, повторный импорт без дублей и экспорт CSV/Excel.
+    dependencies:
+    - ARV-008
+    - ARV-030
+    - ARV-009
+    source: https://www.eiscalp.ru/
+    comment: Перенято у eisсalp; необходимо до массового подключения ЭТП и долгой фоновой синхронизации.
+    dependencies_raw: ARV-008, ARV-030, ARV-009
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-011
+  legacy_snapshot:
+    queue_order: 18
+    block: 2. Источники и production
+    title: Выбрать и арендовать VPS для backend
+    status: В работе
+    priority: P1
+    urgency: 3
+    importance: 5
+    complexity: 3
+    dependency_readiness: 4
+    progress_pct: 55
+    score: 86
+    completed_summary: 'Provider-neutral infrastructure requirements и runtime topology audit подготовлены: readiness/security gaps и варианты
+      local Mac mini / VPS / dedicated.'
+    next_result: После pilot metrics сравнить local Mac mini, российский VPS и dedicated по latency, доступности, данным и стоимости; не покупать
+      VPS заранее.
+    dependencies:
+    - ARV-005
+    - ARV-010
+    source: https://github.com/arutyunoveth/ai-corporation/pull/38
+    comment: Mac mini + внешний SSD остаются пилотным контуром.
+    dependencies_raw: ARV-005, ARV-010
+  reconciliation:
+    state: in_progress
+    verified_at: '2026-09-14'
+    evidence:
+    - commit: 5a53c9b
+      detail: ARV-011A runtime topology audit and infrastructure requirements
+    notes: Provider-neutral requirements are implemented; no evidence here is used to infer the later VPS purchase/migration decision.
+- id: ARV-012
+  legacy_snapshot:
+    queue_order: 19
+    block: 2. Источники и production
+    title: Переезд с Mac mini на VPS
+    status: Запланировано
+    priority: P1
+    urgency: 3
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 25
+    score: 79
+    completed_summary: Контейнерный deployment package и проверяемое восстановление уже существуют; Linux PDF regression закрыта.
+    next_result: Переезд выполнять после решения ARV-011 и только с frozen release, TLS, backup/restore, rollback и acceptance smoke.
+    dependencies:
+    - ARV-011
+    source: https://github.com/arutyunoveth/ai-corporation/commit/8bb52591372475dde63dc32260cd2a0c4cf0e422
+    comment: Отложено до подтверждения потребности пилотом.
+    dependencies_raw: ARV-011
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-013
+  legacy_snapshot:
+    queue_order: 20
+    block: 2. Источники и production
+    title: Заменить временный CloudPub на нормальный production-доступ
+    status: Запланировано
+    priority: P0
+    urgency: 5
+    importance: 4
+    complexity: 2
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 164
+    completed_summary: Временный публичный доступ работает.
+    next_result: Публичный HTTPS на VPS; админ-доступ по SSH/Tailscale; закрыть CloudPub.
+    dependencies:
+    - ARV-012
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: SSH не использовать как основной публичный транспорт.
+    dependencies_raw: ARV-012
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-014
+  legacy_snapshot:
+    queue_order: 21
+    block: 2. Источники и production
+    title: Белые списки площадок и Anti-DDoS после появления IP VPS
+    status: Запланировано
+    priority: P0
+    urgency: 4
+    importance: 5
+    complexity: 3
+    dependency_readiness: 2
+    progress_pct: 28
+    score: 161
+    completed_summary: В R7 сделаны pinned EIS chain validation, container trust mount и fail-closed preflight.
+    next_result: После получения постоянного IP VPS запросить allowlist ЕИС/ЭТП и оформить процедуру смены IP.
+    dependencies:
+    - ARV-011
+    source: https://github.com/arutyunoveth/ai-corporation/commit/8bb52591372475dde63dc32260cd2a0c4cf0e422
+    comment: Технический trust-контур готов; внешний allowlist ещё не запрошен.
+    dependencies_raw: ARV-011
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-015
+  legacy_snapshot:
+    queue_order: 22
+    block: 3. Коммерческий MVP
+    title: Профиль поставщика для персонального анализа закупок
+    status: В работе
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 45
+    score: 96
+    completed_summary: Есть supplier relevance scoring, category profiles, supplier memo и базовые ограничения.
+    next_result: Категории, бренды, регионы, сертификаты, опыт, экономика, 1С-номенклатура, корпоративные документы, стоп-факторы и reusable business
+      profile.
+    dependencies:
+    - ARV-003
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Профиль должен одновременно питать matching, qualification, Q&A и генерацию заявки.
+    dependencies_raw: ARV-003
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-064
+  legacy_snapshot:
+    queue_order: 23
+    block: 3. Коммерческий MVP
+    title: Корпоративное хранилище документов и переиспользуемый профиль компании
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 87
+    completed_summary: Есть supplier profile, Customer/Project/Case и artifact storage.
+    next_result: Хранить уставные документы, лицензии, сертификаты, опыт, реквизиты и шаблоны; версии, сроки действия, tenant isolation и автоподстановка
+      в заявку.
+    dependencies:
+    - ARV-043
+    - ARV-015
+    - ARV-010
+    source: 'https://tenderyapp.ru/
+
+      https://get-tender.com/'
+    comment: Снижает повторный ручной ввод и повышает точность qualification.
+    dependencies_raw: ARV-043, ARV-015, ARV-010
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-016
+  legacy_snapshot:
+    queue_order: 24
+    block: 3. Коммерческий MVP
+    title: Обработка прайс-листов XLSX/CSV/PDF
+    status: Запланировано
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 5
+    score: 91
+    completed_summary: Есть опыт обработки каталогов и нормализации товарных характеристик; направление подтверждено BIMLIB.
+    next_result: Импорт XLSX/CSV/PDF, автоопределение колонок, нормализация SKU/брендов/характеристик, каталог аналогов и история прайсов.
+    dependencies:
+    - ARV-015
+    source: https://bimlib.pro/for-manufacturers/radar
+    comment: 'Перенято у BIMLIB: клиентский каталог, автоопределение колонок и единая номенклатура.'
+    dependencies_raw: ARV-015
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-017
+  legacy_snapshot:
+    queue_order: 25
+    block: 3. Коммерческий MVP
+    title: Подбор тендеров по прайс-листу и каталогу
+    status: Запланировано
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 88
+    completed_summary: Есть live-поиск и supplier relevance scoring.
+    next_result: Матчинг EXACT/LIKELY_ANALOG/PARTIAL/UNCERTAIN/NO_MATCH, покрытие позиций, сумма потенциальной продажи и прогноз маржинальности.
+    dependencies:
+    - ARV-006
+    - ARV-016
+    source: https://bimlib.pro/for-manufacturers/radar
+    comment: 'Перенято у BIMLIB: сумма возможности и ежедневная персонализированная подборка.'
+    dependencies_raw: ARV-006, ARV-016
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-053
+  legacy_snapshot:
+    queue_order: 26
+    block: 3. Коммерческий MVP
+    title: Проверка и скоринг контрагентов
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 87
+    completed_summary: Есть профили поставщиков и базовые данные закупки; отдельного контрагентского слоя нет.
+    next_result: Карточка заказчика/поставщика, риск-скоринг, история закупок/контрактов, признаки надёжности и evidence для каждого фактора.
+    dependencies:
+    - ARV-015
+    - ARV-024
+    - ARV-059
+    source: 'https://bimlib.pro/for-manufacturers/radar
+
+      https://seldon.pro/tariffs/'
+    comment: Перенято у BIMLIB и Seldon; скоринг не должен быть непрозрачным единым баллом.
+    dependencies_raw: ARV-015, ARV-024, ARV-059
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-019
+  legacy_snapshot:
+    queue_order: 27
+    block: 3. Коммерческий MVP
+    title: Канбан закупок в личном кабинете
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 10
+    score: 90
+    completed_summary: Есть Clients/Projects UI и карточки закупок.
+    next_result: Автоматическая воронка, канбан, командные KPI, auto-outcome, этапы подачи/исполнения, readiness, блокеры и связи с обсуждением.
+    dependencies:
+    - BASE-014
+    - ARV-008
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Рынок смещается от отдельного отчёта к рабочему месту и outcome-tracking.
+    dependencies_raw: BASE-014, ARV-008
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-063
+  legacy_snapshot:
+    queue_order: 28
+    block: 3. Коммерческий MVP
+    title: Генератор пакета заявки и заполнение клиентских шаблонов
+    status: Запланировано
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 91
+    completed_summary: Экспорт отчётов уже работает; есть canonical artifacts и readiness checklist.
+    next_result: Заполнять Форму 2, КП, декларации, спецификации и описи без разрушения вёрстки; сохранять working_kp.xlsx, версии и provenance
+      каждого поля.
+    dependencies:
+    - ARV-001
+    - ARV-020
+    - ARV-050
+    - ARV-064
+    source: 'https://tenderman.tech/
+
+      https://tendro.ru/'
+    comment: 'Новая ключевая задача: конкуренты уже монетизируют готовый пакет заявки, а не только анализ.'
+    dependencies_raw: ARV-001, ARV-020, ARV-050, ARV-064
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-056
+  legacy_snapshot:
+    queue_order: 29
+    block: 3. Коммерческий MVP
+    title: Тендерный календарь, контроль изменений и наблюдение за заказчиками/конкурентами
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 87
+    completed_summary: Есть watchlist/уведомления как общий эпик.
+    next_result: Единый календарь дедлайнов, timeline изменений, подписка на заказчика и конкурентные события, напоминания и журнал реакции.
+    dependencies:
+    - ARV-021
+    - ARV-019
+    - ARV-031
+    source: 'https://tenderplan.ru/rates
+
+      https://tenmon.ru/'
+    comment: 'Отдельный слой над уведомлениями: пользователь видит не только событие, но и требуемое действие.'
+    dependencies_raw: ARV-021, ARV-019, ARV-031
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-021
+  legacy_snapshot:
+    queue_order: 30
+    block: 3. Коммерческий MVP
+    title: Мониторинг закупок и уведомления
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 10
+    score: 87
+    completed_summary: Live-поиск и карточки закупок уже существуют.
+    next_result: Сохранённые запросы, логические шаблоны, watchlist, изменения документов, дедлайны, Telegram/MAX/email/push и дайджест.
+    dependencies:
+    - ARV-006
+    - ARV-008
+    source: 'https://tenmon.ru/
+
+      https://tenderplan.ru/rates
+
+      https://bimlib.pro/for-manufacturers/radar'
+    comment: 'Перенято: saved searches, boolean-шаблоны, Telegram/MAX и контроль изменений.'
+    dependencies_raw: ARV-006, ARV-008
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-054
+  legacy_snapshot:
+    queue_order: 31
+    block: 4. Go-to-market
+    title: Прозрачные тарифы, pay-per-analysis и мгновенная демоверсия
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 5
+    score: 95
+    completed_summary: Есть пилотный пакет и сайт; публичная продуктовая упаковка и ценовой эксперимент ещё не оформлены.
+    next_result: Freemium-квоты, pay-per-analysis, подписка + токены, тарифы по объёму анализов, seats/limits, прозрачный прайс и instant demo.
+    dependencies:
+    - ARV-038
+    - ARV-042
+    - ARV-039
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Ценовой коридор рынка — от 30–590 ₽ за скрининг до 10–30 тыс. ₽/мес. за full-cycle.
+    dependencies_raw: ARV-038, ARV-042, ARV-039
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-068
+  legacy_snapshot:
+    queue_order: 32
+    block: 7. Масштабирование
+    title: Учёт потребления, квоты, токены и применение тарифных лимитов
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 87
+    completed_summary: Тарифная концепция и multi-tenant foundation определены.
+    next_result: Usage ledger по анализам/файлам/LLM cost, бесплатные квоты, token packs, предупреждения, hard/soft limits, seats и audit списаний.
+    dependencies:
+    - ARV-043
+    - ARV-054
+    - ARV-039
+    source: 'https://www.tenderai.pro/terms
+
+      https://neirotender.ru/
+
+      https://www.tenderguru.ru/ai'
+    comment: Нужен до коммерческого self-service, но после фиксации реальной себестоимости анализа.
+    dependencies_raw: ARV-043, ARV-054, ARV-039
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-038
+  legacy_snapshot:
+    queue_order: 33
+    block: 4. Go-to-market
+    title: 'Обновить сайт: продукт вместо общей IT-компании'
+    status: В работе
+    priority: P1
+    urgency: 5
+    importance: 5
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 45
+    score: 101
+    completed_summary: Сайт и тендерный CTA работают; есть бренд, соцсети и базовые продуктовые страницы.
+    next_result: Product-first сайт + мгновенная демоверсия, публичные пакеты, pay-per-analysis, пилот, пример отчёта и прозрачные ограничения.
+    dependencies:
+    - ARV-018
+    - ARV-042
+    source: 'https://tenders-ai.ru/
+
+      https://tenderplan.ru/rates
+
+      https://zakupki.kontur.ru/price'
+    comment: GTM должен снижать порог входа, не обещая неподтверждённую автономность.
+    dependencies_raw: ARV-018, ARV-042
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-039
+  legacy_snapshot:
+    queue_order: 34
+    block: 4. Go-to-market
+    title: Метрики сайта и продукта
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 3
+    dependency_readiness: 4
+    progress_pct: 20
+    score: 92
+    completed_summary: Есть базовая аналитическая готовность сайта и тестовый продуктовый контур.
+    next_result: Activation, successful analysis, evidence coverage, funnel conversion, time-to-decision, auto-outcome, win/loss, forecast accuracy,
+      RFQ conversion и retention.
+    dependencies:
+    - ARV-038
+    - ARV-002
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Метрики должны измерять outcome, а не только количество обработанных закупок.
+    dependencies_raw: ARV-038, ARV-002
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-040
+  legacy_snapshot:
+    queue_order: 35
+    block: 4. Go-to-market
+    title: Обновить индексацию в Яндексе и Google
+    status: Запланировано
+    priority: P1
+    urgency: 3
+    importance: 4
+    complexity: 2
+    dependency_readiness: 3
+    progress_pct: 10
+    score: 80
+    completed_summary: Домен и сайт работают.
+    next_result: Sitemap, robots, canonical, schema, кабинеты вебмастеров и продуктовые посадочные страницы.
+    dependencies:
+    - ARV-038
+    source: https://arvectum.com
+    comment: После новой структуры сайта.
+    dependencies_raw: ARV-038
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-022
+  legacy_snapshot:
+    queue_order: 36
+    block: 3. Коммерческий MVP
+    title: OCR fallback для сканированных документов
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 5
+    score: 82
+    completed_summary: Основной extraction-контур обрабатывает текстовые документы.
+    next_result: OCR/CV fallback для таблиц и сканов, координаты, confidence, ручная проверка низкой уверенности и вертикальные параметры.
+    dependencies:
+    - ARV-001
+    - ARV-008
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Tender Analyzer и TenderGuru показывают ценность CV, citations и распознанных датасетов.
+    dependencies_raw: ARV-001, ARV-008
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-065
+  legacy_snapshot:
+    queue_order: 37
+    block: 1. Качество ядра
+    title: 'Evidence-grounded copilot по закупке: Q&A, AI-юрист и сметчик'
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 85
+    completed_summary: LLM/Hermes baseline, source graph и structured risks уже существуют.
+    next_result: Чат по закупке с цитатами, юридические вопросы, расчёт сметы/обеспечения/налогов и ссылки на конкретные фрагменты; явная граница
+      между фактом и рекомендацией.
+    dependencies:
+    - ARV-003
+    - ARV-004
+    - ARV-064
+    source: 'https://semantor.ru/
+
+      https://neirotender.ru/
+
+      https://www.tenvizor.ru/'
+    comment: Не отдельный чат-бот, а интерфейс над доказательным анализом и профилем клиента.
+    dependencies_raw: ARV-003, ARV-004, ARV-064
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-023
+  legacy_snapshot:
+    queue_order: 38
+    block: 5. Поставщики и RFQ
+    title: Поиск поставщиков
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 82
+    completed_summary: Есть supplier relevance и RFQ-first дизайн.
+    next_result: Поиск компаний, производителей и дилеров; контакты, бренды, регионы и источники.
+    dependencies:
+    - ARV-015
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Следующий крупный продуктовый контур.
+    dependencies_raw: ARV-015
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-024
+  legacy_snapshot:
+    queue_order: 39
+    block: 5. Поставщики и RFQ
+    title: База поставщиков и история взаимодействия
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 84
+    completed_summary: Есть клиенты/проекты и базовая память профилей.
+    next_result: 'Карточки поставщиков и аналогов: категории, бренды, цены, сроки, условия, история ответов, подтверждённые замены и качество
+      данных.'
+    dependencies:
+    - ARV-023
+    - ARV-043
+    source: 'https://tenders-ai.ru/
+
+      https://bimlib.pro/for-manufacturers/radar'
+    comment: Каталог поставщиков и аналогов должен быть связан с доказательным матчингом.
+    dependencies_raw: ARV-023, ARV-043
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-025
+  legacy_snapshot:
+    queue_order: 40
+    block: 5. Поставщики и RFQ
+    title: 'Интеграция почты пользователя: OAuth/SMTP + IMAP/API'
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 82
+    completed_summary: Требования к workflow и безопасности сформулированы.
+    next_result: Безопасные токены, отправка, получение, threading, логи и привязка к закупке/поставщику.
+    dependencies:
+    - ARV-024
+    - ARV-041
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Не ограничиваться одним SMTP.
+    dependencies_raw: ARV-024, ARV-041
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-026
+  legacy_snapshot:
+    queue_order: 41
+    block: 5. Поставщики и RFQ
+    title: Автоматическая подготовка и рассылка запросов ТКП
+    status: В работе
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 30
+    score: 82
+    completed_summary: RFQ-first pipeline, спецификации и шаблоны отчётов уже заложены.
+    next_result: Draft-first письма, персонализация, вложения, подтверждение отправки, follow-up и извлечение ответов.
+    dependencies:
+    - ARV-025
+    - ARV-029
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Автономную отправку без проверки не включать по умолчанию.
+    dependencies_raw: ARV-025, ARV-029
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-027
+  legacy_snapshot:
+    queue_order: 42
+    block: 5. Поставщики и RFQ
+    title: Сравнение ТКП и выбор поставщика
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 2
+    progress_pct: 20
+    score: 84
+    completed_summary: Есть supplier memo, экономика, нормализация позиций и risk layer.
+    next_result: Цена, наличие, сроки, НДС, доставка, аналоги, отклонения, себестоимость и рекомендация.
+    dependencies:
+    - ARV-026
+    - ARV-003
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Замыкает RFQ-first value chain.
+    dependencies_raw: ARV-026, ARV-003
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-060
+  legacy_snapshot:
+    queue_order: 43
+    block: 3. Коммерческий MVP
+    title: 'Командное обсуждение закупки: чат, упоминания и журнал решений'
+    status: Запланировано
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 76
+    completed_summary: R8 даёт customer/project/case ownership; отдельного collaboration-слоя нет.
+    next_result: Чат внутри ProcurementCase, @mentions, ссылки на evidence, решения/комментарии, уведомления и неизменяемая история.
+    dependencies:
+    - ARV-050
+    - ARV-019
+    - ARV-021
+    - ARV-043
+    source: https://www.rustore.ru/catalog/app/ru.digitender.app
+    comment: Перенято у DigiTender; обсуждение должно быть связано с конкретным выводом/документом.
+    dependencies_raw: ARV-050, ARV-019, ARV-021, ARV-043
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-066
+  legacy_snapshot:
+    queue_order: 44
+    block: 3. Коммерческий MVP
+    title: 'Импорт закупки одним кликом: URL, browser extension и share action'
+    status: Запланировано
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 76
+    completed_summary: Работает exact-number flow и загрузка файлов.
+    next_result: Принимать URL карточки/реестровый номер, расширение браузера на ЭТП, share action, цветовые маркеры статуса и безопасную передачу
+      в customer case.
+    dependencies:
+    - ARV-002
+    - ARV-050
+    - ARV-030
+    source: 'https://tender-check.ru/
+
+      https://aitender.ru/
+
+      https://zakupki.kontur.ru/price'
+    comment: Уменьшает трение входа, но не должен зависеть от хрупкого DOM как единственного источника.
+    dependencies_raw: ARV-002, ARV-050, ARV-030
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-055
+  legacy_snapshot:
+    queue_order: 45
+    block: 3. Коммерческий MVP
+    title: Похожие закупки и поиск аналогичных тендеров
+    status: Запланировано
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 4
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 76
+    completed_summary: PostgreSQL/pgvector и source graph создают техническую основу.
+    next_result: Поиск похожих закупок по предмету, позициям, заказчику и требованиям; объяснение сходства и исключение ложных аналогов.
+    dependencies:
+    - ARV-005
+    - ARV-009
+    - ARV-057
+    source: https://zakupki.kontur.ru/price
+    comment: Перенято у Контур.Закупки; similarity должна быть объяснимой, а не только векторной.
+    dependencies_raw: ARV-005, ARV-009, ARV-057
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-057
+  legacy_snapshot:
+    queue_order: 46
+    block: 3. Коммерческий MVP
+    title: Исторические цены, база цен и ориентир НМЦК
+    status: Исследование
+    priority: P2
+    urgency: 3
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 0
+    score: 79
+    completed_summary: Закупочные данные и позиции уже накапливаются; специализированной ценовой модели нет.
+    next_result: Нормализованные исторические цены, индикаторы диапазона, ориентир НМЦК, прогноз цены/участников и evidence для каждого сравнения.
+    dependencies:
+    - ARV-006
+    - ARV-009
+    - ARV-058
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Seldon, МАРКЕР и Закупки360 подтверждают decision-value ценовых и конкурентных прогнозов.
+    dependencies_raw: ARV-006, ARV-009, ARV-058
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-059
+  legacy_snapshot:
+    queue_order: 47
+    block: 3. Коммерческий MVP
+    title: Аналитика фактического исполнения контрактов
+    status: Исследование
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 71
+    completed_summary: Есть procurement source graph, но жизненный цикл после заключения контракта пока вне ядра.
+    next_result: Закупка → контракт → этапы исполнения → оплаты → сроки → неустойки → фактическая цена → outcome; обратная связь в скоринг и аналитику.
+    dependencies:
+    - ARV-058
+    - ARV-006
+    - ARV-053
+    - ARV-057
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: ТЕНвизор и Закупки.AI поднимают ожидание цикла до исполнения.
+    dependencies_raw: ARV-058, ARV-006, ARV-053, ARV-057
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-069
+  legacy_snapshot:
+    queue_order: 48
+    block: 3. Коммерческий MVP
+    title: Прогноз конкуренции, участников и цены подачи
+    status: Исследование
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 71
+    completed_summary: Есть исторические закупки, заказчики, цены и planned counterparty layer.
+    next_result: Прогноз вероятных участников, диапазона цены и факторов победы; показывать качество модели, выборку и uncertainty.
+    dependencies:
+    - ARV-053
+    - ARV-057
+    - ARV-059
+    source: 'https://zakupki360.ru/
+
+      https://marker-interfax.ru/'
+    comment: Не использовать как обещание победы; только как evidence-backed decision context.
+    dependencies_raw: ARV-053, ARV-057, ARV-059
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-028
+  legacy_snapshot:
+    queue_order: 49
+    block: 5. Поставщики и RFQ
+    title: Развернуть self-hosted n8n как внешний оркестратор
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 3
+    dependency_readiness: 4
+    progress_pct: 5
+    score: 87
+    completed_summary: 'Архитектурное решение принято: n8n не пишет напрямую в рабочие таблицы.'
+    next_result: Развернуть n8n и internal API-контракты для расписаний, ожиданий, webhook и уведомлений.
+    dependencies:
+    - ARV-008
+    - ARV-012
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Бизнес-логика остаётся в FastAPI/Python.
+    dependencies_raw: ARV-008, ARV-012
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-029
+  legacy_snapshot:
+    queue_order: 50
+    block: 5. Поставщики и RFQ
+    title: Первые n8n-пайплайны
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 84
+    completed_summary: Приоритетные сценарии определены.
+    next_result: Мониторинг, анализ, уведомления, RFQ, follow-up, входящие ответы, digest и kanban updates.
+    dependencies:
+    - ARV-028
+    - ARV-025
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Начать с 2–3 самых повторяемых сценариев.
+    dependencies_raw: ARV-028, ARV-025
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-030
+  legacy_snapshot:
+    queue_order: 51
+    block: 6. Коннекторы ЭТП
+    title: Единый слой marketplace connectors
+    status: В работе
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 35
+    score: 85
+    completed_summary: В коде уже есть разные live/demo источники и единая предметная модель procurement.
+    next_result: Стандартный интерфейс адаптеров для ЕИС, ТЭК-Торг, федеральных и коммерческих ЭТП.
+    dependencies:
+    - ARV-002
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Сначала контракт адаптера, потом массовые интеграции.
+    dependencies_raw: ARV-002
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-031
+  legacy_snapshot:
+    queue_order: 52
+    block: 6. Коннекторы ЭТП
+    title: Дедупликация ЕИС и ЭТП
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 82
+    completed_summary: Source graph/provenance baseline уже создан.
+    next_result: Матчинг по реестровому номеру, номеру площадки, заказчику, лотам, датам, сумме и hash документов.
+    dependencies:
+    - ARV-030
+    source: https://github.com/arutyunoveth/ai-corporation/commit/c0e7c7dbfb65765e5a918318d784115b00b4ce06
+    comment: Сохранять уникальные документы и статусы площадки.
+    dependencies_raw: ARV-030
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-032
+  legacy_snapshot:
+    queue_order: 53
+    block: 6. Коннекторы ЭТП
+    title: Исследовать уникальность данных восьми федеральных ЭТП
+    status: Исследование
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 3
+    dependency_readiness: 5
+    progress_pct: 10
+    score: 95
+    completed_summary: Сформулирован вопрос о дублировании ЕИС и площадок; есть рабочий SOAP ЕИС.
+    next_result: 'Матрица: уникальные процедуры/документы, latency, API/SOAP, условия доступа и Anti-DDoS.'
+    dependencies:
+    - ARV-006
+    - ARV-030
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Не подключать все восемь без оценки incremental value.
+    dependencies_raw: ARV-006, ARV-030
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-033
+  legacy_snapshot:
+    queue_order: 54
+    block: 6. Коннекторы ЭТП
+    title: ТЭК-Торг SOAP proof of concept
+    status: Исследование
+    priority: P1
+    urgency: 4
+    importance: 5
+    complexity: 4
+    dependency_readiness: 4
+    progress_pct: 20
+    score: 90
+    completed_summary: Получена инструкция интеграции и изучен WSDL/регламент.
+    next_result: 'Read-only PoC: поиск, карточки, лоты, документы, изменения, протоколы, pagination и dedup.'
+    dependencies:
+    - ARV-030
+    - ARV-032
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Первый внешний адаптер после ЕИС.
+    dependencies_raw: ARV-030, ARV-032
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-036
+  legacy_snapshot:
+    queue_order: 55
+    block: 6. Коннекторы ЭТП
+    title: Интеграция B2B-Center
+    status: Исследование
+    priority: P2
+    urgency: 4
+    importance: 5
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 82
+    completed_summary: Площадка включена в целевой список.
+    next_result: Оценить коммерческие/корпоративные закупки вне ЕИС, API и доступ к документации.
+    dependencies:
+    - ARV-030
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Потенциально более ценна, чем часть федеральных ЭТП.
+    dependencies_raw: ARV-030
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-035
+  legacy_snapshot:
+    queue_order: 56
+    block: 6. Коннекторы ЭТП
+    title: Интеграция Фабрикант
+    status: Исследование
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 4
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 73
+    completed_summary: Площадка включена в целевой список.
+    next_result: Исследовать API/WSDL, лицензирование, документы и уникальный массив.
+    dependencies:
+    - ARV-030
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Приоритет зависит от уникальности закупок.
+    dependencies_raw: ARV-030
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-037
+  legacy_snapshot:
+    queue_order: 57
+    block: 6. Коннекторы ЭТП
+    title: Интеграция Tender-Pro
+    status: Исследование
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 4
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 73
+    completed_summary: Площадка включена в целевой список.
+    next_result: Оценить уникальность, API, документы, ограничения поиска и условия интеграции.
+    dependencies:
+    - ARV-030
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Сравнить ценность с B2B-Center и Фабрикантом.
+    dependencies_raw: ARV-030
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-034
+  legacy_snapshot:
+    queue_order: 58
+    block: 6. Коннекторы ЭТП
+    title: Подключить остальные федеральные ЭТП
+    status: Запланировано
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 5
+    dependency_readiness: 1
+    progress_pct: 0
+    score: 68
+    completed_summary: Пока нет инструкций и подтверждённой уникальности.
+    next_result: Подключать по одной по результатам матрицы incremental value.
+    dependencies:
+    - ARV-032
+    - ARV-033
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Не делать одним большим эпиком.
+    dependencies_raw: ARV-032, ARV-033
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-071
+  legacy_snapshot:
+    queue_order: 59
+    block: 6. Коннекторы ЭТП
+    title: Buyer-side SRM и структурированные ТКП
+    status: Исследование
+    priority: P2
+    urgency: 3
+    importance: 4
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 71
+    completed_summary: Есть опыт SAP SRM-контекста и RFQ-first архитектура.
+    next_result: 'Исследовать SAP SRM и российские SRM: импорт процедур, structured quotation, статусы, API/webhooks и формат безопасного обмена
+      без auto-submit.'
+    dependencies:
+    - ARV-027
+    - ARV-030
+    - ARV-045
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Закрытые корпоративные контуры требуют интеграции, но MVP остаётся upload-first.
+    dependencies_raw: ARV-027, ARV-030, ARV-045
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-043
+  legacy_snapshot:
+    queue_order: 60
+    block: 7. Масштабирование
+    title: 'Multi-tenant SaaS: организации, роли и изоляция данных'
+    status: В работе
+    priority: P2
+    urgency: 3
+    importance: 5
+    complexity: 5
+    dependency_readiness: 3
+    progress_pct: 68
+    score: 79
+    completed_summary: R8 уже реализует изолированный Customer → Project → ProcurementCase → AnalysisRun, ownership FKs, 404 isolation и idempotent
+      active runs.
+    next_result: Organizations, seats, RBAC, tenant isolation, audit, quotas, feature limits, plan enforcement и модульная тарифная модель.
+    dependencies:
+    - ARV-050
+    - ARV-041
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Нужен простой SaaS-контур, не тяжёлая копия enterprise-suite.
+    dependencies_raw: ARV-050, ARV-041
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-046
+  legacy_snapshot:
+    queue_order: 61
+    block: 7. Масштабирование
+    title: Enterprise/on-premise и air-gapped deployment
+    status: Исследование
+    priority: P2
+    urgency: 2
+    importance: 4
+    complexity: 5
+    dependency_readiness: 2
+    progress_pct: 20
+    score: 65
+    completed_summary: Подготовлены security FAQ и варианты cloud/on-prem/air-gapped.
+    next_result: Облако, выделенный/private и локальный контур; local connector, audit trail, SSO, retention и air-gapped режим.
+    dependencies:
+    - ARV-010
+    - ARV-043
+    source: 'https://zakupki.kontur.ru/price
+
+      https://seldon.pro/tariffs/
+
+      https://www.eiscalp.ru/'
+    comment: 'Перенято: варианты развёртывания и локальное хранение у клиента.'
+    dependencies_raw: ARV-010, ARV-043
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-045
+  legacy_snapshot:
+    queue_order: 62
+    block: 7. Масштабирование
+    title: Интеграции 1С, CRM, ERP и корпоративных систем
+    status: Отложено
+    priority: P2
+    urgency: 2
+    importance: 4
+    complexity: 5
+    dependency_readiness: 1
+    progress_pct: 0
+    score: 62
+    completed_summary: Есть опыт SAP SRM-контекста клиента и internal API-концепция.
+    next_result: Документированный API, MCP, датасеты распознанной документации, 1С/CRM/ERP, Bitrix24, webhooks и API как тарифный модификатор.
+    dependencies:
+    - ARV-030
+    - ARV-043
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: TenderGuru, BIMLIB, Контур, Seldon и Tenderstore делают API/data layer конкурентным активом.
+    dependencies_raw: ARV-030, ARV-043
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-044
+  legacy_snapshot:
+    queue_order: 63
+    block: 7. Масштабирование
+    title: Web-first + mobile companion «тендерный радар»
+    status: Отложено
+    priority: P2
+    urgency: 2
+    importance: 3
+    complexity: 5
+    dependency_readiness: 1
+    progress_pct: 5
+    score: 57
+    completed_summary: 'Исследованы мобильные конкуренты и сформулирован сценарий: лента, GO/NO-GO, избранное, уведомления.'
+    next_result: 'На телефоне: push, быстрый триаж, GO/NO-GO, сроки, избранное и быстрые решения; полный workflow остаётся в web.'
+    dependencies:
+    - ARV-021
+    - ARV-043
+    source: 'https://www.rustore.ru/catalog/app/ru.digitender.app
+
+      https://tenmon.ru/'
+    comment: 'Не копировать мобильный агрегатор: приложение — companion к глубокому web-анализу.'
+    dependencies_raw: ARV-021, ARV-043
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-070
+  legacy_snapshot:
+    queue_order: 64
+    block: 7. Масштабирование
+    title: Интеграции банковских гарантий и тендерного финансирования после GO
+    status: Отложено
+    priority: P3
+    urgency: 2
+    importance: 3
+    complexity: 4
+    dependency_readiness: 2
+    progress_pct: 0
+    score: 62
+    completed_summary: В конкурентном анализе выделен отдельный bank ecosystem с бесплатным поиском и финансированием.
+    next_result: После решения GO передавать подтверждённые параметры закупки партнёру для гарантии/кредита; consent, audit и несколько провайдеров.
+    dependencies:
+    - ARV-018
+    - ARV-020
+    - ARV-041
+    source: Arvectum_Competitive_Analysis_RU_Market_2026-07-22.xlsx
+    comment: Партнёрский слой после product-market fit; не смешивать финансовую рекомендацию с анализом закупки.
+    dependencies_raw: ARV-018, ARV-020, ARV-041
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-062
+  legacy_snapshot:
+    queue_order: 65
+    block: 9. Управление разработкой
+    title: Настроить полное зеркало репозитория ai-corporation в GitVerse
+    status: Запланировано
+    priority: P1
+    urgency: 4
+    importance: 4
+    complexity: 2
+    dependency_readiness: 5
+    progress_pct: 0
+    score: 92
+    completed_summary: Требование зафиксировано; GitHub остаётся каноническим основным репозиторием.
+    next_result: Создать приватный mirror в GitVerse, перенести полную git-историю, все ветки и теги; настроить одностороннюю автоматическую синхронизацию,
+      protected branches, проверку клонирования/восстановления и эксплуатационный runbook.
+    dependencies:
+    - ARV-051
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Зеркалируется git-репозиторий и refs. Secrets, CI variables, issues/PR, releases/artifacts и Git LFS проверяются и переносятся отдельно;
+      токены не коммитятся.
+    dependencies_raw: ARV-051
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-047
+  legacy_snapshot:
+    queue_order: 66
+    block: 8. Поздняя оптимизация
+    title: OpenSearch / Elasticsearch для расширенного поиска
+    status: Отложено
+    priority: P3
+    urgency: 1
+    importance: 2
+    complexity: 5
+    dependency_readiness: 1
+    progress_pct: 0
+    score: 46
+    completed_summary: Текущий поиск работает на PostgreSQL.
+    next_result: Внедрять только после измеренного дефицита качества или скорости.
+    dependencies:
+    - ARV-009
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Не создавать инфраструктурный долг заранее.
+    dependencies_raw: ARV-009
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-048
+  legacy_snapshot:
+    queue_order: 67
+    block: 8. Поздняя оптимизация
+    title: ClickHouse для событий и аналитики
+    status: Отложено
+    priority: P3
+    urgency: 1
+    importance: 2
+    complexity: 5
+    dependency_readiness: 1
+    progress_pct: 0
+    score: 46
+    completed_summary: Пока нет объёма событий, который требует отдельного OLAP.
+    next_result: Вернуться при значительном потоке событий, цен и пользовательской аналитики.
+    dependencies:
+    - ARV-039
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: PostgreSQL достаточно на MVP.
+    dependencies_raw: ARV-039
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
+- id: ARV-049
+  legacy_snapshot:
+    queue_order: 68
+    block: 8. Поздняя оптимизация
+    title: Kubernetes / Helm
+    status: Отложено
+    priority: P3
+    urgency: 1
+    importance: 1
+    complexity: 5
+    dependency_readiness: 1
+    progress_pct: 0
+    score: 41
+    completed_summary: Docker-архитектуры достаточно для первого VPS.
+    next_result: Вернуться при нескольких серверах, HA или enterprise-инсталляциях.
+    dependencies:
+    - ARV-012
+    - ARV-046
+    source: https://github.com/arutyunoveth/ai-corporation
+    comment: Не нужен на стадии одного VPS.
+    dependencies_raw: ARV-012, ARV-046
+  reconciliation:
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null

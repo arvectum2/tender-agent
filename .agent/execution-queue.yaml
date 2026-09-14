@@ -1,66 +1,77 @@
-version: 1
+# Filtered executable projection of docs/roadmap/master-roadmap.yaml.
+# This file is intentionally narrower than the full product roadmap.
+# Presence in the master roadmap does not grant execution authority or queue admission.
+# The executor may update allowed execution status/evidence only; it must not silently
+# create priorities, resolve roadmap ID conflicts, infer ARV mappings, or change gates.
+version: 2
 repository: arvectum2/tender-agent
-updated_at: "2026-09-14T14:46:00Z"
+updated_at: '2026-09-14T18:00:00Z'
 owner_controls_order: true
-
-# Ordered execution view over canonical issues. The executor may update
-# status/evidence only; it must not silently create priorities or change gates.
+master_roadmap: docs/roadmap/master-roadmap.yaml
+master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
+projection:
+  role: filtered_executable_projection
+  master_roadmap_is_scope_history_source: true
+  admission_requires_explicit_queue_entry: true
+  queue_is_not_complete_roadmap: true
+  executor_must_not_promote_master_items: true
+  executor_must_not_resolve_id_conflicts: true
+  executor_must_not_infer_arv_mapping: true
+  authority_remains_defined_by_executor_policy_and_company_source: true
 items:
-  - order: 10
-    task_id: DOCUMENT-QA-005
-    title: "Source-bound customer role and identity extraction"
-    status: in_progress
-    authority: AUTO
-    independent: true
-    auto_merge: true
-    source: "issue #16; active child checkpoint DOCUMENT-QA-005-BLIND-CASE10; blind acceptance issue #34"
-    dependencies: []
-    executor_scope: "Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve frozen truth/comparator/normalizer."
-    done_gate: "Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance, with required CI/evidence recorded."
-
-  - order: 20
-    task_id: BUILD-DOCKER-CONTEXT-001
-    title: "Repair Docker context dependency on missing landing assets"
-    status: ready
-    authority: AUTO
-    independent: true
-    auto_merge: true
-    source: "issue #19"
-    dependencies: []
-    executor_scope: "Restore a self-contained reproducible clean-checkout Docker build; keep external/local sibling dependencies explicit and deterministic."
-    done_gate: "Issue #19 acceptance criteria and relevant CI/runtime smoke evidence pass."
-
-  - order: 30
-    task_id: DISCOVERY-QA-001
-    title: "Procurement search quality benchmark and relevance hardening"
-    status: blocked
-    authority: REVIEW
-    independent: true
-    auto_merge: false
-    source: "issue #2"
-    dependencies:
-      - BENCHMARK-PIPELINE-001
-    blocker: "Issue #2 requires Product Owner inspection/promotion after the completed control rerun. Repository state does not contain an explicit canonical promotion yet."
-    owner_gate: "Product Owner must explicitly promote this item to READY before search-weight tuning or corpus expansion."
-    executor_scope: "May inspect current evidence and prepare a decision packet, but do not tune search or expand corpus while status remains blocked."
-
-  - order: 40
-    task_id: DOCUMENT-QA-NEXT-INCREMENT
-    title: "Next measured document-QA failure family"
-    status: deferred
-    authority: REVIEW
-    independent: false
-    auto_merge: false
-    source: "issue #3 current strategy"
-    dependencies:
-      - DOCUMENT-QA-005
-    owner_gate: "Promote only after a concrete reusable failure family is captured in a canonical issue with acceptance criteria."
-    executor_scope: "Do not invent the next product priority from benchmark output; prepare evidence/options only."
-
+- order: 10
+  task_id: DOCUMENT-QA-005
+  title: Source-bound customer role and identity extraction
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16; latest exposed blind acceptance issue #36'
+  dependencies: []
+  executor_scope: Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve
+    frozen truth/comparator/normalizer.
+  done_gate: 'Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance, with required CI/evidence recorded.'
+- order: 20
+  task_id: BUILD-DOCKER-CONTEXT-001
+  title: Repair Docker context dependency on missing landing assets
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'issue #19'
+  dependencies: []
+  executor_scope: Restore a self-contained reproducible clean-checkout Docker build; keep external/local sibling dependencies explicit and deterministic.
+  done_gate: 'Issue #19 acceptance criteria and relevant CI/runtime smoke evidence pass.'
+- order: 30
+  task_id: DISCOVERY-QA-001
+  title: Procurement search quality benchmark and relevance hardening
+  status: blocked
+  authority: REVIEW
+  independent: true
+  auto_merge: false
+  source: 'issue #2'
+  dependencies:
+  - BENCHMARK-PIPELINE-001
+  blocker: 'Issue #2 requires Product Owner inspection/promotion after the completed control rerun. Repository state does not contain an explicit
+    canonical promotion yet.'
+  owner_gate: Product Owner must explicitly promote this item to READY before search-weight tuning or corpus expansion.
+  executor_scope: May inspect current evidence and prepare a decision packet, but do not tune search or expand corpus while status remains blocked.
+- order: 40
+  task_id: DOCUMENT-QA-NEXT-INCREMENT
+  title: Next measured document-QA failure family
+  status: deferred
+  authority: REVIEW
+  independent: false
+  auto_merge: false
+  source: 'issue #3 current strategy'
+  dependencies:
+  - DOCUMENT-QA-005
+  owner_gate: Promote only after a concrete reusable failure family is captured in a canonical issue with acceptance criteria.
+  executor_scope: Do not invent the next product priority from benchmark output; prepare evidence/options only.
 completed_dependencies:
-  - task_id: BENCHMARK-PIPELINE-001
-    source: "issue #1"
-    status: done
-  - task_id: DOCUMENT-QA-004
-    source: "issue #11 and completed held-out acceptance sequence"
-    status: done
+- task_id: BENCHMARK-PIPELINE-001
+  source: 'issue #1'
+  status: done
+- task_id: DOCUMENT-QA-004
+  source: 'issue #11 and completed held-out acceptance sequence'
+  status: done
