@@ -17,22 +17,23 @@ completed:
   - "PR #40 merged after exact-head CI run 34890440084 succeeded."
   - "Fixed product commit for case 13 is bd07f39d4b88c0196dcfa017047b276ea271e06b."
   - "Case 12 archived as exposed regression-only; its blind result/frozen truth remain immutable."
-current: "Select and independence-check a fresh post-merge case 13 candidate before source acquisition."
+  - "Selected fresh case-13 candidate 0137200001226007271 (`Поставка кабеля`) after PR #40 merge; current tree, full git history, GitHub code/issues/PR searches all had no prior hit."
+  - "Created dedicated calibration issue #41 with fixed product commit and blind protocol."
+  - "Created isolated worktree /Users/master/tender-agent-case13-phase-a on branch local/calibration-case13-phase-a at exact product commit bd07f39d4b88c0196dcfa017047b276ea271e06b; isolated backend started on port 8059 with separate SQLite."
+current: "Run source-only Phase A for case 13, inspect official customer/organizer evidence and event state, and reject pre-SUT if provenance/evidence is insufficient."
 pending:
-  - "Select a fresh independent 44-FZ candidate with explicit customer-role evidence and publicly ingestible official attachments."
-  - "Create a dedicated case-13 issue with fixed product state and blind protocol."
   - "Create an isolated case-13 worktree at exact fixed product commit and run source-only Phase A."
   - "Freeze blind labels before SUT, execute exactly one first-blind run, normalize/compare/review and record immutable result."
   - "Transition #16 and the canonical queue according to the genuine blind result."
 last_verified_commit: "bd07f39d4b88c0196dcfa017047b276ea271e06b"
 test_results:
   - "PR #40 exact-head CI 34890440084: success."
-updated_at: "2026-09-14T20:24:19.267899+00:00"
-resume_instruction: "Use Mac-mini-master.local. Select a fresh independent 44-FZ customer-role case after PR #40 merge. Do not reuse cases 3-12, do not inspect case-13 SUT output before source-only label freeze, and keep runtime provenance fixed to bd07f39d4b88c0196dcfa017047b276ea271e06b."
+updated_at: "2026-09-14T20:28:20.014233+00:00"
+resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-case13-phase-a. Case 13 is registry 0137200001226007271, issue #41, fixed product bd07f39d4b88c0196dcfa017047b276ea271e06b. Run source-only Phase A on port 8059, inspect official EIS role/event evidence without SUT analysis, reject pre-SUT if needed, otherwise bind context, author/freeze source-only labels before exactly one analysis."
 execution:
   claimed_by: "chatgpt"
   execution_id: "document-qa-005-case13-blind"
-  branch: null
+  branch: "local/calibration-case13-phase-a"
   base_commit: "bd07f39d4b88c0196dcfa017047b276ea271e06b"
-  lease_until: "2026-09-14T22:24:19.267899+00:00"
+  lease_until: "2026-09-14T22:28:20.014233+00:00"
   manual_override: false
