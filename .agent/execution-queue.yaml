@@ -1,6 +1,6 @@
 version: 1
 repository: arvectum2/tender-agent
-updated_at: "2026-09-14T13:50:00Z"
+updated_at: "2026-09-14T14:46:00Z"
 owner_controls_order: true
 
 # Ordered execution view over canonical issues. The executor may update
@@ -13,7 +13,7 @@ items:
     authority: AUTO
     independent: true
     auto_merge: true
-    source: "issue #16; active child checkpoint DOCUMENT-QA-005-BLIND-CASE9"
+    source: "issue #16; active child checkpoint DOCUMENT-QA-005-BLIND-CASE10; blind acceptance issue #34"
     dependencies: []
     executor_scope: "Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve frozen truth/comparator/normalizer."
     done_gate: "Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance, with required CI/evidence recorded."
