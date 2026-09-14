@@ -85,6 +85,18 @@ _CUSTOMER_TABLE_ROW_RE = re.compile(
     + r"Адрес\s+электронной\s+почты|Номер\s+контактного\s+телефона|"
     + r"Ответственное\s+должностное\s+лицо|ИНН(?:\s*/\s*КПП)?|КПП|ОГРН)\s*:)|$)"
 )
+# Same-line role/value extraction is fail-closed when flattened requisites
+# glue customer-detail fields into the captured value.  Trimming at the first
+# marker is unsafe because aliases/parentheticals may sit between the legal
+# name and those details; another explicit source or a contract preamble must
+# provide the identity instead.
+_CUSTOMER_DETAIL_FIELD_RE = re.compile(
+    r"(?:e[ -]?mail|email|адрес\s+электронной\s+почты|электронн(?:ая|ой)\s+почт(?:а|ы)|"
+    r"(?:номер\s+контактного\s+)?телефон|место\s+нахождения|почтовый\s+адрес|"
+    r"ответственное\s+должностное\s+лицо|ИНН(?:\s*/\s*КПП)?|КПП|ОГРН|ОКПО|ОКТМО|"
+    r"банковские\s+реквизиты)\s*:?",
+    re.IGNORECASE,
+)
 # Bare role label line whose organization follows on a neighboring line.
 _CUSTOMER_ROLE_LINE_RE = re.compile(
     r"(?im)^\s*" + _CUSTOMER_ROLE_TOKEN + r"[ \t]*:?[ \t]*$"
@@ -202,14 +214,17 @@ def _structured_candidates(text: str, source_role: str) -> list[_Candidate]:
 
 def _label_candidates(text: str, source_role: str) -> list[_Candidate]:
     found: list[_Candidate] = []
-    for pattern in (
-        _CUSTOMER_LABEL_LINE_RE,
-        _CUSTOMER_ROLE_CELL_RE,
-        _CUSTOMER_TABLE_ROW_RE,
+    for pattern, reject_glued_details in (
+        (_CUSTOMER_LABEL_LINE_RE, True),
+        (_CUSTOMER_ROLE_CELL_RE, True),
+        (_CUSTOMER_TABLE_ROW_RE, False),
     ):
         for match in pattern.finditer(text):
+            raw = match.group(1)
+            if reject_glued_details and _CUSTOMER_DETAIL_FIELD_RE.search(raw):
+                continue
             candidate = _accept(
-                match.group(1), evidence_kind=_EXPLICIT_CUSTOMER_LABEL, source_role=source_role
+                raw, evidence_kind=_EXPLICIT_CUSTOMER_LABEL, source_role=source_role
             )
             if candidate is not None:
                 found.append(candidate)

@@ -1,0 +1,44 @@
+version: 2
+repository: arvectum2/tender-agent
+status: in_progress
+task_id: DOCUMENT-QA-005-CASE11-FIX
+authority: AUTO
+goal: "Fix the generic customer legal-identity boundary defect exposed by blind case 11, prove exposed regression without altering frozen benchmark truth/comparator/normalizer, merge after CI, then select a fresh held-out blind acceptance case."
+definition_of_done:
+  - "Diagnose the generic source-bound legal-name over-capture that appended alias/contact/address data to case-11 customer_name."
+  - "Implement a reusable resolver boundary fix with synthetic tests; no case-specific registry/name literals."
+  - "Keep benchmark truth, comparator, normalizer, and case-11 first-blind artifacts immutable."
+  - "Run focused tests, full relevant quality checks, and exposed case-11 regression on frozen bytes; require customer_name TRUE_POSITIVE for regression."
+  - "Commit/push the generic fix, open PR, merge only after GitHub CI passes."
+  - "After merge, choose a new independent held-out customer-role procurement for final #16 blind acceptance."
+completed:
+  - "Case 11 first-blind run toa-run-20260914162940-be7f99 remains immutable; comparator TP=1 FP=1 FN=26 F1=0.06896551724137931 with customer_name CONTRADICTION."
+  - "Root cause reproduced generically: same-line explicit `ЗАКАЗЧИК:` requisites can glue alias/contact/address fields into the captured identity and outrank clean customer-role evidence."
+  - "Added two generic synthetic regression tests; baseline failed 2/24 as expected."
+  - "Implemented fail-closed glued-detail detection for same-line explicit customer-label/cell candidates; table-row extractor remains bounded by its own explicit field markers."
+  - "Focused customer-role suite: 24/24 PASS; broader customer/document suite: 77/77 PASS; Ruff clean; git diff --check clean; make check PASS."
+  - "Exposed case-11 resolver check on unchanged extracted bytes returns frozen customer_name exactly."
+  - "Exposed case-11 runtime regression toa-run-20260914173516-d9db32 on isolated port 8056 returns frozen customer_name exactly; repository comparator customer_name TRUE_POSITIVE, 0 contradictions, TP=2 FP=0 FN=25 F1=0.13793103448275862."
+  - "Full make test completed with 2931 passed, 241 skipped and one pre-existing local pg_restore environment failure in tests/test_r9_backup_restore.py; no customer-related failures."
+current: "PR #37 product fix validated locally; rebased onto latest main without replacing the active OWNER roadmap checkpoint. Await refreshed PR CI, then merge and start a fresh blind case."
+pending:
+  - "Stop isolated exposed-regression runtime 8056; verify shared port 8000 remains untouched."
+  - "Commit and push the generic resolver fix plus checkpoint."
+  - "Open PR, run CI, merge only after all required jobs pass."
+  - "After merge, select a fresh independent blind case and update checkpoint before acquisition."
+last_verified_commit: "b5da88de89fab7d0e8d61e86a4b5560e1affe024"
+test_results:
+  - "24/24 focused customer-role tests PASS."
+  - "77/77 broader customer/document tests PASS."
+  - "Ruff PASS; git diff --check PASS; make check PASS."
+  - "Full make test: 2931 passed, 241 skipped, 1 failed only because local pg_restore returned exit code 1 in test_r9_backup_restore; same known environment class, unrelated to customer resolver."
+  - "Exposed case-11 comparator: customer_name TRUE_POSITIVE; no contradictions; TP=2 FP=0 FN=25 precision=1.0 recall=0.07407407407407407 F1=0.13793103448275862."
+updated_at: "2026-09-14T17:52:00Z"
+resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-dqa005-case11-followup. Do not rerun case 11 blind. PR #37 is the generic fix. Preserve the active OWNER ROADMAP-CANONICAL-001 current-task on main. Wait for refreshed CI after rebase, merge #37 only if all jobs pass, then select a fresh independent blind case for #16 and continue from a separate checkpoint if the OWNER lease is still active."
+execution:
+  claimed_by: "chatgpt"
+  execution_id: "dqa005-case11-fix"
+  branch: "document-qa-005-case11-customer-boundary"
+  base_commit: "b5da88de89fab7d0e8d61e86a4b5560e1affe024"
+  lease_until: null
+  manual_override: false
