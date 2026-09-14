@@ -60,3 +60,62 @@ def test_unbalanced_parenthetical_preamble_fragment_is_rejected():
     source = 'ГУ «Центр), именуемое в дальнейшем «Заказчик», в лице директора.'
 
     assert value(contract_draft_text=source) is None
+
+
+def test_numbered_notice_customer_table_row_with_name_field_is_resolved():
+    source = (
+        "6\tЗаказчик\tНаименование: ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ''ЦЕНТР''"
+        "Место нахождения и почтовый адрес: Российская Федерация, г. Москва"
+        "Адрес электронной почты: office@example.test"
+    )
+
+    resolution = resolve_customer_name(notice_text=source)
+
+    assert resolution is not None
+    assert resolution.value == "ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ УЧРЕЖДЕНИЕ ''ЦЕНТР''"
+    assert resolution.evidence_kind == "explicit_customer_label"
+    assert resolution.source_role == "notice"
+
+
+def test_unnumbered_notice_customer_table_row_is_resolved():
+    source = "Заказчик\tНаименование: Государственное учреждение «Центр»Почтовый адрес: г. Москва"
+
+    assert value(notice_text=source) == "Государственное учреждение «Центр»"
+
+
+def test_unquoted_customer_role_in_contract_preamble_is_resolved():
+    source = (
+        "Государственное учреждение «Центр», "
+        "именуемое в дальнейшем Заказчик, в лице директора."
+    )
+
+    resolution = resolve_customer_name(contract_draft_text=source)
+
+    assert resolution is not None
+    assert resolution.value == "Государственное учреждение «Центр»"
+    assert resolution.evidence_kind == "contract_party_preamble"
+    assert resolution.source_role == "contract"
+
+
+def test_notice_table_customer_outranks_unquoted_contract_preamble():
+    notice = "6\tЗаказчик\tНаименование: ГОСУДАРСТВЕННОЕ УЧРЕЖДЕНИЕ ''ЦЕНТР''Почтовый адрес: г. Москва"
+    contract = (
+        "Государственное учреждение «Центр», "
+        "именуемое в дальнейшем Заказчик, в лице директора."
+    )
+
+    resolution = resolve_customer_name(notice_text=notice, contract_draft_text=contract)
+
+    assert resolution is not None
+    assert resolution.value == "ГОСУДАРСТВЕННОЕ УЧРЕЖДЕНИЕ ''ЦЕНТР''"
+    assert resolution.evidence_kind == "explicit_customer_label"
+    assert resolution.source_role == "notice"
+
+
+def test_inflected_unquoted_customer_word_is_not_a_role_assignment():
+    source = (
+        "Государственное учреждение «Центр», "
+        "именуемое в дальнейшем Заказчиком, в лице директора."
+    )
+
+    assert value(contract_draft_text=source) is None

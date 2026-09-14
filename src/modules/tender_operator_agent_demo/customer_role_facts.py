@@ -69,7 +69,21 @@ _CUSTOMER_LABEL_LINE_RE = re.compile(
 # Case-SENSITIVE on purpose: the inline (?i) used elsewhere would defeat the
 # uppercase guard.
 _CUSTOMER_ROLE_CELL_RE = re.compile(
-    r"(?m)^\s*" + _CUSTOMER_ROLE_TOKEN + r"[ \t]+([А-ЯA-Z«\"][^\n\t]{3,239})"
+    r"(?m)^\s*" + _CUSTOMER_ROLE_TOKEN + r"[ \t]+(?!(?i:Наименование)[ \t]*:)([А-ЯA-Z«\"][^\n\t]{3,239})"
+)
+# Structured notice tables may flatten as:
+# ``6\tЗаказчик\tНаименование: <ORG>Место нахождения ...``.  Preserve the
+# explicit role/cell semantics, allow an optional numbered first cell, and stop
+# the legal-name capture before common customer-detail field labels that can be
+# glued to the organization by DOCX table extraction.
+_CUSTOMER_TABLE_ROW_RE = re.compile(
+    r"(?m)^(?:[ \t]*\d+(?:\.\d+)?[ \t]*\t)?[ \t]*"
+    + _CUSTOMER_ROLE_TOKEN
+    + r"[ \t]*\t[ \t]*(?:Наименование[ \t]*:[ \t]*)?"
+    + r"([А-ЯA-Z«\"][^\n\t]{3,500}?)(?="
+    + r"(?:(?:Место\s+нахождения(?:\s+и\s+почтовый\s+адрес)?|Почтовый\s+адрес|"
+    + r"Адрес\s+электронной\s+почты|Номер\s+контактного\s+телефона|"
+    + r"Ответственное\s+должностное\s+лицо|ИНН(?:\s*/\s*КПП)?|КПП|ОГРН)\s*:)|$)"
 )
 # Bare role label line whose organization follows on a neighboring line.
 _CUSTOMER_ROLE_LINE_RE = re.compile(
@@ -85,7 +99,8 @@ _LOCALITY_ABBR = r"р\.п\.|г\.|д\.|с\.|ул\.|пр\.|пер\.|бул\.|на�
 _ROLE_TAIL = (
     r"(?:\s*,?\s+(?i:именуем(?:ое|ая|ый|ые)?)[\s\S]{0,80}?"
     r"|\s*,?\s+(?i:в дальнейшем по тексту)[\s\S]{0,20}?"
-    r"|\s+(?i:далее)\s*[–—\-:]\s*)[«\"]Заказчик[»\"]"
+    r"|\s+(?i:далее)\s*[–—\-:]\s*)"
+    r"(?:[«\"]Заказчик[»\"]|(?i:Заказчик)\b)"
 )
 _ROLE_TEMPERED = r"(?:(?!(?i:именуем|в дальнейшем)).){2,219}?"
 _CONTRACT_PARTY_RE = re.compile(
@@ -179,7 +194,11 @@ def _structured_candidates(text: str, source_role: str) -> list[_Candidate]:
 
 def _label_candidates(text: str, source_role: str) -> list[_Candidate]:
     found: list[_Candidate] = []
-    for pattern in (_CUSTOMER_LABEL_LINE_RE, _CUSTOMER_ROLE_CELL_RE):
+    for pattern in (
+        _CUSTOMER_LABEL_LINE_RE,
+        _CUSTOMER_ROLE_CELL_RE,
+        _CUSTOMER_TABLE_ROW_RE,
+    ):
         for match in pattern.finditer(text):
             candidate = _accept(
                 match.group(1), evidence_kind=_EXPLICIT_CUSTOMER_LABEL, source_role=source_role
