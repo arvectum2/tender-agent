@@ -1,10 +1,10 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-CASE14-BLIND
+task_id: DOCUMENT-QA-005-BLIND-CASE14
 authority: AUTO
-goal: 'Run fresh held-out blind case 14 after the generic case-13 fix merge; preserve freeze-before-SUT integrity and close
-  #16 only on strict unbiased customer_name TRUE_POSITIVE.'
+goal: 'Run a fresh independent held-out blind customer-role acceptance case for DOCUMENT-QA-005 after PR #42, preserving freeze-before-SUT
+  integrity and closing #16 only on unbiased strict customer_name acceptance.'
 definition_of_done:
 - Select a new 44-FZ procurement not previously used for development, calibration, regression, issues, PRs or commits.
 - Fix product runtime provenance at merge commit 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2; later checkpoint-only commits must
