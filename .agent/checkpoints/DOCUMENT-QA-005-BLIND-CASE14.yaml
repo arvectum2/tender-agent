@@ -1,0 +1,57 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: DOCUMENT-QA-005-BLIND-CASE14
+authority: AUTO
+goal: 'Run a fresh independent held-out blind customer-role acceptance case for DOCUMENT-QA-005 after PR #42, preserving freeze-before-SUT
+  integrity and closing #16 only on unbiased strict customer_name acceptance.'
+definition_of_done:
+- Select a new 44-FZ procurement not previously used for development, calibration, regression, issues, PRs or commits.
+- Fix product runtime provenance at merge commit 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2; later checkpoint-only commits must
+  not change SUT provenance.
+- Acquire current original official EIS bytes and revision/event state and reject pre-SUT on material source conflict, insufficient
+  customer-role evidence or ingestion incompatibility.
+- Author and freeze source-only blind labels before any Tender Agent analysis; do not mutate truth/comparator/normalizer afterward.
+- Run exactly one valid first-blind analysis in an isolated runtime using the exact frozen source bytes.
+- Normalize, compare and route review with repository-owned unchanged tooling and preserve the first valid result even if
+  it fails.
+- 'Record immutable evidence in dedicated issue #44 and #16; close #16 only if strict unbiased customer_name is TRUE_POSITIVE.'
+- If accepted, mark DOCUMENT-QA-005 complete and advance the execution queue; if failed, preserve case 14 as exposed regression
+  and continue only with a generic reusable fix.
+completed:
+- Case 13 first-blind failure remains immutable and exposed regression-only.
+- 'Generic case-13 representation-boundary fix merged via PR #42 as 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2 after exact-head
+  CI success.'
+- 'Fresh case-14 candidate 0194200000526005052 selected after PR #42 merge and before any case-14 SUT analysis; no current-tree,
+  full-history, GitHub code/commit/issue/PR hit.'
+- 'Dedicated blind case issue #44 created with fixed product commit and freeze-before-SUT protocol.'
+- Isolated worktree /Users/master/tender-agent-case14-phase-a created at exact product commit 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2
+  and backend started on 127.0.0.1:8060 with separate SQLite/data root.
+- Phase A acquired and froze source bundle SHA256 8eb07ce9fc00dae4d89f2731b0ec27d6ff577cdba7807910327b81acdea4dc18; current
+  EIS revision independently verified before SUT.
+- 'Source-only customer truth frozen before analysis: Муниципальное бюджетное учреждение культуры «Городской Дом культуры»
+  г. Гудермес Гудермесского муниципального района; label-set SHA256 d9368a73592ac8b306dbdd5c72dcfbbd865797116f930ab4f69c2190a44dc038.'
+- 'Exactly one first-blind analysis ran: analysis_started -> stub_analysis_fallback -> analysis_completed.'
+- 'First-blind strict customer_name result was CONTRADICTION: runtime prepended adjacent table-cell text to the correct legal
+  customer name; TP=0 FP=1 FN=1 for focused truth.'
+- 'Case 14 is permanently exposed regression-only; issue #44 recorded evidence and was closed completed. Issue #16 remains
+  open.'
+current: Completed as an immutable failed blind acceptance; no further blind execution is allowed for this case.
+pending: []
+last_verified_commit: 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2
+test_results:
+- 'Pre-freeze source-only runtime: analysis_mode=not_started, final_recommendation=null, zero analysis events.'
+- Phase B run toa-run-20260914213712-35fc0f completed once at product 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2.
+- 'customer_name comparator outcome: CONTRADICTION; expected legal name versus actual adjacent-cell-prefixed legal name.'
+- Artifact ZIP SHA256 86609daa20dc6acd22d9d4834ef34edefeddacbaad09fb1e1b97f2357e8b9ca2; normalized output b40ac470058c421645f635dacf78d511daf79d6b57b7ee9ff84734593a828f6e;
+  audit 6a8e382e9108a5841025ebaec008e87199f8706c5b532e1e2467b3e22847fb7d.
+updated_at: '2026-09-14T21:48:58.855965+00:00'
+resume_instruction: Case 14 is completed failed blind evidence and regression-only. Never rerun it as blind or mutate its
+  truth/freeze/comparator/normalizer.
+execution:
+  claimed_by: chatgpt
+  execution_id: document-qa-005-case14-blind
+  branch: local/calibration-case14-phase-a
+  base_commit: 2dd3465b64a2897aa23fb5f24c083d7b3e7087a2
+  lease_until: '2026-09-14T21:48:58.855965+00:00'
+  manual_override: false
