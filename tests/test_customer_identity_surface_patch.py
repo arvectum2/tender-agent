@@ -1,6 +1,8 @@
 """Regression coverage for legal-name vs definitional-alias boundaries."""
 
-from src.modules.tender_operator_agent_demo.customer_role_facts import resolve_customer_name
+from src.modules.tender_operator_agent_demo.customer_role_facts import (
+    resolve_customer_name,
+)
 
 
 def value(**kwargs) -> str | None:
