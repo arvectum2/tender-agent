@@ -14,6 +14,48 @@ Current repository evidence is recorded as a **reconciliation overlay**. It may 
 
 Blocked, REVIEW, OWNER and HUMAN gates remain blocked/gated even when later independent queue work is executable. The roadmap does not expand Company AM-4 authority.
 
+## Owner acceleration directive — 2026-09-14
+
+The Product Owner changes the default development posture from **build-first** to **reuse-first**. Historical ARV IDs/status snapshots below remain immutable history; this directive is a current strategy overlay and does not renumber or silently rewrite them.
+
+**Product thesis:** **Thin Commodity Shell + Deep Decision Core.** Before designing a feature from scratch, first identify who already solved the problem and prefer the shortest lawful path.
+
+| Strategy | Default use | Hard boundary |
+|---|---|---|
+| `REUSE` | OSS/library/component already solves the commodity problem | Check license, security, maintenance and fit |
+| `COPY_PATTERN` | A competitor/public product has a proven UX/workflow/functional pattern | Reimplement behavior; do **not** copy proprietary source, assets, text or private data |
+| `ADAPT` | API/protocol/service/standard component can be integrated | Keep vendor boundary replaceable; own only the differentiating layer |
+| `INVENT` | Existing options fail or the capability is part of Tender Agent's moat | Requires written gap, differentiation and maintenance-cost justification |
+
+**INVENT gate:** no new custom implementation enters active work until reusable OSS/APIs/public patterns have been checked, the gap is documented, the differentiation maps to Decision Core / Commercial Core / procurement-specific edge cases, and ownership cost is justified. Without that evidence the item defaults to `REUSE`, `COPY_PATTERN` or `ADAPT`.
+
+### Accelerated sequence
+
+| Stage | Priority | Outcome |
+|---|---|---|
+| **0. Competitive reverse-spec + reuse registry** | P0 | Benchmark 8–10 direct competitors across `search → results → tender card → documents → AI analysis → decision → next action`; record best patterns, components/APIs, licenses/legal boundaries and explicit de-scope decisions. Classify every active P0/P1 item. |
+| **1. Thin commodity shell** | P0 | Baseline search/filter/saved views, card, document viewer/parsing adapters, auth/roles, alerts and export — mostly reuse/adaptation, no gold-plating. |
+| **2. Decision Core v1** | P0 | Canonical facts, evidence chain, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW, risk/unknown/confidence, clickable evidence and regression benchmark. |
+| **3. Commercial Core** | P0 | Nomenclature normalization, catalog matching, substitutes, Supplier → RFQ → TKP, landed cost, margin and bid economics. |
+| **4. Automation + integrations** | P1 | Alerts, email/CRM/source connectors, APIs/webhooks and scheduled reporting only where they shorten validated workflows. |
+| **5. Reliability + moat** | P1 | 44-ФЗ/223-ФЗ/private edge cases, regression depth, outcome telemetry, security/compliance and workflow lock-in. |
+
+### Commodity default: do not build from scratch
+
+Custom OCR, PDF renderer/viewer, vector/search infrastructure, auth framework, generic chatbot/RAG shell, notification service, analytics/dashboard platform, CRM clone and premature distributed infrastructure are **not** differentiation. Reuse/adapt them unless a measured gap proves otherwise.
+
+### What we deliberately own
+
+Custom engineering is concentrated in: evidence-bound procurement facts; GO/NO-GO and blockers; nomenclature/catalog matching and substitutions; Supplier → RFQ → TKP; real margin/bid economics; contract/procurement risks; 44-ФЗ/223-ФЗ/private edge cases; and the regression corpus built from real failures.
+
+### Strategy success gates
+
+- ≥70% of new P0/P1 **commodity** work resolves through `REUSE` / `COPY_PATTERN` / `ADAPT`.
+- 100% of substantive GO/NO-GO claims have source evidence or explicit `Unknown`.
+- No hard decision exists without a traceable `document → page → fragment → conclusion` chain.
+- Every confirmed real failure/edge case becomes a regression case.
+- Competitor reverse-spec is refreshed at milestone boundaries before commodity scope expands.
+
 ## Current reconciliation highlights
 
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
@@ -31,6 +73,7 @@ These programs are repository-native benchmark/document-QA execution tracks. No 
 
 | Program | State | Source |
 |---|---|---|
+| `REUSE-FIRST-001` | ready | Owner directive 2026-09-14 |
 | `BENCHMARK-PIPELINE-001` | done | issue #1 |
 | `DOCUMENT-QA-004` | done | issue #11 |
 | `DOCUMENT-QA-005` | in_progress | issue #16; latest exposed blind acceptance issue #36 |

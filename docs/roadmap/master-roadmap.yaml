@@ -1,4 +1,4 @@
-version: 1
+version: 2
 repository: arvectum2/tender-agent
 canonical_role: master_product_roadmap
 restored_at: '2026-09-14T17:55:00Z'
@@ -21,6 +21,118 @@ governance:
   queue_admission_is_explicit: true
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
+strategy_revision: reuse_first_2026_09_14
+strategy_updated_at: '2026-09-14T21:05:00Z'
+development_strategy:
+  principle: copy_commodity_invent_moat
+  architecture_thesis: thin_commodity_shell_plus_deep_decision_core
+  owner_directive: "Before designing a feature from scratch, identify who already solved the problem and prefer reuse or reimplementation of the proven public pattern."
+  allowed_delivery_strategies:
+    REUSE: "Use an existing OSS/library/component when licensing, security and maintenance fit."
+    COPY_PATTERN: "Reimplement a proven public UX/workflow/functional pattern; do not copy proprietary source code, assets, text or private datasets."
+    ADAPT: "Integrate or adapt an existing API, protocol, service or standard component."
+    INVENT: "Build custom behavior only when a documented gap or defensible product advantage justifies ownership."
+  invent_gate:
+    required: true
+    checks:
+      - reusable OSS/API/public patterns checked
+      - gap documented with evidence
+      - differentiation tied to Decision Core, Commercial Core or procurement-specific edge cases
+      - maintenance cost justified
+    fallback_without_justification: "REUSE, COPY_PATTERN or ADAPT"
+  commodity_reuse_target_pct: 70
+  success_metrics:
+    - "At least 70% of new P0/P1 commodity work resolves through REUSE/COPY_PATTERN/ADAPT."
+    - "100% of substantive GO/NO-GO claims have source evidence or explicit Unknown."
+    - "No hard decision without a traceable document/page/fragment evidence chain."
+    - "Every confirmed real failure or procurement edge case becomes a regression case."
+    - "Competitor benchmark/reverse-spec is refreshed at milestone boundaries before widening commodity scope."
+  do_not_build_from_scratch_without_explicit_gap:
+    - custom OCR engine
+    - custom PDF renderer/viewer
+    - custom vector database or generic search infrastructure
+    - custom authentication framework
+    - generic chatbot or generic RAG shell
+    - bespoke notification service
+    - custom analytics/dashboard platform
+    - CRM clone
+    - premature distributed infrastructure or performance optimization
+    - AI feature without a measurable decision or next-action outcome
+accelerated_plan:
+  - stage: 0
+    name: competitive_reverse_spec_and_reuse_registry
+    priority: P0
+    objective: "Benchmark 8-10 direct competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action; record best public patterns, reusable components/APIs, legal/license constraints and de-scope decisions."
+    exit_gate: "Every active P0/P1 item is classified REUSE/COPY_PATTERN/ADAPT/INVENT; every INVENT has written justification."
+  - stage: 1
+    name: thin_commodity_shell
+    priority: P0
+    objective: "Keep only baseline search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export; prefer proven components and patterns, no gold-plating."
+    exit_gate: "Commodity shell is usable end-to-end and no commodity item has become a custom multi-sprint build without an approved gap."
+  - stage: 2
+    name: decision_core_v1
+    priority: P0
+    objective: "Invest custom engineering in canonical tender facts, evidence primitives, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW, risk/unknown/confidence and clickable evidence."
+    exit_gate: "Decision outputs are measurable against a regression corpus and every material conclusion is source-bound or explicitly unknown."
+  - stage: 3
+    name: commercial_core
+    priority: P0
+    objective: "Build nomenclature normalization, customer-catalog matching, substitutes/compatibility, Supplier -> RFQ -> TKP, landed cost, margin and bid economics, with recomputation when quotes change."
+    exit_gate: "Bid/no-bid can be tied to commercial feasibility with auditable inputs and human control."
+  - stage: 4
+    name: automation_and_integrations
+    priority: P1
+    objective: "Add integrations, webhooks/APIs, saved-search alerts, email/CRM/source connectors and scheduled reporting only where they shorten validated workflows."
+    exit_gate: "Automations reduce operator work without crossing external-action/human-control boundaries."
+  - stage: 5
+    name: reliability_and_moat
+    priority: P1
+    objective: "Compound 44-FZ/223-FZ/private-procurement edge cases, regression evidence, decision/outcome telemetry, security/compliance and workflow integration depth."
+    exit_gate: "Moat is evidenced by domain-specific regression depth, integration depth and measured decision quality rather than commodity feature count."
+strategy_overlay:
+  REUSE_FIRST_001:
+    delivery_strategy: COPY_PATTERN
+    scope: "Competitive reverse-spec and reuse registry; this is the next admitted strategy workstream after the already-live task finishes."
+  DOCUMENT_QA_005:
+    delivery_strategy: INVENT
+    invent_justification: "Source-bound role/entity precedence is procurement-specific decision integrity and directly strengthens the evidence moat."
+  ARV_018:
+    delivery_strategy: INVENT
+    invent_justification: "Evidence-grounded GO/NO-GO/NEEDS REVIEW is the core differentiated decision product."
+  ARV_020:
+    delivery_strategy: INVENT
+    invent_justification: "Application-readiness logic is valuable only when procurement-specific, evidence-bound and tied to hard blockers."
+  ARV_061:
+    delivery_strategy: ADAPT
+    custom_boundary: "Reuse generic retrieval/extraction; own only cited procurement reasoning and decision mapping."
+  ARV_065:
+    delivery_strategy: ADAPT
+    custom_boundary: "Do not build a generic chat product; reuse Q&A/RAG primitives and differentiate through procurement evidence/actions."
+  ARV_016:
+    delivery_strategy: ADAPT
+    custom_boundary: "Reuse XLSX/CSV/PDF parsing; custom logic starts at nomenclature normalization and commercial matching."
+  ARV_017:
+    delivery_strategy: INVENT
+    invent_justification: "Tender-to-catalog matching and substitution logic is a core commercial moat."
+  ARV_023:
+    delivery_strategy: ADAPT
+    custom_boundary: "Reuse supplier discovery sources/connectors; own procurement-specific ranking, qualification and RFQ handoff."
+  ARV_019:
+    delivery_strategy: COPY_PATTERN
+  ARV_021:
+    delivery_strategy: ADAPT
+  ARV_022:
+    delivery_strategy: REUSE
+  ARV_056:
+    delivery_strategy: COPY_PATTERN
+  ARV_063:
+    delivery_strategy: ADAPT
+  ARV_047:
+    delivery_strategy: REUSE
+  ARV_048:
+    delivery_strategy: REUSE
+  ARV_049:
+    delivery_strategy: REUSE
 id_conflicts:
 - id: ARV-073
   historical_meaning: 'R9 Operational Hardening: завершить инженерную отладку и заморозить ядро'
@@ -48,6 +160,12 @@ post_snapshot_observed:
     detail: Read-only local EIS document-set acceptance runbook.
   admission: not inferred into execution queue; gaps ARV-077..ARV-095 are not invented
 current_programs:
+- task_id: REUSE-FIRST-001
+  state: ready
+  source: 'Owner directive 2026-09-14: aggressive reuse-first development'
+  roadmap_mapping: null
+  strategy: COPY_PATTERN
+  objective: 'Create competitor reverse-spec, reuse registry and P0/P1 strategy classification before widening new implementation scope.'
 - task_id: BENCHMARK-PIPELINE-001
   state: done
   source: 'issue #1'
