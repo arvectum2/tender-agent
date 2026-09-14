@@ -57,3 +57,22 @@ def test_alias_variant_does_not_create_equal_strength_false_conflict():
     aliased = 'Заказчик: Государственное учреждение «Центр» (далее - ГУ «Центр»)'
 
     assert value(supporting_texts=[plain, aliased]) == 'Государственное учреждение «Центр»'
+
+
+def test_short_name_definition_is_trimmed_from_customer_identity():
+    source = (
+        'Заказчик: Государственное учреждение «Центр» '
+        '(сокращенное наименование ГУ «Центр»)'
+    )
+
+    assert value(supporting_texts=[source]) == 'Государственное учреждение «Центр»'
+
+
+def test_nested_source_quotes_and_short_name_definition_preserve_legal_surface():
+    legal_name = 'Государственное учреждение «Центр помощи детям «Солнечный»'
+    source = (
+        f'{legal_name} (сокращённое наименование ГУ «Солнечный»), '
+        'именуемое в дальнейшем «Заказчик»'
+    )
+
+    assert value(contract_draft_text=source) == legal_name

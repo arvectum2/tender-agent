@@ -23,7 +23,8 @@ _ORIGINAL_ACCEPT = None
 _ORIGINAL_COLLECT = None
 
 _DEFINITIONAL_ALIAS_PAREN_RE = re.compile(
-    r"\s*\(\s*(?:далее|в\s+дальнейшем(?:\s+по\s+тексту)?)"
+    r"\s*\(\s*(?:далее|в\s+дальнейшем(?:\s+по\s+тексту)?|"
+    r"сокращ[её]нное\s+наименование)"
     r"\s*(?:[-–—:]\s*)?[^()\n]{1,220}\)",
     re.IGNORECASE,
 )
