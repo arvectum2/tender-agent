@@ -1,0 +1,34 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: DOCUMENT-QA-005-BLIND-CASE11
+status: completed
+authority: AUTO
+goal: "Complete a new independent held-out blind case 11 acceptance for DOCUMENT-QA-005."
+definition_of_done:
+  - "Keep product code fixed at 2eb593ba6deba03b11738ea20833294bb7ae3ca8."
+  - "Freeze source-only truth before SUT."
+  - "Execute exactly one valid first-blind run from proven exact product provenance."
+  - "Preserve frozen truth/comparator/normalizer and record the immutable first result."
+completed:
+  - "Phase A/source-only freeze PASS; source bundle c395ed7db1efd91d64a81a12cebe07ca853f2cdcbc263c7e0043c7c32d6f6666."
+  - "Label set frozen at a075257573b8bfa6a8686687f953f9a507867b9a1c86501ec02ce647732faaec."
+  - "Exactly one valid first-blind Phase-B execution completed against fixed product commit 2eb593ba6deba03b11738ea20833294bb7ae3ca8."
+  - "Repository-owned normalization/comparison/review routing completed without changing truth/comparator/normalizer."
+  - "customer_name result was CONTRADICTION: correct school identity was contaminated by alias/contact/address suffix."
+  - "Overall: TP=1, FP=1, FN=26, abstention_matches=2, precision=0.5, recall=0.037037, F1=0.068966; review state NEEDS_REVIEW."
+  - "GitHub issue #36 closed completed; parent issue #16 remains open because strict blind acceptance did not pass."
+current: "Completed; preserved as exposed regression evidence."
+pending: []
+last_verified_commit: "2eb593ba6deba03b11738ea20833294bb7ae3ca8"
+test_results:
+  - "PR #32 GitHub Actions: 8/8 success."
+  - "Case 11 first valid blind execution completed; immutable result recorded in issue #36."
+updated_at: "2026-09-14T17:45:00Z"
+resume_instruction: "Do not rerun case 11 for score improvement. Treat it as exposed regression evidence only; continue DOCUMENT-QA-005 from the next generic reusable failure-family work admitted by canonical roadmap/issue governance."
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: "2eb593ba6deba03b11738ea20833294bb7ae3ca8"
+  lease_until: null
+  manual_override: false
