@@ -1,0 +1,103 @@
+version: 1
+repository: arvectum2/tender-agent
+mode: roadmap_executor
+
+sources:
+  current_task: .agent/current-task.yaml
+  execution_queue: .agent/execution-queue.yaml
+  supporting_roadmap:
+    - GitHub issues referenced by queue items
+    - repository-owned benchmark/evidence artifacts
+
+selection:
+  resume_active_current_task_first: true
+  scan_queue_in_order: true
+  may_skip_blocked_or_human_gated_items: true
+  may_execute_later_independent_items: true
+  executor_may_reorder_queue: false
+  executor_may_change_authority_class: false
+  executor_may_create_new_priorities: false
+  dependencies_must_be_satisfied: true
+
+status_rules:
+  executor_may_transition:
+    - ready -> in_progress
+    - in_progress -> blocked
+    - blocked -> in_progress
+    - in_progress -> done
+  executor_must_not_change:
+    - order
+    - authority
+    - dependencies
+    - owner_gate
+  done_requires_definition_of_done_and_evidence: true
+
+lease:
+  enabled: true
+  ttl_minutes: 110
+  renew_each_run: true
+  reclaim_after_expiry_only_after_repository_activity_check: true
+  manual_override_blocks_automation: true
+  current_task_fields:
+    - claimed_by
+    - execution_id
+    - branch
+    - base_commit
+    - lease_until
+    - manual_override
+
+authority:
+  AUTO:
+    description: "Low-risk, reversible repository and read-only procurement-intelligence work inside an already approved scope."
+    may:
+      - inspect repository, issues and public procurement source evidence
+      - create branches and pull requests
+      - edit code, tests, documentation, CI and repository-owned evidence
+      - run deterministic tests, benchmark diagnostics and isolated read-only analysis
+      - commit and push changes
+      - update issue/checkpoint evidence
+      - merge only when the queue item explicitly permits auto_merge, required CI is green, no owner/review gate exists, and the change has no external procurement effect
+  REVIEW:
+    description: "Executor may prepare implementation/evidence but an authorized human must pass the final gate."
+    may:
+      - perform AUTO preparation work
+      - open or update pull requests
+      - prepare decision packets and recommendations
+    must_stop_before:
+      - final product-scope or benchmark-strategy decision reserved to Product Owner
+      - merge when the queue item requires human review
+      - production/external effect
+  OWNER:
+    description: "Reserved owner/Product Owner decision; automation may prepare analysis or drafts only."
+  HUMAN:
+    description: "Requires credentialed, physical, legal or otherwise non-delegated human action."
+
+hard_stops:
+  - submit or modify a bid/application on EIS/ETP or another procurement platform
+  - sign documents, use EDS/UKЭP or act as an authorized procurement participant
+  - send supplier, customer, regulator or contracting-authority communications
+  - create payments, bank actions, guarantees or commercial commitments
+  - accept legal/commercial risk or decide participation in a procurement
+  - expose or rotate secrets/private keys/credentials without explicit authorization
+  - use private/customer data beyond an explicitly approved repository/task boundary
+  - change frozen benchmark truth, comparator or normalizer after SUT output to improve score
+  - fabricate physical, legal, owner or independent-evaluator approval
+
+benchmark_integrity:
+  preserve_freeze_before_sut: true
+  no_truth_tuning_after_output: true
+  exposed_cases_are_regression_only: true
+  blind_case_independence_required_when_source_issue_requires_it: true
+
+blocker_behavior:
+  record_real_blocker: true
+  release_lease_when_waiting_on_human: true
+  continue_with_next_independent_ready_item: true
+  notify_only_if_no_independent_executable_work_remains_or_owner_action_is_time_critical: true
+
+notifications:
+  notify_on:
+    - completed roadmap item
+    - owner or human decision required and no independent executable work remains
+    - material safety/security/legal/benchmark-integrity blocker
+  suppress_routine_progress: true
