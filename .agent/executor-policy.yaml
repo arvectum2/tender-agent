@@ -1,4 +1,4 @@
-version: 1
+version: 2
 repository: arvectum2/tender-agent
 mode: roadmap_executor
 
@@ -8,6 +8,11 @@ sources:
   supporting_roadmap:
     - GitHub issues referenced by queue items
     - repository-owned benchmark/evidence artifacts
+  company_authority:
+    repository: arvectum2/arvectum-company
+    decision: docs/governance/decisions/DECISION-2026-09-14-POS-004-ROADMAP-EXECUTOR-AM4.md
+    assignment: docs/organization/POS-004-ROADMAP-EXECUTOR-AM4-AUTHORIZATION-v1.0.0.md
+    decision_merge_commit: 7a4a1f57344380b01f960f8a137bba590a736278
 
 selection:
   resume_active_current_task_first: true
@@ -46,6 +51,18 @@ lease:
     - lease_until
     - manual_override
 
+company_authority_gate:
+  required_for_automatic_merge: true
+  authority_mode: AM-4
+  position: POS-004
+  principal: AI-ENG-001
+  assignment_id: ASG-POS004-ROADMAP-EXECUTOR-2026-09-14
+  mandatory_review_deadline: "2026-10-14"
+  automatic_merge_counter_limit: 10
+  fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
+  fail_closed_mode: REVIEW
+  product_policy_cannot_expand_company_authority: true
+
 authority:
   AUTO:
     description: "Low-risk, reversible repository and read-only procurement-intelligence work inside an already approved scope."
@@ -56,7 +73,7 @@ authority:
       - run deterministic tests, benchmark diagnostics and isolated read-only analysis
       - commit and push changes
       - update issue/checkpoint evidence
-      - merge only when the queue item explicitly permits auto_merge, required CI is green, no owner/review gate exists, and the change has no external procurement effect
+      - merge only when the queue item explicitly permits auto_merge, exact-head required CI/rulesets are green, no unresolved required review exists, the Company AM-4 authority gate is valid, and the change has no prohibited procurement/external/production effect
   REVIEW:
     description: "Executor may prepare implementation/evidence but an authorized human must pass the final gate."
     may:
@@ -82,6 +99,7 @@ hard_stops:
   - use private/customer data beyond an explicitly approved repository/task boundary
   - change frozen benchmark truth, comparator or normalizer after SUT output to improve score
   - fabricate physical, legal, owner or independent-evaluator approval
+  - bypass Company AM-4 review/expiry/revocation conditions
 
 benchmark_integrity:
   preserve_freeze_before_sut: true
