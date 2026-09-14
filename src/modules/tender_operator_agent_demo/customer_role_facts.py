@@ -270,10 +270,15 @@ _PLACE_AFTER_ABBR_RE = re.compile(
     r"(?:" + _LOCALITY_ABBR + r")\s+$",
     re.IGNORECASE,
 )
-_YEAR_SUFFIX_RE = re.compile(r"\b\d{4}\s*г\.\s+$", re.IGNORECASE)
-_YEAR_BEFORE_ABBR_RE = re.compile(r"\b\d{4}\s*$")
+# Contract templates often keep an unfilled signing-year placeholder such as
+# ``20___ г.`` before the customer preamble.  The trailing ``г.`` is a year
+# abbreviation, not a locality prefix.  Treat concrete and template-year
+# surfaces consistently so the next legal-name token is not suppressed.
+_YEAR_TOKEN = r"(?:\d{4}|(?:19|20)_{2,4}|_{4})"
+_YEAR_SUFFIX_RE = re.compile(rf"(?<![\w]){_YEAR_TOKEN}\s*г\.\s*$", re.IGNORECASE)
+_YEAR_BEFORE_ABBR_RE = re.compile(rf"(?<![\w]){_YEAR_TOKEN}\s*$")
 _YEAR_HEADER_BOUNDARY_RE = re.compile(
-    r"\b\d{4}\s*г\.\s+(?=[А-ЯA-ZЁ«\"])",
+    rf"(?<![\w]){_YEAR_TOKEN}\s*г\.\s+(?=[А-ЯA-ZЁ«\"])",
     re.IGNORECASE,
 )
 

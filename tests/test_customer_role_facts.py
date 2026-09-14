@@ -153,6 +153,30 @@ def test_place_of_signing_header_is_not_part_of_identity():
     assert value(contract_draft_text=source) == "ООО «Ромашка»"
 
 
+def test_unfilled_signing_year_header_does_not_hide_legal_form_prefix():
+    source = (
+        "ПРОЕКТ КОНТРАКТА\n"
+        "г Примерск\t«___» ________ 20___ г.\n"
+        "Государственное бюджетное учреждение здравоохранения ''Клинический центр'', "
+        "именуемое в дальнейшем «Заказчик», в лице руководителя."
+    )
+
+    assert (
+        value(contract_draft_text=source)
+        == "Государственное бюджетное учреждение здравоохранения ''Клинический центр''"
+    )
+
+
+def test_two_digit_year_template_header_does_not_hide_legal_form_prefix():
+    source = (
+        "«__» ______ 20__ г. "
+        "Муниципальное бюджетное учреждение «Центр», "
+        "именуемое в дальнейшем «Заказчик»."
+    )
+
+    assert value(contract_draft_text=source) == "Муниципальное бюджетное учреждение «Центр»"
+
+
 def test_evidence_kind_outranks_source_role():
     # An explicit label in the lowest-priority combined text still outranks a
     # weaker contract-party preamble: kind first, source role breaks ties.
