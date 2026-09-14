@@ -1,0 +1,44 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: DOCUMENT-QA-005-BLIND-CASE13
+authority: AUTO
+goal: "Run a fresh independent held-out blind customer-role acceptance case for DOCUMENT-QA-005 after PR #40, preserving freeze-before-SUT integrity and closing #16 only on unbiased strict customer_name acceptance."
+definition_of_done:
+  - "Select a new 44-FZ procurement not previously used for development, calibration, regression, issues, PRs or commits."
+  - "Fix product runtime provenance at merge commit bd07f39d4b88c0196dcfa017047b276ea271e06b; later checkpoint-only commits must not change SUT provenance."
+  - "Acquire current original official EIS bytes and revision/event state and reject pre-SUT on material source conflict, insufficient customer-role evidence or ingestion incompatibility."
+  - "Author and freeze source-only blind labels before any Tender Agent analysis; do not mutate truth/comparator/normalizer afterward."
+  - "Run exactly one valid first-blind analysis in an isolated runtime using the exact frozen source bytes."
+  - "Normalize, compare and route review with repository-owned unchanged tooling and preserve the first valid result even if it fails."
+  - "Record immutable evidence in a dedicated case issue and #16; close #16 only if strict unbiased customer_name is TRUE_POSITIVE."
+  - "If accepted, mark DOCUMENT-QA-005 complete and advance the execution queue; if failed, preserve case 13 as exposed regression and continue only with a generic reusable fix."
+completed:
+  - "PR #40 merged after exact-head CI run 34890440084 succeeded."
+  - "Fixed product commit for case 13 is bd07f39d4b88c0196dcfa017047b276ea271e06b."
+  - "Case 12 archived as exposed regression-only; its blind result/frozen truth remain immutable."
+  - "Selected fresh case-13 candidate 0137200001226007271 (`Поставка кабеля`) after PR #40 merge; current tree, full git history, GitHub code/issues/PR searches all had no prior hit."
+  - "Created dedicated calibration issue #41 with fixed product commit and blind protocol."
+  - "Created isolated worktree /Users/master/tender-agent-case13-phase-a on branch local/calibration-case13-phase-a at exact product commit bd07f39d4b88c0196dcfa017047b276ea271e06b; isolated backend started on port 8059 with separate SQLite."
+  - "Phase A ready for run toa-run-20260914202859-186fda with 4 official EIS attachments; source bundle SHA256 62aeec3fd21a233e35856c21a9b8912e14ece068eeb646893ba5f44d7f2ab5c3; provenance_sufficient=true."
+  - "Official source-only evidence identifies customer `Государственное казенное учреждение Калужской области «Центр обеспечения «ОКА»` and authorized placing body `МИНИСТЕРСТВО КОНКУРЕНТНОЙ ПОЛИТИКИ КАЛУЖСКОЙ ОБЛАСТИ`; no material same-role conflict."
+  - "Official EIS documents/event journal show one current notice placed 14.09.2026 and active `Подача заявок`; no amendment, cancellation or commission protocols at acquisition cut-off."
+  - "Bound supplier context before labels; case manifest SHA256 c5b01d17a2dc6191bb19587ca158352d5540e7ab27258d0f2cc6fd6505bb8c3c; evaluator bundle SHA256 b999e42ffe64beadcdb3c7e2b708750700b0ac8fcc29e0d148c0695de95417b1; discovery context SHA256 2140f0ff68a75073f6c829d9849c6e45f155eba62f532fb44dae7614a2f083e3."
+  - "Authored and schema-validated blind labels source-only: 27 document facts (21 ASSERTED, 6 abstentions) and discovery PARTIALLY_RELEVANT; no SUT analysis existed."
+  - "Frozen labels at 2026-09-14T20:35:31.430326+00:00 after zero-analysis gate; label_set SHA256 76a3176530644ea4559c288edc8af9d732d304edbd1e4c087219ec82d9f93733; verify_frozen_labels PASS."
+current: "Completed as immutable blind failure; preserve for exposed regression only."
+pending:
+  - "Freeze blind labels before SUT, execute exactly one first-blind run, normalize/compare/review and record immutable result."
+  - "Transition #16 and the canonical queue according to the genuine blind result."
+last_verified_commit: "bd07f39d4b88c0196dcfa017047b276ea271e06b"
+test_results:
+  - "PR #40 exact-head CI 34890440084: success."
+updated_at: "2026-09-14T20:36:02.555461+00:00"
+resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-case13-phase-a. Case 13 labels are frozen and immutable; do not alter truth/comparator/normalizer. Recheck fixed runtime provenance on port 8059 and zero prior analysis, then execute exactly one first-blind Phase B analysis for run toa-run-20260914202859-186fda, normalize/compare/review with repository-owned tooling, update #41/#16, and transition according to the actual strict customer_name result."
+execution:
+  claimed_by: "chatgpt"
+  execution_id: "document-qa-005-case13-blind"
+  branch: "local/calibration-case13-phase-a"
+  base_commit: "bd07f39d4b88c0196dcfa017047b276ea271e06b"
+  lease_until: "2026-09-14T22:36:02.555461+00:00"
+  manual_override: false

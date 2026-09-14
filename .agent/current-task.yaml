@@ -1,44 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-BLIND-CASE13
+task_id: DOCUMENT-QA-005-CASE13-FIX
 authority: AUTO
-goal: "Run a fresh independent held-out blind customer-role acceptance case for DOCUMENT-QA-005 after PR #40, preserving freeze-before-SUT integrity and closing #16 only on unbiased strict customer_name acceptance."
+goal: "Fix the generic customer-role precedence failure exposed by immutable blind case 13, prove exposed regression without changing frozen benchmark artifacts, merge after green CI, then select a fresh held-out blind case for #16 acceptance."
 definition_of_done:
-  - "Select a new 44-FZ procurement not previously used for development, calibration, regression, issues, PRs or commits."
-  - "Fix product runtime provenance at merge commit bd07f39d4b88c0196dcfa017047b276ea271e06b; later checkpoint-only commits must not change SUT provenance."
-  - "Acquire current original official EIS bytes and revision/event state and reject pre-SUT on material source conflict, insufficient customer-role evidence or ingestion incompatibility."
-  - "Author and freeze source-only blind labels before any Tender Agent analysis; do not mutate truth/comparator/normalizer afterward."
-  - "Run exactly one valid first-blind analysis in an isolated runtime using the exact frozen source bytes."
-  - "Normalize, compare and route review with repository-owned unchanged tooling and preserve the first valid result even if it fails."
-  - "Record immutable evidence in a dedicated case issue and #16; close #16 only if strict unbiased customer_name is TRUE_POSITIVE."
-  - "If accepted, mark DOCUMENT-QA-005 complete and advance the execution queue; if failed, preserve case 13 as exposed regression and continue only with a generic reusable fix."
+  - "Preserve case-13 first-blind run toa-run-20260914202859-186fda, frozen truth, comparator and normalizer unchanged; never rerun case 13 as blind."
+  - "Diagnose the reusable source-bound cause that allowed the public search-card authorized placing body to survive over explicit contract/EIS customer-role evidence."
+  - "Implement a generic precedence/resolution fix with synthetic tests and no case-specific registry, organization or filename literals."
+  - "Run focused/broader customer/document-QA tests, Ruff, git diff checks, make check and an exposed case-13 regression on unchanged source bytes."
+  - "Commit/push and open a PR; merge automatically only after exact-head CI/rules are green under AUTO authority."
+  - "After merge, select a fresh independent held-out customer-role case and repeat freeze-before-SUT acceptance; close #16 only on strict unbiased customer_name TRUE_POSITIVE."
 completed:
-  - "PR #40 merged after exact-head CI run 34890440084 succeeded."
-  - "Fixed product commit for case 13 is bd07f39d4b88c0196dcfa017047b276ea271e06b."
-  - "Case 12 archived as exposed regression-only; its blind result/frozen truth remain immutable."
-  - "Selected fresh case-13 candidate 0137200001226007271 (`Поставка кабеля`) after PR #40 merge; current tree, full git history, GitHub code/issues/PR searches all had no prior hit."
-  - "Created dedicated calibration issue #41 with fixed product commit and blind protocol."
-  - "Created isolated worktree /Users/master/tender-agent-case13-phase-a on branch local/calibration-case13-phase-a at exact product commit bd07f39d4b88c0196dcfa017047b276ea271e06b; isolated backend started on port 8059 with separate SQLite."
-  - "Phase A ready for run toa-run-20260914202859-186fda with 4 official EIS attachments; source bundle SHA256 62aeec3fd21a233e35856c21a9b8912e14ece068eeb646893ba5f44d7f2ab5c3; provenance_sufficient=true."
-  - "Official source-only evidence identifies customer `Государственное казенное учреждение Калужской области «Центр обеспечения «ОКА»` and authorized placing body `МИНИСТЕРСТВО КОНКУРЕНТНОЙ ПОЛИТИКИ КАЛУЖСКОЙ ОБЛАСТИ`; no material same-role conflict."
-  - "Official EIS documents/event journal show one current notice placed 14.09.2026 and active `Подача заявок`; no amendment, cancellation or commission protocols at acquisition cut-off."
-  - "Bound supplier context before labels; case manifest SHA256 c5b01d17a2dc6191bb19587ca158352d5540e7ab27258d0f2cc6fd6505bb8c3c; evaluator bundle SHA256 b999e42ffe64beadcdb3c7e2b708750700b0ac8fcc29e0d148c0695de95417b1; discovery context SHA256 2140f0ff68a75073f6c829d9849c6e45f155eba62f532fb44dae7614a2f083e3."
-  - "Authored and schema-validated blind labels source-only: 27 document facts (21 ASSERTED, 6 abstentions) and discovery PARTIALLY_RELEVANT; no SUT analysis existed."
-  - "Frozen labels at 2026-09-14T20:35:31.430326+00:00 after zero-analysis gate; label_set SHA256 76a3176530644ea4559c288edc8af9d732d304edbd1e4c087219ec82d9f93733; verify_frozen_labels PASS."
-current: "Execute exactly one first-blind case-13 analysis on the isolated fixed runtime, then normalize/compare/review and record immutable acceptance evidence."
+  - "Case 13 first-blind result is immutable: customer truth `Государственное казенное учреждение Калужской области «Центр обеспечения «ОКА»`; runtime retained authorized placing body `МИНИСТЕРСТВО КОНКУРЕНТНОЙ ПОЛИТИКИ КАЛУЖСКОЙ ОБЛАСТИ`; strict customer_name CONTRADICTION."
+  - "First-blind run toa-run-20260914202859-186fda had exactly one analysis_started, one stub_analysis_fallback and one analysis_completed at fixed product bd07f39d4b88c0196dcfa017047b276ea271e06b."
+  - "Full blind score TP=2 FP=1 FN=19 F1=0.16666666666666666; review NEEDS_REVIEW; source bundle and frozen labels remained immutable."
+  - "Recorded result in #41 and #16; #41 closed completed, #16 remains open; case 13 is exposed regression-only."
+current: "Create a separate follow-up worktree from current main and diagnose the generic card-seed-vs-document-customer precedence failure."
 pending:
-  - "Freeze blind labels before SUT, execute exactly one first-blind run, normalize/compare/review and record immutable result."
-  - "Transition #16 and the canonical queue according to the genuine blind result."
+  - "Create follow-up worktree and reproduce the failure generically without modifying case-13 benchmark artifacts."
+  - "Implement narrow generic source-bound fix plus synthetic regressions."
+  - "Run focused/broader quality gates and exposed case-13 regression on unchanged official bytes."
+  - "Open/merge PR only after exact-head green CI; preserve historical blind failure."
+  - "Select fresh post-merge blind acceptance case and continue #16."
 last_verified_commit: "bd07f39d4b88c0196dcfa017047b276ea271e06b"
 test_results:
-  - "PR #40 exact-head CI 34890440084: success."
-updated_at: "2026-09-14T20:36:02.555461+00:00"
-resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-case13-phase-a. Case 13 labels are frozen and immutable; do not alter truth/comparator/normalizer. Recheck fixed runtime provenance on port 8059 and zero prior analysis, then execute exactly one first-blind Phase B analysis for run toa-run-20260914202859-186fda, normalize/compare/review with repository-owned tooling, update #41/#16, and transition according to the actual strict customer_name result."
+  - "Case-13 blind Phase B complete; artifact ZIP SHA256 ee378bcbed5e86c4f5ed2f7733490ea47e835ccc714f4a0855e2061d0d35368b."
+  - "Normalized output SHA256 4d23178fde20bc1e29a459f0e8bab1b2997c730cfbe05ffbde32d7a3db1a6900; normalization audit SHA256 38533a2ec9b18416e399a071ee09e7297b0d91450dc0a71b62d660677bec2455."
+updated_at: "2026-09-14T20:39:53.662336+00:00"
+resume_instruction: "Use Mac-mini-master.local. Case 13 is immutable exposed regression-only; never rerun it as blind or mutate its frozen truth/comparator/normalizer. Create/continue a separate follow-up worktree from current main, diagnose why explicit document customer-role evidence failed to replace the search-card authorized-body seed, implement a generic source-bound fix with synthetic tests, prove exposed regression on unchanged case-13 bytes, merge only on exact-head green CI, then select a new post-merge held-out blind case."
 execution:
   claimed_by: "chatgpt"
-  execution_id: "document-qa-005-case13-blind"
-  branch: "local/calibration-case13-phase-a"
-  base_commit: "bd07f39d4b88c0196dcfa017047b276ea271e06b"
-  lease_until: "2026-09-14T22:36:02.555461+00:00"
+  execution_id: "dqa005-case13-fix"
+  branch: null
+  base_commit: "6a956334b1d38b24d06658280116d9693815128c"
+  lease_until: "2026-09-14T22:39:53.662336+00:00"
   manual_override: false
