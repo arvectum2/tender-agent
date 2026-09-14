@@ -119,3 +119,15 @@ def test_inflected_unquoted_customer_word_is_not_a_role_assignment():
     )
 
     assert value(contract_draft_text=source) is None
+
+
+def test_source_authored_nested_guillemets_with_missing_outer_closer_are_preserved():
+    source = 'Заказчик: Государственное учреждение «Центр помощи детям «Солнечный»'
+
+    assert value(supporting_texts=[source]) == 'Государственное учреждение «Центр помощи детям «Солнечный»'
+
+
+def test_dangling_open_quote_without_closing_boundary_is_rejected():
+    source = 'Заказчик: Государственное учреждение «Центр'
+
+    assert value(supporting_texts=[source]) is None

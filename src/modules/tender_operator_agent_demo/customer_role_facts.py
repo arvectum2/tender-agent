@@ -149,13 +149,21 @@ def _strip_counterparty_boundary(value: str) -> str:
 
 
 def _has_balanced_identity_delimiters(value: str) -> bool:
-    """Reject obviously truncated identity fragments before projection."""
+    """Reject structural truncation without rewriting source punctuation.
+
+    Parentheses are a reliable completeness boundary for organization-role
+    captures, so mismatched parentheses remain fail-closed.  Quote parity is
+    weaker: official legal-name surfaces can contain nested source-authored
+    guillemets/quotes with a missing outer closer.  Preserve such a surface
+    only when the candidate itself reaches a closing quote; a dangling opener
+    at the end still looks truncated and is rejected.
+    """
 
     if value.count("(") != value.count(")"):
         return False
-    if value.count("«") != value.count("»"):
+    if value.count("«") != value.count("»") and not value.endswith("»"):
         return False
-    return value.count('"') % 2 == 0
+    return not (value.count('"') % 2 and not value.endswith('"'))
 
 
 def _accept(value: str | None, *, evidence_kind: str, source_role: str) -> _Candidate | None:
