@@ -1,5 +1,52 @@
 # Product Backlog
 
+Updated: 2026-09-14
+Canonical strategy source: `docs/roadmap/master-roadmap.yaml` / `docs/roadmap/MASTER_ROADMAP.md`
+
+## Reuse-first operating policy — 2026-09-14
+
+Default question for every new item: **“Who already solved this, and what can we reuse or lawfully reimplement before writing custom code?”**
+
+Every new/active P0/P1 item gets exactly one delivery strategy: `REUSE`, `COPY_PATTERN`, `ADAPT`, or `INVENT`. `INVENT` requires a written reuse check, gap, differentiating value and ownership-cost justification. Otherwise it is not admitted as a custom build.
+
+Product shape: **Thin Commodity Shell + Deep Decision Core**. Commodity UX/infrastructure should converge quickly on proven market patterns; differentiation belongs in evidence-bound tender decisions and commercial workflow.
+
+## P0 — accelerated backlog
+
+- [ ] **REUSE-FIRST-001 / Stage 0 — Competitive reverse-spec + reuse registry** (`COPY_PATTERN`) — benchmark 8–10 direct competitors on `search → results → tender card → documents → AI analysis → decision → next action`; for every step record the best reference, pattern to copy, what Tender Agent must do better, reusable OSS/API options, license/legal notes and whether custom code is justified.
+- [ ] **Stage 0 — P0/P1 backlog triage** (`ADAPT`) — classify every active P0/P1 item; split mixed tasks so commodity subparts are reused/adapted and only the moat boundary can remain `INVENT`; explicitly de-scope duplicate commodity engineering.
+- [ ] **Stage 1 — Thin commodity shell** (`REUSE` / `COPY_PATTERN` / `ADAPT`) — search/filter/saved views, tender card, document viewer/parsing, auth/roles, alerts and export at baseline quality only. No custom multi-sprint build without an approved gap.
+- [ ] **Stage 2 — Decision Core v1** (`INVENT`) — source-bound facts, `document → page → fragment → conclusion`, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW, risk/unknown/confidence, regression corpus and labeled evaluation. Current `DOCUMENT-QA-005` work belongs here and remains valid because it fixes procurement-specific evidence integrity.
+- [ ] **Stage 3 — Commercial Core** (`INVENT` at the moat boundary) — nomenclature normalization, customer-catalog matching, substitutes/compatibility, supplier qualification/handoff, RFQ/TKP, landed cost, margin and bid economics; reuse generic parsers/discovery/connectors underneath.
+
+## P1 — only after validated core value
+
+- [ ] **Stage 4 — Automation + integrations** (`ADAPT`) — alerts, email/CRM/source connectors, API/webhooks and scheduled reporting when a validated operator workflow needs them.
+- [ ] **Stage 5 — Reliability + moat** (`INVENT` only for domain depth) — 44-ФЗ/223-ФЗ/private edge cases, decision-outcome telemetry, security/compliance, deeper integrations and continuous regression expansion.
+
+## Explicit do-not-build list
+
+Do not build custom OCR, PDF renderer/viewer, vector/search engine, auth framework, generic chatbot/RAG shell, notification service, analytics/dashboard platform, CRM clone or premature distributed infrastructure unless Stage 0 records a concrete measured gap.
+
+## Existing roadmap strategy map
+
+| Work | Strategy | Custom boundary / rationale |
+|---|---|---|
+| `DOCUMENT-QA-005` | `INVENT` | Procurement-specific source/role precedence and evidence integrity |
+| `ARV-018` GO/NO-GO | `INVENT` | Core evidence-grounded decision product |
+| `ARV-020` readiness checklist | `INVENT` | Only evidence-bound procurement blockers/requirements |
+| `ARV-061` cited pre-analysis | `ADAPT` | Reuse retrieval/extraction; own cited procurement reasoning |
+| `ARV-065` copilot/Q&A | `ADAPT` | Reuse generic Q&A/RAG; no generic chat platform |
+| `ARV-016` price-list ingest | `ADAPT` | Reuse file parsers; custom starts at nomenclature normalization |
+| `ARV-017` tender ↔ catalog matching | `INVENT` | Commercial moat |
+| `ARV-023` supplier search | `ADAPT` | Reuse discovery/connectors; own ranking/qualification/RFQ handoff |
+| `ARV-019` kanban | `COPY_PATTERN` | Commodity operator UX |
+| `ARV-021` monitoring/notifications | `ADAPT` | Standard scheduling/notification primitives |
+| `ARV-022` OCR fallback | `REUSE` | Existing OCR engines only |
+| `ARV-056` calendar/change control | `COPY_PATTERN` | Commodity workflow pattern |
+| `ARV-063` application package generator | `ADAPT` | Reuse document/template tooling; own procurement rules only |
+| `ARV-047/048/049` search/events/K8s infra | `REUSE` | Standard infrastructure and still deferred until evidence demands it |
+
 ## Deferred Until After MVP v1
 
 - SaaS hardening for multi-tenant deployment

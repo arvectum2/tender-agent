@@ -3,9 +3,9 @@
 # Presence in the master roadmap does not grant execution authority or queue admission.
 # The executor may update allowed execution status/evidence only; it must not silently
 # create priorities, resolve roadmap ID conflicts, infer ARV mappings, or change gates.
-version: 2
+version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-14T18:00:00Z'
+updated_at: '2026-09-14T21:05:00Z'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -19,8 +19,22 @@ projection:
   executor_must_not_infer_arv_mapping: true
   authority_remains_defined_by_executor_policy_and_company_source: true
 items:
+- order: 5
+  task_id: REUSE-FIRST-001
+  title: Competitive reverse-spec and reuse registry
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Owner directive 2026-09-14; docs/roadmap reuse-first strategy overlay'
+  strategy: COPY_PATTERN
+  dependencies: []
+  executor_scope: "After any already-live current task is completed, benchmark 8-10 direct competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action; create/update a reuse registry and classify active P0/P1 work as REUSE/COPY_PATTERN/ADAPT/INVENT. Do not copy proprietary code/assets/text/data and do not widen external-action authority."
+  done_gate: "Canonical competitor-pattern matrix and reuse registry exist; active P0/P1 work is classified; every INVENT has documented reuse check, gap, differentiation and maintenance justification; duplicate commodity builds are explicitly de-scoped or converted to reuse/adaptation."
 - order: 10
   task_id: DOCUMENT-QA-005
+  strategy: INVENT
+  invent_justification: 'Procurement-specific source-bound identity/role resolution directly protects evidence integrity and decision quality.'
   title: Source-bound customer role and identity extraction
   status: in_progress
   authority: AUTO
@@ -33,6 +47,7 @@ items:
   done_gate: 'Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance, with required CI/evidence recorded.'
 - order: 20
   task_id: BUILD-DOCKER-CONTEXT-001
+  strategy: ADAPT
   title: Repair Docker context dependency on missing landing assets
   status: ready
   authority: AUTO
@@ -44,6 +59,8 @@ items:
   done_gate: 'Issue #19 acceptance criteria and relevant CI/runtime smoke evidence pass.'
 - order: 30
   task_id: DISCOVERY-QA-001
+  strategy: ADAPT
+  custom_boundary: 'Reuse standard retrieval/index components; custom tuning only after benchmark evidence identifies procurement-specific ranking gaps.'
   title: Procurement search quality benchmark and relevance hardening
   status: blocked
   authority: REVIEW
@@ -58,6 +75,8 @@ items:
   executor_scope: May inspect current evidence and prepare a decision packet, but do not tune search or expand corpus while status remains blocked.
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
+  strategy: INVENT
+  invent_justification: 'Only a measured reusable procurement-specific failure family may be promoted; generic capabilities must be reused/adapted.'
   title: Next measured document-QA failure family
   status: deferred
   authority: REVIEW
