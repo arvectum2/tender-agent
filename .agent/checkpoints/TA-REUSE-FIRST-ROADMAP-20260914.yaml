@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-REUSE-FIRST-ROADMAP-20260914
+status: in_progress
+goal: "Reframe the Tender Agent backlog and canonical master roadmap around an aggressive reuse-first strategy: copy/reuse commodity capabilities, reserve custom engineering for the decision/commercial moat, and make competitive reverse-spec the next admitted workstream."
+definition_of_done:
+  - "Canonical master roadmap records the reuse-first operating policy, strategy tags, hard INVENT gate, accelerated stages, do-not-build list, and success metrics without rewriting historical ARV registry semantics."
+  - "Product backlog is reprioritized around competitive reverse-spec, reuse registry, thin commodity shell, Decision Core, Commercial Core, automation, and moat/reliability."
+  - "Execution queue admits REUSE-FIRST-001 ahead of new implementation work while preserving the already-live DOCUMENT-QA-005 lease/current task."
+  - "Relevant YAML/Markdown validation passes; changes are committed and merged after repository checks."
+completed:
+  - "Read canonical master roadmap, product backlog, current roadmap, MVP scope/non-goals, execution queue, executor policy, and live current-task."
+  - "Confirmed DOCUMENT-QA-005 is actively leased; current-task.yaml will not be overwritten by this parallel Owner roadmap edit."
+current: "Changes validated and committed; push branch, open PR, verify exact-head CI, merge, then mark checkpoint completed."
+pending:
+  - "Review diff, commit, push, open/merge PR after checks."
+last_verified_commit: "b407ccd5fdfd3a33a915f2f982b1f3cb8f123cf9"
+test_results:
+  - "YAML parse/assertions PASS for docs/roadmap/master-roadmap.yaml, .agent/execution-queue.yaml and preserved .agent/current-task.yaml."
+  - "uv run pytest -q tests/test_product_readiness_c1.py tests/test_restricted_paid_pilot_pp0.py: 23 passed, 2 warnings."
+  - "git diff --check: PASS."
+resume_instruction: "Continue in /Users/master/tender-agent-reuse-roadmap. Do not modify .agent/current-task.yaml while DOCUMENT-QA-005 owns the live lease. Finish reuse-first roadmap/backlog/queue edits, validate YAML and relevant tests, commit/push/merge, then mark this checkpoint completed."
+execution:
+  claimed_by: "chatgpt-owner-roadmap-edit"
+  execution_id: "ta-reuse-first-roadmap-20260914"
+  branch: "owner/reuse-first-roadmap-20260914"
+  base_commit: "0c3ac75659c3b95975a3a8e38297198b459e948f"
+  live_current_task_preserved: "DOCUMENT-QA-005-CASE13-FIX"
+  manual_override: true
