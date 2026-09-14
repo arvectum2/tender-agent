@@ -131,3 +131,17 @@ def test_dangling_open_quote_without_closing_boundary_is_rejected():
     source = 'Заказчик: Государственное учреждение «Центр'
 
     assert value(supporting_texts=[source]) is None
+
+
+def test_public_customer_acting_on_behalf_of_region_preserves_legal_entity_identity():
+    source = (
+        "Государственное казенное учреждение области «Центр», "
+        "от имени области, именуемое в дальнейшем «Заказчик», в лице директора."
+    )
+
+    resolution = resolve_customer_name(contract_draft_text=source)
+
+    assert resolution is not None
+    assert resolution.value == "Государственное казенное учреждение области «Центр»"
+    assert resolution.evidence_kind == "contract_party_preamble"
+    assert resolution.source_role == "contract"

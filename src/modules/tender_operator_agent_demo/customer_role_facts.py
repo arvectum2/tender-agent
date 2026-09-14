@@ -298,6 +298,12 @@ def _strip_leading_locality(capture: str) -> str:
     return stripped or capture
 
 
+def _strip_representation_suffix(capture: str) -> str:
+    """Remove an explicit public-law representation phrase from identity."""
+    stripped = _REPRESENTATION_SUFFIX_RE.sub("", capture, count=1).strip()
+    return stripped or capture
+
+
 _UPPERCASE_START_RE = re.compile(r"[А-ЯA-Z]")
 # A place-of-signing header ("р.п. Краснообск") precedes the organization on
 # the same flattened line.  These lowercase starts exist only so the locality
@@ -311,6 +317,14 @@ _QUOTED_SPAN_RE = re.compile(r"«[^»\n]*»|\"[^\n\"]*\"")
 # A single organization name never spans a party-clause boundary.  Captures
 # crossing one belong to a preceding counterparty clause, not the customer.
 _PARTY_CLAUSE_MARKERS = ("с одной стороны", "с другой стороны")
+# A public-law customer may contract explicitly "от имени" its region/state.
+# That representation phrase follows the legal entity name but is not part of
+# the customer identity surface.  Keep it as a right-hand boundary rather than
+# rejecting the whole otherwise explicit customer preamble.
+_REPRESENTATION_SUFFIX_RE = re.compile(
+    r"\s+от\s+имени\s+(?:Российской\s+Федерации|[А-ЯA-ZЁ][^,;]{2,100})$",
+    re.IGNORECASE,
+)
 # A preamble organization never starts more than this far before its role
 # phrase; bounds the start enumeration below.
 _PREAMBLE_WINDOW = 260
@@ -391,7 +405,7 @@ def _preamble_candidates(text: str, source_role: str) -> list[_Candidate]:
     found: list[_Candidate] = []
     for end in sorted(best_by_role):
         candidate = _accept(
-            _strip_leading_locality(best_by_role[end]),
+            _strip_representation_suffix(_strip_leading_locality(best_by_role[end])),
             evidence_kind=_CONTRACT_PARTY_PREAMBLE,
             source_role=source_role,
         )
