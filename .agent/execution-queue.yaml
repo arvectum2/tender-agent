@@ -1,6 +1,6 @@
 version: 1
 repository: arvectum2/tender-agent
-updated_at: "2026-09-14T13:45:00Z"
+updated_at: "2026-09-14T13:50:00Z"
 owner_controls_order: true
 
 # Ordered execution view over canonical issues. The executor may update
@@ -12,7 +12,7 @@ items:
     status: in_progress
     authority: AUTO
     independent: true
-    auto_merge: false
+    auto_merge: true
     source: "issue #16; active child checkpoint DOCUMENT-QA-005-BLIND-CASE9"
     dependencies: []
     executor_scope: "Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve frozen truth/comparator/normalizer."
@@ -24,7 +24,7 @@ items:
     status: ready
     authority: AUTO
     independent: true
-    auto_merge: false
+    auto_merge: true
     source: "issue #19"
     dependencies: []
     executor_scope: "Restore a self-contained reproducible clean-checkout Docker build; keep external/local sibling dependencies explicit and deterministic."
