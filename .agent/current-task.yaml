@@ -1,52 +1,40 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ROADMAP-CANONICAL-001
-authority: OWNER
-goal: "Restore the full Tender Agent master roadmap as a repository-owned canonical source, preserving historical ARV IDs and separating it from the filtered execution queue."
+status: in_progress
+task_id: DOCUMENT-QA-005-BLIND-CASE12
+authority: AUTO
+goal: "Run a fresh independent held-out blind customer-role acceptance case for DOCUMENT-QA-005 after the generic case-11 boundary fix merged, preserving freeze-before-SUT benchmark integrity and completing #16 only on unbiased passing evidence."
 definition_of_done:
-  - "Recover the complete historical roadmap from the latest canonical Arvectum_Backlog_Roadmap workbook and repository evidence without renumbering existing ARV IDs."
-  - "Create a machine-readable master roadmap and human-readable roadmap index in the repository."
-  - "Preserve original snapshot status/priority/dependencies and add a current reconciliation layer with evidence/conflict notes rather than silently rewriting history."
-  - "Explicitly retain legal, electrical-ontology/equipment, 223-FZ, commercial, supplier/RFQ, connector, SaaS, infrastructure and late-optimization tracks."
-  - "Record known ARV-ID drift/collisions introduced after the historical snapshot instead of overwriting legacy meaning."
-  - "Bind .agent/execution-queue.yaml to the master roadmap as a filtered executable projection; do not expand executor authority or silently admit deferred/human-gated work."
-  - "Update the single Tender Agent hourly watchdog/executor prompt to read the master roadmap before the execution queue."
-  - "Validate YAML/Markdown structure, queue references and canonical checkpoint state; commit final evidence and mark this task completed."
+  - "Select a new 44-FZ procurement not previously used for development, calibration, regression, issues, PRs or commits, with an official source bundle ingestible byte-for-byte by the fixed runtime."
+  - "Fix product code provenance at the post-PR-37 merge commit ba0a0df56e660de1dcc0d53dabe3935d0911521e; later checkpoint-only commits must not change runtime provenance."
+  - "Acquire current original official EIS bytes and event/revision state, prepare a source-only evaluator bundle, inspect customer/organizer role evidence directly without SUT, and reject pre-SUT on material official conflict or insufficient evidence."
+  - "Author and freeze source-only blind labels before any Tender Agent analysis; do not change truth/comparator/normalizer after SUT output."
+  - "Run exactly one valid first-blind analysis on an isolated runtime proven to use the fixed product commit and the exact frozen source bytes."
+  - "Normalize, compare and route review only with repository-owned unchanged tooling; preserve the first valid result even if it fails."
+  - "Record immutable evidence in a dedicated case issue and parent issue #16; close #16 only if the strict unbiased customer_name acceptance gate is satisfied."
+  - "Run/verify all relevant checks and update this canonical checkpoint to completed or to the next generic follow-up task if the blind case exposes a reusable failure."
 completed:
-  - "Archived stale DOCUMENT-QA-005-BLIND-CASE11 checkpoint as completed from issue #36 immutable blind result."
-  - "Recovered the latest canonical Owner backlog snapshot from Arvectum_Backlog_Roadmap_2026-07-30_v9_storage_cleanup.xlsx, sheet `Полный бэклог`, rows 5-97."
-  - "Restored the complete historical registry: BASE-001..BASE-018 and ARV-001..ARV-075 with IDs preserved exactly."
-  - "Created docs/roadmap/master-roadmap.yaml as the machine-readable canonical product scope/history registry with immutable historical snapshot fields and a separate current reconciliation overlay."
-  - "Created docs/roadmap/MASTER_ROADMAP.md as the human-readable canonical roadmap, including legal, 223-FZ, electrical ontology/equipment, supplier/RFQ, ETP connector, SaaS, infrastructure and late-optimization tracks."
-  - "Recorded ARV-073 and ARV-074 later ID reuse as unresolved fail-closed conflicts rather than silently renumbering or overwriting historical meanings."
-  - "Recorded post-snapshot ARV-076 and ARV-096 separately without inventing missing IDs or automatic queue admission."
-  - "Updated .agent/execution-queue.yaml to version 2 and bound it explicitly to the master roadmap as a filtered executable projection; queue order, authority, dependencies and gates were preserved."
-  - "Opened PR #38 at exact head 35399632e713ec1406b74265b2b61e124df19542; changed files were limited to current-task, execution-queue and the two roadmap files; no review threads or change requests existed."
-  - "PR #38 exact-head CI run 34878304646 completed successfully."
-  - "Merged PR #38 to main as verified merge commit 340fd3e442aea43f1068c718715257ef76c214d6."
-  - "Post-merge main CI run 34879582411 completed successfully across all 8 jobs, including quality, migrations, security, Redis integration, R8 PostgreSQL/acceptance integration and P6.03 Arvectum OS bridge."
-  - "Post-merge GitVerse mirror run 34879582308 completed successfully."
-  - "Updated the existing hourly Tender Agent Roadmap Executor automation 6aa7ef95fc9c8191beaa71fea17dc372 to read docs/roadmap/master-roadmap.yaml and docs/roadmap/MASTER_ROADMAP.md before current-task/policy/queue, while explicitly keeping execution admission and authority in the filtered queue/policy."
-current: "Completed. Canonical master roadmap is restored on main and the single hourly executor is bound to it."
-pending: []
-last_verified_commit: "340fd3e442aea43f1068c718715257ef76c214d6"
+  - "PR #37 generic glued-requisites fix merged to main as ba0a0df56e660de1dcc0d53dabe3935d0911521e."
+  - "Post-merge main CI run 34881657689 completed successfully; GitVerse mirror run 34881657582 completed successfully."
+  - "Case 11 remains immutable exposed regression evidence and must not be reused as blind acceptance."
+current: "Select and independence-check a fresh case 12 candidate, then create the dedicated issue/checkpoint before source acquisition."
+pending:
+  - "Select a fresh independent 44-FZ customer-role candidate with byte-ingestible official attachments."
+  - "Create dedicated case-12 issue with fixed product state and blind protocol."
+  - "Create isolated local Phase-A worktree at exact fixed product commit and acquire/freeze source-only evidence."
+  - "Freeze blind labels before SUT, execute exactly one valid first-blind run, normalize/compare/review, and record immutable result."
+  - "If acceptance passes, complete DOCUMENT-QA-005/#16 and advance the filtered queue; if it fails, preserve the case and continue only with a generic reusable fix."
+last_verified_commit: "ba0a0df56e660de1dcc0d53dabe3935d0911521e"
 test_results:
-  - "Historical workbook parse PASS: 11 sheets found; `Полный бэклог` rows 5-97 recovered."
-  - "Roadmap invariant validation PASS: 93 unique historical entries, exactly ARV-001..ARV-075 and BASE-001..BASE-018."
-  - "Key ID/title validation PASS for ARV-006, ARV-017, ARV-023, ARV-041, ARV-067, ARV-073 and ARV-074."
-  - "Queue projection validation PASS: order 10/20/30/40, authority AUTO/AUTO/REVIEW/REVIEW and statuses in_progress/ready/blocked/deferred preserved."
-  - "Queue current/completed program references are represented in master roadmap current_programs; human roadmap contains all recovered IDs."
-  - "git diff --check PASS on restoration branch."
-  - "PR #38 exact-head CI 34878304646: success."
-  - "main post-merge CI 34879582411: success, 8/8 jobs."
-  - "GitVerse mirror 34879582308: success."
-updated_at: "2026-09-14T18:23:00Z"
-resume_instruction: "ROADMAP-CANONICAL-001 is complete. On the next executor run, read the canonical master roadmap first, then the filtered execution queue, and resume the first executable admitted queue item without changing roadmap IDs, priority, authority, dependencies or owner gates. Do not reopen this restoration task unless new repository evidence shows the canonical roadmap is incomplete or corrupted."
+  - "PR #37 exact-head CI passed before merge."
+  - "main post-merge CI 34881657689: success."
+  - "GitVerse mirror 34881657582: success."
+updated_at: "2026-09-14T18:46:00Z"
+resume_instruction: "Read master roadmap, execution queue and issue #16. Continue DOCUMENT-QA-005 with a new independent blind case after PR #37. Do not reuse cases 3-11, do not inspect SUT output before source-only label freeze, and keep runtime provenance fixed to ba0a0df56e660de1dcc0d53dabe3935d0911521e. Use Mac-mini-master.local for local source acquisition/runtime work."
 execution:
-  claimed_by: null
-  execution_id: null
+  claimed_by: "chatgpt"
+  execution_id: "document-qa-005-case12-blind"
   branch: null
-  base_commit: "340fd3e442aea43f1068c718715257ef76c214d6"
-  lease_until: null
+  base_commit: "ba0a0df56e660de1dcc0d53dabe3935d0911521e"
+  lease_until: "2026-09-14T20:36:00Z"
   manual_override: false
