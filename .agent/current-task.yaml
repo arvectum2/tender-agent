@@ -1,48 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-BLIND-CASE11
-authority: AUTO
-goal: "Complete a new independent held-out blind case 11 acceptance for DOCUMENT-QA-005 after case 10 was rejected before any valid SUT result due exact-source RAR incompatibility."
+task_id: ROADMAP-CANONICAL-001
+authority: OWNER
+goal: "Restore the full Tender Agent master roadmap as a repository-owned canonical source, preserving historical ARV IDs and separating it from the filtered execution queue."
 definition_of_done:
-  - "Keep benchmark product code fixed at 2eb593ba6deba03b11738ea20833294bb7ae3ca8 (PR #32 merge)."
-  - "Acquire and validate original official EIS source bytes for registry 0162300078626000203 and current event/revision state."
-  - "Reject before SUT if official customer-role evidence is materially conflicting/insufficient or exact frozen files are not ingestible by fixed runtime."
-  - "Author source-only truth/discovery and freeze labels before any case-11 SUT run or resolver output."
-  - "After freeze, prove isolated runtime provenance is exact product commit, ingest exact frozen bytes, execute exactly one valid first-blind analysis, normalize/compare/route-review unchanged."
-  - "Preserve frozen truth/comparator/normalizer and shared port 8000 unchanged."
-  - "Update GitHub #36 and #16; close #36 when benchmark execution completes; close #16 only on strict blind customer_name TRUE_POSITIVE with no role fabrication."
+  - "Recover the complete historical roadmap from the latest canonical Arvectum_Backlog_Roadmap workbook and repository evidence without renumbering existing ARV IDs."
+  - "Create a machine-readable master roadmap and human-readable roadmap index in the repository."
+  - "Preserve original snapshot status/priority/dependencies and add a current reconciliation layer with evidence/conflict notes rather than silently rewriting history."
+  - "Explicitly retain legal, electrical-ontology/equipment, 223-FZ, commercial, supplier/RFQ, connector, SaaS, infrastructure and late-optimization tracks."
+  - "Record known ARV-ID drift/collisions introduced after the historical snapshot instead of overwriting legacy meaning."
+  - "Bind .agent/execution-queue.yaml to the master roadmap as a filtered executable projection; do not expand executor authority or silently admit deferred/human-gated work."
+  - "Update the single Tender Agent hourly watchdog/executor prompt to read the master roadmap before the execution queue."
+  - "Validate YAML/Markdown structure, queue references and canonical checkpoint state; commit final evidence and mark this task completed."
 completed:
-  - "PR #32 merged; fixed customer-role product code state is 2eb593ba6deba03b11738ea20833294bb7ae3ca8."
-  - "Case 10 #34 Phase A/freeze was valid, but exact fixed runtime rejected original .rar attachments before run creation; no valid case-10 SUT result exists."
-  - "Case 10 closed not_planned as an input-container compatibility blocker; #16 remains open."
-  - "Case 11 selected independently after case-10 rejection: registry 0162300078626000203, subject `Поставка продуктов питания`, Sverdlovsk Region."
-  - "Independence checks: registry absent from repository code, issues/PRs and commits before #36 creation."
-  - "Public selection evidence indicates actual customer МОУ `АРАМАШЕВСКАЯ СОШ` and organizer УМЗ администрации МО Алапаевское; official frozen EIS bytes alone will govern truth."
-  - "Public attachment listing shows five DOCX files, all accepted by fixed manual-upload extension policy."
-  - "Official EIS Phase A acquired 7 frozen source artifacts (5 DOCX notice attachments, current final-protocol attachment as published, and current protocol HTML); source bundle c395ed7db1efd91d64a81a12cebe07ca853f2cdcbc263c7e0043c7c32d6f6666."
-  - "Event journal checked: initial notice 27.08.2026, final protocol 07.09.2026, no notice amendments/clarifications at cut-off."
-  - "Customer-role source gate A CONSISTENT; final protocol explicitly distinguishes customer from organizer."
-  - "Manifest/evaluator/source identity validation PASS; discovery context SHA 61235e66dfab71a12c6b14a260f3d3fb126dd57b648d9ecb87165a54d261cd12."
-  - "Source-only labels authored before SUT: 29 facts, 27 ASSERTED, 2 INSUFFICIENT_EVIDENCE, 0 conflicts; discovery IRRELEVANT."
-  - "Labels frozen and verified at 2026-09-14T15:55:43.620175+00:00; label_set a075257573b8bfa6a8686687f953f9a507867b9a1c86501ec02ce647732faaec; frozen raw fc5b2467db339a72675ba03a74e2818cd1d43b972c5c5cffafbf1bb4b1e4feb2."
-current: "Case 11 Phase A/source-only labels are frozen and verified. Start exactly one valid first-blind Phase-B run from exact product commit 2eb593ba6deba03b11738ea20833294bb7ae3ca8 with proven runtime provenance."
+  - "Archived stale DOCUMENT-QA-005-BLIND-CASE11 checkpoint as completed from issue #36 immutable blind result."
+  - "Located latest canonical backlog workbook on Mac mini: /Users/master/Downloads/Arvectum_Backlog_Roadmap_2026-07-30_v9_storage_cleanup.xlsx."
+  - "Recovered the full historical `Полный бэклог` sheet: BASE-001..BASE-018 plus ARV-001..ARV-075-era roadmap entries, including ARV-041 legal, ARV-067 electrical ontology, ARV-006 223-FZ and broader commercial/SaaS/integration tracks."
+current: "Build repository-owned master roadmap from the recovered workbook and reconcile it against current main/docs/issues without changing historical IDs."
 pending:
-  - "Create fresh first-blind Phase-B directory from frozen case-11 artifacts and prove no prior valid case-11 SUT output exists."
-  - "Start isolated runtime from exact product commit 2eb593ba6deba03b11738ea20833294bb7ae3ca8 and verify process cwd/import provenance before analysis."
-  - "Ingest exact frozen case-11 source bytes and execute exactly one valid analysis."
-  - "Persist raw SUT response; run repository-owned normalize-phase-b, compare and route-review unchanged."
-  - "Classify customer_name strictly against frozen truth, update #36/#16, close #36 when execution completes; close #16 only on strict blind TRUE_POSITIVE with no role fabrication."
-last_verified_commit: "2eb593ba6deba03b11738ea20833294bb7ae3ca8"
+  - "Generate machine-readable master roadmap with legacy snapshot fields and current reconciliation/evidence fields."
+  - "Create human-readable roadmap document and ID-collision/reconciliation notes."
+  - "Update execution-queue metadata so it is explicitly a filtered projection of the master roadmap."
+  - "Update Tender Agent hourly executor prompt to read master roadmap before queue."
+  - "Validate files/references, record final commit/evidence, mark checkpoint completed."
+last_verified_commit: "98b869b79dd08a131837ca1ce5f8a50f7bc4dbd4"
 test_results:
-  - "PR #32 GitHub Actions: 8/8 success."
-  - "Case 10 exact runtime provenance check: PASS, but intake rejected .rar before run creation; shared port 8000 remained untouched."
-updated_at: "2026-09-14T15:58:00Z"
-resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-case11-phase-a. Case 11 labels are frozen: source bundle c395ed7db1efd91d64a81a12cebe07ca853f2cdcbc263c7e0043c7c32d6f6666, label_set a075257573b8bfa6a8686687f953f9a507867b9a1c86501ec02ce647732faaec. Never modify truth/freeze. Prove no prior valid case-11 SUT run, create one fresh Phase-B directory, start isolated runtime from exact product commit 2eb593ba6deba03b11738ea20833294bb7ae3ca8, verify process cwd/import provenance before analysis, ingest exact frozen files, execute exactly one valid analysis, then normalize/compare/route-review unchanged. Never touch shared port 8000."
+  - "Historical workbook recovered and parsed directly from OOXML; 11 sheets found, `Полный бэклог` rows 5-97 contain the canonical July-30 roadmap snapshot."
+updated_at: "2026-09-14T17:46:00Z"
+resume_instruction: "Use Mac-mini-master.local for the recovered workbook and repository evidence. Preserve every historical ARV ID exactly. Build master roadmap as history + reconciliation overlay; do not silently reuse or renumber colliding IDs. Keep execution queue narrow and authority-neutral."
 execution:
-  claimed_by: null
-  execution_id: null
+  claimed_by: "chatgpt-owner-session"
+  execution_id: "ROADMAP-CANONICAL-001-20260914"
   branch: null
-  base_commit: "2eb593ba6deba03b11738ea20833294bb7ae3ca8"
-  lease_until: null
-  manual_override: false
+  base_commit: "98b869b79dd08a131837ca1ce5f8a50f7bc4dbd4"
+  lease_until: "2026-09-14T19:36:00Z"
+  manual_override: true
