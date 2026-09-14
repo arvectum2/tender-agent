@@ -1,0 +1,66 @@
+version: 1
+repository: arvectum2/tender-agent
+updated_at: "2026-09-14T13:45:00Z"
+owner_controls_order: true
+
+# Ordered execution view over canonical issues. The executor may update
+# status/evidence only; it must not silently create priorities or change gates.
+items:
+  - order: 10
+    task_id: DOCUMENT-QA-005
+    title: "Source-bound customer role and identity extraction"
+    status: in_progress
+    authority: AUTO
+    independent: true
+    auto_merge: false
+    source: "issue #16; active child checkpoint DOCUMENT-QA-005-BLIND-CASE9"
+    dependencies: []
+    executor_scope: "Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve frozen truth/comparator/normalizer."
+    done_gate: "Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance, with required CI/evidence recorded."
+
+  - order: 20
+    task_id: BUILD-DOCKER-CONTEXT-001
+    title: "Repair Docker context dependency on missing landing assets"
+    status: ready
+    authority: AUTO
+    independent: true
+    auto_merge: false
+    source: "issue #19"
+    dependencies: []
+    executor_scope: "Restore a self-contained reproducible clean-checkout Docker build; keep external/local sibling dependencies explicit and deterministic."
+    done_gate: "Issue #19 acceptance criteria and relevant CI/runtime smoke evidence pass."
+
+  - order: 30
+    task_id: DISCOVERY-QA-001
+    title: "Procurement search quality benchmark and relevance hardening"
+    status: blocked
+    authority: REVIEW
+    independent: true
+    auto_merge: false
+    source: "issue #2"
+    dependencies:
+      - BENCHMARK-PIPELINE-001
+    blocker: "Issue #2 requires Product Owner inspection/promotion after the completed control rerun. Repository state does not contain an explicit canonical promotion yet."
+    owner_gate: "Product Owner must explicitly promote this item to READY before search-weight tuning or corpus expansion."
+    executor_scope: "May inspect current evidence and prepare a decision packet, but do not tune search or expand corpus while status remains blocked."
+
+  - order: 40
+    task_id: DOCUMENT-QA-NEXT-INCREMENT
+    title: "Next measured document-QA failure family"
+    status: deferred
+    authority: REVIEW
+    independent: false
+    auto_merge: false
+    source: "issue #3 current strategy"
+    dependencies:
+      - DOCUMENT-QA-005
+    owner_gate: "Promote only after a concrete reusable failure family is captured in a canonical issue with acceptance criteria."
+    executor_scope: "Do not invent the next product priority from benchmark output; prepare evidence/options only."
+
+completed_dependencies:
+  - task_id: BENCHMARK-PIPELINE-001
+    source: "issue #1"
+    status: done
+  - task_id: DOCUMENT-QA-004
+    source: "issue #11 and completed held-out acceptance sequence"
+    status: done
