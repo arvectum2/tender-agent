@@ -173,3 +173,28 @@ def test_source_role_breaks_ties_within_same_kind():
         )
         == "ООО «Ромашка»"
     )
+
+
+def test_glued_customer_details_do_not_outrank_clean_explicit_role_evidence():
+    contract = (
+        'ЗАКАЗЧИК: Акционерное общество "Север" (АО "СЕВЕР")'
+        'e-mail: office@example.test телефон +7(000)000-00-00'
+        'Место нахождения: 000000, г. Пример'
+    )
+    protocol = 'Заказчик(и): АКЦИОНЕРНОЕ ОБЩЕСТВО "СЕВЕР"'
+
+    assert (
+        value(contract_draft_text=contract, supporting_texts=[protocol])
+        == 'АКЦИОНЕРНОЕ ОБЩЕСТВО "СЕВЕР"'
+    )
+
+
+def test_glued_customer_details_fall_back_to_contract_party_preamble():
+    contract = (
+        'Акционерное общество «Север», именуемое в дальнейшем «Заказчик», в лице директора.\n'
+        'ЗАКАЗЧИК: Акционерное общество "Север" (АО "СЕВЕР")'
+        'e-mail: office@example.test телефон +7(000)000-00-00'
+        'Место нахождения: 000000, г. Пример'
+    )
+
+    assert value(contract_draft_text=contract) == 'Акционерное общество «Север»'
