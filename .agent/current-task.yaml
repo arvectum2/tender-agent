@@ -1,40 +1,44 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-BLIND-CASE12
+task_id: DOCUMENT-QA-005-CASE12-FIX
 authority: AUTO
-goal: "Run a fresh independent held-out blind customer-role acceptance case for DOCUMENT-QA-005 after the generic case-11 boundary fix merged, preserving freeze-before-SUT benchmark integrity and completing #16 only on unbiased passing evidence."
+goal: "Fix the generic customer legal-name truncation exposed by immutable blind case 12, prove exposed regression without changing frozen benchmark artifacts, merge after green CI, then select a fresh held-out blind case for #16 acceptance."
 definition_of_done:
-  - "Select a new 44-FZ procurement not previously used for development, calibration, regression, issues, PRs or commits, with an official source bundle ingestible byte-for-byte by the fixed runtime."
-  - "Fix product code provenance at the post-PR-37 merge commit ba0a0df56e660de1dcc0d53dabe3935d0911521e; later checkpoint-only commits must not change runtime provenance."
-  - "Acquire current original official EIS bytes and event/revision state, prepare a source-only evaluator bundle, inspect customer/organizer role evidence directly without SUT, and reject pre-SUT on material official conflict or insufficient evidence."
-  - "Author and freeze source-only blind labels before any Tender Agent analysis; do not change truth/comparator/normalizer after SUT output."
-  - "Run exactly one valid first-blind analysis on an isolated runtime proven to use the fixed product commit and the exact frozen source bytes."
-  - "Normalize, compare and route review only with repository-owned unchanged tooling; preserve the first valid result even if it fails."
-  - "Record immutable evidence in a dedicated case issue and parent issue #16; close #16 only if the strict unbiased customer_name acceptance gate is satisfied."
-  - "Run/verify all relevant checks and update this canonical checkpoint to completed or to the next generic follow-up task if the blind case exposes a reusable failure."
+  - "Preserve case-12 first-blind run toa-run-20260914185704-57ef2d, frozen truth, comparator and normalizer unchanged; never rerun case 12 as blind."
+  - "Diagnose and fix the reusable source-bound cause that dropped the legal-form prefix from an explicit contract-party customer name."
+  - "Add generic synthetic regression tests without case-specific registry, organization or filename literals."
+  - "Run focused and broader customer/document-QA tests, Ruff, git diff checks, make check, and an exposed case-12 regression on unchanged source bytes."
+  - "Commit/push the generic fix and open a PR; merge automatically only after exact-head required CI/rules are green under current AM-4 authority."
+  - "After merge, select a new independent held-out 44-FZ customer-role case and repeat freeze-before-SUT acceptance; close #16 only on strict unbiased customer_name TRUE_POSITIVE."
 completed:
-  - "PR #37 generic glued-requisites fix merged to main as ba0a0df56e660de1dcc0d53dabe3935d0911521e."
-  - "Post-merge main CI run 34881657689 completed successfully; GitVerse mirror run 34881657582 completed successfully."
-  - "Case 11 remains immutable exposed regression evidence and must not be reused as blind acceptance."
-current: "Select and independence-check a fresh case 12 candidate, then create the dedicated issue/checkpoint before source acquisition."
+  - "Archived the completed case-12 blind checkpoint to .agent/checkpoints/DOCUMENT-QA-005-BLIND-CASE12.yaml."
+  - "Case 12 is an immutable valid blind failure: customer_name expected full legal hospital name; runtime emitted shortened malformed surface; TP=2 FP=1 FN=20 F1=0.16; review NEEDS_REVIEW."
+  - "Recorded immutable case-12 evidence in #39 and #16; #39 closed completed, #16 remains open; case 12 is exposed regression-only."
+  - "Created follow-up worktree /Users/master/tender-agent-dqa005-case12-followup from origin/main 85a36e478d09eb04db4fa1e0d216e21d03430e15 on branch document-qa-005-case12-full-legal-name."
+  - "Baseline focused customer/document-QA suite passed 67/67 before edits."
+  - "Root cause reproduced generically: signing template prefix `20___ г.` was not recognized as a year, so trailing `г.` was treated as locality and suppressed the true legal-name start."
+  - "Implemented generic year-template handling for concrete and placeholder signing years and added two synthetic regressions; focused suite passes 69/69."
+  - "Direct exposed resolver check on unchanged case-12 extracted bytes now preserves the complete source-supported legal-form prefix instead of starting at the quoted organization name."
+  - "Broader customer/document-QA regression suite passed 101/101; Ruff PASS; git diff --check PASS; make check PASS."
+  - "Full make test: 2933 passed, 241 skipped, 1 failed only in tests/test_r9_backup_restore.py because local pg_restore returned exit code 1; same pre-existing environment failure class as prior case-11 validation and unrelated to customer resolver."
+current: "Commit the generic fix to establish exact runtime provenance, then run an exposed case-12 regression from that commit on unchanged frozen source bytes."
 pending:
-  - "Select a fresh independent 44-FZ customer-role candidate with byte-ingestible official attachments."
-  - "Create dedicated case-12 issue with fixed product state and blind protocol."
-  - "Create isolated local Phase-A worktree at exact fixed product commit and acquire/freeze source-only evidence."
-  - "Freeze blind labels before SUT, execute exactly one valid first-blind run, normalize/compare/review, and record immutable result."
-  - "If acceptance passes, complete DOCUMENT-QA-005/#16 and advance the filtered queue; if it fails, preserve the case and continue only with a generic reusable fix."
-last_verified_commit: "ba0a0df56e660de1dcc0d53dabe3935d0911521e"
+  - "Run exposed case-12 regression on isolated port/runtime using unchanged frozen source bytes; record exact customer result and distinguish structural repair from any remaining source-surface convention difference."
+  - "Update #16/#39 with exposed regression evidence; commit/push branch and open PR."
+  - "Verify exact-head CI/rules, merge only if green, update canonical checkpoint."
+  - "Select a fresh independent post-merge blind case and continue #16 acceptance."
+last_verified_commit: "85a36e478d09eb04db4fa1e0d216e21d03430e15"
 test_results:
-  - "PR #37 exact-head CI passed before merge."
-  - "main post-merge CI 34881657689: success."
-  - "GitVerse mirror 34881657582: success."
-updated_at: "2026-09-14T18:46:00Z"
-resume_instruction: "Read master roadmap, execution queue and issue #16. Continue DOCUMENT-QA-005 with a new independent blind case after PR #37. Do not reuse cases 3-11, do not inspect SUT output before source-only label freeze, and keep runtime provenance fixed to ba0a0df56e660de1dcc0d53dabe3935d0911521e. Use Mac-mini-master.local for local source acquisition/runtime work."
+  - "Pre-edit focused customer/document-QA baseline: 67 passed."
+  - "Post-edit focused suite: 69 passed."
+  - "Exposed case-12 resolver on unchanged extracted contract bytes now returns full `Государственное бюджетное учреждение здравоохранения ...` source surface."
+updated_at: "2026-09-14T19:53:38Z"
+resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-dqa005-case12-followup. Case 12 is exposed regression-only; never run it as blind again and never alter its frozen truth/comparator/normalizer. Continue with broader quality gates, then an exposed regression using unchanged case-12 bytes, commit/push/open PR if green, merge only on exact-head green CI under AUTO authority, then select a fresh post-merge held-out case."
 execution:
   claimed_by: "chatgpt"
-  execution_id: "document-qa-005-case12-blind"
-  branch: null
-  base_commit: "ba0a0df56e660de1dcc0d53dabe3935d0911521e"
-  lease_until: "2026-09-14T20:36:00Z"
+  execution_id: "dqa005-case12-fix"
+  branch: "document-qa-005-case12-full-legal-name"
+  base_commit: "85a36e478d09eb04db4fa1e0d216e21d03430e15"
+  lease_until: "2026-09-14T21:26:00Z"
   manual_override: false
