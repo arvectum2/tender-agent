@@ -3,36 +3,58 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: ROADMAP-CANONICAL-001
 authority: OWNER
-goal: "Restore the full Tender Agent master roadmap as a repository-owned canonical source, preserving historical ARV IDs and separating it from the filtered execution queue."
+goal: Restore the full Tender Agent master roadmap as a repository-owned canonical source, preserving historical ARV IDs and separating it from
+  the filtered execution queue.
 definition_of_done:
-  - "Recover the complete historical roadmap from the latest canonical Arvectum_Backlog_Roadmap workbook and repository evidence without renumbering existing ARV IDs."
-  - "Create a machine-readable master roadmap and human-readable roadmap index in the repository."
-  - "Preserve original snapshot status/priority/dependencies and add a current reconciliation layer with evidence/conflict notes rather than silently rewriting history."
-  - "Explicitly retain legal, electrical-ontology/equipment, 223-FZ, commercial, supplier/RFQ, connector, SaaS, infrastructure and late-optimization tracks."
-  - "Record known ARV-ID drift/collisions introduced after the historical snapshot instead of overwriting legacy meaning."
-  - "Bind .agent/execution-queue.yaml to the master roadmap as a filtered executable projection; do not expand executor authority or silently admit deferred/human-gated work."
-  - "Update the single Tender Agent hourly watchdog/executor prompt to read the master roadmap before the execution queue."
-  - "Validate YAML/Markdown structure, queue references and canonical checkpoint state; commit final evidence and mark this task completed."
+- Recover the complete historical roadmap from the latest canonical Arvectum_Backlog_Roadmap workbook and repository evidence without renumbering
+  existing ARV IDs.
+- Create a machine-readable master roadmap and human-readable roadmap index in the repository.
+- Preserve original snapshot status/priority/dependencies and add a current reconciliation layer with evidence/conflict notes rather than silently
+  rewriting history.
+- Explicitly retain legal, electrical-ontology/equipment, 223-FZ, commercial, supplier/RFQ, connector, SaaS, infrastructure and late-optimization
+  tracks.
+- Record known ARV-ID drift/collisions introduced after the historical snapshot instead of overwriting legacy meaning.
+- Bind .agent/execution-queue.yaml to the master roadmap as a filtered executable projection; do not expand executor authority or silently admit
+  deferred/human-gated work.
+- Update the single Tender Agent hourly watchdog/executor prompt to read the master roadmap before the execution queue.
+- Validate YAML/Markdown structure, queue references and canonical checkpoint state; commit final evidence and mark this task completed.
 completed:
-  - "Archived stale DOCUMENT-QA-005-BLIND-CASE11 checkpoint as completed from issue #36 immutable blind result."
-  - "Located latest canonical backlog workbook on Mac mini: /Users/master/Downloads/Arvectum_Backlog_Roadmap_2026-07-30_v9_storage_cleanup.xlsx."
-  - "Recovered the full historical `Полный бэклог` sheet: BASE-001..BASE-018 plus ARV-001..ARV-075-era roadmap entries, including ARV-041 legal, ARV-067 electrical ontology, ARV-006 223-FZ and broader commercial/SaaS/integration tracks."
-current: "Build repository-owned master roadmap from the recovered workbook and reconcile it against current main/docs/issues without changing historical IDs."
+- 'Archived stale DOCUMENT-QA-005-BLIND-CASE11 checkpoint as completed from issue #36 immutable blind result.'
+- 'Located latest canonical backlog workbook on Mac mini: Arvectum_Backlog_Roadmap_2026-07-30_v9_storage_cleanup.xlsx.'
+- 'Recovered the full historical `Полный бэклог` sheet: BASE-001..BASE-018 plus ARV-001..ARV-075-era roadmap entries, including ARV-041 legal,
+  ARV-067 electrical ontology, ARV-006 223-FZ and broader commercial/SaaS/integration tracks.'
+- Generated docs/roadmap/master-roadmap.yaml with the complete recovered BASE-001..BASE-018 and ARV-001..ARV-075 historical registry plus a current
+  reconciliation overlay.
+- Generated docs/roadmap/MASTER_ROADMAP.md with a readable complete roadmap, current executor programs, legal/ontology/223-FZ highlights, and
+  post-snapshot observed work.
+- Recorded fail-closed ARV-073/ARV-074 ID collisions instead of silently renumbering or overwriting historical meanings.
+- Updated .agent/execution-queue.yaml to version 2 and bound it explicitly to the master roadmap as a filtered executable projection; queue order/authority/dependencies/status
+  gates were preserved.
+current: Validate restored roadmap/queue invariants, commit/push a reviewable branch, merge after exact-head checks, then bind the single hourly
+  Tender Agent executor to read the master roadmap first.
 pending:
-  - "Generate machine-readable master roadmap with legacy snapshot fields and current reconciliation/evidence fields."
-  - "Create human-readable roadmap document and ID-collision/reconciliation notes."
-  - "Update execution-queue metadata so it is explicitly a filtered projection of the master roadmap."
-  - "Update Tender Agent hourly executor prompt to read master roadmap before queue."
-  - "Validate files/references, record final commit/evidence, mark checkpoint completed."
-last_verified_commit: "98b869b79dd08a131837ca1ce5f8a50f7bc4dbd4"
+- Validate YAML/Markdown coverage, key IDs/titles, queue-to-master program references and git diff hygiene.
+- Commit and push owner/roadmap-canonical-001; open and independently inspect PR/exact-head checks.
+- Merge only if repository checks and review gates permit.
+- Update the existing Tender Agent Roadmap Executor automation to read the canonical master roadmap before the execution queue.
+- Record final merge/evidence and mark ROADMAP-CANONICAL-001 completed with manual_override released.
+last_verified_commit: fca49371d8c8d0c5a588dc42fb7021ebe4d8addd
 test_results:
-  - "Historical workbook recovered and parsed directly from OOXML; 11 sheets found, `Полный бэклог` rows 5-97 contain the canonical July-30 roadmap snapshot."
-updated_at: "2026-09-14T17:46:00Z"
-resume_instruction: "Use Mac-mini-master.local for the recovered workbook and repository evidence. Preserve every historical ARV ID exactly. Build master roadmap as history + reconciliation overlay; do not silently reuse or renumber colliding IDs. Keep execution queue narrow and authority-neutral."
+- Historical workbook recovered and parsed directly from OOXML; 11 sheets found, `Полный бэклог` rows 5-97 contain the canonical July-30 roadmap
+  snapshot.
+- 'Roadmap invariant validation PASS: 93 unique historical entries, exactly ARV-001..ARV-075 and BASE-001..BASE-018.'
+- Key ID/title validation PASS for ARV-006, ARV-017, ARV-023, ARV-041, ARV-067, ARV-073 and ARV-074.
+- 'Queue projection validation PASS: order 10/20/30/40, authority AUTO/AUTO/REVIEW/REVIEW and statuses in_progress/ready/blocked/deferred preserved.'
+- Queue current/completed program references are all represented in master roadmap current_programs; human roadmap contains all recovered IDs.
+- git diff --check PASS.
+updated_at: '2026-09-14T18:03:00Z'
+resume_instruction: Continue from clean branch owner/roadmap-canonical-001. Validate docs/roadmap/master-roadmap.yaml, docs/roadmap/MASTER_ROADMAP.md
+  and .agent/execution-queue.yaml; preserve all ARV IDs and queue authority/status gates. Then push/PR/check/merge if allowed, update the one
+  existing Tender Agent Roadmap Executor prompt to read the master roadmap before queue, and complete this checkpoint.
 execution:
-  claimed_by: "chatgpt-owner-session"
-  execution_id: "ROADMAP-CANONICAL-001-20260914"
-  branch: null
-  base_commit: "98b869b79dd08a131837ca1ce5f8a50f7bc4dbd4"
-  lease_until: "2026-09-14T19:36:00Z"
+  claimed_by: chatgpt-owner-session
+  execution_id: ROADMAP-CANONICAL-001-20260914
+  branch: owner/roadmap-canonical-001
+  base_commit: fca49371d8c8d0c5a588dc42fb7021ebe4d8addd
+  lease_until: '2026-09-14T19:53:00Z'
   manual_override: true
