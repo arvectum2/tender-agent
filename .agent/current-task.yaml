@@ -1,41 +1,40 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-CASE13-FIX
+task_id: DOCUMENT-QA-005-CASE14-FIX
 authority: AUTO
-goal: "Fix the generic customer-role precedence failure exposed by immutable blind case 13, prove exposed regression without changing frozen benchmark artifacts, merge after green CI, then select a fresh held-out blind case for #16 acceptance."
+goal: "Fix the generic flattened contract-preamble identity-boundary failure exposed by immutable blind case 14, prove exposed regression without changing frozen benchmark artifacts, merge after exact-head green CI, then select a fresh held-out blind case for #16 acceptance."
 definition_of_done:
-  - "Preserve case-13 first-blind run toa-run-20260914202859-186fda, frozen truth, comparator and normalizer unchanged; never rerun case 13 as blind."
-  - "Diagnose the reusable source-bound cause that allowed the public search-card authorized placing body to survive over explicit contract/EIS customer-role evidence."
-  - "Implement a generic precedence/resolution fix with synthetic tests and no case-specific registry, organization or filename literals."
-  - "Run focused/broader customer/document-QA tests, Ruff, git diff checks, make check and an exposed case-13 regression on unchanged source bytes."
-  - "Commit/push and open a PR; merge automatically only after exact-head CI/rules are green under AUTO authority."
-  - "After merge, select a fresh independent held-out customer-role case and repeat freeze-before-SUT acceptance; close #16 only on strict unbiased customer_name TRUE_POSITIVE."
+  - "Preserve case-14 first-blind run toa-run-20260914213712-35fc0f, frozen truth, comparator and normalizer unchanged; never rerun case 14 as blind."
+  - "Implement a generic source-bound identity boundary fix with synthetic tests and no procurement-number, organization-name or filename literals."
+  - "Prove unchanged case-14 source bytes resolve the strict expected customer identity."
+  - "Merge automatically only after exact-head required CI/rules are green under valid Company AM-4 and no unresolved review gate exists."
+  - "After merge, select a fresh independent held-out customer-role case and repeat freeze-before-SUT acceptance; close #16 only on unbiased strict customer_name TRUE_POSITIVE."
 completed:
-  - "Case 13 first-blind result is immutable: customer truth `Государственное казенное учреждение Калужской области «Центр обеспечения «ОКА»`; runtime retained authorized placing body `МИНИСТЕРСТВО КОНКУРЕНТНОЙ ПОЛИТИКИ КАЛУЖСКОЙ ОБЛАСТИ`; strict customer_name CONTRADICTION."
-  - "First-blind run toa-run-20260914202859-186fda had exactly one analysis_started, one stub_analysis_fallback and one analysis_completed at fixed product bd07f39d4b88c0196dcfa017047b276ea271e06b."
-  - "Full blind score TP=2 FP=1 FN=19 F1=0.16666666666666666; review NEEDS_REVIEW; source bundle and frozen labels remained immutable."
-  - "Recorded result in #41 and #16; #41 closed completed, #16 remains open; case 13 is exposed regression-only."
-  - "Generic public-law representation-suffix boundary implemented on branch document-qa-005-case13-precedence; focused follow-up suite 14 passed."
-  - "PR #46 exact head 2ebcf46c9d52016bb47a1cdf5b481b7ada4e34dd passed CI run 34896339082 and was auto-merged under valid Company AM-4 as f0a87313683e3919269260adf979822bcf209944."
-current: "Select a fresh independent held-out customer-role case after merge f0a87313683e3919269260adf979822bcf209944 and execute freeze-before-SUT acceptance for #16."
+  - "Case 14 / issue #44 first-blind result is immutable exposed regression-only: strict customer_name CONTRADICTION."
+  - "Frozen label-set SHA256 d9368a73592ac8b306dbdd5c72dcfbbd865797116f930ab4f69c2190a44dc038; source bundle SHA256 8eb07ce9fc00dae4d89f2731b0ec27d6ff577cdba7807910327b81acdea4dc18."
+  - "Diagnosed generic failure: flattened contract-template instructional prose immediately before an explicit legal customer preamble was absorbed by longest-valid preamble capture."
+  - "Implemented explicit organization-form start preference with generic fallback on branch document-qa-005-case14-boundary."
+  - "Local customer-role suites: 42 passed; broader document-QA/calibration suites: 25 passed; Ruff and git diff --check passed."
+  - "Exposed regression on unchanged case-14 source bytes now resolves exactly the frozen expected customer identity."
+  - "Opened PR #47 at exact head 4f25f1e023d3b9e49666243d41b7d4bddb6c6852."
+current: "Wait for exact-head PR #47 CI/rules; if green and Company AM-4 remains valid, auto-merge, then select a fresh independent held-out case for #16."
 pending:
-  - "Select a fresh post-merge held-out customer-role case that has not been exposed to implementation/tuning."
-  - "Freeze truth/comparator/normalizer before SUT output and record hashes/evidence."
-  - "Run exactly one first-blind SUT acceptance and strict customer_name comparator."
-  - "Close #16 only if unbiased customer_name is TRUE_POSITIVE; otherwise preserve the failure as exposed regression-only and continue generically."
-last_verified_commit: "f0a87313683e3919269260adf979822bcf209944"
+  - "Verify PR #47 exact-head required CI/rules and review state."
+  - "Before merge independently re-read Company AM-4 decision and assignment; fail closed to REVIEW if uncertain or review-due."
+  - "After merge, select a fresh post-merge held-out customer-role case not exposed to implementation/tuning."
+  - "Freeze truth/comparator/normalizer before SUT and run exactly one first-blind acceptance."
+last_verified_commit: "4f25f1e023d3b9e49666243d41b7d4bddb6c6852"
 test_results:
-  - "Case-13 blind Phase B complete; artifact ZIP SHA256 ee378bcbed5e86c4f5ed2f7733490ea47e835ccc714f4a0855e2061d0d35368b."
-  - "Normalized output SHA256 4d23178fde20bc1e29a459f0e8bab1b2997c730cfbe05ffbde32d7a3db1a6900; normalization audit SHA256 38533a2ec9b18416e399a071ee09e7297b0d91450dc0a71b62d660677bec2455."
-  - "Focused synthetic follow-up: tests/test_customer_role_facts_followup.py = 14 passed."
-  - "Exact-head GitHub CI run 34896339082 = success."
-updated_at: "2026-09-14T23:02:00Z"
-resume_instruction: "Use Mac-mini-master.local. Case 13 remains immutable exposed regression-only. Continue only with a fresh independent held-out customer-role case after merge f0a87313683e3919269260adf979822bcf209944; freeze labels/comparator/normalizer before SUT, then perform one first-blind acceptance."
+  - "tests/test_customer_role_facts.py + tests/test_customer_role_facts_followup.py = 42 passed."
+  - "tests/test_document_qa_first_real_baseline.py + tests/test_benchmark_calibration_hardening.py = 25 passed."
+  - "Ruff = pass; git diff --check = pass."
+updated_at: "2026-09-14T23:58:00Z"
+resume_instruction: "Check PR #47 exact-head CI. Case 14 remains immutable exposed regression-only. Merge only under valid Company AM-4 after all gates, then continue #16 with a fresh independent freeze-before-SUT held-out case."
 execution:
   claimed_by: "chatgpt"
-  execution_id: "dqa005-case13-fix"
-  branch: null
-  base_commit: "f0a87313683e3919269260adf979822bcf209944"
-  lease_until: "2026-09-15T00:52:00Z"
+  execution_id: "dqa005-case14-fix"
+  branch: "document-qa-005-case14-boundary"
+  base_commit: "7567b69626a9c9213d0dc960ea467afee4521563"
+  lease_until: "2026-09-15T01:48:00Z"
   manual_override: false
