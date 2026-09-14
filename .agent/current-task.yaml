@@ -1,13 +1,38 @@
 version: 1
 repository: arvectum2/tender-agent
-status: completed
-task_id: null
-goal: null
-definition_of_done: []
-completed: []
-current: null
-pending: []
-last_verified_commit: null
-test_results: []
-updated_at: null
-resume_instruction: null
+status: in_progress
+task_id: DOCUMENT-QA-005-BLIND-CASE9
+goal: "Complete held-out blind case 9 acceptance for DOCUMENT-QA-005 without altering frozen truth, comparator, normalizer, or product behavior after freeze."
+definition_of_done:
+  - "Use the already-created case-9 run toa-run-20260914125926-d1e8a8 and execute analysis exactly once."
+  - "Persist first valid SUT response and run repository-owned normalize-phase-b, compare, and route-review."
+  - "Classify customer_name against frozen truth and report the full immutable benchmark score."
+  - "Preserve port 8000/shared PID and all frozen case-9 artifacts unchanged."
+  - "Update GitHub #31 and #16 with the immutable result; close #31 when benchmark execution is complete."
+  - "If customer_name is strict TRUE_POSITIVE with no role fabrication, close #16 as completed; otherwise keep #16 open and record the reusable defect or governance outcome."
+completed:
+  - "PR #30 CI passed 8/8 and merged; product acceptance HEAD fixed at 3c7560b3ca76301e948a32d9d9ba06f2035f7a9a."
+  - "Held-out case 9 selected independently and tracked as GitHub #31: registry 0806500000226000808."
+  - "Official EIS Phase A acquired 4 DOCX sources; source bundle 66f69878f3cca7371984f3f2afa2b4935002bed1e8b9bcf8d0bd764c7979d660."
+  - "Customer/organizer source gate passed as internally consistent."
+  - "Source-only labels authored: 29 facts, 20 ASSERTED, 9 INSUFFICIENT_EVIDENCE, 0 conflicts; discovery IRRELEVANT."
+  - "Labels frozen and verified at 2026-09-14T12:54:37.669583+00:00; label_set b27cfd65750babf3230d1ca2410334e4fde9b25a9b5d678661264a6272aaa3e8."
+  - "Fresh Phase B directory created; isolated canonical runtime started on port 8052; shared port 8000 untouched."
+  - "Exactly 4 frozen documents ingested into run toa-run-20260914125926-d1e8a8; run status ready_to_analyze."
+current: "Execute the existing case-9 run exactly once, then normalize, compare, route review, and close/update tracking issues according to the immutable result."
+pending:
+  - "POST /api/demo/tender-agent/runs/toa-run-20260914125926-d1e8a8/analyze exactly once."
+  - "Capture raw runtime output, especially customer_name and evidence."
+  - "Run repository-owned normalize-phase-b, compare, and route-review."
+  - "Verify post-run integrity; terminate only isolated port-8052 SUT."
+  - "Update GitHub #31 and #16; close #31, and close #16 only on strict customer TRUE_POSITIVE without fabrication."
+last_verified_commit: "3c7560b3ca76301e948a32d9d9ba06f2035f7a9a"
+test_results:
+  - "PR #30 GitHub Actions: 8/8 jobs success."
+  - "case-9 manifest/evaluator validations: PASS."
+  - "verify_frozen_labels: PASS."
+  - "source identity: PASS, 4/4 frozen DOCX hashes exact."
+  - "prior valid case-9 SUT output before run creation: none."
+  - "shared port 8000 PID 63463 untouched."
+updated_at: "2026-09-14T13:15:00Z"
+resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-case9-phase-a. Do NOT create another run. Confirm run toa-run-20260914125926-d1e8a8 is still ready_to_analyze and isolated SUT on port 8052 is alive; then POST analyze exactly once. Persist the first valid response in the existing case-9 Phase B directory, run repository-owned normalize-phase-b, compare, and route-review, verify frozen hashes/HEAD/port 8000, terminate only the isolated SUT, then update GitHub #31 and #16."
