@@ -1,7 +1,8 @@
-version: 1
+version: 2
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: DOCUMENT-QA-005-BLIND-CASE9
+authority: AUTO
 goal: "Complete held-out blind case 9 acceptance for DOCUMENT-QA-005 without altering frozen truth, comparator, normalizer, or product behavior after freeze."
 definition_of_done:
   - "Use the already-created case-9 run toa-run-20260914125926-d1e8a8 and execute analysis exactly once."
@@ -38,5 +39,12 @@ test_results:
   - "source identity: PASS, 4/4 frozen DOCX hashes exact."
   - "prior valid case-9 SUT output before run creation: none."
   - "shared port 8000 PID 63463 untouched."
-updated_at: "2026-09-14T13:24:00Z"
+updated_at: "2026-09-14T13:45:00Z"
 resume_instruction: "Use Mac-mini-master.local. Case 9 blind execution is complete and immutable; never rerun it as blind. Create/use a separate follow-up worktree from current main, diagnose why the customer resolver failed on the exposed case-9 source forms, implement only a generic source-bound customer fix with synthetic tests, run exposed case-9 regression against unchanged frozen bytes, and merge only after tests/CI. Then choose a new independent blind case for #16."
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: "3c7560b3ca76301e948a32d9d9ba06f2035f7a9a"
+  lease_until: null
+  manual_override: false
