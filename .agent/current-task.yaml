@@ -16,22 +16,25 @@ completed:
   - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
   - Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
   - Completed reuse inventory: ProcurementTender/ProcurementTenderDocument provide source-state/provenance inputs; procedure_monitor provides an existing internal event/alert feed pattern; event_log.append_event_record accepts source_module_id without a deal and is suitable for audit integration.
-current: Design the minimal procurement-specific watch/snapshot/diff/feed persistence and deterministic fingerprint/diff semantics using the inventoried primitives.
+  - Inspected event_log persistence/service and central router registration; monitoring can reuse EventRecord audit with deal_id null and source_module_id procurement_monitoring, while its product router belongs in APPLICATION_ROUTERS.
+  - Confirmed migrations are linear numbered Alembic files under migrations/versions; exact current head still must be resolved before adding the task migration.
+current: Implement the minimal procurement_monitoring module after resolving the exact Alembic head; use deterministic source-bound canonical fingerprints and idempotent feed semantics.
 pending:
-  - Inspect router/migration/test conventions and implement the monitoring module and migration.
+  - Determine exact current Alembic head and add linear monitoring migration.
+  - Implement monitoring models/schemas/service/router and central router registration.
   - Add deterministic/idempotent change detection and internal API/feed surface.
   - Add unchanged/deadline/document-revision/status-cancellation/duplicate replay regressions.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
-last_verified_commit: 64bbf9abb78682e1335c671b70104599313f8c45
+last_verified_commit: f02f0f3c37896d0ca38c1fe794581db4b50ac2b1
 test_results:
-  - No product code changed yet; tests not run in this inventory quantum.
-updated_at: '2026-09-16T00:20:00+03:00'
-resume_instruction: Inspect router registration plus one recent module migration/test pattern, then implement procurement_monitoring. Use ProcurementTender/Document as source-state inputs and event_log.append_event_record(source_module_id=...) for audit. Do not bind to post-submission ProcedureMonitorSet and do not implement external notification transports.
+  - No product code changed yet; tests not run in this integration-seam inventory stage.
+updated_at: '2026-09-16T01:11:00+03:00'
+resume_instruction: Determine exact current Alembic head, then implement procurement_monitoring models/schemas/service/router plus one linear migration. Reuse ProcurementTender/Document source state and append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit; register through src/shared/api/router_registry.py. Unchanged replay must not create another alert/feed event. External transports remain disabled.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260916T000157+0300
+  execution_id: watchdog-20260916T005849+0300
   branch: agent/change-monitoring-v1-001
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T02:10:00+03:00'
+  lease_until: '2026-09-16T02:48:00+03:00'
