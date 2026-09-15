@@ -1,41 +1,32 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: REUSE-FIRST-001
+status: in_progress
+task_id: BUILD-DOCKER-CONTEXT-001
 authority: AUTO
-goal: "Create the canonical competitive reverse-spec and reuse registry, then classify active P0/P1 work as REUSE/COPY_PATTERN/ADAPT/INVENT so commodity scope is reused/adapted instead of rebuilt."
+goal: "Restore a self-contained, reproducible clean-checkout Docker build by removing or replacing the undeclared dependency on arvectum-landing/public/assets."
 definition_of_done:
-  - "Benchmark 8-10 direct tender/procurement competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action using public evidence."
-  - "Create/update a repository-owned reuse registry covering public patterns, reusable OSS/APIs/components, legal/license constraints and de-scope decisions."
-  - "Classify every active P0/P1 workstream as REUSE/COPY_PATTERN/ADAPT/INVENT; every INVENT has a written reuse check, gap, differentiation and maintenance justification."
-  - "Translate findings into bounded roadmap/queue recommendations without copying proprietary code/assets/text/private data and without widening external-action authority."
-  - "Run relevant documentation/schema checks and merge only after required exact-head CI/gates."
+  - "Trace whether arvectum-landing/public/assets is actually required at Tender Agent runtime and identify the intended source of any required assets."
+  - "Clean checkout + docker build . succeeds without local sibling-directory assumptions."
+  - "No credentials or network-only mutable artifacts are embedded implicitly."
+  - "Runtime image still contains every asset actually required by the application."
+  - "Relevant CI/deployment documentation or smoke coverage is updated if needed, and required exact-head/current-base gates pass before merge."
 completed:
-  - "Nine direct procurement/tender products benchmarked in the repository-owned reverse-spec packet."
-  - "Ten concrete component/API/standard candidates recorded with license/legal/maintenance/adoption boundaries; no paid commitment or dependency approval created."
-  - "All active accelerated-plan P0/P1 workstreams and current strategy/queue overlays classified as REUSE/COPY_PATTERN/ADAPT/INVENT with commodity/moat boundaries."
-  - "Every current INVENT boundary has reuse check, documented gap, differentiation and maintenance justification."
-  - "Duplicate commodity builds explicitly de-scoped; HUMAN/REVIEW gates preserved for external procurement/commercial effects."
-  - "Owner explicitly completed AM-4 review and renewed POS-004 / AI-ENG-001 on unchanged terms on 2026-09-15."
-  - "PR #56 merged by squash as commit 8b1c131941e76b079a1eac18cf3a71201a6c01ce."
-current: "REUSE-FIRST-001 completed and merged."
-pending: []
+  - "REUSE-FIRST-001 completed and merged in PR #56; Owner renewed POS-004 / AI-ENG-001 on unchanged terms."
+  - "Execution queue reconciled to select BUILD-DOCKER-CONTEXT-001 as the next admitted ready AUTO workstream."
+  - "Issue #19 acceptance criteria reviewed."
+current: "Trace Dockerfile asset usage and repository references, then implement the smallest deterministic repair on a dedicated branch."
+pending:
+  - "Inspect Dockerfile, application references, build/deploy workflows and landing-asset usage."
+  - "Choose REMOVE vs explicit deterministic acquisition based on runtime evidence."
+  - "Implement repair with focused regression/smoke coverage and documentation only where needed."
+  - "Run relevant CI/build gates, merge after exact-head/current-base validation, close issue #19, and mark checkpoint completed."
 last_verified_commit: "8b1c131941e76b079a1eac18cf3a71201a6c01ce"
 test_results:
-  - "PR #56 was conflict-free/mergeable at the reviewed head before Owner renewal."
-  - "GitHub accepted the guarded merge with expected head f42115d85b390af062f8b8f76281eb39f7ad9600 and produced merge commit 8b1c131941e76b079a1eac18cf3a71201a6c01ce."
-  - "No product/runtime code or dependencies were changed by the strategy packet."
-updated_at: "2026-09-15T09:00:00Z"
-resume_instruction: "REUSE-FIRST-001 is completed. Do not reopen it unless a concrete regression or Owner-directed refresh requires it. On the next autonomous run, reconcile .agent/execution-queue.yaml against main and claim the next admitted AUTO workstream under the renewed POS-004 / AI-ENG-001 authority."
-owner_review:
-  reviewed_at: "2026-09-15"
-  decision: "renewed"
-  scope: "POS-004 / AI-ENG-001"
-  terms: "unchanged"
+  - "No BUILD-DOCKER-CONTEXT-001 validation run yet in this continuation."
+updated_at: "2026-09-15"
+resume_instruction: "Continue BUILD-DOCKER-CONTEXT-001 from issue #19. Do not revisit REUSE-FIRST-001. Inspect Dockerfile and all references to arvectum-landing/public/assets; prefer deleting the COPY if assets are unused, otherwise make the dependency explicit and deterministic. Preserve clean-checkout reproducibility and run exact-head/current-base gates before merge."
 execution:
-  claimed_by: "manual Owner-requested continuation"
-  execution_id: "reuse-first-001-manual-20260915T1128MSK"
-  branch: "agent/reuse-first-001-reverse-spec"
-  merged_pr: 56
-  merge_commit: "8b1c131941e76b079a1eac18cf3a71201a6c01ce"
+  claimed_by: "manual Owner-requested roadmap continuation"
+  execution_id: "build-docker-context-001-20260915"
+  branch: "agent/build-docker-context-001"
   manual_override: true
