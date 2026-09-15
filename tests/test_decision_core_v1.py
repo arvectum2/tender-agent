@@ -60,6 +60,8 @@ def test_complete_grounded_case_can_reach_go_without_external_authority() -> Non
 
     assert result["contract_version"] == DECISION_CORE_CONTRACT_VERSION
     assert result["decision"]["status"] == "GO"
+    assert result["facts"]["application_deadline"]["status"] == "KNOWN"
+    assert result["facts"]["application_deadline"]["evidence"][0]["excerpt"] == "2026-09-30T12:00:00+03:00"
     assert result["decision"]["external_action_allowed"] is False
     assert result["decision"]["human_control_required"] is True
     assert result["safety"]["bid_submission_allowed"] is False
@@ -90,6 +92,7 @@ def test_expired_deadline_without_source_binding_fails_closed_to_review() -> Non
     result = build_decision_core(model, supplier_profile=_profile())
 
     assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert result["facts"]["application_deadline"]["status"] == "UNKNOWN"
     assert not result["blockers"]
     application = next(
         item for item in result["readiness"] if item["code"] == "APPLICATION_WINDOW"

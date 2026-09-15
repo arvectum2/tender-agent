@@ -53,7 +53,12 @@ def _field_evidence(model: dict[str, Any], field: str) -> list[dict[str, Any]]:
         return []
     raw = mapping.get(field)
     refs = raw if isinstance(raw, list) else [raw]
-    return [item for value in refs if (item := _evidence_from_ref(value)) is not None]
+    result = [item for value in refs if (item := _evidence_from_ref(value)) is not None]
+    excerpt = model.get(field)
+    if excerpt not in (None, ""):
+        for item in result:
+            item["excerpt"] = excerpt
+    return result
 
 
 def _mapped_evidence(model: dict[str, Any], evidence_id: Any) -> dict[str, Any] | None:
@@ -142,7 +147,27 @@ def build_decision_core(
     unknowns: list[dict[str, Any]] = []
     rationale: list[str] = []
 
+    title_evidence = _field_evidence(model, "procurement_title")
     deadline_evidence = _field_evidence(model, "application_deadline")
+    nmck_evidence = _field_evidence(model, "nmck")
+    facts = {
+        "procurement_title": {
+            "status": "KNOWN" if title_evidence and model.get("procurement_title") not in (None, "") else "UNKNOWN",
+            "value": model.get("procurement_title") if title_evidence else None,
+            "evidence": title_evidence,
+        },
+        "application_deadline": {
+            "status": "KNOWN" if deadline_evidence and model.get("application_deadline") not in (None, "") else "UNKNOWN",
+            "value": model.get("application_deadline") if deadline_evidence else None,
+            "evidence": deadline_evidence,
+        },
+        "nmck": {
+            "status": "KNOWN" if nmck_evidence and _number(model.get("nmck")) is not None else "UNKNOWN",
+            "value": model.get("nmck") if nmck_evidence else None,
+            "evidence": nmck_evidence,
+        },
+    }
+
     deadline_status = _text(model.get("deadline_status")).lower()
     if deadline_status == "expired" and deadline_evidence:
         blockers.append(
@@ -192,6 +217,11 @@ def build_decision_core(
 
     contract_status = _text(model.get("contract_draft_status")).lower()
     contract_evidence = _contract_evidence(model)
+    facts["contract_draft"] = {
+        "status": "KNOWN" if contract_evidence and contract_status == "present" else "UNKNOWN",
+        "value": "present" if contract_evidence and contract_status == "present" else None,
+        "evidence": contract_evidence,
+    }
     if contract_status == "present" and contract_evidence:
         readiness.append(
             _readiness(
@@ -240,7 +270,6 @@ def build_decision_core(
         price_min = _number(criteria.get("price_min"))
         price_max = _number(criteria.get("price_max"))
         nmck = _number(model.get("nmck"))
-        nmck_evidence = _field_evidence(model, "nmck")
         if nmck is not None and nmck_evidence and (price_min is not None or price_max is not None):
             outside = (price_min is not None and nmck < price_min) or (price_max is not None and nmck > price_max)
             readiness.append(
@@ -352,6 +381,7 @@ def build_decision_core(
 
     return {
         "contract_version": DECISION_CORE_CONTRACT_VERSION,
+        "facts": facts,
         "supplier_profile_bound": profile_bound,
         "decision": {
             "status": status,
