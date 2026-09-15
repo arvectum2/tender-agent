@@ -36,11 +36,11 @@ items:
   strategy: INVENT
   invent_justification: 'Procurement-specific source-bound identity/role resolution directly protects evidence integrity and decision quality.'
   title: Source-bound customer role and identity extraction
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16; latest exposed blind acceptance issue #36'
+  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16; final unbiased held-out acceptance case 15'
   dependencies: []
   executor_scope: Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve
     frozen truth/comparator/normalizer.
