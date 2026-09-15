@@ -1,0 +1,45 @@
+version: 1
+task_id: DISCOVERY-QA-001
+status: in_progress
+updated_at: '2026-09-15T11:48:00Z'
+goal: 'Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark.'
+definition_of_done:
+  - 'Freeze an independently labelled 30–50-case 44-FZ discovery corpus before evaluating or tuning Tender Agent output.'
+  - 'Record Precision@5, Precision@10, Recall@K, nDCG@K/equivalent, top-K false-positive rate, missed-relevant rate, duplicate rate, supported status/deadline correctness, and explainability coverage.'
+  - 'Identify measured failure classes before any search hardening.'
+  - 'Apply only bounded hardening justified by those measured failures; no first-move LLM reranking.'
+  - 'Re-run the same frozen benchmark with truth/comparator/normalizer unchanged and prepare review-ready evidence/PR.'
+  - 'Stop before merge because authority remains REVIEW and auto_merge=false.'
+completed:
+  - 'BENCHMARK-PIPELINE-001 dependency completed.'
+  - 'Owner READY promotion recorded in issue #2 comment 5678641869.'
+  - 'Existing benchmark/evidence contract and deterministic scorer reused; no bespoke parallel benchmark stack introduced.'
+  - 'Independent query selector ran before SUT; source-only feasibility selected three distinct queries.'
+  - '45 real public 44-FZ cases acquired for 2026-09-01..2026-09-15.'
+  - 'Independent local Qwen2.5-14B source-only evaluation completed; labels frozen before SUT.'
+  - 'Frozen labels: 10 RELEVANT, 16 PARTIALLY_RELEVANT, 19 IRRELEVANT; cohort freeze SHA 8a4f0898428b829698c53ed4e95a5276e2c52ece1f1a0c22622bcc13723a422e.'
+  - 'Baseline: P@5 0.7333, R@5 0.4597, nDCG@5 0.7305, FP@5 0.2667; P@10 0.5667, R@10 0.6355, nDCG@10 0.7596, FP@10 0.4333; missed@10 0.3645.'
+  - 'Measured defects before code change: nonsemantic commercial boosts, diluted single capability matches, overbroad Russian prefix morphology.'
+  - 'Bounded scorer hardening commit 32d5ce3336af3c3ff9e79625f2a813b312941579.'
+  - 'Same frozen corpus rerun: P@5 0.9333, R@5 0.5885, nDCG@5 0.7997, FP@5 0.0667; P@10 0.7000, R@10 0.8120, nDCG@10 0.8302, FP@10 0.3000; missed@10 0.1880.'
+  - 'Evidence release commit d62b81bbd5f7fb606ee6069463416ab1a6fd424b pushed to agent/discovery-qa-001.'
+current: 'Reconcile with main, open review-ready PR, verify exact-head CI, then stop for Product Owner review.'
+remaining:
+  - 'Merge current main into branch without rewriting the hardened runtime commit.'
+  - 'Open PR and publish issue #2 evidence summary.'
+  - 'Verify exact-head CI/gates.'
+  - 'Set checkpoint blocked/review and wait for Product Owner; do not merge.'
+last_verified_commit: 'd62b81bbd5f7fb606ee6069463416ab1a6fd424b'
+test_results:
+  - 'Focused relevance/discovery tests: 27 passed; Ruff PASS.'
+  - 'Evidence SHA256SUMS verification: PASS.'
+  - 'make check: PASS.'
+  - 'Local full pytest: 2948 passed, 241 skipped, one pre-existing Mac/PostgreSQL R9 backup/restore failure (pg_restore exit 1); no R9 code changed.'
+resume_instruction: 'Fetch current main and merge it into agent/discovery-qa-001; do not rebase because the frozen evidence names 32d5ce3 as the hardened runtime. Push, open PR, verify exact-head GitHub CI, update issue #2 and checkpoint, then stop before merge for Product Owner review.'
+execution:
+  branch: 'agent/discovery-qa-001'
+  base_commit: 'ae7c5d0e5c2ea905a13def47e972111afde013af'
+  hardened_runtime_commit: '32d5ce3336af3c3ff9e79625f2a813b312941579'
+  evidence_commit: 'd62b81bbd5f7fb606ee6069463416ab1a6fd424b'
+  pull_request: null
+  manual_override: true
