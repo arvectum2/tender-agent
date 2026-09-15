@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: DOCUMENT-QA-NEXT-INCREMENT
 authority: AUTO
 goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing
@@ -45,12 +45,16 @@ completed:
 - 'Focused and broader relevant tests passed locally: focused 36 passed; broader public-44FZ/intake set 119 passed.'
 - Hardened fail-closed behavior for pages that expose EIS revision controls/state but whose revision blocks cannot be parsed
   safely; such pages return revision_binding_unparsed and require review instead of falling back to mixed attachment traversal.
-current: Commit and push the reconciled implementation, open the review-ready PR, then verify exact-head GitHub CI.
-pending:
-- Commit and push implementation/tests/exposed case-14 fixture to agent/document-qa-next-increment.
-- 'Open review-ready PR for issue #51 and verify exact-head GitHub Actions; do not merge because auto_merge=false and Product
-  Owner review is required.'
-last_verified_commit: ccbefe09dbb13303279fb029fd666cf4ce09301d
+- Committed and pushed implementation/test fixture at 4a1eef074dee15cd5762acfe6a0d4bd111bd5dda on agent/document-qa-next-increment.
+- 'Opened review-ready PR #73 for issue #51; PR is mergeable and intentionally left unmerged because auto_merge=false requires
+  explicit Product Owner approval.'
+- 'Exact-head GitHub CI run 35015973165 (CI #294) passed at implementation head 4a1eef074dee15cd5762acfe6a0d4bd111bd5dda:
+  all 9 jobs succeeded, including quality/full pytest, security, migrations, Docker build, Redis, R8 integrations, dependency
+  lock, and P6.03 bridge.'
+current: 'Definition of Done is complete. PR #73 is review-ready and awaits the explicit Product Owner merge decision; no
+  merge has been performed.'
+pending: []
+last_verified_commit: 4a1eef074dee15cd5762acfe6a0d4bd111bd5dda
 test_results:
 - 'Focused: 36 passed, 11 warnings.'
 - 'Case-14 fixture parse: rev.1 inactive 14.09.2026 15:50, rev.2 active 14.09.2026 23:01, 6 active links; obsolete contract
@@ -62,9 +66,10 @@ test_results:
   it is a local baseline/environment failure rather than this increment.'
 - Case-14 fixture SHA256 ef21176d9480e4b15d8a5a966e5cf8b80aa7fbc581405487fb9d0f908fd930bb is asserted in regression coverage;
   rev.2 active 23:01 selects 6 links and obsolete rev.1 contract UID is excluded.
-updated_at: '2026-09-15T19:48:17Z'
-resume_instruction: 'Commit/push the exact current branch, open a PR referencing #51, then inspect Actions for that exact
-  head. If CI is green, mark checkpoint ready_for_owner_review/completed implementation and stop before merge.'
+- 'Exact-head GitHub CI run 35015973165 / CI #294 at 4a1eef074dee15cd5762acfe6a0d4bd111bd5dda: SUCCESS, 9/9 jobs passed.'
+updated_at: '2026-09-15T19:59:37Z'
+resume_instruction: 'Task completed. Do not resume implementation. Leave PR #73 unmerged unless the Product Owner explicitly
+  approves merge; before any later merge, re-check the PR head, required CI, reviews, and repository governance.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260915T194029Z
@@ -72,5 +77,5 @@ execution:
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 51
   manual_override: true
-  lease_until: '2026-09-15T20:48:17Z'
+  lease_until: null
 checkpoint_role: durable_task_checkpoint
