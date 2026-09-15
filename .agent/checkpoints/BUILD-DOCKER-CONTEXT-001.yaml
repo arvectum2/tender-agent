@@ -1,0 +1,25 @@
+version: 1
+task_id: BUILD-DOCKER-CONTEXT-001
+status: in_progress
+updated_at: '2026-09-15'
+goal: 'Restore a self-contained reproducible clean-checkout Docker build without undeclared sibling/local landing-asset dependencies.'
+definition_of_done:
+  - 'Trace whether arvectum-landing/public/assets is required at runtime and identify the intended source of any required assets.'
+  - 'clean checkout + docker build . succeeds.'
+  - 'No local sibling-directory assumptions.'
+  - 'No credentials or network-only mutable artifacts embedded implicitly.'
+  - 'Runtime still contains every asset actually required by the app.'
+  - 'Relevant CI/deployment documentation or smoke coverage updated if needed; exact-head/current-base gates pass before merge.'
+completed:
+  - 'Issue #19 acceptance criteria reviewed.'
+  - 'Execution queue advanced to this AUTO workstream.'
+current: 'Inspect Dockerfile and repository references to arvectum-landing/public/assets.'
+remaining:
+  - 'Determine whether the COPY is obsolete or required.'
+  - 'Implement smallest deterministic fix on agent/build-docker-context-001.'
+  - 'Add/update focused regression or smoke coverage if needed.'
+  - 'Run CI/build validation, merge, close issue #19, and mark completed.'
+last_verified_commit: '8b1c131941e76b079a1eac18cf3a71201a6c01ce'
+test_results:
+  - 'No validation run yet for this task.'
+resume_instruction: 'Inspect all Dockerfile/workflow/application references to arvectum-landing/public/assets. Prefer removing the COPY if unused; otherwise replace the undeclared local dependency with an explicit deterministic source. Continue autonomously through validation and merge unless an objective blocker appears.'
