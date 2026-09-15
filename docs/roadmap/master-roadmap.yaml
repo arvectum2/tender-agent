@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-09-15T05:45:00Z'
+strategy_updated_at: '2026-09-15T16:05:16Z'
 continuous_execution:
   owner_directive_date: '2026-09-15'
   principle: work_conserving_hourly_executor
@@ -36,6 +36,19 @@ continuous_execution:
     - 'After a queue done gate is satisfied, do not create another acceptance cycle for that same gate unless an explicit new queue item or Owner directive reopens it.'
     - 'If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and resume immediately.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
+execution_snapshot:
+  updated_at: '2026-09-15T16:05:16Z'
+  watchdog:
+    title: Tender Agent Watchdog
+    enabled: true
+    timing_mode: exact_schedule
+    target_cadence_minutes: 60
+    timezone: Europe/Moscow
+    single_watchdog: true
+    audit_issue: 57
+  queue_state: no_admitted_executable_item
+  next_admitted_item: null
+  note: 'Hourly watchdog invocations continue autonomously, but productive product development is allowed only for explicitly admitted executable queue items. With the current queue exhausted, an hourly run may only reconcile/report and must not invent scope.'
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -77,31 +90,43 @@ accelerated_plan:
     priority: P0
     objective: "Benchmark 8-10 direct competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action; record best public patterns, reusable components/APIs, legal/license constraints and de-scope decisions."
     exit_gate: "Every active P0/P1 item is classified REUSE/COPY_PATTERN/ADAPT/INVENT; every INVENT has written justification."
+    current_state: done
+    current_evidence: 'PR #56 merged as 8b1c131941e76b079a1eac18cf3a71201a6c01ce; 9 direct products, 10 reuse candidates, active P0/P1 classification and commodity de-scope.'
   - stage: 1
     name: thin_commodity_shell
     priority: P0
     objective: "Keep only baseline search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export; prefer proven components and patterns, no gold-plating."
     exit_gate: "Commodity shell is usable end-to-end and no commodity item has become a custom multi-sprint build without an approved gap."
+    current_state: partial_existing_not_separately_gated
+    current_evidence: 'Baseline shell pre-existed this acceleration cycle; Docker-context hardening PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3. No standalone Stage 1 completion gate is admitted.'
   - stage: 2
     name: decision_core_v1
     priority: P0
     objective: "Invest custom engineering in canonical tender facts, evidence primitives, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW, risk/unknown/confidence and clickable evidence."
     exit_gate: "Decision outputs are measurable against a regression corpus and every material conclusion is source-bound or explicitly unknown."
+    current_state: done
+    current_evidence: 'DISCOVERY-QA-001 PR #59 merged as 762a392207a73ed77b04af69a378746920960ba8; Decision Core v1 PR #61 merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
   - stage: 3
     name: commercial_core
     priority: P0
     objective: "Build nomenclature normalization, customer-catalog matching, substitutes/compatibility, Supplier -> RFQ -> TKP, landed cost, margin and bid economics, with recomputation when quotes change."
     exit_gate: "Bid/no-bid can be tied to commercial feasibility with auditable inputs and human control."
+    current_state: done
+    current_evidence: 'Commercial Core v1 PR #63 merged as 4257cd23d68d4ad69ebbedf075195f34969bace1 after Product Owner approval and post-sync exact-head CI 34990327143 SUCCESS 9/9.'
   - stage: 4
     name: automation_and_integrations
     priority: P1
     objective: "Add integrations, webhooks/APIs, saved-search alerts, email/CRM/source connectors and scheduled reporting only where they shorten validated workflows."
     exit_gate: "Automations reduce operator work without crossing external-action/human-control boundaries."
+    current_state: not_admitted
+    current_evidence: 'No explicit execution-queue item currently admits Stage 4 implementation.'
   - stage: 5
     name: reliability_and_moat
     priority: P1
     objective: "Compound 44-FZ/223-FZ/private-procurement edge cases, regression evidence, decision/outcome telemetry, security/compliance and workflow integration depth."
     exit_gate: "Moat is evidenced by domain-specific regression depth, integration depth and measured decision quality rather than commodity feature count."
+    current_state: not_admitted
+    current_evidence: 'No explicit execution-queue item currently admits Stage 5 implementation.'
 strategy_overlay:
   REUSE_FIRST_001:
     delivery_strategy: COPY_PATTERN
@@ -174,12 +199,11 @@ post_snapshot_observed:
   admission: not inferred into execution queue; gaps ARV-077..ARV-095 are not invented
 current_programs:
 - task_id: REUSE-FIRST-001
-  state: in_progress
-  source: 'Owner directives 2026-09-14 reuse-first and 2026-09-15 continuous execution'
+  state: done
+  source: 'PR #56 merged 2026-09-15'
   roadmap_mapping: null
   strategy: COPY_PATTERN
-  objective: 'Create competitor reverse-spec, reuse registry and P0/P1 strategy classification before widening new implementation scope.'
-  execution_note: 'Next canonical AUTO workstream after DOCUMENT-QA-005 acceptance and post-acceptance regression hardening were reconciled.'
+  completion_evidence: '9-product reverse-spec + 10-candidate reuse registry; merge 8b1c131941e76b079a1eac18cf3a71201a6c01ce.'
 - task_id: BENCHMARK-PIPELINE-001
   state: done
   source: 'issue #1'
@@ -192,16 +216,29 @@ current_programs:
   state: done
   source: 'issue #16 closed completed 2026-09-15; post-acceptance regression #52/#53 fixed by PR #54'
   roadmap_mapping: null
-  acceptance_evidence: 'Unbiased strict customer_name acceptance satisfied before issue #16 closure; later #52 is post-acceptance regression evidence and does not reopen the gate.'
-  followup_hardening: 'issue #53 closed completed after PR #54 merge 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9; exact-head CI run 34932286281 success.'
 - task_id: BUILD-DOCKER-CONTEXT-001
-  state: ready
-  source: 'issue #19'
+  state: done
+  source: 'issue #19; PR #58 merged'
   roadmap_mapping: null
+  completion_evidence: 'merge 8924a8576a96ccac490682be737f2b041c8a06e3; clean-checkout Docker build gate.'
 - task_id: DISCOVERY-QA-001
-  state: blocked_review
-  source: 'issue #2'
+  state: done
+  source: 'issue #2; PR #59 merged after Product Owner approval'
   roadmap_mapping: null
+  strategy: ADAPT
+  completion_evidence: '45-case frozen 44-FZ benchmark and relevance hardening; merge 762a392207a73ed77b04af69a378746920960ba8.'
+- task_id: DECISION-CORE-V1-001
+  state: done
+  source: 'issue #60; PR #61 merged after Product Owner approval'
+  roadmap_mapping: [ARV-018, ARV-020]
+  strategy: INVENT
+  completion_evidence: 'Evidence-bound fail-closed Decision Core v1; merge 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
+- task_id: COMMERCIAL-CORE-V1-001
+  state: done
+  source: 'issue #62; PR #63 merged after Product Owner approval'
+  roadmap_mapping: [ARV-016, ARV-017]
+  strategy: INVENT
+  completion_evidence: 'Commercial Core v1 price-list ingest, matching and auditable economics; merge 4257cd23d68d4ad69ebbedf075195f34969bace1.'
 - task_id: DOCUMENT-QA-NEXT-INCREMENT
   state: deferred_review
   source: 'issue #3 strategy'

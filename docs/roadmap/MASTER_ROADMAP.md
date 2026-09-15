@@ -31,14 +31,14 @@ The Product Owner changes the default development posture from **build-first** t
 
 ### Accelerated sequence
 
-| Stage | Priority | Outcome |
-|---|---|---|
-| **0. Competitive reverse-spec + reuse registry** | P0 | Benchmark 8–10 direct competitors across `search → results → tender card → documents → AI analysis → decision → next action`; record best patterns, components/APIs, licenses/legal boundaries and explicit de-scope decisions. Classify every active P0/P1 item. |
-| **1. Thin commodity shell** | P0 | Baseline search/filter/saved views, card, document viewer/parsing adapters, auth/roles, alerts and export — mostly reuse/adaptation, no gold-plating. |
-| **2. Decision Core v1** | P0 | Canonical facts, evidence chain, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW, risk/unknown/confidence, clickable evidence and regression benchmark. |
-| **3. Commercial Core** | P0 | Nomenclature normalization, catalog matching, substitutes, Supplier → RFQ → TKP, landed cost, margin and bid economics. |
-| **4. Automation + integrations** | P1 | Alerts, email/CRM/source connectors, APIs/webhooks and scheduled reporting only where they shorten validated workflows. |
-| **5. Reliability + moat** | P1 | 44-ФЗ/223-ФЗ/private edge cases, regression depth, outcome telemetry, security/compliance and workflow lock-in. |
+| Stage | Priority | Current state | Outcome / evidence |
+|---|---|---|---|
+| **0. Competitive reverse-spec + reuse registry** | P0 | **done** | PR #56 merged (`8b1c131`): 9 direct products, 10 reuse candidates, active P0/P1 strategy classification and explicit commodity de-scope. |
+| **1. Thin commodity shell** | P0 | partial / not separately gated | Baseline shell pre-existed this cycle; Docker-context hardening PR #58 merged (`8924a857`). No standalone Stage 1 completion gate is currently admitted. |
+| **2. Decision Core v1** | P0 | **done** | Discovery benchmark/hardening PR #59 merged (`762a392`); Decision Core v1 PR #61 merged (`3bf397f`) with evidence-bound fail-closed decisions. |
+| **3. Commercial Core** | P0 | **done** | PR #63 merged (`4257cd2`): price-list ingest, tender-to-catalog matching, coverage/cost/headroom and auditable commercial feasibility with HUMAN control. |
+| **4. Automation + integrations** | P1 | **not admitted** | No current execution-queue item authorizes implementation yet. |
+| **5. Reliability + moat** | P1 | **not admitted** | No current execution-queue item authorizes implementation yet. |
 
 ### Commodity default: do not build from scratch
 
@@ -64,6 +64,8 @@ The executor must reconcile issue/PR/done-gate state before continuing a stale c
 
 This changes utilization/cadence only. It does **not** expand AM-4 authority, queue admission, external-action rights, or `REVIEW` / `OWNER` / `HUMAN` gates.
 
+**Current execution status (2026-09-15):** the watchdog remains configured for exact-hourly autonomous runs and writes an audit record to issue #57, but the current execution queue has no remaining admitted executable item after Commercial Core v1 completion. Therefore an hourly invocation can reconcile/report without making product changes. Continuous *productive development* resumes only when the Product Owner explicitly admits the next bounded queue item; the executor must not invent scope merely to stay busy.
+
 ### DOCUMENT-QA-005 reconciliation
 
 `DOCUMENT-QA-005` is **done**: issue #16 had already met its unbiased strict `customer_name` acceptance gate and was closed `completed` before the later #52 calibration. Case #52 is retained as post-acceptance regression evidence. Its generic EIS placement-organization/customer defect was fixed by PR #54 and issue #53 is completed; this does not silently reopen #16 or authorize an endless sequence of fresh blind cases.
@@ -83,14 +85,16 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 
 These programs are repository-native benchmark/document-QA execution tracks. No ARV mapping is invented where the repository does not provide one.
 
-| Program | State | Source |
+| Program | State | Source / completion evidence |
 |---|---|---|
-| `REUSE-FIRST-001` | **in_progress** | Owner directives 2026-09-14 / 2026-09-15 |
+| `REUSE-FIRST-001` | **done** | PR #56 merged as `8b1c131`; 9-product reverse-spec + 10-candidate reuse registry |
 | `BENCHMARK-PIPELINE-001` | done | issue #1 |
 | `DOCUMENT-QA-004` | done | issue #11 |
-| `DOCUMENT-QA-005` | **done** | issue #16 accepted/closed; #52/#53 post-acceptance regression hardening; PR #54 |
-| `BUILD-DOCKER-CONTEXT-001` | ready | issue #19 |
-| `DISCOVERY-QA-001` | blocked_review | issue #2 |
+| `DOCUMENT-QA-005` | **done** | issue #16 accepted/closed; #52/#53 post-acceptance hardening; PR #54 |
+| `BUILD-DOCKER-CONTEXT-001` | **done** | issue #19; PR #58 merged as `8924a857` |
+| `DISCOVERY-QA-001` | **done** | issue #2; PR #59 merged as `762a392` after Product Owner approval |
+| `DECISION-CORE-V1-001` | **done** | issue #60; PR #61 merged as `3bf397f` after Product Owner approval |
+| `COMMERCIAL-CORE-V1-001` | **done** | issue #62; PR #63 merged as `4257cd2` after Product Owner approval |
 | `DOCUMENT-QA-NEXT-INCREMENT` | deferred_review | issue #3 strategy |
 
 ## ID conflicts

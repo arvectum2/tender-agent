@@ -1,0 +1,27 @@
+version: 1
+task_id: ROADMAP-SYNC-20260915
+status: completed
+goal: Synchronize canonical roadmap overlays with verified 2026-09-15 merged work and make unattended-hourly execution limits
+  explicit.
+definition_of_done:
+- Machine and human roadmaps reflect verified REUSE-FIRST, Docker-context, Discovery-QA, Decision Core v1 and Commercial Core
+  v1 completion evidence.
+- Accelerated plan states distinguish completed, partial/not-separately-gated and not-admitted stages without rewriting historical
+  snapshot.
+- Roadmap explicitly states that hourly watchdog invocation is autonomous but productive development requires an admitted
+  executable queue item.
+- YAML/schema sanity, historical registry cardinality and queue/current-program status alignment are verified.
+completed:
+- Roadmap overlays synchronized from main queue/current-task and merged PR evidence.
+- No historical ARV/BASE snapshot entry was rewritten or renumbered.
+current: Completed roadmap synchronization.
+pending: []
+last_verified_commit: 32a3e568fbc56a68750e5b872b62c624ef1b034a
+test_results:
+- master-roadmap.yaml parsed successfully with PyYAML.
+- Historical registry remains exactly 93 entries / 93 unique IDs.
+- Current program states align with execution queue for all admitted items (deferred normalized to deferred_review).
+- 'Accelerated stages: 0 done; 1 partial/not separately gated; 2 done; 3 done; 4 not admitted; 5 not admitted.'
+- git diff --check PASS.
+resume_instruction: Task completed. Future runs should use master roadmap + execution queue; do not claim continuous productive
+  development when no admitted executable item exists.
