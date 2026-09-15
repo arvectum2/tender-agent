@@ -106,7 +106,7 @@ items:
   strategy: INVENT
   invent_justification: 'Procurement-specific nomenclature compatibility, tender-to-catalog matching classes and auditable commercial feasibility are Commercial Core moat; commodity XLSX/CSV parsing and generic economics infrastructure must be reused/adapted.'
   title: Price-list ingest, tender-to-catalog matching and auditable bid economics
-  status: ready
+  status: blocked
   authority: REVIEW
   independent: true
   auto_merge: false
@@ -116,10 +116,12 @@ items:
   roadmap_scope:
   - ARV-016
   - ARV-017
-  owner_gate_evidence: 'Satisfied 2026-09-15: Product Owner explicitly directed continuation with the Commercial Core immediately after Decision Core v1 completion.'
+  owner_gate_evidence: 'Start authority satisfied 2026-09-15; merge authority not yet granted.'
   custom_boundary: 'ARV-016 import plumbing is ADAPT/REUSE using openpyxl/CSV and existing import patterns. INVENT only nomenclature normalization, compatibility/match semantics, coverage and auditable commercial feasibility. Do not implicitly wire offline ARV-067 product catalog into production runtime.'
-  executor_scope: 'Implement issue #62 Definition of Done. Fail closed on ambiguous/missing commercial inputs. Preserve source provenance and HUMAN control; no bid submission, RFQ/invitation sending, supplier contact, winner selection, signing, spend, purchase or other external commercial effect. Prepare review-ready PR; do not merge automatically.'
-  done_gate: 'Versioned Commercial Core contract; source-provenanced XLSX/CSV import; explicit match statuses; supported coverage/cost/headroom or Unknown; existing product/API exposure; regression coverage; relevant tests and exact-head CI green; Product Owner review before merge.'
+  review_gate: 'Implementation, local validation and exact-head CI are complete. Product Owner review and explicit merge approval are required.'
+  review_gate_evidence: 'PR #63 exact head 07ba3458ee7ee132e2b7db50a1e7322e834a930a; CI run 34983170537 SUCCESS 9/9; local full pytest 2972 passed, 241 skipped, one known environment-only macOS/PostgreSQL R9 pg_restore failure.'
+  executor_scope: 'Blocked for Product Owner review. Do not tune/expand/merge. On explicit merge approval, re-fetch PR/head/CI; if main has advanced, sync checkpoint-only advances and rerun exact-head CI, then guarded merge. Preserve HUMAN control; no bid submission, RFQ/invitation sending, supplier contact, winner selection, signing, spend, purchase or other external commercial effect.'
+  done_gate: 'Implementation side satisfied: versioned Commercial Core contract; source-provenanced XLSX/CSV import; explicit match statuses; supported coverage/cost/headroom or Unknown; existing product/API exposure; regressions; exact-head CI green. Final completion awaits Product Owner-approved merge.'
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
