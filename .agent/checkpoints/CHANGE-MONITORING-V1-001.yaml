@@ -14,15 +14,19 @@ completed:
   - Inventoried reusable persistence/event surfaces. ProcurementTender already stores source/external_id, application_deadline, nmck_amount, status, raw_payload, content_hash and first/last-seen timestamps; ProcurementTenderDocument carries source document identity, sha256 and raw_meta provenance.
   - Identified src.modules.procedure_monitor as the closest existing alert/feed pattern: ProcedureMonitorEvent has event_type/timestamp/summary/source_ref and ProcedureMonitorAlert has code/severity/summary; its service already appends event-log records. This is a reuse pattern, not a suitable direct persistence model because it is post-submission/deal-bound.
   - Confirmed src.shared.events and src.modules.event_log are existing generic event/audit primitives to reuse for monitoring audit integration.
-current: Define a minimal procurement-monitoring module that reuses ProcurementTender/Document source fields and event-log conventions while keeping watch/snapshot/diff/feed persistence procurement-specific and source-bound.
+  - Inspected event_log models/service: EventRecord supports deal_id=null with source_module_id, JSON payload and indexed event_code/source_module_id/created_at; append_event_record enforces at least one source identity and can audit procurement-monitoring events without inventing a deal.
+  - Inspected application router registration: routers are centrally imported and appended to APPLICATION_ROUTERS in src/shared/api/router_registry.py, so procurement_monitoring should follow that established surface rather than modifying src/main.py directly.
+  - Inspected migration layout: repository uses linear numbered Alembic files under migrations/versions; the new persistence migration must follow the current branch head rather than creating an independent migration lineage.
+  - Reconfirmed issue #65 DoD and hard boundaries at run start; no external notification transport, procurement action, or source mutation is authorized.
+current: Define and implement the minimal procurement_monitoring persistence/schema/service/router slice using source-bound watch/snapshot/feed records and deterministic canonical fingerprints.
 pending:
-  - Inspect event_log models/service and API router registration conventions plus migrations/tests for a similarly sized module.
+  - Determine current Alembic head and use its exact down_revision for the monitoring migration.
   - Define versioned watch target, source snapshot, diff and alert-event schemas; fingerprint canonical source state deterministically.
   - Persist watch + snapshot + internal event/feed records with uniqueness/idempotency constraints; no external transport fields or delivery workers.
   - Implement unchanged/deadline/document-revision/status-cancellation/document-set change detection and UNKNOWN/NEEDS_REVIEW for unsupported ambiguity.
-  - Add regression tests and internal API/feed surface.
+  - Add regression tests and internal API/feed surface; register router through src/shared/api/router_registry.py.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
 test_results:
-  - No product code changed in this inventory quantum; tests not run yet.
-resume_instruction: Inspect src/modules/event_log/{models.py,service.py}, src/main.py router inclusion, and one recent module migration/test pattern. Then implement the smallest procurement_monitoring module using ProcurementTender and ProcurementTenderDocument as source-state inputs and event_log conventions for audit. Do not reuse ProcedureMonitorSet directly because it requires deal/post-submission context. Do not implement email/SMS/Telegram/webhook delivery.
-updated_at: '2026-09-16T00:18:00+03:00'
+  - No product code changed in this integration-seam inventory stage; tests not run yet.
+resume_instruction: Determine the exact current Alembic head, then create the smallest procurement_monitoring module (models/schemas/service/router + one linear migration). Use ProcurementTender/ProcurementTenderDocument as source-state inputs, EventRecord via append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit, and register the router in src/shared/api/router_registry.py. Canonicalize/fingerprint only source-bound fields; unchanged replay must produce no new feed event. Do not implement email/SMS/Telegram/webhook delivery.
+updated_at: '2026-09-16T01:10:00+03:00'
