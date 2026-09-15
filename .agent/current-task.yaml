@@ -1,40 +1,30 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
-task_id: DOCUMENT-QA-005-CASE14-FIX
+status: done
+task_id: DOCUMENT-QA-005
 authority: AUTO
-goal: "Fix the generic flattened contract-preamble identity-boundary failure exposed by immutable blind case 14, prove exposed regression without changing frozen benchmark artifacts, merge after exact-head green CI, then select a fresh held-out blind case for #16 acceptance."
+goal: "Complete source-bound customer role and identity extraction with unbiased held-out strict customer_name acceptance under benchmark governance."
 definition_of_done:
-  - "Preserve case-14 first-blind run toa-run-20260914213712-35fc0f, frozen truth, comparator and normalizer unchanged; never rerun case 14 as blind."
-  - "Implement a generic source-bound identity boundary fix with synthetic tests and no procurement-number, organization-name or filename literals."
-  - "Prove unchanged case-14 source bytes resolve the strict expected customer identity."
-  - "Merge automatically only after exact-head required CI/rules are green under valid Company AM-4 and no unresolved review gate exists."
-  - "After merge, select a fresh independent held-out customer-role case and repeat freeze-before-SUT acceptance; close #16 only on unbiased strict customer_name TRUE_POSITIVE."
+  - "Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance."
 completed:
-  - "Case 14 / issue #44 first-blind result is immutable exposed regression-only: strict customer_name CONTRADICTION."
-  - "Frozen label-set SHA256 d9368a73592ac8b306dbdd5c72dcfbbd865797116f930ab4f69c2190a44dc038; source bundle SHA256 8eb07ce9fc00dae4d89f2731b0ec27d6ff577cdba7807910327b81acdea4dc18."
-  - "Diagnosed generic failure: flattened contract-template instructional prose immediately before an explicit legal customer preamble was absorbed by longest-valid preamble capture."
-  - "Implemented explicit organization-form start preference with generic fallback on branch document-qa-005-case14-boundary."
-  - "Local customer-role suites: 42 passed; broader document-QA/calibration suites: 25 passed; Ruff and git diff --check passed."
-  - "Exposed regression on unchanged case-14 source bytes now resolves exactly the frozen expected customer identity."
-  - "Opened PR #47 at exact head 4f25f1e023d3b9e49666243d41b7d4bddb6c6852."
-current: "Wait for exact-head PR #47 CI/rules; if green and Company AM-4 remains valid, auto-merge, then select a fresh independent held-out case for #16."
-pending:
-  - "Verify PR #47 exact-head required CI/rules and review state."
-  - "Before merge independently re-read Company AM-4 decision and assignment; fail closed to REVIEW if uncertain or review-due."
-  - "After merge, select a fresh post-merge held-out customer-role case not exposed to implementation/tuning."
-  - "Freeze truth/comparator/normalizer before SUT and run exactly one first-blind acceptance."
-last_verified_commit: "4f25f1e023d3b9e49666243d41b7d4bddb6c6852"
+  - "PR #47 merged generic case-14 boundary fix at ff10a999285586bf69fdc68a2d9089534bf93b76."
+  - "Fresh held-out case 15 selected after merge: 0116300005026000053; no prior repository/history hit before Phase A."
+  - "Phase A acquired 6 official EIS attachments; provenance sufficient; source bundle SHA256 da07232e3d4400540c942f46b32e54c1ac341216c0ef0c2a0bc3f58aba12b73c."
+  - "Source-only customer truth frozen before SUT; label-set SHA256 b4afb310179c1322bff5e33db6b7f4aa29fe6b68019d2a39c822233588568d8c."
+  - "Exactly one first-blind Phase B run toa-run-20260915013735-37c1ac at runtime ff10a999285586bf69fdc68a2d9089534bf93b76."
+  - "Strict customer_name acceptance PASS: TP=1, FP=0, FN=0, precision=recall=F1=1.0."
+  - "Issue #16 closed completed; case 15 is exposed regression-only and frozen truth/comparator/normalizer remain immutable."
+current: "DOCUMENT-QA-005 complete; executor may select the next eligible queue item in canonical order."
+pending: []
+last_verified_commit: "ff10a999285586bf69fdc68a2d9089534bf93b76"
 test_results:
-  - "tests/test_customer_role_facts.py + tests/test_customer_role_facts_followup.py = 42 passed."
-  - "tests/test_document_qa_first_real_baseline.py + tests/test_benchmark_calibration_hardening.py = 25 passed."
-  - "Ruff = pass; git diff --check = pass."
-updated_at: "2026-09-14T23:58:00Z"
-resume_instruction: "Check PR #47 exact-head CI. Case 14 remains immutable exposed regression-only. Merge only under valid Company AM-4 after all gates, then continue #16 with a fresh independent freeze-before-SUT held-out case."
+  - "Case 15 strict customer_name: TRUE_POSITIVE; document F1=1.0."
+updated_at: "2026-09-15T01:40:00Z"
+resume_instruction: "DOCUMENT-QA-005 is complete. Read the canonical master roadmap and execution queue, then select the next eligible admitted item in queue order."
 execution:
-  claimed_by: "chatgpt"
-  execution_id: "dqa005-case14-fix"
-  branch: "document-qa-005-case14-boundary"
-  base_commit: "7567b69626a9c9213d0dc960ea467afee4521563"
-  lease_until: "2026-09-15T01:48:00Z"
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: null
+  lease_until: null
   manual_override: false
