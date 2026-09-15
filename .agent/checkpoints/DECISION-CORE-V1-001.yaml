@@ -1,7 +1,7 @@
 version: 1
 task_id: DECISION-CORE-V1-001
 status: in_progress
-updated_at: '2026-09-15T12:22:00Z'
+updated_at: '2026-09-15T12:52:31Z'
 goal: 'Deliver the first product Decision Core slice: source-bound canonical procurement facts and blockers feeding deterministic GO / NO-GO / NEEDS REVIEW plus application-readiness gaps and a human-controlled next action.'
 definition_of_done:
   - 'Versioned Decision Core contract for canonical facts, evidence links, blockers, unknowns/confidence, decision and readiness gaps.'
@@ -17,20 +17,29 @@ completed:
   - 'Owner explicitly directed start of Decision Core v1 on 2026-09-15.'
   - 'Issue #60 created with Definition of Done, reuse-first boundary and REVIEW gate.'
   - 'Execution queue admits DECISION-CORE-V1-001 READY / REVIEW / auto_merge=false with ARV-018 + ARV-020 roadmap scope.'
-current: 'Inventory existing decision/readiness/report/API/evidence primitives and identify the minimal custom procurement-specific layer.'
+  - 'Branch agent/decision-core-v1-001 created from 1b8fdf6ad686ce88124d7ef4a7ac7c9847051093.'
+  - 'Reuse inventory completed: canonical evidence/report path, supplier profile, existing readiness flow, API/report projections and deterministic primitives reused.'
+  - 'Implementation commit bdc1bef49e529f08a7f330bef01ab52647aa0fbf adds evidence-bound Decision Core v1, fail-closed GO/NO_GO/NEEDS_REVIEW, readiness and explicit safety boundaries.'
+  - 'Integrated into canonical report, persisted report JSON, sanitized customer projection and customer HTML without adding new external-action authority.'
+  - 'Regression coverage added for grounded GO, hard blocker, missing/unsupported evidence, risk review, missing contract/profile, supplier price range and contradictions.'
+current: 'Complete full regression validation, then open review-ready PR and verify exact-head CI.'
 remaining:
-  - 'Create isolated branch agent/decision-core-v1-001.'
-  - 'Inventory reusable code/contracts and existing tests/fixtures.'
-  - 'Implement minimal Decision Core contract and deterministic semantics.'
-  - 'Integrate product/API exposure and regressions.'
-  - 'Run tests/CI, open review-ready PR, stop for Owner review.'
-last_verified_commit: '7cf051f22491c00fb5f4d7a043e8d99957d85877'
+  - 'Collect full pytest result and repair only Decision Core-caused regressions.'
+  - 'Run final focused/relevant tests and make check.'
+  - 'Open PR for issue #60 and verify exact-head CI.'
+  - 'Checkpoint blocked/review for Product Owner; do not merge.'
+last_verified_commit: 'bdc1bef49e529f08a7f330bef01ab52647aa0fbf'
 test_results:
-  - 'No task implementation tests yet; initialization only.'
-resume_instruction: 'Create or verify branch agent/decision-core-v1-001 from latest main. Inventory existing evidence/provenance, report/decision/readiness, supplier-profile and API/UI primitives before coding. Reuse/adapt commodity layers; invent only procurement-specific evidence-bound decision/readiness semantics. Fail closed. No external actions. REVIEW task: do not auto-merge.'
+  - 'Decision Core tests: 10 passed; changed-scope Ruff PASS.'
+  - 'Relevant product/integration tests: 63 passed, 7 skipped.'
+  - 'Canonical producer/commercial prebid tests: 16 passed.'
+  - 'make check: PASS.'
+  - 'Full pytest running; final result pending.'
+resume_instruction: 'Resume agent/decision-core-v1-001 at bdc1bef49e529f08a7f330bef01ab52647aa0fbf. Read full pytest result, fix only task-caused regressions, rerun checks, open review-ready PR for issue #60, verify exact-head CI, then stop at Product Owner review. No automatic merge or external procurement/commercial action.'
 execution:
   issue: 60
   branch: 'agent/decision-core-v1-001'
-  base_commit: null
+  base_commit: '1b8fdf6ad686ce88124d7ef4a7ac7c9847051093'
+  implementation_commit: 'bdc1bef49e529f08a7f330bef01ab52647aa0fbf'
   pull_request: null
   manual_override: true
