@@ -12,26 +12,26 @@ definition_of_done:
   - Focused/relevant tests and exact-head CI green.
   - Documentation states external notification transports remain disabled/out of scope.
 completed:
-  - Reconciled prior DOCUMENT-QA-NEXT-INCREMENT branch as implementation-complete and waiting on Product Owner merge review; PR #73 exact-head CI was queued, so waiting was checkpointed rather than polled.
+  - Reconciled DOCUMENT-QA-NEXT-INCREMENT as completed/merged on main; do not reopen it.
   - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
-  - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
-  - Created durable checkpoint .agent/checkpoints/CHANGE-MONITORING-V1-001.yaml.
-current: Inventory existing event/alert, saved-search, procurement source snapshot, API/feed and persistence primitives before implementation.
+  - Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
+  - Completed reuse inventory: ProcurementTender/ProcurementTenderDocument provide source-state/provenance inputs; procedure_monitor provides an existing internal event/alert feed pattern; event_log.append_event_record accepts source_module_id without a deal and is suitable for audit integration.
+current: Design the minimal procurement-specific watch/snapshot/diff/feed persistence and deterministic fingerprint/diff semantics using the inventoried primitives.
 pending:
-  - Identify reusable repository models/services/API surfaces for saved watches, source snapshots and internal events.
-  - Implement the smallest versioned monitoring contract and procurement-specific deterministic diff semantics.
-  - Add idempotent regression coverage and internal feed/API surface; keep external transports disabled.
+  - Inspect router/migration/test conventions and implement the monitoring module and migration.
+  - Add deterministic/idempotent change detection and internal API/feed surface.
+  - Add unchanged/deadline/document-revision/status-cancellation/duplicate replay regressions.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
-last_verified_commit: 8253effa1f0e5a560dfd8780c4a40363299ec5cc
+last_verified_commit: 64bbf9abb78682e1335c671b70104599313f8c45
 test_results:
-  - No product code changed yet; tests not run in this inventory checkpoint.
-updated_at: '2026-09-15T20:06:00Z'
-resume_instruction: Read existing models/services/routes for tender source state, saved searches and internal event/audit primitives. Reuse those seams; custom code starts only at procurement-specific source snapshot/diff semantics. Do not implement email/SMS/Telegram/webhook delivery.
+  - No product code changed yet; tests not run in this inventory quantum.
+updated_at: '2026-09-16T00:20:00+03:00'
+resume_instruction: Inspect router registration plus one recent module migration/test pattern, then implement procurement_monitoring. Use ProcurementTender/Document as source-state inputs and event_log.append_event_record(source_module_id=...) for audit. Do not bind to post-submission ProcedureMonitorSet and do not implement external notification transports.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260915T225946+0300
+  execution_id: watchdog-20260916T000157+0300
   branch: agent/change-monitoring-v1-001
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T00:49:46+03:00'
+  lease_until: '2026-09-16T02:10:00+03:00'
