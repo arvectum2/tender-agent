@@ -570,12 +570,15 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
 
     reestr_number = _extract_reestr_from_card(entry_html)
 
+    # Search result cards may expose the authorized/placing organization rather
+    # than the contracting customer. Only an explicitly customer-scoped label
+    # is safe to project as ``customer_name``; placement/general organization
+    # labels stay unclassified here and are resolved from common-info later.
     customer_name = _first_matching_value(
         pairs,
         (
             "заказчик",
-            "организация, осуществляющая размещение",
-            "организация",
+            "наименование заказчика",
         ),
     )
     customer_inn = _first_matching_value(pairs, ("инн", "инн заказчика"))
@@ -841,14 +844,61 @@ def _merge_detail_metadata(detail: PublicTenderDetail, parsed: dict[str, Any]) -
         detail.raw["detail_metadata"] = _json_safe_mapping(parsed)
 
 
+def _extract_explicit_customer_name(html_str: str) -> str | None:
+    """Extract only contracting-customer role evidence from EIS common-info.
+
+    EIS distinguishes the organization that places a procurement from the
+    contracting customer.  A centralized procurement body must therefore
+    never be used as a customer fallback.  Prefer the strongest explicit
+    customer surfaces and fail closed when customer requirement blocks name
+    more than one distinct organization.
+    """
+
+    customer_name = _extract_card_main_info_value(html_str, "Заказчик")
+    if customer_name:
+        return customer_name
+
+    customer_name = _extract_section_info_value(html_str, ("Заказчик",))
+    if customer_name:
+        return customer_name
+
+    requirement_pattern = re.compile(
+        r"Требования\s+заказчика(?:\s|&nbsp;)*(?:&laquo;|«)(.*?)(?:&raquo;|»)",
+        re.IGNORECASE | re.DOTALL,
+    )
+    requirement_names = {
+        value
+        for match in requirement_pattern.finditer(html_str)
+        if (value := _strip_html(match.group(1)))
+    }
+    if len(requirement_names) == 1:
+        return next(iter(requirement_names))
+    if len(requirement_names) > 1:
+        return None
+
+    # Some EIS layouts put the customer into the placement contact block as
+    # text: ``Заказчик: Наименование: <org> ...``.  This is still explicit
+    # customer-role evidence, unlike the surrounding placement organization.
+    additional = _extract_section_info_value(html_str, ("Дополнительная информация",))
+    if additional:
+        match = re.search(
+            r"(?:^|\s)Заказчик\s*:\s*Наименование\s*:\s*(.+?)"
+            r"(?=\s+(?:Место\s+нахождения(?:\s+и\s+почтовый\s+адрес)?|"
+            r"Почтовый\s+адрес|Адрес\s+электронной\s+почты|"
+            r"Номер\s+контактного\s+телефона|Ответственное\s+должностное\s+лицо)\s*:|$)",
+            additional,
+            re.IGNORECASE,
+        )
+        if match:
+            value = _strip_html(match.group(1))
+            if value:
+                return value
+    return None
+
+
 def _parse_detail_metadata(html_str: str, card_url: str | None) -> dict[str, Any]:
     title = _extract_card_main_info_value(html_str, "Объект закупки")
-    customer_name = _extract_card_main_info_value(html_str, "Заказчик")
-    if not customer_name:
-        customer_name = _extract_section_info_value(
-            html_str,
-            ("Организация, осуществляющая размещение", "Заказчик"),
-        )
+    customer_name = _extract_explicit_customer_name(html_str)
     publication_date = _parse_public_datetime(_extract_card_main_info_value(html_str, "Размещено"))
     application_deadline = _parse_public_datetime(_extract_card_main_info_value(html_str, "Окончание подачи заявок"))
     nmck_text = _extract_card_main_info_value(html_str, "Начальная цена")

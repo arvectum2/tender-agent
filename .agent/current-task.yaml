@@ -1,40 +1,41 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-CASE14-FIX
+task_id: DOCUMENT-QA-005-CASE15-FIX
 authority: AUTO
-goal: "Fix the generic flattened contract-preamble identity-boundary failure exposed by immutable blind case 14, prove exposed regression without changing frozen benchmark artifacts, merge after exact-head green CI, then select a fresh held-out blind case for #16 acceptance."
+goal: "Fix the generic public-EIS role conflation exposed by immutable blind case #52, where placement/authorized organization was promoted to customer_name despite explicit contracting-customer evidence."
 definition_of_done:
-  - "Preserve case-14 first-blind run toa-run-20260914213712-35fc0f, frozen truth, comparator and normalizer unchanged; never rerun case 14 as blind."
-  - "Implement a generic source-bound identity boundary fix with synthetic tests and no procurement-number, organization-name or filename literals."
-  - "Prove unchanged case-14 source bytes resolve the strict expected customer identity."
-  - "Merge automatically only after exact-head required CI/rules are green under valid Company AM-4 and no unresolved review gate exists."
-  - "After merge, select a fresh independent held-out customer-role case and repeat freeze-before-SUT acceptance; close #16 only on unbiased strict customer_name TRUE_POSITIVE."
+  - "Preserve case #52 first-blind run toa-run-20260915044859-130098, frozen truth, comparator and normalizer unchanged; never rerun case #52 as blind."
+  - "Remove generic placement-organization -> customer_name conflation in public 44-FZ detail parsing/handoff; fail closed when no explicit customer evidence exists."
+  - "Add synthetic provider/handoff tests for distinct organizer/customer, explicit customer, and missing-customer cases with no case-specific literals in product code."
+  - "Run Ruff, focused and broader customer/document-QA suites, git diff checks, make check, and exposed case-#52 regression on unchanged official bytes."
+  - "Commit/push/open PR for #53 and merge automatically only after exact-head CI is green."
+  - "After merge, select a fresh independent held-out procurement and run one freeze-before-SUT strict customer_name acceptance for #16."
 completed:
-  - "Case 14 / issue #44 first-blind result is immutable exposed regression-only: strict customer_name CONTRADICTION."
-  - "Frozen label-set SHA256 d9368a73592ac8b306dbdd5c72dcfbbd865797116f930ab4f69c2190a44dc038; source bundle SHA256 8eb07ce9fc00dae4d89f2731b0ec27d6ff577cdba7807910327b81acdea4dc18."
-  - "Diagnosed generic failure: flattened contract-template instructional prose immediately before an explicit legal customer preamble was absorbed by longest-valid preamble capture."
-  - "Implemented explicit organization-form start preference with generic fallback on branch document-qa-005-case14-boundary."
-  - "Local customer-role suites: 42 passed; broader document-QA/calibration suites: 25 passed; Ruff and git diff --check passed."
-  - "Exposed regression on unchanged case-14 source bytes now resolves exactly the frozen expected customer identity."
-  - "Opened PR #47 at exact head 4f25f1e023d3b9e49666243d41b7d4bddb6c6852."
-current: "Wait for exact-head PR #47 CI/rules; if green and Company AM-4 remains valid, auto-merge, then select a fresh independent held-out case for #16."
+  - "Fresh blind case #52 / registry 0865200000326001152 is immutable FAIL at runtime ff10a999285586bf69fdc68a2d9089534bf93b76; #52 is regression-only."
+  - "Generic diagnosis recorded in #53: both search-card and detail parsers conflated placement/authorized organization with contracting customer, while handoff trusted the search seed ahead of common-info."
+  - "Added synthetic regressions proving organizer-vs-customer separation, no-customer fail-closed behavior, and page customer precedence over stale search-card placement organization."
+  - "Implemented explicit customer parsing from EIS customer surfaces, removed placement/general organization customer fallbacks, and made common-info customer precedence authoritative in handoff."
+  - "Reused the source-controlled EIS TLS opener for common-info context; this fixed the previous certificate-failure path that silently returned empty page context."
+  - "Exposed #52 unchanged common-info parser regression PASS: exact full Tomsk dispensary legal name."
+  - "Exposed #52 real search-to-intake regression PASS on new non-blind run toa-run-20260915051731-7c6fe7: exact contracting customer, 4 official files, analysis_mode=not_started."
+  - "Focused provider/handoff suite: 47 passed. Broader customer/document-QA suite: 161 passed, 11 warnings. Product-file Ruff F/E9 PASS; git diff --check PASS; make check PASS."
+current: "Commit and push the generic #53 fix, open PR, then require exact-head green CI before merge."
 pending:
-  - "Verify PR #47 exact-head required CI/rules and review state."
-  - "Before merge independently re-read Company AM-4 decision and assignment; fail closed to REVIEW if uncertain or review-due."
-  - "After merge, select a fresh post-merge held-out customer-role case not exposed to implementation/tuning."
-  - "Freeze truth/comparator/normalizer before SUT and run exactly one first-blind acceptance."
-last_verified_commit: "4f25f1e023d3b9e49666243d41b7d4bddb6c6852"
+  - "Commit/push product code, tests and canonical checkpoint; open PR linked to #53."
+  - "Wait for exact-head CI; fix only genuine failures; merge automatically when green."
+  - "Update #53/#16 and canonical checkpoint with merge commit and verification."
+  - "Select a fresh independent post-merge procurement and run one freeze-before-SUT strict customer_name acceptance for #16."
+last_verified_commit: "ff10a999285586bf69fdc68a2d9089534bf93b76"
 test_results:
-  - "tests/test_customer_role_facts.py + tests/test_customer_role_facts_followup.py = 42 passed."
-  - "tests/test_document_qa_first_real_baseline.py + tests/test_benchmark_calibration_hardening.py = 25 passed."
-  - "Ruff = pass; git diff --check = pass."
-updated_at: "2026-09-14T23:58:00Z"
-resume_instruction: "Check PR #47 exact-head CI. Case 14 remains immutable exposed regression-only. Merge only under valid Company AM-4 after all gates, then continue #16 with a fresh independent freeze-before-SUT held-out case."
+  - "Case #52 immutable source bundle 64579deecbe4b8d53b78cc4121531e94741c7412a51aa21b2edf3567bb01c678; label set adcf5f75154bcb79deffd5f7229b3cb4aa4b4bab2aa7d7b5edc5468adefb1d23."
+  - "Case #52 Phase-B ZIP 320abbf603710c30c479a91d0b8f105e04ca9aecefc66e4c104d4e4b543241ba; normalized 0f9d7db031d5d4056a67fc6203f167a43468dbc4581b7020ef4eadeba79722ea; audit 4747a0e58c186ddd0804f03f66aa6c5bb0157687e5af43ce3c55b6126ee3631f."
+  - "2026-09-15: focused 47/47 PASS; broader 161/161 PASS; Ruff F/E9 PASS; git diff --check PASS; make check PASS; exposed real handoff regression PASS."
+updated_at: "2026-09-15T05:18:43Z"
+resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-dqa005-case15-followup. Do not rerun #52 as blind. Commit/push current generic #53 fix, open PR, verify exact-head CI and merge only when green; then start a fresh independent post-merge blind customer-role acceptance for #16."
 execution:
-  claimed_by: "chatgpt"
-  execution_id: "dqa005-case14-fix"
-  branch: "document-qa-005-case14-boundary"
-  base_commit: "7567b69626a9c9213d0dc960ea467afee4521563"
-  lease_until: "2026-09-15T01:48:00Z"
+  claimed_by: chatgpt
+  execution_id: dqa005-case15-fix
+  branch: document-qa-005-case15-public-customer
+  base_commit: ff10a999285586bf69fdc68a2d9089534bf93b76
   manual_override: false

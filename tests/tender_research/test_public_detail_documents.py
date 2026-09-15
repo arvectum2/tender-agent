@@ -140,3 +140,48 @@ def test_no_documents_returns_empty_list():
 
     assert detail.network_status == PublicSearchStatus.SUCCESS
     assert detail.document_links == []
+
+
+def test_detail_prefers_explicit_customer_requirements_over_placement_organization():
+    card_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0123456789012345678"
+    docs_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0123456789012345678"
+    common_html = """
+    <div class="cardMainInfo__section">
+      <span class="cardMainInfo__title">Объект закупки</span>
+      <span class="cardMainInfo__content">Оказание услуг</span>
+    </div>
+    <section class="blockInfo__section section">
+      <span class="section__title">Организация, осуществляющая размещение</span>
+      <span class="section__info">ГКУ Региональный центр закупок</span>
+    </section>
+    <div class="collapse__title_text">
+      Требования заказчика&nbsp;&laquo;ГБУ &quot;Фактический заказчик&quot;&raquo;
+    </div>
+    """
+    provider = FakeProvider({
+        card_url: {"status": PublicSearchStatus.SUCCESS, "html": common_html, "error": None},
+        docs_url: {"status": PublicSearchStatus.SUCCESS, "html": "<html></html>", "error": None},
+    })
+
+    detail = provider.fetch_detail(card_url, registry_number="0123456789012345678")
+
+    assert detail.customer_name == 'ГБУ "Фактический заказчик"'
+
+
+def test_detail_does_not_promote_placement_organization_when_customer_is_absent():
+    card_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0123456789012345679"
+    docs_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0123456789012345679"
+    common_html = """
+    <section class="blockInfo__section section">
+      <span class="section__title">Организация, осуществляющая размещение</span>
+      <span class="section__info">ГКУ Только организатор</span>
+    </section>
+    """
+    provider = FakeProvider({
+        card_url: {"status": PublicSearchStatus.SUCCESS, "html": common_html, "error": None},
+        docs_url: {"status": PublicSearchStatus.SUCCESS, "html": "<html></html>", "error": None},
+    })
+
+    detail = provider.fetch_detail(card_url, registry_number="0123456789012345679")
+
+    assert detail.customer_name is None

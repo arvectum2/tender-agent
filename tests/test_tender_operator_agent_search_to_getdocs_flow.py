@@ -672,3 +672,52 @@ def test_existing_getdocs_intake_tests_still_pass(client, monkeypatch, tmp_path)
     )
     assert response.status_code == 200
     clear_zakupki_soap_settings_cache()
+
+
+def test_public_page_customer_outranks_search_card_placement_organization(client, monkeypatch, tmp_path):
+    from src.modules.tender_operator_agent_demo import procurement_intake_service as service
+    from src.modules.tender_operator_agent_demo.settings import clear_zakupki_soap_settings_cache
+
+    runs_root = tmp_path / "tender_operator_demo_runs"
+    monkeypatch.setenv("AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR", str(runs_root))
+    monkeypatch.delenv("ZAKUPKI_GOV_RU_SOAP_ENABLED", raising=False)
+    monkeypatch.delenv("ZAKUPKI_GOV_RU_SOAP_TOKEN", raising=False)
+    clear_zakupki_soap_settings_cache()
+
+    page_calls = []
+
+    def fake_page_context(url):
+        page_calls.append(url)
+        return {
+            "title": "Оказание услуг",
+            "customer_name": "ГБУ Фактический заказчик",
+            "publication_date": "15.09.2026",
+            "deadline": "20.09.2026 09:00",
+            "initial_price": 100000.0,
+            "currency": "RUB",
+        }
+
+    monkeypatch.setattr(service, "_extract_public_page_context", fake_page_context)
+    monkeypatch.setattr(service, "_supplement_run_with_public_notice_attachments", lambda *_args, **_kwargs: 0)
+
+    response = client.post(
+        "/api/demo/tender-agent/runs/from-search-result",
+        json={
+            "source": "public_eis_html_44fz",
+            "law": "44fz",
+            "reestr_number": "0123456789012345678",
+            "source_url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0123456789012345678",
+            "title": "Оказание услуг",
+            "customer_name": "ГКУ Региональный центр закупок",
+            "download_archive": True,
+            "analyze_after_download": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    metadata = json.loads((runs_root / payload["run_id"] / "metadata.json").read_text(encoding="utf-8"))
+    assert page_calls
+    assert metadata["customer_name"] == "ГБУ Фактический заказчик"
+    assert metadata["procurement"]["customer_name"] == "ГБУ Фактический заказчик"
+    clear_zakupki_soap_settings_cache()
