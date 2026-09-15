@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-15'
+updated_at: '2026-09-15T16:26:13Z'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -148,18 +148,129 @@ items:
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
-  invent_justification: Only a measured reusable procurement-specific failure family may be promoted; generic capabilities
-    must be reused/adapted.
-  title: Next measured document-QA failure family
-  status: deferred
-  authority: REVIEW
-  independent: false
+  invent_justification: Procurement-specific notice-revision binding directly protects source/evidence integrity; generic parsing and dedupe primitives must be reused.
+  title: Active EIS notice revision binding
+  status: in_progress
+  authority: AUTO
+  independent: true
   auto_merge: false
-  source: 'issue #3 current strategy'
+  source: 'issue #51; Product Owner promotion comments 5683950542 and 5684049184 on 2026-09-15'
   dependencies:
   - DOCUMENT-QA-005
-  owner_gate: Promote only after a concrete reusable failure family is captured in a canonical issue with acceptance criteria.
-  executor_scope: Do not invent the next product priority from benchmark output; prepare evidence/options only.
+  owner_gate_evidence: 'Implementation start gate satisfied: issue #51 is a concrete reusable failure family with explicit acceptance criteria and exposed case-14 regression evidence. Implementation/testing is AUTO; merge remains Product Owner REVIEW because auto_merge=false.'
+  executor_scope: Parse EIS notice revision blocks, bind analysis attachments only to the active/current revision, preserve revision provenance, fail closed on ambiguity, and add synthetic/exposed regression coverage without changing frozen benchmark truth.
+  done_gate: 'Issue #51 acceptance criteria satisfied; focused/relevant tests and exact-head CI pass; review-ready PR merged only after explicit Product Owner approval; issue #51 closed completed.'
+- order: 50
+  task_id: CHANGE-MONITORING-V1-001
+  strategy: ADAPT
+  title: Saved-search and procurement-change monitoring
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'issue #65; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-021
+  - ARV-056
+  dependencies:
+  - COMMERCIAL-CORE-V1-001
+  executor_scope: Implement source-bound watch definitions, procurement-change snapshots/diffs and an internal alert/feed using existing event/alert primitives. External notification transports remain disabled and out of scope.
+  done_gate: 'Issue #65 Definition of Done satisfied; focused/relevant tests and exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #65 closed completed.'
+- order: 55
+  task_id: INGEST-RESILIENCE-V1-001
+  strategy: ADAPT
+  title: Resumable idempotent source sync and revision-aware dedupe
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'issue #66; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-031
+  - ARV-058
+  dependencies:
+  - DOCUMENT-QA-NEXT-INCREMENT
+  executor_scope: Reuse current repository/dedupe/cache primitives to make public-source ingest resumable, idempotent and provenance/revision aware; no source mutation and no silent ambiguity resolution.
+  done_gate: 'Issue #66 Definition of Done satisfied; focused/relevant tests and exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #66 closed completed.'
+- order: 60
+  task_id: INTEGRATION-OUTBOX-V1-001
+  strategy: ADAPT
+  title: Internal integration events and disabled-by-default adapter boundary
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'issue #67; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-025
+  - ARV-029
+  - ARV-045
+  dependencies:
+  - CHANGE-MONITORING-V1-001
+  executor_scope: Add versioned internal integration events, idempotent outbox/audit records and read-only export/API surfaces. Any real email/webhook/CRM delivery remains disabled and requires a separate REVIEW/HUMAN gate.
+  done_gate: 'Issue #67 Definition of Done satisfied; focused/relevant tests and exact-head CI green; no external delivery enabled; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #67 closed completed.'
+- order: 65
+  task_id: OPS-OBSERVABILITY-V1-001
+  strategy: REUSE
+  title: Queue, ingestion, storage and recovery observability
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'issue #68; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-010
+  dependencies: []
+  executor_scope: Reuse existing health/storage/queue/backup state to expose machine-readable operational metrics and non-destructive recovery guidance; do not deploy third-party telemetry or perform production/network changes.
+  done_gate: 'Issue #68 Definition of Done satisfied; focused/relevant tests and exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #68 closed completed.'
+- order: 70
+  task_id: 223FZ-INGEST-V1-001
+  strategy: ADAPT
+  title: Read-only 223-FZ source adapter and canonical intake parity
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'issue #69; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-006
+  dependencies:
+  - INGEST-RESILIENCE-V1-001
+  executor_scope: Implement a separate audited public 223-FZ search/card/document ingestion path using reusable acquisition/provenance infrastructure; do not add legal/decision semantics and never silently reuse 44-FZ-only assumptions.
+  done_gate: 'Issue #69 Definition of Done satisfied; existing 44-FZ regressions remain green; exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #69 closed completed.'
+- order: 75
+  task_id: 223FZ-DECISION-V1-001
+  strategy: INVENT
+  invent_justification: Regime-specific source-bound 223-FZ readiness/blocker semantics are procurement-domain moat; the existing Decision Core/evidence framework is reused.
+  title: Source-bound 223-FZ decision/readiness semantics
+  status: ready
+  authority: REVIEW
+  independent: true
+  auto_merge: false
+  source: 'issue #70; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-006
+  dependencies:
+  - 223FZ-INGEST-V1-001
+  executor_scope: Extend Decision Core only with independently frozen, source-supported 223-FZ semantics. Unsupported legal/procedural assumptions remain UNKNOWN/NEEDS_REVIEW; no external procurement action is authorized.
+  done_gate: 'Issue #70 Definition of Done satisfied; frozen 223-FZ regression evidence and exact-head CI green; merge only after explicit Product Owner REVIEW approval; issue #70 closed completed.'
+- order: 80
+  task_id: DOMAIN-REGRESSION-V1-001
+  strategy: INVENT
+  invent_justification: Procurement-specific regression lifecycle and edge-case invariants are part of the evidence moat; generic pytest/CI/reporting infrastructure must be reused.
+  title: Procurement edge-case corpus and outcome telemetry
+  status: ready
+  authority: REVIEW
+  independent: true
+  auto_merge: false
+  source: 'issue #71; Product Owner queue-fill directive 2026-09-15'
+  roadmap_scope:
+  - ARV-072
+  dependencies:
+  - DECISION-CORE-V1-001
+  - COMMERCIAL-CORE-V1-001
+  executor_scope: Build a versioned registry/lifecycle for confirmed real procurement regressions and machine-readable CI results, preserving strict blind/acceptance/regression separation and anti-circularity.
+  done_gate: 'Issue #71 Definition of Done satisfied; manifest integrity/anti-circularity tests and exact-head CI green; any material benchmark-method change merged only after Product Owner REVIEW approval; issue #71 closed completed.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

@@ -37,8 +37,8 @@ The Product Owner changes the default development posture from **build-first** t
 | **1. Thin commodity shell** | P0 | partial / not separately gated | Baseline shell pre-existed this cycle; Docker-context hardening PR #58 merged (`8924a857`). No standalone Stage 1 completion gate is currently admitted. |
 | **2. Decision Core v1** | P0 | **done** | Discovery benchmark/hardening PR #59 merged (`762a392`); Decision Core v1 PR #61 merged (`3bf397f`) with evidence-bound fail-closed decisions. |
 | **3. Commercial Core** | P0 | **done** | PR #63 merged (`4257cd2`): price-list ingest, tender-to-catalog matching, coverage/cost/headroom and auditable commercial feasibility with HUMAN control. |
-| **4. Automation + integrations** | P1 | **not admitted** | No current execution-queue item authorizes implementation yet. |
-| **5. Reliability + moat** | P1 | **not admitted** | No current execution-queue item authorizes implementation yet. |
+| **4. Automation + integrations** | P1 | **admitted / in progress** | Issues #65–#67 admitted: internal change monitoring, resumable/idempotent source ingest, and integration outbox/adapter boundary. External delivery remains disabled. |
+| **5. Reliability + moat** | P1 | **admitted / queued** | Issues #68–#71 admitted: ops observability, read-only 223-ФЗ intake, review-gated 223-ФЗ Decision Core, and domain regression/outcome telemetry. |
 
 ### Commodity default: do not build from scratch
 
@@ -64,7 +64,7 @@ The executor must reconcile issue/PR/done-gate state before continuing a stale c
 
 This changes utilization/cadence only. It does **not** expand AM-4 authority, queue admission, external-action rights, or `REVIEW` / `OWNER` / `HUMAN` gates.
 
-**Current execution status (2026-09-15):** the watchdog remains configured for exact-hourly autonomous runs and writes an audit record to issue #57, but the current execution queue has no remaining admitted executable item after Commercial Core v1 completion. Therefore an hourly invocation can reconcile/report without making product changes. Continuous *productive development* resumes only when the Product Owner explicitly admits the next bounded queue item; the executor must not invent scope merely to stay busy.
+**Current execution status (2026-09-15):** the Product Owner explicitly refilled the executable projection. The watchdog remains exact-hourly and audit-logged in issue #57, with `DOCUMENT-QA-NEXT-INCREMENT` (#51) active and a bounded Stage-4/5 pipeline behind it. The executor may continue autonomously between these admitted tasks without new chat input, including switching to later independent `AUTO` work while an earlier task waits on CI/review. `REVIEW` / `HUMAN` / external-action gates still stop only the gated action; they do not authorize external delivery, procurement submission, signing, payment or participation decisions.
 
 ### DOCUMENT-QA-005 reconciliation
 
@@ -95,7 +95,31 @@ These programs are repository-native benchmark/document-QA execution tracks. No 
 | `DISCOVERY-QA-001` | **done** | issue #2; PR #59 merged as `762a392` after Product Owner approval |
 | `DECISION-CORE-V1-001` | **done** | issue #60; PR #61 merged as `3bf397f` after Product Owner approval |
 | `COMMERCIAL-CORE-V1-001` | **done** | issue #62; PR #63 merged as `4257cd2` after Product Owner approval |
-| `DOCUMENT-QA-NEXT-INCREMENT` | deferred_review | issue #3 strategy |
+| `DOCUMENT-QA-NEXT-INCREMENT` | **in_progress / AUTO, merge REVIEW** | issue #51; Owner promotion 2026-09-15; active EIS notice-revision binding |
+| `CHANGE-MONITORING-V1-001` | ready / AUTO | issue #65; ARV-021 + ARV-056 |
+| `INGEST-RESILIENCE-V1-001` | ready / AUTO | issue #66; ARV-031 + ARV-058 |
+| `INTEGRATION-OUTBOX-V1-001` | ready / AUTO | issue #67; safe infrastructure slice of ARV-025 + ARV-029 + ARV-045 |
+| `OPS-OBSERVABILITY-V1-001` | ready / AUTO | issue #68; ARV-010 |
+| `223FZ-INGEST-V1-001` | ready / AUTO | issue #69; first bounded ARV-006 increment |
+| `223FZ-DECISION-V1-001` | ready / REVIEW | issue #70; ARV-006 decision/readiness semantics |
+| `DOMAIN-REGRESSION-V1-001` | ready / REVIEW | issue #71; ARV-072-aligned procurement regression/outcome layer |
+
+### Admitted hourly execution queue
+
+The queue below is deliberately longer than one task so the watchdog can keep working when an earlier item is waiting on CI or a review gate. `AUTO` means repository-only implementation/testing may proceed autonomously subject to Company AM-4. `REVIEW` means the watchdog may prepare safe analysis/drafts/evidence but must not cross the task's review gate without Product Owner authorization. `AUTO; merge REVIEW` is the hybrid used for #51: code/test work may proceed, but merge is explicitly gated.
+
+| Order | Task | Authority | Depends on | Roadmap scope | Intended result |
+|---:|---|---|---|---|---|
+| 40 | `DOCUMENT-QA-NEXT-INCREMENT` | AUTO; merge REVIEW | `DOCUMENT-QA-005` | measured failure family | Active EIS revision only; no inactive/current document mixing (#51) |
+| 50 | `CHANGE-MONITORING-V1-001` | AUTO | Commercial Core v1 | ARV-021, ARV-056 | Saved watches + source-bound change feed; no external notification delivery (#65) |
+| 55 | `INGEST-RESILIENCE-V1-001` | AUTO | order 40 | ARV-031, ARV-058 | Resumable/idempotent sync, revision-aware dedupe (#66) |
+| 60 | `INTEGRATION-OUTBOX-V1-001` | AUTO | order 50 | ARV-025, ARV-029, ARV-045 | Internal integration events/outbox; live transports disabled (#67) |
+| 65 | `OPS-OBSERVABILITY-V1-001` | AUTO | none | ARV-010 | Queue/ingest/storage/backup operational visibility (#68) |
+| 70 | `223FZ-INGEST-V1-001` | AUTO | order 55 | ARV-006 | Separate read-only 223-ФЗ source path and intake parity (#69) |
+| 75 | `223FZ-DECISION-V1-001` | REVIEW | order 70 | ARV-006 | Evidence-bound 223-ФЗ readiness/decision semantics (#70) |
+| 80 | `DOMAIN-REGRESSION-V1-001` | REVIEW | Decision + Commercial Core | ARV-072-aligned | Durable edge-case corpus and outcome/regression telemetry (#71) |
+
+The executor must skip unsatisfied dependencies and may progress a later independent admitted item instead. This is specifically intended to prevent human-review or CI waits from turning into idle multi-hour gaps.
 
 ## ID conflicts
 

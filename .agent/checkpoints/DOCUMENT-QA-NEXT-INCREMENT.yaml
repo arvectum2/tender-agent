@@ -40,3 +40,4 @@ execution:
   issue: 51
   manual_override: false
   lease_until: null
+checkpoint_role: durable_task_checkpoint

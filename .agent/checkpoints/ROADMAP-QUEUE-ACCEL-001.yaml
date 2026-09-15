@@ -1,0 +1,27 @@
+task_id: ROADMAP-QUEUE-ACCEL-001
+status: completed
+goal: Refill Tender Agent executable queue with bounded Stage-4/5 work so the hourly watchdog can continue without new chat
+  input while preserving all authority gates.
+definition_of_done:
+- 'Promote the concrete reusable issue #51 document-QA failure family.'
+- Create bounded canonical issues for Stage 4/5 work with explicit hard boundaries and Definitions of Done.
+- Update execution queue, master roadmap machine/human views and active current-task handoff.
+- Preserve historical 93-item registry and AM-4/REVIEW/HUMAN/external-action boundaries.
+- Validate YAML, ordering, dependencies and roadmap/queue alignment; open reviewable PR.
+completed:
+- 'Promoted issue #51 via Owner comment 5683950542.'
+- 'Created issues #65–#71 for change monitoring, ingest resilience, integration outbox, observability, 223-FZ ingest, 223-FZ
+  decision semantics and domain regression.'
+- Admitted a work-conserving queue with AUTO tasks plus explicit REVIEW gates.
+- Set DOCUMENT-QA-NEXT-INCREMENT as the active handoff task.
+current: 'Completed; canonical issues, queue, roadmap and active-task handoff are prepared in PR #72.'
+pending: []
+last_verified_commit: 88f1fbf6e0d86cab9a5f0587c9244729c4088d4b
+test_results:
+- PyYAML parse PASS for execution queue, master roadmap, current task and checkpoints.
+- Historical master registry preserved at exactly 93 unique items.
+- 'Execution queue order unique/sorted with 14 items total: 6 completed, 1 in_progress AUTO with merge REVIEW, 5 ready AUTO,
+  2 ready REVIEW.'
+- 'git diff --check PASS before PR; PR #72 exact-head CI is the final merge gate.'
+updated_at: '2026-09-15T16:26:13Z'
+resume_instruction: ROADMAP-QUEUE-ACCEL-001 is complete. Do not reopen it; resume DOCUMENT-QA-NEXT-INCREMENT from .agent/current-task.yaml.
