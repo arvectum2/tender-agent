@@ -58,14 +58,14 @@ items:
   task_id: BUILD-DOCKER-CONTEXT-001
   strategy: ADAPT
   title: Repair Docker context dependency on missing landing assets
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'issue #19'
+  source: 'issue #19 closed completed; PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3'
   dependencies: []
-  executor_scope: Restore a self-contained reproducible clean-checkout Docker build; keep external/local sibling dependencies explicit and deterministic.
-  done_gate: 'Issue #19 acceptance criteria and relevant CI/runtime smoke evidence pass.'
+  executor_scope: 'Completed. Preserve the clean-checkout docker-build regression gate and explicit optional ARVECTUM_LANDING_PUBLIC_DIR boundary.'
+  done_gate: 'Satisfied: issue #19 closed; exact-head CI run 34953003147 passed; clean temporary checkout docker build and compose boundary acceptance passed.'
 - order: 30
   task_id: DISCOVERY-QA-001
   strategy: ADAPT
