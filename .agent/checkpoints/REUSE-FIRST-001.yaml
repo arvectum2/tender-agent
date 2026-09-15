@@ -1,10 +1,10 @@
 version: 1
 task_id: REUSE-FIRST-001
 status: blocked
-updated_at: '2026-09-15T08:45:00Z'
+updated_at: '2026-09-15T08:49:00Z'
 run: '2026-09-15 manual continuation after 10:59 MSK watchdog tranche'
 progress:
-  - 'Reconciled current main at a08d31ba931c12df3a7257bad5bdb2de365eb7ae and superseded the stale/conflicted PR #56 head by resetting its task branch to current main before reapplying bounded artifacts.'
+  - 'Reconciled stale/conflicted REUSE-FIRST work onto canonical main and reduced PR #56 to the single strategy artifact.'
   - 'Expanded the competitor reverse-spec to 9 direct procurement/tender products across search -> results -> tender/docs -> analysis -> workflow/next-action patterns using public evidence.'
   - 'Created a concrete reusable component/API registry covering PDF.js, pypdf, Apache Tika, Tesseract, OCRmyPDF, openpyxl, pgvector, OCDS, atomno-mcp-zakupki and TenderGuru API/MCP with license/legal/maintenance/adoption boundaries.'
   - 'Classified all active accelerated-plan P0/P1 workstreams and the current roadmap/queue overlay as REUSE/COPY_PATTERN/ADAPT/INVENT, with explicit commodity versus moat boundaries.'
@@ -14,6 +14,7 @@ artifacts:
   strategy_packet: docs/strategy/REUSE_FIRST_001_COMPETITOR_REVERSE_SPEC.md
   pull_request: 56
   branch: agent/reuse-first-001-reverse-spec
+  head: f42115d85b390af062f8b8f76281eb39f7ad9600
 competitor_count: 9
 reuse_registry:
   concrete_candidates: 10
@@ -27,8 +28,8 @@ done_gate_assessment:
   commodity_descope: pass
   authority_boundary: pass
 validation:
-  exact_head_ci: 'final head 490705a31be952a59cef61266a6f3442abe5f024 is in CI run 34948115175; completed jobs observed so far are green, final workflow conclusion pending'
-  mergeability: 'PR #56 was mergeable before the canonical checkpoint-only main updates; recheck/reconcile against current main after any Owner renewal before merge'
+  exact_head_ci: 'run 34948846757 for head f42115d85b390af062f8b8f76281eb39f7ad9600 is in progress; completed checks observed so far are green'
+  mergeability: 'PR #56 is conflict-free/mergeable; after Owner renewal recheck against then-current main and rerun gates if base has advanced'
 blocker:
   type: OWNER_REVIEW
   reason: 'Company AM-4 requires mandatory Owner review at the earliest of 2026-10-14, ten automatic merges, a material incident, or a material policy/authority/product/protection/access change. The Assignment-wide count of automatic merges under this authorization cannot be reliably attributed from GitHub merge metadata across Tender Agent, Proxy Launcher and other execution contours; therefore the ten-merge trigger cannot be proven un-reached and automatic merge must fail closed.'
@@ -37,4 +38,4 @@ authority_recheck:
   company_am4_approved: true
   mandatory_review_trigger: 'Earliest of 2026-10-14, ten automatic merges, material incident, or material policy/authority/product/protection/access change.'
   automatic_merge: fail_closed_review
-next_action: 'Verify final exact-head CI for PR #56 and leave the task review-ready. Do not merge automatically unless the AM-4 mandatory-review blocker is attributably resolved by the Owner; after renewal recheck current main/base and all gates before merge.'
+next_action: 'Verify CI run 34948846757, then remain review-ready. After attributable Owner AM-4 renewal, reconcile to current main, revalidate exact head/current base, merge PR #56, mark task completed, and advance the next admitted queue item.'
