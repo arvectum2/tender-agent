@@ -101,7 +101,11 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
 
 
 def persist_canonical_outputs(*, output_dir: Path, run_id: str, metadata: dict, outputs: dict, steps: list, render_html: Callable[[dict], str], now_factory: Callable[[], str]) -> PersistedCanonicalFiles:
-    from src.modules.tender_operator_agent_demo.report_model import build_procurement_report_model, canonical_report_to_markdown
+    from src.modules.tender_operator_agent_demo.report_model import (
+        build_customer_report_projection,
+        build_procurement_report_model,
+        canonical_report_to_markdown,
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     for name, payload in outputs.items():
         _write_json(output_dir / f"{name}.json", payload)
@@ -109,7 +113,8 @@ def persist_canonical_outputs(*, output_dir: Path, run_id: str, metadata: dict, 
     canonical_path = output_dir / "canonical_report.json"; _write_json(canonical_path, canonical)
     html_path = output_dir / "report.html"; html_path.write_text(render_html(canonical), encoding="utf-8")
     report_path = output_dir / "report.json"
-    _write_json(report_path, {"run_id": run_id, "report_title": "Отчёт по загруженному прогону тендерного агента", "generated_at": now_factory(), "recommendation": outputs["final_recommendation"]["recommendation"], "recommendation_label": outputs["final_recommendation"]["label"], "executive_summary": outputs["final_recommendation"]["rationale"], "manual_checks": outputs["final_recommendation"]["manual_checks"], "sections": [{"title": item.title, "kind": "bullets", "items": item.findings} for item in steps], "report_markdown": canonical_report_to_markdown(canonical)})
+    customer_projection = build_customer_report_projection(canonical)
+    _write_json(report_path, {"run_id": run_id, "report_title": "Отчёт по загруженному прогону тендерного агента", "generated_at": now_factory(), "recommendation": outputs["final_recommendation"]["recommendation"], "recommendation_label": outputs["final_recommendation"]["label"], "executive_summary": outputs["final_recommendation"]["rationale"], "manual_checks": outputs["final_recommendation"]["manual_checks"], "sections": [{"title": item.title, "kind": "bullets", "items": item.findings} for item in steps], "report_markdown": canonical_report_to_markdown(canonical), "decision_core": customer_projection.get("decision_core")})
     steps_path = output_dir / "steps.json"; _write_json(steps_path, {"steps": [item.model_dump(mode="json") for item in steps]})
     requirements_path = output_dir / "requirements.json"
     return PersistedCanonicalFiles(requirements_path, canonical_path, report_path, html_path, steps_path, canonical)

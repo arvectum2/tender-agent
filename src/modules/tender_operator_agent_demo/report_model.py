@@ -12,6 +12,10 @@ from pathlib import Path
 from typing import Any
 
 from src.modules.tender_operator_agent_demo import report_model_legacy as _legacy
+from src.modules.tender_operator_agent_demo.decision_core import (
+    build_decision_core,
+    legacy_bid_decision,
+)
 from src.modules.tender_operator_agent_demo.document_set_completeness import (
     build_document_set_summary,
 )
@@ -272,6 +276,21 @@ def build_procurement_report_model(
     )
     model["metadata"] = model_metadata
     _clean_complete_document_model(model, document_summary)
+    analysis_context = (
+        outputs.get("requirements", {}).get("analysis_context", {})
+        if isinstance(outputs.get("requirements"), dict)
+        else {}
+    )
+    supplier_profile = (
+        analysis_context.get("supplier_profile")
+        if isinstance(analysis_context, dict)
+        else None
+    )
+    model["decision_core"] = build_decision_core(
+        model,
+        supplier_profile=supplier_profile,
+    )
+    model["bid_decision"] = legacy_bid_decision(model["decision_core"])
     return model
 
 
@@ -296,6 +315,77 @@ def _customer_evidence_location(value: Any) -> str:
         return f"раздел «Объект закупки», {location}"
     return location
 
+
+
+def _customer_decision_evidence(values: Any) -> list[dict[str, str]]:
+    result: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for item in values or []:
+        if not isinstance(item, dict):
+            continue
+        document_label, _document_type = _customer_document_label(item.get("document"))
+        location = _customer_evidence_location(item.get("locator"))
+        key = (document_label, location)
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append({"document_label": document_label, "location": location})
+    return result
+
+
+def _customer_decision_core_projection(model: dict[str, Any]) -> dict[str, Any] | None:
+    raw = model.get("decision_core")
+    if not isinstance(raw, dict):
+        return None
+    decision = raw.get("decision") if isinstance(raw.get("decision"), dict) else {}
+    blockers = []
+    for item in raw.get("blockers", []) or []:
+        if not isinstance(item, dict):
+            continue
+        blockers.append(
+            {
+                "code": item.get("code"),
+                "summary": item.get("summary"),
+                "hard": bool(item.get("hard")),
+                "evidence": _customer_decision_evidence(item.get("evidence")),
+            }
+        )
+    readiness = []
+    for item in raw.get("readiness", []) or []:
+        if not isinstance(item, dict):
+            continue
+        readiness.append(
+            {
+                "code": item.get("code"),
+                "label": item.get("label"),
+                "status": item.get("status"),
+                "required": bool(item.get("required")),
+                "blocking": bool(item.get("blocking")),
+                "summary": item.get("summary"),
+                "evidence": _customer_decision_evidence(item.get("evidence")),
+            }
+        )
+    return {
+        "contract_version": raw.get("contract_version"),
+        "decision": {
+            "status": decision.get("status"),
+            "confidence": decision.get("confidence"),
+            "rationale": list(decision.get("rationale") or []),
+            "next_action": decision.get("next_action"),
+            "evidence": _customer_decision_evidence(decision.get("evidence")),
+            "human_control_required": bool(decision.get("human_control_required", True)),
+            "external_action_allowed": bool(decision.get("external_action_allowed", False)),
+        },
+        "blockers": blockers,
+        "readiness": readiness,
+        "unknowns": [
+            dict(item)
+            for item in raw.get("unknowns", []) or []
+            if isinstance(item, dict)
+        ],
+        "supplier_profile_bound": bool(raw.get("supplier_profile_bound")),
+        "safety": dict(raw.get("safety") or {}),
+    }
 
 def build_customer_report_projection(model: dict[str, Any]) -> dict[str, Any]:
     """Return a sanitized customer model without mutating canonical data."""
@@ -414,6 +504,7 @@ def build_customer_report_projection(model: dict[str, Any]) -> dict[str, Any]:
         "document_set_complete": document_summary.get("status") == "complete",
         "customer_documents": documents,
         "customer_decision": dict(model.get("customer_decision") or {}),
+        "decision_core": _customer_decision_core_projection(model),
         "line_items": line_items,
         "evidence_map": customer_evidence,
         "unit_economics": (

@@ -421,6 +421,22 @@ def _render_customer_report_html(model: dict[str, Any]) -> str:
         )
 
     decision = projection["customer_decision"]
+    decision_core = projection.get("decision_core") or {}
+    core_decision = (
+        decision_core.get("decision")
+        if isinstance(decision_core.get("decision"), dict)
+        else {}
+    )
+    core_readiness = [
+        item
+        for item in decision_core.get("readiness", []) or []
+        if isinstance(item, dict)
+    ]
+    core_blockers = [
+        item
+        for item in decision_core.get("blockers", []) or []
+        if isinstance(item, dict)
+    ]
     documents = "".join(
         f"<li>{esc(item['name'])} ({esc(item['type'])})</li>"
         for item in projection["customer_documents"]
@@ -548,11 +564,40 @@ def _render_customer_report_html(model: dict[str, Any]) -> str:
         if limitations
         else ""
     )
+    if core_decision:
+        decision_title = core_decision.get("status")
+        decision_reasons = core_decision.get("rationale", [])
+        decision_next_action = core_decision.get("next_action")
+        readiness_html = "".join(
+            f"<li><strong>{esc(item.get('status'))}</strong> — "
+            f"{esc(item.get('label'))}: {esc(item.get('summary'))}</li>"
+            for item in core_readiness
+        )
+        blockers_html = "".join(
+            f"<li>{esc(item.get('summary'))}</li>"
+            for item in core_blockers
+            if item.get("hard")
+        )
+        decision_extra = (
+            (f"<h3>Жёсткие блокеры</h3><ul>{blockers_html}</ul>" if blockers_html else "")
+            + (f"<h3>Готовность</h3><ul>{readiness_html}</ul>" if readiness_html else "")
+            + "<p><strong>Human control:</strong> решение рекомендательное; внешние действия не разрешены.</p>"
+        )
+    else:
+        decision_title = decision.get("recommendation")
+        decision_reasons = decision.get("reasons", [])
+        decision_next_action = decision.get("next_action")
+        decision_extra = (
+            "<h3>Подтверждено документами</h3><ul>"
+            + bullets(decision.get("confirmed", []))
+            + "</ul>"
+            + (("<h3>Не удалось оценить</h3><ul>" + bullets(decision.get("not_evaluated", [])) + "</ul>") if decision.get("not_evaluated") else "")
+        )
 
     return f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Анализ закупки № {esc(projection.get('procurement_number'))}</title><style>body{{margin:0;background:#f5f8fa;color:#10243e;font:16px Arial,sans-serif}}main{{max-width:1180px;margin:auto;padding:24px}}section{{background:#fff;border:1px solid #dce5eb;border-radius:12px;padding:20px;margin:16px 0}}h1,h2{{color:#003b5c}}.decision{{border-left:6px solid #d08300}}.scroll{{overflow-x:auto}}table{{border-collapse:collapse;width:100%;min-width:860px}}th,td{{border-bottom:1px solid #dce5eb;padding:9px;text-align:left;vertical-align:top}}th{{background:#e9f7f5}}</style></head><body><main>
 <section><h1>Анализ закупки № {esc(projection.get('procurement_number'))}</h1><p>Отчёт для принятия решения об участии</p><details><summary>Документы комплекта ({esc(projection['documents_count'])})</summary><ul>{documents}</ul></details></section>
 <section><h2>{esc(projection.get('procurement_title'))}</h2><p>Заказчик: {esc(projection.get('customer_name'))}</p><p>Дата публикации: {esc(projection.get('publication_datetime_display'))}</p><p>Окончание подачи заявок: {esc(projection.get('application_deadline_display'))}</p><p>НМЦК: {esc(projection.get('nmck'))} ₽</p><p>Место поставки: {esc(projection.get('delivery_place'))}</p>{as_of}</section>
-<section class="decision"><h2>Решение: {esc(decision.get('recommendation'))}</h2><h3>Ключевые основания</h3><ul>{bullets(decision.get('reasons', []))}</ul><h3>Подтверждено документами</h3><ul>{bullets(decision.get('confirmed', []))}</ul>{('<h3>Не удалось оценить</h3><ul>' + bullets(decision.get('not_evaluated', [])) + '</ul>') if decision.get('not_evaluated') else ''}<p><strong>Следующее действие:</strong> {esc(decision.get('next_action'))}</p></section>
+<section class="decision"><h2>Decision Core: {esc(decision_title)}</h2><h3>Ключевые основания</h3><ul>{bullets(decision_reasons)}</ul>{decision_extra}<p><strong>Следующее действие:</strong> {esc(decision_next_action)}</p></section>
 {items_section}{economics}{requirement_sections}{contract_sections}<section><h2>Коммерческие предложения</h2><p>Коммерческие предложения не загружены; экономика участия не рассчитана.</p></section>{risks_section}{questions_section}{evidence_section}{limitations_section}</main></body></html>'''
 
 
