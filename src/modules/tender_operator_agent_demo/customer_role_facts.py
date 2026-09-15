@@ -305,6 +305,25 @@ def _strip_representation_suffix(capture: str) -> str:
 
 
 _UPPERCASE_START_RE = re.compile(r"[А-ЯA-Z]")
+# When a flattened contract template glues instructional prose directly to a
+# party preamble (for example, a signing-date instruction followed by the
+# customer legal name), arbitrary uppercase starts before the legal entity are
+# not identity boundaries. Prefer an explicit organization-form start when one
+# exists in the bounded preamble window; fall back to the historical generic
+# uppercase enumeration only for names whose legal form is not explicit.
+_ORGANIZATION_FORM_START_RE = re.compile(
+    r"(?<![А-Яа-яA-Za-zЁё])(?:"
+    r"(?:Федеральн(?:ое|ая)|Государственн(?:ое|ая)|Муниципальн(?:ое|ая)|"
+    r"Казенн(?:ое|ая)|Бюджетн(?:ое|ая)|Автономн(?:ое|ая))\s+"
+    r"(?:государственн(?:ое|ая)\s+|муниципальн(?:ое|ая)\s+)?"
+    r"(?:казенн(?:ое|ая)\s+|бюджетн(?:ое|ая)\s+|автономн(?:ое|ая)\s+)?"
+    r"(?:учреждение|предприятие|унитарное\s+предприятие)"
+    r"|Общество\s+с\s+ограниченной\s+ответственностью"
+    r"|Акционерное\s+общество|Публичное\s+акционерное\s+общество"
+    r"|Индивидуальный\s+предприниматель"
+    r")\b",
+    re.IGNORECASE,
+)
 # A place-of-signing header ("р.п. Краснообск") precedes the organization on
 # the same flattened line.  These lowercase starts exist only so the locality
 # strip below can remove them; anything else about them follows the same
@@ -381,7 +400,18 @@ def _preamble_candidates(text: str, source_role: str) -> list[_Candidate]:
             for match in _LOCALITY_START_RE.finditer(flattened, window_start, role.start())
             if not _is_year_abbreviation_start(flattened, match.start())
         )
-        return sorted(set(positions))
+        positions = sorted(set(positions))
+        legal_form_positions = [
+            match.start()
+            for match in _ORGANIZATION_FORM_START_RE.finditer(
+                flattened, window_start, role_start
+            )
+            if not _inside_quotes(match.start())
+        ]
+        # A legal-form token is a stronger identity boundary than template
+        # prose accidentally flattened onto the same line. Keep all such
+        # starts so the normal conflict/shape filters still fail closed.
+        return sorted(set(legal_form_positions)) or positions
 
     best_by_role: dict[int, str] = {}
     for role in _ROLE_PHRASE_RE.finditer(flattened):

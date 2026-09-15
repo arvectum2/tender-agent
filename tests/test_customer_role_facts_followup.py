@@ -145,3 +145,26 @@ def test_public_customer_acting_on_behalf_of_region_preserves_legal_entity_ident
     assert resolution.value == "Государственное казенное учреждение области «Центр»"
     assert resolution.evidence_kind == "contract_party_preamble"
     assert resolution.source_role == "contract"
+
+
+def test_flattened_signing_instruction_before_customer_preamble_is_not_identity():
+    source = (
+        "Дата заключения контракта соответствует дате подписания контракта "
+        "Заказчиком в ЕИС Муниципальное бюджетное учреждение культуры "
+        "«Городской Дом культуры» г. Гудермес Гудермесского муниципального района, "
+        "именуемое в дальнейшем «Заказчик», в лице директора."
+    )
+
+    assert value(contract_draft_text=source) == (
+        "Муниципальное бюджетное учреждение культуры «Городской Дом культуры» "
+        "г. Гудермес Гудермесского муниципального района"
+    )
+
+
+def test_unknown_legal_form_still_uses_generic_preamble_fallback():
+    source = (
+        "Комитет по управлению имуществом города, "
+        "именуемый в дальнейшем «Заказчик», в лице председателя."
+    )
+
+    assert value(contract_draft_text=source) == "Комитет по управлению имуществом города"
