@@ -721,3 +721,55 @@ def test_public_page_customer_outranks_search_card_placement_organization(client
     assert metadata["customer_name"] == "ГБУ Фактический заказчик"
     assert metadata["procurement"]["customer_name"] == "ГБУ Фактический заказчик"
     clear_zakupki_soap_settings_cache()
+
+
+
+def test_public_notice_attachment_parser_preserves_active_revision_provenance():
+    from src.modules.tender_operator_agent_demo import procurement_intake_service as service
+
+    page_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0123456789012345678"
+    page_html = """
+    <div class="notice-documents">
+      <a href="/epz/order/notice/printForm/viewByVersionNumber.html?regNumber=0123456789012345678&versionNumber=2&qualifier=regNumberAndVersion">print</a>
+      <div class="section__value docName">Извещение в ред. 2</div>
+      <div><div class="section__attrib">Размещено</div><div class="section__value">15.09.2026 11:00 (МСК)</div></div>
+      <div><div class="section__attrib">Редакция</div><div class="section__value">Действующая</div></div>
+      <div class="attachment row"><div><a href="/44fz/filestore/public/1.0/download/priz/file.html?uid=ACTIVE" title="ТЗ.docx">ТЗ</a></div></div>
+    </div>
+    """
+
+    attachments = service._parse_public_notice_attachments(page_html, page_url=page_url)
+
+    assert len(attachments) == 1
+    assert attachments[0].attachment_id == "ACTIVE"
+    assert attachments[0].provenance == {
+        "revision": 2,
+        "publication_timestamp": "15.09.2026 11:00 (МСК)",
+        "active": True,
+        "state": "active",
+        "source_url": "https://zakupki.gov.ru/epz/order/notice/printForm/viewByVersionNumber.html?regNumber=0123456789012345678&versionNumber=2&qualifier=regNumberAndVersion",
+        "documents_page_url": page_url,
+    }
+
+
+def test_public_notice_attachment_parser_fails_closed_on_multiple_active_revisions():
+    import pytest
+
+    from src.modules.tender_operator_agent_demo import procurement_intake_service as service
+
+    page_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0123456789012345678"
+    block = """
+    <div class="notice-documents">
+      <div class="section__value docName">Извещение в ред. {version}</div>
+      <div><div class="section__attrib">Размещено</div><div class="section__value">15.09.2026 11:00 (МСК)</div></div>
+      <div><div class="section__attrib">Редакция</div><div class="section__value">Действующая</div></div>
+      <div class="attachment row"><div><a href="/44fz/filestore/public/1.0/download/priz/file.html?uid={uid}" title="{uid}.pdf">{uid}</a></div></div>
+    </div>
+    """
+    page_html = block.format(version=1, uid="A") + block.format(version=2, uid="B")
+
+    with pytest.raises(service.PublicRevisionBindingError) as exc_info:
+        service._parse_public_notice_attachments(page_html, page_url=page_url)
+
+    assert exc_info.value.selection["status"] == "ambiguous_revision_state"
+    assert exc_info.value.selection["requires_review"] is True

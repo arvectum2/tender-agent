@@ -3,40 +3,66 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: DOCUMENT-QA-NEXT-INCREMENT
 authority: AUTO
-goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing closed on ambiguity.
+goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing
+  closed on ambiguity.
 definition_of_done:
 - Parse public EIS notice revision blocks and identify the active/current revision deterministically.
-- Bind/download analysis attachments only from the active/current revision; historical revisions stay separate from the current analysis set.
+- Bind/download analysis attachments only from the active/current revision; historical revisions stay separate from the current
+  analysis set.
 - Preserve revision number/publication timestamp/active state/source URL in provenance.
 - Fail closed to review if revision state or attachment binding is ambiguous.
 - Add synthetic coverage plus exposed case-14 regression without changing any frozen benchmark artifact.
-- Run focused/relevant tests and exact-head CI; prepare review-ready PR and stop before merge unless Product Owner explicitly approves.
+- Run focused/relevant tests and exact-head CI; prepare review-ready PR and stop before merge unless Product Owner explicitly
+  approves.
 completed:
-- Owner promoted issue #51 and authorized AUTO implementation/testing with merge REVIEW.
-- Claimed isolated branch agent/document-qa-next-increment and inventoried the current SOAP attachment path; it has no revision provenance.
+- Owner promoted issue
+- Claimed isolated branch agent/document-qa-next-increment and inventoried the current SOAP attachment path; it has no revision
+  provenance.
 - Reconfirmed case-14 as immutable exposed regression evidence.
 - Identified EisDocumentRaw.raw_meta as the backward-compatible revision provenance seam.
-- Reconciled issue #51 open and branch checkpoint; no competing executor or completed gate overrides the task.
-- Inspected pyproject.toml and repository code search: no dedicated HTML parser dependency/helper is present, so Python stdlib html.parser is the bounded reuse-first parser seam.
-- Prepared the standalone fail-closed parser/selector design; the connected GitHub product-file creation action was blocked by its safety layer before code landed.
-current: Product implementation is blocked at the first new source-file write; checkpoint commit 5bbe751019c023087863ff7ff057d32a253cd69b records the exact recovery state.
+- Reconciled issue
+- Inspected pyproject.toml and repository code search: no dedicated HTML parser dependency/helper is present, so Python stdlib
+    html.parser is the bounded reuse-first parser seam.
+- Prepared the standalone fail-closed parser/selector design; the connected GitHub product-file creation action was blocked
+  by its safety layer before code landed.
+- Interactive continuation superseded the stale/tool-blocked implementation state after reconciling remote branch ccbefe09dbb13303279fb029fd666cf4ce09301d;
+  remote-only commits changed checkpoints only, no product code.
+- Implemented documents-page revision parsing/selection using explicit EIS revision state and version links; one active revision
+  is required and current analysis links are sourced only from it.
+- Propagated revision provenance through ProcurementAttachment, download manifest, and saved file descriptors; ambiguous/missing
+  active binding is routed to revision review instead of downloading mixed files.
+- Added synthetic regression coverage for single revision, inactive+active overlapping filename, changed file, duplicate URL
+  across revisions, ambiguous active state, missing active binding, and provenance propagation.
+- Added exposed case-14 documents-page HTML fixture as regression evidence without modifying frozen benchmark artifacts; active
+  rev.2 at 14.09.2026 23:01 selects 6 links and excludes obsolete contract UID from rev.1.
+- 'Focused and broader relevant tests passed locally: focused 36 passed; broader public-44FZ/intake set 119 passed.'
+- Hardened fail-closed behavior for pages that expose EIS revision controls/state but whose revision blocks cannot be parsed
+  safely; such pages return revision_binding_unparsed and require review instead of falling back to mixed attachment traversal.
+current: Commit and push the reconciled implementation, open the review-ready PR, then verify exact-head GitHub CI.
 pending:
-- Retry/add the bounded standalone revision parser/selector when repository product-file writes are available.
-- Add synthetic cases: single revision; inactive+active overlapping filename; changed file; duplicate URL; ambiguity.
-- Positively identify real public EIS documents-page revision markers before runtime wiring; never infer active state from DOM order.
-- Bind current analysis attachments only to the selected active revision and retain historical revision metadata separately.
-- Add exposed case-14 HTML regression without changing frozen benchmark truth/artifacts.
-- Run focused/relevant tests and exact-head CI; open review-ready PR.
-last_verified_commit: 5bbe751019c023087863ff7ff057d32a253cd69b
+- Commit and push implementation/tests/exposed case-14 fixture to agent/document-qa-next-increment.
+- 'Open review-ready PR for issue #51 and verify exact-head GitHub Actions; do not merge because auto_merge=false and Product
+  Owner review is required.'
+last_verified_commit: ccbefe09dbb13303279fb029fd666cf4ce09301d
 test_results:
-- No product tests run; product-file creation was blocked before code landed.
-updated_at: '2026-09-15T18:14:00Z'
-resume_instruction: Retry the standalone parser/selector source-file write first. Keep it dependency-free using Python html.parser because no repository HTML parser dependency/helper was found. Require explicit revision state and exactly one active revision; fail closed rather than infer from DOM order. Then add synthetic tests before runtime wiring. Preserve case-14 frozen artifacts byte-for-byte and leave generic SOAP semantics unchanged.
+- 'Focused: 36 passed, 11 warnings.'
+- 'Case-14 fixture parse: rev.1 inactive 14.09.2026 15:50, rev.2 active 14.09.2026 23:01, 6 active links; obsolete contract
+  UID excluded.'
+- 'Repository check: PATH=.venv/bin:$PATH make check => PASS.'
+- 'Broader relevant public 44-FZ/provider/intake/downloader regression set after final parser hardening: 120 passed, 14 warnings.'
+- 'Full local suite: 2980 passed, 241 skipped, 1 failed; the sole failure is tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed
+  because local pg_restore exits 1. The same test fails identically with all issue-51 product/test changes stashed, proving
+  it is a local baseline/environment failure rather than this increment.'
+- Case-14 fixture SHA256 ef21176d9480e4b15d8a5a966e5cf8b80aa7fbc581405487fb9d0f908fd930bb is asserted in regression coverage;
+  rev.2 active 23:01 selects 6 links and obsolete rev.1 contract UID is excluded.
+updated_at: '2026-09-15T19:48:17Z'
+resume_instruction: 'Commit/push the exact current branch, open a PR referencing #51, then inspect Actions for that exact
+  head. If CI is green, mark checkpoint ready_for_owner_review/completed implementation and stop before merge.'
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260915T2158MSK
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260915T194029Z
   branch: agent/document-qa-next-increment
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 51
-  manual_override: false
-  lease_until: '2026-09-15T20:04:00Z'
+  manual_override: true
+  lease_until: '2026-09-15T20:48:17Z'

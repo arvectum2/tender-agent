@@ -71,8 +71,9 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
+    PublicDocumentLink,
     _parse_detail_metadata,
-    _parse_document_links,
+    _select_current_revision_document_links,
 )
 
 ARCHIVE_DOWNLOAD_RETRY_ATTEMPTS = 5
@@ -80,6 +81,12 @@ ARCHIVE_DOWNLOAD_RETRY_DELAY_SECONDS = 10
 PUBLIC_EIS_MAX_RESPONSE_BYTES = 5 * 1024 * 1024
 PUBLIC_EIS_USER_AGENT = "Mozilla/5.0 (compatible; ArvectumTenderAgent/0.1; read-only)"
 MAX_PROCUREMENT_DOCUMENTS = 100
+
+
+class PublicRevisionBindingError(RuntimeError):
+    def __init__(self, selection: dict[str, Any]) -> None:
+        self.selection = selection
+        super().__init__(str(selection.get("reason") or "Public EIS revision binding requires review"))
 
 
 def _now_iso() -> str:
@@ -467,10 +474,28 @@ def _format_public_context_datetime(value: Any) -> str | None:
     return value.strftime("%d.%m.%Y %H:%M")
 
 
+def _document_link_revision_provenance(item: PublicDocumentLink) -> dict[str, Any] | None:
+    raw = item.raw or {}
+    if "revision" not in raw and "revision_state" not in raw:
+        return None
+    return {
+        "revision": raw.get("revision"),
+        "publication_timestamp": raw.get("revision_publication_timestamp"),
+        "active": raw.get("revision_active"),
+        "state": raw.get("revision_state"),
+        "source_url": raw.get("revision_source_url"),
+        "documents_page_url": raw.get("documents_page_url"),
+    }
+
+
 def _parse_public_notice_attachments(page_html: str, *, page_url: str) -> list[ProcurementAttachment]:
+    links, _revisions, selection = _select_current_revision_document_links(page_html, page_url)
+    if selection.get("requires_review"):
+        raise PublicRevisionBindingError(selection)
+
     attachments: list[ProcurementAttachment] = []
     seen_urls: set[str] = set()
-    for item in _parse_document_links(page_html, page_url):
+    for item in links:
         href = urljoin(page_url, html.unescape(item.url))
         if href in seen_urls:
             continue
@@ -479,7 +504,9 @@ def _parse_public_notice_attachments(page_html: str, *, page_url: str) -> list[P
         if not name:
             continue
         parsed_href = urlparse(href)
-        attachment_id = item.raw.get("uid") or parse_qs(parsed_href.query).get("uid", [Path(parsed_href.path).name or name])[0]
+        attachment_id = item.raw.get("uid") or parse_qs(parsed_href.query).get(
+            "uid", [Path(parsed_href.path).name or name]
+        )[0]
         extension = Path(name).suffix.lower() or Path(parsed_href.path).suffix.lower() or None
         attachments.append(
             ProcurementAttachment(
@@ -489,6 +516,7 @@ def _parse_public_notice_attachments(page_html: str, *, page_url: str) -> list[P
                 extension=extension,
                 can_download=True,
                 requires_manual_upload=False,
+                provenance=_document_link_revision_provenance(item),
             )
         )
     return attachments
@@ -496,6 +524,9 @@ def _parse_public_notice_attachments(page_html: str, *, page_url: str) -> list[P
 
 def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachment]:
     detail = Public44FzSearchProvider(bypass_proxy=True).fetch_detail(card_url=source_url)
+    selection = (getattr(detail, "raw", {}) or {}).get("document_revision_selection") or {}
+    if selection.get("requires_review"):
+        raise PublicRevisionBindingError(selection)
     if not detail.document_links:
         return []
 
@@ -517,10 +548,10 @@ def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachm
                 extension=extension,
                 can_download=True,
                 requires_manual_upload=False,
+                provenance=_document_link_revision_provenance(item),
             )
         )
     return attachments
-
 
 def _role_hint_from_procurement_attachment(name: str) -> str | None:
     lowered = name.lower()
@@ -686,20 +717,21 @@ def _supplement_run_with_discovered_attachments(
             continue
         file_index += 1
         role_hint = _role_hint_from_procurement_attachment(item.name)
-        existing_files.append(
-            build_demo_file_descriptor(
-                file_id=f"FILE-{file_index:02d}",
-                original_name=item.name,
-                stored_name=item.stored_name,
-                role_hint=role_hint,
-                size_bytes=item.size_bytes,
-                content_type=item.content_type or "application/octet-stream",
-                source=source_type,
-                source_type=source_type,
-                source_url=item.source_url,
-                document_kind=item.document_kind or _document_kind_from_role_hint(role_hint),
-            )
+        descriptor = build_demo_file_descriptor(
+            file_id=f"FILE-{file_index:02d}",
+            original_name=item.name,
+            stored_name=item.stored_name,
+            role_hint=role_hint,
+            size_bytes=item.size_bytes,
+            content_type=item.content_type or "application/octet-stream",
+            source=source_type,
+            source_type=source_type,
+            source_url=item.source_url,
+            document_kind=item.document_kind or _document_kind_from_role_hint(role_hint),
         )
+        if item.provenance:
+            descriptor["source_provenance"] = item.provenance
+        existing_files.append(descriptor)
         append_demo_run_event(
             run_id,
             "attachment_saved",
@@ -727,6 +759,7 @@ def _supplement_run_with_discovered_attachments(
                 content_type=item.content_type,
                 size_bytes=item.size_bytes,
                 error=item.error,
+                provenance=item.provenance,
             )
         )
         if item.status != "saved":
@@ -778,7 +811,38 @@ def _supplement_run_with_discovered_attachments(
 def _supplement_run_with_public_notice_attachments(run_id: str, source_url: str | None) -> int:
     if not source_url:
         return 0
-    attachments = _fetch_public_notice_attachments(source_url)
+    try:
+        attachments = _fetch_public_notice_attachments(source_url)
+    except PublicRevisionBindingError as exc:
+        metadata = load_demo_run_metadata(run_id)
+        warning = f"Публичные документы ЕИС требуют проверки редакции: {exc}"
+        warnings = list(metadata.get("warnings") or [])
+        if warning not in warnings:
+            warnings.append(warning)
+        metadata["warnings"] = warnings
+        limitations = list(metadata.get("limitations") or [])
+        limitation = (
+            "Автоматическое добавление публичных вложений остановлено: не удалось однозначно "
+            "привязать файлы к действующей редакции извещения ЕИС."
+        )
+        if limitation not in limitations:
+            limitations.append(limitation)
+        metadata["limitations"] = limitations
+        metadata["manual_upload_required"] = True
+        if not metadata.get("files"):
+            metadata["attachments_status"] = "revision_review_required"
+        procurement_payload = dict(metadata.get("procurement") or {})
+        procurement_payload["revision_review_required"] = True
+        procurement_payload["revision_selection"] = exc.selection
+        metadata["procurement"] = procurement_payload
+        save_demo_run_metadata(run_id, metadata)
+        append_demo_run_event(
+            run_id,
+            "public_revision_review_required",
+            "Публичные вложения ЕИС не добавлены из-за неоднозначной редакции извещения.",
+            {"source_url": source_url, "revision_selection": exc.selection},
+        )
+        return 0
     return _supplement_run_with_discovered_attachments(
         run_id,
         attachments=attachments,

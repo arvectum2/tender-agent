@@ -52,6 +52,7 @@ class AttachmentDownloadManifestItem:
     document_kind: str | None = None
     content_type: str | None = None
     error: str | None = None
+    provenance: dict[str, object] | None = None
 
 
 @dataclass
@@ -92,6 +93,7 @@ def download_procurement_attachments(
                     note="Формат вложения не входит в allowlist.",
                     source_url=attachment.url,
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     error="unsupported_extension",
                 )
             )
@@ -105,6 +107,7 @@ def download_procurement_attachments(
                     status="skipped",
                     note="В ответе источника нет ссылки на скачивание.",
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     error="missing_url",
                 )
             )
@@ -120,6 +123,7 @@ def download_procurement_attachments(
                     note=url_error,
                     source_url=attachment.url,
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     error="url_rejected",
                 )
             )
@@ -149,6 +153,7 @@ def download_procurement_attachments(
                     source_url=attachment.url,
                     source_type="remote_attachment",
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     error=error_code,
                 )
             )
@@ -165,6 +170,7 @@ def download_procurement_attachments(
                     source_url=attachment.url,
                     source_type="remote_attachment",
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     error=error_code,
                 )
             )
@@ -183,6 +189,7 @@ def download_procurement_attachments(
                     source_url=attachment.url,
                     source_type="remote_attachment",
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     content_type=content_type,
                     error="file_too_large",
                 )
@@ -200,6 +207,7 @@ def download_procurement_attachments(
                     source_url=attachment.url,
                     source_type="remote_attachment",
                     document_kind=getattr(attachment, "document_kind", None),
+                    provenance=getattr(attachment, "provenance", None),
                     content_type=content_type,
                     error="total_size_exceeded",
                 )
@@ -223,6 +231,7 @@ def download_procurement_attachments(
                 source_url=attachment.url,
                 source_type="remote_attachment",
                 document_kind=getattr(attachment, "document_kind", None),
+                provenance=getattr(attachment, "provenance", None),
                 content_type=content_type,
             )
         )
@@ -237,6 +246,7 @@ def download_procurement_attachments(
                 note="Вложение пропущено из-за лимита количества файлов.",
                 source_url=attachment.url,
                 document_kind=getattr(attachment, "document_kind", None),
+                provenance=getattr(attachment, "provenance", None),
                 error="attachment_limit_exceeded",
             )
         )
