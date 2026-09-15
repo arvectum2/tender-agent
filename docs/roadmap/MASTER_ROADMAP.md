@@ -106,7 +106,7 @@ These programs are repository-native benchmark/document-QA execution tracks. No 
 
 ### Admitted hourly execution queue
 
-The queue below is deliberately longer than one task so the watchdog can keep working when an earlier item is waiting on CI or a review gate. `AUTO` means repository-only work may proceed autonomously subject to Company AM-4; `REVIEW` means implementation/testing may proceed, but merge/final gate remains explicit Product Owner review.
+The queue below is deliberately longer than one task so the watchdog can keep working when an earlier item is waiting on CI or a review gate. `AUTO` means repository-only implementation/testing may proceed autonomously subject to Company AM-4. `REVIEW` means the watchdog may prepare safe analysis/drafts/evidence but must not cross the task's review gate without Product Owner authorization. `AUTO; merge REVIEW` is the hybrid used for #51: code/test work may proceed, but merge is explicitly gated.
 
 | Order | Task | Authority | Depends on | Roadmap scope | Intended result |
 |---:|---|---|---|---|---|
