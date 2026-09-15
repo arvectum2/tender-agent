@@ -151,13 +151,13 @@ items:
   invent_justification: Procurement-specific notice-revision binding directly protects source/evidence integrity; generic parsing and dedupe primitives must be reused.
   title: Active EIS notice revision binding
   status: in_progress
-  authority: REVIEW
+  authority: AUTO
   independent: true
   auto_merge: false
-  source: 'issue #51; Product Owner promotion comment 5683950542 on 2026-09-15'
+  source: 'issue #51; Product Owner promotion comments 5683950542 and 5684049184 on 2026-09-15'
   dependencies:
   - DOCUMENT-QA-005
-  owner_gate_evidence: 'Start gate satisfied: issue #51 is a concrete reusable failure family with explicit acceptance criteria and exposed case-14 regression evidence. Merge remains Product Owner REVIEW.'
+  owner_gate_evidence: 'Implementation start gate satisfied: issue #51 is a concrete reusable failure family with explicit acceptance criteria and exposed case-14 regression evidence. Implementation/testing is AUTO; merge remains Product Owner REVIEW because auto_merge=false.'
   executor_scope: Parse EIS notice revision blocks, bind analysis attachments only to the active/current revision, preserve revision provenance, fail closed on ambiguity, and add synthetic/exposed regression coverage without changing frozen benchmark truth.
   done_gate: 'Issue #51 acceptance criteria satisfied; focused/relevant tests and exact-head CI pass; review-ready PR merged only after explicit Product Owner approval; issue #51 closed completed.'
 - order: 50

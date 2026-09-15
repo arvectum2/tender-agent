@@ -95,7 +95,7 @@ These programs are repository-native benchmark/document-QA execution tracks. No 
 | `DISCOVERY-QA-001` | **done** | issue #2; PR #59 merged as `762a392` after Product Owner approval |
 | `DECISION-CORE-V1-001` | **done** | issue #60; PR #61 merged as `3bf397f` after Product Owner approval |
 | `COMMERCIAL-CORE-V1-001` | **done** | issue #62; PR #63 merged as `4257cd2` after Product Owner approval |
-| `DOCUMENT-QA-NEXT-INCREMENT` | **in_progress / REVIEW** | issue #51; Owner promotion 2026-09-15; active EIS notice-revision binding |
+| `DOCUMENT-QA-NEXT-INCREMENT` | **in_progress / AUTO, merge REVIEW** | issue #51; Owner promotion 2026-09-15; active EIS notice-revision binding |
 | `CHANGE-MONITORING-V1-001` | ready / AUTO | issue #65; ARV-021 + ARV-056 |
 | `INGEST-RESILIENCE-V1-001` | ready / AUTO | issue #66; ARV-031 + ARV-058 |
 | `INTEGRATION-OUTBOX-V1-001` | ready / AUTO | issue #67; safe infrastructure slice of ARV-025 + ARV-029 + ARV-045 |
@@ -110,7 +110,7 @@ The queue below is deliberately longer than one task so the watchdog can keep wo
 
 | Order | Task | Authority | Depends on | Roadmap scope | Intended result |
 |---:|---|---|---|---|---|
-| 40 | `DOCUMENT-QA-NEXT-INCREMENT` | REVIEW | `DOCUMENT-QA-005` | measured failure family | Active EIS revision only; no inactive/current document mixing (#51) |
+| 40 | `DOCUMENT-QA-NEXT-INCREMENT` | AUTO; merge REVIEW | `DOCUMENT-QA-005` | measured failure family | Active EIS revision only; no inactive/current document mixing (#51) |
 | 50 | `CHANGE-MONITORING-V1-001` | AUTO | Commercial Core v1 | ARV-021, ARV-056 | Saved watches + source-bound change feed; no external notification delivery (#65) |
 | 55 | `INGEST-RESILIENCE-V1-001` | AUTO | order 40 | ARV-031, ARV-058 | Resumable/idempotent sync, revision-aware dedupe (#66) |
 | 60 | `INTEGRATION-OUTBOX-V1-001` | AUTO | order 50 | ARV-025, ARV-029, ARV-045 | Internal integration events/outbox; live transports disabled (#67) |

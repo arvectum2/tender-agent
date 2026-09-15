@@ -2,7 +2,7 @@ version: 2
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: DOCUMENT-QA-NEXT-INCREMENT
-authority: REVIEW
+authority: AUTO
 goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing
   closed on ambiguity.
 definition_of_done:
@@ -17,6 +17,8 @@ definition_of_done:
 completed:
 - 'Owner promoted issue #51 as the concrete reusable DOCUMENT-QA next increment on 2026-09-15.'
 - Queue admission and follow-on Stage-4/5 pipeline prepared by ROADMAP-QUEUE-ACCEL-001.
+- 'Owner clarified issue #51 implementation/testing as AUTO while preserving auto_merge=false and explicit Product Owner merge
+  review.'
 current: 'Implementation not yet claimed by an executor; begin from issue #51 and existing EIS documents-page intake path.'
 pending:
 - Inventory current documents-page revision parsing and attachment-link traversal.

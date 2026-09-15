@@ -250,10 +250,10 @@ current_programs:
   completion_evidence: 'Commercial Core v1 price-list ingest, matching and auditable economics; merge 4257cd23d68d4ad69ebbedf075195f34969bace1.'
 - task_id: DOCUMENT-QA-NEXT-INCREMENT
   state: in_progress
-  source: 'issue #51; Product Owner promotion comment 5683950542'
+  source: 'issue #51; Product Owner promotion comments 5683950542 / 5684049184'
   roadmap_mapping: null
   strategy: INVENT
-  current_evidence: 'Concrete reusable active/inactive EIS notice-revision mixing failure family with explicit acceptance criteria and exposed case-14 regression; merge remains REVIEW.'
+  current_evidence: 'Concrete reusable active/inactive EIS notice-revision mixing failure family with explicit acceptance criteria and exposed case-14 regression; implementation/testing AUTO, merge still Product Owner REVIEW.'
 - task_id: CHANGE-MONITORING-V1-001
   state: ready
   source: 'issue #65'
