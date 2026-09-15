@@ -56,6 +56,18 @@ Custom engineering is concentrated in: evidence-bound procurement facts; GO/NO-G
 - Every confirmed real failure/edge case becomes a regression case.
 - Competitor reverse-spec is refreshed at milestone boundaries before commodity scope expands.
 
+## Continuous execution directive — 2026-09-15
+
+The Owner requires the single `Tender Agent Watchdog` to be **work-conserving** at the maximum supported cadence: one exact run per hour. A run should do productive work rather than occupy time waiting for CI or another future condition.
+
+The executor must reconcile issue/PR/done-gate state before continuing a stale checkpoint. If a done gate is already satisfied, it must close/reconcile that task rather than start another acceptance loop. Waiting on CI, external acquisition or human review is checkpointed; the lease is released, and another independent admitted `AUTO` item may progress in an isolated branch/checkpoint. A productive run should normally finish/checkpoint within 45 minutes so the next hourly tick is not lost to an overlapping long session. If executable work exists but no valid progress/lease is observed for more than 90 minutes, the next run treats that as a recovery condition and resumes from canonical state immediately.
+
+This changes utilization/cadence only. It does **not** expand AM-4 authority, queue admission, external-action rights, or `REVIEW` / `OWNER` / `HUMAN` gates.
+
+### DOCUMENT-QA-005 reconciliation
+
+`DOCUMENT-QA-005` is **done**: issue #16 had already met its unbiased strict `customer_name` acceptance gate and was closed `completed` before the later #52 calibration. Case #52 is retained as post-acceptance regression evidence. Its generic EIS placement-organization/customer defect was fixed by PR #54 and issue #53 is completed; this does not silently reopen #16 or authorize an endless sequence of fresh blind cases.
+
 ## Current reconciliation highlights
 
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
@@ -73,10 +85,10 @@ These programs are repository-native benchmark/document-QA execution tracks. No 
 
 | Program | State | Source |
 |---|---|---|
-| `REUSE-FIRST-001` | ready | Owner directive 2026-09-14 |
+| `REUSE-FIRST-001` | **in_progress** | Owner directives 2026-09-14 / 2026-09-15 |
 | `BENCHMARK-PIPELINE-001` | done | issue #1 |
 | `DOCUMENT-QA-004` | done | issue #11 |
-| `DOCUMENT-QA-005` | in_progress | issue #16; latest exposed blind acceptance issue #36 |
+| `DOCUMENT-QA-005` | **done** | issue #16 accepted/closed; #52/#53 post-acceptance regression hardening; PR #54 |
 | `BUILD-DOCKER-CONTEXT-001` | ready | issue #19 |
 | `DISCOVERY-QA-001` | blocked_review | issue #2 |
 | `DOCUMENT-QA-NEXT-INCREMENT` | deferred_review | issue #3 strategy |

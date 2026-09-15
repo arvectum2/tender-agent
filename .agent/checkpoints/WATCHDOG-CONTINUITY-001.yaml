@@ -1,0 +1,29 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: WATCHDOG-CONTINUITY-001
+authority: OWNER
+goal: "Reconcile canonical roadmap state and make the hourly Tender Agent Watchdog work-conserving and exact-hour."
+definition_of_done:
+  - "DOCUMENT-QA-005 accepted completion and post-acceptance #52/#53 hardening reconciled."
+  - "Master roadmap and execution queue updated for continuous execution."
+  - "REUSE-FIRST-001 selected as next canonical AUTO workstream."
+  - "Watchdog prompt/schedule updated externally and verified before final handoff."
+completed:
+  - "Issue #16 reconciled as done; #53 closed completed after PR #54."
+  - "Roadmap/queue updated with work-conserving rules: reconcile gates first, no passive CI waiting, 45-minute productive quantum, >90-minute stale recovery, no repeat acceptance after done gate."
+  - "REUSE-FIRST-001 promoted from ready to in_progress; BUILD-DOCKER-CONTEXT-001 remains ready; REVIEW gates unchanged."
+current: "Repository changes prepared; external automation update/verification is the final owner-session step."
+pending: []
+last_verified_commit: "1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9"
+test_results:
+  - "YAML parse and queue-state validation required before merge."
+updated_at: "2026-09-15T05:45:00Z"
+resume_instruction: "After merge, verify exact-hour Tender Agent Watchdog configuration and continue REUSE-FIRST-001."
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: null
+  lease_until: null
+  manual_override: false
