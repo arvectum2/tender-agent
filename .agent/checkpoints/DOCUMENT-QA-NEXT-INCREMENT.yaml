@@ -18,27 +18,29 @@ completed:
 - Inventoried src/tender_research/eis_real_loader.py: fetch_tender_details uses get_procurement_details attachments; fetch_tender_documents uses list_attachments; _attachments_to_raw preserves name/url/id/type/size only. No revision number, publication timestamp, active state, or revision source URL is currently represented at this boundary.
 - Inventoried tests/tender_research/test_eis_real_loader.py: existing coverage asserts SOAP attachment normalization/delegation but has no revision semantics.
 - Reconfirmed immutable exposed case-14 evidence from issue #44: public scraper mixed obsolete/current contract-draft revisions, but case-14 frozen customer evidence remains valid and must not be mutated.
-- Reconciled durable branch head a1a52479d9c680ce6714d9b7cc29603ad4512ce1 and renewed the lease without redoing the prior inventory.
-- Inspected src/tender_research/schemas.py: EisDocumentRaw already exposes raw_meta: dict | None, which is the narrowest backward-compatible location for revision/publication/active/source provenance. The first implementation slice therefore does not need a cross-cutting schema migration.
-current: Standalone revision-page parser/selector and synthetic tests, using EisDocumentRaw.raw_meta for provenance; runtime wiring follows only after a positive public HTML acquisition seam is identified.
+- Inspected src/tender_research/schemas.py: EisDocumentRaw.raw_meta is the narrowest backward-compatible revision provenance seam.
+- Reconciled branch head 69f1ca214a29730968f057afe6574c420e5461ee against open issue #51 and canonical queue; no competing executor or completed gate found.
+- Inspected pyproject.toml and repository code search: no dedicated HTML parser dependency/helper is present, so a bounded Python stdlib html.parser implementation is the reuse-first seam.
+- Prepared a fail-closed standalone parser/selector design that recognizes only explicit revision provenance, requires exactly one active revision and rejects unbindable active revisions; repository code creation was attempted but the connected GitHub write action was blocked by its safety layer before any product file was created.
+current: Implementation is tool-blocked at the first product-file write; no product code was committed in this quantum.
 pending:
-- Inspect existing HTML parser/fetch helpers and reuse the narrowest available primitive.
-- Implement deterministic active/current revision selection; fail closed on zero/multiple/ambiguous active candidates or unbindable attachments.
-- Preserve revision metadata and separate historical attachments from current analysis set.
+- Retry/add the bounded standalone revision parser/selector when GitHub repository write becomes available.
 - Add synthetic tests for single revision, inactive+active overlapping filename, changed file, duplicate URL, and ambiguity.
+- Positively identify the real public EIS documents-page DOM contract before runtime wiring; do not guess presentation selectors.
+- Bind current analysis attachments only to selected active revision and preserve revision metadata in EisDocumentRaw.raw_meta.
 - Add exposed case-14 HTML regression without changing frozen benchmark artifacts.
 - Run focused/relevant tests and exact-head CI; open review-ready PR; do not merge without Product Owner approval.
-last_verified_commit: a1a52479d9c680ce6714d9b7cc29603ad4512ce1
+last_verified_commit: 69f1ca214a29730968f057afe6574c420e5461ee
 test_results:
-- Inventory/schema-only stage; no product code changed and no product tests run yet.
-updated_at: '2026-09-15T17:58:00Z'
-resume_instruction: Add a standalone revision-page parser/selector module and unit tests. Put revision number, publication timestamp, active state and revision source URL into EisDocumentRaw.raw_meta so existing consumers remain compatible. Reuse an existing HTML parser dependency/helper if present; otherwise keep the parser bounded and dependency-free. Preserve case-14 frozen artifacts byte-for-byte and leave generic SOAP behavior unchanged until revision-bound public evidence is available.
+- No product tests run; product-file creation was blocked before code landed.
+updated_at: '2026-09-15T18:12:00Z'
+resume_instruction: Retry the standalone parser/selector product-file write first. Keep it dependency-free using Python html.parser because no repository HTML parser dependency/helper was found. Require explicit revision state and exactly one active revision; fail closed rather than infer from DOM order. Then add synthetic tests before any runtime wiring. Preserve case-14 frozen artifacts byte-for-byte and do not alter generic SOAP semantics.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260915T2057MSK
+  execution_id: watchdog-20260915T2158MSK
   branch: agent/document-qa-next-increment
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 51
   manual_override: false
-  lease_until: '2026-09-15T19:47:00Z'
+  lease_until: '2026-09-15T20:02:00Z'
 checkpoint_role: durable_task_checkpoint
