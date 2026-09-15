@@ -5,7 +5,7 @@
 # create priorities, resolve roadmap ID conflicts, infer ARV mappings, or change gates.
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-15T05:45:00Z'
+updated_at: '2026-09-15'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -32,15 +32,15 @@ items:
 - order: 5
   task_id: REUSE-FIRST-001
   title: Competitive reverse-spec and reuse registry
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Owner directive 2026-09-14; docs/roadmap reuse-first strategy overlay'
+  source: 'Owner directive 2026-09-14; docs/roadmap reuse-first strategy overlay; completed PR #56'
   strategy: COPY_PATTERN
   dependencies: []
-  executor_scope: "After any already-live current task is completed, benchmark 8-10 direct competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action; create/update a reuse registry and classify active P0/P1 work as REUSE/COPY_PATTERN/ADAPT/INVENT. Do not copy proprietary code/assets/text/data and do not widen external-action authority."
-  done_gate: "Canonical competitor-pattern matrix and reuse registry exist; active P0/P1 work is classified; every INVENT has documented reuse check, gap, differentiation and maintenance justification; duplicate commodity builds are explicitly de-scoped or converted to reuse/adaptation."
+  executor_scope: "Completed. Preserve the merged reverse-spec/reuse registry; do not reopen without a concrete regression or Owner-directed refresh."
+  done_gate: "Satisfied by merged strategy packet in PR #56: competitor-pattern matrix and reuse registry exist; active P0/P1 work is classified; INVENT boundaries are justified; duplicate commodity builds are de-scoped."
 - order: 10
   task_id: DOCUMENT-QA-005
   strategy: INVENT
@@ -58,7 +58,7 @@ items:
   task_id: BUILD-DOCKER-CONTEXT-001
   strategy: ADAPT
   title: Repair Docker context dependency on missing landing assets
-  status: ready
+  status: in_progress
   authority: AUTO
   independent: true
   auto_merge: true
@@ -78,8 +78,7 @@ items:
   source: 'issue #2'
   dependencies:
   - BENCHMARK-PIPELINE-001
-  blocker: 'Issue #2 requires Product Owner inspection/promotion after the completed control rerun. Repository state does not contain an explicit
-    canonical promotion yet.'
+  blocker: 'Issue #2 requires Product Owner inspection/promotion after the completed control rerun. Repository state does not contain an explicit canonical promotion yet.'
   owner_gate: Product Owner must explicitly promote this item to READY before search-weight tuning or corpus expansion.
   executor_scope: May inspect current evidence and prepare a decision packet, but do not tune search or expand corpus while status remains blocked.
 - order: 40
