@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-09-15T16:05:16Z'
+strategy_updated_at: '2026-09-15T16:26:13Z'
 continuous_execution:
   owner_directive_date: '2026-09-15'
   principle: work_conserving_hourly_executor
@@ -37,7 +37,7 @@ continuous_execution:
     - 'If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and resume immediately.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
 execution_snapshot:
-  updated_at: '2026-09-15T16:05:16Z'
+  updated_at: '2026-09-15T16:26:13Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -46,9 +46,18 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: no_admitted_executable_item
-  next_admitted_item: null
-  note: 'Hourly watchdog invocations continue autonomously, but productive product development is allowed only for explicitly admitted executable queue items. With the current queue exhausted, an hourly run may only reconcile/report and must not invent scope.'
+  queue_state: admitted_executable_items_present
+  next_admitted_item: DOCUMENT-QA-NEXT-INCREMENT
+  admitted_pipeline:
+    - DOCUMENT-QA-NEXT-INCREMENT
+    - CHANGE-MONITORING-V1-001
+    - INGEST-RESILIENCE-V1-001
+    - INTEGRATION-OUTBOX-V1-001
+    - OPS-OBSERVABILITY-V1-001
+    - 223FZ-INGEST-V1-001
+    - 223FZ-DECISION-V1-001
+    - DOMAIN-REGRESSION-V1-001
+  note: 'Product Owner explicitly refilled the queue on 2026-09-15. Hourly watchdog runs may now continue bounded work without new chat input, while REVIEW/HUMAN/external-action gates remain fail-closed.'
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -118,15 +127,15 @@ accelerated_plan:
     priority: P1
     objective: "Add integrations, webhooks/APIs, saved-search alerts, email/CRM/source connectors and scheduled reporting only where they shorten validated workflows."
     exit_gate: "Automations reduce operator work without crossing external-action/human-control boundaries."
-    current_state: not_admitted
-    current_evidence: 'No explicit execution-queue item currently admits Stage 4 implementation.'
+    current_state: admitted_in_progress
+    current_evidence: 'Owner queue-fill directive 2026-09-15 admitted CHANGE-MONITORING-V1-001 (#65), INGEST-RESILIENCE-V1-001 (#66) and INTEGRATION-OUTBOX-V1-001 (#67). External notification/delivery remains disabled and separately gated.'
   - stage: 5
     name: reliability_and_moat
     priority: P1
     objective: "Compound 44-FZ/223-FZ/private-procurement edge cases, regression evidence, decision/outcome telemetry, security/compliance and workflow integration depth."
     exit_gate: "Moat is evidenced by domain-specific regression depth, integration depth and measured decision quality rather than commodity feature count."
-    current_state: not_admitted
-    current_evidence: 'No explicit execution-queue item currently admits Stage 5 implementation.'
+    current_state: admitted_queued
+    current_evidence: 'Owner queue-fill directive 2026-09-15 admitted OPS-OBSERVABILITY-V1-001 (#68), 223FZ-INGEST-V1-001 (#69), 223FZ-DECISION-V1-001 (#70) and DOMAIN-REGRESSION-V1-001 (#71). Review-gated semantics/benchmark changes remain auto_merge=false.'
 strategy_overlay:
   REUSE_FIRST_001:
     delivery_strategy: COPY_PATTERN
@@ -240,9 +249,46 @@ current_programs:
   strategy: INVENT
   completion_evidence: 'Commercial Core v1 price-list ingest, matching and auditable economics; merge 4257cd23d68d4ad69ebbedf075195f34969bace1.'
 - task_id: DOCUMENT-QA-NEXT-INCREMENT
-  state: deferred_review
-  source: 'issue #3 strategy'
+  state: in_progress
+  source: 'issue #51; Product Owner promotion comment 5683950542'
   roadmap_mapping: null
+  strategy: INVENT
+  current_evidence: 'Concrete reusable active/inactive EIS notice-revision mixing failure family with explicit acceptance criteria and exposed case-14 regression; merge remains REVIEW.'
+- task_id: CHANGE-MONITORING-V1-001
+  state: ready
+  source: 'issue #65'
+  roadmap_mapping: [ARV-021, ARV-056]
+  strategy: ADAPT
+- task_id: INGEST-RESILIENCE-V1-001
+  state: ready
+  source: 'issue #66'
+  roadmap_mapping: [ARV-031, ARV-058]
+  strategy: ADAPT
+- task_id: INTEGRATION-OUTBOX-V1-001
+  state: ready
+  source: 'issue #67'
+  roadmap_mapping: [ARV-025, ARV-029, ARV-045]
+  strategy: ADAPT
+- task_id: OPS-OBSERVABILITY-V1-001
+  state: ready
+  source: 'issue #68'
+  roadmap_mapping: [ARV-010]
+  strategy: REUSE
+- task_id: 223FZ-INGEST-V1-001
+  state: ready
+  source: 'issue #69'
+  roadmap_mapping: [ARV-006]
+  strategy: ADAPT
+- task_id: 223FZ-DECISION-V1-001
+  state: ready_review
+  source: 'issue #70'
+  roadmap_mapping: [ARV-006]
+  strategy: INVENT
+- task_id: DOMAIN-REGRESSION-V1-001
+  state: ready_review
+  source: 'issue #71'
+  roadmap_mapping: [ARV-072]
+  strategy: INVENT
 legacy_registry:
 - id: BASE-001
   legacy_snapshot:
