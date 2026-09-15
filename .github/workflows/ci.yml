@@ -23,6 +23,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build runtime image from clean checkout
         run: docker build --tag tender-agent-ci:${{ github.sha }} .
+      - name: Verify optional landing preview dependency is explicit
+        shell: bash
+        run: |
+          if docker compose -f docker-compose.site-pilot.yml config >/tmp/site-pilot.yml 2>/tmp/site-pilot.err; then
+            echo "Expected compose config to require ARVECTUM_LANDING_PUBLIC_DIR" >&2
+            exit 1
+          fi
+          ARVECTUM_LANDING_PUBLIC_DIR="$PWD" docker compose -f docker-compose.site-pilot.yml config >/dev/null
 
   quality:
     runs-on: ubuntu-latest
