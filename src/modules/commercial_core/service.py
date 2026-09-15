@@ -361,6 +361,10 @@ def _match_status(
     row_unit = _unit_key(row.unit)
     if position_unit and row_unit and position_unit != row_unit:
         return CatalogMatchStatus.UNCERTAIN, [f"unit_conflict:{position_unit}!={row_unit}"]
+    if position_unit and not row_unit:
+        return CatalogMatchStatus.UNCERTAIN, ["catalog_unit_unknown"]
+    if row_unit and not position_unit:
+        return CatalogMatchStatus.UNCERTAIN, ["tender_unit_unknown"]
     if ambiguous:
         return CatalogMatchStatus.UNCERTAIN, ["multiple_close_catalog_candidates"]
     article_match = bool(
@@ -407,7 +411,10 @@ def _match_position(position: ProcurementPosition, rows: list[CommercialCatalogR
     top_score, top_row, generic_reasons = ranked[0]
     close = [item for item in ranked if item[0] >= 0.30 and abs(item[0] - top_score) <= 0.02]
     ambiguous = len(close) > 1
-    status, rationale = _match_status(position, top_row, top_score, ambiguous=ambiguous)
+    if "article_conflict" in generic_reasons:
+        status, rationale = CatalogMatchStatus.NO_MATCH, ["article_conflict"]
+    else:
+        status, rationale = _match_status(position, top_row, top_score, ambiguous=ambiguous)
     selected = status in {CatalogMatchStatus.EXACT, CatalogMatchStatus.LIKELY_ANALOG, CatalogMatchStatus.PARTIAL}
     evidence = []
     if selected or status == CatalogMatchStatus.UNCERTAIN:
@@ -477,6 +484,11 @@ def _economics(
             unknown.append(match.position_id)
             continue
         if match.catalog_unit_price is None or match.tender_quantity is None or not match.currency:
+            unknown.append(match.position_id)
+            continue
+        tender_unit = _unit_key(match.tender_unit)
+        catalog_unit = _unit_key(match.catalog_unit)
+        if not tender_unit or not catalog_unit or tender_unit != catalog_unit:
             unknown.append(match.position_id)
             continue
         costed.append(match)

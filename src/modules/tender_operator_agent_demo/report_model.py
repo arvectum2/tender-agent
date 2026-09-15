@@ -411,7 +411,6 @@ def _customer_commercial_core_projection(model: dict[str, Any]) -> dict[str, Any
             )
         matches.append(
             {
-                "position_id": item.get("position_id"),
                 "tender_name": item.get("tender_name"),
                 "tender_quantity": item.get("tender_quantity"),
                 "tender_unit": item.get("tender_unit"),
@@ -430,7 +429,6 @@ def _customer_commercial_core_projection(model: dict[str, Any]) -> dict[str, Any
         "catalog": {
             "status": catalog.get("status"),
             "source_file": Path(str(catalog.get("source_file") or "Каталог")).name,
-            "source_sha256": catalog.get("source_sha256"),
             "warnings": list(catalog.get("warnings") or []),
             "unknowns": list(catalog.get("unknowns") or []),
             "rows_count": len(catalog.get("rows") or []),

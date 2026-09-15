@@ -595,6 +595,36 @@ def _render_customer_report_html(model: dict[str, Any]) -> str:
         )
 
     commercial_core = projection.get("commercial_core") or {}
+    commercial_match_rows = ""
+    if commercial_core:
+        commercial_rows: list[str] = []
+        for item in commercial_core.get("matches", []):
+            if not isinstance(item, dict):
+                continue
+            source_labels = [
+                f"{ref.get('source_file')} / {ref.get('sheet')} / строка {ref.get('row')}"
+                for ref in item.get("evidence", [])
+                if isinstance(ref, dict)
+            ]
+            source_display = ", ".join(source_labels) or "—"
+            commercial_rows.append(
+                "<tr>"
+                f"<td>{esc(item.get('tender_name'))}</td>"
+                f"<td>{esc(item.get('status'))}</td>"
+                f"<td>{esc(item.get('catalog_title'))}</td>"
+                f"<td>{esc(item.get('catalog_unit_price'))} {esc(item.get('currency'))}</td>"
+                f"<td>{esc('; '.join(item.get('rationale') or []))}</td>"
+                f"<td>{esc(source_display)}</td>"
+                "</tr>"
+            )
+        commercial_match_rows = "".join(commercial_rows)
+    commercial_matches_table = (
+        "<div class='scroll'><table><thead><tr><th>Позиция закупки</th><th>Статус</th>"
+        "<th>Позиция каталога</th><th>Цена</th><th>Основание</th><th>Источник</th>"
+        f"</tr></thead><tbody>{commercial_match_rows}</tbody></table></div>"
+        if commercial_match_rows
+        else ""
+    )
     commercial_section = (
         "<section><h2>Commercial Core</h2>"
         "<p><strong>Коммерческая реализуемость:</strong> "
@@ -607,6 +637,7 @@ def _render_customer_report_html(model: dict[str, Any]) -> str:
         "<p><strong>Подтверждённая стоимость по каталогу:</strong> "
         f"{esc((commercial_core.get('economics') or {}).get('known_catalog_cost'))} "
         f"{esc((commercial_core.get('economics') or {}).get('currency'))}</p>"
+        f"{commercial_matches_table}"
         f"<p><strong>Следующее действие:</strong> {esc(commercial_core.get('next_action'))}</p>"
         "<p><strong>Human control:</strong> коммерческий вывод рекомендательный; внешние действия не разрешены.</p>"
         "</section>"

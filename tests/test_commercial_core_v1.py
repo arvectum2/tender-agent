@@ -374,10 +374,14 @@ KK-2024;Кабель-канал 20х24 мм;м;100;RUB
     assert canonical_after["commercial_core"]["catalog"]["stored_source"]["sha256"] == payload["catalog"]["source_sha256"]
     assert customer_report["commercial_core"]["catalog"]["source_file"] == "customer-price.csv"
     assert "stored_source" not in str(customer_report["commercial_core"])
+    assert "source_sha256" not in customer_report["commercial_core"]["catalog"]
+    assert "position_id" not in str(customer_report["commercial_core"]["matches"])
 
     report_html = (output_dir / "report.html").read_text(encoding="utf-8")
     assert "Commercial Core" in report_html
     assert "FEASIBLE" in report_html
+    assert "EXACT" in report_html
+    assert "customer-price.csv / CSV / строка 2" in report_html
     assert "28000" in report_html
     assert "внешние действия не разрешены" in report_html
 
@@ -402,3 +406,47 @@ def test_commercial_core_api_requires_analyzed_run(client, monkeypatch, tmp_path
     )
     assert response.status_code == 409
     assert "Analyze the tender run" in response.json()["detail"]
+
+
+def test_conflicting_sku_never_becomes_exact_from_same_title() -> None:
+    model = _model(lines=[{
+        "stable_item_id": "line-1",
+        "official_name": "Автоматический выключатель ВА47-29 16А",
+        "quantity": 10,
+        "unit_normalized": "шт",
+        "article": "TENDER-SKU",
+    }])
+    payload = _csv(
+        """
+Артикул;Наименование;Ед.;Цена;Валюта
+CATALOG-SKU;Автоматический выключатель ВА47-29 16А;шт;1200;RUB
+"""
+    )
+    result = build_commercial_core(model, catalog_filename="conflict.csv", catalog_content=payload)
+
+    assert result.matches[0].status == CatalogMatchStatus.NO_MATCH
+    assert "article_conflict" in result.matches[0].rationale
+    assert result.economics.known_catalog_cost is None
+    assert result.feasibility_status == CommercialFeasibilityStatus.NEEDS_REVIEW
+
+
+def test_unknown_catalog_unit_blocks_exact_costing() -> None:
+    model = _model(lines=[{
+        "stable_item_id": "line-1",
+        "official_name": "Автоматический выключатель ВА47-29 16А",
+        "quantity": 10,
+        "unit_normalized": "шт",
+        "article": "MVA20-1-016-C",
+    }])
+    payload = _csv(
+        """
+Артикул;Наименование;Цена;Валюта
+MVA20-1-016-C;Автоматический выключатель ВА47-29 16А;1200;RUB
+"""
+    )
+    result = build_commercial_core(model, catalog_filename="unit-unknown.csv", catalog_content=payload)
+
+    assert result.matches[0].status == CatalogMatchStatus.UNCERTAIN
+    assert "catalog_unit_unknown" in result.matches[0].rationale
+    assert result.economics.known_catalog_cost is None
+    assert result.feasibility_status == CommercialFeasibilityStatus.NEEDS_REVIEW
