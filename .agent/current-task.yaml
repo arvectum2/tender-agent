@@ -1,41 +1,36 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-005-CASE15-FIX
-authority: AUTO
-goal: "Fix the generic public-EIS role conflation exposed by immutable blind case #52, where placement/authorized organization was promoted to customer_name despite explicit contracting-customer evidence."
+task_id: WATCHDOG-CONTINUITY-001
+authority: OWNER
+goal: "Reconcile canonical roadmap state after DOCUMENT-QA-005 acceptance/follow-up drift and make the hourly Tender Agent Watchdog work-conserving, exact-hour and non-idling."
 definition_of_done:
-  - "Preserve case #52 first-blind run toa-run-20260915044859-130098, frozen truth, comparator and normalizer unchanged; never rerun case #52 as blind."
-  - "Remove generic placement-organization -> customer_name conflation in public 44-FZ detail parsing/handoff; fail closed when no explicit customer evidence exists."
-  - "Add synthetic provider/handoff tests for distinct organizer/customer, explicit customer, and missing-customer cases with no case-specific literals in product code."
-  - "Run Ruff, focused and broader customer/document-QA suites, git diff checks, make check, and exposed case-#52 regression on unchanged official bytes."
-  - "Commit/push/open PR for #53 and merge automatically only after exact-head CI is green."
-  - "After merge, select a fresh independent held-out procurement and run one freeze-before-SUT strict customer_name acceptance for #16."
+  - "Reconcile DOCUMENT-QA-005 as completed from issue #16 accepted closure; preserve post-closure #52/#53 regression evidence without reopening the accepted gate."
+  - "Record PR #54/#53 follow-up as completed regression hardening and prevent an unbounded repeat-blind loop after an already satisfied done gate."
+  - "Update master roadmap and execution queue so REUSE-FIRST-001 is the next active AUTO workstream, BUILD-DOCKER-CONTEXT-001 remains independently executable, and REVIEW/HUMAN gates remain unchanged."
+  - "Update the single Tender Agent Watchdog to an exact hourly cadence and a bounded work-conserving run protocol: reconcile done gates first, never idle waiting for CI, checkpoint waits, and continue independent AUTO work when safe."
+  - "Verify watchdog schedule/prompt and repository canonical files, then release manual_override and leave a precise resume instruction."
 completed:
-  - "Fresh blind case #52 / registry 0865200000326001152 is immutable FAIL at runtime ff10a999285586bf69fdc68a2d9089534bf93b76; #52 is regression-only."
-  - "Generic diagnosis recorded in #53: both search-card and detail parsers conflated placement/authorized organization with contracting customer, while handoff trusted the search seed ahead of common-info."
-  - "Added synthetic regressions proving organizer-vs-customer separation, no-customer fail-closed behavior, and page customer precedence over stale search-card placement organization."
-  - "Implemented explicit customer parsing from EIS customer surfaces, removed placement/general organization customer fallbacks, and made common-info customer precedence authoritative in handoff."
-  - "Reused the source-controlled EIS TLS opener for common-info context; this fixed the previous certificate-failure path that silently returned empty page context."
-  - "Exposed #52 unchanged common-info parser regression PASS: exact full Tomsk dispensary legal name."
-  - "Exposed #52 real search-to-intake regression PASS on new non-blind run toa-run-20260915051731-7c6fe7: exact contracting customer, 4 official files, analysis_mode=not_started."
-  - "Focused provider/handoff suite: 47 passed. Broader customer/document-QA suite: 161 passed, 11 warnings. Product-file Ruff F/E9 PASS; git diff --check PASS; make check PASS."
-current: "Commit and push the generic #53 fix, open PR, then require exact-head green CI before merge."
+  - "Owner requested canonical roadmap/watchdog refresh and more aggressive continuous execution on 2026-09-15."
+  - "Verified issue #16 is closed completed since 2026-09-15T01:39:24Z after an unbiased strict customer_name TRUE_POSITIVE acceptance."
+  - "Verified later case #52 is a post-closure exposed regression, issue #53 tracks the generic EIS placement-organization/customer conflation, and PR #54 merged the generic fix at 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9 after exact-head CI success."
+current: "Reconcile issue/roadmap/queue state, update the hourly watchdog cadence and run protocol, then activate REUSE-FIRST-001 as the next canonical current task."
 pending:
-  - "Commit/push product code, tests and canonical checkpoint; open PR linked to #53."
-  - "Wait for exact-head CI; fix only genuine failures; merge automatically when green."
-  - "Update #53/#16 and canonical checkpoint with merge commit and verification."
-  - "Select a fresh independent post-merge procurement and run one freeze-before-SUT strict customer_name acceptance for #16."
-last_verified_commit: "ff10a999285586bf69fdc68a2d9089534bf93b76"
+  - "Close/correct #53 as completed post-acceptance regression hardening; do not restart #16 acceptance loop."
+  - "Update docs/roadmap/master-roadmap.yaml and MASTER_ROADMAP.md with continuous-execution directive and current program states."
+  - "Update .agent/execution-queue.yaml: DOCUMENT-QA-005 done; REUSE-FIRST-001 next active; preserve BUILD and REVIEW gates."
+  - "Update and verify Tender Agent Watchdog exact hourly schedule plus non-idling/work-conserving prompt."
+  - "Finalize checkpoint, release manual_override, and hand off to REUSE-FIRST-001."
+last_verified_commit: "1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9"
 test_results:
-  - "Case #52 immutable source bundle 64579deecbe4b8d53b78cc4121531e94741c7412a51aa21b2edf3567bb01c678; label set adcf5f75154bcb79deffd5f7229b3cb4aa4b4bab2aa7d7b5edc5468adefb1d23."
-  - "Case #52 Phase-B ZIP 320abbf603710c30c479a91d0b8f105e04ca9aecefc66e4c104d4e4b543241ba; normalized 0f9d7db031d5d4056a67fc6203f167a43468dbc4581b7020ef4eadeba79722ea; audit 4747a0e58c186ddd0804f03f66aa6c5bb0157687e5af43ce3c55b6126ee3631f."
-  - "2026-09-15: focused 47/47 PASS; broader 161/161 PASS; Ruff F/E9 PASS; git diff --check PASS; make check PASS; exposed real handoff regression PASS."
-updated_at: "2026-09-15T05:18:43Z"
-resume_instruction: "Use Mac-mini-master.local and /Users/master/tender-agent-dqa005-case15-followup. Do not rerun #52 as blind. Commit/push current generic #53 fix, open PR, verify exact-head CI and merge only when green; then start a fresh independent post-merge blind customer-role acceptance for #16."
+  - "PR #54 exact-head CI run 34932286281 completed success; merge commit 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9."
+  - "Issue #16 state=closed/completed; issue #52 state=closed/completed; issue #53 still open and needs canonical cleanup."
+updated_at: "2026-09-15T05:35:00Z"
+resume_instruction: "Owner maintenance in progress. Do not resume roadmap execution while manual_override=true. Finish canonical reconciliation and watchdog update, then set current-task to REUSE-FIRST-001 with manual_override=false."
 execution:
-  claimed_by: chatgpt
-  execution_id: dqa005-case15-fix
-  branch: document-qa-005-case15-public-customer
-  base_commit: ff10a999285586bf69fdc68a2d9089534bf93b76
-  manual_override: false
+  claimed_by: "chatgpt-owner-session"
+  execution_id: "WATCHDOG-CONTINUITY-001-20260915"
+  branch: null
+  base_commit: "1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9"
+  lease_until: null
+  manual_override: true
