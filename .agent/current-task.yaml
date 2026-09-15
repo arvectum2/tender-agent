@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: completed
 task_id: COMMERCIAL-CORE-V1-001
 authority: REVIEW
 goal: 'Deliver the first executable Commercial Core slice: customer price-list/catalog ingest -> normalized catalog -> tender-to-catalog
@@ -52,24 +52,24 @@ completed:
   failure; no R9 code changed.'
 - 'PR #63 exact head 07ba3458ee7ee132e2b7db50a1e7322e834a930a is mergeable and exact-head GitHub CI run 34983170537 completed
   SUCCESS with all 9 jobs green, including quality/make test.'
-current: 'Implementation and exact-head CI are complete. Blocked at the required Product Owner review gate for PR #63; no
-  further code change or merge is authorized.'
-pending:
-- 'Product Owner review and explicit merge approval for PR #63.'
-last_verified_commit: 07ba3458ee7ee132e2b7db50a1e7322e834a930a
+- 'Product Owner explicitly approved PR #63 merge on 2026-09-15; main was synced into the branch, exact-head CI rerun 34990327143
+  passed 9/9, and PR #63 was guarded squash-merged as 4257cd23d68d4ad69ebbedf075195f34969bace1.'
+current: 'COMMERCIAL-CORE-V1-001 completed and merged to main as 4257cd23d68d4ad69ebbedf075195f34969bace1; issue #62 closed
+  completed.'
+pending: []
+last_verified_commit: 4257cd23d68d4ad69ebbedf075195f34969bace1
 test_results:
 - 'Commercial Core focused/regression/API integration after hardening: 14 passed.'
 - 'Broader relevant commercial/decision/report suite after hardening: 47 passed.'
 - Python 3.11 py_compile PASS; changed-scope Ruff PASS; make check PASS; git diff --check PASS.
 - 'Final local full pytest: 2972 passed, 241 skipped, 1 known environment-only R9 pg_restore failure on macOS.'
 - 'Exact-head GitHub CI run 34983170537: SUCCESS, 9/9 jobs green; quality/make test PASS.'
-updated_at: '2026-09-15T14:46:00Z'
-resume_instruction: 'COMMERCIAL-CORE-V1-001 is blocked for Product Owner review on PR #63. Do not tune, expand or merge. If
-  the Product Owner explicitly approves merge, re-fetch PR #63, confirm expected head 07ba3458ee7ee132e2b7db50a1e7322e834a930a
-  or sync current main checkpoint-only advances into the branch and rerun exact-head CI if the head changes, then perform
-  a guarded expected-head merge, verify issue #62 closes completed, and update task/queue checkpoints to completed. If review
-  requests changes, implement only the bounded requested changes and rerun exact-head CI. Preserve HUMAN control over all
-  external procurement/commercial actions.'
+- 'Post-sync exact-head GitHub CI run 34990327143 on eeb08ad1bc0b8a0b4d462294bc2c0838a4a67564: SUCCESS, 9/9 jobs green; quality/make
+  test PASS.'
+updated_at: '2026-09-15T15:53:00Z'
+resume_instruction: COMMERCIAL-CORE-V1-001 is completed. Preserve the merged Commercial Core v1 fail-closed semantics and
+  HUMAN control boundaries. Do not reopen or expand this task unless a concrete regression or explicit Product Owner directive
+  creates a new scoped item.
 execution:
   claimed_by: 'explicit Product Owner directive 2026-09-15: делай; continuation reaffirmed 2026-09-15'
   execution_id: commercial-core-v1-001-20260915
@@ -80,5 +80,8 @@ execution:
   issue: 62
   pull_request: 63
   manual_override: true
-  final_head: 07ba3458ee7ee132e2b7db50a1e7322e834a930a
-  ci_run: 34983170537
+  final_head: eeb08ad1bc0b8a0b4d462294bc2c0838a4a67564
+  ci_run: 34990327143
+  merge_commit: 4257cd23d68d4ad69ebbedf075195f34969bace1
+  issue_closed_completed: true
+  owner_merge_approval: '2026-09-15'

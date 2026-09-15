@@ -1,8 +1,3 @@
-# Filtered executable projection of docs/roadmap/master-roadmap.yaml.
-# This file is intentionally narrower than the full product roadmap.
-# Presence in the master roadmap does not grant execution authority or queue admission.
-# The executor may update allowed execution status/evidence only; it must not silently
-# create priorities, resolve roadmap ID conflicts, infer ARV mappings, or change gates.
 version: 3
 repository: arvectum2/tender-agent
 updated_at: '2026-09-15'
@@ -27,7 +22,7 @@ executor_runtime:
   passive_waiting_for_ci_or_future_state: false
   continue_independent_auto_work_while_primary_waits: true
   repeat_acceptance_after_done_gate: false
-  note: 'Utilization only; no authority/gate expansion.'
+  note: Utilization only; no authority/gate expansion.
 items:
 - order: 5
   task_id: REUSE-FIRST-001
@@ -39,21 +34,27 @@ items:
   source: 'Owner directive 2026-09-14; docs/roadmap reuse-first strategy overlay; completed PR #56'
   strategy: COPY_PATTERN
   dependencies: []
-  executor_scope: 'Completed. Preserve the merged reverse-spec/reuse registry; do not reopen without a concrete regression or Owner-directed refresh.'
-  done_gate: 'Satisfied by merged strategy packet in PR #56: competitor-pattern matrix and reuse registry exist; active P0/P1 work is classified; INVENT boundaries are justified; duplicate commodity builds are de-scoped.'
+  executor_scope: Completed. Preserve the merged reverse-spec/reuse registry; do not reopen without a concrete regression
+    or Owner-directed refresh.
+  done_gate: 'Satisfied by merged strategy packet in PR #56: competitor-pattern matrix and reuse registry exist; active P0/P1
+    work is classified; INVENT boundaries are justified; duplicate commodity builds are de-scoped.'
 - order: 10
   task_id: DOCUMENT-QA-005
   strategy: INVENT
-  invent_justification: 'Procurement-specific source-bound identity/role resolution directly protects evidence integrity and decision quality.'
+  invent_justification: Procurement-specific source-bound identity/role resolution directly protects evidence integrity and
+    decision quality.
   title: Source-bound customer role and identity extraction
   status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16 closed completed; post-acceptance #52/#53 fixed by PR #54'
+  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16 closed completed; post-acceptance #52/#53 fixed by PR
+    #54'
   dependencies: []
-  executor_scope: 'Completed. Preserve exposed blind/regression artifacts; do not reopen or start another acceptance loop without an explicit new queue item or Owner directive.'
-  done_gate: 'Satisfied: issue #16 closed completed after unbiased strict customer_name acceptance; post-acceptance #52/#53 regression hardening merged in PR #54.'
+  executor_scope: Completed. Preserve exposed blind/regression artifacts; do not reopen or start another acceptance loop without
+    an explicit new queue item or Owner directive.
+  done_gate: 'Satisfied: issue #16 closed completed after unbiased strict customer_name acceptance; post-acceptance #52/#53
+    regression hardening merged in PR #54.'
 - order: 20
   task_id: BUILD-DOCKER-CONTEXT-001
   strategy: ADAPT
@@ -64,12 +65,15 @@ items:
   auto_merge: true
   source: 'issue #19 closed completed; PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3'
   dependencies: []
-  executor_scope: 'Completed. Preserve the clean-checkout docker-build regression gate and explicit optional ARVECTUM_LANDING_PUBLIC_DIR boundary.'
-  done_gate: 'Satisfied: issue #19 closed; exact-head CI run 34953003147 passed; clean temporary checkout docker build and compose boundary acceptance passed.'
+  executor_scope: Completed. Preserve the clean-checkout docker-build regression gate and explicit optional ARVECTUM_LANDING_PUBLIC_DIR
+    boundary.
+  done_gate: 'Satisfied: issue #19 closed; exact-head CI run 34953003147 passed; clean temporary checkout docker build and
+    compose boundary acceptance passed.'
 - order: 30
   task_id: DISCOVERY-QA-001
   strategy: ADAPT
-  custom_boundary: 'Reuse standard retrieval/index components; custom tuning only after benchmark evidence identifies procurement-specific ranking gaps.'
+  custom_boundary: Reuse standard retrieval/index components; custom tuning only after benchmark evidence identifies procurement-specific
+    ranking gaps.
   title: Procurement search quality benchmark and relevance hardening
   status: done
   authority: REVIEW
@@ -78,13 +82,18 @@ items:
   source: 'issue #2 completed; Product Owner approved PR #59 merge 2026-09-15'
   dependencies:
   - BENCHMARK-PIPELINE-001
-  owner_gate_evidence: 'READY promotion recorded in issue #2 comment 5678641869; merge explicitly approved by Product Owner on 2026-09-15.'
-  done_gate: 'Satisfied: frozen 45-case benchmark, evidence-backed hardening, exact-head CI run 34964993833 SUCCESS 9/9, PR #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8, issue #2 closed completed.'
-  executor_scope: 'Completed. Preserve frozen benchmark artifacts as regression evidence; no further tuning without a concrete measured regression or Owner directive.'
+  owner_gate_evidence: 'READY promotion recorded in issue #2 comment 5678641869; merge explicitly approved by Product Owner
+    on 2026-09-15.'
+  done_gate: 'Satisfied: frozen 45-case benchmark, evidence-backed hardening, exact-head CI run 34964993833 SUCCESS 9/9, PR
+    #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8, issue #2 closed completed.'
+  executor_scope: Completed. Preserve frozen benchmark artifacts as regression evidence; no further tuning without a concrete
+    measured regression or Owner directive.
 - order: 35
   task_id: DECISION-CORE-V1-001
   strategy: INVENT
-  invent_justification: 'The narrow procurement-specific decision semantics are the documented product moat: evidence-bound canonical facts, hard blockers, GO/NO-GO/NEEDS REVIEW and readiness. Commodity retrieval/parsing/UI/rules infrastructure must be reused or adapted.'
+  invent_justification: 'The narrow procurement-specific decision semantics are the documented product moat: evidence-bound
+    canonical facts, hard blockers, GO/NO-GO/NEEDS REVIEW and readiness. Commodity retrieval/parsing/UI/rules infrastructure
+    must be reused or adapted.'
   title: Evidence-bound Decision Core v1 and application readiness
   status: done
   authority: REVIEW
@@ -98,15 +107,23 @@ items:
   - ARV-018
   - ARV-020
   owner_gate_evidence: 'Satisfied: Product Owner approved start on 2026-09-15 and explicitly approved merge of PR #61 on 2026-09-15.'
-  custom_boundary: 'Reuse existing search, document extraction, provenance/source graph, supplier profile, roles/UI and deterministic primitives. Invent only procurement-specific decision/readiness semantics and source-bound rules.'
-  executor_scope: 'Completed. Preserve source-bound fail-closed Decision Core semantics; do not widen external-action authority. No bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect without explicit HUMAN control.'
-  done_gate: 'Satisfied: versioned Decision Core contract; evidence-bound canonical facts/blockers/readiness; deterministic fail-closed GO/NO_GO/NEEDS_REVIEW; supplier-profile integration; existing product/API exposure; source-grounded regressions; local validation; exact-head CI run 34972199342 SUCCESS 9/9; PR #61 guarded squash-merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1; issue #60 closed completed.'
+  custom_boundary: Reuse existing search, document extraction, provenance/source graph, supplier profile, roles/UI and deterministic
+    primitives. Invent only procurement-specific decision/readiness semantics and source-bound rules.
+  executor_scope: Completed. Preserve source-bound fail-closed Decision Core semantics; do not widen external-action authority.
+    No bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect without explicit
+    HUMAN control.
+  done_gate: 'Satisfied: versioned Decision Core contract; evidence-bound canonical facts/blockers/readiness; deterministic
+    fail-closed GO/NO_GO/NEEDS_REVIEW; supplier-profile integration; existing product/API exposure; source-grounded regressions;
+    local validation; exact-head CI run 34972199342 SUCCESS 9/9; PR #61 guarded squash-merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1;
+    issue #60 closed completed.'
 - order: 37
   task_id: COMMERCIAL-CORE-V1-001
   strategy: INVENT
-  invent_justification: 'Procurement-specific nomenclature compatibility, tender-to-catalog matching classes and auditable commercial feasibility are Commercial Core moat; commodity XLSX/CSV parsing and generic economics infrastructure must be reused/adapted.'
+  invent_justification: Procurement-specific nomenclature compatibility, tender-to-catalog matching classes and auditable
+    commercial feasibility are Commercial Core moat; commodity XLSX/CSV parsing and generic economics infrastructure must
+    be reused/adapted.
   title: Price-list ingest, tender-to-catalog matching and auditable bid economics
-  status: blocked
+  status: done
   authority: REVIEW
   independent: true
   auto_merge: false
@@ -116,16 +133,23 @@ items:
   roadmap_scope:
   - ARV-016
   - ARV-017
-  owner_gate_evidence: 'Start authority satisfied 2026-09-15; merge authority not yet granted.'
-  custom_boundary: 'ARV-016 import plumbing is ADAPT/REUSE using openpyxl/CSV and existing import patterns. INVENT only nomenclature normalization, compatibility/match semantics, coverage and auditable commercial feasibility. Do not implicitly wire offline ARV-067 product catalog into production runtime.'
-  review_gate: 'Implementation, local validation and exact-head CI are complete. Product Owner review and explicit merge approval are required.'
-  review_gate_evidence: 'PR #63 exact head 07ba3458ee7ee132e2b7db50a1e7322e834a930a; CI run 34983170537 SUCCESS 9/9; local full pytest 2972 passed, 241 skipped, one known environment-only macOS/PostgreSQL R9 pg_restore failure.'
-  executor_scope: 'Blocked for Product Owner review. Do not tune/expand/merge. On explicit merge approval, re-fetch PR/head/CI; if main has advanced, sync checkpoint-only advances and rerun exact-head CI, then guarded merge. Preserve HUMAN control; no bid submission, RFQ/invitation sending, supplier contact, winner selection, signing, spend, purchase or other external commercial effect.'
-  done_gate: 'Implementation side satisfied: versioned Commercial Core contract; source-provenanced XLSX/CSV import; explicit match statuses; supported coverage/cost/headroom or Unknown; existing product/API exposure; regressions; exact-head CI green. Final completion awaits Product Owner-approved merge.'
+  owner_gate_evidence: 'Satisfied: Product Owner approved start and explicitly approved PR #63 merge on 2026-09-15.'
+  custom_boundary: ARV-016 import plumbing is ADAPT/REUSE using openpyxl/CSV and existing import patterns. INVENT only nomenclature
+    normalization, compatibility/match semantics, coverage and auditable commercial feasibility. Do not implicitly wire offline
+    ARV-067 product catalog into production runtime.
+  review_gate: 'Satisfied: PR #63 guarded-merged after post-sync exact-head CI success.'
+  review_gate_evidence: 'PR #63 synced head eeb08ad1bc0b8a0b4d462294bc2c0838a4a67564; CI run 34990327143 SUCCESS 9/9; guarded
+    squash merge 4257cd23d68d4ad69ebbedf075195f34969bace1; issue #62 closed completed.'
+  executor_scope: Completed. Preserve Commercial Core v1 source-provenanced fail-closed matching/economics and HUMAN control
+    boundaries; do not reopen without a concrete regression or explicit Product Owner directive.
+  done_gate: 'Satisfied: versioned Commercial Core contract; source-provenanced XLSX/CSV import; explicit match statuses;
+    supported coverage/cost/headroom or Unknown; product/API/report exposure; regression coverage; post-sync exact-head CI
+    run 34990327143 SUCCESS 9/9; PR #63 merged as 4257cd23d68d4ad69ebbedf075195f34969bace1; issue #62 closed completed.'
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
-  invent_justification: 'Only a measured reusable procurement-specific failure family may be promoted; generic capabilities must be reused/adapted.'
+  invent_justification: Only a measured reusable procurement-specific failure family may be promoted; generic capabilities
+    must be reused/adapted.
   title: Next measured document-QA failure family
   status: deferred
   authority: REVIEW
