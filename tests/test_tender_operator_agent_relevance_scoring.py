@@ -2,7 +2,6 @@ import pytest
 
 from src.modules.tender_operator_agent_demo.relevance_scoring import (
     RelevanceRecommendation,
-    RelevanceScoreResult,
     RelevanceStatus,
     score_procurement_card,
     score_procurement_document_text,
@@ -27,10 +26,10 @@ class TestScoreProcurementCard:
         assert result.status == RelevanceStatus.NOT_RECOMMENDED
         assert result.recommendation == RelevanceRecommendation.MANUAL_REVIEW_REQUIRED
 
-    def test_empty_profile_returns_low_score(self, empty_profile):
+    def test_empty_profile_returns_not_recommended(self, empty_profile):
         result = score_procurement_card(title="Поставка оборудования", profile=empty_profile)
-        assert result.score <= 25
-        assert result.status == RelevanceStatus.LOW
+        assert result.score == 0
+        assert result.status == RelevanceStatus.NOT_RECOMMENDED
 
     def test_highly_relevant_card(self, demo_profile):
         result = score_procurement_card(
@@ -72,7 +71,7 @@ class TestScoreProcurementCard:
 
     def test_price_none(self, demo_profile):
         result = score_procurement_card(
-            title="Поставка оборудования",
+            title="Поставка электротехнического оборудования",
             initial_price=None,
             profile=demo_profile,
         )
@@ -100,7 +99,7 @@ class TestScoreProcurementCard:
 
     def test_score_ranges_low(self, demo_profile):
         result = score_procurement_card(
-            title="Поставка автомобильных шин",
+            title="Электромонтажные работы строительного характера",
             initial_price=100_000_000.0,
             profile=demo_profile,
         )
@@ -115,6 +114,49 @@ class TestScoreProcurementCard:
         assert result.score < 20
         assert result.status == RelevanceStatus.NOT_RECOMMENDED
         assert result.recommendation == RelevanceRecommendation.DO_NOT_PARTICIPATE
+
+    def test_unrelated_in_range_card_gets_no_neutral_relevance_boost(self, demo_profile):
+        irrelevant = score_procurement_card(
+            title="Оказание услуг по диагностике и ремонту автотранспорта",
+            initial_price=1_000_000.0,
+            submission_deadline="2026-10-01",
+            profile=demo_profile,
+        )
+        relevant = score_procurement_card(
+            title="Оказание услуг по техническому обслуживанию электротехнического оборудования",
+            initial_price=50_000.0,
+            submission_deadline="2026-10-01",
+            profile=demo_profile,
+        )
+
+        assert irrelevant.score == 0
+        assert irrelevant.breakdown["price_range"] == 0
+        assert irrelevant.breakdown["risk"] == 0
+        assert relevant.score > irrelevant.score
+
+    def test_automation_does_not_match_automated_information_system(self, demo_profile):
+        result = score_procurement_card(
+            title="Модернизация автоматизированной информационной системы управления имуществом",
+            initial_price=5_000_000.0,
+            submission_deadline="2026-10-01",
+            profile=demo_profile,
+        )
+
+        assert result.breakdown["keywords"] == 0
+        assert result.score == 0
+
+    def test_russian_inflections_still_match_profile_terms(self, demo_profile):
+        electrical = score_procurement_card(
+            title="Обслуживание электротехническим персоналом электрооборудования",
+            profile=demo_profile,
+        )
+        commissioning = score_procurement_card(
+            title="Монтаж оборудования и пусконаладочные работы",
+            profile=demo_profile,
+        )
+
+        assert electrical.breakdown["keywords"] > 0
+        assert commissioning.breakdown["keywords"] > 0
 
     def test_to_dict_contains_all_keys(self, demo_profile):
         result = score_procurement_card(

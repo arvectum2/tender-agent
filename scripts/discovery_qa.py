@@ -58,6 +58,7 @@ from src.tender_research.providers.public_44fz_search import (
 
 CORPUS_VERSION = "1"
 DEFAULT_CANDIDATES_PER_QUERY = 15
+EIS_SEARCH_PAGE_SIZE = 10
 ALLOWED_LABELS = {"RELEVANT", "PARTIALLY_RELEVANT", "IRRELEVANT", "UNCLEAR"}
 
 
@@ -253,7 +254,11 @@ def acquire(args: argparse.Namespace) -> None:
             date_from=date_from,
             date_to=date_to,
             max_pages=args.max_pages,
-            page_size=max(candidates_per_query, 15),
+            # The current public EIS HTML endpoint emits 10 cards per physical page
+            # even when a larger recordsPerPage is requested.  Asking the provider
+            # for 10 keeps its has_next heuristic aligned with the source and lets
+            # source-only acquisition walk enough pages to fill a 15+ case cohort.
+            page_size=EIS_SEARCH_PAGE_SIZE,
             law_type="44fz",
         )
         candidates: list[Any] = []
