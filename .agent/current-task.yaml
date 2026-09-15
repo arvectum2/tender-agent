@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: DECISION-CORE-V1-001
 authority: REVIEW
 goal: "Deliver the first product Decision Core slice: source-bound canonical procurement facts and blockers feeding deterministic GO / NO-GO / NEEDS REVIEW plus application-readiness gaps and a human-controlled next action."
@@ -17,33 +17,37 @@ completed:
   - "DISCOVERY-QA-001 completed: PR #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8; issue #2 closed completed."
   - "Product Owner explicitly approved starting Decision Core v1 on 2026-09-15."
   - "Canonical issue #60 created with reuse-first boundary, Definition of Done and REVIEW merge gate."
-  - "Execution queue admits DECISION-CORE-V1-001 as READY / REVIEW / auto_merge=false with roadmap scope ARV-018 + ARV-020."
-  - "Isolated branch agent/decision-core-v1-001 created from main commit 1b8fdf6ad686ce88124d7ef4a7ac7c9847051093."
-  - "Inventory confirmed reusable foundations: canonical report/evidence map, supplier profile, existing submission-readiness flow, report/API/customer projection and deterministic rule primitives."
-  - "Minimal custom Decision Core v1 implemented in bdc1bef49e529f08a7f330bef01ab52647aa0fbf: source-bound hard blockers, fail-closed GO/NO_GO/NEEDS_REVIEW, readiness states, supplier-profile price-range review, contradiction/risk handling and explicit no-external-action safety contract."
-  - "Decision Core is wired into canonical report generation, sanitized customer projection, persisted report JSON and existing customer HTML surface; legacy bid_decision remains as a compatibility projection."
-  - "Regression tests cover grounded GO, source-bound expired-deadline NO_GO, unsupported hard facts failing to review, source-grounded risk review, missing contract/profile, supplier price mismatch, contradictions and customer evidence sanitization."
-current: "Run broader/full regression validation on branch head bdc1bef, then reconcile any failures, open a review-ready PR and verify exact-head CI."
+  - "Execution queue admitted DECISION-CORE-V1-001 as READY / REVIEW / auto_merge=false with roadmap scope ARV-018 + ARV-020."
+  - "Reuse inventory confirmed canonical report/evidence map, supplier profile, existing submission-readiness flow, report/API/customer projection and deterministic rule primitives."
+  - "Implementation commit bdc1bef49e529f08a7f330bef01ab52647aa0fbf added source-bound hard blockers, fail-closed GO/NO_GO/NEEDS_REVIEW, readiness states, supplier-profile price-range review, contradiction/risk handling and explicit no-external-action safety contract."
+  - "Follow-up commit 38af3f344d6a755770c041945ce6468db0773ee1 exposes source-bound canonical facts with KNOWN/UNKNOWN state and evidence/excerpt binding."
+  - "Decision Core is wired into canonical report generation, sanitized customer projection, persisted report JSON and existing customer HTML surface; legacy bid_decision remains a compatibility projection."
+  - "Regression coverage includes grounded GO, source-bound expired-deadline NO_GO, unsupported hard facts failing to review, source-grounded risk review, missing contract/profile, supplier price mismatch, contradictions and customer evidence sanitization."
+  - "Local validation on final head: focused Decision Core 10 passed; combined relevant product/integration/canonical-producer set 79 passed, 7 skipped; make check PASS; git diff --check PASS."
+  - "Local full suite: 2958 passed, 241 skipped, 1 failed; sole failure is the known macOS/PostgreSQL R9 backup/restore pg_restore environment failure, unrelated to Decision Core."
+  - "Review-ready PR #61 opened at exact head 38af3f344d6a755770c041945ce6468db0773ee1."
+  - "Exact-head GitHub CI run 34972199342 completed SUCCESS: all 9 jobs green including quality/make test, security, docker-build, migrations, Redis, R8 integration and P6.03 bridge."
+current: "Engineering Definition of Done is satisfied; blocked only on Product Owner review/merge of PR #61."
 pending:
-  - "Finish full pytest regression run and fix only task-caused failures; record unrelated environment-only failures separately."
-  - "Run final changed-scope lint/checks after any fixes."
-  - "Open review-ready PR for issue #60 and verify exact-head GitHub CI."
-  - "Set checkpoint blocked/review with exact PR/head/CI evidence; do not merge automatically."
-last_verified_commit: "bdc1bef49e529f08a7f330bef01ab52647aa0fbf"
+  - "Product Owner review and explicit merge approval for PR #61."
+  - "After approval, re-check exact PR head/CI/mergeability, perform guarded merge, close issue #60 completed, and mark canonical checkpoint/queue completed."
+last_verified_commit: "38af3f344d6a755770c041945ce6468db0773ee1"
 test_results:
-  - "Decision Core focused tests: 10 passed; changed-scope Ruff for decision_core/report_model/tests PASS."
-  - "Relevant product/integration set: 63 passed, 7 skipped (demo/report/upload/submission-readiness/commercial-bid-readiness)."
-  - "Canonical producer/commercial prebid set: 16 passed."
-  - "make check: PASS."
-  - "Full pytest currently running on Mac worktree; final result pending."
-updated_at: "2026-09-15T12:52:31Z"
-resume_instruction: "Resume DECISION-CORE-V1-001 on agent/decision-core-v1-001 at bdc1bef49e529f08a7f330bef01ab52647aa0fbf. First inspect the already-running/full pytest result. Fix only regressions caused by Decision Core changes. Re-run focused/relevant tests and make check, then push any fix commit, open a review-ready PR for issue #60, verify exact-head CI and checkpoint blocked for Product Owner review. Do not merge automatically; no external procurement/commercial action."
+  - "Decision Core focused tests: 10 passed; changed-scope Ruff PASS."
+  - "Combined relevant product/integration/canonical-producer tests: 79 passed, 7 skipped."
+  - "make check: PASS; git diff --check: PASS."
+  - "Local full pytest: 2958 passed, 241 skipped, 1 known environment-only R9 pg_restore failure on macOS."
+  - "Exact-head GitHub CI run 34972199342: SUCCESS, 9/9 jobs green; quality/make test PASS."
+updated_at: "2026-09-15T13:07:00Z"
+resume_instruction: "DECISION-CORE-V1-001 is at Product Owner review gate in PR #61. Do not change or merge automatically. On explicit Owner approval, fetch PR #61 and verify head is still 38af3f344d6a755770c041945ce6468db0773ee1 (or revalidate any new head), verify exact-head CI and mergeability, guarded-merge only with the approved head, close issue #60 completed, update execution queue to done and set this checkpoint completed. No external procurement/commercial action."
 execution:
   claimed_by: "explicit Product Owner directive 2026-09-15"
   execution_id: "decision-core-v1-001-20260915"
   branch: "agent/decision-core-v1-001"
   base_commit: "1b8fdf6ad686ce88124d7ef4a7ac7c9847051093"
   implementation_commit: "bdc1bef49e529f08a7f330bef01ab52647aa0fbf"
+  final_head: "38af3f344d6a755770c041945ce6468db0773ee1"
   issue: 60
-  pull_request: null
+  pull_request: 61
+  ci_run: 34972199342
   manual_override: true
