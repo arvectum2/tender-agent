@@ -18,23 +18,32 @@ completed:
   - "Product Owner explicitly approved starting Decision Core v1 on 2026-09-15."
   - "Canonical issue #60 created with reuse-first boundary, Definition of Done and REVIEW merge gate."
   - "Execution queue admits DECISION-CORE-V1-001 as READY / REVIEW / auto_merge=false with roadmap scope ARV-018 + ARV-020."
-current: "Inventory existing decision/readiness/report/API primitives and source-evidence contracts; identify the shortest reuse/adapt path before adding procurement-specific Decision Core code."
+  - "Isolated branch agent/decision-core-v1-001 created from main commit 1b8fdf6ad686ce88124d7ef4a7ac7c9847051093."
+  - "Inventory confirmed reusable foundations: canonical report/evidence map, supplier profile, existing submission-readiness flow, report/API/customer projection and deterministic rule primitives."
+  - "Minimal custom Decision Core v1 implemented in bdc1bef49e529f08a7f330bef01ab52647aa0fbf: source-bound hard blockers, fail-closed GO/NO_GO/NEEDS_REVIEW, readiness states, supplier-profile price-range review, contradiction/risk handling and explicit no-external-action safety contract."
+  - "Decision Core is wired into canonical report generation, sanitized customer projection, persisted report JSON and existing customer HTML surface; legacy bid_decision remains as a compatibility projection."
+  - "Regression tests cover grounded GO, source-bound expired-deadline NO_GO, unsupported hard facts failing to review, source-grounded risk review, missing contract/profile, supplier price mismatch, contradictions and customer evidence sanitization."
+current: "Run broader/full regression validation on branch head bdc1bef, then reconcile any failures, open a review-ready PR and verify exact-head CI."
 pending:
-  - "Create isolated branch from the latest main checkpoint state."
-  - "Inventory existing analysis/report/readiness/decision models, evidence/provenance contracts, supplier profile and current API/UI exposure."
-  - "Write the minimal versioned Decision Core contract and fail-closed deterministic semantics using existing primitives."
-  - "Integrate with existing product/API path and add source-grounded regressions."
-  - "Run tests/CI, open review-ready PR, then stop for Product Owner review."
-last_verified_commit: "eea3add4492f9d933453e274181a675998c60b76"
+  - "Finish full pytest regression run and fix only task-caused failures; record unrelated environment-only failures separately."
+  - "Run final changed-scope lint/checks after any fixes."
+  - "Open review-ready PR for issue #60 and verify exact-head GitHub CI."
+  - "Set checkpoint blocked/review with exact PR/head/CI evidence; do not merge automatically."
+last_verified_commit: "bdc1bef49e529f08a7f330bef01ab52647aa0fbf"
 test_results:
-  - "No DECISION-CORE-V1-001 implementation tests yet; task just admitted after Owner directive."
-updated_at: "2026-09-15T12:22:00Z"
-resume_instruction: "Resume DECISION-CORE-V1-001 from canonical main. First create/verify branch agent/decision-core-v1-001, then inventory existing decision/report/readiness/evidence/supplier-profile/API code. Reuse existing primitives and document the gap before custom code. Implement only procurement-specific evidence-bound decision/readiness semantics; fail closed on missing/contradictory evidence. No external procurement/commercial action. Authority is REVIEW: prepare PR/evidence but do not merge automatically."
+  - "Decision Core focused tests: 10 passed; changed-scope Ruff for decision_core/report_model/tests PASS."
+  - "Relevant product/integration set: 63 passed, 7 skipped (demo/report/upload/submission-readiness/commercial-bid-readiness)."
+  - "Canonical producer/commercial prebid set: 16 passed."
+  - "make check: PASS."
+  - "Full pytest currently running on Mac worktree; final result pending."
+updated_at: "2026-09-15T12:52:31Z"
+resume_instruction: "Resume DECISION-CORE-V1-001 on agent/decision-core-v1-001 at bdc1bef49e529f08a7f330bef01ab52647aa0fbf. First inspect the already-running/full pytest result. Fix only regressions caused by Decision Core changes. Re-run focused/relevant tests and make check, then push any fix commit, open a review-ready PR for issue #60, verify exact-head CI and checkpoint blocked for Product Owner review. Do not merge automatically; no external procurement/commercial action."
 execution:
   claimed_by: "explicit Product Owner directive 2026-09-15"
   execution_id: "decision-core-v1-001-20260915"
   branch: "agent/decision-core-v1-001"
-  base_commit: null
+  base_commit: "1b8fdf6ad686ce88124d7ef4a7ac7c9847051093"
+  implementation_commit: "bdc1bef49e529f08a7f330bef01ab52647aa0fbf"
   issue: 60
   pull_request: null
   manual_override: true
