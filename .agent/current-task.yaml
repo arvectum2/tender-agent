@@ -1,53 +1,40 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
-task_id: DISCOVERY-QA-001
+status: in_progress
+task_id: DECISION-CORE-V1-001
 authority: REVIEW
-goal: "Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark."
+goal: "Deliver the first product Decision Core slice: source-bound canonical procurement facts and blockers feeding deterministic GO / NO-GO / NEEDS REVIEW plus application-readiness gaps and a human-controlled next action."
 definition_of_done:
-  - "Freeze an independently labelled 30–50-case 44-FZ discovery corpus before evaluating or tuning Tender Agent output."
-  - "Record the issue-defined baseline metrics: Precision@5, Precision@10, Recall@K, nDCG@K/equivalent, top-K false-positive rate, missed-relevant rate, duplicate rate, supported status/deadline correctness, and explainability coverage."
-  - "Identify concrete measured failure classes from the frozen baseline before changing search behaviour."
-  - "Apply only bounded hardening justified by measured failure classes; LLM reranking is not the first move."
-  - "Re-run the same frozen benchmark without modifying truth/comparator/normalizer after seeing SUT output, and prepare review-ready evidence/PR."
-  - "Do not merge automatically: queue authority remains REVIEW and auto_merge=false."
+  - "Define a versioned Decision Core contract for canonical facts, evidence links, blockers, unknowns/confidence, decision and readiness gaps."
+  - "Every substantive blocker/decision claim is traceable to source evidence (document/source -> locator/page/fragment -> conclusion) or explicitly Unknown."
+  - "Implement deterministic fail-closed GO, NO_GO and NEEDS_REVIEW semantics; missing evidence never becomes a positive fact."
+  - "Integrate existing supplier-profile constraints where available without inventing absent commercial/catalog facts."
+  - "Provide application-readiness output distinguishing blocking, required, missing/unknown and satisfied items."
+  - "Expose the decision/readiness result through the existing product/API path without procurement submission/signing/external commercial effect."
+  - "Add regression tests using source-grounded existing fixtures/cases, including contradictory/missing evidence and at least one hard-blocker case."
+  - "Run focused/relevant integration tests and exact-head CI; prepare a review-ready PR and stop before merge for Product Owner review."
 completed:
-  - "BENCHMARK-PIPELINE-001 dependency is completed."
-  - "Product Owner promoted DISCOVERY-QA-001 to READY on 2026-09-15; issue #2 comment 5678641869 records the gate."
-  - "Inventory completed; existing benchmark contract/evidence machinery and production deterministic scorer are reused."
-  - "Independent local-model query selection completed before SUT; final source-feasible queries cover electrical equipment, commissioning works, and electrical services."
-  - "45 real public EIS 44-FZ query-candidate cases acquired for the fixed 2026-09-01..2026-09-15 window."
-  - "Independent local Qwen2.5-14B evaluator labelled source-only bundles blind to Tender Agent output; labels frozen before SUT."
-  - "Frozen label counts: RELEVANT 10, PARTIALLY_RELEVANT 16, IRRELEVANT 19, UNCLEAR 0; freeze SHA-256 8a4f0898428b829698c53ed4e95a5276e2c52ece1f1a0c22622bcc13723a422e."
-  - "Baseline recorded: P@5 0.7333, R@5 0.4597, nDCG@5 0.7305, FP@5 0.2667; P@10 0.5667, R@10 0.6355, nDCG@10 0.7596, FP@10 0.4333; missed-relevant@10 0.3645."
-  - "Measured failure classes identified before tuning: neutral/commercial boosts without semantic fit, dilution of a clear single capability match, and overbroad Russian prefix matching."
-  - "Bounded deterministic hardening committed as 32d5ce3336af3c3ff9e79625f2a813b312941579; no LLM reranker, vector DB, paid service, or new dependency added."
-  - "Exact same frozen corpus rerun at 32d5ce3 improved P@5 to 0.9333, R@5 to 0.5885, nDCG@5 to 0.7997, FP@5 to 0.0667; P@10 to 0.7000, R@10 to 0.8120, nDCG@10 to 0.8302, FP@10 to 0.3000; missed-relevant@10 to 0.1880."
-  - "Repo-owned review evidence release committed as d62b81bbd5f7fb606ee6069463416ab1a6fd424b."
-  - "Branch reconciled with current main without rewriting the frozen hardened runtime; exact PR head is 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be."
-  - "Review-ready PR #59 opened against main; issue #2 evidence report posted as comment 5679631340."
-  - "Exact-head GitHub CI run 34964993833 completed SUCCESS on 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be; all 9 jobs passed including quality/make test, security, docker-build, dependency-lock, migrations, redis, R8 and bridge jobs."
-current: "Blocked at the required Product Owner review gate for PR #59. No further code change or merge is authorized by the current REVIEW task state."
+  - "DISCOVERY-QA-001 completed: PR #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8; issue #2 closed completed."
+  - "Product Owner explicitly approved starting Decision Core v1 on 2026-09-15."
+  - "Canonical issue #60 created with reuse-first boundary, Definition of Done and REVIEW merge gate."
+  - "Execution queue admits DECISION-CORE-V1-001 as READY / REVIEW / auto_merge=false with roadmap scope ARV-018 + ARV-020."
+current: "Inventory existing decision/readiness/report/API primitives and source-evidence contracts; identify the shortest reuse/adapt path before adding procurement-specific Decision Core code."
 pending:
-  - "Product Owner reviews PR #59 and explicitly approves or requests changes."
-  - "If explicitly approved for merge, re-fetch PR #59, verify its head is still 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be (or re-run exact-head CI if changed), merge with guarded expected-head SHA, verify issue #2 closure, then mark task/queue completed."
-last_verified_commit: "1dc243d57f686fcc9fec92e4b355fe2ef98aa4be"
+  - "Create isolated branch from the latest main checkpoint state."
+  - "Inventory existing analysis/report/readiness/decision models, evidence/provenance contracts, supplier profile and current API/UI exposure."
+  - "Write the minimal versioned Decision Core contract and fail-closed deterministic semantics using existing primitives."
+  - "Integrate with existing product/API path and add source-grounded regressions."
+  - "Run tests/CI, open review-ready PR, then stop for Product Owner review."
+last_verified_commit: "eea3add4492f9d933453e274181a675998c60b76"
 test_results:
-  - "Focused relevance/discovery tests: 27 passed; Ruff changed-scope PASS."
-  - "Benchmark evidence SHA256SUMS: PASS for query plan, supplier profile, corpus manifest, freeze, source-only evaluator ZIP, blind labels, baseline and hardened SUT/comparison artifacts."
-  - "make check: PASS."
-  - "Local full pytest: 2948 passed, 241 skipped, 1 failed; sole failure is the known Mac/PostgreSQL R9 pg_restore environment mismatch and no R9 code changed."
-  - "GitHub exact-head CI run 34964993833: SUCCESS; all 9 jobs passed, including authoritative Ubuntu quality/make test."
-updated_at: "2026-09-15T11:56:00Z"
-resume_instruction: "DISCOVERY-QA-001 is implementation-complete and blocked on Product Owner review of PR #59. Do not continue tuning, expand the corpus, or merge. If the Owner explicitly approves merge, re-fetch PR #59 and exact-head CI; if unchanged and green, merge with expected_head_sha, verify issue #2 is closed completed, update execution queue and both checkpoints to completed. If changes are requested, resume only those bounded review changes."
+  - "No DECISION-CORE-V1-001 implementation tests yet; task just admitted after Owner directive."
+updated_at: "2026-09-15T12:22:00Z"
+resume_instruction: "Resume DECISION-CORE-V1-001 from canonical main. First create/verify branch agent/decision-core-v1-001, then inventory existing decision/report/readiness/evidence/supplier-profile/API code. Reuse existing primitives and document the gap before custom code. Implement only procurement-specific evidence-bound decision/readiness semantics; fail closed on missing/contradictory evidence. No external procurement/commercial action. Authority is REVIEW: prepare PR/evidence but do not merge automatically."
 execution:
-  claimed_by: "manual Owner-requested roadmap continuation"
-  execution_id: "discovery-qa-001-20260915"
-  branch: "agent/discovery-qa-001"
-  base_commit: "ae7c5d0e5c2ea905a13def47e972111afde013af"
-  hardened_runtime_commit: "32d5ce3336af3c3ff9e79625f2a813b312941579"
-  evidence_commit: "d62b81bbd5f7fb606ee6069463416ab1a6fd424b"
-  pull_request: 59
-  pull_request_head: "1dc243d57f686fcc9fec92e4b355fe2ef98aa4be"
-  ci_run: 34964993833
+  claimed_by: "explicit Product Owner directive 2026-09-15"
+  execution_id: "decision-core-v1-001-20260915"
+  branch: "agent/decision-core-v1-001"
+  base_commit: null
+  issue: 60
+  pull_request: null
   manual_override: true
