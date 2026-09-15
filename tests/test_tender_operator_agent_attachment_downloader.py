@@ -357,3 +357,26 @@ def test_default_transport_fails_closed_on_certificate_error(monkeypatch):
         attachment_downloader,
         "_download_with_unverified_context",
     )
+
+
+
+def test_attachment_downloader_preserves_revision_provenance_in_manifest(tmp_path: Path):
+    attachment = _attachment("notice.pdf", "https://zakupki.gov.ru/docs/notice.pdf")
+    attachment.provenance = {
+        "revision": 2,
+        "publication_timestamp": "15.09.2026 11:00 (МСК)",
+        "active": True,
+        "state": "active",
+        "source_url": "https://zakupki.gov.ru/revision/2",
+    }
+
+    result = download_procurement_attachments(
+        [attachment],
+        target_dir=tmp_path,
+        max_attachments=5,
+        max_file_size_bytes=1024,
+        max_total_size_bytes=1024,
+        transport=lambda _url, _limit: (b"pdf", "application/pdf"),
+    )
+
+    assert result.saved[0].provenance == attachment.provenance

@@ -237,6 +237,7 @@ class ProcurementAttachmentManifestItem(APIModel):
     content_type: str | None = None
     size_bytes: int | None = Field(default=None, ge=0)
     error: str | None = None
+    provenance: dict[str, Any] | None = None
 
 
 class ProcurementRunResponse(APIModel):
