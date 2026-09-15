@@ -86,7 +86,7 @@ items:
   strategy: INVENT
   invent_justification: 'The narrow procurement-specific decision semantics are the documented product moat: evidence-bound canonical facts, hard blockers, GO/NO-GO/NEEDS REVIEW and readiness. Commodity retrieval/parsing/UI/rules infrastructure must be reused or adapted.'
   title: Evidence-bound Decision Core v1 and application readiness
-  status: ready
+  status: blocked_review
   authority: REVIEW
   independent: true
   auto_merge: false
@@ -99,8 +99,8 @@ items:
   - ARV-020
   owner_gate_evidence: 'Satisfied 2026-09-15: Product Owner approved starting Decision Core v1 immediately after approving merge of PR #59.'
   custom_boundary: 'Reuse existing search, document extraction, provenance/source graph, supplier profile, roles/UI and deterministic primitives. Invent only procurement-specific decision/readiness semantics and source-bound rules.'
-  executor_scope: 'Implement issue #60 Definition of Done. Every substantive blocker/decision claim must have source evidence or explicit Unknown. Fail closed on missing/contradictory evidence. Analysis/recommendation only; no bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect. Prepare review-ready PR; do not merge automatically.'
-  done_gate: 'Versioned Decision Core contract; deterministic GO/NO_GO/NEEDS_REVIEW semantics; evidence-bound blockers and readiness gaps; existing product/API exposure; regression coverage including missing/contradictory evidence and a hard blocker; relevant tests and exact-head CI green; Product Owner review before merge.'
+  executor_scope: 'Engineering work completed in PR #61. Await Product Owner review; do not merge automatically. Every substantive blocker/decision claim has source evidence or explicit Unknown; no bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect.'
+  done_gate: 'Engineering gate satisfied at PR #61 head 38af3f344d6a755770c041945ce6468db0773ee1: versioned Decision Core contract, evidence-bound canonical facts/blockers/readiness, deterministic fail-closed GO/NO_GO/NEEDS_REVIEW, existing product/API exposure, source-grounded regressions, local validation, and exact-head CI run 34972199342 SUCCESS 9/9. Final Product Owner merge approval remains required.'
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
