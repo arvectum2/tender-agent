@@ -206,9 +206,9 @@ def _extract_supply_items_from_notification_xml(text: str, source_document: str)
         item_type = "service" if _xml_text(type_node).upper() in {"SERVICE", "WORK"} else "goods"
         price = _legacy._parse_float(_xml_text(_first_xml_descendant(node, {"price", "unitPrice"})))
         total = _legacy._parse_float(_xml_text(_first_xml_descendant(node, {"sum", "totalPrice"})))
-        evidence_seed = f"{source_document}|notification-xml|{row_number}|{name}".encode("utf-8")
+        evidence_seed = f"{source_document}|notification-xml|{row_number}|{name}".encode()
         recovered.append(
-            SupplyItem(
+            _legacy.SupplyItem(
                 item_no=None,
                 name=name,
                 quantity=quantity,
@@ -594,11 +594,31 @@ def _render_customer_report_html(model: dict[str, Any]) -> str:
             + (("<h3>Не удалось оценить</h3><ul>" + bullets(decision.get("not_evaluated", [])) + "</ul>") if decision.get("not_evaluated") else "")
         )
 
+    commercial_core = projection.get("commercial_core") or {}
+    commercial_section = (
+        "<section><h2>Commercial Core</h2>"
+        "<p><strong>Коммерческая реализуемость:</strong> "
+        f"{esc(commercial_core.get('feasibility_status'))}</p>"
+        f"<ul>{bullets(commercial_core.get('rationale') or [])}</ul>"
+        "<p><strong>Покрытие каталога:</strong> "
+        f"{esc((commercial_core.get('coverage') or {}).get('matched_coverage_ratio'))}; "
+        "<strong>покрытие себестоимостью:</strong> "
+        f"{esc((commercial_core.get('coverage') or {}).get('costed_coverage_ratio'))}</p>"
+        "<p><strong>Подтверждённая стоимость по каталогу:</strong> "
+        f"{esc((commercial_core.get('economics') or {}).get('known_catalog_cost'))} "
+        f"{esc((commercial_core.get('economics') or {}).get('currency'))}</p>"
+        f"<p><strong>Следующее действие:</strong> {esc(commercial_core.get('next_action'))}</p>"
+        "<p><strong>Human control:</strong> коммерческий вывод рекомендательный; внешние действия не разрешены.</p>"
+        "</section>"
+        if commercial_core
+        else "<section><h2>Commercial Core</h2><p>Прайс-лист/каталог не загружен; коммерческое соответствие и себестоимость не рассчитаны.</p></section>"
+    )
+
     return f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Анализ закупки № {esc(projection.get('procurement_number'))}</title><style>body{{margin:0;background:#f5f8fa;color:#10243e;font:16px Arial,sans-serif}}main{{max-width:1180px;margin:auto;padding:24px}}section{{background:#fff;border:1px solid #dce5eb;border-radius:12px;padding:20px;margin:16px 0}}h1,h2{{color:#003b5c}}.decision{{border-left:6px solid #d08300}}.scroll{{overflow-x:auto}}table{{border-collapse:collapse;width:100%;min-width:860px}}th,td{{border-bottom:1px solid #dce5eb;padding:9px;text-align:left;vertical-align:top}}th{{background:#e9f7f5}}</style></head><body><main>
 <section><h1>Анализ закупки № {esc(projection.get('procurement_number'))}</h1><p>Отчёт для принятия решения об участии</p><details><summary>Документы комплекта ({esc(projection['documents_count'])})</summary><ul>{documents}</ul></details></section>
 <section><h2>{esc(projection.get('procurement_title'))}</h2><p>Заказчик: {esc(projection.get('customer_name'))}</p><p>Дата публикации: {esc(projection.get('publication_datetime_display'))}</p><p>Окончание подачи заявок: {esc(projection.get('application_deadline_display'))}</p><p>НМЦК: {esc(projection.get('nmck'))} ₽</p><p>Место поставки: {esc(projection.get('delivery_place'))}</p>{as_of}</section>
 <section class="decision"><h2>Decision Core: {esc(decision_title)}</h2><h3>Ключевые основания</h3><ul>{bullets(decision_reasons)}</ul>{decision_extra}<p><strong>Следующее действие:</strong> {esc(decision_next_action)}</p></section>
-{items_section}{economics}{requirement_sections}{contract_sections}<section><h2>Коммерческие предложения</h2><p>Коммерческие предложения не загружены; экономика участия не рассчитана.</p></section>{risks_section}{questions_section}{evidence_section}{limitations_section}</main></body></html>'''
+{items_section}{economics}{requirement_sections}{contract_sections}{commercial_section}{risks_section}{questions_section}{evidence_section}{limitations_section}</main></body></html>'''
 
 
 def _render_canonical_report_html(model: dict[str, Any]) -> str:
