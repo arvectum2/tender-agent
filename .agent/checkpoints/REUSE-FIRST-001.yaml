@@ -1,0 +1,55 @@
+version: 1
+task_id: REUSE-FIRST-001
+status: in_progress
+updated_at: '2026-09-15T08:08:00Z'
+run: '2026-09-15 10:59 MSK'
+progress:
+  - 'Reconciled master roadmap, human roadmap, current task, executor policy, execution queue and audit issue #57.'
+  - 'Claimed REUSE-FIRST-001 with lease through 2026-09-15T09:55:00Z.'
+  - 'Started public competitor evidence collection.'
+public_evidence_seed:
+  - competitor: Tenderplan
+    url: https://tenderplan.ru/search
+    observed_patterns:
+      - saved keyword searches and online notifications
+      - search inside tender documentation including archives
+      - OKPD2, region and expert filters
+      - customer/competitor analytics
+      - inline document viewing/comments
+  - competitor: Seldon
+    url: https://seldon.pro/
+    observed_patterns:
+      - multi-source tender search and monitoring
+      - customer/supplier analytics and counterparty checks
+      - document-aware filters
+      - market/price analytics
+      - API integration
+      - AI tools advertised in trial surface
+  - competitor: TenderGuru
+    url: https://www.tenderguru.ru/
+    observed_patterns:
+      - broad multi-source aggregation
+      - advanced search and alerts
+      - customer/supplier/contract views
+      - API and datasets for CRM/BI/ML/RAG
+      - Telegram/PWA notification channels
+  - competitor: GOC Tender
+    url: https://goc-tender.ru/
+    observed_patterns:
+      - free 44-FZ/223-FZ search
+      - customer reliability/FAS/court checks
+      - search/check/work contour in one window
+  - competitor: TendroBase
+    url: https://tendrobase.ru/
+    observed_patterns:
+      - lightweight free EIS-derived search
+      - region/category/customer/keyword filters
+      - explicit source handoff to zakupki.gov.ru
+reuse_candidates_seed:
+  - component: atomno-mcp-zakupki
+    source: https://pypi.org/project/atomno-mcp-zakupki/0.2.0/
+    candidate_use: 'Evaluate as public pattern/reference for EIS search, tender-card normalization, OKPD2 lookup and agent-facing procurement tools; license/security/maintenance verification still required before dependency adoption.'
+  - component: OpenProcurement/OCDS
+    source: https://openprocurement.io/
+    candidate_use: 'Evaluate open procurement/OCDS data-model patterns; do not assume direct Russian-EIS fit.'
+next_action: 'Expand to 8-10 direct competitors using first-party public evidence where possible, then create canonical competitor-pattern matrix and reuse registry with license/legal/de-scope fields.'
