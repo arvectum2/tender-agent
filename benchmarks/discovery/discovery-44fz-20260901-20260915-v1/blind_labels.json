@@ -1,0 +1,591 @@
+{
+  "evaluator": "local-qwen2.5-14b-independent-discovery-evaluator-v1",
+  "evaluated_at": "2026-09-15T11:15:01.954720+00:00",
+  "labels": [
+    {
+      "case_id": "dq1-q01-r01-0119300019826001780",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is for the maintenance of water facilities in Krasnoyarsk city, which is unrelated to the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение работ по содержанию водных устройств в городе Красноярске в 2026 году"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r02-0828100000726000382",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on technical maintenance and preventive repair of fire suppression, fire alarm, and evacuation systems, which are outside the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию и регламентно-профилактическому ремонту систем газового пожаротушения, пожарной сигнализации, оповещения и управления эвакуацией людей при пожаре для обеспечения нужд Управления Федерального казначейства по Липецкой области"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r03-0173200015526000010",
+      "label": "RELEVANT",
+      "reason": "The procurement involves technical maintenance of electrical equipment, which is directly within the supplier's specialization of supplying electrical equipment and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию электротехнического оборудования управы района Старое Крюково города Москвы в 2026 году"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r04-0131200001026005690",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка связана с оказанием услуг по электротехническим испытаниям электрооборудования, что частично соответствует специализации поставщика в области электротехнического оборудования. Однако, услуга по испытаниям не является прямым поставкой оборудования или кабельной продукции.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "2026-05802:) Оказание услуг по электротехническим испытаниям электрооборудования и измерению сопротивления изоляции"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r05-0318200031326000123",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on diagnostic, technical maintenance, and repair services for vehicles, fire trucks, and other transportation vehicles, which is outside the supplier's capabilities in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуги по диагностике, техническому обслуживанию и ремонту автотранспортных средств, пожарных автомобилей и прочих транспортных средств"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r06-0858400000126000094",
+      "label": "RELEVANT",
+      "reason": "The procurement involves technical maintenance and repair of electrical equipment for administrative buildings, which aligns with the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию и ремонту электрооборудования административных зданий для нужд Управления Федерального казначейства по Ростовской области (прочая закупка)"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r07-0818500000826005863",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is for diagnostic, technical maintenance, and repair services for automotive vehicles, which is outside the supplier's capabilities of electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по диагностике, техническому обслуживанию и ремонту автотранспорта (с заменой запасных частей)"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r08-0387200005326000070",
+      "label": "IRRELEVANT",
+      "reason": "The procurement focuses on comprehensive maintenance services for engineering networks, which does not align with the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по комплексному обслуживанию инженерных сетей в 2026-2027 годах"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r09-0136300005826000173",
+      "label": "RELEVANT",
+      "reason": "The procurement involves the measurement of insulation resistance for electrical devices and equipment, which is directly related to the supplier's specialization in electrical equipment and services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по измерению сопротивления изоляции электротехнических устройств и оборудования"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r10-0369200034826000059",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка связана с оказанием услуг по электротехническим измерениям и испытаниям электрооборудования, что частично соответствует специализации поставщика в области электротехнического оборудования. Однако, услуги по измерениям и испытаниям не полностью совпадают с основными направлениями деятельности поставщика, такими как поставка оборудования и кабельной продукции.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по электротехническим измерениям и испытаниям электрооборудования"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r11-0373100134626000454",
+      "label": "RELEVANT",
+      "reason": "Закупка соответствует специализации поставщика по поставке электротехнического оборудования. Заказчик требует поставку оборудования с сертификатом РКО, что входит в область компетенции поставщика.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка электротехнического оборудования с сертификатом РКО для Водораздельных сооружений Тушинского РГС"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r12-0169300035826000214",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is for road safety measures, which does not align with the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение мероприятий по обеспечению безопасности дорожного движения"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r13-0845600007426000041",
+      "label": "IRRELEVANT",
+      "reason": "The procurement focuses on the technical maintenance and repair of internal engineering networks and room equipment in administrative buildings, which does not align with the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение работ по комплексному техническому обслуживанию и ремонту внутридомовых инженерных сетей и оборудования помещений в административных зданиях"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r14-0828100000726000376",
+      "label": "IRRELEVANT",
+      "reason": "The procurement involves technical maintenance and preventive repair of fire suppression systems, fire alarm systems, evacuation management, and smoke exhaust systems, which are unrelated to the supplier's specialization in electrical equipment, cable products, control cabinets, and low-voltage and power equipment.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию и регламентно-профилактическому ремонту систем газового и порошкового пожаротушения, охранно-пожарной сигнализации, оповещения и управления эвакуацией людей при пожаре, дымоудаления для обеспечения нужд Управления Федерального казначейства по Орловской области и Межрегионального филиала Федерального казенного учреждения «Центр по обеспечению деятельности Казначейства России» в г. Владимире (г. Орел)"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q01-r15-0137100000426000068",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка включает поставку и монтаж оборудования локально-вычислительной сети и телефонизации, что не полностью соответствует специализации поставщика на электротехническое оборудование, кабельную продукцию и шкафы управления. Тем не менее, возможна частичная релевантность в контексте монтажных работ и сопутствующих услуг.",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка (и монтаж) оборудования локально – вычислительной сети, телефонизации и радиофикации в административном здании Обнинского городского суда Калужской области"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r01-0841600001326000056",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка включает пусконаладочные работы, что соответствует ключевому слову в профиле поставщика. Однако закупка также включает монтаж оборудования для очистки воды, что выходит за рамки специализации поставщика на электротехническое оборудование и кабельную продукцию.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение работ по проведению монтажа и пусконаладочных работ УСТАНОВКИ ДЛЯ ОЧИСТКИ ПОВЕРХНОСТНЫХ ВОД «АКВАТРОНИК ВОС-175» в рамках реконструкции объекта капитального строительства: «Водозаборные и водоочистные сооружения г. Мантурово. Реконструкция 1 этап»"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r02-0322300035026000014",
+      "label": "RELEVANT",
+      "reason": "The procurement involves the execution of commissioning works for the installation of an uninterruptible power supply system, which aligns with the supplier's specialization in electrical equipment and commissioning services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение пусконаладочных работ по вводу в эксплуатацию источника бесперебойного питания на территории КГБУЗ «Тугуро-Чумиканская центральная районная больница» министерства здравоохранения Хабаровского края"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r03-0348200066826000032",
+      "label": "RELEVANT",
+      "reason": "The procurement involves the installation of an electric drive for roller gates, which includes commissioning works. The supplier specializes in electrical equipment, cable products, control cabinets, and related services, making it a clear fit.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение работ по демонтажу старого оборудования и монтажу комплекта электропривода откатных ворот, включая пусконаладочные работы"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r04-0127100007426000043",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка включает пусконаладочные работы, что соответствует специализации поставщика. Однако основной объем закупки связан с поставкой кондиционеров и монтажными работами, что не является основной специализацией поставщика.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка кондиционеров бытовых, блока ротации и резервирования, демонтажные, монтажные и пусконаладочные работы, не связаны с капстроительством или капремонтом объекта ОС"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r05-0352300219526000166",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедуре закупки требуется выполнение сопутствующих работ, включая пусконаладочные работы, однако основной предмет закупки - программно-технические средства для сопровождения заседаний, что не входит в основные области специализации поставщика.",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка комплекса программно-технических средств для сопровождения заседаний с выполнением сопутствующих работ"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r06-0338200008626000410",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедуре закупки соответствует пусконаладочные работы, однако основной объект закупки - установка для приготовления и дозирования дезинфекционного раствора, что не входит в основные области специализации поставщика.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка установки для приготовления и дозирования дезинфекционного раствора в систему канализации, монтажные, пусконаладочные работы"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r07-0148200000826000038",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on the development and modernization of a specialized software system for judicial districts, which does not align with the supplier's capabilities in electrical equipment, cable products, control cabinets, or electrical installation and commissioning.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Проведение работ по развитию (модернизации) государственной информационной системы «Специализированное программное обеспечение «Паспорт судебного участка»"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r08-0348100056626000020",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедуре закупки соответствует пусконаладочные работы, однако основная сфера закупки - системы контроля и управления доступом (СКУД), что не является прямым соответствием к специализации поставщика в области электротехнического оборудования, кабельной продукции и шкафов управления.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Приобретение отдельных элементов систем контроля и управления доступом (СКУД), включая монтаж и пусконаладочные работы в помещениях, занимаемых Управлением Федеральной службы государственной регистрации, кадастра и картографии по Московской области по адресу: город Москва, улица Обручева, дом 46"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r09-0815500000526011626",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедуре закупки соответствует пусконаладочные работы, однако основная часть закупки связана с поставкой и монтажом блочно-модульных конструкций зданий, что не входит в специализацию поставщика.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка, монтаж блочно-модульных конструкций зданий фельдшерско-акушерских пунктов для обслуживания населения до 800 человек с последующим монтажом, подготовкой площадки, подготовкой основания под данную блочно-модульную конструкцию, отделочными и пусконаладочными работами, выполнением противопожарных мероприятий, а также с обеспечением создания условий доступа для маломобильных групп населения по Чувашской Республике"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r10-0843500000226005138",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедура закупки включает пусконаладочные работы, что соответствует специализации поставщика. Однако основная сфера закупки связана с монтажом систем пожарной сигнализации и оповещения, что не является прямым соответствием к электротехническому оборудованию, кабельной продукции или шкафам управления.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Монтаж новой системы пожарной сигнализации и системы оповещения и управления эвакуацией людей при пожаре с пусконаладочными работами."
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r11-0319300338826000191",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедуре закупки соответствует выполнение пусконаладочных работ, что входит в сопутствующие услуги поставщика, однако основной предмет закупки - поставка и монтаж котла, что не входит в основные категории поставщика.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка основы автоматического твердотопливного угольного котла мощность 300 кВт торговой марки «Терморобот», включая демонтаж устаревшего оборудования и выполнение монтажных и пусконаладочный работ при установке нового оборудования"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r12-0187300012826000399",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка включает поставку и установку светотехнического оборудования, что частично соответствует специализации поставщика на электротехническое оборудование и кабельную продукцию. Однако основное внимание уделяется светотехническому оборудованию, что делает прямую связь менее очевидной.",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка с установкой светотехнического оборудования статических фотографических изображений (проекционная демаркация) на пешеходных переходах г.Нефтеюганска"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r13-0320100011226000501",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедура закупки требует пусконаладочных работ для канализационных насосов, что частично соответствует сопутствующим услугам поставщика, но не входит в его основные области специализации по электротехническому оборудованию, кабельной продукции и шкафам управления.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по проведению пусконаладочных работ канализационных насосов, установленных в КНС № 1 и КНС № 2"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r14-0171200001926004082",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on the modernization of an automated information management system for state property in Yaroslavl Oblast, including software installation, configuration, and data conversion. This does not align with the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Выполнение работ по модернизации автоматизированной информационной системы управления государственным имуществом Ярославской области для обеспечения ее работоспособности на системном программном обеспечении из Единого реестра российских программ для электронных вычислительных машин и баз данных, включая установку, настройку и конвертацию данных"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q02-r15-0126100002926000046",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Процедуре закупки требуется монтаж оборудования для фильтрования и очистки воды, что не является прямым соответствием к специализации поставщика на электротехническое оборудование, кабельную продукцию и шкафы управления. Однако, ключевое слово 'пусконаладочные работы' в профиле поставщика может указывать на его способность выполнять сопутствующие услуги, включая пусконаладочные работы для оборудования. Тем не менее, основная сфера закупки не входит в основные области специализации поставщика.",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Поставка и монтаж оборудования для фильтрования и очистки воды в котельной"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r01-0828100000726000382",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on technical maintenance and regulated preventive repair of fire suppression, fire alarm, notification, and evacuation systems, which are outside the supplier's electrical equipment and installation capabilities.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию и регламентно-профилактическому ремонту систем газового пожаротушения, пожарной сигнализации, оповещения и управления эвакуацией людей при пожаре для обеспечения нужд Управления Федерального казначейства по Липецкой области"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r02-0173200015526000010",
+      "label": "RELEVANT",
+      "reason": "The procurement involves technical maintenance services for electrical equipment, which aligns with the supplier's specialization in electrical equipment and related services. The customer is located in Moscow, within the supplier's target region.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию электротехнического оборудования управы района Старое Крюково города Москвы в 2026 году"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r03-0326100010326000286",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is for training services related to labor safety, which does not match the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по обучению работников вопросам охраны труда по программам обучения требованиям охраны труда"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r04-0332100025126000642",
+      "label": "IRRELEVANT",
+      "reason": "The procurement involves providing services for performing measurements in radiation cabinets, which is outside the supplier's capabilities of electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание Услуг по выполнению измерений по программе производственного контроля рентгеновских кабинетов ФГБУЗ КБ № 50 ФМБА России."
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r05-0333200025726000054",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on providing diagnostic, technical maintenance, and current repair services for automotive vehicles, which is outside the supplier's capabilities in electrical equipment, cable, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по диагностике, техническому обслуживанию и текущему ремонту автотранспортного средства"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r06-0131200001026005690",
+      "label": "RELEVANT",
+      "reason": "The procurement involves the provision of electrical testing services for electrical equipment and insulation resistance measurement, which aligns with the supplier's specialization in electrical equipment and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "2026-05802:) Оказание услуг по электротехническим испытаниям электрооборудования и измерению сопротивления изоляции"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r07-0318200031326000123",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on diagnostic, technical maintenance, and repair services for vehicles, fire trucks, and other transportation vehicles, which is outside the supplier's electrical equipment, cable, control cabinet, low-voltage, and power equipment capabilities.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуги по диагностике, техническому обслуживанию и ремонту автотранспортных средств, пожарных автомобилей и прочих транспортных средств"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r08-0858400000126000094",
+      "label": "RELEVANT",
+      "reason": "The procurement involves technical maintenance and repair of electrical equipment in administrative buildings, which aligns with the supplier's specialization in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию и ремонту электрооборудования административных зданий для нужд Управления Федерального казначейства по Ростовской области (прочая закупка)"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r09-0818500000826005863",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is focused on providing diagnostic, technical maintenance, and repair services for automotive vehicles, which is outside the supplier's capabilities in electrical equipment, cable products, control cabinets, and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по диагностике, техническому обслуживанию и ремонту автотранспорта (с заменой запасных частей)"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r10-0387200005326000070",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка связана с оказанием услуг по комплексному обслуживанию инженерных сетей, что может включать электротехнические услуги, но не является главным фокусом. Профиль поставщика включает электротехнические услуги, но закупка более обширна и не специализируется на электротехнических услугах.",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по комплексному обслуживанию инженерных сетей в 2026-2027 годах"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r11-0136300005826000173",
+      "label": "RELEVANT",
+      "reason": "The procurement involves the measurement of insulation resistance for electrical devices and equipment, which aligns with the supplier's specialization in electrical equipment and related services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по измерению сопротивления изоляции электротехнических устройств и оборудования"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r12-0369200034826000059",
+      "label": "PARTIALLY_RELEVANT",
+      "reason": "Закупка связана с оказанием услуг по электротехническим измерениям и испытаниям электрооборудования, что частично соответствует специализации поставщика в области электротехнических услуг и оборудования. Однако, закупка не включает прямую поставку оборудования или шкафов управления, что делает её периферийной для основных направлений деятельности поставщика.",
+      "confidence": 0.7,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по электротехническим измерениям и испытаниям электрооборудования"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r13-0140100006326000039",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is for diagnostic, technical maintenance, and repair services for automotive transport, which is outside the supplier's capabilities in electrical equipment, cable, control cabinets, low-voltage, and power equipment.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по диагностике, техническому обслуживанию и ремонту автотранспорта."
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r14-0156100008126000039",
+      "label": "IRRELEVANT",
+      "reason": "The procurement is for educational services related to professional training of state civil servants, not for the supply of electrical equipment, cable, control cabinets, or installation services.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание образовательных услуг по профессиональной подготовке (переподготовке) государственных гражданских служащих Семнадцатого арбитражного апелляционного суда по программам: «Электротехнический (электротехнологический) персонал на группу по электробезопасности» и «Персонал, эксплуатирующий тепловые энергоустановки»"
+        }
+      ]
+    },
+    {
+      "case_id": "dq1-q03-r15-0828100000726000376",
+      "label": "IRRELEVANT",
+      "reason": "The procurement focuses on technical maintenance and preventive repair of fire suppression systems, fire alarm systems, evacuation management, and smoke exhaust systems, which are outside the supplier's electrical equipment and installation capabilities.",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "source_ref": "source/card.json",
+          "locator": "title",
+          "quote": "Оказание услуг по техническому обслуживанию и регламентно-профилактическому ремонту систем газового и порошкового пожаротушения, охранно-пожарной сигнализации, оповещения и управления эвакуацией людей при пожаре, дымоудаления для обеспечения нужд Управления Федерального казначейства по Орловской области и Межрегионального филиала Федерального казенного учреждения «Центр по обеспечению деятельности Казначейства России» в г. Владимире (г. Орел)"
+        }
+      ]
+    }
+  ]
+}

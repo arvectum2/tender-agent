@@ -43,38 +43,105 @@ def _normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
-def _tokens(text: str) -> set[str]:
-    return set(_normalize(text).split())
-
-
 def _words(text: str) -> list[str]:
-    return _normalize(text).split()
+    return re.findall(r"[0-9a-zа-яё]+", _normalize(text), flags=re.IGNORECASE)
 
 
-def _stem_prefix(w1: str, w2: str, min_prefix: int = 7) -> bool:
-    shorter, longer = (w1, w2) if len(w1) <= len(w2) else (w2, w1)
-    if len(shorter) >= 3 and shorter in longer:
-        return True
-    match_len = min(min_prefix, len(w1), len(w2))
-    if match_len < 4:
-        return w1 == w2
-    return w1[:match_len] == w2[:match_len]
+def _tokens(text: str) -> set[str]:
+    return set(_words(text))
+
+
+# Conservative inflection endings.  This is deliberately not a generic
+# Russian stemmer: the discovery baseline showed that a broad 7-character
+# prefix incorrectly treated derivationally different words such as
+# ``автоматизация`` and ``автоматизированной`` as the same capability.
+_INFLECTION_SUFFIXES = tuple(
+    sorted(
+        {
+            "иями",
+            "ями",
+            "ами",
+            "его",
+            "ого",
+            "ему",
+            "ому",
+            "ими",
+            "ыми",
+            "иях",
+            "ах",
+            "ях",
+            "ию",
+            "ью",
+            "ия",
+            "ья",
+            "ую",
+            "юю",
+            "ая",
+            "яя",
+            "ое",
+            "ее",
+            "ие",
+            "ые",
+            "ий",
+            "ый",
+            "ой",
+            "им",
+            "ым",
+            "ом",
+            "ем",
+            "их",
+            "ых",
+            "ов",
+            "ев",
+            "ам",
+            "ям",
+            "а",
+            "я",
+            "ы",
+            "и",
+            "у",
+            "ю",
+            "е",
+            "о",
+        },
+        key=len,
+        reverse=True,
+    )
+)
+
+
+def _inflection_stem(word: str) -> str:
+    normalized = _normalize(word)
+    for suffix in _INFLECTION_SUFFIXES:
+        if normalized.endswith(suffix) and len(normalized) - len(suffix) >= 5:
+            return normalized[: -len(suffix)]
+    return normalized
 
 
 def _word_matches(title_tokens: set[str], word: str) -> bool:
-    if len(word) < 3:
-        return word in title_tokens
-    for tw in title_tokens:
-        if _stem_prefix(word, tw):
+    normalized = _normalize(word)
+    if len(normalized) < 3:
+        return normalized in title_tokens
+    stem = _inflection_stem(normalized)
+    for token in title_tokens:
+        if token == normalized:
+            return True
+        # Preserve safe compounds/ordinary inflections such as
+        # ``кабель`` -> ``кабельной`` and ``оборудование`` ->
+        # ``электрооборудования`` without broad prefix matching.
+        shorter, longer = (normalized, token) if len(normalized) <= len(token) else (token, normalized)
+        if len(shorter) >= 5 and shorter in longer:
+            return True
+        if len(stem) >= 5 and stem == _inflection_stem(token):
             return True
     return False
 
 
 def _all_words_match(title_tokens: set[str], phrase: str) -> bool:
-    words = [w for w in _words(phrase) if len(w) >= 3]
+    words = [word for word in _words(phrase) if len(word) >= 3]
     if not words:
         return False
-    return all(_word_matches(title_tokens, w) for w in words)
+    return all(_word_matches(title_tokens, word) for word in words)
 
 
 def _keyword_matches_title(title_tokens: set[str], keyword: str) -> bool:
@@ -85,23 +152,37 @@ def _stop_word_matches_title(title_tokens: set[str], stop_word: str) -> bool:
     return _all_words_match(title_tokens, stop_word)
 
 
-def _keyword_match_score(title: str, keywords: list[str]) -> tuple[float, list[str]]:
-    if not keywords:
-        return 0.0, []
+def _semantic_match_score(
+    title: str,
+    keywords: list[str],
+    categories: list[str],
+) -> tuple[float, float, list[str]]:
+    """Return keyword score, category bonus, and source-visible reasons.
+
+    The frozen DISCOVERY-QA-001 baseline demonstrated that ratio-to-all-keywords
+    diluted one clear capability match to 5-10 points while unrelated in-range
+    procurements received 45 neutral/commercial points.  A clear keyword match
+    therefore gets a strong fixed base; additional matches add only bounded
+    evidence.  Full category phrases are a small bonus, not a second base score.
+    """
+
     tokens = _tokens(title)
-    score = 0.0
+    matched_keywords = [kw for kw in keywords if _keyword_matches_title(tokens, kw)]
+    matched_categories = [category for category in categories if _all_words_match(tokens, category)]
     reasons: list[str] = []
-    matched_keywords = 0
-    for kw in keywords:
-        if _keyword_matches_title(tokens, kw):
-            matched_keywords += 1
-            reasons.append(f"Найдено ключевое слово: «{kw}»")
-    if matched_keywords > 0:
-        ratio = matched_keywords / len(keywords)
-        score = min(ratio * 40.0, 40.0)
+
+    if matched_keywords:
+        keyword_score = min(35.0 + 5.0 * (len(matched_keywords) - 1), 45.0)
+        reasons.extend(f"Совпадение с профилем: «{kw}»" for kw in matched_keywords)
     else:
-        reasons.append("Ключевые слова поставщика не найдены в названии закупки")
-    return score, reasons
+        keyword_score = 0.0
+
+    category_bonus = min(10.0 + 5.0 * (len(matched_categories) - 1), 15.0) if matched_categories else 0.0
+    reasons.extend(f"Совпадение категории: «{category}»" for category in matched_categories)
+
+    if keyword_score == 0.0 and category_bonus == 0.0:
+        reasons.append("Тематические признаки профиля поставщика не найдены в названии закупки")
+    return keyword_score, category_bonus, reasons
 
 
 def _stop_word_penalty(title: str, stop_words: list[str]) -> tuple[float, list[str]]:
@@ -110,10 +191,10 @@ def _stop_word_penalty(title: str, stop_words: list[str]) -> tuple[float, list[s
     tokens = _tokens(title)
     score = 0.0
     reasons: list[str] = []
-    for sw in stop_words:
-        if _stop_word_matches_title(tokens, sw):
+    for stop_word in stop_words:
+        if _stop_word_matches_title(tokens, stop_word):
             score -= 15.0
-            reasons.append(f"Стоп-слово в названии: «{sw}»")
+            reasons.append(f"Стоп-слово в названии: «{stop_word}»")
     return score, reasons
 
 
@@ -121,7 +202,11 @@ def _price_range_score(
     price: float | None,
     price_min: float | None,
     price_max: float | None,
+    *,
+    semantic_match: bool,
 ) -> tuple[float, list[str]]:
+    if not semantic_match:
+        return 0.0, ["Цена не повышает релевантность без тематического совпадения"]
     if price is None:
         return 5.0, ["Цена не указана — частичный балл"]
     reasons: list[str] = []
@@ -129,30 +214,35 @@ def _price_range_score(
         if price_min <= price <= price_max:
             reasons.append(f"Цена {price:,.0f} ₽ в диапазоне поставщика {price_min:,.0f}–{price_max:,.0f} ₽")
             return 20.0, reasons
-        elif price < price_min:
+        if price < price_min:
             reasons.append(f"Цена {price:,.0f} ₽ ниже минимальной {price_min:,.0f} ₽")
             return 5.0, reasons
-        else:
-            reasons.append(f"Цена {price:,.0f} ₽ выше максимальной {price_max:,.0f} ₽")
-            return 5.0, reasons
+        reasons.append(f"Цена {price:,.0f} ₽ выше максимальной {price_max:,.0f} ₽")
+        return 5.0, reasons
     if price_min is not None:
         if price >= price_min:
             reasons.append(f"Цена {price:,.0f} ₽ не ниже минимальной {price_min:,.0f} ₽")
             return 15.0, reasons
-        else:
-            reasons.append(f"Цена {price:,.0f} ₽ ниже минимальной {price_min:,.0f} ₽")
-            return 5.0, reasons
+        reasons.append(f"Цена {price:,.0f} ₽ ниже минимальной {price_min:,.0f} ₽")
+        return 5.0, reasons
     if price_max is not None:
         if price <= price_max:
             reasons.append(f"Цена {price:,.0f} ₽ не выше максимальной {price_max:,.0f} ₽")
             return 15.0, reasons
-        else:
-            reasons.append(f"Цена {price:,.0f} ₽ выше максимальной {price_max:,.0f} ₽")
-            return 5.0, reasons
+        reasons.append(f"Цена {price:,.0f} ₽ выше максимальной {price_max:,.0f} ₽")
+        return 5.0, reasons
     return 0.0, []
 
 
-def _deadline_score(submission_deadline: str | None, max_delay_days: int | None) -> tuple[float, list[str]]:
+def _deadline_score(
+    submission_deadline: str | None,
+    max_delay_days: int | None,
+    *,
+    semantic_match: bool,
+) -> tuple[float, list[str]]:
+    del max_delay_days  # card-level scorer does not yet parse execution delay semantics
+    if not semantic_match:
+        return 0.0, ["Срок подачи не повышает релевантность без тематического совпадения"]
     if not submission_deadline:
         return 5.0, ["Срок подачи не указан — частичный балл"]
     return 10.0, []
@@ -163,9 +253,11 @@ def _risk_flag_score(
     customer_name: str | None,
     risk_preferences: object,
 ) -> tuple[float, list[str]]:
-    score = 15.0
-    reasons: list[str] = ["Риски не обнаружены"]
-    return score, reasons
+    del title, customer_name, risk_preferences
+    # The previous implementation granted every card +15 simply because no
+    # card-level risk check existed.  The frozen discovery baseline proved that
+    # this promoted unrelated procurements.  Unknown risk is neutral, not good.
+    return 0.0, ["Риск-факторы не оцениваются по поисковой карточке"]
 
 
 def score_procurement_card(
@@ -188,9 +280,15 @@ def score_procurement_card(
     breakdown: dict[str, float] = {}
     all_reasons: list[str] = []
 
-    kw_score, kw_reasons = _keyword_match_score(title, profile.criteria.keywords)
-    breakdown["keywords"] = round(kw_score, 1)
-    all_reasons.extend(kw_reasons)
+    keyword_score, category_bonus, semantic_reasons = _semantic_match_score(
+        title,
+        profile.criteria.keywords,
+        profile.criteria.categories,
+    )
+    breakdown["keywords"] = round(keyword_score, 1)
+    breakdown["categories"] = round(category_bonus, 1)
+    all_reasons.extend(semantic_reasons)
+    semantic_match = keyword_score > 0.0 or category_bonus > 0.0
 
     stop_penalty, stop_reasons = _stop_word_penalty(title, profile.criteria.stop_words)
     breakdown["stop_words"] = round(stop_penalty, 1)
@@ -200,11 +298,16 @@ def score_procurement_card(
         initial_price,
         profile.criteria.price_min,
         profile.criteria.price_max,
+        semantic_match=semantic_match,
     )
     breakdown["price_range"] = round(price_score, 1)
     all_reasons.extend(price_reasons)
 
-    deadline_score, deadline_reasons = _deadline_score(submission_deadline, profile.risk_preferences.max_delay_days)
+    deadline_score, deadline_reasons = _deadline_score(
+        submission_deadline,
+        profile.risk_preferences.max_delay_days,
+        semantic_match=semantic_match,
+    )
     breakdown["deadline"] = round(deadline_score, 1)
     all_reasons.extend(deadline_reasons)
 
@@ -235,7 +338,6 @@ def score_procurement_card(
         reasons=all_reasons,
         breakdown=breakdown,
     )
-
 
 def score_procurement_document_text(
     *,
