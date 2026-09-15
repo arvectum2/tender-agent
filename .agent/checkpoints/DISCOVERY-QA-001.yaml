@@ -1,0 +1,34 @@
+version: 1
+task_id: DISCOVERY-QA-001
+status: in_progress
+updated_at: '2026-09-15T10:24:00Z'
+goal: 'Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark.'
+definition_of_done:
+  - 'Freeze an independently labelled 30–50-case 44-FZ discovery corpus before evaluating or tuning Tender Agent output.'
+  - 'Record Precision@5, Precision@10, Recall@K, nDCG@K/equivalent, top-K false-positive rate, missed-relevant rate, duplicate rate, supported status/deadline correctness, and explainability coverage.'
+  - 'Identify measured failure classes before any search hardening.'
+  - 'Apply only bounded hardening justified by those measured failures; no first-move LLM reranking.'
+  - 'Re-run the same frozen benchmark with truth/comparator/normalizer unchanged and prepare review-ready evidence/PR.'
+  - 'Stop before merge because authority remains REVIEW and auto_merge=false.'
+completed:
+  - 'BENCHMARK-PIPELINE-001 dependency completed.'
+  - 'Owner promotion to READY recorded in issue #2 comment 5678641869.'
+  - 'Queue promoted to ready without changing authority class.'
+  - 'Branch agent/discovery-qa-001 created from ae7c5d0e5c2ea905a13def47e972111afde013af.'
+current: 'Inventory existing discovery/search implementation, benchmark primitives, supplier-profile matching, source fixtures and ranking controls.'
+remaining:
+  - 'Inventory code/evidence paths and identify reusable benchmark machinery.'
+  - 'Freeze independent 30–50-case corpus.'
+  - 'Run baseline metrics and classify measured failures.'
+  - 'Implement bounded evidence-backed hardening.'
+  - 'Re-run frozen benchmark, run relevant tests/CI, open review-ready PR.'
+  - 'Stop for Product Owner review before merge.'
+last_verified_commit: 'ae7c5d0e5c2ea905a13def47e972111afde013af'
+test_results:
+  - 'No implementation tests yet; task initialized after Owner promotion.'
+resume_instruction: 'Resume on agent/discovery-qa-001. Inventory existing search/ranking and benchmark code first. Preserve freeze-before-SUT integrity. Do not tune before the corpus is independently labelled and frozen. Reuse existing components; custom ranking changes require measured procurement-specific gaps. No LLM reranking in the first move. Prepare PR/evidence only; do not merge automatically.'
+execution:
+  branch: 'agent/discovery-qa-001'
+  base_commit: 'ae7c5d0e5c2ea905a13def47e972111afde013af'
+  manual_override: true
+  lease_until: '2026-09-15T12:14:00Z'
