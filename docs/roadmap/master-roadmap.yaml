@@ -22,7 +22,20 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-09-14T21:05:00Z'
+strategy_updated_at: '2026-09-15T05:45:00Z'
+continuous_execution:
+  owner_directive_date: '2026-09-15'
+  principle: work_conserving_hourly_executor
+  watchdog_target_cadence_minutes: 60
+  max_productive_quantum_minutes: 45
+  stale_progress_recovery_minutes: 90
+  rules:
+    - 'Reconcile canonical issue/PR/done-gate state before continuing a checkpoint; a satisfied/closed gate wins over stale checkpoint text.'
+    - 'Do not passively poll or sleep waiting for CI, external acquisition, human review or another future condition; checkpoint the wait and end or continue independent admitted AUTO work.'
+    - 'When an AUTO item is waiting on CI/external state, another independent admitted AUTO item may progress in an isolated branch/checkpoint without widening authority.'
+    - 'After a queue done gate is satisfied, do not create another acceptance cycle for that same gate unless an explicit new queue item or Owner directive reopens it.'
+    - 'If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and resume immediately.'
+  authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -161,11 +174,12 @@ post_snapshot_observed:
   admission: not inferred into execution queue; gaps ARV-077..ARV-095 are not invented
 current_programs:
 - task_id: REUSE-FIRST-001
-  state: ready
-  source: 'Owner directive 2026-09-14: aggressive reuse-first development'
+  state: in_progress
+  source: 'Owner directives 2026-09-14 reuse-first and 2026-09-15 continuous execution'
   roadmap_mapping: null
   strategy: COPY_PATTERN
   objective: 'Create competitor reverse-spec, reuse registry and P0/P1 strategy classification before widening new implementation scope.'
+  execution_note: 'Next canonical AUTO workstream after DOCUMENT-QA-005 acceptance and post-acceptance regression hardening were reconciled.'
 - task_id: BENCHMARK-PIPELINE-001
   state: done
   source: 'issue #1'
@@ -175,9 +189,11 @@ current_programs:
   source: 'issue #11'
   roadmap_mapping: null
 - task_id: DOCUMENT-QA-005
-  state: in_progress
-  source: 'issue #16; latest exposed blind acceptance issue #36'
+  state: done
+  source: 'issue #16 closed completed 2026-09-15; post-acceptance regression #52/#53 fixed by PR #54'
   roadmap_mapping: null
+  acceptance_evidence: 'Unbiased strict customer_name acceptance satisfied before issue #16 closure; later #52 is post-acceptance regression evidence and does not reopen the gate.'
+  followup_hardening: 'issue #53 closed completed after PR #54 merge 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9; exact-head CI run 34932286281 success.'
 - task_id: BUILD-DOCKER-CONTEXT-001
   state: ready
   source: 'issue #19'

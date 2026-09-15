@@ -1,37 +1,34 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: WATCHDOG-CONTINUITY-001
-authority: OWNER
-goal: "Reconcile canonical roadmap state after DOCUMENT-QA-005 acceptance/follow-up drift and make the hourly Tender Agent Watchdog work-conserving, exact-hour and non-idling."
+task_id: REUSE-FIRST-001
+authority: AUTO
+goal: "Create the canonical competitive reverse-spec and reuse registry, then classify active P0/P1 work as REUSE/COPY_PATTERN/ADAPT/INVENT so commodity scope is reused/adapted instead of rebuilt."
 definition_of_done:
-  - "Reconcile DOCUMENT-QA-005 as completed from issue #16 accepted closure; preserve post-closure #52/#53 regression evidence without reopening the accepted gate."
-  - "Record PR #54/#53 follow-up as completed regression hardening and prevent an unbounded repeat-blind loop after an already satisfied done gate."
-  - "Update master roadmap and execution queue so REUSE-FIRST-001 is the next active AUTO workstream, BUILD-DOCKER-CONTEXT-001 remains independently executable, and REVIEW/HUMAN gates remain unchanged."
-  - "Update the single Tender Agent Watchdog to an exact hourly cadence and a bounded work-conserving run protocol: reconcile done gates first, never idle waiting for CI, checkpoint waits, and continue independent AUTO work when safe."
-  - "Verify watchdog schedule/prompt and repository canonical files, then release manual_override and leave a precise resume instruction."
+  - "Benchmark 8-10 direct tender/procurement competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action using public evidence."
+  - "Create/update a repository-owned reuse registry covering public patterns, reusable OSS/APIs/components, legal/license constraints and de-scope decisions."
+  - "Classify every active P0/P1 workstream as REUSE/COPY_PATTERN/ADAPT/INVENT; every INVENT has a written reuse check, gap, differentiation and maintenance justification."
+  - "Translate findings into bounded roadmap/queue recommendations without copying proprietary code/assets/text/private data and without widening external-action authority."
+  - "Run relevant documentation/schema checks and merge only after required exact-head CI/gates."
 completed:
-  - "Owner requested canonical roadmap/watchdog refresh and more aggressive continuous execution on 2026-09-15."
-  - "Verified issue #16 is closed completed since 2026-09-15T01:39:24Z after an unbiased strict customer_name TRUE_POSITIVE acceptance."
-  - "Verified later case #52 is a post-closure exposed regression, issue #53 tracks the generic EIS placement-organization/customer conflation, and PR #54 merged the generic fix at 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9 after exact-head CI success."
-  - "Added Owner reconciliation comment to #53: #52/#53 are post-acceptance regression hardening and must not restart an unbounded #16 blind-acceptance loop."
-current: "Update canonical roadmap/queue and watchdog, then activate REUSE-FIRST-001."
+  - "Owner reuse-first directive is canonical in master roadmap."
+  - "DOCUMENT-QA-005 is reconciled done; post-acceptance #52/#53 hardening is completed by PR #54."
+  - "Continuous-execution directive makes this the next active AUTO workstream."
+current: "Start competitor reverse-spec/reuse-registry evidence collection and create a bounded implementation plan/artifact set."
 pending:
-  - "Close #53 as completed post-acceptance regression hardening."
-  - "Update docs/roadmap/master-roadmap.yaml and MASTER_ROADMAP.md with continuous-execution directive and current program states."
-  - "Update .agent/execution-queue.yaml: DOCUMENT-QA-005 done; REUSE-FIRST-001 next active; preserve BUILD and REVIEW gates."
-  - "Update and verify Tender Agent Watchdog exact hourly schedule plus non-idling/work-conserving prompt."
-  - "Finalize checkpoint, release manual_override, and hand off to REUSE-FIRST-001."
-last_verified_commit: "c3a7f21b3dbd9d68bf83c67d8add251e302f7932"
+  - "Select 8-10 direct competitors and collect public workflow evidence."
+  - "Build competitor-pattern matrix and reusable component/API registry."
+  - "Classify active P0/P1 work and document INVENT justifications/de-scope decisions."
+  - "Commit/PR canonical artifacts, validate exact-head CI and merge if AM-4 gates remain valid."
+last_verified_commit: null
 test_results:
-  - "PR #54 exact-head CI run 34932286281 completed success; merge commit 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9."
-  - "Issue #16 state=closed/completed; issue #52 state=closed/completed; Owner reconciliation comment added to #53."
-updated_at: "2026-09-15T05:40:00Z"
-resume_instruction: "Owner maintenance in progress. Do not resume roadmap execution while manual_override=true. Finish canonical reconciliation and watchdog update, then set current-task to REUSE-FIRST-001 with manual_override=false."
+  - "Not started; this checkpoint is the canonical handoff from WATCHDOG-CONTINUITY-001."
+updated_at: "2026-09-15T05:45:00Z"
+resume_instruction: "Begin REUSE-FIRST-001 immediately. Do not return to DOCUMENT-QA-005 acceptance loops. Work in <=45-minute productive quanta; if waiting on CI/external state, checkpoint and continue another independent admitted AUTO item or exit for the next exact-hour watchdog run."
 execution:
-  claimed_by: "chatgpt-owner-session"
-  execution_id: "WATCHDOG-CONTINUITY-001-20260915"
+  claimed_by: null
+  execution_id: null
   branch: null
-  base_commit: "1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9"
+  base_commit: null
   lease_until: null
-  manual_override: true
+  manual_override: false

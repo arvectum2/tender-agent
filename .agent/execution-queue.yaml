@@ -5,7 +5,7 @@
 # create priorities, resolve roadmap ID conflicts, infer ARV mappings, or change gates.
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-14T21:05:00Z'
+updated_at: '2026-09-15T05:45:00Z'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -18,11 +18,21 @@ projection:
   executor_must_not_resolve_id_conflicts: true
   executor_must_not_infer_arv_mapping: true
   authority_remains_defined_by_executor_policy_and_company_source: true
+executor_runtime:
+  cadence: exact_hourly
+  target_minutes: 60
+  max_productive_quantum_minutes: 45
+  stale_progress_recovery_minutes: 90
+  reconcile_done_gate_before_resume: true
+  passive_waiting_for_ci_or_future_state: false
+  continue_independent_auto_work_while_primary_waits: true
+  repeat_acceptance_after_done_gate: false
+  note: 'Utilization only; no authority/gate expansion.'
 items:
 - order: 5
   task_id: REUSE-FIRST-001
   title: Competitive reverse-spec and reuse registry
-  status: ready
+  status: in_progress
   authority: AUTO
   independent: true
   auto_merge: true
@@ -36,15 +46,14 @@ items:
   strategy: INVENT
   invent_justification: 'Procurement-specific source-bound identity/role resolution directly protects evidence integrity and decision quality.'
   title: Source-bound customer role and identity extraction
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16; latest exposed blind acceptance issue #36'
+  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16 closed completed; post-acceptance #52/#53 fixed by PR #54'
   dependencies: []
-  executor_scope: Continue the generic source-bound fix and independent blind acceptance protocol. Exposed cases remain regression-only; preserve
-    frozen truth/comparator/normalizer.
-  done_gate: 'Issue #16 acceptance is satisfied by unbiased held-out blind evidence under benchmark governance, with required CI/evidence recorded.'
+  executor_scope: 'Completed. Preserve exposed blind/regression artifacts; do not reopen or start another acceptance loop without an explicit new queue item or Owner directive.'
+  done_gate: 'Satisfied: issue #16 closed completed after unbiased strict customer_name acceptance; post-acceptance #52/#53 regression hardening merged in PR #54.'
 - order: 20
   task_id: BUILD-DOCKER-CONTEXT-001
   strategy: ADAPT

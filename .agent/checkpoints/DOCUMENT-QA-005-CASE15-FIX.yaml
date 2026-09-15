@@ -1,0 +1,30 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: DOCUMENT-QA-005-CASE15-FIX
+authority: AUTO
+goal: "Fix the generic public-EIS placement-organization/customer conflation exposed by post-acceptance blind case #52."
+definition_of_done:
+  - "Preserve #52 immutable first-blind evidence."
+  - "Implement a generic EIS customer/placement-role separation with synthetic and exposed regression coverage."
+  - "Merge after exact-head green CI."
+completed:
+  - "#52 preserved as immutable post-acceptance regression evidence."
+  - "Generic #53 fix verified: focused 47 passed; broader customer/document-QA 161 passed; Ruff/git diff/make check PASS."
+  - "PR #54 exact-head CI run 34932286281 success and merged as 1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9."
+  - "Issue #53 closed completed after Owner reconciliation: #52/#53 do not reopen already-completed #16 or require another blind-acceptance loop."
+current: completed
+pending: []
+last_verified_commit: "1e5e6b4d52b5494e9b25789f35e0bf7e701b79e9"
+test_results:
+  - "PR #54 CI run 34932286281: success."
+  - "Exposed #52 common-info/search-to-intake regression: PASS after generic fix."
+updated_at: "2026-09-15T05:45:00Z"
+resume_instruction: "Completed. Do not rerun #52 as blind and do not reopen #16 absent an explicit new Owner/queue gate."
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: null
+  lease_until: null
+  manual_override: false
