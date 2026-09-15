@@ -1,5 +1,5 @@
 task_id: WATCHDOG-REPORTING-001
-status: in_progress
+status: completed
 goal: "Make every Tender Agent hourly watchdog run auditable and user-visible even when no roadmap item completes."
 definition_of_done:
   - "A canonical GitHub issue exists as the persistent hourly watchdog run log."
@@ -10,13 +10,15 @@ completed:
   - "Confirmed the watchdog has a recorded latest run timestamp at 2026-09-15T07:13:38Z."
   - "Confirmed no Tender Agent main commit exists after 2026-09-15T05:56:54Z and current-task remained unchanged at 2026-09-15T05:57:00Z."
   - "Updated the watchdog prompt so a report is mandatory on every invocation, including NO PRODUCTIVE PROGRESS."
-current: "Create canonical run-log issue and bind every future run to append one report there."
-pending:
-  - "Create canonical run-log issue."
-  - "Update watchdog prompt with the issue number and append-report requirement."
-  - "Record retrospective report for the 10:00 scheduled slot."
-last_verified_commit: "40cefdde96ac6734f23b9c116d0d2e31e4efb5e1"
+  - "Created canonical hourly execution log issue #57."
+  - "Bound every future watchdog invocation to append exactly one report comment to issue #57 and return the same report as the Scheduled Task result."
+  - "Recorded the retrospective 10:00 MSK slot as NO PRODUCTIVE PROGRESS with evidence and corrective action."
+current: "Reporting setup complete; the next watchdog invocation must execute REUSE-FIRST-001 and report regardless of outcome."
+pending: []
+last_verified_commit: "c4095a032418f9f43b8507991aa78d89d18187cf"
 test_results:
-  - "GitHub recent commits inspected: no repository progress after 05:56:54Z."
+  - "GitHub recent commits inspected: no repository progress after 05:56:54Z before the user's reporting correction."
   - "Remote Mac worktrees inspected: no new reuse-first worktree/progress attributable to the 10:00 slot."
-resume_instruction: "Finish watchdog reporting setup, then mark this checkpoint completed."
+  - "Issue #57 exists and contains the reconstructed 10:00-slot report."
+  - "Tender Agent Watchdog remains enabled, exact hourly, with mandatory per-run reporting and issue #57 audit binding."
+resume_instruction: "Task complete. Next run: resume canonical current task REUSE-FIRST-001; post one run report to issue #57 and return the same summary to the user."
