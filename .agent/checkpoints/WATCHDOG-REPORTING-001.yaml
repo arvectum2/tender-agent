@@ -1,0 +1,22 @@
+task_id: WATCHDOG-REPORTING-001
+status: in_progress
+goal: "Make every Tender Agent hourly watchdog run auditable and user-visible even when no roadmap item completes."
+definition_of_done:
+  - "A canonical GitHub issue exists as the persistent hourly watchdog run log."
+  - "The single Tender Agent Watchdog requires one concise run report every invocation, including no-op runs."
+  - "The watchdog prompt requires posting the same report to the canonical run-log issue."
+  - "The current missing 10:00-slot outcome is reconstructed from available evidence and recorded."
+completed:
+  - "Confirmed the watchdog has a recorded latest run timestamp at 2026-09-15T07:13:38Z."
+  - "Confirmed no Tender Agent main commit exists after 2026-09-15T05:56:54Z and current-task remained unchanged at 2026-09-15T05:57:00Z."
+  - "Updated the watchdog prompt so a report is mandatory on every invocation, including NO PRODUCTIVE PROGRESS."
+current: "Create canonical run-log issue and bind every future run to append one report there."
+pending:
+  - "Create canonical run-log issue."
+  - "Update watchdog prompt with the issue number and append-report requirement."
+  - "Record retrospective report for the 10:00 scheduled slot."
+last_verified_commit: "40cefdde96ac6734f23b9c116d0d2e31e4efb5e1"
+test_results:
+  - "GitHub recent commits inspected: no repository progress after 05:56:54Z."
+  - "Remote Mac worktrees inspected: no new reuse-first worktree/progress attributable to the 10:00 slot."
+resume_instruction: "Finish watchdog reporting setup, then mark this checkpoint completed."
