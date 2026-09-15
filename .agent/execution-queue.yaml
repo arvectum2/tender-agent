@@ -86,21 +86,21 @@ items:
   strategy: INVENT
   invent_justification: 'The narrow procurement-specific decision semantics are the documented product moat: evidence-bound canonical facts, hard blockers, GO/NO-GO/NEEDS REVIEW and readiness. Commodity retrieval/parsing/UI/rules infrastructure must be reused or adapted.'
   title: Evidence-bound Decision Core v1 and application readiness
-  status: blocked_review
+  status: done
   authority: REVIEW
   independent: true
   auto_merge: false
-  source: 'issue #60; explicit Product Owner directive in project conversation 2026-09-15: давай делать'
+  source: 'issue #60 completed; Product Owner approved PR #61 merge on 2026-09-15'
   dependencies:
   - DISCOVERY-QA-001
   - DOCUMENT-QA-005
   roadmap_scope:
   - ARV-018
   - ARV-020
-  owner_gate_evidence: 'Satisfied 2026-09-15: Product Owner approved starting Decision Core v1 immediately after approving merge of PR #59.'
+  owner_gate_evidence: 'Satisfied: Product Owner approved start on 2026-09-15 and explicitly approved merge of PR #61 on 2026-09-15.'
   custom_boundary: 'Reuse existing search, document extraction, provenance/source graph, supplier profile, roles/UI and deterministic primitives. Invent only procurement-specific decision/readiness semantics and source-bound rules.'
-  executor_scope: 'Engineering work completed in PR #61. Await Product Owner review; do not merge automatically. Every substantive blocker/decision claim has source evidence or explicit Unknown; no bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect.'
-  done_gate: 'Engineering gate satisfied at PR #61 head 38af3f344d6a755770c041945ce6468db0773ee1: versioned Decision Core contract, evidence-bound canonical facts/blockers/readiness, deterministic fail-closed GO/NO_GO/NEEDS_REVIEW, existing product/API exposure, source-grounded regressions, local validation, and exact-head CI run 34972199342 SUCCESS 9/9. Final Product Owner merge approval remains required.'
+  executor_scope: 'Completed. Preserve source-bound fail-closed Decision Core semantics; do not widen external-action authority. No bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect without explicit HUMAN control.'
+  done_gate: 'Satisfied: versioned Decision Core contract; evidence-bound canonical facts/blockers/readiness; deterministic fail-closed GO/NO_GO/NEEDS_REVIEW; supplier-profile integration; existing product/API exposure; source-grounded regressions; local validation; exact-head CI run 34972199342 SUCCESS 9/9; PR #61 guarded squash-merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1; issue #60 closed completed.'
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
