@@ -1,0 +1,23 @@
+{
+  "queries": [
+    "электротехническое оборудование",
+    "пусконаладочные работы",
+    "электротехнические услуги"
+  ],
+  "rationale": "Final three are the first source-feasible, non-SUT-selected queries from two independent local-model passes over the supplier profile: goods, commissioning works, and electrical services. Selection among generated candidates used only raw EIS unique-result counts in the fixed date window, never Tender Agent relevance output.",
+  "selection_principles": [
+    "supplier-profile-grounded independent generation before SUT",
+    "at least 15 unique public 44-FZ candidates in the frozen date window",
+    "mixed goods/works/services semantics rather than near-duplicate synonyms",
+    "no candidate relevance labels or Tender Agent scores used in query selection"
+  ],
+  "source_only_feasibility": {
+    "date_from": "2026-09-01",
+    "date_to": "2026-09-15",
+    "counts": {
+      "электротехническое оборудование": 20,
+      "пусконаладочные работы": 39,
+      "электротехнические услуги": 20
+    }
+  }
+}

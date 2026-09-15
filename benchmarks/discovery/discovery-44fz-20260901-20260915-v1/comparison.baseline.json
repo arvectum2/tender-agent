@@ -1,0 +1,661 @@
+{
+  "cohort_freeze_sha256": "8a4f0898428b829698c53ed4e95a5276e2c52ece1f1a0c22622bcc13723a422e",
+  "cohort_id": "discovery-44fz-20260901-20260915-v1",
+  "cohort_manifest_sha256": "286196ef1c10bdf5ded40dc434bc26b59eda271d3db02d95b8d96f15db8eaa7b",
+  "compared_at": "2026-09-15T11:16:03.486176+00:00",
+  "corpus_version": "1",
+  "metric_semantics": {
+    "ndcg_grades": {
+      "IRRELEVANT": 0,
+      "PARTIALLY_RELEVANT": 1,
+      "RELEVANT": 2
+    },
+    "precision_relevant_labels": [
+      "RELEVANT",
+      "PARTIALLY_RELEVANT"
+    ],
+    "primary_k": 10,
+    "unclear": "excluded from scored ranking denominators and reported separately"
+  },
+  "metrics": {
+    "benchmark_version": "1",
+    "case_count": 45,
+    "deadline_correctness": {
+      "accuracy": 1.0,
+      "correct_count": 45,
+      "supported_count": 45
+    },
+    "failure_inventory": {
+      "missed_relevant": [
+        "dq1-q01-r03-0173200015526000010",
+        "dq1-q01-r04-0131200001026005690",
+        "dq1-q02-r01-0841600001326000056",
+        "dq1-q02-r05-0352300219526000166",
+        "dq1-q02-r12-0187300012826000399",
+        "dq1-q02-r15-0126100002926000046",
+        "dq1-q03-r02-0173200015526000010",
+        "dq1-q03-r06-0131200001026005690",
+        "dq1-q03-r10-0387200005326000070"
+      ],
+      "top_k_irrelevant": [
+        "dq1-q01-r01-0119300019826001780",
+        "dq1-q01-r02-0828100000726000382",
+        "dq1-q01-r07-0818500000826005863",
+        "dq1-q01-r12-0169300035826000214",
+        "dq1-q01-r14-0828100000726000376",
+        "dq1-q02-r14-0171200001926004082",
+        "dq1-q03-r01-0828100000726000382",
+        "dq1-q03-r03-0326100010326000286",
+        "dq1-q03-r04-0332100025126000642",
+        "dq1-q03-r05-0333200025726000054",
+        "dq1-q03-r09-0818500000826005863",
+        "dq1-q03-r13-0140100006326000039",
+        "dq1-q03-r15-0828100000726000376"
+      ]
+    },
+    "label_counts": {
+      "IRRELEVANT": 19,
+      "PARTIALLY_RELEVANT": 16,
+      "RELEVANT": 10
+    },
+    "macro_duplicate_rate": 0.0,
+    "macro_explainability_coverage": 1.0,
+    "macro_metrics_by_k": {
+      "10": {
+        "false_positive_rate": 0.43333333333333335,
+        "ndcg": 0.7595947506431756,
+        "precision": 0.5666666666666667,
+        "recall": 0.6355311355311355
+      },
+      "5": {
+        "false_positive_rate": 0.26666666666666666,
+        "ndcg": 0.7305048048196526,
+        "precision": 0.7333333333333334,
+        "recall": 0.4597069597069597
+      }
+    },
+    "macro_missed_relevant_rate_at_primary_k": 0.3644688644688645,
+    "queries": [
+      {
+        "benchmark_version": "1",
+        "case_count": 15,
+        "deadline_correctness": {
+          "accuracy": 1.0,
+          "correct_count": 15,
+          "supported_count": 15
+        },
+        "duplicate_rate": 0.0,
+        "explainability_coverage": 1.0,
+        "failure_cases": {
+          "missed_relevant": [
+            "dq1-q01-r03-0173200015526000010",
+            "dq1-q01-r04-0131200001026005690"
+          ],
+          "top_k_irrelevant": [
+            "dq1-q01-r01-0119300019826001780",
+            "dq1-q01-r02-0828100000726000382",
+            "dq1-q01-r07-0818500000826005863",
+            "dq1-q01-r12-0169300035826000214",
+            "dq1-q01-r14-0828100000726000376"
+          ]
+        },
+        "metrics_by_k": {
+          "10": {
+            "evaluated_count": 10,
+            "false_positive_rate": 0.5,
+            "ndcg": 0.7959952974789054,
+            "precision": 0.5,
+            "recall": 0.7142857142857143,
+            "relevant_count": 5
+          },
+          "5": {
+            "evaluated_count": 5,
+            "false_positive_rate": 0.2,
+            "ndcg": 0.8281827047067384,
+            "precision": 0.8,
+            "recall": 0.5714285714285714,
+            "relevant_count": 4
+          }
+        },
+        "missed_relevant_rate_at_primary_k": 0.2857142857142857,
+        "query": "электротехническое оборудование",
+        "ranked_cases": [
+          {
+            "case_id": "dq1-q01-r06-0858400000126000094",
+            "label": "RELEVANT",
+            "rank": 1,
+            "registry_number": "0858400000126000094",
+            "score": 55.0,
+            "source_rank": 6,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r09-0136300005826000173",
+            "label": "RELEVANT",
+            "rank": 2,
+            "registry_number": "0136300005826000173",
+            "score": 55.0,
+            "source_rank": 9,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r10-0369200034826000059",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 3,
+            "registry_number": "0369200034826000059",
+            "score": 55.0,
+            "source_rank": 10,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r11-0373100134626000454",
+            "label": "RELEVANT",
+            "rank": 4,
+            "registry_number": "0373100134626000454",
+            "score": 55.0,
+            "source_rank": 11,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r01-0119300019826001780",
+            "label": "IRRELEVANT",
+            "rank": 5,
+            "registry_number": "0119300019826001780",
+            "score": 45.0,
+            "source_rank": 1,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r02-0828100000726000382",
+            "label": "IRRELEVANT",
+            "rank": 6,
+            "registry_number": "0828100000726000382",
+            "score": 45.0,
+            "source_rank": 2,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r07-0818500000826005863",
+            "label": "IRRELEVANT",
+            "rank": 7,
+            "registry_number": "0818500000826005863",
+            "score": 45.0,
+            "source_rank": 7,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r12-0169300035826000214",
+            "label": "IRRELEVANT",
+            "rank": 8,
+            "registry_number": "0169300035826000214",
+            "score": 45.0,
+            "source_rank": 12,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r14-0828100000726000376",
+            "label": "IRRELEVANT",
+            "rank": 9,
+            "registry_number": "0828100000726000376",
+            "score": 45.0,
+            "source_rank": 14,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r15-0137100000426000068",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 10,
+            "registry_number": "0137100000426000068",
+            "score": 45.0,
+            "source_rank": 15,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r03-0173200015526000010",
+            "label": "RELEVANT",
+            "rank": 11,
+            "registry_number": "0173200015526000010",
+            "score": 40.0,
+            "source_rank": 3,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r04-0131200001026005690",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 12,
+            "registry_number": "0131200001026005690",
+            "score": 40.0,
+            "source_rank": 4,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q01-r05-0318200031326000123",
+            "label": "IRRELEVANT",
+            "rank": 13,
+            "registry_number": "0318200031326000123",
+            "score": 30.0,
+            "source_rank": 5,
+            "status": "low"
+          },
+          {
+            "case_id": "dq1-q01-r08-0387200005326000070",
+            "label": "IRRELEVANT",
+            "rank": 14,
+            "registry_number": "0387200005326000070",
+            "score": 30.0,
+            "source_rank": 8,
+            "status": "low"
+          },
+          {
+            "case_id": "dq1-q01-r13-0845600007426000041",
+            "label": "IRRELEVANT",
+            "rank": 15,
+            "registry_number": "0845600007426000041",
+            "score": 30.0,
+            "source_rank": 13,
+            "status": "low"
+          }
+        ],
+        "relevant_total": 7,
+        "scored_case_count": 15,
+        "status_correctness": {
+          "accuracy": null,
+          "correct_count": 0,
+          "supported_count": 0
+        },
+        "unclear_case_ids": [],
+        "unclear_count": 0
+      },
+      {
+        "benchmark_version": "1",
+        "case_count": 15,
+        "deadline_correctness": {
+          "accuracy": 1.0,
+          "correct_count": 15,
+          "supported_count": 15
+        },
+        "duplicate_rate": 0.0,
+        "explainability_coverage": 1.0,
+        "failure_cases": {
+          "missed_relevant": [
+            "dq1-q02-r15-0126100002926000046",
+            "dq1-q02-r05-0352300219526000166",
+            "dq1-q02-r12-0187300012826000399",
+            "dq1-q02-r01-0841600001326000056"
+          ],
+          "top_k_irrelevant": [
+            "dq1-q02-r14-0171200001926004082"
+          ]
+        },
+        "metrics_by_k": {
+          "10": {
+            "evaluated_count": 10,
+            "false_positive_rate": 0.1,
+            "ndcg": 0.8429139270601976,
+            "precision": 0.9,
+            "recall": 0.6923076923076923,
+            "relevant_count": 9
+          },
+          "5": {
+            "evaluated_count": 5,
+            "false_positive_rate": 0.2,
+            "ndcg": 0.6952186554835916,
+            "precision": 0.8,
+            "recall": 0.3076923076923077,
+            "relevant_count": 4
+          }
+        },
+        "missed_relevant_rate_at_primary_k": 0.3076923076923077,
+        "query": "пусконаладочные работы",
+        "ranked_cases": [
+          {
+            "case_id": "dq1-q02-r03-0348200066826000032",
+            "label": "RELEVANT",
+            "rank": 1,
+            "registry_number": "0348200066826000032",
+            "score": 60.0,
+            "source_rank": 3,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r14-0171200001926004082",
+            "label": "IRRELEVANT",
+            "rank": 2,
+            "registry_number": "0171200001926004082",
+            "score": 60.0,
+            "source_rank": 14,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r08-0348100056626000020",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 3,
+            "registry_number": "0348100056626000020",
+            "score": 55.0,
+            "source_rank": 8,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r09-0815500000526011626",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 4,
+            "registry_number": "0815500000526011626",
+            "score": 55.0,
+            "source_rank": 9,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r10-0843500000226005138",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 5,
+            "registry_number": "0843500000226005138",
+            "score": 55.0,
+            "source_rank": 10,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r11-0319300338826000191",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 6,
+            "registry_number": "0319300338826000191",
+            "score": 55.0,
+            "source_rank": 11,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r02-0322300035026000014",
+            "label": "RELEVANT",
+            "rank": 7,
+            "registry_number": "0322300035026000014",
+            "score": 50.0,
+            "source_rank": 2,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r04-0127100007426000043",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 8,
+            "registry_number": "0127100007426000043",
+            "score": 50.0,
+            "source_rank": 4,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r06-0338200008626000410",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 9,
+            "registry_number": "0338200008626000410",
+            "score": 50.0,
+            "source_rank": 6,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r13-0320100011226000501",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 10,
+            "registry_number": "0320100011226000501",
+            "score": 50.0,
+            "source_rank": 13,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r15-0126100002926000046",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 11,
+            "registry_number": "0126100002926000046",
+            "score": 50.0,
+            "source_rank": 15,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r05-0352300219526000166",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 12,
+            "registry_number": "0352300219526000166",
+            "score": 45.0,
+            "source_rank": 5,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r07-0148200000826000038",
+            "label": "IRRELEVANT",
+            "rank": 13,
+            "registry_number": "0148200000826000038",
+            "score": 45.0,
+            "source_rank": 7,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r12-0187300012826000399",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 14,
+            "registry_number": "0187300012826000399",
+            "score": 45.0,
+            "source_rank": 12,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q02-r01-0841600001326000056",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 15,
+            "registry_number": "0841600001326000056",
+            "score": 20.0,
+            "source_rank": 1,
+            "status": "low"
+          }
+        ],
+        "relevant_total": 13,
+        "scored_case_count": 15,
+        "status_correctness": {
+          "accuracy": null,
+          "correct_count": 0,
+          "supported_count": 0
+        },
+        "unclear_case_ids": [],
+        "unclear_count": 0
+      },
+      {
+        "benchmark_version": "1",
+        "case_count": 15,
+        "deadline_correctness": {
+          "accuracy": 1.0,
+          "correct_count": 15,
+          "supported_count": 15
+        },
+        "duplicate_rate": 0.0,
+        "explainability_coverage": 1.0,
+        "failure_cases": {
+          "missed_relevant": [
+            "dq1-q03-r02-0173200015526000010",
+            "dq1-q03-r06-0131200001026005690",
+            "dq1-q03-r10-0387200005326000070"
+          ],
+          "top_k_irrelevant": [
+            "dq1-q03-r01-0828100000726000382",
+            "dq1-q03-r03-0326100010326000286",
+            "dq1-q03-r04-0332100025126000642",
+            "dq1-q03-r05-0333200025726000054",
+            "dq1-q03-r09-0818500000826005863",
+            "dq1-q03-r13-0140100006326000039",
+            "dq1-q03-r15-0828100000726000376"
+          ]
+        },
+        "metrics_by_k": {
+          "10": {
+            "evaluated_count": 10,
+            "false_positive_rate": 0.7,
+            "ndcg": 0.639875027390424,
+            "precision": 0.3,
+            "recall": 0.5,
+            "relevant_count": 3
+          },
+          "5": {
+            "evaluated_count": 5,
+            "false_positive_rate": 0.4,
+            "ndcg": 0.6681130542686281,
+            "precision": 0.6,
+            "recall": 0.5,
+            "relevant_count": 3
+          }
+        },
+        "missed_relevant_rate_at_primary_k": 0.5,
+        "query": "электротехнические услуги",
+        "ranked_cases": [
+          {
+            "case_id": "dq1-q03-r08-0858400000126000094",
+            "label": "RELEVANT",
+            "rank": 1,
+            "registry_number": "0858400000126000094",
+            "score": 55.0,
+            "source_rank": 8,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r11-0136300005826000173",
+            "label": "RELEVANT",
+            "rank": 2,
+            "registry_number": "0136300005826000173",
+            "score": 55.0,
+            "source_rank": 11,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r12-0369200034826000059",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 3,
+            "registry_number": "0369200034826000059",
+            "score": 55.0,
+            "source_rank": 12,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r01-0828100000726000382",
+            "label": "IRRELEVANT",
+            "rank": 4,
+            "registry_number": "0828100000726000382",
+            "score": 45.0,
+            "source_rank": 1,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r03-0326100010326000286",
+            "label": "IRRELEVANT",
+            "rank": 5,
+            "registry_number": "0326100010326000286",
+            "score": 45.0,
+            "source_rank": 3,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r04-0332100025126000642",
+            "label": "IRRELEVANT",
+            "rank": 6,
+            "registry_number": "0332100025126000642",
+            "score": 45.0,
+            "source_rank": 4,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r05-0333200025726000054",
+            "label": "IRRELEVANT",
+            "rank": 7,
+            "registry_number": "0333200025726000054",
+            "score": 45.0,
+            "source_rank": 5,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r09-0818500000826005863",
+            "label": "IRRELEVANT",
+            "rank": 8,
+            "registry_number": "0818500000826005863",
+            "score": 45.0,
+            "source_rank": 9,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r13-0140100006326000039",
+            "label": "IRRELEVANT",
+            "rank": 9,
+            "registry_number": "0140100006326000039",
+            "score": 45.0,
+            "source_rank": 13,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r15-0828100000726000376",
+            "label": "IRRELEVANT",
+            "rank": 10,
+            "registry_number": "0828100000726000376",
+            "score": 45.0,
+            "source_rank": 15,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r02-0173200015526000010",
+            "label": "RELEVANT",
+            "rank": 11,
+            "registry_number": "0173200015526000010",
+            "score": 40.0,
+            "source_rank": 2,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r06-0131200001026005690",
+            "label": "RELEVANT",
+            "rank": 12,
+            "registry_number": "0131200001026005690",
+            "score": 40.0,
+            "source_rank": 6,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r14-0156100008126000039",
+            "label": "IRRELEVANT",
+            "rank": 13,
+            "registry_number": "0156100008126000039",
+            "score": 40.0,
+            "source_rank": 14,
+            "status": "medium"
+          },
+          {
+            "case_id": "dq1-q03-r07-0318200031326000123",
+            "label": "IRRELEVANT",
+            "rank": 14,
+            "registry_number": "0318200031326000123",
+            "score": 30.0,
+            "source_rank": 7,
+            "status": "low"
+          },
+          {
+            "case_id": "dq1-q03-r10-0387200005326000070",
+            "label": "PARTIALLY_RELEVANT",
+            "rank": 15,
+            "registry_number": "0387200005326000070",
+            "score": 30.0,
+            "source_rank": 10,
+            "status": "low"
+          }
+        ],
+        "relevant_total": 6,
+        "scored_case_count": 15,
+        "status_correctness": {
+          "accuracy": null,
+          "correct_count": 0,
+          "supported_count": 0
+        },
+        "unclear_case_ids": [],
+        "unclear_count": 0
+      }
+    ],
+    "query_count": 3,
+    "scored_case_count": 45,
+    "status_correctness": {
+      "accuracy": null,
+      "correct_count": 0,
+      "supported_count": 0
+    }
+  },
+  "runtime_version": "relevance_scoring@8827bdf1e0d6f0f1bb0de34ae06064cb3b3da407-baseline",
+  "sut_cohort_sha256": "09ab3b3e24522daae16183e8174ad7db837863ad32634129604ed541531c0c61"
+}
