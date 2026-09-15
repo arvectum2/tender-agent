@@ -1,0 +1,37 @@
+version: 1
+task_id: COMMERCIAL-CORE-V1-001
+status: in_progress
+updated_at: '2026-09-15T13:22:00Z'
+goal: 'Deliver the first executable Commercial Core slice: customer price-list/catalog ingest -> normalized catalog -> tender-to-catalog matching -> auditable coverage/cost/economic headroom -> commercial feasibility -> human-controlled next action.'
+definition_of_done:
+  - 'Versioned Commercial Core v1 contract with normalized catalog rows, source provenance, match results, coverage/economic outputs, unknowns and human-control flags.'
+  - 'XLSX/CSV import reuses commodity parsers and fails closed on ambiguous layouts while retaining source row/sheet provenance.'
+  - 'SKU/article, brand/manufacturer, title/name, unit, price/currency and optional characteristics are normalized without inventing missing values.'
+  - 'Tender-to-catalog matching emits EXACT / LIKELY_ANALOG / PARTIAL / UNCERTAIN / NO_MATCH with deterministic rationale/evidence and no price-only relevance.'
+  - 'Coverage, known catalog cost and economic headroom/margin are calculated only from supported inputs; missing inputs remain explicit Unknown/Needs Review.'
+  - 'Result is exposed through the existing report/API path and cannot authorize external procurement/commercial action.'
+  - 'Regression coverage includes clean XLSX/CSV, ambiguous columns, missing price, match classes, duplicate SKUs, unit mismatch and unknown economics.'
+  - 'Focused/relevant tests and exact-head CI green; review-ready PR; stop before merge for Product Owner review.'
+completed:
+  - 'Decision Core v1 completed and merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
+  - 'Owner explicitly directed Commercial Core continuation on 2026-09-15.'
+  - 'Issue #62 created with ARV-016 + ARV-017 scope and REVIEW gate.'
+  - 'Reuse inventory identified existing openpyxl/CSV import patterns, tender canonical line items, supplier profile, quote comparison, cost model, economics package and report/API surfaces.'
+  - 'ARV-067 electrical ontology/product catalog remains offline/reference-only and is excluded from implicit runtime wiring.'
+current: 'Create isolated branch and implement reusable catalog ingest plus deterministic commercial matching contract.'
+remaining:
+  - 'Audit existing import/economics helpers for direct reuse.'
+  - 'Implement and test catalog ingest/normalization.'
+  - 'Implement and test match classes, coverage and economics.'
+  - 'Integrate into report/API.'
+  - 'Run broader validation, open PR #62 implementation, exact-head CI, then stop at owner review.'
+last_verified_commit: '49430cb1de11cfda2f8d3aba7caa9c2e45cdc3dc'
+test_results:
+  - 'No Commercial Core v1 code changed yet; inventory only.'
+resume_instruction: 'Resume COMMERCIAL-CORE-V1-001 from issue #62 on branch agent/commercial-core-v1-001. Reuse existing XLSX/CSV/TKP/vendor import and economics primitives; do not wire offline ARV-067 catalog into runtime. Implement the smallest auditable catalog ingest + tender matching + commercial feasibility slice, fail closed on ambiguous/missing inputs, preserve HUMAN control, test it, open a REVIEW PR, verify exact-head CI, and stop before merge.'
+execution:
+  issue: 62
+  branch: 'agent/commercial-core-v1-001'
+  base_commit: '49430cb1de11cfda2f8d3aba7caa9c2e45cdc3dc'
+  pull_request: null
+  manual_override: true
