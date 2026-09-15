@@ -1,7 +1,7 @@
 version: 1
 task_id: BUILD-DOCKER-CONTEXT-001
-status: in_progress
-updated_at: '2026-09-15T09:30:00Z'
+status: completed
+updated_at: '2026-09-15T09:49:00Z'
 goal: 'Restore a self-contained reproducible clean-checkout Docker build without undeclared sibling/local landing-asset dependencies.'
 definition_of_done:
   - 'Trace whether arvectum-landing/public/assets is required at runtime and identify the intended source of any required assets.'
@@ -11,19 +11,26 @@ definition_of_done:
   - 'Runtime still contains every asset actually required by the app.'
   - 'Relevant CI/deployment documentation or smoke coverage updated if needed; exact-head/current-base gates pass before merge.'
 completed:
-  - 'Issue #19 acceptance criteria reviewed.'
-  - 'Execution queue advanced to this AUTO workstream.'
-  - 'Runtime trace proves landing-site files are optional: site_public_root defaults to None and install_optional_site_mount is a no-op when unset.'
-  - 'Repository trace proves arvectum-landing is not in the Tender Agent checkout; prior Dockerfile COPY and compose host path were undeclared local assumptions.'
-  - 'Repair implemented on agent/build-docker-context-001: invalid Dockerfile COPY removed; optional site preview requires explicit ARVECTUM_LANDING_PUBLIC_DIR; deployment guide updated; clean-checkout docker-build CI added.'
-  - 'PR #58 opened at head 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622.'
-current: 'Await and verify exact-head CI/current-base gates for PR #58.'
-remaining:
-  - 'Verify new docker-build and all required CI jobs pass on exact PR head.'
-  - 'Recheck current-base mergeability.'
-  - 'Squash-merge PR #58, verify issue #19 closes, mark task and queue completed.'
-last_verified_commit: '60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622'
+  - 'Runtime trace proved landing-site files are optional: site_public_root defaults to None and install_optional_site_mount is a no-op when unset.'
+  - 'Repository trace proved arvectum-landing is not in the Tender Agent checkout; the Dockerfile COPY and compose host path were undeclared local assumptions.'
+  - 'Removed the invalid Dockerfile landing-assets COPY.'
+  - 'Made the optional unified marketing-site preview dependency explicit through required ARVECTUM_LANDING_PUBLIC_DIR.'
+  - 'Updated deployment guidance and added a clean-checkout docker-build/compose CI regression gate.'
+  - 'Local clean-clone exact-head Docker acceptance passed with LOCAL_BUILDCTX_VALIDATION_OK.'
+  - 'Exact-head GitHub CI run 34953003147 for 829e96523e9c86bdd9c8f54b061f8a4448aeef9f passed all jobs, including docker-build and quality.'
+  - 'PR #58 was mergeable against current main and squash-merged as 8924a8576a96ccac490682be737f2b041c8a06e3.'
+  - 'Issue #19 auto-closed completed.'
+current: 'BUILD-DOCKER-CONTEXT-001 completed.'
+remaining: []
+last_verified_commit: '8924a8576a96ccac490682be737f2b041c8a06e3'
 test_results:
-  - 'Static/runtime inspection confirms the Tender Agent runtime image does not require external marketing-site files.'
-  - 'Clean-checkout docker-build CI gate added; result pending.'
-resume_instruction: 'Resume at PR #58. Verify CI for head 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622 and current-base mergeability; if green, merge and close the task. Do not redo completed tracing or promote REVIEW/deferred queue items.'
+  - 'Clean temporary clone: docker build PASS; missing ARVECTUM_LANDING_PUBLIC_DIR fails closed; explicit path compose config PASS.'
+  - 'GitHub CI run 34953003147: success; exact head 829e96523e9c86bdd9c8f54b061f8a4448aeef9f.'
+  - 'Additional macOS full make test reached 2940 passed / 241 skipped with one host-specific R9 backup/restore failure using Homebrew PostgreSQL 18.6; supported Ubuntu GitHub quality job passed the same exact head, so the host-specific failure is recorded but did not invalidate the repository acceptance gate.'
+resume_instruction: 'Task completed. Do not reopen unless a concrete Docker/build regression appears. Continue from the next explicitly admitted queue item; REVIEW/deferred items require their stated Owner gate.'
+artifacts:
+  pull_request: 58
+  issue: 19
+  head: 829e96523e9c86bdd9c8f54b061f8a4448aeef9f
+  merge_commit: 8924a8576a96ccac490682be737f2b041c8a06e3
+  ci_run: 34953003147
