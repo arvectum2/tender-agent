@@ -1,7 +1,7 @@
 version: 1
 task_id: DISCOVERY-QA-001
-status: blocked
-updated_at: '2026-09-15T11:56:00Z'
+status: completed
+updated_at: '2026-09-15T12:20:00Z'
 goal: 'Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark.'
 definition_of_done:
   - 'Freeze an independently labelled 30–50-case 44-FZ discovery corpus before evaluating or tuning Tender Agent output.'
@@ -13,31 +13,26 @@ definition_of_done:
 completed:
   - 'BENCHMARK-PIPELINE-001 dependency completed.'
   - 'Owner READY promotion recorded in issue #2 comment 5678641869.'
-  - 'Existing benchmark/evidence contract and deterministic scorer reused; no bespoke parallel benchmark stack introduced.'
-  - 'Independent query selector ran before SUT; source-only feasibility selected three distinct queries.'
-  - '45 real public 44-FZ cases acquired for 2026-09-01..2026-09-15.'
-  - 'Independent local Qwen2.5-14B source-only evaluation completed; labels frozen before SUT.'
+  - '45 real public 44-FZ cases acquired for 2026-09-01..2026-09-15 and independently labelled/frozen before SUT.'
   - 'Frozen labels: 10 RELEVANT, 16 PARTIALLY_RELEVANT, 19 IRRELEVANT; cohort freeze SHA 8a4f0898428b829698c53ed4e95a5276e2c52ece1f1a0c22622bcc13723a422e.'
-  - 'Baseline: P@5 0.7333, R@5 0.4597, nDCG@5 0.7305, FP@5 0.2667; P@10 0.5667, R@10 0.6355, nDCG@10 0.7596, FP@10 0.4333; missed@10 0.3645.'
-  - 'Measured defects before code change: nonsemantic commercial boosts, diluted single capability matches, overbroad Russian prefix morphology.'
-  - 'Bounded scorer hardening commit 32d5ce3336af3c3ff9e79625f2a813b312941579.'
-  - 'Same frozen corpus rerun: P@5 0.9333, R@5 0.5885, nDCG@5 0.7997, FP@5 0.0667; P@10 0.7000, R@10 0.8120, nDCG@10 0.8302, FP@10 0.3000; missed@10 0.1880.'
-  - 'Evidence release commit d62b81bbd5f7fb606ee6069463416ab1a6fd424b pushed to agent/discovery-qa-001.'
-  - 'Branch reconciled with main and pushed at exact PR head 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be.'
-  - 'PR #59 opened review-ready; issue #2 evidence report posted in comment 5679631340.'
-  - 'Exact-head GitHub CI run 34964993833 completed SUCCESS; all 9 jobs passed including authoritative Ubuntu quality/make test.'
-current: 'Blocked at Product Owner review gate for PR #59.'
-remaining:
-  - 'Product Owner reviews PR #59 and explicitly approves merge or requests bounded changes.'
-  - 'On explicit merge approval: verify exact PR head/CI, guarded merge, verify issue #2 closure, mark queue/current/history completed.'
-last_verified_commit: '1dc243d57f686fcc9fec92e4b355fe2ef98aa4be'
+  - 'Baseline measured before hardening: P@5 0.7333, R@5 0.4597, nDCG@5 0.7305, FP@5 0.2667; P@10 0.5667, R@10 0.6355, nDCG@10 0.7596, FP@10 0.4333; missed@10 0.3645.'
+  - 'Measured defects: nonsemantic commercial boosts, diluted single capability matches, overbroad Russian prefix morphology.'
+  - 'Bounded scorer hardening commit 32d5ce3336af3c3ff9e79625f2a813b312941579; no LLM reranker/vector DB/paid service/new dependency.'
+  - 'Same frozen corpus rerun improved P@5 to 0.9333, R@5 to 0.5885, nDCG@5 to 0.7997, FP@5 to 0.0667; P@10 to 0.7000, R@10 to 0.8120, nDCG@10 to 0.8302, FP@10 to 0.3000; missed@10 to 0.1880.'
+  - 'Evidence release commit d62b81bbd5f7fb606ee6069463416ab1a6fd424b; PR #59 exact head 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be.'
+  - 'Exact-head GitHub CI run 34964993833 completed SUCCESS with 9/9 jobs passed.'
+  - 'Product Owner explicitly approved merge of PR #59 on 2026-09-15.'
+  - 'PR #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8; issue #2 closed completed.'
+current: 'Completed and merged.'
+remaining: []
+last_verified_commit: '762a392207a73ed77b04af69a378746920960ba8'
 test_results:
   - 'Focused relevance/discovery tests: 27 passed; Ruff PASS.'
   - 'Evidence SHA256SUMS verification: PASS.'
   - 'make check: PASS.'
   - 'Local full pytest: 2948 passed, 241 skipped, one known Mac/PostgreSQL R9 pg_restore environment failure; no R9 code changed.'
   - 'GitHub exact-head CI run 34964993833: SUCCESS; 9/9 jobs passed.'
-resume_instruction: 'Do not make further product changes or merge while REVIEW is pending. If Product Owner explicitly approves PR #59 for merge, re-fetch PR/head/CI and merge only with guarded expected_head_sha; then verify issue #2 closed and update canonical task/queue to completed. If review requests changes, implement only those bounded changes and rerun exact-head CI.'
+resume_instruction: 'Task is completed. Do not reopen DISCOVERY-QA-001 without a concrete regression or explicit Product Owner directive. Preserve the frozen corpus and benchmark evidence as regression assets.'
 execution:
   branch: 'agent/discovery-qa-001'
   base_commit: 'ae7c5d0e5c2ea905a13def47e972111afde013af'
@@ -45,5 +40,5 @@ execution:
   evidence_commit: 'd62b81bbd5f7fb606ee6069463416ab1a6fd424b'
   pull_request: 59
   pull_request_head: '1dc243d57f686fcc9fec92e4b355fe2ef98aa4be'
+  merge_commit: '762a392207a73ed77b04af69a378746920960ba8'
   ci_run: 34964993833
-  manual_override: true
