@@ -7,19 +7,22 @@ issue: 65
 branch: agent/change-monitoring-v1-001
 base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
 completed:
-  - Reconciled DOCUMENT-QA-NEXT-INCREMENT branch checkpoint: implementation DoD complete; PR #73 remains open and Product Owner merge-gated.
-  - Checked PR #73 exact current head a746377a59173dd04f891dae9681f34625185e91; exact-head CI run 35016956523 is queued, so no passive wait was performed.
+  - Reconciled DOCUMENT-QA-NEXT-INCREMENT against main: PR #73 is merged as dca11d460912e805abc634a37ca731f03d4bb24c and issue #51 is completed; do not reopen it.
   - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
   - Read issue #65 scope and hard boundaries; external notification delivery remains disabled/out of scope.
   - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
-current: Inventory existing event/alert, saved-search, procurement source snapshot, API/feed and persistence primitives before implementation.
+  - Inventoried reusable persistence/event surfaces. ProcurementTender already stores source/external_id, application_deadline, nmck_amount, status, raw_payload, content_hash and first/last-seen timestamps; ProcurementTenderDocument carries source document identity, sha256 and raw_meta provenance.
+  - Identified src.modules.procedure_monitor as the closest existing alert/feed pattern: ProcedureMonitorEvent has event_type/timestamp/summary/source_ref and ProcedureMonitorAlert has code/severity/summary; its service already appends event-log records. This is a reuse pattern, not a suitable direct persistence model because it is post-submission/deal-bound.
+  - Confirmed src.shared.events and src.modules.event_log are existing generic event/audit primitives to reuse for monitoring audit integration.
+current: Define a minimal procurement-monitoring module that reuses ProcurementTender/Document source fields and event-log conventions while keeping watch/snapshot/diff/feed persistence procurement-specific and source-bound.
 pending:
-  - Identify reusable repository models/services/API surfaces for saved watches, source snapshots and internal events.
-  - Define the smallest versioned monitoring contract and procurement-specific deterministic diff semantics.
-  - Implement idempotent unchanged/deadline/document-revision/status-cancellation handling with source provenance.
-  - Add internal feed/API surface only; do not enable external transports.
+  - Inspect event_log models/service and API router registration conventions plus migrations/tests for a similarly sized module.
+  - Define versioned watch target, source snapshot, diff and alert-event schemas; fingerprint canonical source state deterministically.
+  - Persist watch + snapshot + internal event/feed records with uniqueness/idempotency constraints; no external transport fields or delivery workers.
+  - Implement unchanged/deadline/document-revision/status-cancellation/document-set change detection and UNKNOWN/NEEDS_REVIEW for unsupported ambiguity.
+  - Add regression tests and internal API/feed surface.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
 test_results:
-  - No product code changed yet; tests not run in this inventory checkpoint.
-resume_instruction: Read existing models/services/routes for tender source state, saved searches and internal event/audit primitives. Reuse those seams; custom code starts only at procurement-specific source snapshot/diff semantics. Do not implement email/SMS/Telegram/webhook delivery.
-updated_at: '2026-09-15T20:05:00Z'
+  - No product code changed in this inventory quantum; tests not run yet.
+resume_instruction: Inspect src/modules/event_log/{models.py,service.py}, src/main.py router inclusion, and one recent module migration/test pattern. Then implement the smallest procurement_monitoring module using ProcurementTender and ProcurementTenderDocument as source-state inputs and event_log conventions for audit. Do not reuse ProcedureMonitorSet directly because it requires deal/post-submission context. Do not implement email/SMS/Telegram/webhook delivery.
+updated_at: '2026-09-16T00:18:00+03:00'
