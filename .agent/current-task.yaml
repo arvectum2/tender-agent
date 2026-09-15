@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: BUILD-DOCKER-CONTEXT-001
 authority: AUTO
 goal: "Restore a self-contained, reproducible clean-checkout Docker build by removing or replacing the undeclared dependency on arvectum-landing/public/assets."
@@ -11,27 +11,25 @@ definition_of_done:
   - "Runtime image still contains every asset actually required by the application."
   - "Relevant CI/deployment documentation or smoke coverage is updated if needed, and required exact-head/current-base gates pass before merge."
 completed:
-  - "REUSE-FIRST-001 completed and merged in PR #56; Owner renewed POS-004 / AI-ENG-001 on unchanged terms."
-  - "Execution queue reconciled to select BUILD-DOCKER-CONTEXT-001 as the next admitted ready AUTO workstream."
-  - "Issue #19 acceptance criteria reviewed."
-  - "Runtime trace confirmed landing files are optional: site_public_root defaults to None and install_optional_site_mount returns without mounting when unset; docker-compose tender-pilot does not set it."
-  - "Repository trace confirmed main has no arvectum-landing directory, while Dockerfile and local preview compose assumed one."
-  - "Branch agent/build-docker-context-001 removes the invalid Dockerfile COPY, makes local marketing-site path explicit through required ARVECTUM_LANDING_PUBLIC_DIR, updates deployment guidance, and adds clean-checkout docker build CI."
-  - "PR #58 opened from exact branch head 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622."
-current: "Validate PR #58 exact head/current base, including the new clean-checkout docker-build CI job."
+  - "Runtime trace confirmed landing files are optional: site_public_root defaults to None and install_optional_site_mount returns without mounting when unset."
+  - "PR #58 removed the invalid Dockerfile COPY, made the optional marketing-site path explicit through ARVECTUM_LANDING_PUBLIC_DIR, updated deployment guidance, and added clean-checkout docker-build CI."
+  - "Exact-head CI run 34953003147 passed for head 829e96523e9c86bdd9c8f54b061f8a4448aeef9f."
+  - "PR #58 squash-merged as 8924a8576a96ccac490682be737f2b041c8a06e3."
+  - "Issue #19 closed completed."
+current: "BUILD-DOCKER-CONTEXT-001 completed; no admitted AUTO item remains in the current execution queue."
 pending:
-  - "Verify all required CI jobs are green for PR #58 exact head."
-  - "Recheck mergeability/current-base state after CI."
-  - "Merge #58, confirm issue #19 closes, mark checkpoints/queue completed, then advance only to the next explicitly admitted AUTO item."
-last_verified_commit: "60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622"
+  - "DISCOVERY-QA-001 remains blocked REVIEW pending explicit Product Owner promotion to READY."
+  - "DOCUMENT-QA-NEXT-INCREMENT remains deferred REVIEW pending a concrete reusable failure family and Owner promotion."
+last_verified_commit: "8924a8576a96ccac490682be737f2b041c8a06e3"
 test_results:
-  - "Static/runtime inspection: optional site mount is disabled unless AI_CORP_SITE_PUBLIC_ROOT is explicitly configured."
-  - "PR #58 adds docker-build CI as the clean-checkout acceptance regression gate; CI result pending."
-updated_at: "2026-09-15T09:30:00Z"
-resume_instruction: "Continue BUILD-DOCKER-CONTEXT-001 at PR #58. Do not redo runtime tracing. Verify exact-head CI for 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622 and current-base mergeability. If green, squash-merge, verify issue #19 closure, set task/checkpoint/queue to completed, then inspect the queue for the next explicitly admitted AUTO workstream. Do not promote REVIEW/deferred items yourself."
+  - "Clean temporary clone Docker acceptance passed."
+  - "GitHub CI run 34953003147: success, including docker-build and quality."
+updated_at: "2026-09-15T10:00:00Z"
+resume_instruction: "Task completed. On the next run reconcile the queue. Do not reopen BUILD-DOCKER-CONTEXT-001 unless a concrete regression appears. Do not promote DISCOVERY-QA-001 or DOCUMENT-QA-NEXT-INCREMENT without their explicit Owner gates."
 execution:
-  claimed_by: "manual Owner-requested roadmap continuation"
-  execution_id: "build-docker-context-001-20260915"
-  branch: "agent/build-docker-context-001"
+  claimed_by: null
+  execution_id: null
+  branch: null
   pull_request: 58
-  manual_override: true
+  manual_override: false
+  lease_until: null
