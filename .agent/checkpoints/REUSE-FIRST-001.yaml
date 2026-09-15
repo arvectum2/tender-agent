@@ -1,55 +1,40 @@
 version: 1
 task_id: REUSE-FIRST-001
-status: in_progress
-updated_at: '2026-09-15T08:08:00Z'
-run: '2026-09-15 10:59 MSK'
+status: blocked
+updated_at: '2026-09-15T08:45:00Z'
+run: '2026-09-15 manual continuation after 10:59 MSK watchdog tranche'
 progress:
-  - 'Reconciled master roadmap, human roadmap, current task, executor policy, execution queue and audit issue #57.'
-  - 'Claimed REUSE-FIRST-001 with lease through 2026-09-15T09:55:00Z.'
-  - 'Started public competitor evidence collection.'
-public_evidence_seed:
-  - competitor: Tenderplan
-    url: https://tenderplan.ru/search
-    observed_patterns:
-      - saved keyword searches and online notifications
-      - search inside tender documentation including archives
-      - OKPD2, region and expert filters
-      - customer/competitor analytics
-      - inline document viewing/comments
-  - competitor: Seldon
-    url: https://seldon.pro/
-    observed_patterns:
-      - multi-source tender search and monitoring
-      - customer/supplier analytics and counterparty checks
-      - document-aware filters
-      - market/price analytics
-      - API integration
-      - AI tools advertised in trial surface
-  - competitor: TenderGuru
-    url: https://www.tenderguru.ru/
-    observed_patterns:
-      - broad multi-source aggregation
-      - advanced search and alerts
-      - customer/supplier/contract views
-      - API and datasets for CRM/BI/ML/RAG
-      - Telegram/PWA notification channels
-  - competitor: GOC Tender
-    url: https://goc-tender.ru/
-    observed_patterns:
-      - free 44-FZ/223-FZ search
-      - customer reliability/FAS/court checks
-      - search/check/work contour in one window
-  - competitor: TendroBase
-    url: https://tendrobase.ru/
-    observed_patterns:
-      - lightweight free EIS-derived search
-      - region/category/customer/keyword filters
-      - explicit source handoff to zakupki.gov.ru
-reuse_candidates_seed:
-  - component: atomno-mcp-zakupki
-    source: https://pypi.org/project/atomno-mcp-zakupki/0.2.0/
-    candidate_use: 'Evaluate as public pattern/reference for EIS search, tender-card normalization, OKPD2 lookup and agent-facing procurement tools; license/security/maintenance verification still required before dependency adoption.'
-  - component: OpenProcurement/OCDS
-    source: https://openprocurement.io/
-    candidate_use: 'Evaluate open procurement/OCDS data-model patterns; do not assume direct Russian-EIS fit.'
-next_action: 'Expand to 8-10 direct competitors using first-party public evidence where possible, then create canonical competitor-pattern matrix and reuse registry with license/legal/de-scope fields.'
+  - 'Reconciled current main at a08d31ba931c12df3a7257bad5bdb2de365eb7ae and superseded the stale/conflicted PR #56 head by resetting its task branch to current main before reapplying bounded artifacts.'
+  - 'Expanded the competitor reverse-spec to 9 direct procurement/tender products across search -> results -> tender/docs -> analysis -> workflow/next-action patterns using public evidence.'
+  - 'Created a concrete reusable component/API registry covering PDF.js, pypdf, Apache Tika, Tesseract, OCRmyPDF, openpyxl, pgvector, OCDS, atomno-mcp-zakupki and TenderGuru API/MCP with license/legal/maintenance/adoption boundaries.'
+  - 'Classified all active accelerated-plan P0/P1 workstreams and the current roadmap/queue overlay as REUSE/COPY_PATTERN/ADAPT/INVENT, with explicit commodity versus moat boundaries.'
+  - 'Documented reuse check, gap, differentiation and maintenance justification for every current INVENT boundary and explicitly de-scoped custom OCR, PDF renderer, vector/search infrastructure, auth, generic chatbot/RAG, notification, analytics, CRM and premature distributed infrastructure.'
+  - 'Preserved HUMAN/REVIEW controls for submissions, RFQs/invitations, winner/participation decisions, signing and other external procurement/commercial effects.'
+artifacts:
+  strategy_packet: docs/strategy/REUSE_FIRST_001_COMPETITOR_REVERSE_SPEC.md
+  pull_request: 56
+  branch: agent/reuse-first-001-reverse-spec
+competitor_count: 9
+reuse_registry:
+  concrete_candidates: 10
+  dependency_approvals_created: 0
+  new_paid_commitments: 0
+done_gate_assessment:
+  competitor_matrix: pass
+  reuse_registry: pass
+  p0_p1_classification: pass
+  invent_justification: pass
+  commodity_descope: pass
+  authority_boundary: pass
+validation:
+  exact_head_ci: 'final head 490705a31be952a59cef61266a6f3442abe5f024 is in CI run 34948115175; completed jobs observed so far are green, final workflow conclusion pending'
+  mergeability: 'PR #56 was mergeable before the canonical checkpoint-only main updates; recheck/reconcile against current main after any Owner renewal before merge'
+blocker:
+  type: OWNER_REVIEW
+  reason: 'Company AM-4 requires mandatory Owner review at the earliest of 2026-10-14, ten automatic merges, a material incident, or a material policy/authority/product/protection/access change. The Assignment-wide count of automatic merges under this authorization cannot be reliably attributed from GitHub merge metadata across Tender Agent, Proxy Launcher and other execution contours; therefore the ten-merge trigger cannot be proven un-reached and automatic merge must fail closed.'
+  resolution: 'An attributable Owner review/renewal of AM-4 (or canonical evidence proving the trigger has not been reached) is required before automatic merge. Preparation, CI and review-ready PR work may continue; auto-merge may not.'
+authority_recheck:
+  company_am4_approved: true
+  mandatory_review_trigger: 'Earliest of 2026-10-14, ten automatic merges, material incident, or material policy/authority/product/protection/access change.'
+  automatic_merge: fail_closed_review
+next_action: 'Verify final exact-head CI for PR #56 and leave the task review-ready. Do not merge automatically unless the AM-4 mandatory-review blocker is attributably resolved by the Owner; after renewal recheck current main/base and all gates before merge.'
