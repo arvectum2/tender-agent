@@ -243,3 +243,19 @@ class TestPublicTenderDataclasses:
         assert len(page.items) == 1
         assert page.page == 2
         assert page.has_next is True
+
+
+def test_search_card_does_not_alias_placement_organization_to_customer():
+    html = """
+    <div class="registry-entry">
+      <div class="registry-entry__header-mid__title">Оказание услуг</div>
+      <div class="registry-entry__body-title">Организация, осуществляющая размещение</div>
+      <div class="registry-entry__body-value">ГКУ Региональный центр закупок</div>
+      <a href="/epz/order/notice/ea20/view/common-info.html?regNumber=0123456789012345678">0123456789012345678</a>
+    </div>
+    """
+
+    cards = parse_44fz_search_results(html)
+
+    assert len(cards) == 1
+    assert cards[0]["customer_name"] is None

@@ -10,9 +10,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urljoin, urlparse
-from urllib.request import ProxyHandler, Request, build_opener
+from urllib.request import Request
 
 from fastapi import HTTPException
+
+from src.shared.network.http_client import create_urllib_opener
 
 from src.modules.tender_operator_agent_demo import schemas as tender_schemas
 from src.modules.tender_operator_agent_demo.attachment_downloader import (
@@ -213,7 +215,7 @@ def _create_public_html_run_from_search_result(
         source=_source_for_public_law(normalized_law),
         title=(request.title or "").strip() or page_context.get("title") or f"Закупка {reestr_number}",
         procurement_number=reestr_number,
-        customer_name=(request.customer_name or "").strip() or page_context.get("customer_name") or "Не указан",
+        customer_name=page_context.get("customer_name") or (request.customer_name or "").strip() or "Не указан",
         category=law_label,
         publication_date=publication_date,
         deadline=deadline,
@@ -280,7 +282,7 @@ def _create_public_html_run_from_search_result(
     }
     save_demo_run_metadata(run_id, metadata)
     _write_procurement_artifacts(run_id, selected=selected, manifest=[])
-    _apply_search_result_context(run_id, request)
+    _apply_search_result_context(run_id, request, page_context=page_context)
     saved_count = _supplement_run_with_public_notice_attachments(run_id, request.source_url)
     _apply_document_set_completeness(run_id)
 
@@ -370,7 +372,7 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
     if not hostname.endswith("zakupki.gov.ru"):
         return {}
 
-    opener = build_opener(ProxyHandler({}))
+    opener = create_urllib_opener(source_url, source_direct_connection=True)
     request = Request(source_url, headers={"User-Agent": PUBLIC_EIS_USER_AGENT}, method="GET")
     try:
         with opener.open(request, timeout=20) as response:
@@ -846,9 +848,22 @@ def _apply_document_set_completeness(run_id: str) -> dict[str, Any]:
     return summary
 
 
+def _first_meaningful_text(*values: Any) -> str | None:
+    missing = {"не указан", "none", "null", "n/a", "—"}
+    for value in values:
+        if value is None:
+            continue
+        text = str(value).strip()
+        if text and text.casefold() not in missing:
+            return text
+    return None
+
+
 def _apply_search_result_context(
     run_id: str,
     request: tender_schemas.SearchResultHandoffRequest,
+    *,
+    page_context: dict[str, Any] | None = None,
 ) -> None:
     metadata = load_demo_run_metadata(run_id)
     procurement_payload = dict(metadata.get("procurement") or {})
@@ -858,11 +873,8 @@ def _apply_search_result_context(
         or metadata.get("procurement_url")
         or "https://zakupki.gov.ru/"
     )
-    page_context = (
-        _extract_public_page_context(source_url)
-        if source_url and not (request.title or "").strip() and not (request.customer_name or "").strip()
-        else {}
-    )
+    if page_context is None:
+        page_context = _extract_public_page_context(source_url) if source_url else {}
 
     title = (
         (request.title or "").strip()
@@ -870,12 +882,12 @@ def _apply_search_result_context(
         or procurement_payload.get("title")
         or metadata.get("tender_title")
     )
-    customer_name = (
-        (request.customer_name or "").strip()
-        or page_context.get("customer_name")
-        or procurement_payload.get("customer_name")
-        or metadata.get("customer_name")
-    )
+    customer_name = _first_meaningful_text(
+        page_context.get("customer_name"),
+        procurement_payload.get("customer_name"),
+        metadata.get("customer_name"),
+        request.customer_name,
+    ) or "Не указан"
 
     metadata["tender_title"] = title
     metadata["customer_name"] = customer_name
