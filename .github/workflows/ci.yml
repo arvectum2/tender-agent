@@ -17,6 +17,13 @@ jobs:
           uv pip compile pyproject.toml --extra dev --python-version 3.11 --universal --generate-hashes --output-file requirements.lock
           git diff --exit-code -- requirements.lock
 
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build runtime image from clean checkout
+        run: docker build --tag tender-agent-ci:${{ github.sha }} .
+
   quality:
     runs-on: ubuntu-latest
     steps:
