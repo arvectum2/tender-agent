@@ -72,11 +72,16 @@ AI_CORP_CORS_ALLOW_ORIGINS=https://arvectum.com,https://www.arvectum.com
 
 ## Container Build
 
-Build the application image from the repository root:
+Build the application image from the Tender Agent repository root:
 
 ```bash
 docker build -t ai-corporation-tender-pilot .
 ```
+
+The runtime image is self-contained and does not require a sibling checkout of
+`arvectum-landing`. The pilot UI assets required by the FastAPI application live
+inside this repository under `src/` and are copied by the normal application
+build.
 
 Run it locally:
 
@@ -84,15 +89,21 @@ Run it locally:
 docker run --rm -p 8000:8000 --env-file .env.local ai-corporation-tender-pilot
 ```
 
-The image includes the required Arvectum brand assets used by the pilot UI.
-
 ## Unified Local Preview
 
-To preview the website and the live pilot behind one local entrypoint:
+The marketing site is a separate repository. To preview that site and the live
+pilot behind one local entrypoint, explicitly point Compose at the marketing
+site's `public` directory instead of relying on a sibling-directory layout:
 
 ```bash
+export ARVECTUM_LANDING_PUBLIC_DIR=/absolute/path/to/arvectum-landing/public
 docker compose -f docker-compose.site-pilot.yml up --build
 ```
+
+`docker-compose.site-pilot.yml` fails fast when
+`ARVECTUM_LANDING_PUBLIC_DIR` is missing or empty. This keeps the optional local
+marketing-site dependency explicit while the Tender Agent image itself remains
+clean-checkout reproducible.
 
 Local URLs:
 
@@ -104,21 +115,28 @@ Local URLs:
 This stack serves the Arvectum static site from Nginx and proxies the Tender
 Operator pilot routes into the FastAPI container.
 
-If `8081` is busy, override the port:
+If `8081` is busy, override the port while keeping the explicit landing path:
 
 ```bash
-ARVECTUM_SITE_PORT=8090 docker compose -f docker-compose.site-pilot.yml up --build
+ARVECTUM_LANDING_PUBLIC_DIR=/absolute/path/to/arvectum-landing/public \
+ARVECTUM_SITE_PORT=8090 \
+docker compose -f docker-compose.site-pilot.yml up --build
 ```
 
 ## Pure Python Same-Port Preview
 
-If you want the static site and the pilot on one local port without Nginx, set
-`AI_CORP_SITE_PUBLIC_ROOT` and run the main FastAPI app directly:
+If you want the external static site and the pilot on one local port without
+Nginx, set `AI_CORP_SITE_PUBLIC_ROOT` explicitly and run the main FastAPI app
+directly:
 
 ```bash
-AI_CORP_SITE_PUBLIC_ROOT=/Users/master/Documents/AI-Corporation/arvectum-landing/public \
+AI_CORP_SITE_PUBLIC_ROOT=/absolute/path/to/arvectum-landing/public \
 ./.venv/bin/python -m uvicorn src.main:app --host 127.0.0.1 --port 8090
 ```
+
+`AI_CORP_SITE_PUBLIC_ROOT` is optional. When it is unset, FastAPI runs normally
+without marketing-site files. When it is set, the configured directory must
+contain `index.html` for the optional static-site mount to activate.
 
 This mode is useful for local demos and quick operator preview. It serves the
 static site from the filesystem and keeps the pilot routes on the same origin.
