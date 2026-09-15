@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: REUSE-FIRST-001
 authority: AUTO
 goal: "Create the canonical competitive reverse-spec and reuse registry, then classify active P0/P1 work as REUSE/COPY_PATTERN/ADAPT/INVENT so commodity scope is reused/adapted instead of rebuilt."
@@ -15,22 +15,31 @@ completed:
   - "DOCUMENT-QA-005 is reconciled done; post-acceptance #52/#53 hardening is completed by PR #54."
   - "Continuous-execution directive is merged by PR #55 and makes this the next active AUTO workstream."
   - "Tender Agent Watchdog is enabled on an exact hourly Europe/Moscow schedule with work-conserving execution rules."
-current: "Collect competitor reverse-spec/reuse-registry evidence and create bounded canonical artifacts."
+  - "Nine direct procurement/tender products are benchmarked in the repository-owned reverse-spec packet."
+  - "Concrete component/API reuse registry records license/legal/maintenance/adoption boundaries for ten candidates without approving a dependency or paid commitment."
+  - "All active accelerated-plan P0/P1 workstreams and current strategy/queue overlays are classified; current INVENT boundaries have explicit reuse check, gap, differentiation and maintenance justification."
+  - "Commodity duplicate builds are explicitly de-scoped and procurement external-action/HUMAN/REVIEW boundaries are preserved."
+current: "Review-ready PR #56; final exact-head CI must pass, then merge remains blocked by the fail-closed Company AM-4 mandatory Owner-review trigger unless attributable renewal/evidence resolves it."
 pending:
-  - "Complete 8-10 direct competitor public workflow evidence matrix."
-  - "Build reusable component/API registry."
-  - "Classify active P0/P1 work and document INVENT justifications/de-scope decisions."
-  - "Commit/PR canonical artifacts, validate exact-head CI and merge if AM-4 gates remain valid."
-last_verified_commit: "55f3515058ec3928119605b05fbdf0462d59cff0"
+  - "Verify green exact-head CI for final PR #56 head."
+  - "Obtain attributable Owner review/renewal of Company AM-4, or canonical evidence proving its ten-automatic-merge mandatory-review trigger has not been reached."
+  - "Merge only after that blocker and every remaining exact-head gate are valid; then mark REUSE-FIRST-001 completed on main."
+last_verified_commit: "490705a31be952a59cef61266a6f3442abe5f024"
 test_results:
   - "PR #55 exact-head CI run #166 passed 8/8 jobs before merge."
-  - "Canonical roadmap/queue validation passed; watchdog schedule verified enabled/exact-hourly."
-updated_at: "2026-09-15T08:05:00Z"
-resume_instruction: "Continue REUSE-FIRST-001. Do not return to DOCUMENT-QA-005 acceptance loops. Work in <=45-minute productive quanta; if waiting on CI/external state, checkpoint and continue another independent admitted AUTO item or exit for the next exact-hour watchdog run."
+  - "Earlier stale PR #56 head 807be706427f2036600f7e28debcad658996ed12 passed CI run 34935276956 (8/8) but was superseded during main reconciliation."
+  - "Final blocked-state head 490705a31be952a59cef61266a6f3442abe5f024 is running exact-head CI run 34948115175; completed jobs observed so far are green, but final workflow conclusion is still pending."
+updated_at: "2026-09-15T08:44:00Z"
+resume_instruction: "REUSE-FIRST-001 technical/evidence work is complete. First verify PR #56 final exact-head CI. Do not repeat competitor research, DOCUMENT-QA acceptance, or commodity-scope design. If CI is green, remain blocked/review-ready and request attributable Owner AM-4 review/renewal because the ten-automatic-merge trigger cannot be proven below threshold across all execution contours. If Owner renews/approves and all gates remain green against current main, reconcile/rebase as needed, merge PR #56, mark REUSE-FIRST-001 completed, and advance the next admitted queue item."
+blocker:
+  type: OWNER_REVIEW
+  policy: "POS-004 Roadmap Executor AM-4"
+  reason: "The Assignment-wide count of automatic merges performed under AM-4 cannot be attributed reliably from repository merge metadata across all execution contours; the mandatory ten-automatic-merge review trigger therefore cannot be proven un-reached."
+  resolution: "Attributable Owner review/renewal, or canonical proof that the trigger is not reached."
 execution:
-  claimed_by: "Tender Agent Watchdog"
-  execution_id: "reuse-first-001-20260915T1059MSK"
-  branch: null
-  base_commit: "55f3515058ec3928119605b05fbdf0462d59cff0"
-  lease_until: "2026-09-15T09:55:00Z"
-  manual_override: false
+  claimed_by: "manual Owner-requested continuation"
+  execution_id: "reuse-first-001-manual-20260915T1128MSK"
+  branch: "agent/reuse-first-001-reverse-spec"
+  base_commit: "a08d31ba931c12df3a7257bad5bdb2de365eb7ae"
+  lease_until: "2026-09-15T09:30:00Z"
+  manual_override: true
