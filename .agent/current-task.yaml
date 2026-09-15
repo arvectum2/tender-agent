@@ -15,22 +15,22 @@ completed:
   - "DOCUMENT-QA-005 is reconciled done; post-acceptance #52/#53 hardening is completed by PR #54."
   - "Continuous-execution directive is merged by PR #55 and makes this the next active AUTO workstream."
   - "Tender Agent Watchdog is enabled on an exact hourly Europe/Moscow schedule with work-conserving execution rules."
-current: "Start competitor reverse-spec/reuse-registry evidence collection and create a bounded implementation plan/artifact set."
+current: "Collect competitor reverse-spec/reuse-registry evidence and create bounded canonical artifacts."
 pending:
-  - "Select 8-10 direct competitors and collect public workflow evidence."
-  - "Build competitor-pattern matrix and reusable component/API registry."
+  - "Complete 8-10 direct competitor public workflow evidence matrix."
+  - "Build reusable component/API registry."
   - "Classify active P0/P1 work and document INVENT justifications/de-scope decisions."
   - "Commit/PR canonical artifacts, validate exact-head CI and merge if AM-4 gates remain valid."
 last_verified_commit: "55f3515058ec3928119605b05fbdf0462d59cff0"
 test_results:
   - "PR #55 exact-head CI run #166 passed 8/8 jobs before merge."
   - "Canonical roadmap/queue validation passed; watchdog schedule verified enabled/exact-hourly."
-updated_at: "2026-09-15T05:57:00Z"
-resume_instruction: "Begin REUSE-FIRST-001 immediately. Do not return to DOCUMENT-QA-005 acceptance loops. Work in <=45-minute productive quanta; if waiting on CI/external state, checkpoint and continue another independent admitted AUTO item or exit for the next exact-hour watchdog run."
+updated_at: "2026-09-15T08:05:00Z"
+resume_instruction: "Continue REUSE-FIRST-001. Do not return to DOCUMENT-QA-005 acceptance loops. Work in <=45-minute productive quanta; if waiting on CI/external state, checkpoint and continue another independent admitted AUTO item or exit for the next exact-hour watchdog run."
 execution:
-  claimed_by: null
-  execution_id: null
+  claimed_by: "Tender Agent Watchdog"
+  execution_id: "reuse-first-001-20260915T1059MSK"
   branch: null
   base_commit: "55f3515058ec3928119605b05fbdf0462d59cff0"
-  lease_until: null
+  lease_until: "2026-09-15T09:55:00Z"
   manual_override: false
