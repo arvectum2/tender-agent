@@ -71,16 +71,18 @@ items:
   strategy: ADAPT
   custom_boundary: 'Reuse standard retrieval/index components; custom tuning only after benchmark evidence identifies procurement-specific ranking gaps.'
   title: Procurement search quality benchmark and relevance hardening
-  status: ready
+  status: blocked
   authority: REVIEW
   independent: true
   auto_merge: false
-  source: 'issue #2; Product Owner promotion in project conversation 2026-09-15'
+  source: 'issue #2; Product Owner promotion in project conversation 2026-09-15; review-ready PR #59'
   dependencies:
   - BENCHMARK-PIPELINE-001
   owner_gate: Product Owner must explicitly promote this item to READY before search-weight tuning or corpus expansion.
   owner_gate_evidence: 'Satisfied 2026-09-15 by explicit Owner instruction: Продвигаю DISCOVERY-QA-001 в READY; recorded in issue #2 comment 5678641869.'
-  executor_scope: 'Proceed evidence-first: freeze an independently labelled 30–50-case 44-FZ discovery corpus; measure the issue-defined baseline metrics; harden only measured failure classes. LLM reranking is not the first move. Authority remains REVIEW and auto_merge remains false.'
+  review_gate: 'Implementation and exact-head CI are complete; Product Owner review/explicit merge approval is required before merge.'
+  review_gate_evidence: 'PR #59 head 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be; exact-head CI run 34964993833 completed SUCCESS with 9/9 jobs passed; issue #2 evidence comment 5679631340.'
+  executor_scope: 'Implementation is complete and frozen-benchmark evidence is review-ready. Do not tune further, expand the corpus, or merge while REVIEW gate is pending. On explicit Owner merge approval, re-verify exact PR head/CI and perform only the guarded merge/completion reconciliation.'
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
