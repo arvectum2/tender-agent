@@ -14,19 +14,24 @@ completed:
   - "REUSE-FIRST-001 completed and merged in PR #56; Owner renewed POS-004 / AI-ENG-001 on unchanged terms."
   - "Execution queue reconciled to select BUILD-DOCKER-CONTEXT-001 as the next admitted ready AUTO workstream."
   - "Issue #19 acceptance criteria reviewed."
-current: "Trace Dockerfile asset usage and repository references, then implement the smallest deterministic repair on a dedicated branch."
+  - "Runtime trace confirmed landing files are optional: site_public_root defaults to None and install_optional_site_mount returns without mounting when unset; docker-compose tender-pilot does not set it."
+  - "Repository trace confirmed main has no arvectum-landing directory, while Dockerfile and local preview compose assumed one."
+  - "Branch agent/build-docker-context-001 removes the invalid Dockerfile COPY, makes local marketing-site path explicit through required ARVECTUM_LANDING_PUBLIC_DIR, updates deployment guidance, and adds clean-checkout docker build CI."
+  - "PR #58 opened from exact branch head 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622."
+current: "Validate PR #58 exact head/current base, including the new clean-checkout docker-build CI job."
 pending:
-  - "Inspect Dockerfile, application references, build/deploy workflows and landing-asset usage."
-  - "Choose REMOVE vs explicit deterministic acquisition based on runtime evidence."
-  - "Implement repair with focused regression/smoke coverage and documentation only where needed."
-  - "Run relevant CI/build gates, merge after exact-head/current-base validation, close issue #19, and mark checkpoint completed."
-last_verified_commit: "8b1c131941e76b079a1eac18cf3a71201a6c01ce"
+  - "Verify all required CI jobs are green for PR #58 exact head."
+  - "Recheck mergeability/current-base state after CI."
+  - "Merge #58, confirm issue #19 closes, mark checkpoints/queue completed, then advance only to the next explicitly admitted AUTO item."
+last_verified_commit: "60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622"
 test_results:
-  - "No BUILD-DOCKER-CONTEXT-001 validation run yet in this continuation."
-updated_at: "2026-09-15"
-resume_instruction: "Continue BUILD-DOCKER-CONTEXT-001 from issue #19. Do not revisit REUSE-FIRST-001. Inspect Dockerfile and all references to arvectum-landing/public/assets; prefer deleting the COPY if assets are unused, otherwise make the dependency explicit and deterministic. Preserve clean-checkout reproducibility and run exact-head/current-base gates before merge."
+  - "Static/runtime inspection: optional site mount is disabled unless AI_CORP_SITE_PUBLIC_ROOT is explicitly configured."
+  - "PR #58 adds docker-build CI as the clean-checkout acceptance regression gate; CI result pending."
+updated_at: "2026-09-15T09:30:00Z"
+resume_instruction: "Continue BUILD-DOCKER-CONTEXT-001 at PR #58. Do not redo runtime tracing. Verify exact-head CI for 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622 and current-base mergeability. If green, squash-merge, verify issue #19 closure, set task/checkpoint/queue to completed, then inspect the queue for the next explicitly admitted AUTO workstream. Do not promote REVIEW/deferred items yourself."
 execution:
   claimed_by: "manual Owner-requested roadmap continuation"
   execution_id: "build-docker-context-001-20260915"
   branch: "agent/build-docker-context-001"
+  pull_request: 58
   manual_override: true
