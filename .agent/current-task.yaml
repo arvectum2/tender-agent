@@ -17,24 +17,24 @@ completed:
   - Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
   - Completed reuse inventory: ProcurementTender/ProcurementTenderDocument provide source-state/provenance inputs; procedure_monitor provides an existing internal event/alert feed pattern; event_log.append_event_record accepts source_module_id without a deal and is suitable for audit integration.
   - Inspected event_log persistence/service and central router registration; monitoring can reuse EventRecord audit with deal_id null and source_module_id procurement_monitoring, while its product router belongs in APPLICATION_ROUTERS.
-  - Confirmed migrations are linear numbered Alembic files under migrations/versions; exact current head still must be resolved before adding the task migration.
-current: Implement the minimal procurement_monitoring module after resolving the exact Alembic head; use deterministic source-bound canonical fingerprints and idempotent feed semantics.
+  - Inspected repository Alembic workflow and migration history; latest migration-changing commit is 8a62641e3d852e197435a6c978707ad3510b0d9a and explicitly records migration revision 097 for ARV-052. The next migration must bind to the actual revision identifier declared by 097 rather than infer a filename.
+current: Resolve the exact revision identifier declared by migration 097, then implement procurement_monitoring models/schemas/service/router plus the next linear migration.
 pending:
-  - Determine exact current Alembic head and add linear monitoring migration.
+  - Fetch existing migration 097 content/revision declaration and add next linear monitoring migration.
   - Implement monitoring models/schemas/service/router and central router registration.
   - Add deterministic/idempotent change detection and internal API/feed surface.
   - Add unchanged/deadline/document-revision/status-cancellation/duplicate replay regressions.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
-last_verified_commit: f02f0f3c37896d0ca38c1fe794581db4b50ac2b1
+last_verified_commit: 24418a622484719fb199048dd364792bd5aa7e86
 test_results:
-  - No product code changed yet; tests not run in this integration-seam inventory stage.
-updated_at: '2026-09-16T01:11:00+03:00'
-resume_instruction: Determine exact current Alembic head, then implement procurement_monitoring models/schemas/service/router plus one linear migration. Reuse ProcurementTender/Document source state and append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit; register through src/shared/api/router_registry.py. Unchanged replay must not create another alert/feed event. External transports remain disabled.
+  - No product code changed yet; tests not run in this migration-head discovery stage.
+updated_at: '2026-09-16T02:10:00+03:00'
+resume_instruction: Fetch the exact existing migration 097 blob/path and read its revision/down_revision declarations. Create the next linear procurement_monitoring migration using that exact revision as down_revision, then implement models/schemas/service/router. Reuse ProcurementTender/Document source state and append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit; register through src/shared/api/router_registry.py. Unchanged replay must not create another alert/feed event. External transports remain disabled.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260916T005849+0300
+  execution_id: watchdog-20260916T015939+0300
   branch: agent/change-monitoring-v1-001
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T02:48:00+03:00'
+  lease_until: '2026-09-16T03:49:00+03:00'
