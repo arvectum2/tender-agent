@@ -1,35 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: BUILD-DOCKER-CONTEXT-001
-authority: AUTO
-goal: "Restore a self-contained, reproducible clean-checkout Docker build by removing or replacing the undeclared dependency on arvectum-landing/public/assets."
+status: in_progress
+task_id: DISCOVERY-QA-001
+authority: REVIEW
+goal: "Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark."
 definition_of_done:
-  - "Trace whether arvectum-landing/public/assets is actually required at Tender Agent runtime and identify the intended source of any required assets."
-  - "Clean checkout + docker build . succeeds without local sibling-directory assumptions."
-  - "No credentials or network-only mutable artifacts are embedded implicitly."
-  - "Runtime image still contains every asset actually required by the application."
-  - "Relevant CI/deployment documentation or smoke coverage is updated if needed, and required exact-head/current-base gates pass before merge."
+  - "Freeze an independently labelled 30–50-case 44-FZ discovery corpus before evaluating or tuning Tender Agent output."
+  - "Record the issue-defined baseline metrics: Precision@5, Precision@10, Recall@K, nDCG@K/equivalent, top-K false-positive rate, missed-relevant rate, duplicate rate, supported status/deadline correctness, and explainability coverage."
+  - "Identify concrete measured failure classes from the frozen baseline before changing search behaviour."
+  - "Apply only bounded hardening justified by measured failure classes; LLM reranking is not the first move."
+  - "Re-run the same frozen benchmark without modifying truth/comparator/normalizer after seeing SUT output, and prepare review-ready evidence/PR."
+  - "Do not merge automatically: queue authority remains REVIEW and auto_merge=false."
 completed:
-  - "Runtime trace confirmed landing files are optional: site_public_root defaults to None and install_optional_site_mount returns without mounting when unset."
-  - "PR #58 removed the invalid Dockerfile COPY, made the optional marketing-site path explicit through ARVECTUM_LANDING_PUBLIC_DIR, updated deployment guidance, and added clean-checkout docker-build CI."
-  - "Exact-head CI run 34953003147 passed for head 829e96523e9c86bdd9c8f54b061f8a4448aeef9f."
-  - "PR #58 squash-merged as 8924a8576a96ccac490682be737f2b041c8a06e3."
-  - "Issue #19 closed completed."
-current: "BUILD-DOCKER-CONTEXT-001 completed; no admitted AUTO item remains in the current execution queue."
+  - "BENCHMARK-PIPELINE-001 dependency is completed."
+  - "Product Owner explicitly promoted DISCOVERY-QA-001 to READY on 2026-09-15; promotion recorded in issue #2 comment 5678641869."
+  - "Execution queue updated to READY without changing REVIEW authority or auto_merge=false."
+  - "Dedicated branch agent/discovery-qa-001 created from main commit ae7c5d0e5c2ea905a13def47e972111afde013af."
+current: "Inventory the existing procurement-search path, benchmark/evidence primitives, current corpus assets, and ranking controls before freezing the first discovery benchmark corpus."
 pending:
-  - "DISCOVERY-QA-001 remains blocked REVIEW pending explicit Product Owner promotion to READY."
-  - "DOCUMENT-QA-NEXT-INCREMENT remains deferred REVIEW pending a concrete reusable failure family and Owner promotion."
-last_verified_commit: "8924a8576a96ccac490682be737f2b041c8a06e3"
+  - "Trace existing public 44-FZ search/relevance implementation and supplier-profile matching."
+  - "Reuse existing benchmark/evidence machinery where possible; document any measured gap before custom work."
+  - "Assemble and freeze an independent 30–50-case discovery corpus with source bundles and labels."
+  - "Run baseline metrics on the frozen corpus."
+  - "Implement only evidence-backed relevance hardening and re-run the frozen benchmark."
+  - "Open/update a review-ready PR and stop before merge for Product Owner review."
+last_verified_commit: "ae7c5d0e5c2ea905a13def47e972111afde013af"
 test_results:
-  - "Clean temporary clone Docker acceptance passed."
-  - "GitHub CI run 34953003147: success, including docker-build and quality."
-updated_at: "2026-09-15T10:00:00Z"
-resume_instruction: "Task completed. On the next run reconcile the queue. Do not reopen BUILD-DOCKER-CONTEXT-001 unless a concrete regression appears. Do not promote DISCOVERY-QA-001 or DOCUMENT-QA-NEXT-INCREMENT without their explicit Owner gates."
+  - "No DISCOVERY-QA-001 implementation tests run yet; task just promoted and claimed."
+updated_at: "2026-09-15T10:24:00Z"
+resume_instruction: "Resume DISCOVERY-QA-001 from branch agent/discovery-qa-001. First inventory existing search/ranking code, supplier-profile matching, benchmark/evidence assets and any reusable public-source fixtures. Do not tune weights or expand implementation until an independently labelled 30–50-case corpus is frozen. Preserve freeze-before-SUT integrity. LLM reranking is out of the first move. Authority remains REVIEW: prepare evidence and PR but do not merge automatically."
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  pull_request: 58
-  manual_override: false
-  lease_until: null
+  claimed_by: "manual Owner-requested roadmap continuation"
+  execution_id: "discovery-qa-001-20260915"
+  branch: "agent/discovery-qa-001"
+  base_commit: "ae7c5d0e5c2ea905a13def47e972111afde013af"
+  pull_request: null
+  manual_override: true
+  lease_until: "2026-09-15T12:14:00Z"
