@@ -1,7 +1,7 @@
 version: 1
 task_id: BUILD-DOCKER-CONTEXT-001
 status: in_progress
-updated_at: '2026-09-15'
+updated_at: '2026-09-15T09:30:00Z'
 goal: 'Restore a self-contained reproducible clean-checkout Docker build without undeclared sibling/local landing-asset dependencies.'
 definition_of_done:
   - 'Trace whether arvectum-landing/public/assets is required at runtime and identify the intended source of any required assets.'
@@ -13,13 +13,17 @@ definition_of_done:
 completed:
   - 'Issue #19 acceptance criteria reviewed.'
   - 'Execution queue advanced to this AUTO workstream.'
-current: 'Inspect Dockerfile and repository references to arvectum-landing/public/assets.'
+  - 'Runtime trace proves landing-site files are optional: site_public_root defaults to None and install_optional_site_mount is a no-op when unset.'
+  - 'Repository trace proves arvectum-landing is not in the Tender Agent checkout; prior Dockerfile COPY and compose host path were undeclared local assumptions.'
+  - 'Repair implemented on agent/build-docker-context-001: invalid Dockerfile COPY removed; optional site preview requires explicit ARVECTUM_LANDING_PUBLIC_DIR; deployment guide updated; clean-checkout docker-build CI added.'
+  - 'PR #58 opened at head 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622.'
+current: 'Await and verify exact-head CI/current-base gates for PR #58.'
 remaining:
-  - 'Determine whether the COPY is obsolete or required.'
-  - 'Implement smallest deterministic fix on agent/build-docker-context-001.'
-  - 'Add/update focused regression or smoke coverage if needed.'
-  - 'Run CI/build validation, merge, close issue #19, and mark completed.'
-last_verified_commit: '8b1c131941e76b079a1eac18cf3a71201a6c01ce'
+  - 'Verify new docker-build and all required CI jobs pass on exact PR head.'
+  - 'Recheck current-base mergeability.'
+  - 'Squash-merge PR #58, verify issue #19 closes, mark task and queue completed.'
+last_verified_commit: '60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622'
 test_results:
-  - 'No validation run yet for this task.'
-resume_instruction: 'Inspect all Dockerfile/workflow/application references to arvectum-landing/public/assets. Prefer removing the COPY if unused; otherwise replace the undeclared local dependency with an explicit deterministic source. Continue autonomously through validation and merge unless an objective blocker appears.'
+  - 'Static/runtime inspection confirms the Tender Agent runtime image does not require external marketing-site files.'
+  - 'Clean-checkout docker-build CI gate added; result pending.'
+resume_instruction: 'Resume at PR #58. Verify CI for head 60c1a054787d8e3c48d1fd3a3ffc0ac9c14df622 and current-base mergeability; if green, merge and close the task. Do not redo completed tracing or promote REVIEW/deferred queue items.'
