@@ -1,42 +1,37 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: DOCUMENT-QA-NEXT-INCREMENT
+task_id: CHANGE-MONITORING-V1-001
 authority: AUTO
-goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing
-  closed on ambiguity.
+goal: Implement source-bound saved procurement watches, deterministic change snapshots/diffs, and an idempotent internal alert feed without external notification delivery.
 definition_of_done:
-- Parse public EIS notice revision blocks and identify the active/current revision deterministically.
-- Bind/download analysis attachments only from the active/current revision; historical revisions stay separate from the current
-  analysis set.
-- Preserve revision number/publication timestamp/active state/source URL in provenance.
-- Fail closed to review if revision state or attachment binding is ambiguous.
-- Add synthetic coverage plus exposed case-14 regression without changing any frozen benchmark artifact.
-- Run focused/relevant tests and exact-head CI; prepare review-ready PR and stop before merge unless Product Owner explicitly
-  approves.
+  - Versioned monitoring contract for watch target, source snapshot, diff and alert event.
+  - Deterministic source-bound change detection with idempotent replay.
+  - API/UI-compatible internal feed or existing product surface integration.
+  - Regression tests for unchanged state, deadline change, document revision change, status/cancellation and duplicate replay.
+  - Focused/relevant tests and exact-head CI green.
+  - Documentation states external notification transports remain disabled/out of scope.
 completed:
-- 'Owner promoted issue #51 as the concrete reusable DOCUMENT-QA next increment on 2026-09-15.'
-- Queue admission and follow-on Stage-4/5 pipeline prepared by ROADMAP-QUEUE-ACCEL-001.
-- 'Owner clarified issue #51 implementation/testing as AUTO while preserving auto_merge=false and explicit Product Owner merge
-  review.'
-current: 'Implementation not yet claimed by an executor; begin from issue #51 and existing EIS documents-page intake path.'
+  - Reconciled prior DOCUMENT-QA-NEXT-INCREMENT branch as implementation-complete and waiting on Product Owner merge review; PR #73 exact-head CI was queued, so waiting was checkpointed rather than polled.
+  - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
+  - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
+  - Created durable checkpoint .agent/checkpoints/CHANGE-MONITORING-V1-001.yaml.
+current: Inventory existing event/alert, saved-search, procurement source snapshot, API/feed and persistence primitives before implementation.
 pending:
-- Inventory current documents-page revision parsing and attachment-link traversal.
-- Implement active-revision selection/provenance and fail-closed ambiguity handling.
-- Add synthetic and exposed regression tests.
-- Run focused/relevant tests and exact-head CI; open review-ready PR.
-last_verified_commit: 1383bb889b7cd310e9964fd74600ba7558cce887
+  - Identify reusable repository models/services/API surfaces for saved watches, source snapshots and internal events.
+  - Implement the smallest versioned monitoring contract and procurement-specific deterministic diff semantics.
+  - Add idempotent regression coverage and internal feed/API surface; keep external transports disabled.
+  - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
+last_verified_commit: 8253effa1f0e5a560dfd8780c4a40363299ec5cc
 test_results:
-- 'Queue/roadmap admission validation pending this branch CI; no product tests run yet for issue #51.'
-updated_at: '2026-09-15T16:26:13Z'
-resume_instruction: 'Read issue #51 and current EIS public documents-page intake implementation. First identify exactly where
-  revision blocks and attachment links are parsed/traversed; add a bounded checkpoint before code changes. Preserve case-14
-  frozen artifacts and do not tune benchmark truth.'
+  - No product code changed yet; tests not run in this inventory checkpoint.
+updated_at: '2026-09-15T20:06:00Z'
+resume_instruction: Read existing models/services/routes for tender source state, saved searches and internal event/audit primitives. Reuse those seams; custom code starts only at procurement-specific source snapshot/diff semantics. Do not implement email/SMS/Telegram/webhook delivery.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: 1383bb889b7cd310e9964fd74600ba7558cce887
-  issue: 51
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260915T225946+0300
+  branch: agent/change-monitoring-v1-001
+  base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
+  issue: 65
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-16T00:49:46+03:00'
