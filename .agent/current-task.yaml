@@ -18,24 +18,26 @@ completed:
 - Reconciled issue #51 open and no existing implementation PR/branch; claimed isolated branch agent/document-qa-next-increment.
 - Inventoried the runtime path: RealEisLoader currently obtains attachments through SOAP client list_attachments/get_procurement_details and maps them without revision provenance; public documents-page revision selection is not implemented in this loader.
 - Reconfirmed case-14 is exposed regression-only and its frozen artifacts must not be modified; issue #44 records mixed obsolete/current acquisition as a separate caveat.
-current: Add a bounded public EIS documents-page revision parser/selector at the acquisition boundary, preserving existing SOAP behavior unless revision-bound public evidence is available.
+- Reconciled branch checkpoint at a1a52479d9c680ce6714d9b7cc29603ad4512ce1 against open issue #51 and current main; no competing executor or completed gate found.
+- Inspected EisDocumentRaw schema: raw_meta is the narrowest backward-compatible provenance seam; no schema-wide field expansion is required for the first parser slice.
+current: Implement the smallest standalone public EIS documents-page revision parser/selector using EisDocumentRaw.raw_meta for revision provenance, with fail-closed ambiguity semantics and synthetic tests before runtime wiring.
 pending:
-- Locate/reuse the narrowest HTTP/HTML acquisition primitive and define revision/attachment provenance types without widening generic retrieval infrastructure.
+- Locate/reuse the narrowest HTTP/HTML acquisition primitive without widening generic retrieval infrastructure.
 - Implement deterministic active-revision selection and fail-closed ambiguity handling.
 - Bind current analysis attachments only to the selected active revision and retain historical revision metadata separately.
 - Add synthetic cases: single revision; inactive+active overlapping filename; changed file; duplicate URL; ambiguity.
 - Add exposed case-14 HTML regression without changing frozen benchmark truth/artifacts.
 - Run focused/relevant tests and exact-head CI; open review-ready PR.
-last_verified_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
+last_verified_commit: a1a52479d9c680ce6714d9b7cc29603ad4512ce1
 test_results:
-- No product tests run in this inventory quantum; no product code changed yet.
-updated_at: '2026-09-15T17:18:00Z'
-resume_instruction: Read the existing HTTP/browser helpers and EisDocumentRaw schema next. Implement the smallest revision-page parser/selector module and unit tests first; do not alter frozen benchmark artifacts or generic SOAP semantics. Then wire it only where current public EIS documents-page acquisition can provide revision evidence.
+- No product tests run in this schema/reconciliation quantum; no product code changed yet.
+updated_at: '2026-09-15T17:57:00Z'
+resume_instruction: Add a standalone revision-page parser/selector module and unit tests first. Store revision/publication/active/source provenance in EisDocumentRaw.raw_meta to preserve compatibility. Reuse an existing HTML parser dependency/helper if present; otherwise keep parsing dependency-free and bounded. Do not alter frozen benchmark artifacts or generic SOAP semantics. Then wire only where current public EIS documents-page acquisition can provide revision evidence.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260915T2000MSK
+  execution_id: watchdog-20260915T2057MSK
   branch: agent/document-qa-next-increment
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 51
   manual_override: false
-  lease_until: '2026-09-15T19:08:00Z'
+  lease_until: '2026-09-15T19:47:00Z'
