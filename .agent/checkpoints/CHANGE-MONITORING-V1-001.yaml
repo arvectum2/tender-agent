@@ -12,21 +12,21 @@ completed:
   - Read issue #65 scope and hard boundaries; external notification delivery remains disabled/out of scope.
   - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
   - Inventoried reusable persistence/event surfaces. ProcurementTender already stores source/external_id, application_deadline, nmck_amount, status, raw_payload, content_hash and first/last-seen timestamps; ProcurementTenderDocument carries source document identity, sha256 and raw_meta provenance.
-  - Identified src.modules.procedure_monitor as the closest existing alert/feed pattern: ProcedureMonitorEvent has event_type/timestamp/summary/source_ref and ProcedureMonitorAlert has code/severity/summary; its service already appends event-log records. This is a reuse pattern, not a suitable direct persistence model because it is post-submission/deal-bound.
+  - Identified src.modules.procedure_monitor as the closest existing alert/feed pattern; reuse the pattern, not its post-submission/deal-bound persistence.
   - Confirmed src.shared.events and src.modules.event_log are existing generic event/audit primitives to reuse for monitoring audit integration.
-  - Inspected event_log models/service: EventRecord supports deal_id=null with source_module_id, JSON payload and indexed event_code/source_module_id/created_at; append_event_record enforces at least one source identity and can audit procurement-monitoring events without inventing a deal.
-  - Inspected application router registration: routers are centrally imported and appended to APPLICATION_ROUTERS in src/shared/api/router_registry.py, so procurement_monitoring should follow that established surface rather than modifying src/main.py directly.
-  - Inspected migration layout: repository uses linear numbered Alembic files under migrations/versions; the new persistence migration must follow the current branch head rather than creating an independent migration lineage.
+  - Inspected event_log models/service: EventRecord supports deal_id=null with source_module_id, JSON payload and indexed event_code/source_module_id/created_at; append_event_record can audit procurement-monitoring events without inventing a deal.
+  - Inspected application router registration: routers are centrally imported and appended to APPLICATION_ROUTERS in src/shared/api/router_registry.py.
+  - Inspected repository Alembic workflow and migration tree directly. The branch migration directory is a single historical linear series whose latest migration-changing commit is 8a62641e3d852e197435a6c978707ad3510b0d9a; that commit explicitly records migration revision 097 for ARV-052. Therefore the monitoring migration must be the next revision and its down_revision must bind to the actual revision identifier declared by the existing 097 migration, not merely infer a filename.
   - Reconfirmed issue #65 DoD and hard boundaries at run start; no external notification transport, procurement action, or source mutation is authorized.
-current: Define and implement the minimal procurement_monitoring persistence/schema/service/router slice using source-bound watch/snapshot/feed records and deterministic canonical fingerprints.
+current: Resolve the exact revision identifier declared by migration 097, then implement the minimal procurement_monitoring persistence/schema/service/router slice using deterministic source-bound canonical fingerprints.
 pending:
-  - Determine current Alembic head and use its exact down_revision for the monitoring migration.
+  - Fetch the existing 097 migration content/revision identifier and use it as exact down_revision for the next monitoring migration.
   - Define versioned watch target, source snapshot, diff and alert-event schemas; fingerprint canonical source state deterministically.
   - Persist watch + snapshot + internal event/feed records with uniqueness/idempotency constraints; no external transport fields or delivery workers.
   - Implement unchanged/deadline/document-revision/status-cancellation/document-set change detection and UNKNOWN/NEEDS_REVIEW for unsupported ambiguity.
   - Add regression tests and internal API/feed surface; register router through src/shared/api/router_registry.py.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
 test_results:
-  - No product code changed in this integration-seam inventory stage; tests not run yet.
-resume_instruction: Determine the exact current Alembic head, then create the smallest procurement_monitoring module (models/schemas/service/router + one linear migration). Use ProcurementTender/ProcurementTenderDocument as source-state inputs, EventRecord via append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit, and register the router in src/shared/api/router_registry.py. Canonicalize/fingerprint only source-bound fields; unchanged replay must produce no new feed event. Do not implement email/SMS/Telegram/webhook delivery.
-updated_at: '2026-09-16T01:10:00+03:00'
+  - No product code changed in this migration-head discovery stage; tests not run yet.
+resume_instruction: Fetch the exact existing migration 097 blob/path and read its revision/down_revision declarations. Create the next linear procurement_monitoring migration using that exact revision as down_revision, then implement models/schemas/service/router. Use ProcurementTender/ProcurementTenderDocument as source-state inputs, EventRecord via append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit, and register through src/shared/api/router_registry.py. Unchanged replay must produce no new feed event. Do not implement email/SMS/Telegram/webhook delivery.
+updated_at: '2026-09-16T02:09:00+03:00'
