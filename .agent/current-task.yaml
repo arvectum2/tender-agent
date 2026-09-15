@@ -15,22 +15,21 @@ completed:
   - "DOCUMENT-QA-005 is reconciled done; post-acceptance #52/#53 hardening is completed by PR #54."
   - "Continuous-execution directive is merged by PR #55 and makes this the next active AUTO workstream."
   - "Tender Agent Watchdog is enabled on an exact hourly Europe/Moscow schedule with work-conserving execution rules."
-current: "Start competitor reverse-spec/reuse-registry evidence collection and create a bounded implementation plan/artifact set."
+current: "Collecting public competitor workflow evidence and building the canonical reverse-spec/reuse registry on agent/reuse-first-001."
 pending:
-  - "Select 8-10 direct competitors and collect public workflow evidence."
-  - "Build competitor-pattern matrix and reusable component/API registry."
+  - "Complete 8-10 competitor evidence matrix."
+  - "Build reusable component/API registry and legal/license boundaries."
   - "Classify active P0/P1 work and document INVENT justifications/de-scope decisions."
   - "Commit/PR canonical artifacts, validate exact-head CI and merge if AM-4 gates remain valid."
-last_verified_commit: "55f3515058ec3928119605b05fbdf0462d59cff0"
+last_verified_commit: "40cefdde96ac6734f23b9c116d0d2e31e4efb5e1"
 test_results:
-  - "PR #55 exact-head CI run #166 passed 8/8 jobs before merge."
-  - "Canonical roadmap/queue validation passed; watchdog schedule verified enabled/exact-hourly."
-updated_at: "2026-09-15T05:57:00Z"
-resume_instruction: "Begin REUSE-FIRST-001 immediately. Do not return to DOCUMENT-QA-005 acceptance loops. Work in <=45-minute productive quanta; if waiting on CI/external state, checkpoint and continue another independent admitted AUTO item or exit for the next exact-hour watchdog run."
+  - "Canonical state reconciled at main 40cefdde96ac6734f23b9c116d0d2e31e4efb5e1; REUSE-FIRST-001 remains admitted AUTO/in_progress."
+updated_at: "2026-09-15T07:15:00Z"
+resume_instruction: "Continue REUSE-FIRST-001 evidence/artifact construction. Do not return to DOCUMENT-QA-005 acceptance loops."
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: "55f3515058ec3928119605b05fbdf0462d59cff0"
-  lease_until: null
+  claimed_by: "roadmap-executor"
+  execution_id: "REUSE-FIRST-001-20260915T0715Z"
+  branch: "agent/reuse-first-001"
+  base_commit: "40cefdde96ac6734f23b9c116d0d2e31e4efb5e1"
+  lease_until: "2026-09-15T09:05:00Z"
   manual_override: false
