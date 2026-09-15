@@ -1,24 +1,15 @@
+from typing import Annotated
+
 from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, Response
 
-from src.modules.tender_operator_agent_demo.schemas import (
-    EisDocsArchiveRunRequest,
-    ProcurementRunCreateRequest,
-    ProcurementRunDetailsResponse,
-    ProcurementRunResponse,
-    ProcurementSearchResponse,
-    PublicSearchUrlResponse,
-    SearchResultHandoffRequest,
-    SearchResultHandoffResponse,
-    TenderOperatorDemoReportResponse,
-    TenderOperatorDemoRunResponse,
-    TenderOperatorDemoStepsResponse,
-    TenderOperatorUploadedRunAnalyzeResponse,
-    TenderOperatorUploadedRunCreateResponse,
-    TenderOperatorUploadedRunListResponse,
-    TenderOperatorUploadedRunResponse,
-    TenderOperatorRunEventFeedItem,
-    TenderOperatorUploadedRunStepsResponse,
+from src.modules.commercial_core.run_service import (
+    evaluate_run_commercial_core,
+    get_run_commercial_core,
+)
+from src.modules.commercial_core.schemas import CommercialCoreResponse
+from src.modules.tender_operator_agent_demo.pilot_wizard_ui import (
+    render_tender_operator_pilot_wizard_html,
 )
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     build_public_search_url,
@@ -37,10 +28,37 @@ from src.modules.tender_operator_agent_demo.procurement_intake_service import (
 )
 from src.modules.tender_operator_agent_demo.procurement_schemas import (
     ProcurementDetails,
-    PublicProcurementSearchResponse,
-    ProcurementSearchRequest as ProcurementSearchRequestV2,
-    ProcurementSearchResult as ProcurementSearchResultV2,
     ProcurementSourceStatus,
+    PublicProcurementSearchResponse,
+)
+from src.modules.tender_operator_agent_demo.procurement_schemas import (
+    ProcurementSearchRequest as ProcurementSearchRequestV2,
+)
+from src.modules.tender_operator_agent_demo.procurement_schemas import (
+    ProcurementSearchResult as ProcurementSearchResultV2,
+)
+from src.modules.tender_operator_agent_demo.report_export_service import (
+    export_demo_agent_report_docx,
+    export_demo_agent_report_pdf,
+)
+from src.modules.tender_operator_agent_demo.schemas import (
+    EisDocsArchiveRunRequest,
+    ProcurementRunCreateRequest,
+    ProcurementRunDetailsResponse,
+    ProcurementRunResponse,
+    ProcurementSearchResponse,
+    PublicSearchUrlResponse,
+    SearchResultHandoffRequest,
+    SearchResultHandoffResponse,
+    TenderOperatorDemoReportResponse,
+    TenderOperatorDemoRunResponse,
+    TenderOperatorDemoStepsResponse,
+    TenderOperatorRunEventFeedItem,
+    TenderOperatorUploadedRunAnalyzeResponse,
+    TenderOperatorUploadedRunCreateResponse,
+    TenderOperatorUploadedRunListResponse,
+    TenderOperatorUploadedRunResponse,
+    TenderOperatorUploadedRunStepsResponse,
 )
 from src.modules.tender_operator_agent_demo.service import (
     ASSET_MAP,
@@ -51,11 +69,8 @@ from src.modules.tender_operator_agent_demo.service import (
     get_tender_operator_demo_steps,
     render_tender_operator_demo_report_html,
 )
-from src.modules.tender_operator_agent_demo.pilot_wizard_ui import render_tender_operator_pilot_wizard_html
-from src.modules.tender_operator_agent_demo.ui import render_tender_operator_console_html
-from src.modules.tender_operator_agent_demo.report_export_service import (
-    export_demo_agent_report_docx,
-    export_demo_agent_report_pdf,
+from src.modules.tender_operator_agent_demo.ui import (
+    render_tender_operator_console_html,
 )
 from src.modules.tender_operator_agent_demo.upload_service import (
     analyze_uploaded_demo_run,
@@ -66,12 +81,11 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     get_uploaded_demo_report_download,
     get_uploaded_demo_report_html,
     get_uploaded_demo_run,
-    get_uploaded_demo_source_file_download,
     get_uploaded_demo_run_steps,
-    load_demo_run_events,
+    get_uploaded_demo_source_file_download,
     list_uploaded_demo_runs,
+    load_demo_run_events,
 )
-
 
 router = APIRouter(tags=["tender-operator-agent-demo"])
 
@@ -326,7 +340,7 @@ async def create_tender_operator_uploaded_run(
     logistics_reserve_percent: float = Form(default=3),
     risk_reserve_percent: float = Form(default=5),
     payment_delay_days: int = Form(default=45),
-    files: list[UploadFile] = File(...),
+    files: Annotated[list[UploadFile], File()] = ...,
 ) -> TenderOperatorUploadedRunCreateResponse:
     uploads: list[tuple[str, str, bytes]] = []
     for item in files:
@@ -347,7 +361,7 @@ async def create_tender_operator_uploaded_run(
 @router.post("/api/demo/tender-agent/runs/{run_id}/files", response_model=TenderOperatorUploadedRunCreateResponse)
 async def append_tender_operator_uploaded_files(
     run_id: str,
-    files: list[UploadFile] = File(...),
+    files: Annotated[list[UploadFile], File()] = ...,
 ) -> TenderOperatorUploadedRunCreateResponse:
     uploads: list[tuple[str, str, bytes]] = []
     for item in files:
@@ -387,6 +401,33 @@ def get_tender_operator_procurement_for_run(run_id: str) -> ProcurementRunDetail
 @router.post("/api/demo/tender-agent/runs/{run_id}/analyze", response_model=TenderOperatorUploadedRunAnalyzeResponse)
 def analyze_tender_operator_uploaded_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeResponse:
     return analyze_uploaded_demo_run(run_id)
+
+
+@router.post(
+    "/api/demo/tender-agent/runs/{run_id}/commercial-core",
+    response_model=CommercialCoreResponse,
+)
+async def evaluate_tender_operator_commercial_core(
+    run_id: str,
+    catalog_file: Annotated[UploadFile, File()] = ...,
+    default_currency: str | None = Form(default=None),
+    target_bid_amount: float | None = Form(default=None),
+) -> CommercialCoreResponse:
+    return evaluate_run_commercial_core(
+        run_id,
+        catalog_filename=catalog_file.filename or "catalog",
+        catalog_content=await catalog_file.read(),
+        default_currency=default_currency,
+        target_bid_amount=target_bid_amount,
+    )
+
+
+@router.get(
+    "/api/demo/tender-agent/runs/{run_id}/commercial-core",
+    response_model=CommercialCoreResponse,
+)
+def get_tender_operator_commercial_core(run_id: str) -> CommercialCoreResponse:
+    return get_run_commercial_core(run_id)
 
 
 @router.get("/api/demo/tender-agent/runs/{run_id}/steps", response_model=TenderOperatorUploadedRunStepsResponse)

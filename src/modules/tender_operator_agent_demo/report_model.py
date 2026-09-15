@@ -387,6 +387,64 @@ def _customer_decision_core_projection(model: dict[str, Any]) -> dict[str, Any] 
         "safety": dict(raw.get("safety") or {}),
     }
 
+
+
+def _customer_commercial_core_projection(model: dict[str, Any]) -> dict[str, Any] | None:
+    raw = model.get("commercial_core")
+    if not isinstance(raw, dict):
+        return None
+    catalog = raw.get("catalog") if isinstance(raw.get("catalog"), dict) else {}
+    matches = []
+    for item in raw.get("matches", []) or []:
+        if not isinstance(item, dict):
+            continue
+        evidence = []
+        for ref in item.get("evidence", []) or []:
+            if not isinstance(ref, dict):
+                continue
+            evidence.append(
+                {
+                    "source_file": Path(str(ref.get("source_file") or "Каталог")).name,
+                    "sheet": str(ref.get("sheet") or ""),
+                    "row": ref.get("row"),
+                }
+            )
+        matches.append(
+            {
+                "tender_name": item.get("tender_name"),
+                "tender_quantity": item.get("tender_quantity"),
+                "tender_unit": item.get("tender_unit"),
+                "status": item.get("status"),
+                "catalog_title": item.get("catalog_title"),
+                "catalog_unit": item.get("catalog_unit"),
+                "catalog_unit_price": item.get("catalog_unit_price"),
+                "currency": item.get("currency"),
+                "match_score": item.get("match_score"),
+                "rationale": list(item.get("rationale") or []),
+                "evidence": evidence,
+            }
+        )
+    return {
+        "contract_version": raw.get("contract_version"),
+        "catalog": {
+            "status": catalog.get("status"),
+            "source_file": Path(str(catalog.get("source_file") or "Каталог")).name,
+            "warnings": list(catalog.get("warnings") or []),
+            "unknowns": list(catalog.get("unknowns") or []),
+            "rows_count": len(catalog.get("rows") or []),
+        },
+        "matches": matches,
+        "coverage": dict(raw.get("coverage") or {}),
+        "economics": dict(raw.get("economics") or {}),
+        "feasibility_status": raw.get("feasibility_status"),
+        "rationale": list(raw.get("rationale") or []),
+        "next_action": raw.get("next_action"),
+        "human_control_required": bool(raw.get("human_control_required", True)),
+        "external_action_allowed": bool(raw.get("external_action_allowed", False)),
+        "safety": dict(raw.get("safety") or {}),
+    }
+
+
 def build_customer_report_projection(model: dict[str, Any]) -> dict[str, Any]:
     """Return a sanitized customer model without mutating canonical data."""
 
@@ -505,6 +563,7 @@ def build_customer_report_projection(model: dict[str, Any]) -> dict[str, Any]:
         "customer_documents": documents,
         "customer_decision": dict(model.get("customer_decision") or {}),
         "decision_core": _customer_decision_core_projection(model),
+        "commercial_core": _customer_commercial_core_projection(model),
         "line_items": line_items,
         "evidence_map": customer_evidence,
         "unit_economics": (
