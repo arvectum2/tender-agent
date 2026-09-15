@@ -3,40 +3,39 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: DOCUMENT-QA-NEXT-INCREMENT
 authority: AUTO
-goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing
-  closed on ambiguity.
+goal: Bind EIS analysis attachments to the active/current notice revision only, preserving revision provenance and failing closed on ambiguity.
 definition_of_done:
 - Parse public EIS notice revision blocks and identify the active/current revision deterministically.
-- Bind/download analysis attachments only from the active/current revision; historical revisions stay separate from the current
-  analysis set.
+- Bind/download analysis attachments only from the active/current revision; historical revisions stay separate from the current analysis set.
 - Preserve revision number/publication timestamp/active state/source URL in provenance.
 - Fail closed to review if revision state or attachment binding is ambiguous.
 - Add synthetic coverage plus exposed case-14 regression without changing any frozen benchmark artifact.
-- Run focused/relevant tests and exact-head CI; prepare review-ready PR and stop before merge unless Product Owner explicitly
-  approves.
+- Run focused/relevant tests and exact-head CI; prepare review-ready PR and stop before merge unless Product Owner explicitly approves.
 completed:
-- 'Owner promoted issue #51 as the concrete reusable DOCUMENT-QA next increment on 2026-09-15.'
+- Owner promoted issue #51 as the concrete reusable DOCUMENT-QA next increment on 2026-09-15.
 - Queue admission and follow-on Stage-4/5 pipeline prepared by ROADMAP-QUEUE-ACCEL-001.
-- 'Owner clarified issue #51 implementation/testing as AUTO while preserving auto_merge=false and explicit Product Owner merge
-  review.'
-current: 'Implementation not yet claimed by an executor; begin from issue #51 and existing EIS documents-page intake path.'
+- Owner clarified issue #51 implementation/testing as AUTO while preserving auto_merge=false and explicit Product Owner merge review.
+- Reconciled issue #51 open and no existing implementation PR/branch; claimed isolated branch agent/document-qa-next-increment.
+- Inventoried the runtime path: RealEisLoader currently obtains attachments through SOAP client list_attachments/get_procurement_details and maps them without revision provenance; public documents-page revision selection is not implemented in this loader.
+- Reconfirmed case-14 is exposed regression-only and its frozen artifacts must not be modified; issue #44 records mixed obsolete/current acquisition as a separate caveat.
+current: Add a bounded public EIS documents-page revision parser/selector at the acquisition boundary, preserving existing SOAP behavior unless revision-bound public evidence is available.
 pending:
-- Inventory current documents-page revision parsing and attachment-link traversal.
-- Implement active-revision selection/provenance and fail-closed ambiguity handling.
-- Add synthetic and exposed regression tests.
+- Locate/reuse the narrowest HTTP/HTML acquisition primitive and define revision/attachment provenance types without widening generic retrieval infrastructure.
+- Implement deterministic active-revision selection and fail-closed ambiguity handling.
+- Bind current analysis attachments only to the selected active revision and retain historical revision metadata separately.
+- Add synthetic cases: single revision; inactive+active overlapping filename; changed file; duplicate URL; ambiguity.
+- Add exposed case-14 HTML regression without changing frozen benchmark truth/artifacts.
 - Run focused/relevant tests and exact-head CI; open review-ready PR.
-last_verified_commit: 1383bb889b7cd310e9964fd74600ba7558cce887
+last_verified_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
 test_results:
-- 'Queue/roadmap admission validation pending this branch CI; no product tests run yet for issue #51.'
-updated_at: '2026-09-15T16:26:13Z'
-resume_instruction: 'Read issue #51 and current EIS public documents-page intake implementation. First identify exactly where
-  revision blocks and attachment links are parsed/traversed; add a bounded checkpoint before code changes. Preserve case-14
-  frozen artifacts and do not tune benchmark truth.'
+- No product tests run in this inventory quantum; no product code changed yet.
+updated_at: '2026-09-15T17:18:00Z'
+resume_instruction: Read the existing HTTP/browser helpers and EisDocumentRaw schema next. Implement the smallest revision-page parser/selector module and unit tests first; do not alter frozen benchmark artifacts or generic SOAP semantics. Then wire it only where current public EIS documents-page acquisition can provide revision evidence.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: 1383bb889b7cd310e9964fd74600ba7558cce887
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260915T2000MSK
+  branch: agent/document-qa-next-increment
+  base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 51
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-15T19:08:00Z'
