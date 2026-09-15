@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: DISCOVERY-QA-001
 authority: REVIEW
 goal: "Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark."
@@ -23,21 +23,23 @@ completed:
   - "Measured failure classes identified before tuning: neutral/commercial boosts without semantic fit, dilution of a clear single capability match, and overbroad Russian prefix matching."
   - "Bounded deterministic hardening committed as 32d5ce3336af3c3ff9e79625f2a813b312941579; no LLM reranker, vector DB, paid service, or new dependency added."
   - "Exact same frozen corpus rerun at 32d5ce3 improved P@5 to 0.9333, R@5 to 0.5885, nDCG@5 to 0.7997, FP@5 to 0.0667; P@10 to 0.7000, R@10 to 0.8120, nDCG@10 to 0.8302, FP@10 to 0.3000; missed-relevant@10 to 0.1880."
-  - "Repo-owned review evidence release committed on branch as d62b81bbd5f7fb606ee6069463416ab1a6fd424b and pushed."
-current: "Reconcile branch with current main, open the review-ready PR, run exact-head CI, then stop for Product Owner review without merging."
+  - "Repo-owned review evidence release committed as d62b81bbd5f7fb606ee6069463416ab1a6fd424b."
+  - "Branch reconciled with current main without rewriting the frozen hardened runtime; exact PR head is 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be."
+  - "Review-ready PR #59 opened against main; issue #2 evidence report posted as comment 5679631340."
+  - "Exact-head GitHub CI run 34964993833 completed SUCCESS on 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be; all 9 jobs passed including quality/make test, security, docker-build, dependency-lock, migrations, redis, R8 and bridge jobs."
+current: "Blocked at the required Product Owner review gate for PR #59. No further code change or merge is authorized by the current REVIEW task state."
 pending:
-  - "Merge current main checkpoint commits into agent/discovery-qa-001 without rewriting the exact hardened runtime commit."
-  - "Open review-ready PR against main and record issue #2 evidence."
-  - "Verify exact-head GitHub CI/gates; distinguish any unrelated environment-specific failure."
-  - "Set canonical task state to blocked/review with exact PR/head/CI evidence and wait for Product Owner review; do not merge automatically."
-last_verified_commit: "d62b81bbd5f7fb606ee6069463416ab1a6fd424b"
+  - "Product Owner reviews PR #59 and explicitly approves or requests changes."
+  - "If explicitly approved for merge, re-fetch PR #59, verify its head is still 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be (or re-run exact-head CI if changed), merge with guarded expected-head SHA, verify issue #2 closure, then mark task/queue completed."
+last_verified_commit: "1dc243d57f686fcc9fec92e4b355fe2ef98aa4be"
 test_results:
   - "Focused relevance/discovery tests: 27 passed; Ruff changed-scope PASS."
   - "Benchmark evidence SHA256SUMS: PASS for query plan, supplier profile, corpus manifest, freeze, source-only evaluator ZIP, blind labels, baseline and hardened SUT/comparison artifacts."
   - "make check: PASS."
-  - "Local full pytest: 2948 passed, 241 skipped, 1 failed. The only failure is the pre-existing Mac/PostgreSQL R9 backup/restore acceptance (pg_restore exit 1); DISCOVERY-QA changed no R9 code. GitHub Ubuntu CI remains authoritative."
-updated_at: "2026-09-15T11:48:00Z"
-resume_instruction: "Resume DISCOVERY-QA-001 on agent/discovery-qa-001. Fetch main, merge it into the branch (do not rebase/rewrite 32d5ce3 because the frozen benchmark evidence binds the hardened runtime to that commit), push, open the PR, and verify exact-head CI. If CI is clean, update issue #2 and canonical checkpoint to blocked awaiting Product Owner review. Do not merge: authority is REVIEW and auto_merge=false."
+  - "Local full pytest: 2948 passed, 241 skipped, 1 failed; sole failure is the known Mac/PostgreSQL R9 pg_restore environment mismatch and no R9 code changed."
+  - "GitHub exact-head CI run 34964993833: SUCCESS; all 9 jobs passed, including authoritative Ubuntu quality/make test."
+updated_at: "2026-09-15T11:56:00Z"
+resume_instruction: "DISCOVERY-QA-001 is implementation-complete and blocked on Product Owner review of PR #59. Do not continue tuning, expand the corpus, or merge. If the Owner explicitly approves merge, re-fetch PR #59 and exact-head CI; if unchanged and green, merge with expected_head_sha, verify issue #2 is closed completed, update execution queue and both checkpoints to completed. If changes are requested, resume only those bounded review changes."
 execution:
   claimed_by: "manual Owner-requested roadmap continuation"
   execution_id: "discovery-qa-001-20260915"
@@ -45,5 +47,7 @@ execution:
   base_commit: "ae7c5d0e5c2ea905a13def47e972111afde013af"
   hardened_runtime_commit: "32d5ce3336af3c3ff9e79625f2a813b312941579"
   evidence_commit: "d62b81bbd5f7fb606ee6069463416ab1a6fd424b"
-  pull_request: null
+  pull_request: 59
+  pull_request_head: "1dc243d57f686fcc9fec92e4b355fe2ef98aa4be"
+  ci_run: 34964993833
   manual_override: true
