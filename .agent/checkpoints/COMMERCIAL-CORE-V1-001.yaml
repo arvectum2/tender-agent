@@ -1,46 +1,65 @@
 version: 1
 task_id: COMMERCIAL-CORE-V1-001
-status: in_progress
-updated_at: '2026-09-15T14:36:00Z'
-goal: 'Deliver the first executable Commercial Core slice: customer price-list/catalog ingest -> normalized catalog -> tender-to-catalog matching -> auditable coverage/cost/economic headroom -> commercial feasibility -> human-controlled next action.'
+status: blocked
+updated_at: '2026-09-15T14:46:00Z'
+goal: 'Deliver the first executable Commercial Core slice: customer price-list/catalog ingest -> normalized catalog -> tender-to-catalog
+  matching -> auditable coverage/cost/economic headroom -> commercial feasibility -> human-controlled next action.'
 definition_of_done:
-  - 'Versioned Commercial Core v1 contract with normalized catalog rows, source provenance, match results, coverage/economic outputs, unknowns and human-control flags.'
-  - 'XLSX/CSV import reuses commodity parsers and fails closed on ambiguous layouts while retaining source row/sheet provenance.'
-  - 'SKU/article, brand/manufacturer, title/name, unit, price/currency and optional characteristics are normalized without inventing missing values.'
-  - 'Tender-to-catalog matching emits EXACT / LIKELY_ANALOG / PARTIAL / UNCERTAIN / NO_MATCH with deterministic rationale/evidence and no price-only relevance.'
-  - 'Coverage, known catalog cost and economic headroom/margin are calculated only from supported inputs; missing inputs remain explicit Unknown/Needs Review.'
-  - 'Result is exposed through the existing report/API path and cannot authorize external procurement/commercial action.'
-  - 'Regression coverage includes clean XLSX/CSV, ambiguous columns, missing price, match classes, duplicate SKUs, unit mismatch and unknown economics.'
-  - 'Focused/relevant tests and exact-head CI green; review-ready PR; stop before merge for Product Owner review.'
+- Versioned Commercial Core v1 contract with normalized catalog rows, source provenance, match results, coverage/economic
+  outputs, unknowns and human-control flags.
+- XLSX/CSV import reuses commodity parsers and fails closed on ambiguous layouts while retaining source row/sheet provenance.
+- SKU/article, brand/manufacturer, title/name, unit, price/currency and optional characteristics are normalized without inventing
+  missing values.
+- Tender-to-catalog matching emits EXACT / LIKELY_ANALOG / PARTIAL / UNCERTAIN / NO_MATCH with deterministic rationale/evidence
+  and no price-only relevance.
+- Coverage, known catalog cost and economic headroom/margin are calculated only from supported inputs; missing inputs remain
+  explicit Unknown/Needs Review.
+- Result is exposed through the existing report/API path and cannot authorize external procurement/commercial action.
+- Regression coverage includes clean XLSX/CSV, ambiguous columns, missing price, match classes, duplicate SKUs, unit mismatch
+  and unknown economics.
+- Focused/relevant tests and exact-head CI green; review-ready PR; stop before merge for Product Owner review.
 completed:
-  - 'Decision Core v1 completed and merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
-  - 'Owner explicitly directed Commercial Core continuation on 2026-09-15.'
-  - 'Issue #62 created with ARV-016 + ARV-017 scope and REVIEW gate.'
-  - 'Reuse inventory identified existing openpyxl/CSV import patterns, tender canonical line items, supplier profile, quote comparison, cost model, economics package and report/API surfaces.'
-  - 'ARV-067 electrical ontology/product catalog remains offline/reference-only and is excluded from implicit runtime wiring.'
-  - 'Implementation commit 981d81cd389cdf5a29effbcec674def71eb18bf0 adds versioned Commercial Core service/API/report integration.'
-  - 'PR #63 opened for issue #62.'
-  - 'Hardening commit a89d5c6449a163c85a5486df67a1d60557cc5ee6 adds SKU-conflict fail-closed behavior, known-unit requirement for costing, customer projection sanitization and source-bound match rows in customer HTML.'
-  - 'Post-hardening validation: 14 focused Commercial Core tests passed; 47 broader relevant tests passed; Python 3.11 syntax compile, Ruff, make check and git diff --check passed.'
-  - 'Earlier full pytest: 2970 passed, 241 skipped, one known environment-only macOS/PostgreSQL R9 pg_restore failure.'
-current: 'Merge latest checkpoint-only main advance into branch, push hardening exact head, run exact-head CI, then stop at owner review gate.'
+- Decision Core v1 completed and merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1.
+- Owner explicitly directed Commercial Core continuation on 2026-09-15.
+- 'Issue #62 created with ARV-016 + ARV-017 scope and REVIEW gate.'
+- Reuse inventory identified existing openpyxl/CSV import patterns, tender canonical line items, supplier profile, quote comparison,
+  cost model, economics package and report/API surfaces.
+- ARV-067 electrical ontology/product catalog remains offline/reference-only and is excluded from implicit runtime wiring.
+- Implementation commit 981d81cd389cdf5a29effbcec674def71eb18bf0 adds versioned Commercial Core service/API/report integration.
+- 'PR #63 opened for issue #62.'
+- Hardening commit a89d5c6449a163c85a5486df67a1d60557cc5ee6 adds SKU-conflict fail-closed behavior, known-unit requirement
+  for costing, customer projection sanitization and source-bound match rows in customer HTML.
+- 'Post-hardening validation: 14 focused Commercial Core tests passed; 47 broader relevant tests passed; Python 3.11 syntax
+  compile, Ruff, make check and git diff --check passed.'
+- 'Earlier full pytest: 2970 passed, 241 skipped, one known environment-only macOS/PostgreSQL R9 pg_restore failure.'
+- 'Final local full pytest after hardening: 2972 passed, 241 skipped, 1 known environment-only macOS/PostgreSQL R9 pg_restore
+  failure; no R9 code changed.'
+- 'PR #63 exact head 07ba3458ee7ee132e2b7db50a1e7322e834a930a is mergeable and exact-head GitHub CI run 34983170537 completed
+  SUCCESS with all 9 jobs green, including quality/make test.'
+current: 'Implementation and exact-head CI are complete. Blocked at the required Product Owner review gate for PR #63; no
+  further code change or merge is authorized.'
 remaining:
-  - 'Merge current main checkpoint commits without rewriting implementation history.'
-  - 'Push branch and update PR #63 head.'
-  - 'Verify exact-head GitHub CI; fix only attributable failures.'
-  - 'Mark canonical task and execution queue blocked_review after green CI; await Product Owner merge approval.'
-last_verified_commit: 'a89d5c6449a163c85a5486df67a1d60557cc5ee6'
+- 'Product Owner review and explicit merge approval for PR #63.'
+last_verified_commit: 07ba3458ee7ee132e2b7db50a1e7322e834a930a
 test_results:
-  - 'Commercial Core focused/regression/API integration after hardening: 14 passed.'
-  - 'Broader relevant commercial/decision/report suite after hardening: 47 passed.'
-  - 'Python 3.11 py_compile PASS; Ruff PASS; make check PASS; git diff --check PASS.'
-  - 'Earlier local full pytest: 2970 passed, 241 skipped, 1 known environment-only R9 pg_restore failure on macOS.'
-resume_instruction: 'Resume from hardening commit a89d5c6449a163c85a5486df67a1d60557cc5ee6 on branch agent/commercial-core-v1-001 and PR #63. Merge checkpoint-only main advances, push new exact head, verify exact-head CI, then update checkpoint/queue to blocked_review. Do not merge without explicit Product Owner approval.'
+- 'Commercial Core focused/regression/API integration after hardening: 14 passed.'
+- 'Broader relevant commercial/decision/report suite after hardening: 47 passed.'
+- Python 3.11 py_compile PASS; changed-scope Ruff PASS; make check PASS; git diff --check PASS.
+- 'Final local full pytest: 2972 passed, 241 skipped, 1 known environment-only R9 pg_restore failure on macOS.'
+- 'Exact-head GitHub CI run 34983170537: SUCCESS, 9/9 jobs green; quality/make test PASS.'
+resume_instruction: 'COMMERCIAL-CORE-V1-001 is blocked for Product Owner review on PR #63. Do not tune, expand or merge. If
+  the Product Owner explicitly approves merge, re-fetch PR #63, confirm expected head 07ba3458ee7ee132e2b7db50a1e7322e834a930a
+  or sync current main checkpoint-only advances into the branch and rerun exact-head CI if the head changes, then perform
+  a guarded expected-head merge, verify issue #62 closes completed, and update task/queue checkpoints to completed. If review
+  requests changes, implement only the bounded requested changes and rerun exact-head CI. Preserve HUMAN control over all
+  external procurement/commercial actions.'
 execution:
   issue: 62
-  branch: 'agent/commercial-core-v1-001'
-  base_commit: 'cb3d22babf1bb28fe674d5265aaa24150eb07f96'
-  implementation_commit: '981d81cd389cdf5a29effbcec674def71eb18bf0'
-  hardening_commit: 'a89d5c6449a163c85a5486df67a1d60557cc5ee6'
+  branch: agent/commercial-core-v1-001
+  base_commit: cb3d22babf1bb28fe674d5265aaa24150eb07f96
+  implementation_commit: 981d81cd389cdf5a29effbcec674def71eb18bf0
+  hardening_commit: a89d5c6449a163c85a5486df67a1d60557cc5ee6
   pull_request: 63
   manual_override: true
+  final_head: 07ba3458ee7ee132e2b7db50a1e7322e834a930a
+  ci_run: 34983170537
