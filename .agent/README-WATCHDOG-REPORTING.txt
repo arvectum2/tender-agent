@@ -1,0 +1,1 @@
+Hourly user-visible reporting is mandatory. See .agent/WATCHDOG_REPORTING.md. A persistent GitHub issue should be used for the run-log thread once created.
