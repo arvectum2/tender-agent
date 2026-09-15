@@ -1,7 +1,7 @@
 version: 1
 task_id: DISCOVERY-QA-001
-status: in_progress
-updated_at: '2026-09-15T11:48:00Z'
+status: blocked
+updated_at: '2026-09-15T11:56:00Z'
 goal: 'Measure and improve 44-FZ procurement discovery/relevance for the configured supplier profile using a fixed, source-grounded, independently labelled benchmark.'
 definition_of_done:
   - 'Freeze an independently labelled 30–50-case 44-FZ discovery corpus before evaluating or tuning Tender Agent output.'
@@ -23,23 +23,27 @@ completed:
   - 'Bounded scorer hardening commit 32d5ce3336af3c3ff9e79625f2a813b312941579.'
   - 'Same frozen corpus rerun: P@5 0.9333, R@5 0.5885, nDCG@5 0.7997, FP@5 0.0667; P@10 0.7000, R@10 0.8120, nDCG@10 0.8302, FP@10 0.3000; missed@10 0.1880.'
   - 'Evidence release commit d62b81bbd5f7fb606ee6069463416ab1a6fd424b pushed to agent/discovery-qa-001.'
-current: 'Reconcile with main, open review-ready PR, verify exact-head CI, then stop for Product Owner review.'
+  - 'Branch reconciled with main and pushed at exact PR head 1dc243d57f686fcc9fec92e4b355fe2ef98aa4be.'
+  - 'PR #59 opened review-ready; issue #2 evidence report posted in comment 5679631340.'
+  - 'Exact-head GitHub CI run 34964993833 completed SUCCESS; all 9 jobs passed including authoritative Ubuntu quality/make test.'
+current: 'Blocked at Product Owner review gate for PR #59.'
 remaining:
-  - 'Merge current main into branch without rewriting the hardened runtime commit.'
-  - 'Open PR and publish issue #2 evidence summary.'
-  - 'Verify exact-head CI/gates.'
-  - 'Set checkpoint blocked/review and wait for Product Owner; do not merge.'
-last_verified_commit: 'd62b81bbd5f7fb606ee6069463416ab1a6fd424b'
+  - 'Product Owner reviews PR #59 and explicitly approves merge or requests bounded changes.'
+  - 'On explicit merge approval: verify exact PR head/CI, guarded merge, verify issue #2 closure, mark queue/current/history completed.'
+last_verified_commit: '1dc243d57f686fcc9fec92e4b355fe2ef98aa4be'
 test_results:
   - 'Focused relevance/discovery tests: 27 passed; Ruff PASS.'
   - 'Evidence SHA256SUMS verification: PASS.'
   - 'make check: PASS.'
-  - 'Local full pytest: 2948 passed, 241 skipped, one pre-existing Mac/PostgreSQL R9 backup/restore failure (pg_restore exit 1); no R9 code changed.'
-resume_instruction: 'Fetch current main and merge it into agent/discovery-qa-001; do not rebase because the frozen evidence names 32d5ce3 as the hardened runtime. Push, open PR, verify exact-head GitHub CI, update issue #2 and checkpoint, then stop before merge for Product Owner review.'
+  - 'Local full pytest: 2948 passed, 241 skipped, one known Mac/PostgreSQL R9 pg_restore environment failure; no R9 code changed.'
+  - 'GitHub exact-head CI run 34964993833: SUCCESS; 9/9 jobs passed.'
+resume_instruction: 'Do not make further product changes or merge while REVIEW is pending. If Product Owner explicitly approves PR #59 for merge, re-fetch PR/head/CI and merge only with guarded expected_head_sha; then verify issue #2 closed and update canonical task/queue to completed. If review requests changes, implement only those bounded changes and rerun exact-head CI.'
 execution:
   branch: 'agent/discovery-qa-001'
   base_commit: 'ae7c5d0e5c2ea905a13def47e972111afde013af'
   hardened_runtime_commit: '32d5ce3336af3c3ff9e79625f2a813b312941579'
   evidence_commit: 'd62b81bbd5f7fb606ee6069463416ab1a6fd424b'
-  pull_request: null
+  pull_request: 59
+  pull_request_head: '1dc243d57f686fcc9fec92e4b355fe2ef98aa4be'
+  ci_run: 34964993833
   manual_override: true
