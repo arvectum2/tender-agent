@@ -129,6 +129,7 @@ class TenderOperatorDemoReportResponse(APIModel):
     manual_checks: list[str]
     sections: list[DemoDetailSection]
     report_markdown: str
+    decision_core: dict[str, Any] | None = None
 
 
 class TenderOperatorUploadedRunStatus(StrEnum):
