@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: CHANGE-MONITORING-V1-001
+status: in_progress
+authority: AUTO
+issue: 65
+branch: agent/change-monitoring-v1-001
+base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
+completed:
+  - Reconciled DOCUMENT-QA-NEXT-INCREMENT branch checkpoint: implementation DoD complete; PR #73 remains open and Product Owner merge-gated.
+  - Checked PR #73 exact current head a746377a59173dd04f891dae9681f34625185e91; exact-head CI run 35016956523 is queued, so no passive wait was performed.
+  - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
+  - Read issue #65 scope and hard boundaries; external notification delivery remains disabled/out of scope.
+  - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
+current: Inventory existing event/alert, saved-search, procurement source snapshot, API/feed and persistence primitives before implementation.
+pending:
+  - Identify reusable repository models/services/API surfaces for saved watches, source snapshots and internal events.
+  - Define the smallest versioned monitoring contract and procurement-specific deterministic diff semantics.
+  - Implement idempotent unchanged/deadline/document-revision/status-cancellation handling with source provenance.
+  - Add internal feed/API surface only; do not enable external transports.
+  - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
+test_results:
+  - No product code changed yet; tests not run in this inventory checkpoint.
+resume_instruction: Read existing models/services/routes for tender source state, saved searches and internal event/audit primitives. Reuse those seams; custom code starts only at procurement-specific source snapshot/diff semantics. Do not implement email/SMS/Telegram/webhook delivery.
+updated_at: '2026-09-15T20:05:00Z'
