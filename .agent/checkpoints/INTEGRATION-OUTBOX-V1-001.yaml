@@ -20,17 +20,25 @@ completed:
   - Reuse inventory confirmed src/modules/event_log/service.py append_event_record accepts deal-less source-module events and list_events provides deterministic read ordering; outbox events can reference/audit through this existing primitive.
   - Reuse inventory confirmed procurement_monitoring.check_watch already emits source-bound procurement_watch_changed EventRecord only after idempotent ProcurementWatchEvent event_key dedupe; this is the exact monitoring-alert seam and must not be duplicated.
   - Monitoring AlertEvent event_key is deterministic over source/external identity plus previous/current fingerprints and outcome, providing a stable source event key for outbox idempotency.
-current: Reuse inventory complete for event log and monitoring-alert seam; next inspect exact analysis-completion and review-required persistence/state-transition functions, then define the smallest outbox envelope around those existing transitions.
+  - Identified customer_pilot.complete_run as the committed analysis-completion/operator-review transition and submission_readiness build as an existing NEEDS_REVIEW transition; migration head on dependency branch was 098_add_procurement_monitoring.
+  - Implemented integration-event-v1 envelope and persisted idempotent IntegrationOutboxEvent with stable SHA-256 event keys, tenant-aware read filtering, recursive credential-like field stripping, and migration 099_add_integration_outbox parented to 098.
+  - Wired monitoring_alert after existing ProcurementWatchEvent dedupe, analysis_completed plus review_required at customer-pilot completion, and review_required when submission readiness resolves NEEDS_REVIEW.
+  - Added read-only /integration-outbox/events and fail-closed /adapter-status; live email/webhook/CRM/messenger delivery remains impossible through this module and explicitly REVIEW/HUMAN gated in docs.
+  - Added replay/idempotency, tenant isolation, secret stripping, disabled-adapter and monitoring replay regressions. Product commit 0925fcb pushed to agent/integration-outbox-v1-001.
+  - Local validation: focused monitoring/outbox 12 passed; broader customer-pilot/readiness selection 18 passed, 1 skipped; make check PASS; alembic single head 099_add_integration_outbox; git diff --check PASS.
+current: Product slice is implemented and locally green at 0925fcb; exact-head GitHub CI and PR/reconciliation remain.
 pending:
-  - Identify exact analysis-completion and review-required state-change functions/models and router/migration head on this branch.
-  - Implement minimal versioned envelope/outbox persistence and disabled adapter guard without building a generic integration platform.
-  - Wire the three required internal event types, add read-only list/export and idempotency/tenant/no-secret tests.
-  - Run focused/relevant tests and exact-head CI; open review-ready PR. Automatic merge remains subject to Company AM-4 validity and dependency/base reconciliation.
-last_verified_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
+  - Inspect exact-head GitHub CI once after push; if green, open/update PR and verify issue #67 DoD.
+  - Reconcile dependency/base with CHANGE-MONITORING PR #74 before any merge.
+  - Automatic merge remains blocked unless Company AM-4 authority is independently valid.
+last_verified_commit: 0925fcb
 test_results:
-  - No product tests run yet; this invocation changed checkpoint evidence only.
-updated_at: '2026-09-16T14:58:41+03:00'
-resume_instruction: Inspect the concrete analysis completion and Decision Core/review-required state transition functions/models plus current migration head. Reuse those transition points; do not infer events from read paths and do not enable or call any external transport.
+  - Focused integration outbox + procurement monitoring: 12 passed.
+  - Broader selected customer-pilot/readiness/outbox/monitoring: 18 passed, 1 skipped.
+  - make check: PASS.
+  - alembic heads: 099_add_integration_outbox (single head); git diff --check PASS.
+updated_at: '2026-09-16T16:12:24+03:00'
+resume_instruction: Check exact-head CI once for 0925fcb. If green, open/update PR and verify DoD; do not enable external transports. Before any automatic merge, reconcile base/dependency and independently re-read Company AM-4 authority.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260916T135928+0300
@@ -38,4 +46,4 @@ execution:
   base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
   issue: 67
   manual_override: false
-  lease_until: '2026-09-16T16:48:41+03:00'
+  lease_until: '2026-09-16T18:02:24+03:00'
