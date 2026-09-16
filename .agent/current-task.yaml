@@ -28,23 +28,42 @@ completed:
 - 'Bounded design selected: add a no-migration ops_observability module with versioned snapshot schema,
   GET /api/ops/observability endpoint, deterministic thresholds, optional ARVECTUM_BACKUP_ROOT metadata
   reader, and runbook. No third-party telemetry or destructive recovery.'
-current: Implement the no-migration ops_observability module and optional backup-root setting using only
-  existing persisted state and public storage snapshot.
+- Implemented versioned ops-observability-v1 snapshot and GET /api/ops/observability without a migration
+  or new telemetry dependency.
+- Snapshot reuses TenderAnalysisJob for queue age/depth and recent worker failures, DocumentIngestionRun
+  for ingestion outcomes, ProcurementTenderDocument for processing failures, public storage guard state,
+  and optional ARV-076 backup metadata.
+- Added deterministic warning/critical thresholds and explicit UNKNOWN/UNAVAILABLE semantics; overall
+  status remains unknown if any dependency is unknown/unavailable and no higher-severity warning/critical
+  is present.
+- Added optional ARVECTUM_BACKUP_ROOT setting; endpoint reads only BACKUP_COMPLETE + valid arv-076 MANIFEST
+  metadata and never returns filesystem paths.
+- Added non-destructive operational runbook covering stale queue, ingestion/document failures, storage
+  guard, backup state, and unavailable dependencies.
+- Added regressions for healthy, failed-ingestion degraded, recent-worker degraded, stale queue, storage
+  ingestion guard, stale backup age, unavailable dependencies, and endpoint contract.
+- 'Local validation: focused ops-observability 8 passed; broader relevant ops/storage/job/document-ingestion/backup/security
+  suite 97 passed, 5 skipped; make check PASS; targeted ruff and git diff --check PASS.'
+- Product implementation committed as fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403.
+current: 'Push validated implementation/checkpoint branch, open PR for issue #68, then inspect exact-head
+  CI once.'
 pending:
-- Add versioned schemas/service/router and register /api/ops/observability.
-- Add optional ARVECTUM_BACKUP_ROOT setting; expose backup as UNAVAILABLE/UNKNOWN when not configured
-  or no completed backup exists.
-- Add healthy/degraded/stale queue/storage guard/unavailable dependency regressions plus runbook.
-- Run focused/relevant tests and exact-head CI; apply guarded auto-merge gates only if AM-4 remains provably
-  valid.
-last_verified_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
+- 'Commit/push durable validation checkpoint and open PR for issue #68.'
+- Inspect exact-head CI once; if queued/running, park without passive polling and continue another independent
+  AUTO item if safe.
+- 'If CI is green, verify issue #68 DoD, mergeability/reviews and Company AM-4 authority/counter; auto-merge
+  only if every gate is provably valid.'
+last_verified_commit: fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403
 test_results:
-- 'No #68 product tests run yet; inventory stage only.'
-updated_at: '2026-09-16T08:39:16+03:00'
-resume_instruction: Implement src/modules/ops_observability with a versioned snapshot built from TenderAnalysisJob,
-  DocumentIngestionRun, ProcurementTenderDocument and public_storage_snapshot(). Add optional ARVECTUM_BACKUP_ROOT
-  safe metadata lookup and /api/ops/observability. Preserve UNKNOWN/UNAVAILABLE instead of zero for unsupported/no-source
-  conditions; no third-party telemetry or recovery mutation.
+- 'Focused tests/test_ops_observability_v1.py: 8 passed.'
+- 'Relevant ops/storage/job/document-ingestion/backup/security suite: 97 passed, 5 skipped.'
+- 'PATH=/Users/master/Documents/.venv/bin:$PATH make check: PASS.'
+- 'Targeted ruff for ops_observability/settings/router/test: PASS; git diff --check: PASS.'
+updated_at: '2026-09-16T08:49:27+03:00'
+resume_instruction: 'Push the branch, open PR for issue #68, inspect exact-head CI once and verify mergeability/reviews.
+  If exact-head CI is waiting, park the task and continue the next independent admitted AUTO item. Before
+  any merge, re-read Company AM-4 and prove the automatic-merge review trigger un-reached; otherwise fail
+  closed to REVIEW.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260916-ops-observability
@@ -52,4 +71,4 @@ execution:
   base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
   issue: 68
   manual_override: true
-  lease_until: '2026-09-16T10:29:16+03:00'
+  lease_until: '2026-09-16T10:39:27+03:00'
