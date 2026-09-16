@@ -1,0 +1,37 @@
+version: 2
+repository: arvectum2/tender-agent
+status: in_progress
+task_id: INTEGRATION-OUTBOX-V1-001
+authority: AUTO
+goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces while keeping every live external transport disabled.
+definition_of_done:
+  - Versioned event envelope plus persisted idempotent outbox.
+  - analysis-completed, monitoring-alert and review-required event types wired from existing internal state changes.
+  - Read-only list/export surface.
+  - External transport boundary exists only behind explicit disabled/fail-closed configuration.
+  - Replay/idempotency/tenant-isolation/no-secret regressions.
+  - Focused/relevant tests and exact-head CI green; docs preserve REVIEW/HUMAN gate for live transport.
+completed:
+  - Reconciled queue dependency CHANGE-MONITORING-V1-001 as technically complete on open mergeable PR #74 with exact-head green evidence; its final merge is blocked only by Company AM-4 review uncertainty.
+  - Selected the next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge authority gate.
+  - Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b so the required monitoring-alert primitive is available without duplicating #65 implementation.
+  - Read issue #67 and bounded scope: internal event/outbox infrastructure only; no live email/webhook/CRM/messenger delivery, no destination credentials, no procurement/commercial external effect.
+current: Inventory reusable EventRecord/event_log, monitoring-alert persistence, analysis completion and review-required state-change seams before product code changes.
+pending:
+  - Identify exact reusable event/audit and router/migration seams on this branch.
+  - Implement minimal versioned envelope/outbox persistence and disabled adapter guard without building a generic integration platform.
+  - Wire the three required internal event types, add read-only list/export and idempotency/tenant/no-secret tests.
+  - Run focused/relevant tests and exact-head CI; open review-ready PR. Automatic merge remains subject to Company AM-4 validity and dependency/base reconciliation.
+last_verified_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
+test_results:
+  - No product tests run yet in this inventory quantum.
+updated_at: '2026-09-16T13:59:28+03:00'
+resume_instruction: Inspect EventRecord/event_log, procurement_monitoring alert creation, analysis completion and Decision Core review-required paths. Record exact reusable functions/models before implementation. Do not enable or call any external transport.
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260916T135928+0300
+  branch: agent/integration-outbox-v1-001
+  base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
+  issue: 67
+  manual_override: false
+  lease_until: '2026-09-16T15:49:28+03:00'
