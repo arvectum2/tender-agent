@@ -4,7 +4,7 @@ issue: 69
 branch: agent/223fz-ingest-v1-001
 base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
 status: in_progress
-updated_at: '2026-09-16T23:02:00+03:00'
+updated_at: '2026-09-17T00:18:00+03:00'
 authority: AUTO
 reconciliation:
   dependency: INGEST-RESILIENCE-V1-001
@@ -14,16 +14,27 @@ reconciliation:
     - 'Issue #66 closed completed.'
   am4_cycle:
     renewal: 'DECISION-2026-09-16-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md Approved'
-    automatic_merges_observed_this_run: 1
+    automatic_merges_observed_since_renewal_in_watchdog_evidence: 1
 inventory:
   - path: src/tender_research/providers/public_44fz_search.py
-    finding: 'Contains regime-neutral search/detail/document/revision dataclasses and HTTP plumbing; LAW_FLAGS already maps 223fz -> fz223.'
+    finding: 'Regime-neutral dataclasses, HTTP transport, host allow-list, page classification and LAW_FLAGS exist; LAW_FLAGS maps 223fz -> fz223.'
   - path: src/tender_research/providers/public_44fz_search.py
-    finding: 'Concrete implementation is still named/bounded Public44FzSearchProvider; its parsing/endpoint assumptions must not become a hidden 223-FZ fallback.'
-  - path: src/tender_research/providers
-    finding: 'Current provider directory contains public_44fz_search.py, manual_urls.py and duckduckgo_html.py; no separate public 223-FZ provider exists on main.'
+    finding: 'Public44FzSearchProvider.search always parses with parse_44fz_search_results; _parse_single_entry hard-codes law=44fz, so passing law_type=223fz today silently labels 223-FZ cards as 44-FZ.'
+  - path: src/tender_research/providers/public_44fz_search.py
+    finding: 'fetch_detail defaults law_type to 44fz and always derives the 44-FZ common-info/documents route plus 44-FZ revision binding. This path cannot be reused for 223-FZ detail/documents without an explicit separate implementation.'
+  - path: src/tender_research/registry_discovery.py
+    finding: 'Discovery owns only SourceType.EXTERNAL_PUBLIC_44FZ and a Public44FzSearchProvider. _search_item_to_discovered also stamps source/source_type external_public_44fz regardless of item law. A separate 223-FZ source type/provider selection is required.'
+  - path: src/tender_research/pipeline.py
+    finding: 'TenderResearchPipeline constructs only Public44FzSearchProvider; _lookup_public_discovered_item and fallback provenance are hard-coded external_public_44fz. Direct 223-FZ intake needs explicit provider/source selection before the existing regime-neutral upsert can be reused.'
+  - path: repository tree
+    finding: 'No repository-owned public_eis_html_223fz fixture/evidence was found in the branch tree. Do not fabricate a real-EIS fixture; synthetic source-bound fixtures can cover parser contracts while supported public examples must be acquired/read-only or explicitly documented unavailable.'
+design:
+  - 'Add src/tender_research/providers/public_223fz_search.py as a distinct provider/parser contract; reuse regime-neutral dataclasses and transport only, never call parse_44fz_search_results or 44-FZ detail/revision helpers as a fallback.'
+  - 'Add SourceType.EXTERNAL_PUBLIC_223FZ and explicit discovery/provider selection. Keep auto discovery unchanged unless queue scope explicitly admits changing default source order.'
+  - 'Represent missing/ambiguous 223-FZ fields as source-bound UNKNOWN/NEEDS_REVIEW metadata; do not infer customer role, revision semantics, or legal meaning from 44-FZ labels/routes.'
+  - 'Reuse TenderRepository/upsert/document provenance and ingest-resilience identity primitives after a 223-FZ detail object has been safely constructed.'
 next:
-  - Inspect URL builder/search parser/detail/document methods in Public44FzSearchProvider and identify extractable regime-neutral transport seams.
-  - Inspect TenderPipeline/provider selection and API/CLI entry points for law_type handling.
-  - Locate repository docs/tests mentioning public_eis_html_223fz using directory inspection if code search remains empty.
-  - Implement a distinct 223-FZ provider/parser contract with fail-closed unknown/ambiguous fields and no legal decision semantics.
+  - Inspect current CLI/API discovery entry points and exact 44-FZ detail URL helper assumptions to bound explicit 223-FZ direct-registry surface.
+  - Implement the distinct 223-FZ provider/parser and source type with synthetic normal/missing/ambiguous fixtures and idempotent repository ingest coverage.
+  - Add support matrix documenting which 223-FZ public layouts/endpoints are verified versus UNKNOWN/NEEDS_REVIEW.
+  - Run focused 223-FZ plus existing 44-FZ regressions, make check, then open exact-head CI PR when local gates pass.
