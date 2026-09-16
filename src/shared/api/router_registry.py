@@ -77,6 +77,7 @@ from src.modules.launch_visibility.router import router as launch_visibility_rou
 from src.modules.learning_automation.router import router as learning_automation_router
 from src.modules.logistics_tracking.router import router as logistics_tracking_router
 from src.modules.operator_sessions.router import router as operator_sessions_router
+from src.modules.ops_observability.router import router as ops_observability_router
 from src.modules.optimization.router import router as optimization_router
 from src.modules.outcome_intake.router import router as outcome_intake_router
 from src.modules.payment_collection.router import router as payment_collection_router
@@ -85,6 +86,9 @@ from src.modules.post_submission.router import router as post_submission_router
 from src.modules.postmortems.router import router as postmortems_router
 from src.modules.priority_scoring.router import router as priority_scoring_router
 from src.modules.procedure_monitor.router import router as procedure_monitor_router
+from src.modules.procurement_monitoring.router import (
+    router as procurement_monitoring_router,
+)
 from src.modules.prompt_schema_library.router import (
     router as prompt_schema_library_router,
 )
@@ -159,6 +163,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     integration_tasks_router,
     intake_priority_router,
     operator_sessions_router,
+    ops_observability_router,
     execution_ledger_router,
     external_execution_router,
     deal_closure_router,
@@ -224,6 +229,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     runtime_control_traces_router,
     runtime_metadata_slices_router,
     procedure_monitor_router,
+    procurement_monitoring_router,
     supplier_contracts_router,
     purchase_orders_router,
     outcome_intake_router,
