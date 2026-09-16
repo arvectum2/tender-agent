@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: INTEGRATION-OUTBOX-V1-001
 authority: AUTO
 goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces while keeping every live external transport disabled.
@@ -17,24 +17,29 @@ completed:
   - Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b so required monitoring-alert primitives are available without duplicating #65 implementation.
   - Created durable checkpoint .agent/checkpoints/INTEGRATION-OUTBOX-V1-001.yaml and bounded external transports/credentials/actions explicitly out of scope.
   - Completed event-log/monitoring reuse inventory: EventRecord + append_event_record are the audit seam; procurement_monitoring.check_watch already performs deterministic event_key dedupe and emits procurement_watch_changed only after persistence.
-current: Product slice is implemented and locally green at 0925fcb; exact-head GitHub CI and PR/reconciliation remain.
+  - Implemented integration-event-v1, idempotent persisted outbox, tenant-filtered read-only export, recursive credential-like field stripping, migration 099_add_integration_outbox, and disabled/fail-closed adapter status.
+  - Wired monitoring_alert, analysis_completed and review_required from existing state transitions; no external transport enabled.
+  - Opened PR #79 at exact head c792eaf40a858894eb0e192802b72d0a7e71adf6; GitHub CI run 35100497032 completed SUCCESS and PR is currently open/mergeable.
+  - Re-read Company AM-4 decision and assignment on 2026-09-16; both remain Approved, but the mandatory ten-auto-merge review trigger cannot be proven un-reached, so automatic merge fails closed to REVIEW.
+current: PR #79 is technically complete and exact-head CI is green; final merge is blocked by unresolved dependency #74 plus Company AM-4 mandatory-review/counter uncertainty.
 pending:
-  - Inspect exact-head GitHub CI once after push; if green, open/update PR and verify issue #67 DoD.
-  - Reconcile dependency/base with CHANGE-MONITORING PR #74 before any merge.
-  - Automatic merge remains blocked unless Company AM-4 authority is independently valid.
-last_verified_commit: 0925fcb
+  - Resolve/merge CHANGE-MONITORING PR #74 under valid authority, then reconcile PR #79 base/dependency against main.
+  - Re-run/confirm exact-head CI after dependency reconciliation.
+  - Merge only after Company AM-4 review/counter validity is attributable and every repository gate remains satisfied.
+last_verified_commit: c792eaf40a858894eb0e192802b72d0a7e71adf6
 test_results:
   - Focused integration outbox + procurement monitoring: 12 passed.
   - Broader selected customer-pilot/readiness/outbox/monitoring: 18 passed, 1 skipped.
   - make check: PASS.
   - alembic heads: 099_add_integration_outbox (single head); git diff --check PASS.
-updated_at: '2026-09-16T16:12:24+03:00'
-resume_instruction: Check exact-head CI once for 0925fcb. If green, open/update PR and verify DoD; do not enable external transports. Before any automatic merge, reconcile base/dependency and independently re-read Company AM-4 authority.
+  - Exact-head GitHub CI run 35100497032: SUCCESS.
+updated_at: '2026-09-16T16:58:39+03:00'
+resume_instruction: Reconcile PR #74 and Company AM-4 review/counter state once. If #74 is validly merged, synchronize #79 onto main and revalidate exact-head CI. Do not enable external transports. If AM-4 remains uncertain, preserve review-ready blocked state and continue only another independently admitted AUTO item whose dependencies are satisfied.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260916T135928+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/integration-outbox-v1-001
   base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
   issue: 67
   manual_override: false
-  lease_until: '2026-09-16T18:02:24+03:00'
+  lease_until: null
