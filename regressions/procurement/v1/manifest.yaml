@@ -1,0 +1,50 @@
+schema_version: procurement-regression-manifest-v1
+registry_version: 1
+cases:
+- case_id: DQA-CASE11-CUSTOMER-BOUNDARY
+  regime: 44-FZ
+  component: customer_role
+  failure_class: customer_legal_identity_overcapture
+  benchmark_class: regression_only
+  exposure_status: exposed_regression
+  provenance:
+    origin_issue: '#36'
+    source_kind: public_eis
+    registry_number: 0848300045426000620
+    source_url: https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0848300045426000620
+    evidence_refs:
+    - .agent/checkpoints/DOCUMENT-QA-005-BLIND-CASE11.yaml
+  frozen_evidence:
+    kind: exposed_regression_fixture
+    path: regressions/procurement/v1/evidence/dqa_case11_customer_boundary.txt
+    sha256: 69cc448f985162550761b6997108643bc115ce8655299d39f41ab3213f0748b0
+  former_blind:
+    freeze_ref: .agent/checkpoints/DOCUMENT-QA-005-BLIND-CASE11.yaml
+    first_result_ref: github:arvectum2/tender-agent#36
+    truth_frozen_before_sut: true
+    exposed_after_first_result: true
+  expected_invariant: customer legal identity stops before an adjacent contract-party role marker
+  runner:
+    pytest_nodeids:
+    - tests/test_customer_name_boundary.py::test_real_regression_trailing_ispolnitel_boundary
+- case_id: DQA-CASE14-ACTIVE-REVISION
+  regime: 44-FZ
+  component: document_intake
+  failure_class: notice_revision_attachment_mixing
+  benchmark_class: regression_only
+  exposure_status: exposed_regression
+  provenance:
+    origin_issue: '#51'
+    source_kind: public_eis
+    registry_number: 0194200000526005052
+    source_url: https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0194200000526005052
+    evidence_refs:
+    - tests/fixtures/eis/case14_documents_page_0194200000526005052.html
+  frozen_evidence:
+    kind: public_source_fixture
+    path: tests/fixtures/eis/case14_documents_page_0194200000526005052.html
+    sha256: ef21176d9480e4b15d8a5a966e5cf8b80aa7fbc581405487fb9d0f908fd930bb
+  expected_invariant: only attachments bound to the unique active notice revision enter the current analysis set
+  runner:
+    pytest_nodeids:
+    - tests/tender_research/test_public_detail_documents.py::test_case14_documents_page_selects_only_revision_two

@@ -3,28 +3,54 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: DOMAIN-REGRESSION-V1-001
 authority: REVIEW
-goal: Build a versioned repository-owned lifecycle and deterministic CI telemetry for confirmed procurement regressions while preserving strict benchmark/acceptance/regression separation and anti-circularity.
+goal: Build a versioned repository-owned lifecycle and deterministic CI telemetry for confirmed procurement regressions
+  while preserving strict benchmark/acceptance/regression separation and anti-circularity.
 definition_of_done:
-  - Versioned regression-case manifest/schema and documented lifecycle, including blind-to-exposed transition rules where applicable.
-  - Initial seed uses only confirmed existing failure families/fixtures with source provenance and no speculative cases.
-  - Deterministic CI command/report executes registered regression subsets and produces machine-readable results.
-  - Benchmark, acceptance and regression-only cases remain explicitly separated.
-  - Tests cover manifest integrity, provenance requirements, duplicate case IDs and anti-circularity rules.
-  - Exact-head CI green; material benchmark-method changes remain behind Product Owner REVIEW.
+- Versioned regression-case manifest/schema and documented lifecycle, including blind-to-exposed transition rules
+  where applicable.
+- Initial seed uses only confirmed existing failure families/fixtures with source provenance and no speculative
+  cases.
+- Deterministic CI command/report executes registered regression subsets and produces machine-readable results.
+- Benchmark, acceptance and regression-only cases remain explicitly separated.
+- Tests cover manifest integrity, provenance requirements, duplicate case IDs and anti-circularity rules.
+- Exact-head CI green; material benchmark-method changes remain behind Product Owner REVIEW.
 completed:
-  - Issue #71 and queue item read; dependencies DECISION-CORE-V1-001 and COMMERCIAL-CORE-V1-001 are completed.
-  - Created isolated branch/worktree agent/domain-regression-v1-001 from current origin/main.
-current: Inventory existing benchmark/acceptance/regression artifacts and confirmed failure-family fixtures before defining the bounded manifest schema.
+- Issue
+- Created isolated branch/worktree agent/domain-regression-v1-001 from current origin/main.
+- 'Reuse inventory completed: existing blind/acceptance tooling remains separate; confirmed exposed regressions
+  include DOCUMENT-QA case 11 customer legal-identity boundary and case 14 EIS active-revision attachment binding.'
+- Implemented procurement-regression-manifest-v1 JSON schema plus repository registry with mandatory origin/provenance,
+  frozen evidence SHA-256, regime/component/failure class, expected invariant and pytest node IDs.
+- 'Seeded only confirmed 44-FZ regressions: case 11 customer-role boundary (former blind, post-result exposed) and
+  case 14 active-revision binding; no speculative 223-FZ/private cases were fabricated.'
+- Implemented fail-closed manifest validation for duplicate IDs, provenance, repository path confinement, evidence
+  hash, test target existence and former-blind freeze-before-SUT/post-result-exposure invariants.
+- Implemented deterministic procurement-regression-report-v1 runner with case/component filtering and CI Makefile/workflow
+  integration; report omits timestamps/durations and is uploaded as CI evidence.
+- Documented strict blind benchmark vs acceptance vs exposed-regression lifecycle; registry never rewrites blind
+  truth/comparator/normalizer.
+- Bound the existing case-11 regression test to the repository-owned frozen evidence fixture; case-14 keeps its
+  unchanged public EIS HTML fixture hash.
+- 'Local validation green: registry integrity tests 7 passed; registered regression command 2/2 passed; broader
+  benchmark/customer/document/Decision Core/Commercial Core relevant suite 78 passed; make check, targeted ruff
+  and git diff --check PASS.'
+current: Implementation and local validation complete; commit/push, open review-ready PR, then exact-head CI. Final
+  merge remains Product Owner REVIEW / auto_merge=false.
 pending:
-  - Inventory current frozen benchmark assets, acceptance artifacts, exposed regressions and existing pytest/reporting commands.
-  - Define the smallest versioned procurement-regression manifest and lifecycle without modifying frozen truth/comparators.
-  - Seed only confirmed repository cases, add integrity/anti-circularity tests and deterministic machine-readable runner/report.
-  - Run focused/relevant tests and exact-head CI; open review-ready PR and stop before merge for Product Owner REVIEW.
+- 'Commit/push the bounded implementation and open a review-ready PR for issue #71.'
+- Run/observe exact-head CI and reconcile any task-caused failures.
+- Stop before merge and request explicit Product Owner REVIEW approval; do not auto-merge.
 last_verified_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
 test_results:
-  - No product tests run yet for this task.
-updated_at: '2026-09-16T09:40:00+03:00'
-resume_instruction: Inventory existing benchmark/acceptance/regression fixtures and reporting commands first. Record exact reusable paths and confirmed source cases in this checkpoint before product code changes. Do not alter frozen benchmark truth/comparators/normalizers.
+- 'tests/test_domain_regression_registry.py: 7 passed.'
+- 'make test-domain-regressions: 2 registered cases passed; deterministic JSON report generated.'
+- 'Broader relevant suite (registry + customer boundary + public detail + benchmark pipeline/hardening/control +
+  Decision Core + Commercial Core): 78 passed.'
+- 'make check: PASS; targeted ruff: PASS; git diff --check: PASS.'
+updated_at: '2026-09-16T09:52:00+03:00'
+resume_instruction: 'Commit/push current implementation, open review-ready PR for issue #71, inspect exact-head
+  CI once, fix only task-caused regressions, then stop at Product Owner REVIEW before merge. Preserve frozen benchmark
+  artifacts unchanged.'
 execution:
   claimed_by: manual Owner-requested roadmap continuation
   execution_id: domain-regression-20260916T094000+0300
