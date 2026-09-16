@@ -16,17 +16,18 @@ completed:
   - Selected next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge authority gate.
   - Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b so required monitoring-alert primitives are available without duplicating #65 implementation.
   - Created durable checkpoint .agent/checkpoints/INTEGRATION-OUTBOX-V1-001.yaml and bounded external transports/credentials/actions explicitly out of scope.
-current: Inventory reusable EventRecord/event_log, monitoring-alert persistence, analysis completion and review-required state-change seams before product code changes.
+  - Completed event-log/monitoring reuse inventory: EventRecord + append_event_record are the audit seam; procurement_monitoring.check_watch already performs deterministic event_key dedupe and emits procurement_watch_changed only after persistence.
+current: Inspect exact analysis-completion and review-required state-transition functions/models, then define the smallest outbox envelope around existing transitions.
 pending:
-  - Identify exact reusable event/audit and router/migration seams on this branch.
+  - Identify exact analysis-completion and review-required state-change functions/models and router/migration head.
   - Implement minimal versioned envelope/outbox persistence and disabled adapter guard without building a generic integration platform.
   - Wire required event types, read-only list/export, idempotency/tenant/no-secret tests.
   - Run focused/relevant tests and exact-head CI; open PR. Merge remains subject to Company AM-4 and dependency/base reconciliation.
-last_verified_commit: fff25e4931f056f488563f41123f3e351f2c8ee3
+last_verified_commit: 610bdb3286ded1f0970751475ab9dc16c08b59ab
 test_results:
-  - No product tests run yet in this inventory quantum.
-updated_at: '2026-09-16T13:59:28+03:00'
-resume_instruction: Inspect EventRecord/event_log, procurement_monitoring alert creation, analysis completion and Decision Core review-required paths. Record exact reusable functions/models before implementation. Do not enable or call any external transport.
+  - No product tests run yet; checkpoint-only progress this invocation.
+updated_at: '2026-09-16T14:58:41+03:00'
+resume_instruction: Inspect concrete analysis completion and Decision Core/review-required transition points plus current migration head. Reuse transition points; do not infer events from read paths and do not enable/call external transports.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260916T135928+0300
@@ -34,4 +35,4 @@ execution:
   base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
   issue: 67
   manual_override: false
-  lease_until: '2026-09-16T15:49:28+03:00'
+  lease_until: '2026-09-16T16:48:41+03:00'
