@@ -535,3 +535,5 @@ __all__ = [
     "WorkspaceFeedRecord",
     "WorkspaceFeedSet",
 ]
+
+from src.modules.procurement_monitoring.models import ProcurementWatch, ProcurementWatchEvent, ProcurementWatchSnapshot  # noqa: F401
