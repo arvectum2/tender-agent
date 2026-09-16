@@ -119,3 +119,101 @@ def build_alert_event(snapshot: SourceSnapshot, diff: SourceDiff) -> AlertEvent 
         changes=diff.changes,
         reason=diff.reason,
     )
+
+
+def snapshot_from_tender(tender: Any) -> SourceSnapshot:
+    from .schemas import DocumentState
+
+    docs = []
+    active_revisions: set[str] = set()
+    for doc in tender.documents:
+        meta = doc.raw_meta or {}
+        revision = meta.get("notice_revision") or meta.get("revision")
+        active = meta.get("revision_active")
+        if active is True and revision is not None:
+            active_revisions.add(str(revision))
+        docs.append(DocumentState(
+            source_document_id=doc.source_document_id or doc.document_identity_hash or doc.id,
+            sha256=doc.sha256,
+            revision=str(revision) if revision is not None else None,
+            source_url=doc.file_url,
+        ))
+    ambiguity_reason = "active_revision_ambiguous" if len(active_revisions) > 1 else None
+    notice_revision = next(iter(active_revisions)) if len(active_revisions) == 1 else None
+    raw = tender.raw_payload or {}
+    if notice_revision is None:
+        candidate = raw.get("notice_revision") or raw.get("revision")
+        notice_revision = str(candidate) if candidate is not None else None
+    status = tender.status
+    normalized = (status or "").strip().lower()
+    cancelled = True if normalized in {"cancelled", "canceled", "аннулирована", "отменена", "отменено"} else None
+    return SourceSnapshot(
+        source=tender.source,
+        external_id=tender.external_id,
+        source_url=tender.eis_url or tender.platform_url,
+        application_deadline=tender.application_deadline,
+        nmck_amount=tender.nmck_amount,
+        status=status,
+        notice_revision=notice_revision,
+        cancelled=cancelled,
+        documents=docs,
+        ambiguity_reason=ambiguity_reason,
+    )
+
+
+def create_watch(session: Any, target: Any) -> Any:
+    from sqlalchemy import select
+    from .models import ProcurementWatch
+    existing = session.scalar(select(ProcurementWatch).where(ProcurementWatch.source == target.source, ProcurementWatch.external_id == target.external_id))
+    if existing:
+        return existing
+    watch = ProcurementWatch(source=target.source, external_id=target.external_id, source_url=target.source_url, saved_search=target.saved_search)
+    session.add(watch)
+    session.commit()
+    session.refresh(watch)
+    return watch
+
+
+def check_watch(session: Any, watch_id: str) -> AlertEvent | None:
+    from sqlalchemy import select
+    from src.modules.event_log.service import append_event_record
+    from src.shared.errors import NotFoundError
+    from src.tender_research.models import ProcurementTender
+    from .models import ProcurementWatch, ProcurementWatchEvent, ProcurementWatchSnapshot
+
+    watch = session.get(ProcurementWatch, watch_id)
+    if watch is None:
+        raise NotFoundError(f"Procurement watch '{watch_id}' was not found")
+    tender = session.scalar(select(ProcurementTender).where(ProcurementTender.source == watch.source, ProcurementTender.external_id == watch.external_id))
+    if tender is None:
+        raise NotFoundError(f"Watched procurement '{watch.source}:{watch.external_id}' was not found")
+    current = snapshot_from_tender(tender)
+    current_fp = snapshot_fingerprint(current)
+    previous_row = session.scalar(select(ProcurementWatchSnapshot).where(ProcurementWatchSnapshot.watch_id == watch.id).order_by(ProcurementWatchSnapshot.created_at.desc(), ProcurementWatchSnapshot.id.desc()).limit(1))
+    if previous_row is None:
+        session.add(ProcurementWatchSnapshot(watch_id=watch.id, fingerprint=current_fp, payload=current.model_dump(mode="json")))
+        session.commit()
+        return None
+    previous = SourceSnapshot.model_validate(previous_row.payload)
+    diff = diff_snapshots(previous, current)
+    event = build_alert_event(current, diff)
+    if diff.outcome == "UNCHANGED":
+        return None
+    existing_event = session.scalar(select(ProcurementWatchEvent).where(ProcurementWatchEvent.event_key == event.event_key))
+    if existing_event is not None:
+        return event
+    if current_fp != previous_row.fingerprint:
+        session.add(ProcurementWatchSnapshot(watch_id=watch.id, fingerprint=current_fp, payload=current.model_dump(mode="json")))
+    session.add(ProcurementWatchEvent(watch_id=watch.id, event_key=event.event_key, outcome=event.outcome, source_url=event.source_url, payload=event.model_dump(mode="json")))
+    append_event_record(session, deal_id=None, event_code="procurement_watch_changed", source_module_id="procurement_monitoring", severity="WARNING" if event.outcome == "NEEDS_REVIEW" else "INFO", payload_json=event.model_dump(mode="json"))
+    session.commit()
+    return event
+
+
+def list_feed(session: Any, watch_id: str | None = None) -> list[Any]:
+    from sqlalchemy import select
+    from .models import ProcurementWatchEvent
+    query = select(ProcurementWatchEvent).order_by(ProcurementWatchEvent.created_at.desc(), ProcurementWatchEvent.id.desc())
+    if watch_id:
+        query = query.where(ProcurementWatchEvent.watch_id == watch_id)
+    return list(session.scalars(query))

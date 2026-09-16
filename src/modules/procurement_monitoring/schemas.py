@@ -62,3 +62,12 @@ class AlertEvent(BaseModel):
     outcome: Literal["CHANGED", "NEEDS_REVIEW"]
     changes: list[ChangedField] = Field(default_factory=list)
     reason: str | None = None
+
+class WatchResponse(WatchTarget):
+    id: str
+    model_config = {"from_attributes": True}
+
+
+class FeedEventResponse(AlertEvent):
+    id: str
+    created_at: datetime
