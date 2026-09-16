@@ -16,21 +16,35 @@ definition_of_done:
 completed:
 - 'Read issue #68 and queue admission; task is independent AUTO with auto_merge=true and no dependencies.'
 - Created isolated branch/worktree agent/ops-observability-v1-001 from main f060fe23a89d3334cf3d776062e980b4a0945e7c.
-current: Inventory existing /health/ready, queue/job persistence, ingestion/document failure state, storage
-  guardrails, backup metadata and worker error counters before product changes.
+- 'Reuse inventory: src/main.py /health/ready already exposes storage_metrics_dict and Redis health; ops
+  snapshot will reuse public storage state rather than duplicate disk logic.'
+- 'Reuse inventory: TenderAnalysisJob persists queued/running/failed job state and timestamps suitable
+  for queue depth/oldest age and recent worker-error counters.'
+- 'Reuse inventory: DocumentIngestionRun persists started/completed/partial/failed ingestion runs; ProcurementTenderDocument
+  persists download/text-extraction failures and updated_at.'
+- 'Reuse inventory: ARV-076 backup tooling writes BACKUP_COMPLETE plus MANIFEST.json with created_at;
+  no runtime backup-root setting exists, so backup metrics must be optional and explicitly UNAVAILABLE
+  when not configured.'
+- 'Bounded design selected: add a no-migration ops_observability module with versioned snapshot schema,
+  GET /api/ops/observability endpoint, deterministic thresholds, optional ARVECTUM_BACKUP_ROOT metadata
+  reader, and runbook. No third-party telemetry or destructive recovery.'
+current: Implement the no-migration ops_observability module and optional backup-root setting using only
+  existing persisted state and public storage snapshot.
 pending:
-- Identify exact reusable source-of-truth seams and define the smallest versioned snapshot/status contract.
-- Implement machine-readable endpoint/CLI surface with deterministic healthy/warning/critical/unknown
-  rules and no third-party telemetry.
-- Add healthy/degraded/stale-queue/storage-guard/unavailable dependency regressions and runbook.
-- Run focused/relevant tests and exact-head CI; prepare/merge only under valid AUTO + AM-4 gates.
+- Add versioned schemas/service/router and register /api/ops/observability.
+- Add optional ARVECTUM_BACKUP_ROOT setting; expose backup as UNAVAILABLE/UNKNOWN when not configured
+  or no completed backup exists.
+- Add healthy/degraded/stale queue/storage guard/unavailable dependency regressions plus runbook.
+- Run focused/relevant tests and exact-head CI; apply guarded auto-merge gates only if AM-4 remains provably
+  valid.
 last_verified_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
 test_results:
 - 'No #68 product tests run yet; inventory stage only.'
-updated_at: '2026-09-16T08:35:22+03:00'
-resume_instruction: Inventory existing readiness, queue/job, ingestion/document, storage guard, backup
-  and worker-error state. Record exact reusable source paths in the checkpoint before product code changes;
-  prefer current dependencies and expose unsupported metrics as UNKNOWN/UNAVAILABLE rather than zero.
+updated_at: '2026-09-16T08:39:16+03:00'
+resume_instruction: Implement src/modules/ops_observability with a versioned snapshot built from TenderAnalysisJob,
+  DocumentIngestionRun, ProcurementTenderDocument and public_storage_snapshot(). Add optional ARVECTUM_BACKUP_ROOT
+  safe metadata lookup and /api/ops/observability. Preserve UNKNOWN/UNAVAILABLE instead of zero for unsupported/no-source
+  conditions; no third-party telemetry or recovery mutation.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260916-ops-observability
@@ -38,5 +52,5 @@ execution:
   base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
   issue: 68
   manual_override: true
-  lease_until: '2026-09-16T10:25:22+03:00'
+  lease_until: '2026-09-16T10:29:16+03:00'
 checkpoint_role: durable_task_checkpoint
