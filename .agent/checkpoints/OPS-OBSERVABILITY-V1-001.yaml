@@ -39,3 +39,4 @@ execution:
   issue: 68
   manual_override: true
   lease_until: '2026-09-16T10:25:22+03:00'
+checkpoint_role: durable_task_checkpoint
