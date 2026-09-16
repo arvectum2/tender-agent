@@ -7,22 +7,23 @@ issue: 65
 branch: agent/change-monitoring-v1-001
 base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
 completed:
-  - Reconciled DOCUMENT-QA-NEXT-INCREMENT against main: PR #73 is merged as dca11d460912e805abc634a37ca731f03d4bb24c and issue #51 is completed; do not reopen it.
+  - Reconciled DOCUMENT-QA-NEXT-INCREMENT against main: PR #73 is merged and issue #51 completed; do not reopen it.
   - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
-  - Read issue #65 scope and hard boundaries; external notification delivery remains disabled/out of scope.
-  - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
-  - Inventoried reusable ProcurementTender/ProcurementTenderDocument persistence, procedure_monitor alert/feed pattern, EventRecord audit primitive, and central router registry.
-  - Resolved exact Alembic parent revision as 097_add_arv052_expert_review.
-  - Implemented versioned monitoring schemas for watch target, source snapshot, document state, diff and internal alert event.
-  - Implemented deterministic canonical snapshot fingerprinting, monitored-field/document-set diffs, stable event keys, unchanged replay suppression, and fail-closed NEEDS_REVIEW for identity/ambiguous/unsupported source-state changes.
-  - Added focused regressions for unchanged replay, deadline, notice/document revision, status/cancellation, ambiguity and identity mismatch.
-  - Added persistence models and linear migration 098 parented to 097_add_arv052_expert_review with unique watch/snapshot/event idempotency constraints.
-  - Mapped ProcurementTender/document source state into SourceSnapshot, persisted internal feed plus EventRecord audit, and registered /procurement-monitoring API routes.
-  - Added persisted duplicate-replay regression and module boundary documentation; focused monitoring suite 7 passed and make check passed.
-current: Persistence, source-state mapping and internal API/feed are implemented; validate broader tests and exact-head CI before merge gate.
+  - Implemented versioned monitoring contracts, deterministic source-bound diffs/idempotency, persistence/migration 098, source-state mapping, internal feed/audit, API routes, documentation, and focused regressions.
+  - Focused monitoring suite 7 passed; make check passed; Alembic single head 098_add_procurement_monitoring.
+  - Exact branch-head CI run 35046653818 succeeded at 24c1c49bd6b93d8dfd64c805db4e62f92e76f738; mirror run 35046653835 also succeeded.
+  - Opened PR #74 from agent/change-monitoring-v1-001 to main; issue #65 remains open until merge.
+  - Independently re-read Company AM-4 decision and authorization on main; both remain Approved and mandatory review deadline is 2026-10-14.
+  - PR #74 has no reviews or unresolved review threads. GitHub currently reports the PR branch diverged from main (behind by 3) and mergeable=false, so automatic merge is not attempted.
+current: 'Implementation/validation is complete at branch head 24c1c49; PR #74 is open but must be synchronized with current main and revalidated at the resulting exact head before any automatic merge.'
 pending:
-  - Run broader relevant tests and exact-head CI; inspect CI once next run and satisfy issue #65 DoD if green.
+  - Synchronize/rebase the task branch onto current main without losing scoped changes.
+  - Run/observe exact-head CI after synchronization and re-check mergeability/review/ruleset/AM-4 gates.
+  - Merge only if every automatic-merge gate is satisfied; otherwise fail closed to REVIEW.
 test_results:
-  - CI push run 35042171099 was observed in_progress at service commit 9b0d44390f895eb839c216799ac76ff45eb50846; per continuous-execution policy it was checked once and not polled. Test commit 4853ca2ad8fe6c76c5983cd6495c17598a9c9cea landed afterward and requires exact-head CI verification next run.
-resume_instruction: Inspect exact-head CI once. If green, run/confirm broader relevant tests, verify issue #65 DoD and automatic-merge gates including Company AM-4 before any merge. If CI is waiting/failing, checkpoint once and continue independent AUTO work per policy.
-updated_at: '2026-09-16T04:58:00+03:00'
+  - 'Focused monitoring suite: 7 passed.'
+  - 'PATH=.venv/bin:$PATH make check: PASS.'
+  - 'Alembic heads: 098_add_procurement_monitoring (single head).'
+  - 'GitHub CI run 35046653818: SUCCESS at 24c1c49bd6b93d8dfd64c805db4e62f92e76f738.'
+resume_instruction: 'Synchronize PR #74 branch with current main first. Do not merge the diverged head. After synchronization, verify the new exact-head CI once, then re-check PR mergeability, reviews, Company AM-4 and all queue gates.'
+updated_at: '2026-09-16T06:07:00+03:00'
