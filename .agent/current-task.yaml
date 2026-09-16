@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: INGEST-RESILIENCE-V1-001
 authority: AUTO
 goal: Harden public procurement ingestion with resumable bounded sync, deterministic idempotent replay, and revision-aware
@@ -35,13 +35,9 @@ completed:
 - Product implementation committed as 1f5c760733be3d856770f854ffa2bfcdddd8f4ed.
 - 'Exact-head GitHub CI run 35060039331 succeeded for PR #75 head 605d2feb5f37f564218aa530bd68b0ef61746866; PR is
   open, mergeable and review-ready.'
-current: 'PR #75 is technically complete and exact-head CI is green; final merge is blocked only by Company AM-4
-  mandatory-review/counter uncertainty.'
+current: 'Owner renewed AM-4 on 2026-09-16 on unchanged terms. PR #75 is technically complete; branch is being synchronized to current main for guarded merge.'
 pending:
-- Obtain attributable Owner AM-4 review/renewal or otherwise prove the ten-auto-merge review trigger has not been
-  reached.
-- 'After authority is renewed/proven and PR #75 remains mergeable with exact-head CI green, perform guarded merge
-  and close the canonical issue.'
+- 'Verify synchronized exact-head CI, mergeability/reviews/rulesets, then guarded squash-merge PR #75 under renewed AM-4 and close issue #66.'
 last_verified_commit: 1f5c760733be3d856770f854ffa2bfcdddd8f4ed
 test_results:
 - 'Focused: tests/tender_research/test_ingest_resilience.py -> 7 passed.'
@@ -50,10 +46,8 @@ test_results:
 - PATH=/Users/master/Documents/.venv/bin:$PATH make check -> PASS.
 - Targeted ruff on new ingest_checkpoint/test files -> PASS; git diff --check -> PASS.
 - 'Exact-head CI run 35060039331: SUCCESS.'
-updated_at: '2026-09-16T09:36:00+03:00'
-resume_instruction: 'Recheck PR #75 exact head/mergeability and Company AM-4 review state once. Do not change product
-  code unless a new task-caused regression appears. Merge only after attributable authority is valid; otherwise
-  preserve review-ready blocked state and continue another independent admitted item.'
+updated_at: '2026-09-16T22:45:00+03:00'
+resume_instruction: 'After current-main synchronization, require exact-head green CI and guarded merge checks; then squash-merge PR #75 under the Owner renewal dated 2026-09-16. Do not alter product code unless a task-caused regression appears.'
 execution:
   claimed_by: null
   execution_id: null

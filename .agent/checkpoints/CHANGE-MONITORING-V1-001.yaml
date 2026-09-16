@@ -1,0 +1,62 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: CHANGE-MONITORING-V1-001
+status: blocked
+authority: AUTO
+issue: 65
+branch: agent/change-monitoring-v1-001
+base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
+completed:
+- Reconciled DOCUMENT-QA-NEXT-INCREMENT against main: PR
+- Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001
+    (#65).
+- Implemented versioned monitoring contracts, deterministic source-bound diffs/idempotency,
+  persistence/migration 098, source-state mapping, internal feed/audit, API routes,
+  documentation, and focused regressions.
+- Focused monitoring suite 7 passed; make check passed; Alembic single head 098_add_procurement_monitoring.
+- Exact branch-head CI run 35046653818 succeeded at 24c1c49bd6b93d8dfd64c805db4e62f92e76f738;
+  mirror run 35046653835 also succeeded.
+- Opened PR
+- Independently re-read Company AM-4 decision and authorization on main; both remain
+  Approved and mandatory review deadline is 2026-10-14.
+- PR
+- Post-main-sync PR head bb8dc3e22f1d2a666dc46f706f1cb6af4b505096 is mergeable; exact-head
+  GitHub CI run 35055653292 completed SUCCESS.
+- 'Broader relevant local regression set after main sync: 62 passed, 10 skipped, 14
+  warnings.'
+- 'Re-read current Company AM-4 decision and assignment plus repository review/ruleset
+  state: authority artifacts remain Approved, PR #74 has no reviews/unresolved threads,
+  repository has no rulesets and main has no protection requirement.'
+- Automatic merge failed closed because the mandatory ten-automatic-merge review trigger
+  cannot be proven un-reached and no attributable AM-4 renewal after the earlier recorded
+  OWNER_REVIEW condition was found. No merge attempted.
+current: 'Implementation and technical DoD are complete; PR #74 is review-ready. Automatic
+  merge is blocked on attributable Owner AM-4 review/renewal because the automatic-merge
+  counter gate cannot be proven safe.'
+pending:
+- Owner review/renewal of the AM-4 mandatory review gate, followed by exact-head/current-base
+  revalidation before any merge.
+test_results:
+- 'Focused monitoring suite: 7 passed.'
+- 'PATH=.venv/bin:$PATH make check: PASS.'
+- 'Alembic heads: 098_add_procurement_monitoring (single head).'
+- 'GitHub CI run 35046653818: SUCCESS at 24c1c49bd6b93d8dfd64c805db4e62f92e76f738.'
+- 'Post-sync broader relevant tests: 62 passed, 10 skipped, 14 warnings.'
+- 'Exact-head GitHub CI run 35055653292 at bb8dc3e22f1d2a666dc46f706f1cb6af4b505096:
+  SUCCESS.'
+resume_instruction: 'Do not resume implementation. PR #74 is review-ready. Merge only
+  after attributable Owner AM-4 review/renewal and a fresh exact-head/current-base/review/ruleset
+  check. Meanwhile continue the next independent admitted AUTO queue item.'
+updated_at: '2026-09-16T07:57:34+03:00'
+goal: Implement source-bound saved procurement watches, deterministic change snapshots/diffs,
+  and an idempotent internal alert feed without external notification delivery.
+definition_of_done:
+- Versioned monitoring contract for watch target, source snapshot, diff and alert
+  event.
+- Deterministic source-bound change detection with idempotent replay.
+- API/UI-compatible internal feed or existing product surface integration.
+- Regression tests for unchanged state, deadline change, document revision change,
+  status/cancellation and duplicate replay.
+- Focused/relevant tests and exact-head CI green.
+- Documentation states external notification transports remain disabled/out of scope.
+last_verified_commit: bb8dc3e22f1d2a666dc46f706f1cb6af4b505096
