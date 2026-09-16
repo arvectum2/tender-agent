@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: OPS-OBSERVABILITY-V1-001
 authority: AUTO
 goal: Expose repository-native, machine-readable operational observability for queue, ingestion, document processing,
@@ -47,13 +47,9 @@ completed:
   inspection.'
 - 'Exact-head GitHub CI run 35061132033 succeeded for PR #76 head 9c39e8e99286b7afd0d85d25c49d626c97aa7030; PR is
   open, mergeable and review-ready.'
-current: 'PR #76 is technically complete and exact-head CI is green; final merge is blocked only by Company AM-4
-  mandatory-review/counter uncertainty.'
+current: 'Owner renewed AM-4 on 2026-09-16 on unchanged terms. PR #76 is technically complete; branch is synchronized to current main and awaiting exact-head CI for guarded merge.'
 pending:
-- Obtain attributable Owner AM-4 review/renewal or otherwise prove the ten-auto-merge review trigger has not been
-  reached.
-- 'After authority is renewed/proven and PR #76 remains mergeable with exact-head CI green, perform guarded merge
-  and close the canonical issue.'
+- 'Verify synchronized exact-head CI, mergeability/reviews/rulesets, then guarded squash-merge PR #76 under renewed AM-4 and close issue #68.'
 last_verified_commit: fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403
 test_results:
 - 'Focused tests/test_ops_observability_v1.py: 8 passed.'
@@ -61,10 +57,8 @@ test_results:
 - 'PATH=/Users/master/Documents/.venv/bin:$PATH make check: PASS.'
 - 'Targeted ruff for ops_observability/settings/router/test: PASS; git diff --check: PASS.'
 - 'Exact-head CI run 35061132033: SUCCESS.'
-updated_at: '2026-09-16T09:36:00+03:00'
-resume_instruction: 'Recheck PR #76 exact head/mergeability and Company AM-4 review state once. Do not change product
-  code unless a new task-caused regression appears. Merge only after attributable authority is valid; otherwise
-  preserve review-ready blocked state and continue another independent admitted item.'
+updated_at: '2026-09-16T22:56:00+03:00'
+resume_instruction: 'Require exact-head green CI and guarded merge checks on the current-main synchronized head; then squash-merge PR #76 under the Owner renewal dated 2026-09-16. Do not alter product code unless a task-caused regression appears.'
 execution:
   claimed_by: null
   execution_id: null

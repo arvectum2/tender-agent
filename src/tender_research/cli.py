@@ -388,14 +388,17 @@ def cmd_ingest_eis_registry_list(args: argparse.Namespace) -> None:
     result = pipeline.ingest_eis_by_registry_numbers(
         registry_numbers=numbers,
         limit=args.limit,
+        checkpoint_key=args.checkpoint_key,
     )
-    print(f"Registry ingest complete:")
+    print("Registry ingest complete:")
     print(f"  total: {result['total']}")
     print(f"  saved: {result['saved']}")
     print(f"  skipped: {result['skipped']}")
     print(f"  no_data: {result['no_data']}")
     print(f"  connection_resets: {result['connection_resets']}")
     print(f"  missing_token: {result['missing_token']}")
+    if result.get("checkpoint_key"):
+        print(f"  checkpoint: {result['checkpoint_key']} status={result.get('checkpoint_status')} next_index={result.get('next_index')}")
     if result["errors"]:
         print(f"  errors ({len(result['errors'])}):")
         for e in result["errors"][:5]:
@@ -669,14 +672,17 @@ def cmd_ingest_collected_registry_numbers(args: argparse.Namespace) -> None:
     result = pipeline.ingest_eis_by_registry_numbers(
         registry_numbers=numbers,
         limit=args.limit,
+        checkpoint_key=args.checkpoint_key,
     )
-    print(f"Registry ingest complete:")
+    print("Registry ingest complete:")
     print(f"  total: {result['total']}")
     print(f"  saved: {result['saved']}")
     print(f"  skipped: {result['skipped']}")
     print(f"  no_data: {result['no_data']}")
     print(f"  connection_resets: {result['connection_resets']}")
     print(f"  missing_token: {result['missing_token']}")
+    if result.get("checkpoint_key"):
+        print(f"  checkpoint: {result['checkpoint_key']} status={result.get('checkpoint_status')} next_index={result.get('next_index')}")
     if result["errors"]:
         print(f"  errors ({len(result['errors'])}):")
         for e in result["errors"][:5]:
@@ -838,6 +844,7 @@ def main() -> None:
     p_reg = sub.add_parser("ingest-eis-registry-list", parents=[_common], help="Ingest tenders by registry number list")
     p_reg.add_argument("--file", default="data/eis_seed/registry_numbers.txt", help="Path to seed file")
     p_reg.add_argument("--limit", type=int, default=None, help="Max tenders to process")
+    p_reg.add_argument("--checkpoint-key", default=None, help="Durable resume key for this exact registry-number batch")
 
     p_one = sub.add_parser("research-one", parents=[_common], help="Full cycle for one tender")
     p_one.add_argument("external_id", help="EIS external ID")
@@ -878,6 +885,7 @@ def main() -> None:
                                         help="Ingest collected registry numbers from JSON file")
     p_ingest_collected.add_argument("--file", required=True, help="Path to collected JSON file")
     p_ingest_collected.add_argument("--limit", type=int, default=None, help="Max tenders to process")
+    p_ingest_collected.add_argument("--checkpoint-key", default=None, help="Durable resume key for this exact registry-number batch")
 
     p_disc_batch = sub.add_parser("research-discovered", parents=[_common],
                                   help="Discover and research tenders in one step")

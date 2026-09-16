@@ -5,6 +5,14 @@ class TenderResearchError(Exception):
     pass
 
 
+class IngestCheckpointConflictError(TenderResearchError):
+    pass
+
+
+class DocumentIdentityConflictError(TenderResearchError):
+    pass
+
+
 class EisLoaderError(TenderResearchError):
     pass
 
