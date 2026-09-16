@@ -4,7 +4,7 @@ issue: 69
 branch: agent/223fz-ingest-v1-001
 base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
 status: in_progress
-updated_at: '2026-09-17T00:18:00+03:00'
+updated_at: '2026-09-17T01:13:00+03:00'
 authority: AUTO
 reconciliation:
   dependency: INGEST-RESILIENCE-V1-001
@@ -12,9 +12,10 @@ reconciliation:
   evidence:
     - 'PR #75 merged as fbf6d3cbac246af2c28db242465d52617890bf0c after exact-head CI run 35142513674 SUCCESS.'
     - 'Issue #66 closed completed.'
+    - 'Stale canonical main current-task points at OPS-OBSERVABILITY-V1-001, but PR #76 is merged as c335c60fa92742d7c464739e057df7eac89fa191 and issue #68 is closed completed; do not resume it.'
   am4_cycle:
     renewal: 'DECISION-2026-09-16-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md Approved'
-    automatic_merges_observed_since_renewal_in_watchdog_evidence: 1
+    automatic_merges_observed_since_renewal_in_watchdog_evidence: 2
 inventory:
   - path: src/tender_research/providers/public_44fz_search.py
     finding: 'Regime-neutral dataclasses, HTTP transport, host allow-list, page classification and LAW_FLAGS exist; LAW_FLAGS maps 223fz -> fz223.'
@@ -25,16 +26,23 @@ inventory:
   - path: src/tender_research/registry_discovery.py
     finding: 'Discovery owns only SourceType.EXTERNAL_PUBLIC_44FZ and a Public44FzSearchProvider. _search_item_to_discovered also stamps source/source_type external_public_44fz regardless of item law. A separate 223-FZ source type/provider selection is required.'
   - path: src/tender_research/pipeline.py
-    finding: 'TenderResearchPipeline constructs only Public44FzSearchProvider; _lookup_public_discovered_item and fallback provenance are hard-coded external_public_44fz. Direct 223-FZ intake needs explicit provider/source selection before the existing regime-neutral upsert can be reused.'
+    finding: 'TenderResearchPipeline constructs only Public44FzSearchProvider; _ingest_discovered_tender always calls that provider fetch_detail, and _lookup_public_discovered_item is hard-coded external_public_44fz. Explicit source-based provider dispatch is required before existing regime-neutral upsert can be reused.'
+  - path: src/tender_research/cli.py
+    finding: 'SOURCE_CHOICES exposes only external_public_44fz; discover-registry-numbers and research-discovered are the explicit source-selection surfaces to extend with external_public_223fz.'
+  - path: src/tender_research/cli.py
+    finding: 'collect-registry-numbers accepts --law-type 223fz but always instantiates Public44FzSearchProvider, so current 223fz collection is unsafe and must dispatch to the separate provider instead of relying on LAW_FLAGS alone.'
+  - path: src/tender_research/cli.py
+    finding: 'ingest-collected-registry-numbers routes to SOAP ingest_eis_by_registry_numbers and does not preserve collected law/source metadata; it is not the canonical public 223-FZ intake surface for this increment. research-discovered with explicit external_public_223fz is the bounded canonical path.'
   - path: repository tree
     finding: 'No repository-owned public_eis_html_223fz fixture/evidence was found in the branch tree. Do not fabricate a real-EIS fixture; synthetic source-bound fixtures can cover parser contracts while supported public examples must be acquired/read-only or explicitly documented unavailable.'
 design:
   - 'Add src/tender_research/providers/public_223fz_search.py as a distinct provider/parser contract; reuse regime-neutral dataclasses and transport only, never call parse_44fz_search_results or 44-FZ detail/revision helpers as a fallback.'
   - 'Add SourceType.EXTERNAL_PUBLIC_223FZ and explicit discovery/provider selection. Keep auto discovery unchanged unless queue scope explicitly admits changing default source order.'
+  - 'Extend CLI SOURCE_CHOICES and make collect-registry-numbers dispatch by law type; never send 223fz through Public44FzSearchProvider.'
+  - 'Make pipeline detail fetch dispatch on discovered.source_type/law_type so external_public_223fz cannot hit the 44-FZ detail route.'
   - 'Represent missing/ambiguous 223-FZ fields as source-bound UNKNOWN/NEEDS_REVIEW metadata; do not infer customer role, revision semantics, or legal meaning from 44-FZ labels/routes.'
   - 'Reuse TenderRepository/upsert/document provenance and ingest-resilience identity primitives after a 223-FZ detail object has been safely constructed.'
 next:
-  - Inspect current CLI/API discovery entry points and exact 44-FZ detail URL helper assumptions to bound explicit 223-FZ direct-registry surface.
-  - Implement the distinct 223-FZ provider/parser and source type with synthetic normal/missing/ambiguous fixtures and idempotent repository ingest coverage.
-  - Add support matrix documenting which 223-FZ public layouts/endpoints are verified versus UNKNOWN/NEEDS_REVIEW.
+  - Implement the distinct 223-FZ provider/parser, SourceType.EXTERNAL_PUBLIC_223FZ, explicit discovery and pipeline provider dispatch, and CLI source/law dispatch.
+  - Add source-bound synthetic normal/missing/ambiguous fixtures, repeated idempotent ingest coverage and support matrix.
   - Run focused 223-FZ plus existing 44-FZ regressions, make check, then open exact-head CI PR when local gates pass.
