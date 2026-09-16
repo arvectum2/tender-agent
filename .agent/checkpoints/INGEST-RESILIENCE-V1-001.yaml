@@ -3,46 +3,57 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: INGEST-RESILIENCE-V1-001
 authority: AUTO
-goal: Harden public procurement ingestion with resumable bounded sync, deterministic
-  idempotent replay, and revision-aware source identity/provenance without source-side
-  mutation.
+goal: Harden public procurement ingestion with resumable bounded sync, deterministic idempotent replay,
+  and revision-aware source identity/provenance without source-side mutation.
 definition_of_done:
 - Durable resumable cursor/checkpoint or equivalent bounded restart mechanism.
 - Deterministic idempotent replay for tenders, documents and source metadata.
-- Revision-aware identity model preventing inactive/current attachment mixing where
-  source state is known.
-- Tests for interrupted batch resume, duplicate replay, changed revision, conflicting
-  identity and unavailable source.
-- Existing public 44-FZ flow remains compatible; focused/relevant tests and exact-head
-  CI pass.
+- Revision-aware identity model preventing inactive/current attachment mixing where source state is known.
+- Tests for interrupted batch resume, duplicate replay, changed revision, conflicting identity and unavailable
+  source.
+- Existing public 44-FZ flow remains compatible; focused/relevant tests and exact-head CI pass.
 - Operational docs describe recovery semantics and observable failure states.
 completed:
-- 'Issue #66 and queue admission read; dependency DOCUMENT-QA-NEXT-INCREMENT is satisfied
-  by merged PR #73 / closed issue #51 despite stale queue wording.'
-- Initial reuse inventory identified existing TenderRepository tender/document upsert
-  and identity-hash dedupe, TenderPipeline EIS ingestion, current-revision public
-  44-FZ binding, and existing stateless public-search cursor primitives as reuse seams.
-- Created isolated branch/worktree agent/ingest-resilience-v1-001 from current main
-  f060fe23a89d3334cf3d776062e980b4a0945e7c.
-current: Inventory exact ingestion transaction boundaries and document identity semantics;
-  define the smallest durable sync/checkpoint seam before product code changes.
+- 'Issue #66 and queue admission read; dependency DOCUMENT-QA-NEXT-INCREMENT is satisfied by merged PR
+  #73 / closed issue #51 despite stale queue wording.'
+- Initial reuse inventory identified existing TenderRepository tender/document upsert and identity-hash
+  dedupe, TenderPipeline EIS ingestion, current-revision public 44-FZ binding, and existing stateless
+  public-search cursor primitives as reuse seams.
+- Created isolated branch/worktree agent/ingest-resilience-v1-001 from current main f060fe23a89d3334cf3d776062e980b4a0945e7c.
+- Inspected TenderPipeline transaction boundaries and TenderRepository document identity/dedupe behavior;
+  selected file-backed atomic checkpoint state under data_dir as the bounded resumable seam without adding
+  a second ingestion stack.
+- Implemented resumable registry-number ingestion with input fingerprint conflict detection, commit-before-cursor
+  ordering, blocked/completed checkpoint states, and safe replay after interruption.
+- Implemented revision-aware document identity using revision/publication/source provenance; conflicting
+  cross-revision SHA or changed content under a stable identity fails closed via DocumentIdentityConflictError.
+- Expanded tender content fingerprint to include normalized source metadata changes while excluding raw_payload
+  noise; added CLI checkpoint option and operational recovery documentation.
+- Added regression coverage for interrupted resume, completed replay, checkpoint input conflict, changed
+  revision, conflicting revision identity, same-identity content conflict, and replayed tender metadata
+  update.
+- 'Validated implementation locally: focused ingest-resilience 7 passed; relevant ingestion/dedupe/public-44FZ
+  suite 98 passed; make check PASS; new checkpoint/test files pass targeted ruff and git diff --check.'
+- Product implementation committed as 1f5c760733be3d856770f854ffa2bfcdddd8f4ed.
+current: 'Push implementation/checkpoint branch, open reviewable PR for issue #66, then verify exact-head
+  CI.'
 pending:
-- Inspect _save_one_tender and document identity implementation plus migration/model
-  patterns; choose bounded durable sync state schema.
-- Implement resumable sync/checkpoint and revision-aware idempotent repository behavior
-  without a second ingestion stack.
-- Add interrupted-resume, duplicate, changed-revision, conflicting-identity and unavailable-source
-  regressions plus operational docs.
-- Run focused/relevant tests and exact-head CI; prepare/merge only under valid AUTO
-  + AM-4 gates.
-last_verified_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
+- Commit durable checkpoint evidence and push agent/ingest-resilience-v1-001.
+- 'Open PR for issue #66 and inspect exact-head CI plus mergeability/review state.'
+- Before any auto-merge, independently re-read Company AM-4 authority and determine whether the ten-auto-merge
+  review trigger is provably un-reached; otherwise fail closed to REVIEW.
+last_verified_commit: 1f5c760733be3d856770f854ffa2bfcdddd8f4ed
 test_results:
-- 'No #66 product tests run yet; inventory stage only.'
-updated_at: '2026-09-16T07:58:35+03:00'
-resume_instruction: Inspect TenderPipeline._save_one_tender, TenderRepository._compute_identity_hash/upsert_document,
-  and current tender/document migrations. Add a bounded checkpoint before code changes;
-  reuse existing repository/dedupe primitives and do not create source-side mutations
-  or silent ambiguous-revision fallbacks.
+- 'Focused: tests/tender_research/test_ingest_resilience.py -> 7 passed.'
+- 'Relevant: ingest resilience + document identity dedupe + repository upsert + pipeline smoke + public
+  44-FZ/detail + EIS real loader + discovery metadata/limit consistency -> 98 passed.'
+- PATH=/Users/master/Documents/.venv/bin:$PATH make check -> PASS.
+- Targeted ruff on new ingest_checkpoint/test files -> PASS; git diff --check -> PASS.
+updated_at: '2026-09-16T08:32:48+03:00'
+resume_instruction: 'Push the current branch, open a PR for issue #66, inspect exact-head CI once, and
+  verify issue DoD/mergeability/review state. Auto-merge only if queue auto_merge=true and Company AM-4
+  review counter/authority is independently provably valid; otherwise stop at review-ready and preserve
+  checkpoint.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260916T075835+0300
@@ -50,5 +61,5 @@ execution:
   base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
   issue: 66
   manual_override: true
-  lease_until: '2026-09-16T09:48:35+03:00'
+  lease_until: '2026-09-16T10:22:48+03:00'
 checkpoint_role: durable_task_checkpoint
