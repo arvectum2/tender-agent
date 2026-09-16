@@ -11,22 +11,19 @@ completed:
   - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
   - Read issue #65 scope and hard boundaries; external notification delivery remains disabled/out of scope.
   - Created isolated branch agent/change-monitoring-v1-001 from main d41ea1c43b649160cc9ef6579f1f36a116e0bec6.
-  - Inventoried reusable persistence/event surfaces. ProcurementTender already stores source/external_id, application_deadline, nmck_amount, status, raw_payload, content_hash and first/last-seen timestamps; ProcurementTenderDocument carries source document identity, sha256 and raw_meta provenance.
-  - Identified src.modules.procedure_monitor as the closest existing alert/feed pattern; reuse the pattern, not its post-submission/deal-bound persistence.
-  - Confirmed src.shared.events and src.modules.event_log are existing generic event/audit primitives to reuse for monitoring audit integration.
-  - Inspected event_log models/service: EventRecord supports deal_id=null with source_module_id, JSON payload and indexed event_code/source_module_id/created_at; append_event_record can audit procurement-monitoring events without inventing a deal.
-  - Inspected application router registration: routers are centrally imported and appended to APPLICATION_ROUTERS in src/shared/api/router_registry.py.
-  - Inspected repository Alembic workflow and migration tree directly. The branch migration directory is linear through 097.
-  - Resolved exact Alembic head declaration: migrations/versions/097_add_arv052_expert_review_workflow.py declares revision "097_add_arv052_expert_review" and down_revision "096_add_r8_canonical_snapshot_binding". The monitoring migration must use exactly "097_add_arv052_expert_review" as down_revision.
-  - Reconfirmed issue #65 DoD and hard boundaries at run start; no external notification transport, procurement action, or source mutation is authorized.
-current: Implement the minimal procurement_monitoring persistence/schema/service/router slice and next linear migration using down_revision 097_add_arv052_expert_review.
+  - Inventoried reusable ProcurementTender/ProcurementTenderDocument persistence, procedure_monitor alert/feed pattern, EventRecord audit primitive, and central router registry.
+  - Resolved exact Alembic parent revision as 097_add_arv052_expert_review.
+  - Implemented versioned monitoring schemas for watch target, source snapshot, document state, diff and internal alert event.
+  - Implemented deterministic canonical snapshot fingerprinting, monitored-field/document-set diffs, stable event keys, unchanged replay suppression, and fail-closed NEEDS_REVIEW for identity/ambiguous/unsupported source-state changes.
+  - Added focused regressions for unchanged replay, deadline, notice/document revision, status/cancellation, ambiguity and identity mismatch.
+current: Persist watch/snapshot/internal feed state and wire source-state/API integration without external transports.
 pending:
-  - Define versioned watch target, source snapshot, diff and alert-event schemas; fingerprint canonical source state deterministically.
-  - Persist watch + snapshot + internal event/feed records with uniqueness/idempotency constraints; no external transport fields or delivery workers.
-  - Implement unchanged/deadline/document-revision/status-cancellation/document-set change detection and UNKNOWN/NEEDS_REVIEW for unsupported ambiguity.
-  - Add regression tests and internal API/feed surface; register router through src/shared/api/router_registry.py.
+  - Add persistence models and next linear migration with down_revision 097_add_arv052_expert_review; enforce uniqueness/idempotency constraints.
+  - Map ProcurementTender/ProcurementTenderDocument into SourceSnapshot with source provenance.
+  - Persist internal alert/feed records and append EventRecord audit entries; unchanged replay must not create a record.
+  - Add API/feed surface and register through src/shared/api/router_registry.py.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
 test_results:
-  - No product code changed in this migration-head resolution stage; tests not run yet.
-resume_instruction: Create the next linear procurement_monitoring migration with down_revision "097_add_arv052_expert_review", then implement models/schemas/service/router. Use ProcurementTender/ProcurementTenderDocument as source-state inputs, EventRecord via append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit, and register through src/shared/api/router_registry.py. Unchanged replay must produce no new feed event. Do not implement email/SMS/Telegram/webhook delivery.
-updated_at: '2026-09-16T03:04:00+03:00'
+  - CI push run 35042171099 was observed in_progress at service commit 9b0d44390f895eb839c216799ac76ff45eb50846; per continuous-execution policy it was checked once and not polled. Test commit 4853ca2ad8fe6c76c5983cd6495c17598a9c9cea landed afterward and requires exact-head CI verification next run.
+resume_instruction: Inspect current exact-head CI once. Then add procurement_monitoring persistence models + migration parented to 097_add_arv052_expert_review, map existing procurement source rows into SourceSnapshot, persist idempotent internal feed/audit records, and register a read-only/internal API surface. Keep email/SMS/Telegram/webhook delivery absent.
+updated_at: '2026-09-16T04:04:00+03:00'
