@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: INGEST-RESILIENCE-V1-001
 authority: AUTO
 goal: Harden public procurement ingestion with resumable bounded sync, deterministic idempotent replay,
@@ -35,13 +35,14 @@ completed:
 - 'Validated implementation locally: focused ingest-resilience 7 passed; relevant ingestion/dedupe/public-44FZ
   suite 98 passed; make check PASS; new checkpoint/test files pass targeted ruff and git diff --check.'
 - Product implementation committed as 1f5c760733be3d856770f854ffa2bfcdddd8f4ed.
-current: 'Push implementation/checkpoint branch, open reviewable PR for issue #66, then verify exact-head
-  CI.'
+current: 'PR #75 is open; exact-head GitHub CI is the only remaining technical completion gate and was
+  queued on first inspection.'
 pending:
-- Commit durable checkpoint evidence and push agent/ingest-resilience-v1-001.
-- 'Open PR for issue #66 and inspect exact-head CI plus mergeability/review state.'
-- Before any auto-merge, independently re-read Company AM-4 authority and determine whether the ten-auto-merge
-  review trigger is provably un-reached; otherwise fail closed to REVIEW.
+- 'Inspect PR #75 exact-head CI once after this checkpoint commit is pushed; do not passively poll.'
+- 'If exact-head CI is green, verify issue #66 DoD, PR mergeability/reviews and Company AM-4 authority/counter
+  before any merge.'
+- If AM-4 automatic-merge authority is uncertain or review-due, keep PR review-ready and fail closed to
+  REVIEW instead of merging.
 last_verified_commit: 1f5c760733be3d856770f854ffa2bfcdddd8f4ed
 test_results:
 - 'Focused: tests/tender_research/test_ingest_resilience.py -> 7 passed.'
@@ -49,17 +50,16 @@ test_results:
   44-FZ/detail + EIS real loader + discovery metadata/limit consistency -> 98 passed.'
 - PATH=/Users/master/Documents/.venv/bin:$PATH make check -> PASS.
 - Targeted ruff on new ingest_checkpoint/test files -> PASS; git diff --check -> PASS.
-updated_at: '2026-09-16T08:32:48+03:00'
-resume_instruction: 'Push the current branch, open a PR for issue #66, inspect exact-head CI once, and
-  verify issue DoD/mergeability/review state. Auto-merge only if queue auto_merge=true and Company AM-4
-  review counter/authority is independently provably valid; otherwise stop at review-ready and preserve
-  checkpoint.'
+updated_at: '2026-09-16T08:34:08+03:00'
+resume_instruction: 'Inspect PR #75 exact-head CI once. If green, verify issue #66 DoD and mergeability/reviews.
+  Re-read Company AM-4 artifacts and prove the automatic-merge review trigger un-reached before merge;
+  if uncertain, remain blocked at REVIEW. No product code changes unless CI exposes a task-caused regression.'
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260916T075835+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/ingest-resilience-v1-001
   base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
   issue: 66
-  manual_override: true
-  lease_until: '2026-09-16T10:22:48+03:00'
+  manual_override: false
+  lease_until: null
 checkpoint_role: durable_task_checkpoint
