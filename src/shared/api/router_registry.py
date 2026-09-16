@@ -77,6 +77,7 @@ from src.modules.launch_visibility.router import router as launch_visibility_rou
 from src.modules.learning_automation.router import router as learning_automation_router
 from src.modules.logistics_tracking.router import router as logistics_tracking_router
 from src.modules.operator_sessions.router import router as operator_sessions_router
+from src.modules.ops_observability.router import router as ops_observability_router
 from src.modules.optimization.router import router as optimization_router
 from src.modules.outcome_intake.router import router as outcome_intake_router
 from src.modules.payment_collection.router import router as payment_collection_router
@@ -159,6 +160,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     integration_tasks_router,
     intake_priority_router,
     operator_sessions_router,
+    ops_observability_router,
     execution_ledger_router,
     external_execution_router,
     deal_closure_router,
