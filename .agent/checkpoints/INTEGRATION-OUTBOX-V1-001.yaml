@@ -16,17 +16,21 @@ completed:
   - Selected the next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge authority gate.
   - Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b so the required monitoring-alert primitive is available without duplicating #65 implementation.
   - Read issue #67 and bounded scope: internal event/outbox infrastructure only; no live email/webhook/CRM/messenger delivery, no destination credentials, no procurement/commercial external effect.
-current: Inventory reusable EventRecord/event_log, monitoring-alert persistence, analysis completion and review-required state-change seams before product code changes.
+  - Reuse inventory confirmed src/modules/event_log/models.py EventRecord already provides unique event_id, optional deal_id, event_code, source module/agent, severity, JSON payload and timestamp; no second generic audit log is needed.
+  - Reuse inventory confirmed src/modules/event_log/service.py append_event_record accepts deal-less source-module events and list_events provides deterministic read ordering; outbox events can reference/audit through this existing primitive.
+  - Reuse inventory confirmed procurement_monitoring.check_watch already emits source-bound procurement_watch_changed EventRecord only after idempotent ProcurementWatchEvent event_key dedupe; this is the exact monitoring-alert seam and must not be duplicated.
+  - Monitoring AlertEvent event_key is deterministic over source/external identity plus previous/current fingerprints and outcome, providing a stable source event key for outbox idempotency.
+current: Reuse inventory complete for event log and monitoring-alert seam; next inspect exact analysis-completion and review-required persistence/state-transition functions, then define the smallest outbox envelope around those existing transitions.
 pending:
-  - Identify exact reusable event/audit and router/migration seams on this branch.
+  - Identify exact analysis-completion and review-required state-change functions/models and router/migration head on this branch.
   - Implement minimal versioned envelope/outbox persistence and disabled adapter guard without building a generic integration platform.
   - Wire the three required internal event types, add read-only list/export and idempotency/tenant/no-secret tests.
   - Run focused/relevant tests and exact-head CI; open review-ready PR. Automatic merge remains subject to Company AM-4 validity and dependency/base reconciliation.
 last_verified_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
 test_results:
-  - No product tests run yet in this inventory quantum.
-updated_at: '2026-09-16T13:59:28+03:00'
-resume_instruction: Inspect EventRecord/event_log, procurement_monitoring alert creation, analysis completion and Decision Core review-required paths. Record exact reusable functions/models before implementation. Do not enable or call any external transport.
+  - No product tests run yet; this invocation changed checkpoint evidence only.
+updated_at: '2026-09-16T14:58:41+03:00'
+resume_instruction: Inspect the concrete analysis completion and Decision Core/review-required state transition functions/models plus current migration head. Reuse those transition points; do not infer events from read paths and do not enable or call any external transport.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260916T135928+0300
@@ -34,4 +38,4 @@ execution:
   base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
   issue: 67
   manual_override: false
-  lease_until: '2026-09-16T15:49:28+03:00'
+  lease_until: '2026-09-16T16:48:41+03:00'
