@@ -3,9 +3,9 @@ repository: arvectum2/tender-agent
 status: blocked
 task_id: OPS-OBSERVABILITY-V1-001
 authority: AUTO
-goal: Expose repository-native, machine-readable operational observability for queue, ingestion, document
-  processing, storage guard, backup state and recent worker errors, with deterministic status rules and
-  non-destructive recovery guidance.
+goal: Expose repository-native, machine-readable operational observability for queue, ingestion, document processing,
+  storage guard, backup state and recent worker errors, with deterministic status rules and non-destructive recovery
+  guidance.
 definition_of_done:
 - Versioned operational metrics/status schema and endpoint/CLI surface.
 - Queue age/depth, ingestion, storage and backup signals sourced from existing state where supported.
@@ -16,55 +16,55 @@ definition_of_done:
 completed:
 - 'Read issue #68 and queue admission; task is independent AUTO with auto_merge=true and no dependencies.'
 - Created isolated branch/worktree agent/ops-observability-v1-001 from main f060fe23a89d3334cf3d776062e980b4a0945e7c.
-- 'Reuse inventory: src/main.py /health/ready already exposes storage_metrics_dict and Redis health; ops
-  snapshot will reuse public storage state rather than duplicate disk logic.'
-- 'Reuse inventory: TenderAnalysisJob persists queued/running/failed job state and timestamps suitable
-  for queue depth/oldest age and recent worker-error counters.'
+- 'Reuse inventory: src/main.py /health/ready already exposes storage_metrics_dict and Redis health; ops snapshot
+  will reuse public storage state rather than duplicate disk logic.'
+- 'Reuse inventory: TenderAnalysisJob persists queued/running/failed job state and timestamps suitable for queue
+  depth/oldest age and recent worker-error counters.'
 - 'Reuse inventory: DocumentIngestionRun persists started/completed/partial/failed ingestion runs; ProcurementTenderDocument
   persists download/text-extraction failures and updated_at.'
-- 'Reuse inventory: ARV-076 backup tooling writes BACKUP_COMPLETE plus MANIFEST.json with created_at;
-  no runtime backup-root setting exists, so backup metrics must be optional and explicitly UNAVAILABLE
-  when not configured.'
-- 'Bounded design selected: add a no-migration ops_observability module with versioned snapshot schema,
-  GET /api/ops/observability endpoint, deterministic thresholds, optional ARVECTUM_BACKUP_ROOT metadata
-  reader, and runbook. No third-party telemetry or destructive recovery.'
-- Implemented versioned ops-observability-v1 snapshot and GET /api/ops/observability without a migration
-  or new telemetry dependency.
-- Snapshot reuses TenderAnalysisJob for queue age/depth and recent worker failures, DocumentIngestionRun
-  for ingestion outcomes, ProcurementTenderDocument for processing failures, public storage guard state,
-  and optional ARV-076 backup metadata.
-- Added deterministic warning/critical thresholds and explicit UNKNOWN/UNAVAILABLE semantics; overall
-  status remains unknown if any dependency is unknown/unavailable and no higher-severity warning/critical
-  is present.
-- Added optional ARVECTUM_BACKUP_ROOT setting; endpoint reads only BACKUP_COMPLETE + valid arv-076 MANIFEST
-  metadata and never returns filesystem paths.
-- Added non-destructive operational runbook covering stale queue, ingestion/document failures, storage
-  guard, backup state, and unavailable dependencies.
-- Added regressions for healthy, failed-ingestion degraded, recent-worker degraded, stale queue, storage
-  ingestion guard, stale backup age, unavailable dependencies, and endpoint contract.
+- 'Reuse inventory: ARV-076 backup tooling writes BACKUP_COMPLETE plus MANIFEST.json with created_at; no runtime
+  backup-root setting exists, so backup metrics must be optional and explicitly UNAVAILABLE when not configured.'
+- 'Bounded design selected: add a no-migration ops_observability module with versioned snapshot schema, GET /api/ops/observability
+  endpoint, deterministic thresholds, optional ARVECTUM_BACKUP_ROOT metadata reader, and runbook. No third-party
+  telemetry or destructive recovery.'
+- Implemented versioned ops-observability-v1 snapshot and GET /api/ops/observability without a migration or new
+  telemetry dependency.
+- Snapshot reuses TenderAnalysisJob for queue age/depth and recent worker failures, DocumentIngestionRun for ingestion
+  outcomes, ProcurementTenderDocument for processing failures, public storage guard state, and optional ARV-076
+  backup metadata.
+- Added deterministic warning/critical thresholds and explicit UNKNOWN/UNAVAILABLE semantics; overall status remains
+  unknown if any dependency is unknown/unavailable and no higher-severity warning/critical is present.
+- Added optional ARVECTUM_BACKUP_ROOT setting; endpoint reads only BACKUP_COMPLETE + valid arv-076 MANIFEST metadata
+  and never returns filesystem paths.
+- Added non-destructive operational runbook covering stale queue, ingestion/document failures, storage guard, backup
+  state, and unavailable dependencies.
+- Added regressions for healthy, failed-ingestion degraded, recent-worker degraded, stale queue, storage ingestion
+  guard, stale backup age, unavailable dependencies, and endpoint contract.
 - 'Local validation: focused ops-observability 8 passed; broader relevant ops/storage/job/document-ingestion/backup/security
   suite 97 passed, 5 skipped; make check PASS; targeted ruff and git diff --check PASS.'
 - Product implementation committed as fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403.
-- 'Opened PR #76 at head 406a63c43e42ece0599addb2cfebcde023a533ad; exact-head CI run 35061094346 was queued
-  on first inspection.'
-current: 'PR #76 is review-ready; exact-head CI is the remaining technical gate and was queued on first
+- 'Opened PR #76 at head 406a63c43e42ece0599addb2cfebcde023a533ad; exact-head CI run 35061094346 was queued on first
   inspection.'
+- 'Exact-head GitHub CI run 35061132033 succeeded for PR #76 head 9c39e8e99286b7afd0d85d25c49d626c97aa7030; PR is
+  open, mergeable and review-ready.'
+current: 'PR #76 is technically complete and exact-head CI is green; final merge is blocked only by Company AM-4
+  mandatory-review/counter uncertainty.'
 pending:
-- 'Inspect PR #76 exact-head CI once on the next run; do not passively poll.'
-- 'If green, verify issue #68 DoD plus PR mergeability/reviews and Company AM-4 authority/counter.'
-- If AM-4 review trigger cannot be proven un-reached, keep PR review-ready and fail closed to REVIEW;
-  do not merge.
+- Obtain attributable Owner AM-4 review/renewal or otherwise prove the ten-auto-merge review trigger has not been
+  reached.
+- 'After authority is renewed/proven and PR #76 remains mergeable with exact-head CI green, perform guarded merge
+  and close the canonical issue.'
 last_verified_commit: fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403
 test_results:
 - 'Focused tests/test_ops_observability_v1.py: 8 passed.'
 - 'Relevant ops/storage/job/document-ingestion/backup/security suite: 97 passed, 5 skipped.'
 - 'PATH=/Users/master/Documents/.venv/bin:$PATH make check: PASS.'
 - 'Targeted ruff for ops_observability/settings/router/test: PASS; git diff --check: PASS.'
-updated_at: '2026-09-16T08:50:20+03:00'
-resume_instruction: 'Inspect PR #76 exact-head CI run for head 406a63c43e42ece0599addb2cfebcde023a533ad
-  once. If green, verify issue #68 DoD and PR state. Before merge, independently prove Company AM-4 review
-  trigger un-reached; if uncertain, remain blocked at REVIEW. No product code changes unless CI exposes
-  a task-caused failure.'
+- 'Exact-head CI run 35061132033: SUCCESS.'
+updated_at: '2026-09-16T09:36:00+03:00'
+resume_instruction: 'Recheck PR #76 exact head/mergeability and Company AM-4 review state once. Do not change product
+  code unless a new task-caused regression appears. Merge only after attributable authority is valid; otherwise
+  preserve review-ready blocked state and continue another independent admitted item.'
 execution:
   claimed_by: null
   execution_id: null
