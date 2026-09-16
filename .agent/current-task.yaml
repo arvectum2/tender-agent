@@ -14,20 +14,23 @@ definition_of_done:
 completed:
 - Reconciled CHANGE-MONITORING-V1-001 as merged in PR #74; do not resume stale main checkpoint wording.
 - Reconciled INGEST-RESILIENCE-V1-001 as exact-head green and guarded-merged PR #75 under the 2026-09-16 AM-4 renewal; issue #66 is closed completed.
-- Selected next executable queue item by order: 223FZ-INGEST-V1-001 (#69), because its dependency is now satisfied; earlier #67/#68 remain independent existing PR work and may be reconciled separately without overlapping this source-adapter scope.
+- Selected next executable queue item by order: 223FZ-INGEST-V1-001 (#69), because its dependency is now satisfied.
 - Created isolated branch agent/223fz-ingest-v1-001 from main fbf6d3cbac246af2c28db242465d52617890bf0c.
-- Initial reuse inventory: src/tender_research/providers/public_44fz_search.py already has generic public-search result/detail/document/revision dataclasses and LAW_FLAGS includes 223fz, but the only concrete provider class is Public44FzSearchProvider; src/tender_research/providers contains no separate 223-FZ provider. This confirms the task must reuse transport/data primitives while adding a distinct parser/provider contract rather than routing 223-FZ through the 44-FZ parser.
-current: Inventory the exact public-search URL builder/parser and pipeline/provider selection seams needed for a separate 223-FZ path; no product code changed yet.
+- Initial reuse inventory established regime-neutral public-search dataclasses/HTTP transport and absence of a separate 223-FZ provider.
+- Completed exact seam audit: Public44FzSearchProvider.search always calls parse_44fz_search_results and its card parser hard-codes law=44fz; fetch_detail defaults 44fz and derives 44-FZ common-info/documents/revision routes. Passing law_type=223fz through that class is therefore unsafe hidden reuse.
+- RegistryNumberDiscovery has only EXTERNAL_PUBLIC_44FZ and stamps discovered provenance as external_public_44fz; TenderResearchPipeline likewise constructs only Public44FzSearchProvider and hard-codes public lookup provenance. Separate 223-FZ source/provider selection is required before existing regime-neutral repository upsert can be reused.
+- Repository tree contains no public_eis_html_223fz fixture/evidence. Real-EIS behavior must not be fabricated; synthetic parser fixtures may cover bounded contracts while unverified public layouts remain documented UNKNOWN/NEEDS_REVIEW.
+current: Implement the bounded separate 223-FZ provider/parser and explicit source selection described in the durable checkpoint; do not reuse the 44-FZ parser/detail route as fallback.
 pending:
-- Inspect Public44FzSearchProvider URL construction/search/detail parsing boundaries and TenderPipeline provider selection.
-- Identify existing documented public_eis_html_223fz fallback/support evidence if present outside indexed code search.
-- Implement smallest separate 223-FZ provider/parser contract reusing transport/dataclasses only where regime-neutral.
-- Add source-bound fixtures/tests, support matrix, relevant 44-FZ regressions, exact-head CI and review merge gates.
-last_verified_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
+- Inspect CLI/API discovery entry points and exact detail URL helpers needed for explicit direct-registry 223-FZ intake.
+- Implement src/tender_research/providers/public_223fz_search.py, SourceType.EXTERNAL_PUBLIC_223FZ and explicit provider selection.
+- Add source-bound synthetic normal/missing/ambiguous fixtures, repeated idempotent ingest coverage and support matrix.
+- Run focused 223-FZ plus existing 44-FZ regressions, make check, exact-head CI and guarded merge gates.
+last_verified_commit: 0dfd253a7890c10414b50170f947bbd52d346b1b
 test_results:
-- No product tests run yet for this task; this quantum established branch, authority/dependency reconciliation and reuse inventory only.
-updated_at: '2026-09-16T23:02:00+03:00'
-resume_instruction: Inspect exact 44-FZ provider/pipeline seams before writing product code. Reuse regime-neutral HTTP/search/document primitives, but do not call the 44-FZ parser as a hidden fallback for 223-FZ and do not add 223-FZ legal/decision semantics.
+- No product tests run in this quantum; no product code changed. Repository/checkpoint progress consists of completed provider/pipeline seam audit.
+updated_at: '2026-09-17T00:20:00+03:00'
+resume_instruction: Implement only after explicit 223-FZ CLI/API/direct-registry entry seams are identified. Reuse regime-neutral transport/dataclasses/repository primitives, never parse 223-FZ through parse_44fz_search_results or 44-FZ document/revision helpers, and preserve UNKNOWN/NEEDS_REVIEW for unverified roles/layouts.
 execution:
   claimed_by: tender-agent-watchdog
   execution_id: 223fz-ingest-20260916T230200+0300
@@ -35,4 +38,4 @@ execution:
   base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
   issue: 69
   manual_override: false
-  lease_until: '2026-09-17T00:52:00+03:00'
+  lease_until: '2026-09-17T01:50:00+03:00'
