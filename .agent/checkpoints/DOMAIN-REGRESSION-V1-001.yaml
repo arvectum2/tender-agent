@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: DOMAIN-REGRESSION-V1-001
 authority: REVIEW
 goal: Build a versioned repository-owned lifecycle and deterministic CI telemetry for confirmed procurement regressions
@@ -34,29 +34,27 @@ completed:
 - 'Local validation green: registry integrity tests 7 passed; registered regression command 2/2 passed; broader
   benchmark/customer/document/Decision Core/Commercial Core relevant suite 78 passed; make check, targeted ruff
   and git diff --check PASS.'
-current: Implementation and local validation complete; commit/push, open review-ready PR, then exact-head CI. Final
-  merge remains Product Owner REVIEW / auto_merge=false.
+- 'Opened review-ready PR #77; current head 8f49babe24951aacf3b59f12eb5ecc07f87f15a4 is mergeable with exact-head CI run 35065166199 SUCCESS.'
+- 'Final merge remains blocked on explicit Product Owner REVIEW because authority=REVIEW and auto_merge=false.'
+current: 'Technical Definition of Done is satisfied; PR #77 is review-ready and exact-head CI is green. Final merge is blocked on explicit Product Owner REVIEW.'
 pending:
-- 'Commit/push the bounded implementation and open a review-ready PR for issue #71.'
-- Run/observe exact-head CI and reconcile any task-caused failures.
-- Stop before merge and request explicit Product Owner REVIEW approval; do not auto-merge.
-last_verified_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
+- 'Explicit Product Owner REVIEW approval for PR #77, followed by a fresh exact-head/current-base/review check before merge.'
+last_verified_commit: 8f49babe24951aacf3b59f12eb5ecc07f87f15a4
 test_results:
 - 'tests/test_domain_regression_registry.py: 7 passed.'
 - 'make test-domain-regressions: 2 registered cases passed; deterministic JSON report generated.'
 - 'Broader relevant suite (registry + customer boundary + public detail + benchmark pipeline/hardening/control +
   Decision Core + Commercial Core): 78 passed.'
 - 'make check: PASS; targeted ruff: PASS; git diff --check: PASS.'
-updated_at: '2026-09-16T09:52:00+03:00'
-resume_instruction: 'Commit/push current implementation, open review-ready PR for issue #71, inspect exact-head
-  CI once, fix only task-caused regressions, then stop at Product Owner REVIEW before merge. Preserve frozen benchmark
-  artifacts unchanged.'
+- 'Exact-head GitHub CI run 35065166199 at 8f49babe24951aacf3b59f12eb5ecc07f87f15a4: SUCCESS.'
+updated_at: '2026-09-16T13:38:00+03:00'
+resume_instruction: 'Do not resume implementation. PR #77 is review-ready with exact-head CI green. Preserve frozen benchmark artifacts unchanged and merge only after explicit Product Owner REVIEW approval plus a fresh exact-head/current-base/review check.'
 execution:
-  claimed_by: manual Owner-requested roadmap continuation
-  execution_id: domain-regression-20260916T094000+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/domain-regression-v1-001
   base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
   issue: 71
-  manual_override: true
-  lease_until: '2026-09-16T11:30:00+03:00'
+  manual_override: false
+  lease_until: null
 checkpoint_role: durable_task_checkpoint
