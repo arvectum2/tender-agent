@@ -1,0 +1,29 @@
+version: 1
+task_id: 223FZ-INGEST-V1-001
+issue: 69
+branch: agent/223fz-ingest-v1-001
+base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
+status: in_progress
+updated_at: '2026-09-16T23:02:00+03:00'
+authority: AUTO
+reconciliation:
+  dependency: INGEST-RESILIENCE-V1-001
+  dependency_state: satisfied
+  evidence:
+    - 'PR #75 merged as fbf6d3cbac246af2c28db242465d52617890bf0c after exact-head CI run 35142513674 SUCCESS.'
+    - 'Issue #66 closed completed.'
+  am4_cycle:
+    renewal: 'DECISION-2026-09-16-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md Approved'
+    automatic_merges_observed_this_run: 1
+inventory:
+  - path: src/tender_research/providers/public_44fz_search.py
+    finding: 'Contains regime-neutral search/detail/document/revision dataclasses and HTTP plumbing; LAW_FLAGS already maps 223fz -> fz223.'
+  - path: src/tender_research/providers/public_44fz_search.py
+    finding: 'Concrete implementation is still named/bounded Public44FzSearchProvider; its parsing/endpoint assumptions must not become a hidden 223-FZ fallback.'
+  - path: src/tender_research/providers
+    finding: 'Current provider directory contains public_44fz_search.py, manual_urls.py and duckduckgo_html.py; no separate public 223-FZ provider exists on main.'
+next:
+  - Inspect URL builder/search parser/detail/document methods in Public44FzSearchProvider and identify extractable regime-neutral transport seams.
+  - Inspect TenderPipeline/provider selection and API/CLI entry points for law_type handling.
+  - Locate repository docs/tests mentioning public_eis_html_223fz using directory inspection if code search remains empty.
+  - Implement a distinct 223-FZ provider/parser contract with fail-closed unknown/ambiguous fields and no legal decision semantics.
