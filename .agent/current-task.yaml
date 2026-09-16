@@ -1,42 +1,66 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: CHANGE-MONITORING-V1-001
 authority: AUTO
-goal: Implement source-bound saved procurement watches, deterministic change snapshots/diffs, and an idempotent internal alert feed without external notification delivery.
+goal: Implement source-bound saved procurement watches, deterministic change snapshots/diffs,
+  and an idempotent internal alert feed without external notification delivery.
 definition_of_done:
-  - Versioned monitoring contract for watch target, source snapshot, diff and alert event.
-  - Deterministic source-bound change detection with idempotent replay.
-  - API/UI-compatible internal feed or existing product surface integration.
-  - Regression tests for unchanged state, deadline change, document revision change, status/cancellation and duplicate replay.
-  - Focused/relevant tests and exact-head CI green.
-  - Documentation states external notification transports remain disabled/out of scope.
+- Versioned monitoring contract for watch target, source snapshot, diff and alert
+  event.
+- Deterministic source-bound change detection with idempotent replay.
+- API/UI-compatible internal feed or existing product surface integration.
+- Regression tests for unchanged state, deadline change, document revision change,
+  status/cancellation and duplicate replay.
+- Focused/relevant tests and exact-head CI green.
+- Documentation states external notification transports remain disabled/out of scope.
 completed:
-  - Reconciled DOCUMENT-QA-NEXT-INCREMENT as completed/merged on main; do not reopen it.
-  - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
-  - Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
-  - Completed reuse inventory and exact Alembic parent resolution (097_add_arv052_expert_review).
-  - Implemented versioned WatchTarget/SourceSnapshot/SourceDiff/AlertEvent contracts.
-  - Implemented deterministic source fingerprint/diff/event-key primitives with unchanged suppression and fail-closed ambiguity handling.
-  - Added focused regression tests for unchanged replay, deadline, document revision, status/cancellation, ambiguity and identity mismatch.
-  - Added persistence/migration, source-row snapshot mapping, idempotent internal feed/audit persistence and registered internal API routes.
-  - Added persisted duplicate-replay regression and explicit documentation that external notification transports remain disabled/out of scope.
-  - Synced current main after DOCUMENT-QA-NEXT-INCREMENT merge; conflict was checkpoint-only and resolved in favor of this active task.
-current: Current main is integrated; run broader validation and exact-head CI, then evaluate guarded completion.
+- Reconciled DOCUMENT-QA-NEXT-INCREMENT as completed/merged on main; do not reopen
+  it.
+- Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001
+    (#65).
+- Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
+- Completed reuse inventory and exact Alembic parent resolution (097_add_arv052_expert_review).
+- Implemented versioned WatchTarget/SourceSnapshot/SourceDiff/AlertEvent contracts.
+- Implemented deterministic source fingerprint/diff/event-key primitives with unchanged
+  suppression and fail-closed ambiguity handling.
+- Added focused regression tests for unchanged replay, deadline, document revision,
+  status/cancellation, ambiguity and identity mismatch.
+- Added persistence/migration, source-row snapshot mapping, idempotent internal feed/audit
+  persistence and registered internal API routes.
+- Added persisted duplicate-replay regression and explicit documentation that external
+  notification transports remain disabled/out of scope.
+- Synced current main after DOCUMENT-QA-NEXT-INCREMENT merge; conflict was checkpoint-only
+  and resolved in favor of this active task.
+- Post-main-sync PR head bb8dc3e22f1d2a666dc46f706f1cb6af4b505096 is mergeable; exact-head
+  GitHub CI run 35055653292 completed SUCCESS.
+- 'Broader relevant local regression set after main sync: 62 passed, 10 skipped, 14
+  warnings.'
+- 'Automatic merge failed closed: the AM-4 ten-automatic-merge mandatory review trigger
+  cannot be proven un-reached and no attributable renewal was found; PR #74 remains
+  review-ready and unmerged.'
+current: 'Technical DoD complete; PR #74 review-ready. Automatic merge blocked on
+  attributable Owner AM-4 review/renewal.'
 pending:
-  - Run broader relevant tests and exact-head CI on the post-main-sync head; satisfy issue #65 DoD and guarded auto-merge gates.
-last_verified_commit: 03f3998
+- 'Owner AM-4 review/renewal, then guarded PR #74 merge revalidation.'
+last_verified_commit: bb8dc3e22f1d2a666dc46f706f1cb6af4b505096
 test_results:
-  - Focused monitoring suite: 7 passed.
-  - PATH=.venv/bin:$PATH make check: PASS.
-  - Alembic heads: 098_add_procurement_monitoring (single head). Exact-head CI must be verified next run after push.
-updated_at: '2026-09-16T07:28:00+03:00'
-resume_instruction: Run broader relevant tests after the main sync, commit/push the merge, then inspect exact-head CI. If green, verify issue #65 DoD and Company AM-4/repository gates before any automatic merge. Do not enable external transports.
+- Focused monitoring suite: 7 passed.
+- PATH=.venv/bin:$PATH make check: PASS.
+- Alembic heads: 098_add_procurement_monitoring (single head). Exact-head CI must
+    be verified next run after push.
+- 'Broader relevant post-sync tests: 62 passed, 10 skipped, 14 warnings.'
+- 'Exact-head GitHub CI run 35055653292 at bb8dc3e22f1d2a666dc46f706f1cb6af4b505096:
+  SUCCESS.'
+updated_at: '2026-09-16T07:57:34+03:00'
+resume_instruction: 'Do not resume CHANGE-MONITORING implementation. Preserve PR #74
+  for Owner AM-4 review/renewal and continue the next independent admitted AUTO queue
+  item.'
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260916T035708+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/change-monitoring-v1-001
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T08:15:00+03:00'
+  lease_until: null
