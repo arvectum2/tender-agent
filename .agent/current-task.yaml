@@ -14,23 +14,24 @@ definition_of_done:
 completed:
 - Reconciled CHANGE-MONITORING-V1-001 as merged in PR #74; do not resume stale main checkpoint wording.
 - Reconciled INGEST-RESILIENCE-V1-001 as exact-head green and guarded-merged PR #75 under the 2026-09-16 AM-4 renewal; issue #66 is closed completed.
+- Reconciled stale canonical main current-task: OPS-OBSERVABILITY-V1-001 is done because PR #76 merged as c335c60fa92742d7c464739e057df7eac89fa191 and issue #68 is closed completed.
 - Selected next executable queue item by order: 223FZ-INGEST-V1-001 (#69), because its dependency is now satisfied.
 - Created isolated branch agent/223fz-ingest-v1-001 from main fbf6d3cbac246af2c28db242465d52617890bf0c.
 - Initial reuse inventory established regime-neutral public-search dataclasses/HTTP transport and absence of a separate 223-FZ provider.
 - Completed exact seam audit: Public44FzSearchProvider.search always calls parse_44fz_search_results and its card parser hard-codes law=44fz; fetch_detail defaults 44fz and derives 44-FZ common-info/documents/revision routes. Passing law_type=223fz through that class is therefore unsafe hidden reuse.
 - RegistryNumberDiscovery has only EXTERNAL_PUBLIC_44FZ and stamps discovered provenance as external_public_44fz; TenderResearchPipeline likewise constructs only Public44FzSearchProvider and hard-codes public lookup provenance. Separate 223-FZ source/provider selection is required before existing regime-neutral repository upsert can be reused.
 - Repository tree contains no public_eis_html_223fz fixture/evidence. Real-EIS behavior must not be fabricated; synthetic parser fixtures may cover bounded contracts while unverified public layouts remain documented UNKNOWN/NEEDS_REVIEW.
-current: Implement the bounded separate 223-FZ provider/parser and explicit source selection described in the durable checkpoint; do not reuse the 44-FZ parser/detail route as fallback.
+- Completed CLI/API entrypoint audit: discover-registry-numbers and research-discovered are explicit source-selection surfaces; collect-registry-numbers currently accepts 223fz but unsafely uses Public44FzSearchProvider and must dispatch by law; ingest-collected-registry-numbers is SOAP-only and does not preserve public source/law metadata.
+current: Implement the separate 223-FZ provider/parser, explicit discovery/pipeline provider dispatch, and CLI source/law dispatch recorded in the durable checkpoint; do not reuse the 44-FZ parser/detail route as fallback.
 pending:
-- Inspect CLI/API discovery entry points and exact detail URL helpers needed for explicit direct-registry 223-FZ intake.
-- Implement src/tender_research/providers/public_223fz_search.py, SourceType.EXTERNAL_PUBLIC_223FZ and explicit provider selection.
+- Implement src/tender_research/providers/public_223fz_search.py, SourceType.EXTERNAL_PUBLIC_223FZ, explicit discovery and pipeline provider selection, and safe CLI dispatch.
 - Add source-bound synthetic normal/missing/ambiguous fixtures, repeated idempotent ingest coverage and support matrix.
 - Run focused 223-FZ plus existing 44-FZ regressions, make check, exact-head CI and guarded merge gates.
-last_verified_commit: 0dfd253a7890c10414b50170f947bbd52d346b1b
+last_verified_commit: 7ead271c80c80475ac8a5e66b57eb5671aaa820b
 test_results:
-- No product tests run in this quantum; no product code changed. Repository/checkpoint progress consists of completed provider/pipeline seam audit.
-updated_at: '2026-09-17T00:20:00+03:00'
-resume_instruction: Implement only after explicit 223-FZ CLI/API/direct-registry entry seams are identified. Reuse regime-neutral transport/dataclasses/repository primitives, never parse 223-FZ through parse_44fz_search_results or 44-FZ document/revision helpers, and preserve UNKNOWN/NEEDS_REVIEW for unverified roles/layouts.
+- No product tests run in this quantum; no product code changed. Repository/checkpoint progress consists of completed CLI/API/direct-registry entrypoint audit and stale-main reconciliation.
+updated_at: '2026-09-17T01:15:00+03:00'
+resume_instruction: Implement the recorded bounded design. Reuse regime-neutral transport/dataclasses/repository primitives, never parse 223-FZ through parse_44fz_search_results or 44-FZ document/revision helpers, and preserve UNKNOWN/NEEDS_REVIEW for unverified roles/layouts.
 execution:
   claimed_by: tender-agent-watchdog
   execution_id: 223fz-ingest-20260916T230200+0300
@@ -38,4 +39,4 @@ execution:
   base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
   issue: 69
   manual_override: false
-  lease_until: '2026-09-17T01:50:00+03:00'
+  lease_until: '2026-09-17T03:05:00+03:00'
