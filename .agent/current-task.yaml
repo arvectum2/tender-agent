@@ -21,16 +21,17 @@ completed:
   - Added focused regression tests for unchanged replay, deadline, document revision, status/cancellation, ambiguity and identity mismatch.
   - Added persistence/migration, source-row snapshot mapping, idempotent internal feed/audit persistence and registered internal API routes.
   - Added persisted duplicate-replay regression and explicit documentation that external notification transports remain disabled/out of scope.
-current: Persistence/source mapping/internal feed/API implemented; waiting only for broader/exact-head validation and guarded completion.
+  - Synced current main after DOCUMENT-QA-NEXT-INCREMENT merge; conflict was checkpoint-only and resolved in favor of this active task.
+current: Current main is integrated; run broader validation and exact-head CI, then evaluate guarded completion.
 pending:
-  - Run broader relevant tests and exact-head CI; satisfy issue #65 DoD and guarded auto-merge gates.
+  - Run broader relevant tests and exact-head CI on the post-main-sync head; satisfy issue #65 DoD and guarded auto-merge gates.
 last_verified_commit: 03f3998
 test_results:
   - Focused monitoring suite: 7 passed.
   - PATH=.venv/bin:$PATH make check: PASS.
   - Alembic heads: 098_add_procurement_monitoring (single head). Exact-head CI must be verified next run after push.
-updated_at: '2026-09-16T04:58:00+03:00'
-resume_instruction: Check exact-head CI once. If green, verify broader relevant tests and issue #65 DoD, then evaluate Company AM-4 and repository gates before automatic merge. Do not enable external transports.
+updated_at: '2026-09-16T07:28:00+03:00'
+resume_instruction: Run broader relevant tests after the main sync, commit/push the merge, then inspect exact-head CI. If green, verify issue #65 DoD and Company AM-4/repository gates before any automatic merge. Do not enable external transports.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260916T035708+0300
@@ -38,4 +39,4 @@ execution:
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T06:48:00+03:00'
+  lease_until: '2026-09-16T08:15:00+03:00'

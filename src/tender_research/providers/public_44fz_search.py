@@ -80,6 +80,28 @@ class PublicDocumentLink:
 
 
 @dataclass
+class PublicNoticeRevision:
+    revision: int | None = None
+    publication_timestamp: str | None = None
+    state: str | None = None
+    active: bool | None = None
+    source_url: str | None = None
+    title: str | None = None
+    document_links: list[PublicDocumentLink] = field(default_factory=list)
+
+    def provenance(self) -> dict[str, Any]:
+        return {
+            "revision": self.revision,
+            "publication_timestamp": self.publication_timestamp,
+            "state": self.state,
+            "active": self.active,
+            "source_url": self.source_url,
+            "title": self.title,
+            "attachment_count": len(self.document_links),
+        }
+
+
+@dataclass
 class PublicTenderDetail:
     registry_number: str | None = None
     title: str | None = None
@@ -93,6 +115,8 @@ class PublicTenderDetail:
     card_url: str | None = None
     source_url: str | None = None
     document_links: list[PublicDocumentLink] = field(default_factory=list)
+    document_revisions: list[PublicNoticeRevision] = field(default_factory=list)
+    active_revision: PublicNoticeRevision | None = None
     raw_html_path: str | None = None
     raw: dict[str, Any] = field(default_factory=dict)
     network_status: str = PublicSearchStatus.SUCCESS
@@ -376,7 +400,19 @@ class Public44FzSearchProvider:
             if docs_result.get("status") == PublicSearchStatus.SUCCESS and docs_result.get("html"):
                 documents_html = docs_result["html"]
                 detail.documents_html = documents_html
-                detail.document_links = _parse_document_links(documents_html, documents_url)
+                links, revisions, selection = _select_current_revision_document_links(
+                    documents_html, documents_url
+                )
+                detail.document_links = links
+                detail.document_revisions = revisions
+                detail.active_revision = next(
+                    (item for item in revisions if item.active is True),
+                    None,
+                ) if selection.get("status") == "active_revision_selected" else None
+                detail.raw["document_revision_selection"] = selection
+                detail.raw["document_revisions"] = [item.provenance() for item in revisions]
+                if selection.get("requires_review"):
+                    detail.error_message = str(selection.get("reason") or "EIS revision binding requires review")
             else:
                 detail.raw["documents_fetch_error"] = docs_result.get("error")
 
@@ -960,6 +996,194 @@ def _extract_registry_from_url_or_html(card_url: str | None, html_str: str) -> s
         if reg_number:
             return reg_number[0]
     return _extract_reestr_from_text(html_str)
+
+
+def _extract_div_blocks_by_class(html_str: str, class_token: str) -> list[str]:
+    """Return balanced ``div`` fragments whose class list contains ``class_token``."""
+
+    tag_pattern = re.compile(r"<\s*(/?)\s*div\b([^>]*)>", re.IGNORECASE | re.DOTALL)
+    class_pattern = re.compile(r"class\s*=\s*([\"'])(.*?)\1", re.IGNORECASE | re.DOTALL)
+    depth = 0
+    targets: list[tuple[int, int]] = []
+    blocks: list[str] = []
+    for match in tag_pattern.finditer(html_str):
+        closing = bool(match.group(1))
+        if not closing:
+            depth += 1
+            class_match = class_pattern.search(match.group(2))
+            classes = class_match.group(2).split() if class_match else []
+            if class_token in classes:
+                targets.append((depth, match.start()))
+            continue
+
+        for index in range(len(targets) - 1, -1, -1):
+            target_depth, start = targets[index]
+            if target_depth == depth:
+                blocks.append(html_str[start : match.end()])
+                targets.pop(index)
+                break
+        depth = max(0, depth - 1)
+    return blocks
+
+
+def _extract_revision_value(block: str, label: str) -> str | None:
+    pattern = re.compile(
+        rf'<(?:div|span)[^>]*class="[^"]*\bsection__attrib\b[^"]*"[^>]*>\s*{re.escape(label)}\s*</(?:div|span)>\s*'
+        rf'<(?:div|span)[^>]*class="[^"]*\bsection__value\b[^"]*"[^>]*>(.*?)</(?:div|span)>',
+        re.IGNORECASE | re.DOTALL,
+    )
+    match = pattern.search(block)
+    return _strip_html(match.group(1)) if match else None
+
+
+def _extract_revision_title(block: str) -> str | None:
+    match = re.search(
+        r'<div[^>]*class="[^"]*\bdocName\b[^"]*"[^>]*>(.*?)</div>',
+        block,
+        re.IGNORECASE | re.DOTALL,
+    )
+    return _strip_html(match.group(1)) if match else None
+
+
+def _extract_revision_number(block: str, title: str | None) -> int | None:
+    match = re.search(r"[?&]versionNumber=(\d+)", block, re.IGNORECASE)
+    if not match and title:
+        match = re.search(r"\bв\s+ред\.\s*(\d+)\b", title, re.IGNORECASE)
+    return int(match.group(1)) if match else None
+
+
+def _extract_revision_source_url(block: str, page_url: str) -> str:
+    for match in re.finditer(r'<a[^>]*href="([^"]+)"[^>]*>', block, re.IGNORECASE | re.DOTALL):
+        href = html.unescape(match.group(1))
+        if "viewByVersionNumber" in href:
+            return urljoin(page_url, href)
+    return page_url
+
+
+def _parse_revision_active_state(value: str | None) -> tuple[str | None, bool | None]:
+    normalized = re.sub(r"\s+", " ", (value or "")).strip().lower()
+    if "недействующ" in normalized:
+        return "inactive", False
+    if "действующ" in normalized:
+        return "active", True
+    return (normalized or None), None
+
+
+def _dedupe_document_links(items: list[PublicDocumentLink]) -> list[PublicDocumentLink]:
+    seen_urls: set[str] = set()
+    result: list[PublicDocumentLink] = []
+    for item in items:
+        if item.url in seen_urls:
+            continue
+        seen_urls.add(item.url)
+        result.append(item)
+    return result
+
+
+def _parse_notice_document_revisions(html_str: str, page_url: str) -> list[PublicNoticeRevision]:
+    revisions: list[PublicNoticeRevision] = []
+    for block in _extract_div_blocks_by_class(html_str, "notice-documents"):
+        state_text = _extract_revision_value(block, "Редакция")
+        title = _extract_revision_title(block)
+        revision = _extract_revision_number(block, title)
+        publication_timestamp = _extract_revision_value(block, "Размещено")
+        state, active = _parse_revision_active_state(state_text)
+        source_url = _extract_revision_source_url(block, page_url)
+        links = _dedupe_document_links(_parse_document_links(block, page_url))
+        provenance = {
+            "revision": revision,
+            "revision_publication_timestamp": publication_timestamp,
+            "revision_state": state,
+            "revision_active": active,
+            "revision_source_url": source_url,
+            "documents_page_url": page_url,
+        }
+        for link in links:
+            link.raw.update(provenance)
+        revisions.append(
+            PublicNoticeRevision(
+                revision=revision,
+                publication_timestamp=publication_timestamp,
+                state=state,
+                active=active,
+                source_url=source_url,
+                title=title,
+                document_links=links,
+            )
+        )
+    return revisions
+
+
+def _select_current_revision_document_links(
+    html_str: str,
+    page_url: str,
+) -> tuple[list[PublicDocumentLink], list[PublicNoticeRevision], dict[str, Any]]:
+    revisions = _parse_notice_document_revisions(html_str, page_url)
+    if not revisions:
+        revision_markers_exposed = (
+            "inactive-redaction-toggle" in html_str
+            or bool(re.search(r">\s*Редакция\s*<", html_str, re.IGNORECASE))
+        )
+        if revision_markers_exposed:
+            return (
+                [],
+                [],
+                {
+                    "status": "revision_binding_unparsed",
+                    "requires_review": True,
+                    "reason": "EIS documents page exposes revision controls/state, but revision attachment blocks could not be parsed safely.",
+                },
+            )
+        return (
+            _dedupe_document_links(_parse_document_links(html_str, page_url)),
+            [],
+            {
+                "status": "revision_state_not_exposed",
+                "requires_review": False,
+                "reason": "EIS documents page does not expose notice revision blocks.",
+            },
+        )
+
+    unknown = [item for item in revisions if item.active is None]
+    active = [item for item in revisions if item.active is True]
+    if unknown or len(active) != 1:
+        return (
+            [],
+            revisions,
+            {
+                "status": "ambiguous_revision_state",
+                "requires_review": True,
+                "reason": (
+                    "Cannot bind public EIS attachments to one active notice revision: "
+                    f"active={len(active)}, unknown={len(unknown)}, total={len(revisions)}."
+                ),
+            },
+        )
+
+    selected = active[0]
+    any_links = any(item.document_links for item in revisions)
+    if any_links and not selected.document_links:
+        return (
+            [],
+            revisions,
+            {
+                "status": "active_revision_attachment_binding_missing",
+                "requires_review": True,
+                "reason": "Active EIS notice revision was identified, but its attachment binding is empty while other revisions contain attachments.",
+                "active_revision": selected.provenance(),
+            },
+        )
+
+    return (
+        selected.document_links,
+        revisions,
+        {
+            "status": "active_revision_selected",
+            "requires_review": False,
+            "reason": None,
+            "active_revision": selected.provenance(),
+        },
+    )
 
 
 def _parse_document_links(html_str: str, page_url: str) -> list[PublicDocumentLink]:

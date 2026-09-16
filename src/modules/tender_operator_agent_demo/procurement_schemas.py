@@ -54,6 +54,7 @@ class ProcurementAttachment(APIModel):
     can_download: bool = False
     requires_manual_upload: bool = False
     warnings: list[str] = Field(default_factory=list)
+    provenance: dict[str, Any] | None = None
 
 
 class ProcurementSearchResult(APIModel):
