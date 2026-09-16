@@ -1,66 +1,37 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
-task_id: CHANGE-MONITORING-V1-001
+status: in_progress
+task_id: INTEGRATION-OUTBOX-V1-001
 authority: AUTO
-goal: Implement source-bound saved procurement watches, deterministic change snapshots/diffs,
-  and an idempotent internal alert feed without external notification delivery.
+goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces while keeping every live external transport disabled.
 definition_of_done:
-- Versioned monitoring contract for watch target, source snapshot, diff and alert
-  event.
-- Deterministic source-bound change detection with idempotent replay.
-- API/UI-compatible internal feed or existing product surface integration.
-- Regression tests for unchanged state, deadline change, document revision change,
-  status/cancellation and duplicate replay.
-- Focused/relevant tests and exact-head CI green.
-- Documentation states external notification transports remain disabled/out of scope.
+  - Versioned event envelope plus persisted idempotent outbox.
+  - analysis-completed, monitoring-alert and review-required event types wired from existing internal state changes.
+  - Read-only list/export surface.
+  - External transport boundary exists only behind explicit disabled/fail-closed configuration.
+  - Replay/idempotency/tenant-isolation/no-secret regressions.
+  - Focused/relevant tests and exact-head CI green; docs preserve REVIEW/HUMAN gate for live transport.
 completed:
-- Reconciled DOCUMENT-QA-NEXT-INCREMENT as completed/merged on main; do not reopen
-  it.
-- Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001
-    (#65).
-- Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
-- Completed reuse inventory and exact Alembic parent resolution (097_add_arv052_expert_review).
-- Implemented versioned WatchTarget/SourceSnapshot/SourceDiff/AlertEvent contracts.
-- Implemented deterministic source fingerprint/diff/event-key primitives with unchanged
-  suppression and fail-closed ambiguity handling.
-- Added focused regression tests for unchanged replay, deadline, document revision,
-  status/cancellation, ambiguity and identity mismatch.
-- Added persistence/migration, source-row snapshot mapping, idempotent internal feed/audit
-  persistence and registered internal API routes.
-- Added persisted duplicate-replay regression and explicit documentation that external
-  notification transports remain disabled/out of scope.
-- Synced current main after DOCUMENT-QA-NEXT-INCREMENT merge; conflict was checkpoint-only
-  and resolved in favor of this active task.
-- Post-main-sync PR head bb8dc3e22f1d2a666dc46f706f1cb6af4b505096 is mergeable; exact-head
-  GitHub CI run 35055653292 completed SUCCESS.
-- 'Broader relevant local regression set after main sync: 62 passed, 10 skipped, 14
-  warnings.'
-- 'Automatic merge failed closed: the AM-4 ten-automatic-merge mandatory review trigger
-  cannot be proven un-reached and no attributable renewal was found; PR #74 remains
-  review-ready and unmerged.'
-current: 'Technical DoD complete; PR #74 review-ready. Automatic merge blocked on
-  attributable Owner AM-4 review/renewal.'
+  - Reconciled CHANGE-MONITORING-V1-001 as technically complete on open mergeable PR #74 with exact-head green evidence; final merge remains blocked only by Company AM-4 review uncertainty.
+  - Selected next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge authority gate.
+  - Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b so required monitoring-alert primitives are available without duplicating #65 implementation.
+  - Created durable checkpoint .agent/checkpoints/INTEGRATION-OUTBOX-V1-001.yaml and bounded external transports/credentials/actions explicitly out of scope.
+current: Inventory reusable EventRecord/event_log, monitoring-alert persistence, analysis completion and review-required state-change seams before product code changes.
 pending:
-- 'Owner AM-4 review/renewal, then guarded PR #74 merge revalidation.'
-last_verified_commit: bb8dc3e22f1d2a666dc46f706f1cb6af4b505096
+  - Identify exact reusable event/audit and router/migration seams on this branch.
+  - Implement minimal versioned envelope/outbox persistence and disabled adapter guard without building a generic integration platform.
+  - Wire required event types, read-only list/export, idempotency/tenant/no-secret tests.
+  - Run focused/relevant tests and exact-head CI; open PR. Merge remains subject to Company AM-4 and dependency/base reconciliation.
+last_verified_commit: fff25e4931f056f488563f41123f3e351f2c8ee3
 test_results:
-- Focused monitoring suite: 7 passed.
-- PATH=.venv/bin:$PATH make check: PASS.
-- Alembic heads: 098_add_procurement_monitoring (single head). Exact-head CI must
-    be verified next run after push.
-- 'Broader relevant post-sync tests: 62 passed, 10 skipped, 14 warnings.'
-- 'Exact-head GitHub CI run 35055653292 at bb8dc3e22f1d2a666dc46f706f1cb6af4b505096:
-  SUCCESS.'
-updated_at: '2026-09-16T07:57:34+03:00'
-resume_instruction: 'Do not resume CHANGE-MONITORING implementation. Preserve PR #74
-  for Owner AM-4 review/renewal and continue the next independent admitted AUTO queue
-  item.'
+  - No product tests run yet in this inventory quantum.
+updated_at: '2026-09-16T13:59:28+03:00'
+resume_instruction: Inspect EventRecord/event_log, procurement_monitoring alert creation, analysis completion and Decision Core review-required paths. Record exact reusable functions/models before implementation. Do not enable or call any external transport.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/change-monitoring-v1-001
-  base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
-  issue: 65
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260916T135928+0300
+  branch: agent/integration-outbox-v1-001
+  base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
+  issue: 67
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-16T15:49:28+03:00'
