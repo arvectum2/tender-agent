@@ -8,8 +8,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
 
-from src.tender_research.dedupe import content_hash
-from src.tender_research.errors import TenderResearchError
+from src.tender_research.errors import DocumentIdentityConflictError
 from src.tender_research.models import (
     ProcurementCustomer,
     ProcurementDocumentChunk,
@@ -21,6 +20,28 @@ from src.tender_research.models import (
     ProcurementWebPage,
     ProcurementWebSearchResult,
 )
+
+
+def _revision_identity(raw_meta: dict | None) -> str | None:
+    if not isinstance(raw_meta, dict):
+        return None
+    payload = {
+        "revision": raw_meta.get("revision"),
+        "publication_timestamp": raw_meta.get("revision_publication_timestamp")
+        or raw_meta.get("publication_timestamp"),
+        "source_url": raw_meta.get("revision_source_url") or raw_meta.get("source_url"),
+    }
+    if not any(value not in (None, "") for value in payload.values()):
+        return None
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def _revision_scopes_equivalent(left: dict | None, right: dict | None) -> bool:
+    left_identity = _revision_identity(left)
+    right_identity = _revision_identity(right)
+    if left_identity is None and right_identity is None:
+        return True
+    return left_identity is not None and left_identity == right_identity
 
 
 class TenderRepository:
@@ -235,6 +256,7 @@ class TenderRepository:
         size_bytes = data.get("size_bytes")
         content_type = data.get("content_type")
         raw_meta = data.get("raw_meta")
+        revision_identity = _revision_identity(raw_meta)
 
         if source_document_id:
             identity_source = "source_document_id"
@@ -258,6 +280,10 @@ class TenderRepository:
         else:
             return None, None
 
+        if revision_identity is not None:
+            identity_source = f"{identity_source}+revision"
+            identity_value = f"{identity_value}|revision={revision_identity}"
+
         raw = f"{tender_id}|{identity_source}|{identity_value}"
         identity_hash = hashlib.sha256(raw.encode("utf-8")).hexdigest()
         return identity_hash, identity_source
@@ -278,13 +304,23 @@ class TenderRepository:
             ).scalar_one_or_none()
 
         if not existing and sha256:
-            existing = self._session.execute(
+            existing_by_sha = self._session.execute(
                 select(ProcurementTenderDocument).where(
                     ProcurementTenderDocument.tender_id == tender_id,
                     ProcurementTenderDocument.sha256 == sha256,
                 )
             ).scalar_one_or_none()
+            if existing_by_sha and not _revision_scopes_equivalent(existing_by_sha.raw_meta, data.get("raw_meta")):
+                raise DocumentIdentityConflictError(
+                    "Document content hash matches an existing row but revision provenance does not; "
+                    "refusing to merge distinct or ambiguous source revisions"
+                )
+            existing = existing_by_sha
         elif existing and sha256:
+            if existing.sha256 and existing.sha256 != sha256:
+                raise DocumentIdentityConflictError(
+                    "Stable document identity produced a different content hash; explicit reconciliation is required"
+                )
             existing_by_sha = self._session.execute(
                 select(ProcurementTenderDocument).where(
                     ProcurementTenderDocument.tender_id == tender_id,
@@ -292,6 +328,10 @@ class TenderRepository:
                 )
             ).scalar_one_or_none()
             if existing_by_sha and existing_by_sha.id != existing.id:
+                if not _revision_scopes_equivalent(existing_by_sha.raw_meta, data.get("raw_meta")):
+                    raise DocumentIdentityConflictError(
+                        "Document SHA collision spans different revision provenance; refusing implicit merge"
+                    )
                 existing = self._merge_documents_by_sha(
                     canonical=existing_by_sha,
                     duplicate=existing,
@@ -304,6 +344,10 @@ class TenderRepository:
                 return existing
 
         if existing:
+            if existing.sha256 and sha256 and existing.sha256 != sha256:
+                raise DocumentIdentityConflictError(
+                    "Existing source document changed content without a distinct revision identity"
+                )
             self._apply_document_update(
                 existing,
                 data,
