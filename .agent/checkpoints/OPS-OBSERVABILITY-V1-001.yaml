@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: OPS-OBSERVABILITY-V1-001
 authority: AUTO
 goal: Expose repository-native, machine-readable operational observability for queue, ingestion, document
@@ -45,31 +45,32 @@ completed:
 - 'Local validation: focused ops-observability 8 passed; broader relevant ops/storage/job/document-ingestion/backup/security
   suite 97 passed, 5 skipped; make check PASS; targeted ruff and git diff --check PASS.'
 - Product implementation committed as fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403.
-current: 'Push validated implementation/checkpoint branch, open PR for issue #68, then inspect exact-head
-  CI once.'
+- 'Opened PR #76 at head 406a63c43e42ece0599addb2cfebcde023a533ad; exact-head CI run 35061094346 was queued
+  on first inspection.'
+current: 'PR #76 is review-ready; exact-head CI is the remaining technical gate and was queued on first
+  inspection.'
 pending:
-- 'Commit/push durable validation checkpoint and open PR for issue #68.'
-- Inspect exact-head CI once; if queued/running, park without passive polling and continue another independent
-  AUTO item if safe.
-- 'If CI is green, verify issue #68 DoD, mergeability/reviews and Company AM-4 authority/counter; auto-merge
-  only if every gate is provably valid.'
+- 'Inspect PR #76 exact-head CI once on the next run; do not passively poll.'
+- 'If green, verify issue #68 DoD plus PR mergeability/reviews and Company AM-4 authority/counter.'
+- If AM-4 review trigger cannot be proven un-reached, keep PR review-ready and fail closed to REVIEW;
+  do not merge.
 last_verified_commit: fdbd1dc23c7c76d0a036de3c10a8ce2d3a211403
 test_results:
 - 'Focused tests/test_ops_observability_v1.py: 8 passed.'
 - 'Relevant ops/storage/job/document-ingestion/backup/security suite: 97 passed, 5 skipped.'
 - 'PATH=/Users/master/Documents/.venv/bin:$PATH make check: PASS.'
 - 'Targeted ruff for ops_observability/settings/router/test: PASS; git diff --check: PASS.'
-updated_at: '2026-09-16T08:49:27+03:00'
-resume_instruction: 'Push the branch, open PR for issue #68, inspect exact-head CI once and verify mergeability/reviews.
-  If exact-head CI is waiting, park the task and continue the next independent admitted AUTO item. Before
-  any merge, re-read Company AM-4 and prove the automatic-merge review trigger un-reached; otherwise fail
-  closed to REVIEW.'
+updated_at: '2026-09-16T08:50:20+03:00'
+resume_instruction: 'Inspect PR #76 exact-head CI run for head 406a63c43e42ece0599addb2cfebcde023a533ad
+  once. If green, verify issue #68 DoD and PR state. Before merge, independently prove Company AM-4 review
+  trigger un-reached; if uncertain, remain blocked at REVIEW. No product code changes unless CI exposes
+  a task-caused failure.'
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260916-ops-observability
+  claimed_by: null
+  execution_id: null
   branch: agent/ops-observability-v1-001
   base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
   issue: 68
-  manual_override: true
-  lease_until: '2026-09-16T10:39:27+03:00'
+  manual_override: false
+  lease_until: null
 checkpoint_role: durable_task_checkpoint
