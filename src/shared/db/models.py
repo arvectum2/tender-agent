@@ -81,6 +81,7 @@ from src.modules.document_ingestion.models import DocumentIngestionRun, Document
 from src.modules.document_requirements.models import DocumentRequirementRow, DocumentRequirementSet
 from src.modules.document_store.models import ArtifactLink, ArtifactVersion, DocumentArtifact
 from src.modules.event_log.models import DecisionRecord, EventRecord
+from src.modules.integration_outbox.models import IntegrationOutboxEvent  # noqa: F401
 from src.modules.execution_command.models import (
     ExecutionCommandBinding,
     ExecutionCommandRecord,

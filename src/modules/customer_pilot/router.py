@@ -504,6 +504,9 @@ def complete_run(
         case_id=case_id,
         run_id=run_id,
     )
+    from src.modules.integration_outbox.service import enqueue_event
+    enqueue_event(session, event_type="analysis_completed", tenant_id=customer_id, aggregate_type="analysis_run", aggregate_id=run_id, source_key=run_id, data={"project_id": case.project_id, "case_id": case_id, "status": run.status})
+    enqueue_event(session, event_type="review_required", tenant_id=customer_id, aggregate_type="procurement_case", aggregate_id=case_id, source_key=run_id, data={"project_id": case.project_id, "run_id": run_id, "reason": "analysis_completed_operator_review"})
     session.commit()
     return {
         "id": run.id,

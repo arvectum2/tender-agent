@@ -265,6 +265,9 @@ def build_submission_readiness(session: Session, payload: BuildSubmissionReadine
                 "recommendation": recommendation,
             },
         )
+        if recommendation == str(ReadinessRecommendation.NEEDS_REVIEW):
+            from src.modules.integration_outbox.service import enqueue_event
+            enqueue_event(session, event_type="review_required", aggregate_type="deal", aggregate_id=payload.deal_id, source_key=record.submission_readiness_id, data={"submission_readiness_id": record.submission_readiness_id, "recommendation": recommendation})
         session.commit()
     except Exception as exc:
         readiness_set.readiness_status = SubmissionReadinessStatus.NOT_READY

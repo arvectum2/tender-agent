@@ -163,6 +163,7 @@ def snapshot_from_tender(tender: Any) -> SourceSnapshot:
 
 def create_watch(session: Any, target: Any) -> Any:
     from sqlalchemy import select
+
     from .models import ProcurementWatch
     existing = session.scalar(select(ProcurementWatch).where(ProcurementWatch.source == target.source, ProcurementWatch.external_id == target.external_id))
     if existing:
@@ -176,10 +177,16 @@ def create_watch(session: Any, target: Any) -> Any:
 
 def check_watch(session: Any, watch_id: str) -> AlertEvent | None:
     from sqlalchemy import select
+
     from src.modules.event_log.service import append_event_record
     from src.shared.errors import NotFoundError
     from src.tender_research.models import ProcurementTender
-    from .models import ProcurementWatch, ProcurementWatchEvent, ProcurementWatchSnapshot
+
+    from .models import (
+        ProcurementWatch,
+        ProcurementWatchEvent,
+        ProcurementWatchSnapshot,
+    )
 
     watch = session.get(ProcurementWatch, watch_id)
     if watch is None:
@@ -206,12 +213,15 @@ def check_watch(session: Any, watch_id: str) -> AlertEvent | None:
         session.add(ProcurementWatchSnapshot(watch_id=watch.id, fingerprint=current_fp, payload=current.model_dump(mode="json")))
     session.add(ProcurementWatchEvent(watch_id=watch.id, event_key=event.event_key, outcome=event.outcome, source_url=event.source_url, payload=event.model_dump(mode="json")))
     append_event_record(session, deal_id=None, event_code="procurement_watch_changed", source_module_id="procurement_monitoring", severity="WARNING" if event.outcome == "NEEDS_REVIEW" else "INFO", payload_json=event.model_dump(mode="json"))
+    from src.modules.integration_outbox.service import enqueue_event
+    enqueue_event(session, event_type="monitoring_alert", aggregate_type="procurement_watch", aggregate_id=watch.id, source_key=event.event_key, data={"outcome": event.outcome, "source": watch.source, "external_id": watch.external_id, "source_url": event.source_url})
     session.commit()
     return event
 
 
 def list_feed(session: Any, watch_id: str | None = None) -> list[Any]:
     from sqlalchemy import select
+
     from .models import ProcurementWatchEvent
     query = select(ProcurementWatchEvent).order_by(ProcurementWatchEvent.created_at.desc(), ProcurementWatchEvent.id.desc())
     if watch_id:
