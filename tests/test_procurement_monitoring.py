@@ -66,3 +66,25 @@ def test_identity_change_fails_closed():
     diff = diff_snapshots(snapshot(), snapshot(external_id="other"))
     assert diff.outcome == "NEEDS_REVIEW"
     assert diff.reason == "watch_target_identity_changed"
+
+
+def test_persisted_watch_replay_does_not_duplicate_feed_or_audit(session):
+    from sqlalchemy import func, select
+    from src.modules.event_log.models import EventRecord
+    from src.modules.procurement_monitoring.models import ProcurementWatchEvent
+    from src.modules.procurement_monitoring.schemas import WatchTarget
+    from src.modules.procurement_monitoring.service import check_watch, create_watch
+    from src.tender_research.models import ProcurementTender
+
+    tender = ProcurementTender(source="eis", external_id="watch-1", title="Watched tender", status="published")
+    session.add(tender)
+    session.commit()
+    watch = create_watch(session, WatchTarget(source="eis", external_id="watch-1"))
+    assert check_watch(session, watch.id) is None
+    tender.application_deadline = datetime(2026, 9, 21, 12, 0, tzinfo=UTC)
+    session.commit()
+    first = check_watch(session, watch.id)
+    assert first is not None and first.outcome == "CHANGED"
+    assert check_watch(session, watch.id) is None
+    assert session.scalar(select(func.count()).select_from(ProcurementWatchEvent)) == 1
+    assert session.scalar(select(func.count()).select_from(EventRecord).where(EventRecord.source_module_id == "procurement_monitoring")) == 1
