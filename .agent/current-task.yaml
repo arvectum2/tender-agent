@@ -15,26 +15,26 @@ completed:
   - Reconciled DOCUMENT-QA-NEXT-INCREMENT as completed/merged on main; do not reopen it.
   - Selected next independent admitted AUTO item strictly by queue order: CHANGE-MONITORING-V1-001 (#65).
   - Created isolated branch agent/change-monitoring-v1-001 and durable checkpoint.
-  - Completed reuse inventory: ProcurementTender/ProcurementTenderDocument provide source-state/provenance inputs; procedure_monitor provides an existing internal event/alert feed pattern; event_log.append_event_record accepts source_module_id without a deal and is suitable for audit integration.
-  - Inspected event_log persistence/service and central router registration; monitoring can reuse EventRecord audit with deal_id null and source_module_id procurement_monitoring, while its product router belongs in APPLICATION_ROUTERS.
-  - Inspected repository Alembic workflow and migration history; latest migration is 097 for ARV-052.
-  - Resolved exact migration lineage: 097_add_arv052_expert_review_workflow.py declares revision 097_add_arv052_expert_review and down_revision 096_add_r8_canonical_snapshot_binding. The monitoring migration must use 097_add_arv052_expert_review as its exact parent.
-current: Implement procurement_monitoring models/schemas/service/router plus the next linear migration using down_revision 097_add_arv052_expert_review.
+  - Completed reuse inventory and exact Alembic parent resolution (097_add_arv052_expert_review).
+  - Implemented versioned WatchTarget/SourceSnapshot/SourceDiff/AlertEvent contracts.
+  - Implemented deterministic source fingerprint/diff/event-key primitives with unchanged suppression and fail-closed ambiguity handling.
+  - Added focused regression tests for unchanged replay, deadline, document revision, status/cancellation, ambiguity and identity mismatch.
+current: Add persistence/migration and wire source-state/internal feed/API integration.
 pending:
-  - Add next linear monitoring migration and product persistence/schema/service/router.
-  - Add deterministic/idempotent change detection and internal API/feed surface.
-  - Add unchanged/deadline/document-revision/status-cancellation/duplicate replay regressions.
+  - Add persistence models and next linear monitoring migration parented to 097_add_arv052_expert_review.
+  - Map ProcurementTender/ProcurementTenderDocument into SourceSnapshot and persist idempotent feed/audit events.
+  - Add read-only/internal API feed and router registration.
   - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
-last_verified_commit: af0cb5b7f35f27fbd141a57a561c2b759b4413eb
+last_verified_commit: 4853ca2ad8fe6c76c5983cd6495c17598a9c9cea
 test_results:
-  - No product code changed in this migration-head resolution stage; tests not run yet.
-updated_at: '2026-09-16T03:05:00+03:00'
-resume_instruction: Create the next linear procurement_monitoring migration with down_revision 097_add_arv052_expert_review, then implement models/schemas/service/router. Reuse ProcurementTender/Document source state and append_event_record(deal_id=None, source_module_id='procurement_monitoring') for audit; register through src/shared/api/router_registry.py. Unchanged replay must not create another alert/feed event. External transports remain disabled.
+  - CI run 35042171099 was observed in_progress for intermediate service head 9b0d44390f895eb839c216799ac76ff45eb50846 and was not passively polled. Exact-head CI including tests must be verified next run.
+updated_at: '2026-09-16T04:05:00+03:00'
+resume_instruction: Check exact-head CI once, then implement persistence/migration and source-state/internal feed/API wiring. Unchanged replay must create no feed/audit duplicate. External transports remain disabled.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260916T025908+0300
+  execution_id: watchdog-20260916T035708+0300
   branch: agent/change-monitoring-v1-001
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T04:49:00+03:00'
+  lease_until: '2026-09-16T05:47:00+03:00'
