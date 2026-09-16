@@ -19,17 +19,18 @@ completed:
   - Implemented versioned WatchTarget/SourceSnapshot/SourceDiff/AlertEvent contracts.
   - Implemented deterministic source fingerprint/diff/event-key primitives with unchanged suppression and fail-closed ambiguity handling.
   - Added focused regression tests for unchanged replay, deadline, document revision, status/cancellation, ambiguity and identity mismatch.
-current: Add persistence/migration and wire source-state/internal feed/API integration.
+  - Added persistence/migration, source-row snapshot mapping, idempotent internal feed/audit persistence and registered internal API routes.
+  - Added persisted duplicate-replay regression and explicit documentation that external notification transports remain disabled/out of scope.
+current: Persistence/source mapping/internal feed/API implemented; waiting only for broader/exact-head validation and guarded completion.
 pending:
-  - Add persistence models and next linear monitoring migration parented to 097_add_arv052_expert_review.
-  - Map ProcurementTender/ProcurementTenderDocument into SourceSnapshot and persist idempotent feed/audit events.
-  - Add read-only/internal API feed and router registration.
-  - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
-last_verified_commit: 4853ca2ad8fe6c76c5983cd6495c17598a9c9cea
+  - Run broader relevant tests and exact-head CI; satisfy issue #65 DoD and guarded auto-merge gates.
+last_verified_commit: 03f3998
 test_results:
-  - CI run 35042171099 was observed in_progress for intermediate service head 9b0d44390f895eb839c216799ac76ff45eb50846 and was not passively polled. Exact-head CI including tests must be verified next run.
-updated_at: '2026-09-16T04:05:00+03:00'
-resume_instruction: Check exact-head CI once, then implement persistence/migration and source-state/internal feed/API wiring. Unchanged replay must create no feed/audit duplicate. External transports remain disabled.
+  - Focused monitoring suite: 7 passed.
+  - PATH=.venv/bin:$PATH make check: PASS.
+  - Alembic heads: 098_add_procurement_monitoring (single head). Exact-head CI must be verified next run after push.
+updated_at: '2026-09-16T04:58:00+03:00'
+resume_instruction: Check exact-head CI once. If green, verify broader relevant tests and issue #65 DoD, then evaluate Company AM-4 and repository gates before automatic merge. Do not enable external transports.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260916T035708+0300
@@ -37,4 +38,4 @@ execution:
   base_commit: d41ea1c43b649160cc9ef6579f1f36a116e0bec6
   issue: 65
   manual_override: false
-  lease_until: '2026-09-16T05:47:00+03:00'
+  lease_until: '2026-09-16T06:48:00+03:00'

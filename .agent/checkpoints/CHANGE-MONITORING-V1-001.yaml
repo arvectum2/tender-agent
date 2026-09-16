@@ -16,14 +16,13 @@ completed:
   - Implemented versioned monitoring schemas for watch target, source snapshot, document state, diff and internal alert event.
   - Implemented deterministic canonical snapshot fingerprinting, monitored-field/document-set diffs, stable event keys, unchanged replay suppression, and fail-closed NEEDS_REVIEW for identity/ambiguous/unsupported source-state changes.
   - Added focused regressions for unchanged replay, deadline, notice/document revision, status/cancellation, ambiguity and identity mismatch.
-current: Persist watch/snapshot/internal feed state and wire source-state/API integration without external transports.
+  - Added persistence models and linear migration 098 parented to 097_add_arv052_expert_review with unique watch/snapshot/event idempotency constraints.
+  - Mapped ProcurementTender/document source state into SourceSnapshot, persisted internal feed plus EventRecord audit, and registered /procurement-monitoring API routes.
+  - Added persisted duplicate-replay regression and module boundary documentation; focused monitoring suite 7 passed and make check passed.
+current: Persistence, source-state mapping and internal API/feed are implemented; validate broader tests and exact-head CI before merge gate.
 pending:
-  - Add persistence models and next linear migration with down_revision 097_add_arv052_expert_review; enforce uniqueness/idempotency constraints.
-  - Map ProcurementTender/ProcurementTenderDocument into SourceSnapshot with source provenance.
-  - Persist internal alert/feed records and append EventRecord audit entries; unchanged replay must not create a record.
-  - Add API/feed surface and register through src/shared/api/router_registry.py.
-  - Run focused/relevant tests and exact-head CI; satisfy issue #65 DoD.
+  - Run broader relevant tests and exact-head CI; inspect CI once next run and satisfy issue #65 DoD if green.
 test_results:
   - CI push run 35042171099 was observed in_progress at service commit 9b0d44390f895eb839c216799ac76ff45eb50846; per continuous-execution policy it was checked once and not polled. Test commit 4853ca2ad8fe6c76c5983cd6495c17598a9c9cea landed afterward and requires exact-head CI verification next run.
-resume_instruction: Inspect current exact-head CI once. Then add procurement_monitoring persistence models + migration parented to 097_add_arv052_expert_review, map existing procurement source rows into SourceSnapshot, persist idempotent internal feed/audit records, and register a read-only/internal API surface. Keep email/SMS/Telegram/webhook delivery absent.
-updated_at: '2026-09-16T04:04:00+03:00'
+resume_instruction: Inspect exact-head CI once. If green, run/confirm broader relevant tests, verify issue #65 DoD and automatic-merge gates including Company AM-4 before any merge. If CI is waiting/failing, checkpoint once and continue independent AUTO work per policy.
+updated_at: '2026-09-16T04:58:00+03:00'
