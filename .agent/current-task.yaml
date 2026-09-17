@@ -17,22 +17,22 @@ completed:
 - Existing evidence/fact primitives for procurement_title, application_deadline, nmck, source consistency and supplier profile are structurally regime-neutral only when their source bindings are valid.
 - Existing APPLICATION_DEADLINE_EXPIRED blocker is evidence-dependent but requires explicit regime support before it can be treated as a 223-FZ hard blocker.
 - Existing contract_draft semantics and risk classification semantics are not assumed to be 223-FZ-safe; they remain UNKNOWN/NEEDS_REVIEW until independently frozen source evidence supports them.
-current: Prepare a bounded 223-FZ regime matrix and frozen regression packet before changing custom decision rules.
+current: Implement conservative regime dispatch against the now-frozen pre-SUT 223-FZ regression matrix; unsupported 223-FZ semantics remain UNKNOWN/NEEDS_REVIEW.
 pending:
 - Inventory report/API projection for procurement regime and Decision Core output.
-- Freeze source-grounded 223-FZ cases before tuning rules; do not mutate truth/comparator after SUT output.
+- Frozen pre-SUT regression matrix committed at docs/223fz/DECISION_REGRESSION_MATRIX.md (5a335c4); do not mutate expected outcomes after SUT output.
 - Implement only source-supported regime dispatch and fail-closed UNKNOWN/NEEDS_REVIEW behavior.
 - Run focused 223-FZ and unchanged 44-FZ Decision Core regressions plus exact-head CI.
 - Open review-ready PR but do not merge without explicit Product Owner approval.
 last_verified_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
 test_results: []
-updated_at: '2026-09-17T09:13:00+03:00'
-resume_instruction: Inspect report_model/API regime projection and existing Decision Core tests/fixtures; create the frozen 223-FZ regression/evidence matrix before any rule tuning.
+updated_at: '2026-09-17T10:18:00+03:00'
+resume_instruction: Add normalized procurement regime to Decision Core/report projection and gate 223-FZ away from 44-FZ-only deadline/contract/risk semantics; encode the frozen matrix as tests without changing its expected outcomes.
 execution:
   claimed_by: tender-agent-watchdog
   execution_id: watchdog-20260917T085800+0300
-  branch: null
+  branch: agent/223fz-decision-v1-001
   base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
   issue: 70
   manual_override: false
-  lease_until: '2026-09-17T11:03:00+03:00'
+  lease_until: '2026-09-17T12:08:00+03:00'

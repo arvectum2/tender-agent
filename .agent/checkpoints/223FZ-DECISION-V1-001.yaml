@@ -2,7 +2,7 @@ version: 1
 task_id: 223FZ-DECISION-V1-001
 issue: 70
 status: in_progress
-updated_at: '2026-09-17T09:14:00+03:00'
+updated_at: '2026-09-17T10:18:00+03:00'
 authority: REVIEW
 auto_merge: false
 base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
@@ -26,10 +26,14 @@ inventory:
   finding: Existing hard_blocker classification can create NO_GO; do not reuse classifications for 223-FZ without independently frozen source-supported semantics.
 - semantic: contradictions/source consistency
   finding: Fail-closed REVIEW on contradictory evidence is regime-neutral and safe to reuse.
+progress:
+- Frozen pre-SUT regression matrix committed as 5a335c4 at docs/223fz/DECISION_REGRESSION_MATRIX.md.
+- Matrix freezes GO-capable candidate, hard-blocker candidate, missing-evidence, contradictory, and unchanged 44-FZ control expectations before SUT tuning.
+- Repository inventory confirms procurement_law is exposed on run metadata/UI, but Decision Core/report projection currently omit normalized regime.
 next:
 - Inspect report_model/API for explicit procurement regime projection.
 - Inspect existing Decision Core tests and evidence fixtures.
-- Create/freeze a small 223-FZ source-grounded regression matrix covering GO-capable, hard blocker, missing evidence and contradictory/ambiguous cases before custom rule tuning.
+- Encode the frozen matrix as tests without changing expected outcomes after SUT output.
 - Implement only supported regime dispatch; unsupported legal/procedural items remain UNKNOWN/NEEDS_REVIEW.
 - Prepare PR and exact-head CI; final merge remains Product Owner REVIEW.
 hard_boundaries:
