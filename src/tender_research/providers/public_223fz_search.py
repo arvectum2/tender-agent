@@ -4,7 +4,6 @@ import html
 import re
 from datetime import date
 from decimal import Decimal
-from typing import Any
 from urllib.parse import urlencode, urljoin
 
 from src.tender_research.providers.public_44fz_search import (
@@ -102,7 +101,7 @@ def parse_223fz_search_results(html_str: str) -> list[PublicTenderSearchItem]:
             normalized = re.sub(r"[^0-9,.]", "", price_text).replace(" ", "").replace(",", ".")
             try:
                 amount = Decimal(normalized)
-            except Exception:
+            except (ValueError, ArithmeticError):
                 amount = None
         card_url = _extract_card_url(fragment, registry_number)
         items.append(

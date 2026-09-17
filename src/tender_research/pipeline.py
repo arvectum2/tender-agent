@@ -23,6 +23,7 @@ from src.tender_research.errors import (
     classify_eis_error,
 )
 from src.tender_research.ingest_checkpoint import IngestCheckpointStore
+from src.tender_research.providers.public_223fz_search import Public223FzSearchProvider
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
     PublicTenderDetail,
@@ -35,6 +36,7 @@ from src.tender_research.registry_discovery import (
     DiscoveredRegistryNumber,
     DiscoveryResult,
     RegistryNumberDiscovery,
+    SourceType,
 )
 from src.tender_research.repository import TenderRepository
 from src.tender_research.search_provider import SearchProvider
@@ -63,6 +65,12 @@ class TenderResearchPipeline:
         self._search_limiter = RateLimiter(delay_seconds=self._config.web_search_delay_seconds)
         self._fetch_limiter = RateLimiter(delay_seconds=self._config.web_fetch_delay_seconds)
         self._public_provider = Public44FzSearchProvider(
+            timeout_seconds=self._config.public_search_timeout_seconds,
+            delay_seconds=self._config.public_search_delay_seconds,
+            bypass_proxy=self._config.public_search_bypass_proxy,
+            no_proxy_domains=self._config.public_search_no_proxy_domains,
+        )
+        self._public_223fz_provider = Public223FzSearchProvider(
             timeout_seconds=self._config.public_search_timeout_seconds,
             delay_seconds=self._config.public_search_delay_seconds,
             bypass_proxy=self._config.public_search_bypass_proxy,
@@ -348,7 +356,12 @@ class TenderResearchPipeline:
             "documents_created_from_public_links": 0,
         }
         existing_tender = self._repo.get_tender_by_external("eis", discovered.registry_number)
-        detail = self._public_provider.fetch_detail(discovered.card_url, registry_number=discovered.registry_number)
+        detail_provider = (
+            self._public_223fz_provider
+            if discovered.source_type == SourceType.EXTERNAL_PUBLIC_223FZ or discovered.law_type == "223fz"
+            else self._public_provider
+        )
+        detail = detail_provider.fetch_detail(discovered.card_url, registry_number=discovered.registry_number)
         if detail.network_status == "success":
             summary["public_detail_fetched"] += 1
             summary["detail_fetch_success"] += 1
