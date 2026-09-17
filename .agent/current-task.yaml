@@ -1,66 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: 223FZ-INGEST-V1-001
-authority: AUTO
-goal: Deliver a separate audited read-only 223-FZ source adapter and canonical intake path without silently reusing 44-FZ-only
-  assumptions.
+task_id: 223FZ-DECISION-V1-001
+authority: REVIEW
+goal: Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving fail-closed evidence and human control.
 definition_of_done:
-- Explicit 223-FZ source/provider contract and separate parser path.
-- Search/direct-registry intake produces source-bound canonical procurement + document metadata for supported public examples.
-- No 44-FZ-only document endpoint or role assumption is silently reused.
-- Regression fixtures cover normal card/documents, missing field, ambiguous role/revision and repeated idempotent ingest.
-- Existing 44-FZ behavior remains green.
-- Focused/relevant tests + exact-head CI green and support matrix documents known gaps.
+- Regime-aware Decision Core contract clearly separates shared facts from 223-FZ-specific semantics.
+- Every 223-FZ hard blocker/positive hard fact is source-bound; unsupported items fail closed.
+- Frozen source-grounded regression cases cover GO-capable, hard blocker, missing evidence and contradictory/ambiguous cases.
+- 44-FZ Decision Core regressions remain unchanged/green.
+- Product/report/API projection exposes regime and evidence safely.
+- Focused/relevant tests + exact-head CI green; merge stops at explicit Product Owner REVIEW gate.
 completed:
-- 'Implemented first product slice in commit 973bee16a02049e25f9823763c9ba9ef5a6fcc76: new src/tender_research/providers/public_223fz_search.py.'
-- The new provider has a separate parse_223fz_search_results contract and parse_223fz_detail contract and never calls parse_44fz_search_results
-  or the 44-FZ detail/document/revision helpers.
-- Transport is reused from Public44FzSearchProvider only for bounded HTTP/network policy; search emits fz223 and 223-FZ parser
-  output.
-- Missing explicit customer role and ambiguous multiple revision markers are represented as requires_review/review_reasons
-  instead of inferred 44-FZ semantics.
-- When no 223-FZ detail URL exists, fetch_detail fails closed with UNSUPPORTED_LAYOUT and explicitly states that no 44-FZ
-  fallback is permitted.
-- 'Reconciled issue #69 remains open and its DoD still requires explicit 223-FZ source dispatch, idempotent regressions, 44-FZ
-  preservation, support matrix and exact-head CI.'
-- Audited registry_discovery.py, pipeline.py and cli.py exact branch seams. A connector full-file rewrite attempt was detected
-  as unsafe because the fetched source was truncated; the branch was immediately restored exactly to parent cbe1844fdcabf50f4b813a629363c5bc411fc914
-  before any checkpoint write. No unverified product rewrite was retained.
-- 'Implemented explicit separate 223-FZ dispatch in commit b0f2b07: SourceType.EXTERNAL_PUBLIC_223FZ, RegistryNumberDiscovery
-  source path/provider, TenderResearchPipeline detail-provider selection, CLI source choice and law-based collection provider.'
-- 'Safety validation: python compileall PASS; git diff --check PASS. Existing 44-FZ focused parser/search suite emitted 40
-  passing dots before process completion; full captured summary was unavailable. Broad targeted ruff exposed pre-existing
-  file-level debt plus one task-caused SourceType import defect, which was fixed before commit.'
-- 'Added synthetic normal/missing/ambiguous/fail-closed provider regressions and concise support matrix in commit b7fa27d;
-  focused 223-FZ + existing 44-FZ/source-discovery suite: 47 passed; make check PASS; git diff --check PASS.'
-- Fixed 223-FZ document provenance so public document rows record external_public_223fz_detail instead of the 44-FZ source
-  label.
-- Added direct 223-FZ discovery-provider dispatch and pipeline detail-provider isolation regressions plus repeated canonical
-  ingest idempotency coverage in commit 2c67842458717a3c1afe7f17fe6e55aa0d4fbd88.
-- Fresh compileall and git diff --check PASS. Local dependency-backed pytest/ruff invocation on the mounted repo venv stalled
-  without output and was terminated; exact-head GitHub CI is the next authoritative verification gate.
-current: 'PR #80 synchronized onto current main at exact head ed88e0a7925c0d20f819848136d340dd40cd7322; local make check/compileall/diff-check
-  pass. Exact-head GitHub CI run 35180449551 is queued; checked once, so wait is checkpointed without polling.'
+- Reconciled dependency 223FZ-INGEST-V1-001 as done: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed completed.
+- Audited Decision Core v1 seam at src/modules/tender_operator_agent_demo/decision_core.py.
+- Existing evidence/fact primitives for procurement_title, application_deadline, nmck, source consistency and supplier profile are structurally regime-neutral only when their source bindings are valid.
+- Existing APPLICATION_DEADLINE_EXPIRED blocker is evidence-dependent but requires explicit regime support before it can be treated as a 223-FZ hard blocker.
+- Existing contract_draft semantics and risk classification semantics are not assumed to be 223-FZ-safe; they remain UNKNOWN/NEEDS_REVIEW until independently frozen source evidence supports them.
+current: Prepare a bounded 223-FZ regime matrix and frozen regression packet before changing custom decision rules.
 pending:
-- Exact-head GitHub CI run 35180449551 at ed88e0a7925c0d20f819848136d340dd40cd7322 must complete successfully.
-- Then revalidate current main/base, PR mergeability/reviews, renewed AM-4 and 44-FZ preservation before guarded AUTO merge.
-last_verified_commit: ed88e0a7925c0d20f819848136d340dd40cd7322
-test_results:
-- 'Earlier focused 223-FZ + existing 44-FZ/source-discovery suite: 47 passed.'
-- 'Earlier make check: PASS; git diff --check: PASS.'
-- 'Final dispatch/idempotency slice: python compileall PASS; git diff --check PASS.'
-- Local dependency-backed pytest/ruff invocation on mounted repo venv stalled without output and was terminated; exact-head
-  GitHub CI remains authoritative final verification.
-updated_at: '2026-09-17T07:05:00+03:00'
-resume_instruction: 'Check exact-head CI run 35180449551 once. If green, re-read all three Company AM-4 artifacts, verify
-  current base/mergeability/reviews and guarded-merge PR #80. If not ready, persist state and continue independent admitted
-  work if available.'
+- Inventory report/API projection for procurement regime and Decision Core output.
+- Freeze source-grounded 223-FZ cases before tuning rules; do not mutate truth/comparator after SUT output.
+- Implement only source-supported regime dispatch and fail-closed UNKNOWN/NEEDS_REVIEW behavior.
+- Run focused 223-FZ and unchanged 44-FZ Decision Core regressions plus exact-head CI.
+- Open review-ready PR but do not merge without explicit Product Owner approval.
+last_verified_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+test_results: []
+updated_at: '2026-09-17T09:13:00+03:00'
+resume_instruction: Inspect report_model/API regime projection and existing Decision Core tests/fixtures; create the frozen 223-FZ regression/evidence matrix before any rule tuning.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/223fz-ingest-v1-001
-  base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
-  issue: 69
+  claimed_by: tender-agent-watchdog
+  execution_id: watchdog-20260917T085800+0300
+  branch: null
+  base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+  issue: 70
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-17T11:03:00+03:00'
