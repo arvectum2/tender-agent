@@ -1,38 +1,46 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: 223FZ-DECISION-V1-001
 authority: REVIEW
-goal: Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving fail-closed evidence and human control.
+goal: >-
+  Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving fail-closed evidence and human control.
 definition_of_done:
-- Regime-aware Decision Core contract clearly separates shared facts from 223-FZ-specific semantics.
-- Every 223-FZ hard blocker/positive hard fact is source-bound; unsupported items fail closed.
-- Frozen source-grounded regression cases cover GO-capable, hard blocker, missing evidence and contradictory/ambiguous cases.
-- 44-FZ Decision Core regressions remain unchanged/green.
-- Product/report/API projection exposes regime and evidence safely.
-- Focused/relevant tests + exact-head CI green; merge stops at explicit Product Owner REVIEW gate.
+  - Regime-aware Decision Core contract clearly separates shared facts from 223-FZ-specific semantics.
+  - Every 223-FZ hard blocker or positive hard fact is source-bound; unsupported items fail closed.
+  - Frozen source-grounded regression cases cover GO-capable, hard-blocker candidate, missing evidence and contradictory/ambiguous cases.
+  - Existing 44-FZ Decision Core regressions remain unchanged and green.
+  - Product/report/API projection exposes procurement regime and evidence safely.
+  - Focused/relevant tests and exact-head CI are green; merge stops at explicit Product Owner REVIEW gate.
 completed:
-- Reconciled dependency 223FZ-INGEST-V1-001 as done: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed completed.
-- Audited Decision Core/report seams and froze docs/223fz/DECISION_REGRESSION_MATRIX.md before SUT tuning.
-- Implemented normalized procurement regime and conservative 223-FZ dispatch: shared source-bound facts remain usable, while deadline/contract/risk 44-FZ semantics cannot fall through into 223-FZ.
-- Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regression expectations without changing the frozen matrix.
-current: PR #81 is review-ready locally; await/check exact-head CI and Product Owner REVIEW without merging.
+  - '223FZ-INGEST-V1-001 dependency completed: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed.'
+  - 'Audited Decision Core/report seams and froze docs/223fz/DECISION_REGRESSION_MATRIX.md before SUT tuning.'
+  - 'Implemented normalized procurement regime and conservative 223-FZ dispatch so shared source-bound facts remain usable while 44-FZ deadline/contract/risk semantics do not fall through.'
+  - 'Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regressions without changing the frozen matrix.'
+  - 'Projected normalized procurement regime through canonical/customer report surfaces.'
+  - 'Reduced accidental formatting-only churn in PR #81 while preserving semantics.'
+  - 'Synchronized PR #81 with current main after PR #79 / INTEGRATION-OUTBOX-V1-001 merged.'
+  - 'Fresh local validation at 51be03d27f93d38fb5563a59241b500d2cba25b5: 17 focused tests passed; task-scoped ruff PASS; make check PASS; git diff --check PASS.'
+current: >-
+  Technical implementation and local validation are complete; PR #81 is review-ready and blocked on fresh exact-head CI plus explicit Product Owner REVIEW approval.
 pending:
-- Check exact-head PR #81 CI once and fix only task-caused failures without changing frozen expectations.
-- Review diff for avoidable formatting-only churn before final review.
-- Do not merge without explicit Product Owner approval.
-last_verified_commit: 18c9e05fccf6986542c08a97b05cadeb227143f5
+  - Push the final cleaned/current-main-synced head and check fresh exact-head CI once.
+  - After CI green, obtain explicit Product Owner REVIEW approval; then revalidate head/base/reviews and merge.
+last_verified_commit: 51be03d27f93d38fb5563a59241b500d2cba25b5
 test_results:
-- 'tests/test_decision_core_v1.py: 17 passed'
-- 'task-scoped ruff: PASS'
-- 'make check: PASS'
-updated_at: '2026-09-17T12:08:00+03:00'
-resume_instruction: Check PR #81 exact-head CI once, reduce accidental formatting churn if useful, and stop before merge pending explicit Product Owner REVIEW. Do not alter frozen expected outcomes.
+  - 'tests/test_decision_core_v1.py: 17 passed at synced head.'
+  - 'task-scoped ruff: PASS.'
+  - 'make check: PASS.'
+  - 'git diff --check: PASS.'
+  - 'Previous exact-head CI run 35203252176: SUCCESS at ca677e5; fresh final-head CI pending.'
+updated_at: '2026-09-17T15:51:00+03:00'
+resume_instruction: >-
+  Check PR #81 fresh exact-head CI once. If green, remain blocked pending explicit Product Owner REVIEW approval. After approval, revalidate current head/base/reviews and merge; never change frozen expected outcomes.
 execution:
-  claimed_by: tender-agent-watchdog
-  execution_id: watchdog-20260917T105732+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/223fz-decision-v1-001
-  base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+  base_commit: 6ed4a5e1b6cd4d51d12209d299f7b00db109cd50
   issue: 70
   manual_override: false
-  lease_until: '2026-09-17T13:52:00+03:00'
+  lease_until: null
