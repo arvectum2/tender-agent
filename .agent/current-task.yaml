@@ -1,62 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: INTEGRATION-OUTBOX-V1-001
-authority: AUTO
-goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces
-  while keeping every live external transport disabled.
+task_id: 223FZ-DECISION-V1-001
+authority: REVIEW
+goal: Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving fail-closed evidence and human control.
 definition_of_done:
-- Versioned event envelope plus persisted idempotent outbox.
-- analysis-completed, monitoring-alert and review-required event types wired from existing internal state changes.
-- Read-only list/export surface.
-- External transport boundary exists only behind explicit disabled/fail-closed configuration.
-- Replay/idempotency/tenant-isolation/no-secret regressions.
-- Focused/relevant tests and exact-head CI green; docs preserve REVIEW/HUMAN gate for live transport.
+- Regime-aware Decision Core contract clearly separates shared facts from 223-FZ-specific semantics.
+- Every 223-FZ hard blocker/positive hard fact is source-bound; unsupported items fail closed.
+- Frozen source-grounded regression cases cover GO-capable, hard blocker, missing evidence and contradictory/ambiguous cases.
+- 44-FZ Decision Core regressions remain unchanged/green.
+- Product/report/API projection exposes regime and evidence safely.
+- Focused/relevant tests + exact-head CI green; merge stops at explicit Product Owner REVIEW gate.
 completed:
-- Reconciled CHANGE-MONITORING-V1-001 as technically complete on open mergeable PR
-- Selected next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge
-  authority gate.
-- Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b
-  so required monitoring-alert primitives are available without duplicating
-- Created durable checkpoint .agent/checkpoints/INTEGRATION-OUTBOX-V1-001.yaml and bounded external transports/credentials/actions
-  explicitly out of scope.
-- Completed event-log/monitoring reuse inventory: EventRecord + append_event_record are the audit seam; procurement_monitoring.check_watch
-    already performs deterministic event_key dedupe and emits procurement_watch_changed only after persistence.
-- Implemented integration-event-v1, idempotent persisted outbox, tenant-filtered read-only export, recursive credential-like
-  field stripping, migration 099_add_integration_outbox, and disabled/fail-closed adapter status.
-- Wired monitoring_alert, analysis_completed and review_required from existing state transitions; no external transport
-  enabled.
-- Opened PR
-- Re-read Company AM-4 decision and assignment on 2026-09-16; both remain Approved, but the mandatory ten-auto-merge
-  review trigger cannot be proven un-reached, so automatic merge fails closed to REVIEW.
-- 'Dependency CHANGE-MONITORING-V1-001 is now satisfied by merged PR #74.'
-- Company AM-4 Owner review was explicitly renewed on 2026-09-16 on unchanged terms; automatic-merge counter restarted
-  under the renewed cycle.
-- 'DOMAIN-REGRESSION-V1-001 PR #77 was explicitly Owner-approved and merged to main as c5e653a11a894360b1b05c1834495330b3a64cbb
-  after exact-head CI success.'
-- Reconciled INTEGRATION-OUTBOX branch against current main; kept the outbox monitoring hook and accepted current
-  main changes elsewhere.
-current: Reconciled implementation against current main after dependency merges; validating merged branch before
-  guarded AUTO merge.
+- Reconciled dependency 223FZ-INGEST-V1-001 as done: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed completed.
+- Audited Decision Core v1 seam at src/modules/tender_operator_agent_demo/decision_core.py.
+- Existing evidence/fact primitives for procurement_title, application_deadline, nmck, source consistency and supplier profile are structurally regime-neutral only when their source bindings are valid.
+- Existing APPLICATION_DEADLINE_EXPIRED blocker is evidence-dependent but requires explicit regime support before it can be treated as a 223-FZ hard blocker.
+- Existing contract_draft semantics and risk classification semantics are not assumed to be 223-FZ-safe; they remain UNKNOWN/NEEDS_REVIEW until independently frozen source evidence supports them.
+current: Prepare a bounded 223-FZ regime matrix and frozen regression packet before changing custom decision rules.
 pending:
-- Run focused/relevant tests and make check on reconciled head.
-- Push reconciled head and require fresh exact-head CI success.
-- 'If CI is green and PR remains mergeable with no review blockers, guarded AUTO merge PR #79 under renewed AM-4.'
-last_verified_commit: c792eaf40a858894eb0e192802b72d0a7e71adf6
-test_results:
-- Focused integration outbox + procurement monitoring: 12 passed.
-- Broader selected customer-pilot/readiness/outbox/monitoring: 18 passed, 1 skipped.
-- make check: PASS.
-- alembic heads: 099_add_integration_outbox (single head); git diff --check PASS.
-- Exact-head GitHub CI run 35100497032: SUCCESS.
-updated_at: '2026-09-17T05:15:00+03:00'
-resume_instruction: 'Continue validation of the reconciled INTEGRATION-OUTBOX branch. Do not enable external transports.
-  Push only after local checks; merge PR #79 only on fresh exact-head green CI and valid renewed AM-4.'
+- Inventory report/API projection for procurement regime and Decision Core output.
+- Freeze source-grounded 223-FZ cases before tuning rules; do not mutate truth/comparator after SUT output.
+- Implement only source-supported regime dispatch and fail-closed UNKNOWN/NEEDS_REVIEW behavior.
+- Run focused 223-FZ and unchanged 44-FZ Decision Core regressions plus exact-head CI.
+- Open review-ready PR but do not merge without explicit Product Owner approval.
+last_verified_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+test_results: []
+updated_at: '2026-09-17T09:13:00+03:00'
+resume_instruction: Inspect report_model/API regime projection and existing Decision Core tests/fixtures; create the frozen 223-FZ regression/evidence matrix before any rule tuning.
 execution:
-  claimed_by: ChatGPT manual continuation
-  execution_id: manual-20260917T051500+0300
-  branch: agent/integration-outbox-v1-001
-  base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
-  issue: 67
+  claimed_by: tender-agent-watchdog
+  execution_id: watchdog-20260917T085800+0300
+  branch: null
+  base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+  issue: 70
   manual_override: false
-  lease_until: '2026-09-17T07:00:00+03:00'
+  lease_until: '2026-09-17T11:03:00+03:00'

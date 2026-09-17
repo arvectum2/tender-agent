@@ -12,6 +12,7 @@ from pathlib import Path
 from src.tender_research.config import TenderResearchConfig
 from src.tender_research.eis_loader import EisTenderLoader
 from src.tender_research.errors import DiscoveryEmptyError, DiscoveryError
+from src.tender_research.providers.public_223fz_search import Public223FzSearchProvider
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
     PublicSearchStatus,
@@ -29,6 +30,7 @@ _EIS_URL_RE = re.compile(r"regNumber=(\d{19})")
 class SourceType:
     BACKEND_SEARCH_REAL = "backend_search_real"
     EXTERNAL_PUBLIC_44FZ = "external_public_44fz"
+    EXTERNAL_PUBLIC_223FZ = "external_public_223fz"
     LOCAL_DB = "local_db"
     SEED_FILE = "seed_file"
     DEMO = "demo"
@@ -114,8 +116,8 @@ def _search_item_to_discovered(item: PublicTenderSearchItem) -> DiscoveredRegist
         return None
     return DiscoveredRegistryNumber(
         registry_number=item.registry_number,
-        source="external_public_44fz",
-        source_type=SourceType.EXTERNAL_PUBLIC_44FZ,
+        source="external_public_223fz" if item.law_type == "223fz" else "external_public_44fz",
+        source_type=SourceType.EXTERNAL_PUBLIC_223FZ if item.law_type == "223fz" else SourceType.EXTERNAL_PUBLIC_44FZ,
         tender_title=item.title,
         purchase_number=item.purchase_number,
         customer_name=item.customer_name,
@@ -175,6 +177,12 @@ class RegistryNumberDiscovery:
             bypass_proxy=self._config.public_search_bypass_proxy,
             no_proxy_domains=self._config.public_search_no_proxy_domains,
         )
+        self._public_223fz_provider = Public223FzSearchProvider(
+            timeout_seconds=self._config.public_search_timeout_seconds,
+            delay_seconds=self._config.public_search_delay_seconds,
+            bypass_proxy=self._config.public_search_bypass_proxy,
+            no_proxy_domains=self._config.public_search_no_proxy_domains,
+        )
 
     def discover(
         self,
@@ -193,6 +201,8 @@ class RegistryNumberDiscovery:
             return self._auto_discover(days_back=days_back, limit=limit, seed_file=seed_file, page_size=page_size)
         elif source == "external_public_44fz":
             return self._external_public_44fz(days_back=days_back, limit=limit, page_size=page_size)
+        elif source == "external_public_223fz":
+            return self._external_public_223fz(days_back=days_back, limit=limit, page_size=page_size)
         elif source == "seed_file":
             return self._seed_file(limit=limit, seed_file=seed_file)
         elif source == "local_db":
@@ -316,6 +326,83 @@ class RegistryNumberDiscovery:
             network_status=network_status,
             errors=[],
             warnings=[f"external_public_44fz read {len(pages)} pages, found {len(numbers)} numbers, {len(pages) - successes} pages non-success"],
+        )
+
+    def _external_public_223fz(
+        self,
+        days_back: int,
+        limit: int,
+        page_size: int = 30,
+    ) -> DiscoveryResult:
+        effective_page_size = min(max(page_size, 1), 100)
+        effective_limit = max(0, limit)
+        date_from = datetime.now(timezone.utc).date() - timedelta(days=days_back)
+        date_to = datetime.now(timezone.utc).date()
+        max_pages = max(1, (effective_limit + effective_page_size - 1) // effective_page_size)
+        max_pages = min(max_pages, 10)
+
+        pages = self._public_223fz_provider.search_pages(
+            query=None,
+            date_from=date_from,
+            date_to=date_to,
+            max_pages=max_pages,
+            page_size=effective_page_size,
+        )
+        metrics = _page_item_metrics(pages)
+        source_url = pages[0].source_url if pages else None
+
+        first_status = pages[0].status if pages else PublicSearchStatus.EMPTY
+        network_status = first_status
+        if first_status not in (PublicSearchStatus.SUCCESS, PublicSearchStatus.EMPTY):
+            return DiscoveryResult(
+                numbers=[],
+                selected_source="external_public_223fz",
+                selected_source_type=SourceType.EXTERNAL_PUBLIC_223FZ,
+                requested_limit=limit,
+                effective_limit=effective_limit,
+                requested_page_size=page_size,
+                effective_page_size=effective_page_size,
+                date_from=datetime.combine(date_from, datetime.min.time(), tzinfo=timezone.utc),
+                date_to=datetime.combine(date_to, datetime.min.time(), tzinfo=timezone.utc),
+                pages_read=0,
+                page_size=effective_page_size,
+                source_url=source_url,
+                items_raw_count=metrics["items_raw_count"],
+                items_with_registry_number=metrics["items_with_registry_number"],
+                skipped_without_registry_number=metrics["skipped_without_registry_number"],
+                items_after_dedupe=metrics["items_after_dedupe"],
+                items_after_demo_filter=metrics["items_after_demo_filter"],
+                network_status=first_status,
+                errors=[pages[0].error or f"Network status: {first_status}"] if pages else [],
+                warnings=[f"external_public_223fz is {first_status}: {pages[0].error}" if pages else f"external_public_223fz is {first_status}"],
+            )
+
+        discovered = self._page_items_to_discovered(pages, effective_limit or None)
+        numbers = [item.registry_number for item in discovered]
+
+        successes = sum(1 for p in pages if p.status == PublicSearchStatus.SUCCESS)
+        return DiscoveryResult(
+            numbers=discovered,
+            selected_source="external_public_223fz",
+            selected_source_type=SourceType.EXTERNAL_PUBLIC_223FZ,
+            requested_limit=limit,
+            effective_limit=effective_limit,
+            requested_page_size=page_size,
+            effective_page_size=effective_page_size,
+            date_from=datetime.combine(date_from, datetime.min.time(), tzinfo=timezone.utc),
+            date_to=datetime.combine(date_to, datetime.min.time(), tzinfo=timezone.utc),
+            pages_read=len(pages),
+            page_size=effective_page_size,
+            source_url=source_url,
+            discovered_count=len(discovered),
+            items_raw_count=metrics["items_raw_count"],
+            items_with_registry_number=metrics["items_with_registry_number"],
+            skipped_without_registry_number=metrics["skipped_without_registry_number"],
+            items_after_dedupe=metrics["items_after_dedupe"],
+            items_after_demo_filter=len(numbers),
+            network_status=network_status,
+            errors=[],
+            warnings=[f"external_public_223fz read {len(pages)} pages, found {len(numbers)} numbers, {len(pages) - successes} pages non-success"],
         )
 
     def _seed_file(
