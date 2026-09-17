@@ -20,6 +20,7 @@ _load_dotenv_local_result = load_dotenv(".env.local", override=False)
 
 from src.tender_research.config import load_config
 from src.tender_research.pipeline import TenderResearchPipeline
+from src.tender_research.providers.public_223fz_search import Public223FzSearchProvider
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
     PublicSearchStatus,
@@ -45,6 +46,7 @@ logger = logging.getLogger("tender_research.cli")
 SOURCE_CHOICES = [
     "auto",
     "external_public_44fz",
+    "external_public_223fz",
     "local_db",
     "seed_file",
     "demo",
@@ -555,7 +557,8 @@ def cmd_discover_registry_numbers(args: argparse.Namespace) -> None:
 
 
 def cmd_collect_registry_numbers(args: argparse.Namespace) -> None:
-    provider = Public44FzSearchProvider(
+    provider_cls = Public223FzSearchProvider if (args.law_type or "44fz") == "223fz" else Public44FzSearchProvider
+    provider = provider_cls(
         timeout_seconds=args.timeout or 30,
         delay_seconds=args.delay or 3.0,
         bypass_proxy=not args.use_proxy,
@@ -622,7 +625,7 @@ def cmd_collect_registry_numbers(args: argparse.Namespace) -> None:
     if output_path.suffix.lower() == ".json":
         output_path.write_text(
             json.dumps({
-                "source": "external_public_44fz",
+                "source": "external_public_223fz" if (args.law_type or "44fz") == "223fz" else "external_public_44fz",
                 "date_from": date_from.isoformat(),
                 "date_to": date_to.isoformat(),
                 "pages_read": len(pages),
@@ -632,7 +635,8 @@ def cmd_collect_registry_numbers(args: argparse.Namespace) -> None:
             encoding="utf-8",
         )
     else:
-        lines = [f"# collected via external_public_44fz, date_from={date_from}, date_to={date_to}"]
+        source_name = "external_public_223fz" if (args.law_type or "44fz") == "223fz" else "external_public_44fz"
+        lines = [f"# collected via {source_name}, date_from={date_from}, date_to={date_to}"]
         lines += [item["registry_number"] for item in items]
         output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
