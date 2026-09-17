@@ -70,6 +70,7 @@ from src.modules.intake_priority.router import router as intake_priority_router
 from src.modules.integrated_risk_memo.router import (
     router as integrated_risk_memo_router,
 )
+from src.modules.integration_outbox.router import router as integration_outbox_router
 from src.modules.integration_tasks.router import router as integration_tasks_router
 from src.modules.knowledge_assets.router import router as knowledge_assets_router
 from src.modules.kpi_learning.router import router as kpi_learning_router
@@ -161,6 +162,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     customer_pilot_router,
     expert_review_router,
     integration_tasks_router,
+    integration_outbox_router,
     intake_priority_router,
     operator_sessions_router,
     ops_observability_router,
