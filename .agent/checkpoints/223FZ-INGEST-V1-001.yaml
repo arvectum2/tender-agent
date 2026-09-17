@@ -4,7 +4,7 @@ issue: 69
 branch: agent/223fz-ingest-v1-001
 base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
 status: in_progress
-updated_at: '2026-09-17T03:08:00+03:00'
+updated_at: '2026-09-17T04:24:00+03:00'
 authority: AUTO
 reconciliation:
   dependency: INGEST-RESILIENCE-V1-001
@@ -35,8 +35,8 @@ completed:
   - 'When no 223-FZ detail URL exists, fetch_detail fails closed with UNSUPPORTED_LAYOUT and explicitly states that no 44-FZ fallback is permitted.'
   - 'Reconciled issue #69 remains open and its DoD still requires explicit 223-FZ source dispatch, idempotent regressions, 44-FZ preservation, support matrix and exact-head CI.'
   - 'Audited registry_discovery.py, pipeline.py and cli.py exact branch seams. A connector full-file rewrite attempt was detected as unsafe because the fetched source was truncated; the branch was immediately restored exactly to parent cbe1844fdcabf50f4b813a629363c5bc411fc914 before any checkpoint write. No unverified product rewrite was retained.'
+  - 'Implemented explicit separate 223-FZ dispatch in commit b0f2b07: SourceType.EXTERNAL_PUBLIC_223FZ, RegistryNumberDiscovery source path/provider, TenderResearchPipeline detail-provider selection, CLI source choice and law-based collection provider.'
+  - 'Safety validation: python compileall PASS; git diff --check PASS. Existing 44-FZ focused parser/search suite emitted 40 passing dots before process completion; full captured summary was unavailable. Broad targeted ruff exposed pre-existing file-level debt plus one task-caused SourceType import defect, which was fixed before commit.'
 next:
-  - 'Apply SourceType.EXTERNAL_PUBLIC_223FZ and provider dispatch using a patch-capable/local worktree path rather than replacing a partially fetched large file.'
-  - 'Wire pipeline detail-provider selection by discovered.source_type/law_type and CLI external_public_223fz/law dispatch without changing auto discovery semantics.'
   - 'Add synthetic normal/missing/ambiguous parser fixtures/tests, repeated idempotent ingest coverage and support matrix.'
   - 'Run focused 223-FZ plus existing 44-FZ regressions and make check; correct any syntax/lint/test issues before PR/CI.'
