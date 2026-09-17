@@ -717,7 +717,7 @@ class TenderResearchPipeline:
                 "download_status": "pending",
                 "text_extraction_status": "pending",
                 "raw_meta": {
-                    "source": "external_public_44fz_detail",
+                    "source": "external_public_223fz_detail" if detail.law_type == "223fz" else "external_public_44fz_detail",
                     "title": link.title,
                     "card_url": detail.card_url,
                     "raw": link.raw,
