@@ -3,7 +3,8 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: 223FZ-INGEST-V1-001
 authority: AUTO
-goal: Deliver a separate audited read-only 223-FZ source adapter and canonical intake path without silently reusing 44-FZ-only assumptions.
+goal: Deliver a separate audited read-only 223-FZ source adapter and canonical intake path without silently reusing 44-FZ-only
+  assumptions.
 definition_of_done:
 - Explicit 223-FZ source/provider contract and separate parser path.
 - Search/direct-registry intake produces source-bound canonical procurement + document metadata for supported public examples.
@@ -12,31 +13,54 @@ definition_of_done:
 - Existing 44-FZ behavior remains green.
 - Focused/relevant tests + exact-head CI green and support matrix documents known gaps.
 completed:
-- Reconciled CHANGE-MONITORING-V1-001 as merged in PR #74; do not resume stale main checkpoint wording.
-- Reconciled INGEST-RESILIENCE-V1-001 as exact-head green and guarded-merged PR #75 under the 2026-09-16 AM-4 renewal; issue #66 is closed completed.
-- Reconciled stale canonical main current-task: OPS-OBSERVABILITY-V1-001 is done because PR #76 merged as c335c60fa92742d7c464739e057df7eac89fa191 and issue #68 is closed completed.
-- Selected next executable queue item by order: 223FZ-INGEST-V1-001 (#69), because its dependency is now satisfied.
-- Created isolated branch agent/223fz-ingest-v1-001 from main fbf6d3cbac246af2c28db242465d52617890bf0c.
-- Initial reuse inventory established regime-neutral public-search dataclasses/HTTP transport and absence of a separate 223-FZ provider.
-- Completed exact seam audit: Public44FzSearchProvider.search always calls parse_44fz_search_results and its card parser hard-codes law=44fz; fetch_detail defaults 44fz and derives 44-FZ common-info/documents/revision routes. Passing law_type=223fz through that class is therefore unsafe hidden reuse.
-- RegistryNumberDiscovery has only EXTERNAL_PUBLIC_44FZ and stamps discovered provenance as external_public_44fz; TenderResearchPipeline likewise constructs only Public44FzSearchProvider and hard-codes public lookup provenance. Separate 223-FZ source/provider selection is required before existing regime-neutral repository upsert can be reused.
-- Repository tree contains no public_eis_html_223fz fixture/evidence. Real-EIS behavior must not be fabricated; synthetic parser fixtures may cover bounded contracts while unverified public layouts remain documented UNKNOWN/NEEDS_REVIEW.
-- Completed CLI/API entrypoint audit: discover-registry-numbers and research-discovered are explicit source-selection surfaces; collect-registry-numbers currently accepts 223fz but unsafely uses Public44FzSearchProvider and must dispatch by law; ingest-collected-registry-numbers is SOAP-only and does not preserve public source/law metadata.
-current: Implement the separate 223-FZ provider/parser, explicit discovery/pipeline provider dispatch, and CLI source/law dispatch recorded in the durable checkpoint; do not reuse the 44-FZ parser/detail route as fallback.
+- 'Implemented first product slice in commit 973bee16a02049e25f9823763c9ba9ef5a6fcc76: new src/tender_research/providers/public_223fz_search.py.'
+- The new provider has a separate parse_223fz_search_results contract and parse_223fz_detail contract and never calls parse_44fz_search_results
+  or the 44-FZ detail/document/revision helpers.
+- Transport is reused from Public44FzSearchProvider only for bounded HTTP/network policy; search emits fz223 and 223-FZ parser
+  output.
+- Missing explicit customer role and ambiguous multiple revision markers are represented as requires_review/review_reasons
+  instead of inferred 44-FZ semantics.
+- When no 223-FZ detail URL exists, fetch_detail fails closed with UNSUPPORTED_LAYOUT and explicitly states that no 44-FZ
+  fallback is permitted.
+- 'Reconciled issue #69 remains open and its DoD still requires explicit 223-FZ source dispatch, idempotent regressions, 44-FZ
+  preservation, support matrix and exact-head CI.'
+- Audited registry_discovery.py, pipeline.py and cli.py exact branch seams. A connector full-file rewrite attempt was detected
+  as unsafe because the fetched source was truncated; the branch was immediately restored exactly to parent cbe1844fdcabf50f4b813a629363c5bc411fc914
+  before any checkpoint write. No unverified product rewrite was retained.
+- 'Implemented explicit separate 223-FZ dispatch in commit b0f2b07: SourceType.EXTERNAL_PUBLIC_223FZ, RegistryNumberDiscovery
+  source path/provider, TenderResearchPipeline detail-provider selection, CLI source choice and law-based collection provider.'
+- 'Safety validation: python compileall PASS; git diff --check PASS. Existing 44-FZ focused parser/search suite emitted 40
+  passing dots before process completion; full captured summary was unavailable. Broad targeted ruff exposed pre-existing
+  file-level debt plus one task-caused SourceType import defect, which was fixed before commit.'
+- 'Added synthetic normal/missing/ambiguous/fail-closed provider regressions and concise support matrix in commit b7fa27d;
+  focused 223-FZ + existing 44-FZ/source-discovery suite: 47 passed; make check PASS; git diff --check PASS.'
+- Fixed 223-FZ document provenance so public document rows record external_public_223fz_detail instead of the 44-FZ source
+  label.
+- Added direct 223-FZ discovery-provider dispatch and pipeline detail-provider isolation regressions plus repeated canonical
+  ingest idempotency coverage in commit 2c67842458717a3c1afe7f17fe6e55aa0d4fbd88.
+- Fresh compileall and git diff --check PASS. Local dependency-backed pytest/ruff invocation on the mounted repo venv stalled
+  without output and was terminated; exact-head GitHub CI is the next authoritative verification gate.
+current: 'Implementation and DoD regressions are complete; PR #80 is open. Final gate is fresh exact-head GitHub CI plus current-base/mergeability/renewed-AM-4
+  revalidation.'
 pending:
-- Implement src/tender_research/providers/public_223fz_search.py, SourceType.EXTERNAL_PUBLIC_223FZ, explicit discovery and pipeline provider selection, and safe CLI dispatch.
-- Add source-bound synthetic normal/missing/ambiguous fixtures, repeated idempotent ingest coverage and support matrix.
-- Run focused 223-FZ plus existing 44-FZ regressions, make check, exact-head CI and guarded merge gates.
-last_verified_commit: 7ead271c80c80475ac8a5e66b57eb5671aaa820b
+- 'Fresh exact-head GitHub CI for PR #80 must complete successfully.'
+- Revalidate current main/base, PR mergeability, review state, renewed AM-4 and 44-FZ preservation.
+- 'If all gates remain green, perform guarded AUTO merge of PR #80; otherwise checkpoint the blocker without weakening scope.'
+last_verified_commit: 4bba379d2684ee38dfecaeb23c2e6bed5598abcd
 test_results:
-- No product tests run in this quantum; no product code changed. Repository/checkpoint progress consists of completed CLI/API/direct-registry entrypoint audit and stale-main reconciliation.
-updated_at: '2026-09-17T01:15:00+03:00'
-resume_instruction: Implement the recorded bounded design. Reuse regime-neutral transport/dataclasses/repository primitives, never parse 223-FZ through parse_44fz_search_results or 44-FZ document/revision helpers, and preserve UNKNOWN/NEEDS_REVIEW for unverified roles/layouts.
+- 'Earlier focused 223-FZ + existing 44-FZ/source-discovery suite: 47 passed.'
+- 'Earlier make check: PASS; git diff --check: PASS.'
+- 'Final dispatch/idempotency slice: python compileall PASS; git diff --check PASS.'
+- Local dependency-backed pytest/ruff invocation on mounted repo venv stalled without output and was terminated; exact-head
+  GitHub CI remains authoritative final verification.
+updated_at: '2026-09-17T05:31:00+03:00'
+resume_instruction: 'Check PR #80 exact-head CI once. If green, re-read renewed Company AM-4, verify current base/mergeability/reviews
+  and guarded-merge PR #80. Do not add 223-FZ legal decision semantics or any external action.'
 execution:
-  claimed_by: tender-agent-watchdog
-  execution_id: 223fz-ingest-20260916T230200+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/223fz-ingest-v1-001
   base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
   issue: 69
   manual_override: false
-  lease_until: '2026-09-17T03:05:00+03:00'
+  lease_until: null
