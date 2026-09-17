@@ -1,45 +1,62 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: INTEGRATION-OUTBOX-V1-001
 authority: AUTO
-goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces while keeping every live external transport disabled.
+goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces
+  while keeping every live external transport disabled.
 definition_of_done:
-  - Versioned event envelope plus persisted idempotent outbox.
-  - analysis-completed, monitoring-alert and review-required event types wired from existing internal state changes.
-  - Read-only list/export surface.
-  - External transport boundary exists only behind explicit disabled/fail-closed configuration.
-  - Replay/idempotency/tenant-isolation/no-secret regressions.
-  - Focused/relevant tests and exact-head CI green; docs preserve REVIEW/HUMAN gate for live transport.
+- Versioned event envelope plus persisted idempotent outbox.
+- analysis-completed, monitoring-alert and review-required event types wired from existing internal state changes.
+- Read-only list/export surface.
+- External transport boundary exists only behind explicit disabled/fail-closed configuration.
+- Replay/idempotency/tenant-isolation/no-secret regressions.
+- Focused/relevant tests and exact-head CI green; docs preserve REVIEW/HUMAN gate for live transport.
 completed:
-  - Reconciled CHANGE-MONITORING-V1-001 as technically complete on open mergeable PR #74 with exact-head green evidence; final merge remains blocked only by Company AM-4 review uncertainty.
-  - Selected next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge authority gate.
-  - Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b so required monitoring-alert primitives are available without duplicating #65 implementation.
-  - Created durable checkpoint .agent/checkpoints/INTEGRATION-OUTBOX-V1-001.yaml and bounded external transports/credentials/actions explicitly out of scope.
-  - Completed event-log/monitoring reuse inventory: EventRecord + append_event_record are the audit seam; procurement_monitoring.check_watch already performs deterministic event_key dedupe and emits procurement_watch_changed only after persistence.
-  - Implemented integration-event-v1, idempotent persisted outbox, tenant-filtered read-only export, recursive credential-like field stripping, migration 099_add_integration_outbox, and disabled/fail-closed adapter status.
-  - Wired monitoring_alert, analysis_completed and review_required from existing state transitions; no external transport enabled.
-  - Opened PR #79 at exact head c792eaf40a858894eb0e192802b72d0a7e71adf6; GitHub CI run 35100497032 completed SUCCESS and PR is currently open/mergeable.
-  - Re-read Company AM-4 decision and assignment on 2026-09-16; both remain Approved, but the mandatory ten-auto-merge review trigger cannot be proven un-reached, so automatic merge fails closed to REVIEW.
-current: PR #79 is technically complete and exact-head CI is green; final merge is blocked by unresolved dependency #74 plus Company AM-4 mandatory-review/counter uncertainty.
+- Reconciled CHANGE-MONITORING-V1-001 as technically complete on open mergeable PR
+- Selected next independent admitted AUTO item INTEGRATION-OUTBOX-V1-001 (#67) rather than waiting on the merge
+  authority gate.
+- Created isolated branch agent/integration-outbox-v1-001 from CHANGE-MONITORING PR head 808030e4eabbd6f8a3156e12368e3daa67cf608b
+  so required monitoring-alert primitives are available without duplicating
+- Created durable checkpoint .agent/checkpoints/INTEGRATION-OUTBOX-V1-001.yaml and bounded external transports/credentials/actions
+  explicitly out of scope.
+- Completed event-log/monitoring reuse inventory: EventRecord + append_event_record are the audit seam; procurement_monitoring.check_watch
+    already performs deterministic event_key dedupe and emits procurement_watch_changed only after persistence.
+- Implemented integration-event-v1, idempotent persisted outbox, tenant-filtered read-only export, recursive credential-like
+  field stripping, migration 099_add_integration_outbox, and disabled/fail-closed adapter status.
+- Wired monitoring_alert, analysis_completed and review_required from existing state transitions; no external transport
+  enabled.
+- Opened PR
+- Re-read Company AM-4 decision and assignment on 2026-09-16; both remain Approved, but the mandatory ten-auto-merge
+  review trigger cannot be proven un-reached, so automatic merge fails closed to REVIEW.
+- 'Dependency CHANGE-MONITORING-V1-001 is now satisfied by merged PR #74.'
+- Company AM-4 Owner review was explicitly renewed on 2026-09-16 on unchanged terms; automatic-merge counter restarted
+  under the renewed cycle.
+- 'DOMAIN-REGRESSION-V1-001 PR #77 was explicitly Owner-approved and merged to main as c5e653a11a894360b1b05c1834495330b3a64cbb
+  after exact-head CI success.'
+- Reconciled INTEGRATION-OUTBOX branch against current main; kept the outbox monitoring hook and accepted current
+  main changes elsewhere.
+current: Reconciled implementation against current main after dependency merges; validating merged branch before
+  guarded AUTO merge.
 pending:
-  - Resolve/merge CHANGE-MONITORING PR #74 under valid authority, then reconcile PR #79 base/dependency against main.
-  - Re-run/confirm exact-head CI after dependency reconciliation.
-  - Merge only after Company AM-4 review/counter validity is attributable and every repository gate remains satisfied.
+- Run focused/relevant tests and make check on reconciled head.
+- Push reconciled head and require fresh exact-head CI success.
+- 'If CI is green and PR remains mergeable with no review blockers, guarded AUTO merge PR #79 under renewed AM-4.'
 last_verified_commit: c792eaf40a858894eb0e192802b72d0a7e71adf6
 test_results:
-  - Focused integration outbox + procurement monitoring: 12 passed.
-  - Broader selected customer-pilot/readiness/outbox/monitoring: 18 passed, 1 skipped.
-  - make check: PASS.
-  - alembic heads: 099_add_integration_outbox (single head); git diff --check PASS.
-  - Exact-head GitHub CI run 35100497032: SUCCESS.
-updated_at: '2026-09-16T16:58:39+03:00'
-resume_instruction: Reconcile PR #74 and Company AM-4 review/counter state once. If #74 is validly merged, synchronize #79 onto main and revalidate exact-head CI. Do not enable external transports. If AM-4 remains uncertain, preserve review-ready blocked state and continue only another independently admitted AUTO item whose dependencies are satisfied.
+- Focused integration outbox + procurement monitoring: 12 passed.
+- Broader selected customer-pilot/readiness/outbox/monitoring: 18 passed, 1 skipped.
+- make check: PASS.
+- alembic heads: 099_add_integration_outbox (single head); git diff --check PASS.
+- Exact-head GitHub CI run 35100497032: SUCCESS.
+updated_at: '2026-09-17T05:15:00+03:00'
+resume_instruction: 'Continue validation of the reconciled INTEGRATION-OUTBOX branch. Do not enable external transports.
+  Push only after local checks; merge PR #79 only on fresh exact-head green CI and valid renewed AM-4.'
 execution:
-  claimed_by: null
-  execution_id: null
+  claimed_by: ChatGPT manual continuation
+  execution_id: manual-20260917T051500+0300
   branch: agent/integration-outbox-v1-001
   base_commit: 808030e4eabbd6f8a3156e12368e3daa67cf608b
   issue: 67
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-17T07:00:00+03:00'

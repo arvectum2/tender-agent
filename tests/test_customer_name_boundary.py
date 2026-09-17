@@ -7,17 +7,19 @@ boundaries without corrupting legitimate organization names.
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 from src.modules.tender_operator_agent_demo import upload_service_legacy as legacy
 
 
 def test_real_regression_trailing_ispolnitel_boundary() -> None:
     """TEST A — exact real regression from calibration-44fz-0848300045426000620."""
 
-    text = (
-        'Заказчик: МУНИЦИПАЛЬНОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ "СЛУЖБА КЛАДБИЩ" '
-        "ОДИНЦОВСКОГО ГОРОДСКОГО ОКРУГА МОСКОВСКОЙ ОБЛАСТИ "
-        "Исполнитель:________________"
+    fixture = (
+        Path(__file__).resolve().parents[1]
+        / "regressions/procurement/v1/evidence/dqa_case11_customer_boundary.txt"
     )
+    text = fixture.read_text(encoding="utf-8").strip()
 
     result = legacy._extract_customer_name_from_text(text)
 

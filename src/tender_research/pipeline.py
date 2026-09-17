@@ -22,6 +22,7 @@ from src.tender_research.errors import (
     EisNoDataError,
     classify_eis_error,
 )
+from src.tender_research.ingest_checkpoint import IngestCheckpointStore
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
     PublicTenderDetail,
@@ -100,9 +101,13 @@ class TenderResearchPipeline:
         self,
         registry_numbers: list[str],
         limit: int | None = None,
+        *,
+        checkpoint_key: str | None = None,
+        resume: bool = True,
     ) -> dict[str, Any]:
+        numbers = registry_numbers[:limit] if limit else registry_numbers
         result: dict[str, Any] = {
-            "total": len(registry_numbers),
+            "total": len(numbers),
             "saved": 0,
             "skipped": 0,
             "errors": [],
@@ -110,27 +115,82 @@ class TenderResearchPipeline:
             "no_data": 0,
             "missing_token": False,
         }
-        numbers = registry_numbers[:limit] if limit else registry_numbers
-        for rn in numbers:
+        checkpoint_store = None
+        checkpoint = None
+        start_index = 0
+        if checkpoint_key:
+            checkpoint_store = IngestCheckpointStore(self._config.data_dir)
+            checkpoint = checkpoint_store.begin(
+                key=checkpoint_key,
+                source="eis_registry_numbers",
+                items=numbers,
+                resume=resume,
+            )
+            start_index = checkpoint.next_index
+            result["checkpoint_key"] = checkpoint_key
+            result["resumed_from_index"] = start_index
+            result["checkpoint_status"] = checkpoint.status
+
+        for index in range(start_index, len(numbers)):
+            rn = numbers[index]
             try:
                 raw = self._eis.fetch_by_registry_number(rn)
                 if raw is None:
                     result["skipped"] += 1
+                    if checkpoint_store and checkpoint:
+                        checkpoint = checkpoint_store.advance(
+                            checkpoint, next_index=index + 1, external_id=rn
+                        )
                     continue
                 self._save_one_tender(raw)
+                if checkpoint_store:
+                    # Commit source state before advancing the durable cursor. A crash
+                    # between these operations only replays an idempotent upsert.
+                    self._session.commit()
                 result["saved"] += 1
+                if checkpoint_store and checkpoint:
+                    checkpoint = checkpoint_store.advance(
+                        checkpoint, next_index=index + 1, external_id=rn
+                    )
             except EisMissingTokenError:
+                self._session.rollback()
                 result["missing_token"] = True
                 result["errors"].append(f"{rn}: token missing")
+                if checkpoint_store and checkpoint:
+                    checkpoint = checkpoint_store.fail(
+                        checkpoint, external_id=rn, error="missing_token"
+                    )
                 break
             except EisConnectionResetError:
+                self._session.rollback()
                 result["connection_resets"] += 1
                 result["errors"].append(f"{rn}: connection reset")
+                if checkpoint_store and checkpoint:
+                    checkpoint = checkpoint_store.fail(
+                        checkpoint, external_id=rn, error="connection_reset"
+                    )
+                    break
             except EisNoDataError:
+                self._session.rollback()
                 result["no_data"] += 1
-            except Exception as e:
+                if checkpoint_store and checkpoint:
+                    checkpoint = checkpoint_store.advance(
+                        checkpoint, next_index=index + 1, external_id=rn
+                    )
+            except Exception as e:  # noqa: BLE001 - preserve legacy batch error capture
+                self._session.rollback()
                 result["errors"].append(f"{rn}: {e}")
-        self._session.commit()
+                if checkpoint_store and checkpoint:
+                    checkpoint = checkpoint_store.fail(
+                        checkpoint, external_id=rn, error=f"{type(e).__name__}: {e}"
+                    )
+                    break
+
+        if not checkpoint_store:
+            self._session.commit()
+        elif checkpoint is not None:
+            result["checkpoint_status"] = checkpoint.status
+            result["next_index"] = checkpoint.next_index
         return result
 
     def _save_one_tender(self, raw: EisTenderRaw) -> int:
@@ -909,8 +969,14 @@ class TenderResearchPipeline:
             "eis_url": raw.eis_url,
             "raw_payload": raw.raw_payload,
         }
-        hash_input = raw.title + (raw.customer_name or "") + raw.external_id
-        tender_data["content_hash"] = content_hash(hash_input)
+        hash_payload = {
+            key: value
+            for key, value in tender_data.items()
+            if key != "raw_payload"
+        }
+        tender_data["content_hash"] = content_hash(
+            json.dumps(hash_payload, ensure_ascii=False, sort_keys=True, default=str, separators=(",", ":"))
+        )
 
         customer_data = None
         if raw.customer_name:

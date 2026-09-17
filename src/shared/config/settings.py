@@ -229,6 +229,11 @@ class Settings(BaseSettings):
         ),
     )
 
+    arvectum_backup_root: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("ARVECTUM_BACKUP_ROOT", "AI_CORP_ARVECTUM_BACKUP_ROOT"),
+    )
+
     # Storage capacity guardrails (ARV-010)
     # Canonical env: ARVECTUM_STORAGE_*; compatibility: AI_CORP_ARVECTUM_STORAGE_*
     # Canonical has priority via AliasChoices order.

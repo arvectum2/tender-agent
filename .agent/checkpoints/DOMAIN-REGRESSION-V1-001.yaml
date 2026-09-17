@@ -1,0 +1,60 @@
+version: 2
+repository: arvectum2/tender-agent
+status: blocked
+task_id: DOMAIN-REGRESSION-V1-001
+authority: REVIEW
+goal: Build a versioned repository-owned lifecycle and deterministic CI telemetry for confirmed procurement regressions
+  while preserving strict benchmark/acceptance/regression separation and anti-circularity.
+definition_of_done:
+- Versioned regression-case manifest/schema and documented lifecycle, including blind-to-exposed transition rules
+  where applicable.
+- Initial seed uses only confirmed existing failure families/fixtures with source provenance and no speculative
+  cases.
+- Deterministic CI command/report executes registered regression subsets and produces machine-readable results.
+- Benchmark, acceptance and regression-only cases remain explicitly separated.
+- Tests cover manifest integrity, provenance requirements, duplicate case IDs and anti-circularity rules.
+- Exact-head CI green; material benchmark-method changes remain behind Product Owner REVIEW.
+completed:
+- Issue
+- Created isolated branch/worktree agent/domain-regression-v1-001 from current origin/main.
+- 'Reuse inventory completed: existing blind/acceptance tooling remains separate; confirmed exposed regressions
+  include DOCUMENT-QA case 11 customer legal-identity boundary and case 14 EIS active-revision attachment binding.'
+- Implemented procurement-regression-manifest-v1 JSON schema plus repository registry with mandatory origin/provenance,
+  frozen evidence SHA-256, regime/component/failure class, expected invariant and pytest node IDs.
+- 'Seeded only confirmed 44-FZ regressions: case 11 customer-role boundary (former blind, post-result exposed) and
+  case 14 active-revision binding; no speculative 223-FZ/private cases were fabricated.'
+- Implemented fail-closed manifest validation for duplicate IDs, provenance, repository path confinement, evidence
+  hash, test target existence and former-blind freeze-before-SUT/post-result-exposure invariants.
+- Implemented deterministic procurement-regression-report-v1 runner with case/component filtering and CI Makefile/workflow
+  integration; report omits timestamps/durations and is uploaded as CI evidence.
+- Documented strict blind benchmark vs acceptance vs exposed-regression lifecycle; registry never rewrites blind
+  truth/comparator/normalizer.
+- Bound the existing case-11 regression test to the repository-owned frozen evidence fixture; case-14 keeps its
+  unchanged public EIS HTML fixture hash.
+- 'Local validation green: registry integrity tests 7 passed; registered regression command 2/2 passed; broader
+  benchmark/customer/document/Decision Core/Commercial Core relevant suite 78 passed; make check, targeted ruff
+  and git diff --check PASS.'
+- 'Opened review-ready PR #77; current head 8f49babe24951aacf3b59f12eb5ecc07f87f15a4 is mergeable with exact-head CI run 35065166199 SUCCESS.'
+- 'Final merge remains blocked on explicit Product Owner REVIEW because authority=REVIEW and auto_merge=false.'
+current: 'Technical Definition of Done is satisfied; PR #77 is review-ready and exact-head CI is green. Final merge is blocked on explicit Product Owner REVIEW.'
+pending:
+- 'Explicit Product Owner REVIEW approval for PR #77, followed by a fresh exact-head/current-base/review check before merge.'
+last_verified_commit: 8f49babe24951aacf3b59f12eb5ecc07f87f15a4
+test_results:
+- 'tests/test_domain_regression_registry.py: 7 passed.'
+- 'make test-domain-regressions: 2 registered cases passed; deterministic JSON report generated.'
+- 'Broader relevant suite (registry + customer boundary + public detail + benchmark pipeline/hardening/control +
+  Decision Core + Commercial Core): 78 passed.'
+- 'make check: PASS; targeted ruff: PASS; git diff --check: PASS.'
+- 'Exact-head GitHub CI run 35065166199 at 8f49babe24951aacf3b59f12eb5ecc07f87f15a4: SUCCESS.'
+updated_at: '2026-09-16T13:38:00+03:00'
+resume_instruction: 'Do not resume implementation. PR #77 is review-ready with exact-head CI green. Preserve frozen benchmark artifacts unchanged and merge only after explicit Product Owner REVIEW approval plus a fresh exact-head/current-base/review check.'
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: agent/domain-regression-v1-001
+  base_commit: f060fe23a89d3334cf3d776062e980b4a0945e7c
+  issue: 71
+  manual_override: false
+  lease_until: null
+checkpoint_role: durable_task_checkpoint
