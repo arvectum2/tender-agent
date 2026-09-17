@@ -4,7 +4,7 @@ issue: 69
 branch: agent/223fz-ingest-v1-001
 base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
 status: in_progress
-updated_at: '2026-09-17T04:24:00+03:00'
+updated_at: '2026-09-17T05:13:00+03:00'
 authority: AUTO
 reconciliation:
   dependency: INGEST-RESILIENCE-V1-001
@@ -37,6 +37,7 @@ completed:
   - 'Audited registry_discovery.py, pipeline.py and cli.py exact branch seams. A connector full-file rewrite attempt was detected as unsafe because the fetched source was truncated; the branch was immediately restored exactly to parent cbe1844fdcabf50f4b813a629363c5bc411fc914 before any checkpoint write. No unverified product rewrite was retained.'
   - 'Implemented explicit separate 223-FZ dispatch in commit b0f2b07: SourceType.EXTERNAL_PUBLIC_223FZ, RegistryNumberDiscovery source path/provider, TenderResearchPipeline detail-provider selection, CLI source choice and law-based collection provider.'
   - 'Safety validation: python compileall PASS; git diff --check PASS. Existing 44-FZ focused parser/search suite emitted 40 passing dots before process completion; full captured summary was unavailable. Broad targeted ruff exposed pre-existing file-level debt plus one task-caused SourceType import defect, which was fixed before commit.'
+  - 'Added synthetic normal/missing/ambiguous/fail-closed provider regressions and concise support matrix in commit b7fa27d; focused 223-FZ + existing 44-FZ/source-discovery suite: 47 passed; make check PASS; git diff --check PASS.'
 next:
-  - 'Add synthetic normal/missing/ambiguous parser fixtures/tests, repeated idempotent ingest coverage and support matrix.'
+  - 'Add repeated idempotent canonical ingest coverage and direct-registry/pipeline dispatch regression.'
   - 'Run focused 223-FZ plus existing 44-FZ regressions and make check; correct any syntax/lint/test issues before PR/CI.'
