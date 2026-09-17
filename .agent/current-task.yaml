@@ -13,26 +13,23 @@ definition_of_done:
 - Focused/relevant tests + exact-head CI green; merge stops at explicit Product Owner REVIEW gate.
 completed:
 - Reconciled dependency 223FZ-INGEST-V1-001 as done: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed completed.
-- Audited Decision Core v1 seam at src/modules/tender_operator_agent_demo/decision_core.py.
-- Existing evidence/fact primitives for procurement_title, application_deadline, nmck, source consistency and supplier profile are structurally regime-neutral only when their source bindings are valid.
-- Existing APPLICATION_DEADLINE_EXPIRED blocker is evidence-dependent but requires explicit regime support before it can be treated as a 223-FZ hard blocker.
-- Existing contract_draft semantics and risk classification semantics are not assumed to be 223-FZ-safe; they remain UNKNOWN/NEEDS_REVIEW until independently frozen source evidence supports them.
-current: Implement conservative regime dispatch against the now-frozen pre-SUT 223-FZ regression matrix; unsupported 223-FZ semantics remain UNKNOWN/NEEDS_REVIEW.
+- Audited Decision Core/report seams and froze docs/223fz/DECISION_REGRESSION_MATRIX.md before SUT tuning.
+- Implemented normalized procurement regime and conservative 223-FZ dispatch: shared source-bound facts remain usable, while deadline/contract/risk 44-FZ semantics cannot fall through into 223-FZ.
+- Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regression expectations without changing the frozen matrix.
+current: Complete report/API regime projection and obtain executable validation for branch head.
 pending:
-- Inventory report/API projection for procurement regime and Decision Core output.
-- Frozen pre-SUT regression matrix committed at docs/223fz/DECISION_REGRESSION_MATRIX.md (5a335c4); do not mutate expected outcomes after SUT output.
-- Implement only source-supported regime dispatch and fail-closed UNKNOWN/NEEDS_REVIEW behavior.
-- Run focused 223-FZ and unchanged 44-FZ Decision Core regressions plus exact-head CI.
+- Add normalized procurement regime to canonical/customer report projection and verify metadata law propagation.
+- Run focused 223-FZ and unchanged 44-FZ Decision Core regressions plus relevant checks/exact-head CI.
 - Open review-ready PR but do not merge without explicit Product Owner approval.
-last_verified_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+last_verified_commit: cea64118d34b87f762422af5c7f1cecbd5031492
 test_results: []
-updated_at: '2026-09-17T10:00:00+03:00'
-resume_instruction: Add normalized procurement regime to Decision Core/report projection and gate 223-FZ away from 44-FZ-only deadline/contract/risk semantics; encode the frozen matrix as tests without changing its expected outcomes.
+updated_at: '2026-09-17T11:20:00+03:00'
+resume_instruction: Project procurement regime through canonical/customer report surfaces, then run exact branch tests/CI. Do not alter frozen expected outcomes.
 execution:
   claimed_by: tender-agent-watchdog
-  execution_id: watchdog-20260917T085800+0300
+  execution_id: watchdog-20260917T105732+0300
   branch: agent/223fz-decision-v1-001
   base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
   issue: 70
   manual_override: false
-  lease_until: '2026-09-17T11:50:00+03:00'
+  lease_until: '2026-09-17T13:07:00+03:00'
