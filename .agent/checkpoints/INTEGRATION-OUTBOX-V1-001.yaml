@@ -1,0 +1,41 @@
+version: 2
+repository: arvectum2/tender-agent
+status: done
+task_id: INTEGRATION-OUTBOX-V1-001
+authority: AUTO
+goal: Add versioned internal integration events, idempotent outbox/audit persistence and read-only export surfaces while keeping every live external transport disabled.
+definition_of_done:
+- Versioned event envelope plus persisted idempotent outbox.
+- analysis-completed, monitoring-alert and review-required event types wired from existing internal state changes.
+- Read-only list/export surface.
+- External transport boundary exists only behind explicit disabled/fail-closed configuration.
+- Replay/idempotency/tenant-isolation/no-secret regressions.
+- Focused/relevant tests and exact-head CI green; docs preserve REVIEW/HUMAN gate for live transport.
+completed:
+- Reused existing event-log and monitoring primitives; no duplicate generic audit infrastructure.
+- Implemented integration-event-v1 envelope and idempotent IntegrationOutboxEvent persistence with tenant-aware reads and credential-like field stripping.
+- Wired monitoring_alert, analysis_completed and review_required internal events.
+- Added read-only integration-outbox surfaces; live email/webhook/CRM/messenger delivery remains disabled and separately REVIEW/HUMAN gated.
+- Added replay/idempotency, tenant isolation, secret stripping, disabled-adapter and monitoring replay regressions.
+- Local validation before final sync: focused monitoring/outbox 12 passed; broader customer-pilot/readiness selection 18 passed, 1 skipped; make check PASS; alembic single head 099_add_integration_outbox; git diff --check PASS.
+- Reconciled branch against current main after dependency merges.
+- Exact-head GitHub CI run 35208293299 succeeded on head 617f95f76aa483aa7d2fd3eacb1c74e0cbe766d0; PR #79 was mergeable and review-clean.
+- Guarded AUTO squash merge completed as 4149801221f15713c10b180236ba552fc2c4c3ab on 2026-09-17; issue #67 closed completed.
+current: Done gate satisfied; preserve disabled external-transport boundary and do not reopen without an explicit new queue item or Owner directive.
+pending: []
+last_verified_commit: 4149801221f15713c10b180236ba552fc2c4c3ab
+test_results:
+- Focused integration outbox + procurement monitoring: 12 passed.
+- Broader selected customer-pilot/readiness/outbox/monitoring: 18 passed, 1 skipped.
+- make check: PASS.
+- Exact-head GitHub CI run 35208293299: SUCCESS.
+updated_at: '2026-09-17T15:08:00+03:00'
+resume_instruction: Do not resume; done gate is satisfied. Continue canonical queue reconciliation.
+execution:
+  claimed_by: tender-agent-watchdog
+  execution_id: watchdog-20260917T150241+0300
+  branch: null
+  base_commit: 4149801221f15713c10b180236ba552fc2c4c3ab
+  issue: 67
+  manual_override: false
+  lease_until: null
