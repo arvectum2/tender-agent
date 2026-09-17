@@ -20,22 +20,23 @@ completed:
   - 'Projected normalized procurement regime through canonical/customer report surfaces.'
   - 'Reduced accidental formatting-only churn in PR #81 while preserving semantics.'
   - 'Synchronized PR #81 with current main after PR #79 / INTEGRATION-OUTBOX-V1-001 merged.'
-  - 'Fresh local validation at 51be03d27f93d38fb5563a59241b500d2cba25b5: 17 focused tests passed; task-scoped ruff PASS; make check PASS; git diff --check PASS.'
+  - 'Fresh local validation: tests/test_decision_core_v1.py 17 passed; task-scoped ruff PASS; make check PASS; git diff --check PASS.'
+  - 'Final exact-head CI run 35223538846 SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce; PR #81 mergeable, no submitted reviews, no review threads.'
 current: >-
-  Technical implementation and local validation are complete; PR #81 is review-ready and blocked on fresh exact-head CI plus explicit Product Owner REVIEW approval.
+  Technical implementation and all automated validation gates are complete; PR #81 is review-ready and blocked only on explicit Product Owner REVIEW approval.
 pending:
-  - Push the final cleaned/current-main-synced head and check fresh exact-head CI once.
-  - After CI green, obtain explicit Product Owner REVIEW approval; then revalidate head/base/reviews and merge.
-last_verified_commit: 51be03d27f93d38fb5563a59241b500d2cba25b5
+  - Obtain explicit Product Owner REVIEW approval.
+  - After approval, revalidate current head/base/reviews and merge; never change frozen expected outcomes.
+last_verified_commit: 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce
 test_results:
-  - 'tests/test_decision_core_v1.py: 17 passed at synced head.'
+  - 'tests/test_decision_core_v1.py: 17 passed.'
   - 'task-scoped ruff: PASS.'
   - 'make check: PASS.'
   - 'git diff --check: PASS.'
-  - 'Previous exact-head CI run 35203252176: SUCCESS at ca677e5; fresh final-head CI pending.'
-updated_at: '2026-09-17T15:51:00+03:00'
+  - 'Exact-head CI run 35223538846: SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce.'
+updated_at: '2026-09-17T16:02:25+03:00'
 resume_instruction: >-
-  Check PR #81 fresh exact-head CI once. If green, remain blocked pending explicit Product Owner REVIEW approval. After approval, revalidate current head/base/reviews and merge; never change frozen expected outcomes.
+  Wait for explicit Product Owner REVIEW approval for PR #81. On a later invocation, reconcile new Owner/PR evidence first; if approved, revalidate current head/base/reviews and merge without changing frozen expected outcomes.
 execution:
   claimed_by: null
   execution_id: null
