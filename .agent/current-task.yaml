@@ -16,15 +16,18 @@ completed:
 - Audited Decision Core/report seams and froze docs/223fz/DECISION_REGRESSION_MATRIX.md before SUT tuning.
 - Implemented normalized procurement regime and conservative 223-FZ dispatch: shared source-bound facts remain usable, while deadline/contract/risk 44-FZ semantics cannot fall through into 223-FZ.
 - Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regression expectations without changing the frozen matrix.
-current: Complete report/API regime projection and obtain executable validation for branch head.
+current: PR #81 is review-ready locally; await/check exact-head CI and Product Owner REVIEW without merging.
 pending:
-- Add normalized procurement regime to canonical/customer report projection and verify metadata law propagation.
-- Run focused 223-FZ and unchanged 44-FZ Decision Core regressions plus relevant checks/exact-head CI.
-- Open review-ready PR but do not merge without explicit Product Owner approval.
-last_verified_commit: cea64118d34b87f762422af5c7f1cecbd5031492
-test_results: []
-updated_at: '2026-09-17T11:20:00+03:00'
-resume_instruction: Project procurement regime through canonical/customer report surfaces, then run exact branch tests/CI. Do not alter frozen expected outcomes.
+- Check exact-head PR #81 CI once and fix only task-caused failures without changing frozen expectations.
+- Review diff for avoidable formatting-only churn before final review.
+- Do not merge without explicit Product Owner approval.
+last_verified_commit: 18c9e05fccf6986542c08a97b05cadeb227143f5
+test_results:
+- 'tests/test_decision_core_v1.py: 17 passed'
+- 'task-scoped ruff: PASS'
+- 'make check: PASS'
+updated_at: '2026-09-17T12:08:00+03:00'
+resume_instruction: Check PR #81 exact-head CI once, reduce accidental formatting churn if useful, and stop before merge pending explicit Product Owner REVIEW. Do not alter frozen expected outcomes.
 execution:
   claimed_by: tender-agent-watchdog
   execution_id: watchdog-20260917T105732+0300
@@ -32,4 +35,4 @@ execution:
   base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
   issue: 70
   manual_override: false
-  lease_until: '2026-09-17T13:07:00+03:00'
+  lease_until: '2026-09-17T13:52:00+03:00'

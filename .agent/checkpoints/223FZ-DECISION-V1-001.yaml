@@ -2,7 +2,7 @@ version: 1
 task_id: 223FZ-DECISION-V1-001
 issue: 70
 status: in_progress
-updated_at: '2026-09-17T11:18:00+03:00'
+updated_at: '2026-09-17T12:08:00+03:00'
 authority: REVIEW
 auto_merge: false
 base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
@@ -20,12 +20,14 @@ implementation:
 - commit: cea64118d34b87f762422af5c7f1cecbd5031492
   detail: Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regressions while retaining existing 44-FZ/control expectations.
 validation:
-- status: pending
-  detail: GitHub connector writes succeeded, but no safe local authenticated checkout is currently available on Mac-mini-master; SSH clone reports the GitHub account suspended. Do not claim tests green until exact branch tests/CI run.
+- status: local_green
+  detail: Fresh HTTPS checkout via authenticated gh on Mac-mini-master; locked venv installed from requirements.lock. tests/test_decision_core_v1.py: 17 passed; task-scoped ruff PASS; make check PASS; compileall/diff-check PASS.
+- status: ci_pending
+  detail: Review-ready PR #81 opened at exact head 18c9e05fccf6986542c08a97b05cadeb227143f5; exact-head GitHub CI has not yet been claimed green.
 next:
-- Add normalized procurement regime to canonical/customer report projection and verify metadata law propagation.
-- Run focused tests and broader relevant checks using an authenticated/safe execution route; fix task-caused failures without changing frozen expectations.
-- Open review-ready PR and exact-head CI when green; final merge remains Product Owner REVIEW.
+- Check exact-head PR #81 CI once; fix only task-caused failures without changing frozen expectations.
+- Review PR diff for accidental formatting-only churn and reduce it if it obscures semantic review.
+- Stop before merge until explicit Product Owner approval.
 hard_boundaries:
 - no legal advice or fabricated 223-FZ interpretation
 - no external procurement action or autonomous participation decision
