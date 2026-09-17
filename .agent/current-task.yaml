@@ -26,7 +26,7 @@ pending:
 - Open review-ready PR but do not merge without explicit Product Owner approval.
 last_verified_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
 test_results: []
-updated_at: '2026-09-17T10:18:00+03:00'
+updated_at: '2026-09-17T10:00:00+03:00'
 resume_instruction: Add normalized procurement regime to Decision Core/report projection and gate 223-FZ away from 44-FZ-only deadline/contract/risk semantics; encode the frozen matrix as tests without changing its expected outcomes.
 execution:
   claimed_by: tender-agent-watchdog
@@ -35,4 +35,4 @@ execution:
   base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
   issue: 70
   manual_override: false
-  lease_until: '2026-09-17T12:08:00+03:00'
+  lease_until: '2026-09-17T11:50:00+03:00'

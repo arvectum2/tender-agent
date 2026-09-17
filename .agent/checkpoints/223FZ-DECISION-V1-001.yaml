@@ -2,7 +2,7 @@ version: 1
 task_id: 223FZ-DECISION-V1-001
 issue: 70
 status: in_progress
-updated_at: '2026-09-17T10:18:00+03:00'
+updated_at: '2026-09-17T10:00:00+03:00'
 authority: REVIEW
 auto_merge: false
 base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
