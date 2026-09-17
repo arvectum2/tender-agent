@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:arvectum:tender-agent:procurement-regression-manifest-v1",
+  "title": "Procurement Regression Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_version",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "procurement-regression-manifest-v1"
+    },
+    "registry_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    }
+  },
+  "$defs": {
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "regime",
+        "component",
+        "failure_class",
+        "benchmark_class",
+        "exposure_status",
+        "provenance",
+        "frozen_evidence",
+        "expected_invariant",
+        "runner"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9][A-Z0-9_-]+$"
+        },
+        "regime": {
+          "enum": [
+            "44-FZ",
+            "223-FZ",
+            "private"
+          ]
+        },
+        "component": {
+          "enum": [
+            "customer_role",
+            "document_intake",
+            "ingestion",
+            "decision_core",
+            "commercial_core",
+            "discovery",
+            "other"
+          ]
+        },
+        "failure_class": {
+          "type": "string",
+          "minLength": 3
+        },
+        "benchmark_class": {
+          "const": "regression_only"
+        },
+        "exposure_status": {
+          "const": "exposed_regression"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "frozen_evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "former_blind": {
+          "$ref": "#/$defs/former_blind"
+        },
+        "expected_invariant": {
+          "type": "string",
+          "minLength": 8
+        },
+        "runner": {
+          "$ref": "#/$defs/runner"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin_issue",
+        "source_kind",
+        "evidence_refs"
+      ],
+      "properties": {
+        "origin_issue": {
+          "type": "string",
+          "pattern": "^#[0-9]+$"
+        },
+        "source_kind": {
+          "enum": [
+            "public_eis",
+            "repository_fixture",
+            "confirmed_internal_regression"
+          ]
+        },
+        "registry_number": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "registry_number",
+            "source_url"
+          ]
+        },
+        {
+          "properties": {
+            "source_kind": {
+              "const": "repository_fixture"
+            }
+          }
+        },
+        {
+          "properties": {
+            "source_kind": {
+              "const": "confirmed_internal_regression"
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "public_source_fixture",
+            "exposed_regression_fixture",
+            "repository_checkpoint"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "former_blind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "freeze_ref",
+        "first_result_ref",
+        "truth_frozen_before_sut",
+        "exposed_after_first_result"
+      ],
+      "properties": {
+        "freeze_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_result_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "truth_frozen_before_sut": {
+          "const": true
+        },
+        "exposed_after_first_result": {
+          "const": true
+        }
+      }
+    },
+    "runner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pytest_nodeids"
+      ],
+      "properties": {
+        "pytest_nodeids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^tests/.+::test_.+"
+          }
+        }
+      }
+    }
+  }
+}
