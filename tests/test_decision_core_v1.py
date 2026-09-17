@@ -165,3 +165,23 @@ def test_canonical_report_builder_attaches_fail_closed_decision_core() -> None:
     assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
     assert model["bid_decision"]["status"] == "needs_review"
     assert model["decision_core"]["supplier_profile_bound"] is True
+
+
+def test_customer_projection_exposes_normalized_procurement_regime() -> None:
+    model = _grounded_223fz_model()
+    model["decision_core"] = build_decision_core(model, supplier_profile=_profile())
+    model.update({"customer_decision": {}, "customer_documents": [], "line_items": [], "okpd2_codes": [], "customer_questions": [], "corpus_limitations": [], "delivery_place": "Москва"})
+    projection = build_customer_report_projection(model)
+    assert projection["procurement_regime"] == "223fz"
+    assert projection["decision_core"]["procurement_regime"] == "223fz"
+
+
+def test_canonical_report_builder_propagates_223fz_metadata_law() -> None:
+    metadata = {"run_id": "decision-core-223fz-test", "procurement_id": "2230000000000000000", "procurement_title": "Тестовая закупка 223-ФЗ", "procurement_law": "223-FZ", "files": [], "_field_evidence": {"procurement_title": "notice:procurement_subject", "application_deadline": "notice:application_deadline", "nmck": "notice:initial_price"}, "deadline": "30.09.2026 12:00 +03:00", "analysis_completed_at": "15.09.2026T12:00:00+00:00"}
+    outputs = {"requirements": {"preliminary_analysis": {"supply_items": [], "item_coverage": {}, "next_actions": []}, "analysis_context": {"procurement_subject": "Тестовая закупка 223-ФЗ", "nmck": 1_000_000, "currency": "RUB", "document_coverage": "partial", "missing_documents": ["draft_contract"], "supplier_profile": deepcopy(_profile())}}, "final_recommendation": {"recommendation": "needs_review", "rationale": [], "manual_checks": []}, "contract_risks": {"risks": []}, "economics": {"metrics": [], "warnings": []}, "supplier_questions": {"questions": []}, "quotes_comparison": {"highlights": []}}
+    model = build_procurement_report_model(metadata, outputs)
+    assert model["procurement_law"] == "223-FZ"
+    assert model["decision_core"]["procurement_regime"] == "223fz"
+    assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
+    projection = build_customer_report_projection(model)
+    assert projection["procurement_regime"] == "223fz"
