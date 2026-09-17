@@ -4,7 +4,7 @@ issue: 69
 branch: agent/223fz-ingest-v1-001
 base_commit: fbf6d3cbac246af2c28db242465d52617890bf0c
 status: in_progress
-updated_at: '2026-09-17T05:27:00+03:00'
+updated_at: '2026-09-17T07:05:00+03:00'
 authority: AUTO
 reconciliation:
   dependency: INGEST-RESILIENCE-V1-001
@@ -62,5 +62,12 @@ next:
 - 'Push current branch and open/update PR for issue #69.'
 - Require fresh exact-head CI; if green, verify 44-FZ preservation and mergeability before guarded AUTO merge.
 - Do not add 223-FZ decision/legal semantics; those remain a separate REVIEW task.
-resume_instruction: 'Push commit 2c67842458717a3c1afe7f17fe6e55aa0d4fbd88 and this checkpoint, open/update PR #69, then inspect
-  exact-head CI once. Do not enable any write/external action and do not add 223-FZ legal decision semantics.'
+resume_instruction: 'Check exact-head CI run 35180449551 once. If green, re-read all three Company AM-4 artifacts, verify
+  current base/mergeability/reviews and guarded-merge PR #80. If not ready, persist state and continue independent admitted
+  work if available.'
+current: 'PR #80 synchronized onto current main at exact head ed88e0a7925c0d20f819848136d340dd40cd7322; local make check/compileall/diff-check
+  pass. Exact-head GitHub CI run 35180449551 is queued; checked once, so wait is checkpointed without polling.'
+pending:
+- Exact-head GitHub CI run 35180449551 at ed88e0a7925c0d20f819848136d340dd40cd7322 must complete successfully.
+- Then revalidate current main/base, PR mergeability/reviews, renewed AM-4 and 44-FZ preservation before guarded AUTO merge.
+last_verified_commit: ed88e0a7925c0d20f819848136d340dd40cd7322

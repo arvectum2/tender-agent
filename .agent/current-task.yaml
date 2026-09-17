@@ -40,22 +40,22 @@ completed:
   ingest idempotency coverage in commit 2c67842458717a3c1afe7f17fe6e55aa0d4fbd88.
 - Fresh compileall and git diff --check PASS. Local dependency-backed pytest/ruff invocation on the mounted repo venv stalled
   without output and was terminated; exact-head GitHub CI is the next authoritative verification gate.
-current: 'Implementation and DoD regressions are complete; PR #80 is open. Final gate is fresh exact-head GitHub CI plus current-base/mergeability/renewed-AM-4
-  revalidation.'
+current: 'PR #80 synchronized onto current main at exact head ed88e0a7925c0d20f819848136d340dd40cd7322; local make check/compileall/diff-check
+  pass. Exact-head GitHub CI run 35180449551 is queued; checked once, so wait is checkpointed without polling.'
 pending:
-- 'Fresh exact-head GitHub CI for PR #80 must complete successfully.'
-- Revalidate current main/base, PR mergeability, review state, renewed AM-4 and 44-FZ preservation.
-- 'If all gates remain green, perform guarded AUTO merge of PR #80; otherwise checkpoint the blocker without weakening scope.'
-last_verified_commit: 4bba379d2684ee38dfecaeb23c2e6bed5598abcd
+- Exact-head GitHub CI run 35180449551 at ed88e0a7925c0d20f819848136d340dd40cd7322 must complete successfully.
+- Then revalidate current main/base, PR mergeability/reviews, renewed AM-4 and 44-FZ preservation before guarded AUTO merge.
+last_verified_commit: ed88e0a7925c0d20f819848136d340dd40cd7322
 test_results:
 - 'Earlier focused 223-FZ + existing 44-FZ/source-discovery suite: 47 passed.'
 - 'Earlier make check: PASS; git diff --check: PASS.'
 - 'Final dispatch/idempotency slice: python compileall PASS; git diff --check PASS.'
 - Local dependency-backed pytest/ruff invocation on mounted repo venv stalled without output and was terminated; exact-head
   GitHub CI remains authoritative final verification.
-updated_at: '2026-09-17T05:31:00+03:00'
-resume_instruction: 'Check PR #80 exact-head CI once. If green, re-read renewed Company AM-4, verify current base/mergeability/reviews
-  and guarded-merge PR #80. Do not add 223-FZ legal decision semantics or any external action.'
+updated_at: '2026-09-17T07:05:00+03:00'
+resume_instruction: 'Check exact-head CI run 35180449551 once. If green, re-read all three Company AM-4 artifacts, verify
+  current base/mergeability/reviews and guarded-merge PR #80. If not ready, persist state and continue independent admitted
+  work if available.'
 execution:
   claimed_by: null
   execution_id: null
