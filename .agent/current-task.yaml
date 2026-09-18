@@ -1,42 +1,42 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: ROADMAP-SYNC-20260918
+task_id: BRANCH-HYGIENE-001
 authority: OWNER_DIRECTIVE
-goal: Reconcile the canonical roadmap with completed Stage 4/5 work and enumerate all continuation branches without admitting new execution work.
+goal: Reduce repository branch/PR clutter without losing unmerged work, then identify the next bounded development increment.
 definition_of_done:
-- Reflect completed queue items #51 and #65-#71 in current roadmap overlays.
-- Mark accelerated stages 4 and 5 completed while preserving immutable historical snapshot fields.
-- Record that the admitted execution queue is exhausted and watchdog must not invent work.
-- Add a complete continuation-branch matrix grouped by product stream, with residual scope and gates.
-- Preserve all historical IDs, ID conflicts, and AM-4/HUMAN/REVIEW boundaries.
-- Validate current-state consistency and prepare a reviewable roadmap PR.
+- Inventory all remote branches and open PRs against current main.
+- Close superseded open PRs whose work is already merged or obsolete.
+- Delete only remote branches proven fully merged, content-equivalent to main, or explicitly superseded.
+- Reconcile live maintenance PR #78 and roadmap PR #82.
+- Leave durable cleanup evidence and identify one next bounded development increment.
 completed:
-- Reconciled canonical roadmap, current task, execution queue, recent commits, PRs and issues.
-- Verified every admitted queue item through order 80 is done; issues #65-#71 are closed completed and PRs #74-#77/#79-#81 are merged.
-- Updated machine roadmap execution snapshot, accelerated stages 4/5 and all current-program states.
-- Added 14 candidate continuation branches without queue admission, including residual 223-FZ breadth, monitoring delivery, competitive benchmark and ID-conflict reconciliation.
-- Updated human roadmap with completed pipeline and candidate continuation matrix.
-- Verified historical legacy_registry is byte-identical to main with 93 unique historical IDs.
-- Verified human Complete recovered roadmap section is byte-identical to main.
-- Verified execution queue has zero non-done entries and roadmap branch is ahead of main without divergence.
-current: Roadmap sync complete; branch is ready for PR/CI.
+- Inventoried 142 non-main remote branches against main.
+- Closed stale PRs #12, #45 and #48 with supersession comments.
+- Deleted 93 branches proven merged/superseded, zero failures.
+- Deleted owner/roadmap-sync-20260918 after PR #82 merged and deleted stale checkpoint-only agent/reuse-first-001.
+- Ran a second content-equivalence audit and deleted 11 additional branches whose branch-touched files were byte-identical to current main.
+- PR #82 exact-head CI 35312663415 passed; roadmap sync merged as edd35979bce9bc9f9bfcf47708ff3f8ed88fc69e and branch deleted.
+- PR #78 was rebased onto current main, updated with the 2026-09-16 AM-4 renewal authority source, exact-head CI 35313488952 passed 9/9, and merged as aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c; branch deleted.
+- Remote branch count reduced from 143 including main to 36 including main and this temporary hygiene branch. After this bookkeeping branch is merged/deleted, 35 branches remain: main plus 34 historical branches with unique unmerged commits.
+- Preserved every remaining historical branch with unique content rather than deleting potentially recoverable work.
+- Created issue #83 PROCUREMENT-KANBAN-V1-001 as the recommended next bounded development increment mapped to ARV-019/COPY_PATTERN; it is not silently admitted into the execution queue.
+current: Branch hygiene complete; bookkeeping PR remains.
 pending: []
-last_verified_commit: f44349f50d5cf051d2e0c5f281e4e5d144042b25
+last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
 test_results:
-- "Historical machine legacy registry: byte-identical to main; 93 IDs / 93 unique."
-- "Historical human recovered-roadmap section: byte-identical to main."
-- "Execution queue reconciliation: zero non-done entries."
-- "Current programs: all 16 tracked programs done."
-- "Continuation matrix: 14 candidate branches; none admitted."
-- "Branch compare: ahead of main only; four intended files before completion bookkeeping."
-updated_at: '2026-09-18T08:52:00+03:00'
-resume_instruction: Task completed. Do not reopen ROADMAP-SYNC-20260918; wait for PR CI/merge bookkeeping or a new explicit Owner roadmap-admission directive.
+- "Safe-delete batch 1: 93/93 branches deleted, 0 failures."
+- "Content-equivalence batch 2: 11/11 branches deleted."
+- "Roadmap PR #82 exact-head CI 35312663415: SUCCESS; merged edd35979."
+- "Watchdog config PR #78 exact-head CI 35313488952: SUCCESS 9/9; merged aa5aa7a."
+- "Remaining branches: all preserved historical branches have unique unmerged content relative to main or unrelated recovery history."
+updated_at: '2026-09-18T09:18:00+03:00'
+resume_instruction: Task completed. Do not delete the remaining historical branches automatically; they require semantic review/archive decisions. Next recommended development increment is issue #83, but queue admission requires an explicit Owner directive.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260918-roadmap-sync
-  branch: owner/roadmap-sync-20260918
-  base_commit: eb62234e3da39f58b357bba92d55891d576cda0f
+  claimed_by: null
+  execution_id: null
+  branch: agent/branch-hygiene-001
+  base_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
   issue: null
   manual_override: false
   lease_until: null
