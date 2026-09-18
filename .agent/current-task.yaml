@@ -1,42 +1,50 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: completed
 task_id: 223FZ-DECISION-V1-001
 authority: REVIEW
-goal: >-
-  Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving fail-closed evidence and human control.
+goal: Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving
+  fail-closed evidence and human control.
 definition_of_done:
-  - Regime-aware Decision Core contract clearly separates shared facts from 223-FZ-specific semantics.
-  - Every 223-FZ hard blocker or positive hard fact is source-bound; unsupported items fail closed.
-  - Frozen source-grounded regression cases cover GO-capable, hard-blocker candidate, missing evidence and contradictory/ambiguous cases.
-  - Existing 44-FZ Decision Core regressions remain unchanged and green.
-  - Product/report/API projection exposes procurement regime and evidence safely.
-  - Focused/relevant tests and exact-head CI are green; merge stops at explicit Product Owner REVIEW gate.
+- Regime-aware Decision Core contract clearly separates shared facts from 223-FZ-specific semantics.
+- Every 223-FZ hard blocker or positive hard fact is source-bound; unsupported items fail closed.
+- Frozen source-grounded regression cases cover GO-capable, hard-blocker candidate, missing evidence and contradictory/ambiguous
+  cases.
+- Existing 44-FZ Decision Core regressions remain unchanged and green.
+- Product/report/API projection exposes procurement regime and evidence safely.
+- Focused/relevant tests and exact-head CI are green; merge stops at explicit Product Owner REVIEW gate.
 completed:
-  - '223FZ-INGEST-V1-001 dependency completed: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed.'
-  - 'Audited Decision Core/report seams and froze docs/223fz/DECISION_REGRESSION_MATRIX.md before SUT tuning.'
-  - 'Implemented normalized procurement regime and conservative 223-FZ dispatch so shared source-bound facts remain usable while 44-FZ deadline/contract/risk semantics do not fall through.'
-  - 'Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regressions without changing the frozen matrix.'
-  - 'Projected normalized procurement regime through canonical/customer report surfaces.'
-  - 'Reduced accidental formatting-only churn in PR #81 while preserving semantics.'
-  - 'Synchronized PR #81 with current main after PR #79 / INTEGRATION-OUTBOX-V1-001 merged.'
-  - 'Fresh local validation: tests/test_decision_core_v1.py 17 passed; task-scoped ruff PASS; make check PASS; git diff --check PASS.'
-  - 'Final exact-head CI run 35223538846 SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce; PR #81 mergeable, no submitted reviews, no review threads.'
-current: >-
-  Technical implementation and all automated validation gates are complete; PR #81 is review-ready and blocked only on explicit Product Owner REVIEW approval.
-pending:
-  - Obtain explicit Product Owner REVIEW approval.
-  - After approval, revalidate current head/base/reviews and merge; never change frozen expected outcomes.
-last_verified_commit: 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce
+- '223FZ-INGEST-V1-001 dependency completed: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609 and issue #69 closed.'
+- Audited Decision Core/report seams and froze docs/223fz/DECISION_REGRESSION_MATRIX.md before SUT tuning.
+- Implemented normalized procurement regime and conservative 223-FZ dispatch so shared source-bound facts remain usable while
+  44-FZ deadline/contract/risk semantics do not fall through.
+- Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regressions
+  without changing the frozen matrix.
+- Projected normalized procurement regime through canonical/customer report surfaces.
+- 'Reduced accidental formatting-only churn in PR #81 while preserving semantics.'
+- 'Synchronized PR #81 with current main after PR #79 / INTEGRATION-OUTBOX-V1-001 merged.'
+- 'Fresh local validation: tests/test_decision_core_v1.py 17 passed; task-scoped ruff PASS; make check PASS; git diff --check
+  PASS.'
+- 'Final exact-head CI run 35223538846 SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce; PR #81 mergeable, no submitted
+  reviews, no review threads.'
+- 'Product Owner explicit approval 2026-09-18: «Разрешаю merge PR #81 после успешного exact-head CI.»'
+- Final exact-head CI run 35224747739 SUCCESS at c7b846cfc85137be05e0d6d022046b7d7210a952.
+- 'PR #81 squash-merged as f603c9f62859b49287456069d7be98ac1c8ce1dd; issue #70 closed completed.'
+- Verified squash-merge tree content exactly matches the approved exact-head branch tree.
+current: 'Definition of Done satisfied; PR #81 merged and issue #70 closed completed.'
+pending: []
+last_verified_commit: f603c9f62859b49287456069d7be98ac1c8ce1dd
 test_results:
-  - 'tests/test_decision_core_v1.py: 17 passed.'
-  - 'task-scoped ruff: PASS.'
-  - 'make check: PASS.'
-  - 'git diff --check: PASS.'
-  - 'Exact-head CI run 35223538846: SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce.'
-updated_at: '2026-09-17T16:02:25+03:00'
-resume_instruction: >-
-  Wait for explicit Product Owner REVIEW approval for PR #81. On a later invocation, reconcile new Owner/PR evidence first; if approved, revalidate current head/base/reviews and merge without changing frozen expected outcomes.
+- 'tests/test_decision_core_v1.py: 17 passed.'
+- 'task-scoped ruff: PASS.'
+- 'make check: PASS.'
+- 'git diff --check: PASS.'
+- 'Exact-head CI run 35223538846: SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce.'
+- 'Exact-head CI run 35224747739: SUCCESS at c7b846cfc85137be05e0d6d022046b7d7210a952.'
+- 'Approved branch tree == squash-merge tree: PASS.'
+updated_at: '2026-09-18T08:19:08+03:00'
+resume_instruction: Task completed. Do not reopen. Reconcile the execution queue and select the next explicitly admitted executable
+  item; if none exists, leave no task in_progress.
 execution:
   claimed_by: null
   execution_id: null
