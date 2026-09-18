@@ -1,43 +1,41 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: PROCUREMENT-KANBAN-V1-001
-authority: AUTO
-goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without introducing parallel workflow semantics or external effects.
+status: in_progress
+task_id: WATCHDOG-CONTINUATION-V2-001
+authority: OWNER_DIRECTIVE
+goal: Make the single hourly Tender Agent Watchdog continue deterministic bounded roadmap work under an active Owner continuation directive instead of silently idling on an empty queue, while preserving Company/Product hard stops and review gates.
 definition_of_done:
-- Add an internal kanban route/view in the existing Commercial Operator Console.
-- Group active non-deleted deals deterministically by canonical DealStatus; archived/deleted semantics remain consistent with existing behavior.
-- Show compact cards from already persisted deal fields and link to the existing tender/deal card.
-- Add bounded filters/search using existing persisted fields only.
-- If status changes are exposed, they are explicitly human-initiated and call the existing canonical status validation/apply path; invalid transitions fail closed and remain audited.
-- Do not add automatic transitions, procurement submission, external communication, CRM clone behavior, a parallel stage enum, a new workflow table, a new frontend framework, or an unnecessary DB migration.
-- Focused kanban/status/deal/console tests and relevant regression tests pass; exact-head CI is green.
-- Prepare a review-ready PR; final merge is not implicitly approved and remains gated because auto_merge=false.
+- Reconcile PROCUREMENT-KANBAN-V1-001 as completed from merged PR #85 and exact-head CI evidence.
+- Add a durable active Owner continuation directive and a deterministic empty-queue continuation contract without allowing the executor to invent product priorities, widen scope, downgrade REVIEW/HUMAN/OWNER gates, or bypass hard stops.
+- When no implementation-ready queue item exists, the next canonical continuation candidate resolves deterministically from the roadmap continuation matrix and is admitted only as a bounded evidence/revalidation slice unless a bounded Definition of Done already exists canonically.
+- Admit the next bounded continuation slice on canonical main as part of this change so the watchdog has executable work immediately after merge.
+- Make watchdog run reporting fail-visible: exactly one issue #57 comment is created at run start and updated in place at run end, so interrupted runs do not disappear silently.
+- Keep exactly one hourly Tender Agent Watchdog; update its existing Scheduled Task prompt rather than creating a duplicate.
+- Record that this material executor-policy change triggers the Company AM-4 mandatory Owner-review gate for future automatic merges; preparation/implementation/testing may continue but automatic merges fail closed until an attributable renewal.
+- Validate YAML/policy consistency, relevant repository checks and exact-head CI; merge this specifically Owner-directed maintenance change only after green CI.
 completed:
-- Owner admission recorded in issue #83 comment #5726117047; queue order 90 admitted.
-- Implemented /commercial-console/kanban over canonical Deal/DealStatus with deterministic grouping, archived/deleted exclusion, persisted-field cards and bounded filters/search.
-- Added explicit human-only status transition endpoint delegating to status_engine.apply_transition; invalid transitions fail closed and remain audited.
-- Focused tests passed: 4 passed; relevant regression set passed: 7 passed, 13 skipped; local make check passed.
-- Product Owner explicitly approved merge of PR #85 on 2026-09-18 after current exact-head green CI.
-- Rebased exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed GitHub CI run 35353562825 SUCCESS.
-- PR #85 merged 2026-09-18T14:09:46Z as 24d515d1a16fdc7906bcc5801ad700afb2206589.
-- Issue #83 closed completed 2026-09-18T14:10:03Z.
-current: Completed; do not reopen without a concrete regression or explicit new Owner admission/directive.
-pending: []
+- PR #84 branch-hygiene bookkeeping merged as 2ac371360ef57bf0e79f157e5732bb61b993c68f after exact-head CI success.
+- PR #85 rebased onto PR #84/main; exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed CI run 35353562825 SUCCESS 9/9 and was squash-merged as 24d515d1a16fdc7906bcc5801ad700afb2206589 under explicit Product Owner approval.
+- Issue #83 closed completed with merge/CI evidence.
+current: Implement the durable continuation-policy and fail-visible reporting repair, then update the existing hourly Scheduled Task.
+pending:
+- Reconcile Kanban queue/checkpoint state as completed.
+- Add active Owner directive and deterministic continuation admission contract.
+- Seed the first bounded continuation/revalidation item.
+- Harden reporting contract and watchdog binding.
+- Validate locally and open a reviewable PR.
+- Update the existing Tender Agent Watchdog Scheduled Task to the new concise canonical protocol and verify enabled/hourly/singleton.
+- Run exact-head CI and merge this explicitly Owner-directed watchdog repair if green.
 last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
 test_results:
-- "ruff check changed Python/test files: PASS."
-- "pytest tests/test_commercial_operator_console_c4.py: 4 passed, 6 warnings."
-- "pytest relevant regression set: 7 passed, 13 skipped, 8 warnings."
-- "uv run make check: PASS."
-- "GitHub exact-head CI run 35353562825 at 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10: SUCCESS."
-updated_at: '2026-09-18T18:02:00+03:00'
-resume_instruction: Reconcile execution queue/checkpoint against merged PR #85 and closed issue #83; scan later admitted queue items strictly by order. Do not reopen this completed gate without explicit new admission.
+- "PR #85 exact-head CI run 35353562825: SUCCESS 9/9."
+updated_at: '2026-09-18T17:14:00+03:00'
+resume_instruction: Reconcile order 90/checkpoint to completed, then implement owner-directive continuation selection and fail-visible one-comment-per-run reporting without weakening any hard stop; seed the first deterministic bounded revalidation item from the continuation matrix.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: null
-  issue: 83
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260918-watchdog-continuation-v2
+  branch: owner/watchdog-continuation-v2-001
+  base_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
+  issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-18T19:05:00+03:00'

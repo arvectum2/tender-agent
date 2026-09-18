@@ -1,0 +1,37 @@
+task_id: WATCHDOG-CONTINUATION-V2-001
+status: in_progress
+goal: Repair empty-queue continuation and silent-run reporting for the single Tender Agent Watchdog under the explicit 2026-09-18 Owner directive.
+definition_of_done:
+  - Kanban v1 completion reconciled.
+  - Durable Owner continuation directive exists.
+  - Empty queue resolves deterministically to a bounded roadmap continuation slice without invented priority/scope.
+  - First next bounded slice is admitted on canonical main by this change.
+  - Run reporting is fail-visible with one issue #57 comment created at start and updated at end.
+  - Existing singleton hourly Scheduled Task is updated and verified, not replaced.
+  - Material policy change is recorded as triggering AM-4 Owner-review for future automatic merges.
+  - YAML/policy checks and exact-head CI pass; explicitly Owner-directed maintenance PR merged.
+completed:
+  - PR #84 merged after exact-head green CI.
+  - PR #85 exact-head CI 35353562825 SUCCESS 9/9; merged as 24d515d1a16fdc7906bcc5801ad700afb2206589.
+  - Issue #83 closed completed.
+current: Implement repository-owned continuation and reporting policy.
+remaining:
+  - Reconcile Kanban completion.
+  - Implement owner directive/selection/reporting changes.
+  - Seed next bounded continuation item.
+  - Validate and open PR.
+  - Update/verify scheduled watchdog.
+  - Obtain exact-head green CI and merge.
+last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
+test_results:
+  - PR #85 exact-head CI 35353562825 SUCCESS 9/9.
+resume_instruction: Implement the repository policy repair first; do not change product priorities or hard stops. Seed only the deterministic first bounded revalidation item.
+updated_at: '2026-09-18T17:14:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260918-watchdog-continuation-v2
+  branch: owner/watchdog-continuation-v2-001
+  base_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
+  issue: null
+  manual_override: false
+  lease_until: '2026-09-18T19:05:00+03:00'
