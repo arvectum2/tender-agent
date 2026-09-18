@@ -1,0 +1,28 @@
+task_id: BRANCH-HYGIENE-001
+status: completed
+goal: Clean remote branch/PR clutter safely and identify the next bounded development increment.
+definition_of_done:
+  - Inventory all remote branches/open PRs.
+  - Close superseded open PRs.
+  - Delete only branches proven safe.
+  - Resolve maintenance PR #78 and roadmap PR #82.
+  - Record durable cleanup evidence.
+  - Identify one next bounded development task.
+completed:
+  - Closed stale PRs #12, #45, #48.
+  - Deleted 93 merged/superseded branches with zero failures.
+  - Deleted 11 additional branches after byte-equivalence validation against main.
+  - Merged PR #82 after exact-head CI success and deleted its branch.
+  - Rebased/refreshed PR #78, added renewal authority source, merged after exact-head CI success and deleted its branch.
+  - Reduced remote branches from 143 including main to 36 including the temporary hygiene branch.
+  - Preserved 34 historical non-main branches with unique unmerged content/recovery history.
+  - Created issue #83 as the recommended next development increment.
+current: Completed; only bookkeeping merge remains.
+remaining: []
+last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+test_results:
+  - Safe-delete 93/93 PASS.
+  - Content-equivalence delete 11/11 PASS.
+  - PR #82 CI 35312663415 SUCCESS.
+  - PR #78 CI 35313488952 SUCCESS 9/9.
+resume_instruction: Do not reopen branch hygiene. Preserve remaining unique historical branches until separately reviewed.
