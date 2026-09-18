@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: PROCUREMENT-KANBAN-V1-001
 authority: AUTO
 goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without introducing parallel workflow semantics or external effects.
@@ -14,37 +14,30 @@ definition_of_done:
 - Focused kanban/status/deal/console tests and relevant regression tests pass; exact-head CI is green.
 - Prepare a review-ready PR; final merge is not implicitly approved and remains gated because auto_merge=false.
 completed:
-- Recovered canonical roadmap/queue/checkpoint state and admitted issue #83 from the 2026-09-18 Owner continuation directive.
-- Created isolated branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c and added queue item order 90.
-- Reused the existing Commercial Operator Console, Deal/DealStatus model and canonical status engine; no parallel lifecycle or migration was introduced.
-- Implemented /commercial-console/kanban with deterministic canonical-status columns, archived/deleted exclusion, persisted-field cards and bounded filters/search.
-- Added explicit human-only kanban status transition endpoint delegating to status_engine.apply_transition; invalid jumps fail closed and use the existing blocked-transition audit event.
-- Added focused tests for rendering, filtering, archived exclusion, valid human transition and invalid transition blocking.
-- Updated operator-console product documentation and opened review PR #85.
-- Local lint passed after ruff fixes.
-- Local focused tests passed: 4 passed, 6 warnings.
-- Local relevant regression set passed: 7 passed, 13 skipped, 8 warnings.
-- Local CI-equivalent make check passed.
-- Full default pytest reached 3028 passed / 241 skipped; 3 R9 Docker-backed acceptance tests failed locally because the temporary worktree could not execute Docker, so GitHub CI remains authoritative for those environment-dependent checks.
-current: Rebased onto merged PR #84/main; Product Owner explicitly approved merge of PR #85 on 2026-09-18. Await exact-head CI for the rebased head, then guarded merge.
-pending:
-- Push rebased head and obtain exact-head CI success.
-- If green and head is unchanged, merge PR #85 under the explicit Product Owner approval from 2026-09-18.
-- After merge, reconcile queue/checkpoint as completed on canonical main.
-last_verified_commit: 55822172615952107b20ea45800ea0df8f832026
+- Owner admission recorded in issue #83 comment #5726117047; queue order 90 admitted.
+- Implemented /commercial-console/kanban over canonical Deal/DealStatus with deterministic grouping, archived/deleted exclusion, persisted-field cards and bounded filters/search.
+- Added explicit human-only status transition endpoint delegating to status_engine.apply_transition; invalid transitions fail closed and remain audited.
+- Focused tests passed: 4 passed; relevant regression set passed: 7 passed, 13 skipped; local make check passed.
+- Product Owner explicitly approved merge of PR #85 on 2026-09-18 after current exact-head green CI.
+- Rebased exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed GitHub CI run 35353562825 SUCCESS.
+- PR #85 merged 2026-09-18T14:09:46Z as 24d515d1a16fdc7906bcc5801ad700afb2206589.
+- Issue #83 closed completed 2026-09-18T14:10:03Z.
+current: Completed; do not reopen without a concrete regression or explicit new Owner admission/directive.
+pending: []
+last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
 test_results:
 - "ruff check changed Python/test files: PASS."
 - "pytest tests/test_commercial_operator_console_c4.py: 4 passed, 6 warnings."
-- "pytest tests/test_sprint1_integration.py tests/test_controlled_pilot_operator_workflow_cp2.py tests/test_commercial_operator_console_c4.py: 7 passed, 13 skipped, 8 warnings."
+- "pytest relevant regression set: 7 passed, 13 skipped, 8 warnings."
 - "uv run make check: PASS."
-- "full default pytest: 3028 passed, 241 skipped, 3 environment-dependent R9 Docker acceptance failures (command failed: docker); exact GitHub CI pending."
-updated_at: '2026-09-18T16:55:00+03:00'
-resume_instruction: Push/recheck the rebased PR #85 exact head. If CI fails, fix autonomously. If exact-head CI is green and head is unchanged, merge PR #85 under the explicit 2026-09-18 Product Owner approval, then reconcile canonical queue/checkpoint as completed.
+- "GitHub exact-head CI run 35353562825 at 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10: SUCCESS."
+updated_at: '2026-09-18T18:02:00+03:00'
+resume_instruction: Reconcile execution queue/checkpoint against merged PR #85 and closed issue #83; scan later admitted queue items strictly by order. Do not reopen this completed gate without explicit new admission.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260918-procurement-kanban-v1
-  branch: agent/procurement-kanban-v1-001
-  base_commit: 2ac371360ef57bf0e79f157e5732bb61b993c68f
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: null
   issue: 83
   manual_override: false
-  lease_until: '2026-09-18T18:30:00+03:00'
+  lease_until: null
