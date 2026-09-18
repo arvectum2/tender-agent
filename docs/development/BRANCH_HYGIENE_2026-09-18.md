@@ -11,12 +11,13 @@ Repository branch cleanup was performed conservatively against canonical `main`.
 - Additional completed maintenance branches removed after merge: `owner/roadmap-sync-20260918`, `chore/project-watchdog-config`, and stale checkpoint-only `agent/reuse-first-001`.
 - Roadmap sync PR #82 merged as `edd35979` after exact-head CI `35312663415` success.
 - Project Watchdog binding PR #78 refreshed to current main, updated with the 2026-09-16 AM-4 renewal source, and merged as `aa5aa7a` after exact-head CI `35313488952` success.
-- Before merging this bookkeeping branch: **36 remote branches including main and this branch**.
-- Expected after merging/deleting this branch: **35 remote branches = main + 34 preserved historical branches**.
+- All 34 remaining historical branches with unique commits were **renamed losslessly** into `archive/2026-09-18/*`: each archive ref points to the exact original commit SHA, and only after successful archive creation was the original branch deleted.
+- Before merging this bookkeeping branch: **36 remote branches = `main` + this temporary hygiene branch + 34 archive branches**.
+- Expected after merging/deleting this branch: **35 remote branches = `main` + 34 explicitly archived historical refs**. There will be no other active-looking remote branch.
 
-## Why 34 historical branches remain
+## Why 34 archived historical refs remain
 
-They were **not** deleted because they still contain unique unmerged commits relative to current main, or represent unrelated recovery history. Branch-name age alone is not sufficient evidence for destructive deletion.
+They contain unique unmerged commits relative to current main, or represent unrelated recovery history. Instead of deleting recoverable work or leaving it mixed with active branches, every one was moved to the `archive/2026-09-18/` namespace at the identical commit SHA.
 
 Preserved areas include:
 - reproducible dependency/lock experiments;
@@ -27,7 +28,7 @@ Preserved areas include:
 - MacBook recovery history;
 - two supplier-engine discovery adapter variants whose current-main implementation is newer but whose branch documentation/history is not fully byte-equivalent.
 
-A future archive pass may inspect these semantically and either port missing value, tag/archive them, or delete them with explicit evidence. Automatic deletion is prohibited until that review.
+A future semantic pass may inspect these archived refs and either port missing value or delete the archive refs with explicit evidence. They no longer appear as active development branches.
 
 ## Next development increment
 
