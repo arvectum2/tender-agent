@@ -24,6 +24,8 @@ completed:
 - Local lint passed after ruff fixes.
 - Local focused tests passed: 4 passed, 6 warnings.
 - Local relevant regression set passed: 7 passed, 13 skipped, 8 warnings.
+- Local CI-equivalent make check passed.
+- Full default pytest reached 3028 passed / 241 skipped; 3 R9 Docker-backed acceptance tests failed locally because the temporary worktree could not execute Docker, so GitHub CI remains authoritative for those environment-dependent checks.
 current: Exact-head GitHub CI for PR #85 after final checkpoint update.
 pending:
 - Confirm exact-head CI is green.
@@ -34,7 +36,9 @@ test_results:
 - "ruff check changed Python/test files: PASS."
 - "pytest tests/test_commercial_operator_console_c4.py: 4 passed, 6 warnings."
 - "pytest tests/test_sprint1_integration.py tests/test_controlled_pilot_operator_workflow_cp2.py tests/test_commercial_operator_console_c4.py: 7 passed, 13 skipped, 8 warnings."
-updated_at: '2026-09-18T09:43:00+03:00'
+- "uv run make check: PASS."
+- "full default pytest: 3028 passed, 241 skipped, 3 environment-dependent R9 Docker acceptance failures (command failed: docker); exact GitHub CI pending."
+updated_at: '2026-09-18T09:58:00+03:00'
 resume_instruction: Check exact-head CI on PR #85. If it fails, inspect failing jobs and fix autonomously. If it is green, update queue/current-task/checkpoint to blocked awaiting Product Owner merge approval, release the lease, and stop before merge.
 execution:
   claimed_by: ChatGPT interactive

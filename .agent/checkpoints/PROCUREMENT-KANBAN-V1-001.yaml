@@ -20,6 +20,8 @@ completed:
   - Local ruff check PASS.
   - Focused tests PASS: 4 passed.
   - Relevant regression set PASS: 7 passed, 13 skipped.
+  - Local CI-equivalent make check PASS.
+  - Full default pytest: 3028 passed, 241 skipped; 3 R9 Docker-backed acceptance tests failed from local Docker execution only, pending authoritative GitHub CI.
 current: Exact-head GitHub CI for PR #85 after checkpoint update.
 remaining:
   - Confirm exact-head CI.
@@ -29,8 +31,10 @@ test_results:
   - ruff changed files PASS.
   - focused pytest 4 passed, 6 warnings.
   - relevant pytest 7 passed, 13 skipped, 8 warnings.
+  - uv run make check PASS.
+  - full default pytest 3028 passed, 241 skipped; 3 local Docker-environment R9 acceptance failures; exact GitHub CI pending.
 resume_instruction: Check exact-head CI on PR #85; fix failures autonomously; on green mark blocked awaiting Product Owner merge approval and release lease. Do not merge without separate approval.
-updated_at: '2026-09-18T09:43:00+03:00'
+updated_at: '2026-09-18T09:58:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-procurement-kanban-v1
