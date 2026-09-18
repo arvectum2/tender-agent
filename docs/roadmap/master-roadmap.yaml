@@ -327,6 +327,21 @@ continuation_branches:
     historical_items: [ARV-030, ARV-031, ARV-032, ARV-033, ARV-034, ARV-035, ARV-036, ARV-037, ARV-071]
     residual_scope: 'Unified connector layer, federal ETP uniqueness research, TEK-Torg/Fabrikant/B2B-Center/Tender-Pro and remaining ETPs; revision-aware dedupe v1 is already available as infrastructure.'
     gates: 'Read-only acquisition can be bounded; authenticated/private or consequential platform actions require separate authority.'
+  - branch_id: 223FZ-BREADTH
+    title: Expand 223-FZ beyond the completed v1 intake/decision boundary
+    historical_items: [ARV-006]
+    residual_scope: 'Broaden 223-FZ source/document/procedure coverage only from measured gaps; preserve separate regime semantics and source-bound fail-closed decisions.'
+    gates: 'The v1 foundation is done; new breadth requires a concrete regression/corpus gap and explicit bounded admission. Unsupported legal/procedural assumptions remain UNKNOWN/NEEDS_REVIEW.'
+  - branch_id: MONITORING-DELIVERY
+    title: Extend internal monitoring into user-facing delivery channels
+    historical_items: [ARV-021, ARV-056, ARV-025, ARV-029, ARV-045]
+    residual_scope: 'Build only explicitly approved adapters from the completed internal monitoring/outbox foundation to email/CRM/webhook/scheduled reporting surfaces.'
+    gates: 'Real external delivery is disabled by default and requires separate REVIEW/HUMAN authority; no autonomous supplier/customer communication.'
+  - branch_id: COMPETITIVE-BENCHMARK
+    title: Identical-procurement competitive benchmark refresh
+    historical_items: [ARV-072]
+    residual_scope: 'Use the completed domain-regression registry as infrastructure for a controlled same-procurement competitor benchmark refreshed at milestone boundaries.'
+    gates: 'Benchmark method/corpus must be frozen before evaluated outputs; exposed cases are regression-only and anti-circularity remains mandatory.'
   - branch_id: GO-TO-MARKET
     title: Legal/commercial packaging, pricing, site and acquisition metrics
     historical_items: [ARV-038, ARV-039, ARV-040, ARV-041, ARV-054]
@@ -352,6 +367,11 @@ continuation_branches:
     historical_items: [BASE-003, BASE-007, BASE-011, BASE-012, BASE-014, ARV-003, ARV-051, ARV-075]
     residual_scope: 'Reconcile July snapshot partial statuses against current repository/runtime evidence without rewriting history.'
     gates: 'Status-only reconciliation does not grant implementation or merge authority.'
+  - branch_id: ID-CONFLICT-RESOLUTION
+    title: Resolve historical ARV-073 / ARV-074 ID collisions
+    historical_items: [ARV-073, ARV-074]
+    residual_scope: 'Owner-level reconciliation of later reused IDs versus preserved 2026-07-30 historical meanings; no silent renumbering.'
+    gates: 'Blocked on explicit OWNER reconciliation; not executable engineering work until resolved.'
 
 legacy_registry:
 - id: BASE-001
