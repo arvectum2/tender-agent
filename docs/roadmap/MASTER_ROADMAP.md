@@ -302,6 +302,6 @@ The first materialized continuation slice is `ARV-002-REVALIDATION-001` under `C
 
 ## Executor rule
 
-`.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
+`.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not arbitrarily promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
 
-When a roadmap item becomes ready for execution, the Product Owner/Owner or another already-authorized canonical mechanism must create/promote the corresponding queue entry with explicit authority, dependencies, done gate and merge policy.
+While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-a-time bounded-materialization rule is itself an explicitly authorized canonical admission mechanism: the watchdog may select the next eligible continuation item in document order and admit only the bounded form permitted by `.agent/owner-directive.yaml`. Outside that mechanism, roadmap promotion still requires Product Owner/Owner or another separately authorized canonical source.

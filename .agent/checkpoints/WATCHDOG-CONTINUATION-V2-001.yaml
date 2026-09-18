@@ -1,5 +1,5 @@
 task_id: WATCHDOG-CONTINUATION-V2-001
-status: in_progress
+status: completed
 goal: Repair empty-queue continuation and silent-run reporting for the single Tender Agent Watchdog under the explicit 2026-09-18 Owner directive.
 definition_of_done:
   - Kanban v1 completion reconciled.
@@ -19,24 +19,27 @@ completed:
   - PR #84 merged after exact-head green CI.
   - PR #85 exact-head CI 35353562825 SUCCESS 9/9; merged as 24d515d1a16fdc7906bcc5801ad700afb2206589.
   - Issue #83 closed completed.
-current: Repository-owned continuation/reporting policy validated locally; commit/push and open PR.
-remaining:
-  - Validate and open PR.
-  - Update/verify scheduled watchdog.
-  - Obtain exact-head green CI and merge.
-last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
+  - PR #87 exact-head CI passed and bookkeeping merge landed as 8d7c00489c064a6dabcdac41f55578a0b7281ac3.
+  - Existing Tender Agent Watchdog id 6aa7ef95fc9c8191beaa71fea17dc372 updated in place and verified enabled/exact-hourly/singleton.
+  - Scheduled prompt now creates one fail-visible issue #57 placeholder before mutation, updates it in place at run end, and must continue substantive ready/owner-directed bounded work in the same invocation instead of repeatedly waiting on bookkeeping.
+  - Conflicting executor-rule wording reconciled without weakening hard stops.
+current: Completed on merge of PR #86; ARV-002-REVALIDATION-001 is the next ready item.
+remaining: []
+last_verified_commit: 7bee177
 test_results:
   - PR #85 exact-head CI 35353562825 SUCCESS 9/9.
   - focused watchdog continuation policy test 2 passed.
   - uv run make check PASS.
   - git diff --check PASS.
-resume_instruction: Commit/push and open the watchdog repair PR; obtain exact-head CI; after merge update and verify the existing singleton Scheduled Task.
-updated_at: '2026-09-18T17:31:00+03:00'
+  - PR #87 exact-head CI SUCCESS and merge 8d7c00489c064a6dabcdac41f55578a0b7281ac3.
+  - existing Scheduled Task update verified enabled/exact-hourly/singleton.
+resume_instruction: Completed. Next run must claim ARV-002-REVALIDATION-001 and do concrete revalidation work; future automatic merges remain fail-closed pending attributable Owner AM-4 renewal.
+updated_at: '2026-09-18T22:31:00+03:00'
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260918-watchdog-continuation-v2
-  branch: owner/watchdog-continuation-v2-001
-  base_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: 8d7c00489c064a6dabcdac41f55578a0b7281ac3
   issue: null
   manual_override: false
-  lease_until: '2026-09-18T19:05:00+03:00'
+  lease_until: null

@@ -39,7 +39,7 @@ continuous_execution:
     - 'A material executor-policy change triggers the Company AM-4 review gate: repository preparation/testing may continue, but automatic merges fail closed until attributable Owner renewal.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
 execution_snapshot:
-  updated_at: '2026-09-18T05:20:12Z'
+  updated_at: '2026-09-18T19:31:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -61,7 +61,9 @@ execution_snapshot:
     - 223FZ-INGEST-V1-001
     - 223FZ-DECISION-V1-001
     - DOMAIN-REGRESSION-V1-001
-  note: 'Items through order 90 are completed. Active OWNER-CONTINUOUS-ROADMAP-2026-09-18 permits deterministic bounded continuation when the queue would otherwise be empty; it does not permit priority invention or hard-stop bypass. ARV-002-REVALIDATION-001 is the first materialized continuation slice.'
+    - PROCUREMENT-KANBAN-V1-001
+    - WATCHDOG-CONTINUATION-V2-001
+  note: 'Items through order 95 are completed. Active OWNER-CONTINUOUS-ROADMAP-2026-09-18 permits deterministic bounded continuation when the queue would otherwise be empty; it does not permit priority invention or hard-stop bypass. ARV-002-REVALIDATION-001 is admitted and ready as the first materialized continuation slice.'
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
