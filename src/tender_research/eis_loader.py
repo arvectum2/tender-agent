@@ -1,13 +1,10 @@
 from __future__ import annotations
 
-import logging
 from datetime import datetime
 from typing import Any
 
 from src.tender_research.errors import EisLoaderError
 from src.tender_research.schemas import EisDocumentRaw, EisTenderRaw
-
-logger = logging.getLogger(__name__)
 
 
 class EisTenderLoader:

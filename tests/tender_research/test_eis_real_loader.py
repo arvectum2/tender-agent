@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 from src.tender_research.eis_loader import EisTenderLoader
-from src.tender_research.errors import EisLoaderError
 from src.tender_research.eis_real_loader import RealEisLoader
+from src.tender_research.errors import EisLoaderError
 from src.tender_research.schemas import EisDocumentRaw, EisTenderRaw
 
 
