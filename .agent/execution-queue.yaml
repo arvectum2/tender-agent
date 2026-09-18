@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-18T08:20:00+03:00'
+updated_at: '2026-09-18T09:27:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -271,6 +271,22 @@ items:
   - COMMERCIAL-CORE-V1-001
   executor_scope: Build a versioned registry/lifecycle for confirmed real procurement regressions and machine-readable CI results, preserving strict blind/acceptance/regression separation and anti-circularity.
   done_gate: 'Issue #71 Definition of Done satisfied; manifest integrity/anti-circularity tests and exact-head CI green; any material benchmark-method change merged only after Product Owner REVIEW approval; issue #71 closed completed.'
+- order: 90
+  task_id: PROCUREMENT-KANBAN-V1-001
+  strategy: COPY_PATTERN
+  title: Operator kanban over existing deal/status engine
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  source: 'issue #83; Owner admission comment #5726117047 from 2026-09-18 directive: continue work according to roadmap'
+  roadmap_scope:
+  - ARV-019
+  dependencies:
+  - COMMERCIAL-CORE-V1-001
+  custom_boundary: Reuse canonical Deal/DealStatus, transition validation/history, Commercial Operator Console routes/styles and server-rendered patterns. Do not create a parallel workflow engine, stage enum, CRM subsystem or new frontend framework.
+  executor_scope: Implement a thin internal kanban board over existing persisted deal/status state; deterministic grouping and bounded filters/search; any status change must be explicitly human-initiated and use the existing canonical status service. No automatic transitions, procurement submission, external communication or other external effect.
+  done_gate: 'Issue #83 Definition of Done satisfied: deterministic stable board; deleted/archived semantics preserved; canonical status engine remains sole transition authority; valid/invalid human transition tests; existing console/status/deal routes green; focused/relevant tests and exact-head CI green; no unnecessary DB migration or external side effect; final merge remains review-gated because auto_merge=false.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
