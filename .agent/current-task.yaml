@@ -18,8 +18,8 @@ completed:
 - Ran a second content-equivalence audit and deleted 11 additional branches whose branch-touched files were byte-identical to current main.
 - PR #82 exact-head CI 35312663415 passed; roadmap sync merged as edd35979bce9bc9f9bfcf47708ff3f8ed88fc69e and branch deleted.
 - PR #78 was rebased onto current main, updated with the 2026-09-16 AM-4 renewal authority source, exact-head CI 35313488952 passed 9/9, and merged as aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c; branch deleted.
-- Remote branch count reduced from 143 including main to 36 including main and this temporary hygiene branch. After this bookkeeping branch is merged/deleted, 35 branches remain: main plus 34 historical branches with unique unmerged commits.
-- Preserved every remaining historical branch with unique content rather than deleting potentially recoverable work.
+- Remote branch count reduced from 143 including main to 36 including main and this temporary hygiene branch. The 34 preserved historical refs now all live under `archive/2026-09-18/*`; after this bookkeeping branch is merged/deleted, the only non-archive active branch is `main`.
+- Preserved every remaining historical branch with unique content by moving all 34 to the explicit `archive/2026-09-18/` namespace at the exact same commit SHA, then deleting the original active-looking refs.
 - Created issue #83 PROCUREMENT-KANBAN-V1-001 as the recommended next bounded development increment mapped to ARV-019/COPY_PATTERN; it is not silently admitted into the execution queue.
 current: Branch hygiene complete; bookkeeping PR remains.
 pending: []
@@ -29,7 +29,7 @@ test_results:
 - "Content-equivalence batch 2: 11/11 branches deleted."
 - "Roadmap PR #82 exact-head CI 35312663415: SUCCESS; merged edd35979."
 - "Watchdog config PR #78 exact-head CI 35313488952: SUCCESS 9/9; merged aa5aa7a."
-- "Remaining branches: all preserved historical branches have unique unmerged content relative to main or unrelated recovery history."
+- "Archive pass: 34/34 unique historical branches recreated under archive/2026-09-18/* at identical SHAs; 34/34 original refs deleted."
 updated_at: '2026-09-18T09:18:00+03:00'
 resume_instruction: Task completed. Do not delete the remaining historical branches automatically; they require semantic review/archive decisions. Next recommended development increment is issue #83, but queue admission requires an explicit Owner directive.
 execution:
