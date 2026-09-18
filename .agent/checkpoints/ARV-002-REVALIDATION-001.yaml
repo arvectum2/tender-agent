@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-002-REVALIDATION-001
+status: in_progress
+authority: AUTO
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+branch: agent/arv-002-revalidation-20260918
+observed_at: '2026-09-18T23:08:00+03:00'
+roadmap_evidence:
+- 'ARV-002 legacy snapshot: live exact-number flow, production source graph, persistent artifacts, recovery and controlled-pilot deployment were confirmed in R7; next_result is inclusion in the final R9 integration gate and then use as production-like pilot baseline.'
+- 'ARV-002 reconciliation on canonical main is still needs_revalidation.'
+- 'Historical dependency ARV-073 is an unresolved ID collision in the restored roadmap, so this task does not infer or mutate that mapping.'
+current_evidence:
+- 'Canonical main 46d01bd8282eb237b7d60ad62c9b9b2b6b103867 has current CI run 35387329435 completed SUCCESS.'
+- 'The restored roadmap records R9 Operational Hardening as completed via PR #16 / merge 58bef2da2342bff1e6f63215ee2697e96fefe6f7 with five CI jobs green and full suite 1680 passed / 188 skipped.'
+- 'The roadmap also records BASE-018/R9 as a frozen operational baseline with deterministic startup/restart, idempotency, publication concurrency, interrupted-state classification, reconciliation/recovery and compensated cross-store backup/restore.'
+residual_gap:
+  state: evidence_reconciliation_pending
+  detail: 'Current main has strong durable R7/R9 completion evidence, but this run has not yet located a current deterministic test specifically naming the ARV-002 exact-number live E2E/no-hidden-fallback invariant. Do not infer completion solely from generic CI.'
+next_action: 'Inspect current test/runbook paths for exact-number E2E and fallback invariants; run or cite the narrow deterministic repository-only check, then update the roadmap reconciliation overlay. If no such check exists, record only the source-traceable residual regression-gate gap; do not invent architecture or acceptance criteria.'
+execution:
+  lease_until: '2026-09-19T00:54:00+03:00'
+  external_effects: none
