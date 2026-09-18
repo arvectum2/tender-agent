@@ -1,0 +1,33 @@
+schema_version: 1
+project_name: Tender Agent
+repository: arvectum2/tender-agent
+default_branch: main
+roadmap_paths:
+  - docs/roadmap/master-roadmap.yaml
+  - docs/roadmap/MASTER_ROADMAP.md
+execution_queue_path: .agent/execution-queue.yaml
+current_task_path: .agent/current-task.yaml
+checkpoint_dir: .agent/checkpoints
+executor_policy_path: .agent/executor-policy.yaml
+audit_issue: 57
+watchdog_title: Tender Agent Watchdog
+timezone: Europe/Moscow
+merge_policy: repo_policy
+auto_merge_authority_sources:
+  - repository: arvectum2/arvectum-company
+    path: docs/governance/decisions/DECISION-2026-09-14-POS-004-ROADMAP-EXECUTOR-AM4.md
+  - repository: arvectum2/arvectum-company
+    path: docs/organization/POS-004-ROADMAP-EXECUTOR-AM4-AUTHORIZATION-v1.0.0.md
+  - repository: arvectum2/arvectum-company
+    path: docs/governance/decisions/DECISION-2026-09-16-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+runtime:
+  cadence: hourly
+  max_productive_quantum_minutes: 45
+  stale_progress_recovery_minutes: 90
+  self_disable_prohibited: true
+  disable_requires_explicit_user_request: true
+  single_watchdog_per_project: true
+reporting:
+  mandatory_every_run: true
+  no_progress_marker: NO PRODUCTIVE PROGRESS
+  append_to_audit_issue: true
