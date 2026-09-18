@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-002-NO-HIDDEN-FALLBACK-001
-status: in_progress
+status: blocked
 authority: AUTO
 branch: agent/arv-002-no-hidden-fallback-20260919
 base_commit: 42c70cb
@@ -17,20 +17,21 @@ completed:
 - 'EisTenderLoader real registry_numbers list path now raises EisLoaderError instead of returning demo tenders.'
 - 'Explicit demo discovery now uses a dedicated demo-mode loader and remains available only through explicit/allowed demo policy.'
 - 'Added deterministic tests for fail-closed list behavior and exact registry-number real delegation.'
-- Revalidation gap and bounded successor admission inherited from parent PR #88 branch.
-current: Final implementation locally validated (448 tender_research tests); exact-head CI pending on final head.
+- 'Revalidation gap and bounded successor admission inherited from parent PR #88 branch.'
+- 'Exact implementation head 77f81b78e98e5f5c092fc235d5e7637b7ed749f1 passed GitHub CI run 35406092595 SUCCESS.'
+current: Implementation and deterministic validation are complete; merge is REVIEW-gated pending attributable Owner AM-4 renewal after the 2026-09-18 material executor-policy change.
 remaining:
-- Exact-head CI.
-- Stop before merge unless attributable Owner/AM-4 review gate is satisfied.
+- 'Owner/AM-4 review gate before merge.'
 test_results:
 - 'Broad tender_research suite: 448 passed, 9 skipped, 29 warnings.'
 - 'Affected focused suite: 71 passed, 1 warning.'
 - 'uv run make check: PASS.'
 - 'git diff --check: PASS.'
-resume_instruction: Check PR #89 exact-head CI once; fix failures if any; on green record head/run and remain blocked only on REVIEW/AM-4 merge gate.
-updated_at: '2026-09-19T03:10:00+03:00'
+- 'GitHub exact-head CI run 35406092595 at 77f81b78e98e5f5c092fc235d5e7637b7ed749f1: SUCCESS.'
+resume_instruction: Do not repeat implementation or tests. Revalidate PR head/reviews once if attributable Owner AM-4 renewal appears; otherwise keep merge blocked and continue later independent canonical work.
+updated_at: '2026-09-19T03:02:00+03:00'
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260919-arv002-no-hidden-fallback
-  lease_until: '2026-09-19T04:00:00+03:00'
+  claimed_by: null
+  execution_id: null
+  lease_until: null
   external_effects: none
