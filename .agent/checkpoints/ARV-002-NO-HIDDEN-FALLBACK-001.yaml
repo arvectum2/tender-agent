@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-002-NO-HIDDEN-FALLBACK-001
+status: in_progress
+authority: AUTO
+branch: agent/arv-002-no-hidden-fallback-20260919
+base_commit: 42c70cb
+goal: Replace the confirmed real registry_numbers demo substitution with an explicit fail-closed loader boundary and regression coverage.
+definition_of_done:
+- real registry_numbers fetch_tenders raises EisLoaderError and never returns demo tenders.
+- error guidance identifies valid real-mode paths.
+- exact registry-number real delegation remains covered.
+- demo mode and explicit discovery fallback policy unchanged.
+- focused tests, repository checks and exact-head CI pass.
+completed:
+- Revalidation gap and bounded successor admission inherited from parent PR #88 branch.
+current: Implement loader and test changes.
+remaining:
+- Code change.
+- Focused tests and repository validation.
+- Commit/push and stacked PR.
+- Exact-head CI.
+- Stop before merge unless attributable Owner/AM-4 review gate is satisfied.
+test_results: []
+resume_instruction: Make the smallest loader/test change, run focused regressions, then checkpoint evidence.
+updated_at: '2026-09-19T02:39:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260919-arv002-no-hidden-fallback
+  lease_until: '2026-09-19T04:00:00+03:00'
+  external_effects: none

@@ -1,28 +1,33 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-002-REVALIDATION-001
+status: in_progress
+task_id: ARV-002-NO-HIDDEN-FALLBACK-001
 authority: AUTO
-goal: Revalidate live end-to-end pipeline status and residual gap against current main and durable repository evidence.
+goal: Remove the confirmed hidden demo substitution from real registry-number mode without changing demo mode or unrelated discovery semantics.
 definition_of_done:
-- Current ARV-002 implementation/status is evidence-backed on the reconciliation overlay.
-- Deterministic relevant tests/checks are recorded.
-- Any residual gap is explicit and source-traceable.
-- No external, production or procurement effect occurs; REVIEW/HUMAN/OWNER gates remain preserved.
+- EisTenderLoader.fetch_tenders in mode=real + discovery_mode=registry_numbers fails closed with an explicit EisLoaderError instead of returning demo tenders.
+- Error guidance points callers to registry-number ingestion or discovery_mode=search.
+- Real exact-registry fetch remains delegated to the real loader and never substitutes demo data.
+- Demo mode behavior and explicit allow_demo_discovery behavior remain unchanged.
+- Focused loader/pipeline/discovery regressions and repository checks pass; exact-head CI is green.
+- No production, procurement, external, ARV-ID or authority mutation occurs.
+- Final merge remains REVIEW-gated pending attributable AM-4 renewal after the 2026-09-18 material executor-policy change.
 completed:
-- Focused ARV-002 revalidation passed 5 tests covering exact-card selection/fail-closed selection, required public source URL, no-demo real auto-discovery, and the currently encoded real registry_numbers demo fallback.
-- Concrete residual gap confirmed: EisTenderLoader.fetch_tenders returns demo tenders for eis_mode=real + discovery_mode=registry_numbers.
-- Roadmap reconciliation overlay updated with evidence and bounded successor ARV-002-NO-HIDDEN-FALLBACK-001 admitted under the 2026-09-19 Owner continuation instruction.
-- Canonical queue order 100 selected after completed WATCHDOG-CONTINUATION-V2-001.
-current: Revalidation completed with a concrete source-traceable hidden-fallback gap; bounded successor ARV-002-NO-HIDDEN-FALLBACK-001 admitted.
-pending: []
-updated_at: '2026-09-19T02:34:00+03:00'
-resume_instruction: Completed. Do not reopen ARV-002-REVALIDATION-001; claim ARV-002-NO-HIDDEN-FALLBACK-001 and implement the bounded fail-closed fix.
+- ARV-002-REVALIDATION-001 confirmed the concrete current gap with 5 focused passing tests and roadmap evidence.
+- Successor scope was bounded directly to the canonical ARV-002 no-hidden-fallback result and admitted by the Product Owner 2026-09-19 continuation instruction.
+current: Implement fail-closed real registry-number list behavior and deterministic regression coverage.
+pending:
+- Update EisTenderLoader real registry_numbers behavior.
+- Replace the regression that expected demo substitution and add exact registry delegation coverage.
+- Run focused tests and make check.
+- Push stacked review-ready PR and inspect exact-head CI.
+updated_at: '2026-09-19T02:39:00+03:00'
+resume_instruction: Implement only the bounded loader/test fix; preserve demo mode and explicit allow_demo_discovery policy; then validate and open/update a stacked PR.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260918T225940+0300
-  branch: agent/arv-002-revalidation-20260918
-  base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260919-arv002-no-hidden-fallback
+  branch: agent/arv-002-no-hidden-fallback-20260919
+  base_commit: 42c70cb
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-19T04:00:00+03:00'
