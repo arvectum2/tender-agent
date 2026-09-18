@@ -275,7 +275,7 @@ items:
   task_id: PROCUREMENT-KANBAN-V1-001
   strategy: COPY_PATTERN
   title: Operator kanban over existing deal/status engine
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: false
