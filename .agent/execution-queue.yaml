@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-15T16:26:13Z'
+updated_at: '2026-09-18T08:20:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -150,7 +150,7 @@ items:
   strategy: INVENT
   invent_justification: Procurement-specific notice-revision binding directly protects source/evidence integrity; generic parsing and dedupe primitives must be reused.
   title: Active EIS notice revision binding
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: false
@@ -164,7 +164,7 @@ items:
   task_id: CHANGE-MONITORING-V1-001
   strategy: ADAPT
   title: Saved-search and procurement-change monitoring
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -180,7 +180,7 @@ items:
   task_id: INGEST-RESILIENCE-V1-001
   strategy: ADAPT
   title: Resumable idempotent source sync and revision-aware dedupe
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -196,7 +196,7 @@ items:
   task_id: INTEGRATION-OUTBOX-V1-001
   strategy: ADAPT
   title: Internal integration events and disabled-by-default adapter boundary
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -213,7 +213,7 @@ items:
   task_id: OPS-OBSERVABILITY-V1-001
   strategy: REUSE
   title: Queue, ingestion, storage and recovery observability
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -227,7 +227,7 @@ items:
   task_id: 223FZ-INGEST-V1-001
   strategy: ADAPT
   title: Read-only 223-FZ source adapter and canonical intake parity
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -243,7 +243,7 @@ items:
   strategy: INVENT
   invent_justification: Regime-specific source-bound 223-FZ readiness/blocker semantics are procurement-domain moat; the existing Decision Core/evidence framework is reused.
   title: Source-bound 223-FZ decision/readiness semantics
-  status: ready
+  status: done
   authority: REVIEW
   independent: true
   auto_merge: false
@@ -259,7 +259,7 @@ items:
   strategy: INVENT
   invent_justification: Procurement-specific regression lifecycle and edge-case invariants are part of the evidence moat; generic pytest/CI/reporting infrastructure must be reused.
   title: Procurement edge-case corpus and outcome telemetry
-  status: ready
+  status: done
   authority: REVIEW
   independent: true
   auto_merge: false
