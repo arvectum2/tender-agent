@@ -1,0 +1,37 @@
+task_id: PROCUREMENT-KANBAN-V1-001
+status: in_progress
+goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without parallel workflow semantics or external effects.
+definition_of_done:
+  - Internal kanban route/view exists in the Commercial Operator Console.
+  - Active non-deleted deals are grouped deterministically by canonical DealStatus.
+  - Compact cards use already persisted deal fields and link to existing tender/deal detail.
+  - Bounded filters/search use existing persisted fields.
+  - Any exposed status change is explicitly human-initiated and uses canonical status validation/apply; invalid transitions fail closed and are audited.
+  - No automatic transitions, external communication/submission, CRM clone behavior, parallel stage enum/workflow table, new frontend framework or unnecessary DB migration.
+  - Focused/relevant tests and exact-head CI pass.
+  - Review-ready PR prepared; final merge remains gated because auto_merge=false.
+completed:
+  - Recovered roadmap/queue state and reconciled issue #83 recommendation.
+  - Owner admission recorded in issue #83 comment #5726117047.
+  - Created branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c.
+  - Added queue item order 90 and claimed canonical current task.
+current: Inventory reusable console, deal/status, transition and test seams.
+remaining:
+  - Inventory implementation seams.
+  - Implement kanban/filter slice.
+  - Add focused tests.
+  - Run validation and exact-head CI.
+  - Prepare review-ready PR and stop before merge unless separately authorized.
+last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+test_results:
+  - No code tests run yet; admission/bootstrap only.
+resume_instruction: Inspect existing Commercial Operator Console routes/templates, Deal/DealStatus model and canonical status-transition service; implement the smallest server-rendered kanban slice reusing them; add focused tests.
+updated_at: '2026-09-18T09:29:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260918-procurement-kanban-v1
+  branch: agent/procurement-kanban-v1-001
+  base_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+  issue: 83
+  manual_override: false
+  lease_until: '2026-09-18T11:18:00+03:00'
