@@ -294,8 +294,14 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-076` | Docker/Colima backup and restore | implementation_present_acceptance_followup | not inferred into execution queue |
 | `ARV-096` | Real EIS document-set acceptance | observed_post_snapshot_work | not inferred into execution queue; gaps ARV-077..ARV-095 are not invented |
 
+## Continuous Owner-directed continuation
+
+`OWNER-CONTINUOUS-ROADMAP-2026-09-18` keeps the hourly executor work-conserving when the admitted queue becomes empty. Selection is deterministic from the continuation matrix in document order, one bounded item per run. Existing bounded tasks are preferred; otherwise only an evidence/revalidation slice may be materialized. This does **not** authorize product-priority invention, new material architecture, authority downgrades, production/external effects, or bypass of REVIEW/HUMAN/OWNER gates.
+
+The first materialized continuation slice is `ARV-002-REVALIDATION-001` under `CORE-QUALITY-PILOT`. The 2026-09-18 watchdog policy change is material for Company AM-4 review purposes, so future automatic merges fail closed to REVIEW until attributable Owner renewal; implementation/testing/review-ready PR preparation may continue.
+
 ## Executor rule
 
-`.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
+`.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not arbitrarily promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
 
-When a roadmap item becomes ready for execution, the Product Owner/Owner or another already-authorized canonical mechanism must create/promote the corresponding queue entry with explicit authority, dependencies, done gate and merge policy.
+While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-a-time bounded-materialization rule is itself an explicitly authorized canonical admission mechanism: the watchdog may select the next eligible continuation item in document order and admit only the bounded form permitted by `.agent/owner-directive.yaml`. Outside that mechanism, roadmap promotion still requires Product Owner/Owner or another separately authorized canonical source.

@@ -1,0 +1,45 @@
+schema_version: 1
+repository: arvectum2/tender-agent
+directive_id: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+status: active
+issued_at: '2026-09-18T17:00:00+03:00'
+authority: Product Owner / Owner
+source: 'Owner directive in Tender Agent project conversation on 2026-09-18: after PR #84 and #85, repair the watchdog so that while an Owner directive is active it does not stall on an empty queue and continues the next canonically determined bounded increment within existing hard stops.'
+purpose: Keep roadmap execution work-conserving without turning the executor into a product-priority setter.
+continuation:
+  enabled: true
+  trigger: execution_queue_has_no_ready_or_in_progress_executable_item
+  canonical_navigation_source: docs/roadmap/master-roadmap.yaml#continuation_branches
+  branch_order: document_order
+  item_order: historical_items_order
+  max_new_admissions_per_run: 1
+  skip:
+    - item_is_already_satisfied_by_durable_merged_evidence
+    - item_is_already_represented_by_an_open_or_active_queue_task
+    - item_requires_owner_only_id_conflict_resolution
+    - item_is_deferred_by_a_canonical_gate
+  bounded_materialization:
+    existing_bounded_task_first: true
+    fallback_mode: REVALIDATION
+    fallback_task_suffix: REVALIDATION-001
+    fallback_authority: AUTO
+    fallback_independent: true
+    fallback_auto_merge: true
+    fallback_definition_of_done:
+      - Reconcile the selected historical item against current main, merged PRs, issues, tests and repository-owned evidence without rewriting the immutable legacy snapshot.
+      - Verify the current implementation/status with deterministic repository-only or explicitly read-only checks; do not create production, procurement, commercial or external effects.
+      - Update only the reconciliation overlay/evidence needed to state what is already complete and what concrete gap remains.
+      - If a concrete repository-only gap is proven and its desired result is already stated by the canonical roadmap, record one bounded successor candidate with traceable scope; do not invent a new product priority, material architecture or business acceptance criterion.
+      - Preserve REVIEW/HUMAN/OWNER gates and fail closed when the next step requires one.
+    implementation_invention_allowed: false
+  hard_boundaries:
+    - Never reorder continuation branches or historical_items.
+    - Never downgrade REVIEW, HUMAN or OWNER authority.
+    - Never resolve ARV-ID conflicts by inference.
+    - Never cross executor-policy hard stops or Company/Product/Arvectum OS authority boundaries.
+    - Never treat this directive as approval for procurement submission, external communication, production mutation, spend, signing, legal/commercial acceptance or benchmark-truth mutation.
+governance:
+  material_executor_policy_change: true
+  am4_effect: future_automatic_merges_fail_closed_to_review_until_attributable_owner_renewal
+  note: This directive authorizes the watchdog behavior change and continued bounded preparation/execution. It does not itself claim a renewal of the Company AM-4 automatic-merge review cycle.
+revocation: Owner may revoke or supersede this directive at any time.

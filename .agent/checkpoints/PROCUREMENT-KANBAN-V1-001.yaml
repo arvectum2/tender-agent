@@ -14,9 +14,11 @@ completed:
   - Owner admission recorded in issue #83 comment #5726117047; queue order 90 admitted.
   - Implemented deterministic server-rendered kanban over canonical Deal/DealStatus with archived/deleted exclusion, persisted-field cards and bounded filters/search.
   - Added human-only status endpoint delegating to canonical apply_transition and preserving fail-closed audit behavior.
-  - Focused tests PASS: 4 passed; relevant regression set PASS: 7 passed, 13 skipped; local make check PASS.
+  - Added focused board/filter/archive/transition tests and updated operator-console docs.
+  - Local ruff check PASS; focused tests 4 passed; relevant regression set 7 passed, 13 skipped; local make check PASS.
+  - Full default pytest reached 3028 passed, 241 skipped; 3 R9 Docker-backed tests were local Docker-environment failures only.
   - Product Owner explicitly approved PR #85 merge on 2026-09-18 after current exact-head green CI.
-  - Rebased exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed GitHub CI run 35353562825 SUCCESS.
+  - Rebased exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed GitHub CI run 35353562825 SUCCESS 9/9.
   - PR #85 merged at 2026-09-18T14:09:46Z as 24d515d1a16fdc7906bcc5801ad700afb2206589.
   - Issue #83 closed completed at 2026-09-18T14:10:03Z.
 current: Completed; preserve the merged gate and do not reopen without explicit new Owner admission/directive or a concrete regression.
@@ -27,7 +29,8 @@ test_results:
   - focused pytest 4 passed, 6 warnings.
   - relevant pytest 7 passed, 13 skipped, 8 warnings.
   - uv run make check PASS.
-  - GitHub exact-head CI run 35353562825 at 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 SUCCESS.
+  - full default pytest 3028 passed, 241 skipped; 3 local Docker-environment R9 acceptance failures.
+  - GitHub exact-head CI run 35353562825 at 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 SUCCESS 9/9.
 resume_instruction: Do not resume this completed checkpoint unless explicitly reopened by a new admitted item/Owner directive.
 updated_at: '2026-09-18T18:02:00+03:00'
 execution:

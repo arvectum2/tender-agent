@@ -24,7 +24,7 @@ governance:
 strategy_revision: reuse_first_2026_09_14
 strategy_updated_at: '2026-09-18T05:20:12Z'
 continuous_execution:
-  owner_directive_date: '2026-09-15'
+  owner_directive_date: '2026-09-18'
   principle: work_conserving_hourly_executor
   watchdog_target_cadence_minutes: 60
   max_productive_quantum_minutes: 45
@@ -35,9 +35,11 @@ continuous_execution:
     - 'When an AUTO item is waiting on CI/external state, another independent admitted AUTO item may progress in an isolated branch/checkpoint without widening authority.'
     - 'After a queue done gate is satisfied, do not create another acceptance cycle for that same gate unless an explicit new queue item or Owner directive reopens it.'
     - 'If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and resume immediately.'
+    - 'If the admitted queue is empty while .agent/owner-directive.yaml is active, deterministically select the first eligible continuation branch/item in document order and materialize at most one bounded item; prefer an existing bounded task, otherwise use the standard evidence/revalidation slice. This is not authority to invent product priority or implementation scope.'
+    - 'A material executor-policy change triggers the Company AM-4 review gate: repository preparation/testing may continue, but automatic merges fail closed until attributable Owner renewal.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
 execution_snapshot:
-  updated_at: '2026-09-18T05:20:12Z'
+  updated_at: '2026-09-18T19:31:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -46,9 +48,10 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: no_admitted_executable_item
-  next_admitted_item: null
-  admitted_pipeline: []
+  queue_state: owner_directed_continuation_admitted
+  next_admitted_item: ARV-002-REVALIDATION-001
+  admitted_pipeline:
+    - ARV-002-REVALIDATION-001
   completed_pipeline:
     - DOCUMENT-QA-NEXT-INCREMENT
     - CHANGE-MONITORING-V1-001
@@ -58,7 +61,9 @@ execution_snapshot:
     - 223FZ-INGEST-V1-001
     - 223FZ-DECISION-V1-001
     - DOMAIN-REGRESSION-V1-001
-  note: 'All explicitly admitted queue items through order 80 are completed as of 2026-09-18. The hourly watchdog remains enabled but must not invent or promote new roadmap work; productive development resumes only after explicit Owner admission/directive.'
+    - PROCUREMENT-KANBAN-V1-001
+    - WATCHDOG-CONTINUATION-V2-001
+  note: 'Items through order 95 are completed. Active OWNER-CONTINUOUS-ROADMAP-2026-09-18 permits deterministic bounded continuation when the queue would otherwise be empty; it does not permit priority invention or hard-stop bypass. ARV-002-REVALIDATION-001 is admitted and ready as the first materialized continuation slice.'
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -299,8 +304,8 @@ current_programs:
   completion_evidence: 'Versioned procurement regression registry and outcome telemetry foundation; merge c5e653a11a894360b1b05c1834495330b3a64cbb.'
 
 continuation_branches:
-  status: candidate_only_not_admitted
-  admission_rule: 'This matrix is a roadmap navigation aid only. No branch below enters execution until the Product Owner explicitly admits a bounded queue item with authority and Definition of Done.'
+  status: active_navigation_under_owner_continuation_directive
+  admission_rule: 'This matrix remains a navigation aid, not blanket implementation authority. While OWNER-CONTINUOUS-ROADMAP-2026-09-18 is active and the admitted queue is empty, the watchdog may deterministically materialize at most one next bounded item in branch/item document order. It must prefer an already-defined bounded task; otherwise it may admit only the standard evidence/revalidation slice from .agent/owner-directive.yaml. It may not invent product priority, material architecture, implementation acceptance criteria, or downgrade REVIEW/HUMAN/OWNER gates.'
   branches:
   - branch_id: CORE-QUALITY-PILOT
     title: Quality closure, production reasoning and controlled pilot
