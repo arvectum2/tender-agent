@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-09-15T16:26:13Z'
+strategy_updated_at: '2026-09-18T05:20:12Z'
 continuous_execution:
   owner_directive_date: '2026-09-15'
   principle: work_conserving_hourly_executor
@@ -37,7 +37,7 @@ continuous_execution:
     - 'If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and resume immediately.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
 execution_snapshot:
-  updated_at: '2026-09-15T16:26:13Z'
+  updated_at: '2026-09-18T05:20:12Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -46,9 +46,10 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: admitted_executable_items_present
-  next_admitted_item: DOCUMENT-QA-NEXT-INCREMENT
-  admitted_pipeline:
+  queue_state: no_admitted_executable_item
+  next_admitted_item: null
+  admitted_pipeline: []
+  completed_pipeline:
     - DOCUMENT-QA-NEXT-INCREMENT
     - CHANGE-MONITORING-V1-001
     - INGEST-RESILIENCE-V1-001
@@ -57,7 +58,7 @@ execution_snapshot:
     - 223FZ-INGEST-V1-001
     - 223FZ-DECISION-V1-001
     - DOMAIN-REGRESSION-V1-001
-  note: 'Product Owner explicitly refilled the queue on 2026-09-15. Hourly watchdog runs may now continue bounded work without new chat input, while REVIEW/HUMAN/external-action gates remain fail-closed.'
+  note: 'All explicitly admitted queue items through order 80 are completed as of 2026-09-18. The hourly watchdog remains enabled but must not invent or promote new roadmap work; productive development resumes only after explicit Owner admission/directive.'
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -127,15 +128,15 @@ accelerated_plan:
     priority: P1
     objective: "Add integrations, webhooks/APIs, saved-search alerts, email/CRM/source connectors and scheduled reporting only where they shorten validated workflows."
     exit_gate: "Automations reduce operator work without crossing external-action/human-control boundaries."
-    current_state: admitted_in_progress
-    current_evidence: 'Owner queue-fill directive 2026-09-15 admitted CHANGE-MONITORING-V1-001 (#65), INGEST-RESILIENCE-V1-001 (#66) and INTEGRATION-OUTBOX-V1-001 (#67). External notification/delivery remains disabled and separately gated.'
+    current_state: done
+    current_evidence: 'Stage 4 completed: change monitoring PR #74 merged as 56ca227fb3ab0073d5afd89657f083b427a5187b; ingest resilience PR #75 merged as fbf6d3cbac246af2c28db242465d52617890bf0c; integration outbox PR #79 merged as 4149801221f1. External email/SMS/Telegram/webhook/CRM delivery remains disabled and separately gated.'
   - stage: 5
     name: reliability_and_moat
     priority: P1
     objective: "Compound 44-FZ/223-FZ/private-procurement edge cases, regression evidence, decision/outcome telemetry, security/compliance and workflow integration depth."
     exit_gate: "Moat is evidenced by domain-specific regression depth, integration depth and measured decision quality rather than commodity feature count."
-    current_state: admitted_queued
-    current_evidence: 'Owner queue-fill directive 2026-09-15 admitted OPS-OBSERVABILITY-V1-001 (#68), 223FZ-INGEST-V1-001 (#69), 223FZ-DECISION-V1-001 (#70) and DOMAIN-REGRESSION-V1-001 (#71). Review-gated semantics/benchmark changes remain auto_merge=false.'
+    current_state: done
+    current_evidence: 'Stage 5 completed at the admitted v1 boundary: ops observability PR #76 merged as c335c60fa92742d7c464739e057df7eac89fa191; domain regression registry PR #77 merged as c5e653a11a894360b1b05c1834495330b3a64cbb; read-only 223-FZ ingest PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609; review-approved 223-FZ Decision Core PR #81 merged as f603c9f62859b49287456069d7be98ac1c8ce1dd.'
 strategy_overlay:
   REUSE_FIRST_001:
     delivery_strategy: COPY_PATTERN
@@ -249,46 +250,129 @@ current_programs:
   strategy: INVENT
   completion_evidence: 'Commercial Core v1 price-list ingest, matching and auditable economics; merge 4257cd23d68d4ad69ebbedf075195f34969bace1.'
 - task_id: DOCUMENT-QA-NEXT-INCREMENT
-  state: in_progress
-  source: 'issue #51; Product Owner promotion comments 5683950542 / 5684049184'
+  state: done
+  source: 'issue #51; PR #73'
   roadmap_mapping: null
   strategy: INVENT
-  current_evidence: 'Concrete reusable active/inactive EIS notice-revision mixing failure family with explicit acceptance criteria and exposed case-14 regression; implementation/testing AUTO, merge still Product Owner REVIEW.'
+  completion_evidence: 'Active/current EIS notice revision binding with fail-closed ambiguity routing; merge dca11d460912e805abc634a37ca731f03d4bb24c.'
 - task_id: CHANGE-MONITORING-V1-001
-  state: ready
-  source: 'issue #65'
+  state: done
+  source: 'issue #65; PR #74'
   roadmap_mapping: [ARV-021, ARV-056]
   strategy: ADAPT
+  completion_evidence: 'Source-bound saved-watch snapshots/diffs and idempotent internal feed; merge 56ca227fb3ab0073d5afd89657f083b427a5187b.'
 - task_id: INGEST-RESILIENCE-V1-001
-  state: ready
-  source: 'issue #66'
+  state: done
+  source: 'issue #66; PR #75'
   roadmap_mapping: [ARV-031, ARV-058]
   strategy: ADAPT
+  completion_evidence: 'Resumable idempotent revision-aware ingest/dedupe; merge fbf6d3cbac246af2c28db242465d52617890bf0c.'
 - task_id: INTEGRATION-OUTBOX-V1-001
-  state: ready
-  source: 'issue #67'
+  state: done
+  source: 'issue #67; PR #79'
   roadmap_mapping: [ARV-025, ARV-029, ARV-045]
   strategy: ADAPT
+  completion_evidence: 'Versioned internal integration events/outbox with disabled-by-default external adapter boundary; merge 4149801221f1.'
 - task_id: OPS-OBSERVABILITY-V1-001
-  state: ready
-  source: 'issue #68'
+  state: done
+  source: 'issue #68; PR #76'
   roadmap_mapping: [ARV-010]
   strategy: REUSE
+  completion_evidence: 'Repository-native queue/ingest/storage/recovery observability; merge c335c60fa92742d7c464739e057df7eac89fa191.'
 - task_id: 223FZ-INGEST-V1-001
-  state: ready
-  source: 'issue #69'
+  state: done
+  source: 'issue #69; PR #80'
   roadmap_mapping: [ARV-006]
   strategy: ADAPT
+  completion_evidence: 'Separate read-only 223-FZ intake path; merge dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.'
 - task_id: 223FZ-DECISION-V1-001
-  state: ready_review
-  source: 'issue #70'
+  state: done
+  source: 'issue #70; PR #81'
   roadmap_mapping: [ARV-006]
   strategy: INVENT
+  completion_evidence: 'Source-bound fail-closed 223-FZ decision/readiness semantics after explicit Product Owner approval; merge f603c9f62859b49287456069d7be98ac1c8ce1dd.'
 - task_id: DOMAIN-REGRESSION-V1-001
-  state: ready_review
-  source: 'issue #71'
+  state: done
+  source: 'issue #71; PR #77'
   roadmap_mapping: [ARV-072]
   strategy: INVENT
+  completion_evidence: 'Versioned procurement regression registry and outcome telemetry foundation; merge c5e653a11a894360b1b05c1834495330b3a64cbb.'
+
+continuation_branches:
+  status: candidate_only_not_admitted
+  admission_rule: 'This matrix is a roadmap navigation aid only. No branch below enters execution until the Product Owner explicitly admits a bounded queue item with authority and Definition of Done.'
+  branches:
+  - branch_id: CORE-QUALITY-PILOT
+    title: Quality closure, production reasoning and controlled pilot
+    historical_items: [ARV-002, ARV-003, ARV-004, ARV-005, ARV-061, ARV-065, ARV-067]
+    residual_scope: 'Revalidate live E2E/LLM readiness, finish Hermes/customer feedback loop, run controlled 10-20 procurement pilot, fast cited pre-analysis and evidence-grounded copilot; ARV-067 remains expert-gated.'
+    gates: 'Pilot/customer evidence and ontology expert acceptance are HUMAN/REVIEW evidence; no fabricated acceptance.'
+  - branch_id: PRODUCTION-RUNTIME
+    title: Workers, production hosting, access, security and recovery
+    historical_items: [ARV-008, ARV-010, ARV-011, ARV-012, ARV-013, ARV-014, ARV-075]
+    residual_scope: 'Workers/jobs, residual security/recovery beyond observability v1, VPS choice/migration, production access/allowlists/Anti-DDoS, and local Mac storage revalidation.'
+    gates: 'Production/network/provider mutations and local destructive cleanup require explicit applicable authority; repository-only preparation may be separately admitted.'
+  - branch_id: COMMERCIAL-WORKFLOW
+    title: Supplier profile, workspace workflow and application preparation
+    historical_items: [ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069]
+    residual_scope: 'Supplier profile, kanban, OCR fallback via reuse, counterparty checks, reusable company docs, application package generation, collaboration/import and later analytics/intelligence.'
+    gates: 'No participation decision, legal conclusion or application submission may be automated.'
+  - branch_id: SUPPLIER-RFQ
+    title: Supplier discovery, RFQ/TKP and orchestration
+    historical_items: [ARV-023, ARV-024, ARV-025, ARV-026, ARV-027, ARV-028, ARV-029]
+    residual_scope: 'Supplier search/database, user-mail adapter, RFQ/TKP preparation/comparison, self-hosted n8n and bounded workflow automation.'
+    gates: 'External supplier/customer email or RFQ sending remains REVIEW/HUMAN; internal outbox foundation is complete but live transports stay disabled.'
+  - branch_id: ETP-CONNECTORS
+    title: Marketplace/ETP connector expansion
+    historical_items: [ARV-030, ARV-031, ARV-032, ARV-033, ARV-034, ARV-035, ARV-036, ARV-037, ARV-071]
+    residual_scope: 'Unified connector layer, federal ETP uniqueness research, TEK-Torg/Fabrikant/B2B-Center/Tender-Pro and remaining ETPs; revision-aware dedupe v1 is already available as infrastructure.'
+    gates: 'Read-only acquisition can be bounded; authenticated/private or consequential platform actions require separate authority.'
+  - branch_id: 223FZ-BREADTH
+    title: Expand 223-FZ beyond the completed v1 intake/decision boundary
+    historical_items: [ARV-006]
+    residual_scope: 'Broaden 223-FZ source/document/procedure coverage only from measured gaps; preserve separate regime semantics and source-bound fail-closed decisions.'
+    gates: 'The v1 foundation is done; new breadth requires a concrete regression/corpus gap and explicit bounded admission. Unsupported legal/procedural assumptions remain UNKNOWN/NEEDS_REVIEW.'
+  - branch_id: MONITORING-DELIVERY
+    title: Extend internal monitoring into user-facing delivery channels
+    historical_items: [ARV-021, ARV-056, ARV-025, ARV-029, ARV-045]
+    residual_scope: 'Build only explicitly approved adapters from the completed internal monitoring/outbox foundation to email/CRM/webhook/scheduled reporting surfaces.'
+    gates: 'Real external delivery is disabled by default and requires separate REVIEW/HUMAN authority; no autonomous supplier/customer communication.'
+  - branch_id: COMPETITIVE-BENCHMARK
+    title: Identical-procurement competitive benchmark refresh
+    historical_items: [ARV-072]
+    residual_scope: 'Use the completed domain-regression registry as infrastructure for a controlled same-procurement competitor benchmark refreshed at milestone boundaries.'
+    gates: 'Benchmark method/corpus must be frozen before evaluated outputs; exposed cases are regression-only and anti-circularity remains mandatory.'
+  - branch_id: GO-TO-MARKET
+    title: Legal/commercial packaging, pricing, site and acquisition metrics
+    historical_items: [ARV-038, ARV-039, ARV-040, ARV-041, ARV-054]
+    residual_scope: 'Product-first site, site/product metrics, search indexing, tariffs/demo packaging and completion of the legal SaaS/pilot package.'
+    gates: 'ARV-041 remains director/counsel/regulatory HUMAN gate; commercial pricing/public commitments require Owner approval.'
+  - branch_id: SAAS-SCALE
+    title: Multi-tenant SaaS, usage limits and enterprise integrations
+    historical_items: [ARV-043, ARV-044, ARV-045, ARV-046, ARV-068, ARV-070]
+    residual_scope: 'Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile companion and later finance/integration surfaces.'
+    gates: 'Bank guarantees/financing and external enterprise commitments remain HUMAN/commercial gates.'
+  - branch_id: DEVELOPMENT-GOVERNANCE
+    title: Development protocol, mirrors and watchdog maintenance
+    historical_items: [ARV-051, ARV-062]
+    residual_scope: 'Revalidate near-complete parallel-development protocol, repository mirror posture and reusable Project Watchdog binding; open PR #78 is a maintenance candidate, not admitted product work.'
+    gates: 'Must not change Company/Product authority or roadmap priority by implication.'
+  - branch_id: LATE-INFRA
+    title: Deferred search/analytics/orchestration infrastructure
+    historical_items: [ARV-047, ARV-048, ARV-049]
+    residual_scope: 'OpenSearch/Elasticsearch, ClickHouse and Kubernetes/Helm only after measured need.'
+    gates: 'Remain deferred by default; reuse-first and measured-gap gate applies.'
+  - branch_id: STATUS-REVALIDATION
+    title: Historical partial-status reconciliation
+    historical_items: [BASE-003, BASE-007, BASE-011, BASE-012, BASE-014, ARV-003, ARV-051, ARV-075]
+    residual_scope: 'Reconcile July snapshot partial statuses against current repository/runtime evidence without rewriting history.'
+    gates: 'Status-only reconciliation does not grant implementation or merge authority.'
+  - branch_id: ID-CONFLICT-RESOLUTION
+    title: Resolve historical ARV-073 / ARV-074 ID collisions
+    historical_items: [ARV-073, ARV-074]
+    residual_scope: 'Owner-level reconciliation of later reused IDs versus preserved 2026-07-30 historical meanings; no silent renumbering.'
+    gates: 'Blocked on explicit OWNER reconciliation; not executable engineering work until resolved.'
+
 legacy_registry:
 - id: BASE-001
   legacy_snapshot:
