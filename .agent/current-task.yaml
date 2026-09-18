@@ -1,42 +1,50 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: BRANCH-HYGIENE-001
-authority: OWNER_DIRECTIVE
-goal: Reduce repository branch/PR clutter without losing unmerged work, then identify the next bounded development increment.
+status: in_progress
+task_id: PROCUREMENT-KANBAN-V1-001
+authority: AUTO
+goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without introducing parallel workflow semantics or external effects.
 definition_of_done:
-- Inventory all remote branches and open PRs against current main.
-- Close superseded open PRs whose work is already merged or obsolete.
-- Delete only remote branches proven fully merged, content-equivalent to main, or explicitly superseded.
-- Reconcile live maintenance PR #78 and roadmap PR #82.
-- Leave durable cleanup evidence and identify one next bounded development increment.
+- Add an internal kanban route/view in the existing Commercial Operator Console.
+- Group active non-deleted deals deterministically by canonical DealStatus; archived/deleted semantics remain consistent with existing behavior.
+- Show compact cards from already persisted deal fields and link to the existing tender/deal card.
+- Add bounded filters/search using existing persisted fields only.
+- If status changes are exposed, they are explicitly human-initiated and call the existing canonical status validation/apply path; invalid transitions fail closed and remain audited.
+- Do not add automatic transitions, procurement submission, external communication, CRM clone behavior, a parallel stage enum, a new workflow table, a new frontend framework, or an unnecessary DB migration.
+- Focused kanban/status/deal/console tests and relevant regression tests pass; exact-head CI is green.
+- Prepare a review-ready PR; final merge is not implicitly approved and remains gated because auto_merge=false.
 completed:
-- Inventoried 142 non-main remote branches against main.
-- Closed stale PRs #12, #45 and #48 with supersession comments.
-- Deleted 93 branches proven merged/superseded, zero failures.
-- Deleted owner/roadmap-sync-20260918 after PR #82 merged and deleted stale checkpoint-only agent/reuse-first-001.
-- Ran a second content-equivalence audit and deleted 11 additional branches whose branch-touched files were byte-identical to current main.
-- PR #82 exact-head CI 35312663415 passed; roadmap sync merged as edd35979bce9bc9f9bfcf47708ff3f8ed88fc69e and branch deleted.
-- PR #78 was rebased onto current main, updated with the 2026-09-16 AM-4 renewal authority source, exact-head CI 35313488952 passed 9/9, and merged as aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c; branch deleted.
-- Remote branch count reduced from 143 including main to 36 including main and this temporary hygiene branch. The 34 preserved historical refs now all live under `archive/2026-09-18/*`; after this bookkeeping branch is merged/deleted, the only non-archive active branch is `main`.
-- Preserved every remaining historical branch with unique content by moving all 34 to the explicit `archive/2026-09-18/` namespace at the exact same commit SHA, then deleting the original active-looking refs.
-- Created issue #83 PROCUREMENT-KANBAN-V1-001 as the recommended next bounded development increment mapped to ARV-019/COPY_PATTERN; it is not silently admitted into the execution queue.
-current: Branch hygiene complete; bookkeeping PR remains.
-pending: []
-last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+- Recovered canonical roadmap/queue/checkpoint state and admitted issue #83 from the 2026-09-18 Owner continuation directive.
+- Created isolated branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c and added queue item order 90.
+- Reused the existing Commercial Operator Console, Deal/DealStatus model and canonical status engine; no parallel lifecycle or migration was introduced.
+- Implemented /commercial-console/kanban with deterministic canonical-status columns, archived/deleted exclusion, persisted-field cards and bounded filters/search.
+- Added explicit human-only kanban status transition endpoint delegating to status_engine.apply_transition; invalid jumps fail closed and use the existing blocked-transition audit event.
+- Added focused tests for rendering, filtering, archived exclusion, valid human transition and invalid transition blocking.
+- Updated operator-console product documentation and opened review PR #85.
+- Local lint passed after ruff fixes.
+- Local focused tests passed: 4 passed, 6 warnings.
+- Local relevant regression set passed: 7 passed, 13 skipped, 8 warnings.
+- Local CI-equivalent make check passed.
+- Full default pytest reached 3028 passed / 241 skipped; 3 R9 Docker-backed acceptance tests failed locally because the temporary worktree could not execute Docker, so GitHub CI remains authoritative for those environment-dependent checks.
+current: Rebased onto merged PR #84/main; Product Owner explicitly approved merge of PR #85 on 2026-09-18. Await exact-head CI for the rebased head, then guarded merge.
+pending:
+- Push rebased head and obtain exact-head CI success.
+- If green and head is unchanged, merge PR #85 under the explicit Product Owner approval from 2026-09-18.
+- After merge, reconcile queue/checkpoint as completed on canonical main.
+last_verified_commit: 55822172615952107b20ea45800ea0df8f832026
 test_results:
-- "Safe-delete batch 1: 93/93 branches deleted, 0 failures."
-- "Content-equivalence batch 2: 11/11 branches deleted."
-- "Roadmap PR #82 exact-head CI 35312663415: SUCCESS; merged edd35979."
-- "Watchdog config PR #78 exact-head CI 35313488952: SUCCESS 9/9; merged aa5aa7a."
-- "Archive pass: 34/34 unique historical branches recreated under archive/2026-09-18/* at identical SHAs; 34/34 original refs deleted."
-updated_at: '2026-09-18T09:18:00+03:00'
-resume_instruction: Task completed. Do not delete the remaining historical branches automatically; they require semantic review/archive decisions. Next recommended development increment is issue #83, but queue admission requires an explicit Owner directive.
+- "ruff check changed Python/test files: PASS."
+- "pytest tests/test_commercial_operator_console_c4.py: 4 passed, 6 warnings."
+- "pytest tests/test_sprint1_integration.py tests/test_controlled_pilot_operator_workflow_cp2.py tests/test_commercial_operator_console_c4.py: 7 passed, 13 skipped, 8 warnings."
+- "uv run make check: PASS."
+- "full default pytest: 3028 passed, 241 skipped, 3 environment-dependent R9 Docker acceptance failures (command failed: docker); exact GitHub CI pending."
+updated_at: '2026-09-18T16:55:00+03:00'
+resume_instruction: Push/recheck the rebased PR #85 exact head. If CI fails, fix autonomously. If exact-head CI is green and head is unchanged, merge PR #85 under the explicit 2026-09-18 Product Owner approval, then reconcile canonical queue/checkpoint as completed.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/branch-hygiene-001
-  base_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
-  issue: null
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260918-procurement-kanban-v1
+  branch: agent/procurement-kanban-v1-001
+  base_commit: 2ac371360ef57bf0e79f157e5732bb61b993c68f
+  issue: 83
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-18T18:30:00+03:00'

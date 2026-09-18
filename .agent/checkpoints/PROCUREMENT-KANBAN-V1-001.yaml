@@ -1,0 +1,46 @@
+task_id: PROCUREMENT-KANBAN-V1-001
+status: in_progress
+goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without parallel workflow semantics or external effects.
+definition_of_done:
+  - Internal kanban route/view exists in the Commercial Operator Console.
+  - Active non-deleted deals are grouped deterministically by canonical DealStatus.
+  - Compact cards use already persisted deal fields and link to existing tender/deal detail.
+  - Bounded filters/search use existing persisted fields.
+  - Any exposed status change is explicitly human-initiated and uses canonical status validation/apply; invalid transitions fail closed and are audited.
+  - No automatic transitions, external communication/submission, CRM clone behavior, parallel stage enum/workflow table, new frontend framework or unnecessary DB migration.
+  - Focused/relevant tests and exact-head CI pass.
+  - Review-ready PR prepared; final merge remains gated because auto_merge=false.
+completed:
+  - Owner admission recorded in issue #83 comment #5726117047; queue order 90 created.
+  - Implemented deterministic server-rendered kanban over canonical Deal/DealStatus.
+  - Excluded archived/deleted deals; added persisted-field cards and bounded filters/search.
+  - Added human-only status endpoint delegating to canonical apply_transition and preserving fail-closed audit behavior.
+  - Added focused board/filter/archive/transition tests and updated operator-console docs.
+  - Opened PR #85.
+  - Local ruff check PASS.
+  - Focused tests PASS: 4 passed.
+  - Relevant regression set PASS: 7 passed, 13 skipped.
+  - Local CI-equivalent make check PASS.
+  - Full default pytest: 3028 passed, 241 skipped; 3 R9 Docker-backed acceptance tests failed from local Docker execution only, pending authoritative GitHub CI.
+current: Rebased onto merged PR #84/main; Product Owner explicitly approved merge of PR #85 on 2026-09-18. Await exact-head CI for the rebased head, then guarded merge.
+remaining:
+  - Push rebased head and obtain exact-head CI success.
+  - Merge PR #85 if the exact head remains green under the explicit Product Owner approval.
+  - Reconcile queue/checkpoint as completed on canonical main.
+last_verified_commit: 55822172615952107b20ea45800ea0df8f832026
+test_results:
+  - ruff changed files PASS.
+  - focused pytest 4 passed, 6 warnings.
+  - relevant pytest 7 passed, 13 skipped, 8 warnings.
+  - uv run make check PASS.
+  - full default pytest 3028 passed, 241 skipped; 3 local Docker-environment R9 acceptance failures; exact GitHub CI pending.
+resume_instruction: Push/recheck the rebased PR #85 exact head; fix CI failures autonomously; on green merge under the explicit 2026-09-18 Product Owner approval and reconcile completion on canonical main.
+updated_at: '2026-09-18T16:55:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260918-procurement-kanban-v1
+  branch: agent/procurement-kanban-v1-001
+  base_commit: 2ac371360ef57bf0e79f157e5732bb61b993c68f
+  issue: 83
+  manual_override: false
+  lease_until: '2026-09-18T18:30:00+03:00'
