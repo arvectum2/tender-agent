@@ -1,42 +1,40 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: BRANCH-HYGIENE-001
-authority: OWNER_DIRECTIVE
-goal: Reduce repository branch/PR clutter without losing unmerged work, then identify the next bounded development increment.
+status: in_progress
+task_id: PROCUREMENT-KANBAN-V1-001
+authority: AUTO
+goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without introducing parallel workflow semantics or external effects.
 definition_of_done:
-- Inventory all remote branches and open PRs against current main.
-- Close superseded open PRs whose work is already merged or obsolete.
-- Delete only remote branches proven fully merged, content-equivalent to main, or explicitly superseded.
-- Reconcile live maintenance PR #78 and roadmap PR #82.
-- Leave durable cleanup evidence and identify one next bounded development increment.
+- Add an internal kanban route/view in the existing Commercial Operator Console.
+- Group active non-deleted deals deterministically by canonical DealStatus; archived/deleted semantics remain consistent with existing behavior.
+- Show compact cards from already persisted deal fields and link to the existing tender/deal card.
+- Add bounded filters/search using existing persisted fields only.
+- If status changes are exposed, they are explicitly human-initiated and call the existing canonical status validation/apply path; invalid transitions fail closed and remain audited.
+- Do not add automatic transitions, procurement submission, external communication, CRM clone behavior, a parallel stage enum, a new workflow table, a new frontend framework, or an unnecessary DB migration.
+- Focused kanban/status/deal/console tests and relevant regression tests pass; exact-head CI is green.
+- Prepare a review-ready PR; final merge is not implicitly approved and remains gated because auto_merge=false.
 completed:
-- Inventoried 142 non-main remote branches against main.
-- Closed stale PRs #12, #45 and #48 with supersession comments.
-- Deleted 93 branches proven merged/superseded, zero failures.
-- Deleted owner/roadmap-sync-20260918 after PR #82 merged and deleted stale checkpoint-only agent/reuse-first-001.
-- Ran a second content-equivalence audit and deleted 11 additional branches whose branch-touched files were byte-identical to current main.
-- PR #82 exact-head CI 35312663415 passed; roadmap sync merged as edd35979bce9bc9f9bfcf47708ff3f8ed88fc69e and branch deleted.
-- PR #78 was rebased onto current main, updated with the 2026-09-16 AM-4 renewal authority source, exact-head CI 35313488952 passed 9/9, and merged as aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c; branch deleted.
-- Remote branch count reduced from 143 including main to 36 including main and this temporary hygiene branch. The 34 preserved historical refs now all live under `archive/2026-09-18/*`; after this bookkeeping branch is merged/deleted, the only non-archive active branch is `main`.
-- Preserved every remaining historical branch with unique content by moving all 34 to the explicit `archive/2026-09-18/` namespace at the exact same commit SHA, then deleting the original active-looking refs.
-- Created issue #83 PROCUREMENT-KANBAN-V1-001 as the recommended next bounded development increment mapped to ARV-019/COPY_PATTERN; it is not silently admitted into the execution queue.
-current: Branch hygiene complete; bookkeeping PR remains.
-pending: []
+- Recovered canonical roadmap/queue/checkpoint state and reconciled open PR #84 plus recommended issue #83.
+- Product Owner directive on 2026-09-18 admitted issue #83 as the next bounded roadmap increment; durable admission recorded in issue comment #5726117047.
+- Created isolated branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c.
+- Added PROCUREMENT-KANBAN-V1-001 to the canonical execution queue as order 90, AUTO, auto_merge=false, mapped to ARV-019.
+current: Inventory existing Commercial Operator Console, Deal/DealStatus model, canonical transition service, templates/styles and tests before implementing the smallest COPY_PATTERN slice.
+pending:
+- Inventory reusable console/status/deal patterns and freeze the implementation seam.
+- Implement kanban board and bounded filters/search without new workflow state.
+- Add/adjust focused tests proving deterministic grouping, deleted/archive handling and canonical transition enforcement if transition controls are exposed.
+- Run relevant validation and inspect exact-head CI.
+- Open/update a review-ready PR and stop before merge unless separately authorized.
 last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
 test_results:
-- "Safe-delete batch 1: 93/93 branches deleted, 0 failures."
-- "Content-equivalence batch 2: 11/11 branches deleted."
-- "Roadmap PR #82 exact-head CI 35312663415: SUCCESS; merged edd35979."
-- "Watchdog config PR #78 exact-head CI 35313488952: SUCCESS 9/9; merged aa5aa7a."
-- "Archive pass: 34/34 unique historical branches recreated under archive/2026-09-18/* at identical SHAs; 34/34 original refs deleted."
-updated_at: '2026-09-18T09:18:00+03:00'
-resume_instruction: Task completed. Do not delete the remaining historical branches automatically; they require semantic review/archive decisions. Next recommended development increment is issue #83, but queue admission requires an explicit Owner directive.
+- "No code tests run yet; task admission/bootstrap only."
+updated_at: '2026-09-18T09:28:00+03:00'
+resume_instruction: Inspect the existing Commercial Operator Console routes/templates, Deal/DealStatus model and canonical status-transition service on this branch; then implement the smallest server-rendered kanban slice that reuses them and add focused tests.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/branch-hygiene-001
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260918-procurement-kanban-v1
+  branch: agent/procurement-kanban-v1-001
   base_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
-  issue: null
+  issue: 83
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-18T11:18:00+03:00'
