@@ -1,5 +1,5 @@
 task_id: PROCUREMENT-KANBAN-V1-001
-status: in_progress
+status: completed
 goal: Implement a thin operator kanban inside the existing Commercial Operator Console using canonical Deal/DealStatus state and transition rules, without parallel workflow semantics or external effects.
 definition_of_done:
   - Internal kanban route/view exists in the Commercial Operator Console.
@@ -11,36 +11,30 @@ definition_of_done:
   - Focused/relevant tests and exact-head CI pass.
   - Review-ready PR prepared; final merge remains gated because auto_merge=false.
 completed:
-  - Owner admission recorded in issue #83 comment #5726117047; queue order 90 created.
-  - Implemented deterministic server-rendered kanban over canonical Deal/DealStatus.
-  - Excluded archived/deleted deals; added persisted-field cards and bounded filters/search.
+  - Owner admission recorded in issue #83 comment #5726117047; queue order 90 admitted.
+  - Implemented deterministic server-rendered kanban over canonical Deal/DealStatus with archived/deleted exclusion, persisted-field cards and bounded filters/search.
   - Added human-only status endpoint delegating to canonical apply_transition and preserving fail-closed audit behavior.
-  - Added focused board/filter/archive/transition tests and updated operator-console docs.
-  - Opened PR #85.
-  - Local ruff check PASS.
-  - Focused tests PASS: 4 passed.
-  - Relevant regression set PASS: 7 passed, 13 skipped.
-  - Local CI-equivalent make check PASS.
-  - Full default pytest: 3028 passed, 241 skipped; 3 R9 Docker-backed acceptance tests failed from local Docker execution only, pending authoritative GitHub CI.
-current: Rebased onto merged PR #84/main; Product Owner explicitly approved merge of PR #85 on 2026-09-18. Await exact-head CI for the rebased head, then guarded merge.
-remaining:
-  - Push rebased head and obtain exact-head CI success.
-  - Merge PR #85 if the exact head remains green under the explicit Product Owner approval.
-  - Reconcile queue/checkpoint as completed on canonical main.
-last_verified_commit: 55822172615952107b20ea45800ea0df8f832026
+  - Focused tests PASS: 4 passed; relevant regression set PASS: 7 passed, 13 skipped; local make check PASS.
+  - Product Owner explicitly approved PR #85 merge on 2026-09-18 after current exact-head green CI.
+  - Rebased exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed GitHub CI run 35353562825 SUCCESS.
+  - PR #85 merged at 2026-09-18T14:09:46Z as 24d515d1a16fdc7906bcc5801ad700afb2206589.
+  - Issue #83 closed completed at 2026-09-18T14:10:03Z.
+current: Completed; preserve the merged gate and do not reopen without explicit new Owner admission/directive or a concrete regression.
+remaining: []
+last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
 test_results:
   - ruff changed files PASS.
   - focused pytest 4 passed, 6 warnings.
   - relevant pytest 7 passed, 13 skipped, 8 warnings.
   - uv run make check PASS.
-  - full default pytest 3028 passed, 241 skipped; 3 local Docker-environment R9 acceptance failures; exact GitHub CI pending.
-resume_instruction: Push/recheck the rebased PR #85 exact head; fix CI failures autonomously; on green merge under the explicit 2026-09-18 Product Owner approval and reconcile completion on canonical main.
-updated_at: '2026-09-18T16:55:00+03:00'
+  - GitHub exact-head CI run 35353562825 at 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 SUCCESS.
+resume_instruction: Do not resume this completed checkpoint unless explicitly reopened by a new admitted item/Owner directive.
+updated_at: '2026-09-18T18:02:00+03:00'
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260918-procurement-kanban-v1
-  branch: agent/procurement-kanban-v1-001
-  base_commit: 2ac371360ef57bf0e79f157e5732bb61b993c68f
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: null
   issue: 83
   manual_override: false
-  lease_until: '2026-09-18T18:30:00+03:00'
+  lease_until: null
