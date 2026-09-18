@@ -15,7 +15,7 @@ completed:
   - Merged PR #82 after exact-head CI success and deleted its branch.
   - Rebased/refreshed PR #78, added renewal authority source, merged after exact-head CI success and deleted its branch.
   - Reduced remote branches from 143 including main to 36 including the temporary hygiene branch.
-  - Preserved 34 historical non-main branches with unique unmerged content/recovery history.
+  - Preserved 34 historical branches with unique content by moving them to archive/2026-09-18/* at identical commit SHAs; all 34 original refs were deleted.
   - Created issue #83 as the recommended next development increment.
 current: Completed; only bookkeeping merge remains.
 remaining: []
