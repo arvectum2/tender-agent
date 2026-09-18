@@ -1,28 +1,40 @@
 import html
-import json
 
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
-from src.modules.contract_risks.models import ContractRiskFlag, ContractRiskRecord, ContractRiskSet
-from src.modules.deal_registry.models import Deal
-from src.modules.document_requirements.models import DocumentRequirementRow, DocumentRequirementSet
-from src.modules.event_log.models import DecisionRecord, EventRecord
-from src.modules.event_log.schemas import AppendDecisionRequest, AppendEventRequest
-from src.modules.event_log.service import append_decision, append_event
-from src.modules.initial_tech_risks.models import InitialTechRiskFlag, InitialTechRiskFlagSet
-from src.modules.prompt_schema_library.models import PromptSchemaRecord
-from src.modules.requirement_extraction.models import RequirementExtractionRecord, RequirementExtractionSet
-from src.modules.runtime_control_traces.models import RuntimeControlTrace
-from src.modules.status_engine.models import DealStatusHistory
-from src.modules.status_engine.schemas import ApplyTransitionRequest
-from src.modules.status_engine.service import apply_transition
-from src.modules.tender_summary.models import TenderSummary
 from src.modules.commercial_operator_console.schemas import (
     CommercialOperatorActionRequest,
     CommercialOperatorActionResponse,
     KanbanStatusTransitionRequest,
 )
+from src.modules.contract_risks.models import (
+    ContractRiskFlag,
+    ContractRiskRecord,
+    ContractRiskSet,
+)
+from src.modules.deal_registry.models import Deal
+from src.modules.document_requirements.models import (
+    DocumentRequirementRow,
+    DocumentRequirementSet,
+)
+from src.modules.event_log.models import DecisionRecord
+from src.modules.event_log.schemas import AppendDecisionRequest, AppendEventRequest
+from src.modules.event_log.service import append_decision, append_event
+from src.modules.initial_tech_risks.models import (
+    InitialTechRiskFlag,
+    InitialTechRiskFlagSet,
+)
+from src.modules.prompt_schema_library.models import PromptSchemaRecord
+from src.modules.requirement_extraction.models import (
+    RequirementExtractionRecord,
+    RequirementExtractionSet,
+)
+from src.modules.runtime_control_traces.models import RuntimeControlTrace
+from src.modules.status_engine.models import DealStatusHistory
+from src.modules.status_engine.schemas import ApplyTransitionRequest
+from src.modules.status_engine.service import apply_transition
+from src.modules.tender_summary.models import TenderSummary
 from src.shared.enums import ChangedByType, DealStatus, DecisionByType, EventSeverity
 from src.shared.errors import NotFoundError
 

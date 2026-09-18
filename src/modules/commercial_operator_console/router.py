@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Query, status
 from fastapi.responses import HTMLResponse
 
@@ -22,7 +24,6 @@ from src.modules.status_engine.schemas import StatusHistoryEntry
 from src.shared.api.dependencies import DBSession
 from src.shared.enums import DealStatus
 
-
 router = APIRouter(tags=["commercial-operator-console"])
 
 
@@ -34,7 +35,7 @@ def commercial_console_dashboard(session: DBSession) -> str:
 @router.get("/commercial-console/kanban", response_class=HTMLResponse)
 def commercial_console_kanban(
     session: DBSession,
-    status_filter: DealStatus | None = Query(default=None, alias="status"),
+    status_filter: Annotated[DealStatus | None, Query(alias="status")] = None,
     priority_bucket: str | None = None,
     customer_name: str | None = None,
     procurement_number: str | None = None,
