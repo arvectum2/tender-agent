@@ -910,9 +910,17 @@ legacy_registry:
     dependencies_raw: ARV-073
   reconciliation:
     state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    verified_at: '2026-09-19'
+    evidence:
+    - path: tests/test_benchmark_calibration_phase_a.py
+      detail: 'Exact-card selection is deterministic and fails closed when the requested registry number or public source URL is absent.'
+    - path: tests/tender_research/test_registry_discovery.py
+      detail: 'Real auto-discovery with allow_demo_discovery=false returns no synthetic procurement when public/seed sources are unavailable.'
+    - path: tests/tender_research/test_eis_real_loader.py
+      detail: 'Current regression explicitly demonstrates the residual gap: real mode + registry_numbers fetch_tenders() returns demo tenders instead of failing closed.'
+    - run: '2026-09-19 focused ARV-002 revalidation'
+      detail: '5 focused tests passed; the existing fallback-to-demo test proves the hidden fallback is still intentionally encoded on current main.'
+    notes: 'Revalidation is evidence-backed but ARV-002 is not confirmed done: current EisTenderLoader.fetch_tenders silently returns demo data when eis_mode=real and discovery_mode=registry_numbers. This directly conflicts with the canonical "без скрытых fallback" result. Successor ARV-002-NO-HIDDEN-FALLBACK-001 is bounded to removing that real-mode demo substitution and adding deterministic regression coverage; no ARV-073 collision inference is required.'
 - id: ARV-009
   legacy_snapshot:
     queue_order: 0

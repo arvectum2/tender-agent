@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-002-REVALIDATION-001
 authority: AUTO
 goal: Revalidate live end-to-end pipeline status and residual gap against current main and durable repository evidence.
@@ -10,13 +10,14 @@ definition_of_done:
 - Any residual gap is explicit and source-traceable.
 - No external, production or procurement effect occurs; REVIEW/HUMAN/OWNER gates remain preserved.
 completed:
+- Focused ARV-002 revalidation passed 5 tests covering exact-card selection/fail-closed selection, required public source URL, no-demo real auto-discovery, and the currently encoded real registry_numbers demo fallback.
+- Concrete residual gap confirmed: EisTenderLoader.fetch_tenders returns demo tenders for eis_mode=real + discovery_mode=registry_numbers.
+- Roadmap reconciliation overlay updated with evidence and bounded successor ARV-002-NO-HIDDEN-FALLBACK-001 admitted under the 2026-09-19 Owner continuation instruction.
 - Canonical queue order 100 selected after completed WATCHDOG-CONTINUATION-V2-001.
-current: Inspect current implementation and durable evidence for the ARV-002 live E2E pipeline and hidden-fallback boundaries.
-pending:
-- Run deterministic relevant checks.
-- Update reconciliation overlay and checkpoint with evidence and any source-traceable residual gap.
-updated_at: '2026-09-18T23:04:00+03:00'
-resume_instruction: Continue ARV-002 revalidation from current main evidence; do not mutate production or invent acceptance criteria.
+current: Revalidation completed with a concrete source-traceable hidden-fallback gap; bounded successor ARV-002-NO-HIDDEN-FALLBACK-001 admitted.
+pending: []
+updated_at: '2026-09-19T02:34:00+03:00'
+resume_instruction: Completed. Do not reopen ARV-002-REVALIDATION-001; claim ARV-002-NO-HIDDEN-FALLBACK-001 and implement the bounded fail-closed fix.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260918T225940+0300
@@ -24,4 +25,4 @@ execution:
   base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
   issue: null
   manual_override: false
-  lease_until: '2026-09-19T00:54:00+03:00'
+  lease_until: null

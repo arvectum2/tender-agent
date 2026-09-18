@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-18T22:31:00+03:00'
+updated_at: '2026-09-19T02:34:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -306,7 +306,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate live end-to-end pipeline status and residual gap
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -316,6 +316,21 @@ items:
   dependencies: []
   executor_scope: Reconcile ARV-002 against current main/merged evidence and deterministic tests. Verify the existing live end-to-end pipeline and hidden-fallback boundaries without production mutation or consequential external action. Update reconciliation evidence; if a concrete repository-only residual gap is proven and already traceable to the canonical ARV-002 next_result/residual_scope, record at most one bounded successor candidate. Do not invent a new product priority, architecture or acceptance criterion.
   done_gate: 'Current ARV-002 implementation/status is evidence-backed on the reconciliation overlay; deterministic relevant tests/checks are recorded; any residual gap is explicit and source-traceable; no external/production/procurement effect; REVIEW/HUMAN/OWNER gates preserved. Automatic merge remains fail-closed after the 2026-09-18 material executor-policy change until attributable Owner AM-4 renewal.'
+- order: 105
+  task_id: ARV-002-NO-HIDDEN-FALLBACK-001
+  strategy: REUSE
+  title: Fail closed instead of substituting demo tenders in real registry-number mode
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  source: 'ARV-002 revalidation evidence plus explicit Product Owner continuation instruction 2026-09-19: «Продолжай разработку. Опять само не делает ничего».'
+  roadmap_scope:
+  - ARV-002
+  dependencies:
+  - ARV-002-REVALIDATION-001
+  executor_scope: Remove the current real-mode registry_numbers demo substitution in EisTenderLoader.fetch_tenders and replace it with an explicit fail-closed EisLoaderError directing callers to registry-number ingestion or search mode. Add deterministic regression coverage proving real mode never returns demo tenders through this path. Do not change demo mode, public-source discovery policy, production/external state, ARV-ID mappings, or unrelated fallback semantics.
+  done_gate: 'Focused loader/pipeline/discovery tests and repository checks pass; exact-head CI green; ARV-002 reconciliation notes reference the removed hidden fallback. Merge remains REVIEW-gated because the 2026-09-18 material executor-policy change has not yet received attributable AM-4 renewal.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
