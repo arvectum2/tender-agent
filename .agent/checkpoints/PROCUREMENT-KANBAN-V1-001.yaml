@@ -11,22 +11,26 @@ definition_of_done:
   - Focused/relevant tests and exact-head CI pass.
   - Review-ready PR prepared; final merge remains gated because auto_merge=false.
 completed:
-  - Recovered roadmap/queue state and reconciled issue #83 recommendation.
-  - Owner admission recorded in issue #83 comment #5726117047.
-  - Created branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c.
-  - Added queue item order 90 and claimed canonical current task.
-current: Inventory reusable console, deal/status, transition and test seams.
+  - Owner admission recorded in issue #83 comment #5726117047; queue order 90 created.
+  - Implemented deterministic server-rendered kanban over canonical Deal/DealStatus.
+  - Excluded archived/deleted deals; added persisted-field cards and bounded filters/search.
+  - Added human-only status endpoint delegating to canonical apply_transition and preserving fail-closed audit behavior.
+  - Added focused board/filter/archive/transition tests and updated operator-console docs.
+  - Opened PR #85.
+  - Local ruff check PASS.
+  - Focused tests PASS: 4 passed.
+  - Relevant regression set PASS: 7 passed, 13 skipped.
+current: Exact-head GitHub CI for PR #85 after checkpoint update.
 remaining:
-  - Inventory implementation seams.
-  - Implement kanban/filter slice.
-  - Add focused tests.
-  - Run validation and exact-head CI.
-  - Prepare review-ready PR and stop before merge unless separately authorized.
-last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+  - Confirm exact-head CI.
+  - On green, record CI/head and block on Product Owner merge review; release lease.
+last_verified_commit: e609944
 test_results:
-  - No code tests run yet; admission/bootstrap only.
-resume_instruction: Inspect existing Commercial Operator Console routes/templates, Deal/DealStatus model and canonical status-transition service; implement the smallest server-rendered kanban slice reusing them; add focused tests.
-updated_at: '2026-09-18T09:29:00+03:00'
+  - ruff changed files PASS.
+  - focused pytest 4 passed, 6 warnings.
+  - relevant pytest 7 passed, 13 skipped, 8 warnings.
+resume_instruction: Check exact-head CI on PR #85; fix failures autonomously; on green mark blocked awaiting Product Owner merge approval and release lease. Do not merge without separate approval.
+updated_at: '2026-09-18T09:43:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-procurement-kanban-v1

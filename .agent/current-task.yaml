@@ -14,22 +14,28 @@ definition_of_done:
 - Focused kanban/status/deal/console tests and relevant regression tests pass; exact-head CI is green.
 - Prepare a review-ready PR; final merge is not implicitly approved and remains gated because auto_merge=false.
 completed:
-- Recovered canonical roadmap/queue/checkpoint state and reconciled open PR #84 plus recommended issue #83.
-- Product Owner directive on 2026-09-18 admitted issue #83 as the next bounded roadmap increment; durable admission recorded in issue comment #5726117047.
-- Created isolated branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c.
-- Added PROCUREMENT-KANBAN-V1-001 to the canonical execution queue as order 90, AUTO, auto_merge=false, mapped to ARV-019.
-current: Inventory existing Commercial Operator Console, Deal/DealStatus model, canonical transition service, templates/styles and tests before implementing the smallest COPY_PATTERN slice.
+- Recovered canonical roadmap/queue/checkpoint state and admitted issue #83 from the 2026-09-18 Owner continuation directive.
+- Created isolated branch agent/procurement-kanban-v1-001 from main aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c and added queue item order 90.
+- Reused the existing Commercial Operator Console, Deal/DealStatus model and canonical status engine; no parallel lifecycle or migration was introduced.
+- Implemented /commercial-console/kanban with deterministic canonical-status columns, archived/deleted exclusion, persisted-field cards and bounded filters/search.
+- Added explicit human-only kanban status transition endpoint delegating to status_engine.apply_transition; invalid jumps fail closed and use the existing blocked-transition audit event.
+- Added focused tests for rendering, filtering, archived exclusion, valid human transition and invalid transition blocking.
+- Updated operator-console product documentation and opened review PR #85.
+- Local lint passed after ruff fixes.
+- Local focused tests passed: 4 passed, 6 warnings.
+- Local relevant regression set passed: 7 passed, 13 skipped, 8 warnings.
+current: Exact-head GitHub CI for PR #85 after final checkpoint update.
 pending:
-- Inventory reusable console/status/deal patterns and freeze the implementation seam.
-- Implement kanban board and bounded filters/search without new workflow state.
-- Add/adjust focused tests proving deterministic grouping, deleted/archive handling and canonical transition enforcement if transition controls are exposed.
-- Run relevant validation and inspect exact-head CI.
-- Open/update a review-ready PR and stop before merge unless separately authorized.
-last_verified_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+- Confirm exact-head CI is green.
+- If green, mark task/queue blocked on Product Owner merge review, release lease, and record the exact CI run/head.
+- Do not merge PR #85 without separate Product Owner approval because auto_merge=false.
+last_verified_commit: e609944
 test_results:
-- "No code tests run yet; task admission/bootstrap only."
-updated_at: '2026-09-18T09:28:00+03:00'
-resume_instruction: Inspect the existing Commercial Operator Console routes/templates, Deal/DealStatus model and canonical status-transition service on this branch; then implement the smallest server-rendered kanban slice that reuses them and add focused tests.
+- "ruff check changed Python/test files: PASS."
+- "pytest tests/test_commercial_operator_console_c4.py: 4 passed, 6 warnings."
+- "pytest tests/test_sprint1_integration.py tests/test_controlled_pilot_operator_workflow_cp2.py tests/test_commercial_operator_console_c4.py: 7 passed, 13 skipped, 8 warnings."
+updated_at: '2026-09-18T09:43:00+03:00'
+resume_instruction: Check exact-head CI on PR #85. If it fails, inspect failing jobs and fix autonomously. If it is green, update queue/current-task/checkpoint to blocked awaiting Product Owner merge approval, release the lease, and stop before merge.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-procurement-kanban-v1
