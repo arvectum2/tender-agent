@@ -34,13 +34,10 @@ class EisTenderLoader:
         if self._mode == "real":
             if self._discovery_mode == "search":
                 return self._real_loader.fetch_tenders(date_from, date_to, limit, law_type, query)
-            logger.warning(
-                "fetch_tenders() called in real mode but discovery_mode=%s "
-                "does not support search. Use fetch_by_registry_numbers or switch to "
-                "discovery_mode=search. Returning demo data as fallback.",
-                self._discovery_mode,
+            raise EisLoaderError(
+                "fetch_tenders() is unavailable in real registry-number mode; "
+                "use fetch_by_registry_number(s) or switch discovery_mode=search"
             )
-            return _get_demo_tenders(date_from, date_to, limit, law_type, query)
         return _get_demo_tenders(date_from, date_to, limit, law_type, query)
 
     def fetch_tender_details(self, external_id: str) -> EisTenderRaw | None:

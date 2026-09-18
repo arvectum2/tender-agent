@@ -13,16 +13,18 @@ definition_of_done:
 - No production, procurement, external, ARV-ID or authority mutation occurs.
 - Final merge remains REVIEW-gated pending attributable AM-4 renewal after the 2026-09-18 material executor-policy change.
 completed:
+- Fail-closed loader implemented: real registry_numbers fetch_tenders now raises EisLoaderError with valid-path guidance instead of substituting demo tenders.
+- Explicit demo discovery is isolated through a demo-mode loader so source=demo and allow_demo_discovery behavior remain available without depending on the real loader fallback.
+- Regression coverage updated for fail-closed list behavior and exact registry-number real delegation.
+- Focused affected suite passed: 70 passed, 1 warning; uv run make check PASS; git diff --check PASS.
 - ARV-002-REVALIDATION-001 confirmed the concrete current gap with 5 focused passing tests and roadmap evidence.
 - Successor scope was bounded directly to the canonical ARV-002 no-hidden-fallback result and admitted by the Product Owner 2026-09-19 continuation instruction.
-current: Implement fail-closed real registry-number list behavior and deterministic regression coverage.
+current: Fail-closed loader boundary implemented and locally validated; push a stacked review-ready PR and verify exact-head CI.
 pending:
-- Update EisTenderLoader real registry_numbers behavior.
-- Replace the regression that expected demo substitution and add exact registry delegation coverage.
-- Run focused tests and make check.
 - Push stacked review-ready PR and inspect exact-head CI.
-updated_at: '2026-09-19T02:39:00+03:00'
-resume_instruction: Implement only the bounded loader/test fix; preserve demo mode and explicit allow_demo_discovery policy; then validate and open/update a stacked PR.
+- Reconcile evidence/checkpoint after CI; stop before merge unless attributable Owner/AM-4 review gate is satisfied.
+updated_at: '2026-09-19T02:47:00+03:00'
+resume_instruction: Commit/push the validated bounded fix, open a stacked PR against the ARV-002 revalidation branch, then verify exact-head CI and keep merge fail-closed pending Owner/AM-4 review.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260919-arv002-no-hidden-fallback
