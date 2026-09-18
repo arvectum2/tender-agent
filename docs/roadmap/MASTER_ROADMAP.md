@@ -37,8 +37,8 @@ The Product Owner changes the default development posture from **build-first** t
 | **1. Thin commodity shell** | P0 | partial / not separately gated | Baseline shell pre-existed this cycle; Docker-context hardening PR #58 merged (`8924a857`). No standalone Stage 1 completion gate is currently admitted. |
 | **2. Decision Core v1** | P0 | **done** | Discovery benchmark/hardening PR #59 merged (`762a392`); Decision Core v1 PR #61 merged (`3bf397f`) with evidence-bound fail-closed decisions. |
 | **3. Commercial Core** | P0 | **done** | PR #63 merged (`4257cd2`): price-list ingest, tender-to-catalog matching, coverage/cost/headroom and auditable commercial feasibility with HUMAN control. |
-| **4. Automation + integrations** | P1 | **admitted / in progress** | Issues #65–#67 admitted: internal change monitoring, resumable/idempotent source ingest, and integration outbox/adapter boundary. External delivery remains disabled. |
-| **5. Reliability + moat** | P1 | **admitted / queued** | Issues #68–#71 admitted: ops observability, read-only 223-ФЗ intake, review-gated 223-ФЗ Decision Core, and domain regression/outcome telemetry. |
+| **4. Automation + integrations** | P1 | **done at admitted v1 boundary** | PR #74 (`56ca227`) change monitoring + PR #75 (`fbf6d3c`) ingest resilience + PR #79 (`4149801`) internal integration outbox. External delivery remains disabled and separately gated. |
+| **5. Reliability + moat** | P1 | **done at admitted v1 boundary** | PR #76 (`c335c60`) ops observability + PR #77 (`c5e653a`) domain regression registry + PR #80 (`dc87a0b`) read-only 223-ФЗ intake + review-approved PR #81 (`f603c9f`) 223-ФЗ Decision Core. |
 
 ### Commodity default: do not build from scratch
 
@@ -64,7 +64,7 @@ The executor must reconcile issue/PR/done-gate state before continuing a stale c
 
 This changes utilization/cadence only. It does **not** expand AM-4 authority, queue admission, external-action rights, or `REVIEW` / `OWNER` / `HUMAN` gates.
 
-**Current execution status (2026-09-15):** the Product Owner explicitly refilled the executable projection. The watchdog remains exact-hourly and audit-logged in issue #57, with `DOCUMENT-QA-NEXT-INCREMENT` (#51) active and a bounded Stage-4/5 pipeline behind it. The executor may continue autonomously between these admitted tasks without new chat input, including switching to later independent `AUTO` work while an earlier task waits on CI/review. `REVIEW` / `HUMAN` / external-action gates still stop only the gated action; they do not authorize external delivery, procurement submission, signing, payment or participation decisions.
+**Current execution status (2026-09-18):** every explicitly admitted execution-queue item through order 80 is completed. The final REVIEW item, `223FZ-DECISION-V1-001` / PR #81, was merged after explicit Product Owner approval and successful exact-head CI. The canonical queue is now exhausted: there is **no admitted executable item**. The single `Tender Agent Watchdog` remains enabled exact-hourly and audit-logged in issue #57, but it must report/reconcile only and must not invent or promote roadmap work until the Product Owner admits a new bounded item.
 
 ### DOCUMENT-QA-005 reconciliation
 
@@ -76,14 +76,15 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 - **ARV-003 — production LLM analysis:** current docs refer to an accepted ARV-003 bundle, while an older R10.1 backlog status still says Gate 5 ready. This inconsistency is preserved as a status-revalidation item rather than silently resolved.
 - **ARV-041 — legal SaaS/pilot package:** repository package exists, but the canonical legal release gate remains human: director approval, qualified Russian counsel review and infrastructure/Roskomnadzor/localization/retention checks.
 - **ARV-067 — vertical ontologies / electrical equipment knowledge:** electrical ontology assets, taxonomy/profiles/truth packs and gated shadow work are present; current repository tests explicitly keep the ontology out of production runtime. Expert acceptance/evidence remains a gate.
-- **ARV-006 — full 223-ФЗ:** restored as a P0 planned product track; it was missing from the narrow executor queue, not from the historical roadmap.
+- **ARV-006 — full 223-ФЗ:** the bounded v1 intake and evidence-bound decision increments are now completed (PR #80 + #81). This advances ARV-006 materially but does not silently claim every historical meaning of “full 223-ФЗ support” is finished; residual breadth remains a future scope decision.
 - **ARV-017 / ARV-023:** restored with their actual historical meanings: ARV-017 is tender matching against price lists/catalogs; ARV-023 is supplier search.
+- **ARV-010 / ARV-021 / ARV-025 / ARV-029 / ARV-031 / ARV-045 / ARV-056 / ARV-058 / ARV-072:** bounded v1 infrastructure has now landed through PRs #74–#77 and #79. Historical broader meanings remain immutable; the reconciliation overlay records implemented foundations without claiming unbuilt external transports, full connector breadth, or later analytics are complete.
 - **ARV-073 / ARV-074:** later documents reused these IDs for different work. The conflict is recorded fail-closed; no renumbering or silent reassignment was performed.
 - **ARV-076 / ARV-096:** observed after the 2026-07-30 snapshot. They are recorded separately and are not used to invent missing IDs or automatic queue admission.
 
 ## Current executor programs
 
-These programs are repository-native benchmark/document-QA execution tracks. No ARV mapping is invented where the repository does not provide one.
+The accelerated admitted pipeline that was active on 2026-09-15 is now fully reconciled as completed.
 
 | Program | State | Source / completion evidence |
 |---|---|---|
@@ -92,34 +93,41 @@ These programs are repository-native benchmark/document-QA execution tracks. No 
 | `DOCUMENT-QA-004` | done | issue #11 |
 | `DOCUMENT-QA-005` | **done** | issue #16 accepted/closed; #52/#53 post-acceptance hardening; PR #54 |
 | `BUILD-DOCKER-CONTEXT-001` | **done** | issue #19; PR #58 merged as `8924a857` |
-| `DISCOVERY-QA-001` | **done** | issue #2; PR #59 merged as `762a392` after Product Owner approval |
-| `DECISION-CORE-V1-001` | **done** | issue #60; PR #61 merged as `3bf397f` after Product Owner approval |
-| `COMMERCIAL-CORE-V1-001` | **done** | issue #62; PR #63 merged as `4257cd2` after Product Owner approval |
-| `DOCUMENT-QA-NEXT-INCREMENT` | **in_progress / AUTO, merge REVIEW** | issue #51; Owner promotion 2026-09-15; active EIS notice-revision binding |
-| `CHANGE-MONITORING-V1-001` | ready / AUTO | issue #65; ARV-021 + ARV-056 |
-| `INGEST-RESILIENCE-V1-001` | ready / AUTO | issue #66; ARV-031 + ARV-058 |
-| `INTEGRATION-OUTBOX-V1-001` | ready / AUTO | issue #67; safe infrastructure slice of ARV-025 + ARV-029 + ARV-045 |
-| `OPS-OBSERVABILITY-V1-001` | ready / AUTO | issue #68; ARV-010 |
-| `223FZ-INGEST-V1-001` | ready / AUTO | issue #69; first bounded ARV-006 increment |
-| `223FZ-DECISION-V1-001` | ready / REVIEW | issue #70; ARV-006 decision/readiness semantics |
-| `DOMAIN-REGRESSION-V1-001` | ready / REVIEW | issue #71; ARV-072-aligned procurement regression/outcome layer |
+| `DISCOVERY-QA-001` | **done** | issue #2; PR #59 merged as `762a392` |
+| `DECISION-CORE-V1-001` | **done** | issue #60; PR #61 merged as `3bf397f` |
+| `COMMERCIAL-CORE-V1-001` | **done** | issue #62; PR #63 merged as `4257cd2` |
+| `DOCUMENT-QA-NEXT-INCREMENT` | **done** | issue #51; PR #73 merged as `dca11d4` |
+| `CHANGE-MONITORING-V1-001` | **done** | issue #65; PR #74 merged as `56ca227` |
+| `INGEST-RESILIENCE-V1-001` | **done** | issue #66; PR #75 merged as `fbf6d3c` |
+| `INTEGRATION-OUTBOX-V1-001` | **done** | issue #67; PR #79 merged as `4149801` |
+| `OPS-OBSERVABILITY-V1-001` | **done** | issue #68; PR #76 merged as `c335c60` |
+| `223FZ-INGEST-V1-001` | **done** | issue #69; PR #80 merged as `dc87a0b` |
+| `223FZ-DECISION-V1-001` | **done** | issue #70; PR #81 merged as `f603c9f` after explicit Product Owner approval |
+| `DOMAIN-REGRESSION-V1-001` | **done** | issue #71; PR #77 merged as `c5e653a` |
 
-### Admitted hourly execution queue
+### Execution queue after reconciliation
 
-The queue below is deliberately longer than one task so the watchdog can keep working when an earlier item is waiting on CI or a review gate. `AUTO` means repository-only implementation/testing may proceed autonomously subject to Company AM-4. `REVIEW` means the watchdog may prepare safe analysis/drafts/evidence but must not cross the task's review gate without Product Owner authorization. `AUTO; merge REVIEW` is the hybrid used for #51: code/test work may proceed, but merge is explicitly gated.
+All queue entries through order 80 are `done`. There is currently **no admitted READY/AUTO/REVIEW item** to execute. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
 
-| Order | Task | Authority | Depends on | Roadmap scope | Intended result |
-|---:|---|---|---|---|---|
-| 40 | `DOCUMENT-QA-NEXT-INCREMENT` | AUTO; merge REVIEW | `DOCUMENT-QA-005` | measured failure family | Active EIS revision only; no inactive/current document mixing (#51) |
-| 50 | `CHANGE-MONITORING-V1-001` | AUTO | Commercial Core v1 | ARV-021, ARV-056 | Saved watches + source-bound change feed; no external notification delivery (#65) |
-| 55 | `INGEST-RESILIENCE-V1-001` | AUTO | order 40 | ARV-031, ARV-058 | Resumable/idempotent sync, revision-aware dedupe (#66) |
-| 60 | `INTEGRATION-OUTBOX-V1-001` | AUTO | order 50 | ARV-025, ARV-029, ARV-045 | Internal integration events/outbox; live transports disabled (#67) |
-| 65 | `OPS-OBSERVABILITY-V1-001` | AUTO | none | ARV-010 | Queue/ingest/storage/backup operational visibility (#68) |
-| 70 | `223FZ-INGEST-V1-001` | AUTO | order 55 | ARV-006 | Separate read-only 223-ФЗ source path and intake parity (#69) |
-| 75 | `223FZ-DECISION-V1-001` | REVIEW | order 70 | ARV-006 | Evidence-bound 223-ФЗ readiness/decision semantics (#70) |
-| 80 | `DOMAIN-REGRESSION-V1-001` | REVIEW | Decision + Commercial Core | ARV-072-aligned | Durable edge-case corpus and outcome/regression telemetry (#71) |
+### Available continuation branches — candidate matrix
 
-The executor must skip unsatisfied dependencies and may progress a later independent admitted item instead. This is specifically intended to prevent human-review or CI waits from turning into idle multi-hour gaps.
+These are **roadmap branches, not admitted work**. Selecting one means creating a bounded task/Definition of Done and explicitly admitting it to the execution queue. The historical IDs listed here are preserved; this matrix does not create new ARV IDs.
+
+| Branch | Historical scope | What remains useful to do | Main gate |
+|---|---|---|---|
+| **CORE-QUALITY-PILOT** | ARV-002, 003, 004, 005, 061, 065, 067 | Revalidate live E2E/LLM readiness; finish Hermes/customer feedback loop; controlled 10–20 procurement pilot; fast cited pre-analysis; evidence-grounded copilot; ontology acceptance | Pilot/customer evidence and ARV-067 expert acceptance are REVIEW/HUMAN |
+| **PRODUCTION-RUNTIME** | ARV-008, 010, 011–014, 075 | Workers/jobs; residual security/recovery after observability v1; VPS/production access/migration/allowlists; Mac storage revalidation | Production/network/provider/local destructive changes require explicit applicable authority |
+| **COMMERCIAL-WORKFLOW** | ARV-015, 019, 022, 053, 055, 057, 059, 060, 063, 064, 066, 069 | Supplier profile; kanban; reusable OCR fallback; counterparty checks; company docs; application package; collaboration/import; later analytics | No automated participation decision, legal acceptance or application submission |
+| **SUPPLIER-RFQ** | ARV-023–029 | Supplier search/database; user-mail adapter; RFQ/TKP preparation/comparison; n8n orchestration | External supplier/customer email/RFQ send remains REVIEW/HUMAN |
+| **ETP-CONNECTORS** | ARV-030–037, 071 | Unified marketplace connector layer; federal ETP uniqueness research; TEK-Torg/Fabrikant/B2B-Center/Tender-Pro/other ETPs | Read-only acquisition can be bounded; authenticated/consequential platform actions need separate authority |
+| **GO-TO-MARKET** | ARV-038–041, 054 | Product-first site; metrics; indexing; tariffs/demo; legal SaaS/pilot package | ARV-041 remains director/counsel/regulatory HUMAN gate; pricing/public commitments need Owner approval |
+| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas/tariff limits; on-prem/air-gapped; mobile companion; later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
+| **DEVELOPMENT-GOVERNANCE** | ARV-051, 062 | Revalidate parallel-development protocol; mirror posture; reusable Project Watchdog binding | Must not alter Company/Product authority; open PR #78 is maintenance only |
+| **LATE-INFRA** | ARV-047–049 | OpenSearch, ClickHouse, Kubernetes/Helm when measured need appears | Deferred + reuse-first measured-gap gate |
+| **STATUS-REVALIDATION** | BASE-003, 007, 011, 012, 014; ARV-003, 051, 075 | Reconcile stale July progress/status values against current repository/runtime evidence | Status reconciliation only; no implementation authority |
+
+The already delivered Decision Core, Commercial Core, monitoring, ingest resilience, integration outbox, observability, 223-ФЗ v1 and domain-regression foundations should **not** be reopened as generic continuation branches without a concrete regression or an explicitly new bounded increment.
+
 
 ## ID conflicts
 
