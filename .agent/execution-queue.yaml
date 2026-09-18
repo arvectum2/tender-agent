@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-18T09:27:00+03:00'
+updated_at: '2026-09-18T16:55:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -280,6 +280,7 @@ items:
   independent: true
   auto_merge: false
   source: 'issue #83; Owner admission comment #5726117047 from 2026-09-18 directive: continue work according to roadmap'
+  owner_gate_evidence: 'Product Owner explicitly approved merge of PR #85 on 2026-09-18 after актуальный exact-head green CI; PR was then rebased onto merged PR #84/main and must re-earn exact-head green before merge.'
   roadmap_scope:
   - ARV-019
   dependencies:

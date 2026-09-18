@@ -22,24 +22,25 @@ completed:
   - Relevant regression set PASS: 7 passed, 13 skipped.
   - Local CI-equivalent make check PASS.
   - Full default pytest: 3028 passed, 241 skipped; 3 R9 Docker-backed acceptance tests failed from local Docker execution only, pending authoritative GitHub CI.
-current: Exact-head GitHub CI for PR #85 after checkpoint update.
+current: Rebased onto merged PR #84/main; Product Owner explicitly approved merge of PR #85 on 2026-09-18. Await exact-head CI for the rebased head, then guarded merge.
 remaining:
-  - Confirm exact-head CI.
-  - On green, record CI/head and block on Product Owner merge review; release lease.
-last_verified_commit: e609944
+  - Push rebased head and obtain exact-head CI success.
+  - Merge PR #85 if the exact head remains green under the explicit Product Owner approval.
+  - Reconcile queue/checkpoint as completed on canonical main.
+last_verified_commit: 55822172615952107b20ea45800ea0df8f832026
 test_results:
   - ruff changed files PASS.
   - focused pytest 4 passed, 6 warnings.
   - relevant pytest 7 passed, 13 skipped, 8 warnings.
   - uv run make check PASS.
   - full default pytest 3028 passed, 241 skipped; 3 local Docker-environment R9 acceptance failures; exact GitHub CI pending.
-resume_instruction: Check exact-head CI on PR #85; fix failures autonomously; on green mark blocked awaiting Product Owner merge approval and release lease. Do not merge without separate approval.
-updated_at: '2026-09-18T09:58:00+03:00'
+resume_instruction: Push/recheck the rebased PR #85 exact head; fix CI failures autonomously; on green merge under the explicit 2026-09-18 Product Owner approval and reconcile completion on canonical main.
+updated_at: '2026-09-18T16:55:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-procurement-kanban-v1
   branch: agent/procurement-kanban-v1-001
-  base_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+  base_commit: 2ac371360ef57bf0e79f157e5732bb61b993c68f
   issue: 83
   manual_override: false
-  lease_until: '2026-09-18T11:18:00+03:00'
+  lease_until: '2026-09-18T18:30:00+03:00'

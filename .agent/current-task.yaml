@@ -26,25 +26,25 @@ completed:
 - Local relevant regression set passed: 7 passed, 13 skipped, 8 warnings.
 - Local CI-equivalent make check passed.
 - Full default pytest reached 3028 passed / 241 skipped; 3 R9 Docker-backed acceptance tests failed locally because the temporary worktree could not execute Docker, so GitHub CI remains authoritative for those environment-dependent checks.
-current: Exact-head GitHub CI for PR #85 after final checkpoint update.
+current: Rebased onto merged PR #84/main; Product Owner explicitly approved merge of PR #85 on 2026-09-18. Await exact-head CI for the rebased head, then guarded merge.
 pending:
-- Confirm exact-head CI is green.
-- If green, mark task/queue blocked on Product Owner merge review, release lease, and record the exact CI run/head.
-- Do not merge PR #85 without separate Product Owner approval because auto_merge=false.
-last_verified_commit: e609944
+- Push rebased head and obtain exact-head CI success.
+- If green and head is unchanged, merge PR #85 under the explicit Product Owner approval from 2026-09-18.
+- After merge, reconcile queue/checkpoint as completed on canonical main.
+last_verified_commit: 55822172615952107b20ea45800ea0df8f832026
 test_results:
 - "ruff check changed Python/test files: PASS."
 - "pytest tests/test_commercial_operator_console_c4.py: 4 passed, 6 warnings."
 - "pytest tests/test_sprint1_integration.py tests/test_controlled_pilot_operator_workflow_cp2.py tests/test_commercial_operator_console_c4.py: 7 passed, 13 skipped, 8 warnings."
 - "uv run make check: PASS."
 - "full default pytest: 3028 passed, 241 skipped, 3 environment-dependent R9 Docker acceptance failures (command failed: docker); exact GitHub CI pending."
-updated_at: '2026-09-18T09:58:00+03:00'
-resume_instruction: Check exact-head CI on PR #85. If it fails, inspect failing jobs and fix autonomously. If it is green, update queue/current-task/checkpoint to blocked awaiting Product Owner merge approval, release the lease, and stop before merge.
+updated_at: '2026-09-18T16:55:00+03:00'
+resume_instruction: Push/recheck the rebased PR #85 exact head. If CI fails, fix autonomously. If exact-head CI is green and head is unchanged, merge PR #85 under the explicit 2026-09-18 Product Owner approval, then reconcile canonical queue/checkpoint as completed.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-procurement-kanban-v1
   branch: agent/procurement-kanban-v1-001
-  base_commit: aa5aa7aed45bcbac40fb95fe802bcbdc53b3649c
+  base_commit: 2ac371360ef57bf0e79f157e5732bb61b993c68f
   issue: 83
   manual_override: false
-  lease_until: '2026-09-18T11:18:00+03:00'
+  lease_until: '2026-09-18T18:30:00+03:00'
