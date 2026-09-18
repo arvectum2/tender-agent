@@ -14,23 +14,27 @@ definition_of_done:
 - Record that this material executor-policy change triggers the Company AM-4 mandatory Owner-review gate for future automatic merges; preparation/implementation/testing may continue but automatic merges fail closed until an attributable renewal.
 - Validate YAML/policy consistency, relevant repository checks and exact-head CI; merge this specifically Owner-directed maintenance change only after green CI.
 completed:
+- Reconciled PROCUREMENT-KANBAN-V1-001 queue/checkpoint as completed from PR #85 merge evidence.
+- Added active OWNER-CONTINUOUS-ROADMAP-2026-09-18 with deterministic document-order continuation and standard revalidation fallback.
+- Seeded ARV-002-REVALIDATION-001 as the first deterministic bounded continuation item.
+- Added fail-visible one-comment-per-run reporting: create issue #57 placeholder before mutation and update that same comment at run end.
+- Recorded the material executor-policy change as an AM-4 automatic-merge review trigger; future auto-merges fail closed pending Owner renewal.
 - PR #84 branch-hygiene bookkeeping merged as 2ac371360ef57bf0e79f157e5732bb61b993c68f after exact-head CI success.
 - PR #85 rebased onto PR #84/main; exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed CI run 35353562825 SUCCESS 9/9 and was squash-merged as 24d515d1a16fdc7906bcc5801ad700afb2206589 under explicit Product Owner approval.
 - Issue #83 closed completed with merge/CI evidence.
-current: Implement the durable continuation-policy and fail-visible reporting repair, then update the existing hourly Scheduled Task.
+current: Repository policy/reporting repair validated locally; commit/push and open PR, then update the existing Scheduled Task only after repository policy is integrated.
 pending:
-- Reconcile Kanban queue/checkpoint state as completed.
-- Add active Owner directive and deterministic continuation admission contract.
-- Seed the first bounded continuation/revalidation item.
-- Harden reporting contract and watchdog binding.
 - Validate locally and open a reviewable PR.
 - Update the existing Tender Agent Watchdog Scheduled Task to the new concise canonical protocol and verify enabled/hourly/singleton.
 - Run exact-head CI and merge this explicitly Owner-directed watchdog repair if green.
 last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
 test_results:
 - "PR #85 exact-head CI run 35353562825: SUCCESS 9/9."
-updated_at: '2026-09-18T17:14:00+03:00'
-resume_instruction: Reconcile order 90/checkpoint to completed, then implement owner-directive continuation selection and fail-visible one-comment-per-run reporting without weakening any hard stop; seed the first deterministic bounded revalidation item from the continuation matrix.
+- "python -m pytest -q tests/test_watchdog_continuation_policy.py: 2 passed."
+- "uv run make check: PASS."
+- "git diff --check: PASS."
+updated_at: '2026-09-18T17:31:00+03:00'
+resume_instruction: Commit/push the validated watchdog repair, open PR and obtain exact-head CI. After merge, update the existing singleton Scheduled Task prompt to the new fail-visible deterministic continuation protocol and verify it remains enabled/hourly.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-watchdog-continuation-v2

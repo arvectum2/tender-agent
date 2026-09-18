@@ -11,22 +11,27 @@ definition_of_done:
   - Material policy change is recorded as triggering AM-4 Owner-review for future automatic merges.
   - YAML/policy checks and exact-head CI pass; explicitly Owner-directed maintenance PR merged.
 completed:
+  - Kanban v1 reconciled complete from PR #85 exact-head CI/merge.
+  - Active Owner continuation directive added with deterministic selection and standard revalidation fallback.
+  - ARV-002-REVALIDATION-001 seeded as the first next bounded item.
+  - Fail-visible placeholder/update-in-place reporting contract added.
+  - Material policy-change AM-4 review trigger recorded; future automatic merges fail closed pending renewal.
   - PR #84 merged after exact-head green CI.
   - PR #85 exact-head CI 35353562825 SUCCESS 9/9; merged as 24d515d1a16fdc7906bcc5801ad700afb2206589.
   - Issue #83 closed completed.
-current: Implement repository-owned continuation and reporting policy.
+current: Repository-owned continuation/reporting policy validated locally; commit/push and open PR.
 remaining:
-  - Reconcile Kanban completion.
-  - Implement owner directive/selection/reporting changes.
-  - Seed next bounded continuation item.
   - Validate and open PR.
   - Update/verify scheduled watchdog.
   - Obtain exact-head green CI and merge.
 last_verified_commit: 24d515d1a16fdc7906bcc5801ad700afb2206589
 test_results:
   - PR #85 exact-head CI 35353562825 SUCCESS 9/9.
-resume_instruction: Implement the repository policy repair first; do not change product priorities or hard stops. Seed only the deterministic first bounded revalidation item.
-updated_at: '2026-09-18T17:14:00+03:00'
+  - focused watchdog continuation policy test 2 passed.
+  - uv run make check PASS.
+  - git diff --check PASS.
+resume_instruction: Commit/push and open the watchdog repair PR; obtain exact-head CI; after merge update and verify the existing singleton Scheduled Task.
+updated_at: '2026-09-18T17:31:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260918-watchdog-continuation-v2

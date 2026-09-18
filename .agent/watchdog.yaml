@@ -6,6 +6,7 @@ roadmap_paths:
   - docs/roadmap/master-roadmap.yaml
   - docs/roadmap/MASTER_ROADMAP.md
 execution_queue_path: .agent/execution-queue.yaml
+owner_directive_path: .agent/owner-directive.yaml
 current_task_path: .agent/current-task.yaml
 checkpoint_dir: .agent/checkpoints
 executor_policy_path: .agent/executor-policy.yaml
@@ -27,7 +28,15 @@ runtime:
   self_disable_prohibited: true
   disable_requires_explicit_user_request: true
   single_watchdog_per_project: true
+  empty_queue_behavior: deterministic_owner_directive_continuation
+  max_new_admissions_per_run: 1
+  require_canonical_admission_before_product_implementation: true
 reporting:
   mandatory_every_run: true
   no_progress_marker: NO PRODUCTIVE PROGRESS
   append_to_audit_issue: true
+  fail_visible: true
+  create_placeholder_comment_at_run_start: true
+  update_same_comment_at_run_end: true
+  exactly_one_comment_per_invocation: true
+  mutation_requires_placeholder_or_explicit_read_only_failure_mode: true

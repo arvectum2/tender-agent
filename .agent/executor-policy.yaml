@@ -5,6 +5,7 @@ mode: roadmap_executor
 sources:
   current_task: .agent/current-task.yaml
   execution_queue: .agent/execution-queue.yaml
+  owner_directive: .agent/owner-directive.yaml
   supporting_roadmap:
     - GitHub issues referenced by queue items
     - repository-owned benchmark/evidence artifacts
@@ -23,6 +24,18 @@ selection:
   executor_may_change_authority_class: false
   executor_may_create_new_priorities: false
   dependencies_must_be_satisfied: true
+  empty_queue_continuation:
+    enabled_only_with_active_owner_directive: true
+    navigation_source: docs/roadmap/master-roadmap.yaml#continuation_branches
+    deterministic_branch_order: document_order
+    deterministic_item_order: historical_items_order
+    max_new_admissions_per_run: 1
+    prefer_existing_bounded_task: true
+    fallback_to_standard_revalidation_slice: true
+    may_invent_product_priority: false
+    may_invent_material_architecture: false
+    may_downgrade_review_human_owner_gate: false
+    canonical_admission_required_before_product_implementation: true
 
 status_rules:
   executor_may_transition:
@@ -62,6 +75,9 @@ company_authority_gate:
   fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
   fail_closed_mode: REVIEW
   product_policy_cannot_expand_company_authority: true
+  material_policy_change_recorded_2026_09_18: true
+  automatic_merge_after_material_policy_change: REVIEW_UNTIL_OWNER_RENEWAL
+  preparation_implementation_testing_may_continue_when_independently_authorized: true
 
 authority:
   AUTO:
@@ -112,6 +128,8 @@ blocker_behavior:
   release_lease_when_waiting_on_human: true
   continue_with_next_independent_ready_item: true
   notify_only_if_no_independent_executable_work_remains_or_owner_action_is_time_critical: true
+  empty_queue_with_active_owner_directive_is_not_a_no_work_state: true
+  materialize_at_most_one_deterministic_bounded_continuation_item: true
 
 notifications:
   notify_on:

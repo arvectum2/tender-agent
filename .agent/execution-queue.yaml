@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-18T17:14:00+03:00'
+updated_at: '2026-09-18T17:24:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -299,6 +299,21 @@ items:
   source: 'Explicit Product Owner directive 2026-09-18: after merging PR #84/#85, repair watchdog so an active Owner directive continues the next canonically determined bounded increment within existing hard stops.'
   executor_scope: Repair repository-owned selection/admission/reporting semantics and the existing singleton Scheduled Task only. Do not change product priority, Company/Product/OS authority, benchmark truth, external-effect permissions, production state or protected-repository governance.
   done_gate: 'Durable active directive + deterministic bounded continuation rule + fail-visible one-comment run reporting + immediate next bounded item admitted; existing hourly watchdog updated/verified; policy validation and exact-head CI green. Because this is a material executor-policy change, future AM-4 automatic merges fail closed pending attributable Owner renewal.'
+- order: 100
+  task_id: ARV-002-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate live end-to-end pipeline status and residual gap
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first continuation branch CORE-QUALITY-PILOT; first historical item ARV-002; legacy reconciliation=needs_revalidation.'
+  roadmap_scope:
+  - ARV-002
+  dependencies: []
+  executor_scope: Reconcile ARV-002 against current main/merged evidence and deterministic tests. Verify the existing live end-to-end pipeline and hidden-fallback boundaries without production mutation or consequential external action. Update reconciliation evidence; if a concrete repository-only residual gap is proven and already traceable to the canonical ARV-002 next_result/residual_scope, record at most one bounded successor candidate. Do not invent a new product priority, architecture or acceptance criterion.
+  done_gate: 'Current ARV-002 implementation/status is evidence-backed on the reconciliation overlay; deterministic relevant tests/checks are recorded; any residual gap is explicit and source-traceable; no external/production/procurement effect; REVIEW/HUMAN/OWNER gates preserved. Automatic merge remains fail-closed after the 2026-09-18 material executor-policy change until attributable Owner AM-4 renewal.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
