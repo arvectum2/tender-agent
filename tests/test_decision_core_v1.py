@@ -59,6 +59,7 @@ def test_complete_grounded_case_can_reach_go_without_external_authority() -> Non
     result = build_decision_core(_grounded_model(), supplier_profile=_profile())
 
     assert result["contract_version"] == DECISION_CORE_CONTRACT_VERSION
+    assert result["procurement_regime"] == "unknown"
     assert result["decision"]["status"] == "GO"
     assert result["facts"]["application_deadline"]["status"] == "KNOWN"
     assert result["facts"]["application_deadline"]["evidence"][0]["excerpt"] == "2026-09-30T12:00:00+03:00"
@@ -251,3 +252,144 @@ def test_canonical_report_builder_attaches_fail_closed_decision_core() -> None:
     assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
     assert model["bid_decision"]["status"] == "needs_review"
     assert model["decision_core"]["supplier_profile_bound"] is True
+
+def _grounded_223fz_model() -> dict:
+    model = _grounded_model()
+    model["procurement_law"] = "223fz"
+    return model
+
+
+def test_223fz_go_capable_candidate_fails_closed_without_regime_rules() -> None:
+    result = build_decision_core(_grounded_223fz_model(), supplier_profile=_profile())
+
+    assert result["procurement_regime"] == "223fz"
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert not result["blockers"]
+    assert result["facts"]["procurement_title"]["status"] == "KNOWN"
+    assert result["facts"]["application_deadline"]["status"] == "KNOWN"
+    assert result["facts"]["nmck"]["status"] == "KNOWN"
+    assert any(item["code"] == "223FZ_APPLICATION_WINDOW_SEMANTICS" for item in result["unknowns"])
+
+
+def test_223fz_expired_deadline_does_not_inherit_44fz_hard_blocker() -> None:
+    model = _grounded_223fz_model()
+    model["deadline_status"] = "expired"
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert not result["blockers"]
+    assert all(item["code"] != "APPLICATION_DEADLINE_EXPIRED" for item in result["blockers"])
+
+
+def test_223fz_missing_source_binding_keeps_shared_fact_unknown() -> None:
+    model = _grounded_223fz_model()
+    model["field_evidence"].pop("application_deadline")
+    model["field_evidence"].pop("nmck")
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert result["facts"]["application_deadline"]["status"] == "UNKNOWN"
+    assert result["facts"]["nmck"]["status"] == "UNKNOWN"
+
+
+def test_223fz_contradiction_remains_regime_neutral_review() -> None:
+    model = _grounded_223fz_model()
+    model["contradictions"] = [{"field": "quantity", "values": [10, 20]}]
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    consistency = next(item for item in result["readiness"] if item["code"] == "SOURCE_CONSISTENCY")
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert consistency["status"] == "REVIEW"
+
+
+def test_223fz_risk_classification_never_inherits_44fz_hard_blocker() -> None:
+    model = _grounded_223fz_model()
+    model["risks"] = [
+        {
+            "risk": "Режимно неподтверждённый риск",
+            "classification": "hard_blocker",
+            "operator_decision_required": False,
+        }
+    ]
+    model["evidence_map"] = [
+        {
+            "evidence_id": "risk:1:locator:1",
+            "document": "Документ закупки",
+            "row": "раздел 7",
+            "short_excerpt": "Риск",
+        }
+    ]
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert not result["blockers"]
+    assert any(item["code"] == "223FZ_RISK_1_SEMANTICS" for item in result["unknowns"])
+
+
+def test_customer_projection_exposes_normalized_procurement_regime() -> None:
+    model = _grounded_223fz_model()
+    model["decision_core"] = build_decision_core(model, supplier_profile=_profile())
+    model["customer_decision"] = {}
+    model["customer_documents"] = []
+    model["line_items"] = []
+    model["okpd2_codes"] = []
+    model["customer_questions"] = []
+    model["corpus_limitations"] = []
+    model["delivery_place"] = "Москва"
+
+    projection = build_customer_report_projection(model)
+
+    assert projection["procurement_regime"] == "223fz"
+    assert projection["decision_core"]["procurement_regime"] == "223fz"
+
+
+def test_canonical_report_builder_propagates_223fz_metadata_law() -> None:
+    metadata = {
+        "run_id": "decision-core-223fz-test",
+        "procurement_id": "2230000000000000000",
+        "procurement_title": "Тестовая закупка 223-ФЗ",
+        "procurement_law": "223-FZ",
+        "files": [],
+        "_field_evidence": {
+            "procurement_title": "notice:procurement_subject",
+            "application_deadline": "notice:application_deadline",
+            "nmck": "notice:initial_price",
+        },
+        "deadline": "30.09.2026 12:00 +03:00",
+        "analysis_completed_at": "15.09.2026T12:00:00+00:00",
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "supply_items": [],
+                "item_coverage": {},
+                "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Тестовая закупка 223-ФЗ",
+                "nmck": 1_000_000,
+                "currency": "RUB",
+                "document_coverage": "partial",
+                "missing_documents": ["draft_contract"],
+                "supplier_profile": deepcopy(_profile()),
+            },
+        },
+        "final_recommendation": {
+            "recommendation": "needs_review",
+            "rationale": [],
+            "manual_checks": [],
+        },
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+
+    model = build_procurement_report_model(metadata, outputs)
+
+    assert model["procurement_law"] == "223-FZ"
+    assert model["decision_core"]["procurement_regime"] == "223fz"

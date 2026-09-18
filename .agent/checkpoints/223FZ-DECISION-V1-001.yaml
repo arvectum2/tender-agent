@@ -1,39 +1,56 @@
-version: 1
+version: 2
 task_id: 223FZ-DECISION-V1-001
 issue: 70
-status: in_progress
-updated_at: '2026-09-17T09:14:00+03:00'
+status: blocked
+updated_at: '2026-09-17T16:02:25+03:00'
 authority: REVIEW
 auto_merge: false
-base_commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
-reconciliation:
-  dependency: 223FZ-INGEST-V1-001
-  dependency_state: satisfied
-  evidence:
-  - PR #80 merged at 2026-09-17T05:01:20Z as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
-  - Issue #69 closed completed.
-  - Canonical current-task was stale in-progress #69 and was reconciled before claiming #70.
-inventory:
-- path: src/modules/tender_operator_agent_demo/decision_core.py
-  finding: Decision Core v1 is fail-closed and source-bound, but it has no procurement-regime dispatch in the audited seam.
-- semantic: procurement_title/application_deadline/nmck
-  finding: Fact extraction is structurally regime-neutral only when source binding is valid; no 223-FZ legal interpretation is implied.
-- semantic: APPLICATION_DEADLINE_EXPIRED
-  finding: Existing hard blocker depends on source-bound deadline evidence, but must not be projected to 223-FZ until frozen source evidence supports the regime-specific rule.
-- semantic: contract_draft
-  finding: Existing readiness assumes a project-contract concept/status; treat as unsupported for 223-FZ until independently evidenced.
-- semantic: risks
-  finding: Existing hard_blocker classification can create NO_GO; do not reuse classifications for 223-FZ without independently frozen source-supported semantics.
-- semantic: contradictions/source consistency
-  finding: Fail-closed REVIEW on contradictory evidence is regime-neutral and safe to reuse.
-next:
-- Inspect report_model/API for explicit procurement regime projection.
-- Inspect existing Decision Core tests and evidence fixtures.
-- Create/freeze a small 223-FZ source-grounded regression matrix covering GO-capable, hard blocker, missing evidence and contradictory/ambiguous cases before custom rule tuning.
-- Implement only supported regime dispatch; unsupported legal/procedural items remain UNKNOWN/NEEDS_REVIEW.
-- Prepare PR and exact-head CI; final merge remains Product Owner REVIEW.
+base_commit: 6ed4a5e1b6cd4d51d12209d299f7b00db109cd50
+goal: >-
+  Extend Decision Core with only independently frozen, source-supported 223-FZ readiness/decision semantics while preserving fail-closed evidence and human control.
+definition_of_done:
+  - Regime-aware Decision Core separates shared facts from 223-FZ-specific semantics.
+  - Every 223-FZ hard blocker or positive hard fact is source-bound; unsupported items fail closed.
+  - Frozen source-grounded regressions cover GO-capable, hard-blocker candidate, missing evidence and contradictory/ambiguous cases.
+  - Existing 44-FZ Decision Core regressions remain green.
+  - Product/report/API projection exposes procurement regime and evidence safely.
+  - Focused/relevant tests and exact-head CI are green; final merge requires explicit Product Owner REVIEW approval.
+completed:
+  - 'Dependency satisfied: PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609; issue #69 closed completed.'
+  - 'Frozen pre-SUT truth committed in docs/223fz/DECISION_REGRESSION_MATRIX.md before Decision Core tuning and left unchanged after SUT output.'
+  - 'Implemented normalized procurement regime and fail-closed 223-FZ dispatch; 44-FZ deadline/contract/risk hard semantics cannot silently fall through into 223-FZ.'
+  - 'Encoded frozen 223-FZ GO-capable, expired-deadline candidate, missing-evidence, contradiction and risk-classification regressions while retaining 44-FZ controls.'
+  - 'Projected normalized procurement regime through canonical and customer report surfaces.'
+  - 'Reduced accidental formatting-only churn in PR #81 without changing frozen expectations or intended semantics.'
+  - 'Synchronized PR #81 with current main after INTEGRATION-OUTBOX-V1-001 merged.'
+  - 'Fresh local validation: tests/test_decision_core_v1.py 17 passed; task-scoped ruff PASS; make check PASS; git diff --check PASS.'
+  - 'Final exact-head CI run 35223538846 SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce; PR #81 mergeable, no submitted reviews and no review threads.'
+current: >-
+  Technical implementation and all automated validation gates are complete. PR #81 is review-ready and blocked only on explicit Product Owner REVIEW approval.
+remaining:
+  - Obtain explicit Product Owner REVIEW approval.
+  - After approval, revalidate current head/base/reviews and merge; do not alter frozen regression truth.
+last_verified_commit: 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce
+test_results:
+  - 'tests/test_decision_core_v1.py: 17 passed.'
+  - 'task-scoped ruff: PASS.'
+  - 'make check: PASS.'
+  - 'git diff --check: PASS.'
+  - 'Exact-head CI run 35223538846: SUCCESS at 0dcd34c4d86536132b05d42e60cb2b2e3bcd63ce.'
+frozen_truth:
+  path: docs/223fz/DECISION_REGRESSION_MATRIX.md
+  state: frozen_before_sut_tuning
+  mutation_after_sut_output: false
 hard_boundaries:
-- no legal advice or fabricated 223-FZ interpretation
-- no external procurement action or autonomous participation decision
-- no benchmark truth/comparator/normalizer mutation after SUT output
-- no final merge without explicit Product Owner approval
+  - No legal-advice claim or fabricated 223-FZ interpretation.
+  - No external procurement action or autonomous participation decision.
+  - No benchmark truth/comparator/normalizer mutation after SUT output.
+  - No final merge without explicit Product Owner approval.
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: agent/223fz-decision-v1-001
+  manual_override: false
+  lease_until: null
+resume_instruction: >-
+  Wait for explicit Product Owner REVIEW approval for PR #81. Reconcile new Owner/PR evidence first; after approval, revalidate current head/base/reviews and merge without changing frozen expected outcomes.

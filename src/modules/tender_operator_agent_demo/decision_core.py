@@ -18,6 +18,16 @@ def _number(value: Any) -> float | None:
         return None
 
 
+def _normalize_procurement_regime(model: dict[str, Any]) -> str:
+    raw = _text(model.get("procurement_regime") or model.get("procurement_law")).lower()
+    compact = raw.replace("-", "").replace("_", "").replace(" ", "")
+    if compact in {"44fz", "44фз"}:
+        return "44fz"
+    if compact in {"223fz", "223фз"}:
+        return "223fz"
+    return "unknown"
+
+
 def _evidence_from_ref(source_ref: Any, *, fallback_document: str | None = None) -> dict[str, Any] | None:
     ref = _text(source_ref)
     if not ref:
@@ -146,6 +156,8 @@ def build_decision_core(
     readiness: list[dict[str, Any]] = []
     unknowns: list[dict[str, Any]] = []
     rationale: list[str] = []
+    regime = _normalize_procurement_regime(model)
+    is_223fz = regime == "223fz"
 
     title_evidence = _field_evidence(model, "procurement_title")
     deadline_evidence = _field_evidence(model, "application_deadline")
@@ -169,7 +181,24 @@ def build_decision_core(
     }
 
     deadline_status = _text(model.get("deadline_status")).lower()
-    if deadline_status == "expired" and deadline_evidence:
+    if is_223fz:
+        readiness.append(
+            _readiness(
+                "APPLICATION_WINDOW",
+                "Срок подачи заявок",
+                "UNKNOWN",
+                "223-ФЗ: срок извлечён как source-bound факт, но правовой статус окна подачи не интерпретируется без отдельно утверждённой режимной семантики.",
+                blocking=True,
+                evidence=deadline_evidence,
+            )
+        )
+        unknowns.append(
+            {
+                "code": "223FZ_APPLICATION_WINDOW_SEMANTICS",
+                "summary": "Правовая интерпретация срока подачи для 223-ФЗ не утверждена в текущем Decision Core.",
+            }
+        )
+    elif deadline_status == "expired" and deadline_evidence:
         blockers.append(
             {
                 "code": "APPLICATION_DEADLINE_EXPIRED",
@@ -217,44 +246,67 @@ def build_decision_core(
 
     contract_status = _text(model.get("contract_draft_status")).lower()
     contract_evidence = _contract_evidence(model)
-    facts["contract_draft"] = {
-        "status": "KNOWN" if contract_evidence and contract_status == "present" else "UNKNOWN",
-        "value": "present" if contract_evidence and contract_status == "present" else None,
-        "evidence": contract_evidence,
-    }
-    if contract_status == "present" and contract_evidence:
+    if is_223fz:
+        facts["contract_draft"] = {
+            "status": "UNKNOWN",
+            "value": None,
+            "evidence": contract_evidence,
+        }
         readiness.append(
             _readiness(
                 "CONTRACT_DRAFT",
-                "Проект контракта",
-                "SATISFIED",
-                "Проект контракта присутствует и связан с доказательством.",
+                "Проект договора/контракта",
+                "UNKNOWN",
+                "223-ФЗ: договорная готовность не интерпретируется по 44-ФЗ-семантике без отдельно утверждённого source-bound правила.",
+                blocking=True,
                 evidence=contract_evidence,
             )
         )
-    elif contract_status == "present":
-        readiness.append(
-            _readiness(
-                "CONTRACT_DRAFT",
-                "Проект контракта",
-                "UNKNOWN",
-                "Наличие проекта контракта заявлено без source binding.",
-                blocking=True,
-            )
-        )
         unknowns.append(
-            {"code": "CONTRACT_DRAFT_EVIDENCE", "summary": "Нужна привязка проекта контракта к источнику."}
+            {
+                "code": "223FZ_CONTRACT_READINESS_SEMANTICS",
+                "summary": "Договорная readiness-семантика 223-ФЗ не утверждена в текущем Decision Core.",
+            }
         )
     else:
-        readiness.append(
-            _readiness(
-                "CONTRACT_DRAFT",
-                "Проект контракта",
-                "MISSING",
-                "Проект контракта отсутствует или его наличие не подтверждено.",
-                blocking=True,
+        facts["contract_draft"] = {
+            "status": "KNOWN" if contract_evidence and contract_status == "present" else "UNKNOWN",
+            "value": "present" if contract_evidence and contract_status == "present" else None,
+            "evidence": contract_evidence,
+        }
+        if contract_status == "present" and contract_evidence:
+            readiness.append(
+                _readiness(
+                    "CONTRACT_DRAFT",
+                    "Проект контракта",
+                    "SATISFIED",
+                    "Проект контракта присутствует и связан с доказательством.",
+                    evidence=contract_evidence,
+                )
             )
-        )
+        elif contract_status == "present":
+            readiness.append(
+                _readiness(
+                    "CONTRACT_DRAFT",
+                    "Проект контракта",
+                    "UNKNOWN",
+                    "Наличие проекта контракта заявлено без source binding.",
+                    blocking=True,
+                )
+            )
+            unknowns.append(
+                {"code": "CONTRACT_DRAFT_EVIDENCE", "summary": "Нужна привязка проекта контракта к источнику."}
+            )
+        else:
+            readiness.append(
+                _readiness(
+                    "CONTRACT_DRAFT",
+                    "Проект контракта",
+                    "MISSING",
+                    "Проект контракта отсутствует или его наличие не подтверждено.",
+                    blocking=True,
+                )
+            )
 
     profile_bound = isinstance(supplier_profile, dict) and bool(supplier_profile)
     if profile_bound:
@@ -297,46 +349,74 @@ def build_decision_core(
     risks = [item for item in model.get("risks", []) or [] if isinstance(item, dict)]
     risk_review_evidence: list[dict[str, Any]] = []
     risk_requires_review = False
-    for index, risk in enumerate(risks, start=1):
-        evidence = _risk_evidence(model, index)
-        if not evidence:
+    if is_223fz:
+        for index, risk in enumerate(risks, start=1):
+            evidence = _risk_evidence(model, index)
+            risk_review_evidence.extend(evidence)
             unknowns.append(
                 {
-                    "code": f"RISK_{index}_EVIDENCE",
-                    "summary": f"Риск «{_text(risk.get('risk') or risk.get('description')) or index}» не имеет source binding.",
+                    "code": f"223FZ_RISK_{index}_SEMANTICS",
+                    "summary": f"Риск «{_text(risk.get('risk') or risk.get('description')) or index}» не классифицируется как hard blocker без утверждённой 223-ФЗ-семантики.",
                 }
             )
-            risk_requires_review = True
-            continue
-        risk_review_evidence.extend(evidence)
-        classification = _text(risk.get("classification")).lower()
-        if classification in {"hard_blocker", "confirmed_hard_blocker"} and not bool(risk.get("operator_decision_required")):
-            blockers.append(
-                {
-                    "code": f"RISK_{index}_HARD_BLOCKER",
-                    "summary": _text(risk.get("risk") or risk.get("description")) or "Подтверждённый жёсткий риск.",
-                    "hard": True,
-                    "evidence": evidence,
-                }
-            )
-        else:
-            risk_requires_review = True
-
-    if risks:
         readiness.append(
             _readiness(
                 "RISK_REVIEW",
                 "Риски закупки",
-                "REVIEW" if risk_requires_review else "SATISFIED",
-                "Риски требуют решения оператора." if risk_requires_review else "Подтверждённые риски не требуют отдельной эскалации.",
-                blocking=risk_requires_review,
+                "REVIEW" if risks else "UNKNOWN",
+                "223-ФЗ: риск-семантика требует ручной проверки; 44-ФЗ hard-blocker классификация не наследуется.",
+                blocking=True,
                 evidence=_dedupe_evidence(risk_review_evidence),
             )
         )
+        if not risks:
+            unknowns.append(
+                {
+                    "code": "223FZ_RISK_SEMANTICS",
+                    "summary": "Отсутствие риск-флагов не считается подтверждением 223-ФЗ readiness.",
+                }
+            )
     else:
-        readiness.append(
-            _readiness("RISK_REVIEW", "Риски закупки", "SATISFIED", "Подтверждённых риск-флагов для эскалации нет.")
-        )
+        for index, risk in enumerate(risks, start=1):
+            evidence = _risk_evidence(model, index)
+            if not evidence:
+                unknowns.append(
+                    {
+                        "code": f"RISK_{index}_EVIDENCE",
+                        "summary": f"Риск «{_text(risk.get('risk') or risk.get('description')) or index}» не имеет source binding.",
+                    }
+                )
+                risk_requires_review = True
+                continue
+            risk_review_evidence.extend(evidence)
+            classification = _text(risk.get("classification")).lower()
+            if classification in {"hard_blocker", "confirmed_hard_blocker"} and not bool(risk.get("operator_decision_required")):
+                blockers.append(
+                    {
+                        "code": f"RISK_{index}_HARD_BLOCKER",
+                        "summary": _text(risk.get("risk") or risk.get("description")) or "Подтверждённый жёсткий риск.",
+                        "hard": True,
+                        "evidence": evidence,
+                    }
+                )
+            else:
+                risk_requires_review = True
+
+        if risks:
+            readiness.append(
+                _readiness(
+                    "RISK_REVIEW",
+                    "Риски закупки",
+                    "REVIEW" if risk_requires_review else "SATISFIED",
+                    "Риски требуют решения оператора." if risk_requires_review else "Подтверждённые риски не требуют отдельной эскалации.",
+                    blocking=risk_requires_review,
+                    evidence=_dedupe_evidence(risk_review_evidence),
+                )
+            )
+        else:
+            readiness.append(
+                _readiness("RISK_REVIEW", "Риски закупки", "SATISFIED", "Подтверждённых риск-флагов для эскалации нет.")
+            )
 
     contradictions = [item for item in model.get("contradictions", []) or [] if item]
     if contradictions:
@@ -381,6 +461,7 @@ def build_decision_core(
 
     return {
         "contract_version": DECISION_CORE_CONTRACT_VERSION,
+        "procurement_regime": regime,
         "facts": facts,
         "supplier_profile_bound": profile_bound,
         "decision": {

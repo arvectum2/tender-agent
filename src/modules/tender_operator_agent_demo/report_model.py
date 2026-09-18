@@ -274,6 +274,9 @@ def build_procurement_report_model(
             "document_set_status": document_summary.get("status", "unknown"),
         }
     )
+    procurement_law = metadata.get("procurement_law") or metadata.get("procurement_regime")
+    if procurement_law:
+        model["procurement_law"] = procurement_law
     model["metadata"] = model_metadata
     _clean_complete_document_model(model, document_summary)
     analysis_context = (
@@ -367,6 +370,7 @@ def _customer_decision_core_projection(model: dict[str, Any]) -> dict[str, Any] 
         )
     return {
         "contract_version": raw.get("contract_version"),
+        "procurement_regime": raw.get("procurement_regime"),
         "decision": {
             "status": decision.get("status"),
             "confidence": decision.get("confidence"),
@@ -533,6 +537,7 @@ def build_customer_report_projection(model: dict[str, Any]) -> dict[str, Any]:
     return {
         "procurement_number": model.get("procurement_number"),
         "procurement_title": model.get("procurement_title"),
+        "procurement_regime": (model.get("decision_core") or {}).get("procurement_regime") if isinstance(model.get("decision_core"), dict) else "unknown",
         "customer_name": model.get("customer_name"),
         "publication_datetime_display": model.get(
             "publication_datetime_display"
