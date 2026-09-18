@@ -1,7 +1,7 @@
 import html
 import json
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from src.modules.contract_risks.models import ContractRiskFlag, ContractRiskRecord, ContractRiskSet
@@ -14,12 +14,16 @@ from src.modules.initial_tech_risks.models import InitialTechRiskFlag, InitialTe
 from src.modules.prompt_schema_library.models import PromptSchemaRecord
 from src.modules.requirement_extraction.models import RequirementExtractionRecord, RequirementExtractionSet
 from src.modules.runtime_control_traces.models import RuntimeControlTrace
+from src.modules.status_engine.models import DealStatusHistory
+from src.modules.status_engine.schemas import ApplyTransitionRequest
+from src.modules.status_engine.service import apply_transition
 from src.modules.tender_summary.models import TenderSummary
 from src.modules.commercial_operator_console.schemas import (
     CommercialOperatorActionRequest,
     CommercialOperatorActionResponse,
+    KanbanStatusTransitionRequest,
 )
-from src.shared.enums import DecisionByType, EventSeverity
+from src.shared.enums import ChangedByType, DealStatus, DecisionByType, EventSeverity
 from src.shared.errors import NotFoundError
 
 
@@ -122,7 +126,16 @@ def _layout(title: str, body: str) -> str:
     return (
         "<html><head><title>"
         + html.escape(title)
-        + "</title><style>body{font-family:Arial,sans-serif;max-width:960px;margin:40px auto;padding:0 16px;line-height:1.5}nav a{margin-right:12px}code{background:#f4f4f4;padding:2px 4px}</style></head><body>"
+        + "</title><style>body{font-family:Arial,sans-serif;max-width:1400px;margin:40px auto;padding:0 16px;line-height:1.5}"
+        + "nav a{margin-right:12px}code{background:#f4f4f4;padding:2px 4px}"
+        + ".kanban-board{display:flex;gap:12px;overflow-x:auto;align-items:flex-start;padding-bottom:12px}"
+        + ".kanban-column{min-width:260px;max-width:260px;background:#f6f7f8;border:1px solid #ddd;border-radius:8px;padding:10px}"
+        + ".kanban-column h2{font-size:14px;margin:0 0 10px}.count{font-weight:normal;color:#666}"
+        + ".kanban-card{background:white;border:1px solid #ddd;border-radius:6px;padding:10px;margin-bottom:8px}"
+        + ".kanban-card h3{font-size:15px;margin:0 0 8px}.kanban-card p{font-size:13px;margin:0 0 6px}"
+        + ".filters{display:flex;flex-wrap:wrap;gap:8px;align-items:end;margin:16px 0}"
+        + ".filters label{display:flex;flex-direction:column;font-size:12px}.warning{padding:10px;border:1px solid #b7791f;margin:12px 0}"
+        + ".empty{color:#777;font-size:13px}</style></head><body>"
         + body
         + "</body></html>"
     )
@@ -140,6 +153,155 @@ def render_dashboard_html(session: Session) -> str:
         "<h1>Commercial Operator Dashboard</h1><p>Internal-only commercial MVP review surface.</p><ul>" + rows + "</ul>",
     )
 
+
+
+def _kanban_deals(
+    session: Session,
+    *,
+    status_filter: DealStatus | None = None,
+    priority_bucket: str | None = None,
+    customer_name: str | None = None,
+    procurement_number: str | None = None,
+    search: str | None = None,
+) -> list[Deal]:
+    query = select(Deal).where(
+        Deal.is_deleted.is_(False),
+        Deal.archived_at.is_(None),
+    )
+    if status_filter is not None:
+        query = query.where(Deal.current_status == status_filter)
+    if priority_bucket:
+        query = query.where(Deal.priority_bucket == priority_bucket.strip())
+    if customer_name:
+        query = query.where(Deal.customer_name.ilike(f"%{customer_name.strip()}%"))
+    if procurement_number:
+        query = query.where(Deal.procurement_number == procurement_number.strip())
+    if search and search.strip():
+        term = f"%{search.strip()}%"
+        query = query.where(
+            or_(
+                Deal.title.ilike(term),
+                Deal.customer_name.ilike(term),
+                Deal.procurement_number.ilike(term),
+            )
+        )
+    query = query.order_by(Deal.created_at.desc(), Deal.id.desc())
+    return list(session.scalars(query))
+
+
+def _kanban_card(deal: Deal) -> str:
+    customer = html.escape(deal.customer_name or "—")
+    procurement = html.escape(deal.procurement_number or "—")
+    priority = html.escape(deal.priority_bucket or "—")
+    deal_id = html.escape(deal.deal_id)
+    return (
+        "<article class='kanban-card'>"
+        f"<h3><a href='/commercial-console/deals/{deal_id}'>{html.escape(deal.title)}</a></h3>"
+        f"<p><strong>Procurement:</strong> {procurement}<br>"
+        f"<strong>Customer:</strong> {customer}<br>"
+        f"<strong>Priority:</strong> {priority}</p>"
+        f"<small>{deal_id}</small>"
+        "</article>"
+    )
+
+
+def render_kanban_html(
+    session: Session,
+    *,
+    status_filter: DealStatus | None = None,
+    priority_bucket: str | None = None,
+    customer_name: str | None = None,
+    procurement_number: str | None = None,
+    search: str | None = None,
+) -> str:
+    deals = _kanban_deals(
+        session,
+        status_filter=status_filter,
+        priority_bucket=priority_bucket,
+        customer_name=customer_name,
+        procurement_number=procurement_number,
+        search=search,
+    )
+    grouped: dict[DealStatus, list[Deal]] = {status: [] for status in DealStatus}
+    invalid_status_deals: list[Deal] = []
+    for deal in deals:
+        try:
+            grouped[DealStatus(deal.current_status)].append(deal)
+        except ValueError:
+            invalid_status_deals.append(deal)
+
+    columns = "".join(
+        (
+            f"<section class='kanban-column' data-status='{html.escape(status.value)}'>"
+            f"<h2>{html.escape(status.value)} <span class='count'>{len(grouped[status])}</span></h2>"
+            + ("".join(_kanban_card(deal) for deal in grouped[status]) or "<p class='empty'>No deals.</p>")
+            + "</section>"
+        )
+        for status in DealStatus
+        if status_filter is None or status == status_filter
+    )
+    integrity_warning = ""
+    if invalid_status_deals:
+        integrity_warning = (
+            "<aside class='warning'><strong>Data integrity warning:</strong> "
+            f"{len(invalid_status_deals)} active deal(s) have a non-canonical status and are not placed on the board."
+            "</aside>"
+        )
+
+    def _filter_value(value: str | None) -> str:
+        return html.escape(value or "", quote=True)
+
+    selected_status = status_filter.value if status_filter else ""
+    status_options = ["<option value=''>All statuses</option>"]
+    for status in DealStatus:
+        selected = " selected" if status.value == selected_status else ""
+        status_options.append(
+            f"<option value='{html.escape(status.value)}'{selected}>{html.escape(status.value)}</option>"
+        )
+    filters = (
+        "<form method='get' action='/commercial-console/kanban' class='filters'>"
+        "<label>Status <select name='status'>"
+        + "".join(status_options)
+        + "</select></label>"
+        f"<label>Priority <input name='priority_bucket' value='{_filter_value(priority_bucket)}'></label>"
+        f"<label>Customer <input name='customer_name' value='{_filter_value(customer_name)}'></label>"
+        f"<label>Procurement <input name='procurement_number' value='{_filter_value(procurement_number)}'></label>"
+        f"<label>Search <input name='q' value='{_filter_value(search)}'></label>"
+        "<button type='submit'>Filter</button>"
+        "<a href='/commercial-console/kanban'>Reset</a>"
+        "</form>"
+    )
+    return _layout(
+        "Procurement Kanban",
+        "<nav><a href='/commercial-console'>dashboard</a> <a href='/commercial-console/kanban'>kanban</a></nav>"
+        "<h1>Procurement Kanban</h1>"
+        "<p>Internal board over the canonical deal status engine. Archived and deleted deals are excluded.</p>"
+        + filters
+        + integrity_warning
+        + "<div class='kanban-board'>"
+        + columns
+        + "</div>",
+    )
+
+
+def apply_kanban_status_transition(
+    session: Session,
+    deal_id: str,
+    payload: KanbanStatusTransitionRequest,
+) -> DealStatusHistory:
+    _load_deal(session, deal_id)
+    return apply_transition(
+        session,
+        ApplyTransitionRequest(
+            deal_id=deal_id,
+            to_status=payload.to_status,
+            changed_by_type=ChangedByType.HUMAN,
+            changed_by_ref=payload.operator_ref,
+            reason_code="commercial_console_kanban",
+            reason_text=payload.reason,
+            is_override=False,
+        ),
+    )
 
 def render_tender_card_html(session: Session, deal_id: str) -> str:
     snapshot = _load_snapshot(session, deal_id)
@@ -253,6 +415,7 @@ def _deal_nav(deal_id: str) -> str:
     return (
         "<nav>"
         f"<a href='/commercial-console'>dashboard</a>"
+        f"<a href='/commercial-console/kanban'>kanban</a>"
         f"<a href='/commercial-console/deals/{deal_id}'>tender card</a>"
         f"<a href='/commercial-console/deals/{deal_id}/report'>report</a>"
         f"<a href='/commercial-console/deals/{deal_id}/requirements'>requirements</a>"
