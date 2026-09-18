@@ -120,11 +120,15 @@ These are **roadmap branches, not admitted work**. Selecting one means creating 
 | **COMMERCIAL-WORKFLOW** | ARV-015, 019, 022, 053, 055, 057, 059, 060, 063, 064, 066, 069 | Supplier profile; kanban; reusable OCR fallback; counterparty checks; company docs; application package; collaboration/import; later analytics | No automated participation decision, legal acceptance or application submission |
 | **SUPPLIER-RFQ** | ARV-023–029 | Supplier search/database; user-mail adapter; RFQ/TKP preparation/comparison; n8n orchestration | External supplier/customer email/RFQ send remains REVIEW/HUMAN |
 | **ETP-CONNECTORS** | ARV-030–037, 071 | Unified marketplace connector layer; federal ETP uniqueness research; TEK-Torg/Fabrikant/B2B-Center/Tender-Pro/other ETPs | Read-only acquisition can be bounded; authenticated/consequential platform actions need separate authority |
+| **223FZ-BREADTH** | ARV-006 | Expand beyond completed read-only intake + Decision Core v1 using measured source/procedure gaps | New breadth needs concrete regression/corpus evidence; unsupported legal/procedural claims remain UNKNOWN/NEEDS_REVIEW |
+| **MONITORING-DELIVERY** | ARV-021, 056, 025, 029, 045 | Extend completed internal monitoring/outbox foundation to approved email/CRM/webhook/scheduled-reporting adapters | Live external delivery remains disabled until separate REVIEW/HUMAN authority |
+| **COMPETITIVE-BENCHMARK** | ARV-072 | Use completed domain-regression infrastructure for identical-procurement competitor benchmark refresh | Corpus/method frozen before outputs; anti-circularity mandatory |
 | **GO-TO-MARKET** | ARV-038–041, 054 | Product-first site; metrics; indexing; tariffs/demo; legal SaaS/pilot package | ARV-041 remains director/counsel/regulatory HUMAN gate; pricing/public commitments need Owner approval |
-| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas/tariff limits; on-prem/air-gapped; mobile companion; later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
+| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas; on-prem/air-gapped; mobile companion; later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
 | **DEVELOPMENT-GOVERNANCE** | ARV-051, 062 | Revalidate parallel-development protocol; mirror posture; reusable Project Watchdog binding | Must not alter Company/Product authority; open PR #78 is maintenance only |
 | **LATE-INFRA** | ARV-047–049 | OpenSearch, ClickHouse, Kubernetes/Helm when measured need appears | Deferred + reuse-first measured-gap gate |
 | **STATUS-REVALIDATION** | BASE-003, 007, 011, 012, 014; ARV-003, 051, 075 | Reconcile stale July progress/status values against current repository/runtime evidence | Status reconciliation only; no implementation authority |
+| **ID-CONFLICT-RESOLUTION** | ARV-073, ARV-074 | Resolve later ID reuse versus preserved historical meanings without silent renumbering | Explicit OWNER reconciliation required |
 
 The already delivered Decision Core, Commercial Core, monitoring, ingest resilience, integration outbox, observability, 223-ФЗ v1 and domain-regression foundations should **not** be reopened as generic continuation branches without a concrete regression or an explicitly new bounded increment.
 
