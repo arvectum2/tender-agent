@@ -13,21 +13,22 @@ definition_of_done:
 - demo mode and explicit discovery fallback policy unchanged.
 - focused tests, repository checks and exact-head CI pass.
 completed:
+- 'Pipeline fail-closed regression proves no demo tender is ingested when the real registry-number list API is misused.'
 - 'EisTenderLoader real registry_numbers list path now raises EisLoaderError instead of returning demo tenders.'
 - 'Explicit demo discovery now uses a dedicated demo-mode loader and remains available only through explicit/allowed demo policy.'
 - 'Added deterministic tests for fail-closed list behavior and exact registry-number real delegation.'
 - Revalidation gap and bounded successor admission inherited from parent PR #88 branch.
-current: PR #89 open; broad tender_research regression suite green; exact-head CI pending.
+current: Final implementation locally validated (448 tender_research tests); exact-head CI pending on final head.
 remaining:
 - Exact-head CI.
 - Stop before merge unless attributable Owner/AM-4 review gate is satisfied.
 test_results:
-- 'Broad tender_research suite: 447 passed, 9 skipped, 29 warnings.'
-- 'Affected focused suite: 70 passed, 1 warning.'
+- 'Broad tender_research suite: 448 passed, 9 skipped, 29 warnings.'
+- 'Affected focused suite: 71 passed, 1 warning.'
 - 'uv run make check: PASS.'
 - 'git diff --check: PASS.'
 resume_instruction: Check PR #89 exact-head CI once; fix failures if any; on green record head/run and remain blocked only on REVIEW/AM-4 merge gate.
-updated_at: '2026-09-19T03:01:00+03:00'
+updated_at: '2026-09-19T03:10:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260919-arv002-no-hidden-fallback

@@ -13,18 +13,19 @@ definition_of_done:
 - No production, procurement, external, ARV-ID or authority mutation occurs.
 - Final merge remains REVIEW-gated pending attributable AM-4 renewal after the 2026-09-18 material executor-policy change.
 completed:
-- Broad tender_research regression suite passed: 447 passed, 9 skipped, 29 warnings.
+- Pipeline-level fail-closed regression proves real registry-number mode raises before ingest and leaves the tender repository empty.
+- Broad tender_research regression suite passed: 448 passed, 9 skipped, 29 warnings.
 - Stacked PR #89 opened from the bounded successor branch against PR #88 branch.
 - Fail-closed loader implemented: real registry_numbers fetch_tenders now raises EisLoaderError with valid-path guidance instead of substituting demo tenders.
 - Explicit demo discovery is isolated through a demo-mode loader so source=demo and allow_demo_discovery behavior remain available without depending on the real loader fallback.
 - Regression coverage updated for fail-closed list behavior and exact registry-number real delegation.
-- Focused affected suite passed: 70 passed, 1 warning; uv run make check PASS; git diff --check PASS.
+- Focused affected suite passed: 71 passed, 1 warning; uv run make check PASS; git diff --check PASS.
 - ARV-002-REVALIDATION-001 confirmed the concrete current gap with 5 focused passing tests and roadmap evidence.
 - Successor scope was bounded directly to the canonical ARV-002 no-hidden-fallback result and admitted by the Product Owner 2026-09-19 continuation instruction.
-current: Stacked PR #89 is open; broad tender_research regression suite is green. Await exact-head CI once, then checkpoint final evidence and stop at REVIEW gate.
+current: PR #89 implementation is final locally: 448 tender_research tests green and pipeline fail-closed regression added. Await exact-head CI on the final pushed head, then stop at REVIEW gate.
 pending:
 - Reconcile evidence/checkpoint after CI; stop before merge unless attributable Owner/AM-4 review gate is satisfied.
-updated_at: '2026-09-19T03:01:00+03:00'
+updated_at: '2026-09-19T03:10:00+03:00'
 resume_instruction: Check PR #89 exact-head CI once. If green, record head/run evidence and leave review-ready without merging; if failing, fix autonomously within the bounded scope.
 execution:
   claimed_by: ChatGPT interactive
