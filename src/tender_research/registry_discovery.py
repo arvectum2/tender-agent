@@ -571,7 +571,11 @@ class RegistryNumberDiscovery:
 
     def _demo_discover(self, days_back: int, limit: int) -> DiscoveryResult:
         date_from = datetime.now(timezone.utc) - timedelta(days=days_back)
-        raw_tenders = self._eis.fetch_tenders(
+        # Demo discovery is an explicit synthetic source. Keep it isolated from the
+        # configured real loader so real-mode paths can fail closed without
+        # accidentally becoming the mechanism that produces demo tenders.
+        demo_loader = EisTenderLoader(mode="demo")
+        raw_tenders = demo_loader.fetch_tenders(
             date_from=date_from,
             limit=limit,
         )

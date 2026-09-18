@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
+
+import pytest
 
 from src.tender_research.eis_loader import EisTenderLoader
 from src.tender_research.eis_real_loader import RealEisLoader
+from src.tender_research.errors import EisLoaderError
 from src.tender_research.schemas import EisDocumentRaw, EisTenderRaw
 
 
@@ -204,13 +207,30 @@ class TestEisTenderLoaderMode:
         assert tenders[0].external_id == "real-001"
         mock_real.fetch_tenders.assert_called_once()
 
-    def test_real_mode_registry_numbers_fallback_to_demo(self):
+    def test_real_mode_registry_numbers_fetch_tenders_fails_closed(self):
         mock_real = MagicMock()
         loader = EisTenderLoader(mode="real", discovery_mode="registry_numbers", real_loader=mock_real)
-        tenders = loader.fetch_tenders()
-        assert len(tenders) == 3
-        assert tenders[0].external_id == "0373100000124000001"
+
+        with pytest.raises(EisLoaderError, match="registry-number mode"):
+            loader.fetch_tenders()
+
         mock_real.fetch_tenders.assert_not_called()
+
+    def test_real_mode_registry_number_delegates_without_demo_fallback(self):
+        mock_real = MagicMock()
+        mock_real.fetch_by_registry_number.return_value = EisTenderRaw(
+            external_id="real-001",
+            registry_number="0848300045426000620",
+            title="Real exact procurement",
+        )
+        loader = EisTenderLoader(mode="real", discovery_mode="registry_numbers", real_loader=mock_real)
+
+        tender = loader.fetch_by_registry_number("0848300045426000620")
+
+        assert tender is not None
+        assert tender.external_id == "real-001"
+        assert tender.registry_number == "0848300045426000620"
+        mock_real.fetch_by_registry_number.assert_called_once_with("0848300045426000620")
 
     def test_real_mode_delegates_details(self):
         mock_real = MagicMock()
