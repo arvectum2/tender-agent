@@ -1,48 +1,28 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: WATCHDOG-CONTINUATION-V2-001
-authority: OWNER_DIRECTIVE
-goal: Make the single hourly Tender Agent Watchdog continue deterministic bounded roadmap work under an active Owner continuation directive instead of silently idling on an empty queue, while preserving Company/Product hard stops and review gates.
+task_id: ARV-002-REVALIDATION-001
+authority: AUTO
+goal: Revalidate live end-to-end pipeline status and residual gap against current main and durable repository evidence.
 definition_of_done:
-- Reconcile PROCUREMENT-KANBAN-V1-001 as completed from merged PR #85 and exact-head CI evidence.
-- Add a durable active Owner continuation directive and deterministic empty-queue continuation contract without allowing invented priorities, widened scope, downgraded REVIEW/HUMAN/OWNER gates, or hard-stop bypass.
-- When no implementation-ready queue item exists, resolve the next canonical continuation candidate deterministically and admit only a bounded evidence/revalidation slice unless a bounded Definition of Done already exists.
-- Admit the next bounded continuation slice so the watchdog has executable work immediately after merge.
-- Make run reporting fail-visible with exactly one issue #57 comment created at run start and updated in place at run end.
-- Keep exactly one hourly Tender Agent Watchdog and update that existing Scheduled Task rather than creating a duplicate.
-- Record that this material executor-policy change triggers Company AM-4 Owner review for future automatic merges.
-- Validate YAML/policy consistency, relevant repository checks and exact-head CI; merge this specifically Owner-directed repair only after green CI.
+- Current ARV-002 implementation/status is evidence-backed on the reconciliation overlay.
+- Deterministic relevant tests/checks are recorded.
+- Any residual gap is explicit and source-traceable.
+- No external, production or procurement effect occurs; REVIEW/HUMAN/OWNER gates remain preserved.
 completed:
-- Reconciled PROCUREMENT-KANBAN-V1-001 queue/checkpoint as completed from PR #85 merge evidence.
-- Added active OWNER-CONTINUOUS-ROADMAP-2026-09-18 with deterministic document-order continuation and standard revalidation fallback.
-- Seeded ARV-002-REVALIDATION-001 as the first deterministic bounded continuation item.
-- Added fail-visible one-comment-per-run reporting: create issue #57 placeholder before mutation and update that same comment at run end.
-- Recorded the material executor-policy change as an AM-4 automatic-merge review trigger; future auto-merges fail closed pending Owner renewal.
-- PR #84 merged as 2ac371360ef57bf0e79f157e5732bb61b993c68f after exact-head CI success.
-- PR #85 exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed CI run 35353562825 SUCCESS 9/9 and merged as 24d515d1a16fdc7906bcc5801ad700afb2206589.
-- Issue #83 closed completed with merge/CI evidence.
-- PR #87 exact head 031c383d5bf3debb306fb77d6cbd61b9c3c50958 passed CI and merged as 8d7c00489c064a6dabcdac41f55578a0b7281ac3 under the Owner's 2026-09-18 continuation instruction.
-- Existing Scheduled Task Tender Agent Watchdog id 6aa7ef95fc9c8191beaa71fea17dc372 updated in place; remains enabled, exact-hourly and singleton.
-- Scheduled prompt now requires fail-visible start comments and substantive same-run continuation instead of repeated bookkeeping/review waits.
-- Conflicting roadmap wording was reconciled: arbitrary promotion remains prohibited while the active Owner directive is an explicitly authorized one-at-a-time bounded admission mechanism.
-current: Completed on merge of PR #86; next canonical executable item is ARV-002-REVALIDATION-001.
+- Focused ARV-002 revalidation passed 5 tests covering exact-card selection/fail-closed selection, required public source URL, no-demo real auto-discovery, and the currently encoded real registry_numbers demo fallback.
+- Concrete residual gap confirmed: EisTenderLoader.fetch_tenders returns demo tenders for eis_mode=real + discovery_mode=registry_numbers.
+- Roadmap reconciliation overlay updated with evidence and bounded successor ARV-002-NO-HIDDEN-FALLBACK-001 admitted under the 2026-09-19 Owner continuation instruction.
+- Canonical queue order 100 selected after completed WATCHDOG-CONTINUATION-V2-001.
+current: Revalidation completed with a concrete source-traceable hidden-fallback gap; bounded successor ARV-002-NO-HIDDEN-FALLBACK-001 admitted.
 pending: []
-last_verified_commit: 7bee177
-test_results:
-- "PR #85 exact-head CI run 35353562825: SUCCESS 9/9."
-- "focused watchdog continuation policy test: 2 passed."
-- "uv run make check: PASS."
-- "git diff --check: PASS."
-- "PR #87 exact-head CI: SUCCESS; merged as 8d7c00489c064a6dabcdac41f55578a0b7281ac3."
-- "Scheduled Task update verified enabled/exact-hourly/singleton."
-updated_at: '2026-09-18T22:31:00+03:00'
-resume_instruction: Completed. On the next invocation read canonical main, claim ARV-002-REVALIDATION-001 and perform concrete revalidation work in the same run; do not return to Kanban bookkeeping or reopen WATCHDOG-CONTINUATION-V2-001 absent a concrete regression.
+updated_at: '2026-09-19T02:34:00+03:00'
+resume_instruction: Completed. Do not reopen ARV-002-REVALIDATION-001; claim ARV-002-NO-HIDDEN-FALLBACK-001 and implement the bounded fail-closed fix.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: 8d7c00489c064a6dabcdac41f55578a0b7281ac3
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260918T225940+0300
+  branch: agent/arv-002-revalidation-20260918
+  base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
   issue: null
   manual_override: false
   lease_until: null
