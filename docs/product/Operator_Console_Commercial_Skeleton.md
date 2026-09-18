@@ -7,6 +7,7 @@ Provide a minimal operator-facing commercial review surface without opening exte
 ## Views
 
 - `/commercial-console`
+- `/commercial-console/kanban` — internal board grouped by canonical `DealStatus`
 - `/commercial-console/deals/{deal_id}`
 - `/commercial-console/deals/{deal_id}/report`
 - `/commercial-console/deals/{deal_id}/requirements`
@@ -18,12 +19,20 @@ Provide a minimal operator-facing commercial review surface without opening exte
 
 `POST /commercial-console/deals/{deal_id}/actions`
 
-Supported actions:
+Supported review actions:
 
 - `rejected`
 - `needs_more_review`
 - `collect_tkp`
 - `prepare_bid_draft`
+
+### Kanban status transition
+
+`POST /commercial-console/kanban/deals/{deal_id}/status`
+
+This endpoint is human-initiated only. It delegates to the canonical status engine; it does not define a parallel lifecycle. Invalid transitions remain blocked and audited by the existing status engine.
+
+The board excludes deleted and archived deals and supports bounded filtering by canonical status, priority, customer, procurement number, plus text search over persisted deal fields.
 
 ## Workflow Coverage
 
@@ -50,4 +59,6 @@ Downstream pilot states remain internal-only and are completed through the comme
 - no external messages
 - no submission
 - no final autonomous decision
+- no automatic kanban/status transition
+- canonical status engine remains the sole transition authority
 - no production auth added in this phase
