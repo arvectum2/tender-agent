@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from unittest.mock import patch
+from datetime import UTC, datetime
+from unittest.mock import MagicMock, patch
 
 from fastapi.testclient import TestClient
 
@@ -12,7 +12,7 @@ client = TestClient(app)
 
 
 def _job_record(*, job_id: str = "job-001", job_type: str = "prepare", status: str = "queued") -> TenderAnalysisJobRecord:
-    now = datetime(2026, 7, 6, 1, 0, 0, tzinfo=timezone.utc)
+    now = datetime(2026, 7, 6, 1, 0, 0, tzinfo=UTC)
     return TenderAnalysisJobRecord(
         id=job_id,
         job_type=job_type,
@@ -144,3 +144,33 @@ class TestJobApi:
 
         assert response.status_code == 404
         assert response.json()["detail"] == "Analysis job not found"
+
+
+    def test_start_analyze_job_transport_failure_marks_job_failed_and_returns_503(self) -> None:
+        session = MagicMock()
+        with patch(
+            "src.tender_research.api.create_job",
+            return_value=_job_record(job_type="analyze"),
+        ), patch(
+            "src.tender_research.api.submit_analyze_job",
+            side_effect=RuntimeError("redis unavailable"),
+        ), patch(
+            "src.tender_research.api._get_session",
+            return_value=session,
+        ), patch(
+            "src.tender_research.api.fail_job",
+        ) as mock_fail:
+            response = client.post(
+                "/api/tender-research/jobs/analyze",
+                json={"registry_number": "0323100010326000013"},
+            )
+
+        assert response.status_code == 503
+        assert response.json()["detail"] == "Background job transport unavailable"
+        mock_fail.assert_called_once_with(
+            session,
+            "job-001",
+            errors=["background_job_submission_failed"],
+            current_step="submission",
+        )
+        assert session.close.call_count == 2

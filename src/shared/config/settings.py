@@ -116,6 +116,10 @@ class Settings(BaseSettings):
         default="arvectum",
         validation_alias=AliasChoices("ARVECTUM_REDIS_NAMESPACE", "AI_CORP_REDIS_NAMESPACE"),
     )
+    arvectum_redis_environment: str = Field(
+        default="development",
+        validation_alias=AliasChoices("ARVECTUM_REDIS_ENVIRONMENT", "AI_CORP_REDIS_ENVIRONMENT"),
+    )
     arvectum_redis_connect_timeout_seconds: int = Field(
         default=5, gt=0,
         validation_alias=AliasChoices("ARVECTUM_REDIS_CONNECT_TIMEOUT_SECONDS", "AI_CORP_REDIS_CONNECT_TIMEOUT_SECONDS"),
@@ -147,6 +151,48 @@ class Settings(BaseSettings):
     arvectum_redis_rate_limit_default_limit: int = Field(
         default=100, gt=0,
         validation_alias=AliasChoices("ARVECTUM_REDIS_RATE_LIMIT_DEFAULT_LIMIT", "AI_CORP_REDIS_RATE_LIMIT_DEFAULT_LIMIT"),
+    )
+
+    # ARV-008 durable tender-research worker transport. Thread mode is an
+    # explicit compatibility mode; redis mode never silently falls back.
+    tender_research_job_backend: str = Field(
+        default="thread",
+        validation_alias=AliasChoices("ARVECTUM_TENDER_RESEARCH_JOB_BACKEND", "AI_CORP_TENDER_RESEARCH_JOB_BACKEND"),
+    )
+    tender_research_worker_queue_name: str = Field(
+        default="tender-analysis",
+        validation_alias=AliasChoices("ARVECTUM_TENDER_RESEARCH_WORKER_QUEUE", "AI_CORP_TENDER_RESEARCH_WORKER_QUEUE"),
+    )
+    tender_research_worker_group_name: str = Field(
+        default="tender-analysis-workers",
+        validation_alias=AliasChoices("ARVECTUM_TENDER_RESEARCH_WORKER_GROUP", "AI_CORP_TENDER_RESEARCH_WORKER_GROUP"),
+    )
+    tender_research_worker_max_attempts: int = Field(
+        default=3,
+        ge=1,
+        le=10,
+        validation_alias=AliasChoices(
+            "ARVECTUM_TENDER_RESEARCH_WORKER_MAX_ATTEMPTS",
+            "AI_CORP_TENDER_RESEARCH_WORKER_MAX_ATTEMPTS",
+        ),
+    )
+    tender_research_worker_retry_backoff_seconds: int = Field(
+        default=5,
+        ge=0,
+        le=300,
+        validation_alias=AliasChoices(
+            "ARVECTUM_TENDER_RESEARCH_WORKER_RETRY_BACKOFF_SECONDS",
+            "AI_CORP_TENDER_RESEARCH_WORKER_RETRY_BACKOFF_SECONDS",
+        ),
+    )
+    tender_research_worker_visibility_timeout_seconds: int = Field(
+        default=300,
+        ge=30,
+        le=3600,
+        validation_alias=AliasChoices(
+            "ARVECTUM_TENDER_RESEARCH_WORKER_VISIBILITY_TIMEOUT_SECONDS",
+            "AI_CORP_TENDER_RESEARCH_WORKER_VISIBILITY_TIMEOUT_SECONDS",
+        ),
     )
 
     # ARV-067I electrical ontology shadow runtime remains disabled and killed by default.
@@ -265,6 +311,15 @@ class Settings(BaseSettings):
                 raise ValueError("ARVECTUM_REDIS_URL must start with redis:// or rediss://")
             if not self.arvectum_redis_namespace.strip():
                 raise ValueError("ARVECTUM_REDIS_NAMESPACE must not be empty in production")
+            if not self.arvectum_redis_environment.strip():
+                raise ValueError("ARVECTUM_REDIS_ENVIRONMENT must not be empty when Redis is enabled")
+        backend = self.tender_research_job_backend.strip().lower()
+        if backend not in {"thread", "redis"}:
+            raise ValueError("ARVECTUM_TENDER_RESEARCH_JOB_BACKEND must be thread or redis")
+        if not self.tender_research_worker_queue_name.strip():
+            raise ValueError("ARVECTUM_TENDER_RESEARCH_WORKER_QUEUE must not be empty")
+        if not self.tender_research_worker_group_name.strip():
+            raise ValueError("ARVECTUM_TENDER_RESEARCH_WORKER_GROUP must not be empty")
         return self
 
     def model_post_init(self, __context, /):

@@ -1,15 +1,13 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from src.tender_research.models import TenderAnalysisJob
 from src.tender_research.rag.job_schemas import TenderAnalysisJobRecord, TenderJobStep
-
-UTC = timezone.utc
 
 
 def _utcnow() -> datetime:
@@ -330,6 +328,48 @@ def cancel_job(session: Session, job_id: str) -> TenderAnalysisJobRecord | None:
     row.updated_at = now
     row.current_step = "cancelled"
     _update_duration(row)
+    session.add(row)
+    session.commit()
+    session.refresh(row)
+    return _row_to_record(row)
+
+
+TERMINAL_JOB_STATUSES = frozenset(
+    {
+        "completed",
+        "completed_with_warnings",
+        "cancelled",
+    }
+)
+
+
+def is_terminal_job_status(status: str | None) -> bool:
+    return str(status or "").strip().lower() in TERMINAL_JOB_STATUSES
+
+
+def requeue_job(
+    session: Session,
+    job_id: str,
+    *,
+    warning: str,
+) -> TenderAnalysisJobRecord | None:
+    """Return a failed/running job to queued state for a bounded worker retry."""
+    row = session.query(TenderAnalysisJob).filter(TenderAnalysisJob.id == job_id).first()
+    if row is None:
+        return None
+    if is_terminal_job_status(row.status):
+        return _row_to_record(row)
+    warnings = _normalize_messages(_json_loads_list(row.warnings_json))
+    normalized_warning = str(warning or "").strip()
+    if normalized_warning and normalized_warning not in warnings:
+        warnings.append(normalized_warning)
+    row.status = "queued"
+    row.current_step = "retry_wait"
+    row.progress_percent = max(0, min(99, int(row.progress_percent or 0)))
+    row.finished_at = None
+    row.updated_at = _utcnow()
+    row.errors_json = None
+    row.warnings_json = _json_dumps(warnings) if warnings else None
     session.add(row)
     session.commit()
     session.refresh(row)
