@@ -17,10 +17,11 @@ completed:
   - Standalone tender-analysis worker implemented over existing prepare/analyze runners; PostgreSQL remains durable source of truth.
   - Explicit thread|redis backend implemented; Redis mode fails closed on transport failure and never silently falls back.
   - Worker/runtime docs, env examples and deterministic unit/integration-facing tests added.
+  - Redis Stream retention hardened: no MAXLEN trimming can delete pending deliveries; ACK/retry remove only acknowledged entries.
   - Focused suite 42 passed; broad tender_research + unit/redis 485 passed, 9 skipped.
   - uv run make check PASS; targeted Ruff PASS; git diff --check PASS.
   - Local real-Redis integration blocked only by stopped Colima/Docker daemon; GitHub redis-integration remains authoritative.
-current: Durable PostgreSQL heartbeat plus reclaimed-running duplicate suppression and stale recovery are hardened and locally validated; push final head and obtain CI.
+current: Durable heartbeat/reclaim recovery and stream retention safety are hardened and locally validated; push final head and obtain CI.
 remaining:
   - Push final hardening commit.
   - Exact-head GitHub CI including redis-integration.
@@ -31,8 +32,8 @@ test_results:
   - "uv run make check PASS."
   - "targeted Ruff PASS."
   - "git diff --check PASS."
-resume_instruction: Commit/push durable heartbeat/reclaim hardening to PR #97 and obtain exact-head CI including redis-integration; fix bounded failures autonomously.
-updated_at: '2026-09-19T22:02:00+03:00'
+resume_instruction: Commit/push stream-retention safety to PR #97 and obtain exact-head CI including redis-integration; fix bounded failures autonomously.
+updated_at: '2026-09-19T22:10:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260919-arv008-worker-transport-v1

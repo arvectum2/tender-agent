@@ -51,6 +51,7 @@ def test_stream_queue_round_trip_and_ack(test_namespace, cleanup_keys):
     assert delivery.envelope.payload["job_id"] == "job-a"
     assert delivery.reclaimed is False
     assert queue.ack(delivery) is True
+    assert require_client().xlen(queue.stream_key) == 0
 
 
 def test_stream_queue_reclaims_stale_pending_delivery(test_namespace, cleanup_keys):
@@ -97,3 +98,4 @@ def test_stream_queue_retry_increments_attempt_and_acks_old_delivery(test_namesp
     assert retried.stream_id == retry_id
     assert retried.envelope.attempt == 2
     assert queue.ack(retried) is True
+    assert require_client().xlen(queue.stream_key) == 0

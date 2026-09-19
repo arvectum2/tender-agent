@@ -131,7 +131,6 @@ class RedisStreamQueue:
     FIELD_NAME = "envelope"
     DEFAULT_GROUP = "tender-workers"
     DEFAULT_VISIBILITY_TIMEOUT_SECONDS = 300
-    DEFAULT_MAXLEN = 10000
 
     def __init__(
         self,
@@ -141,7 +140,6 @@ class RedisStreamQueue:
         namespace: str | None = None,
         environment: str | None = None,
         visibility_timeout_seconds: int = DEFAULT_VISIBILITY_TIMEOUT_SECONDS,
-        maxlen: int = DEFAULT_MAXLEN,
         client: redis_py.Redis | None = None,
     ) -> None:
         if not queue_name.strip():
@@ -150,14 +148,11 @@ class RedisStreamQueue:
             raise ValueError("group_name is required")
         if visibility_timeout_seconds < 1:
             raise ValueError("visibility_timeout_seconds must be >= 1")
-        if maxlen < 1:
-            raise ValueError("maxlen must be >= 1")
 
         settings = get_settings()
         self.queue_name = queue_name.strip()
         self.group_name = group_name.strip()
         self.visibility_timeout_seconds = int(visibility_timeout_seconds)
-        self.maxlen = int(maxlen)
         self._client = client or require_client()
         effective_namespace = namespace or settings.arvectum_redis_namespace
         effective_environment = environment or settings.arvectum_redis_environment
@@ -193,11 +188,12 @@ class RedisStreamQueue:
             raise ValueError("envelope queue_name does not match transport queue")
         payload = json.dumps(envelope.to_dict(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         try:
+            # Never trim the stream on enqueue: Redis MAXLEN can remove
+            # entries that are still pending in a consumer group. Acknowledged
+            # entries are deleted explicitly instead.
             stream_id = self._client.xadd(
                 self.stream_key,
                 {self.FIELD_NAME: payload},
-                maxlen=self.maxlen,
-                approximate=True,
             )
         except redis_py.RedisError as exc:
             self._raise_unavailable("enqueue", exc)
@@ -289,20 +285,24 @@ class RedisStreamQueue:
             pipeline.xadd(
                 self.stream_key,
                 {self.FIELD_NAME: payload},
-                maxlen=self.maxlen,
-                approximate=True,
             )
             pipeline.xack(self.stream_key, self.group_name, delivery.stream_id)
+            pipeline.xdel(self.stream_key, delivery.stream_id)
             result = pipeline.execute()
         except redis_py.RedisError as exc:
             self._raise_unavailable("retry", exc)
-        if len(result) != 2 or not result[1]:
+        if len(result) != 3 or not result[1]:
             raise RedisUnavailableError("Redis queue retry unavailable: category=protocol_error")
         return str(result[0]), next_envelope
 
     def ack(self, delivery: QueueDelivery) -> bool:
         try:
-            acknowledged = self._client.xack(self.stream_key, self.group_name, delivery.stream_id)
+            pipeline = self._client.pipeline(transaction=True)
+            pipeline.xack(self.stream_key, self.group_name, delivery.stream_id)
+            pipeline.xdel(self.stream_key, delivery.stream_id)
+            result = pipeline.execute()
         except redis_py.RedisError as exc:
             self._raise_unavailable("ack", exc)
-        return bool(acknowledged)
+        if len(result) != 2:
+            raise RedisUnavailableError("Redis queue ack unavailable: category=protocol_error")
+        return bool(result[0])

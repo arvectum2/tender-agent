@@ -98,6 +98,7 @@ class FakeStreamRedis:
         self.pending: list[tuple[str, dict[str, str]]] = []
         self.claimed: list[str] = []
         self.acked: list[str] = []
+        self.deleted: list[str] = []
 
     def xgroup_create(self, *, name, groupname, id, mkstream):
         import redis as redis_py
@@ -135,6 +136,12 @@ class FakeStreamRedis:
         self.pending = [item for item in self.pending if item[0] != stream_id]
         return 1
 
+    def xdel(self, name, stream_id):
+        self.deleted.append(stream_id)
+        self.messages = [item for item in self.messages if item[0] != stream_id]
+        self.pending = [item for item in self.pending if item[0] != stream_id]
+        return 1
+
     def pipeline(self, transaction=True):
         client = self
 
@@ -150,15 +157,22 @@ class FakeStreamRedis:
                 self.operations.append(("xack", name, groupname, stream_id))
                 return self
 
+            def xdel(self, name, stream_id):
+                self.operations.append(("xdel", name, stream_id))
+                return self
+
             def execute(self):
                 results = []
                 for operation in self.operations:
                     if operation[0] == "xadd":
                         _, name, fields, maxlen, approximate = operation
                         results.append(client.xadd(name, fields, maxlen=maxlen, approximate=approximate))
-                    else:
+                    elif operation[0] == "xack":
                         _, name, groupname, stream_id = operation
                         results.append(client.xack(name, groupname, stream_id))
+                    else:
+                        _, name, stream_id = operation
+                        results.append(client.xdel(name, stream_id))
                 return results
 
         return FakePipeline()
@@ -218,6 +232,7 @@ class TestRedisStreamQueue:
         assert client.claimed == [stream_id]
         assert queue.ack(delivery) is True
         assert client.acked == [stream_id]
+        assert client.deleted == [stream_id]
 
     def test_reclaims_pending_before_new_delivery(self):
         client = FakeStreamRedis()
@@ -251,6 +266,7 @@ class TestRedisStreamQueue:
         assert retry_envelope.attempt == 2
         assert retry_envelope.message_id != delivery.envelope.message_id
         assert first_id in client.acked
+        assert first_id in client.deleted
         assert retry_id != first_id
 
     def test_queue_name_mismatch_fails_closed(self):
