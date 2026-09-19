@@ -4,8 +4,11 @@ import argparse
 import logging
 import os
 import socket
+import threading
 import time
 from collections.abc import Callable
+from datetime import UTC, datetime
+from typing import Self
 
 from src.shared.config.settings import get_settings
 from src.shared.redis.errors import RedisUnavailableError
@@ -21,6 +24,7 @@ from src.tender_research.rag.job_service import (
     get_job,
     is_terminal_job_status,
     requeue_job,
+    touch_job_heartbeat,
 )
 
 logger = logging.getLogger(__name__)
@@ -84,6 +88,67 @@ def _lease_heartbeat(queue: RedisStreamQueue, delivery: QueueDelivery, consumer_
         raise RedisUnavailableError("Redis queue lease refresh unavailable: category=lease_lost")
 
 
+def _durable_heartbeat(job_id: str) -> None:
+    session = _get_session()
+    try:
+        touch_job_heartbeat(session, job_id)
+    finally:
+        session.close()
+
+
+def _job_is_stale(record: object, visibility_timeout_seconds: int) -> bool:
+    updated_at = getattr(record, "updated_at", None)
+    if updated_at is None:
+        return True
+    if updated_at.tzinfo is None or updated_at.tzinfo.utcoffset(updated_at) is None:
+        updated_at = updated_at.replace(tzinfo=UTC)
+    age_seconds = (datetime.now(UTC) - updated_at.astimezone(UTC)).total_seconds()
+    return age_seconds >= visibility_timeout_seconds
+
+
+class _LeaseRenewer:
+    def __init__(
+        self,
+        queue: RedisStreamQueue,
+        delivery: QueueDelivery,
+        consumer_name: str,
+        job_id: str,
+    ) -> None:
+        self.queue = queue
+        self.delivery = delivery
+        self.consumer_name = consumer_name
+        self.job_id = job_id
+        self.interval_seconds = max(
+            1.0,
+            min(float(delivery.envelope.visibility_timeout_seconds) / 3.0, 30.0),
+        )
+        self._stop = threading.Event()
+        self._thread = threading.Thread(
+            target=self._run,
+            name=f"tender-worker-lease-{job_id}",
+            daemon=True,
+        )
+
+    def pulse(self) -> None:
+        _lease_heartbeat(self.queue, self.delivery, self.consumer_name)
+        _durable_heartbeat(self.job_id)
+
+    def _run(self) -> None:
+        while not self._stop.wait(self.interval_seconds):
+            try:
+                self.pulse()
+            except Exception:
+                logger.exception("Worker lease heartbeat failed", extra={"job_id": self.job_id})
+
+    def __enter__(self) -> Self:
+        self._thread.start()
+        return self
+
+    def __exit__(self, exc_type, exc, tb) -> None:
+        self._stop.set()
+        self._thread.join(timeout=self.interval_seconds + 1.0)
+
+
 def process_delivery(
     queue: RedisStreamQueue,
     delivery: QueueDelivery,
@@ -107,6 +172,29 @@ def process_delivery(
     if is_terminal_job_status(record.status):
         queue.ack(delivery)
         return True
+    if delivery.reclaimed and record.status == "running":
+        if not _job_is_stale(record, delivery.envelope.visibility_timeout_seconds):
+            # A live worker may temporarily lose Redis ownership during
+            # transport turbulence. Do not duplicate execution while the
+            # durable PostgreSQL heartbeat is still fresh.
+            queue.touch(delivery, consumer_name)
+            return False
+        if delivery.envelope.attempt >= delivery.envelope.max_attempts:
+            session = _get_session()
+            try:
+                fail_job(
+                    session,
+                    job_id,
+                    errors=["worker_lease_expired_after_max_attempts"],
+                    current_step="worker_recovery",
+                )
+            finally:
+                session.close()
+            queue.ack(delivery)
+            return True
+        _, next_envelope = queue.retry(delivery)
+        _mark_retry(job_id, next_envelope.attempt - 1, next_envelope.max_attempts)
+        return True
     if record.status == "failed":
         if delivery.envelope.attempt >= delivery.envelope.max_attempts:
             queue.ack(delivery)
@@ -123,15 +211,16 @@ def process_delivery(
         # but before resetting PostgreSQL to queued.
         _mark_retry(job_id, delivery.envelope.attempt - 1, delivery.envelope.max_attempts)
 
-    heartbeat = lambda: _lease_heartbeat(queue, delivery, consumer_name)
-    if delivery.envelope.job_type == "prepare":
-        run_prepare_job(job_id, request, heartbeat=heartbeat)
-    elif delivery.envelope.job_type == "analyze":
-        run_analyze_job(job_id, request, heartbeat=heartbeat)
-    else:
+    if delivery.envelope.job_type not in {"prepare", "analyze"}:
         _mark_unsupported(job_id, delivery.envelope.job_type)
         queue.ack(delivery)
         return True
+
+    with _LeaseRenewer(queue, delivery, consumer_name, job_id) as renewer:
+        if delivery.envelope.job_type == "prepare":
+            run_prepare_job(job_id, request, heartbeat=renewer.pulse)
+        else:
+            run_analyze_job(job_id, request, heartbeat=renewer.pulse)
 
     record = _load_job(job_id)
     if record is None:

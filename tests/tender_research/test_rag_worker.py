@@ -1,3 +1,4 @@
+from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -27,12 +28,13 @@ def _delivery(
     return QueueDelivery(stream_id=f"{attempt}-0", envelope=envelope, reclaimed=reclaimed)
 
 
-def _record(status: str) -> TenderAnalysisJobRecord:
+def _record(status: str, *, updated_at: datetime | None = None) -> TenderAnalysisJobRecord:
     return TenderAnalysisJobRecord(
         id="job-1",
         job_type="analyze",
         registry_number="0848300045426000620",
         status=status,
+        updated_at=updated_at,
     )
 
 
@@ -160,6 +162,36 @@ def test_reclaimed_failed_delivery_advances_attempt_without_rerunning_same_attem
         worker, "_mark_retry"
     ) as mark_retry, patch.object(worker, "run_analyze_job") as runner:
         processed = worker.process_delivery(queue, queue.delivery, "worker-restart")
+
+    assert processed is True
+    runner.assert_not_called()
+    assert queue.retried == ["1-0"]
+    mark_retry.assert_called_once_with("job-1", 1, 3)
+
+
+def test_reclaimed_running_delivery_with_fresh_postgres_heartbeat_does_not_duplicate_execution():
+    queue = FakeQueue(_delivery(attempt=1, max_attempts=3, reclaimed=True))
+    record = _record("running", updated_at=datetime.now(UTC))
+    with patch.object(worker, "_load_job", return_value=record), patch.object(
+        worker, "run_analyze_job"
+    ) as runner:
+        processed = worker.process_delivery(queue, queue.delivery, "worker-recovery")
+
+    assert processed is False
+    runner.assert_not_called()
+    assert queue.touched == ["1-0"]
+    assert queue.retried == []
+    assert queue.acked == []
+
+
+def test_reclaimed_running_delivery_with_stale_postgres_heartbeat_advances_retry():
+    queue = FakeQueue(_delivery(attempt=1, max_attempts=3, reclaimed=True))
+    stale = datetime.now(UTC) - timedelta(seconds=301)
+    record = _record("running", updated_at=stale)
+    with patch.object(worker, "_load_job", return_value=record), patch.object(
+        worker, "_mark_retry"
+    ) as mark_retry, patch.object(worker, "run_analyze_job") as runner:
+        processed = worker.process_delivery(queue, queue.delivery, "worker-recovery")
 
     assert processed is True
     runner.assert_not_called()

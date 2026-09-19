@@ -374,3 +374,14 @@ def requeue_job(
     session.commit()
     session.refresh(row)
     return _row_to_record(row)
+
+
+def touch_job_heartbeat(session: Session, job_id: str) -> bool:
+    """Refresh only the durable liveness timestamp for a running worker job."""
+    row = session.query(TenderAnalysisJob).filter(TenderAnalysisJob.id == job_id).first()
+    if row is None or row.status != "running":
+        return False
+    row.updated_at = _utcnow()
+    session.add(row)
+    session.commit()
+    return True
