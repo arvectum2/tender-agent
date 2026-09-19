@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-075-REVALIDATION-001
+status: blocked
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-075-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-075 Mac mini storage-audit status against repository-owned evidence without touching the Mac mini, deleting/moving data, changing production, or creating external effects.
+definition_of_done:
+  - Reconcile ARV-075 against current main, merged history and repository-owned evidence without rewriting immutable legacy history.
+  - Verify only repository-visible/read-only facts; do not infer current local disk state.
+  - State what is already complete and what concrete local evidence remains required.
+  - Preserve HUMAN/OWNER/REVIEW and destructive/local-production hard stops.
+completed:
+  - Canonical continuation order checked after ARV-008 revalidation reached its architecture/REVIEW boundary.
+  - PRODUCTION-RUNTIME ARV-010 is already satisfied at the admitted observability-v1 boundary; ARV-011 is dependency-blocked by unresolved ARV-005, and ARV-012/013/014 depend on ARV-011/012, so they are skipped for now.
+  - ARV-075 is the next independent historical PRODUCTION-RUNTIME item with satisfied ARV-009 dependency.
+  - Canonical roadmap records ARV-009 confirmed done and the 4 TB external SSD as the pilot storage baseline.
+  - Historical ARV-075 requires a current Mac mini baseline, DELETE/MOVE/KEEP classification, backup before destructive work, then Git/Docker/PostgreSQL/tests/free-space verification after any approved move/delete.
+  - Repository evidence alone cannot establish current Mac mini free space, largest directories, duplicate clones/worktrees, Docker layers, caches/logs, active database placement, or whether a safe backup exists.
+  - No Mac mini filesystem, production service, database, Docker runtime, secrets, or external system was accessed or mutated in this revalidation.
+current: Repository-only revalidation is complete to its safe boundary. ARV-075 remains dependent on fresh read-only local Mac mini storage evidence before any DELETE/MOVE plan can be evaluated; destructive work is not authorized by this slice.
+remaining:
+  - Obtain fresh read-only Mac mini storage inventory under applicable local-computer authority: free space, largest directories, worktrees/clones, Docker usage, caches/logs/exports/archives, active PostgreSQL/data paths and backup state.
+  - Classify candidate paths as DELETE/MOVE/KEEP only from that evidence; do not delete or move anything without separately applicable authority and verified backup/rollback.
+  - Automatic merge remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
+resume_instruction: Do not infer local disk state from repository history. Treat repository-only ARV-075 revalidation as complete and local-evidence blocked. On the next invocation check this PR exact-head CI once, then continue the next independent eligible historical item under the active Owner directive if ARV-075 still lacks fresh local evidence.
+updated_at: '2026-09-19T11:10:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  lease_until: null
+  external_effects: none
