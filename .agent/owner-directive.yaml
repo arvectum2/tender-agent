@@ -40,6 +40,8 @@ continuation:
     - Never treat this directive as approval for procurement submission, external communication, production mutation, spend, signing, legal/commercial acceptance or benchmark-truth mutation.
 governance:
   material_executor_policy_change: true
-  am4_effect: future_automatic_merges_fail_closed_to_review_until_attributable_owner_renewal
-  note: This directive authorizes the watchdog behavior change and continued bounded preparation/execution. It does not itself claim a renewal of the Company AM-4 automatic-merge review cycle.
+  am4_effect: renewed_am4_active_after_attributable_owner_review_2026_09_19
+  renewal_decision: docs/governance/decisions/DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  renewal_merge_commit: 57ef73e468122ac714d28d49bfd176ed83588cab
+  note: The 2026-09-18 directive did not itself renew Company AM-4. The separate attributable Owner review on 2026-09-19 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms; all hard stops and review-cycle conditions remain in force.
 revocation: Owner may revoke or supersede this directive at any time.

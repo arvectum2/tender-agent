@@ -35,7 +35,7 @@ def test_owner_directive_materializes_only_one_deterministic_bounded_item():
     assert next_item["authority"] == "AUTO"
 
 
-def test_material_policy_change_fails_automatic_merge_closed_and_reporting_is_visible():
+def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible():
     directive = _yaml(".agent/owner-directive.yaml")
     policy = _yaml(".agent/executor-policy.yaml")
     watchdog = _yaml(".agent/watchdog.yaml")
@@ -43,11 +43,19 @@ def test_material_policy_change_fails_automatic_merge_closed_and_reporting_is_vi
     assert directive["governance"]["material_executor_policy_change"] is True
     assert (
         directive["governance"]["am4_effect"]
-        == "future_automatic_merges_fail_closed_to_review_until_attributable_owner_renewal"
+        == "renewed_am4_active_after_attributable_owner_review_2026_09_19"
+    )
+    assert directive["governance"]["renewal_decision"].endswith(
+        "DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
     )
     company_gate = policy["company_authority_gate"]
     assert company_gate["material_policy_change_recorded_2026_09_18"] is True
-    assert company_gate["automatic_merge_after_material_policy_change"] == "REVIEW_UNTIL_OWNER_RENEWAL"
+    assert company_gate["mandatory_review_deadline"] == "2026-10-19"
+    assert company_gate["automatic_merge_after_material_policy_change"] == "ALLOWED_UNDER_RENEWED_AM4"
+    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 1
+    assert policy["sources"]["company_authority"]["latest_renewal"].endswith(
+        "DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
+    )
 
     reporting = watchdog["reporting"]
     assert reporting["fail_visible"] is True

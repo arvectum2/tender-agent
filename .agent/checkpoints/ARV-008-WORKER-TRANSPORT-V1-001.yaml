@@ -21,18 +21,21 @@ completed:
   - Focused suite 42 passed; broad tender_research + unit/redis 485 passed, 9 skipped.
   - uv run make check PASS; targeted Ruff PASS; git diff --check PASS.
   - Local real-Redis integration blocked only by stopped Colima/Docker daemon; GitHub redis-integration remains authoritative.
-current: Completed to bounded worker-transport v1 DoD; PR #97 is review-ready and merge remains a separate REVIEW/AM-4 gate.
+  - PR #97 final exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34 passed CI run 35463316244 SUCCESS 9/9 including redis-integration.
+  - Owner renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms; Company decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.
+  - PR #97 squash-merged under explicit Owner approval as daa3d2de580ff4098781ad46720626dec31576de.
+current: Completed and merged; residual ARV-008 pause/resume, tenant concurrency and cost budgets remain separate bounded slices.
 remaining: []
-last_verified_commit: 31dda81c0a6a3b2eed420f9dceabaa3e32321951
+last_verified_commit: daa3d2de580ff4098781ad46720626dec31576de
 test_results:
   - "45 focused tests passed after durable-heartbeat/reclaim hardening."
   - "488 passed, 9 skipped in tests/tender_research + tests/unit/redis after hardening."
   - "uv run make check PASS."
   - "targeted Ruff PASS."
   - "git diff --check PASS."
-  - "PR #97 exact implementation head 31dda81c0a6a3b2eed420f9dceabaa3e32321951: GitHub CI run 35462818991 SUCCESS 9/9, including redis-integration."
-resume_instruction: Completed. Do not reopen this checkpoint absent a concrete regression or new Owner-admitted residual ARV-008 slice; PR #97 merge remains REVIEW/AM-4 gated.
-updated_at: '2026-09-19T22:06:23+03:00'
+  - "PR #97 final exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34: GitHub CI run 35463316244 SUCCESS 9/9, including redis-integration; merged as daa3d2de580ff4098781ad46720626dec31576de."
+resume_instruction: Completed and merged. Do not reopen this checkpoint absent a concrete regression or new Owner-admitted residual ARV-008 slice.
+updated_at: '2026-09-19T22:38:44+03:00'
 execution:
   claimed_by: null
   execution_id: null

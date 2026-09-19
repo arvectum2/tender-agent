@@ -1,0 +1,33 @@
+task_id: AM4-RENEWAL-RECONCILE-001
+status: in_progress
+authority: AUTO
+goal: Reconcile Tender Agent canonical state to the 2026-09-19 Owner AM-4 renewal and PR #97 merge evidence.
+definition_of_done:
+  - Company renewal source/commit and 2026-10-19 review deadline recorded.
+  - Material-policy-change review gate marked satisfied by attributable Owner renewal.
+  - PR #97 exact-head CI and merge SHA recorded.
+  - Scope/hard stops unchanged.
+  - Checks and exact-head CI green.
+  - Guarded AUTO merge under renewed AM-4; counter becomes 1/10.
+completed:
+  - Company renewal decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.
+  - PR #97 merged as daa3d2de580ff4098781ad46720626dec31576de after exact-head CI 35463316244 SUCCESS 9/9.
+  - Executor policy, owner directive and ARV-008 merge evidence reconciled without authority expansion.
+  - Focused policy test 2 passed; uv run make check PASS; git diff --check PASS.
+current: Local reconciliation checks are green; commit/push and obtain exact-head CI.
+remaining:
+  - Commit/push and exact-head CI.
+  - Final checkpoint state and guarded auto-merge.
+last_verified_commit: daa3d2de580ff4098781ad46720626dec31576de
+test_results:
+  - "tests/test_watchdog_continuation_policy.py: 2 passed."
+  - "uv run make check: PASS."
+  - "git diff --check: PASS."
+resume_instruction: Commit/push validated reconciliation, obtain exact-head CI, finalize checkpoint and guarded-auto-merge under renewed AM-4.
+updated_at: '2026-09-19T22:42:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260919-am4-renewal-reconcile
+  branch: agent/am4-renewal-reconcile-20260919
+  base_commit: daa3d2de580ff4098781ad46720626dec31576de
+  lease_until: '2026-09-20T00:30:00+03:00'

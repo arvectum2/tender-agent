@@ -1,51 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-008-WORKER-TRANSPORT-V1-001
-authority: OWNER_DIRECTIVE
-goal: Implement the first bounded ARV-008 worker-runtime slice by adapting the frozen ARV-007 Redis foundation into a durable separate-process job transport for existing tender-research background jobs.
+status: in_progress
+task_id: AM4-RENEWAL-RECONCILE-001
+authority: AUTO
+goal: Reconcile Tender Agent canonical executor state to the Owner-approved 2026-09-19 POS-004 / AI-ENG-001 AM-4 renewal and record PR #97 merge evidence without changing the bounded authority model.
 definition_of_done:
-- Use existing redis-py and QueueEnvelope; no Celery/RQ/Dramatiq dependency and no new product priority.
-- Add a Redis Streams transport with consumer-group delivery, acknowledgement, lease refresh and stale-message reclaim matching the existing queue visibility-timeout contract.
-- Add a standalone tender-analysis worker process that dispatches existing prepare/analyze job functions and preserves PostgreSQL as source of truth.
-- Add explicit thread|redis backend selection; redis backend fails closed when Redis is disabled/unavailable and never silently falls back to in-process execution.
-- Add bounded retry/backoff with max attempts and durable job-state reconciliation after worker restart.
-- Add deterministic unit/integration-facing regression coverage for queue transport, worker dispatch/retry/reclaim and backend fail-closed behavior.
-- Preserve existing thread backend as an explicit compatibility mode; do not change production configuration, external systems, procurement state, ARV-ID mappings or Company/Product authority.
-- Record ARV-008 residual scope: pause/resume, per-tenant concurrency and cost budgets remain later bounded slices; this task does not claim full ARV-008 completion.
-- Run focused tests, make check and exact-head CI; prepare a review-ready PR. Merge remains REVIEW-gated pending attributable Owner AM-4 renewal.
+- Record Company renewal decision path/commit and new 2026-10-19 review deadline in executor policy.
+- Mark the 2026-09-18 material-policy-change review gate satisfied by the attributable 2026-09-19 Owner renewal.
+- Record ARV-008 PR #97 exact-head CI and merge SHA in its checkpoint/queue evidence.
+- Preserve all hard stops and unchanged AM-4 scope.
+- Relevant policy/YAML checks and exact-head CI pass.
+- Guarded AUTO merge this reconciliation PR under renewed AM-4; this counts as automatic merge 1/10 in the new cycle.
 completed:
-- Read canonical ARV-008 and ARV-007 evidence.
-- Confirmed ARV-007 explicitly freezes Redis queue envelope/300s lease for ARV-008 and defers worker process, queue runtime and ThreadPoolExecutor migration.
-- Confirmed current tender-research jobs are durable PostgreSQL rows but execution is in-process ThreadPoolExecutor.
-- Selected Redis Streams consumer groups as an ADAPT implementation of the already-canonical Redis queue/lease contract, using installed redis-py and no new dependency.
-- Implemented Redis Streams QueueEnvelope transport with consumer groups, acknowledgement, lease refresh, stale reclaim and bounded retry publication.
-- Added standalone tender-analysis worker with PostgreSQL state reconciliation and explicit thread|redis backend selection.
-- Redis submission failures now fail closed with sanitized 503 and durable failed job state; no implicit thread fallback.
-- Added worker/runtime documentation, env examples, unit coverage and Redis integration coverage.
-- Hardened stream retention: enqueue never trims potentially pending Redis Stream entries; ACK/retry explicitly delete only acknowledged deliveries.
-- Focused worker/API/queue/job-service suite passed: 42 tests.
-- Broader tender_research + unit/redis suite passed: 485 passed, 9 skipped.
-- uv run make check PASS; targeted Ruff PASS; git diff --check PASS.
-- Local real-Redis integration could not start because the Mac mini Colima/Docker daemon is not running; GitHub CI redis-integration will be authoritative.
-current: Completed to the bounded ARV-008 worker-transport v1 Definition of Done; PR #97 is review-ready and merge remains a separate REVIEW/AM-4 gate.
-pending: []
-last_verified_commit: 31dda81c0a6a3b2eed420f9dceabaa3e32321951
+- Company renewal decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.
+- Tender Agent PR #97 exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34 passed CI run 35463316244 SUCCESS 9/9 and merged as daa3d2de580ff4098781ad46720626dec31576de under explicit Owner approval.
+- Reconciled executor-policy Company authority source, 2026-10-19 deadline and material-policy-change renewal state without changing hard stops or authority scope.
+- Reconciled owner directive and ARV-008 checkpoint/queue merge evidence.
+- Updated continuation-policy regression assertions for attributable 2026-09-19 renewal.
+- Focused policy test passed 2/2; uv run make check PASS; git diff --check PASS.
+current: Local reconciliation validation is green; commit/push and obtain exact-head CI.
+pending:
+- Commit/push PR and obtain exact-head CI.
+- Finalize checkpoint on green exact head and guarded-auto-merge under renewed AM-4.
+last_verified_commit: daa3d2de580ff4098781ad46720626dec31576de
 test_results:
-- "45 focused tests passed after durable-heartbeat/reclaim hardening."
-- "488 passed, 9 skipped in tests/tender_research + tests/unit/redis after hardening."
+- "tests/test_watchdog_continuation_policy.py: 2 passed."
 - "uv run make check: PASS."
-- "targeted Ruff: PASS."
 - "git diff --check: PASS."
-- "local Redis integration not run: Colima/Docker daemon unavailable."
-- "PR #97 exact implementation head 31dda81c0a6a3b2eed420f9dceabaa3e32321951: GitHub CI run 35462818991 SUCCESS 9/9, including redis-integration."
-updated_at: '2026-09-19T22:06:23+03:00'
-resume_instruction: Completed. Do not reopen ARV-008-WORKER-TRANSPORT-V1-001 absent a concrete regression or new Owner-admitted residual slice; PR #97 merge remains REVIEW/AM-4 gated.
+updated_at: '2026-09-19T22:42:00+03:00'
+resume_instruction: Commit/push the validated reconciliation, open PR, require exact-head green CI, then finalize the checkpoint and guarded-auto-merge as automatic merge 1/10.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260919-am4-renewal-reconcile
+  branch: agent/am4-renewal-reconcile-20260919
+  base_commit: daa3d2de580ff4098781ad46720626dec31576de
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-20T00:30:00+03:00'
