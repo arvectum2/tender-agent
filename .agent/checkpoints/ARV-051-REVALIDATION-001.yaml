@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-051-REVALIDATION-001
 historical_item: ARV-051
-status: in_progress
+status: blocked
 authority: AUTO
 source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
 base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
@@ -15,14 +15,16 @@ completed:
   - Deterministic continuation reached DEVELOPMENT-GOVERNANCE after earlier branches/items were already satisfied, active, deferred, dependency-blocked, HUMAN/OWNER-gated, or represented by open revalidation PRs.
   - Merged PR #78 is durable evidence for the reusable Project Watchdog binding: .agent/watchdog.yaml exists on main and records singleton/self-disable-prohibited runtime behavior plus AM-4 authority sources.
   - Current .agent/owner-directive.yaml and .agent/executor-policy.yaml preserve deterministic continuation, hard stops and fail-closed automatic-merge REVIEW after the 2026-09-18 material policy change.
-current: Revalidate whether the merged Project Watchdog binding and current governance files satisfy the repository-owned ARV-051 development-governance portion; do not infer external/company-wide completion.
+  - Repository-owned WATCHDOG-CONTINUITY-001 provides durable merged development-protocol evidence for work-conserving gate reconciliation, exact-hour singleton scheduling, bounded productive quanta, stale recovery and no repeated acceptance after a satisfied done gate.
+  - .agent/WATCHDOG_REPORTING.md provides the fail-visible one-comment-per-invocation audit protocol and required final report fields.
+  - PR #95 exact implementation head 199d5ed3d51ff74cb20d6418329d8a5dc7f2a9e1 passed CI run 35436345282 SUCCESS; mirror workflow also succeeded.
+current: Repository-owned ARV-051 development-governance evidence is reconciled to the bounded slice. No repository-only residual gap is proven without inventing broader company-wide governance scope.
 pending:
-  - Inspect remaining repository-owned ARV-051 protocol evidence and identify any concrete residual gap.
-  - Run deterministic repository-only policy/config checks if applicable.
-resume_instruction: Resume this branch/checkpoint. Inspect repository-owned ARV-051 development-protocol evidence without changing authority. If durable merged evidence satisfies the bounded slice, record that reconciliation and stop; otherwise record one concrete residual gap only.
+  - REVIEW gate only: automatic merge remains unavailable until attributable Owner AM-4 renewal after the 2026-09-18 material executor-policy change.
+resume_instruction: Do not repeat ARV-051 repository evidence inspection. Check this checkpoint-only head CI once; if green, leave PR #95 review-ready and blocked on Owner AM-4 renewal, then continue the next independent eligible historical item under the active Owner directive.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260919T130150+0300
+  claimed_by: null
+  execution_id: null
   manual_override: false
-  lease_until: '2026-09-19T14:51:50+03:00'
-updated_at: '2026-09-19T13:10:00+03:00'
+  lease_until: null
+updated_at: '2026-09-19T14:08:00+03:00'
