@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-004-REVALIDATION-001
+status: blocked
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-004-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-004 R10.3 Hermes/customer-scoped feedback status against current repository-owned evidence without production, provider, customer, or external effects.
+definition_of_done:
+  - Reconcile the selected historical item against current main, merged PRs, issues, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is already complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate; do not invent architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and all production/provider/external-effect hard stops.
+completed:
+  - Canonical continuation order checked: CORE-QUALITY-PILOT follows ARV-003 with ARV-004.
+  - Historical roadmap scope is explicit: R10.3 production-loop Hermes and customer-scoped feedback, with the desired result to bind Hermes feedback/memory to Customer/Project/Case and immutable review without changing frozen R9 contracts.
+  - Historical dependencies are ARV-003 and ARV-001. ARV-001 is reconciled completed_governed, but ARV-003 repository-only revalidation remains blocked on HUMAN/REVIEW-controlled Gate 5 provenance or attributable canonical supersession.
+  - Current default-branch code search for Hermes and PilotFeedback returned no indexed implementation evidence. This absence is not treated as proof that implementation is missing; it is only insufficient repository evidence for closure.
+  - No production/provider/customer action was invoked and no HUMAN/REVIEW evidence was inferred.
+current: ARV-004 cannot progress to implementation or closure under the standard REVALIDATION slice while its canonical ARV-003 dependency remains unresolved. Repository-only inspection found no sufficient current evidence to declare the historical Hermes/customer-scoped feedback result satisfied.
+remaining:
+  - Revisit after ARV-003 dependency is canonically satisfied or superseded by attributable evidence.
+  - At that time, locate concrete current Hermes/feedback implementation and deterministic repository-only tests before deciding whether a bounded repository gap exists.
+  - Automatic merge of this reconciliation remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
+resume_instruction: Do not invent or implement ARV-004 while ARV-003 remains unresolved. On a future run check the dependency once; if unchanged, release this task and continue the next deterministic independent continuation item under the active Owner directive, respecting its dependencies and gates.
+updated_at: '2026-09-19T08:10:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  lease_until: null
+  external_effects: none
