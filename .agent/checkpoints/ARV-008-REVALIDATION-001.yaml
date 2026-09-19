@@ -1,0 +1,35 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-008-REVALIDATION-001
+status: blocked
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-008-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-008 background jobs/workers status against current repository-owned evidence without production, provider, procurement, or external effects.
+definition_of_done:
+  - Reconcile ARV-008 against current main, merged history, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate without inventing architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and production/external-effect hard stops.
+completed:
+  - Canonical continuation order checked. CORE-QUALITY-PILOT ARV-005 and ARV-061 remain dependency-blocked by unresolved ARV-003/ARV-004; ARV-067 remains expert-gated, so the next independent eligible branch is PRODUCTION-RUNTIME and its first historical item is ARV-008.
+  - Historical ARV-008 scope is explicit: separate worker process, durable consumer, retries/backoff, restart recovery, pause/cancel/resume, per-tenant concurrency and cost budgets.
+  - Historical dependencies are ARV-007 and ARV-010. ARV-007 is confirmed done in the master roadmap; ARV-010 observability v1 is satisfied by completed queue item OPS-OBSERVABILITY-V1-001.
+  - Repository-owned roadmap evidence confirms ARV-007 only as the frozen Redis foundation: lazy client, health diagnostics, distributed locks, idempotency, TTL cache, rate limiting, queue envelope and start_run integration; it explicitly states workers, retries and durable execution remain separate ARV-008 work.
+  - Fresh default-branch searches for BackgroundJob, Celery, pause_run, job_status and ARV-008 returned no indexed implementation surface. Combined with the explicit ARV-007 roadmap boundary, no durable evidence was found that the canonical ARV-008 worker result is already satisfied; search absence alone is not used as proof.
+  - Exact-head PR #92 CI at c4f2556553d0486f188aa04e8fc75007cbd3b911 completed successfully in run 35425362514, including quality, migrations, dependency-lock and redis-integration checks.
+  - Revalidation therefore establishes a concrete canonical residual result but not an implementation design: ARV-008 still requires the roadmap-stated separate worker/durable-consumer result with retries/backoff, restart recovery, pause/cancel/resume and per-tenant concurrency/cost budgets.
+  - No production/network/provider/procurement/external action was invoked and no worker architecture was invented.
+current: Repository-only revalidation is complete. ARV-008 remains a canonical residual implementation result, but implementing it requires a separately bounded admitted task because this standard REVALIDATION slice does not authorize invention of worker architecture or acceptance criteria.
+remaining:
+  - Preserve one bounded successor candidate: implement the already-canonical ARV-008 worker/durable-execution result in a separately admitted task after an architecture/scope boundary is canonically available; do not infer the queue/backend/process design here.
+  - Automatic merge remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
+resume_instruction: Do not repeat ARV-008 evidence searches. Treat this revalidation as complete to its permitted boundary and REVIEW/architecture-scope blocked. On the next invocation check this PR exact-head CI once, release the wait, and continue the next independent eligible historical item under the active Owner directive.
+updated_at: '2026-09-19T10:12:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  lease_until: null
+  external_effects: none
