@@ -1,0 +1,35 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-008-REVALIDATION-001
+status: in_progress
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-008-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-008 background jobs/workers status against current repository-owned evidence without production, provider, procurement, or external effects.
+definition_of_done:
+  - Reconcile ARV-008 against current main, merged history, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate without inventing architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and production/external-effect hard stops.
+completed:
+  - Canonical continuation order checked. CORE-QUALITY-PILOT ARV-005 and ARV-061 remain dependency-blocked by unresolved ARV-003/ARV-004; ARV-067 remains expert-gated, so the next independent eligible branch is PRODUCTION-RUNTIME and its first historical item is ARV-008.
+  - Historical ARV-008 scope is explicit: separate worker process, durable consumer, retries/backoff, restart recovery, pause/cancel/resume, per-tenant concurrency and cost budgets.
+  - Historical dependencies are ARV-007 and ARV-010. ARV-007 is confirmed done in the master roadmap; ARV-010 observability v1 is satisfied by completed queue item OPS-OBSERVABILITY-V1-001.
+  - Current default-branch code searches for worker/queue/retry/pause/cancel/resume and start_run/Redis queue returned no indexed implementation evidence. Search absence is not treated as proof of missing implementation.
+  - Repository tree inspection found no ARV-008 checkpoint on canonical main; this slice therefore remains evidence-gathering rather than implementation invention.
+  - No production/network/provider/procurement/external action was invoked.
+current: ARV-008 is independently eligible for repository-only revalidation. Current indexed evidence is insufficient to declare the historical worker/durable-execution result satisfied or to prove a bounded implementation gap.
+remaining:
+  - Locate repository-owned worker/job/queue implementation and deterministic tests by concrete paths or merged history rather than inference from search absence.
+  - Reconcile each canonical ARV-008 capability against that evidence; run only repository-local deterministic checks if a concrete implementation surface is found.
+  - If a concrete canonical repository-only gap is proven, record one bounded successor candidate; do not implement invented worker architecture under this revalidation slice.
+  - Automatic merge remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
+resume_instruction: Resume this existing branch/PR. Locate concrete worker/job/queue paths or merged-history evidence, reconcile the canonical ARV-008 capability list, and run only relevant deterministic repository-local checks. Do not mutate production or infer a missing implementation solely from code-search absence.
+updated_at: '2026-09-19T09:08:00+03:00'
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260919T085708+0300
+  lease_until: '2026-09-19T10:58:00+03:00'
+  external_effects: none
