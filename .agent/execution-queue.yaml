@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-19T20:08:00+03:00'
+updated_at: '2026-09-19T22:06:23+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -320,7 +320,7 @@ items:
   task_id: ARV-008-WORKER-TRANSPORT-V1-001
   strategy: ADAPT
   title: Durable separate-process Redis worker transport v1
-  status: in_progress
+  status: done
   authority: OWNER
   independent: true
   auto_merge: false
