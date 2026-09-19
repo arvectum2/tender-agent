@@ -1,0 +1,32 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-003-REVALIDATION-001
+status: in_progress
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-003-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-003 R10.1 production LLM analysis status against current repository-owned evidence without running provider/production effects.
+definition_of_done:
+  - Reconcile the selected historical item against current main, merged PRs, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is already complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate; do not invent architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and all production/provider/external-effect hard stops.
+completed:
+  - Canonical continuation order checked: CORE-QUALITY-PILOT follows ARV-002 with ARV-003.
+  - Historical roadmap evidence reconciled at read-only level: repository-side R10.1 contour was reported at 97% with deterministic batching, compact-safe wire, server-owned fragment grounding, schema-constrained llama.cpp responses, reasoning disabled, sanitized diagnostics and exact-tokenizer-shaped one-call probe.
+  - Historical reconciliation explicitly records accepted ARV-003 bundle references plus a stale older Gate 5 status, so full closure must not be inferred without reconciling that conflict.
+  - PR #89 ARV-002 successor is exact-head green but REVIEW-blocked; its lease is released, so independent continuation is permitted.
+current: Inspect repository-owned ARV-003 accepted-bundle/status evidence and deterministic tests; do not execute controlled real-provider runs or claim human acceptance.
+remaining:
+  - Locate current ARV-003 accepted bundle and stale Gate 5 status artifacts.
+  - Identify deterministic repository-only tests/checks that cover evidence map, confidence and controlled-run metadata contracts.
+  - Record exact evidence and residual gap; stop at any provider/HUMAN/REVIEW gate.
+resume_instruction: Continue read-only evidence inspection and deterministic repository-only validation. Do not run real-provider controlled executions. Do not infer full closure from stale/conflicting status text.
+updated_at: '2026-09-19T05:10:00+03:00'
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260919T050143+0300
+  lease_until: '2026-09-19T06:51:43+03:00'
+  external_effects: none
