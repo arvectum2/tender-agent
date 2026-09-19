@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-002-REVALIDATION-001
 authority: AUTO
 goal: Revalidate the canonical ARV-002 live end-to-end pipeline and hidden-fallback boundary against current main, merged evidence and deterministic tests, then update only reconciliation evidence and one bounded successor candidate if a source-traceable residual gap is proven.
@@ -23,25 +23,23 @@ completed:
 - Revalidation exposed one concrete residual: search-result-card customer_name can be polluted by EIS page JavaScript through an overly broad fallback regex, although the stricter detail extractor self-corrects later.
 - Added evidence document and reconciliation overlay state revalidated_residual_gap.
 - Recorded one bounded successor candidate ARV-002-LIVE-CUSTOMER-PARSE-001 as candidate_not_admitted; no implementation authority inferred.
-current: Revalidation evidence is complete locally; commit/push, open PR and obtain exact-head CI before guarded AUTO merge.
-pending:
-- Commit/push revalidation evidence and open PR.
-- Obtain exact-head CI.
-- Finalize checkpoint/queue state, re-earn exact-head green and guarded AUTO merge if all renewed AM-4 gates remain satisfied.
-last_verified_commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
+current: ARV-002 revalidation is complete to its bounded Definition of Done. PR #99 first evidence head is exact-head green; final bookkeeping head must re-earn exact-head green before guarded AUTO merge.
+pending: []
+last_verified_commit: eb280a6bc78a3eade69e494a2c7f3439c2b1a960
 test_results:
 - "75 focused ARV-002 live-path/source-graph/no-fallback tests passed."
 - "32 persistence/recovery tests passed; 12 environment/profile skips."
 - "uv run make check: PASS."
 - "git diff --check: PASS."
 - "read-only live EIS exact-number lookup: parsed/success_with_results, returned_count=1; detail customer extraction clean."
-updated_at: '2026-09-20T00:08:00+03:00'
-resume_instruction: Commit/push the locally validated ARV-002 reconciliation evidence, open PR, obtain exact-head CI, then finalize checkpoint/queue state and guarded-auto-merge only if renewed AM-4 gates remain satisfied.
+- "PR #99 evidence head eb280a6bc78a3eade69e494a2c7f3439c2b1a960: GitHub CI run 35469522448 SUCCESS 9/9."
+updated_at: '2026-09-20T00:22:00+03:00'
+resume_instruction: Completed. Require the current final-bookkeeping PR #99 exact head to pass all required CI, then guarded-auto-merge under renewed AM-4 as automatic merge 2/10. Do not implement the non-admitted successor candidate unless it is separately admitted.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260919-arv002-revalidation
-  branch: agent/arv-002-revalidation-001
+  claimed_by: null
+  execution_id: null
+  branch: null
   base_commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
   issue: null
   manual_override: false
-  lease_until: '2026-09-20T01:48:00+03:00'
+  lease_until: null

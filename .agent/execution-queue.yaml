@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-19T23:59:30+03:00'
+updated_at: '2026-09-20T00:22:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -306,7 +306,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate live end-to-end pipeline status and residual gap
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -315,7 +315,7 @@ items:
   - ARV-002
   dependencies: []
   executor_scope: Reconcile ARV-002 against current main/merged evidence and deterministic tests. Verify the existing live end-to-end pipeline and hidden-fallback boundaries without production mutation or consequential external action. Update reconciliation evidence; if a concrete repository-only residual gap is proven and already traceable to the canonical ARV-002 next_result/residual_scope, record at most one bounded successor candidate. Do not invent a new product priority, architecture or acceptance criterion.
-  done_gate: 'Current ARV-002 implementation/status is evidence-backed on the reconciliation overlay; deterministic relevant tests/checks are recorded; any residual gap is explicit and source-traceable; no external/production/procurement effect; REVIEW/HUMAN/OWNER gates preserved. Automatic merge remains fail-closed after the 2026-09-18 material executor-policy change until attributable Owner AM-4 renewal.'
+  done_gate: 'Satisfied for repository work: ARV-002 reconciled as revalidated_residual_gap; 75 focused tests plus 32 persistence/recovery tests passed (12 environment/profile skips); read-only exact-number EIS check succeeded; one source-traceable non-admitted customer-parser successor candidate recorded; PR #99 evidence head eb280a6bc78a3eade69e494a2c7f3439c2b1a960 passed CI run 35469522448 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and renewed AM-4 gates.'
 - order: 110
   task_id: ARV-008-WORKER-TRANSPORT-V1-001
   strategy: ADAPT
