@@ -2,17 +2,19 @@ from __future__ import annotations
 
 import logging
 import threading
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any
+from uuid import uuid4
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
 from src.shared.config.settings import get_settings
 from src.shared.db.base import Base
+from src.shared.redis.queue import QueueEnvelope, RedisStreamQueue
 from src.shared.storage.gate import IngestionBlockedError, check_ingestion_allowed
 from src.tender_research.rag.analysis_service import analyze_tender
-from src.tender_research.rag.job_schemas import TenderJobStep
 from src.tender_research.rag.job_service import (
     complete_job,
     fail_job,
@@ -231,14 +233,23 @@ def _resolve_analyze_job_status(result) -> tuple[str, list[str]]:
     return "completed", warnings
 
 
-def run_prepare_job(job_id: str, request: dict) -> None:
+def run_prepare_job(
+    job_id: str,
+    request: dict,
+    *,
+    heartbeat: Callable[[], None] | None = None,
+) -> None:
     session = _get_session()
     try:
         check_ingestion_allowed()
 
         mark_job_running(session, job_id)
+        if heartbeat is not None:
+            heartbeat()
 
         def on_progress(payload: dict) -> None:
+            if heartbeat is not None:
+                heartbeat()
             update_job_progress(
                 session,
                 job_id,
@@ -295,10 +306,17 @@ def run_prepare_job(job_id: str, request: dict) -> None:
             _FUTURES.pop(job_id, None)
 
 
-def run_analyze_job(job_id: str, request: dict) -> None:
+def run_analyze_job(
+    job_id: str,
+    request: dict,
+    *,
+    heartbeat: Callable[[], None] | None = None,
+) -> None:
     session = _get_session()
     try:
         mark_job_running(session, job_id)
+        if heartbeat is not None:
+            heartbeat()
         update_job_progress(
             session,
             job_id,
@@ -309,6 +327,8 @@ def run_analyze_job(job_id: str, request: dict) -> None:
         )
 
         def on_progress(payload: dict) -> None:
+            if heartbeat is not None:
+                heartbeat()
             current_step = str(payload.get("current_step") or "running")
             progress_percent = int(payload.get("progress_percent", 0) or 0)
             message = str(payload.get("message") or "")
@@ -381,11 +401,50 @@ def run_analyze_job(job_id: str, request: dict) -> None:
             _FUTURES.pop(job_id, None)
 
 
-def submit_prepare_job(job_id: str, request: dict) -> None:
+def build_worker_queue() -> RedisStreamQueue:
+    settings = get_settings()
+    return RedisStreamQueue(
+        settings.tender_research_worker_queue_name,
+        group_name=settings.tender_research_worker_group_name,
+        visibility_timeout_seconds=settings.tender_research_worker_visibility_timeout_seconds,
+    )
+
+
+def _enqueue_redis_job(job_id: str, job_type: str, request: dict) -> None:
+    settings = get_settings()
+    queue = build_worker_queue()
+    envelope = QueueEnvelope(
+        queue_name=settings.tender_research_worker_queue_name,
+        message_id=uuid4().hex,
+        job_type=job_type,
+        tenant=str(request.get("tenant") or "internal"),
+        customer_id=str(request.get("customer_id") or "tender-research"),
+        project_id=str(request.get("project_id") or ""),
+        procurement_case_id=str(request.get("procurement_case_id") or ""),
+        run_id=job_id,
+        payload={"job_id": job_id, "request": request},
+        max_attempts=settings.tender_research_worker_max_attempts,
+        visibility_timeout_seconds=settings.tender_research_worker_visibility_timeout_seconds,
+        correlation_id=str(request.get("correlation_id") or job_id),
+    )
+    queue.enqueue(envelope)
+
+
+def _submit_job(job_id: str, job_type: str, request: dict) -> None:
+    backend = get_settings().tender_research_job_backend.strip().lower()
+    if backend == "redis":
+        _enqueue_redis_job(job_id, job_type, request)
+        return
+    if backend != "thread":
+        raise ValueError("Unsupported tender research job backend")
+    runner = run_prepare_job if job_type == "prepare" else run_analyze_job
     with _FUTURES_LOCK:
-        _FUTURES[job_id] = _EXECUTOR.submit(run_prepare_job, job_id, request)
+        _FUTURES[job_id] = _EXECUTOR.submit(runner, job_id, request)
+
+
+def submit_prepare_job(job_id: str, request: dict) -> None:
+    _submit_job(job_id, "prepare", request)
 
 
 def submit_analyze_job(job_id: str, request: dict) -> None:
-    with _FUTURES_LOCK:
-        _FUTURES[job_id] = _EXECUTOR.submit(run_analyze_job, job_id, request)
+    _submit_job(job_id, "analyze", request)

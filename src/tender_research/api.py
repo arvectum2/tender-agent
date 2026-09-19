@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import json
 import logging
-from pathlib import Path
 from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Query
@@ -12,23 +10,35 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
 from src.shared.config.settings import get_settings
-from src.shared.db.diagnostics import get_database_diagnostics, masked_database_url
-from src.shared.errors import AppError
-from src.shared.storage.gate import check_ingestion_allowed, IngestionBlockedError
 from src.shared.db.base import Base
+from src.shared.db.diagnostics import get_database_diagnostics
+from src.shared.errors import AppError
+from src.shared.storage.gate import check_ingestion_allowed
 from src.tender_research.config import load_config
-from src.tender_research.rag.job_runner import submit_analyze_job, submit_prepare_job
-from src.tender_research.rag.job_schemas import JobListResponse, JobStatusResponse, StartJobResponse
-from src.tender_research.rag.job_service import create_job, get_job, list_jobs
 from src.tender_research.rag.analysis_service import analyze_tender
-from src.tender_research.rag.export_service import export_analysis_report_docx, export_analysis_report_pdf
+from src.tender_research.rag.export_service import (
+    export_analysis_report_docx,
+    export_analysis_report_pdf,
+)
 from src.tender_research.rag.history_service import (
     get_analysis_run,
     get_analysis_run_report,
-    get_latest_analysis_report as get_latest_report,
     list_analysis_runs,
 )
-from src.tender_research.rag.prepare_service import check_preparation_status, prepare_tender_for_analysis
+from src.tender_research.rag.history_service import (
+    get_latest_analysis_report as get_latest_report,
+)
+from src.tender_research.rag.job_runner import submit_analyze_job, submit_prepare_job
+from src.tender_research.rag.job_schemas import (
+    JobListResponse,
+    JobStatusResponse,
+    StartJobResponse,
+)
+from src.tender_research.rag.job_service import create_job, fail_job, get_job, list_jobs
+from src.tender_research.rag.prepare_service import (
+    check_preparation_status,
+    prepare_tender_for_analysis,
+)
 from src.tender_research.rag.schemas import DEFAULT_ANALYSIS_MODE, TenderAnalysisResult
 
 router = APIRouter(prefix="/api/tender-research", tags=["tender-research"])
@@ -349,7 +359,12 @@ def start_prepare_job_endpoint(payload: PrepareRequest) -> StartJobResponse:
         submit_prepare_job(record.id, {**request, "source": "api"})
     except Exception as exc:
         logger.exception("Failed to submit prepare job %s", record.id)
-        raise HTTPException(status_code=500, detail=f"Failed to submit background job: {exc}") from exc
+        session = _get_session()
+        try:
+            fail_job(session, record.id, errors=["background_job_submission_failed"], current_step="submission")
+        finally:
+            session.close()
+        raise HTTPException(status_code=503, detail="Background job transport unavailable") from exc
 
     return StartJobResponse(
         job_id=record.id,
@@ -420,7 +435,12 @@ def start_analyze_job_endpoint(payload: AnalyzeRequest) -> StartJobResponse:
         submit_analyze_job(record.id, {**request, "source": "api"})
     except Exception as exc:
         logger.exception("Failed to submit analyze job %s", record.id)
-        raise HTTPException(status_code=500, detail=f"Failed to submit background job: {exc}") from exc
+        session = _get_session()
+        try:
+            fail_job(session, record.id, errors=["background_job_submission_failed"], current_step="submission")
+        finally:
+            session.close()
+        raise HTTPException(status_code=503, detail="Background job transport unavailable") from exc
 
     return StartJobResponse(
         job_id=record.id,

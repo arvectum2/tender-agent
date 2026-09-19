@@ -4,7 +4,10 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from src.tender_research.rag.job_runner import run_analyze_job, run_prepare_job
-from src.tender_research.rag.prepare_service import TenderPreparationResult, TenderPreparationStep
+from src.tender_research.rag.prepare_service import (
+    TenderPreparationResult,
+    TenderPreparationStep,
+)
 from src.tender_research.rag.schemas import TenderAnalysisResult
 
 
@@ -286,3 +289,42 @@ def test_run_analyze_job_progress_preserves_section_statuses() -> None:
     progress_steps = mock_progress.call_args_list[-1].kwargs["steps"]
     section_step = next(step for step in progress_steps if step["name"] == "section:contract_terms")
     assert section_step["details"]["section_title"] == "Условия контракта"
+
+
+def test_submit_analyze_job_redis_backend_enqueues_durable_envelope() -> None:
+    from src.tender_research.rag.job_runner import submit_analyze_job
+
+    queue = MagicMock()
+    settings = SimpleNamespace(
+        tender_research_job_backend="redis",
+        tender_research_worker_queue_name="tender-analysis",
+        tender_research_worker_max_attempts=3,
+        tender_research_worker_visibility_timeout_seconds=300,
+    )
+    request = {"registry_number": "0848300045426000620", "source": "api"}
+
+    with patch("src.tender_research.rag.job_runner.get_settings", return_value=settings), patch(
+        "src.tender_research.rag.job_runner.build_worker_queue", return_value=queue
+    ):
+        submit_analyze_job("job-redis-1", request)
+
+    envelope = queue.enqueue.call_args.args[0]
+    assert envelope.queue_name == "tender-analysis"
+    assert envelope.job_type == "analyze"
+    assert envelope.run_id == "job-redis-1"
+    assert envelope.payload == {"job_id": "job-redis-1", "request": request}
+    assert envelope.attempt == 1
+    assert envelope.max_attempts == 3
+
+
+def test_submit_prepare_job_thread_backend_uses_explicit_executor() -> None:
+    from src.tender_research.rag.job_runner import submit_prepare_job
+
+    settings = SimpleNamespace(tender_research_job_backend="thread")
+    future = object()
+    with patch("src.tender_research.rag.job_runner.get_settings", return_value=settings), patch(
+        "src.tender_research.rag.job_runner._EXECUTOR.submit", return_value=future
+    ) as submit:
+        submit_prepare_job("job-thread-1", {"registry_number": "0848300045426000620"})
+
+    submit.assert_called_once()
