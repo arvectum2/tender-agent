@@ -1,0 +1,42 @@
+task_id: ARV-002-REVALIDATION-001
+status: in_progress
+authority: AUTO
+goal: Revalidate current ARV-002 live end-to-end pipeline and hidden-fallback boundary without production or external effects.
+definition_of_done:
+  - Immutable ARV-002 snapshot and current constraints read.
+  - Current live exact-number/source-to-analysis path verified with deterministic repository evidence.
+  - Hidden/demo fallback protections verified fail-closed.
+  - ARV-002 reconciliation overlay updated without rewriting legacy snapshot.
+  - At most one successor candidate, only if directly traceable to canonical ARV-002 residual/next_result.
+  - Relevant tests/checks and exact-head CI green.
+  - Guarded AUTO merge only under current renewed AM-4 gates.
+completed:
+  - PR #98 exact head 0a6dece0a7051d57fb8363f5a19420a0d6303127 passed CI 35465589127 SUCCESS 9/9 and merged as 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b.
+  - Canonical queue item ARV-002-REVALIDATION-001 selected from order 100.
+  - Immutable ARV-002 snapshot and next_result read without rewrite.
+  - 75 focused live-path/source-graph/no-fallback tests passed.
+  - 32 persistence/recovery tests passed; 12 environment/profile skips.
+  - uv run make check PASS; git diff --check PASS.
+  - Read-only live exact-number EIS lookup succeeded and common-info detail extractor returned the correct explicit customer.
+  - Search-card customer fallback was proven to emit JavaScript-polluted customer_name on the current EIS layout.
+  - Reconciliation overlay/evidence doc updated and one bounded non-admitted successor candidate recorded.
+current: Local evidence/reconciliation complete; commit/push and obtain exact-head CI.
+remaining:
+  - Commit/push and PR.
+  - Exact-head CI.
+  - Final checkpoint/queue state and guarded merge if eligible.
+last_verified_commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
+test_results:
+  - "75 focused tests passed."
+  - "32 persistence/recovery tests passed; 12 skipped."
+  - "uv run make check PASS."
+  - "git diff --check PASS."
+  - "read-only live EIS exact-number lookup succeeded; detail customer extraction clean; search-card customer pollution reproduced."
+resume_instruction: Commit/push the validated reconciliation evidence, open PR, obtain exact-head CI, finalize checkpoint/queue state and guarded-auto-merge if eligible.
+updated_at: '2026-09-20T00:08:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260919-arv002-revalidation
+  branch: agent/arv-002-revalidation-001
+  base_commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
+  lease_until: '2026-09-20T01:48:00+03:00'

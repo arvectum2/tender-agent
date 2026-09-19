@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-19T22:50:16+03:00'
+updated_at: '2026-09-19T23:59:30+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -306,7 +306,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate live end-to-end pipeline status and residual gap
-  status: ready
+  status: in_progress
   authority: AUTO
   independent: true
   auto_merge: true

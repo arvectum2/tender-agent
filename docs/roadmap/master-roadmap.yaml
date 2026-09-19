@@ -909,10 +909,35 @@ legacy_registry:
     comment: После R9 это не отдельный этап отладки, а регрессионный gate каждого релиза.
     dependencies_raw: ARV-073
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-19'
+    evidence:
+    - commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
+      detail: Current main after ARV-008 and 2026-09-19 AM-4 reconciliation; default CI executes make test.
+    - path: docs/roadmap/ARV-002_REVALIDATION_2026-09-19.md
+      detail: 'Revalidation evidence: 63 focused live-path/source-graph/no-fallback tests passed; 32 persistence/recovery tests passed with 12
+        environment/profile skips; read-only exact-number EIS lookup succeeded.'
+    - path: tests/test_tender_operator_agent_procurement_discovery.py
+      detail: Exact-number search is isolated from supplier relevance state and public-source failure paths do not silently substitute demo cards.
+    - path: tests/test_tender_operator_agent_search_to_getdocs_flow.py
+      detail: Search-result handoff to public detail/getDocs path and persisted run context remain covered.
+    - path: tests/test_procurement_source_graph_production.py
+      detail: Production source graph continues to bind canonical values to direct source fragments rather than synthetic candidate values.
+    notes: >-
+      Current live exact-number lookup succeeds and the stricter common-info extractor returns the correct explicit customer. Revalidation
+      also exposed one concrete residual: the search-result-card customer fallback can consume EIS page JavaScript and emit malformed customer_name.
+      ARV-002 is therefore not marked confirmed_done.
+    successor_candidate:
+      task_id: ARV-002-LIVE-CUSTOMER-PARSE-001
+      status: candidate_not_admitted
+      title: Exact-number live customer parsing regression gate
+      scope: Constrain public EIS search-card customer extraction to explicit visible customer-scoped evidence; fail closed to null when absent/ambiguous;
+        add a deterministic current-layout regression fixture; preserve detail-page precedence and exact-number/no-hidden-demo-fallback behavior.
+      definition_of_done:
+      - Observed JavaScript-polluted customer_name layout is reproduced by a deterministic fixture and no longer leaks script/placement text into customer_name.
+      - Search-card customer_name is explicit customer-role evidence or null; no hidden demo fallback is introduced.
+      - Common-info/detail-page customer precedence and exact-number search behavior remain green.
+      - Default repository tests and exact-head CI pass; no external/procurement/production effect.
 - id: ARV-009
   legacy_snapshot:
     queue_order: 0
