@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-19T22:06:23+03:00'
+updated_at: '2026-09-19T22:50:16+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -325,13 +325,27 @@ items:
   independent: true
   auto_merge: false
   source: 'Canonical ARV-008 residual plus explicit Product Owner continuation instruction 2026-09-19: «Продолжай».'
+  owner_gate_evidence: 'Owner review renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms in docs/governance/decisions/DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md (Company merge 57ef73e468122ac714d28d49bfd176ed83588cab) and explicitly approved PR #97 after current exact-head green CI.'
   roadmap_scope:
   - ARV-008
   dependencies:
   - ARV-007
   - OPS-OBSERVABILITY-V1-001
   executor_scope: Adapt the frozen ARV-007 Redis QueueEnvelope/visibility-lease foundation into a Redis Streams consumer-group transport for existing tender-research prepare/analyze jobs, with separate worker process, explicit thread|redis backend, fail-closed Redis mode, bounded retry/backoff and stale pending reclaim. PostgreSQL remains source of truth. Do not claim full ARV-008 completion; pause/resume, per-tenant concurrency and cost budgets remain later bounded slices.
-  done_gate: 'Transport/worker/backend regression tests and repository checks pass; exact-head CI green; no production/external/procurement mutation. Final merge remains REVIEW-gated pending attributable Owner AM-4 renewal after the 2026-09-18 material executor-policy change.'
+  done_gate: 'Satisfied: PR #97 exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34 passed CI run 35463316244 SUCCESS 9/9 including redis-integration and was squash-merged under explicit Owner approval as daa3d2de580ff4098781ad46720626dec31576de. No production/external/procurement effect.'
+- order: 115
+  task_id: AM4-RENEWAL-RECONCILE-001
+  strategy: REUSE
+  title: Reconcile 2026-09-19 AM-4 renewal into Tender Agent canonical state
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Attributable Owner review 2026-09-19 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms; Company decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.'
+  roadmap_scope: []
+  dependencies: []
+  executor_scope: Reconcile only Company renewal source/deadline/counter state and PR #97 merge evidence into repository-owned executor policy/checkpoints. Preserve authority scope, hard stops, Product/Company/OS boundaries and all external-effect prohibitions.
+  done_gate: 'Satisfied for repository work: renewal/evidence state reconciled; focused policy test 2 passed; make check/diff check PASS; PR #98 head 62e2c09b7b17ee8453472c652dbed130a914f3e4 passed CI run 35465114094 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and all ordinary gates; when merged it counts as automatic merge 1/10 of the 2026-09-19 review cycle.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

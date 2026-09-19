@@ -1,0 +1,32 @@
+task_id: AM4-RENEWAL-RECONCILE-001
+status: completed
+authority: AUTO
+goal: Reconcile Tender Agent canonical state to the 2026-09-19 Owner AM-4 renewal and PR #97 merge evidence.
+definition_of_done:
+  - Company renewal source/commit and 2026-10-19 review deadline recorded.
+  - Material-policy-change review gate marked satisfied by attributable Owner renewal.
+  - PR #97 exact-head CI and merge SHA recorded.
+  - Scope/hard stops unchanged.
+  - Checks and exact-head CI green.
+  - Guarded AUTO merge under renewed AM-4; counter becomes 1/10.
+completed:
+  - Company renewal decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.
+  - PR #97 merged as daa3d2de580ff4098781ad46720626dec31576de after exact-head CI 35463316244 SUCCESS 9/9.
+  - Executor policy, owner directive and ARV-008 merge evidence reconciled without authority expansion.
+  - Focused policy test 2 passed; uv run make check PASS; git diff --check PASS.
+current: Reconciliation complete; first exact-head CI is green and final bookkeeping head must stay green before guarded auto-merge.
+remaining: []
+last_verified_commit: 62e2c09b7b17ee8453472c652dbed130a914f3e4
+test_results:
+  - "tests/test_watchdog_continuation_policy.py: 2 passed."
+  - "uv run make check: PASS."
+  - "git diff --check: PASS."
+  - "PR #98 head 62e2c09b7b17ee8453472c652dbed130a914f3e4: GitHub CI run 35465114094 SUCCESS 9/9."
+resume_instruction: Completed. Require current final-bookkeeping exact-head CI green, then guarded-auto-merge PR #98 under renewed AM-4 as automatic merge 1/10; do not reopen absent a concrete regression.
+updated_at: '2026-09-19T22:50:16+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: daa3d2de580ff4098781ad46720626dec31576de
+  lease_until: null
