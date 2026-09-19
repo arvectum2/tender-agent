@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-008-REVALIDATION-001
-status: in_progress
+status: blocked
 authority: AUTO
 continuation_mode: REVALIDATION
 branch: agent/arv-008-revalidation-20260919
@@ -17,19 +17,19 @@ completed:
   - Canonical continuation order checked. CORE-QUALITY-PILOT ARV-005 and ARV-061 remain dependency-blocked by unresolved ARV-003/ARV-004; ARV-067 remains expert-gated, so the next independent eligible branch is PRODUCTION-RUNTIME and its first historical item is ARV-008.
   - Historical ARV-008 scope is explicit: separate worker process, durable consumer, retries/backoff, restart recovery, pause/cancel/resume, per-tenant concurrency and cost budgets.
   - Historical dependencies are ARV-007 and ARV-010. ARV-007 is confirmed done in the master roadmap; ARV-010 observability v1 is satisfied by completed queue item OPS-OBSERVABILITY-V1-001.
-  - Current default-branch code searches for worker/queue/retry/pause/cancel/resume and start_run/Redis queue returned no indexed implementation evidence. Search absence is not treated as proof of missing implementation.
-  - Repository tree inspection found no ARV-008 checkpoint on canonical main; this slice therefore remains evidence-gathering rather than implementation invention.
-  - No production/network/provider/procurement/external action was invoked.
-current: ARV-008 is independently eligible for repository-only revalidation. Current indexed evidence is insufficient to declare the historical worker/durable-execution result satisfied or to prove a bounded implementation gap.
+  - Repository-owned roadmap evidence confirms ARV-007 only as the frozen Redis foundation: lazy client, health diagnostics, distributed locks, idempotency, TTL cache, rate limiting, queue envelope and start_run integration; it explicitly states workers, retries and durable execution remain separate ARV-008 work.
+  - Fresh default-branch searches for BackgroundJob, Celery, pause_run, job_status and ARV-008 returned no indexed implementation surface. Combined with the explicit ARV-007 roadmap boundary, no durable evidence was found that the canonical ARV-008 worker result is already satisfied; search absence alone is not used as proof.
+  - Exact-head PR #92 CI at c4f2556553d0486f188aa04e8fc75007cbd3b911 completed successfully in run 35425362514, including quality, migrations, dependency-lock and redis-integration checks.
+  - Revalidation therefore establishes a concrete canonical residual result but not an implementation design: ARV-008 still requires the roadmap-stated separate worker/durable-consumer result with retries/backoff, restart recovery, pause/cancel/resume and per-tenant concurrency/cost budgets.
+  - No production/network/provider/procurement/external action was invoked and no worker architecture was invented.
+current: Repository-only revalidation is complete. ARV-008 remains a canonical residual implementation result, but implementing it requires a separately bounded admitted task because this standard REVALIDATION slice does not authorize invention of worker architecture or acceptance criteria.
 remaining:
-  - Locate repository-owned worker/job/queue implementation and deterministic tests by concrete paths or merged history rather than inference from search absence.
-  - Reconcile each canonical ARV-008 capability against that evidence; run only repository-local deterministic checks if a concrete implementation surface is found.
-  - If a concrete canonical repository-only gap is proven, record one bounded successor candidate; do not implement invented worker architecture under this revalidation slice.
+  - Preserve one bounded successor candidate: implement the already-canonical ARV-008 worker/durable-execution result in a separately admitted task after an architecture/scope boundary is canonically available; do not infer the queue/backend/process design here.
   - Automatic merge remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
-resume_instruction: Resume this existing branch/PR. Locate concrete worker/job/queue paths or merged-history evidence, reconcile the canonical ARV-008 capability list, and run only relevant deterministic repository-local checks. Do not mutate production or infer a missing implementation solely from code-search absence.
-updated_at: '2026-09-19T09:08:00+03:00'
+resume_instruction: Do not repeat ARV-008 evidence searches. Treat this revalidation as complete to its permitted boundary and REVIEW/architecture-scope blocked. On the next invocation check this PR exact-head CI once, release the wait, and continue the next independent eligible historical item under the active Owner directive.
+updated_at: '2026-09-19T10:12:00+03:00'
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260919T085708+0300
-  lease_until: '2026-09-19T10:58:00+03:00'
+  claimed_by: null
+  execution_id: null
+  lease_until: null
   external_effects: none
