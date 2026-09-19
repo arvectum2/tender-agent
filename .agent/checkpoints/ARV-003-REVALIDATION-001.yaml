@@ -17,14 +17,15 @@ completed:
   - Canonical continuation order checked: CORE-QUALITY-PILOT follows ARV-002 with ARV-003.
   - Historical roadmap evidence reconciled at read-only level: repository-side R10.1 contour was reported at 97% with deterministic batching, compact-safe wire, server-owned fragment grounding, schema-constrained llama.cpp responses, reasoning disabled, sanitized diagnostics and exact-tokenizer-shaped one-call probe.
   - Historical reconciliation explicitly records accepted ARV-003 bundle references plus a stale older Gate 5 status, so full closure must not be inferred without reconciling that conflict.
-  - PR #89 ARV-002 successor is exact-head green but REVIEW-blocked; its lease is released, so independent continuation is permitted.
-current: Inspect repository-owned ARV-003 accepted-bundle/status evidence and deterministic tests; do not execute controlled real-provider runs or claim human acceptance.
+  - Current docs/local/ARV-096_EIS_DOCUMENT_SET_ACCEPTANCE.md independently treats the ARV-003 bundle as accepted and immutable for diagnostics, explicitly forbids invoking the controlled R10.1 provider run, and requires provider call count 0 / accepted-bundle mutation count 0 for that acceptance path.
+  - PR #89 ARV-002 successor exact head 9dbbe3881a915476e16cc8d5b66976a3594210f0 passed CI run 35407733718 SUCCESS and remains REVIEW-blocked; its lease is released, so independent continuation is permitted.
+current: Accepted-bundle existence is corroborated by current repository safety/runbook evidence, but full ARV-003 closure is not yet proven because the historical Gate 5 status conflict and controlled-provider acceptance provenance still need reconciliation.
 remaining:
-  - Locate current ARV-003 accepted bundle and stale Gate 5 status artifacts.
+  - Locate the stale Gate 5 status artifact and the accepted-bundle provenance/metadata artifact without invoking provider runtime.
   - Identify deterministic repository-only tests/checks that cover evidence map, confidence and controlled-run metadata contracts.
   - Record exact evidence and residual gap; stop at any provider/HUMAN/REVIEW gate.
 resume_instruction: Continue read-only evidence inspection and deterministic repository-only validation. Do not run real-provider controlled executions. Do not infer full closure from stale/conflicting status text.
-updated_at: '2026-09-19T05:10:00+03:00'
+updated_at: '2026-09-19T05:14:00+03:00'
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260919T050143+0300
