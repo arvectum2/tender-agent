@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-18T22:31:00+03:00'
+updated_at: '2026-09-19T20:08:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -316,6 +316,22 @@ items:
   dependencies: []
   executor_scope: Reconcile ARV-002 against current main/merged evidence and deterministic tests. Verify the existing live end-to-end pipeline and hidden-fallback boundaries without production mutation or consequential external action. Update reconciliation evidence; if a concrete repository-only residual gap is proven and already traceable to the canonical ARV-002 next_result/residual_scope, record at most one bounded successor candidate. Do not invent a new product priority, architecture or acceptance criterion.
   done_gate: 'Current ARV-002 implementation/status is evidence-backed on the reconciliation overlay; deterministic relevant tests/checks are recorded; any residual gap is explicit and source-traceable; no external/production/procurement effect; REVIEW/HUMAN/OWNER gates preserved. Automatic merge remains fail-closed after the 2026-09-18 material executor-policy change until attributable Owner AM-4 renewal.'
+- order: 110
+  task_id: ARV-008-WORKER-TRANSPORT-V1-001
+  strategy: ADAPT
+  title: Durable separate-process Redis worker transport v1
+  status: in_progress
+  authority: OWNER
+  independent: true
+  auto_merge: false
+  source: 'Canonical ARV-008 residual plus explicit Product Owner continuation instruction 2026-09-19: «Продолжай».'
+  roadmap_scope:
+  - ARV-008
+  dependencies:
+  - ARV-007
+  - OPS-OBSERVABILITY-V1-001
+  executor_scope: Adapt the frozen ARV-007 Redis QueueEnvelope/visibility-lease foundation into a Redis Streams consumer-group transport for existing tender-research prepare/analyze jobs, with separate worker process, explicit thread|redis backend, fail-closed Redis mode, bounded retry/backoff and stale pending reclaim. PostgreSQL remains source of truth. Do not claim full ARV-008 completion; pause/resume, per-tenant concurrency and cost budgets remain later bounded slices.
+  done_gate: 'Transport/worker/backend regression tests and repository checks pass; exact-head CI green; no production/external/procurement mutation. Final merge remains REVIEW-gated pending attributable Owner AM-4 renewal after the 2026-09-18 material executor-policy change.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

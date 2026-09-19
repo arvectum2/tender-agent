@@ -1,0 +1,30 @@
+task_id: ARV-008-WORKER-TRANSPORT-V1-001
+status: in_progress
+authority: OWNER_DIRECTIVE
+goal: Adapt ARV-007 Redis primitives into the first durable separate-process ARV-008 worker transport for existing tender-research jobs.
+definition_of_done:
+  - Redis Streams QueueEnvelope transport with ack, lease refresh and stale reclaim.
+  - Separate worker process dispatches prepare/analyze jobs; PostgreSQL remains source of truth.
+  - Explicit thread|redis backend; redis mode fails closed on Redis outage/disablement.
+  - Bounded retry/backoff and restart reconciliation.
+  - Deterministic tests and repository checks pass.
+  - Pause/resume, tenant concurrency and cost budgets remain explicit residual slices.
+  - Review-ready PR; no merge absent applicable Owner/AM-4 review.
+completed:
+  - ARV-007/ARV-008 boundary and current ThreadPoolExecutor implementation inspected.
+  - Redis Streams chosen as reuse/adapt path because redis-py is already installed and ARV-007 already specifies queue envelope plus 300s visibility lease.
+current: Implement queue transport.
+remaining:
+  - Queue transport and tests.
+  - Worker integration and tests.
+  - Validation and PR.
+last_verified_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+test_results: []
+resume_instruction: Start with src/shared/redis/queue.py transport and unit tests; keep all Redis failures sanitized/fail-closed.
+updated_at: '2026-09-19T20:08:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260919-arv008-worker-transport-v1
+  branch: owner/arv-008-worker-transport-v1
+  base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+  lease_until: '2026-09-19T22:00:00+03:00'
