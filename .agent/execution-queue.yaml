@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-20T00:22:00+03:00'
+updated_at: '2026-09-20T10:12:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -346,6 +346,24 @@ items:
   dependencies: []
   executor_scope: Reconcile only Company renewal source/deadline/counter state and PR #97 merge evidence into repository-owned executor policy/checkpoints. Preserve authority scope, hard stops, Product/Company/OS boundaries and all external-effect prohibitions.
   done_gate: 'Satisfied for repository work: renewal/evidence state reconciled; focused policy test 2 passed; make check/diff check PASS; PR #98 head 62e2c09b7b17ee8453472c652dbed130a914f3e4 passed CI run 35465114094 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and all ordinary gates; when merged it counts as automatic merge 1/10 of the 2026-09-19 review cycle.'
+- order: 120
+  task_id: ARV-010-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate production observability, safety and recovery umbrella
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first eligible unresolved PRODUCTION-RUNTIME historical item after ARV-008.'
+  roadmap_scope:
+  - ARV-010
+  dependencies:
+  - BASE-018
+  - ARV-008-WORKER-TRANSPORT-V1-001
+  executor_scope: Reconcile ARV-010 against current main and repository-owned evidence for storage guardrails, observability, backup/recovery freshness and incident guidance. No production/network/provider mutation, third-party telemetry activation or external notification delivery. Record at most one bounded source-traceable successor candidate if a concrete residual remains.
+  done_gate: 'ARV-010 reconciliation overlay is evidence-backed; relevant deterministic tests/checks and exact-head CI are green; any residual is explicit/source-traceable; no production/external effect; guarded merge only if renewed AM-4 and repository auto-merge gates remain valid.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
