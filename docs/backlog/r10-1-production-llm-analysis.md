@@ -1,6 +1,6 @@
 # R10.1 / ARV-003 — Production LLM Analysis
 
-Status: `R10_1_GATE_4_VERSIONED_CANONICAL_PRODUCER_COMPLETE_GATE_5_READY`.
+Status: `R10_1_GATE_5_CONTROLLED_ACCEPTANCE_COMPLETE` (reconciled 2026-09-20 from merged acceptance evidence; historical Gate 1–4 text below is retained).
 
 Canonical base: annotated tag `r9-operational-hardening-2026-07-24`, peeled commit `58bef2da2342bff1e6f63215ee2697e96fefe6f7`.
 
@@ -138,21 +138,23 @@ Status: `R10_1_GATE_4_VERSIONED_CANONICAL_PRODUCER_COMPLETE`.
 
 ### Gate 5 — controlled real-provider evidence
 
-- [ ] select and approve one configured provider/model and versioned pricing policy;
-- [ ] load credentials only from the existing secret/config boundary and prove they never enter requests, results, logs or artifacts;
-- [ ] run one approved real procurement through `production_llm_r10_1`;
-- [ ] verify every accepted claim against procurement-owned evidence and preserve rejected claims/limitations;
-- [ ] record provider/model/request/prompt/schema/evidence/grounding/pricing identities;
-- [ ] record token usage, retries, latency and cost against explicit budgets;
-- [ ] prove provider, validation and budget failures remain fail closed without frozen or stub fallback;
-- [ ] publish sanitized runtime evidence without raw tender text, raw provider bodies or credentials;
-- [ ] repeat the same controlled input to verify stable local identities and non-conflicting publication.
+- [x] select and approve one configured provider/model and versioned pricing policy;
+- [x] load credentials only from the existing secret/config boundary and prove they never enter requests, results, logs or artifacts;
+- [x] run one approved real procurement through `production_llm_r10_1`;
+- [x] verify every accepted claim against procurement-owned evidence and preserve rejected claims/limitations;
+- [x] record provider/model/request/prompt/schema/evidence/grounding/pricing identities;
+- [x] record token usage, retries, latency and cost against explicit budgets;
+- [x] prove provider, validation and budget failures remain fail closed without frozen or stub fallback;
+- [x] publish sanitized runtime evidence without raw tender text, raw provider bodies or credentials;
+- [x] repeat the same controlled input to verify stable local identities and non-conflicting publication.
 
 Gate 5 is the first gate allowed to use one approved real credential, endpoint and procurement. It must be executed as a controlled evidence run, not as general customer rollout.
 
+Acceptance reconciliation (2026-09-20): Gate 5 was accepted in issue #68 on merged commit `f96e3588f2e1f61f19d54e44594debfc81a745bf`. Repository-owned downstream runbooks record `ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE`, two executions, repeat identity verification, 25 batches, 20 accepted claims, zero rejected/unsupported claims, zero retries, no raw provider response storage and zero external cost. This update records existing accepted evidence only; it does not rerun the provider or mutate the accepted bundle.
+
 ### Gate 6 — handoff to ARV-001
 
-- [ ] provide R10.1 evidence to the golden report and release-gate work;
+- [x] provide R10.1 evidence to the golden report and release-gate work;
 - [ ] do not begin ARV-004 self-improvement or ARV-005 pilot expansion before ARV-001 acceptance criteria are defined.
 
 ## Non-goals

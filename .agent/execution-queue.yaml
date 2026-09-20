@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-20T10:12:00+03:00'
+updated_at: '2026-09-20T15:08:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -363,6 +363,23 @@ items:
   - ARV-008-WORKER-TRANSPORT-V1-001
   executor_scope: Reconcile ARV-010 against current main and repository-owned evidence for storage guardrails, observability, backup/recovery freshness and incident guidance. No production/network/provider mutation, third-party telemetry activation or external notification delivery. Record at most one bounded source-traceable successor candidate if a concrete residual remains.
   done_gate: 'ARV-010 reconciliation overlay is evidence-backed; relevant deterministic tests/checks and exact-head CI are green; any residual is explicit/source-traceable; no production/external effect; guarded merge only if renewed AM-4 and repository auto-merge gates remain valid.'
+
+- order: 125
+  task_id: ARV-003-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate R10.1 production LLM analysis status against accepted Gate 5 evidence
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; CORE-QUALITY-PILOT historical item ARV-003; legacy reconciliation requires status revalidation.'
+  roadmap_scope:
+  - ARV-003
+  dependencies:
+  - BASE-018
+  executor_scope: Reconcile ARV-003 status against current main, merged repository evidence and the repository-owned accepted Gate 5 references. Do not invoke provider/runtime, access credentials, mutate the accepted evidence bundle, or alter frozen benchmark truth. Update only reconciliation evidence/status and stale documentation needed to remove contradiction while preserving historical facts.
+  done_gate: 'Repository-owned evidence proves whether Gate 5 was accepted; stale status is reconciled without provider/runtime execution; deterministic relevant tests/checks and exact-head CI are green; no production/external effect; guarded merge only if renewed AM-4 and repository auto-merge gates remain valid.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001

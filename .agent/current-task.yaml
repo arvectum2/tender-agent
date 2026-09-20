@@ -1,35 +1,32 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-010-REVALIDATION-001
+status: in_progress
+task_id: ARV-003-REVALIDATION-001
 authority: AUTO
-goal: Revalidate canonical ARV-010 production observability, safety and recovery status against current main and merged repository evidence, then record only evidence-backed closure/residual scope.
+goal: Revalidate ARV-003 R10.1 production LLM analysis status against accepted Gate 5 repository evidence without invoking provider/runtime or mutating accepted evidence.
 definition_of_done:
-- Read immutable ARV-010 snapshot and current executor/roadmap constraints.
-- Verify storage guardrails, operational observability, backup/recovery freshness signals and incident guidance from current repository-owned code/tests/docs.
-- Determine whether ARV-010 is already satisfied, partially satisfied, or has a concrete source-traceable repository-only residual.
-- Update only the reconciliation overlay/evidence and at most one bounded successor candidate if directly traceable to ARV-010 next_result.
-- No production/network/provider mutation, third-party telemetry activation, external notification delivery or secret access.
-- Relevant deterministic tests/checks and exact-head CI pass; guarded AUTO merge only under current queue and renewed AM-4 gates.
+- Reconcile stale Gate 5 status against current merged repository-owned acceptance evidence.
+- Preserve immutable historical snapshot and accepted ARV-003 bundle.
+- Do not invoke provider/runtime, access credentials, or mutate benchmark truth.
+- Run deterministic relevant tests/checks and require exact-head CI before guarded merge.
 completed:
-- Canonical main 2a5e03bac8c4a6a821152c31599164e631d1e0a7 verified after merged ARV-002 revalidation.
-- Deterministic continuation skipped CORE-QUALITY-PILOT items already represented by open PRs, dependency-blocked items and expert/HUMAN gates, then selected first eligible PRODUCTION-RUNTIME historical item ARV-010.
-- ARV-010 dependencies are satisfied for repository-side revalidation: BASE-018 durable R9 baseline and merged ARV-008 worker transport v1.
-current: ARV-010 repository revalidation is complete. Earlier PR #100 evidence head 37bfc31ae51c43edf8714ed83ecff5f066ddfadd passed CI run 35491176644; later bookkeeping head 7e3d482f4394cf5ab7bdf44b6658af2e99419205 failed only because the AM-4 counter assertion was stale (policy=3, test=2). This rebuilt head is based on current main after ARV-062, reconciles the counter to 5/10, and must re-earn exact-head green.
-pending: []
-last_verified_commit: 79754ce83cab50c2a47038a0ff2fc4e3d19f01a4
+- Deterministic Owner-directive continuation selected CORE-QUALITY-PILOT ARV-003 after ARV-002; no existing ARV-003 revalidation PR/branch was present.
+- Repository evidence identifies ARV-003 Gate 5 as accepted on merged commit f96e3588f2e1f61f19d54e44594debfc81a745bf with sanitized acceptance marker ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE.
+current: Repository-only ARV-003 status reconciliation is complete locally; accepted Gate 5 evidence is reflected in the canonical overlay and stale backlog status without provider/runtime execution. Await exact-head CI before done/merge.
+pending:
+- Commit/push and open PR; require exact-head CI.
+last_verified_commit: 88cf8d3000aa1b74e9fed1c1c2448dcac81dc6ac
 test_results:
-- "Focused/relevant local suite: 113 passed, 1 Docker-backed acceptance deselected after confirming local daemon unavailable."
-- "Current-main PR #99 CI run 35470123590: SUCCESS 9/9, covering full GitHub CI environment."
-- "uv run make check: PASS."
-- "PR #100 head 37bfc31ae51c43edf8714ed83ecff5f066ddfadd: CI run 35491176644 SUCCESS; Mirror to GitVerse run 35491174688 SUCCESS."\n- "PR #100 bookkeeping head 7e3d482f4394cf5ab7bdf44b6658af2e99419205: CI run 35495895435 failed only in test_watchdog_continuation_policy because policy counter 3 and stale assertion 2 diverged; no product/runtime regression."
-updated_at: '2026-09-20T10:52:00+03:00'
-resume_instruction: Completed. Require this rebuilt PR #100 exact-head required CI green, then guarded-auto-merge under renewed AM-4 as automatic merge 5/10 if all review/mergeability/scope gates remain satisfied.
+- 'Relevant ARV-003 production LLM suite: 399 passed, 35 warnings.'
+- 'uv run make check: PASS.'
+- 'git diff --check: PASS.'
+updated_at: '2026-09-20T15:15:00+03:00'
+resume_instruction: Check exact-head CI once. If green, reread current AM-4/reviews/mergeability and guarded-auto-merge if all gates remain satisfied; otherwise persist the blocker and continue independent admitted work. Never rerun provider or mutate accepted bundle.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-    base_commit: 79754ce83cab50c2a47038a0ff2fc4e3d19f01a4
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260920T145809+0300
+  branch: agent/arv-003-revalidation-001
+  base_commit: 88cf8d3000aa1b74e9fed1c1c2448dcac81dc6ac
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-20T16:58:00+03:00'
