@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-051-REVALIDATION-001
+historical_item: ARV-051
+status: completed
+authority: AUTO
+source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+base_commit: 2a5e03bac8c4a6a821152c31599164e631d1e0a7
+branch: agent/arv-051-revalidation-20260919
+scope:
+  - Reconcile historical ARV-051 development-governance status against current main and merged repository evidence.
+  - Verify repository-owned Project Watchdog/development-protocol evidence only; do not change Company/Product authority or roadmap priority.
+  - Preserve REVIEW/OWNER gates and record any residual gap without inventing scope.
+completed:
+  - Deterministic continuation reached DEVELOPMENT-GOVERNANCE after earlier branches/items were already satisfied, active, deferred, dependency-blocked, HUMAN/OWNER-gated, or represented by open revalidation PRs.
+  - Merged PR #78 is durable evidence for the reusable Project Watchdog binding: .agent/watchdog.yaml exists on main and records singleton/self-disable-prohibited runtime behavior plus AM-4 authority sources.
+  - Current .agent/owner-directive.yaml and .agent/executor-policy.yaml preserve deterministic continuation and hard stops; the attributable 2026-09-19 Owner review subsequently renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms.
+  - Repository-owned WATCHDOG-CONTINUITY-001 provides durable merged development-protocol evidence for work-conserving gate reconciliation, exact-hour singleton scheduling, bounded productive quanta, stale recovery and no repeated acceptance after a satisfied done gate.
+  - .agent/WATCHDOG_REPORTING.md provides the fail-visible one-comment-per-invocation audit protocol and required final report fields.
+  - PR #95 original implementation head 199d5ed3d51ff74cb20d6418329d8a5dc7f2a9e1 passed CI run 35436345282 SUCCESS; mirror workflow also succeeded.
+  - PR #95 rebased head c458e657343f19c433be6a9a41f3928d88001422 passed CI run 35470032031 SUCCESS 9/9 before main advanced with merged PR #99.
+current: Repository-owned ARV-051 development-governance evidence is reconciled to the bounded slice. The former AM-4 renewal blocker is satisfied and the checkpoint-only branch is refreshed directly onto canonical main 2a5e03bac8c4a6a821152c31599164e631d1e0a7; fresh exact-head CI is the remaining guarded-merge gate.
+pending:
+  - Require fresh exact-head CI green on the current checkpoint-only head, no unresolved required review/change request, then guarded AUTO merge under renewed AM-4.
+resume_instruction: Do not repeat ARV-051 evidence inspection. Require fresh exact-head CI green and no unresolved required review/change request, mark ready from draft, then guarded-auto-merge under renewed AM-4.
+execution:
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null
+updated_at: '2026-09-20T08:05:00+03:00'
