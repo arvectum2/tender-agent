@@ -18,23 +18,24 @@ hard_boundaries:
   - Do not invent product priority, architecture, acceptance criteria or ARV mappings.
   - Preserve REVIEW/HUMAN/OWNER gates.
 selection_evidence:
-  - ARV-075 PR #93 exact head e181295bf602cddfc822e6b0b2e27716ead18dbd passed CI run 35430853641 and remains blocked on fresh read-only Mac mini storage evidence.
-  - Earlier continuation branches remain represented by active/review-blocked work or dependency/HUMAN gates; no verified stage is repeated.
+  - ARV-075 PR #93 remains blocked on fresh read-only Mac mini storage evidence.
+  - Earlier continuation branches remain represented by satisfied, active, dependency-blocked, HUMAN/OWNER-gated, or open revalidation work; no verified stage is repeated.
   - GO-TO-MARKET ARV-038 is historically bounded and depends on ARV-018 and ARV-042, both represented as completed/governed roadmap foundations.
 revalidation_evidence:
   - Canonical ARV-038 historical next_result requires a product-first site, instant demo, public packages, pay-per-analysis, pilot, sample report and transparent limitations.
-  - Current tender-agent main root contains application/runtime sources and no repository-owned landing/public-site directory; repository code search for landing/product-demo packaging returned no indexed artifact.
-  - BUILD-DOCKER-CONTEXT-001 is already completed specifically with an optional external landing-assets boundary, so absence of site assets in this repository is consistent with an external/optional site boundary rather than evidence that a new in-repo site should be invented.
+  - Current tender-agent repository evidence does not establish the actual public website surface; BUILD-DOCKER-CONTEXT-001 preserves an optional external landing-assets boundary, so a new in-repo site must not be invented from absence.
+  - Exact-head CI run 35433611813 for head 586ce6be1ebadde3f5a7e82ab69b2a42ac3a00d1 completed SUCCESS.
+  - The former AM-4 renewal blocker is stale: .agent/owner-directive.yaml records attributable 2026-09-19 Owner renewal merged in Company as 57ef73e468122ac714d28d49bfd176ed83588cab. This does not authorize public/commercial claims or publication.
   - Therefore this bounded slice cannot prove ARV-038 complete and cannot safely create/publish product-site content without separate bounded scope and Owner/commercial approval for public claims/pricing.
-current: Repository-only ARV-038 revalidation reached its evidence boundary; no production/public site mutation is authorized.
+current: Repository-only ARV-038 revalidation is complete to its evidence boundary. CI for the prior head is green and Company AM-4 renewal is satisfied, but the product/publication scope remains Owner/commercial gated and the branch is stale against current main.
 pending:
   - Fresh canonical evidence for the actual website repository/surface if separately admitted.
   - Owner/commercial approval before publishing pricing, packages, claims or other public commitments.
-  - Owner AM-4 renewal before any automatic merge after the 2026-09-18 material executor-policy change.
-resume_instruction: Do not repeat repository searches. Check exact-head CI once. If still blocked, leave ARV-038 review-ready and continue the next independent deterministic continuation item; any actual site edit/publication requires separately applicable scope and authority.
+  - Refresh this checkpoint-only branch against current main before any future merge consideration; do not treat AM-4 renewal as product/publication authority.
+resume_instruction: Do not repeat repository searches or exact-head CI inspection for 586ce6be1ebadde3f5a7e82ab69b2a42ac3a00d1. Keep ARV-038 blocked at the Owner/commercial/publication boundary. Continue the next deterministic independent eligible continuation item; any actual site edit/publication requires separately applicable scope and authority.
 execution:
-  claimed_by: null
-  execution_id: null
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260921T025732+0300
   manual_override: false
   lease_until: null
-updated_at: '2026-09-19T12:14:00+03:00'
+updated_at: '2026-09-21T03:08:00+03:00'
