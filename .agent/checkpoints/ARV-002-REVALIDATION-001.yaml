@@ -1,0 +1,40 @@
+task_id: ARV-002-REVALIDATION-001
+status: completed
+authority: AUTO
+goal: Revalidate current ARV-002 live end-to-end pipeline and hidden-fallback boundary without production or external effects.
+definition_of_done:
+  - Immutable ARV-002 snapshot and current constraints read.
+  - Current live exact-number/source-to-analysis path verified with deterministic repository evidence.
+  - Hidden/demo fallback protections verified fail-closed.
+  - ARV-002 reconciliation overlay updated without rewriting legacy snapshot.
+  - At most one successor candidate, only if directly traceable to canonical ARV-002 residual/next_result.
+  - Relevant tests/checks and exact-head CI green.
+  - Guarded AUTO merge only under current renewed AM-4 gates.
+completed:
+  - PR #98 exact head 0a6dece0a7051d57fb8363f5a19420a0d6303127 passed CI 35465589127 SUCCESS 9/9 and merged as 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b.
+  - Canonical queue item ARV-002-REVALIDATION-001 selected from order 100.
+  - Immutable ARV-002 snapshot and next_result read without rewrite.
+  - 75 focused live-path/source-graph/no-fallback tests passed.
+  - 32 persistence/recovery tests passed; 12 environment/profile skips.
+  - uv run make check PASS; git diff --check PASS.
+  - Read-only live exact-number EIS lookup succeeded and common-info detail extractor returned the correct explicit customer.
+  - Search-card customer fallback was proven to emit JavaScript-polluted customer_name on the current EIS layout.
+  - Reconciliation overlay/evidence doc updated and one bounded non-admitted successor candidate recorded.
+current: Bounded ARV-002 revalidation complete; first PR #99 evidence head is exact-head green and final bookkeeping head must re-earn exact-head green before guarded merge.
+remaining: []
+last_verified_commit: eb280a6bc78a3eade69e494a2c7f3439c2b1a960
+test_results:
+  - "75 focused tests passed."
+  - "32 persistence/recovery tests passed; 12 skipped."
+  - "uv run make check PASS."
+  - "git diff --check PASS."
+  - "read-only live EIS exact-number lookup succeeded; detail customer extraction clean; search-card customer pollution reproduced."
+  - "PR #99 evidence head eb280a6bc78a3eade69e494a2c7f3439c2b1a960: GitHub CI run 35469522448 SUCCESS 9/9."
+resume_instruction: Completed. Require current final-bookkeeping PR #99 exact-head CI green, then guarded-auto-merge under renewed AM-4 as automatic merge 2/10. The successor candidate remains candidate_not_admitted.
+updated_at: '2026-09-20T00:22:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
+  lease_until: null

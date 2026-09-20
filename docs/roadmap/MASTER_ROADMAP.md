@@ -173,7 +173,7 @@ The table below is a compact view grouped by product block. The machine-readable
 |---|---:|---|---|---:|---|---|
 | `ARV-050` | 0 | Готово | P0 | 100% | R8: изолированное рабочее пространство клиентского пилота | needs_revalidation |
 | `ARV-073` | 0 | Готово | P0 | 100% | R9 Operational Hardening: завершить инженерную отладку и заморозить ядро | id_conflict |
-| `ARV-002` | 0 | Базовый контур готов | P0 | 90% | Стабильный live end-to-end pipeline без скрытых fallback | needs_revalidation |
+| `ARV-002` | 0 | Базовый контур готов | P0 | 90% | Стабильный live end-to-end pipeline без скрытых fallback | revalidated_residual_gap |
 | `ARV-003` | 2 | В работе | P0 | 97% | R10.1: production LLM-анализ с evidence map и confidence | accepted_evidence_present_needs_status_revalidation |
 | `ARV-001` | 3 | Запланировано | P0 | 85% | R10.2: Quality & Product Readiness — golden report и release gates | completed_governed |
 | `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation |
@@ -299,6 +299,12 @@ The table below is a compact view grouped by product block. The machine-readable
 `OWNER-CONTINUOUS-ROADMAP-2026-09-18` keeps the hourly executor work-conserving when the admitted queue becomes empty. Selection is deterministic from the continuation matrix in document order, one bounded item per run. Existing bounded tasks are preferred; otherwise only an evidence/revalidation slice may be materialized. This does **not** authorize product-priority invention, new material architecture, authority downgrades, production/external effects, or bypass of REVIEW/HUMAN/OWNER gates.
 
 The first materialized continuation slice is `ARV-002-REVALIDATION-001` under `CORE-QUALITY-PILOT`. The 2026-09-18 watchdog policy change is material for Company AM-4 review purposes, so future automatic merges fail closed to REVIEW until attributable Owner renewal; implementation/testing/review-ready PR preparation may continue.
+
+## ARV-002 revalidation — 2026-09-19
+
+Current exact-number public EIS lookup is live and the source-to-handoff/source-graph/recovery regressions are green. The revalidation did **not** mark ARV-002 fully done: the current EIS search-card parser can populate `customer_name` with page JavaScript via an overly broad fallback, while the stricter common-info detail extractor returns the correct explicit customer.
+
+Evidence and the single bounded, non-admitted successor candidate `ARV-002-LIVE-CUSTOMER-PARSE-001` are recorded in `docs/roadmap/ARV-002_REVALIDATION_2026-09-19.md` and the ARV-002 reconciliation overlay. No implementation authority is inferred from candidate status.
 
 ## Executor rule
 
