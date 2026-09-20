@@ -1102,15 +1102,16 @@ legacy_registry:
     comment: Кодовая часть почти закрыта; оставшийся gate зависит от локального llama/provider runtime, а не от нового repository scope.
     dependencies_raw: BASE-018
   reconciliation:
-    state: accepted_evidence_present_needs_status_revalidation
-    verified_at: '2026-09-14'
+    state: confirmed_done
+    verified_at: '2026-09-20'
     evidence:
+    - path: docs/local/ARV-001_MAC_MINI_OPENCODE.md
+      detail: Repository-owned downstream acceptance runbook records ARV-003 Gate 5 accepted in issue #68 on merged commit f96e3588f2e1f61f19d54e44594debfc81a745bf and the sanitized ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE result.
     - path: docs/local/ARV-096_EIS_DOCUMENT_SET_ACCEPTANCE.md
-      detail: Current runbook explicitly protects the accepted ARV-003 bundle.
-    - commit: f96e358
-      detail: ARV-003 controlled runner metadata contract hardening after R10.1 work.
-    notes: Repository contains multiple references to an accepted ARV-003 bundle, while the older R10.1 backlog file still shows Gate 5 pending.
-      Preserve both facts and do not silently declare full closure without reconciling the stale status document.
+      detail: Current runbook explicitly protects the accepted ARV-003 bundle from mutation or provider reinvocation.
+    - commit: f96e3588f2e1f61f19d54e44594debfc81a745bf
+      detail: Final merged ARV-003 controlled-runner metadata hardening commit referenced by the accepted Gate 5 evidence.
+    notes: Gate 5 acceptance is now reconciled into the stale R10.1 backlog status. Historical Gate 1-4 and pre-acceptance text remains preserved; no provider/runtime rerun or accepted-bundle mutation was performed by revalidation.
 - id: ARV-001
   legacy_snapshot:
     queue_order: 3
