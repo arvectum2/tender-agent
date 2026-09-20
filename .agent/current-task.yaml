@@ -1,45 +1,35 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: ARV-002-REVALIDATION-001
+task_id: ARV-010-REVALIDATION-001
 authority: AUTO
-goal: Revalidate the canonical ARV-002 live end-to-end pipeline and hidden-fallback boundary against current main, merged evidence and deterministic tests, then update only reconciliation evidence and one bounded successor candidate if a source-traceable residual gap is proven.
+goal: Revalidate canonical ARV-010 production observability, safety and recovery status against current main and merged repository evidence, then record only evidence-backed closure/residual scope.
 definition_of_done:
-- Read the immutable ARV-002 legacy snapshot and current reconciliation/navigation constraints.
-- Verify current live exact-number/source-to-analysis pipeline and persistence/recovery path with repository-owned evidence and deterministic tests.
-- Verify hidden/demo fallback protections remain fail-closed; no production/external/procurement mutation.
-- Update only ARV-002 reconciliation evidence/status and any source-traceable bounded residual candidate.
-- Preserve REVIEW/HUMAN/OWNER gates and AM-4 hard stops.
-- Relevant checks and exact-head CI pass; guarded AUTO merge only if all renewed AM-4 gates remain satisfied.
+- Read immutable ARV-010 snapshot and current executor/roadmap constraints.
+- Verify storage guardrails, operational observability, backup/recovery freshness signals and incident guidance from current repository-owned code/tests/docs.
+- Determine whether ARV-010 is already satisfied, partially satisfied, or has a concrete source-traceable repository-only residual.
+- Update only the reconciliation overlay/evidence and at most one bounded successor candidate if directly traceable to ARV-010 next_result.
+- No production/network/provider mutation, third-party telemetry activation, external notification delivery or secret access.
+- Relevant deterministic tests/checks and exact-head CI pass; guarded AUTO merge only under current queue and renewed AM-4 gates.
 completed:
-- Verified PR #98 final exact head 0a6dece0a7051d57fb8363f5a19420a0d6303127 passed CI run 35465589127 SUCCESS 9/9 and was merged as 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b; renewal reconciliation is complete and counts as automatic merge 1/10.
-- Selected canonical queue order 100 ARV-002-REVALIDATION-001, currently AUTO/auto_merge.
-- Read immutable ARV-002 snapshot: R7 proved live exact-number flow, production source graph, persistent artifacts, recovery and controlled-pilot deployment; next result is release/integration regression baseline.
-- Focused current-main live-path/source-graph/no-fallback suite passed: 75 tests.
-- Additional persistence/recovery suite passed: 32 passed, 12 environment/profile skips.
-- uv run make check PASS; git diff --check PASS.
-- Public read-only exact-number EIS lookup for 0888500000226000399 succeeded with parsed/success_with_results, one public_eis_html_44fz card and no supplier relevance attachment.
-- Public common-info detail extraction for the same notice returned a clean explicit customer, coherent dates/deadline and price.
-- Revalidation exposed one concrete residual: search-result-card customer_name can be polluted by EIS page JavaScript through an overly broad fallback regex, although the stricter detail extractor self-corrects later.
-- Added evidence document and reconciliation overlay state revalidated_residual_gap.
-- Recorded one bounded successor candidate ARV-002-LIVE-CUSTOMER-PARSE-001 as candidate_not_admitted; no implementation authority inferred.
-current: ARV-002 revalidation is complete to its bounded Definition of Done. PR #99 first evidence head is exact-head green; final bookkeeping head must re-earn exact-head green before guarded AUTO merge.
+- Canonical main 2a5e03bac8c4a6a821152c31599164e631d1e0a7 verified after merged ARV-002 revalidation.
+- Deterministic continuation skipped CORE-QUALITY-PILOT items already represented by open PRs, dependency-blocked items and expert/HUMAN gates, then selected first eligible PRODUCTION-RUNTIME historical item ARV-010.
+- ARV-010 dependencies are satisfied for repository-side revalidation: BASE-018 durable R9 baseline and merged ARV-008 worker transport v1.
+current: ARV-010 repository revalidation is complete. Earlier PR #100 evidence head 37bfc31ae51c43edf8714ed83ecff5f066ddfadd passed CI run 35491176644; later bookkeeping head 7e3d482f4394cf5ab7bdf44b6658af2e99419205 failed only because the AM-4 counter assertion was stale (policy=3, test=2). This rebuilt head is based on current main after ARV-062, reconciles the counter to 5/10, and must re-earn exact-head green.
 pending: []
-last_verified_commit: eb280a6bc78a3eade69e494a2c7f3439c2b1a960
+last_verified_commit: 79754ce83cab50c2a47038a0ff2fc4e3d19f01a4
 test_results:
-- "75 focused ARV-002 live-path/source-graph/no-fallback tests passed."
-- "32 persistence/recovery tests passed; 12 environment/profile skips."
+- "Focused/relevant local suite: 113 passed, 1 Docker-backed acceptance deselected after confirming local daemon unavailable."
+- "Current-main PR #99 CI run 35470123590: SUCCESS 9/9, covering full GitHub CI environment."
 - "uv run make check: PASS."
-- "git diff --check: PASS."
-- "read-only live EIS exact-number lookup: parsed/success_with_results, returned_count=1; detail customer extraction clean."
-- "PR #99 evidence head eb280a6bc78a3eade69e494a2c7f3439c2b1a960: GitHub CI run 35469522448 SUCCESS 9/9."
-updated_at: '2026-09-20T00:22:00+03:00'
-resume_instruction: Completed. Require the current final-bookkeeping PR #99 exact head to pass all required CI, then guarded-auto-merge under renewed AM-4 as automatic merge 2/10. Do not implement the non-admitted successor candidate unless it is separately admitted.
+- "PR #100 head 37bfc31ae51c43edf8714ed83ecff5f066ddfadd: CI run 35491176644 SUCCESS; Mirror to GitVerse run 35491174688 SUCCESS."\n- "PR #100 bookkeeping head 7e3d482f4394cf5ab7bdf44b6658af2e99419205: CI run 35495895435 failed only in test_watchdog_continuation_policy because policy counter 3 and stale assertion 2 diverged; no product/runtime regression."
+updated_at: '2026-09-20T10:52:00+03:00'
+resume_instruction: Completed. Require this rebuilt PR #100 exact-head required CI green, then guarded-auto-merge under renewed AM-4 as automatic merge 5/10 if all review/mergeability/scope gates remain satisfied.
 execution:
   claimed_by: null
   execution_id: null
   branch: null
-  base_commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
+    base_commit: 79754ce83cab50c2a47038a0ff2fc4e3d19f01a4
   issue: null
   manual_override: false
   lease_until: null

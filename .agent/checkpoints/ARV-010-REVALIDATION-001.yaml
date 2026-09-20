@@ -1,0 +1,30 @@
+task_id: ARV-010-REVALIDATION-001
+status: completed
+authority: AUTO
+source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+goal: Revalidate ARV-010 production observability, safety and recovery umbrella against current repository evidence without production or external effects.
+definition_of_done:
+  - Immutable ARV-010 snapshot/current constraints read.
+  - Storage guardrails, operational metrics, backup/recovery freshness signals and incident guidance verified from repository-owned code/tests/docs.
+  - Current reconciliation state updated without rewriting legacy snapshot.
+  - At most one bounded successor candidate only if directly traceable to ARV-010 next_result.
+  - No production/network/provider mutation, telemetry activation, external delivery or secret access.
+  - Relevant tests/checks and exact-head CI green.
+completed:
+  - Selected as first eligible unresolved PRODUCTION-RUNTIME historical item after deterministic skips in CORE-QUALITY-PILOT and completed ARV-008.
+  - Current main verified at 2a5e03bac8c4a6a821152c31599164e631d1e0a7.
+current: Repository revalidation complete. Earlier evidence head 37bfc31ae51c43edf8714ed83ecff5f066ddfadd passed CI 35491176644. Bookkeeping head 7e3d482f4394cf5ab7bdf44b6658af2e99419205 exposed only a stale AM-4 counter assertion (policy=3/test=2). Rebuilt on current main after ARV-062 with counter/test reconciled to 5/10; exact-head CI is the remaining gate.
+remaining: []
+last_verified_commit: 79754ce83cab50c2a47038a0ff2fc4e3d19f01a4
+test_results:
+  - "113 focused/relevant tests passed; 1 Docker-backed R9 acceptance deselected after local Docker daemon unavailability was isolated."
+  - "Current-main PR #99 CI run 35470123590 SUCCESS 9/9."
+  - "uv run make check PASS."\n  - "PR #100 bookkeeping head 7e3d482f4394cf5ab7bdf44b6658af2e99419205 CI run 35495895435 failed only on stale AM-4 counter assertion (policy=3/test=2); no runtime/product regression."
+resume_instruction: Completed. Require rebuilt exact-head CI green, then guarded-auto-merge PR #100 under renewed AM-4 as automatic merge 5/10 if all repository gates remain satisfied.
+updated_at: '2026-09-20T10:52:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  branch: null
+    base_commit: 79754ce83cab50c2a47038a0ff2fc4e3d19f01a4
+  lease_until: null

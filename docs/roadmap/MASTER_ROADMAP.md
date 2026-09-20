@@ -190,7 +190,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-007` | 0 | Готово | P0 | 100% | Redis как очередь, lock, cache и rate-limit слой | confirmed_done |
 | `ARV-075` | 1 | Запланировано | P0 | 0% | Аудит и разгрузка системного диска Mac mini: удалить мусор и перенести данные Арвектум на внешний SSD | needs_revalidation |
 | `ARV-008` | 6 | Запланировано | P0 | 25% | Фоновые задания и workers с прогрессом и повторным запуском | needs_revalidation |
-| `ARV-010` | 9 | В работе | P0 | 93% | Production-наблюдаемость, безопасность и восстановление | in_progress |
+| `ARV-010` | 9 | В работе | P0 | 93% | Production-наблюдаемость, безопасность и восстановление | confirmed_done |
 | `ARV-006` | 15 | Запланировано | P0 | 10% | Добавить полноценную работу с 223-ФЗ | needs_revalidation |
 | `ARV-074` | 16 | Исследование | P1 | 5% | ODS/Hermes-инфраструктура Mac mini и устранение дублирующихся локальных сервисов | id_conflict |
 | `ARV-058` | 17 | Запланировано | P1 | 10% | Возобновляемая синхронизация, локальный кэш и идемпотентный импорт | needs_revalidation |
@@ -305,6 +305,12 @@ The first materialized continuation slice is `ARV-002-REVALIDATION-001` under `C
 Current exact-number public EIS lookup is live and the source-to-handoff/source-graph/recovery regressions are green. The revalidation did **not** mark ARV-002 fully done: the current EIS search-card parser can populate `customer_name` with page JavaScript via an overly broad fallback, while the stricter common-info detail extractor returns the correct explicit customer.
 
 Evidence and the single bounded, non-admitted successor candidate `ARV-002-LIVE-CUSTOMER-PARSE-001` are recorded in `docs/roadmap/ARV-002_REVALIDATION_2026-09-19.md` and the ARV-002 reconciliation overlay. No implementation authority is inferred from candidate status.
+
+## ARV-010 revalidation — 2026-09-20
+
+The historical ARV-010 storage guardrails were followed by merged `OPS-OBSERVABILITY-V1` / PR #76. Current main now has a versioned `/api/ops/observability` snapshot for queue age/depth, ingestion/document failures, storage guard state, backup freshness and recent worker failures, with deterministic warning/critical/unknown semantics plus a non-destructive incident runbook.
+
+The reconciliation overlay marks ARV-010 `confirmed_done` for its repository-side umbrella. This does **not** claim live external notifications, third-party telemetry deployment, production mutation or provider-side monitoring; those remain separately gated scopes.
 
 ## Executor rule
 

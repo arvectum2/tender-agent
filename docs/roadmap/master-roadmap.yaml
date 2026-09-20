@@ -1311,13 +1311,21 @@ legacy_registry:
     comment: Storage guardrails завершены; umbrella ARV-010 остаётся открытой из-за monitoring и эксплуатационных алертов.
     dependencies_raw: BASE-018, ARV-008
   reconciliation:
-    state: in_progress
-    verified_at: '2026-09-14'
+    state: confirmed_done
+    verified_at: '2026-09-20'
     evidence:
     - commit: da7b078
-      detail: 'ARV-010 storage capacity ingestion guardrails (PR #35)'
-    notes: Implementation exists, but the historical umbrella explicitly retained monitoring/alerting follow-up; no later closure evidence was
-      asserted here.
+      detail: 'ARV-010 storage capacity ingestion guardrails (PR #35): warning/critical/protected thresholds and fail-closed ingestion enforcement.'
+    - commit: c335c60fa92742d7c464739e057df7eac89fa191
+      detail: 'OPS-OBSERVABILITY-V1 / PR #76 merged: versioned machine-readable queue, ingestion, storage, backup and worker-error observability with deterministic warning/critical states.'
+    - path: docs/ops/OPS_OBSERVABILITY_RUNBOOK.md
+      detail: Non-destructive incident diagnosis/recovery guidance covers stale queue, ingestion/document failures, storage guard, backup state and unavailable dependencies.
+    - path: tests/test_ops_observability_v1.py
+      detail: Deterministic regressions cover healthy/degraded/stale queue, storage protection, backup freshness and unavailable dependency states.
+    notes: >-
+      Later merged OPS-OBSERVABILITY-V1 evidence closes the historical repository-side monitoring/alert-state, backup-freshness and incident-runbook follow-up.
+      Warning/critical status and machine-readable reasons are internal operational alert signals. Live external notification delivery or third-party telemetry
+      is intentionally not claimed here and remains governed by separate delivery/production gates.
 - id: ARV-051
   legacy_snapshot:
     queue_order: 10
