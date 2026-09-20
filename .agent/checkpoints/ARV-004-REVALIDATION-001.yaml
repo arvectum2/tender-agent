@@ -16,19 +16,31 @@ definition_of_done:
 completed:
   - Canonical continuation order checked: CORE-QUALITY-PILOT follows ARV-003 with ARV-004.
   - Historical roadmap scope is explicit: R10.3 production-loop Hermes and customer-scoped feedback, with the desired result to bind Hermes feedback/memory to Customer/Project/Case and immutable review without changing frozen R9 contracts.
-  - Historical dependencies are ARV-003 and ARV-001; current main now reconciles ARV-003 as confirmed_done and ARV-001 as completed_governed.
-  - Rechecked current default-branch repository search after ARV-003 closure for Hermes, PilotFeedback, and customer/project/case feedback-memory bindings; no indexed implementation evidence was returned. Search absence is not treated as proof of missing implementation.
-  - The stale dependency blocker recorded on 2026-09-19 is therefore cleared, but the standard REVALIDATION slice still lacks sufficient repository-owned evidence to declare ARV-004 satisfied or to infer an implementation architecture.
+  - Historical dependencies ARV-003 and ARV-001 are satisfied on current main.
+  - Direct path inspection found the current Hermes implementation on main even though default-branch code search returned no Hermes hits: src/modules/hermes_agent/models.py and service.py are present.
+  - Current AgentMemory, TenderAnalysisFeedback, TenderEvalCase, DocumentEvidenceSpan and AnalysisQualityCheck persistence is tender/analysis scoped; no Customer/Project/Case identity columns are present in those Hermes models.
+  - save_feedback_as_memory persists feedback plus AgentMemory using source_tender_id/source_analysis_id; search_memory/load_relevant_memory filter factual feedback by tender_id. This proves a concrete residual against the canonical Customer/Project/Case-scoped next_result without inferring a new architecture.
+  - Existing Hermes feedback is not discarded: the current implementation already has feedback-to-memory, eval-case creation, quality gates, evidence spans and feedback reflection. The residual is specifically the missing canonical business-scope binding plus immutable review requirement.
   - No production/provider/customer action was invoked and no HUMAN/REVIEW evidence was inferred.
-current: ARV-004 dependencies are canonically satisfied, but repository-only inspection still provides insufficient evidence to declare the historical Hermes/customer-scoped feedback result satisfied. Under the standard REVALIDATION slice, implementation cannot be invented from search absence.
+current: ARV-004 is not satisfied. Repository-owned code proves an existing tender-scoped Hermes feedback/memory loop, while the canonical R10.3 next_result requires Customer/Project/Case binding and immutable review. The standard REVALIDATION slice may record that residual but may not invent the material data model or review architecture.
 remaining:
-  - Locate concrete repository-owned Hermes/feedback implementation evidence or an already-defined bounded task that maps the canonical Customer/Project/Case plus immutable-review result.
-  - If concrete repository evidence proves a bounded residual, record at most one source-traceable successor candidate; otherwise remain blocked rather than invent architecture or acceptance criteria.
-  - Rebase/refresh this stale branch before any merge; current main contains later canonical reconciliation and authority state.
-resume_instruction: ARV-003 is now satisfied. On the next run, inspect concrete repository-owned Hermes/feedback artifacts or an already-defined bounded task once. If none exists, keep this revalidation blocked for insufficient evidence, release it, and continue the next deterministic independent continuation item under the active Owner directive. Do not infer architecture from search absence.
-updated_at: '2026-09-20T23:03:00+03:00'
+  - Keep this revalidation blocked rather than implementing a guessed Customer/Project/Case schema or immutable-review mechanism.
+  - Refresh/rebase this stale branch before any merge; current main contains later canonical reconciliation and authority state.
+  - Release ARV-004 and continue the next deterministic independent continuation item under the active Owner directive.
+successor_candidate:
+  task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
+  status: candidate_not_admitted
+  title: Bind Hermes feedback/memory to canonical Customer/Project/Case scope with immutable review
+  source: docs/roadmap/master-roadmap.yaml ARV-004 next_result
+  scope: Preserve the existing Hermes tender-scoped feedback/memory loop and frozen R9 contracts while adding only the canonical Customer/Project/Case binding and immutable review behavior once the repository provides an already-defined bounded model/acceptance contract or Owner/REVIEW authority resolves the material design choices.
+  constraints:
+    - Do not infer or create a parallel Customer/Project/Case authority model.
+    - Do not weaken tender evidence isolation or global-memory fail-closed behavior.
+    - Do not mutate production/provider/customer state or frozen benchmark truth.
+resume_instruction: Concrete repository evidence now proves the ARV-004 residual. Do not repeat Hermes discovery. Keep this revalidation blocked/released until an already-defined bounded Customer/Project/Case plus immutable-review contract exists; continue the next deterministic independent continuation item under the active Owner directive.
+updated_at: '2026-09-21T01:08:00+03:00'
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260920T225800+0300
+  execution_id: watchdog-20260921T010115+0300
   lease_until: null
   external_effects: none
