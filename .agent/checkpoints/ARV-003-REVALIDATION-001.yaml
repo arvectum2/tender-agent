@@ -1,0 +1,35 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-003-REVALIDATION-001
+status: blocked
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-003-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-003 R10.1 production LLM analysis status against current repository-owned evidence without running provider/production effects.
+definition_of_done:
+  - Reconcile the selected historical item against current main, merged PRs, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is already complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate; do not invent architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and all production/provider/external-effect hard stops.
+completed:
+  - Canonical continuation order checked: CORE-QUALITY-PILOT follows ARV-002 with ARV-003.
+  - Historical roadmap evidence reconciled at read-only level: repository-side R10.1 contour was reported at 97% with deterministic batching, compact-safe wire, server-owned fragment grounding, schema-constrained llama.cpp responses, reasoning disabled, sanitized diagnostics and exact-tokenizer-shaped one-call probe.
+  - Located canonical stale status artifact docs/backlog/r10-1-production-llm-analysis.md. It still declares R10_1_GATE_4_VERSIONED_CANONICAL_PRODUCER_COMPLETE_GATE_5_READY and leaves every Gate 5 controlled real-provider checkbox open; Gate 5 is explicitly the first gate allowed to use an approved real credential, endpoint and procurement.
+  - The same backlog defines Gate 5 acceptance as one approved real procurement through production_llm_r10_1 with evidence grounding, deterministic confidence, provider/model/prompt/schema/evidence/policy identities, usage/retry/latency/cost budgets, fail-closed behavior and sanitized runtime evidence, repeated for stable identities/non-conflicting publication.
+  - Current docs/local/ARV-096_EIS_DOCUMENT_SET_ACCEPTANCE.md independently treats an ARV-003 bundle as accepted and immutable for diagnostics, explicitly forbids invoking the controlled R10.1 provider run, and requires provider call count 0 / accepted-bundle mutation count 0 for that acceptance path.
+  - Deterministic repository-owned regression coverage exists under tests/production_llm_analysis, including test_evidence_packet.py, test_grounding.py, test_controlled_evidence.py, test_controlled_preflight.py, test_controlled_preflight_zero_transport.py, test_controlled_runtime_regression.py and test_controlled_transport_boundary.py; current PR #90 exact-head CI run 35414525710 is SUCCESS.
+  - Therefore repository-only evidence proves Gates 2-4 contracts and current regression coverage, but does not prove that the Gate 5 real-provider acceptance described by the canonical backlog was completed. The accepted-bundle reference alone cannot be promoted into fabricated HUMAN/provider acceptance.
+  - PR #89 ARV-002 successor exact head 9dbbe3881a915476e16cc8d5b66976a3594210f0 passed CI run 35407733718 SUCCESS and remains REVIEW-blocked; its lease is released, so independent continuation is permitted.
+current: Revalidation complete to the repository-only boundary. ARV-003 cannot be closed automatically: canonical Gate 5 remains a controlled real-provider acceptance requiring approved credential/provider/procurement evidence, while the current diagnostic runbook expressly forbids executing that run. Preserve the accepted-bundle reference as evidence but do not infer missing approval/provenance.
+remaining:
+  - HUMAN/REVIEW-controlled Gate 5 provenance or an attributable canonical reconciliation explicitly superseding the stale Gate 5 checklist is required before full ARV-003 closure can be claimed.
+  - Automatic merge of this reconciliation remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
+resume_instruction: Do not repeat repository-only ARV-003 validation. Check the REVIEW/HUMAN/Owner gate once on a future run; if unchanged, release this task and continue the next deterministic independent continuation item under the active Owner directive.
+updated_at: '2026-09-19T07:07:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  lease_until: null
+  external_effects: none
