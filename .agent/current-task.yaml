@@ -1,36 +1,33 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-038-REVALIDATION-001
+status: in_progress
+task_id: ARV-015-REVALIDATION-001
 authority: AUTO
-goal: Revalidate historical ARV-038 product-first website scope against the actual Arvectum landing repository and current public-site artifacts without mutating or deploying the site.
+goal: Revalidate ARV-015 supplier business-profile scope against current supplier registry, Decision Core integration and repository-owned tests without external supplier actions or commercial commitments.
 definition_of_done:
-- Identify the actual arvectum.com website repository/surface with read-only evidence.
-- Reconcile which ARV-038 product-first/demo/package elements already exist.
-- Record the concrete residual without inventing pricing, claims, product priority or publication authority.
-- Preserve Owner/commercial gates for pricing/pay-per-analysis/public commitments.
-- Run exact-head repository CI before guarded merge of this reconciliation-only change.
+- Reconcile the historical ARV-015 profile scope against current main and merged supplier-profile evidence.
+- Distinguish reusable supplier registry/counterparty data from the participant business profile needed for personal procurement analysis.
+- Verify which canonical next_result fields are implemented and which concrete repository-only gap remains.
+- Record at most one bounded source-traceable successor candidate; do not invent a parallel profile architecture or product priority.
+- Run deterministic relevant checks and exact-head CI before guarded merge.
 completed:
-- Actual site repository identified read-only as arvectum2/arvectum-landing.
-- README confirms the static B2B site for arvectum.com and public/ website surface.
-- public/site-config.js routes procurementAiAgent to public/services/ai-tender-agent.html.
-- Existing Tender Agent product page already provides product-first positioning, a synthetic demo report, explicit human-decision limitations, work-format/package cards, a 2–4 week RFQ+TKP pilot, closed-contour option and development/support offer.
-- The package section explicitly states "без случайных цен"; no public explicit product price or pay-per-analysis offer was found on the inspected product page.
-- Residual narrowed to Owner/commercial approval for explicit pricing/pay-per-analysis and any material public-claim/publication decisions.
-- No site edit, deployment, pricing publication, production mutation or external communication was performed.
-current: Bounded ARV-038 revalidation is complete. The underlying product item remains REVIEW-gated only for explicit pricing/pay-per-analysis and material public-claim/publication decisions.
-pending: []
-last_verified_commit: a445f93d762de0877f507acaef6f986c736fe390
-test_results:
-- 'Read-only site repository evidence: arvectum2/arvectum-landing README, public/site-config.js and public/services/ai-tender-agent.html.'
-- 'Prior checkpoint-only ARV-038 evidence heads passed GitHub CI through run 35552747466; replacement closure branch must re-earn exact-head CI.'
-updated_at: '2026-09-21T12:58:00+03:00'
-resume_instruction: Completed revalidation. Do not invent or publish prices/pay-per-analysis or materially change public claims without Owner/commercial approval. Resume only a newly executable bounded item under current gates.
+- Fresh canonical main a4b1a5b3f4787398f0604ddce9323947f0e1da19 verified after ARV-038 revalidation merge.
+- Deterministic continuation skips blocked/gated CORE-QUALITY and earlier PRODUCTION-RUNTIME items; ARV-075 was resumed read-only and remains local-privacy/backup blocked.
+- ARV-015 is the next independent COMMERCIAL-WORKFLOW historical item; its sole ARV-003 dependency is confirmed done.
+current: Inspecting current supplier registry, supplier-profile Decision Core binding and historical supplier-profile artifacts against the ARV-015 next_result.
+pending:
+- Inventory current repository fields and tests.
+- Reconcile roadmap evidence/status.
+- Run exact-head CI and guarded merge if gates remain satisfied.
+last_verified_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
+test_results: []
+updated_at: '2026-09-21T15:35:00+03:00'
+resume_instruction: Continue repository-only ARV-015 revalidation from current supplier registry and Decision Core evidence. Do not create a parallel supplier-profile system, send supplier communications, mutate production, or make commercial/legal decisions.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: a445f93d762de0877f507acaef6f986c736fe390
+  claimed_by: ChatGPT
+  execution_id: manual-20260921T1535+0300
+  branch: agent/arv-015-revalidation-001
+  base_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
   issue: null
-  manual_override: false
-  lease_until: null
+  manual_override: true
+  lease_until: '2026-09-21T17:25:00+03:00'
