@@ -1,26 +1,25 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: review
 task_id: ARV-004-REVALIDATION-001
 authority: AUTO
 goal: Revalidate historical Hermes adapter and pilot feedback loop scope against current repository evidence without external model calls, production effects, or invented architecture.
 definition_of_done:
-- Reconcile ARV-004 historical scope against current main and repository-owned evidence.
+- Reconcile ARV-004 against current repository evidence.
 - Establish whether Hermes adapter and pilot feedback-loop artifacts remain present, superseded, or absent.
-- Run deterministic repository-only checks available for the bounded slice.
-- Record at most one bounded source-traceable successor candidate; do not invent model/provider architecture or external integration scope.
-current: ARV-004 repository-only revalidation is in progress on an isolated branch.
+- Record at most one bounded source-traceable successor candidate without inventing architecture.
+current: Repository-only ARV-004 revalidation is complete on the branch; current main exposes no Hermes/HermesClient or pilot-feedback implementation attributable to ARV-004, so reconstruction is not admitted by inference.
 pending:
-- Record revalidation evidence and checkpoint.
-- Open review-gated PR; AM-4 is already review-due at 10/10 so do not auto-merge.
+- Exact-head CI after PR creation.
+- Owner AM-4 renewal/review before any automatic merge.
 last_verified_commit: b0b99c37963ebcc177a839a7154f08f9eb49cf46
-updated_at: '2026-09-22T02:15:00+03:00'
-resume_instruction: Continue ARV-004-REVALIDATION-001 from branch evidence; do not make external model calls or implement new Hermes/provider architecture. Preserve AM-4 REVIEW gate.
+updated_at: '2026-09-22T02:21:00+03:00'
+resume_instruction: Check exact-head CI once. If green, preserve this PR as review-ready; do not auto-merge while AM-4 remains REVIEW-due at 10/10 and do not implement ARV-004-HERMES-FEEDBACK-CONTRACT-001 unless separately admitted.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260922T020245+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/arv-004-revalidation-20260922
   base_commit: b0b99c37963ebcc177a839a7154f08f9eb49cf46
   issue: 57
   manual_override: false
-  lease_until: '2026-09-22T03:15:00+03:00'
+  lease_until: null
