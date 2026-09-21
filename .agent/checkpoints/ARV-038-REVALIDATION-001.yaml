@@ -28,8 +28,10 @@ revalidation_evidence:
   - Checkpoint-refresh head 930547be9b18511abf82fa14e3111b31c2eceadc passed exact-head CI run 35546204040 SUCCESS.
   - Evidence-persistence head 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb passed exact-head CI run 35552747466 SUCCESS.
   - The former AM-4 renewal blocker is stale: .agent/owner-directive.yaml records attributable 2026-09-19 Owner renewal merged in Company as 57ef73e468122ac714d28d49bfd176ed83588cab. This does not authorize public/commercial claims or publication.
-  - The former unknown-site-surface blocker is resolved by read-only repository evidence. This bounded slice still cannot prove ARV-038 complete because public packages/pricing/pay-per-analysis/demo claims and publication choices remain Owner/commercial gated; no site mutation or deployment is performed here.
-current: Read-only evidence has now identified the real arvectum.com website surface and existing AI Tender Agent product page. Exact-head CI through evidence-persistence head 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb is green and Company AM-4 renewal is satisfied; the remaining blocker is Owner/commercial authority for public packages, pricing/pay-per-analysis, demo/public claims and publication, plus branch refresh before any merge.
+  - Read-only inspection of public/services/ai-tender-agent.html shows ARV-038 already has a product-first Tender Agent page, synthetic demo report, explicit human-decision limitation, four work-format/package cards, a 2–4 week RFQ+TKP pilot, closed-contour option and development/support offer.
+  - The package section intentionally says "без случайных цен"; no public product price or pay-per-analysis offer was found in the inspected product page. Therefore the concrete remaining ARV-038 gap is narrowed to approved commercial pricing/pay-per-analysis/publication decisions rather than missing site/demo/package structure.
+  - The former unknown-site-surface blocker is resolved by read-only repository evidence. This bounded slice still cannot prove ARV-038 complete because publishing or materially changing commercial pricing/pay-per-analysis and related public commitments remains Owner/commercial gated; no site mutation or deployment is performed here.
+current: Read-only evidence now shows the existing arvectum.com Tender Agent page already covers product positioning, demo report, packages/formats, pilot, closed contour and human-decision limitations. The concrete residual is narrowed to Owner/commercial approval for explicit pricing/pay-per-analysis and any material public-claim changes, plus branch refresh before any merge.
 pending:
   - Owner/commercial approval before publishing or materially changing pricing, packages, pay-per-analysis, demo claims or other public commitments.
   - If separately authorized, prepare bounded site-repository changes in arvectum2/arvectum-landing without deploying them automatically.
@@ -40,4 +42,4 @@ execution:
   execution_id: watchdog-20260921T045956+0300
   manual_override: false
   lease_until: null
-updated_at: '2026-09-21T12:49:00+03:00'
+updated_at: '2026-09-21T12:54:00+03:00'
