@@ -1669,10 +1669,33 @@ legacy_registry:
     comment: Профиль должен одновременно питать matching, qualification, Q&A и генерацию заявки.
     dependencies_raw: ARV-003
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-21'
+    evidence:
+    - path: src/modules/supplier_registry/models.py
+      detail: M-006 persists reusable supplier identity, status, external refs, contacts and tags, but not the full ARV-015 operator/business constraint set.
+    - path: docs/product/templates/Tender_Operator_Profile_Template.md
+      detail: Existing RFQ-first operator profile contract already defines categories, regions, NMCK, VAT, financial/risk constraints, licenses/SRO/experience and supplier-search preferences.
+    - path: scripts/run_tender_operator_pilot.py
+      detail: Current _read_operator_profile only returns presence booleans, line count and preview; it does not parse the defined profile fields into reusable structured values.
+    - path: src/modules/tender_operator_agent_demo/decision_core.py
+      detail: Decision Core already accepts structured supplier_profile input and consumes configured price-range criteria without permitting external procurement action.
+    - path: docs/roadmap/ARV-015_REVALIDATION_2026-09-21.md
+      detail: Full evidence matrix and bounded non-admitted successor candidate.
+    notes: >-
+      ARV-015 is partially implemented: reusable supplier identity and Decision Core profile binding exist, and a richer RFQ-first operator-profile contract is documented/tested.
+      The concrete gap is structured ingestion/reuse of that existing business-profile contract; brands, 1C nomenclature and corporate-document persistence remain later residuals.
+    successor_candidate:
+      task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+      status: candidate_not_admitted
+      title: Structured RFQ-first operator profile ingestion
+      scope: Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.
+      definition_of_done:
+      - Existing synthetic operator_profile.md deterministically yields structured categories, regions, NMCK range, VAT, financial/risk constraints and license/SRO/experience values.
+      - Missing or malformed fields remain unknown/null rather than inferred.
+      - Existing Decision Core supplier-profile/price-range behavior consumes the structured profile without changing external-action safety.
+      - RFQ-first no-fixed-catalog/no-known-price assumptions remain covered.
+      - Relevant tests and exact-head CI pass; no external/procurement/production/commercial effect.
 - id: ARV-064
   legacy_snapshot:
     queue_order: 23
