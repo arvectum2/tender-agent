@@ -394,7 +394,7 @@ items:
   roadmap_scope:
   - ARV-038
   dependencies:
-  - DECISION-CORE-V1-001
+  - ARV-018
   - ARV-042
   executor_scope: Reconcile historical ARV-038 against current public-site repository evidence only. Do not edit/deploy the website, invent prices/pay-per-analysis, publish claims, or make commercial commitments. Preserve Owner/commercial publication gates.
   done_gate: 'Satisfied for revalidation: actual arvectum.com site repository identified; existing Tender Agent page already covers product-first positioning, demo report, work-format/package cards, pilot, closed-contour and human-decision limitations. Concrete residual is explicit pricing/pay-per-analysis and material public-claim/publication approval, which remains REVIEW/Owner-commercial gated. No site mutation or external effect.'
