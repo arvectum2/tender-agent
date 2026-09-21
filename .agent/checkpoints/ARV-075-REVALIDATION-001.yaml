@@ -19,14 +19,16 @@ completed:
   - Canonical roadmap records ARV-009 confirmed done and the 4 TB external SSD as the pilot storage baseline.
   - Historical ARV-075 requires a current Mac mini baseline, DELETE/MOVE/KEEP classification, backup before destructive work, then Git/Docker/PostgreSQL/tests/free-space verification after any approved move/delete.
   - Repository evidence alone cannot establish current Mac mini free space, largest directories, duplicate clones/worktrees, Docker layers, caches/logs, active database placement, or whether a safe backup exists.
+  - Exact-head CI for prior head e181295bf602cddfc822e6b0b2e27716ead18dbd passed: CI run 35430853641 SUCCESS; mirror run 35430847801 SUCCESS.
+  - Canonical executor policy now records attributable Owner AM-4 renewal on 2026-09-19 (decision merge 57ef73e468122ac714d28d49bfd176ed83588cab), so the checkpoint's former pending-renewal statement is stale and removed. This does not authorize local destructive work.
   - No Mac mini filesystem, production service, database, Docker runtime, secrets, or external system was accessed or mutated in this revalidation.
 current: Repository-only revalidation is complete to its safe boundary. ARV-075 remains dependent on fresh read-only local Mac mini storage evidence before any DELETE/MOVE plan can be evaluated; destructive work is not authorized by this slice.
 remaining:
   - Obtain fresh read-only Mac mini storage inventory under applicable local-computer authority: free space, largest directories, worktrees/clones, Docker usage, caches/logs/exports/archives, active PostgreSQL/data paths and backup state.
   - Classify candidate paths as DELETE/MOVE/KEEP only from that evidence; do not delete or move anything without separately applicable authority and verified backup/rollback.
-  - Automatic merge remains REVIEW-gated by the 2026-09-18 material executor-policy change pending attributable Owner AM-4 renewal.
-resume_instruction: Do not infer local disk state from repository history. Treat repository-only ARV-075 revalidation as complete and local-evidence blocked. On the next invocation check this PR exact-head CI once, then continue the next independent eligible historical item under the active Owner directive if ARV-075 still lacks fresh local evidence.
-updated_at: '2026-09-19T11:10:00+03:00'
+  - Rebase/reconcile this stale branch against current main before any merge consideration; exact-head CI must be re-earned after any branch update.
+resume_instruction: Do not infer local disk state from repository history and do not repeat the verified prior-head CI check. Treat repository-only ARV-075 revalidation as complete and local-evidence blocked. Reconcile this stale branch with current main only when safe; otherwise continue the next independent eligible historical item under the active Owner directive.
+updated_at: '2026-09-21T15:05:00+03:00'
 execution:
   claimed_by: null
   execution_id: null
