@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-015-REVALIDATION-001
 historical_item: ARV-015
-status: in_progress
+status: completed
 authority: AUTO
 source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
 base_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
@@ -17,17 +17,22 @@ definition_of_done:
 completed:
   - Canonical dependency ARV-003 is confirmed done.
   - ARV-015 deterministically selected as the next independent eligible COMMERCIAL-WORKFLOW historical item.
-current: Inspect current supplier registry and Decision Core supplier-profile integration.
+  - M-006 supplier registry verified as reusable identity/contact/tag foundation.
+  - Existing Tender Operator Profile Template verified as the richer RFQ-first business-profile contract.
+  - _read_operator_profile verified to be shallow presence/preview parsing only.
+  - Existing Decision Core verified to accept structured supplier_profile and price-range criteria.
+  - Roadmap reconciliation updated to revalidated_residual_gap.
+  - One bounded non-admitted successor candidate recorded: ARV-015-OPERATOR-PROFILE-PARSER-001.
+current: Revalidation complete; structured operator-profile ingestion is the proven residual.
 remaining:
-  - Inspect current code/docs/tests.
-  - Reconcile roadmap status and residual.
-  - Validate and merge if all AUTO/AM-4 gates are satisfied.
+  - Exact-head CI and guarded merge only.
 last_verified_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
-test_results: []
-resume_instruction: Continue from current supplier registry and Decision Core evidence; do not invent a new profile subsystem.
-updated_at: '2026-09-21T15:35:00+03:00'
+test_results:
+  - 'Repository evidence inspection complete; exact-head GitHub CI pending.'
+resume_instruction: Require exact-head CI then guarded-auto-merge if gates remain satisfied. Do not implement ARV-015-OPERATOR-PROFILE-PARSER-001 until separately admitted.
+updated_at: '2026-09-21T15:48:00+03:00'
 execution:
-  claimed_by: ChatGPT
-  execution_id: manual-20260921T1535+0300
-  manual_override: true
-  lease_until: '2026-09-21T17:25:00+03:00'
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null
