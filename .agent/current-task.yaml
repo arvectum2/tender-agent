@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-015-REVALIDATION-001
 authority: AUTO
 goal: Revalidate ARV-015 supplier business-profile scope against current supplier registry, Decision Core integration and repository-owned tests without external supplier actions or commercial commitments.
@@ -11,23 +11,27 @@ definition_of_done:
 - Record at most one bounded source-traceable successor candidate; do not invent a parallel profile architecture or product priority.
 - Run deterministic relevant checks and exact-head CI before guarded merge.
 completed:
+- Current M-006 supplier registry inspected: reusable legal identity/status, external refs, contacts and tags are persisted and event-traced.
+- Existing Tender_Operator_Profile_Template inspected: working/excluded categories, regions, NMCK, VAT, financial/risk constraints, delivery, licenses/SRO/experience and supplier-search preferences are already defined.
+- PP1R runtime parser inspected: _read_operator_profile only emits presence booleans/line count/preview, proving the structured-ingestion gap.
+- Existing Decision Core inspected: structured supplier_profile is already accepted and price-range criteria are consumed fail-closed.
+- ARV-015 reconciliation updated to revalidated_residual_gap with one bounded candidate_not_admitted successor ARV-015-OPERATOR-PROFILE-PARSER-001.
 - Fresh canonical main a4b1a5b3f4787398f0604ddce9323947f0e1da19 verified after ARV-038 revalidation merge.
 - Deterministic continuation skips blocked/gated CORE-QUALITY and earlier PRODUCTION-RUNTIME items; ARV-075 was resumed read-only and remains local-privacy/backup blocked.
 - ARV-015 is the next independent COMMERCIAL-WORKFLOW historical item; its sole ARV-003 dependency is confirmed done.
-current: Inspecting current supplier registry, supplier-profile Decision Core binding and historical supplier-profile artifacts against the ARV-015 next_result.
-pending:
-- Inventory current repository fields and tests.
-- Reconcile roadmap evidence/status.
-- Run exact-head CI and guarded merge if gates remain satisfied.
+current: ARV-015 revalidation is complete to the repository evidence boundary. Reusable supplier identity, the RFQ-first operator-profile contract and Decision Core profile binding exist; structured operator-profile ingestion remains the proven bounded residual.
+pending: []
 last_verified_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
-test_results: []
-updated_at: '2026-09-21T15:35:00+03:00'
-resume_instruction: Continue repository-only ARV-015 revalidation from current supplier registry and Decision Core evidence. Do not create a parallel supplier-profile system, send supplier communications, mutate production, or make commercial/legal decisions.
+test_results:
+- 'Repository evidence inspected: supplier registry models/schemas/service, Tender Operator Profile Template, PP1R fixture/tests, runner profile parser and Decision Core supplier-profile binding.'
+- 'Exact-head GitHub CI required before guarded merge.'
+updated_at: '2026-09-21T15:48:00+03:00'
+resume_instruction: Revalidation complete. Require exact-head CI, then guarded-auto-merge under renewed AM-4 if all gates remain green. The successor candidate remains candidate_not_admitted; do not implement it unless separately admitted.
 execution:
-  claimed_by: ChatGPT
-  execution_id: manual-20260921T1535+0300
-  branch: agent/arv-015-revalidation-001
+  claimed_by: null
+  execution_id: null
+  branch: null
   base_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
   issue: null
-  manual_override: true
-  lease_until: '2026-09-21T17:25:00+03:00'
+  manual_override: false
+  lease_until: null
