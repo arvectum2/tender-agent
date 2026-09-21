@@ -1,0 +1,33 @@
+version: 1
+task_id: ARV-030-REVALIDATION-001
+branch: agent/arv-030-revalidation-20260921
+base_commit: cf52b4c634d737a8c190150f8b55fed859a3d75d
+status: waiting_ci
+updated_at: '2026-09-21T18:12:00+03:00'
+authority: AUTO
+reconciliation:
+  dependency: ARV-002-REVALIDATION-001
+  dependency_state: satisfied
+  evidence:
+  - 'ARV-002 revalidation is completed on canonical main; live E2E/source-graph/no-hidden-fallback behavior is preserved as a release gate.'
+inventory:
+- path: src/tender_research/registry_discovery.py
+  finding: SourceType and RegistryNumberDiscovery already dispatch separate external_public_44fz and external_public_223fz sources into one DiscoveredRegistryNumber/DiscoveryResult model.
+- path: src/tender_research/providers/public_44fz_search.py
+  finding: 44-FZ public acquisition owns the reusable HTTP/search/detail transport and common public result dataclasses.
+- path: src/tender_research/providers/public_223fz_search.py
+  finding: 223-FZ provider reuses bounded transport but deliberately keeps separate parser/detail semantics and fails closed rather than falling back to 44-FZ assumptions.
+- path: src/tender_research/pipeline.py
+  finding: Pipeline currently selects 44-FZ versus 223-FZ detail providers with explicit conditionals; there is no canonical marketplace-adapter protocol/registry covering future ETP providers.
+- path: src/tender_research/search_provider.py
+  finding: Existing SearchProvider ABC is for generic web search results and is not the procurement marketplace adapter contract described by ARV-030.
+completed:
+- Selected ARV-030 as the first independent eligible ETP-CONNECTORS item after deterministic traversal skipped blocked COMMERCIAL-WORKFLOW successors.
+- Confirmed current main already has shared source/result/provenance seams and isolated 44-FZ/223-FZ public providers.
+- Confirmed the concrete residual is a standard procurement-source adapter protocol/registry for future ETPs, not another source implementation.
+next:
+- 'Focused local pytest could not run on system Python 3.9 because datetime.UTC requires newer Python; Python 3.12 had no pytest, and uv dependency bootstrap was blocked by the host network tunnel. No test failure in product code was observed.'
+- 'git diff --check PASS.'
+- 'Roadmap reconciliation and candidate_not_admitted successor ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001 persisted.'
+- Commit/push and open PR; exact-head CI is the authoritative deterministic test gate.
+resume_instruction: Check exact-head CI once. If green, reread Company AM-4 authority and ordinary merge gates before guarded auto-merge. Do not implement the candidate successor or any new/authenticated ETP in this slice.
