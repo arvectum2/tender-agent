@@ -16,15 +16,14 @@ completed:
 - Merged 223FZ-DECISION-V1-001 evidence identified at commit f603c9f62859b49287456069d7be98ac1c8ce1dd.
 - Current support matrix confirms dedicated public search/card intake, registry number/title/dates, explicit customer-role parsing, document discovery and conservative revision ambiguity detection.
 - Current Decision Core regression matrix confirms regime-aware fail-closed NEEDS_REVIEW semantics and prohibits inheritance of unproven 44-FZ hard rules.
-current: Reconcile implemented 223-FZ v1 capabilities against the broader ARV-006 next_result and persist the concrete residual without implementation invention.
+current: ARV-006 evidence reconciliation is complete; merged v1 covers search/intake/basic facts/documents/revision ambiguity and fail-closed decision semantics, while lots/positions and lifecycle artifacts remain the concrete residual.
 pending:
-- Update ARV-006 reconciliation evidence and one bounded non-admitted successor candidate.
-- Run relevant deterministic validation / exact-head CI.
-- Prepare PR; after AM-4 reaches 10/10, merge must fail closed to REVIEW until Owner renewal.
+- Open PR and require exact-head CI as the authoritative deterministic gate.
+- Do not merge after the AM-4 cycle reaches 10/10; fail closed to REVIEW until attributable Owner renewal.
 last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
 test_results: []
-updated_at: '2026-09-21T21:24:00+03:00'
-resume_instruction: Continue repository-only ARV-006 revalidation from merged 223-FZ intake/decision evidence. Do not add legal semantics, authenticated/private access or a new provider. Preserve fail-closed regime boundaries.
+updated_at: '2026-09-21T21:31:00+03:00'
+resume_instruction: Evidence reconciliation is complete. Open/update the ARV-006 PR and require exact-head CI. The successor candidate remains not admitted; after AM-4 reaches 10/10, leave the PR review-ready but unmerged until Owner renewal.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: manual-20260921-arv006-revalidation
