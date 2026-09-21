@@ -1,0 +1,36 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-038-REVALIDATION-001
+historical_item: ARV-038
+status: completed
+authority: AUTO
+source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+base_commit: a445f93d762de0877f507acaef6f986c736fe390
+branch: agent/arv-038-revalidation-close
+goal: Revalidate the product-first website scope against the actual Arvectum landing repository without site mutation or publication.
+definition_of_done:
+  - Actual site repository/surface identified read-only.
+  - Existing ARV-038 product/demo/package capabilities reconciled.
+  - Concrete residual recorded without inventing commercial terms.
+  - Owner/commercial publication gates preserved.
+  - Exact-head CI green before guarded merge.
+completed:
+  - Identified actual site repository as arvectum2/arvectum-landing.
+  - Verified public Tender Agent route and existing product page.
+  - Verified synthetic demo report, human-decision limitation, packages/work formats, RFQ+TKP pilot, closed-contour and support/development offer.
+  - Verified inspected package section intentionally avoids arbitrary prices and exposes no explicit product price/pay-per-analysis offer.
+  - Narrowed residual to Owner/commercial pricing/pay-per-analysis and material public-claim/publication decisions.
+  - Supersedes stale draft PR #94 checkpoint evidence without repeating site mutation or deployment.
+current: Revalidation complete; underlying ARV-038 remains REVIEW-gated for explicit commercial/publication decisions.
+remaining: []
+last_verified_commit: a445f93d762de0877f507acaef6f986c736fe390
+test_results:
+  - 'Read-only cross-repository evidence verified from arvectum2/arvectum-landing.'
+  - 'Prior PR #94 checkpoint CI evidence green through run 35552747466; this replacement branch must pass exact-head CI.'
+resume_instruction: Completed. Do not edit/deploy public site or invent/publish prices without separately applicable Owner/commercial authority.
+updated_at: '2026-09-21T12:58:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null
