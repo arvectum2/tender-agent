@@ -2,8 +2,8 @@ version: 1
 task_id: ARV-030-REVALIDATION-001
 branch: agent/arv-030-revalidation-20260921
 base_commit: cf52b4c634d737a8c190150f8b55fed859a3d75d
-status: waiting_ci
-updated_at: '2026-09-21T18:12:00+03:00'
+status: completed
+updated_at: '2026-09-21T21:18:00+03:00'
 authority: AUTO
 reconciliation:
   dependency: ARV-002-REVALIDATION-001
@@ -29,5 +29,6 @@ next:
 - 'Focused local pytest could not run on system Python 3.9 because datetime.UTC requires newer Python; Python 3.12 had no pytest, and uv dependency bootstrap was blocked by the host network tunnel. No test failure in product code was observed.'
 - 'git diff --check PASS.'
 - 'Roadmap reconciliation and candidate_not_admitted successor ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001 persisted.'
-- Commit/push and open PR; exact-head CI is the authoritative deterministic test gate.
-resume_instruction: Check exact-head CI once. If green, reread Company AM-4 authority and ordinary merge gates before guarded auto-merge. Do not implement the candidate successor or any new/authenticated ETP in this slice.
+- 'PR #105 exact head a8f5b2e69719f2799af04b2a00fe6e9cfe5b9559 passed GitHub CI run 35616481833 SUCCESS 9/9 and merged as b3cf30241b7ca4acdb7be88a4891f0d163155e1a; automatic merge 9/10.'
+- 'This closure reconciliation, if exact-head green and auto-merged, is automatic merge 10/10 and immediately makes the renewed AM-4 review gate due.'
+resume_instruction: Completed. Do not repeat ARV-030 evidence inspection or implement the successor candidate. After this closure reaches main, automatic merge authority is REVIEW-due at 10/10 until attributable Owner renewal.

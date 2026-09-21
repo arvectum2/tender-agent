@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T15:48:00+03:00'
+updated_at: '2026-09-21T21:18:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -421,7 +421,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate unified marketplace connector layer against current 44-FZ/223-FZ source dispatch
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -431,7 +431,7 @@ items:
   dependencies:
   - ARV-002-REVALIDATION-001
   executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ public providers, pipeline dispatch, source provenance and existing deterministic tests. Record existing reusable seams and one concrete source-traceable residual only. Do not connect authenticated/private ETPs, contact platforms, mutate external systems, or invent provider priority/API contracts.
-  done_gate: 'Repository-only revalidation states what connector abstraction/dispatch already exists and the concrete residual toward the canonical standard adapter interface; relevant deterministic tests and exact-head CI pass; at most one bounded candidate_not_admitted successor is recorded; no external/procurement/production effect.'
+  done_gate: 'Satisfied: repository-only revalidation records the existing 44-FZ/223-FZ source seams and the standard marketplace-adapter residual; PR #105 exact head a8f5b2e69719f2799af04b2a00fe6e9cfe5b9559 passed CI run 35616481833 SUCCESS 9/9 and merged as b3cf30241b7ca4acdb7be88a4891f0d163155e1a; successor remains candidate_not_admitted; no authenticated/private ETP or external/procurement/production effect.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
