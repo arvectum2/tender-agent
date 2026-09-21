@@ -23,21 +23,21 @@ selection_evidence:
   - GO-TO-MARKET ARV-038 is historically bounded and depends on ARV-018 and ARV-042, both represented as completed/governed roadmap foundations.
 revalidation_evidence:
   - Canonical ARV-038 historical next_result requires a product-first site, instant demo, public packages, pay-per-analysis, pilot, sample report and transparent limitations.
-  - Current tender-agent repository evidence does not establish the actual public website surface; BUILD-DOCKER-CONTEXT-001 preserves an optional external landing-assets boundary, so a new in-repo site must not be invented from absence.
+  - Read-only cross-repository evidence now establishes the actual public website surface at arvectum2/arvectum-landing; README identifies a static B2B site for arvectum.com, site-config routes procurementAiAgent to public/services/ai-tender-agent.html, and that public page already presents the Arvectum tender-team AI-agent offer. BUILD-DOCKER-CONTEXT-001 correctly remains an external landing-assets boundary; no new in-repo site is invented.
   - Prior exact-head CI run 35433611813 for head 586ce6be1ebadde3f5a7e82ab69b2a42ac3a00d1 completed SUCCESS.
   - Checkpoint-refresh head 930547be9b18511abf82fa14e3111b31c2eceadc passed exact-head CI run 35546204040 SUCCESS.
   - Evidence-persistence head 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb passed exact-head CI run 35552747466 SUCCESS.
   - The former AM-4 renewal blocker is stale: .agent/owner-directive.yaml records attributable 2026-09-19 Owner renewal merged in Company as 57ef73e468122ac714d28d49bfd176ed83588cab. This does not authorize public/commercial claims or publication.
-  - Therefore this bounded slice cannot prove ARV-038 complete and cannot safely create/publish product-site content without separate bounded scope and Owner/commercial approval for public claims/pricing.
-current: Repository-only ARV-038 revalidation is complete to its evidence boundary. Exact-head CI through evidence-persistence head 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb is green and Company AM-4 renewal is satisfied, but the product/publication scope remains Owner/commercial gated and the branch is stale against current main.
+  - The former unknown-site-surface blocker is resolved by read-only repository evidence. This bounded slice still cannot prove ARV-038 complete because public packages/pricing/pay-per-analysis/demo claims and publication choices remain Owner/commercial gated; no site mutation or deployment is performed here.
+current: Read-only evidence has now identified the real arvectum.com website surface and existing AI Tender Agent product page. Exact-head CI through evidence-persistence head 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb is green and Company AM-4 renewal is satisfied; the remaining blocker is Owner/commercial authority for public packages, pricing/pay-per-analysis, demo/public claims and publication, plus branch refresh before any merge.
 pending:
-  - Fresh canonical evidence for the actual website repository/surface if separately admitted.
-  - Owner/commercial approval before publishing pricing, packages, claims or other public commitments.
+  - Owner/commercial approval before publishing or materially changing pricing, packages, pay-per-analysis, demo claims or other public commitments.
+  - If separately authorized, prepare bounded site-repository changes in arvectum2/arvectum-landing without deploying them automatically.
   - Refresh this checkpoint-only branch against current main before any future merge consideration; do not treat AM-4 renewal as product/publication authority.
-resume_instruction: Exact-head CI through 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb is verified green. Do not repeat ARV-038 repository searches or CI polling. Keep ARV-038 blocked at the Owner/commercial/publication boundary and continue the next deterministic independent eligible continuation item; any actual site edit/publication requires separately applicable scope and authority.
+resume_instruction: Exact-head CI through 942fb897a3d3d5685c42ac435f3c68e6ab5dddeb is verified green and the actual site repository/surface is now identified. Do not repeat site discovery or CI polling. Keep ARV-038 blocked only at Owner/commercial/publication decisions; any actual site edit may be prepared only under separately applicable bounded authority and must not be deployed automatically.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260921T045956+0300
   manual_override: false
   lease_until: null
-updated_at: '2026-09-21T05:59:31+03:00'
+updated_at: '2026-09-21T12:49:00+03:00'
