@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T12:42:00+03:00'
+updated_at: '2026-09-21T12:58:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -380,6 +380,24 @@ items:
   - BASE-018
   executor_scope: Reconcile ARV-003 status against current main, merged repository evidence and the repository-owned accepted Gate 5 references. Do not invoke provider/runtime, access credentials, mutate the accepted evidence bundle, or alter frozen benchmark truth. Update only reconciliation evidence/status and stale documentation needed to remove contradiction while preserving historical facts.
   done_gate: 'Satisfied: ARV-003 Gate 5 acceptance reconciled from repository-owned evidence without provider/runtime execution; 399 relevant tests passed; PR #101 exact head 04df77264326c259662e192abb9a46943eee0b05 passed CI run 35509513159 SUCCESS 9/9 and merged as f1e843d4ad9978fcf91da89510476b3703fd63e6. Immutable historical snapshot and accepted evidence bundle remain preserved; no production/external effect.'
+
+- order: 130
+  task_id: ARV-038-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate product-first Arvectum website scope against actual landing repository
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; existing bounded ARV-038 revalidation branch/PR #94; actual site repository verified read-only as arvectum2/arvectum-landing.'
+  roadmap_scope:
+  - ARV-038
+  dependencies:
+  - ARV-018
+  - ARV-042
+  executor_scope: Reconcile historical ARV-038 against current public-site repository evidence only. Do not edit/deploy the website, invent prices/pay-per-analysis, publish claims, or make commercial commitments. Preserve Owner/commercial publication gates.
+  done_gate: 'Satisfied for revalidation: actual arvectum.com site repository identified; existing Tender Agent page already covers product-first positioning, demo report, work-format/package cards, pilot, closed-contour and human-decision limitations. Concrete residual is explicit pricing/pay-per-analysis and material public-claim/publication approval, which remains REVIEW/Owner-commercial gated. No site mutation or external effect.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
