@@ -416,6 +416,23 @@ items:
   executor_scope: Reconcile ARV-015 against current supplier registry, Decision Core supplier-profile binding, category/profile artifacts and tests. Record only existing capabilities and one concrete source-traceable residual. Do not invent a parallel profile system, external supplier action, commercial commitment or new product priority.
   done_gate: 'Satisfied for repository revalidation: reusable M-006 supplier identity and existing RFQ-first operator-profile contract/Decision Core binding were verified; structured runtime ingestion is the explicit residual; one bounded candidate_not_admitted successor recorded; exact-head CI required before guarded merge; no external/procurement/commercial effect.'
 
+- order: 150
+  task_id: ARV-030-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate unified marketplace connector layer against current 44-FZ/223-FZ source dispatch
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible ETP-CONNECTORS historical item after COMMERCIAL-WORKFLOW successors were dependency-blocked.'
+  roadmap_scope:
+  - ARV-030
+  dependencies:
+  - ARV-002-REVALIDATION-001
+  executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ public providers, pipeline dispatch, source provenance and existing deterministic tests. Record existing reusable seams and one concrete source-traceable residual only. Do not connect authenticated/private ETPs, contact platforms, mutate external systems, or invent provider priority/API contracts.
+  done_gate: 'Repository-only revalidation states what connector abstraction/dispatch already exists and the concrete residual toward the canonical standard adapter interface; relevant deterministic tests and exact-head CI pass; at most one bounded candidate_not_admitted successor is recorded; no external/procurement/production effect.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

@@ -1,37 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-015-REVALIDATION-001
+status: in_progress
+task_id: ARV-030-REVALIDATION-001
 authority: AUTO
-goal: Revalidate ARV-015 supplier business-profile scope against current supplier registry, Decision Core integration and repository-owned tests without external supplier actions or commercial commitments.
+goal: Revalidate the historical unified marketplace connector layer against current 44-FZ/223-FZ source dispatch and repository-owned tests without authenticated/private ETP access or external effects.
 definition_of_done:
-- Reconcile the historical ARV-015 profile scope against current main and merged supplier-profile evidence.
-- Distinguish reusable supplier registry/counterparty data from the participant business profile needed for personal procurement analysis.
-- Verify which canonical next_result fields are implemented and which concrete repository-only gap remains.
-- Record at most one bounded source-traceable successor candidate; do not invent a parallel profile architecture or product priority.
-- Run deterministic relevant checks and exact-head CI before guarded merge.
-completed:
-- Current M-006 supplier registry inspected: reusable legal identity/status, external refs, contacts and tags are persisted and event-traced.
-- Existing Tender_Operator_Profile_Template inspected: working/excluded categories, regions, NMCK, VAT, financial/risk constraints, delivery, licenses/SRO/experience and supplier-search preferences are already defined.
-- PP1R runtime parser inspected: _read_operator_profile only emits presence booleans/line count/preview, proving the structured-ingestion gap.
-- Existing Decision Core inspected: structured supplier_profile is already accepted and price-range criteria are consumed fail-closed.
-- ARV-015 reconciliation updated to revalidated_residual_gap with one bounded candidate_not_admitted successor ARV-015-OPERATOR-PROFILE-PARSER-001.
-- Fresh canonical main a4b1a5b3f4787398f0604ddce9323947f0e1da19 verified after ARV-038 revalidation merge.
-- Deterministic continuation skips blocked/gated CORE-QUALITY and earlier PRODUCTION-RUNTIME items; ARV-075 was resumed read-only and remains local-privacy/backup blocked.
-- ARV-015 is the next independent COMMERCIAL-WORKFLOW historical item; its sole ARV-003 dependency is confirmed done.
-current: ARV-015 revalidation is complete to the repository evidence boundary. Reusable supplier identity, the RFQ-first operator-profile contract and Decision Core profile binding exist; structured operator-profile ingestion remains the proven bounded residual.
-pending: []
-last_verified_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
-test_results:
-- 'Repository evidence inspected: supplier registry models/schemas/service, Tender Operator Profile Template, PP1R fixture/tests, runner profile parser and Decision Core supplier-profile binding.'
-- 'Exact-head GitHub CI required before guarded merge.'
-updated_at: '2026-09-21T15:48:00+03:00'
-resume_instruction: Revalidation complete. Require exact-head CI, then guarded-auto-merge under renewed AM-4 if all gates remain green. The successor candidate remains candidate_not_admitted; do not implement it unless separately admitted.
+- Reconcile ARV-030 against current registry discovery, public providers, pipeline dispatch and source provenance.
+- Distinguish reusable connector seams from the missing canonical standard adapter interface.
+- Run deterministic relevant tests/checks.
+- Record at most one bounded source-traceable successor candidate; do not invent provider priority, API contracts or external integration scope.
+current: ARV-030 repository-only revalidation is complete to the evidence boundary; exact-head CI is pending as the authoritative test gate.
+pending:
+- Push branch and open PR.
+- Require exact-head CI before any merge consideration; local pytest was environment-blocked, not product-failed.
+last_verified_commit: cf52b4c634d737a8c190150f8b55fed859a3d75d
+updated_at: '2026-09-21T18:12:00+03:00'
+resume_instruction: Check exact-head CI once. If green, reread current Company AM-4 authority and all ordinary merge gates before guarded auto-merge. Candidate successor remains not admitted.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: a4b1a5b3f4787398f0604ddce9323947f0e1da19
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260921T175939+0300
+  branch: agent/arv-030-revalidation-20260921
+  base_commit: cf52b4c634d737a8c190150f8b55fed859a3d75d
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-21T18:44:39+03:00'

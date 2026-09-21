@@ -2502,10 +2502,25 @@ legacy_registry:
     comment: Сначала контракт адаптера, потом массовые интеграции.
     dependencies_raw: ARV-002
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-21'
+    evidence:
+    - path: src/tender_research/registry_discovery.py
+      detail: Shared source identity and canonical discovery output already dispatch isolated public 44-FZ and 223-FZ providers.
+    - path: src/tender_research/pipeline.py
+      detail: Source-aware detail acquisition and provenance exist, but provider selection still contains law-specific conditionals.
+    - path: src/tender_research/search_provider.py
+      detail: Existing SearchProvider ABC covers generic web search, not the procurement marketplace adapter contract required by ARV-030.
+    - path: docs/roadmap/ARV-030_REVALIDATION_2026-09-21.md
+      detail: Repository evidence matrix and bounded non-admitted successor candidate.
+    notes: >-
+      ARV-030 is partially implemented: shared source/result/provenance seams and isolated 44-FZ/223-FZ public providers exist.
+      The concrete residual is a standard procurement marketplace adapter protocol/registry for future ETPs; no specific new provider or authenticated/private integration is admitted here.
+    successor_candidate:
+      task_id: ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001
+      status: candidate_not_admitted
+      title: Standard procurement marketplace adapter protocol and registry
+      scope: Extract the proven public-source seams into a versioned adapter protocol/registry and adapt existing 44-FZ/223-FZ providers first; do not add a new ETP, credentials, authenticated access or external writes.
 - id: ARV-031
   legacy_snapshot:
     queue_order: 52
