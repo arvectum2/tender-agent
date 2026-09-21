@@ -1983,10 +1983,16 @@ legacy_registry:
     comment: GTM должен снижать порог входа, не обещая неподтверждённую автономность.
     dependencies_raw: ARV-018, ARV-042
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: review
+    verified_at: '2026-09-21'
+    evidence:
+    - path: arvectum2/arvectum-landing:README.md
+      detail: Read-only repository evidence identifies the actual static B2B website surface for arvectum.com.
+    - path: arvectum2/arvectum-landing:public/site-config.js
+      detail: Current public navigation routes procurementAiAgent to services/ai-tender-agent.html.
+    - path: arvectum2/arvectum-landing:public/services/ai-tender-agent.html
+      detail: Existing product page already contains product-first Tender Agent positioning, synthetic demo report, package/work-format cards, 2-4 week RFQ+TKP pilot, closed-contour option and explicit human-decision limitations.
+    notes: Read-only revalidation resolves the former unknown-site-surface gap. The page intentionally avoids arbitrary public prices; explicit pricing/pay-per-analysis and material public-claim/publication decisions remain Owner/commercial REVIEW gates. No site mutation or deployment was performed.
 - id: ARV-039
   legacy_snapshot:
     queue_order: 34
