@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-20T15:08:00+03:00'
+updated_at: '2026-09-21T12:42:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -369,7 +369,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate R10.1 production LLM analysis status against accepted Gate 5 evidence
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -379,7 +379,7 @@ items:
   dependencies:
   - BASE-018
   executor_scope: Reconcile ARV-003 status against current main, merged repository evidence and the repository-owned accepted Gate 5 references. Do not invoke provider/runtime, access credentials, mutate the accepted evidence bundle, or alter frozen benchmark truth. Update only reconciliation evidence/status and stale documentation needed to remove contradiction while preserving historical facts.
-  done_gate: 'Repository-owned evidence proves whether Gate 5 was accepted; stale status is reconciled without provider/runtime execution; deterministic relevant tests/checks and exact-head CI are green; no production/external effect; guarded merge only if renewed AM-4 and repository auto-merge gates remain valid.'
+  done_gate: 'Satisfied: ARV-003 Gate 5 acceptance reconciled from repository-owned evidence without provider/runtime execution; 399 relevant tests passed; PR #101 exact head 04df77264326c259662e192abb9a46943eee0b05 passed CI run 35509513159 SUCCESS 9/9 and merged as f1e843d4ad9978fcf91da89510476b3703fd63e6. Immutable historical snapshot and accepted evidence bundle remain preserved; no production/external effect.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
