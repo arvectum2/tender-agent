@@ -1,0 +1,20 @@
+version: 1
+task_id: ARV-004-REVALIDATION-001
+roadmap_item: ARV-004
+state: review
+branch: agent/arv-004-revalidation-20260922
+base_commit: b0b99c37963ebcc177a839a7154f08f9eb49cf46
+authority: AUTO
+scope: repository-only historical revalidation
+verified:
+- ARV-003 dependency has a completed revalidation checkpoint.
+- Current default-branch code search has no Hermes/HermesClient implementation match.
+- Current default-branch code search has no Feedback/llm implementation match attributable to ARV-004.
+- No external model/provider calls or private/authenticated systems were used.
+residual:
+  id: ARV-004-HERMES-FEEDBACK-CONTRACT-001
+  state: candidate_not_admitted
+  description: Determine under separate admission whether Hermes/feedback capability is still desired and define repository-owned interface and acceptance criteria without inferring provider architecture.
+blocker: Company AM-4 automatic-merge authority is REVIEW-due at 10/10; prepare PR but do not auto-merge.
+resume_instruction: Check exact-head CI once after PR creation. If green, leave review-ready and preserve AM-4 REVIEW gate; do not implement the residual candidate unless separately admitted.
+updated_at: '2026-09-22T02:19:00+03:00'
