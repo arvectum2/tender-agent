@@ -18,15 +18,17 @@ completed:
   - Merged intake foundation identified at dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
   - Merged fail-closed Decision Core foundation identified at f603c9f62859b49287456069d7be98ac1c8ce1dd.
   - Dedicated public 223-FZ provider/support matrix and regression tests inspected.
-current: Reconcile v1 capabilities against ARV-006 next_result.
+  - Reconciled implemented capabilities: search/card intake, source-bound basic facts, documents, revision ambiguity guard and separate fail-closed decision semantics.
+  - Reconciled missing canonical breadth: lots, positions, structured changes, clarifications, protocols and normalized lifecycle/status semantics.
+  - Added one bounded candidate_not_admitted successor ARV-006-223FZ-BREADTH-V2-001.
+current: Evidence reconciliation complete; exact-head CI/PR remains.
 remaining:
-  - Persist reconciliation evidence and residual candidate.
-  - Validate and prepare PR.
-  - Respect AM-4 review-due gate after cycle reaches 10/10.
+  - Open PR and require exact-head CI.
+  - Leave unmerged once AM-4 review gate reaches 10/10 unless Owner renews.
 last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
 test_results: []
-resume_instruction: Continue from current 223-FZ support matrix/provider/tests. Do not implement unadmitted breadth or invent legal semantics.
-updated_at: '2026-09-21T21:24:00+03:00'
+resume_instruction: Open/update PR and require exact-head CI. Do not implement the candidate or invent legal semantics. If AM-4 is at 10/10, leave review-ready and unmerged pending Owner renewal.
+updated_at: '2026-09-21T21:31:00+03:00'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: manual-20260921-arv006-revalidation
