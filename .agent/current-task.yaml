@@ -1,24 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-030-REVALIDATION-001
+status: in_progress
+task_id: ARV-004-REVALIDATION-001
 authority: AUTO
-goal: Revalidate the historical unified marketplace connector layer against current 44-FZ/223-FZ source dispatch and repository-owned tests without authenticated/private ETP access or external effects.
+goal: Revalidate historical Hermes adapter and pilot feedback loop scope against current repository evidence without external model calls, production effects, or invented architecture.
 definition_of_done:
-- Reconcile ARV-030 against current registry discovery, public providers, pipeline dispatch and source provenance.
-- Distinguish reusable connector seams from the missing canonical standard adapter interface.
-- Run deterministic relevant tests/checks.
-- Record at most one bounded source-traceable successor candidate; do not invent provider priority, API contracts or external integration scope.
-current: ARV-030 repository-only revalidation is complete and merged; this closure reconciles the stale canonical task/queue/checkpoint state left after PR #105.
-pending: []
-last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
-updated_at: '2026-09-21T21:18:00+03:00'
-resume_instruction: Completed. Do not repeat ARV-030 evidence inspection or implement ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001 unless separately admitted. After this closure merge the renewed AM-4 cycle reaches 10/10, so all later automatic merges fail closed to REVIEW until attributable Owner renewal.
+- Reconcile ARV-004 historical scope against current main and repository-owned evidence.
+- Establish whether Hermes adapter and pilot feedback-loop artifacts remain present, superseded, or absent.
+- Run deterministic repository-only checks available for the bounded slice.
+- Record at most one bounded source-traceable successor candidate; do not invent model/provider architecture or external integration scope.
+current: ARV-004 repository-only revalidation is in progress on an isolated branch.
+pending:
+- Record revalidation evidence and checkpoint.
+- Open review-gated PR; AM-4 is already review-due at 10/10 so do not auto-merge.
+last_verified_commit: b0b99c37963ebcc177a839a7154f08f9eb49cf46
+updated_at: '2026-09-22T02:15:00+03:00'
+resume_instruction: Continue ARV-004-REVALIDATION-001 from branch evidence; do not make external model calls or implement new Hermes/provider architecture. Preserve AM-4 REVIEW gate.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
-  issue: null
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260922T020245+0300
+  branch: agent/arv-004-revalidation-20260922
+  base_commit: b0b99c37963ebcc177a839a7154f08f9eb49cf46
+  issue: 57
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-22T03:15:00+03:00'
