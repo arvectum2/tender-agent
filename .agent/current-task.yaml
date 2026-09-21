@@ -16,19 +16,19 @@ completed:
 - Merged 223FZ-DECISION-V1-001 evidence identified at commit f603c9f62859b49287456069d7be98ac1c8ce1dd.
 - Current support matrix confirms dedicated public search/card intake, registry number/title/dates, explicit customer-role parsing, document discovery and conservative revision ambiguity detection.
 - Current Decision Core regression matrix confirms regime-aware fail-closed NEEDS_REVIEW semantics and prohibits inheritance of unproven 44-FZ hard rules.
-current: ARV-006 evidence reconciliation is complete; merged v1 covers search/intake/basic facts/documents/revision ambiguity and fail-closed decision semantics, while lots/positions and lifecycle artifacts remain the concrete residual.
+current: ARV-006 evidence reconciliation is complete and PR #107 is open. Its first evidence head 5fa9c4b6577c9239e1b432c6d39230c9fdeccd58 entered CI run 35638106054; this checkpoint update supersedes that head, so fresh exact-head CI is required. PR #106 remains the higher-priority ARV-030 closure and, if merged, consumes automatic merge 10/10.
 pending:
-- Open PR and require exact-head CI as the authoritative deterministic gate.
-- Do not merge after the AM-4 cycle reaches 10/10; fail closed to REVIEW until attributable Owner renewal.
+- Require fresh exact-head CI for PR #107 after this checkpoint update and after any required rebase onto the eventual #106 merge.
+- Do not merge PR #107 once the AM-4 cycle reaches 10/10; fail closed to REVIEW until attributable Owner renewal.
 last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
 test_results: []
-updated_at: '2026-09-21T21:31:00+03:00'
-resume_instruction: Evidence reconciliation is complete. Open/update the ARV-006 PR and require exact-head CI. The successor candidate remains not admitted; after AM-4 reaches 10/10, leave the PR review-ready but unmerged until Owner renewal.
+updated_at: '2026-09-21T21:36:00+03:00'
+resume_instruction: Resume PR #107 only after checking PR #106 first. If #106 merged, reconcile/rebase #107 onto fresh main, require exact-head CI, then leave #107 review-ready but unmerged because AM-4 is REVIEW-due at 10/10. The successor candidate remains not admitted.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: manual-20260921-arv006-revalidation
+  claimed_by: null
+  execution_id: null
   branch: agent/arv-006-revalidation-001
   base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
   issue: null
-  manual_override: true
-  lease_until: '2026-09-21T23:14:00+03:00'
+  manual_override: false
+  lease_until: null
