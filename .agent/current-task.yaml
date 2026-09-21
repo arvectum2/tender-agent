@@ -1,26 +1,35 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: ARV-030-REVALIDATION-001
+task_id: ARV-006-REVALIDATION-001
 authority: AUTO
-goal: Revalidate the historical unified marketplace connector layer against current 44-FZ/223-FZ source dispatch and repository-owned tests without authenticated/private ETP access or external effects.
+goal: Revalidate historical ARV-006 full 223-FZ breadth against the merged read-only 223-FZ intake and Decision Core evidence without authenticated/private platform access or legal/procedural invention.
 definition_of_done:
-- Reconcile ARV-030 against current registry discovery, public providers, pipeline dispatch and source provenance.
-- Distinguish reusable connector seams from the missing canonical standard adapter interface.
-- Run deterministic relevant tests/checks.
-- Record at most one bounded source-traceable successor candidate; do not invent provider priority, API contracts or external integration scope.
-current: ARV-030 repository-only revalidation is complete to the evidence boundary; exact-head CI is pending as the authoritative test gate.
+- Reconcile the ARV-006 next_result against current 223-FZ search/intake/document/revision and decision semantics.
+- Separate implemented source-bound capabilities from missing lots/positions/changes/clarifications/protocols/status breadth.
+- Preserve dedicated 223-FZ parsing and fail-closed regime semantics; do not fall through to 44-FZ assumptions.
+- Record at most one bounded source-traceable successor candidate; do not invent legal rules, provider priority or authenticated ETP scope.
+- Run deterministic relevant tests/checks and prepare a review-ready PR; automatic merge remains subject to the AM-4 cycle gate.
+completed:
+- ARV-002 dependency is satisfied at the admitted revalidation boundary used by existing 223-FZ source dispatch.
+- Merged 223FZ-INGEST-V1-001 evidence identified at commit dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
+- Merged 223FZ-DECISION-V1-001 evidence identified at commit f603c9f62859b49287456069d7be98ac1c8ce1dd.
+- Current support matrix confirms dedicated public search/card intake, registry number/title/dates, explicit customer-role parsing, document discovery and conservative revision ambiguity detection.
+- Current Decision Core regression matrix confirms regime-aware fail-closed NEEDS_REVIEW semantics and prohibits inheritance of unproven 44-FZ hard rules.
+current: Reconcile implemented 223-FZ v1 capabilities against the broader ARV-006 next_result and persist the concrete residual without implementation invention.
 pending:
-- Push branch and open PR.
-- Require exact-head CI before any merge consideration; local pytest was environment-blocked, not product-failed.
-last_verified_commit: cf52b4c634d737a8c190150f8b55fed859a3d75d
-updated_at: '2026-09-21T18:12:00+03:00'
-resume_instruction: Check exact-head CI once. If green, reread current Company AM-4 authority and all ordinary merge gates before guarded auto-merge. Candidate successor remains not admitted.
+- Update ARV-006 reconciliation evidence and one bounded non-admitted successor candidate.
+- Run relevant deterministic validation / exact-head CI.
+- Prepare PR; after AM-4 reaches 10/10, merge must fail closed to REVIEW until Owner renewal.
+last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
+test_results: []
+updated_at: '2026-09-21T21:24:00+03:00'
+resume_instruction: Continue repository-only ARV-006 revalidation from merged 223-FZ intake/decision evidence. Do not add legal semantics, authenticated/private access or a new provider. Preserve fail-closed regime boundaries.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260921T175939+0300
-  branch: agent/arv-030-revalidation-20260921
-  base_commit: cf52b4c634d737a8c190150f8b55fed859a3d75d
+  claimed_by: ChatGPT interactive
+  execution_id: manual-20260921-arv006-revalidation
+  branch: agent/arv-006-revalidation-001
+  base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
   issue: null
-  manual_override: false
-  lease_until: '2026-09-21T18:44:39+03:00'
+  manual_override: true
+  lease_until: '2026-09-21T23:14:00+03:00'
