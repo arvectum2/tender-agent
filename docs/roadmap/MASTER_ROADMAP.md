@@ -207,7 +207,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-052` | 0 | Готово | P2 | 100% | Human-in-the-loop: экспертная проверка и эскалация сложного отчёта | confirmed_done |
 | `ARV-018` | 13 | В работе | P1 | 60% | Commercial MVP v1: карточка GO / NO-GO / NEEDS REVIEW | needs_revalidation |
 | `ARV-020` | 14 | Запланировано | P1 | 20% | Commercial MVP v1: чек-лист готовности заявки | needs_revalidation |
-| `ARV-015` | 22 | В работе | P1 | 45% | Профиль поставщика для персонального анализа закупок | needs_revalidation |
+| `ARV-015` | 22 | В работе | P1 | 45% | Профиль поставщика для персонального анализа закупок | revalidated_residual_gap |
 | `ARV-064` | 23 | Запланировано | P1 | 0% | Корпоративное хранилище документов и переиспользуемый профиль компании | needs_revalidation |
 | `ARV-016` | 24 | Запланировано | P1 | 5% | Обработка прайс-листов XLSX/CSV/PDF | needs_revalidation |
 | `ARV-017` | 25 | Запланировано | P1 | 0% | Подбор тендеров по прайс-листу и каталогу | needs_revalidation |
@@ -311,6 +311,12 @@ Evidence and the single bounded, non-admitted successor candidate `ARV-002-LIVE-
 The historical ARV-010 storage guardrails were followed by merged `OPS-OBSERVABILITY-V1` / PR #76. Current main now has a versioned `/api/ops/observability` snapshot for queue age/depth, ingestion/document failures, storage guard state, backup freshness and recent worker failures, with deterministic warning/critical/unknown semantics plus a non-destructive incident runbook.
 
 The reconciliation overlay marks ARV-010 `confirmed_done` for its repository-side umbrella. This does **not** claim live external notifications, third-party telemetry deployment, production mutation or provider-side monitoring; those remain separately gated scopes.
+
+## ARV-015 revalidation — 2026-09-21
+
+Current main already has a reusable M-006 supplier registry and Decision Core supplier-profile binding, while the RFQ-first `Tender_Operator_Profile_Template.md` defines categories, regions, NMCK/VAT/financial constraints, risk preferences and licenses/SRO. The runtime PP1R parser currently only records profile presence/preview metadata and does not turn those fields into a reusable structured profile.
+
+The bounded non-admitted successor `ARV-015-OPERATOR-PROFILE-PARSER-001` is recorded in `docs/roadmap/ARV-015_REVALIDATION_2026-09-21.md`. It deliberately reuses the existing template and Decision Core; it does not invent a parallel profile subsystem.
 
 ## Executor rule
 
