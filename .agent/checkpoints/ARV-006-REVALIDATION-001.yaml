@@ -21,16 +21,17 @@ completed:
   - Reconciled implemented capabilities: search/card intake, source-bound basic facts, documents, revision ambiguity guard and separate fail-closed decision semantics.
   - Reconciled missing canonical breadth: lots, positions, structured changes, clarifications, protocols and normalized lifecycle/status semantics.
   - Added one bounded candidate_not_admitted successor ARV-006-223FZ-BREADTH-V2-001.
-current: Evidence reconciliation complete; exact-head CI/PR remains.
+current: Evidence reconciliation complete; PR #107 is open. First evidence head 5fa9c4b6577c9239e1b432c6d39230c9fdeccd58 entered CI run 35638106054, but this checkpoint update supersedes that head; fresh exact-head CI remains required.
 remaining:
-  - Open PR and require exact-head CI.
-  - Leave unmerged once AM-4 review gate reaches 10/10 unless Owner renews.
+  - Check higher-priority PR #106 first; if merged, reconcile/rebase #107 onto fresh main.
+  - Require fresh exact-head CI for #107.
+  - Leave #107 unmerged once AM-4 review gate reaches 10/10 unless Owner renews.
 last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
 test_results: []
-resume_instruction: Open/update PR and require exact-head CI. Do not implement the candidate or invent legal semantics. If AM-4 is at 10/10, leave review-ready and unmerged pending Owner renewal.
-updated_at: '2026-09-21T21:31:00+03:00'
+resume_instruction: Resume PR #107 after PR #106 state is reconciled. Rebase/recreate on fresh main if needed, require exact-head CI, and leave review-ready/unmerged at AM-4 10/10 pending Owner renewal. Do not implement the candidate.
+updated_at: '2026-09-21T21:36:00+03:00'
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: manual-20260921-arv006-revalidation
-  manual_override: true
-  lease_until: '2026-09-21T23:14:00+03:00'
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null
