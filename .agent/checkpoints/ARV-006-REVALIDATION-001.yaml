@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-006-REVALIDATION-001
+historical_item: ARV-006
+status: in_progress
+authority: AUTO
+source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
+branch: agent/arv-006-revalidation-001
+goal: Reconcile full 223-FZ breadth against merged read-only intake and fail-closed decision evidence.
+definition_of_done:
+  - Current 223-FZ v1 capability inventory is evidence-backed.
+  - Missing canonical breadth is explicit and source-traceable.
+  - At most one bounded successor candidate is recorded.
+  - 44-FZ assumptions and unproven legal semantics are not imported.
+  - Relevant checks and exact-head CI are green before any merge consideration.
+completed:
+  - Merged intake foundation identified at dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
+  - Merged fail-closed Decision Core foundation identified at f603c9f62859b49287456069d7be98ac1c8ce1dd.
+  - Dedicated public 223-FZ provider/support matrix and regression tests inspected.
+current: Reconcile v1 capabilities against ARV-006 next_result.
+remaining:
+  - Persist reconciliation evidence and residual candidate.
+  - Validate and prepare PR.
+  - Respect AM-4 review-due gate after cycle reaches 10/10.
+last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
+test_results: []
+resume_instruction: Continue from current 223-FZ support matrix/provider/tests. Do not implement unadmitted breadth or invent legal semantics.
+updated_at: '2026-09-21T21:24:00+03:00'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: manual-20260921-arv006-revalidation
+  manual_override: true
+  lease_until: '2026-09-21T23:14:00+03:00'
