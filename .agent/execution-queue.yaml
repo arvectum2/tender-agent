@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T15:48:00+03:00'
+updated_at: '2026-09-21T21:24:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -432,6 +432,23 @@ items:
   - ARV-002-REVALIDATION-001
   executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ public providers, pipeline dispatch, source provenance and existing deterministic tests. Record existing reusable seams and one concrete source-traceable residual only. Do not connect authenticated/private ETPs, contact platforms, mutate external systems, or invent provider priority/API contracts.
   done_gate: 'Repository-only revalidation states what connector abstraction/dispatch already exists and the concrete residual toward the canonical standard adapter interface; relevant deterministic tests and exact-head CI pass; at most one bounded candidate_not_admitted successor is recorded; no external/procurement/production effect.'
+
+- order: 160
+  task_id: ARV-006-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate 223-FZ breadth against merged intake and decision foundations
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible 223FZ-BREADTH historical item after ETP-CONNECTORS ARV-030 revalidation.'
+  roadmap_scope:
+  - ARV-006
+  dependencies:
+  - ARV-002-REVALIDATION-001
+  executor_scope: Reconcile ARV-006 against current dedicated 223-FZ public search/intake, documents/revision signals and regime-aware Decision Core. Record existing capabilities and one concrete source-traceable residual only. Do not invent legal/procedural semantics, connect authenticated/private platforms or perform external procurement actions.
+  done_gate: 'Repository-only revalidation states implemented 223-FZ breadth and the concrete remaining source capabilities; relevant deterministic tests/checks and exact-head CI are green; successor remains candidate_not_admitted; no external/procurement/production effect. Automatic merge must fail closed if the AM-4 review gate is due.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
