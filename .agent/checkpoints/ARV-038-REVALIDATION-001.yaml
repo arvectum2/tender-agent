@@ -24,18 +24,19 @@ selection_evidence:
 revalidation_evidence:
   - Canonical ARV-038 historical next_result requires a product-first site, instant demo, public packages, pay-per-analysis, pilot, sample report and transparent limitations.
   - Current tender-agent repository evidence does not establish the actual public website surface; BUILD-DOCKER-CONTEXT-001 preserves an optional external landing-assets boundary, so a new in-repo site must not be invented from absence.
-  - Exact-head CI run 35433611813 for head 586ce6be1ebadde3f5a7e82ab69b2a42ac3a00d1 completed SUCCESS.
+  - Prior exact-head CI run 35433611813 for head 586ce6be1ebadde3f5a7e82ab69b2a42ac3a00d1 completed SUCCESS.
+  - Checkpoint-refresh head 930547be9b18511abf82fa14e3111b31c2eceadc passed exact-head CI run 35546204040 SUCCESS.
   - The former AM-4 renewal blocker is stale: .agent/owner-directive.yaml records attributable 2026-09-19 Owner renewal merged in Company as 57ef73e468122ac714d28d49bfd176ed83588cab. This does not authorize public/commercial claims or publication.
   - Therefore this bounded slice cannot prove ARV-038 complete and cannot safely create/publish product-site content without separate bounded scope and Owner/commercial approval for public claims/pricing.
-current: Repository-only ARV-038 revalidation is complete to its evidence boundary. CI for the prior head is green and Company AM-4 renewal is satisfied, but the product/publication scope remains Owner/commercial gated and the branch is stale against current main.
+current: Repository-only ARV-038 revalidation is complete to its evidence boundary. Exact-head CI is green and Company AM-4 renewal is satisfied, but the product/publication scope remains Owner/commercial gated and the branch is stale against current main.
 pending:
   - Fresh canonical evidence for the actual website repository/surface if separately admitted.
   - Owner/commercial approval before publishing pricing, packages, claims or other public commitments.
   - Refresh this checkpoint-only branch against current main before any future merge consideration; do not treat AM-4 renewal as product/publication authority.
-resume_instruction: Do not repeat repository searches or exact-head CI inspection for 586ce6be1ebadde3f5a7e82ab69b2a42ac3a00d1. Keep ARV-038 blocked at the Owner/commercial/publication boundary. Continue the next deterministic independent eligible continuation item; any actual site edit/publication requires separately applicable scope and authority.
+resume_instruction: Exact-head CI for 930547be9b18511abf82fa14e3111b31c2eceadc is verified green. Do not repeat ARV-038 repository searches or CI polling. Keep ARV-038 blocked at the Owner/commercial/publication boundary and continue the next deterministic independent eligible continuation item; any actual site edit/publication requires separately applicable scope and authority.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260921T025732+0300
+  execution_id: watchdog-20260921T045956+0300
   manual_override: false
   lease_until: null
-updated_at: '2026-09-21T03:08:00+03:00'
+updated_at: '2026-09-21T05:07:00+03:00'
