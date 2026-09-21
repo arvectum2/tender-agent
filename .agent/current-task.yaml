@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-003-REVALIDATION-001
 authority: AUTO
 goal: Revalidate ARV-003 R10.1 production LLM analysis status against accepted Gate 5 repository evidence without invoking provider/runtime or mutating accepted evidence.
@@ -10,23 +10,29 @@ definition_of_done:
 - Do not invoke provider/runtime, access credentials, or mutate benchmark truth.
 - Run deterministic relevant tests/checks and require exact-head CI before guarded merge.
 completed:
-- Deterministic Owner-directive continuation selected CORE-QUALITY-PILOT ARV-003 after ARV-002; no existing ARV-003 revalidation PR/branch was present.
-- Repository evidence identifies ARV-003 Gate 5 as accepted on merged commit f96e3588f2e1f61f19d54e44594debfc81a745bf with sanitized acceptance marker ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE.
-current: Repository-only ARV-003 status reconciliation is complete locally; accepted Gate 5 evidence is reflected in the canonical overlay and stale backlog status without provider/runtime execution. Await exact-head CI before done/merge.
-pending:
-- Commit/push and open PR; require exact-head CI.
-last_verified_commit: 88cf8d3000aa1b74e9fed1c1c2448dcac81dc6ac
+- Deterministic Owner-directive continuation selected CORE-QUALITY-PILOT ARV-003 after ARV-002.
+- Repository evidence identified ARV-003 Gate 5 as accepted on merged commit f96e3588f2e1f61f19d54e44594debfc81a745bf with sanitized acceptance marker ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE.
+- Reconciled docs/backlog/r10-1-production-llm-analysis.md Gate 5 and Gate 6 handoff status without invoking provider/runtime or mutating accepted evidence.
+- Reconciled master-roadmap ARV-003 overlay to confirmed_done while preserving immutable historical snapshot text.
+- Relevant ARV-003 production LLM suite passed: 399 tests, 35 warnings.
+- uv run make check PASS; git diff --check PASS.
+- PR #101 exact head 04df77264326c259662e192abb9a46943eee0b05 passed GitHub CI run 35509513159 SUCCESS 9/9 and was merged as f1e843d4ad9978fcf91da89510476b3703fd63e6.
+- Canonical stale in_progress lease/current-task projection is reconciled by this closure PR; no verified ARV-003 work is repeated.
+current: ARV-003 revalidation is complete and merged; this closure only reconciles stale canonical task/queue/checkpoint metadata left by PR #101.
+pending: []
+last_verified_commit: f1e843d4ad9978fcf91da89510476b3703fd63e6
 test_results:
 - 'Relevant ARV-003 production LLM suite: 399 passed, 35 warnings.'
 - 'uv run make check: PASS.'
 - 'git diff --check: PASS.'
-updated_at: '2026-09-20T15:15:00+03:00'
-resume_instruction: Check exact-head CI once. If green, reread current AM-4/reviews/mergeability and guarded-auto-merge if all gates remain satisfied; otherwise persist the blocker and continue independent admitted work. Never rerun provider or mutate accepted bundle.
+- 'PR #101 head 04df77264326c259662e192abb9a46943eee0b05: CI run 35509513159 SUCCESS 9/9; merged as f1e843d4ad9978fcf91da89510476b3703fd63e6.'
+updated_at: '2026-09-21T12:42:00+03:00'
+resume_instruction: Completed. Do not rerun ARV-003 provider/runtime or acceptance. On the next invocation use fresh canonical queue/roadmap state and continue only a newly executable bounded item under existing gates.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260920T145809+0300
-  branch: agent/arv-003-revalidation-001
-  base_commit: 88cf8d3000aa1b74e9fed1c1c2448dcac81dc6ac
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: f1e843d4ad9978fcf91da89510476b3703fd63e6
   issue: null
   manual_override: false
-  lease_until: '2026-09-20T16:58:00+03:00'
+  lease_until: null

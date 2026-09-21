@@ -1,0 +1,38 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-003-REVALIDATION-001
+historical_item: ARV-003
+status: completed
+authority: AUTO
+source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+base_commit: 88cf8d3000aa1b74e9fed1c1c2448dcac81dc6ac
+branch: agent/arv-003-revalidation-001
+goal: Reconcile stale ARV-003 R10.1 Gate 5 status against accepted repository-owned evidence without provider/runtime execution or accepted-bundle mutation.
+definition_of_done:
+  - Accepted Gate 5 evidence reconciled into stale status.
+  - Immutable historical snapshot preserved.
+  - Provider/runtime and credentials not invoked.
+  - Relevant deterministic tests/checks green.
+  - Exact-head CI green before guarded merge.
+completed:
+  - Gate 5 accepted evidence traced to merged commit f96e3588f2e1f61f19d54e44594debfc81a745bf and repository marker ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE.
+  - Backlog Gate 5 and Gate 6 handoff status reconciled without rerunning provider/runtime.
+  - Master-roadmap reconciliation updated to confirmed_done while preserving historical snapshot.
+  - Relevant ARV-003 suite: 399 passed, 35 warnings.
+  - uv run make check PASS; git diff --check PASS.
+  - PR #101 exact head 04df77264326c259662e192abb9a46943eee0b05 passed CI run 35509513159 SUCCESS 9/9 and merged as f1e843d4ad9978fcf91da89510476b3703fd63e6.
+current: Completed; this checkpoint records final merged evidence and releases the stale lease.
+remaining: []
+last_verified_commit: f1e843d4ad9978fcf91da89510476b3703fd63e6
+test_results:
+  - '399 relevant tests passed, 35 warnings.'
+  - 'uv run make check PASS.'
+  - 'git diff --check PASS.'
+  - 'PR #101 CI 35509513159: SUCCESS 9/9.'
+resume_instruction: Completed. Do not repeat ARV-003 acceptance/provider work. Continue from fresh canonical queue/roadmap state under existing gates.
+updated_at: '2026-09-21T12:42:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null
