@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T12:58:00+03:00'
+updated_at: '2026-09-21T15:35:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -398,6 +398,23 @@ items:
   - ARV-042
   executor_scope: Reconcile historical ARV-038 against current public-site repository evidence only. Do not edit/deploy the website, invent prices/pay-per-analysis, publish claims, or make commercial commitments. Preserve Owner/commercial publication gates.
   done_gate: 'Satisfied for revalidation: actual arvectum.com site repository identified; existing Tender Agent page already covers product-first positioning, demo report, work-format/package cards, pilot, closed-contour and human-decision limitations. Concrete residual is explicit pricing/pay-per-analysis and material public-claim/publication approval, which remains REVIEW/Owner-commercial gated. No site mutation or external effect.'
+
+- order: 140
+  task_id: ARV-015-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate supplier business profile for personalized procurement analysis
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible COMMERCIAL-WORKFLOW historical item after blocked/gated earlier branches.'
+  roadmap_scope:
+  - ARV-015
+  dependencies:
+  - ARV-003
+  executor_scope: Reconcile ARV-015 against current supplier registry, Decision Core supplier-profile binding, category/profile artifacts and tests. Record only existing capabilities and one concrete source-traceable residual. Do not invent a parallel profile system, external supplier action, commercial commitment or new product priority.
+  done_gate: 'Current supplier-profile capabilities and residual are evidence-backed; relevant deterministic checks and exact-head CI are green; no external/procurement/commercial effect; guarded merge only under renewed AM-4.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
