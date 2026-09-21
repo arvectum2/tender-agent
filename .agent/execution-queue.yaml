@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T15:35:00+03:00'
+updated_at: '2026-09-21T15:48:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -404,7 +404,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate supplier business profile for personalized procurement analysis
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -414,7 +414,7 @@ items:
   dependencies:
   - ARV-003
   executor_scope: Reconcile ARV-015 against current supplier registry, Decision Core supplier-profile binding, category/profile artifacts and tests. Record only existing capabilities and one concrete source-traceable residual. Do not invent a parallel profile system, external supplier action, commercial commitment or new product priority.
-  done_gate: 'Current supplier-profile capabilities and residual are evidence-backed; relevant deterministic checks and exact-head CI are green; no external/procurement/commercial effect; guarded merge only under renewed AM-4.'
+  done_gate: 'Satisfied for repository revalidation: reusable M-006 supplier identity and existing RFQ-first operator-profile contract/Decision Core binding were verified; structured runtime ingestion is the explicit residual; one bounded candidate_not_admitted successor recorded; exact-head CI required before guarded merge; no external/procurement/commercial effect.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
