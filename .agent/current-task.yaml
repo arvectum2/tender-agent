@@ -1,24 +1,36 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-030-REVALIDATION-001
+status: in_progress
+task_id: AM4-RENEWAL-RECONCILE-002
 authority: AUTO
-goal: Revalidate the historical unified marketplace connector layer against current 44-FZ/223-FZ source dispatch and repository-owned tests without authenticated/private ETP access or external effects.
+goal: Reconcile Tender Agent canonical executor state to the attributable 2026-09-22 Owner renewal of POS-004 / AI-ENG-001 AM-4 without changing scope or hard stops.
 definition_of_done:
-- Reconcile ARV-030 against current registry discovery, public providers, pipeline dispatch and source provenance.
-- Distinguish reusable connector seams from the missing canonical standard adapter interface.
-- Run deterministic relevant tests/checks.
-- Record at most one bounded source-traceable successor candidate; do not invent provider priority, API contracts or external integration scope.
-current: ARV-030 repository-only revalidation is complete and merged; this closure reconciles the stale canonical task/queue/checkpoint state left after PR #105.
-pending: []
-last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
-updated_at: '2026-09-21T21:18:00+03:00'
-resume_instruction: Completed. Do not repeat ARV-030 evidence inspection or implement ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001 unless separately admitted. After this closure merge the renewed AM-4 cycle reaches 10/10, so all later automatic merges fail closed to REVIEW until attributable Owner renewal.
+- Record the 2026-09-22 Company renewal decision path/merge commit and new 2026-10-22 calendar review deadline.
+- Reset the renewed-cycle automatic-merge counter baseline to zero before this reconciliation merge.
+- Preserve all Company/Product/Arvectum OS hard stops and fail-closed conditions unchanged.
+- Update repository-owned watchdog/owner-directive authority references to the latest renewal.
+- Add a bounded queue/checkpoint record for this reconciliation only.
+- Run focused policy/YAML checks and exact-head CI.
+- Guarded AUTO merge only if all renewed AM-4 and repository gates remain satisfied; if merged under AUTO, record it as automatic merge 1/10.
+completed:
+- Owner explicitly renewed AM-4 on unchanged terms in the Tender Agent project conversation on 2026-09-22.
+- Company renewal decision merged in arvectum2/arvectum-company as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.
+current: Update canonical executor policy, owner directive, watchdog sources, queue and policy tests.
+pending:
+- Update executor policy / owner directive / watchdog authority sources.
+- Add queue/checkpoint reconciliation record.
+- Update focused policy regression assertions.
+- Run deterministic checks and exact-head CI.
+- Merge only if renewed AM-4 and ordinary repository gates are satisfied.
+last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+test_results: []
+updated_at: '2026-09-22T22:52:00+03:00'
+resume_instruction: Reconcile only the 2026-09-22 renewal state. Do not merge any unrelated review-ready PR or change Product priority/hard stops as part of this bookkeeping task.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260922-am4-renewal
+  branch: agent/am4-renewal-reconcile-20260922
+  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
