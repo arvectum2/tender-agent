@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-065-REVALIDATION-001
+status: in_progress
+authority: AUTO
+branch: agent/arv-065-revalidation-20260922
+base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+updated_at: '2026-09-22T11:06:00+03:00'
+evidence:
+  canonical_branch: CORE-QUALITY-PILOT
+  historical_item: ARV-065
+  roadmap_residual: evidence-grounded copilot
+  strategy: ADAPT
+  repository_checks:
+    - current roadmap Decision Core v1 is source-bound and fail-closed
+    - roadmap explicitly says not to build a generic chat product and to reuse Q&A/RAG primitives
+    - default-branch searches for ARV-065 and copilot/Q&A evidence-specific symbols found no distinct durable ARV-065 implementation or acceptance artifact
+conclusion: Current evidence/Decision Core foundations support an evidence-grounded procurement assistant boundary but do not prove historical ARV-065 completion; no generic chat/RAG architecture, model/provider choice or acceptance target may be invented by revalidation.
+successor_candidate:
+  task_id: ARV-065-EVIDENCE-COPILOT-CONTRACT-001
+  status: candidate_not_admitted
+  scope: Define and validate the already-roadmapped evidence-grounded procurement copilot outcome by reusing Q&A/RAG primitives and source-bound procurement evidence/actions, only after separate canonical admission supplies measurable acceptance criteria.
+validation:
+  repository_search: PASS_NO_DISTINCT_ARV065_ARTIFACT
+  exact_head_ci: pending
+blocker: Company AM-4 automatic-merge cycle is REVIEW-due at 10/10; preparation/testing may continue but merge fails closed to REVIEW.
+resume_instruction: Check exact-head CI once. If green, preserve this revalidation review-ready without changing the head merely to restate CI. Do not implement the successor candidate unless separately admitted.
