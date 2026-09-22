@@ -1,0 +1,23 @@
+task_id: AM4-RENEWAL-RECONCILE-002
+status: in_progress
+authority: AUTO
+goal: Reconcile Tender Agent canonical state to the 2026-09-22 Owner AM-4 renewal on unchanged terms.
+definition_of_done:
+  - Latest Company renewal source/commit and 2026-10-22 review deadline recorded.
+  - Automatic-merge cycle reset to zero before reconciliation merge.
+  - Hard stops and authority scope unchanged.
+  - Watchdog/directive/policy references updated.
+  - Focused checks and exact-head CI pass.
+  - Guarded AUTO merge counts as 1/10 if executed under AM-4.
+completed:
+  - Company renewal decision merged as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.
+current: Canonical reconciliation edits.
+remaining:
+  - Update policy/directive/watchdog/queue/tests.
+  - Validate.
+  - Open PR and obtain exact-head CI.
+  - Guarded merge if eligible.
+last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+test_results: []
+resume_instruction: Continue reconciliation only; no unrelated PR merges until this canonical renewal state lands.
+updated_at: '2026-09-22T22:52:00+03:00'
