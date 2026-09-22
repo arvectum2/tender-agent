@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T21:18:00+03:00'
+updated_at: '2026-09-22T23:07:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -433,6 +433,19 @@ items:
   executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ public providers, pipeline dispatch, source provenance and existing deterministic tests. Record existing reusable seams and one concrete source-traceable residual only. Do not connect authenticated/private ETPs, contact platforms, mutate external systems, or invent provider priority/API contracts.
   done_gate: 'Satisfied: repository-only revalidation records the existing 44-FZ/223-FZ source seams and the standard marketplace-adapter residual; PR #105 exact head a8f5b2e69719f2799af04b2a00fe6e9cfe5b9559 passed CI run 35616481833 SUCCESS 9/9 and merged as b3cf30241b7ca4acdb7be88a4891f0d163155e1a; successor remains candidate_not_admitted; no authenticated/private ETP or external/procurement/production effect.'
 
+- order: 160
+  task_id: AM4-RENEWAL-RECONCILE-002
+  strategy: REUSE
+  title: Reconcile 2026-09-22 AM-4 renewal into Tender Agent canonical state
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Attributable Owner review 2026-09-22 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms with hard stops unchanged; Company decision merged as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.'
+  roadmap_scope: []
+  dependencies: []
+  executor_scope: Reconcile only the latest Company renewal source/deadline/counter state into repository-owned executor policy/directive/watchdog/checkpoints. Preserve authority scope, hard stops, Product/Company/OS boundaries and every prohibited external effect.
+  done_gate: 'Satisfied for repository work: latest renewal/evidence state reconciled; focused policy/YAML checks and local make check passed; PR #115 head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151 passed GitHub CI run 35777279190 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and all ordinary gates; when merged it counts as automatic merge 1/10 of the 2026-09-22 review cycle.'
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

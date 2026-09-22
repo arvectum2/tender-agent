@@ -43,19 +43,19 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert directive["governance"]["material_executor_policy_change"] is True
     assert (
         directive["governance"]["am4_effect"]
-        == "renewed_am4_active_after_attributable_owner_review_2026_09_19"
+        == "renewed_am4_active_after_attributable_owner_review_2026_09_22"
     )
     assert directive["governance"]["renewal_decision"].endswith(
-        "DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
+        "DECISION-2026-09-22-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
     )
     company_gate = policy["company_authority_gate"]
     assert company_gate["material_policy_change_recorded_2026_09_18"] is True
-    assert company_gate["mandatory_review_deadline"] == "2026-10-19"
+    assert company_gate["mandatory_review_deadline"] == "2026-10-22"
     assert company_gate["automatic_merge_after_material_policy_change"] == "ALLOWED_UNDER_RENEWED_AM4"
-    assert company_gate["automatic_merge_cycle_state"] == "REVIEW_DUE_AT_LIMIT_AFTER_THIS_RECONCILIATION_MERGES"
-    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 10
+    assert company_gate["automatic_merge_cycle_state"] == "ACTIVE_RENEWED_2026_09_22"
+    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 1
     assert policy["sources"]["company_authority"]["latest_renewal"].endswith(
-        "DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
+        "DECISION-2026-09-22-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
     )
 
     reporting = watchdog["reporting"]

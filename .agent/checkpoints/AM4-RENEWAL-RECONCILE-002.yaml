@@ -1,0 +1,25 @@
+task_id: AM4-RENEWAL-RECONCILE-002
+status: completed
+authority: AUTO
+goal: Reconcile Tender Agent canonical state to the 2026-09-22 Owner AM-4 renewal on unchanged terms.
+definition_of_done:
+  - Latest Company renewal source/commit and 2026-10-22 review deadline recorded.
+  - Automatic-merge cycle reset to zero before reconciliation merge.
+  - Hard stops and authority scope unchanged.
+  - Watchdog/directive/policy references updated.
+  - Focused checks and exact-head CI pass.
+  - Guarded AUTO merge counts as 1/10 if executed under AM-4.
+completed:
+  - Company renewal decision merged as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.
+  - PR #115 initial bookkeeping head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151 passed GitHub CI run 35777279190 SUCCESS 9/9.
+current: Reconciliation complete for repository work; final bookkeeping exact-head CI must remain green before guarded AUTO merge.
+remaining: []
+last_verified_commit: dec2aca9c942bf4edff21c0dc2a5c9a7a692a151
+test_results:
+  - "YAML parse PASS."
+  - "tests/test_watchdog_continuation_policy.py: 2 passed."
+  - "uv run make check: PASS."
+  - "git diff --check: PASS."
+  - "PR #115 head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151: GitHub CI run 35777279190 SUCCESS 9/9."
+resume_instruction: Completed for repository work. Require final-bookkeeping exact-head CI green, then guarded-auto-merge PR #115 under renewed AM-4 as automatic merge 1/10.
+updated_at: '2026-09-22T23:07:00+03:00'
