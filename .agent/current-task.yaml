@@ -1,37 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: AM4-RENEWAL-RECONCILE-002
+task_id: ARV-006-REVALIDATION-001
 authority: AUTO
-goal: Reconcile Tender Agent canonical executor state to the attributable 2026-09-22 Owner renewal of POS-004 / AI-ENG-001 AM-4 without changing scope or hard stops.
+goal: Revalidate historical ARV-006 full 223-FZ breadth against merged read-only 223-FZ intake and Decision Core evidence without authenticated/private platform access or legal/procedural invention.
 definition_of_done:
-- Record the 2026-09-22 Company renewal decision path/merge commit and new 2026-10-22 calendar review deadline.
-- Reset the renewed-cycle automatic-merge counter baseline to zero before this reconciliation merge.
-- Preserve all Company/Product/Arvectum OS hard stops and fail-closed conditions unchanged.
-- Update repository-owned watchdog/owner-directive authority references to the latest renewal.
-- Add a bounded queue/checkpoint record for this reconciliation only.
-- Run focused policy/YAML checks and exact-head CI.
-- Guarded AUTO merge only if all renewed AM-4 and repository gates remain satisfied; if merged under AUTO, record it as automatic merge 1/10.
+- Reconcile the ARV-006 next_result against current 223-FZ search/intake/document/revision and decision semantics.
+- Separate implemented source-bound capabilities from missing lots/positions/changes/clarifications/protocols/status breadth.
+- Preserve dedicated 223-FZ parsing and fail-closed regime semantics; do not fall through to 44-FZ assumptions.
+- Record at most one bounded source-traceable successor candidate; do not invent legal rules, provider priority or authenticated ETP scope.
+- Preserve the 2026-09-22 renewed AM-4 authority/hard stops and account this guarded AUTO merge as 2/10 only if executed.
+- Final exact-head CI green on the renewed branch; merge only after parent AM4 reconciliation reaches main and ordinary merge gates remain satisfied.
 completed:
-- Owner explicitly renewed AM-4 on unchanged terms in the Tender Agent project conversation on 2026-09-22.
-- Company renewal decision merged in arvectum2/arvectum-company as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.
-- PR #115 initial bookkeeping head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151 passed GitHub CI run 35777279190 SUCCESS 9/9.
-current: Renewal reconciliation is complete for repository work; the first exact-head CI is green and the final bookkeeping head must stay green before guarded AUTO merge.
+- Merged 223FZ-INGEST-V1-001 evidence identified at dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
+- Merged 223FZ-DECISION-V1-001 evidence identified at f603c9f62859b49287456069d7be98ac1c8ce1dd.
+- Dedicated public 223-FZ support matrix and regression evidence inspected.
+- Implemented capabilities reconciled: search/card intake, source-bound basic facts, documents, revision ambiguity guard and separate fail-closed decision semantics.
+- Remaining canonical gap reconciled: lots, positions, structured changes, clarifications, protocols and normalized lifecycle/status semantics.
+- One bounded successor candidate ARV-006-223FZ-BREADTH-V2-001 remains candidate_not_admitted.
+- Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276 passed CI run 35642169996 SUCCESS before renewal rebase.
+- Owner renewed POS-004 / AI-ENG-001 AM-4 on 2026-09-22; renewal reconciliation PR #115 passed exact-head CI and squash-merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774, consuming automatic merge 1/10.
+- PR #108 prior renewed-stack head 63d00f6d1be6a92705cdf59ac9191685a42b84d7 passed CI run 35778698555 SUCCESS before final rebase onto merged main.
+current: ARV-006 repository revalidation is complete and rebased onto renewed main. Final exact-head CI on this bookkeeping-complete head is required before guarded AUTO merge.
 pending: []
-last_verified_commit: dec2aca9c942bf4edff21c0dc2a5c9a7a692a151
+last_verified_commit: 63d00f6d1be6a92705cdf59ac9191685a42b84d7
 test_results:
-- "YAML parse: PASS for executor-policy, owner-directive, watchdog, execution-queue, current-task and renewal checkpoint."
-- "tests/test_watchdog_continuation_policy.py: 2 passed."
-- "uv run make check: PASS."
-- "git diff --check origin/main...HEAD: PASS."
-- "PR #115 head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151: GitHub CI run 35777279190 SUCCESS 9/9."
-updated_at: '2026-09-22T23:07:00+03:00'
-resume_instruction: Completed for repository work. Require final-bookkeeping exact-head CI green, then guarded-auto-merge PR #115 under renewed AM-4 as automatic merge 1/10; do not reopen absent a concrete regression.
+- "Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276: GitHub CI run 35642169996 SUCCESS."
+- "Renewed stacked head 63d00f6d1be6a92705cdf59ac9191685a42b84d7: GitHub CI run 35778698555 SUCCESS before final rebase onto merged main."
+updated_at: '2026-09-22T23:18:00+03:00'
+resume_instruction: Completed for repository work. Require final exact-head CI green on PR #108; if mergeable and all renewed AM-4 gates remain satisfied, guarded-auto-merge as automatic merge 2/10. Do not implement the successor candidate.
 execution:
   claimed_by: null
   execution_id: null
-  branch: null
-  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+  branch: agent/arv-006-revalidation-review
+  base_commit: 0a2e0055a3ce30cdcc108a097a09d5a2adb24774
   issue: null
   manual_override: false
   lease_until: null

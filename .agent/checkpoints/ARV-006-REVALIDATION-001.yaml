@@ -1,0 +1,40 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-006-REVALIDATION-001
+historical_item: ARV-006
+status: completed
+authority: AUTO
+source: OWNER-CONTINUOUS-ROADMAP-2026-09-18
+base_commit: 0a2e0055a3ce30cdcc108a097a09d5a2adb24774
+branch: agent/arv-006-revalidation-review
+goal: Reconcile full 223-FZ breadth against merged read-only intake and fail-closed decision evidence.
+definition_of_done:
+  - Current 223-FZ v1 capability inventory is evidence-backed.
+  - Missing canonical breadth is explicit and source-traceable.
+  - At most one bounded successor candidate is recorded.
+  - 44-FZ assumptions and unproven legal semantics are not imported.
+  - Final renewed-branch exact-head CI is green.
+  - Guarded AUTO merge only after parent AM4 renewal reconciliation reaches main; if merged, count as 2/10.
+completed:
+  - Merged intake foundation identified at dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
+  - Merged fail-closed Decision Core foundation identified at f603c9f62859b49287456069d7be98ac1c8ce1dd.
+  - Dedicated public 223-FZ provider/support matrix and regression tests inspected.
+  - Implemented capabilities reconciled: search/card intake, source-bound basic facts, documents, revision ambiguity guard and separate fail-closed decision semantics.
+  - Missing canonical breadth reconciled: lots, positions, structured changes, clarifications, protocols and normalized lifecycle/status semantics.
+  - Added one bounded candidate_not_admitted successor ARV-006-223FZ-BREADTH-V2-001.
+  - Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276 passed CI run 35642169996 SUCCESS.
+  - Renewal reconciliation PR #115 passed exact-head CI and squash-merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774, consuming automatic merge 1/10.
+  - Renewed stacked PR #108 head 63d00f6d1be6a92705cdf59ac9191685a42b84d7 passed CI run 35778698555 SUCCESS before final rebase onto merged main.
+current: Repository revalidation is complete on renewed main; final exact-head CI on the bookkeeping-complete head remains the merge gate.
+remaining: []
+last_verified_commit: 63d00f6d1be6a92705cdf59ac9191685a42b84d7
+test_results:
+  - "Prior exact-head CI: run 35642169996 SUCCESS on ec82e5262809e35af067400927b822c216175276."
+  - "Renewed stacked head 63d00f6d1be6a92705cdf59ac9191685a42b84d7: GitHub CI run 35778698555 SUCCESS before final rebase onto merged main."
+resume_instruction: Completed for repository work. Require final exact-head CI green; guarded-auto-merge PR #108 only if all renewed AM-4 and ordinary gates remain satisfied. Do not implement the successor candidate.
+updated_at: '2026-09-22T23:18:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null
