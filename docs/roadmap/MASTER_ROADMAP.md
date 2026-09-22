@@ -318,6 +318,12 @@ Current main already has a reusable M-006 supplier registry and Decision Core su
 
 The bounded non-admitted successor `ARV-015-OPERATOR-PROFILE-PARSER-001` is recorded in `docs/roadmap/ARV-015_REVALIDATION_2026-09-21.md`. It deliberately reuses the existing template and Decision Core; it does not invent a parallel profile subsystem.
 
+## ARV-004 revalidation — 2026-09-22
+
+Current main already contains the canonical Customer / Project / ProcurementCase / run ownership model plus immutable PilotReview and append-only expert-review events. Hermes itself already has tender-scoped feedback-to-memory and isolated retrieval. The remaining gap is therefore an integration gap, not a missing architecture.
+
+The bounded successor ARV-004-CUSTOMER-SCOPED-FEEDBACK-001 remains candidate_not_admitted.
+
 ## Executor rule
 
 `.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not arbitrarily promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.

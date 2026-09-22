@@ -1,0 +1,50 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-004-REVALIDATION-001
+status: completed
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-004-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-004 R10.3 Hermes/customer-scoped feedback status against current repository-owned evidence without production, provider, customer, or external effects.
+definition_of_done:
+  - Reconcile the selected historical item against current main, merged PRs, issues, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is already complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate; do not invent architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and all production/provider/external-effect hard stops.
+completed:
+  - Canonical continuation order checked: CORE-QUALITY-PILOT follows ARV-003 with ARV-004.
+  - Historical roadmap scope is explicit: R10.3 production-loop Hermes and customer-scoped feedback, with the desired result to bind Hermes feedback/memory to Customer/Project/Case and immutable review without changing frozen R9 contracts.
+  - Historical dependencies ARV-003 and ARV-001 are satisfied on current main.
+  - Direct path inspection found the current Hermes implementation on main even though default-branch code search returned no Hermes hits: src/modules/hermes_agent/models.py and service.py are present.
+  - Current AgentMemory, TenderAnalysisFeedback, TenderEvalCase, DocumentEvidenceSpan and AnalysisQualityCheck persistence is tender/analysis scoped; no Customer/Project/Case identity columns are present in those Hermes models.
+  - save_feedback_as_memory persists feedback plus AgentMemory using source_tender_id/source_analysis_id; search_memory/load_relevant_memory filter factual feedback by tender_id. This proves a concrete residual against the canonical Customer/Project/Case-scoped next_result without inferring a new architecture.
+  - Existing Hermes feedback is not discarded: the current implementation already has feedback-to-memory, eval-case creation, quality gates, evidence spans and feedback reflection. The residual is specifically the missing canonical business-scope binding plus immutable review requirement.
+  - No production/provider/customer action was invoked and no HUMAN/REVIEW evidence was inferred.
+current: Revalidation is complete. The repository already provides canonical Customer / Project / ProcurementCase / run ownership plus immutable PilotReview and append-only expert-review events. The residual is now a bounded integration gap between Hermes feedback/memory and those existing primitives.
+remaining:
+  - Run relevant deterministic tests/checks and exact-head CI.
+  - Keep merge fail-closed to REVIEW because the renewed AM-4 automatic-merge cycle is already at 10/10.
+successor_candidate:
+  task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
+  status: candidate_not_admitted
+  title: Bind Hermes feedback/memory to canonical Customer/Project/Case scope with immutable review
+  source: docs/roadmap/master-roadmap.yaml ARV-004 next_result
+  scope: Preserve the existing Hermes tender-scoped feedback/memory loop and frozen R9 contracts while binding it to the already-existing canonical Customer / Project / ProcurementCase / run ownership plus PilotReview/expert-review immutability primitives.
+  constraints:
+    - Do not infer or create a parallel Customer/Project/Case authority model.
+    - Do not weaken tender evidence isolation or global-memory fail-closed behavior.
+    - Do not mutate production/provider/customer state or frozen benchmark truth.
+resume_instruction: Revalidation is complete and the canonical scope/review contract now exists. Run focused tests/exact-head CI, but do not merge while AM-4 is review-due at 10/10 and do not implement the candidate unless separately admitted.
+updated_at: '2026-09-22T14:18:00+03:00'
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260921T010115+0300
+  lease_until: null
+  external_effects: none
+
+test_results:
+  - 'Focused Hermes + customer-pilot/expert-review suite: 62 passed, 17 warnings.'
+  - 'uv run make check: PASS.'
+  - 'git diff --check: PASS.'

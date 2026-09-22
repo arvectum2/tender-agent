@@ -1165,10 +1165,34 @@ legacy_registry:
     comment: Идёт после стабилизации production LLM и критериев качества.
     dependencies_raw: ARV-003, ARV-001
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-22'
+    evidence:
+    - path: src/modules/hermes_agent/models.py
+      detail: Hermes feedback, memory, eval-case, evidence and quality records exist but are scoped only by tender/analysis identifiers.
+    - path: src/modules/hermes_agent/service.py
+      detail: Feedback-to-memory and tender-isolated retrieval already exist; customer/project/case ownership binding is not present.
+    - path: src/modules/customer_pilot/models.py
+      detail: Canonical Customer / Project / ProcurementCase / run bindings and immutable PilotReview primitives already exist.
+    - path: src/modules/customer_pilot/expert_review_models.py
+      detail: Existing expert-review records use the same canonical scope and append-only hash-chained review events.
+    - path: docs/roadmap/ARV-004_REVALIDATION_2026-09-22.md
+      detail: Revalidation evidence and narrowed successor boundary.
+    notes: >-
+      ARV-004 is partially implemented. The repository already has a tender-scoped Hermes feedback/memory loop and a separate canonical
+      Customer / Project / ProcurementCase / immutable-review model. The remaining gap is to bind Hermes feedback/memory to those existing
+      scope/review primitives without creating a parallel architecture or changing frozen R9 contracts.
+    successor_candidate:
+      task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
+      status: candidate_not_admitted
+      title: Bind Hermes feedback/memory to existing customer-pilot scope and immutable review
+      scope: Reuse existing Customer / Project / ProcurementCase / run ownership plus PilotReview/expert-review primitives to scope Hermes feedback/memory; preserve tender isolation and frozen R9 contracts.
+      definition_of_done:
+      - Hermes feedback and derived memory are bound to validated customer/project/procurement-case/run ownership using existing canonical models.
+      - Cross-customer/project/case access fails closed.
+      - Existing tender-scoped feedback-to-memory and retrieval behavior remains compatible.
+      - Review/reflection provenance links to existing immutable review or append-only review-event primitives without mutating frozen evidence.
+      - Relevant deterministic tests and exact-head CI pass; no provider/customer/production/external effect.
 - id: ARV-005
   legacy_snapshot:
     queue_order: 5

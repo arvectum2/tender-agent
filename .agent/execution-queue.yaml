@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-21T21:18:00+03:00'
+updated_at: '2026-09-22T14:12:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -432,6 +432,24 @@ items:
   - ARV-002-REVALIDATION-001
   executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ public providers, pipeline dispatch, source provenance and existing deterministic tests. Record existing reusable seams and one concrete source-traceable residual only. Do not connect authenticated/private ETPs, contact platforms, mutate external systems, or invent provider priority/API contracts.
   done_gate: 'Satisfied: repository-only revalidation records the existing 44-FZ/223-FZ source seams and the standard marketplace-adapter residual; PR #105 exact head a8f5b2e69719f2799af04b2a00fe6e9cfe5b9559 passed CI run 35616481833 SUCCESS 9/9 and merged as b3cf30241b7ca4acdb7be88a4891f0d163155e1a; successor remains candidate_not_admitted; no authenticated/private ETP or external/procurement/production effect.'
+
+- order: 160
+  task_id: ARV-004-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate Hermes customer-scoped feedback and immutable-review integration boundary
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  source: 'Existing bounded PR #91 under active OWNER-CONTINUOUS-ROADMAP-2026-09-18; refreshed after canonical Customer/Project/Case and immutable-review primitives were verified.'
+  roadmap_scope:
+  - ARV-004
+  dependencies:
+  - ARV-003
+  - ARV-001
+  executor_scope: Reconcile existing Hermes feedback/memory against current customer-pilot ownership/review primitives. No provider/customer/production/external effect and no parallel scope architecture.
+  done_gate: 'Satisfied for repository revalidation after focused tests/exact-head CI. Merge is REVIEW-gated because renewed AM-4 reached its 10/10 automatic-merge limit.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001

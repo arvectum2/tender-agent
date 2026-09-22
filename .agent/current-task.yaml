@@ -1,24 +1,37 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: ARV-030-REVALIDATION-001
+task_id: ARV-004-REVALIDATION-001
 authority: AUTO
-goal: Revalidate the historical unified marketplace connector layer against current 44-FZ/223-FZ source dispatch and repository-owned tests without authenticated/private ETP access or external effects.
+goal: Revalidate historical ARV-004 Hermes/customer-scoped feedback against current repository-owned Hermes and customer-pilot scope/review primitives.
 definition_of_done:
-- Reconcile ARV-030 against current registry discovery, public providers, pipeline dispatch and source provenance.
-- Distinguish reusable connector seams from the missing canonical standard adapter interface.
-- Run deterministic relevant tests/checks.
-- Record at most one bounded source-traceable successor candidate; do not invent provider priority, API contracts or external integration scope.
-current: ARV-030 repository-only revalidation is complete and merged; this closure reconciles the stale canonical task/queue/checkpoint state left after PR #105.
+- Verify existing Hermes feedback/memory behavior and isolation.
+- Verify whether canonical Customer / Project / ProcurementCase and immutable-review primitives already exist.
+- Reconcile the exact residual without inventing a parallel architecture.
+- Record at most one bounded successor candidate without admitting implementation.
+- Run relevant deterministic tests/checks and exact-head CI; merge remains REVIEW because renewed AM-4 reached 10/10.
+completed:
+- Hermes feedback-to-memory, eval-case creation and tender-isolated memory retrieval verified.
+- Canonical customer-pilot Customer / Project / ProcurementCase / run ownership model verified.
+- PilotReview immutable_at and hash fields verified.
+- Expert-review scope plus append-only hash-chained events verified.
+- Residual narrowed to binding Hermes feedback/memory to those existing scope/review primitives.
+- Roadmap overlay updated to revalidated_residual_gap.
+- Successor ARV-004-CUSTOMER-SCOPED-FEEDBACK-001 retained as candidate_not_admitted.
+current: Repository revalidation complete. PR remains merge-blocked by the AM-4 10/10 mandatory Owner review gate.
 pending: []
-last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
-updated_at: '2026-09-21T21:18:00+03:00'
-resume_instruction: Completed. Do not repeat ARV-030 evidence inspection or implement ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001 unless separately admitted. After this closure merge the renewed AM-4 cycle reaches 10/10, so all later automatic merges fail closed to REVIEW until attributable Owner renewal.
+last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+test_results:
+- 'Focused Hermes + customer-pilot/expert-review suite: 62 passed, 17 warnings.'
+- 'uv run make check: PASS.'
+- 'git diff --check: PASS.'
+updated_at: '2026-09-22T14:18:00+03:00'
+resume_instruction: Revalidation complete. Run relevant tests and exact-head CI. Do not merge while AM-4 is REVIEW-due at 10/10, and do not implement the non-admitted successor until separately admitted.
 execution:
   claimed_by: null
   execution_id: null
   branch: null
-  base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
+  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
   issue: null
   manual_override: false
   lease_until: null
