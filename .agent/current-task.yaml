@@ -15,17 +15,20 @@ definition_of_done:
 completed:
 - Owner explicitly renewed AM-4 on unchanged terms in the Tender Agent project conversation on 2026-09-22.
 - Company renewal decision merged in arvectum2/arvectum-company as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.
-current: Update canonical executor policy, owner directive, watchdog sources, queue and policy tests.
+current: Canonical renewal reconciliation is implemented and locally validated; open PR and obtain exact-head CI.
 pending:
-- Update executor policy / owner directive / watchdog authority sources.
-- Add queue/checkpoint reconciliation record.
-- Update focused policy regression assertions.
-- Run deterministic checks and exact-head CI.
-- Merge only if renewed AM-4 and ordinary repository gates are satisfied.
-last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
-test_results: []
-updated_at: '2026-09-22T22:52:00+03:00'
-resume_instruction: Reconcile only the 2026-09-22 renewal state. Do not merge any unrelated review-ready PR or change Product priority/hard stops as part of this bookkeeping task.
+- Open reconciliation PR.
+- Obtain exact-head CI.
+- Guarded AUTO merge only if renewed AM-4 and ordinary repository gates are satisfied.
+- Record final merge/counter evidence.
+last_verified_commit: 49626075efb290a618f35936d7b6df11e26020f5
+test_results:
+- "YAML parse: PASS for executor-policy, owner-directive, watchdog, execution-queue, current-task and renewal checkpoint."
+- "tests/test_watchdog_continuation_policy.py: 2 passed."
+- "uv run make check: PASS."
+- "git diff --check origin/main...HEAD: PASS."
+updated_at: '2026-09-22T23:00:00+03:00'
+resume_instruction: Open/update the renewal reconciliation PR and check exact-head CI once. Merge automatically only if the PR stays within this bookkeeping scope and all renewed AM-4 gates are green.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260922-am4-renewal
