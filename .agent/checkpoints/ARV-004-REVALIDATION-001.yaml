@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-004-REVALIDATION-001
-status: blocked
+status: completed
 authority: AUTO
 continuation_mode: REVALIDATION
 branch: agent/arv-004-revalidation-20260919
@@ -22,25 +22,29 @@ completed:
   - save_feedback_as_memory persists feedback plus AgentMemory using source_tender_id/source_analysis_id; search_memory/load_relevant_memory filter factual feedback by tender_id. This proves a concrete residual against the canonical Customer/Project/Case-scoped next_result without inferring a new architecture.
   - Existing Hermes feedback is not discarded: the current implementation already has feedback-to-memory, eval-case creation, quality gates, evidence spans and feedback reflection. The residual is specifically the missing canonical business-scope binding plus immutable review requirement.
   - No production/provider/customer action was invoked and no HUMAN/REVIEW evidence was inferred.
-current: ARV-004 is not satisfied. Repository-owned code proves an existing tender-scoped Hermes feedback/memory loop, while the canonical R10.3 next_result requires Customer/Project/Case binding and immutable review. The standard REVALIDATION slice may record that residual but may not invent the material data model or review architecture.
+current: Revalidation is complete. The repository already provides canonical Customer / Project / ProcurementCase / run ownership plus immutable PilotReview and append-only expert-review events. The residual is now a bounded integration gap between Hermes feedback/memory and those existing primitives.
 remaining:
-  - Keep this revalidation blocked rather than implementing a guessed Customer/Project/Case schema or immutable-review mechanism.
-  - Refresh/rebase this stale branch before any merge; current main contains later canonical reconciliation and authority state.
-  - Release ARV-004 and continue the next deterministic independent continuation item under the active Owner directive.
+  - Run relevant deterministic tests/checks and exact-head CI.
+  - Keep merge fail-closed to REVIEW because the renewed AM-4 automatic-merge cycle is already at 10/10.
 successor_candidate:
   task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
   status: candidate_not_admitted
   title: Bind Hermes feedback/memory to canonical Customer/Project/Case scope with immutable review
   source: docs/roadmap/master-roadmap.yaml ARV-004 next_result
-  scope: Preserve the existing Hermes tender-scoped feedback/memory loop and frozen R9 contracts while adding only the canonical Customer/Project/Case binding and immutable review behavior once the repository provides an already-defined bounded model/acceptance contract or Owner/REVIEW authority resolves the material design choices.
+  scope: Preserve the existing Hermes tender-scoped feedback/memory loop and frozen R9 contracts while binding it to the already-existing canonical Customer / Project / ProcurementCase / run ownership plus PilotReview/expert-review immutability primitives.
   constraints:
     - Do not infer or create a parallel Customer/Project/Case authority model.
     - Do not weaken tender evidence isolation or global-memory fail-closed behavior.
     - Do not mutate production/provider/customer state or frozen benchmark truth.
-resume_instruction: Concrete repository evidence now proves the ARV-004 residual. Do not repeat Hermes discovery. Keep this revalidation blocked/released until an already-defined bounded Customer/Project/Case plus immutable-review contract exists; continue the next deterministic independent continuation item under the active Owner directive.
-updated_at: '2026-09-21T01:08:00+03:00'
+resume_instruction: Revalidation is complete and the canonical scope/review contract now exists. Run focused tests/exact-head CI, but do not merge while AM-4 is review-due at 10/10 and do not implement the candidate unless separately admitted.
+updated_at: '2026-09-22T14:18:00+03:00'
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260921T010115+0300
   lease_until: null
   external_effects: none
+
+test_results:
+  - 'Focused Hermes + customer-pilot/expert-review suite: 62 passed, 17 warnings.'
+  - 'uv run make check: PASS.'
+  - 'git diff --check: PASS.'
