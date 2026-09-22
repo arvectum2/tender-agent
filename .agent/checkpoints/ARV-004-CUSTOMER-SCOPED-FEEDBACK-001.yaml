@@ -1,0 +1,41 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
+status: completed
+authority: AUTO
+source: ARV-004 successor candidate from docs/roadmap/master-roadmap.yaml and docs/roadmap/ARV-004_REVALIDATION_2026-09-22.md
+base_commit: 5984bad08a6e71774694e654f5392a72a333b01d
+branch: agent/arv-004-customer-scoped-feedback-001
+goal: Bind Hermes feedback/memory to existing customer-pilot scope and immutable review provenance.
+definition_of_done:
+  - Scoped feedback validates Customer / Project / ProcurementCase / run ownership.
+  - Derived memory is bound to the validated analysis run and scope provenance.
+  - Cross-scope memory access fails closed; legacy tender-only behavior remains compatible.
+  - Reflection provenance reuses immutable PilotReview or append-only expert-review evidence without mutation.
+  - Regression tests/checks and exact-head CI pass.
+  - No merge while AM-4 is review-due at 10/10.
+completed:
+  - Canonical scope/review model already verified by parent revalidation.
+  - Optional customer/project/case scope added to existing Hermes feedback and memory-search contracts without breaking legacy tender-only requests.
+  - Existing TenderAnalysisRun + ProcurementCase ownership validates scoped feedback; cross-scope binding fails closed.
+  - Existing AgentMemory stores source_analysis_id and scope_binding provenance; no new parallel table/model introduced.
+  - Scoped memory search and runtime relevant-memory loading reuse TenderAnalysisRun ownership.
+  - Feedback reflection reads existing immutable PilotReview provenance without mutating it.
+  - Four deterministic scoped regressions added; broader relevant suite 66 passed, 21 warnings.
+  - uv run make check PASS; git diff --check PASS.
+current: Local implementation DoD complete; stacked PR/exact-head CI remain.
+remaining:
+  - Push and open stacked PR.
+  - Exact-head CI; merge remains REVIEW-gated at AM-4 10/10.
+last_verified_commit: 5984bad08a6e71774694e654f5392a72a333b01d
+test_results:
+  - 'Focused Hermes/customer-pilot/expert-review suite: 66 passed, 21 warnings.'
+  - 'uv run make check: PASS.'
+  - 'git diff --check: PASS.'
+resume_instruction: Local DoD complete. Push/open stacked PR and require exact-head CI. Do not merge at AM-4 10/10.
+updated_at: '2026-09-22T14:34:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  manual_override: false
+  lease_until: null

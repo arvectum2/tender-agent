@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-22T14:12:00+03:00'
+updated_at: '2026-09-22T14:34:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -450,6 +450,23 @@ items:
   - ARV-001
   executor_scope: Reconcile existing Hermes feedback/memory against current customer-pilot ownership/review primitives. No provider/customer/production/external effect and no parallel scope architecture.
   done_gate: 'Satisfied for repository revalidation after focused tests/exact-head CI. Merge is REVIEW-gated because renewed AM-4 reached its 10/10 automatic-merge limit.'
+
+- order: 170
+  task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
+  strategy: REUSE
+  continuation_mode: IMPLEMENTATION
+  title: Bind Hermes feedback/memory to canonical customer-pilot scope
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  source: 'Bounded ARV-004 successor candidate after repository evidence proved existing Customer / Project / ProcurementCase / immutable-review primitives.'
+  roadmap_scope:
+  - ARV-004
+  dependencies:
+  - ARV-004-REVALIDATION-001
+  executor_scope: Reuse existing TenderAnalysisRun, ProcurementCase, PilotReview and expert-review primitives to scope Hermes feedback/memory. Preserve legacy tender-only behavior, frozen R9 contracts and all external-action hard stops.
+  done_gate: 'Repository implementation complete locally: scoped ownership validation, fail-closed cross-scope retrieval, legacy compatibility and immutable-review provenance are covered; focused suite 66 passed and make check/diff check PASS. Exact-head CI required on stacked PR; merge remains REVIEW because AM-4 automatic-merge cycle reached 10/10.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001

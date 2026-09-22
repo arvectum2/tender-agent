@@ -1,37 +1,43 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: ARV-004-REVALIDATION-001
+task_id: ARV-004-CUSTOMER-SCOPED-FEEDBACK-001
 authority: AUTO
-goal: Revalidate historical ARV-004 Hermes/customer-scoped feedback against current repository-owned Hermes and customer-pilot scope/review primitives.
+goal: Bind existing Hermes feedback/memory to the existing customer-pilot Customer / Project / ProcurementCase / run scope and immutable review provenance without creating a parallel architecture or changing frozen R9 contracts.
 definition_of_done:
-- Verify existing Hermes feedback/memory behavior and isolation.
-- Verify whether canonical Customer / Project / ProcurementCase and immutable-review primitives already exist.
-- Reconcile the exact residual without inventing a parallel architecture.
-- Record at most one bounded successor candidate without admitting implementation.
-- Run relevant deterministic tests/checks and exact-head CI; merge remains REVIEW because renewed AM-4 reached 10/10.
+- Customer-scoped Hermes feedback validates analysis-run ownership through existing TenderAnalysisRun/ProcurementCase bindings.
+- Derived feedback memory is durably bound to the validated analysis run and carries customer/project/case scope provenance without duplicating authority models.
+- Scoped memory search fails closed across customer/project/case boundaries while legacy tender-only behavior remains compatible.
+- Feedback reflection exposes read-only provenance to existing immutable PilotReview or append-only expert-review primitives without mutating frozen evidence.
+- Deterministic regression tests cover scoped happy path, cross-scope rejection and legacy compatibility.
+- Relevant checks and exact-head CI pass; merge remains REVIEW-gated while AM-4 is at 10/10.
 completed:
-- Hermes feedback-to-memory, eval-case creation and tender-isolated memory retrieval verified.
-- Canonical customer-pilot Customer / Project / ProcurementCase / run ownership model verified.
-- PilotReview immutable_at and hash fields verified.
-- Expert-review scope plus append-only hash-chained events verified.
-- Residual narrowed to binding Hermes feedback/memory to those existing scope/review primitives.
-- Roadmap overlay updated to revalidated_residual_gap.
-- Successor ARV-004-CUSTOMER-SCOPED-FEEDBACK-001 retained as candidate_not_admitted.
-current: Repository revalidation complete. PR remains merge-blocked by the AM-4 10/10 mandatory Owner review gate.
-pending: []
-last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+- Parent ARV-004 revalidation narrowed the residual and verified existing canonical scope/review primitives.
+- Hermes feedback schema accepts optional customer_id/project_id/procurement_case_id alongside analysis_id; legacy tender-only requests remain valid.
+- Customer-scoped feedback validates existing TenderAnalysisRun and ProcurementCase ownership and rejects cross-scope binding fail-closed.
+- Derived feedback memory remains on existing AgentMemory and is bound to source_analysis_id plus explicit scope_binding provenance; no parallel persistence model added.
+- Scoped memory search filters through existing TenderAnalysisRun ownership and fails closed across case scope.
+- Runtime relevant-memory loading automatically applies customer/project/case scope when run_id resolves to an R8 customer run; legacy tender-only path remains compatible.
+- Feedback reflection exposes read-only existing immutable PilotReview provenance when available and does not mutate review/evidence.
+- Added deterministic scoped happy-path, cross-scope rejection, scoped-search isolation and immutable-review provenance regressions.
+- Focused Hermes/customer-pilot/expert-review suite: 66 passed, 21 warnings.
+- uv run make check PASS; git diff --check PASS.
+current: Bounded customer-scoped Hermes integration is complete locally; push/open stacked PR and require exact-head CI. Merge remains REVIEW-gated at AM-4 10/10.
+pending:
+- Push implementation and open stacked PR on ARV-004 revalidation head.
+- Require exact-head CI; do not merge while AM-4 review is due.
+last_verified_commit: 5984bad08a6e71774694e654f5392a72a333b01d
 test_results:
-- 'Focused Hermes + customer-pilot/expert-review suite: 62 passed, 17 warnings.'
+- 'Focused Hermes/customer-pilot/expert-review suite: 66 passed, 21 warnings.'
 - 'uv run make check: PASS.'
 - 'git diff --check: PASS.'
-updated_at: '2026-09-22T14:18:00+03:00'
-resume_instruction: Revalidation complete. Run relevant tests and exact-head CI. Do not merge while AM-4 is REVIEW-due at 10/10, and do not implement the non-admitted successor until separately admitted.
+updated_at: '2026-09-22T14:34:00+03:00'
+resume_instruction: Local DoD is complete. Push/open the stacked PR and require exact-head CI. Do not merge at AM-4 10/10; do not widen scope beyond existing customer-pilot ownership/review primitives.
 execution:
   claimed_by: null
   execution_id: null
   branch: null
-  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+  base_commit: 5984bad08a6e71774694e654f5392a72a333b01d
   issue: null
   manual_override: false
   lease_until: null

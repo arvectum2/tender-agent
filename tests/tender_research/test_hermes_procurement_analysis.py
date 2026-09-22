@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -20,6 +21,7 @@ from src.modules.hermes_agent.schemas import (
     HermesFeedbackCreateRequest,
     HermesFinalRecommendation,
     HermesLineItem,
+    HermesMemorySearchRequest,
     HermesQualityCheck,
     HermesSummary,
 )
@@ -361,3 +363,184 @@ def test_all_gates_run():
     assert "summary_subject_not_too_generic" in check_map
     assert "evidence_required_for_high_confidence" in check_map
     assert "all_documents_used" in check_map
+
+
+def _customer_scoped_feedback_fixture(session, suffix: str = "A"):
+    from src.modules.customer_pilot.models import PilotProject, ProcurementCase
+    from src.modules.customer_registry.models import CustomerProfile
+    from src.tender_research.models import ProcurementTender, TenderAnalysisRun
+
+    customer = CustomerProfile(
+        customer_id=f"CUST-HERMES-{suffix}",
+        legal_name=f"Hermes Customer {suffix}",
+        customer_status="prospect",
+    )
+    session.add(customer)
+    session.flush()
+
+    project = PilotProject(
+        customer_id=customer.customer_id,
+        name=f"Hermes Project {suffix}",
+        internal_slug=f"hermes-{suffix.lower()}",
+    )
+    session.add(project)
+    session.flush()
+
+    registry_number = f"0379100000726000{100 + ord(suffix[0])}"
+    case = ProcurementCase(
+        customer_id=customer.customer_id,
+        project_id=project.id,
+        procurement_number=registry_number,
+        artifact_key=f"hermes-case-{suffix.lower()}",
+    )
+    session.add(case)
+    session.flush()
+
+    run = TenderAnalysisRun(
+        registry_number=registry_number,
+        customer_id=customer.customer_id,
+        project_id=project.id,
+        procurement_case_id=case.id,
+        idempotency_key=f"hermes-{suffix.lower()}",
+    )
+    session.add(run)
+
+    tender = ProcurementTender(
+        source="test",
+        external_id=f"hermes-scoped-{suffix}",
+        registry_number=registry_number,
+        title=f"Scoped Hermes Tender {suffix}",
+    )
+    session.add(tender)
+    session.flush()
+    case.current_run_id = run.id
+    session.commit()
+    return customer, project, case, run, tender
+
+
+def test_customer_scoped_feedback_binds_memory_to_existing_run_scope(session):
+    customer, project, case, run, tender = _customer_scoped_feedback_fixture(session)
+
+    service = HermesProcurementAnalysisService(session)
+    fb = service.save_feedback_as_memory(
+        HermesFeedbackCreateRequest(
+            tender_id=tender.id,
+            analysis_id=run.id,
+            customer_id=customer.customer_id,
+            project_id=project.id,
+            procurement_case_id=case.id,
+            field_path="line_items.0.quantity",
+            corrected_value_json={"quantity": "25"},
+        )
+    )
+
+    assert fb.analysis_id == run.id
+    memory = session.query(AgentMemory).filter(
+        AgentMemory.source_tender_id == tender.id,
+        AgentMemory.source_analysis_id == run.id,
+    ).one()
+    assert memory.payload_json["scope_binding"] == {
+        "customer_id": customer.customer_id,
+        "project_id": project.id,
+        "procurement_case_id": case.id,
+        "run_id": run.id,
+    }
+
+
+def test_customer_scoped_feedback_rejects_cross_scope_binding(session):
+    _customer, project, case, run, tender = _customer_scoped_feedback_fixture(session, "B")
+
+    service = HermesProcurementAnalysisService(session)
+    with pytest.raises(ValueError, match="does not belong"):
+        service.save_feedback_as_memory(
+            HermesFeedbackCreateRequest(
+                tender_id=tender.id,
+                analysis_id=run.id,
+                customer_id="CUST-OTHER",
+                project_id=project.id,
+                procurement_case_id=case.id,
+                field_path="summary.subject",
+            )
+        )
+
+
+def test_customer_scoped_memory_search_fails_closed_across_case_scope(session):
+    customer, project, case, run, tender = _customer_scoped_feedback_fixture(session, "C")
+    service = HermesProcurementAnalysisService(session)
+    service.save_feedback_as_memory(
+        HermesFeedbackCreateRequest(
+            tender_id=tender.id,
+            analysis_id=run.id,
+            customer_id=customer.customer_id,
+            project_id=project.id,
+            procurement_case_id=case.id,
+            field_path="summary.subject",
+        )
+    )
+
+    allowed = service.search_memory(
+        HermesMemorySearchRequest(
+            customer_id=customer.customer_id,
+            project_id=project.id,
+            procurement_case_id=case.id,
+        )
+    )
+    denied = service.search_memory(
+        HermesMemorySearchRequest(
+            customer_id=customer.customer_id,
+            project_id=project.id,
+            procurement_case_id="00000000-0000-0000-0000-000000000000",
+        )
+    )
+    assert any(item.source_analysis_id == run.id for item in allowed)
+    assert denied == []
+
+
+def test_feedback_reflection_exposes_immutable_review_provenance_without_mutation(
+    session, monkeypatch
+):
+    from src.modules.customer_pilot.models import PilotReview
+    from src.modules.hermes_agent.client import HermesClient
+
+    customer, project, case, run, tender = _customer_scoped_feedback_fixture(session, "D")
+    service = HermesProcurementAnalysisService(session)
+    fb = service.save_feedback_as_memory(
+        HermesFeedbackCreateRequest(
+            tender_id=tender.id,
+            analysis_id=run.id,
+            customer_id=customer.customer_id,
+            project_id=project.id,
+            procurement_case_id=case.id,
+            field_path="summary.subject",
+        )
+    )
+    review = PilotReview(
+        customer_id=customer.customer_id,
+        project_id=project.id,
+        procurement_case_id=case.id,
+        run_id=run.id,
+        reviewer="operator",
+        verdict="approved",
+        checklist={},
+        immutable_at=datetime.now(UTC),
+        source_graph_hash="a" * 64,
+        report_model_hash="b" * 64,
+    )
+    session.add(review)
+    session.commit()
+
+    monkeypatch.setattr(
+        HermesClient,
+        "reflect_on_feedback",
+        lambda self, payload: {"reflection": "preserve scoped correction"},
+    )
+
+    result = service.run_feedback_reflection(fb.id)
+    assert result["scope_binding"]["customer_id"] == customer.customer_id
+    assert result["scope_binding"]["procurement_case_id"] == case.id
+    assert result["immutable_review"]["review_id"] == review.id
+    assert result["immutable_review"]["source_graph_hash"] == "a" * 64
+    assert result["immutable_review"]["report_model_hash"] == "b" * 64
+    session.refresh(review)
+    assert review.verdict == "approved"
+    assert review.immutable_at is not None
