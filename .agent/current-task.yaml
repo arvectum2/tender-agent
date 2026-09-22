@@ -1,40 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-006-REVALIDATION-001
+status: in_progress
+task_id: ARV-008-REVALIDATION-001
 authority: AUTO
-goal: Revalidate historical ARV-006 full 223-FZ breadth against merged read-only 223-FZ intake and Decision Core evidence without authenticated/private platform access or legal/procedural invention.
+goal: Revalidate historical ARV-008 background jobs/workers with progress and retry against current repository-owned runtime and tests, without production mutation.
 definition_of_done:
-- Reconcile the ARV-006 next_result against current 223-FZ search/intake/document/revision and decision semantics.
-- Separate implemented source-bound capabilities from missing lots/positions/changes/clarifications/protocols/status breadth.
-- Preserve dedicated 223-FZ parsing and fail-closed regime semantics; do not fall through to 44-FZ assumptions.
-- Record at most one bounded source-traceable successor candidate; do not invent legal rules, provider priority or authenticated ETP scope.
-- Preserve the 2026-09-22 renewed AM-4 authority/hard stops and account this guarded AUTO merge as 2/10 only if executed.
-- Final exact-head CI green on the renewed branch; merge only after parent AM4 reconciliation reaches main and ordinary merge gates remain satisfied.
-completed:
-- Merged 223FZ-INGEST-V1-001 evidence identified at dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
-- Merged 223FZ-DECISION-V1-001 evidence identified at f603c9f62859b49287456069d7be98ac1c8ce1dd.
-- Dedicated public 223-FZ support matrix and regression evidence inspected.
-- Implemented capabilities reconciled: search/card intake, source-bound basic facts, documents, revision ambiguity guard and separate fail-closed decision semantics.
-- Remaining canonical gap reconciled: lots, positions, structured changes, clarifications, protocols and normalized lifecycle/status semantics.
-- One bounded successor candidate ARV-006-223FZ-BREADTH-V2-001 remains candidate_not_admitted.
-- Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276 passed CI run 35642169996 SUCCESS before renewal rebase.
-- Owner renewed POS-004 / AI-ENG-001 AM-4 on 2026-09-22; renewal reconciliation PR #115 passed exact-head CI and squash-merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774, consuming automatic merge 1/10.
-- PR #108 prior renewed-stack head 63d00f6d1be6a92705cdf59ac9191685a42b84d7 passed CI run 35778698555 SUCCESS before final rebase onto merged main.
-current: ARV-006 repository revalidation is complete, rebased onto renewed main, and PR #108 is retargeted to main. This final metadata head must pass exact-head CI before guarded AUTO merge.
-pending: []
-last_verified_commit: 576cc06a155142d36d5c1b0e150e6f5765a96085
-test_results:
-- "Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276: GitHub CI run 35642169996 SUCCESS."
-- "Renewed stacked head 63d00f6d1be6a92705cdf59ac9191685a42b84d7: GitHub CI run 35778698555 SUCCESS before final rebase onto merged main."
-- "PR #108 retargeted to main at head 576cc06a155142d36d5c1b0e150e6f5765a96085; mergeable=true; final synchronize commit intentionally follows so CI runs against base=main."
-updated_at: '2026-09-22T23:24:00+03:00'
-resume_instruction: Completed for repository work. Require final exact-head CI green on PR #108; if mergeable and all renewed AM-4 gates remain satisfied, guarded-auto-merge as automatic merge 2/10. Do not implement the successor candidate.
+- Reconcile ARV-008 against current main, merged evidence, code and tests.
+- Distinguish existing queue/job/retry/progress primitives from any missing durable worker contract.
+- Run deterministic repository-only checks available to this execution environment.
+- Record at most one bounded source-traceable successor candidate; do not invent runtime architecture, provider choice or production deployment scope.
+current: Repository-only ARV-008 revalidation in progress under active Owner continuation directive.
+pending:
+- inspect current worker/job/retry/progress evidence
+- persist reconciliation and bounded residual if proven
+last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+updated_at: '2026-09-22T14:01:08+03:00'
+resume_instruction: Continue ARV-008 repository-only revalidation. Do not deploy workers or mutate production. If a concrete gap is proven, record only a bounded candidate unless separately admitted.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/arv-006-revalidation-review
-  base_commit: 0a2e0055a3ce30cdcc108a097a09d5a2adb24774
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260922T140108+0300
+  branch: agent/arv-008-revalidation-20260922
+  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-22T15:51:08+03:00'
