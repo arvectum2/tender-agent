@@ -112,12 +112,18 @@ class HermesMemorySearchRequest(BaseModel):
     scope: str | None = None
     category: str | None = None
     source_tender_id: str | None = None
+    customer_id: str | None = None
+    project_id: str | None = None
+    procurement_case_id: str | None = None
     limit: int = 20
 
 
 class HermesFeedbackCreateRequest(BaseModel):
     tender_id: str
     analysis_id: str | None = None
+    customer_id: str | None = None
+    project_id: str | None = None
+    procurement_case_id: str | None = None
     field_path: str
     feedback_type: str = "correction"
     user_comment: str | None = None

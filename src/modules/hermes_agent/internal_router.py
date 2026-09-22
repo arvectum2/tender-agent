@@ -105,6 +105,9 @@ def search_memory(
     scope: str | None = Query(None),
     category: str | None = Query(None),
     source_tender_id: str | None = Query(None),
+    customer_id: str | None = Query(None),
+    project_id: str | None = Query(None),
+    procurement_case_id: str | None = Query(None),
     limit: int = Query(20, ge=1, le=100),
 ) -> list[dict]:
     service = get_service(session)
@@ -113,9 +116,15 @@ def search_memory(
         scope=scope,
         category=category,
         source_tender_id=source_tender_id,
+        customer_id=customer_id,
+        project_id=project_id,
+        procurement_case_id=procurement_case_id,
         limit=limit,
     )
-    memories = service.search_memory(request)
+    try:
+        memories = service.search_memory(request)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     return [
         {
             "id": m.id,
@@ -133,7 +142,10 @@ def search_memory(
 @router.post("/feedback")
 def create_feedback(payload: HermesFeedbackCreateRequest, session: DBSession) -> dict:
     service = get_service(session)
-    fb = service.save_feedback_as_memory(payload)
+    try:
+        fb = service.save_feedback_as_memory(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail="Scoped analysis context not found") from exc
 
     eval_case = service.create_eval_case_from_feedback(payload.tender_id, fb)
 

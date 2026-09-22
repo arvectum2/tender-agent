@@ -217,7 +217,106 @@ class HermesProcurementAnalysisService:
         self.session.commit()
         return analysis_id
 
+    def _resolve_customer_scope(
+        self,
+        *,
+        tender_id: str,
+        analysis_id: str | None,
+        customer_id: str | None,
+        project_id: str | None,
+        procurement_case_id: str | None,
+    ) -> dict | None:
+        scope_values = (customer_id, project_id, procurement_case_id)
+        if not any(scope_values):
+            return None
+        if not all(scope_values) or not analysis_id:
+            raise ValueError(
+                "Customer-scoped Hermes feedback requires analysis_id, customer_id, project_id and procurement_case_id"
+            )
+
+        from src.modules.customer_pilot.models import ProcurementCase
+        from src.tender_research.models import ProcurementTender, TenderAnalysisRun
+
+        run = self.session.scalar(
+            select(TenderAnalysisRun).where(
+                TenderAnalysisRun.id == analysis_id,
+                TenderAnalysisRun.customer_id == customer_id,
+                TenderAnalysisRun.project_id == project_id,
+                TenderAnalysisRun.procurement_case_id == procurement_case_id,
+            )
+        )
+        if not run:
+            raise ValueError("Analysis run does not belong to the requested customer/project/case scope")
+
+        case = self.session.scalar(
+            select(ProcurementCase).where(
+                ProcurementCase.id == procurement_case_id,
+                ProcurementCase.customer_id == customer_id,
+                ProcurementCase.project_id == project_id,
+            )
+        )
+        if not case:
+            raise ValueError("Procurement case does not belong to the requested customer/project scope")
+
+        tender = self.session.get(ProcurementTender, tender_id)
+        if not tender:
+            raise ValueError(f"Tender {tender_id} not found")
+        if (
+            tender.registry_number
+            and run.registry_number
+            and tender.registry_number != run.registry_number
+        ):
+            raise ValueError("Tender and analysis run registry numbers do not match")
+
+        return {
+            "customer_id": customer_id,
+            "project_id": project_id,
+            "procurement_case_id": procurement_case_id,
+            "run_id": analysis_id,
+        }
+
+    def _scope_for_analysis_run(self, analysis_id: str | None) -> dict | None:
+        if not analysis_id:
+            return None
+        from src.tender_research.models import TenderAnalysisRun
+
+        run = self.session.get(TenderAnalysisRun, analysis_id)
+        if not run or not all((run.customer_id, run.project_id, run.procurement_case_id)):
+            return None
+        return {
+            "customer_id": run.customer_id,
+            "project_id": run.project_id,
+            "procurement_case_id": run.procurement_case_id,
+            "run_id": run.id,
+        }
+
+    def _immutable_review_provenance(self, analysis_id: str | None) -> dict | None:
+        scope = self._scope_for_analysis_run(analysis_id)
+        if not scope:
+            return None
+        from src.modules.customer_pilot.models import PilotReview
+
+        review = self.session.scalar(
+            select(PilotReview).where(PilotReview.run_id == analysis_id)
+        )
+        if not review or review.immutable_at is None:
+            return None
+        return {
+            "review_id": review.id,
+            "immutable_at": review.immutable_at.isoformat(),
+            "source_graph_hash": review.source_graph_hash,
+            "report_model_hash": review.report_model_hash,
+            "pdf_sha256": review.pdf_sha256,
+        }
+
     def save_feedback_as_memory(self, feedback: HermesFeedbackCreateRequest) -> TenderAnalysisFeedback:
+        scope_binding = self._resolve_customer_scope(
+            tender_id=feedback.tender_id,
+            analysis_id=feedback.analysis_id,
+            customer_id=feedback.customer_id,
+            project_id=feedback.project_id,
+            procurement_case_id=feedback.procurement_case_id,
+        )
         fb = TenderAnalysisFeedback(
             tender_id=feedback.tender_id,
             analysis_id=feedback.analysis_id,
@@ -236,6 +335,8 @@ class HermesProcurementAnalysisService:
             "corrected_value": feedback.corrected_value_json,
             "user_comment": feedback.user_comment,
         }
+        if scope_binding:
+            memory_payload["scope_binding"] = scope_binding
         memory = AgentMemory(
             memory_type="feedback_error_case",
             scope="procurement_analysis",
@@ -276,6 +377,25 @@ class HermesProcurementAnalysisService:
         if request.source_tender_id:
             query = query.where(AgentMemory.source_tender_id == request.source_tender_id)
 
+        requested_scope = (
+            request.customer_id,
+            request.project_id,
+            request.procurement_case_id,
+        )
+        if any(requested_scope):
+            if not all(requested_scope):
+                raise ValueError(
+                    "Scoped memory search requires customer_id, project_id and procurement_case_id"
+                )
+            from src.tender_research.models import TenderAnalysisRun
+
+            scoped_runs = select(TenderAnalysisRun.id).where(
+                TenderAnalysisRun.customer_id == request.customer_id,
+                TenderAnalysisRun.project_id == request.project_id,
+                TenderAnalysisRun.procurement_case_id == request.procurement_case_id,
+            )
+            query = query.where(AgentMemory.source_analysis_id.in_(scoped_runs))
+
         query = query.order_by(AgentMemory.created_at.desc()).limit(request.limit)
         result = self.session.execute(query)
         return list(result.scalars().all())
@@ -307,12 +427,18 @@ class HermesProcurementAnalysisService:
 
         # Feedback is factual procurement memory. It is valid only for the
         # tender it originated from, never as global prompt context.
-        feedback_memories = self.search_memory(HermesMemorySearchRequest(
+        scoped_run = self._scope_for_analysis_run(context.get("run_id") or None)
+        feedback_search = HermesMemorySearchRequest(
             memory_type="feedback_error_case",
             scope="procurement_analysis",
             source_tender_id=tender_id or None,
             limit=10,
-        ))
+        )
+        if scoped_run:
+            feedback_search.customer_id = scoped_run["customer_id"]
+            feedback_search.project_id = scoped_run["project_id"]
+            feedback_search.procurement_case_id = scoped_run["procurement_case_id"]
+        feedback_memories = self.search_memory(feedback_search)
         for m in feedback_memories:
             memories.append({
                 "id": m.id,
@@ -511,6 +637,13 @@ class HermesProcurementAnalysisService:
             "user_comment": fb.user_comment,
             "corrected_value": fb.corrected_value_json,
         })
+        if isinstance(reflection, dict):
+            scope_binding = self._scope_for_analysis_run(fb.analysis_id)
+            if scope_binding:
+                reflection["scope_binding"] = scope_binding
+            immutable_review = self._immutable_review_provenance(fb.analysis_id)
+            if immutable_review:
+                reflection["immutable_review"] = immutable_review
         return reflection
 
     def _infer_document_role(self, file_name: str) -> str:
