@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-067-REVALIDATION-001
+status: in_progress
+authority: AUTO
+goal: Revalidate historical ARV-067 vertical ontologies / electrical equipment knowledge against current repository-owned assets, tests, and expert-acceptance evidence without enabling ontology production runtime or fabricating expert approval.
+definition_of_done:
+  - Reconcile ARV-067 against current main and repository-owned ontology/taxonomy/profile/truth-pack evidence.
+  - Verify tests continue to keep ontology assets out of production runtime unless separately admitted.
+  - State expert acceptance as satisfied only with durable attributable evidence; otherwise preserve REVIEW/HUMAN gate.
+  - Record at most one bounded repository-only successor candidate when a concrete canonically stated gap is proven.
+  - Do not invent acceptance criteria, ontology architecture, runtime authority, or expert approval.
+current: Bounded repository-only revalidation admitted under OWNER-CONTINUOUS-ROADMAP-2026-09-18 after earlier CORE-QUALITY-PILOT historical items were satisfied, active, or gated.
+pending:
+  - Inspect current repository ontology/taxonomy/profile/truth-pack assets and relevant tests.
+  - Reconcile durable expert-acceptance evidence and runtime isolation.
+  - Update roadmap reconciliation overlay/evidence only as needed.
+resume_instruction: Continue repository-only ARV-067 evidence inspection. Preserve expert acceptance as REVIEW/HUMAN unless durable attributable evidence exists; do not wire ontology assets into production runtime.
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260923T020248+0300
+  branch: agent/arv-067-revalidation-20260923
+  base_commit: 9a37ff969578d7d99afec9b8b65f286ac4539fc0
+  manual_override: false
