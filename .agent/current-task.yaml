@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: ARV-008-REVALIDATION-001
 authority: AUTO
 goal: Revalidate historical ARV-008 background jobs/workers with progress and retry against current repository-owned runtime and tests, without production mutation.
@@ -9,18 +9,18 @@ definition_of_done:
 - Distinguish existing queue/job/retry/progress primitives from any missing durable worker contract.
 - Run deterministic repository-only checks available to this execution environment.
 - Record at most one bounded source-traceable successor candidate; do not invent runtime architecture, provider choice or production deployment scope.
-current: Repository-only ARV-008 revalidation in progress under active Owner continuation directive.
+current: Repository-only ARV-008 revalidation completed on isolated branch; historical result is not proven satisfied and one bounded successor candidate is recorded without admission.
 pending:
-- inspect current worker/job/retry/progress evidence
-- persist reconciliation and bounded residual if proven
-last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+- exact-head CI
+- REVIEW before merge because Company AM-4 cycle is review-due at 10/10
+last_verified_commit: 015d21749f0488402a9352f974426206f9329955
 updated_at: '2026-09-22T14:01:08+03:00'
-resume_instruction: Continue ARV-008 repository-only revalidation. Do not deploy workers or mutate production. If a concrete gap is proven, record only a bounded candidate unless separately admitted.
+resume_instruction: Check exact-head CI once for the open PR. If green, preserve review-ready state. Do not implement ARV-008-WORKER-CONTRACT-001 unless separately admitted; do not mutate production runtime.
 execution:
-  claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260922T140108+0300
+  claimed_by: null
+  execution_id: null
   branch: agent/arv-008-revalidation-20260922
   base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
   issue: null
   manual_override: false
-  lease_until: '2026-09-22T15:51:08+03:00'
+  lease_until: null
