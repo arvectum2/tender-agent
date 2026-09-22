@@ -1,0 +1,20 @@
+version: 1
+task_id: ARV-005-REVALIDATION-001
+roadmap_item: ARV-005
+state: review
+branch: agent/arv-005-revalidation-20260922
+base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+authority: AUTO
+scope: repository-only historical revalidation
+verified:
+- Historical ARV-005 is R10.4 controlled pilot on 10–20 real procurements.
+- Canonical CORE-QUALITY-PILOT continuation branch states pilot/customer evidence is a REVIEW/HUMAN gate.
+- Default-branch repository code search for pilot and 10–20 produced no implementation/evidence match attributable to ARV-005.
+- No customer contact, procurement participation, private/customer data, production mutation, or external action was performed.
+residual:
+  id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+  state: candidate_not_admitted
+  description: Under separate admission and applicable HUMAN/REVIEW authority, define and collect the controlled pilot evidence required by the canonical roadmap without automating procurement participation or inventing customer evidence.
+blocker: Real pilot/customer evidence requires REVIEW/HUMAN action; Company AM-4 automatic-merge authority is also REVIEW-due at 10/10.
+resume_instruction: Check exact-head CI once after PR creation. If green, leave review-ready. Do not initiate pilot/customer/procurement activity or implement the residual candidate unless separately admitted and appropriately gated.
+updated_at: '2026-09-22T04:06:00+03:00'

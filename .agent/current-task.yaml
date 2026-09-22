@@ -1,24 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-030-REVALIDATION-001
+status: review
+task_id: ARV-005-REVALIDATION-001
 authority: AUTO
-goal: Revalidate the historical unified marketplace connector layer against current 44-FZ/223-FZ source dispatch and repository-owned tests without authenticated/private ETP access or external effects.
+goal: Revalidate the historical controlled 10–20 real-procurement pilot scope against current repository-owned evidence without customer contact, procurement participation, private data, or production/external effects.
 definition_of_done:
-- Reconcile ARV-030 against current registry discovery, public providers, pipeline dispatch and source provenance.
-- Distinguish reusable connector seams from the missing canonical standard adapter interface.
-- Run deterministic relevant tests/checks.
-- Record at most one bounded source-traceable successor candidate; do not invent provider priority, API contracts or external integration scope.
-current: ARV-030 repository-only revalidation is complete and merged; this closure reconciles the stale canonical task/queue/checkpoint state left after PR #105.
-pending: []
-last_verified_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
-updated_at: '2026-09-21T21:18:00+03:00'
-resume_instruction: Completed. Do not repeat ARV-030 evidence inspection or implement ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001 unless separately admitted. After this closure merge the renewed AM-4 cycle reaches 10/10, so all later automatic merges fail closed to REVIEW until attributable Owner renewal.
+- Reconcile ARV-005 against current main, merged evidence, issues and repository-owned pilot artifacts.
+- Establish whether a controlled 10–20 procurement pilot has durable repository evidence or remains dependent on HUMAN/REVIEW evidence.
+- Record at most one bounded source-traceable successor candidate; do not invent pilot participants, procurement decisions, acceptance criteria, customer evidence, or external actions.
+current: Repository-only ARV-005 revalidation found no default-branch code/artifact match for pilot or 10–20 procurement pilot evidence; the canonical roadmap itself states that CORE-QUALITY-PILOT remains gated by pilot/customer evidence. Completion cannot be inferred.
+pending:
+- Exact-head CI after PR creation.
+- HUMAN/REVIEW evidence before any real pilot/customer/procurement activity.
+- Owner AM-4 renewal/review before any automatic merge.
+last_verified_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+updated_at: '2026-09-22T04:05:00+03:00'
+resume_instruction: Check exact-head CI once after PR creation. If green, preserve review-ready evidence. Do not initiate a real pilot, contact participants, use private/customer data, make procurement decisions, or implement a successor unless separately admitted and appropriately gated.
 execution:
   claimed_by: null
   execution_id: null
-  branch: null
-  base_commit: b3cf30241b7ca4acdb7be88a4891f0d163155e1a
-  issue: null
+  branch: agent/arv-005-revalidation-20260922
+  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+  issue: 57
   manual_override: false
   lease_until: null
