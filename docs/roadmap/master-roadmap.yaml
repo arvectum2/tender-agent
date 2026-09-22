@@ -1481,10 +1481,26 @@ legacy_registry:
     comment: Ключевой рынок для фокуса Арвектум.
     dependencies_raw: ARV-002
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-21'
+    evidence:
+    - commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
+      detail: Merged read-only 223-FZ intake with dedicated provider/parser, source-aware dispatch, document-link discovery, revision ambiguity guard and idempotent persistence.
+    - commit: f603c9f62859b49287456069d7be98ac1c8ce1dd
+      detail: Merged fail-closed 223-FZ Decision Core semantics that preserve regime separation and human control.
+    - path: docs/223fz/INGEST_SUPPORT_MATRIX.md
+      detail: Current v1 support and explicit fail-closed boundaries for public 223-FZ acquisition.
+    - path: docs/roadmap/ARV-006_REVALIDATION_2026-09-21.md
+      detail: Capability-by-capability reconciliation against the broader historical ARV-006 target.
+    notes: >-
+      Search/registry intake/basic facts/documents and conservative revision ambiguity handling are implemented.
+      Lots, positions, structured change history, clarifications, protocols and normalized procedure/status lifecycle are not established.
+      Unsupported legal/procedural semantics remain UNKNOWN/NEEDS_REVIEW rather than inheriting 44-FZ rules.
+    successor_candidate:
+      task_id: ARV-006-223FZ-BREADTH-V2-001
+      status: candidate_not_admitted
+      title: Source-bound 223-FZ lots, positions and lifecycle breadth
+      scope: Freeze source evidence first, then extend only the existing dedicated read-only 223-FZ adapter for source-backed lots/positions and explicit change/clarification/protocol/status artifacts; preserve fail-closed UNKNOWN/NEEDS_REVIEW, no 44-FZ fallback, no authenticated/private actions and no new legal decision rules.
 - id: ARV-074
   legacy_snapshot:
     queue_order: 16

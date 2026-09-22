@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-22T23:07:00+03:00'
+updated_at: '2026-09-22T23:24:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -446,6 +446,24 @@ items:
   dependencies: []
   executor_scope: Reconcile only the latest Company renewal source/deadline/counter state into repository-owned executor policy/directive/watchdog/checkpoints. Preserve authority scope, hard stops, Product/Company/OS boundaries and every prohibited external effect.
   done_gate: 'Satisfied for repository work: latest renewal/evidence state reconciled; focused policy/YAML checks and local make check passed; PR #115 head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151 passed GitHub CI run 35777279190 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and all ordinary gates; when merged it counts as automatic merge 1/10 of the 2026-09-22 review cycle.'
+- order: 170
+  task_id: ARV-006-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate 223-FZ breadth against merged intake and decision foundations
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible 223FZ-BREADTH historical item after ETP-CONNECTORS ARV-030 revalidation; resumed after 2026-09-22 AM-4 renewal.'
+  roadmap_scope:
+  - ARV-006
+  dependencies:
+  - ARV-002-REVALIDATION-001
+  - AM4-RENEWAL-RECONCILE-002
+  executor_scope: Reconcile ARV-006 against current dedicated 223-FZ public search/intake, documents/revision signals and regime-aware Decision Core. Record existing capabilities and one concrete source-traceable residual only. Do not invent legal/procedural semantics, connect authenticated/private platforms or perform external procurement actions.
+  done_gate: 'Satisfied for repository work: 223-FZ implemented breadth and concrete residual are reconciled; successor remains candidate_not_admitted; prior exact-head CI was green on both review and renewed-stack heads; renewal reconciliation PR #115 merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774 (1/10); PR #108 is retargeted to main. Guarded AUTO merge of PR #108 requires fresh final exact-head CI and ordinary renewed AM-4 gates; if merged automatically, this is 2/10 of the 2026-09-22 cycle.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

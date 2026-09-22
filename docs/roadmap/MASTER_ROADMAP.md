@@ -318,6 +318,10 @@ Current main already has a reusable M-006 supplier registry and Decision Core su
 
 The bounded non-admitted successor `ARV-015-OPERATOR-PROFILE-PARSER-001` is recorded in `docs/roadmap/ARV-015_REVALIDATION_2026-09-21.md`. It deliberately reuses the existing template and Decision Core; it does not invent a parallel profile subsystem.
 
+## ARV-006 revalidation — 2026-09-21
+
+Merged 223-FZ intake and Decision Core already provide dedicated public search/card intake, source-bound basic facts, document discovery, revision ambiguity guards and fail-closed regime semantics. ARV-006 remains partial: lots/positions and structured changes, clarifications, protocols and status lifecycle are not yet established. One source-traceable successor candidate is recorded as `candidate_not_admitted`; no new 223-FZ implementation or legal rule is authorized by this reconciliation.
+
 ## Executor rule
 
 `.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not arbitrarily promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
