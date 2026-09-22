@@ -21,6 +21,10 @@ auto_merge_authority_sources:
     path: docs/organization/POS-004-ROADMAP-EXECUTOR-AM4-AUTHORIZATION-v1.0.0.md
   - repository: arvectum2/arvectum-company
     path: docs/governance/decisions/DECISION-2026-09-16-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  - repository: arvectum2/arvectum-company
+    path: docs/governance/decisions/DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  - repository: arvectum2/arvectum-company
+    path: docs/governance/decisions/DECISION-2026-09-22-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
 runtime:
   cadence: hourly
   max_productive_quantum_minutes: 45
