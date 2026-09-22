@@ -1,0 +1,44 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-008-REVALIDATION-001
+status: blocked
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-008-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-008 background jobs/workers status against current repository-owned evidence without production, provider, procurement, or external effects.
+definition_of_done:
+  - Reconcile ARV-008 against current main, merged history, tests and repository-owned evidence without rewriting immutable legacy history.
+  - Verify current implementation/status with deterministic repository-only or explicitly read-only checks.
+  - Update only reconciliation evidence needed to state what is complete and what concrete gap remains.
+  - If a concrete repository-only gap is proven and its desired result is already canonical, record at most one bounded successor candidate without inventing architecture or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates and production/external-effect hard stops.
+completed:
+  - Canonical continuation order checked. CORE-QUALITY-PILOT ARV-004 is blocked on a material Customer/Project/Case plus immutable-review contract; ARV-005 and ARV-061 depend on unresolved ARV-004/ARV-005; ARV-067 remains expert-gated. PRODUCTION-RUNTIME ARV-008 is therefore an eligible independent continuation item.
+  - Historical ARV-008 scope is explicit: separate worker process, durable consumer, retries/backoff, restart recovery, pause/cancel/resume, per-tenant concurrency and cost budgets.
+  - Historical dependencies ARV-007 and ARV-010 are satisfied at their canonical repository boundaries.
+  - Earlier PR #92 evidence predates later admitted implementation and is superseded for worker-transport status: queue item ARV-008-WORKER-TRANSPORT-V1-001 is done and records PR #97 exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34, CI run 35463316244 SUCCESS 9/9 including redis-integration, and squash merge daa3d2de580ff4098781ad46720626dec31576de.
+  - The merged bounded implementation adapts the frozen ARV-007 Redis foundation into Redis Streams consumer-group transport for existing tender-research prepare/analyze jobs, with a separate worker process, explicit thread|redis backend, fail-closed Redis mode, bounded retry/backoff and stale pending reclaim; PostgreSQL remains source of truth.
+  - Canonical queue scope explicitly does not claim full ARV-008 completion: pause/cancel/resume, per-tenant concurrency and cost budgets remain later bounded slices.
+  - No production/network/provider/procurement/external action was invoked and no residual architecture was invented.
+current: ARV-008 is materially advanced beyond this branch's original evidence boundary. Separate-process durable Redis worker transport, retry/backoff and stale-pending recovery are merged and verified. The remaining canonical residual is limited to pause/cancel/resume, per-tenant concurrency and cost budgets; this REVALIDATION slice does not invent their architecture or acceptance criteria.
+remaining:
+  - Keep ARV-008 released/blocked at the residual architecture boundary rather than reimplementing the already-verified worker transport.
+  - Preserve at most one bounded successor candidate for the roadmap-stated residual pause/cancel/resume, per-tenant concurrency and cost-budget result when an already-defined bounded contract or appropriate authority exists.
+  - Refresh this stale branch against current main before any merge consideration; do not overwrite newer canonical reconciliation state.
+successor_candidate:
+  task_id: ARV-008-RUNTIME-CONTROLS-001
+  status: candidate_not_admitted
+  source: docs/roadmap/master-roadmap.yaml ARV-008 next_result plus completed ARV-008-WORKER-TRANSPORT-V1-001 boundary
+  scope: Add only the remaining canonical pause/cancel/resume, per-tenant concurrency and cost-budget controls on top of the merged worker transport once a bounded contract/acceptance boundary is canonically available.
+  constraints:
+    - Do not replace or repeat the merged Redis Streams worker transport.
+    - Do not mutate production/provider/network state.
+    - Do not invent tenant authority, budget policy or acceptance thresholds.
+resume_instruction: Do not repeat worker-transport discovery or implementation. Treat PR #97/daa3d2de as verified completion of the bounded transport slice. Keep the residual released until a bounded runtime-controls contract exists; continue the next deterministic independent continuation item under the active Owner directive.
+updated_at: '2026-09-21T02:08:00+03:00'
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260921T015827+0300
+  lease_until: null
+  external_effects: none
