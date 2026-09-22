@@ -21,13 +21,14 @@ completed:
 - Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276 passed CI run 35642169996 SUCCESS before renewal rebase.
 - Owner renewed POS-004 / AI-ENG-001 AM-4 on 2026-09-22; renewal reconciliation PR #115 passed exact-head CI and squash-merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774, consuming automatic merge 1/10.
 - PR #108 prior renewed-stack head 63d00f6d1be6a92705cdf59ac9191685a42b84d7 passed CI run 35778698555 SUCCESS before final rebase onto merged main.
-current: ARV-006 repository revalidation is complete and rebased onto renewed main. Final exact-head CI on this bookkeeping-complete head is required before guarded AUTO merge.
+current: ARV-006 repository revalidation is complete, rebased onto renewed main, and PR #108 is retargeted to main. This final metadata head must pass exact-head CI before guarded AUTO merge.
 pending: []
-last_verified_commit: 63d00f6d1be6a92705cdf59ac9191685a42b84d7
+last_verified_commit: 576cc06a155142d36d5c1b0e150e6f5765a96085
 test_results:
 - "Prior PR #108 exact head ec82e5262809e35af067400927b822c216175276: GitHub CI run 35642169996 SUCCESS."
 - "Renewed stacked head 63d00f6d1be6a92705cdf59ac9191685a42b84d7: GitHub CI run 35778698555 SUCCESS before final rebase onto merged main."
-updated_at: '2026-09-22T23:18:00+03:00'
+- "PR #108 retargeted to main at head 576cc06a155142d36d5c1b0e150e6f5765a96085; mergeable=true; final synchronize commit intentionally follows so CI runs against base=main."
+updated_at: '2026-09-22T23:24:00+03:00'
 resume_instruction: Completed for repository work. Require final exact-head CI green on PR #108; if mergeable and all renewed AM-4 gates remain satisfied, guarded-auto-merge as automatic merge 2/10. Do not implement the successor candidate.
 execution:
   claimed_by: null

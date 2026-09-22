@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-22T23:18:00+03:00'
+updated_at: '2026-09-22T23:24:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -462,7 +462,7 @@ items:
   - ARV-002-REVALIDATION-001
   - AM4-RENEWAL-RECONCILE-002
   executor_scope: Reconcile ARV-006 against current dedicated 223-FZ public search/intake, documents/revision signals and regime-aware Decision Core. Record existing capabilities and one concrete source-traceable residual only. Do not invent legal/procedural semantics, connect authenticated/private platforms or perform external procurement actions.
-  done_gate: 'Satisfied for repository work: 223-FZ implemented breadth and concrete residual are reconciled; successor remains candidate_not_admitted; prior exact-head CI was green on both review and renewed-stack heads; renewal reconciliation PR #115 merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774 (1/10). Guarded AUTO merge of PR #108 requires fresh final exact-head CI and ordinary renewed AM-4 gates; if merged automatically, this is 2/10 of the 2026-09-22 cycle.'
+  done_gate: 'Satisfied for repository work: 223-FZ implemented breadth and concrete residual are reconciled; successor remains candidate_not_admitted; prior exact-head CI was green on both review and renewed-stack heads; renewal reconciliation PR #115 merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774 (1/10); PR #108 is retargeted to main. Guarded AUTO merge of PR #108 requires fresh final exact-head CI and ordinary renewed AM-4 gates; if merged automatically, this is 2/10 of the 2026-09-22 cycle.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
