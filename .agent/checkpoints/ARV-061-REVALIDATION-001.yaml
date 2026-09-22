@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-061-REVALIDATION-001
+status: in_progress
+authority: AUTO
+branch: agent/arv-061-revalidation-20260922
+base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+updated_at: '2026-09-22T05:57:44+03:00'
+evidence:
+  canonical_branch: CORE-QUALITY-PILOT
+  historical_item: ARV-061
+  roadmap_residual: fast cited pre-analysis
+  strategy: ADAPT
+  repository_checks:
+    - current roadmap Decision Core v1 is source-bound and fail-closed
+    - roadmap requires source evidence or explicit Unknown for substantive GO/NO-GO claims
+    - searches for ARV-061/pre-analysis/citation-specific symbols found no distinct durable ARV-061 implementation or acceptance artifact on main
+conclusion: Current foundations support the cited-reasoning boundary but do not prove historical ARV-061 fast-pre-analysis completion; no latency/model/architecture criteria may be invented by revalidation.
+successor_candidate:
+  task_id: ARV-061-FAST-CITED-PREANALYSIS-001
+  status: candidate_not_admitted
+  scope: Define and validate the already-roadmapped fast cited pre-analysis outcome using reusable retrieval/extraction and source-bound procurement reasoning, only after separate canonical admission supplies measurable acceptance criteria.
+validation:
+  exact_head_ci: pending
+blocker: Company AM-4 automatic-merge cycle is REVIEW-due at 10/10; preparation/testing may continue but merge fails closed to REVIEW.
+resume_instruction: Check exact-head CI once. If green, preserve this revalidation review-ready without changing the head merely to restate CI. Do not implement the successor candidate unless separately admitted.
