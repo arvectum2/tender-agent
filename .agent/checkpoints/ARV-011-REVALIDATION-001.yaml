@@ -1,0 +1,22 @@
+schema_version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-011-REVALIDATION-001
+status: in_progress
+authority: AUTO
+branch: agent/arv-011-revalidation-20260923
+base_commit: e96b3b8d12943dd1e7e63b2c94cf19c81df921bc
+updated_at: '2026-09-23T08:00:53+03:00'
+canonical_item: ARV-011
+continuation_branch: PRODUCTION-RUNTIME
+scope: Repository-only revalidation of historical ARV-011 against current production-runtime/access/migration evidence; no production, network, provider, credential or external mutation.
+definition_of_done:
+  - Reconcile ARV-011 against current main, merged PRs, repository-owned docs, code and tests.
+  - Distinguish durable repository evidence from any production/network/provider state that cannot be inferred.
+  - Run deterministic repository-only or explicitly read-only checks available in this environment.
+  - Record at most one bounded successor candidate only if a concrete repository-owned gap and desired result are already canonical; do not invent production architecture, provider choice, migration plan or acceptance criteria.
+  - Preserve REVIEW/HUMAN/OWNER gates for production/network/provider/credential actions.
+validation:
+  repository_only: true
+  production_mutation: false
+  external_effect: false
+resume_instruction: Inspect repository-owned ARV-011/production-runtime evidence and deterministic tests. Update only reconciliation evidence. Do not access or mutate production/network/provider systems, credentials or allowlists, and do not invent architecture or acceptance criteria.
