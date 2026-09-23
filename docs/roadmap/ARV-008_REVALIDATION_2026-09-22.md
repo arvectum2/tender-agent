@@ -24,4 +24,4 @@ Record `ARV-008-WORKER-CONTRACT-001` as **candidate_not_admitted** only: define 
 
 ## Safety / gates
 
-No production worker was started, stopped or deployed; no queue/broker/network/provider state was mutated; no external service was contacted; no secrets/private/customer data were broadened. Automatic merge remains REVIEW-blocked because Company AM-4 is review-due at the 10/10 cycle limit.
+No production worker was started, stopped or deployed; no queue/broker/network/provider state was mutated; no external service was contacted; no secrets/private/customer data were broadened. The prior 10/10 Company AM-4 blocker was superseded by attributable Owner renewal on 2026-09-22. The renewed cycle is active; after PR #116, 3/10 automatic merges are consumed. This repository-only revalidation remains eligible for guarded AUTO merge only after rebased exact-head CI and all ordinary Product/Company gates are rechecked.

@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: ARV-008-REVALIDATION-001
 authority: AUTO
 goal: Revalidate historical ARV-008 background jobs/workers with progress and retry against current repository-owned runtime and tests, without production mutation.
@@ -11,16 +11,15 @@ definition_of_done:
 - Record at most one bounded source-traceable successor candidate; do not invent runtime architecture, provider choice or production deployment scope.
 current: Repository-only ARV-008 revalidation completed on isolated branch; historical result is not proven satisfied and one bounded successor candidate is recorded without admission.
 pending:
-- exact-head CI
-- REVIEW before merge because Company AM-4 cycle is review-due at 10/10
-last_verified_commit: 015d21749f0488402a9352f974426206f9329955
-updated_at: '2026-09-22T14:01:08+03:00'
-resume_instruction: Check exact-head CI once for the open PR. If green, preserve review-ready state. Do not implement ARV-008-WORKER-CONTRACT-001 unless separately admitted; do not mutate production runtime.
+- exact-head CI on renewed/rebased head
+last_verified_commit: af1543c
+updated_at: '2026-09-23T06:08:00+03:00'
+resume_instruction: Check exact-head CI once for the rebased PR. If green, re-read Company AM-4 authority and ordinary merge gates immediately before guarded AUTO merge. Do not implement ARV-008-WORKER-CONTRACT-001 unless separately admitted; do not mutate production runtime.
 execution:
   claimed_by: null
   execution_id: null
   branch: agent/arv-008-revalidation-20260922
-  base_commit: b0b992142c1c2872e2df4cd9431b8558bd739ea2
+  base_commit: 7f69a81bdbcadb714163f38b3dfd3a320bac72ea
   issue: null
   manual_override: false
   lease_until: null
