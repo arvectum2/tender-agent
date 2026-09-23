@@ -12,14 +12,14 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 1 acquisition has been attempted for all three frozen cases. W1-A completed controlled local-LLM analysis. W1-B and W1-C both fail closed at read-only public acquisition with docs_required/manual_upload_required and zero documents; neither is counted as a successful analysis.
+current: Wave 1 acquisition-path diagnosis is complete. W1-A completed controlled local-LLM analysis. W1-B/W1-C remain uncounted: their frozen handoffs used printForm/view.html, while the current public documents URL resolver does not map that shape to a procedure-specific documents.html URL; no cached package exists.
 pending:
 - Resolve or formally persist the W1-B/W1-C source-bound public-document blocker using only repository-supported read-only public paths or existing cached public packages; do not repeat identical acquisition blindly.
 - Record per-run source completeness, explicit local-LLM provenance, Decision Core/report status, fallbacks and defects.
 - Apply Wave 1 -> Wave 2 gate; do not tune on Wave 2 cases before their registry numbers are frozen.
 - Repository merges now fail closed to REVIEW because the renewed AM-4 cycle is at 10/10.
-updated_at: '2026-09-23T17:10:00+03:00'
-resume_instruction: W1-B/W1-C are source-bound at read-only public acquisition with zero documents. Inspect only repository-supported public alternatives or existing cached packages; if none exist, record the Wave 1 blocked outcome and apply the defined gate. Never authenticate to EIS/ETP. Do not auto-merge repository evidence until a new attributable Owner AM-4 renewal/review.
+updated_at: '2026-09-23T19:20:00+03:00'
+resume_instruction: Treat the printForm-to-documents URL mismatch as the concrete W1-B/W1-C blocker. Do not guess a procedure code or repeat identical acquisition. Prepare a bounded repository-only resolver fix only if canonical existing search/detail evidence supplies the procedure-specific URL deterministically; otherwise apply the Wave 1 blocked gate. Never authenticate to EIS/ETP or auto-merge while AM-4 is review-due.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot

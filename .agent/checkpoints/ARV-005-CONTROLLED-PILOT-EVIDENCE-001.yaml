@@ -78,3 +78,9 @@ validation:
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
 resume_instruction: W1-B and W1-C are source-bound at public acquisition: docs_required/manual_upload_required, zero documents. Do not repeat the same acquisition blindly. Inspect only repository-supported read-only public acquisition alternatives or existing cached public packages; if none exist, persist the Wave 1 blocked outcome and apply the defined gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.
+wave1_acquisition_diagnosis_20260923:
+  cache_check: no_existing_public_package_for_w1b_or_w1c
+  frozen_source_url_shape: printForm/view.html
+  resolver_gap: current_public_documents_url_builder_does_not_resolve_printForm_to_procedure_specific_documents_url
+  direct_printform_link_check: no_documents_or_public_filestore_link_found
+  safe_boundary: do_not_guess_procedure_code_or_authenticate_to_eis

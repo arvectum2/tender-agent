@@ -59,3 +59,11 @@ A source-bound acquisition blocker counts as a recorded technical pilot outcome 
 - W1-B `0333300006126000121`: read-only public acquisition attempted; run `toa-run-20260923140657-3d3613` returned `docs_required`, `manual_upload_required`, zero downloaded documents, so local LLM was not invoked and the case is not counted as a successful analysis.
 - W1-C `0301200067526000236`: read-only public acquisition attempted; run `toa-run-20260923140728-f2b896` returned `docs_required`, `manual_upload_required`, zero downloaded documents, so local LLM was not invoked and the case is not counted as a successful analysis.
 - These are source-bound acquisition outcomes. No authenticated EIS/ETP action or consequential external action was attempted.
+
+### W1-B/W1-C acquisition-path diagnosis — 2026-09-23
+
+A non-mutating inspection of the isolated Mac mini cache found no previously acquired public package for W1-B or W1-C beyond their zero-document runs. The repository does contain a read-only public-document supplement path (`_supplement_run_with_public_notice_attachments`) and ARV-096 evidence explicitly expects public documents-page / notice-XML supplementation.
+
+The frozen W1-B/W1-C handoffs used `printForm/view.html` as `source_url`. Current `Public44FzSearchProvider._build_documents_url()` only rewrites `common-info.html` or `/view(.html)` shapes; for `printForm/view.html` it therefore resolves the documents fetch back to the print-form URL rather than a procedure-specific `documents.html` URL. Both runs then record zero public documents without an acquisition error. A direct read-only check of the W1-B print-form response found no `documents.html` or public filestore link to recover from that page itself.
+
+This is a concrete repository acquisition-path gap. It must not be bypassed by guessing a procedure code from the registry number or by authenticated EIS access. W1-B/W1-C remain source-bound and uncounted until an already-authorized repository rule can resolve the canonical procedure-specific documents URL, or the Wave 1 gate accepts the blocked outcome. No frozen case, benchmark truth, comparator, or normalizer was changed.
