@@ -162,6 +162,8 @@ TENDER_OPERATOR_PROMPT_SPECS = {
         template=(
             "Return JSON with keys email_subject, intro, requirements_summary, supplier_questions, "
             "requested_response_items, commercial_terms, and closing_note. "
+            "requirements_summary, supplier_questions, requested_response_items, and commercial_terms "
+            "must each be JSON arrays of strings, never numbered or newline-formatted strings. "
             "The draft must not instruct autonomous sending."
         ),
     ),
@@ -779,7 +781,8 @@ class _OpenAICompatibleJSONProvider(_BaseJSONProvider):
                     "role": "system",
                     "content": (
                         "You are a controlled internal procurement analysis assistant. "
-                        "Return valid JSON only. "
+                        "Return valid JSON only. Match the supplied output schema exactly, including array/object/scalar types. "
+                        "Do not coerce JSON arrays into formatted strings. "
                         "Do not suggest autonomous external actions."
                     ),
                 },
@@ -789,6 +792,7 @@ class _OpenAICompatibleJSONProvider(_BaseJSONProvider):
                         {
                             "task": section,
                             "prompt_template": prompt_template,
+                            "output_schema": prompt_record.asset_payload_json.get("output_schema_json", {}),
                             "context": context,
                         },
                         ensure_ascii=False,

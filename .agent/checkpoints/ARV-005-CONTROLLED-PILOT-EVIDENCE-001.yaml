@@ -3,9 +3,9 @@ repository: arvectum2/tender-agent
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 status: in_progress
 authority: AUTO
-branch: agent/arv-005-real-pilot-plan-20260923
-base_commit: 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845
-updated_at: '2026-09-23T11:20:00+03:00'
+branch: agent/arv-005-local-llm-schema-contract
+base_commit: 32410164e81e1d477911fe593f1874faeca52247
+updated_at: '2026-09-23T11:42:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -16,13 +16,19 @@ owner_direction:
   real_procurement_runs_authorized: true
 completed:
   - Canonical development chain reconciled through PR #119 / main 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845.
-  - Mac mini inspection proved backend is running locally and local model/embedding services are present.
+  - Pilot admission plan PR #120 merged as 32410164e81e1d477911fe593f1874faeca52247 (automatic merge 8/10).
+  - Isolated canonical Mac mini clone created; legacy runtime copy left untouched.
+  - Local Python 3.11 pilot venv created; focused controlled-LLM/provider tests pass 26/26 when runtime secrets are isolated from test env.
   - Direct local Gemma smoke returned valid compact JSON through llama.cpp loopback.
-  - Current backend configuration was verified not to enable controlled LLM provider mode, so existing analyses can silently fall back to deterministic mode.
-current: Wave 0 preparation.
+  - Local Qwen3 embedding service is present on loopback and pilot config points retrieval embeddings to it.
+  - Existing legacy backend was verified not to enable controlled LLM provider mode, so its analyses can silently fall back to deterministic mode.
+  - Pilot provider config now targets local Gemma via llama.cpp and uses 120s timeout; one-section requirements smoke passed schema validation in 43.64s.
+  - Full four-section smoke completed in 240.22s: requirements/supplier_questions/contract_risk_memo passed; rfq_draft failed closed because list-typed fields were returned as strings.
+  - RFQ failure reproduced in isolation and classified as output-schema prompt mismatch, not transport failure.
+current: Harden local controlled-provider schema contract before counted Wave 1.
 remaining:
-  - isolated canonical runtime
-  - controlled-provider local LLM configuration and fixture proof
+  - exact-head CI/merge for local LLM schema-contract hardening
+  - repeat full controlled-provider fixture proof with all four core sections valid
   - Wave 1 case freeze and 3 runs
   - Wave 2 case freeze and 5 runs
   - Wave 3 confirmation 4 runs
@@ -36,4 +42,10 @@ validation:
   local_embeddings_model_observed: Qwen3-Embedding-4B
   existing_backend_controlled_llm_enabled: false
   direct_local_generation_smoke: pass
-resume_instruction: Start Wave 0 on Mac mini in a fresh isolated canonical runtime. Preserve the legacy runtime untouched. Configure controlled LLM generation to llama.cpp loopback, run fixture/preflight checks, then freeze Wave 1 selection before inspecting outputs.
+  controlled_requirements_schema_smoke: pass
+  controlled_full_smoke_seconds: 240.22
+  controlled_full_smoke_sections_passed: 3
+  controlled_full_smoke_sections_failed: 1
+  controlled_full_smoke_failure: rfq_draft list fields emitted as strings
+  pilot_llm_timeout_seconds: 120
+resume_instruction: Finish schema-contract hardening, merge only after exact-head CI, sync isolated Mac mini runtime to the merged head, and repeat the full four-section synthetic LLM smoke. Freeze Wave 1 only after the local controlled-provider path is explicit and schema-valid.
