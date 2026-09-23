@@ -1,30 +1,23 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
-task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+status: done
+task_id: ARV-004-REVALIDATION-001
 authority: AUTO
-goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
+goal: Reconcile repository-owned ARV-004 Hermes/customer-scoped-feedback evidence against current main without inventing implementation scope or human acceptance.
 definition_of_done:
-- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
-- Local controlled LLM path configured and proven on fixture data before counted cases.
-- Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
-- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
-- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
-- Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
-- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 0 remains active on the isolated canonical Mac mini runtime. PR #121 merged prompt/schema visibility hardening; targeted post-merge proof showed llama.cpp response_format.schema is also required for reliable type-constrained output. The bounded follow-up adds that existing supported schema constraint; targeted rfq_draft + contract_risk_memo smoke passes 2/2.
-pending:
-- Complete exact-head CI and merge the controlled-provider response schema constraint.
-- Re-run the full synthetic controlled-provider smoke from canonical main and require all four core sections to validate.
-- Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
-- Execute Wave 1, then continue only through defined gates.
-updated_at: '2026-09-23T12:12:00+03:00'
-resume_instruction: Finish the controlled-provider response-schema PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full four-section synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until all four sections validate or fail closed with an explicit accepted blocker.
+- Reconcile the historical ARV-004 item against current main and repository-owned evidence.
+- Run deterministic repository-only tests for Hermes runtime and customer-scoped feedback boundaries.
+- Record implemented evidence and one source-traceable residual.
+- Preserve REVIEW/HUMAN/OWNER gates and all external/production hard stops.
+current: Revalidation complete. Hermes runtime/reflection and customer-scoped pilot feedback both exist, but they use separate feedback models with no repository-owned bridge from PilotFeedback to Hermes reflection/memory.
+pending: []
+updated_at: '2026-09-24T02:14:00+03:00'
+resume_instruction: Do not reopen this revalidation. The source-traceable residual is recorded as successor candidate ARV-004-CUSTOMER-FEEDBACK-BRIDGE-001; implementation requires separate canonical admission.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260923-real-pilot
-  branch: agent/arv-005-local-llm-response-schema
-  base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260924-0200-arv004-revalidation
+  branch: agent/arv-004-revalidation-001
+  base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
   issue: null
   manual_override: false
   lease_until: null

@@ -1165,10 +1165,20 @@ legacy_registry:
     comment: Идёт после стабилизации production LLM и критериев качества.
     dependencies_raw: ARV-003, ARV-001
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: partially_implemented_residual_proven
+    verified_at: '2026-09-24'
+    evidence:
+    - path: src/modules/hermes_agent/service.py
+      detail: Hermes runtime analysis, memory loading, self-improvement and feedback reflection are implemented; reflection currently consumes TenderAnalysisFeedback.
+    - path: src/modules/customer_pilot/models.py
+      detail: PilotFeedback is independently customer/project/case/run scoped and immutable customer-run artifacts preserve customer/project/case binding.
+    - path: src/modules/customer_pilot/router.py
+      detail: Customer pilot feedback API enforces customer/case/run ownership and records scoped feedback.
+    - test: 'python -m pytest -q tests/tender_research/test_hermes_runtime_analyzer.py tests/test_r8_customer_pilot.py'
+      result: '26 passed on 2026-09-24 using isolated pilot venv.'
+    notes: 'Concrete residual: Hermes run_feedback_reflection reads TenderAnalysisFeedback, while customer pilot writes PilotFeedback. No repository-owned bridge currently binds customer/project/case/run-scoped PilotFeedback into Hermes reflection/memory. This directly matches the historical next_result; implementation is not admitted by this revalidation.'
+    successor_candidate: ARV-004-CUSTOMER-FEEDBACK-BRIDGE-001
+    successor_scope: 'Bound only existing PilotFeedback customer/project/case/run identity into existing Hermes feedback-reflection/memory path with immutable review provenance; repository-only implementation candidate, no external/customer effect and no inferred acceptance.'
 - id: ARV-005
   legacy_snapshot:
     queue_order: 5

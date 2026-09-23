@@ -1,0 +1,26 @@
+schema_version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-004-REVALIDATION-001
+status: done
+authority: AUTO
+branch: agent/arv-004-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-09-24T02:14:00+03:00'
+canonical_item: ARV-004
+continuation_branch: CORE-QUALITY-PILOT
+scope: Standard repository-only REVALIDATION of Hermes/customer-scoped feedback evidence.
+completed:
+- Deterministically selected ARV-004 after ARV-002/ARV-003 satisfied and ARV-005 active but blocked at frozen Wave 1 gate.
+- Verified Hermes runtime analysis, memory/self-improvement and TenderAnalysisFeedback reflection implementation.
+- Verified customer/project/case/run-scoped PilotFeedback API/model and cross-customer isolation.
+- Focused tests passed 26/26 using the isolated pilot venv.
+- Proved one residual: PilotFeedback is not bridged into Hermes run_feedback_reflection/memory; Hermes reflection reads separate TenderAnalysisFeedback.
+validation:
+  focused_tests: 26 passed
+  first_system_python_attempt: blocked_by_missing_redis_dependency
+  isolated_pilot_venv_retry: pass
+  external_effects: none
+residual:
+  candidate: ARV-004-CUSTOMER-FEEDBACK-BRIDGE-001
+  scope: Bind existing PilotFeedback customer/project/case/run identity into existing Hermes reflection/memory with immutable review provenance; no external effect or inferred customer acceptance.
+resume_instruction: Revalidation is complete. Do not implement the successor candidate without separate canonical admission.
