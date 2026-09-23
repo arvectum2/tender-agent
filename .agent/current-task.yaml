@@ -1,24 +1,30 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-012-REVALIDATION-001
+status: in_progress
+task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
-goal: Revalidate historical ARV-012 against current repository-owned production-runtime evidence without production, network, provider, credential or external mutation.
+goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
 definition_of_done:
-- Reconcile ARV-012 against current main, merged evidence, docs, code and tests.
-- Distinguish durable repository evidence from production/network/provider state that cannot be inferred.
-- Run deterministic repository-only or explicitly read-only checks available to this execution environment.
-- Record at most one bounded source-traceable successor candidate only if the desired result is already canonical; do not invent production architecture, provider choice, migration plan or acceptance criteria.
-- Preserve REVIEW/HUMAN/OWNER gates for production/network/provider/credential actions.
-current: ARV-012 repository-only revalidation is complete. PR #118 exact head da92796cb7799d9c6698f6b9a7aa31ff2909bdb1 passed CI run 35830742779 and squash-merged as ab82ec266dc5a58f254d6dfbae7ce51177031806 (automatic merge 6/10). Historical VPS migration remains not proven satisfied; no external infrastructure state was inferred. This closure is 7/10 only if guarded-auto-merged after exact-head CI.
-pending: []
-updated_at: '2026-09-23T10:28:00+03:00'
-resume_instruction: Completed. Do not repeat ARV-012 repository evidence inspection. Historical VPS migration remains unproven and production/network/provider/credential actions stay REVIEW/HUMAN/OWNER-gated. ARV-013 depends on historical ARV-012 and is not executable while that dependency remains unproven.
+- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
+- Local controlled LLM path configured and proven on fixture data before counted cases.
+- Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
+- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
+- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
+- Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
+- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
+current: Pilot plan admitted from explicit Owner direction to use the Mac mini instead of VPS and move to real-procurement runs. Wave 0 runtime synchronization and local-LLM controlled-provider preflight is next.
+pending:
+- Prepare isolated canonical Mac mini runtime from exact main.
+- Configure/test local Gemma generation plus Qwen3 embeddings without exposing either service.
+- Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
+- Execute Wave 1, then continue only through defined gates.
+updated_at: '2026-09-23T11:20:00+03:00'
+resume_instruction: Start Wave 0 on Mac mini. Do not mutate the existing legacy runtime copy; create/use an isolated canonical runtime pinned to main. Verify local LLM controlled-provider schema path before selecting counted Wave 1 outputs. No submission, signing, supplier/customer outreach or authenticated consequential ETP action.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/arv-012-close-revalidation
-  base_commit: ab82ec266dc5a58f254d6dfbae7ce51177031806
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20260923-real-pilot
+  branch: agent/arv-005-real-pilot-plan-20260923
+  base_commit: 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845
   issue: null
   manual_override: false
   lease_until: null
