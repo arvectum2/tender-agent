@@ -12,19 +12,19 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 0 is active on an isolated canonical Mac mini runtime. Local Gemma generation works with a 120s provider timeout, but the first full controlled-provider smoke exposed a fail-closed RFQ draft schema mismatch: Gemma returned four list-typed RFQ fields as strings. This branch hardens the provider prompt with the stored output_schema_json and explicit array typing before counted runs.
+current: Wave 0 remains active on the isolated canonical Mac mini runtime. PR #121 merged prompt/schema visibility hardening; targeted post-merge proof showed llama.cpp response_format.schema is also required for reliable type-constrained output. The bounded follow-up adds that existing supported schema constraint; targeted rfq_draft + contract_risk_memo smoke passes 2/2.
 pending:
-- Complete exact-head CI and merge the local-LLM schema-contract hardening.
+- Complete exact-head CI and merge the controlled-provider response schema constraint.
 - Re-run the full synthetic controlled-provider smoke from canonical main and require all four core sections to validate.
 - Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
 - Execute Wave 1, then continue only through defined gates.
-updated_at: '2026-09-23T11:42:00+03:00'
-resume_instruction: Finish the local-LLM schema-contract PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until requirements, supplier_questions, rfq_draft and contract_risk_memo all validate or fail closed with an explicit accepted blocker.
+updated_at: '2026-09-23T12:12:00+03:00'
+resume_instruction: Finish the controlled-provider response-schema PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full four-section synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until all four sections validate or fail closed with an explicit accepted blocker.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
-  branch: agent/arv-005-local-llm-schema-contract
-  base_commit: 32410164e81e1d477911fe593f1874faeca52247
+  branch: agent/arv-005-local-llm-response-schema
+  base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
   issue: null
   manual_override: false
   lease_until: null

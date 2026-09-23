@@ -3,9 +3,9 @@ repository: arvectum2/tender-agent
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 status: in_progress
 authority: AUTO
-branch: agent/arv-005-local-llm-schema-contract
-base_commit: 32410164e81e1d477911fe593f1874faeca52247
-updated_at: '2026-09-23T11:42:00+03:00'
+branch: agent/arv-005-local-llm-response-schema
+base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
+updated_at: '2026-09-23T12:12:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -25,9 +25,12 @@ completed:
   - Pilot provider config now targets local Gemma via llama.cpp and uses 120s timeout; one-section requirements smoke passed schema validation in 43.64s.
   - Full four-section smoke completed in 240.22s: requirements/supplier_questions/contract_risk_memo passed; rfq_draft failed closed because list-typed fields were returned as strings.
   - RFQ failure reproduced in isolation and classified as output-schema prompt mismatch, not transport failure.
-current: Harden local controlled-provider schema contract before counted Wave 1.
+  - PR #121 schema-prompt hardening merged as 37d6ad8c8300906737b5b1fd2ae37b7d88043116 after 19/19 exact-head checks succeeded.
+  - Existing production LLM transport pattern proved llama.cpp supports response_format.schema; controlled provider now reuses its stored schema as a generation constraint.
+  - Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
+current: Complete exact-head CI for llama.cpp response schema constraint, then run one full four-section synthetic proof before counted Wave 1.
 remaining:
-  - exact-head CI/merge for local LLM schema-contract hardening
+  - exact-head CI/merge for controlled-provider response schema constraint
   - repeat full controlled-provider fixture proof with all four core sections valid
   - Wave 1 case freeze and 3 runs
   - Wave 2 case freeze and 5 runs
@@ -48,4 +51,4 @@ validation:
   controlled_full_smoke_sections_failed: 1
   controlled_full_smoke_failure: rfq_draft list fields emitted as strings
   pilot_llm_timeout_seconds: 120
-resume_instruction: Finish schema-contract hardening, merge only after exact-head CI, sync isolated Mac mini runtime to the merged head, and repeat the full four-section synthetic LLM smoke. Freeze Wave 1 only after the local controlled-provider path is explicit and schema-valid.
+resume_instruction: Merge the response-schema constraint only after exact-head CI and ordinary AM-4 gates. Then sync isolated Mac mini runtime to exact main and run one full four-section synthetic LLM smoke. Freeze Wave 1 only if all four sections validate; otherwise fail closed and record the blocker.

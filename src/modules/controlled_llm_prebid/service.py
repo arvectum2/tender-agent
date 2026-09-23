@@ -773,9 +773,11 @@ class _OpenAICompatibleJSONProvider(_BaseJSONProvider):
             raise ValidationError("AI_CORP_LLM_MODEL is required for LLM provider mode")
 
         prompt_template = prompt_record.asset_payload_json.get("template", "")
+        output_schema = prompt_record.asset_payload_json.get("output_schema_json", {})
         body = {
             "model": model,
             "temperature": 0,
+            "response_format": {"type": "json_object", "schema": output_schema},
             "messages": [
                 {
                     "role": "system",
@@ -792,7 +794,7 @@ class _OpenAICompatibleJSONProvider(_BaseJSONProvider):
                         {
                             "task": section,
                             "prompt_template": prompt_template,
-                            "output_schema": prompt_record.asset_payload_json.get("output_schema_json", {}),
+                            "output_schema": output_schema,
                             "context": context,
                         },
                         ensure_ascii=False,
