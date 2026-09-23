@@ -3,9 +3,9 @@ repository: arvectum2/tender-agent
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 status: in_progress
 authority: AUTO
-branch: agent/arv-005-local-llm-response-schema
-base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
-updated_at: '2026-09-23T12:12:00+03:00'
+branch: agent/arv-005-wave1-frozen
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-09-23T17:10:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -28,11 +28,13 @@ completed:
   - PR #121 schema-prompt hardening merged as 37d6ad8c8300906737b5b1fd2ae37b7d88043116 after 19/19 exact-head checks succeeded.
   - Existing production LLM transport pattern proved llama.cpp supports response_format.schema; controlled provider now reuses its stored schema as a generation constraint.
   - Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
-current: Complete exact-head CI for llama.cpp response schema constraint, then run one full four-section synthetic proof before counted Wave 1.
+  - PR #122 exact head 88f7e29882c4652bde704b0de023eb78e44f0a68 passed CI run 35841190403 and merged as 189799ce4cc44a4e83e75169d689613bd14b55bf; renewed AM-4 automatic merge counter reached 10/10.
+  - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
+  - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
+  - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
+current: Wave 1 acquisition attempted for all three frozen cases. W1-A completed controlled local-LLM analysis; W1-B and W1-C fail closed at public acquisition with docs_required/manual_upload_required and zero downloaded documents, so neither is counted as a successful analysis.
 remaining:
-  - exact-head CI/merge for controlled-provider response schema constraint
-  - repeat full controlled-provider fixture proof with all four core sections valid
-  - Wave 1 case freeze and 3 runs
+  - Resolve W1-B/W1-C source-bound public-document acquisition blocker without authenticated/consequential EIS action; otherwise record Wave 1 blocked outcome and apply gate
   - Wave 2 case freeze and 5 runs
   - Wave 3 confirmation 4 runs
   - 3 exploratory 223-FZ runs
@@ -46,9 +48,39 @@ validation:
   existing_backend_controlled_llm_enabled: false
   direct_local_generation_smoke: pass
   controlled_requirements_schema_smoke: pass
-  controlled_full_smoke_seconds: 240.22
-  controlled_full_smoke_sections_passed: 3
-  controlled_full_smoke_sections_failed: 1
-  controlled_full_smoke_failure: rfq_draft list fields emitted as strings
+  controlled_full_smoke_seconds: 250.62
+  controlled_full_smoke_sections_passed: 4
+  controlled_full_smoke_sections_failed: 0
+  controlled_full_smoke_failure: null
+  frozen_wave1_registry_numbers:
+    - '0342200026726000083'
+    - '0333300006126000121'
+    - '0301200067526000236'
+  wave1_w1a_run_id: toa-run-20260923092953-986c09
+  wave1_w1a_documents: 6
+  wave1_w1a_analysis_mode: llm_tender_operator_provider
+  wave1_w1a_llm_invoked: true
+  wave1_w1a_provider: openai_compatible
+  wave1_w1a_model: arvectum-gemma4-12b-it-qat-q4_0
+  wave1_w1a_fallback_reason: null
+  wave1_w1a_runtime_seconds: 487.66
+  wave1_w1b_run_id: toa-run-20260923140657-3d3613
+  wave1_w1b_status: docs_required
+  wave1_w1b_documents: 0
+  wave1_w1b_llm_invoked: false
+  wave1_w1b_blocker: public acquisition returned no archive/documents; manual_upload_required
+  wave1_w1c_run_id: toa-run-20260923140728-f2b896
+  wave1_w1c_status: docs_required
+  wave1_w1c_documents: 0
+  wave1_w1c_llm_invoked: false
+  wave1_w1c_blocker: public acquisition returned no archive/documents; manual_upload_required
+  am4_automatic_merge_counter: 10
+  repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Merge the response-schema constraint only after exact-head CI and ordinary AM-4 gates. Then sync isolated Mac mini runtime to exact main and run one full four-section synthetic LLM smoke. Freeze Wave 1 only if all four sections validate; otherwise fail closed and record the blocker.
+resume_instruction: W1-B and W1-C are source-bound at public acquisition: docs_required/manual_upload_required, zero documents. Do not repeat the same acquisition blindly. Inspect only repository-supported read-only public acquisition alternatives or existing cached public packages; if none exist, persist the Wave 1 blocked outcome and apply the defined gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.
+wave1_acquisition_diagnosis_20260923:
+  cache_check: no_existing_public_package_for_w1b_or_w1c
+  frozen_source_url_shape: printForm/view.html
+  resolver_gap: current_public_documents_url_builder_does_not_resolve_printForm_to_procedure_specific_documents_url
+  direct_printform_link_check: no_documents_or_public_filestore_link_found
+  safe_boundary: do_not_guess_procedure_code_or_authenticate_to_eis
