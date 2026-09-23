@@ -12,19 +12,19 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Pilot plan admitted from explicit Owner direction to use the Mac mini instead of VPS and move to real-procurement runs. Wave 0 runtime synchronization and local-LLM controlled-provider preflight is next.
+current: Wave 0 is active on an isolated canonical Mac mini runtime. Local Gemma generation works with a 120s provider timeout, but the first full controlled-provider smoke exposed a fail-closed RFQ draft schema mismatch: Gemma returned four list-typed RFQ fields as strings. This branch hardens the provider prompt with the stored output_schema_json and explicit array typing before counted runs.
 pending:
-- Prepare isolated canonical Mac mini runtime from exact main.
-- Configure/test local Gemma generation plus Qwen3 embeddings without exposing either service.
+- Complete exact-head CI and merge the local-LLM schema-contract hardening.
+- Re-run the full synthetic controlled-provider smoke from canonical main and require all four core sections to validate.
 - Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
 - Execute Wave 1, then continue only through defined gates.
-updated_at: '2026-09-23T11:20:00+03:00'
-resume_instruction: Start Wave 0 on Mac mini. Do not mutate the existing legacy runtime copy; create/use an isolated canonical runtime pinned to main. Verify local LLM controlled-provider schema path before selecting counted Wave 1 outputs. No submission, signing, supplier/customer outreach or authenticated consequential ETP action.
+updated_at: '2026-09-23T11:42:00+03:00'
+resume_instruction: Finish the local-LLM schema-contract PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until requirements, supplier_questions, rfq_draft and contract_risk_memo all validate or fail closed with an explicit accepted blocker.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
-  branch: agent/arv-005-real-pilot-plan-20260923
-  base_commit: 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845
+  branch: agent/arv-005-local-llm-schema-contract
+  base_commit: 32410164e81e1d477911fe593f1874faeca52247
   issue: null
   manual_override: false
   lease_until: null
