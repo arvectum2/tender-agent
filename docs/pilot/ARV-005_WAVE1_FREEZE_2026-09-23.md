@@ -48,3 +48,10 @@ For each frozen case:
 - perform no submission, signing, supplier/customer outreach or authenticated consequential ETP action.
 
 A source-bound acquisition blocker counts as a recorded technical pilot outcome but not as a successful analysis.
+
+## Wave 1 execution evidence
+
+- W1-A `0342200026726000083`: reused the already acquired six-document public package (`toa-run-20260923092953-986c09`).
+- Initial fallback was traced to the isolated pilot PostgreSQL prerequisite being stopped, not to a missing controlled-LLM code path.
+- After restoring that local prerequisite, re-analysis completed in 487.66s with `analysis_mode=llm_tender_operator_provider`, `llm_invoked=true`, provider `openai_compatible`, model `arvectum-gemma4-12b-it-qat-q4_0`, and `fallback_reason=null`.
+- Status remains `completed_with_warnings`; HUMAN review remains mandatory. No external procurement action occurred.

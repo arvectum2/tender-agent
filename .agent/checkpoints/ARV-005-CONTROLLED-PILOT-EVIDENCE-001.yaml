@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-23T12:28:00+03:00'
+updated_at: '2026-09-23T16:12:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -32,9 +32,9 @@ completed:
   - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
   - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
   - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
-current: Execute the three frozen Wave 1 real 44-FZ cases on Mac mini.
+current: Wave 1 execution active. W1-A reused its already acquired six-document public package; after restoring the isolated local PostgreSQL prerequisite, controlled local-LLM analysis completed with explicit llm_invoked=true provenance.
 remaining:
-  - Wave 1 three real runs
+  - Wave 1 W1-B and W1-C real runs, then gate
   - Wave 2 case freeze and 5 runs
   - Wave 3 confirmation 4 runs
   - 3 exploratory 223-FZ runs
@@ -56,7 +56,15 @@ validation:
     - '0342200026726000083'
     - '0333300006126000121'
     - '0301200067526000236'
+  wave1_w1a_run_id: toa-run-20260923092953-986c09
+  wave1_w1a_documents: 6
+  wave1_w1a_analysis_mode: llm_tender_operator_provider
+  wave1_w1a_llm_invoked: true
+  wave1_w1a_provider: openai_compatible
+  wave1_w1a_model: arvectum-gemma4-12b-it-qat-q4_0
+  wave1_w1a_fallback_reason: null
+  wave1_w1a_runtime_seconds: 487.66
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Execute frozen Wave 1 on Mac mini at exact main 189799ce4cc44a4e83e75169d689613bd14b55bf. Record per-run technical evidence and explicit LLM/fallback provenance. No consequential external action. Repository merge authority is review-due at 10/10, so prepare evidence on branch/PR but do not auto-merge without attributable Owner renewal.
+resume_instruction: Continue frozen Wave 1 with W1-B then W1-C on the isolated Mac mini runtime. Keep local PostgreSQL plus llama.cpp prerequisites healthy, reuse already acquired public documents when available, and require llm_invoked=true with provider/model/fallback provenance before counting each analysis. Do not auto-merge PR #123 while AM-4 remains review-due at 10/10.

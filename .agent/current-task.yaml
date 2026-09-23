@@ -12,14 +12,14 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 0 is complete. PR #122 exact head 88f7e29882c4652bde704b0de023eb78e44f0a68 passed CI run 35841190403 and squash-merged as 189799ce4cc44a4e83e75169d689613bd14b55bf, reaching automatic merge 10/10. The isolated Mac mini runtime was synced to that exact main and the full four-section local Gemma controlled-provider smoke passed 4/4 in 250.62s. Wave 1 case-selection rule and three real 44-FZ registry numbers are frozen before analysis output inspection.
+current: Wave 1 is active. W1-A (0342200026726000083) reused its six-document public package and completed controlled local-LLM analysis after the isolated PostgreSQL prerequisite was restored; provenance records llm_invoked=true, provider=openai_compatible, model=arvectum-gemma4-12b-it-qat-q4_0, fallback_reason=null.
 pending:
-- Execute frozen Wave 1 cases on Mac mini: 0342200026726000083, 0333300006126000121, 0301200067526000236.
+- Execute remaining frozen Wave 1 cases on Mac mini: 0333300006126000121, 0301200067526000236.
 - Record per-run source completeness, explicit local-LLM provenance, Decision Core/report status, fallbacks and defects.
 - Apply Wave 1 -> Wave 2 gate; do not tune on Wave 2 cases before their registry numbers are frozen.
 - Repository merges now fail closed to REVIEW because the renewed AM-4 cycle is at 10/10.
-updated_at: '2026-09-23T12:28:00+03:00'
-resume_instruction: Execute the three frozen Wave 1 registry numbers on the isolated Mac mini runtime pinned to 189799ce4cc44a4e83e75169d689613bd14b55bf. Use only read-only public acquisition plus local analysis/inference/reporting. Record explicit LLM invoked/fallback provenance and fail closed on source-binding/schema defects. Do not auto-merge repository evidence until a new attributable Owner AM-4 renewal/review.
+updated_at: '2026-09-23T16:12:00+03:00'
+resume_instruction: Execute W1-B then W1-C on the isolated Mac mini runtime. Require explicit llm_invoked=true provider/model/fallback provenance before counting each analysis. Preserve read-only public acquisition and HUMAN review. Do not auto-merge repository evidence until a new attributable Owner AM-4 renewal/review.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
