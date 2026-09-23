@@ -1,0 +1,32 @@
+schema_version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-008-REVALIDATION-001
+status: review_ready
+authority: AUTO
+branch: agent/arv-008-revalidation-20260922
+base_commit: 7f69a81bdbcadb714163f38b3dfd3a320bac72ea
+updated_at: '2026-09-23T06:08:00+03:00'
+canonical_item: ARV-008
+continuation_branch: PRODUCTION-RUNTIME
+evidence:
+  - docs/roadmap/master-roadmap.yaml#continuation_branches
+  - docs/roadmap/ARV-008_REVALIDATION_2026-09-22.md
+  - merged queue foundations OPS-OBSERVABILITY-V1-001 and INGEST-RESILIENCE-V1-001
+  - default-branch searches for worker/retry/progress/Celery/task-status symbols returned no attributable durable ARV-008 implementation evidence
+reconciliation:
+  historical_result_proven_satisfied: false
+  adjacent_foundations_present: true
+  material_architecture_inferred: false
+successor_candidate:
+  task_id: ARV-008-WORKER-CONTRACT-001
+  status: candidate_not_admitted
+  scope: Define an implementation-neutral repository-owned worker lifecycle contract for identity/state, progress, idempotent retry/restart and failure evidence, compatible with existing resumable ingest and observability primitives.
+  implementation_allowed: false
+validation:
+  repository_only: true
+  production_mutation: false
+  external_effect: false
+merge_gate:
+  state: AUTO_PENDING_CI
+  reason: Company AM-4 was renewed by attributable Owner decision on 2026-09-22; renewed cycle is active and 3/10 automatic merges are consumed after PR #116. Merge still requires exact-head CI and ordinary Product/Company gates.
+resume_instruction: Check exact-head CI once for the rebased PR. If green, re-read Company AM-4 authority and ordinary merge gates immediately before guarded AUTO merge. Do not implement ARV-008-WORKER-CONTRACT-001 unless separately admitted and do not mutate production runtime.
