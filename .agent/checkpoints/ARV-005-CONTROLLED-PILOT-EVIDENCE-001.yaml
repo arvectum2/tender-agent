@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-23T16:12:00+03:00'
+updated_at: '2026-09-23T17:10:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -32,9 +32,9 @@ completed:
   - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
   - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
   - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
-current: Wave 1 execution active. W1-A reused its already acquired six-document public package; after restoring the isolated local PostgreSQL prerequisite, controlled local-LLM analysis completed with explicit llm_invoked=true provenance.
+current: Wave 1 acquisition attempted for all three frozen cases. W1-A completed controlled local-LLM analysis; W1-B and W1-C fail closed at public acquisition with docs_required/manual_upload_required and zero downloaded documents, so neither is counted as a successful analysis.
 remaining:
-  - Wave 1 W1-B and W1-C real runs, then gate
+  - Resolve W1-B/W1-C source-bound public-document acquisition blocker without authenticated/consequential EIS action; otherwise record Wave 1 blocked outcome and apply gate
   - Wave 2 case freeze and 5 runs
   - Wave 3 confirmation 4 runs
   - 3 exploratory 223-FZ runs
@@ -64,7 +64,17 @@ validation:
   wave1_w1a_model: arvectum-gemma4-12b-it-qat-q4_0
   wave1_w1a_fallback_reason: null
   wave1_w1a_runtime_seconds: 487.66
+  wave1_w1b_run_id: toa-run-20260923140657-3d3613
+  wave1_w1b_status: docs_required
+  wave1_w1b_documents: 0
+  wave1_w1b_llm_invoked: false
+  wave1_w1b_blocker: public acquisition returned no archive/documents; manual_upload_required
+  wave1_w1c_run_id: toa-run-20260923140728-f2b896
+  wave1_w1c_status: docs_required
+  wave1_w1c_documents: 0
+  wave1_w1c_llm_invoked: false
+  wave1_w1c_blocker: public acquisition returned no archive/documents; manual_upload_required
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Continue frozen Wave 1 with W1-B then W1-C on the isolated Mac mini runtime. Keep local PostgreSQL plus llama.cpp prerequisites healthy, reuse already acquired public documents when available, and require llm_invoked=true with provider/model/fallback provenance before counting each analysis. Do not auto-merge PR #123 while AM-4 remains review-due at 10/10.
+resume_instruction: W1-B and W1-C are source-bound at public acquisition: docs_required/manual_upload_required, zero documents. Do not repeat the same acquisition blindly. Inspect only repository-supported read-only public acquisition alternatives or existing cached public packages; if none exist, persist the Wave 1 blocked outcome and apply the defined gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.

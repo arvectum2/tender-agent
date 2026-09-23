@@ -55,3 +55,7 @@ A source-bound acquisition blocker counts as a recorded technical pilot outcome 
 - Initial fallback was traced to the isolated pilot PostgreSQL prerequisite being stopped, not to a missing controlled-LLM code path.
 - After restoring that local prerequisite, re-analysis completed in 487.66s with `analysis_mode=llm_tender_operator_provider`, `llm_invoked=true`, provider `openai_compatible`, model `arvectum-gemma4-12b-it-qat-q4_0`, and `fallback_reason=null`.
 - Status remains `completed_with_warnings`; HUMAN review remains mandatory. No external procurement action occurred.
+
+- W1-B `0333300006126000121`: read-only public acquisition attempted; run `toa-run-20260923140657-3d3613` returned `docs_required`, `manual_upload_required`, zero downloaded documents, so local LLM was not invoked and the case is not counted as a successful analysis.
+- W1-C `0301200067526000236`: read-only public acquisition attempted; run `toa-run-20260923140728-f2b896` returned `docs_required`, `manual_upload_required`, zero downloaded documents, so local LLM was not invoked and the case is not counted as a successful analysis.
+- These are source-bound acquisition outcomes. No authenticated EIS/ETP action or consequential external action was attempted.
