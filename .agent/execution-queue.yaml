@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-23T10:28:00+03:00'
+updated_at: '2026-09-23T11:20:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -528,6 +528,23 @@ items:
   - ARV-011-REVALIDATION-001
   executor_scope: Reconcile repository-owned ARV-012 production/runtime evidence only. Do not infer external infrastructure state, access credentials, mutate provider/network/production systems, or invent production architecture/migration/acceptance criteria.
   done_gate: 'Satisfied for repository revalidation: PR #118 exact head da92796cb7799d9c6698f6b9a7aa31ff2909bdb1 passed CI run 35830742779 SUCCESS and guarded-auto-merged as ab82ec266dc5a58f254d6dfbae7ce51177031806, automatic merge 6/10. Historical VPS migration remains unproven. This closure is automatic merge 7/10 only if its exact-head CI and ordinary AM-4 gates are green.'
+
+- order: 220
+  task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+  strategy: REUSE
+  continuation_mode: CONTROLLED_REAL_PILOT
+  title: Controlled real-procurement pilot on Mac mini
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Explicit Owner direction 2026-09-23: move to real-procurement runs, keep Mac mini as pilot server, defer VPS.'
+  roadmap_scope:
+  - ARV-005
+  dependencies:
+  - ARV-012-REVALIDATION-001
+  executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
+  done_gate: 'Technical completion requires 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
