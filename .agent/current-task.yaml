@@ -1,25 +1,25 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: ARV-011-REVALIDATION-001
+task_id: ARV-012-REVALIDATION-001
 authority: AUTO
-goal: Revalidate historical ARV-011 against current repository-owned production-runtime/access/migration evidence without production, network, provider, credential or external mutation.
+goal: Revalidate historical ARV-012 against current repository-owned production-runtime evidence without production, network, provider, credential or external mutation.
 definition_of_done:
-- Reconcile ARV-011 against current main, merged evidence, docs, code and tests.
+- Reconcile ARV-012 against current main, merged evidence, docs, code and tests.
 - Distinguish durable repository evidence from production/network/provider state that cannot be inferred.
 - Run deterministic repository-only or explicitly read-only checks available to this execution environment.
 - Record at most one bounded source-traceable successor candidate only if the desired result is already canonical; do not invent production architecture, provider choice, migration plan or acceptance criteria.
 - Preserve REVIEW/HUMAN/OWNER gates for production/network/provider/credential actions.
-current: Repository-only ARV-011 revalidation is complete to the permitted boundary. Historical completion is not proven; no external infrastructure state was inferred and no successor implementation was admitted.
+current: Repository-only ARV-012 revalidation started. Fresh default-branch searches found no attributable ARV-012 production/VPS/SSH/migration/allowlist artifact; negative repository evidence is not proof of external infrastructure state.
 pending:
-- exact-head CI on PR #117
-updated_at: '2026-09-23T08:04:00+03:00'
-resume_instruction: Check PR #117 exact-head CI once. If green, reread Company AM-4 and ordinary merge gates before guarded AUTO merge. Preserve historical ARV-011 as not proven satisfied; do not access/mutate production, network, provider, credentials, allowlists or migration state and do not invent architecture or acceptance criteria.
+- complete repository-only evidence reconciliation and exact-head CI
+updated_at: '2026-09-23T10:03:00+03:00'
+resume_instruction: Inspect repository-owned ARV-012/runtime evidence only; record proven status without inferring external production state. Do not access or mutate production, network, provider systems, credentials, allowlists or migration state and do not invent architecture or acceptance criteria.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: agent/arv-011-revalidation-20260923
-  base_commit: e96b3b8d12943dd1e7e63b2c94cf19c81df921bc
+  claimed_by: roadmap-executor
+  execution_id: ARV-012-REVALIDATION-001-20260923
+  branch: agent/arv-012-revalidation-20260923
+  base_commit: d9d5e921512c1f635818eac316dc7c1dff0b93f8
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-23T11:53:00+03:00'
