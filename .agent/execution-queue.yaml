@@ -546,6 +546,22 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+- order: 230
+  task_id: ARV-004-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate Hermes customer-scoped feedback production-loop evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'OWNER-CONTINUOUS-ROADMAP-2026-09-18 deterministic continuation; CORE-QUALITY-PILOT historical_items order; standard REVALIDATION slice.'
+  roadmap_scope:
+  - ARV-004
+  dependencies: []
+  executor_scope: Reconcile repository-owned ARV-004 Hermes/customer-scoped-feedback evidence only. Do not invent production-loop architecture, enable external effects, mutate production, or infer HUMAN/customer acceptance.
+  done_gate: 'Reconcile ARV-004 against current main, tests and repository-owned evidence; record what is implemented and one source-traceable residual without changing immutable legacy truth or inventing acceptance criteria.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
