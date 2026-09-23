@@ -1,11 +1,11 @@
 schema_version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-012-REVALIDATION-001
-status: review_ready
+status: completed
 authority: AUTO
-branch: agent/arv-012-revalidation-20260923
-base_commit: d9d5e921512c1f635818eac316dc7c1dff0b93f8
-updated_at: '2026-09-23T10:18:00+03:00'
+branch: agent/arv-012-close-revalidation
+base_commit: ab82ec266dc5a58f254d6dfbae7ce51177031806
+updated_at: '2026-09-23T10:28:00+03:00'
 canonical_item: ARV-012
 continuation_branch: PRODUCTION-RUNTIME
 scope: Repository-only revalidation of historical ARV-012 against current runtime/production evidence; no production, network, provider, credential or external mutation.
@@ -26,7 +26,11 @@ validation:
   credential_access: false
   external_effect: false
 merge_gate:
-  state: AUTO_PENDING_FINAL_CI
-  automatic_merge_number_if_merged: 6
-  reason: Standard Owner-directive REVALIDATION slice is AUTO/auto_merge=true. Audit issue #57 durably records PR #116 as 3/10, PR #113 as 4/10 and PR #117 as 5/10; this branch reconciles the canonical counter and may merge only after fresh exact-head CI plus ordinary Product/Company gates. Negative repository evidence cannot prove external production state.
-resume_instruction: Check final exact-head CI once. If green, reread Company AM-4 and ordinary merge gates before guarded AUTO merge as automatic merge 6/10. Preserve historical ARV-012 as not proven satisfied; do not access or mutate production/network/provider systems or credentials and do not invent architecture or acceptance criteria.
+  state: COMPLETE_PENDING_CLOSURE_CI
+  completed_merge: ab82ec266dc5a58f254d6dfbae7ce51177031806
+  completed_exact_head: da92796cb7799d9c6698f6b9a7aa31ff2909bdb1
+  completed_ci_run: 35830742779
+  completed_automatic_merge_number: 6
+  closure_automatic_merge_number_if_merged: 7
+  reason: PR #118 passed exact-head CI and merged under renewed AM-4. This closure only reconciles completion evidence and counter; it requires its own exact-head CI and ordinary merge gates.
+resume_instruction: Completed. Do not repeat ARV-012 evidence inspection. Historical VPS migration remains unproven; ARV-013 depends on historical ARV-012 and is not executable while that dependency remains unproven.
