@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-012-REVALIDATION-001
 authority: AUTO
 goal: Revalidate historical ARV-012 against current repository-owned production-runtime evidence without production, network, provider, credential or external mutation.
@@ -10,16 +10,15 @@ definition_of_done:
 - Run deterministic repository-only or explicitly read-only checks available to this execution environment.
 - Record at most one bounded source-traceable successor candidate only if the desired result is already canonical; do not invent production architecture, provider choice, migration plan or acceptance criteria.
 - Preserve REVIEW/HUMAN/OWNER gates for production/network/provider/credential actions.
-current: Repository-only ARV-012 revalidation is complete to the permitted boundary. Historical completion is not proven; no external infrastructure state was inferred and no successor implementation was admitted. Canonical AM-4 bookkeeping is reconciled through automatic merges 3/10, 4/10 and 5/10; this PR is 6/10 only if guarded-auto-merged after final exact-head CI.
-pending:
-- final exact-head CI on this bookkeeping head
-updated_at: '2026-09-23T10:18:00+03:00'
-resume_instruction: Check final exact-head CI once. If green, reread Company AM-4 and ordinary merge gates, then guarded-auto-merge PR #118 as automatic merge 6/10. Preserve historical ARV-012 as not proven satisfied; do not access/mutate production/network/provider/credentials or invent architecture/acceptance criteria.
+current: ARV-012 repository-only revalidation is complete. PR #118 exact head da92796cb7799d9c6698f6b9a7aa31ff2909bdb1 passed CI run 35830742779 and squash-merged as ab82ec266dc5a58f254d6dfbae7ce51177031806 (automatic merge 6/10). Historical VPS migration remains not proven satisfied; no external infrastructure state was inferred. This closure is 7/10 only if guarded-auto-merged after exact-head CI.
+pending: []
+updated_at: '2026-09-23T10:28:00+03:00'
+resume_instruction: Completed. Do not repeat ARV-012 repository evidence inspection. Historical VPS migration remains unproven and production/network/provider/credential actions stay REVIEW/HUMAN/OWNER-gated. ARV-013 depends on historical ARV-012 and is not executable while that dependency remains unproven.
 execution:
   claimed_by: null
   execution_id: null
-  branch: agent/arv-012-revalidation-20260923
-  base_commit: d9d5e921512c1f635818eac316dc7c1dff0b93f8
+  branch: agent/arv-012-close-revalidation
+  base_commit: ab82ec266dc5a58f254d6dfbae7ce51177031806
   issue: null
   manual_override: false
   lease_until: null

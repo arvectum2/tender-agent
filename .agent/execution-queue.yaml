@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-23T10:18:00+03:00'
+updated_at: '2026-09-23T10:28:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -517,7 +517,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate production-runtime evidence
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -527,7 +527,7 @@ items:
   dependencies:
   - ARV-011-REVALIDATION-001
   executor_scope: Reconcile repository-owned ARV-012 production/runtime evidence only. Do not infer external infrastructure state, access credentials, mutate provider/network/production systems, or invent production architecture/migration/acceptance criteria.
-  done_gate: 'Repository-only reconciliation complete; historical completion remains unproven; exact-head CI and ordinary renewed AM-4 gates required. If guarded-auto-merged, PR #118 is automatic merge 6/10 of the 2026-09-22 cycle.'
+  done_gate: 'Satisfied for repository revalidation: PR #118 exact head da92796cb7799d9c6698f6b9a7aa31ff2909bdb1 passed CI run 35830742779 SUCCESS and guarded-auto-merged as ab82ec266dc5a58f254d6dfbae7ce51177031806, automatic merge 6/10. Historical VPS migration remains unproven. This closure is automatic merge 7/10 only if its exact-head CI and ordinary AM-4 gates are green.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
