@@ -3,9 +3,9 @@ repository: arvectum2/tender-agent
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 status: in_progress
 authority: AUTO
-branch: agent/arv-005-local-llm-response-schema
-base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
-updated_at: '2026-09-23T12:12:00+03:00'
+branch: agent/arv-005-wave1-frozen
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-09-23T12:28:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -28,11 +28,13 @@ completed:
   - PR #121 schema-prompt hardening merged as 37d6ad8c8300906737b5b1fd2ae37b7d88043116 after 19/19 exact-head checks succeeded.
   - Existing production LLM transport pattern proved llama.cpp supports response_format.schema; controlled provider now reuses its stored schema as a generation constraint.
   - Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
-current: Complete exact-head CI for llama.cpp response schema constraint, then run one full four-section synthetic proof before counted Wave 1.
+  - PR #122 exact head 88f7e29882c4652bde704b0de023eb78e44f0a68 passed CI run 35841190403 and merged as 189799ce4cc44a4e83e75169d689613bd14b55bf; renewed AM-4 automatic merge counter reached 10/10.
+  - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
+  - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
+  - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
+current: Execute the three frozen Wave 1 real 44-FZ cases on Mac mini.
 remaining:
-  - exact-head CI/merge for controlled-provider response schema constraint
-  - repeat full controlled-provider fixture proof with all four core sections valid
-  - Wave 1 case freeze and 3 runs
+  - Wave 1 three real runs
   - Wave 2 case freeze and 5 runs
   - Wave 3 confirmation 4 runs
   - 3 exploratory 223-FZ runs
@@ -46,9 +48,15 @@ validation:
   existing_backend_controlled_llm_enabled: false
   direct_local_generation_smoke: pass
   controlled_requirements_schema_smoke: pass
-  controlled_full_smoke_seconds: 240.22
-  controlled_full_smoke_sections_passed: 3
-  controlled_full_smoke_sections_failed: 1
-  controlled_full_smoke_failure: rfq_draft list fields emitted as strings
+  controlled_full_smoke_seconds: 250.62
+  controlled_full_smoke_sections_passed: 4
+  controlled_full_smoke_sections_failed: 0
+  controlled_full_smoke_failure: null
+  frozen_wave1_registry_numbers:
+    - '0342200026726000083'
+    - '0333300006126000121'
+    - '0301200067526000236'
+  am4_automatic_merge_counter: 10
+  repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Merge the response-schema constraint only after exact-head CI and ordinary AM-4 gates. Then sync isolated Mac mini runtime to exact main and run one full four-section synthetic LLM smoke. Freeze Wave 1 only if all four sections validate; otherwise fail closed and record the blocker.
+resume_instruction: Execute frozen Wave 1 on Mac mini at exact main 189799ce4cc44a4e83e75169d689613bd14b55bf. Record per-run technical evidence and explicit LLM/fallback provenance. No consequential external action. Repository merge authority is review-due at 10/10, so prepare evidence on branch/PR but do not auto-merge without attributable Owner renewal.
