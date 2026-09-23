@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-22T23:24:00+03:00'
+updated_at: '2026-09-23T10:18:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -463,6 +463,71 @@ items:
   - AM4-RENEWAL-RECONCILE-002
   executor_scope: Reconcile ARV-006 against current dedicated 223-FZ public search/intake, documents/revision signals and regime-aware Decision Core. Record existing capabilities and one concrete source-traceable residual only. Do not invent legal/procedural semantics, connect authenticated/private platforms or perform external procurement actions.
   done_gate: 'Satisfied for repository work: 223-FZ implemented breadth and concrete residual are reconciled; successor remains candidate_not_admitted; prior exact-head CI was green on both review and renewed-stack heads; renewal reconciliation PR #115 merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774 (1/10); PR #108 is retargeted to main. Guarded AUTO merge of PR #108 requires fresh final exact-head CI and ordinary renewed AM-4 gates; if merged automatically, this is 2/10 of the 2026-09-22 cycle.'
+
+- order: 180
+  task_id: ARV-067-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate electrical ontology expert-acceptance evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; completed repository-only revalidation PR #116.'
+  roadmap_scope:
+  - ARV-067
+  dependencies: []
+  executor_scope: Reconcile repository-owned ontology/taxonomy/profile/truth-pack evidence and preserve expert acceptance as REVIEW/HUMAN; no runtime enablement, fabricated expert approval or external effect.
+  done_gate: 'Satisfied for repository revalidation: PR #116 exact head 77db77aa3430a21190b202f7a111f879759e69b4 passed exact-head checks and guarded-auto-merged as 7f69a81bdbcadb714163f38b3dfd3a320bac72ea; audit issue #57 records this as automatic merge 3/10. Historical expert acceptance remains unproven and REVIEW/HUMAN-gated.'
+
+- order: 190
+  task_id: ARV-008-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate background-worker lifecycle evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Existing bounded PR #113 resumed under the 2026-09-22 renewed AM-4 cycle.'
+  roadmap_scope:
+  - ARV-008
+  dependencies: []
+  executor_scope: Reconcile historical worker/retry/progress evidence only; preserve ARV-008-WORKER-CONTRACT-001 as candidate_not_admitted and do not choose a worker framework or mutate production runtime.
+  done_gate: 'Satisfied for repository revalidation: PR #113 exact head 3bbca3dc615baedefe645c0ed0036d6534d12998 passed CI run 35812741251 SUCCESS and guarded-auto-merged as e96b3b8d12943dd1e7e63b2c94cf19c81df921bc; audit issue #57 records this as automatic merge 4/10.'
+
+- order: 200
+  task_id: ARV-011-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate production-runtime/access/migration evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; repository-only PRODUCTION-RUNTIME continuation.'
+  roadmap_scope:
+  - ARV-011
+  dependencies: []
+  executor_scope: Reconcile repository-owned production/VPS/migration/allowlist evidence without production/network/provider/credential mutation or invented architecture/acceptance criteria.
+  done_gate: 'Satisfied for repository revalidation: PR #117 exact head 0abb3abbd1a762960e0169def6cdc4a5619aaf9e passed CI run 35820818048 SUCCESS and guarded-auto-merged as d9d5e921512c1f635818eac316dc7c1dff0b93f8; audit issue #57 records this as automatic merge 5/10. Historical external infrastructure completion remains unproven.'
+
+- order: 210
+  task_id: ARV-012-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate production-runtime evidence
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; deterministic PRODUCTION-RUNTIME continuation after ARV-011.'
+  roadmap_scope:
+  - ARV-012
+  dependencies:
+  - ARV-011-REVALIDATION-001
+  executor_scope: Reconcile repository-owned ARV-012 production/runtime evidence only. Do not infer external infrastructure state, access credentials, mutate provider/network/production systems, or invent production architecture/migration/acceptance criteria.
+  done_gate: 'Repository-only reconciliation complete; historical completion remains unproven; exact-head CI and ordinary renewed AM-4 gates required. If guarded-auto-merged, PR #118 is automatic merge 6/10 of the 2026-09-22 cycle.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
