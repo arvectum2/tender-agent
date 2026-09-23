@@ -82,7 +82,7 @@ company_authority_gate:
   material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-09-22-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   material_policy_change_review_satisfied_commit: 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 2
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 6
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 
 authority:
