@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-067-REVALIDATION-001
-status: in_progress
+status: completed_revalidation_review_preserved
 authority: AUTO
 goal: Revalidate historical ARV-067 vertical ontologies / electrical equipment knowledge against current repository-owned assets, tests, and expert-acceptance evidence without enabling ontology production runtime or fabricating expert approval.
 definition_of_done:
@@ -10,12 +10,28 @@ definition_of_done:
   - State expert acceptance as satisfied only with durable attributable evidence; otherwise preserve REVIEW/HUMAN gate.
   - Record at most one bounded repository-only successor candidate when a concrete canonically stated gap is proven.
   - Do not invent acceptance criteria, ontology architecture, runtime authority, or expert approval.
-current: Bounded repository-only revalidation admitted under OWNER-CONTINUOUS-ROADMAP-2026-09-18 after earlier CORE-QUALITY-PILOT historical items were satisfied, active, or gated.
+current: Repository-only evidence inspection completed. Current default-branch code search returned no matches for ontology, taxonomy, electrical equipment, or truth pack, and recursive branch-tree inspection exposed no ontology-named repository path. No durable attributable expert-acceptance evidence was found. Accordingly historical ARV-067 acceptance is not asserted and remains REVIEW/HUMAN-gated.
+evidence:
+  base_commit: 9a37ff969578d7d99afec9b8b65f286ac4539fc0
+  inspected_pr: 116
+  repository_search:
+    ontology: no_default_branch_matches
+    taxonomy: no_default_branch_matches
+    electrical_equipment: no_default_branch_matches
+    truth_pack: no_default_branch_matches
+  branch_tree:
+    ref: a18b4ee69337247b3e679922d802616ef50680ff
+    ontology_named_paths: none_found
+  runtime_isolation: No repository-owned ontology asset/runtime wiring was found to enable or modify; no production runtime change was made. This does not fabricate a positive ontology-runtime test claim.
+  expert_acceptance: no_durable_attributable_evidence_found
+result:
+  historical_acceptance: not_proven
+  gate: REVIEW/HUMAN
+  successor_candidate: none_materialized
+  rationale: Creating ontology assets, architecture, acceptance criteria, or an expert-acceptance workflow would exceed the standard REVALIDATION slice without separate admission.
 pending:
-  - Inspect current repository ontology/taxonomy/profile/truth-pack assets and relevant tests.
-  - Reconcile durable expert-acceptance evidence and runtime isolation.
-  - Update roadmap reconciliation overlay/evidence only as needed.
-resume_instruction: Continue repository-only ARV-067 evidence inspection. Preserve expert acceptance as REVIEW/HUMAN unless durable attributable evidence exists; do not wire ontology assets into production runtime.
+  - Human/Owner may provide durable attributable expert-acceptance evidence or separately admit a bounded ontology implementation/acceptance task.
+resume_instruction: Treat ARV-067 repository-only revalidation as complete but historical expert acceptance as unproven and REVIEW/HUMAN-gated. Do not enable ontology production runtime or invent ontology assets, architecture, acceptance criteria, or expert approval without separate admission.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260923T020248+0300
