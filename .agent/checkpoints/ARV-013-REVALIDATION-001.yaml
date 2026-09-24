@@ -1,0 +1,25 @@
+schema_version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-013-REVALIDATION-001
+status: done
+authority: AUTO
+branch: agent/arv-013-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-09-24T04:04:25+03:00'
+canonical_item: ARV-013
+continuation_branch: PRODUCTION-RUNTIME
+scope: Standard repository-only REVALIDATION of permanent production-access evidence.
+completed:
+- Deterministically selected ARV-013 after ARV-008/010/011/012 were already satisfied/revalidated and ARV-005 remained independently blocked.
+- Verified repository state still labels CloudPub temporary and long-term reliability unproven.
+- Verified Nginx/reverse-proxy examples and VPS production requirements exist as preparation artifacts.
+- Verified CloudPub local lifecycle scripts parse successfully with bash -n; no tunnel or network state was changed.
+- Proved one residual: no repository-owned attributable evidence establishes public HTTPS on VPS plus SSH/Tailscale admin access with CloudPub retired.
+validation:
+  bash_syntax_cloudpub_scripts: pass
+  repository_static_reconciliation: pass
+  production_mutation: false
+  external_effects: none
+residual:
+  scope: Permanent VPS ingress/access migration remains unproven and requires separate admission plus applicable production/network authority; do not infer deployment from configs/runbooks.
+resume_instruction: Revalidation is complete. Do not configure or retire ingress without separate canonical admission and authority.
