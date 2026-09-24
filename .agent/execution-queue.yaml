@@ -546,6 +546,23 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+- order: 230
+  task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+  strategy: REUSE
+  continuation_mode: EXISTING_BOUNDED_SUCCESSOR
+  title: Structured RFQ-first operator profile ingestion
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Existing bounded successor candidate from merged ARV-015-REVALIDATION-001; admitted deterministically under active OWNER-CONTINUOUS-ROADMAP-2026-09-18.'
+  roadmap_scope:
+  - ARV-015
+  dependencies:
+  - ARV-015-REVALIDATION-001
+  executor_scope: Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.
+  done_gate: 'Synthetic operator_profile.md deterministically yields structured categories, regions, NMCK range, VAT, financial constraints and qualification values; missing/malformed values remain unknown/null; Decision Core consumes the structured profile; relevant tests and exact-head CI pass; no external/procurement/production/commercial effect.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

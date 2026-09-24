@@ -1704,7 +1704,7 @@ legacy_registry:
       The concrete gap is structured ingestion/reuse of that existing business-profile contract; brands, 1C nomenclature and corporate-document persistence remain later residuals.
     successor_candidate:
       task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
-      status: candidate_not_admitted
+      status: admitted_in_progress
       title: Structured RFQ-first operator profile ingestion
       scope: Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.
       definition_of_done:

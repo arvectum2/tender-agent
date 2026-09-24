@@ -141,29 +141,91 @@ def _resolve_provider_request(requested_provider: str, env_provider: str) -> tup
 # Operator profile
 # ---------------------------------------------------------------------------
 
+def _profile_value(text: str, label: str) -> str | None:
+    match = re.search(rf"^- (?:\*\*)?{re.escape(label)}(?:\*\*)?\s*:\s*(.+?)\s*$", text, re.MULTILINE | re.IGNORECASE)
+    if not match:
+        return None
+    value = match.group(1).strip()
+    return value or None
+
+
+def _profile_number(value: str | None) -> float | None:
+    if not value:
+        return None
+    match = re.search(r"[-+]?\d[\d\s,._]*", value)
+    if not match:
+        return None
+    raw = match.group(0).replace(" ", "").replace("_", "")
+    if raw.count(",") == 1 and "." not in raw and len(raw.split(",", 1)[1]) <= 2:
+        raw = raw.replace(",", ".")
+    else:
+        raw = raw.replace(",", "")
+    try:
+        return float(raw)
+    except ValueError:
+        return None
+
+
+def _profile_section(text: str, heading: str) -> str:
+    match = re.search(rf"^##\s+{re.escape(heading)}\s*$", text, re.MULTILINE | re.IGNORECASE)
+    if not match:
+        return ""
+    rest = text[match.end():]
+    next_heading = re.search(r"^##\s+", rest, re.MULTILINE)
+    return rest[: next_heading.start()] if next_heading else rest
+
+
+def _profile_list(section: str) -> list[str]:
+    values: list[str] = []
+    for raw in section.splitlines():
+        line = raw.strip()
+        if not line.startswith("-") or line.startswith("- ["):
+            continue
+        value = line[1:].strip()
+        if not value or value.endswith(":") or re.match(r"^Category\s+\d+\s*:\s*$", value, re.IGNORECASE):
+            continue
+        if ":" in value:
+            _, candidate = value.split(":", 1)
+            value = candidate.strip()
+        if value:
+            values.append(value)
+    return values
+
+
 def _read_operator_profile(operator_dir: Path) -> dict[str, Any]:
     profile_path = operator_dir / "operator_profile.md"
-    if profile_path.is_file():
-        text = profile_path.read_text(encoding="utf-8")
-        lines = [line.strip() for line in text.splitlines() if line.strip()]
-        has_vat = "VAT" in text
-        has_margin = "margin" in text.lower() or "margin" in text
-        has_categories = "Category" in text
-        return {
-            "found": True,
-            "line_count": len(lines),
-            "has_vat_info": has_vat,
-            "has_margin_info": has_margin,
-            "has_categories": has_categories,
-            "preview": " ".join(lines[:5])[:200],
-        }
+    if not profile_path.is_file():
+        return {"found": False, "line_count": 0, "has_vat_info": False, "has_margin_info": False, "has_categories": False, "preview": "", "supplier_profile": {}}
+
+    text = profile_path.read_text(encoding="utf-8")
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    categories = _profile_list(_profile_section(text, "Working Categories"))
+    regions_raw = _profile_value(text, "Tender Regions") or _profile_value(text, "Regions")
+    regions = [part.strip() for part in re.split(r"[,;]", regions_raw or "") if part.strip()]
+    price_min = _profile_number(_profile_value(text, "Minimum"))
+    price_max = _profile_number(_profile_value(text, "Maximum"))
+    margin = _profile_number(_profile_value(text, "Target margin"))
+    payment_delay = _profile_number(_profile_value(text, "Acceptable payment delay"))
+    contract_security = _profile_number(_profile_value(text, "Acceptable contract security"))
+    licenses = _profile_value(text, "Licenses held")
+    sro = _profile_value(text, "SRO approvals held")
+    experience = _profile_number(_profile_value(text, "Experience required"))
+    vat_mode = None
+    vat_section = _profile_section(text, "VAT Mode")
+    checked = [line.lower() for line in vat_section.splitlines() if re.match(r"^\s*- \[x\]", line, re.IGNORECASE)]
+    if any("both" in line for line in checked): vat_mode = "both"
+    elif any("without vat" in line for line in checked): vat_mode = "without_vat"
+    elif any("with vat" in line for line in checked): vat_mode = "with_vat"
+
+    supplier_profile = {
+        "criteria": {"categories": categories, "regions": regions, "price_min": price_min, "price_max": price_max},
+        "commercial": {"vat_mode": vat_mode, "target_margin_percent": margin, "max_payment_delay_days": payment_delay, "max_contract_security_percent": contract_security},
+        "qualification": {"licenses": licenses, "sro_approvals": sro, "experience_years": experience},
+    }
     return {
-        "found": False,
-        "line_count": 0,
-        "has_vat_info": False,
-        "has_margin_info": False,
-        "has_categories": False,
-        "preview": "",
+        "found": True, "line_count": len(lines), "has_vat_info": vat_mode is not None,
+        "has_margin_info": margin is not None, "has_categories": bool(categories),
+        "preview": " ".join(lines[:5])[:200], "supplier_profile": supplier_profile,
     }
 
 
@@ -1354,6 +1416,8 @@ def main() -> None:
     requirements["_notice_chars"] = len(notice_text)
     requirements["_spec_chars"] = len(technical_spec_text)
     requirements["_contract_chars"] = len(contract_draft_text)
+    if operator_profile.get("supplier_profile"):
+        requirements.setdefault("analysis_context", {})["supplier_profile"] = operator_profile["supplier_profile"]
     analysis_mode = "stub"
 
     calibrated_risks = _run_stub_calibrated_contract_risk(contract_draft_text)
@@ -1390,6 +1454,8 @@ def main() -> None:
             resolved_provider = llm_result.get("resolved_provider", resolved_provider)
             llm_requirements = llm_result.get("requirements") or {}
             requirements.update(llm_requirements)
+            if operator_profile.get("supplier_profile"):
+                requirements.setdefault("analysis_context", {})["supplier_profile"] = operator_profile["supplier_profile"]
             requirements["llm_control"] = llm_result.get("llm_control", {})
 
             if llm_result.get("supplier_questions"):
