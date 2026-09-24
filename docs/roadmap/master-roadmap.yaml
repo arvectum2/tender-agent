@@ -1074,10 +1074,21 @@ legacy_registry:
       затем подтверждённое удаление/перенос. Выполнять OpenCode локально параллельно ARV-003.
     dependencies_raw: ARV-009
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-24'
+    evidence:
+    - path: docs/ops/arv-009-storage-decision.md
+      detail: Repository policy approves the external 4 TB SSD as pilot storage baseline.
+    - path: docs/ops/storage-capacity-guardrails.md
+      detail: Storage guardrails require document storage to remain on a separate filesystem from the system disk and fail closed when the mount is not verified.
+    - path: docs/roadmap/ARV-075_REVALIDATION_2026-09-24.md
+      detail: Read-only Mac mini snapshot records 281 GiB available on the 460 GiB system filesystem and 3.4 TiB available on /Volumes/ArvectumSSD; no cleanup or move was performed.
+    notes: Read-only evidence shows no immediate system-disk capacity emergency and confirms the external SSD is mounted with substantial free capacity. The historical DELETE/MOVE/KEEP cleanup and path-migration work is not proven complete; destructive cleanup or relocation remains separately gated.
+    successor_candidate:
+      task_id: ARV-075-STORAGE-CLEANUP-PLAN-001
+      status: candidate_not_admitted
+      title: Dry-run storage classification and rollback plan
+      scope: Produce a path-level DELETE/MOVE/KEEP proposal and rollback/verification plan from read-only inventory before any deletion, relocation, symlink, Docker/PostgreSQL or mount mutation.
 - id: ARV-003
   legacy_snapshot:
     queue_order: 2

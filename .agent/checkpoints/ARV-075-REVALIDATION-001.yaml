@@ -1,0 +1,14 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-075-REVALIDATION-001
+status: done
+authority: AUTO
+branch: agent/arv-075-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-09-24T08:08:00+03:00'
+evidence:
+  - docs/roadmap/ARV-075_REVALIDATION_2026-09-24.md
+  - docs/ops/arv-009-storage-decision.md
+  - docs/ops/storage-capacity-guardrails.md
+result: Read-only capacity posture reconciled; 72 focused storage/backup tests passed; destructive cleanup/migration remains unperformed and separately gated.
+resume_instruction: Check exact-head CI once. If green, leave REVIEW-gated while AM-4 is review-due; do not execute the candidate cleanup plan without separate canonical admission and applicable authority.
