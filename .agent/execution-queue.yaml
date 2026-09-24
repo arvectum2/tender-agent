@@ -546,6 +546,23 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+- order: 230
+  task_id: ARV-075-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate Mac mini system-disk and external-SSD storage posture
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; deterministic PRODUCTION-RUNTIME continuation after ARV-014 was skipped as dependency/external-gated.'
+  roadmap_scope:
+  - ARV-075
+  dependencies:
+  - ARV-009
+  executor_scope: Reconcile repository-owned storage policy with explicitly read-only Mac mini capacity/runtime evidence. Do not delete, move, clean, relink, remount, reconfigure Docker/PostgreSQL, or expose private/customer data. Record only the current capacity posture and one concrete residual.
+  done_gate: 'Satisfied for bounded revalidation: repository storage policy and a read-only Mac mini capacity snapshot are reconciled; no destructive cleanup/move was performed; any DELETE/MOVE action remains separately gated.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
