@@ -1,24 +1,25 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: ARV-022-REVALIDATION-001
+task_id: ARV-022-OCR-ADAPTER-EVAL-001
 authority: AUTO
-goal: Revalidate historical ARV-022 OCR fallback against current repository evidence and the reuse-first registry.
+goal: Evaluate existing Tesseract OCR behind a replaceable local adapter using synthetic/fixture scans only.
 definition_of_done:
-- Current scanned-document/OCR capability is reconciled without rewriting legacy history.
-- Existing reuse candidates and measured repository gap are evidenced.
-- At most one bounded successor candidate is recorded; no dependency adoption or production mutation.
-current: Repository evidence inspection in progress.
+- Replaceable local adapter uses fixed executable resolution and fails closed when unavailable or malformed.
+- OCR result preserves engine provenance, word coordinates and confidence.
+- Low-confidence output explicitly signals human review.
+- Deterministic fixture tests and one local synthetic Tesseract smoke pass.
+- No production wiring, private documents, PDF-rendering architecture or custom OCR engine/model.
+current: Adapter implementation, deterministic fixture tests and local synthetic Tesseract smoke complete; CI pending.
 pending:
-- Record reconciliation evidence and deterministic checks.
-- Commit/push and open reviewable PR.
-updated_at: '2026-09-24T18:10:00+03:00'
-resume_instruction: Finish repository-only ARV-022 revalidation; do not implement or adopt an OCR engine in this slice.
+- Commit/push and open stacked PR; await exact-head CI.
+updated_at: '2026-09-24T19:10:00+03:00'
+resume_instruction: Validate adapter/tests and synthetic local Tesseract smoke; keep OCR disconnected from production ingestion and fail closed on missing/malformed engine output.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260924-180238
-  branch: agent/arv-022-revalidation-001
-  base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+  execution_id: watchdog-20260924-185801
+  branch: agent/arv-022-ocr-adapter-eval-001
+  base_commit: df6993bc9a1d7da1bc56afcbbecf244698f42bb6
   issue: null
   manual_override: false
-  lease_until: '2026-09-24T19:52:00+03:00'
+  lease_until: '2026-09-24T20:48:00+03:00'
