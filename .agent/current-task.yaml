@@ -1,30 +1,24 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+task_id: ARV-022-REVALIDATION-001
 authority: AUTO
-goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
+goal: Revalidate historical ARV-022 OCR fallback against current repository evidence and the reuse-first registry.
 definition_of_done:
-- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
-- Local controlled LLM path configured and proven on fixture data before counted cases.
-- Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
-- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
-- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
-- Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
-- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 0 remains active on the isolated canonical Mac mini runtime. PR #121 merged prompt/schema visibility hardening; targeted post-merge proof showed llama.cpp response_format.schema is also required for reliable type-constrained output. The bounded follow-up adds that existing supported schema constraint; targeted rfq_draft + contract_risk_memo smoke passes 2/2.
+- Current scanned-document/OCR capability is reconciled without rewriting legacy history.
+- Existing reuse candidates and measured repository gap are evidenced.
+- At most one bounded successor candidate is recorded; no dependency adoption or production mutation.
+current: Repository evidence inspection in progress.
 pending:
-- Complete exact-head CI and merge the controlled-provider response schema constraint.
-- Re-run the full synthetic controlled-provider smoke from canonical main and require all four core sections to validate.
-- Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
-- Execute Wave 1, then continue only through defined gates.
-updated_at: '2026-09-23T12:12:00+03:00'
-resume_instruction: Finish the controlled-provider response-schema PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full four-section synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until all four sections validate or fail closed with an explicit accepted blocker.
+- Record reconciliation evidence and deterministic checks.
+- Commit/push and open reviewable PR.
+updated_at: '2026-09-24T18:10:00+03:00'
+resume_instruction: Finish repository-only ARV-022 revalidation; do not implement or adopt an OCR engine in this slice.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260923-real-pilot
-  branch: agent/arv-005-local-llm-response-schema
-  base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260924-180238
+  branch: agent/arv-022-revalidation-001
+  base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
   issue: null
   manual_override: false
-  lease_until: null
+  lease_until: '2026-09-24T19:52:00+03:00'

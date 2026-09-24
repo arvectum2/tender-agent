@@ -546,6 +546,22 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+- order: 240
+  task_id: ARV-022-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: OCR fallback current-state revalidation
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'OWNER-CONTINUOUS-ROADMAP-2026-09-18 deterministic continuation; COMMERCIAL-WORKFLOW after satisfied ARV-019.'
+  roadmap_scope:
+  - ARV-022
+  dependencies: []
+  executor_scope: Reconcile ARV-022 against current repository evidence and existing reuse registry; repository-only/read-only evidence, no OCR engine invention or production mutation.
+  done_gate: 'Current OCR/scanned-document capability and concrete gap are evidenced; existing reuse candidates are reconciled; at most one bounded successor candidate may be recorded without adopting a dependency or inventing architecture.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
