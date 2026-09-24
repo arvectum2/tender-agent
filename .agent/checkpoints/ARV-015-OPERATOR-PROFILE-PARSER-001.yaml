@@ -1,0 +1,11 @@
+schema_version: 1
+task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+status: in_progress
+branch: agent/arv-015-operator-profile-parser-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-09-24T16:18:00+03:00'
+evidence:
+- scripts/run_tender_operator_pilot.py now parses the existing markdown operator profile into structured supplier_profile fields.
+- tests/test_operator_profile_ingestion.py proves fixture parsing, fail-closed malformed values, and Decision Core price-range consumption.
+- 'focused local tests: 41 passed'
+resume_instruction: Check exact-head CI once after PR creation; do not auto-merge while AM-4 is review-due at 10/10.
