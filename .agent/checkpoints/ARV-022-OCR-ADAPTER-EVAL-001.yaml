@@ -1,0 +1,22 @@
+schema_version: 1
+task_id: ARV-022-OCR-ADAPTER-EVAL-001
+state: implementation_complete_ci_pending
+branch: agent/arv-022-ocr-adapter-eval-001
+base_commit: df6993bc9a1d7da1bc56afcbbecf244698f42bb6
+authority: AUTO
+scope:
+  - replaceable local Tesseract TSV adapter
+  - synthetic/fixture images only
+  - engine provenance, word coordinates, confidence, low-confidence review signal
+excluded:
+  - production ingestion wiring
+  - private/customer documents
+  - PDF rendering architecture
+  - custom OCR engine/model
+  - external or procurement effect
+evidence:
+  focused_tests: '10 passed: test_ocr_adapter.py + test_document_text_extractor.py'
+  local_engine: 'Tesseract 5.5.3; eng and rus language packs present on Mac mini'
+  synthetic_smoke: "Tender 12345 TEST -> exact text; 3 words; mean confidence 96.22; needs_review=false; first bbox=(31,59,152,35)"
+  safety: 'fixed executable candidates; bounded language allowlist; 30s timeout; malformed/missing engine fails closed'
+resume_instruction: Check exact-head CI once after push. If green, mark review-ready/done evidence; do not wire OCR into production ingestion without separate canonical admission.
