@@ -2107,10 +2107,14 @@ legacy_registry:
     comment: Tender Analyzer и TenderGuru показывают ценность CV, citations и распознанных датасетов.
     dependencies_raw: ARV-001, ARV-008
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_gap_confirmed
+    verified_at: '2026-09-24T18:16:00+03:00'
+    evidence:
+    - docs/roadmap/ARV-022_REVALIDATION_2026-09-24.md
+    - docs/strategy/REUSE_FIRST_001_COMPETITOR_REVERSE_SPEC.md
+    - docs/tender_research/local_rag_index.md
+    - docs/tender_research/macmini_rag_runtime.md
+    notes: 'OCR gap remains documented; existing-engine reuse candidates exist; ARV-022-OCR-ADAPTER-EVAL-001 is candidate_not_admitted.'
 - id: ARV-065
   legacy_snapshot:
     queue_order: 37
