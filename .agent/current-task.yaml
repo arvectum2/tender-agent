@@ -13,7 +13,7 @@ current: Parser and Decision Core binding implemented on isolated branch; focuse
 pending:
 - Commit and push exact branch head.
 - Open PR and check exact-head CI once.
-updated_at: '2026-09-24T16:18:00+03:00'
+updated_at: '2026-09-24T16:05:00+03:00'
 resume_instruction: Check exact-head CI once. If green, mark implementation done but leave merge REVIEW-gated while Company AM-4 remains review-due at 10/10.
 execution:
   claimed_by: Tender Agent Watchdog
