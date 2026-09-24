@@ -546,6 +546,23 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+- order: 230
+  task_id: ARV-013-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate permanent production-access evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'OWNER-CONTINUOUS-ROADMAP-2026-09-18 deterministic continuation; PRODUCTION-RUNTIME historical_items order; standard REVALIDATION slice.'
+  roadmap_scope:
+  - ARV-013
+  dependencies:
+  - ARV-012-REVALIDATION-001
+  executor_scope: Reconcile repository-owned CloudPub/permanent-ingress/VPS access evidence only. Do not create or configure VPS/network/DNS/TLS/Tailscale/SSH, stop live ingress, mutate production, or invent hosting architecture.
+  done_gate: 'Reconcile ARV-013 against current main and repository-owned evidence; record what is implemented and one source-traceable residual without changing immutable legacy truth or inventing acceptance criteria.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

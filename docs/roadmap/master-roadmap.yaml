@@ -1635,10 +1635,18 @@ legacy_registry:
     comment: SSH не использовать как основной публичный транспорт.
     dependencies_raw: ARV-012
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: residual_external_migration_unproven
+    verified_at: '2026-09-24'
+    evidence:
+    - path: STATUS.md
+      detail: Current repository status still identifies CloudPub as temporary ingress and long-term reliability/SLA as unproven.
+    - path: docs/ops/r0/FINAL_REPORT.md
+      detail: Functional R0 closure preserves PUBLIC_RELIABILITY_LIMITED_NOT_PROVEN and does not authorize permanent CloudPub production use.
+    - path: docs/ops/arv-011-infrastructure-requirements.md
+      detail: VPS/TLS/reverse-proxy topology is documented as a requirement/preparation artifact; main production reverse proxy deployment is not claimed.
+    - path: scripts/local/start_cloudpub_tunnel.sh
+      detail: Temporary CloudPub lifecycle remains present; bash syntax validation passed on 2026-09-24 without changing tunnel state.
+    notes: 'No attributable repository evidence proves public HTTPS on VPS plus SSH/Tailscale admin access has replaced CloudPub. Permanent ingress migration remains a separately gated production/network action.'
 - id: ARV-014
   legacy_snapshot:
     queue_order: 21
