@@ -2686,10 +2686,27 @@ legacy_registry:
     comment: Сравнить ценность с B2B-Center и Фабрикантом.
     dependencies_raw: ARV-030
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - kind: repository
+      ref: docs/roadmap/ARV-037_REVALIDATION_2026-09-27.md
+      result: No current Tender.Pro provider, API contract or cross-platform comparison corpus is evidenced on main.
+    - kind: official_public_api
+      ref: https://system.help.tender.pro/integration.html
+      result: Official help describes ERP/CRM/MDM/BI integration and arbitrary API selections returned as JSON.
+    - kind: official_integration_conditions
+      ref: https://help.tender.pro/integraciya_api.html
+      result: Official help describes integration as operator/customer coordination through a joint working group and technical protocol.
+    - kind: official_access_and_tariffs
+      ref: https://help.tender.pro/tarif.html
+      result: Public tariffs are paid and integration is tariff-associated; detailed API documentation returned HTTP 403 anonymously and document access remains registration-gated in public FAQ evidence.
+    notes: 'Public evidence supports an operator-described JSON API and anonymous tender feed, but detailed documentation, document access, licensing, search limits and incremental unique-data value remain unproven. Candidate ARV-037-TENDERPRO-PUBLIC-VALUE-MATRIX-001 is candidate_not_admitted; no login, operator contact, terms acceptance, payment, signing, connector implementation or external effect.'
+    successor_candidate:
+      task_id: ARV-037-TENDERPRO-PUBLIC-VALUE-MATRIX-001
+      admission: candidate_not_admitted
+      scope: Freeze a public read-only official-source/search-access and procedure/document incremental-value matrix before any provider or connector decision.
+      hard_boundary: No login, registration, operator contact, terms acceptance, payment, electronic signature, private/authenticated data, connector implementation, provider selection, production, procurement or external effect.
 - id: ARV-034
   legacy_snapshot:
     queue_order: 58
