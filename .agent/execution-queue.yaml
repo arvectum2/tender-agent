@@ -546,6 +546,25 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 230
+  task_id: ARV-028-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate self-hosted n8n orchestration evidence and residual gate
+  status: blocked
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first dependency-satisfied SUPPLIER-RFQ historical item after ARV-023 through ARV-027 were skipped for unsatisfied dependencies.'
+  roadmap_scope:
+  - ARV-028
+  dependencies:
+  - ARV-008-WORKER-TRANSPORT-V1-001
+  - ARV-012-REVALIDATION-001
+  executor_scope: Reconcile repository-owned evidence for the planned external n8n orchestration boundary against current main. Verify whether any n8n dependency, compose/runtime service, command, workflow artifact or internal API contract exists. Update only reconciliation evidence and record at most one bounded successor candidate. Do not deploy n8n, mutate production/network/provider state, enable webhooks or external notifications, access credentials, or perform procurement/external actions.
+  done_gate: 'ARV-028 reconciliation overlay is evidence-backed; repository-only checks are recorded; any residual remains explicit and source-traceable; no production/network/provider/external effect; guarded merge only if exact-head CI and Company AM-4/repository gates are valid.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
