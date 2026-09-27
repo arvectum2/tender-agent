@@ -551,7 +551,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate B2B-Center API, access and incremental commercial-procurement evidence
-  status: in_progress
+  status: blocked
   authority: AUTO
   independent: true
   auto_merge: true
