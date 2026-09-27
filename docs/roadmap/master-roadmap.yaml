@@ -726,10 +726,26 @@ legacy_registry:
     comment: Основа интерфейса есть, рабочее место тендерщика ещё не завершено.
     dependencies_raw: ARV-019, ARV-043
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - path: src/modules/customer_registry
+      detail: Canonical customer profile, external-reference and contour primitives are implemented.
+    - path: src/modules/customer_pilot/models.py
+      detail: Customer-bound projects, procurement cases, analysis runs, review checklists, feedback and audit records are persisted.
+    - path: src/modules/customer_pilot/router.py
+      detail: Project/case/run/review/client-ready/delivery/archive routes scope operations by customer and case.
+    - path: src/modules/commercial_operator_console
+      detail: Internal kanban uses canonical DealStatus and human-initiated audited transitions without external execution.
+    - path: tests/test_r8_customer_pilot.py
+      detail: Customer-pilot lifecycle and cross-customer isolation regressions are present.
+    - path: tests/test_r8_acceptance_tenant_stage.py
+      detail: Deterministic tenant acceptance boundary is covered.
+    - path: tests/test_commercial_operator_console_c4.py
+      detail: Kanban rendering, filtering and canonical transition delegation are covered.
+    - path: docs/roadmap/BASE-014_REVALIDATION_2026-09-27.md
+      detail: Evidence matrix and bounded residual candidate.
+    notes: 'Current foundations cover the customer/project/case lifecycle, checklist, isolation and an internal kanban. A unified end-user surface with production authentication and role enforcement remains unproven and requires separate admission/security review.'
 - id: BASE-015
   legacy_snapshot:
     queue_order: 0

@@ -1,0 +1,26 @@
+schema_version: 1
+task_id: BASE-014-REVALIDATION-001
+state: review_ready_blocked
+branch: agent/base-014-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - repository-owned customer, project and procurement-case workspace
+  - checklist/review lifecycle, tenant isolation and internal kanban foundations
+  - status reconciliation plus one bounded REVIEW-gated successor candidate at most
+excluded:
+  - production authentication or authorization changes
+  - private/customer data, production mutation or deployment
+  - procurement participation, submission or external communication
+  - new product architecture, workflow state or acceptance criteria
+evidence:
+  workspace: 'src/modules/customer_pilot/models.py and router.py provide customer-bound projects, procurement cases, runs, review checklists, feedback, delivery/archive lifecycle and scoped queries.'
+  customer_registry: 'src/modules/customer_registry provides canonical customer profiles and API/service primitives reused by the pilot workspace.'
+  isolation: 'customer_id/project_id/procurement_case_id bindings, scoped routes, artifact namespaces and R8 acceptance tests preserve cross-customer isolation.'
+  kanban: 'src/modules/commercial_operator_console exposes an internal kanban over canonical DealStatus; transitions are human-initiated, audited and delegated to the canonical status engine.'
+  tests: 'Focused repository validation passed 18/18 across customer-pilot lifecycle, tenant acceptance and commercial kanban tests.'
+  residual: 'No single unified end-user clients/projects/cases/kanban surface with production authentication and role enforcement was established. The current console is explicitly internal and production auth remains a non-goal.'
+  overlay: 'docs/roadmap/BASE-014_REVALIDATION_2026-09-27.md records the matrix and BASE-014-UNIFIED-WORKSPACE-UI-001 as REVIEW-gated candidate_not_admitted.'
+blocker: 'The remaining unified product surface and production auth/role boundary require separate canonical admission and human security review. Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10, so automatic merge is prohibited; exact-head CI is required.'
+validation: 'Focused tests passed 18/18. Deterministic artifact assertions confirmed workspace models/routes, customer registry, checklist field, scoped isolation tests, internal kanban and human-initiated canonical transitions.'
+resume_instruction: Open or resume the BASE-014 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; do not implement production auth or a new unified UI from candidate status.
