@@ -234,6 +234,33 @@ def _clean_complete_document_model(
         contract["reason"] = "Проект контракта включён в комплект анализа."
 
 
+def _reconcile_fail_closed_customer_decision(model: dict[str, Any]) -> None:
+    """Keep the legacy customer summary consistent with Decision Core."""
+
+    decision_core = model.get("decision_core")
+    if not isinstance(decision_core, dict):
+        return
+    decision = decision_core.get("decision")
+    if not isinstance(decision, dict):
+        return
+    status = str(decision.get("status") or "").upper()
+    labels = {
+        "NEEDS_REVIEW": "Требуется проверка",
+        "NO_GO": "Не участвовать",
+    }
+    if status not in labels:
+        return
+    customer_decision = dict(model.get("customer_decision") or {})
+    customer_decision.update(
+        {
+            "recommendation": labels[status],
+            "reasons": list(decision.get("rationale") or []),
+            "next_action": decision.get("next_action"),
+        }
+    )
+    model["customer_decision"] = customer_decision
+
+
 def build_procurement_report_model(
     metadata: dict[str, Any],
     outputs: dict[str, dict[str, Any]],
@@ -293,6 +320,7 @@ def build_procurement_report_model(
         model,
         supplier_profile=supplier_profile,
     )
+    _reconcile_fail_closed_customer_decision(model)
     model["bid_decision"] = legacy_bid_decision(model["decision_core"])
     return model
 
