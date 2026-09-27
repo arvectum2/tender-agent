@@ -1,0 +1,27 @@
+schema_version: 1
+task_id: ARV-036-REVALIDATION-001
+state: evidence_reconciled
+branch: agent/arv-036-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - repository-owned B2B-Center integration evidence
+  - explicitly public read-only commercial/223-FZ, API, documentation-access and tariff observations
+  - reconciliation overlay and one bounded successor candidate at most
+excluded:
+  - login, registration, account creation or operator contact
+  - acceptance of terms, payment, electronic signature or commercial commitment
+  - private/authenticated procedure data or API documentation
+  - provider selection or connector implementation
+  - production, network, provider, procurement or external mutation
+evidence:
+  roadmap: 'ARV-036 requires evaluation of commercial/corporate procurement outside EIS, API availability and documentation access.'
+  repository: 'No indexed ARV-036/B2B-Center artifact, provider or API contract is evidenced on current main; current marketplace seams cover public EIS 44-FZ/223-FZ only.'
+  official_api: 'B2B-Center news dated 2025-07-29 states that client IT systems can work with the platform/modules through an API; method cards identify an applicable tariff.'
+  documentation_access: 'The same official notice says methods, consolidated documentation and XML examples are available in the Personal Account; no authenticated content was accessed.'
+  access_terms: 'The current official regulation links separate agreements and tariffs to Commercial Procurement and 223-FZ sections and says entitlement to one section does not grant access to the other.'
+  public_scope: 'Official regulation describes both commercial and 223-FZ procedures; official ETP Plus marketing advertises API integration and a supplier pool, but does not prove a public unique-procedure corpus or usable read-only API entitlement.'
+  interpretation: 'Public evidence proves an operator-described API and gated documentation/access model, not credentials, method coverage, public licensing for extraction, unique data volume or integration feasibility.'
+  overlay: 'docs/roadmap/ARV-036_REVALIDATION_2026-09-27.md contains the evidence matrix and ARV-036-B2B-CENTER-PUBLIC-VALUE-MATRIX-001 as candidate_not_admitted.'
+blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10; automatic merge is prohibited. Exact-head PR CI is required.'
+resume_instruction: Validate YAML, finalize review-ready state, open a PR and check exact-head CI once. Keep the successor unadmitted; do not authenticate, contact B2B-Center, accept terms or implement a connector.
