@@ -653,14 +653,7 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         _first_matching_value(pairs, ("окончание подачи заявок", "дата окончания срока подачи заявок", "срок подачи заявок"))
     )
 
-    card_url = None
-    href_match = re.search(r'href="(https://[^"]*(?:zakupki\.gov\.ru)[^"]*)"', entry_html)
-    if href_match:
-        card_url = href_match.group(1)
-    if not card_url:
-        href_match = re.search(r'href="([^"]*(?:view|common-info)[^"]*)"', entry_html)
-        if href_match:
-            card_url = urljoin("https://zakupki.gov.ru", href_match.group(1))
+    card_url = _select_notice_card_url(entry_html)
 
     procedure_status = _strip_html(
         _extract_between(entry_html, '<div class="registry-entry__header-mid__title text-normal">', "</div>")
@@ -684,6 +677,26 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         "card_url": card_url,
         "law": "44fz",
     }
+
+
+def _select_notice_card_url(entry_html: str) -> str | None:
+    candidates: list[tuple[int, str]] = []
+    for href in re.findall(r'href=["\']([^"\']+)["\']', entry_html, re.IGNORECASE):
+        url = urljoin(f"https://{EIS_44FZ_HOST}", html.unescape(href))
+        parsed = urlparse(url)
+        hostname = (parsed.hostname or "").lower()
+        path = parsed.path.lower()
+        if not hostname.endswith(EIS_44FZ_HOST):
+            continue
+        if "/printform/" in path or "/document/" in path:
+            continue
+        if path.endswith("/view/common-info.html"):
+            candidates.append((0, url))
+        elif re.search(r"/epz/order/notice/[^/]+/view\.html$", path):
+            candidates.append((1, url))
+        elif "view" in path or "common-info" in path:
+            candidates.append((2, url))
+    return min(candidates, default=(99, None), key=lambda item: item[0])[1]
 
 
 def _extract_registry_body_pairs(entry_html: str) -> dict[str, str]:
