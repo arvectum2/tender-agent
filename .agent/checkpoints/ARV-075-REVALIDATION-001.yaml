@@ -1,0 +1,44 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: ARV-075-REVALIDATION-001
+status: blocked
+authority: AUTO
+continuation_mode: REVALIDATION
+branch: agent/arv-075-revalidation-20260919
+base_commit: 46d01bd8282eb237b7d60ad62c9b9b2b6b103867
+goal: Reconcile historical ARV-075 Mac mini storage-audit status against repository-owned evidence without touching the Mac mini, deleting/moving data, changing production, or creating external effects.
+definition_of_done:
+  - Reconcile ARV-075 against current main, merged history and repository-owned evidence without rewriting immutable legacy history.
+  - Verify only repository-visible/read-only facts; do not infer current local disk state.
+  - State what is already complete and what concrete local evidence remains required.
+  - Preserve HUMAN/OWNER/REVIEW and destructive/local-production hard stops.
+completed:
+  - Canonical continuation order checked after ARV-008 revalidation reached its architecture/REVIEW boundary.
+  - PRODUCTION-RUNTIME ARV-010 is already satisfied at the admitted observability-v1 boundary; ARV-011 is dependency-blocked by unresolved ARV-005, and ARV-012/013/014 depend on ARV-011/012, so they are skipped for now.
+  - ARV-075 is the next independent historical PRODUCTION-RUNTIME item with satisfied ARV-009 dependency.
+  - Canonical roadmap records ARV-009 confirmed done and the 4 TB external SSD as the pilot storage baseline.
+  - Historical ARV-075 requires a current Mac mini baseline, DELETE/MOVE/KEEP classification, backup before destructive work, then Git/Docker/PostgreSQL/tests/free-space verification after any approved move/delete.
+  - Repository evidence alone cannot establish current Mac mini free space, largest directories, duplicate clones/worktrees, Docker layers, caches/logs, active database placement, or whether a safe backup exists.
+  - Exact-head CI for prior head e181295bf602cddfc822e6b0b2e27716ead18dbd passed: CI run 35430853641 SUCCESS; mirror run 35430847801 SUCCESS.
+  - Canonical executor policy now records attributable Owner AM-4 renewal on 2026-09-19 (decision merge 57ef73e468122ac714d28d49bfd176ed83588cab), so the checkpoint's former pending-renewal statement is stale and removed. This does not authorize local destructive work.
+  - Fresh read-only Mac mini evidence was collected on 2026-09-21 via the authorized Remote Desktop Commander without destructive actions.
+  - Disk baseline: internal APFS has 289 GiB available; ArvectumSSD is mounted at /Volumes/ArvectumSSD with 3.4 TiB available of 3.6 TiB (216 GiB used), so there is no immediate free-space emergency.
+  - Direct listing of /Volumes/ArvectumSSD is denied with macOS "Operation not permitted"; Remote Desktop Commander reports the external volume inaccessible without Full Disk Access/privacy permission, so largest-directory, clone/worktree, archive and backup-file inventory on the SSD cannot be truthfully established yet.
+  - Docker daemon is currently stopped/unreachable at /Users/master/.colima/default/docker.sock; .colima is a symlink to /Volumes/ArvectumSSD/Docker/colima, so Docker layer/volume usage cannot be measured until the daemon and SSD privacy boundary are available.
+  - PostgreSQL is actively running from /opt/homebrew/opt/postgresql@18/bin/postgres with data directory /opt/homebrew/var/postgresql@18; classify that active data path KEEP / DO NOT TOUCH.
+  - Time Machine latest-backup check failed because the backup destination could not be mounted; no verified current backup may be claimed from this evidence.
+  - No Mac mini filesystem content was deleted or moved; no production service/database state was mutated and no secrets were read.
+current: Local read-only baseline is partially established and shows ample free space, active PostgreSQL placement, stopped Docker and an unverified backup. ARV-075 remains blocked only on macOS privacy/Full Disk Access for the external SSD plus backup verification before any path-level DELETE/MOVE classification; there is no space-pressure reason to perform destructive cleanup now.
+remaining:
+  - Grant/restore macOS privacy access for Remote Desktop Commander to read /Volumes/ArvectumSSD, then collect largest-directory, worktree/clone, Docker/caches/logs/exports/archive inventory.
+  - Verify a usable backup/rollback destination; current Time Machine destination could not be mounted.
+  - Preserve /opt/homebrew/var/postgresql@18 as KEEP / DO NOT TOUCH while active PostgreSQL uses it.
+  - Classify SSD candidate paths as DELETE/MOVE/KEEP only after the privacy and backup gates are satisfied; do not delete or move anything under this revalidation slice.
+  - Rebase/reconcile this stale branch against current main before any merge consideration; exact-head CI must be re-earned after any branch update.
+resume_instruction: Do not repeat df/PostgreSQL/Docker/Time Machine checks unless the local gate changes. Current evidence already shows 289 GiB internal and 3.4 TiB SSD free, active PostgreSQL at /opt/homebrew/var/postgresql@18, Docker stopped, Time Machine destination unavailable, and SSD directory listing blocked by macOS privacy. Resume ARV-075 only after SSD Full Disk Access/privacy or backup state changes; meanwhile continue the next independent eligible historical item.
+updated_at: '2026-09-21T15:31:00+03:00'
+execution:
+  claimed_by: null
+  execution_id: null
+  lease_until: null
+  external_effects: none
