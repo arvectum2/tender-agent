@@ -1282,14 +1282,28 @@ legacy_registry:
     comment: Протокол готов; live execution и итоговый рейтинг ещё не выполнены.
     dependencies_raw: ARV-003, ARV-001
   reconciliation:
-    state: in_progress
-    verified_at: '2026-09-14'
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
     evidence:
-    - path: docs/product/Product_Backlog.md
-      detail: Current backlog retains ARV-072 controlled competitive benchmark as open.
-    - commit: 1cb8410
-      detail: ARV-072 reproducible competitive benchmark protocol (#42)
-    notes: Protocol exists; live benchmark execution remains a follow-up.
+    - kind: repository_protocol
+      ref: docs/research/arv-072-competitive-benchmark.md
+      result: The provider-neutral protocol, rubric, cohort, five-case manifest, result schema, validator and draft report already exist; the live matrix is explicitly blocked.
+    - kind: repository_readiness
+      ref: docs/roadmap/ARV-072_REVALIDATION_2026-09-27.md
+      result: All five case records remain live_ready false with source/truth hashes unset; no completion marker or redacted live-result matrix is evidenced.
+    - kind: regression_separation
+      ref: docs/testing/domain-regression-v1.md
+      result: Merged DOMAIN-REGRESSION-V1 supports exposed confirmed regression cases and explicitly does not substitute for blind competitive benchmark evidence.
+    - kind: validation
+      ref: benchmarks/competitive/arv072/validate.py
+      result: The existing benchmark package passes deterministic contract validation; validation does not satisfy live execution gates.
+    notes: 'Repository preparation remains complete while the historical live benchmark remains unexecuted. ARV-072-CONTROLLED-LIVE-BENCHMARK-001 is candidate_not_admitted and requires independently accepted frozen inputs plus authorized access and human review. No benchmark truth/comparator/normalizer mutation, competitor access, scoring or external effect occurred.'
+    successor_candidate:
+      task_id: ARV-072-CONTROLLED-LIVE-BENCHMARK-001
+      admission: candidate_not_admitted
+      scope: Execute the already-defined same-input five-product/five-case matrix only after every frozen-input, accepted-output, authorized-access and independent-review prerequisite is evidenced.
+      hard_boundary: No login, registration, vendor contact, terms acceptance, purchase, credentials, private/customer data, post-output truth/comparator/normalizer change, inferred score, production/procurement action or external effect without separate applicable authority.
+
 - id: ARV-010
   legacy_snapshot:
     queue_order: 9

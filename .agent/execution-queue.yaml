@@ -546,6 +546,24 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 280
+  task_id: ARV-072-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate controlled competitive benchmark readiness and separation
+  status: blocked
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first eligible unresolved COMPETITIVE-BENCHMARK item after satisfied MONITORING-DELIVERY foundations.'
+  roadmap_scope:
+  - ARV-072
+  dependencies:
+  - DOMAIN-REGRESSION-V1-001
+  executor_scope: Reconcile the existing ARV-072 five-product/five-case benchmark contract, current truth-pack/access/dependency readiness and its separation from exposed regression cases. Validate existing repository artifacts only. Do not run competitor products, log in, register, contact vendors, buy access, accept terms, alter frozen truth/comparator/normalizer data, infer scores, use private/customer data or perform any production/procurement/external action.
+  done_gate: 'Existing protocol, cohort, cases, schema and validator are reconciled against current main; every live gate remains explicit; DOMAIN-REGRESSION-V1 separation is recorded; at most one source-traceable successor is candidate_not_admitted; YAML/package validation and exact-head CI are recorded; no benchmark execution or external effect.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
