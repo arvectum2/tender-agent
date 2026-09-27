@@ -2585,10 +2585,25 @@ legacy_registry:
     comment: Не подключать все восемь без оценки incremental value.
     dependencies_raw: ARV-006, ARV-030
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - path: src/tender_research/registry_discovery.py
+      detail: Current source identity and discovery result model cover dedicated public EIS 44-FZ/223-FZ paths, not eight federal ETPs.
+    - path: src/tender_research/pipeline.py
+      detail: Source-aware acquisition/provenance exists, but no federal-ETP capability inventory or provider matrix is implemented.
+    - path: docs/roadmap/ARV-030_REVALIDATION_2026-09-21.md
+      detail: The standard procurement marketplace adapter protocol/registry remains a separate candidate_not_admitted residual.
+    - path: docs/roadmap/ARV-032_REVALIDATION_2026-09-27.md
+      detail: Repository evidence matrix, official-authority baseline and bounded non-admitted successor candidate.
+    notes: >-
+      Current main provides public EIS 44-FZ/223-FZ baselines and reusable source/provenance seams, but no frozen current federal-operator list, same-window platform corpus, incremental procedure/document comparison, latency method, official API/SOAP inventory, access-condition evidence or Anti-DDoS matrix. No platform priority is inferred.
+    successor_candidate:
+      task_id: ARV-032-FEDERAL-ETP-INCREMENTAL-VALUE-MATRIX-001
+      status: candidate_not_admitted
+      title: Frozen read-only federal ETP incremental-value matrix
+      scope: Freeze the current official operator list and comparison method first, then collect only public read-only source evidence for unique procedures/documents, latency, official API/SOAP availability, access conditions and observable Anti-DDoS constraints. No login, bypass, connector code, provider selection, production mutation or external action.
+
 - id: ARV-033
   legacy_snapshot:
     queue_order: 54
