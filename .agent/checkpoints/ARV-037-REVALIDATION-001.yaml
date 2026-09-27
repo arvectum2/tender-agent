@@ -1,6 +1,6 @@
 schema_version: 1
 task_id: ARV-037-REVALIDATION-001
-state: evidence_reconciled
+state: review_ready_blocked
 branch: agent/arv-037-revalidation-001
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
 authority: AUTO
@@ -25,4 +25,5 @@ evidence:
   interpretation: 'Public evidence supports an operator-described JSON API and anonymous feed boundary, not usable credentials, method/schema completeness, extraction permission, unique procedure/document volume or connector feasibility.'
   overlay: 'docs/roadmap/ARV-037_REVALIDATION_2026-09-27.md contains the evidence matrix and ARV-037-TENDERPRO-PUBLIC-VALUE-MATRIX-001 as candidate_not_admitted.'
 blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10; automatic merge is prohibited. Exact-head PR CI is required.'
-resume_instruction: Validate YAML, finalize review-ready state, open a PR and check exact-head CI once. Keep the successor unadmitted; do not authenticate, contact Tender.Pro, accept terms, pay, sign or implement a connector.
+validation: 'PyYAML passed: yaml_ok 1 in_progress ARV-037-REVALIDATION-001 ARV-037-REVALIDATION-001 ARV-037 revalidated_residual_gap 4.'
+resume_instruction: Open or resume the ARV-037 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; keep the successor unadmitted and do not authenticate, contact Tender.Pro, accept terms, pay, sign or implement a connector.
