@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: ARV-039-REVALIDATION-001
+state: review_ready_blocked
+branch: agent/arv-039-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - repository-owned pilot/product metric definitions
+  - existing deal-bound outcome intake and event/report foundations
+  - canonical ARV-039 signal coverage matrix
+  - reconciliation overlay and one bounded successor candidate at most
+excluded:
+  - external analytics providers, cookies, trackers or production instrumentation
+  - customer outreach, surveys, CRM or automated sales activity
+  - fabricated outcomes, conversions, ROI, win/loss or forecast accuracy
+  - pricing, tariff, participation or other commercial decisions
+  - private/customer data expansion or production mutation
+evidence:
+  definitions: 'docs/product/Pilot_Metrics_Definition.md defines run identity, timing, artifact/workflow evidence, operator usefulness proxy, estimated time saved and human-reviewed final outcome; it explicitly excludes analytics dashboards and live telemetry.'
+  pilot_success: 'docs/product/Pilot_Success_Metrics.md defines completion/time/usefulness/blocker/traceability signals plus feedback, would-pay and documented outcome.'
+  feedback_contract: 'docs/product/DP5_Feedback_and_Outcome_Loop.md defines structured feedback/outcome records while excluding CRM, automated surveys, billing and sales outreach.'
+  persistence: 'src/modules/outcome_intake models/schemas/service persist deal/tracker-bound outcome codes, rationale, effective time, artifact bindings, revision status and event-log records.'
+  existing_limit: 'Outcome intake records individual human-supplied outcomes; no cross-run metric aggregation, canonical denominator contract or site/product funnel is evidenced.'
+  residual: 'Activation, successful-analysis rate, evidence coverage, funnel conversion, time-to-decision, automated-outcome rate, win/loss, forecast accuracy, RFQ conversion and retention are not all available as deterministic aggregates; usefulness and time-saved fields are explicitly proxy/directional.'
+  overlay: 'docs/roadmap/ARV-039_REVALIDATION_2026-09-27.md contains the source-linked coverage matrix and ARV-039-OUTCOME-METRIC-CONTRACT-001 as candidate_not_admitted.'
+blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10; automatic merge is prohibited. Any customer/product outcome interpretation remains human-reviewed, and exact-head CI is required.'
+validation: 'Repository evidence matrix assertions passed: 10 canonical signals classified; source paths present; absent/proxy states are explicit; queue/current-task/checkpoint/overlay IDs align. YAML/exact-head CI required on PR.'
+resume_instruction: Open or resume the ARV-039 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; keep the successor unadmitted and do not add external tracking or fabricate outcomes.
