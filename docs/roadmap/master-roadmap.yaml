@@ -548,10 +548,30 @@ legacy_registry:
     comment: Legacy int44 не считается рабочим основным маршрутом.
     dependencies_raw: ARV-010, ARV-014
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - path: src/tender_research/eis_real_loader.py
+      detail: Registry-number acquisition delegates to getDocsByReestrNumber and preserves typed missing-token/auth/no-data/connection failures.
+    - path: src/modules/tender_operator_agent_demo/zakupki_soap_client.py
+      detail: Current getDocsIP request path, EIS host allowlist, bounded archive handling and sanitized diagnostics.
+    - path: src/modules/tender_operator_agent_demo/settings.py
+      detail: Environment-only token configuration, individual/legal mode separation, direct-route defaults and allowed-host boundary.
+    - path: src/shared/network/etp_trust.py
+      detail: Verified system/custom trust and fail-closed certificate policy.
+    - path: tests/tender_research/test_eis_real_loader.py
+      detail: Mocked deterministic loader/config/error coverage; not current live endpoint acceptance.
+    - path: docs/roadmap/BASE-007_REVALIDATION_2026-09-27.md
+      detail: Source-linked capability matrix and explicit live/runtime boundary.
+    notes: >-
+      The repository-owned SOAP/getDocsIP contour remains implemented. Current live smoke, active credential/endpoint/certificate/route/allowlist acceptance and a dedicated operator runbook are not established.
+      Legacy int44 is not treated as the primary route; credentialed/network evidence remains HUMAN-gated.
+    successor_candidate:
+      task_id: BASE-007-EIS-SOAP-OPERATIONS-EVIDENCE-001
+      status: candidate_not_admitted
+      title: Controlled EIS SOAP smoke and operator runbook evidence
+      scope: Document non-secret preflight/recovery and, only under separately confirmed HUMAN/operator authority, record one bounded redacted read-only getDocsByReestrNumber smoke using existing approved credentials and route; never expose secrets, request allowlisting, bypass protections, mutate production or perform procurement actions.
+
 - id: BASE-008
   legacy_snapshot:
     queue_order: 0
