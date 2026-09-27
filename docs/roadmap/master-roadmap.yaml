@@ -2636,10 +2636,27 @@ legacy_registry:
     comment: Потенциально более ценна, чем часть федеральных ЭТП.
     dependencies_raw: ARV-030
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - kind: repository
+      ref: docs/roadmap/ARV-036_REVALIDATION_2026-09-27.md
+      result: No current B2B-Center provider, API contract or comparison corpus is evidenced on main.
+    - kind: official_public_api
+      ref: https://www.b2b-center.ru/news/?id=520
+      result: Official 2025-07-29 notice describes an API, tariff-associated method cards and documentation/XML examples available in the Personal Account.
+    - kind: official_access_terms
+      ref: https://www.b2b-center.ru/help/Регламент_Системы_B2B-Center/
+      result: Current regulation separates Commercial Procurement and 223-FZ sections under separate agreements and tariffs.
+    - kind: official_public_product
+      ref: https://www.b2b-center.ru/plus/
+      result: Operator advertises API integration and commercial sourcing capabilities; no frozen incremental-value corpus or anonymous API entitlement is established.
+    notes: 'Public evidence supports an operator-described API and commercial/223-FZ scope, but method documentation is account-gated and tariff-associated. Usable access/licensing, method coverage and incremental unique-data value remain unproven. Candidate ARV-036-B2B-CENTER-PUBLIC-VALUE-MATRIX-001 is candidate_not_admitted; no login, operator contact, terms acceptance, connector implementation or external effect.'
+    successor_candidate:
+      task_id: ARV-036-B2B-CENTER-PUBLIC-VALUE-MATRIX-001
+      admission: candidate_not_admitted
+      scope: Freeze a public read-only official-source/access and procedure/document incremental-value matrix before any provider or connector decision.
+      hard_boundary: No login, registration, operator contact, terms acceptance, payment, electronic signature, private/authenticated data, connector implementation, provider selection, production, procurement or external effect.
 - id: ARV-035
   legacy_snapshot:
     queue_order: 56
