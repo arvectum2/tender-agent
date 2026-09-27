@@ -546,6 +546,25 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 290
+  task_id: ARV-039-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate site/product outcome-metrics foundations and residual aggregation gap
+  status: blocked
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first unresolved GO-TO-MARKET item after completed ARV-038 revalidation.'
+  roadmap_scope:
+  - ARV-039
+  dependencies:
+  - ARV-038-REVALIDATION-001
+  - ARV-002-REVALIDATION-001
+  executor_scope: Reconcile repository-owned product/site metric definitions, event/outcome data foundations and deterministic reporting evidence. Identify which canonical ARV-039 signals are currently captured, derived, proxy-only or absent. Do not add external analytics, cookies/trackers, customer outreach, production telemetry, pricing/commercial decisions or private/customer data.
+  done_gate: 'A source-linked metric coverage matrix distinguishes existing definitions and persisted foundations from absent aggregation/measurement; proxy/human-reviewed semantics remain explicit; at most one source-traceable successor stays candidate_not_admitted; YAML and exact-head CI are recorded; no external tracking, commercial commitment or production effect.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
