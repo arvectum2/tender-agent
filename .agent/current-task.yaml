@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: ARV-028-REVALIDATION-001
 authority: AUTO
 goal: Reconcile repository-owned evidence for the planned self-hosted n8n orchestration boundary without deploying or enabling it.
@@ -9,13 +9,13 @@ definition_of_done:
 - Reconciliation overlay states what is already present and the concrete residual without rewriting the immutable legacy snapshot.
 - At most one bounded successor candidate is recorded only if the canonical roadmap already states the desired result.
 - No production/network/provider mutation, webhook/external notification enablement, credentials, procurement or external effect.
-current: Canonical bounded REVALIDATION slice admitted. Initial repository checks found no n8n dependency in pyproject.toml, no n8n service in root docker-compose.yml, no n8n command in Makefile, and no n8n reference from repository code search; evidence overlay is being persisted.
+current: Repository-only reconciliation is complete. Current main has worker/outbox foundations but no evidenced n8n dependency, root compose service, lifecycle command, indexed workflow artifact or explicit n8n-to-internal-API contract. The roadmap overlay records the residual and ARV-028-N8N-CONTRACT-PREP-001 as candidate_not_admitted. YAML validation passed.
 pending:
-- Persist the ARV-028 reconciliation overlay and canonical roadmap evidence.
-- Validate YAML/document diff and open a reviewable PR.
-- Check exact-head CI once; automatic merge remains prohibited while Company AM-4 is review-due at 10/10.
-updated_at: '2026-09-27T05:03:18+03:00'
-resume_instruction: Finish repository-only ARV-028 evidence reconciliation. Do not design or deploy an n8n topology; keep any successor candidate bounded to the roadmap-stated self-hosted orchestrator and internal API-contract preparation, with production and external delivery separately gated.
+- Open/update the reviewable PR and check exact-head CI once.
+- Await attributable Owner AM-4 renewal/review before any merge; current cycle is review-due at 10/10.
+- Do not deploy n8n, configure credentials/webhooks, or enable external delivery without separate authority.
+updated_at: '2026-09-27T05:05:42+03:00'
+resume_instruction: Check exact-head PR CI once. If green, persist the run evidence only; keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review. Do not admit or implement ARV-028-N8N-CONTRACT-PREP-001 without a later canonical continuation step.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260927-045840
@@ -23,4 +23,4 @@ execution:
   base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
   issue: null
   manual_override: false
-  lease_until: '2026-09-27T03:53:18.314+00:00'
+  lease_until: null
