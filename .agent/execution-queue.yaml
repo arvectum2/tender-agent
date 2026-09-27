@@ -552,7 +552,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate federal ETP incremental-value research evidence
-  status: in_progress
+  status: blocked
   authority: AUTO
   independent: true
   auto_merge: true
