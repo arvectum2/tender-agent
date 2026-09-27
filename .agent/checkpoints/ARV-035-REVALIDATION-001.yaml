@@ -1,6 +1,6 @@
 schema_version: 1
 task_id: ARV-035-REVALIDATION-001
-state: evidence_reconciliation_in_progress
+state: review_ready_blocked
 branch: agent/arv-035-revalidation-001
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
 authority: AUTO
@@ -20,4 +20,7 @@ evidence:
   official_search: 'Official Fabrikant search result advertised an Integration API page for working with Fabrikant procedures from SRM systems.'
   direct_retrieval: 'Direct retrieval of https://www.fabrikant.ru/integration-api/ returned 404; direct retrieval of https://44.fabrikant.ru/ timed out.'
   interpretation: 'The observations do not prove a stable public API, WSDL, access class, licensing terms, document coverage or unique-data corpus.'
-resume_instruction: Persist the evidence matrix and roadmap overlay. Record only a candidate_not_admitted public read-only research dossier; do not authenticate, contact the operator or implement a connector.
+  overlay: 'docs/roadmap/ARV-035_REVALIDATION_2026-09-27.md contains the evidence matrix and ARV-035-FABRIKANT-PUBLIC-RESEARCH-001 as candidate_not_admitted.'
+  validation: 'PyYAML parsed queue/current-task/checkpoint; ARV-035 roadmap block parsed as revalidated_residual_gap with four evidence records.'
+blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10; automatic merge is prohibited. Exact-head PR CI is required.'
+resume_instruction: Check exact-head CI once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; do not authenticate, contact Fabrikant or implement a connector.
