@@ -2056,10 +2056,28 @@ legacy_registry:
     comment: Метрики должны измерять outcome, а не только количество обработанных закупок.
     dependencies_raw: ARV-038, ARV-002
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - kind: metric_definitions
+      ref: docs/product/Pilot_Metrics_Definition.md
+      result: Repository definitions cover run identity, timing, artifact references, operator actions, blockers, generated reports, usefulness proxy, estimated time saved and human-reviewed final outcome.
+    - kind: pilot_success_signals
+      ref: docs/product/Pilot_Success_Metrics.md
+      result: Success definitions include demo completion, time to report, accepted usefulness, blockers caught, traceability confidence, feedback, would-pay and documented outcome.
+    - kind: persisted_outcome_foundation
+      ref: src/modules/outcome_intake/service.py
+      result: Outcome intake persists deal/tracker-bound outcome codes, rationale, artifact bindings and event-log records with revision semantics.
+    - kind: residual_matrix
+      ref: docs/roadmap/ARV-039_REVALIDATION_2026-09-27.md
+      result: No consolidated repository aggregation is evidenced for activation, successful-analysis rate, evidence coverage, funnel/RFQ conversion, time-to-decision, win/loss, forecast accuracy or retention; some pilot fields remain explicit operator proxies.
+    notes: 'Metric vocabulary and outcome/event foundations exist, but ARV-039 is not complete: cross-run deterministic aggregation and several canonical outcome/funnel signals are absent or proxy-only. ARV-039-OUTCOME-METRIC-CONTRACT-001 is candidate_not_admitted; no external analytics, cookies, customer communication, pricing decision, production telemetry or private/customer data was introduced.'
+    successor_candidate:
+      task_id: ARV-039-OUTCOME-METRIC-CONTRACT-001
+      admission: candidate_not_admitted
+      scope: Define and deterministically aggregate the canonical ARV-039 metric contract over existing repository-owned events, reports and human-reviewed outcomes, with explicit denominator, unknown and proxy semantics.
+      hard_boundary: No external analytics service, cookies/tracking deployment, customer outreach, automated outcome invention, pricing/commercial decision, production mutation or private/customer data expansion.
+
 - id: ARV-040
   legacy_snapshot:
     queue_order: 35
