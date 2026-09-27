@@ -705,16 +705,21 @@ def _extract_preferred_notice_card_url(
         path = parsed.path
         if not path.startswith("/epz/order/notice/") or "/printForm/" in path:
             continue
-        if not path.endswith("/common-info.html"):
-            continue
         if registry_number:
             candidate_registry = (parse_qs(parsed.query).get("regNumber") or [None])[0]
             if candidate_registry != registry_number:
                 continue
-        procedure_specific = bool(
+        procedure_common_info = bool(
             re.fullmatch(r"/epz/order/notice/[^/]+/view/common-info\.html", path)
         )
-        candidates.append((0 if procedure_specific else 1, position, absolute))
+        generic_common_info = path == "/epz/order/notice/view/common-info.html"
+        legacy_procedure_view = bool(
+            re.fullmatch(r"/epz/order/notice/[^/]+/view\.html", path)
+        )
+        if not (procedure_common_info or generic_common_info or legacy_procedure_view):
+            continue
+        priority = 0 if procedure_common_info else 1 if generic_common_info else 2
+        candidates.append((priority, position, absolute))
 
     if not candidates:
         return None
