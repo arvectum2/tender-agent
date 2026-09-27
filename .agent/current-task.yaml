@@ -1,30 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
 status: in_progress
-task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+task_id: ARV-036-REVALIDATION-001
 authority: AUTO
-goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
+goal: Reconcile B2B-Center commercial/223-FZ scope, API/documentation access, tariffs and incremental data evidence without selecting or connecting the platform.
 definition_of_done:
-- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
-- Local controlled LLM path configured and proven on fixture data before counted cases.
-- Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
-- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
-- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
-- Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
-- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 0 remains active on the isolated canonical Mac mini runtime. PR #121 merged prompt/schema visibility hardening; targeted post-merge proof showed llama.cpp response_format.schema is also required for reliable type-constrained output. The bounded follow-up adds that existing supported schema constraint; targeted rfq_draft + contract_risk_memo smoke passes 2/2.
+- Current repository is checked for a B2B-Center provider, API contract, access/licensing evidence and non-EIS commercial-procurement corpus.
+- Explicitly public read-only evidence is recorded without inferring authenticated/private capabilities or accepting platform terms.
+- At most one bounded successor candidate is recorded only from the canonical ARV-036 next result.
+- No login, registration, operator contact, electronic signature, provider selection, connector implementation, private data, production/network/provider mutation, procurement or external effect.
+current: Canonical bounded REVALIDATION slice admitted. Current main has no indexed B2B-Center provider or research artifact. Official public material states that an API exists, but method documentation and XML examples are available in the personal account and methods are tariff-associated. Commercial and 223-FZ sections have separate contractual/tariff access.
 pending:
-- Complete exact-head CI and merge the controlled-provider response schema constraint.
-- Re-run the full synthetic controlled-provider smoke from canonical main and require all four core sections to validate.
-- Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
-- Execute Wave 1, then continue only through defined gates.
-updated_at: '2026-09-23T12:12:00+03:00'
-resume_instruction: Finish the controlled-provider response-schema PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full four-section synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until all four sections validate or fail closed with an explicit accepted blocker.
+- Persist the repository/public evidence matrix and ARV-036 reconciliation overlay.
+- Validate YAML/document structure and open a reviewable PR.
+- Check exact-head CI once; automatic merge remains prohibited while Company AM-4 is review-due at 10/10.
+updated_at: '2026-09-27T07:02:04+03:00'
+resume_instruction: Finish the bounded ARV-036 evidence reconciliation. Treat public marketing/regulatory pages as observations, not proof of usable API credentials, complete method coverage or unique procedure data. Do not log in, register, contact B2B-Center, accept terms, sign, implement a connector or access private procedure data.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260923-real-pilot
-  branch: agent/arv-005-local-llm-response-schema
-  base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260927-070001
+  branch: agent/arv-036-revalidation-001
+  base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
   issue: null
   manual_override: false
   lease_until: null
