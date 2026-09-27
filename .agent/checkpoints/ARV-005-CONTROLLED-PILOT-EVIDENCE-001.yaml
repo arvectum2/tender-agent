@@ -96,7 +96,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Continue A5 from the acquired run IDs: analyze W1-B toa-run-20260927163252-70f1dc and W1-C toa-run-20260927163340-2ce555 under the unchanged local controlled-provider config; persist LLM provenance, Decision Core/report status, warnings/fallbacks/defects, then apply A6 Wave 1 gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.
+resume_instruction: 'Continue A5 from the acquired run IDs: analyze W1-B toa-run-20260927163252-70f1dc and W1-C toa-run-20260927163340-2ce555 under the unchanged local controlled-provider config; persist LLM provenance, Decision Core/report status, warnings/fallbacks/defects, then apply A6 Wave 1 gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.'
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
