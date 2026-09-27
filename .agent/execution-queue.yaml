@@ -546,6 +546,24 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 310
+  task_id: BASE-003-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate Arvectum website and digital-channel baseline
+  status: blocked
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first unresolved STATUS-REVALIDATION item after earlier continuation branches were satisfied, active, deferred, gated or represented by existing work.'
+  roadmap_scope:
+  - BASE-003
+  dependencies:
+  - ARV-038-REVALIDATION-001
+  executor_scope: Reconcile BASE-003 against current read-only arvectum2/arvectum-landing evidence for the website, RU/EN surface, legal/cookie pages, product CTA and declared social links. Do not access social/webmaster accounts, edit or deploy the site, publish claims, invent pricing, or make commercial commitments.
+  done_gate: 'A source-linked overlay distinguishes the repository-evidenced website/digital-channel baseline from unverified live account health and the existing ARV-038 Owner/commercial review boundary; deterministic assertions, YAML and exact-head CI are recorded; no external or production effect.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
