@@ -2661,10 +2661,25 @@ legacy_registry:
     comment: Приоритет зависит от уникальности закупок.
     dependencies_raw: ARV-030
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - path: src/tender_research/registry_discovery.py
+      detail: Current source identity and discovery model cover public EIS 44-FZ/223-FZ paths; no Fabrikant source/provider is registered.
+    - path: docs/roadmap/ARV-030_REVALIDATION_2026-09-21.md
+      detail: Standard procurement marketplace adapter protocol/registry remains a separate candidate_not_admitted dependency boundary.
+    - url: https://www.fabrikant.ru/integration-api/
+      detail: Official search advertised an SRM-oriented Fabrikant Integration API page, but direct public retrieval returned 404 on 2026-09-27.
+    - path: docs/roadmap/ARV-035_REVALIDATION_2026-09-27.md
+      detail: Repository/public evidence matrix, retrieval limitations and bounded non-admitted successor candidate.
+    notes: >-
+      No stable public API/WSDL specification, access/licensing terms, document-coverage corpus or unique-data comparison is preserved in current main. The official API search result and 404/timeout observations do not prove a usable contract or general service unavailability. No provider priority, login, bypass or connector implementation is inferred.
+    successor_candidate:
+      task_id: ARV-035-FABRIKANT-PUBLIC-RESEARCH-001
+      status: candidate_not_admitted
+      title: Frozen public Fabrikant API and incremental-value dossier
+      scope: Freeze only current official public API/WSDL/access/licensing documentation and a predeclared same-window public corpus comparison against EIS. Record URLs, timestamps, hashes, unknowns and blocked observations. No login, operator contact, protection bypass, provider selection, connector code, production mutation or external action.
+
 - id: ARV-037
   legacy_snapshot:
     queue_order: 57
