@@ -1,0 +1,29 @@
+schema_version: 1
+task_id: ARV-037-REVALIDATION-001
+state: review_ready_blocked
+branch: agent/arv-037-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - repository-owned Tender.Pro integration evidence
+  - explicitly public read-only API, document/search access, tariff and unique-data observations
+  - reconciliation overlay and one bounded successor candidate at most
+excluded:
+  - login, registration, account creation or operator contact
+  - acceptance of terms, payment, electronic signature or commercial commitment
+  - private/authenticated procedure data or API credentials
+  - provider selection or connector implementation
+  - production, network, provider, procurement or external mutation
+evidence:
+  roadmap: 'ARV-037 requires evaluation of uniqueness, API, documents, search limitations and integration conditions.'
+  repository: 'No indexed ARV-037/Tender.Pro artifact, provider or API contract is evidenced on current main; current marketplace seams cover public EIS 44-FZ/223-FZ only.'
+  official_api: 'Official help states that arbitrary API selection returns JSON and that Tender.Pro integrates with ERP/CRM/MDM/BI and corporate systems.'
+  integration_condition: 'Official help says a chosen integration level requires contacting Tender.Pro and forming a joint working group to refine the technical protocol and statement of work.'
+  documentation_access: 'The official detailed-documentation target https://www.tender.pro/api/docs/smd returned HTTP 403 anonymously during this run.'
+  public_access: 'Official FAQ search evidence says the tender feed is viewable without registration, while tender documentation becomes available after registration; the FAQ page itself returned HTTP 403 to direct retrieval.'
+  tariffs: 'Official tariff page exposes paid participant/organizer plans; organizer corporate-system integration is tariff-associated. No payment, registration or terms acceptance occurred.'
+  interpretation: 'Public evidence supports an operator-described JSON API and anonymous feed boundary, not usable credentials, method/schema completeness, extraction permission, unique procedure/document volume or connector feasibility.'
+  overlay: 'docs/roadmap/ARV-037_REVALIDATION_2026-09-27.md contains the evidence matrix and ARV-037-TENDERPRO-PUBLIC-VALUE-MATRIX-001 as candidate_not_admitted.'
+blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10; automatic merge is prohibited. Exact-head PR CI is required.'
+validation: 'PyYAML passed: yaml_ok 1 in_progress ARV-037-REVALIDATION-001 ARV-037-REVALIDATION-001 ARV-037 revalidated_residual_gap 4.'
+resume_instruction: Open or resume the ARV-037 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; keep the successor unadmitted and do not authenticate, contact Tender.Pro, accept terms, pay, sign or implement a connector.
