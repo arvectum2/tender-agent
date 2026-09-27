@@ -1,0 +1,27 @@
+schema_version: 1
+task_id: BASE-007-REVALIDATION-001
+state: review_ready_blocked
+branch: agent/base-007-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - repository-owned EIS SOAP/getDocsIP implementation and tests
+  - environment-only settings, allowed-host and direct-route controls
+  - fail-closed TLS trust and sanitized runtime diagnostics
+  - status reconciliation plus one bounded HUMAN-gated successor candidate at most
+excluded:
+  - token, private-key, certificate-store or secret access
+  - credentialed EIS calls or current live production smoke
+  - protection bypass, allowlist requests or external communication
+  - production mutation or procurement action
+evidence:
+  loader: 'src/tender_research/eis_real_loader.py delegates registry-number acquisition to get_docs_by_reestr_number, classifies missing-token/auth/no-data/connection failures and keeps legacy search/details separate.'
+  client: 'src/modules/tender_operator_agent_demo/zakupki_soap_client.py implements getDocsByReestrNumberRequest, EIS host allowlisting, bounded ZIP download, sanitized request/error artifacts and route-status output.'
+  settings: 'src/modules/tender_operator_agent_demo/settings.py loads the token from environment-only configuration, distinguishes individual/legal-entity modes, requires direct RU route by default and declares allowed EIS hosts.'
+  trust: 'src/shared/network/etp_trust.py and http_client.py provide verified system/custom trust, pinned-authority validation, direct-connection policy and fail-closed configuration.'
+  tests: 'tests/tender_research/test_eis_real_loader.py covers configured/unconfigured behavior, normalization, registry-number outcomes, token masking and error classification with mocks; it is not live endpoint acceptance evidence.'
+  residual: 'No attributable current live SOAP smoke, active endpoint/token/certificate/route/allowlist acceptance or dedicated operator runbook evidence was established by the repository-only inspection.'
+  overlay: 'docs/roadmap/BASE-007_REVALIDATION_2026-09-27.md records the capability matrix and BASE-007-EIS-SOAP-OPERATIONS-EVIDENCE-001 as HUMAN-gated candidate_not_admitted.'
+blocker: 'Live acceptance requires controlled operator credentials/network evidence and ARV-014 route/allowlist state. Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10, so automatic merge is prohibited; exact-head CI is required.'
+validation: 'Deterministic repository assertions passed before commit: loader, client, settings, trust and mocked test artifacts were read; getDocsByReestrNumber, allowed-host/direct-route, token masking and fail-closed boundaries were found; durable task/checkpoint/overlay IDs align. YAML/exact-head CI required on PR.'
+resume_instruction: Open or resume the BASE-007 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; keep live EIS smoke and credentialed/network actions HUMAN-gated.
