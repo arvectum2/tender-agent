@@ -546,6 +546,24 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 300
+  task_id: ARV-040-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate search-indexing and technical SEO evidence
+  status: blocked
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; next unresolved GO-TO-MARKET item after ARV-039.'
+  roadmap_scope:
+  - ARV-040
+  dependencies:
+  - ARV-038-REVALIDATION-001
+  executor_scope: Reconcile ARV-040 against the actual arvectum2/arvectum-landing repository at its current main head. Verify repository-owned sitemap, robots, canonical/hreflang, structured data, product pages and recorded checks. Do not access webmaster accounts, credentials, deploy the site, submit indexing requests, change public claims or mutate production.
+  done_gate: 'A source-linked matrix distinguishes completed repository technical SEO from unverified deployment/webmaster/indexing state; at most one human-gated successor stays candidate_not_admitted; deterministic artifact assertions, YAML and exact-head CI are recorded; no credentialed console, deployment or external effect.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

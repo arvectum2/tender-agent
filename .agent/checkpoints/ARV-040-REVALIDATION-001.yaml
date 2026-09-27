@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: ARV-040-REVALIDATION-001
+state: review_ready_blocked
+branch: agent/arv-040-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - read-only current arvectum2/arvectum-landing repository evidence
+  - sitemap, robots, canonical/hreflang and structured-data coverage
+  - repository release/check evidence versus unverified live/index-console state
+  - reconciliation overlay and one bounded HUMAN-gated successor candidate at most
+excluded:
+  - Google Search Console or Yandex Webmaster login/account access
+  - credentials, ownership verification or indexing submission
+  - deployment, hosting/CDN or live-site mutation
+  - public-claim edits or commercial commitments
+evidence:
+  supporting_head: 'arvectum2/arvectum-landing main ff790c74c8d2b2ae3dd44fc4913554f055f17449 was read without mutation.'
+  robots: 'public/robots.txt allows public crawling, excludes health/favicon-preview/thank-you/API paths and declares https://arvectum.com/sitemap.xml.'
+  sitemap: 'public/sitemap.xml contains 35 canonical public URLs including services/ai-tender-agent.html, the procurement solution cluster, demo case, diagnostics, security and materials.'
+  metadata: 'public/index.html has index/follow, canonical, RU/EN/x-default hreflang, Open Graph, WebSite, Organization and Service JSON-LD.'
+  product_page: 'public/services/ai-tender-agent.html has index/follow, canonical, RU/EN/x-default hreflang, Open Graph and Organization/BreadcrumbList/Service/FAQPage JSON-LD.'
+  release_checks: 'SEO_RELEASE_REPORT.md records npm lint, static checks and production checks passing, then lists sitemap submission to Google Search Console and Yandex Webmaster plus 3/7/14/30-day index checks as manual owner steps.'
+  residual: 'No attributable repository evidence confirms current webmaster ownership, sitemap submission status, crawl/index coverage, exclusions or search-result appearance.'
+  overlay: 'docs/roadmap/ARV-040_REVALIDATION_2026-09-27.md records the matrix and ARV-040-WEBMASTER-INDEXING-EVIDENCE-001 as candidate_not_admitted.'
+blocker: 'Credentialed webmaster-console verification is HUMAN-gated. Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10, so automatic merge is prohibited; exact-head CI is required.'
+validation: 'Deterministic repository assertions passed: landing head identified; robots declares sitemap; sitemap has 35 URLs and includes the Tender Agent product page; homepage/product canonical and required structured-data markers are present; durable task/checkpoint/overlay IDs align. YAML/exact-head CI required on PR.'
+resume_instruction: Open or resume the ARV-040 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; keep webmaster evidence HUMAN-gated and do not access accounts, deploy or submit indexing requests.
