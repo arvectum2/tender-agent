@@ -551,7 +551,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: OCR fallback current-state revalidation
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -561,6 +561,22 @@ items:
   dependencies: []
   executor_scope: Reconcile ARV-022 against current repository evidence and existing reuse registry; repository-only/read-only evidence, no OCR engine invention or production mutation.
   done_gate: 'Current OCR/scanned-document capability and concrete gap are evidenced; existing reuse candidates are reconciled; at most one bounded successor candidate may be recorded without adopting a dependency or inventing architecture.'
+
+- order: 250
+  task_id: ARV-022-OCR-ADAPTER-EVAL-001
+  strategy: REUSE
+  title: Replaceable Tesseract OCR adapter evaluation
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'ARV-022-REVALIDATION-001 bounded successor; OWNER-CONTINUOUS-ROADMAP-2026-09-18 existing-bounded-task-first continuation.'
+  roadmap_scope:
+  - ARV-022
+  dependencies:
+  - ARV-022-REVALIDATION-001
+  executor_scope: Evaluate an existing Tesseract engine behind a replaceable local adapter on synthetic/fixture images only; preserve text, confidence, coordinates and fail-closed low-confidence review signaling. No production wiring, private documents, PDF-rendering architecture, custom OCR model/engine, or external effect.
+  done_gate: 'Adapter boundary and deterministic fixture tests prove provenance/coordinates/confidence/review signaling; one local synthetic Tesseract smoke is recorded when available; focused tests and exact-head CI pass.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
