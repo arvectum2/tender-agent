@@ -1,6 +1,6 @@
 schema_version: 1
 task_id: ARV-032-REVALIDATION-001
-state: evidence_reconciliation_in_progress
+state: review_ready_blocked
 branch: agent/arv-032-revalidation-001
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
 authority: AUTO
@@ -21,4 +21,7 @@ evidence:
   support_matrix: 'docs/223fz/INGEST_SUPPORT_MATRIX.md covers EIS 223-FZ intake boundaries, not eight federal ETP incremental value.'
   repository_search: 'No indexed ARV-032, TEK-Torg, Fabrikant, marketplace-adapter or Anti-DDoS research artifact was found on current main.'
   public_authority_baseline: 'Government Order 1447-r of 2018 is the official historical operator-list authority; current operator identity and later amendments must be frozen from official sources in any admitted live research slice.'
-resume_instruction: Persist the evidence matrix and roadmap overlay. Record only a candidate_not_admitted read-only official-source matrix task; do not select or connect a provider.
+  overlay: 'docs/roadmap/ARV-032_REVALIDATION_2026-09-27.md contains the dimension-by-dimension evidence matrix and ARV-032-FEDERAL-ETP-INCREMENTAL-VALUE-MATRIX-001 as candidate_not_admitted.'
+  validation: 'PyYAML parsed queue/current-task/checkpoint; ARV-032 roadmap block parsed as revalidated_residual_gap with four evidence records.'
+blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10; automatic merge is prohibited. Exact-head PR CI is required.'
+resume_instruction: Check exact-head CI once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; do not select or connect an ETP.
