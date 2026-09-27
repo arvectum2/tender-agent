@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: ARV-035-REVALIDATION-001
 authority: AUTO
 goal: Reconcile Fabrikant API/WSDL, access/licensing, document and unique-data evidence without selecting or connecting the platform.
@@ -9,13 +9,13 @@ definition_of_done:
 - Explicitly public read-only evidence and retrieval failures are recorded without inferring private capabilities.
 - At most one bounded successor candidate is recorded only from the canonical ARV-035 next result.
 - No login, registration, operator contact, protection bypass, provider priority, connector implementation, private data, production/network/provider mutation, procurement or external effect.
-current: Canonical bounded REVALIDATION slice admitted. Current main has no evidenced Fabrikant provider or research artifact. Official search exposes an API integration page, but direct retrieval returned 404; the public 44-FZ section timed out. API/WSDL contract, licensing/access and unique-data claims remain unverified.
+current: Repository-only reconciliation is complete and review-ready. Current main contains no evidenced Fabrikant provider, API/WSDL contract, licensing/access record or unique-data corpus. Official search exposed an API integration page, while direct retrieval returned 404 and the public 44-FZ and main pages timed out; these are observations, not proof of withdrawal or general outage. The only successor is candidate_not_admitted. YAML validation passed.
 pending:
-- Persist the ARV-035 evidence matrix and reconciliation overlay.
-- Validate YAML/document structure and open a reviewable PR.
-- Check exact-head CI once; automatic merge remains prohibited while Company AM-4 is review-due at 10/10.
-updated_at: '2026-09-27T06:04:07+03:00'
-resume_instruction: Finish repository-only ARV-035 evidence reconciliation. Treat official-page search snippets and direct retrieval failures as observations, not proof of a usable API. Keep any successor limited to a frozen public read-only research dossier; do not log in, contact the operator or implement a connector.
+- Open the reviewable PR and check exact-head CI, submitted reviews and review threads once.
+- Obtain refreshed Company AM-4 authority review before any automatic merge; current authority is review-due at 10/10.
+- If this slice remains blocked, continue the next independent canonical AUTO item without repeating verified stages.
+updated_at: '2026-09-27T06:06:39+03:00'
+resume_instruction: Resume the existing ARV-035 branch/PR. Check exact-head CI and review state once. Do not repeat the repository or public evidence scan. Keep the successor unadmitted unless separately selected by the deterministic continuation rule. No login, operator contact, connector implementation, merge while AM-4 is review-due, or external effect.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260927-060206
