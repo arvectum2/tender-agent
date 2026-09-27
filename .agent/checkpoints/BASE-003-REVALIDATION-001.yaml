@@ -1,0 +1,28 @@
+schema_version: 1
+task_id: BASE-003-REVALIDATION-001
+state: review_ready_blocked
+branch: agent/base-003-revalidation-001
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+authority: AUTO
+scope:
+  - read-only current arvectum2/arvectum-landing repository evidence
+  - RU/EN content, product CTA/navigation, legal/cookie surfaces and declared social links
+  - separation of repository evidence from live deployment/account state
+  - reconciliation overlay only; preserve the existing ARV-038 review boundary
+excluded:
+  - social, webmaster, hosting or analytics account access
+  - credentials, external messages or account mutations
+  - website edits, deployment or production mutation
+  - public-claim, pricing or commercial decisions
+evidence:
+  supporting_head: 'arvectum2/arvectum-landing main ff790c74c8d2b2ae3dd44fc4913554f055f17449 was read without mutation.'
+  repository_identity: 'README.md identifies a static Arvectum B2B site and documents its public structure and deterministic checks.'
+  bilingual_surface: 'public/site-config.js declares default RU plus RU/EN language content and the rendered pages expose a RU/EN switch.'
+  product_entry: 'public/site-config.js routes procurementAiAgent to public/services/ai-tender-agent.html; public navigation and CTA expose the product/contact path.'
+  legal_consent: 'README.md and site configuration identify privacy, personal-data-consent and cookie-policy pages plus consent controls with analytics opt-in.'
+  digital_channels: 'The site configuration and Organization structured data declare Telegram, VK, Dzen and X links; no claim is made about current external account availability or ownership.'
+  dependency: 'ARV-038-REVALIDATION-001 is done and narrows remaining product-site work to Owner/commercial REVIEW for explicit pricing/pay-per-analysis and material public claims.'
+  overlay: 'docs/roadmap/BASE-003_REVALIDATION_2026-09-27.md records the evidence matrix and boundaries.'
+blocker: 'Company POS-004 / AI-ENG-001 AM-4 is review-due at 10/10, so automatic merge is prohibited; exact-head CI is required. External account health and commercial/publication choices remain outside AUTO authority.'
+validation: 'Deterministic repository assertions passed before commit: landing head identified; README names legal/cookie surfaces; site-config contains RU/EN, product route, CTA/contact, consent controls and Telegram/VK/Dzen/X declarations; durable task/checkpoint/overlay IDs align. YAML/exact-head CI required on PR.'
+resume_instruction: Open or resume the BASE-003 PR and check exact-head CI/reviews once. Keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review; do not access external accounts, edit/deploy the site, publish pricing or alter the ARV-038 review boundary.
