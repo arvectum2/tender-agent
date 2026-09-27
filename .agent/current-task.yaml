@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: ARV-032-REVALIDATION-001
 authority: AUTO
 goal: Reconcile repository-owned evidence for the planned eight-federal-ETP incremental-value matrix without selecting or connecting a provider.
@@ -9,13 +9,13 @@ definition_of_done:
 - Matrix dimensions for unique procedures/documents, latency, API/SOAP, access conditions and Anti-DDoS are explicit.
 - At most one bounded successor candidate is recorded only from the canonical ARV-032 next result.
 - No provider priority, new connector, authentication, Anti-DDoS bypass, private data, production/network/provider mutation, procurement or external effect.
-current: Canonical bounded REVALIDATION slice admitted. Current main exposes public EIS 44-FZ/223-FZ providers and source-aware provenance, but no repository-owned eight-platform uniqueness matrix or federal-ETP provider evidence.
+current: Repository-only reconciliation is complete. Current main provides public EIS 44-FZ/223-FZ baselines and source provenance but no frozen current operator list, eight-platform corpus, uniqueness/latency comparison, official API/access inventory or Anti-DDoS matrix. The overlay records ARV-032-FEDERAL-ETP-INCREMENTAL-VALUE-MATRIX-001 as candidate_not_admitted. YAML validation passed.
 pending:
-- Persist the ARV-032 evidence matrix and reconciliation overlay.
-- Validate YAML/document structure and open a reviewable PR.
-- Check exact-head CI once; automatic merge remains prohibited while Company AM-4 is review-due at 10/10.
-updated_at: '2026-09-27T05:09:21+03:00'
-resume_instruction: Finish repository-only ARV-032 evidence reconciliation. Do not choose an ETP or perform live authenticated probing. Keep any successor candidate limited to a frozen read-only research matrix with official/public sources and separately gated provider implementation.
+- Open/update the reviewable PR and check exact-head CI once.
+- Await attributable Owner AM-4 renewal/review before any merge; current cycle is review-due at 10/10.
+- Do not admit the matrix successor, select a provider, authenticate or implement a connector without a later canonical step.
+updated_at: '2026-09-27T05:11:13+03:00'
+resume_instruction: Check exact-head PR CI once. If green, persist the evidence only; keep merge REVIEW-blocked until attributable Owner AM-4 renewal/review. Do not perform live authenticated probing or provider selection.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20260927-050729
