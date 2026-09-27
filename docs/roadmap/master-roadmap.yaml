@@ -2468,10 +2468,20 @@ legacy_registry:
     comment: Бизнес-логика остаётся в FastAPI/Python.
     dependencies_raw: ARV-008, ARV-012
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - path: pyproject.toml
+      detail: Current canonical dependency manifest contains FastAPI, Redis and application dependencies but no n8n package or adapter dependency.
+    - path: docker-compose.yml
+      detail: Root compose defines PostgreSQL only; no n8n service is present.
+    - path: Makefile
+      detail: Repository commands cover application, Redis, quality and acceptance flows; no n8n lifecycle command is present.
+    - path: docs/roadmap/ARV-028_REVALIDATION_2026-09-27.md
+      detail: Repository-only evidence matrix, explicit no-deployment boundary and one bounded candidate_not_admitted successor.
+    notes: >-
+      Current main provides worker/outbox foundations but no repository-owned n8n dependency, service, workflow artifact or explicit n8n-to-internal-API contract. The residual remains the roadmap-stated external orchestrator boundary with business logic in FastAPI/Python. Production deployment, credentials, webhooks and external delivery remain separately REVIEW/HUMAN gated. ARV-028-N8N-CONTRACT-PREP-001 is candidate_not_admitted.
+
 - id: ARV-029
   legacy_snapshot:
     queue_order: 50
