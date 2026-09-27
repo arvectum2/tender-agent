@@ -1,7 +1,7 @@
 # BASE-014 customer workspace revalidation
 
-Date: 2026-09-27  
-Task: `BASE-014-REVALIDATION-001`  
+Date: 2026-09-27
+Task: `BASE-014-REVALIDATION-001`
 Base: `189799ce4cc44a4e83e75169d689613bd14b55bf`
 
 ## Result
