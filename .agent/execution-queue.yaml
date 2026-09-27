@@ -546,6 +546,24 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 250
+  task_id: ARV-035-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate Fabrikant integration research evidence
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; ARV-033/034 skipped for unsatisfied ARV-032/033 dependencies; ARV-035 is the first dependency-satisfied unresolved ETP-CONNECTORS historical item after ARV-032.'
+  roadmap_scope:
+  - ARV-035
+  dependencies:
+  - ARV-030-REVALIDATION-001
+  executor_scope: Reconcile repository-owned and explicitly public read-only evidence for Fabrikant API/WSDL, access/licensing, document surfaces and unique procurement data. Update only the reconciliation overlay and record at most one bounded successor candidate. Do not log in, register, contact the operator, bypass protections, select provider priority, implement a connector, access private data, mutate production/network/provider state, or perform procurement/external actions.
+  done_gate: 'ARV-035 evidence and unknowns are explicit; any successor remains candidate_not_admitted; no login/bypass/provider selection/connector implementation, production or external effect; guarded merge only if exact-head CI and Company AM-4/repository gates are valid.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
