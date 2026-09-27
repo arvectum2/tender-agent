@@ -253,6 +253,60 @@ def test_canonical_report_builder_attaches_fail_closed_decision_core() -> None:
     assert model["bid_decision"]["status"] == "needs_review"
     assert model["decision_core"]["supplier_profile_bound"] is True
 
+
+def test_canonical_report_builder_reconciles_legacy_customer_decision() -> None:
+    metadata = {
+        "run_id": "decision-consistency-test",
+        "procurement_id": "0123456789012345678",
+        "procurement_title": "Тестовая закупка",
+        "files": [
+            {"display_name": "Техническое задание.docx", "role_hint": "technical_spec"},
+            {"display_name": "Проект контракта.docx", "role_hint": "contract_draft"},
+        ],
+        "_field_evidence": {
+            "procurement_title": "eis_notice:procurement_subject",
+            "application_deadline": "eis_notice:application_deadline",
+            "nmck": "eis_notice:initial_price",
+        },
+        "deadline": "2026-09-30T12:00:00+03:00",
+        "analysis_completed_at": "15.09.2026T12:00:00+00:00",
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "supply_items": [],
+                "item_coverage": {},
+                "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Тестовая закупка",
+                "nmck": 1_000_000,
+                "currency": "RUB",
+                "document_coverage": "complete",
+                "missing_documents": [],
+                "contract_draft_status": "present",
+                "contract_draft_documents": ["Проект контракта.docx"],
+                "contract_draft_evidence_ids": ["contract:contract-1"],
+            },
+        },
+        "final_recommendation": {
+            "recommendation": "participate",
+            "rationale": [],
+            "manual_checks": [],
+        },
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+
+    model = build_procurement_report_model(metadata, outputs)
+
+    assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
+    assert model["customer_decision"]["recommendation"] == "Требуется проверка"
+    assert model["customer_decision"]["reasons"] == model["decision_core"]["decision"]["rationale"]
+    assert model["customer_decision"]["next_action"] == model["decision_core"]["decision"]["next_action"]
+
 def _grounded_223fz_model() -> dict:
     model = _grounded_model()
     model["procurement_law"] = "223fz"
