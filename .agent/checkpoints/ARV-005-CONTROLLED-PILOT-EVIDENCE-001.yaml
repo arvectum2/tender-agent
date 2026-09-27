@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-27T20:04:00+03:00'
+updated_at: '2026-09-27T22:10:28+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -32,7 +32,7 @@ completed:
   - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
   - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
   - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
-current: Subtask A5/6 in progress. A1/A2 parser-resolver hardening is validated; A3/A4 acquisition reruns succeeded with W1-B=13 public documents and W1-C=4 public documents, both ready_to_analyze and no manual upload requirement.
+current: Subtask A5/6 is blocked only on the frozen-model runtime for W1-C. W1-B completed with no LLM fallback, and its canonical report consistency defect is fixed on PR #123 with a focused regression and fail-closed legacy-summary reconciliation.
 subtasks:
   - id: A1
     status: completed
@@ -96,7 +96,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: 'Continue A5 from the acquired run IDs: analyze W1-B toa-run-20260927163252-70f1dc and W1-C toa-run-20260927163340-2ce555 under the unchanged local controlled-provider config; persist LLM provenance, Decision Core/report status, warnings/fallbacks/defects, then apply A6 Wave 1 gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.'
+resume_instruction: 'Restore frozen-model read access for local.llama-server-8081, verify /health plus one short completion, then run W1-C toa-run-20260927163340-2ce555 exactly once under the unchanged controlled-provider config. Persist provenance/report/Decision Core and apply the A6 Wave 1 gate using the fixed W1-B report contract. Do not substitute the model/cases, authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.'
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -150,3 +150,15 @@ wave1_a5_runtime_blocker_20260927:
   finder_copy_attempt: blocked because automation process is not authorized to send Apple events to Finder
   required_human_action: restore removable-volume/full-disk access for the llama-server launch context or otherwise make the exact frozen model readable locally
   safe_boundary: do not substitute model or procurement case; do not authenticate to EIS/ETP
+
+wave1_w1b_report_consistency_fix_20260927:
+  pr: 123
+  implementation_commit: 6f27658710fee1dc9e78e29113c9d87c931f8b59
+  regression_commit: f9bcb68a44fc9affa21e560b4703109fb995f140
+  behavior: NEEDS_REVIEW and NO_GO Decision Core outcomes reconcile the legacy customer_decision recommendation, rationale and next action
+  focused_regression: 1_passed
+  related_report_tests: 24_passed
+  make_check: passed
+  broad_suite: 3051_passed_244_skipped_6_environment_or_time_sensitive_failures
+  broad_suite_failures: public EIS DNS unavailable; wall-clock deadline boundary; Docker unavailable for three R9 acceptance matrices; SOCKS extra unavailable in inherited environment
+  merge_gate: REVIEW_REQUIRED
