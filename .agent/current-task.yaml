@@ -1,30 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
-task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+status: blocked
+task_id: BASE-014-REVALIDATION-001
 authority: AUTO
-goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
+goal: Reconcile the historical basic customer/project/search workspace against current repository foundations without inventing a new product surface or changing production authentication.
 definition_of_done:
-- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
-- Local controlled LLM path configured and proven on fixture data before counted cases.
-- Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
-- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
-- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
-- Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
-- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 0 remains active on the isolated canonical Mac mini runtime. PR #121 merged prompt/schema visibility hardening; targeted post-merge proof showed llama.cpp response_format.schema is also required for reliable type-constrained output. The bounded follow-up adds that existing supported schema constraint; targeted rfq_draft + contract_risk_memo smoke passes 2/2.
+- Current customer registry, project/case workspace, review checklist, isolation and internal kanban evidence is mapped.
+- Implemented foundations are separated from the residual unified end-user UI and production auth/role boundary.
+- At most one bounded successor remains candidate_not_admitted with its REVIEW/security gate explicit.
+- No private/customer data, production auth change, deployment, procurement action or external effect.
+current: Repository revalidation is complete and review-ready. Main contains canonical customer profiles, customer-bound projects and procurement cases, scoped run/review/checklist lifecycle, cross-customer isolation evidence, an exact-number Tender Operator search entry and an internal commercial kanban over the canonical status engine. No unified production-authenticated customer/project/case/kanban surface was established.
 pending:
-- Complete exact-head CI and merge the controlled-provider response schema constraint.
-- Re-run the full synthetic controlled-provider smoke from canonical main and require all four core sections to validate.
-- Freeze Wave 1 case-selection rule and three registry numbers before output inspection.
-- Execute Wave 1, then continue only through defined gates.
-updated_at: '2026-09-23T12:12:00+03:00'
-resume_instruction: Finish the controlled-provider response-schema PR. After merge, sync the isolated Mac mini runtime to exact main and re-run the full four-section synthetic controlled-provider smoke with 120s timeout. Do not select counted Wave 1 cases until all four sections validate or fail closed with an explicit accepted blocker.
+- Open the reviewable PR and check exact-head CI, submitted reviews and review threads once.
+- Obtain refreshed Company AM-4 authority review before any automatic merge; current authority is review-due at 10/10.
+- Keep production authentication/role work and a unified UI unadmitted pending separate canonical admission and security review.
+updated_at: '2026-09-27T17:07:00+03:00'
+resume_instruction: Resume the existing BASE-014 branch/PR. Check exact-head CI and review state once. Do not repeat repository inspection or implement production auth, roles or a unified workspace from candidate status.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20260923-real-pilot
-  branch: agent/arv-005-local-llm-response-schema
-  base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20260927-165803
+  branch: agent/base-014-revalidation-001
+  base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
   issue: null
   manual_override: false
   lease_until: null
