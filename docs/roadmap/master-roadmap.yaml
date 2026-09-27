@@ -448,10 +448,21 @@ legacy_registry:
     comment: Технический сайт готов, продуктовая упаковка ещё не завершена.
     dependencies_raw: ARV-038
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: review
+    verified_at: '2026-09-27'
+    evidence:
+    - repository: arvectum2/arvectum-landing
+      commit: ff790c74c8d2b2ae3dd44fc4913554f055f17449
+      detail: README identifies the static Arvectum B2B site and its public structure/checks.
+    - path: arvectum2/arvectum-landing:public/site-config.js
+      detail: RU/EN content, Tender Agent product route, contact CTA, legal/cookie pages, consent controls and Telegram/VK/Dzen/X declarations are present.
+    - path: arvectum2/arvectum-landing:public/services/ai-tender-agent.html
+      detail: The product-oriented Tender Agent entry is a public, indexable bilingual surface with explicit human-control limitations.
+    - path: docs/roadmap/BASE-003_REVALIDATION_2026-09-27.md
+      detail: Source-linked status matrix and preserved boundaries.
+    notes: >-
+      The repository-owned website baseline is supported. Live external account availability/ownership was not inferred.
+      Product packaging residuals remain governed by the existing ARV-038 Owner/commercial REVIEW boundary; this task does not admit site edits, deployment, pricing or public-claim changes.
 - id: BASE-004
   legacy_snapshot:
     queue_order: 0
