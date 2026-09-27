@@ -259,3 +259,22 @@ def test_search_card_does_not_alias_placement_organization_to_customer():
 
     assert len(cards) == 1
     assert cards[0]["customer_name"] is None
+
+
+def test_search_card_prefers_procedure_card_over_print_form_link():
+    html = """
+    <div class="registry-entry">
+      <div class="registry-entry__header-mid__title">Электронный аукцион</div>
+      <a href="/epz/order/notice/printForm/view.html?regNumber=0123456789012345678">Печатная форма</a>
+      <a href="/epz/order/notice/ea20/view/common-info.html?regNumber=0123456789012345678">0123456789012345678</a>
+    </div>
+    """
+
+    cards = parse_44fz_search_results(html)
+
+    assert len(cards) == 1
+    assert cards[0]["card_url"] == (
+        "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html"
+        "?regNumber=0123456789012345678"
+    )
+    assert cards[0]["procedure_type"] == "Электронный аукцион"
