@@ -551,7 +551,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate Tender.Pro API, documents, search and incremental-value evidence
-  status: in_progress
+  status: blocked
   authority: AUTO
   independent: true
   auto_merge: true
