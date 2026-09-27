@@ -2081,10 +2081,34 @@ legacy_registry:
     comment: После новой структуры сайта.
     dependencies_raw: ARV-038
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-09-27'
+    evidence:
+    - kind: supporting_repository
+      ref: arvectum2/arvectum-landing@ff790c74c8d2b2ae3dd44fc4913554f055f17449
+      result: Current landing main contains repository-owned technical SEO assets and product landing pages.
+    - kind: crawl_controls
+      ref: arvectum2/arvectum-landing:public/robots.txt
+      result: Robots policy allows the public site, excludes hidden/API routes and declares the canonical sitemap URL.
+    - kind: sitemap
+      ref: arvectum2/arvectum-landing:public/sitemap.xml
+      result: Sitemap contains 35 canonical public URLs including the Tender Agent product page and procurement SEO cluster.
+    - kind: metadata_and_schema
+      ref: arvectum2/arvectum-landing:public/services/ai-tender-agent.html
+      result: Product page has index/follow, canonical, RU/EN/x-default hreflang, Open Graph and Organization/Breadcrumb/Service/FAQ structured data.
+    - kind: release_evidence
+      ref: arvectum2/arvectum-landing:SEO_RELEASE_REPORT.md
+      result: Repository report records lint, static and production checks passing and leaves Google Search Console/Yandex Webmaster submission plus 3/7/14/30-day indexing checks as manual owner steps.
+    - kind: residual_matrix
+      ref: docs/roadmap/ARV-040_REVALIDATION_2026-09-27.md
+      result: Current webmaster-console submission, ownership verification, crawl/index coverage and search appearance are not evidenced in either repository.
+    notes: 'Repository technical SEO and product landing foundations are implemented. Credentialed Google/Yandex webmaster submission and current indexing evidence remain HUMAN-gated and unverified. ARV-040-WEBMASTER-INDEXING-EVIDENCE-001 is candidate_not_admitted; no account access, deployment, indexing submission or live-site mutation occurred.'
+    successor_candidate:
+      task_id: ARV-040-WEBMASTER-INDEXING-EVIDENCE-001
+      admission: candidate_not_admitted
+      scope: Collect attributable owner-provided Google Search Console and Yandex Webmaster submission/index-coverage evidence and reconcile current crawl/index status without changing site content or deployment.
+      hard_boundary: HUMAN credential/account action only; no credential extraction, login automation, ownership change, indexing submission, deployment, public-claim edit or production mutation by the watchdog.
+
 - id: ARV-022
   legacy_snapshot:
     queue_order: 36
