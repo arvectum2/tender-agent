@@ -552,7 +552,7 @@ items:
   strategy: REUSE
   continuation_mode: REVALIDATION
   title: Revalidate self-hosted n8n orchestration evidence and residual gate
-  status: in_progress
+  status: blocked
   authority: AUTO
   independent: true
   auto_merge: true
