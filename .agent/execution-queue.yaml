@@ -546,6 +546,25 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 240
+  task_id: ARV-032-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate federal ETP incremental-value research evidence
+  status: in_progress
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; ARV-031 skipped as already satisfied by merged INGEST-RESILIENCE-V1-001 scope; ARV-032 is the first dependency-satisfied unresolved ETP-CONNECTORS historical item.'
+  roadmap_scope:
+  - ARV-032
+  dependencies:
+  - ARV-006-REVALIDATION-001
+  - ARV-030-REVALIDATION-001
+  executor_scope: Reconcile repository-owned evidence for the planned eight-federal-ETP incremental-value matrix. Verify current source/provider coverage, unique-procedure/document evidence, latency/API/access/Anti-DDoS evidence and gaps. Update only the reconciliation overlay and record at most one bounded successor candidate. Do not choose provider priority, connect a new ETP, authenticate, bypass Anti-DDoS, access private data, mutate production/network/provider state, or perform procurement/external actions.
+  done_gate: 'ARV-032 repository evidence and missing matrix dimensions are explicit; any successor remains candidate_not_admitted; no provider selection/integration, authenticated/private access, production or external effect; guarded merge only if exact-head CI and Company AM-4/repository gates are valid.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
