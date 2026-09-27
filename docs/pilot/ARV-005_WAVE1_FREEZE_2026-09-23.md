@@ -67,3 +67,13 @@ A non-mutating inspection of the isolated Mac mini cache found no previously acq
 The frozen W1-B/W1-C handoffs used `printForm/view.html` as `source_url`. Current `Public44FzSearchProvider._build_documents_url()` only rewrites `common-info.html` or `/view(.html)` shapes; for `printForm/view.html` it therefore resolves the documents fetch back to the print-form URL rather than a procedure-specific `documents.html` URL. Both runs then record zero public documents without an acquisition error. A direct read-only check of the W1-B print-form response found no `documents.html` or public filestore link to recover from that page itself.
 
 This is a concrete repository acquisition-path gap. It must not be bypassed by guessing a procedure code from the registry number or by authenticated EIS access. W1-B/W1-C remain source-bound and uncounted until an already-authorized repository rule can resolve the canonical procedure-specific documents URL, or the Wave 1 gate accepts the blocked outcome. No frozen case, benchmark truth, comparator, or normalizer was changed.
+
+## Resolver hardening and acquisition reruns — 2026-09-27
+
+Read-only exact-number EIS search-card inspection showed that both blocked cases expose procedure-specific `common-info.html` and `documents.html` links in the same public card. The parser had been choosing unrelated absolute report links / print-form actions by HTML order. The bounded fix now prefers exact-registry procedure-owned `common-info.html` and refuses to derive a documents URL from `printForm` or report paths. No procedure code is guessed.
+
+Focused public-provider/detail regression suite: **44 passed**. Live read-only proof after the fix:
+- W1-B `0333300006126000121`: `zk20` common-info -> documents page, 13 active-revision public document links. Acquisition rerun `toa-run-20260927163252-70f1dc`: `ready_to_analyze`, 13 downloaded documents, `manual_upload_required=false`.
+- W1-C `0301200067526000236`: `ea20` common-info -> documents page, 4 active-revision public document links. Acquisition rerun `toa-run-20260927163340-2ce555`: `ready_to_analyze`, 4 downloaded documents, `manual_upload_required=false`.
+
+The frozen registry numbers were not changed. No authenticated EIS/ETP action occurred. Analysis output for these two reruns has not yet been counted at this checkpoint; controlled local-LLM analysis is the next subtask.

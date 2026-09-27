@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-23T17:10:00+03:00'
+updated_at: '2026-09-27T19:36:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -32,9 +32,28 @@ completed:
   - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
   - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
   - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
-current: Wave 1 acquisition attempted for all three frozen cases. W1-A completed controlled local-LLM analysis; W1-B and W1-C fail closed at public acquisition with docs_required/manual_upload_required and zero downloaded documents, so neither is counted as a successful analysis.
+current: Subtask A5/6 in progress. A1/A2 parser-resolver hardening is validated; A3/A4 acquisition reruns succeeded with W1-B=13 public documents and W1-C=4 public documents, both ready_to_analyze and no manual upload requirement.
+subtasks:
+  - id: A1
+    status: completed
+    title: deterministic 44-FZ source-link selection + printForm fail-closed hardening
+  - id: A2
+    status: completed
+    title: focused regression suite + live read-only W1-B/W1-C proof
+  - id: A3
+    status: completed
+    title: W1-B acquisition rerun + evidence
+  - id: A4
+    status: completed
+    title: W1-C acquisition rerun + evidence
+  - id: A5
+    status: in_progress
+    title: controlled LLM/report runs for source-complete W1-B/W1-C + provenance
+  - id: A6
+    status: pending
+    title: Wave 1 gate + Wave 2 five-case freeze
 remaining:
-  - Resolve W1-B/W1-C source-bound public-document acquisition blocker without authenticated/consequential EIS action; otherwise record Wave 1 blocked outcome and apply gate
+  - Complete A1..A6 in order without changing frozen Wave 1 registry numbers
   - Wave 2 case freeze and 5 runs
   - Wave 3 confirmation 4 runs
   - 3 exploratory 223-FZ runs
@@ -77,10 +96,37 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: W1-B and W1-C are source-bound at public acquisition: docs_required/manual_upload_required, zero documents. Do not repeat the same acquisition blindly. Inspect only repository-supported read-only public acquisition alternatives or existing cached public packages; if none exist, persist the Wave 1 blocked outcome and apply the defined gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.
+resume_instruction: Continue A5 from the acquired run IDs: analyze W1-B toa-run-20260927163252-70f1dc and W1-C toa-run-20260927163340-2ce555 under the unchanged local controlled-provider config; persist LLM provenance, Decision Core/report status, warnings/fallbacks/defects, then apply A6 Wave 1 gate. Do not authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
   resolver_gap: current_public_documents_url_builder_does_not_resolve_printForm_to_procedure_specific_documents_url
   direct_printform_link_check: no_documents_or_public_filestore_link_found
   safe_boundary: do_not_guess_procedure_code_or_authenticate_to_eis
+wave1_live_source_evidence_20260927:
+  w1b_registry: '0333300006126000121'
+  w1b_common_info: /epz/order/notice/zk20/view/common-info.html?regNumber=0333300006126000121
+  w1b_documents: /epz/order/notice/zk20/view/documents.html?regNumber=0333300006126000121
+  w1c_registry: '0301200067526000236'
+  w1c_common_info: /epz/order/notice/ea20/view/common-info.html?regNumber=0301200067526000236
+  w1c_documents: /epz/order/notice/ea20/view/documents.html?regNumber=0301200067526000236
+  evidence_boundary: public exact-number search cards only; no authentication; no guessed procedure code
+
+wave1_resolver_fix_validation_20260927:
+  provider_tests: 44_passed
+  provider_test_warning_count: 1
+  live_w1b_search_card_url: https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0333300006126000121
+  live_w1b_documents_url: https://zakupki.gov.ru/epz/order/notice/zk20/view/documents.html?regNumber=0333300006126000121
+  live_w1b_document_links: 13
+  live_w1c_search_card_url: https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0301200067526000236
+  live_w1c_documents_url: https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0301200067526000236
+  live_w1c_document_links: 4
+  w1b_acquisition_run_id: toa-run-20260927163252-70f1dc
+  w1b_acquisition_status: ready_to_analyze
+  w1b_acquired_documents: 13
+  w1b_manual_upload_required: false
+  w1c_acquisition_run_id: toa-run-20260927163340-2ce555
+  w1c_acquisition_status: ready_to_analyze
+  w1c_acquired_documents: 4
+  w1c_manual_upload_required: false
+  flow_suite_note: full TestClient handoff suite was not accepted as evidence in this shell because pilot-local host/auth settings contaminated TestClient host validation; provider-focused regression plus live read-only proof are the accepted A1/A2 evidence.
