@@ -546,6 +546,25 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+
+- order: 320
+  task_id: BASE-007-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate EIS SOAP machine-readable acquisition contour
+  status: blocked
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; next unresolved STATUS-REVALIDATION item after BASE-003.'
+  roadmap_scope:
+  - BASE-007
+  dependencies:
+  - ARV-010
+  - ARV-014
+  executor_scope: Reconcile BASE-007 against current repository-owned EIS SOAP/getDocsIP code, tests, trust policy and sanitized diagnostics. Do not read or use tokens/private keys, call credentialed EIS endpoints, bypass protections, request allowlisting, mutate production or perform procurement actions.
+  done_gate: 'A source-linked matrix distinguishes the implemented repository contour from unverified current live smoke, certificate/route/allowlist state and operational runbook evidence; at most one human-gated successor remains candidate_not_admitted; deterministic assertions, YAML and exact-head CI are recorded.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
