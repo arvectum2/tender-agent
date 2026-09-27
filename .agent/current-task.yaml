@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'Subtask A5/6 — W1-B completed local-LLM analysis with no fallback, but report-consistency defect found: final recommendation/Decision Core require review while canonical_report.customer_decision says Участвовать. W1-C has 4 source-complete documents but its local-LLM run exposed an inference runtime hang. After terminating duplicate/orphan requests and restarting local.llama-server-8081, the service is blocked loading the 6.9G model because the launch process cannot reopen the model through /Users/master/.ollama/models -> /Volumes/ArvectumSSD/Models/ollama (direct read returns Operation not permitted). A5 is blocked until removable-volume access is restored or an equivalent frozen-model runtime is available.'
+current: 'Subtask A5/6 — W1-B completed local-LLM analysis with no fallback. Its canonical report consistency defect is fixed on PR #123: fail-closed Decision Core outcomes now reconcile the legacy customer_decision recommendation, reasons and next action. W1-C has 4 source-complete documents but its local-LLM run exposed an inference runtime hang. After terminating duplicate/orphan requests and restarting local.llama-server-8081, the service is blocked loading the 6.9G model because the launch process cannot reopen the model through /Users/master/.ollama/models -> /Volumes/ArvectumSSD/Models/ollama (direct read returns Operation not permitted). A5 remains blocked until removable-volume access is restored or an equivalent frozen-model runtime is available.'
 subtasks:
 - id: A1
   status: completed
@@ -36,8 +36,8 @@ pending:
 - Complete A1..A6 in order without changing the frozen Wave 1 registry numbers.
 - Continue Wave 2 (5 runs), Wave 3 (4 confirmation runs), then 3 exploratory 223-FZ runs.
 - Repository merges remain REVIEW-required because renewed AM-4 is at 10/10; implementation/testing/push may continue.
-updated_at: '2026-09-27T20:02:00+03:00'
-resume_instruction: Restore read access for local.llama-server-8081 to the frozen Gemma model on /Volumes/ArvectumSSD/Models/ollama (current post-restart model open is blocked; direct read reports Operation not permitted). Verify /health plus one short completion before touching W1-C. Then run W1-C toa-run-20260927163340-2ce555 once, record provenance/report/Decision Core, and fix or fail the Wave 1 gate on the W1-B report-consistency defect. Do not substitute the model/cases, authenticate to EIS/ETP, or auto-merge while AM-4 is review-due.
+updated_at: '2026-09-27T22:10:28+03:00'
+resume_instruction: Restore read access for local.llama-server-8081 to the frozen Gemma model on /Volumes/ArvectumSSD/Models/ollama (current post-restart model open is blocked; direct read reports Operation not permitted). Verify /health plus one short completion before touching W1-C. Then run W1-C toa-run-20260927163340-2ce555 once, record provenance/report/Decision Core, and apply the Wave 1 gate using the fixed W1-B report contract. Do not substitute the model/cases, authenticate to EIS/ETP, or auto-merge while AM-4 is review-due.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
