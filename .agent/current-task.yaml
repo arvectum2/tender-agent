@@ -17,11 +17,10 @@ definition_of_done:
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
   is never inferred.
-current: 'Wave 2 counted W2-B finished and exposed a critical hidden LLM-section failure/provenance
-  defect: all four controlled sections FAILED, while top-level metadata/event claim
-  llm_analysis_completed with fallback_reason=null. W2-A/C/D/E remain frozen pre-LLM
-  blockers. Remediation must be regression-first and keep the Wave 2 model/runtime
-  configuration unchanged.'
+current: 'The W2-B hidden LLM-section failure/provenance defect is fixed regression-first
+  at 9921180: all-failed and partially-failed controlled sections can no longer emit
+  clean llm_analysis_completed/fallback_reason=null provenance. W2-A/C/D/E remain
+  frozen pre-LLM blockers; no Wave 2 inference was rerun.'
 subtasks:
 - id: A1
   status: completed
@@ -45,7 +44,6 @@ subtasks:
   title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before
     model-output inspection.
 pending:
-- Run W2-B once under frozen runtime 211d7b0 and record LLM/Decision Core/report provenance.
 - Capture regression tests for W2-A contract alias, W2-C/W2-E technical-document aliases,
   and W2-D ambiguous revision behavior before remediation.
 - Fix bounded ingestion/document classification defects without changing frozen registry
@@ -54,13 +52,12 @@ pending:
 - Complete all five Wave 2 analyses, apply Wave 2 -> Wave 3 gate, then freeze four
   unseen Wave 3 cases.
 - Run three exploratory 223-FZ cases and produce aggregate technical pilot report.
-updated_at: '2026-09-28T09:58:00+03:00'
-resume_instruction: Add a regression that proves all-failed or partially-failed controlled
-  LLM sections cannot be reported as clean llm_analysis_completed/fallback_reason=null.
-  Fix top-level workflow/provenance fail-closed semantics without changing model,
-  timeout, registry numbers, or accepted outputs. Then add regressions for W2-A/C/E
-  document-kind aliases and inspect W2-D revision metadata deterministically. Do not
-  start another Wave 2 LLM run until the provenance defect is fixed and tests pass.
+updated_at: '2026-09-28T10:15:36+03:00'
+resume_instruction: Add regression-first document-kind coverage for the exact W2-A
+  contract alias and W2-C/W2-E technical aliases, then inspect W2-D revision metadata
+  deterministically before any bounded remediation. Do not change frozen registry
+  numbers or model/runtime configuration, and do not rerun Wave 2 LLM inference until
+  the acquisition blockers are fixed and tests pass.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -209,3 +206,16 @@ wave2_w2b_counted_20260928:
     fallback_reason=null even though every controlled LLM section failed validation.
     Empty/placeholder downstream payloads are therefore presented under llm_tender_operator_provider
     without explicit failure provenance.
+wave2_provenance_remediation_20260928:
+  implementation_commit: 9921180a8f8022df38320b51edf53a1bd851502e
+  behavior:
+  - all failed sections emit llm_analysis_validation_failed and deterministic fallback
+  - partial failure emits llm_analysis_completed_with_warnings and explicit fallback_reason
+  - top-level llm_calls_count reflects the controlled section count
+  - trace IDs and failed section names remain explicit in event evidence
+  regression: 2 passed
+  touched_suites: 21 passed, 21 warnings
+  lint: 51 pre-existing Ruff findings remain in the two legacy touched files; no finding
+    points to the added classification or regression lines
+  frozen_inputs_changed: false
+  wave2_llm_rerun: false
