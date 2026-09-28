@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
 goal: Run a controlled technical pilot on real public procurements using the Mac mini
@@ -17,10 +17,10 @@ definition_of_done:
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
   is never inferred.
-current: 'W2-A/C/E document-kind blockers are fixed regression-first at 1a3225e across
-  intake, completeness reconstruction, and notice XML classification. W2-D remains
-  correctly fail-closed for active=2, unknown=0, total=3 and requires review. No
-  procurement reacquisition or Wave 2 LLM inference was run.'
+current: 'PR #123 exact head 1889e771 passed CI run 36395983945. W2-A/C/E
+  reacquisition is blocked on the canonical Mac mini pilot executor because this
+  runner has no preserved toa-run directories and its public EIS request returns
+  no content. W2-D remains correctly fail-closed and review-required.'
 subtasks:
 - id: A1
   status: completed
@@ -49,12 +49,12 @@ pending:
 - Complete all five Wave 2 analyses, apply Wave 2 -> Wave 3 gate, then freeze four
   unseen Wave 3 cases.
 - Run three exploratory 223-FZ cases and produce aggregate technical pilot report.
-updated_at: '2026-09-28T11:11:24+03:00'
-resume_instruction: After exact-head CI succeeds, reacquire only frozen W2-A 0351100020326000084,
-  W2-C 0822500000926000094, and W2-E 0119200000126016261 to verify completeness while
-  retaining their initial blocker evidence. Keep W2-D 0348200027326000071 fail-closed
-  for review; do not choose among two active revisions by inference. Do not change
-  registry numbers or model/runtime configuration.
+updated_at: '2026-09-28T13:05:18+03:00'
+resume_instruction: Resume on the canonical Mac mini pilot executor with the preserved
+  Wave 2 runs and working public EIS access. Reacquire only frozen W2-A 0351100020326000084,
+  W2-C 0822500000926000094, and W2-E 0119200000126016261; retain their initial blocker
+  evidence. Keep W2-D 0348200027326000071 fail-closed and do not choose among two
+  active revisions by inference. Do not change registry numbers or model/runtime.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -235,5 +235,17 @@ wave2_document_alias_remediation_20260928:
   lint: repository files retain pre-existing Ruff formatting/import/UTC findings;
     git diff --check passed and the bounded test suites are green
   frozen_inputs_changed: false
+  procurement_reacquisition: false
+  wave2_llm_rerun: false
+wave2_reacquisition_executor_blocker_20260928:
+  verified_pr_head: 1889e7712a56213a06d9405aa25f7ab734215ae5
+  ci_run: 36395983945
+  ci_status: completed_success
+  submitted_reviews: 0
+  review_threads: 0
+  preserved_wave2_run_directories_available: false
+  public_eis_probe: timed_out_after_10_seconds_without_response_content
+  required_executor: canonical Mac mini pilot context
+  lease_released: true
   procurement_reacquisition: false
   wave2_llm_rerun: false
