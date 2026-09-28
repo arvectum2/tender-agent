@@ -17,10 +17,10 @@ definition_of_done:
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
   is never inferred.
-current: 'The W2-B hidden LLM-section failure/provenance defect is fixed regression-first
-  at 9921180: all-failed and partially-failed controlled sections can no longer emit
-  clean llm_analysis_completed/fallback_reason=null provenance. W2-A/C/D/E remain
-  frozen pre-LLM blockers; no Wave 2 inference was rerun.'
+current: 'W2-A/C/E document-kind blockers are fixed regression-first at 1a3225e across
+  intake, completeness reconstruction, and notice XML classification. W2-D remains
+  correctly fail-closed for active=2, unknown=0, total=3 and requires review. No
+  procurement reacquisition or Wave 2 LLM inference was run.'
 subtasks:
 - id: A1
   status: completed
@@ -44,20 +44,17 @@ subtasks:
   title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before
     model-output inspection.
 pending:
-- Capture regression tests for W2-A contract alias, W2-C/W2-E technical-document aliases,
-  and W2-D ambiguous revision behavior before remediation.
-- Fix bounded ingestion/document classification defects without changing frozen registry
-  numbers or model config; rerun acquisition for blocked cases and retain initial
-  blocker evidence.
+- Reacquire frozen W2-A/W2-C/W2-E with the fixed classifiers and retain their initial
+  blocker evidence; keep W2-D reserved for source/human review.
 - Complete all five Wave 2 analyses, apply Wave 2 -> Wave 3 gate, then freeze four
   unseen Wave 3 cases.
 - Run three exploratory 223-FZ cases and produce aggregate technical pilot report.
-updated_at: '2026-09-28T10:15:36+03:00'
-resume_instruction: Add regression-first document-kind coverage for the exact W2-A
-  contract alias and W2-C/W2-E technical aliases, then inspect W2-D revision metadata
-  deterministically before any bounded remediation. Do not change frozen registry
-  numbers or model/runtime configuration, and do not rerun Wave 2 LLM inference until
-  the acquisition blockers are fixed and tests pass.
+updated_at: '2026-09-28T11:11:24+03:00'
+resume_instruction: After exact-head CI succeeds, reacquire only frozen W2-A 0351100020326000084,
+  W2-C 0822500000926000094, and W2-E 0119200000126016261 to verify completeness while
+  retaining their initial blocker evidence. Keep W2-D 0348200027326000071 fail-closed
+  for review; do not choose among two active revisions by inference. Do not change
+  registry numbers or model/runtime configuration.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -218,4 +215,25 @@ wave2_provenance_remediation_20260928:
   lint: 51 pre-existing Ruff findings remain in the two legacy touched files; no finding
     points to the added classification or regression lines
   frozen_inputs_changed: false
+  wave2_llm_rerun: false
+wave2_document_alias_remediation_20260928:
+  implementation_head: 1a3225e18ca0f8baf485b734e0bbb1142af56351
+  exact_aliases:
+  - 2. Проект ГК.docx -> contract_draft
+  - III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx -> technical_specification
+  - ООЗ.docx and mixed-script OОЗ.docx -> technical_specification
+  paths_hardened:
+  - public attachment intake role hints
+  - retained document-set completeness reconstruction
+  - notice XML attachment classification
+  regression_first_reproduction: 3 failed as expected before implementation
+  focused_regression: 3 passed
+  relevant_suites: 37 passed, 2 deprecation warnings
+  w2d_revision_inspection: 'Synthetic exact observed shape active=2, unknown=0,
+    total=3 returns no attachments, ambiguous_revision_state, requires_review=true.'
+  w2d_behavior_changed: false
+  lint: repository files retain pre-existing Ruff formatting/import/UTC findings;
+    git diff --check passed and the bounded test suites are green
+  frozen_inputs_changed: false
+  procurement_reacquisition: false
   wave2_llm_rerun: false
