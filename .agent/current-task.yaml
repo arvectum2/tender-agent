@@ -17,8 +17,9 @@ definition_of_done:
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
   is never inferred.
-current: Wave 1 gate PASS. Five Wave 2 44-FZ cases are frozen before any model-output
-  inspection; Wave 2 source acquisition is the active stage.
+current: Wave 2 initial acquisition complete on all five frozen cases. W2-B is ready_to_analyze;
+  W2-A/C/D/E are fail-closed before LLM with source/document classification or revision-binding
+  defects. Initial outcomes are frozen as regression evidence before remediation.
 subtasks:
 - id: A1
   status: completed
@@ -42,20 +43,21 @@ subtasks:
   title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before
     model-output inspection.
 pending:
-- Acquire public source packages for all five frozen Wave 2 cases and record completeness/source-binding
-  evidence.
-- Run the frozen Wave 2 cases under the unchanged local Gemma/provider configuration;
-  no tuning on Wave 2 before outputs are recorded.
-- Apply Wave 2 -> Wave 3 gate, then freeze and run four unseen Wave 3 44-FZ cases.
-- Run three exploratory 223-FZ cases separately, then produce the aggregate technical
-  pilot report.
-- Repository merges remain REVIEW-required because renewed AM-4 is at 10/10; implementation/testing/push
-  may continue.
-updated_at: '2026-09-28T09:32:00+03:00'
-resume_instruction: Use only the five frozen Wave 2 registry numbers in wave2_freeze.
-  Begin with read-only public source acquisition and persist per-case completeness/source-binding
-  evidence. Do not substitute cases/model, tune on Wave 2 before outputs are recorded,
-  authenticate to EIS/ETP, or auto-merge while AM-4 is review-due.
+- Run W2-B once under frozen runtime 211d7b0 and record LLM/Decision Core/report provenance.
+- Capture regression tests for W2-A contract alias, W2-C/W2-E technical-document aliases,
+  and W2-D ambiguous revision behavior before remediation.
+- Fix bounded ingestion/document classification defects without changing frozen registry
+  numbers or model config; rerun acquisition for blocked cases and retain initial
+  blocker evidence.
+- Complete all five Wave 2 analyses, apply Wave 2 -> Wave 3 gate, then freeze four
+  unseen Wave 3 cases.
+- Run three exploratory 223-FZ cases and produce aggregate technical pilot report.
+updated_at: '2026-09-28T09:42:00+03:00'
+resume_instruction: Run only W2-B toa-run-20260928063523-e3b615 once under the frozen
+  local Gemma/runtime boundary 211d7b0; record provenance and outputs. Do not analyze
+  W2-A/C/D/E yet. Their initial source blockers are counted regression evidence and
+  must be fixed with bounded tests before reacquisition of the same frozen registry
+  numbers. No case/model substitution, authenticated EIS/ETP action, or auto-merge.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -113,3 +115,57 @@ wave2_freeze:
     expected_reason: source-card customer extraction must fail closed rather than
       accept contaminated identity
 wave2_runtime_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
+wave2_acquisition_initial:
+  W2-A:
+    registry_number: 0351100020326000084
+    run_id: toa-run-20260928063520-0f8807
+    status: docs_required
+    documents: 5
+    document_set_status: incomplete
+    missing:
+    - contract_draft
+    analysis_allowed: false
+    defect: 2. Проект ГК.docx downloaded but document-kind classifier did not recognize
+      contract draft
+  W2-B:
+    registry_number: 0338300012526000076
+    run_id: toa-run-20260928063523-e3b615
+    status: ready_to_analyze
+    documents: 4
+    document_set_status: complete
+    missing: []
+    analysis_allowed: true
+  W2-C:
+    registry_number: 0822500000926000094
+    run_id: toa-run-20260928063528-3674d8
+    status: docs_required
+    documents: 6
+    document_set_status: incomplete
+    missing:
+    - technical_specification
+    analysis_allowed: false
+    defect: III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx downloaded but document-kind classifier did
+      not recognize technical specification
+  W2-D:
+    registry_number: 0348200027326000071
+    run_id: toa-run-20260928063532-51f3ec
+    status: docs_required
+    documents: 0
+    document_set_status: empty
+    missing:
+    - technical_specification
+    - contract_draft
+    analysis_allowed: false
+    defect: 'revision selection fail-closed: active=2, unknown=0, total=3; no attachments
+      accepted'
+  W2-E:
+    registry_number: 0119200000126016261
+    run_id: toa-run-20260928063535-f3d3ca
+    status: docs_required
+    documents: 6
+    document_set_status: incomplete
+    missing:
+    - technical_specification
+    analysis_allowed: false
+    defect: card customer contamination resolved by common-info page, but OОЗ/technical
+      document kind not recognized
