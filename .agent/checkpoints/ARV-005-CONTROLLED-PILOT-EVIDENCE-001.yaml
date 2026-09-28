@@ -1,11 +1,11 @@
 schema_version: 1
 repository: arvectum2/tender-agent
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
-status: in_progress
+status: blocked
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-28T11:11:24+03:00'
+updated_at: '2026-09-28T13:05:18+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local
@@ -50,9 +50,10 @@ completed:
   sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus
   completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: 'W2-A/C/E document-kind blockers are fixed regression-first at 1a3225e without
-  reacquisition or LLM inference. W2-D remains correctly fail-closed for its observed
-  active=2, unknown=0, total=3 revision state and requires source/human review.'
+current: 'PR #123 exact head 1889e771 passed CI run 36395983945. W2-A/C/E
+  reacquisition is blocked on the canonical Mac mini pilot executor because this
+  runner has no preserved toa-run directories and its public EIS request returns
+  no content. W2-D remains correctly fail-closed and review-required.'
 subtasks:
 - id: A1
   status: completed
@@ -115,11 +116,11 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: After exact-head CI succeeds, reacquire only frozen W2-A 0351100020326000084,
-  W2-C 0822500000926000094, and W2-E 0119200000126016261 to verify completeness while
-  retaining their initial blocker evidence. Keep W2-D 0348200027326000071 fail-closed
-  for review; do not choose among two active revisions by inference. Do not change
-  registry numbers or model/runtime configuration.
+resume_instruction: Resume on the canonical Mac mini pilot executor with the preserved
+  Wave 2 runs and working public EIS access. Reacquire only frozen W2-A 0351100020326000084,
+  W2-C 0822500000926000094, and W2-E 0119200000126016261; retain their initial blocker
+  evidence. Keep W2-D 0348200027326000071 fail-closed and do not choose among two
+  active revisions by inference. Do not change registry numbers or model/runtime.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -391,5 +392,17 @@ wave2_document_alias_remediation_20260928:
   lint: repository files retain pre-existing Ruff formatting/import/UTC findings;
     git diff --check passed and the bounded test suites are green
   frozen_inputs_changed: false
+  procurement_reacquisition: false
+  wave2_llm_rerun: false
+wave2_reacquisition_executor_blocker_20260928:
+  verified_pr_head: 1889e7712a56213a06d9405aa25f7ab734215ae5
+  ci_run: 36395983945
+  ci_status: completed_success
+  submitted_reviews: 0
+  review_threads: 0
+  preserved_wave2_run_directories_available: false
+  public_eis_probe: timed_out_after_10_seconds_without_response_content
+  required_executor: canonical Mac mini pilot context
+  lease_released: true
   procurement_reacquisition: false
   wave2_llm_rerun: false
