@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-28T10:15:36+03:00'
+updated_at: '2026-09-28T11:11:24+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local
@@ -48,9 +48,11 @@ completed:
     0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled
   sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
-current: 'The W2-B hidden LLM-section failure/provenance defect is fixed regression-first
-  at 9921180. W2-A/C/D/E remain frozen pre-LLM blockers; exact alias regressions and
-  deterministic W2-D revision inspection are next.'
+- W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus
+  completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
+current: 'W2-A/C/E document-kind blockers are fixed regression-first at 1a3225e without
+  reacquisition or LLM inference. W2-D remains correctly fail-closed for its observed
+  active=2, unknown=0, total=3 revision state and requires source/human review.'
 subtasks:
 - id: A1
   status: completed
@@ -113,11 +115,11 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Add regression-first document-kind coverage for the exact W2-A
-  contract alias and W2-C/W2-E technical aliases, then inspect W2-D revision metadata
-  deterministically before any bounded remediation. Do not change frozen registry
-  numbers or model/runtime configuration, and do not rerun Wave 2 LLM inference until
-  the acquisition blockers are fixed and tests pass.
+resume_instruction: After exact-head CI succeeds, reacquire only frozen W2-A 0351100020326000084,
+  W2-C 0822500000926000094, and W2-E 0119200000126016261 to verify completeness while
+  retaining their initial blocker evidence. Keep W2-D 0348200027326000071 fail-closed
+  for review; do not choose among two active revisions by inference. Do not change
+  registry numbers or model/runtime configuration.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -254,7 +256,7 @@ wave2_freeze_20260928:
   selection_basis: Public 44-FZ search cards and document/revision structure only;
     no Wave 2 model output inspected.
 wave2_runtime_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
-last_verified_commit: 9921180a8f8022df38320b51edf53a1bd851502e
+last_verified_commit: 1a3225e18ca0f8baf485b734e0bbb1142af56351
 rebase_integration_20260928:
   remote_head_before_rebase: 5abbbc7
   remote_commits_preserved:
@@ -369,4 +371,25 @@ wave2_provenance_remediation_20260928:
   lint: 51 pre-existing Ruff findings remain in the two legacy touched files; no finding
     points to the added classification or regression lines
   frozen_inputs_changed: false
+  wave2_llm_rerun: false
+wave2_document_alias_remediation_20260928:
+  implementation_head: 1a3225e18ca0f8baf485b734e0bbb1142af56351
+  exact_aliases:
+  - 2. Проект ГК.docx -> contract_draft
+  - III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx -> technical_specification
+  - ООЗ.docx and mixed-script OОЗ.docx -> technical_specification
+  paths_hardened:
+  - public attachment intake role hints
+  - retained document-set completeness reconstruction
+  - notice XML attachment classification
+  regression_first_reproduction: 3 failed as expected before implementation
+  focused_regression: 3 passed
+  relevant_suites: 37 passed, 2 deprecation warnings
+  w2d_revision_inspection: 'Synthetic exact observed shape active=2, unknown=0,
+    total=3 returns no attachments, ambiguous_revision_state, requires_review=true.'
+  w2d_behavior_changed: false
+  lint: repository files retain pre-existing Ruff formatting/import/UTC findings;
+    git diff --check passed and the bounded test suites are green
+  frozen_inputs_changed: false
+  procurement_reacquisition: false
   wave2_llm_rerun: false
