@@ -3,20 +3,27 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
-goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
+goal: Run a controlled technical pilot on real public procurements using the Mac mini
+  as the server, with local inference and no consequential external action.
 definition_of_done:
-- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
+- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting
+  the legacy runtime copy.
 - Local controlled LLM path configured and proven on fixture data before counted cases.
 - Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
-- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
-- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
+- Three public 223-FZ exploratory runs completed or source-bound blocked and scored
+  separately.
+- Per-run evidence records source completeness, local-LLM provenance, Decision Core
+  result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
-- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'Subtask A5/6 — W1-B completed local-LLM analysis with no fallback. Its canonical report consistency defect is fixed on PR #123: fail-closed Decision Core outcomes now reconcile the legacy customer_decision recommendation, reasons and next action. W1-C has 4 source-complete documents but its local-LLM run exposed an inference runtime hang. After terminating duplicate/orphan requests and restarting local.llama-server-8081, the service is blocked loading the 6.9G model because the launch process cannot reopen the model through /Users/master/.ollama/models -> /Volumes/ArvectumSSD/Models/ollama (direct read returns Operation not permitted). A5 remains blocked until removable-volume access is restored or an equivalent frozen-model runtime is available.'
+- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
+  is never inferred.
+current: Wave 1 gate PASS. Five Wave 2 44-FZ cases are frozen before any model-output
+  inspection; Wave 2 source acquisition is the active stage.
 subtasks:
 - id: A1
   status: completed
-  title: Fix deterministic 44-FZ source-link selection and fail closed on printForm/report URLs.
+  title: Fix deterministic 44-FZ source-link selection and fail closed on printForm/report
+    URLs.
 - id: A2
   status: completed
   title: Run focused regression tests plus read-only exact-number live proof for W1-B/W1-C.
@@ -27,17 +34,28 @@ subtasks:
   status: completed
   title: Re-run W1-C public acquisition and persist source-completeness evidence.
 - id: A5
-  status: blocked
-  title: Run controlled local-LLM analysis/report for any source-complete W1-B/W1-C cases and record provenance/fallbacks/defects.
+  status: completed
+  title: Run controlled local-LLM analysis/report for any source-complete W1-B/W1-C
+    cases and record provenance/fallbacks/defects.
 - id: A6
-  status: pending
-  title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before model-output inspection.
+  status: completed
+  title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before
+    model-output inspection.
 pending:
-- Complete A1..A6 in order without changing the frozen Wave 1 registry numbers.
-- Continue Wave 2 (5 runs), Wave 3 (4 confirmation runs), then 3 exploratory 223-FZ runs.
-- Repository merges remain REVIEW-required because renewed AM-4 is at 10/10; implementation/testing/push may continue.
-updated_at: '2026-09-27T22:10:28+03:00'
-resume_instruction: Restore read access for local.llama-server-8081 to the frozen Gemma model on /Volumes/ArvectumSSD/Models/ollama (current post-restart model open is blocked; direct read reports Operation not permitted). Verify /health plus one short completion before touching W1-C. Then run W1-C toa-run-20260927163340-2ce555 once, record provenance/report/Decision Core, and apply the Wave 1 gate using the fixed W1-B report contract. Do not substitute the model/cases, authenticate to EIS/ETP, or auto-merge while AM-4 is review-due.
+- Acquire public source packages for all five frozen Wave 2 cases and record completeness/source-binding
+  evidence.
+- Run the frozen Wave 2 cases under the unchanged local Gemma/provider configuration;
+  no tuning on Wave 2 before outputs are recorded.
+- Apply Wave 2 -> Wave 3 gate, then freeze and run four unseen Wave 3 44-FZ cases.
+- Run three exploratory 223-FZ cases separately, then produce the aggregate technical
+  pilot report.
+- Repository merges remain REVIEW-required because renewed AM-4 is at 10/10; implementation/testing/push
+  may continue.
+updated_at: '2026-09-28T09:25:00+03:00'
+resume_instruction: Use only the five frozen Wave 2 registry numbers in wave2_freeze.
+  Begin with read-only public source acquisition and persist per-case completeness/source-binding
+  evidence. Do not substitute cases/model, tune on Wave 2 before outputs are recorded,
+  authenticate to EIS/ETP, or auto-merge while AM-4 is review-due.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -46,3 +64,50 @@ execution:
   issue: null
   manual_override: false
   lease_until: null
+wave1_gate:
+  status: passed
+  date: '2026-09-28'
+  criteria:
+    three_runs_completed_without_silent_fallback: true
+    explicit_local_llm_provenance: true
+    no_unsupported_accepted_factual_claims_after_fail_closed_rerender: true
+    critical_ingestion_source_binding_defects_fixed_or_fail_closed: true
+  validation: 72 focused/relevant tests passed; 1 Starlette/httpx deprecation warning.
+  note: W1-A retains three historical explicit stub_analysis_fallback events from
+    earlier attempts; the final counted result is local-LLM with fallback_reason=null
+    and the fallback history is not silent.
+wave2_freeze:
+  frozen_at: '2026-09-28T09:00:00+03:00'
+  before_model_output_inspection: true
+  runtime_model: arvectum-gemma4-12b-it-qat-q4_0
+  cases:
+  - id: W2-A
+    registry_number: 0351100020326000084
+    title: электротехническая продукция
+    source_shape: 5 DOCX, electronic auction
+    expected_review_or_blocker: false
+  - id: W2-B
+    registry_number: 0338300012526000076
+    title: Поставка расходных электротехнических материалов
+    source_shape: XLSX + DOC + PDF + DOCX, electronic auction, higher materiality
+    expected_review_or_blocker: false
+  - id: W2-C
+    registry_number: 0822500000926000094
+    title: Поставка светильников настенных
+    source_shape: 6 DOCX, request for quotations
+    expected_review_or_blocker: false
+  - id: W2-D
+    registry_number: 0348200027326000071
+    title: Поставка автоматических выключателей
+    source_shape: ambiguous revision state, 0 resolved documents
+    expected_review_or_blocker: true
+    expected_reason: public document revision selection requires review
+  - id: W2-E
+    registry_number: 0119200000126016261
+    title: ЭА-№-15972/26 «Поставка светильников электрических настольных для нужд
+      КГКУ "ЦАБС"»
+    source_shape: 6 mixed XLSX/DOCX/DOC/PDF documents; search-card customer field
+      visibly contaminated by page script text
+    expected_review_or_blocker: true
+    expected_reason: source-card customer extraction must fail closed rather than
+      accept contaminated identity

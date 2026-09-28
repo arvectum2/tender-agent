@@ -447,3 +447,358 @@ def test_canonical_report_builder_propagates_223fz_metadata_law() -> None:
 
     assert model["procurement_law"] == "223-FZ"
     assert model["decision_core"]["procurement_regime"] == "223fz"
+
+
+def test_canonical_report_never_says_participate_when_decision_core_needs_review() -> None:
+    metadata = {
+        "run_id": "decision-core-report-consistency",
+        "procurement_id": "0333300006126000121",
+        "procurement_title": "Поставка электротехнической продукции",
+        "files": [
+            {
+                "display_name": "Описание объекта закупки.docx",
+                "role_hint": "technical_spec",
+            },
+            {
+                "display_name": "Проект контракта.docx",
+                "role_hint": "contract_draft",
+            },
+        ],
+        "document_set_summary": {
+            "status": "complete",
+            "physical_file_count": 2,
+            "logical_document_count": 2,
+            "logical_documents": [
+                {"name": "Описание объекта закупки.docx", "type": "технический документ"},
+                {"name": "Проект контракта.docx", "type": "проект контракта"},
+            ],
+            "missing_required_document_kinds": [],
+        },
+        "_field_evidence": {
+            "procurement_title": "eis_notice:procurement_subject",
+            "application_deadline": "eis_notice:application_deadline",
+            "nmck": "eis_notice:initial_price",
+        },
+        "deadline": "30.09.2026 12:00:00 +03:00",
+        "analysis_completed_at": "27.09.2026T12:00:00+00:00",
+        "procurement": {"initial_price": 133_766.60},
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "supply_items": [],
+                "item_coverage": {},
+                "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Поставка электротехнической продукции",
+                "nmck": 133_766.60,
+                "currency": "RUB",
+                "document_coverage": "complete",
+                "missing_documents": [],
+                "contract_draft_status": "present",
+                "contract_draft_documents": ["Проект контракта.docx"],
+                "contract_draft_evidence_ids": ["contract:FILE-02"],
+            },
+        },
+        "final_recommendation": {
+            "recommendation": "manual_review_required",
+            "rationale": ["Требуется ручная проверка перед решением об участии."],
+            "manual_checks": ["Проверить коммерческие условия."],
+        },
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+
+    model = build_procurement_report_model(metadata, outputs)
+
+    assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
+    assert model["bid_decision"]["status"] == "needs_review"
+    assert model["customer_decision"]["recommendation"] == "Требуется проверка"
+    assert model["customer_decision"]["recommendation"] != "Участвовать"
+    assert model["decision"] == "Требуется ручная проверка перед коммерческим расчётом"
+    assert model["customer_decision"]["next_action"] == model["decision_core"]["decision"]["next_action"]
+
+
+def test_decision_core_accepts_source_bound_localized_nmck_display() -> None:
+    model = _grounded_model()
+    model["nmck"] = "1 361 068,80"
+
+    decision = build_decision_core(model, supplier_profile=_profile(price_max=2_000_000))
+
+    assert decision["facts"]["nmck"]["status"] == "KNOWN"
+    assert decision["facts"]["nmck"]["value"] == "1 361 068,80"
+    assert decision["facts"]["nmck"]["evidence"]
+
+
+def test_customer_confirmed_claims_do_not_invent_unextracted_positions() -> None:
+    metadata = {
+        "run_id": "decision-core-report-no-items",
+        "procurement_id": "0333300006126000121",
+        "procurement_title": "Поставка электротехнической продукции",
+        "tender_title": "Поставка электротехнической продукции",
+        "tender_category": "44-ФЗ",
+        "customer_name": "Тестовый заказчик",
+        "files": [
+            {"display_name": "Проект контракта.docx", "role_hint": "contract_draft"},
+        ],
+        "document_set_summary": {
+            "status": "complete",
+            "physical_file_count": 1,
+            "logical_document_count": 1,
+            "logical_documents": [{"name": "Проект контракта.docx", "type": "проект контракта"}],
+            "missing_required_document_kinds": [],
+        },
+        "_field_evidence": {
+            "procurement_title": "card:procurement_subject",
+            "application_deadline": "card:submission_deadline",
+            "nmck": "card:nmck",
+            "customer_name": "card:customer_name",
+        },
+        "deadline": "2026-09-30T12:00:00+03:00",
+        "analysis_completed_at": "2026-09-27T12:00:00+00:00",
+        "procurement": {"initial_price": 133_766.60},
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "supply_items": [],
+                "item_coverage": {},
+                "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Поставка электротехнической продукции",
+                "nmck": 133_766.60,
+                "currency": "RUB",
+                "document_coverage": "complete",
+                "missing_documents": [],
+                "contract_draft_status": "present",
+                "contract_draft_documents": ["Проект контракта.docx"],
+                "contract_draft_evidence_ids": ["contract:FILE-01"],
+            },
+        },
+        "final_recommendation": {
+            "recommendation": "manual_review_required",
+            "rationale": ["Требуется ручная проверка."],
+            "manual_checks": ["Проверить позиции."],
+        },
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+
+    model = build_procurement_report_model(metadata, outputs)
+
+    confirmed = model["customer_decision"]["confirmed"]
+    reasons = " ".join(model["customer_decision"]["reasons"])
+    assert "извлечённые позиции закупки" not in confirmed
+    assert "количество и единица измерения по всем извлечённым позициям" not in confirmed
+    assert "позиция и количество" not in reasons
+    assert "позиции и количество не извлечены в source-bound виде" in model["customer_decision"]["not_evaluated"]
+
+
+def test_customer_confirmed_claims_do_not_invent_missing_quantity() -> None:
+    metadata = {
+        "run_id": "decision-core-report-missing-quantity",
+        "procurement_id": "0301200067526000236",
+        "procurement_title": "Поставка кабельной продукции",
+        "tender_title": "Поставка кабельной продукции",
+        "tender_category": "44-ФЗ",
+        "customer_name": "Тестовый заказчик",
+        "files": [{"display_name": "Описание объекта закупки.docx", "role_hint": "technical_spec"}],
+        "_field_evidence": {
+            "procurement_title": "card:procurement_subject",
+            "application_deadline": "card:submission_deadline",
+            "nmck": "card:nmck",
+            "customer_name": "card:customer_name",
+        },
+        "deadline": "2026-09-30T12:00:00+03:00",
+        "analysis_completed_at": "2026-09-27T12:00:00+00:00",
+        "procurement": {"initial_price": 1_361_068.80},
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "canonical_procurement_model": {
+                    "canonical_items": [
+                        {
+                            "canonical_item_id": "direct-1",
+                            "official_name": "Кабель силовой",
+                            "display_name": "Кабель силовой",
+                            "quantity": None,
+                            "unit": None,
+                            "evidence_ids": ["ev-1"],
+                            "field_provenance": {"name": "ev-1"},
+                            "source_document": "Описание объекта закупки.docx",
+                            "source_row_number": "позиция 1",
+                            "name_source_type": "validated_primary",
+                            "quality_gate_status": "valid",
+                            "warnings": ["QUANTITY_SOURCE_UNRESOLVED"],
+                            "conflicts": [],
+                            "field_issues": [],
+                        }
+                    ],
+                    "run_status": "needs_review",
+                    "unresolved_candidates": [],
+                    "production_model_hash": "a" * 64,
+                    "source_graph": {
+                        "graph_version": "procurement-source-graph-v2",
+                        "production_model_hash": "a" * 64,
+                        "structured_fragments": [],
+                        "canonical_item_edges": [],
+                        "parent_child_edges": [],
+                        "cross_source_matches": [],
+                        "cardinality_decisions": [],
+                    },
+                },
+                "supply_items": [],
+                "item_coverage": {},
+                "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Поставка кабельной продукции",
+                "nmck": 1_361_068.80,
+                "currency": "RUB",
+                "document_coverage": "complete",
+                "missing_documents": [],
+                "contract_draft_status": "absent",
+                "contract_draft_documents": [],
+                "contract_draft_evidence_ids": [],
+            },
+        },
+        "final_recommendation": {
+            "recommendation": "manual_review_required",
+            "rationale": ["Требуется ручная проверка."],
+            "manual_checks": ["Проверить количество."],
+        },
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+
+    model = build_procurement_report_model(metadata, outputs)
+
+    confirmed = model["customer_decision"]["confirmed"]
+    assert "извлечённые позиции закупки" in confirmed
+    assert "количество и единица измерения по всем извлечённым позициям" not in confirmed
+    assert (
+        "количество и/или единица измерения не подтверждены для всех извлечённых позиций"
+        in model["customer_decision"]["not_evaluated"]
+    )
+
+
+def test_present_but_unparsed_contract_is_review_not_missing() -> None:
+    model = _grounded_model()
+    model["contract_draft_status"] = "parse_failed"
+    model["contract_draft_documents"] = ["Проект контракта.docx"]
+    model["contract_draft_evidence_ids"] = ["document_set:contract_draft:1"]
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    contract = next(item for item in result["readiness"] if item["code"] == "CONTRACT_DRAFT")
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert result["facts"]["contract_draft"]["status"] == "KNOWN"
+    assert result["facts"]["contract_draft"]["value"] == "present_unparsed"
+    assert contract["status"] == "REVIEW"
+    assert contract["blocking"] is True
+    assert "присутствует" in contract["summary"].lower()
+    assert "отсутствует" not in contract["summary"].lower()
+    assert any(item["code"] == "CONTRACT_DRAFT_PARSE" for item in result["unknowns"])
+
+
+def test_report_reconciles_complete_docset_contract_presence_when_text_parse_failed() -> None:
+    metadata = {
+        "run_id": "decision-core-contract-parse-failed",
+        "procurement_id": "0301200067526000236",
+        "procurement_title": "Поставка кабельной продукции",
+        "tender_title": "Поставка кабельной продукции",
+        "tender_category": "44-ФЗ",
+        "customer_name": "Тестовый заказчик",
+        "files": [
+            {"display_name": "Описание объекта закупки.docx", "role_hint": "technical_spec"},
+            {"display_name": "Проект контракта.docx.zip", "role_hint": "contract_draft"},
+        ],
+        "document_set_summary": {
+            "status": "complete",
+            "physical_file_count": 2,
+            "logical_document_count": 2,
+            "logical_documents": [
+                {
+                    "name": "Описание объекта закупки.docx",
+                    "type": "техническая документация",
+                    "kind": "technical_specification",
+                    "files": ["Описание объекта закупки.docx"],
+                },
+                {
+                    "name": "Проект контракта.docx",
+                    "type": "проект контракта",
+                    "kind": "contract_draft",
+                    "files": ["Проект контракта.docx.zip"],
+                },
+            ],
+            "missing_required_document_kinds": [],
+        },
+        "_field_evidence": {
+            "procurement_title": "card:procurement_subject",
+            "application_deadline": "card:submission_deadline",
+            "nmck": "card:nmck",
+            "customer_name": "card:customer_name",
+        },
+        "deadline": "2026-09-30T12:00:00+03:00",
+        "analysis_completed_at": "2026-09-27T12:00:00+00:00",
+        "procurement": {"initial_price": 1_361_068.80},
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "supply_items": [],
+                "item_coverage": {},
+                "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Поставка кабельной продукции",
+                "nmck": 1_361_068.80,
+                "currency": "RUB",
+                "document_coverage": "complete",
+                "missing_documents": [],
+                "contract_draft_status": "absent",
+                "contract_draft_documents": [],
+                "contract_draft_evidence_ids": [],
+            },
+        },
+        "final_recommendation": {
+            "recommendation": "manual_review_required",
+            "rationale": ["Требуется ручная проверка."],
+            "manual_checks": ["Проверить проект контракта."],
+        },
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+
+    model = build_procurement_report_model(metadata, outputs)
+
+    contract = next(
+        item
+        for item in model["decision_core"]["readiness"]
+        if item["code"] == "CONTRACT_DRAFT"
+    )
+    assert model["contract_draft_status"] == "parse_failed"
+    assert model["contract_draft_documents"] == ["Проект контракта.docx"]
+    assert model["contract_draft_evidence_ids"]
+    assert contract["status"] == "REVIEW"
+    assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
+    assert model["customer_decision"]["reasons"] == model["decision_core"]["decision"]["rationale"]
+    assert any(
+        "проект контракта присутствует, но его текст не извлечён полностью" in item
+        for item in model["customer_decision"]["not_evaluated"]
+    )
+    assert all(
+        "проект контракта не найден" not in item.lower()
+        for item in model["customer_decision"]["not_evaluated"]
+    )

@@ -5,59 +5,73 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-27T22:10:28+03:00'
+updated_at: '2026-09-28T09:25:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
-scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
+scope: Controlled technical pilot on real public procurements using Mac mini local
+  runtime and local inference; no consequential external action.
 owner_direction:
   date: 2026-09-23
   mac_mini_server_for_pilot: true
   vps_deferred: true
   real_procurement_runs_authorized: true
 completed:
-  - Canonical development chain reconciled through PR #119 / main 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845.
-  - Pilot admission plan PR #120 merged as 32410164e81e1d477911fe593f1874faeca52247 (automatic merge 8/10).
-  - Isolated canonical Mac mini clone created; legacy runtime copy left untouched.
-  - Local Python 3.11 pilot venv created; focused controlled-LLM/provider tests pass 26/26 when runtime secrets are isolated from test env.
-  - Direct local Gemma smoke returned valid compact JSON through llama.cpp loopback.
-  - Local Qwen3 embedding service is present on loopback and pilot config points retrieval embeddings to it.
-  - Existing legacy backend was verified not to enable controlled LLM provider mode, so its analyses can silently fall back to deterministic mode.
-  - Pilot provider config now targets local Gemma via llama.cpp and uses 120s timeout; one-section requirements smoke passed schema validation in 43.64s.
-  - Full four-section smoke completed in 240.22s: requirements/supplier_questions/contract_risk_memo passed; rfq_draft failed closed because list-typed fields were returned as strings.
-  - RFQ failure reproduced in isolation and classified as output-schema prompt mismatch, not transport failure.
-  - PR #121 schema-prompt hardening merged as 37d6ad8c8300906737b5b1fd2ae37b7d88043116 after 19/19 exact-head checks succeeded.
-  - Existing production LLM transport pattern proved llama.cpp supports response_format.schema; controlled provider now reuses its stored schema as a generation constraint.
-  - Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
-  - PR #122 exact head 88f7e29882c4652bde704b0de023eb78e44f0a68 passed CI run 35841190403 and merged as 189799ce4cc44a4e83e75169d689613bd14b55bf; renewed AM-4 automatic merge counter reached 10/10.
-  - Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
-  - Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
-  - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
-current: Subtask A5/6 is blocked only on the frozen-model runtime for W1-C. W1-B completed with no LLM fallback, and its canonical report consistency defect is fixed on PR #123 with a focused regression and fail-closed legacy-summary reconciliation.
+- Canonical development chain reconciled through PR
+- Pilot admission plan PR
+- Isolated canonical Mac mini clone created; legacy runtime copy left untouched.
+- Local Python 3.11 pilot venv created; focused controlled-LLM/provider tests pass
+  26/26 when runtime secrets are isolated from test env.
+- Direct local Gemma smoke returned valid compact JSON through llama.cpp loopback.
+- Local Qwen3 embedding service is present on loopback and pilot config points retrieval
+  embeddings to it.
+- Existing legacy backend was verified not to enable controlled LLM provider mode,
+  so its analyses can silently fall back to deterministic mode.
+- Pilot provider config now targets local Gemma via llama.cpp and uses 120s timeout;
+  one-section requirements smoke passed schema validation in 43.64s.
+- Full four-section smoke completed in 240.22s: requirements/supplier_questions/contract_risk_memo
+    passed; rfq_draft failed closed because list-typed fields were returned as strings.
+- RFQ failure reproduced in isolation and classified as output-schema prompt mismatch,
+  not transport failure.
+- PR
+- Existing production LLM transport pattern proved llama.cpp supports response_format.schema;
+  controlled provider now reuses its stored schema as a generation constraint.
+- Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke
+  for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
+- PR
+- Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf;
+  legacy runtime remained untouched.
+- Full four-section controlled-provider smoke passed requirements, supplier_questions,
+  rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review,
+  trace_count=4.
+- Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple
+    automatic breakers), 0333300006126000121 (multi-position electrical products proxy),
+    0301200067526000236 (higher-materiality cable supply proxy).
+current: Wave 1 gate passed; Wave 2 five-case set frozen before model-output inspection.
+  Source acquisition is next.
 subtasks:
-  - id: A1
-    status: completed
-    title: deterministic 44-FZ source-link selection + printForm fail-closed hardening
-  - id: A2
-    status: completed
-    title: focused regression suite + live read-only W1-B/W1-C proof
-  - id: A3
-    status: completed
-    title: W1-B acquisition rerun + evidence
-  - id: A4
-    status: completed
-    title: W1-C acquisition rerun + evidence
-  - id: A5
-    status: in_progress
-    title: controlled LLM/report runs for source-complete W1-B/W1-C + provenance
-  - id: A6
-    status: pending
-    title: Wave 1 gate + Wave 2 five-case freeze
+- id: A1
+  status: completed
+  title: deterministic 44-FZ source-link selection + printForm fail-closed hardening
+- id: A2
+  status: completed
+  title: focused regression suite + live read-only W1-B/W1-C proof
+- id: A3
+  status: completed
+  title: W1-B acquisition rerun + evidence
+- id: A4
+  status: completed
+  title: W1-C acquisition rerun + evidence
+- id: A5
+  status: completed
+  title: controlled LLM/report runs for source-complete W1-B/W1-C + provenance
+- id: A6
+  status: completed
+  title: Wave 1 gate + Wave 2 five-case freeze
 remaining:
-  - Complete A1..A6 in order without changing frozen Wave 1 registry numbers
-  - Wave 2 case freeze and 5 runs
-  - Wave 3 confirmation 4 runs
-  - 3 exploratory 223-FZ runs
-  - aggregate technical report
+- Wave 2 public source acquisition and 5 frozen runs
+- Wave 2 -> Wave 3 gate and four unseen 44-FZ confirmation runs
+- Three separately scored exploratory 223-FZ runs
+- Aggregate technical pilot report
 validation:
   canonical_main: 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845
   local_generation_endpoint_observed: http://127.0.0.1:8081/v1
@@ -72,9 +86,9 @@ validation:
   controlled_full_smoke_sections_failed: 0
   controlled_full_smoke_failure: null
   frozen_wave1_registry_numbers:
-    - '0342200026726000083'
-    - '0333300006126000121'
-    - '0301200067526000236'
+  - 0342200026726000083
+  - '0333300006126000121'
+  - '0301200067526000236'
   wave1_w1a_run_id: toa-run-20260923092953-986c09
   wave1_w1a_documents: 6
   wave1_w1a_analysis_mode: llm_tender_operator_provider
@@ -96,7 +110,11 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: 'Restore frozen-model read access for local.llama-server-8081, verify /health plus one short completion, then run W1-C toa-run-20260927163340-2ce555 exactly once under the unchanged controlled-provider config. Persist provenance/report/Decision Core and apply the A6 Wave 1 gate using the fixed W1-B report contract. Do not substitute the model/cases, authenticate to EIS/ETP or auto-merge PR #123 while AM-4 remains review-due at 10/10.'
+resume_instruction: Use the frozen Wave 2 registry numbers only. Perform read-only
+  public source acquisition, record completeness/source-binding evidence, then continue
+  counted analysis under the unchanged frozen local Gemma configuration. No case/model
+  substitution, authenticated EIS/ETP action, tuning before Wave 2 outputs, or auto-merge
+  while AM-4 is review-due.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -110,8 +128,8 @@ wave1_live_source_evidence_20260927:
   w1c_registry: '0301200067526000236'
   w1c_common_info: /epz/order/notice/ea20/view/common-info.html?regNumber=0301200067526000236
   w1c_documents: /epz/order/notice/ea20/view/documents.html?regNumber=0301200067526000236
-  evidence_boundary: public exact-number search cards only; no authentication; no guessed procedure code
-
+  evidence_boundary: public exact-number search cards only; no authentication; no
+    guessed procedure code
 wave1_resolver_fix_validation_20260927:
   provider_tests: 44_passed
   provider_test_warning_count: 1
@@ -129,8 +147,9 @@ wave1_resolver_fix_validation_20260927:
   w1c_acquisition_status: ready_to_analyze
   w1c_acquired_documents: 4
   w1c_manual_upload_required: false
-  flow_suite_note: full TestClient handoff suite was not accepted as evidence in this shell because pilot-local host/auth settings contaminated TestClient host validation; provider-focused regression plus live read-only proof are the accepted A1/A2 evidence.
-
+  flow_suite_note: full TestClient handoff suite was not accepted as evidence in this
+    shell because pilot-local host/auth settings contaminated TestClient host validation;
+    provider-focused regression plus live read-only proof are the accepted A1/A2 evidence.
 wave1_a5_runtime_blocker_20260927:
   w1b_run_id: toa-run-20260927163252-70f1dc
   w1b_analysis_status: completed_with_warnings
@@ -140,25 +159,94 @@ wave1_a5_runtime_blocker_20260927:
   w1b_model: arvectum-gemma4-12b-it-qat-q4_0
   w1b_fallback_reason: null
   w1b_decision_core: NEEDS_REVIEW
-  w1b_report_consistency_defect: canonical_report.customer_decision says Участвовать while final recommendation and Decision Core require review
+  w1b_report_consistency_defect: canonical_report.customer_decision says Участвовать
+    while final recommendation and Decision Core require review
   w1c_run_id: toa-run-20260927163340-2ce555
   w1c_documents: 4
   w1c_analysis_status: blocked_runtime
-  runtime_observation: local llama.cpp request hung beyond configured 120s; duplicate/orphan request was removed; after controlled inference-service restart the frozen 6.9G model cannot be reopened through the ArvectumSSD symlink
+  runtime_observation: local llama.cpp request hung beyond configured 120s; duplicate/orphan
+    request was removed; after controlled inference-service restart the frozen 6.9G
+    model cannot be reopened through the ArvectumSSD symlink
   model_path: /Volumes/ArvectumSSD/Models/ollama/blobs/sha256-1278394b693672ac2799eadc9a83fd98259a6a88a40acfb1dcaa6c6fc895a606
   access_error: Operation not permitted
-  finder_copy_attempt: blocked because automation process is not authorized to send Apple events to Finder
-  required_human_action: restore removable-volume/full-disk access for the llama-server launch context or otherwise make the exact frozen model readable locally
-  safe_boundary: do not substitute model or procurement case; do not authenticate to EIS/ETP
-
+  finder_copy_attempt: blocked because automation process is not authorized to send
+    Apple events to Finder
+  required_human_action: restore removable-volume/full-disk access for the llama-server
+    launch context or otherwise make the exact frozen model readable locally
+  safe_boundary: do not substitute model or procurement case; do not authenticate
+    to EIS/ETP
 wave1_w1b_report_consistency_fix_20260927:
   pr: 123
   implementation_commit: 6f27658710fee1dc9e78e29113c9d87c931f8b59
   regression_commit: f9bcb68a44fc9affa21e560b4703109fb995f140
-  behavior: NEEDS_REVIEW and NO_GO Decision Core outcomes reconcile the legacy customer_decision recommendation, rationale and next action
+  behavior: NEEDS_REVIEW and NO_GO Decision Core outcomes reconcile the legacy customer_decision
+    recommendation, rationale and next action
   focused_regression: 1_passed
   related_report_tests: 24_passed
   make_check: passed
   broad_suite: 3051_passed_244_skipped_6_environment_or_time_sensitive_failures
-  broad_suite_failures: public EIS DNS unavailable; wall-clock deadline boundary; Docker unavailable for three R9 acceptance matrices; SOCKS extra unavailable in inherited environment
+  broad_suite_failures: public EIS DNS unavailable; wall-clock deadline boundary;
+    Docker unavailable for three R9 acceptance matrices; SOCKS extra unavailable in
+    inherited environment
   merge_gate: REVIEW_REQUIRED
+wave1_a5_recovery_and_fix_20260927:
+  local_llama_health: ok
+  local_llama_model: arvectum-gemma4-12b-it-qat-q4_0
+  short_completion_smoke: pass
+  w1b_run_id: toa-run-20260927163252-70f1dc
+  w1b_llm_invoked: true
+  w1b_fallback_reason: null
+  w1b_decision_core: NEEDS_REVIEW
+  w1b_report_consistency_fix: customer_decision now Требуется проверка when Decision
+    Core is NEEDS_REVIEW
+  w1b_production_model_hash_unchanged: true
+  w1b_llm_rerun_for_report_fix: false
+  w1c_run_id: toa-run-20260927163340-2ce555
+  w1c_analysis_status: needs_review
+  w1c_analysis_mode: llm_tender_operator_provider
+  w1c_llm_invoked: true
+  w1c_provider: openai_compatible
+  w1c_model: arvectum-gemma4-12b-it-qat-q4_0
+  w1c_fallback_reason: null
+  w1c_decision_core: NEEDS_REVIEW
+  duplicate_w1c_retry_aborted: true
+  duplicate_retry_llm_rerun_completed: false
+  focused_regression: 1 passed
+  touched_regression_suite: 62 passed, 1 deprecation warning
+  note: Python/FastAPI cold imports on this host showed high I/O wait; test body itself
+    remained fast.
+wave1_gate_20260928:
+  status: PASS
+  w1a: PASS
+  w1b: PASS
+  w1c: PASS
+  checks:
+  - completed final state
+  - llm_tender_operator_provider
+  - llm_invoked=true
+  - provider=openai_compatible
+  - frozen Gemma model
+  - fallback_reason=null
+  - explicit llm_analysis_completed event
+  - human control required/external action false
+  - customer report consistent with Decision Core
+  - accepted customer-facing claims source-bound
+  w1a_fallback_history: Three earlier stub_analysis_fallback events remain explicitly
+    logged; final counted result has no fallback.
+  w1c_contract_reconciliation: Document set confirms contract draft presence while
+    text extraction failed; Decision Core now records present_unparsed + REVIEW instead
+    of MISSING.
+  tests: 72 passed, 1 Starlette/httpx deprecation warning
+wave2_freeze_20260928:
+  before_model_output_inspection: true
+  registry_numbers:
+  - 0351100020326000084
+  - 0338300012526000076
+  - 0822500000926000094
+  - 0348200027326000071
+  - 0119200000126016261
+  expected_review_cases:
+  - 0348200027326000071
+  - 0119200000126016261
+  selection_basis: Public 44-FZ search cards and document/revision structure only;
+    no Wave 2 model output inspected.
