@@ -17,9 +17,11 @@ definition_of_done:
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
   is never inferred.
-current: Wave 2 initial acquisition complete on all five frozen cases. W2-B is ready_to_analyze;
-  W2-A/C/D/E are fail-closed before LLM with source/document classification or revision-binding
-  defects. Initial outcomes are frozen as regression evidence before remediation.
+current: 'Wave 2 counted W2-B finished and exposed a critical hidden LLM-section failure/provenance
+  defect: all four controlled sections FAILED, while top-level metadata/event claim
+  llm_analysis_completed with fallback_reason=null. W2-A/C/D/E remain frozen pre-LLM
+  blockers. Remediation must be regression-first and keep the Wave 2 model/runtime
+  configuration unchanged.'
 subtasks:
 - id: A1
   status: completed
@@ -52,12 +54,13 @@ pending:
 - Complete all five Wave 2 analyses, apply Wave 2 -> Wave 3 gate, then freeze four
   unseen Wave 3 cases.
 - Run three exploratory 223-FZ cases and produce aggregate technical pilot report.
-updated_at: '2026-09-28T09:42:00+03:00'
-resume_instruction: Run only W2-B toa-run-20260928063523-e3b615 once under the frozen
-  local Gemma/runtime boundary 211d7b0; record provenance and outputs. Do not analyze
-  W2-A/C/D/E yet. Their initial source blockers are counted regression evidence and
-  must be fixed with bounded tests before reacquisition of the same frozen registry
-  numbers. No case/model substitution, authenticated EIS/ETP action, or auto-merge.
+updated_at: '2026-09-28T09:58:00+03:00'
+resume_instruction: Add a regression that proves all-failed or partially-failed controlled
+  LLM sections cannot be reported as clean llm_analysis_completed/fallback_reason=null.
+  Fix top-level workflow/provenance fail-closed semantics without changing model,
+  timeout, registry numbers, or accepted outputs. Then add regressions for W2-A/C/E
+  document-kind aliases and inspect W2-D revision metadata deterministically. Do not
+  start another Wave 2 LLM run until the provenance defect is fixed and tests pass.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -169,3 +172,40 @@ wave2_acquisition_initial:
     analysis_allowed: false
     defect: card customer contamination resolved by common-info page, but OОЗ/technical
       document kind not recognized
+wave2_w2b_counted_20260928:
+  registry_number: 0338300012526000076
+  run_id: toa-run-20260928063523-e3b615
+  status: completed_with_warnings
+  analysis_status: completed
+  analysis_mode: llm_tender_operator_provider
+  decision_core: NEEDS_REVIEW
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: null
+    llm_calls_count: 1
+  runtime_traces:
+  - trace_id: RTC-2026-000054
+    section: requirements
+    validation_status: FAILED
+    review_status: validation_failed
+  - trace_id: RTC-2026-000055
+    section: supplier_questions
+    validation_status: FAILED
+    review_status: validation_failed
+  - trace_id: RTC-2026-000056
+    section: rfq_draft
+    validation_status: FAILED
+    review_status: validation_failed
+  - trace_id: RTC-2026-000057
+    section: contract_risk_memo
+    validation_status: FAILED
+    review_status: validation_failed
+  observed_transport: all four llama.cpp section requests were cancelled at the frozen
+    120-second provider timeout after very large prompt evaluation; no runtime/model/config
+    change was made
+  critical_defect: Top-level provenance/event reports successful LLM completion with
+    fallback_reason=null even though every controlled LLM section failed validation.
+    Empty/placeholder downstream payloads are therefore presented under llm_tender_operator_provider
+    without explicit failure provenance.
