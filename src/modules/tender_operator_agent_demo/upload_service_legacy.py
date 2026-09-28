@@ -1000,6 +1000,8 @@ def _try_run_llm_workflow(
             return {
                 "analysis_mode": result.analysis_mode,
                 "resolved_provider": result.resolved_provider,
+                "sections": result.sections,
+                "trace_ids": result.trace_ids,
                 "requirements": result.requirements,
                 "supplier_questions": result.supplier_questions,
                 "rfq_draft": result.rfq_draft,
@@ -1008,6 +1010,53 @@ def _try_run_llm_workflow(
             }
     except Exception:
         return None
+
+
+def _classify_controlled_llm_result(llm_result: dict[str, Any]) -> dict[str, Any]:
+    sections = llm_result.get("sections")
+    if not isinstance(sections, dict) or not sections:
+        return {
+            "analysis_engine": "deterministic_with_failed_local_llm",
+            "analysis_mode": "fallback_deterministic_adapter",
+            "event_type": "llm_analysis_validation_failed",
+            "fallback_reason": "controlled_llm_validation_evidence_missing",
+            "failed_sections": [],
+            "llm_calls_count": 0,
+        }
+
+    failed_sections = sorted(
+        section_name
+        for section_name, section_result in sections.items()
+        if not isinstance(section_result, dict) or section_result.get("validation_status") != "PASSED"
+    )
+    if not failed_sections:
+        return {
+            "analysis_engine": "deterministic_with_local_llm",
+            "analysis_mode": llm_result.get("analysis_mode", "llm_tender_operator_provider"),
+            "event_type": "llm_analysis_completed",
+            "fallback_reason": None,
+            "failed_sections": [],
+            "llm_calls_count": len(sections),
+        }
+
+    if len(failed_sections) == len(sections):
+        return {
+            "analysis_engine": "deterministic_with_failed_local_llm",
+            "analysis_mode": "fallback_deterministic_adapter",
+            "event_type": "llm_analysis_validation_failed",
+            "fallback_reason": "controlled_llm_all_sections_failed",
+            "failed_sections": failed_sections,
+            "llm_calls_count": len(sections),
+        }
+
+    return {
+        "analysis_engine": "deterministic_with_partial_local_llm",
+        "analysis_mode": llm_result.get("analysis_mode", "llm_tender_operator_provider"),
+        "event_type": "llm_analysis_completed_with_warnings",
+        "fallback_reason": f"controlled_llm_partial_section_failure:{','.join(failed_sections)}",
+        "failed_sections": failed_sections,
+        "llm_calls_count": len(sections),
+    }
 
 
 def _runtime_ai_provenance() -> dict[str, Any]:
@@ -5428,17 +5477,47 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             provider_mode=provider_mode,
         )
         if llm_result is not None:
-            ai_provenance.update({"analysis_engine": "deterministic_with_local_llm", "llm_invoked": True, "llm_calls_count": 1, "fallback_reason": None})
+            llm_classification = _classify_controlled_llm_result(llm_result)
+            failed_sections = llm_classification["failed_sections"]
+            llm_validation_failed = llm_classification["event_type"] != "llm_analysis_completed"
+            ai_provenance.update(
+                {
+                    "analysis_engine": llm_classification["analysis_engine"],
+                    "llm_invoked": True,
+                    "llm_calls_count": llm_classification["llm_calls_count"],
+                    "fallback_reason": llm_classification["fallback_reason"],
+                }
+            )
             requirements = llm_result.get("requirements", {})
             calibrated_risks = llm_result.get("contract_risks", [])
             supplier_questions = llm_result.get("supplier_questions", [])
             rfq_draft = llm_result.get("rfq_draft", {})
-            analysis_mode = llm_result.get("analysis_mode", "llm_tender_operator_provider")
+            analysis_mode = llm_classification["analysis_mode"]
+            if llm_validation_failed:
+                warnings.append(
+                    (
+                        "Контролируемый LLM-анализ не прошёл валидацию для разделов: "
+                        + ", ".join(failed_sections)
+                        if failed_sections
+                        else "Контролируемый LLM-анализ не предоставил сведения о валидации разделов"
+                    )
+                    + ". Невалидированные результаты не приняты."
+                )
             append_demo_run_event(
                 run_id,
-                "llm_analysis_completed",
-                f"LLM-анализ выполнен через {llm_result.get('resolved_provider', 'llm')}.",
-                {"analysis_mode": analysis_mode, "resolved_provider": llm_result.get("resolved_provider")},
+                llm_classification["event_type"],
+                (
+                    f"LLM-анализ выполнен через {llm_result.get('resolved_provider', 'llm')}."
+                    if not llm_validation_failed
+                    else "Контролируемый LLM-анализ завершён с ошибками валидации; "
+                    "невалидированные результаты не приняты."
+                ),
+                {
+                    "analysis_mode": analysis_mode,
+                    "resolved_provider": llm_result.get("resolved_provider"),
+                    "failed_sections": failed_sections,
+                    "trace_ids": llm_result.get("trace_ids", []),
+                },
             )
         else:
             requirements = {
