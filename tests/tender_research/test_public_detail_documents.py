@@ -280,6 +280,33 @@ def test_revision_selector_fails_closed_on_ambiguous_active_state():
     assert selection["requires_review"] is True
 
 
+def test_wave2_d_revision_shape_remains_fail_closed():
+    from src.tender_research.providers.public_44fz_search import (
+        _select_current_revision_document_links,
+    )
+
+    page_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0348200027326000071"
+    page_html = "".join(
+        [
+            _revision_block(version=1, state="Недействующая", published="15.09.2026 08:00", attachments=[("old.pdf", "OLD")]),
+            _revision_block(version=2, state="Действующая", published="15.09.2026 09:00", attachments=[("a.pdf", "A")]),
+            _revision_block(version=3, state="Действующая", published="15.09.2026 10:00", attachments=[("b.pdf", "B")]),
+        ]
+    )
+
+    links, revisions, selection = _select_current_revision_document_links(page_html, page_url)
+
+    assert links == []
+    assert [(item.revision, item.active) for item in revisions] == [
+        (1, False),
+        (2, True),
+        (3, True),
+    ]
+    assert selection["status"] == "ambiguous_revision_state"
+    assert selection["requires_review"] is True
+    assert "active=2, unknown=0, total=3" in selection["reason"]
+
+
 def test_revision_selector_fails_closed_when_active_binding_is_missing():
     from src.tender_research.providers.public_44fz_search import _select_current_revision_document_links
 
