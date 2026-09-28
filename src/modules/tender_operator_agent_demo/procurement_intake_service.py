@@ -574,6 +574,7 @@ def _role_hint_from_procurement_attachment(name: str) -> str | None:
         for token in (
             "проект контракта",
             "проект договора",
+            "проект гк",
             "электронный контракт",
             "муниципального контракта",
             "государственного контракта",
@@ -587,6 +588,7 @@ def _role_hint_from_procurement_attachment(name: str) -> str | None:
         token in lowered
         for token in (
             "техническое задание",
+            "техническая часть",
             "техзадание",
             "тз",
             "technical specification",
@@ -595,6 +597,8 @@ def _role_hint_from_procurement_attachment(name: str) -> str | None:
             "описание товара",
             "описание работ",
             "описание услуг",
+            "ооз",
+            "oоз",
             "ведомост",
         )
     ):
