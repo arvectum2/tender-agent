@@ -78,6 +78,7 @@ def _normalized_kind(item: dict[str, Any]) -> str:
         for token in (
             "проект контракта",
             "проект договора",
+            "проект гк",
             "contract_draft",
             "contract-draft",
             "contract",
@@ -89,8 +90,11 @@ def _normalized_kind(item: dict[str, Any]) -> str:
         token in lowered
         for token in (
             "техническое задание",
+            "техническая часть",
             "техзадание",
             "описание объекта закупки",
+            "ооз",
+            "oоз",
             "technical specification",
             "technical_spec",
             "technical-spec",
