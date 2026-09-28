@@ -129,6 +129,42 @@ def test_electronic_contract_attachment_is_a_contract_draft():
     ) == "contract_draft"
 
 
+def test_wave2_document_aliases_are_classified_for_intake_and_completeness():
+    aliases = {
+        "2. Проект ГК.docx": ("contract_draft", "contract_draft"),
+        "III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx": (
+            "technical_spec",
+            "technical_specification",
+        ),
+        "ООЗ.docx": ("technical_spec", "technical_specification"),
+        "OОЗ.docx": ("technical_spec", "technical_specification"),
+    }
+
+    for name, (role_hint, document_kind) in aliases.items():
+        assert _role_hint_from_procurement_attachment(name) == role_hint
+        summary = build_document_set_summary([{"original_name": name}])
+        assert summary["kind_counts"] == {document_kind: 1}
+
+
+def test_notice_attachment_parser_supports_wave2_document_aliases():
+    xml = """
+    <epNotification>
+      <documents>
+        <document documentName="2. Проект ГК.docx" href="/files/contract.docx" />
+        <document documentName="III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx"
+                  href="/files/technical.docx" />
+        <document documentName="OОЗ.docx" href="/files/procurement-object.docx" />
+      </documents>
+    </epNotification>
+    """
+
+    assert [item["document_kind"] for item in extract_notice_attachments(xml)] == [
+        "contract_draft",
+        "technical_specification",
+        "procurement_object_description",
+    ]
+
+
 def test_notice_attachment_parser_supports_elements_and_href_attributes():
     xml = """
     <epNotification>
