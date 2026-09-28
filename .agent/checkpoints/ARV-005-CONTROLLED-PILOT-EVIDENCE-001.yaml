@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-09-28T09:25:00+03:00'
+updated_at: '2026-09-28T09:32:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local
@@ -236,7 +236,7 @@ wave1_gate_20260928:
   w1c_contract_reconciliation: Document set confirms contract draft presence while
     text extraction failed; Decision Core now records present_unparsed + REVIEW instead
     of MISSING.
-  tests: 72 passed, 1 Starlette/httpx deprecation warning
+  tests: 73 passed after rebase integration, 1 Starlette/httpx deprecation warning
 wave2_freeze_20260928:
   before_model_output_inspection: true
   registry_numbers:
@@ -250,3 +250,16 @@ wave2_freeze_20260928:
   - 0119200000126016261
   selection_basis: Public 44-FZ search cards and document/revision structure only;
     no Wave 2 model output inspected.
+wave2_runtime_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
+last_verified_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
+rebase_integration_20260928:
+  remote_head_before_rebase: 5abbbc7
+  remote_commits_preserved:
+  - 4b8363a
+  - 6f27658
+  - f9bcb68
+  - 3d29252
+  - 5abbbc7
+  integrated_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
+  focused_regression: 73 passed, 1 deprecation warning
+  force_push_used: false

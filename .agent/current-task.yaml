@@ -51,7 +51,7 @@ pending:
   pilot report.
 - Repository merges remain REVIEW-required because renewed AM-4 is at 10/10; implementation/testing/push
   may continue.
-updated_at: '2026-09-28T09:25:00+03:00'
+updated_at: '2026-09-28T09:32:00+03:00'
 resume_instruction: Use only the five frozen Wave 2 registry numbers in wave2_freeze.
   Begin with read-only public source acquisition and persist per-case completeness/source-binding
   evidence. Do not substitute cases/model, tune on Wave 2 before outputs are recorded,
@@ -72,7 +72,8 @@ wave1_gate:
     explicit_local_llm_provenance: true
     no_unsupported_accepted_factual_claims_after_fail_closed_rerender: true
     critical_ingestion_source_binding_defects_fixed_or_fail_closed: true
-  validation: 72 focused/relevant tests passed; 1 Starlette/httpx deprecation warning.
+  validation: 73 focused/relevant tests passed after safe rebase with remote Wave
+    1 fix; 1 Starlette/httpx deprecation warning.
   note: W1-A retains three historical explicit stub_analysis_fallback events from
     earlier attempts; the final counted result is local-LLM with fallback_reason=null
     and the fallback history is not silent.
@@ -111,3 +112,4 @@ wave2_freeze:
     expected_review_or_blocker: true
     expected_reason: source-card customer extraction must fail closed rather than
       accept contaminated identity
+wave2_runtime_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
