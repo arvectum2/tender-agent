@@ -1264,6 +1264,16 @@ def _infer_procurement_kind(*texts: str | None) -> str:
     return "generic"
 
 
+def _is_generic_procurement_scope_boilerplate(text: str) -> bool:
+    normalized = " ".join((text or "").lower().replace("ё", "е").split())
+    if not normalized:
+        return False
+    has_goods = bool(re.search(r"\bпоставк\w*\s+товар", normalized))
+    has_works = bool(re.search(r"\bвыполнени[ея]\s+работ", normalized))
+    has_services = bool(re.search(r"\bоказани[ея]\s+услуг", normalized))
+    return has_goods and has_works and has_services
+
+
 _SCOPE_SIGNALS: tuple[tuple[str, str, int, str], ...] = (
     ("rental", r"\bарендодатель\w*(?:\s+обяз\w*)?\s+предостав\w*.*\bвременн\w*(?:\s+\w+){0,3}\s+пользован", 6, "rental_temporary_use"),
     ("rental", r"\bарендн\w*\s+плат", 5, "rental_payment"),
@@ -1305,7 +1315,7 @@ def _scope_signal_evidence(metadata: dict[str, Any], documents: list[AnalyzedDoc
         semantic_role = declared_roles.get(str(getattr(document, "role", "")).lower()) or semantic_procurement_role(document)
         for row, raw_line in enumerate((document.text or "").splitlines(), start=1):
             line = " ".join(raw_line.split())
-            if line:
+            if line and not _is_generic_procurement_scope_boilerplate(line):
                 sources.append((document.display_name, document.file_id, f"line:{row}", line, semantic_role))
 
     evidence: list[dict[str, Any]] = []
