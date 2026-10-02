@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: W2-A counted analysis completed under the frozen Gemma runtime. All four controlled LLM sections failed validation and were explicitly rejected; top-level provenance correctly reports controlled_llm_all_sections_failed and deterministic fallback. Before accepting W2-A Decision Core NO_GO, verify live EIS deadline precision because the stored evidence is date-only midnight.
+current: 'W2-A is complete and source-bound. Exact EIS deadline precision defect was fixed: 02.10.2026 10:00 (МСК+4) normalizes to 03:00 UTC. W2-A canonical report was rerendered without repeating LLM; production hash stayed unchanged and Decision Core remains valid NO_GO because the exact deadline had expired. Proceeding to W2-B counted analysis.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T12:59:10+03:00'
-resume_instruction: Inspect live public EIS/common-info for W2-A 0351100020326000084 and determine whether exact application deadline time is available. If exact time is available but the pipeline stores midnight/date-only, add regression-first fail-closed or precision-preserving fix before trusting the W2-A hard blocker. Then record corrected W2-A decision evidence if needed and continue counted analyses W2-B toa-run-20261002084715-3b5d13, W2-C toa-run-20261002084644-d6a081, W2-D toa-run-20261002084646-6af11a, W2-E toa-run-20261002084648-1bc4f2 sequentially with unchanged model/runtime.
+updated_at: '2026-10-02T13:03:29+03:00'
+resume_instruction: Run counted W2-B toa-run-20261002084715-3b5d13 under the unchanged frozen Gemma/openai_compatible runtime and 120s timeout. Record all section validation/trace IDs, fallback_reason, Decision Core and report status. Then continue W2-C, W2-D, W2-E sequentially. Do not change model/runtime, registry numbers, or external-action boundary.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -347,3 +347,16 @@ wave2_w2a_counted_20261002:
   external_action_allowed: false
   open_quality_check: Verify whether the application deadline exact time exists on live EIS; stored date-only midnight must not create a false hard blocker.
   db_trace_namespace_note: Recovered DB started new runtime trace sequence at RTC-2026-000001; these IDs are scoped to the recovered 2026-10-02 DB baseline.
+wave2_w2a_deadline_correction_20261002:
+  parser_fix_commit: 2579e2a263e64d98274bdcf4faaf793acc081481
+  live_eis_raw: 02.10.2026 10:00 (МСК+4)
+  normalized_utc: '2026-10-02T03:00:00+00:00'
+  old_incorrect_value: '2026-10-02T00:00:00+00:00'
+  provider_regression: 47 passed, 1 deprecation warning
+  canonical_rerendered_without_llm_rerun: true
+  production_model_hash_unchanged: true
+  verified_persisted_outputs: true
+  deadline_status: expired
+  decision_core_after_correction: NO_GO
+  decision_changed: false
+  decision_evidence_excerpt: '2026-10-02T03:00:00+00:00'
