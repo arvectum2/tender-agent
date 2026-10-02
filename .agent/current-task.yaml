@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'W2-A is complete and source-bound. Exact EIS deadline precision defect was fixed: 02.10.2026 10:00 (МСК+4) normalizes to 03:00 UTC. W2-A canonical report was rerendered without repeating LLM; production hash stayed unchanged and Decision Core remains valid NO_GO because the exact deadline had expired. Proceeding to W2-B counted analysis.'
+current: W2-A complete/source-bound; exact deadline timestamps for W2-B/C/D/E refreshed from live public EIS common-info before counted analysis. Starting W2-B under unchanged frozen runtime.
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T13:03:29+03:00'
-resume_instruction: Run counted W2-B toa-run-20261002084715-3b5d13 under the unchanged frozen Gemma/openai_compatible runtime and 120s timeout. Record all section validation/trace IDs, fallback_reason, Decision Core and report status. Then continue W2-C, W2-D, W2-E sequentially. Do not change model/runtime, registry numbers, or external-action boundary.
+updated_at: '2026-10-02T13:04:16+03:00'
+resume_instruction: Run W2-B toa-run-20261002084715-3b5d13 counted analysis now; record provenance/section validation/Decision Core/report, then W2-C/D/E sequentially with unchanged runtime.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -360,3 +360,21 @@ wave2_w2a_deadline_correction_20261002:
   decision_core_after_correction: NO_GO
   decision_changed: false
   decision_evidence_excerpt: '2026-10-02T03:00:00+00:00'
+wave2_exact_deadline_refresh_20261002:
+  parser_fix_commit: 2579e2a263e64d98274bdcf4faaf793acc081481
+  before_counted_analysis: true
+  cases:
+    W2-B:
+      raw: 06.10.2026 09:33 (МСК+9)
+      normalized_utc: '2026-10-05T21:33:00+00:00'
+    W2-C:
+      raw: 05.10.2026 10:00 (МСК+7)
+      normalized_utc: '2026-10-05T00:00:00+00:00'
+    W2-D:
+      raw: 05.10.2026 10:00 (МСК)
+      normalized_utc: '2026-10-05T07:00:00+00:00'
+    W2-E:
+      raw: 06.10.2026 08:00 (МСК+4)
+      normalized_utc: '2026-10-06T01:00:00+00:00'
+  documents_reacquired: false
+  llm_invoked: false

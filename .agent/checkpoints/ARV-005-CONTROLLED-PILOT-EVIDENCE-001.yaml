@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-02T13:03:29+03:00'
+updated_at: '2026-10-02T13:04:16+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: 'W2-A is complete and source-bound. Exact EIS deadline precision defect was fixed: 02.10.2026 10:00 (МСК+4) normalizes to 03:00 UTC. W2-A canonical report was rerendered without repeating LLM; production hash stayed unchanged and Decision Core remains valid NO_GO because the exact deadline had expired. Proceeding to W2-B counted analysis.'
+current: W2-A complete/source-bound; exact deadline timestamps for W2-B/C/D/E refreshed from live public EIS common-info before counted analysis. Starting W2-B under unchanged frozen runtime.
 subtasks:
 - id: A1
   status: completed
@@ -97,7 +97,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Run counted W2-B toa-run-20261002084715-3b5d13 under the unchanged frozen Gemma/openai_compatible runtime and 120s timeout. Record all section validation/trace IDs, fallback_reason, Decision Core and report status. Then continue W2-C, W2-D, W2-E sequentially. Do not change model/runtime, registry numbers, or external-action boundary.
+resume_instruction: Run W2-B toa-run-20261002084715-3b5d13 counted analysis now; record provenance/section validation/Decision Core/report, then W2-C/D/E sequentially with unchanged runtime.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -496,3 +496,21 @@ wave2_w2a_deadline_correction_20261002:
   decision_core_after_correction: NO_GO
   decision_changed: false
   decision_evidence_excerpt: '2026-10-02T03:00:00+00:00'
+wave2_exact_deadline_refresh_20261002:
+  parser_fix_commit: 2579e2a263e64d98274bdcf4faaf793acc081481
+  before_counted_analysis: true
+  cases:
+    W2-B:
+      raw: 06.10.2026 09:33 (МСК+9)
+      normalized_utc: '2026-10-05T21:33:00+00:00'
+    W2-C:
+      raw: 05.10.2026 10:00 (МСК+7)
+      normalized_utc: '2026-10-05T00:00:00+00:00'
+    W2-D:
+      raw: 05.10.2026 10:00 (МСК)
+      normalized_utc: '2026-10-05T07:00:00+00:00'
+    W2-E:
+      raw: 06.10.2026 08:00 (МСК+4)
+      normalized_utc: '2026-10-06T01:00:00+00:00'
+  documents_reacquired: false
+  llm_invoked: false
