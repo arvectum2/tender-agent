@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
 goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'Wave 2 source reacquisition is complete for all five frozen cases and all are ready_to_analyze. Counted analysis is blocked only on local infrastructure: the isolated pilot PostgreSQL target 127.0.0.1:55432 is down because Docker Desktop desktop-linux is stopped. Docker Desktop was launched, but macOS is waiting on the privileged-access administrator dialog; no alternate DB or runtime was substituted.'
+current: Wave 2 counted analysis resumed. Docker Desktop local state had been reset; the canonical PostgreSQL endpoint 127.0.0.1:55432/arvectum was reconstructed from the verified 2026-07-13 canonical dump (SHA256 4300f65a...) and migrated 092 -> 099. The five frozen Wave 2 run directories remain intact. Historical post-July runtime_control_traces are not in the recovered DB, so prior W1/W2 trace evidence remains preserved in run files/checkpoints; new counted Wave 2 traces start from the recovered DB baseline.
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T11:51:25+03:00'
-resume_instruction: After the user approves the visible Docker Desktop privileged-access dialog on the Mac mini, verify docker --context desktop-linux is ready, restore/start only the existing arvectum-postgres container/volume on 127.0.0.1:55432, verify DB readiness and migrations without touching PostgreSQL 5432, then run counted Wave 2 analyses sequentially W2-A toa-run-20261002084643-c9157e, W2-B toa-run-20261002084715-3b5d13, W2-C toa-run-20261002084644-d6a081, W2-D toa-run-20261002084646-6af11a, W2-E toa-run-20261002084648-1bc4f2. Keep the frozen Gemma model/provider timeout/config unchanged and record section-level validation/fallback provenance after each.
+updated_at: '2026-10-02T12:49:06+03:00'
+resume_instruction: Run counted Wave 2 analyses sequentially W2-A toa-run-20261002084643-c9157e, W2-B toa-run-20261002084715-3b5d13, W2-C toa-run-20261002084644-d6a081, W2-D toa-run-20261002084646-6af11a, W2-E toa-run-20261002084648-1bc4f2. After each run record metadata status, LLM provider/model, fallback_reason, section validation/trace IDs, Decision Core and report status. Keep the frozen Gemma model and 120s timeout unchanged. Do not authenticate to EIS/ETP or perform consequential external actions.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -292,3 +292,22 @@ wave2_runtime_blocker_20261002:
   dialog_prompt: Docker Desktop requires privileged access to configure privileged port mapping
   alternate_database_substituted: false
   counted_llm_started_after_reacquisition: false
+  resolved: true
+  resolved_at: '2026-10-02T12:49:06+03:00'
+wave2_database_recovery_20261002:
+  docker_context: desktop-linux
+  docker_state_loss_detected: true
+  new_docker_raw_birth: '2026-10-02 12:42:07'
+  original_volume_present_after_restart: false
+  restored_dump: /Users/master/arvectum-backups/postgres/20260713T141620Z/arvectum-postgres.dump
+  restored_dump_sha256: 4300f65a26afa3babbbfd40a1ba1dfe55b0b5a932f78c7a96e44c056d90df5d7
+  restored_dump_revision: 092_create_tender_analysis_jobs_table
+  migrated_revision: 099_add_integration_outbox
+  database_target: 127.0.0.1:55432/arvectum
+  pgvector_version: 0.8.7
+  runtime_control_traces_after_restore: 0
+  historical_post_july_db_trace_limitation: true
+  historical_evidence_preserved_in_run_files_and_checkpoint: true
+  legacy_postgres_5432_touched: false
+  pilot_env_db_credentials_reconciled_locally: true
+  pilot_env_committed: false
