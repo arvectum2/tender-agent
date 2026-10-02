@@ -430,3 +430,38 @@ def test_revision_selector_does_not_treat_active_clarification_as_notice_revisio
         "CURRENT-CONTRACT",
     }
     assert "CLARIFICATION" not in {item.raw["uid"] for item in links}
+
+
+def test_detail_prefers_exact_section_deadline_with_eis_moscow_offset():
+    card_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0351100020326000084"
+    docs_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0351100020326000084"
+    detail_html = """
+    <div class="cardMainInfo__section">
+      <span class="cardMainInfo__title">Окончание подачи заявок</span>
+      <span class="cardMainInfo__content">02.10.2026</span>
+    </div>
+    <section class="blockInfo__section">
+      <span class="section__title">Дата и время окончания срока подачи заявок</span>
+      <span class="section__info">
+        02.10.2026 10:00
+        <span class="timeZoneName">(МСК+4)</span>
+      </span>
+    </section>
+    """
+    provider = FakeProvider({
+        card_url: {"status": PublicSearchStatus.SUCCESS, "html": detail_html, "error": None},
+        docs_url: {"status": PublicSearchStatus.SUCCESS, "html": "", "error": None},
+    })
+
+    detail = provider.fetch_detail(
+        PublicTenderSearchItem(
+            registry_number="0351100020326000084",
+            application_deadline=datetime(2026, 10, 2, tzinfo=timezone.utc),
+            card_url=card_url,
+        )
+    )
+
+    # 10:00 МСК+4 means UTC+7, therefore 03:00 UTC.
+    assert detail.application_deadline == datetime(
+        2026, 10, 2, 3, 0, tzinfo=timezone.utc
+    )

@@ -873,11 +873,33 @@ def _fallback_extract_by_number_patterns(html_str: str) -> list[dict[str, Any]]:
 def _parse_public_datetime(value: str | None) -> datetime | None:
     if not value:
         return None
-    cleaned = _strip_html(value).replace("(МСК)", "").strip()
+    cleaned = _strip_html(value).strip()
     cleaned = re.sub(r"\s+", " ", cleaned)
+
+    # EIS renders explicit Russian time-zone labels such as (МСК) and
+    # (МСК+4).  The numeric part is an offset from Moscow time (UTC+3),
+    # not from UTC. Preserve the exact instant whenever that label exists.
+    zone_match = re.search(
+        r"\(\s*МСК\s*(?:([+-])\s*(\d{1,2}))?\s*\)",
+        cleaned,
+        re.IGNORECASE,
+    )
+    explicit_timezone = None
+    if zone_match:
+        delta = 0
+        if zone_match.group(2):
+            delta = int(zone_match.group(2))
+            if zone_match.group(1) == "-":
+                delta = -delta
+        explicit_timezone = timezone(timedelta(hours=3 + delta))
+        cleaned = (cleaned[: zone_match.start()] + cleaned[zone_match.end() :]).strip()
+        cleaned = re.sub(r"\s+", " ", cleaned)
+
     for fmt in ("%d.%m.%Y %H:%M", "%d.%m.%Y %H:%M:%S", "%d.%m.%Y", "%Y-%m-%d"):
         try:
             parsed = datetime.strptime(cleaned, fmt)
+            if explicit_timezone is not None:
+                return parsed.replace(tzinfo=explicit_timezone).astimezone(timezone.utc)
             return parsed.replace(tzinfo=timezone.utc)
         except ValueError:
             continue
@@ -989,7 +1011,13 @@ def _parse_detail_metadata(html_str: str, card_url: str | None) -> dict[str, Any
     title = _extract_card_main_info_value(html_str, "Объект закупки")
     customer_name = _extract_explicit_customer_name(html_str)
     publication_date = _parse_public_datetime(_extract_card_main_info_value(html_str, "Размещено"))
-    application_deadline = _parse_public_datetime(_extract_card_main_info_value(html_str, "Окончание подачи заявок"))
+    application_deadline = _parse_public_datetime(
+        _extract_section_info_value(
+            html_str,
+            ("Дата и время окончания срока подачи заявок",),
+        )
+        or _extract_card_main_info_value(html_str, "Окончание подачи заявок")
+    )
     nmck_text = _extract_card_main_info_value(html_str, "Начальная цена")
     nmck_amount = _extract_price(nmck_text)
     customer_inn, customer_kpp = _extract_inn_kpp(html_str)
