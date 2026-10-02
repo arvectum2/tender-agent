@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 2 remediation resumed on the canonical Mac mini pilot executor. Remote provenance and document-alias fixes are already integrated. Live public-EIS evidence proved W2-D had one active versioned notice revision (2) plus a separate active clarification block with revision=None; revision selection was fixed and validated live. Reacquiring frozen W2-A/C/D/E under b42aa9b before any new LLM run.
+current: 'Wave 2 reacquisition completed on the canonical Mac mini under b42aa9b: W2-A/B/C/D/E are all source-complete and ready_to_analyze. Original blocker and W2-B hidden-provenance-failure evidence is retained. Starting counted Wave 2 analyses with the unchanged frozen Gemma model/config and fixed fail-closed section provenance.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T11:46:20+03:00'
-resume_instruction: Continue Wave 2 on the canonical Mac mini. Reacquire only frozen W2-A 0351100020326000084, W2-C 0822500000926000094, W2-D 0348200027326000071, and W2-E 0119200000126016261 using public read-only EIS under code b42aa9b; retain initial blocker evidence. Do not change registry numbers or model/runtime config. Start LLM only after source completeness is recorded.
+updated_at: '2026-10-02T11:47:41+03:00'
+resume_instruction: Run counted analysis for Wave 2 reacquired runs in order W2-A toa-run-20261002084643-c9157e, W2-B toa-run-20261002084715-3b5d13, W2-C toa-run-20261002084644-d6a081, W2-D toa-run-20261002084646-6af11a, W2-E toa-run-20261002084648-1bc4f2. Record section validation, fallback_reason, Decision Core and report status after each. Do not change registry numbers, Gemma model, provider timeout/config, authenticate to EIS/ETP, or erase initial blocker evidence.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -240,3 +240,44 @@ wave2_w2d_revision_remediation_20261002:
   requires_review: false
   provider_regression: 46 passed, 1 deprecation warning
   interpretation: 'The former active=2 ambiguity was false: the second active block is an auxiliary clarification, not a competing notice revision.'
+wave2_reacquisition_20261002:
+  code_commit: b42aa9bf9c1cca2c7824fe9de6eec5da9e0c195a
+  all_source_complete: true
+  all_analysis_allowed: true
+  cases:
+    W2-A:
+      registry_number: 0351100020326000084
+      run_id: toa-run-20261002084643-c9157e
+      documents: 5
+      status: ready_to_analyze
+      document_set_status: complete
+    W2-B:
+      registry_number: 0338300012526000076
+      run_id: toa-run-20261002084715-3b5d13
+      documents: 4
+      status: ready_to_analyze
+      document_set_status: complete
+      note: new source-equivalent run; original hidden-provenance-failure run retained unchanged
+    W2-C:
+      registry_number: 0822500000926000094
+      run_id: toa-run-20261002084644-d6a081
+      documents: 6
+      status: ready_to_analyze
+      document_set_status: complete
+    W2-D:
+      registry_number: 0348200027326000071
+      run_id: toa-run-20261002084646-6af11a
+      documents: 5
+      status: ready_to_analyze
+      document_set_status: complete
+      selected_notice_revision: 2
+      auxiliary_publications: 1
+    W2-E:
+      registry_number: 0119200000126016261
+      run_id: toa-run-20261002084648-1bc4f2
+      documents: 6
+      status: ready_to_analyze
+      document_set_status: complete
+      customer_identity_source: public common-info page
+  initial_blocker_evidence_retained: true
+  llm_started_during_reacquisition: false
