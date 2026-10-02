@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-02T13:12:45+03:00'
+updated_at: '2026-10-02T13:49:03+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: W2-A and W2-B counted analyses completed with explicit fail-closed LLM provenance. W2-B deadline is open and Decision Core is NEEDS_REVIEW. Starting W2-C.
+current: W2-A, W2-B and W2-C counted analyses are complete with explicit fail-closed LLM provenance. Starting W2-D under the unchanged frozen runtime.
 subtasks:
 - id: A1
   status: completed
@@ -97,7 +97,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Run W2-C toa-run-20261002084644-d6a081 counted analysis under unchanged frozen runtime; record evidence, then W2-D and W2-E sequentially.
+resume_instruction: Run W2-D toa-run-20261002084646-6af11a counted analysis under unchanged frozen runtime; record section validation, fallback_reason, Decision Core and report status, then run W2-E toa-run-20261002084648-1bc4f2.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -547,3 +547,28 @@ wave2_w2b_counted_20261002:
   invalid_llm_outputs_accepted: false
   human_control_required: true
   external_action_allowed: false
+wave2_w2c_counted_20261002:
+  registry_number: 0822500000926000094
+  run_id: toa-run-20261002084644-d6a081
+  status: needs_review
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: controlled_llm_all_sections_failed
+    llm_calls_count: 4
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000009
+  - RTC-2026-000010
+  - RTC-2026-000011
+  - RTC-2026-000012
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  duplicate_retry_note: A later duplicate invocation was stopped before completion; metadata was restored from the prior confirmed analysis_completed event and the duplicate was audit-recorded.
