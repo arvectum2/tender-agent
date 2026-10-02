@@ -1197,8 +1197,22 @@ def _select_current_revision_document_links(
             },
         )
 
-    unknown = [item for item in revisions if item.active is None]
-    active = [item for item in revisions if item.active is True]
+    # The EIS documents page may interleave versioned notice revisions with
+    # auxiliary publications (for example clarification requests). Those
+    # auxiliary blocks can expose the same active/inactive UI state, but they
+    # are not competing versions of the notice itself. When explicit version
+    # numbers are present, only those versioned blocks participate in active
+    # notice selection; auxiliary blocks remain preserved for audit/provenance.
+    versioned_revisions = [item for item in revisions if item.revision is not None]
+    candidate_revisions = versioned_revisions or revisions
+    auxiliary_publications = (
+        [item for item in revisions if item.revision is None]
+        if versioned_revisions
+        else []
+    )
+
+    unknown = [item for item in candidate_revisions if item.active is None]
+    active = [item for item in candidate_revisions if item.active is True]
     if unknown or len(active) != 1:
         return (
             [],
@@ -1208,8 +1222,9 @@ def _select_current_revision_document_links(
                 "requires_review": True,
                 "reason": (
                     "Cannot bind public EIS attachments to one active notice revision: "
-                    f"active={len(active)}, unknown={len(unknown)}, total={len(revisions)}."
+                    f"active={len(active)}, unknown={len(unknown)}, total={len(candidate_revisions)}."
                 ),
+                "auxiliary_publication_count": len(auxiliary_publications),
             },
         )
 
@@ -1235,6 +1250,7 @@ def _select_current_revision_document_links(
             "requires_review": False,
             "reason": None,
             "active_revision": selected.provenance(),
+            "auxiliary_publication_count": len(auxiliary_publications),
         },
     )
 

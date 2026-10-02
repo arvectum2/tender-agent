@@ -368,3 +368,65 @@ def test_revision_selector_fails_closed_when_revision_controls_are_exposed_but_u
     assert revisions == []
     assert selection["status"] == "revision_binding_unparsed"
     assert selection["requires_review"] is True
+
+
+def test_revision_selector_does_not_treat_active_clarification_as_notice_revision():
+    from src.tender_research.providers.public_44fz_search import (
+        _select_current_revision_document_links,
+    )
+
+    page_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0348200027326000071"
+    page_html = "".join(
+        [
+            _revision_block(
+                version=1,
+                state="Недействующая",
+                published="24.09.2026 08:17",
+                attachments=[("old.pdf", "OLD")],
+            ),
+            _revision_block(
+                version=2,
+                state="Действующая",
+                published="25.09.2026 11:13",
+                attachments=[
+                    ("Описание объекта закупки (Техническое задание).docx", "CURRENT-TZ"),
+                    ("Проект контракта.zip", "CURRENT-CONTRACT"),
+                ],
+            ),
+            """
+            <div class="notice-documents">
+              <div class="section__value docName">
+                <span>Разъяснения положений извещения об осуществлении закупки от 25.09.2026 №РИ1</span>
+              </div>
+              <div><div class="section__attrib">Размещено</div><div class="section__value">25.09.2026 09:30 (МСК)</div></div>
+              <div><div class="section__attrib">Редакция</div><div class="section__value">Действующая</div></div>
+              <div class="attachmentsTabDocs">
+                <div class="attachment row"><div>
+                  <a href="/44fz/filestore/public/1.0/download/priz/file.html?uid=CLARIFICATION"
+                     title="Вопрос.docx">Вопрос.docx</a>
+                </div></div>
+              </div>
+            </div>
+            """,
+        ]
+    )
+
+    links, revisions, selection = _select_current_revision_document_links(
+        page_html,
+        page_url,
+    )
+
+    assert [(item.revision, item.active) for item in revisions] == [
+        (1, False),
+        (2, True),
+        (None, True),
+    ]
+    assert selection["status"] == "active_revision_selected"
+    assert selection["requires_review"] is False
+    assert selection["active_revision"]["revision"] == 2
+    assert selection["auxiliary_publication_count"] == 1
+    assert {item.raw["uid"] for item in links} == {
+        "CURRENT-TZ",
+        "CURRENT-CONTRACT",
+    }
+    assert "CLARIFICATION" not in {item.raw["uid"] for item in links}
