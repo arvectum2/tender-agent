@@ -1,31 +1,22 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
-goal: Run a controlled technical pilot on real public procurements using the Mac mini
-  as the server, with local inference and no consequential external action.
+goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
 definition_of_done:
-- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting
-  the legacy runtime copy.
+- Fresh Mac mini pilot runtime pinned to exact canonical main without overwriting the legacy runtime copy.
 - Local controlled LLM path configured and proven on fixture data before counted cases.
 - Twelve real public 44-FZ procurement runs completed in frozen waves 3 + 5 + 4.
-- Three public 223-FZ exploratory runs completed or source-bound blocked and scored
-  separately.
-- Per-run evidence records source completeness, local-LLM provenance, Decision Core
-  result, report status, defects and fallbacks.
+- Three public 223-FZ exploratory runs completed or source-bound blocked and scored separately.
+- Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
-- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and
-  is never inferred.
-current: 'PR #123 exact head 1889e771 passed CI run 36395983945. W2-A/C/E
-  reacquisition is blocked on the canonical Mac mini pilot executor because this
-  runner has no preserved toa-run directories and its public EIS request returns
-  no content. W2-D remains correctly fail-closed and review-required.'
+- Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
+current: Wave 2 remediation resumed on the canonical Mac mini pilot executor. Remote provenance and document-alias fixes are already integrated. Live public-EIS evidence proved W2-D had one active versioned notice revision (2) plus a separate active clarification block with revision=None; revision selection was fixed and validated live. Reacquiring frozen W2-A/C/D/E under b42aa9b before any new LLM run.
 subtasks:
 - id: A1
   status: completed
-  title: Fix deterministic 44-FZ source-link selection and fail closed on printForm/report
-    URLs.
+  title: Fix deterministic 44-FZ source-link selection and fail closed on printForm/report URLs.
 - id: A2
   status: completed
   title: Run focused regression tests plus read-only exact-number live proof for W1-B/W1-C.
@@ -37,24 +28,18 @@ subtasks:
   title: Re-run W1-C public acquisition and persist source-completeness evidence.
 - id: A5
   status: completed
-  title: Run controlled local-LLM analysis/report for any source-complete W1-B/W1-C
-    cases and record provenance/fallbacks/defects.
+  title: Run controlled local-LLM analysis/report for any source-complete W1-B/W1-C cases and record provenance/fallbacks/defects.
 - id: A6
   status: completed
-  title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before
-    model-output inspection.
+  title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before model-output inspection.
 pending:
-- Reacquire frozen W2-A/W2-C/W2-E with the fixed classifiers and retain their initial
-  blocker evidence; keep W2-D reserved for source/human review.
-- Complete all five Wave 2 analyses, apply Wave 2 -> Wave 3 gate, then freeze four
-  unseen Wave 3 cases.
-- Run three exploratory 223-FZ cases and produce aggregate technical pilot report.
-updated_at: '2026-09-28T13:05:18+03:00'
-resume_instruction: Resume on the canonical Mac mini pilot executor with the preserved
-  Wave 2 runs and working public EIS access. Reacquire only frozen W2-A 0351100020326000084,
-  W2-C 0822500000926000094, and W2-E 0119200000126016261; retain their initial blocker
-  evidence. Keep W2-D 0348200027326000071 fail-closed and do not choose among two
-  active revisions by inference. Do not change registry numbers or model/runtime.
+- Reacquire frozen W2-A/W2-C/W2-D/W2-E under b42aa9b and retain all initial blocker evidence.
+- Run counted analysis for source-complete Wave 2 cases with the unchanged frozen Gemma model/config and explicit section-level provenance.
+- Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
+- Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
+- Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
+updated_at: '2026-10-02T11:46:20+03:00'
+resume_instruction: Continue Wave 2 on the canonical Mac mini. Reacquire only frozen W2-A 0351100020326000084, W2-C 0822500000926000094, W2-D 0348200027326000071, and W2-E 0119200000126016261 using public read-only EIS under code b42aa9b; retain initial blocker evidence. Do not change registry numbers or model/runtime config. Start LLM only after source completeness is recorded.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -71,11 +56,8 @@ wave1_gate:
     explicit_local_llm_provenance: true
     no_unsupported_accepted_factual_claims_after_fail_closed_rerender: true
     critical_ingestion_source_binding_defects_fixed_or_fail_closed: true
-  validation: 73 focused/relevant tests passed after safe rebase with remote Wave
-    1 fix; 1 Starlette/httpx deprecation warning.
-  note: W1-A retains three historical explicit stub_analysis_fallback events from
-    earlier attempts; the final counted result is local-LLM with fallback_reason=null
-    and the fallback history is not silent.
+  validation: 73 focused/relevant tests passed after safe rebase with remote Wave 1 fix; 1 Starlette/httpx deprecation warning.
+  note: W1-A retains three historical explicit stub_analysis_fallback events from earlier attempts; the final counted result is local-LLM with fallback_reason=null and the fallback history is not silent.
 wave2_freeze:
   frozen_at: '2026-09-28T09:00:00+03:00'
   before_model_output_inspection: true
@@ -104,13 +86,10 @@ wave2_freeze:
     expected_reason: public document revision selection requires review
   - id: W2-E
     registry_number: 0119200000126016261
-    title: ЭА-№-15972/26 «Поставка светильников электрических настольных для нужд
-      КГКУ "ЦАБС"»
-    source_shape: 6 mixed XLSX/DOCX/DOC/PDF documents; search-card customer field
-      visibly contaminated by page script text
+    title: ЭА-№-15972/26 «Поставка светильников электрических настольных для нужд КГКУ "ЦАБС"»
+    source_shape: 6 mixed XLSX/DOCX/DOC/PDF documents; search-card customer field visibly contaminated by page script text
     expected_review_or_blocker: true
-    expected_reason: source-card customer extraction must fail closed rather than
-      accept contaminated identity
+    expected_reason: source-card customer extraction must fail closed rather than accept contaminated identity
 wave2_runtime_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
 wave2_acquisition_initial:
   W2-A:
@@ -122,8 +101,7 @@ wave2_acquisition_initial:
     missing:
     - contract_draft
     analysis_allowed: false
-    defect: 2. Проект ГК.docx downloaded but document-kind classifier did not recognize
-      contract draft
+    defect: 2. Проект ГК.docx downloaded but document-kind classifier did not recognize contract draft
   W2-B:
     registry_number: 0338300012526000076
     run_id: toa-run-20260928063523-e3b615
@@ -141,8 +119,7 @@ wave2_acquisition_initial:
     missing:
     - technical_specification
     analysis_allowed: false
-    defect: III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx downloaded but document-kind classifier did
-      not recognize technical specification
+    defect: III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx downloaded but document-kind classifier did not recognize technical specification
   W2-D:
     registry_number: 0348200027326000071
     run_id: toa-run-20260928063532-51f3ec
@@ -153,8 +130,7 @@ wave2_acquisition_initial:
     - technical_specification
     - contract_draft
     analysis_allowed: false
-    defect: 'revision selection fail-closed: active=2, unknown=0, total=3; no attachments
-      accepted'
+    defect: 'revision selection fail-closed: active=2, unknown=0, total=3; no attachments accepted'
   W2-E:
     registry_number: 0119200000126016261
     run_id: toa-run-20260928063535-f3d3ca
@@ -164,8 +140,7 @@ wave2_acquisition_initial:
     missing:
     - technical_specification
     analysis_allowed: false
-    defect: card customer contamination resolved by common-info page, but OОЗ/technical
-      document kind not recognized
+    defect: card customer contamination resolved by common-info page, but OОЗ/technical document kind not recognized
 wave2_w2b_counted_20260928:
   registry_number: 0338300012526000076
   run_id: toa-run-20260928063523-e3b615
@@ -196,13 +171,8 @@ wave2_w2b_counted_20260928:
     section: contract_risk_memo
     validation_status: FAILED
     review_status: validation_failed
-  observed_transport: all four llama.cpp section requests were cancelled at the frozen
-    120-second provider timeout after very large prompt evaluation; no runtime/model/config
-    change was made
-  critical_defect: Top-level provenance/event reports successful LLM completion with
-    fallback_reason=null even though every controlled LLM section failed validation.
-    Empty/placeholder downstream payloads are therefore presented under llm_tender_operator_provider
-    without explicit failure provenance.
+  observed_transport: all four llama.cpp section requests were cancelled at the frozen 120-second provider timeout after very large prompt evaluation; no runtime/model/config change was made
+  critical_defect: Top-level provenance/event reports successful LLM completion with fallback_reason=null even though every controlled LLM section failed validation. Empty/placeholder downstream payloads are therefore presented under llm_tender_operator_provider without explicit failure provenance.
 wave2_provenance_remediation_20260928:
   implementation_commit: 9921180a8f8022df38320b51edf53a1bd851502e
   behavior:
@@ -212,8 +182,7 @@ wave2_provenance_remediation_20260928:
   - trace IDs and failed section names remain explicit in event evidence
   regression: 2 passed
   touched_suites: 21 passed, 21 warnings
-  lint: 51 pre-existing Ruff findings remain in the two legacy touched files; no finding
-    points to the added classification or regression lines
+  lint: 51 pre-existing Ruff findings remain in the two legacy touched files; no finding points to the added classification or regression lines
   frozen_inputs_changed: false
   wave2_llm_rerun: false
 wave2_document_alias_remediation_20260928:
@@ -229,11 +198,9 @@ wave2_document_alias_remediation_20260928:
   regression_first_reproduction: 3 failed as expected before implementation
   focused_regression: 3 passed
   relevant_suites: 37 passed, 2 deprecation warnings
-  w2d_revision_inspection: 'Synthetic exact observed shape active=2, unknown=0,
-    total=3 returns no attachments, ambiguous_revision_state, requires_review=true.'
+  w2d_revision_inspection: Synthetic exact observed shape active=2, unknown=0, total=3 returns no attachments, ambiguous_revision_state, requires_review=true.
   w2d_behavior_changed: false
-  lint: repository files retain pre-existing Ruff formatting/import/UTC findings;
-    git diff --check passed and the bounded test suites are green
+  lint: repository files retain pre-existing Ruff formatting/import/UTC findings; git diff --check passed and the bounded test suites are green
   frozen_inputs_changed: false
   procurement_reacquisition: false
   wave2_llm_rerun: false
@@ -249,3 +216,27 @@ wave2_reacquisition_executor_blocker_20260928:
   lease_released: true
   procurement_reacquisition: false
   wave2_llm_rerun: false
+wave2_reacquisition_runtime_code_commit: b42aa9bf9c1cca2c7824fe9de6eec5da9e0c195a
+wave2_w2d_revision_remediation_20261002:
+  regression_commit: b42aa9bf9c1cca2c7824fe9de6eec5da9e0c195a
+  registry_number: 0348200027326000071
+  live_search_status: success
+  live_exact_matches: 1
+  notice_revisions:
+  - revision: 1
+    active: false
+    publication_timestamp: 24.09.2026 08:17 (МСК)
+  - revision: 2
+    active: true
+    publication_timestamp: 25.09.2026 11:13 (МСК)
+  auxiliary_publication:
+    revision: null
+    active: true
+    title_prefix: Разъяснения положений извещения об осуществлении закупки
+  selection_status: active_revision_selected
+  selected_revision: 2
+  selected_document_links: 5
+  auxiliary_publication_count: 1
+  requires_review: false
+  provider_regression: 46 passed, 1 deprecation warning
+  interpretation: 'The former active=2 ambiguity was false: the second active block is an auxiliary clarification, not a competing notice revision.'
