@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
 goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'Wave 2 reacquisition completed on the canonical Mac mini under b42aa9b: W2-A/B/C/D/E are all source-complete and ready_to_analyze. Original blocker and W2-B hidden-provenance-failure evidence is retained. Starting counted Wave 2 analyses with the unchanged frozen Gemma model/config and fixed fail-closed section provenance.'
+current: 'Wave 2 source reacquisition is complete for all five frozen cases and all are ready_to_analyze. Counted analysis is blocked only on local infrastructure: the isolated pilot PostgreSQL target 127.0.0.1:55432 is down because Docker Desktop desktop-linux is stopped. Docker Desktop was launched, but macOS is waiting on the privileged-access administrator dialog; no alternate DB or runtime was substituted.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T11:47:41+03:00'
-resume_instruction: Run counted analysis for Wave 2 reacquired runs in order W2-A toa-run-20261002084643-c9157e, W2-B toa-run-20261002084715-3b5d13, W2-C toa-run-20261002084644-d6a081, W2-D toa-run-20261002084646-6af11a, W2-E toa-run-20261002084648-1bc4f2. Record section validation, fallback_reason, Decision Core and report status after each. Do not change registry numbers, Gemma model, provider timeout/config, authenticate to EIS/ETP, or erase initial blocker evidence.
+updated_at: '2026-10-02T11:51:25+03:00'
+resume_instruction: After the user approves the visible Docker Desktop privileged-access dialog on the Mac mini, verify docker --context desktop-linux is ready, restore/start only the existing arvectum-postgres container/volume on 127.0.0.1:55432, verify DB readiness and migrations without touching PostgreSQL 5432, then run counted Wave 2 analyses sequentially W2-A toa-run-20261002084643-c9157e, W2-B toa-run-20261002084715-3b5d13, W2-C toa-run-20261002084644-d6a081, W2-D toa-run-20261002084646-6af11a, W2-E toa-run-20261002084648-1bc4f2. Keep the frozen Gemma model/provider timeout/config unchanged and record section-level validation/fallback provenance after each.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -281,3 +281,14 @@ wave2_reacquisition_20261002:
       customer_identity_source: public common-info page
   initial_blocker_evidence_retained: true
   llm_started_during_reacquisition: false
+wave2_runtime_blocker_20261002:
+  database_target: 127.0.0.1:55432/arvectum
+  database_ready: false
+  legacy_postgres_5432_touched: false
+  docker_context_required: desktop-linux
+  docker_daemon_ready: false
+  docker_desktop_launched: true
+  macos_privileged_dialog_pending: true
+  dialog_prompt: Docker Desktop requires privileged access to configure privileged port mapping
+  alternate_database_substituted: false
+  counted_llm_started_after_reacquisition: false
