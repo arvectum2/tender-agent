@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 2 -> Wave 3 gate passed after W2-E cross-domain scope remediation and deterministic no-LLM rerender. Selecting and freezing four previously unseen public 44-FZ Wave 3 cases before any model-output inspection.
+current: Wave 3 four-case confirmation set frozen before any model-output inspection. Starting read-only acquisition with analysis disabled.
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T14:18:27+03:00'
-resume_instruction: Select four previously unseen public 44-FZ cases using read-only public EIS discovery, exclude all Wave 1/2 registry numbers, freeze the four numbers and runtime commit 5964695 before any LLM analysis, acquire documents with analyze_after_download=false, then run the four confirmation cases without tuning between them.
+updated_at: '2026-10-02T14:20:16+03:00'
+resume_instruction: Acquire frozen W3-A 0853500000326006680, W3-B 0348200027026000447, W3-C 0373200074826000979, W3-D 0329100002526000044 from public EIS with analyze_after_download=false. Record completeness and source binding before any LLM run. Do not tune code/model/config based on Wave 3 cases until all four confirmation runs complete.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -523,3 +523,40 @@ wave2_w2e_scope_remediation_20261002:
   decision_core: NEEDS_REVIEW
   customer_decision: Требуется проверка
   audit_event: deterministic_scope_remediation_rerendered
+wave3_freeze:
+  frozen_at: '2026-10-02T14:20:16+03:00'
+  before_model_output_inspection: true
+  selection_basis: read-only public EIS search/detail metadata and source document shape only; no LLM/model output inspected
+  runtime_code_commit: 5964695cec5660222ae0bac0bd8cbed277deb4f9
+  runtime_model: arvectum-gemma4-12b-it-qat-q4_0
+  provider: openai_compatible
+  provider_timeout_seconds: 120
+  cases:
+  - id: W3-A
+    registry_number: 0853500000326006680
+    title: Поставка электротехнической продукции
+    nmck_rub: 17202.3
+    procedure: Запрос котировок
+    source_shape: '4 files: XLSX + DOC + 2 DOCX; search-card customer field contaminated, common-info resolution expected'
+    document_links: 4
+  - id: W3-B
+    registry_number: 0348200027026000447
+    title: Поставка электротехнических товаров в 2026 году (лот 1.2)
+    nmck_rub: 1687517.12
+    procedure: Электронный аукцион
+    source_shape: 5 files including two ZIP-wrapped contract/price appendices + DOCX technical/application docs
+    document_links: 5
+  - id: W3-C
+    registry_number: 0373200074826000979
+    title: Электронный запрос котировок на поставку светильника светодиодного внутреннего освещения для оснащения пищеблока для нужд ГКБ №1 им. Н.И. Пирогова
+    nmck_rub: 581500.8
+    procedure: Запрос котировок
+    source_shape: '8 mixed files: PDFs + XLSX + DOCX; PDF-heavy confirmation case'
+    document_links: 8
+  - id: W3-D
+    registry_number: 0329100002526000044
+    title: Поставка автоматического выключателя в рамках текущего ремонта
+    nmck_rub: 459944.01
+    procedure: Запрос котировок
+    source_shape: '4 files: XLSX + 3 DOCX; catalog-like breaker case'
+    document_links: 4

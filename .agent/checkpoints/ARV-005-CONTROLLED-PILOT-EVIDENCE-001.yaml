@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-02T14:18:27+03:00'
+updated_at: '2026-10-02T14:20:16+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: Wave 2 -> Wave 3 gate passed after W2-E cross-domain scope remediation and deterministic no-LLM rerender. Selecting and freezing four previously unseen public 44-FZ Wave 3 cases before any model-output inspection.
+current: Wave 3 four-case confirmation set frozen before any model-output inspection. Starting read-only acquisition with analysis disabled.
 subtasks:
 - id: A1
   status: completed
@@ -97,7 +97,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Select four previously unseen public 44-FZ cases using read-only public EIS discovery, exclude all Wave 1/2 registry numbers, freeze the four numbers and runtime commit 5964695 before any LLM analysis, acquire documents with analyze_after_download=false, then run the four confirmation cases without tuning between them.
+resume_instruction: Acquire frozen W3-A 0853500000326006680, W3-B 0348200027026000447, W3-C 0373200074826000979, W3-D 0329100002526000044 from public EIS with analyze_after_download=false. Record completeness and source binding before any LLM run. Do not tune code/model/config based on Wave 3 cases until all four confirmation runs complete.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -659,3 +659,40 @@ wave2_w2e_scope_remediation_20261002:
   decision_core: NEEDS_REVIEW
   customer_decision: Требуется проверка
   audit_event: deterministic_scope_remediation_rerendered
+wave3_freeze:
+  frozen_at: '2026-10-02T14:20:16+03:00'
+  before_model_output_inspection: true
+  selection_basis: read-only public EIS search/detail metadata and source document shape only; no LLM/model output inspected
+  runtime_code_commit: 5964695cec5660222ae0bac0bd8cbed277deb4f9
+  runtime_model: arvectum-gemma4-12b-it-qat-q4_0
+  provider: openai_compatible
+  provider_timeout_seconds: 120
+  cases:
+  - id: W3-A
+    registry_number: 0853500000326006680
+    title: Поставка электротехнической продукции
+    nmck_rub: 17202.3
+    procedure: Запрос котировок
+    source_shape: '4 files: XLSX + DOC + 2 DOCX; search-card customer field contaminated, common-info resolution expected'
+    document_links: 4
+  - id: W3-B
+    registry_number: 0348200027026000447
+    title: Поставка электротехнических товаров в 2026 году (лот 1.2)
+    nmck_rub: 1687517.12
+    procedure: Электронный аукцион
+    source_shape: 5 files including two ZIP-wrapped contract/price appendices + DOCX technical/application docs
+    document_links: 5
+  - id: W3-C
+    registry_number: 0373200074826000979
+    title: Электронный запрос котировок на поставку светильника светодиодного внутреннего освещения для оснащения пищеблока для нужд ГКБ №1 им. Н.И. Пирогова
+    nmck_rub: 581500.8
+    procedure: Запрос котировок
+    source_shape: '8 mixed files: PDFs + XLSX + DOCX; PDF-heavy confirmation case'
+    document_links: 8
+  - id: W3-D
+    registry_number: 0329100002526000044
+    title: Поставка автоматического выключателя в рамках текущего ремонта
+    nmck_rub: 459944.01
+    procedure: Запрос котировок
+    source_shape: '4 files: XLSX + 3 DOCX; catalog-like breaker case'
+    document_links: 4
