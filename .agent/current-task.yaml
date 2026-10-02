@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: All five Wave 2 counted runs are complete. Wave 2 -> Wave 3 gate is blocked by W2-E cross-domain scope contamination from generic legal boilerplate. Regression-first remediation is in progress; Wave 3 is not frozen.
+current: Wave 2 -> Wave 3 gate passed after W2-E cross-domain scope remediation and deterministic no-LLM rerender. Selecting and freezing four previously unseen public 44-FZ Wave 3 cases before any model-output inspection.
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T14:09:59+03:00'
-resume_instruction: Add a regression for W2-E goods procurement with generic goods/works/services boilerplate; fix scope evidence so generic legal alternative clauses do not count as independent subject evidence. Re-run focused D07 tests, deterministically re-render W2-E without another LLM run if possible, verify goods scope and remove cross-domain fallback language, then re-apply the Wave 2 -> Wave 3 gate.
+updated_at: '2026-10-02T14:18:27+03:00'
+resume_instruction: Select four previously unseen public 44-FZ cases using read-only public EIS discovery, exclude all Wave 1/2 registry numbers, freeze the four numbers and runtime commit 5964695 before any LLM analysis, acquire documents with analyze_after_download=false, then run the four confirmation cases without tuning between them.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -493,10 +493,33 @@ wave2_w2e_counted_20261002:
   elapsed_seconds: 482.68
   critical_quality_defect: Desk-lamp goods procurement was classified as mixed because generic procurement boilerplate was counted as independent services/works subject evidence.
 wave2_to_wave3_gate_20261002:
-  status: blocked
-  all_five_counted_runs_completed: true
-  explicit_fail_closed_llm_provenance: true
-  decision_report_consistency_observed: true
-  critical_source_attribution_or_cross_domain_contamination_clear: false
-  blocking_defect: W2-E scope contamination from generic legal alternative clauses.
-  wave3_freeze_allowed: false
+  status: passed
+  date: '2026-10-02'
+  criteria:
+    no_unresolved_critical_source_attribution_or_cross_procurement_contamination: true
+    schema_and_fail_closed_behavior_stable: true
+    regressions_captured: true
+  validation: W2-A/B/C/D/E counted runs complete; explicit section-level fail-closed provenance; W2-E cross-domain contamination regression fixed and deterministic rerender verified; 15 focused tests passed.
+  known_non_gate_limitation: All five Wave 2 controlled LLM runs failed all four sections at the frozen 120s timeout and were explicitly rejected into deterministic fallback; this remains visible provenance and is not treated as model success.
+wave2_w2e_scope_remediation_20261002:
+  implementation_commit: 5964695cec5660222ae0bac0bd8cbed277deb4f9
+  regression: 15 passed, 1 Starlette/httpx deprecation warning
+  w2e_run_id: toa-run-20261002084648-1bc4f2
+  prior_scope: mixed
+  repaired_scope: goods
+  deterministic_rerender: true
+  llm_reinvoked: false
+  llm_provenance_unchanged: true
+  counted_trace_ids:
+  - RTC-2026-000017
+  - RTC-2026-000018
+  - RTC-2026-000019
+  - RTC-2026-000020
+  cross_domain_tokens_after_rerender:
+    integration: false
+    software: false
+    modification: false
+    license_risk: false
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  audit_event: deterministic_scope_remediation_rerendered
