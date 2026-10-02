@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: W2-A/B/C/D counted analyses are complete with explicit fail-closed provenance and report-consistent decisions. Starting final Wave 2 case W2-E.
+current: All five Wave 2 counted runs are complete. Wave 2 -> Wave 3 gate is blocked by W2-E cross-domain scope contamination from generic legal boilerplate. Regression-first remediation is in progress; Wave 3 is not frozen.
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T13:57:39+03:00'
-resume_instruction: Run W2-E toa-run-20261002084648-1bc4f2 counted analysis under unchanged frozen runtime. Record provenance, section validation, Decision Core/report status, then apply the Wave 2 -> Wave 3 gate.
+updated_at: '2026-10-02T14:09:59+03:00'
+resume_instruction: Add a regression for W2-E goods procurement with generic goods/works/services boilerplate; fix scope evidence so generic legal alternative clauses do not count as independent subject evidence. Re-run focused D07 tests, deterministically re-render W2-E without another LLM run if possible, verify goods scope and remove cross-domain fallback language, then re-apply the Wave 2 -> Wave 3 gate.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -464,3 +464,39 @@ wave2_w2d_counted_20261002:
   - Не удалось извлечь текст из Обоснование начальной (максимальной) цены контракта от 23.09.2026 09_22 (МСК).pdf.
   - Не удалось извлечь текст из Определение начальной (максимальной) цены контракта (Расчет) от 23.09.2026 09_22 (МСК).pdf.
   elapsed_seconds: 481.02
+wave2_w2e_counted_20261002:
+  registry_number: 0119200000126016261
+  run_id: toa-run-20261002084648-1bc4f2
+  status: completed_with_warnings
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: controlled_llm_all_sections_failed
+    llm_calls_count: 4
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000017
+  - RTC-2026-000018
+  - RTC-2026-000019
+  - RTC-2026-000020
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  warnings:
+  - Не удалось извлечь текст из 06-1875new-15.pdf.
+  elapsed_seconds: 482.68
+  critical_quality_defect: Desk-lamp goods procurement was classified as mixed because generic procurement boilerplate was counted as independent services/works subject evidence.
+wave2_to_wave3_gate_20261002:
+  status: blocked
+  all_five_counted_runs_completed: true
+  explicit_fail_closed_llm_provenance: true
+  decision_report_consistency_observed: true
+  critical_source_attribution_or_cross_domain_contamination_clear: false
+  blocking_defect: W2-E scope contamination from generic legal alternative clauses.
+  wave3_freeze_allowed: false

@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-02T13:57:39+03:00'
+updated_at: '2026-10-02T14:09:59+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: W2-A/B/C/D counted analyses are complete with explicit fail-closed provenance and report-consistent decisions. Starting final Wave 2 case W2-E.
+current: All five Wave 2 counted runs are complete. Wave 2 -> Wave 3 gate is blocked by W2-E cross-domain scope contamination from generic legal boilerplate. Regression-first remediation is in progress; Wave 3 is not frozen.
 subtasks:
 - id: A1
   status: completed
@@ -97,7 +97,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Run W2-E toa-run-20261002084648-1bc4f2 counted analysis under unchanged frozen runtime. Record provenance, section validation, Decision Core/report status, then apply the Wave 2 -> Wave 3 gate.
+resume_instruction: Add a regression for W2-E goods procurement with generic goods/works/services boilerplate; fix scope evidence so generic legal alternative clauses do not count as independent subject evidence. Re-run focused D07 tests, deterministically re-render W2-E without another LLM run if possible, verify goods scope and remove cross-domain fallback language, then re-apply the Wave 2 -> Wave 3 gate.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -600,3 +600,39 @@ wave2_w2d_counted_20261002:
   - Не удалось извлечь текст из Обоснование начальной (максимальной) цены контракта от 23.09.2026 09_22 (МСК).pdf.
   - Не удалось извлечь текст из Определение начальной (максимальной) цены контракта (Расчет) от 23.09.2026 09_22 (МСК).pdf.
   elapsed_seconds: 481.02
+wave2_w2e_counted_20261002:
+  registry_number: 0119200000126016261
+  run_id: toa-run-20261002084648-1bc4f2
+  status: completed_with_warnings
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: controlled_llm_all_sections_failed
+    llm_calls_count: 4
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000017
+  - RTC-2026-000018
+  - RTC-2026-000019
+  - RTC-2026-000020
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  warnings:
+  - Не удалось извлечь текст из 06-1875new-15.pdf.
+  elapsed_seconds: 482.68
+  critical_quality_defect: Desk-lamp goods procurement was classified as mixed because generic procurement boilerplate was counted as independent services/works subject evidence.
+wave2_to_wave3_gate_20261002:
+  status: blocked
+  all_five_counted_runs_completed: true
+  explicit_fail_closed_llm_provenance: true
+  decision_report_consistency_observed: true
+  critical_source_attribution_or_cross_domain_contamination_clear: false
+  blocking_defect: W2-E scope contamination from generic legal alternative clauses.
+  wave3_freeze_allowed: false
