@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'Wave 3 acquisition completed without model output: W3-A/B/D source-complete and ready; W3-C is a source-bound blocker under frozen classifiers because underscore-separated contract/spec filenames are not recognized. No Wave 3 tuning performed. Starting counted analyses for W3-A/B/D sequentially.'
+current: 'Wave 3 confirmation set is closed without pre-completion tuning: W3-A/B/D completed fail-closed; W3-C is source-bound blocked. Post-confirmation remediation started for underscore filename classification and deterministic intra-package scope contamination before the exploratory 223-FZ wave.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-03T16:40:07+03:00'
-resume_instruction: Run counted analysis sequentially for W3-A toa-run-20261003133916-ad847c, W3-B toa-run-20261003133917-1bbc28, and W3-D toa-run-20261003133920-eb1257 under unchanged frozen Gemma/runtime. Keep W3-C toa-run-20261003133919-19b390 blocked and do not tune classifiers until all four Wave 3 confirmation cases are closed. Record provenance/Decision Core/report after each, then evaluate Wave 3 gate and only afterward create any regression for W3-C.
+updated_at: '2026-10-03T17:01:24+03:00'
+resume_instruction: 'Add regression-first fixes for three confirmed Wave 3 defects: normalize underscore-separated Russian document filenames for technical_spec/contract_draft; prevent generic contract-table rows (PIK/ЕАСУЗ SLA and delivery-address rows) from becoming goods PRODUCT_ITEM facts while retaining contract delivery/warranty facts; suppress product-scoped facts from application/instruction boilerplate. Run focused and relevant suites, rerender/recompute deterministic artifacts without rerunning counted LLM, then evaluate technical 44-FZ completion and proceed to three exploratory 223-FZ cases.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -599,3 +599,51 @@ wave3_acquisition_20261003:
       status: ready_to_analyze
       document_set_status: complete
       analysis_allowed: true
+wave3_confirmation_20261003:
+  closed_at: '2026-10-03T17:01:24+03:00'
+  frozen_head: a5053554b33925dd1c6129e7c8350275b80c8c53
+  no_tuning_before_completion: true
+  cases:
+    W3-A:
+      registry_number: 0853500000326006680
+      run_id: toa-run-20261003133916-ad847c
+      status: completed_with_warnings
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: application-template drug/equivalence boilerplate is surfaced as goods requirements in an electrical procurement
+    W3-B:
+      registry_number: 0348200027026000447
+      run_id: toa-run-20261003133917-1bbc28
+      status: needs_review
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: generic table fallback promotes contract appendix PIK/ЕАСУЗ SLA rows as procurement line items
+    W3-C:
+      registry_number: 0373200074826000979
+      run_id: toa-run-20261003133919-19b390
+      status: docs_required
+      analysis_mode: not_started
+      analysis_allowed: false
+      source_bound_blocker: true
+      confirmed_defect: underscore-separated filenames Проект_контракта_* and Техническое_задание_* are not classified as required document kinds
+    W3-D:
+      registry_number: 0329100002526000044
+      run_id: toa-run-20261003133920-eb1257
+      status: completed_with_warnings
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: generic table fallback promotes a delivery-address row from the contract as a procurement line item
+  cross_case_contamination_observed: false
+  source_ownership_isolation_preserved: true

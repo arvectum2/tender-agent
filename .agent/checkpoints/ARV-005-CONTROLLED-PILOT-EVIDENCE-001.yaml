@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-03T16:40:07+03:00'
+updated_at: '2026-10-03T17:01:24+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: 'Wave 3 acquisition completed without model output: W3-A/B/D source-complete and ready; W3-C is a source-bound blocker under frozen classifiers because underscore-separated contract/spec filenames are not recognized. No Wave 3 tuning performed. Starting counted analyses for W3-A/B/D sequentially.'
+current: 'Wave 3 confirmation set is closed without pre-completion tuning: W3-A/B/D completed fail-closed; W3-C is source-bound blocked. Post-confirmation remediation started for underscore filename classification and deterministic intra-package scope contamination before the exploratory 223-FZ wave.'
 subtasks:
 - id: A1
   status: completed
@@ -97,7 +97,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Run counted analysis sequentially for W3-A toa-run-20261003133916-ad847c, W3-B toa-run-20261003133917-1bbc28, and W3-D toa-run-20261003133920-eb1257 under unchanged frozen Gemma/runtime. Keep W3-C toa-run-20261003133919-19b390 blocked and do not tune classifiers until all four Wave 3 confirmation cases are closed. Record provenance/Decision Core/report after each, then evaluate Wave 3 gate and only afterward create any regression for W3-C.
+resume_instruction: 'Add regression-first fixes for three confirmed Wave 3 defects: normalize underscore-separated Russian document filenames for technical_spec/contract_draft; prevent generic contract-table rows (PIK/ЕАСУЗ SLA and delivery-address rows) from becoming goods PRODUCT_ITEM facts while retaining contract delivery/warranty facts; suppress product-scoped facts from application/instruction boilerplate. Run focused and relevant suites, rerender/recompute deterministic artifacts without rerunning counted LLM, then evaluate technical 44-FZ completion and proceed to three exploratory 223-FZ cases.'
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -735,3 +735,51 @@ wave3_acquisition_20261003:
       status: ready_to_analyze
       document_set_status: complete
       analysis_allowed: true
+wave3_confirmation_20261003:
+  closed_at: '2026-10-03T17:01:24+03:00'
+  frozen_head: a5053554b33925dd1c6129e7c8350275b80c8c53
+  no_tuning_before_completion: true
+  cases:
+    W3-A:
+      registry_number: 0853500000326006680
+      run_id: toa-run-20261003133916-ad847c
+      status: completed_with_warnings
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: application-template drug/equivalence boilerplate is surfaced as goods requirements in an electrical procurement
+    W3-B:
+      registry_number: 0348200027026000447
+      run_id: toa-run-20261003133917-1bbc28
+      status: needs_review
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: generic table fallback promotes contract appendix PIK/ЕАСУЗ SLA rows as procurement line items
+    W3-C:
+      registry_number: 0373200074826000979
+      run_id: toa-run-20261003133919-19b390
+      status: docs_required
+      analysis_mode: not_started
+      analysis_allowed: false
+      source_bound_blocker: true
+      confirmed_defect: underscore-separated filenames Проект_контракта_* and Техническое_задание_* are not classified as required document kinds
+    W3-D:
+      registry_number: 0329100002526000044
+      run_id: toa-run-20261003133920-eb1257
+      status: completed_with_warnings
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: generic table fallback promotes a delivery-address row from the contract as a procurement line item
+  cross_case_contamination_observed: false
+  source_ownership_isolation_preserved: true
