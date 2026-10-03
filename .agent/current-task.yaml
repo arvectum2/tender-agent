@@ -1,39 +1,29 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: PRODUCT-SHELL-SEARCH-HARDENING-001
+status: in_progress
+task_id: PRODUCT-SHELL-E2E-LLM-001
 authority: AUTO
-goal: Harden the current Tender Agent product shell based on the first live operator UX iteration so real software-development procurements can be found, understood and handed off to analysis reliably.
+goal: Execute the real operator flow end-to-end through the product UI from public procurement search to document acquisition, explicit local LLM analysis, Decision Core and report, fixing only defects observed in this flow.
 definition_of_done:
-  - UI exposes an explicit active/current procurement filter and applies it to public search.
-  - Query handling for abbreviations/phrases such as "разработка ПО" no longer degenerates into generic "разработка" noise; target Axioma procurement remains discoverable.
-  - Search-card customer attribution fails closed on missing/corrupted HTML/JS contamination and uses safer extraction where supported.
-  - Discovery relevance reflects query-to-procurement match and is not mislabeled by supplier-profile-only scoring.
-  - EIS diagnostics copy is internally consistent and reflects the actual configured public-search path.
-  - Search-result handoff creates a run promptly and exposes visible progress/status rather than appearing hung in one synchronous action.
-  - Focused regression tests cover every confirmed defect.
-  - Real Safari/RDC regression reruns both software-development queries and verifies Axioma workflow.
+  - Start from a fresh public 44-FZ search in the rendered UI, not a pre-existing run.
+  - Find the Axioma procurement 0187200001726001304 using the operator query "разработка ПО".
+  - Acquire the procurement documents through the rendered UI and create a fresh run.
+  - Start the analysis explicitly through the rendered UI with the configured local LLM.
+  - Wait for terminal analysis state and inspect run events/provenance.
+  - Open and inspect the generated report and Decision Core through the rendered UI.
+  - Fix any product/runtime defects that block or materially corrupt this exact end-to-end flow, with focused regression coverage.
+  - Re-run the affected part of the flow after each fix until the end-to-end path completes or an objective external blocker is proven.
 completed:
-  - Added explicit status selector; default is "Подача заявок" and public 44-FZ search sends status_filter to EIS (native af=on stage flag).
-  - Expanded standalone uppercase "ПО" to "программного обеспечения" and added strict query-title matching only for the confirmed software-search failure family; ordinary free-text search semantics remain unchanged.
-  - Added query_relevance separate from supplier_fit; public cards now display query-match score rather than supplier participation recommendation.
-  - Added fail-closed customer-name sanitization for JavaScript/HTML contamination.
-  - Added capped common-info enrichment for missing customer/deadline; Axioma resolves to the authoritative Department customer and 05.10.2026 deadline.
-  - Reworked public-source diagnostics to describe public read-only search without contradictory SOAP token language.
-  - Changed search-result action to "Получить документацию"; handoff shows elapsed progress and sends analyze_after_download=false so analysis remains an explicit next step.
-  - Added visible deadline and status fields to public result cards.
-  - Added focused regression suite tests/test_product_shell_search_hardening.py.
-  - Re-ran live Safari UI for "разработка ПО" and "разработка программн обеспеч": both returned only target Axioma procurement 0187200001726001304 in the tested active/date window, with 100% query match, correct customer, deadline and active status.
-  - Live Axioma handoff created run toa-run-20261003180241-ad8a9f, downloaded/extracted 5 documents, status ready_to_analyze, analysis_status not_started, and preserved correct customer/deadline.
-current: Search/product-shell hardening iteration is complete and verified on exact code commit 1f8396f49e6b0d223c6648f86cfc6e50b75209be.
-remaining: []
-last_verified_commit: 1f8396f49e6b0d223c6648f86cfc6e50b75209be
+  - Verified prior PRODUCT-SHELL-SEARCH-HARDENING-001 is completed at remote-synced head 4572797.
+current: Start a fresh UI search for "разработка ПО" and execute the complete operator flow through explicit local-LLM analysis.
+remaining:
+  - Run fresh public UI search and capture selected procurement.
+  - Acquire documents and create fresh run.
+  - Start explicit local-LLM analysis from UI.
+  - Inspect analysis result, provenance, Decision Core and report.
+  - Fix and regress any observed defects.
+  - Final end-to-end rerun/verification and close checkpoint.
+last_verified_commit: 4572797d6c7ad19e156d2e8d1d3b09ad90408635
 last_tests:
-  - Exact-head focused parser/relevance/product-shell suite: 46 passed, 3 warnings.
-  - Exact-head discovery/public-search semantic suite: 51 passed, 6 deselected, 1 warning.
-  - Six deselected legacy TestClient cases are environment-coupled to local .env.local pilot-auth=true and otherwise receive 401 before tested routes; no search semantic failures remained.
-  - git diff --check passed.
-  - Live Safari/RDC query "разработка ПО": one result, Axioma 0187200001726001304, 100% query match, correct customer, deadline 05.10.2026, status Подача заявок.
-  - Live Safari/RDC query "разработка программн обеспеч": same target and fields.
-  - Live document handoff: toa-run-20261003180241-ad8a9f, 5 files, ready_to_analyze, analysis not started.
-resume_instruction: This hardening iteration is complete. Do not repeat it. The next product-shell task should start from a fresh checkpoint and exercise the created Axioma run through the document review -> explicit analysis -> report UX, fixing only defects observed in that next operator flow.
+  - Prior search hardening exact-head tests passed and live Safari search/document acquisition was verified.
+resume_instruction: Open the canonical UI on 127.0.0.1:8092, perform a fresh "разработка ПО" public 44-FZ search, create a new run from Axioma 0187200001726001304, then explicitly start local-LLM analysis through the rendered UI and continue until report/Decision Core are inspected.
