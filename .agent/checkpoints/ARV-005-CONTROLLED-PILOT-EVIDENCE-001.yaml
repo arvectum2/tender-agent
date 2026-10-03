@@ -783,3 +783,27 @@ wave3_confirmation_20261003:
       confirmed_defect: generic table fallback promotes a delivery-address row from the contract as a procurement line item
   cross_case_contamination_observed: false
   source_ownership_isolation_preserved: true
+wave3_post_confirmation_remediation_20261003:
+  implementation_parent_head: e0dce9590b2f98a2390042cc83731155358404f3
+  compatibility_fix_commit: 1c90fcdafdf2b4c4ec1517966ec8b2df0e11a290
+  ci_failure:
+    run_id: 37128389582
+    job_id: 111218317702
+    failing_test: tests/test_tender_operator_agent_getdocs_ip_intake.py::test_getdocs_archive_can_auto_analyze_after_download
+    observed_status: docs_required
+    root_cause: underscore normalization converted technical_spec to technical spec, but the normalized English alias was not recognized
+  remediation:
+  - preserve underscore-separated Russian document aliases introduced for W3-C
+  - recognize normalized technical_spec and contract_draft English fixture aliases
+  - retain deterministic document-set completeness and analysis gating
+  verification:
+    original_failure_reproduced: true
+    getdocs_module: 7 passed
+    document_set_module: 14 passed
+    source_first_suite: 20 passed
+    ruff_changed_paths: passed
+    make_check_locked_environment: passed
+    diff_check: passed
+  safety_review: no external action, archive extraction, data-handling, or human-control boundary changed
+  exact_head_ci: pending
+  counted_llm_rerun: false

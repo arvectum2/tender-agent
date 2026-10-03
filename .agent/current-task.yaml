@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'Wave 3 confirmation set is closed without pre-completion tuning: W3-A/B/D completed fail-closed; W3-C is source-bound blocked. Post-confirmation remediation started for underscore filename classification and deterministic intra-package scope contamination before the exploratory 223-FZ wave.'
+current: 'All three confirmed Wave 3 defects have regression-first fixes on PR #123. A compatibility regression from underscore normalization was corrected at 1c90fcd; exact-head CI and Mac mini deterministic recomputation remain before the exploratory 223-FZ wave.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-03T17:01:24+03:00'
-resume_instruction: 'Add regression-first fixes for three confirmed Wave 3 defects: normalize underscore-separated Russian document filenames for technical_spec/contract_draft; prevent generic contract-table rows (PIK/ЕАСУЗ SLA and delivery-address rows) from becoming goods PRODUCT_ITEM facts while retaining contract delivery/warranty facts; suppress product-scoped facts from application/instruction boilerplate. Run focused and relevant suites, rerender/recompute deterministic artifacts without rerunning counted LLM, then evaluate technical 44-FZ completion and proceed to three exploratory 223-FZ cases.'
+updated_at: '2026-10-03T18:07:08+03:00'
+resume_instruction: 'Verify exact-head CI after 1c90fcd. On the canonical Mac mini, rerender/recompute W3-A/B/D and reacquire/analyze W3-C without rerunning counted LLM, evaluate technical 44-FZ completion, then proceed to the three exploratory 223-FZ cases.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
