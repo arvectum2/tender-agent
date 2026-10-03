@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: Wave 3 four-case confirmation set frozen before any model-output inspection. Starting read-only acquisition with analysis disabled.
+current: 'Wave 3 acquisition completed without model output: W3-A/B/D source-complete and ready; W3-C is a source-bound blocker under frozen classifiers because underscore-separated contract/spec filenames are not recognized. No Wave 3 tuning performed. Starting counted analyses for W3-A/B/D sequentially.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-02T14:20:16+03:00'
-resume_instruction: Acquire frozen W3-A 0853500000326006680, W3-B 0348200027026000447, W3-C 0373200074826000979, W3-D 0329100002526000044 from public EIS with analyze_after_download=false. Record completeness and source binding before any LLM run. Do not tune code/model/config based on Wave 3 cases until all four confirmation runs complete.
+updated_at: '2026-10-03T16:40:07+03:00'
+resume_instruction: Run counted analysis sequentially for W3-A toa-run-20261003133916-ad847c, W3-B toa-run-20261003133917-1bbc28, and W3-D toa-run-20261003133920-eb1257 under unchanged frozen Gemma/runtime. Keep W3-C toa-run-20261003133919-19b390 blocked and do not tune classifiers until all four Wave 3 confirmation cases are closed. Record provenance/Decision Core/report after each, then evaluate Wave 3 gate and only afterward create any regression for W3-C.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -560,3 +560,42 @@ wave3_freeze:
     procedure: Запрос котировок
     source_shape: '4 files: XLSX + 3 DOCX; catalog-like breaker case'
     document_links: 4
+wave3_acquisition_20261003:
+  frozen_code_head: a5053554b33925dd1c6129e7c8350275b80c8c53
+  analysis_disabled_during_acquisition: true
+  cases:
+    W3-A:
+      registry_number: 0853500000326006680
+      run_id: toa-run-20261003133916-ad847c
+      documents: 4
+      status: ready_to_analyze
+      document_set_status: complete
+      analysis_allowed: true
+    W3-B:
+      registry_number: 0348200027026000447
+      run_id: toa-run-20261003133917-1bbc28
+      documents: 5
+      status: ready_to_analyze
+      document_set_status: complete
+      analysis_allowed: true
+    W3-C:
+      registry_number: 0373200074826000979
+      run_id: toa-run-20261003133919-19b390
+      documents: 8
+      status: docs_required
+      document_set_status: incomplete
+      analysis_allowed: false
+      missing:
+      - technical_specification
+      - contract_draft
+      observed_names:
+      - Проект_контракта_17256094-1.pdf
+      - Техническое_задание_17256094-1.pdf
+      disposition: source-bound blocker retained; no Wave 3 tuning before confirmation-set completion
+    W3-D:
+      registry_number: 0329100002526000044
+      run_id: toa-run-20261003133920-eb1257
+      documents: 4
+      status: ready_to_analyze
+      document_set_status: complete
+      analysis_allowed: true
