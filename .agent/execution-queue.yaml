@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-10-03T21:00:55+03:00'
+updated_at: '2026-10-03T21:02:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -545,6 +545,23 @@ items:
   - ARV-012-REVALIDATION-001
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Satisfied: 12 unique 44-FZ procurements have completed technical reports; three frozen exploratory 223-FZ cases are separately scored source-bound blockers; explicit local-LLM/fallback provenance, aggregate report docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md, regression capture, 105 focused/relevant tests and exact-head CI run 37138206676 SUCCESS are recorded on PR #123 head 8e14fe5106062b68cf6feb3a61613a80b36623de. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
+
+- order: 230
+  task_id: BASE-012-REVALIDATION-001
+  strategy: REUSE
+  continuation_mode: REVALIDATION
+  title: Revalidate golden quality loop, provenance and source-graph evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first newly eligible STATUS-REVALIDATION item after ARV-005 technical pilot completion.'
+  roadmap_scope:
+  - BASE-012
+  dependencies:
+  - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+  executor_scope: Reconcile the historical R1-R5 golden-loop, provenance and source-graph baseline against the completed controlled pilot and repository-owned evidence only. Preserve frozen evidence, HUMAN/REVIEW acceptance gates and all procurement/external hard stops.
+  done_gate: 'Satisfied for repository revalidation: the completed ARV-005 pilot records 12 unique 44-FZ reports plus three separately scored source-bound 223-FZ blockers, explicit model/fallback provenance, zero observed post-fix silent fallback, zero observed cross-procurement source-ownership violation, aggregate report and regression capture. Residual controlled-LLM reliability and 223-FZ source breadth remain explicit gaps requiring a newly admitted frozen phase; no human usefulness/commercial acceptance is inferred.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
