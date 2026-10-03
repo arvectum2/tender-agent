@@ -1,42 +1,31 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: PRODUCT-SHELL-UX-ITERATION-001
+status: in_progress
+task_id: PRODUCT-SHELL-SEARCH-HARDENING-001
 authority: AUTO
-goal: Exercise the current canonical Tender Agent UI as an operator over RDC/browser, search active software-development procurements using the user-specified queries, verify that the expected Axioma procurement is discoverable, and capture concrete UX/search defects without mutating ARV-005 pilot evidence.
+goal: Harden the current Tender Agent product shell based on the first live operator UX iteration so real software-development procurements can be found, understood and handed off to analysis reliably.
 definition_of_done:
-  - Canonical UI exercised through Safari on the Mac mini, not only through backend API calls.
-  - Searches attempted for "разработка ПО" and "разработка программн обеспеч" with 44-FZ/current-date intent.
-  - Search results inspected for expected Axioma procurement and key result fields.
-  - Blocking UI/search defects recorded with reproducible evidence.
-  - Checkpoint updated with exact next action.
+  - UI exposes an explicit active/current procurement filter and applies it to public search.
+  - Query handling for abbreviations/phrases such as "разработка ПО" no longer degenerates into generic "разработка" noise; target Axioma procurement remains discoverable.
+  - Search-card customer attribution fails closed on missing/corrupted HTML/JS contamination and uses safer extraction where supported.
+  - Discovery relevance reflects query-to-procurement match and is not mislabeled by supplier-profile-only scoring.
+  - EIS diagnostics copy is internally consistent and reflects the actual configured public-search path.
+  - Search-result handoff creates a run promptly and exposes visible progress/status rather than appearing hung in one synchronous action.
+  - Focused regression tests cover every confirmed defect.
+  - Real Safari/RDC regression reruns both software-development queries and verifies Axioma workflow.
 completed:
-  - Opened http://127.0.0.1:8092/demo/tender-agent in Safari over RDC and interacted with the rendered UI.
-  - Search 1: "разработка ПО", source public_eis_html_44fz, law 44-ФЗ, publication window 2026-09-01..2026-10-03, max 20. Returned 20 results dominated by generic "разработка" matches and did not surface Axioma in the inspected result set.
-  - Search 2: "разработка программн обеспеч" with the same source/law/date/max filters. Returned 20 results and surfaced Axioma procurement 0187200001726001304.
-  - Axioma card title: "Оказание услуг по разработке модуля для определения пересечений границ земельных участков с землями лесного фонда для программного обеспечения «Автоматизированная географическая информационная система «Аксиома»"; initial price 521000 RUB; publication date 23.09.2026.
-  - External current-source verification found the same procurement with application deadline 05.10.2026, confirming it was active during this UX test on 03.10.2026.
-  - Clicked "Получить документацию и анализировать" on the Axioma result card. UI entered "Запрашиваем документацию ... через getDocsIP…" and remained in a synchronous-looking wait state during observation.
-findings:
-  - severity: P0
-    issue: No explicit procurement-status filter exists in the search form, so the operator cannot request only active/current procurements from the UI.
-  - severity: P0
-    issue: Search phrase "разработка ПО" is too broad/noisy in the current public EIS path; visible results are dominated by unrelated generic "разработка" procurements.
-  - severity: P1
-    issue: Axioma is discoverable with the truncated phrase "разработка программн обеспеч", but the card shows customer_name missing.
-  - severity: P1
-    issue: All visible relevance fields on Axioma are zero and the card is labeled "НЕ РЕКОМЕНДОВАНО" despite direct textual match to software-development intent; supplier-profile relevance is not appropriate for this initial discovery query.
-  - severity: P1
-    issue: Some search cards show corrupted customer_name values containing HTML/JavaScript fragments; this confirms search-card customer attribution remains unsafe.
-  - severity: P1
-    issue: Search diagnostics text is internally contradictory ("токен найден" vs "токен не найден" / endpoint undefined).
-  - severity: P1
-    issue: Search-result handoff immediately requests download + analysis in one UI action and provides only a waiting flash message; observed interaction did not transition promptly to a run/progress page.
-current: First operator UX iteration completed; expected Axioma procurement is discoverable, but search/status/relevance/handoff UX needs hardening before user acceptance.
-remaining: []
-last_verified_commit: ded158733aabca6ced50fd345a6a336d91675df5
+  - Restored prior completed UX checkpoint and verified clean repository state at ac6585d.
+current: Inspect search API/provider/UI architecture and existing test coverage before making changes.
+remaining:
+  - Implement active/current status filter end-to-end.
+  - Harden query semantics for ПО/software-development searches.
+  - Harden customer attribution and contaminated-value rejection.
+  - Separate discovery relevance from supplier-fit presentation.
+  - Reconcile diagnostics copy/state.
+  - Make result handoff prompt/progress-visible.
+  - Add focused regressions and run relevant suite.
+  - Re-run live UI scenario over Safari/RDC and record evidence.
+last_verified_commit: ac6585d237ea9adfd446cd395a02485d31b25477
 last_tests:
-  - Safari UI loaded canonical /demo/tender-agent successfully.
-  - Both requested searches executed through the rendered UI.
-  - Axioma procurement 0187200001726001304 found through UI on second query.
-resume_instruction: Do not repeat this UX iteration. Start a new bounded PRODUCT-SHELL-SEARCH-HARDENING task to add an explicit active-status filter, tighten public search query semantics, fail closed on corrupted/missing customer attribution, make discovery relevance meaningful for user search intent, reconcile diagnostics copy, and make search-result handoff asynchronous/progress-visible. Preserve ARV-005 pilot evidence unchanged.
+  - Prior UX iteration found Axioma procurement 0187200001726001304 through rendered UI.
+resume_instruction: Inspect the public search request/response models, 44-FZ provider/parser, UI rendering/handoff code and focused tests; implement the first failing regression before modifying behavior.
