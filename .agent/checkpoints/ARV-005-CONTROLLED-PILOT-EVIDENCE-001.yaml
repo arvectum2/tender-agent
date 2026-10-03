@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: agent/arv-005-wave1-frozen
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-03T17:01:24+03:00'
+updated_at: '2026-10-03T19:41:27+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: 'Wave 3 confirmation set is closed without pre-completion tuning: W3-A/B/D completed fail-closed; W3-C is source-bound blocked. Post-confirmation remediation started for underscore filename classification and deterministic intra-package scope contamination before the exploratory 223-FZ wave.'
+current: '44-FZ core is technically complete: 12 unique real procurements have completed reports, with the original W3-C blocker preserved plus a supplemental deterministic completion after its regression fix. Three exploratory 223-FZ cases are now frozen before detail/model inspection.'
 subtasks:
 - id: A1
   status: completed
@@ -97,7 +97,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: 'Add regression-first fixes for three confirmed Wave 3 defects: normalize underscore-separated Russian document filenames for technical_spec/contract_draft; prevent generic contract-table rows (PIK/ЕАСУЗ SLA and delivery-address rows) from becoming goods PRODUCT_ITEM facts while retaining contract delivery/warranty facts; suppress product-scoped facts from application/instruction boilerplate. Run focused and relevant suites, rerender/recompute deterministic artifacts without rerunning counted LLM, then evaluate technical 44-FZ completion and proceed to three exploratory 223-FZ cases.'
+resume_instruction: Run read-only 223-FZ detail/acquisition for frozen E223-A 32616432990, E223-B 32616423713, E223-C 32616427405 without changing code/model/config. Record source completeness and attribution first. Analyze only source-complete cases, fail closed on unsupported 223-FZ semantics, then produce the aggregate technical pilot report. Do not fold 223-FZ scores into the 44-FZ core score.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html
@@ -807,3 +807,45 @@ wave3_post_confirmation_remediation_20261003:
   safety_review: no external action, archive extraction, data-handling, or human-control boundary changed
   exact_head_ci: pending
   counted_llm_rerun: false
+core_44fz_completion_20261003:
+  unique_44fz_registry_numbers: 12
+  completed_with_report: 12
+  w3c_original_counted_blocker_run: toa-run-20261003133919-19b390
+  w3c_supplemental_completion_run: toa-run-20261003163911-ba589b
+  w3c_supplemental_llm_invoked: false
+  w3c_supplemental_reason: post-confirmation deterministic remediation; original blocker evidence preserved
+  exact_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  exact_head_local_tests: 105 passed, 1 Starlette/httpx deprecation warning
+  exact_head_ci_run: 37132350065
+  exact_head_ci_conclusion: success
+  technical_core_status: completed
+exploratory_223fz_freeze_20261003:
+  frozen_at: '2026-10-03T19:41:27+03:00'
+  before_detail_or_model_output_inspection: true
+  runtime_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  score_separately: true
+  cases:
+  - id: E223-A
+    registry_number: '32616432990'
+    title: Право заключения договора на кабель
+    query: кабель
+    search_deadline: '2026-10-09T00:00:00+00:00'
+    search_customer_raw: 02.10.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+  - id: E223-B
+    registry_number: '32616423713'
+    title: Поставка прожекторов, светильник
+    query: светильник
+    search_deadline: '2026-10-09T00:00:00+00:00'
+    search_customer_raw: 30.09.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+  - id: E223-C
+    registry_number: '32616427405'
+    title: Поставка электротехническ
+    query: электротехническая продукция
+    search_deadline: '2026-10-08T00:00:00+00:00'
+    search_customer_raw: 01.10.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.

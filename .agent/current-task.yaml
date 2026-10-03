@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: 'All three confirmed Wave 3 defects have regression-first fixes on PR #123. A compatibility regression from underscore normalization was corrected at 1c90fcd; exact-head CI and Mac mini deterministic recomputation remain before the exploratory 223-FZ wave.'
+current: '44-FZ core is technically complete: 12 unique real procurements have completed reports, with the original W3-C blocker preserved plus a supplemental deterministic completion after its regression fix. Three exploratory 223-FZ cases are now frozen before detail/model inspection.'
 subtasks:
 - id: A1
   status: completed
@@ -38,8 +38,8 @@ pending:
 - Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
 - Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
 - Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-03T18:07:08+03:00'
-resume_instruction: 'Verify exact-head CI after 1c90fcd. On the canonical Mac mini, rerender/recompute W3-A/B/D and reacquire/analyze W3-C without rerunning counted LLM, evaluate technical 44-FZ completion, then proceed to the three exploratory 223-FZ cases.'
+updated_at: '2026-10-03T19:41:27+03:00'
+resume_instruction: Run read-only 223-FZ detail/acquisition for frozen E223-A 32616432990, E223-B 32616423713, E223-C 32616427405 without changing code/model/config. Record source completeness and attribution first. Analyze only source-complete cases, fail closed on unsupported 223-FZ semantics, then produce the aggregate technical pilot report. Do not fold 223-FZ scores into the 44-FZ core score.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -647,3 +647,45 @@ wave3_confirmation_20261003:
       confirmed_defect: generic table fallback promotes a delivery-address row from the contract as a procurement line item
   cross_case_contamination_observed: false
   source_ownership_isolation_preserved: true
+core_44fz_completion_20261003:
+  unique_44fz_registry_numbers: 12
+  completed_with_report: 12
+  w3c_original_counted_blocker_run: toa-run-20261003133919-19b390
+  w3c_supplemental_completion_run: toa-run-20261003163911-ba589b
+  w3c_supplemental_llm_invoked: false
+  w3c_supplemental_reason: post-confirmation deterministic remediation; original blocker evidence preserved
+  exact_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  exact_head_local_tests: 105 passed, 1 Starlette/httpx deprecation warning
+  exact_head_ci_run: 37132350065
+  exact_head_ci_conclusion: success
+  technical_core_status: completed
+exploratory_223fz_freeze_20261003:
+  frozen_at: '2026-10-03T19:41:27+03:00'
+  before_detail_or_model_output_inspection: true
+  runtime_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  score_separately: true
+  cases:
+  - id: E223-A
+    registry_number: '32616432990'
+    title: Право заключения договора на кабель
+    query: кабель
+    search_deadline: '2026-10-09T00:00:00+00:00'
+    search_customer_raw: 02.10.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+  - id: E223-B
+    registry_number: '32616423713'
+    title: Поставка прожекторов, светильник
+    query: светильник
+    search_deadline: '2026-10-09T00:00:00+00:00'
+    search_customer_raw: 30.09.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+  - id: E223-C
+    registry_number: '32616427405'
+    title: Поставка электротехническ
+    query: электротехническая продукция
+    search_deadline: '2026-10-08T00:00:00+00:00'
+    search_customer_raw: 01.10.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
