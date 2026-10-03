@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: AUTO
 goal: Run a controlled technical pilot on real public procurements using the Mac mini as the server, with local inference and no consequential external action.
@@ -12,7 +12,7 @@ definition_of_done:
 - Per-run evidence records source completeness, local-LLM provenance, Decision Core result, report status, defects and fallbacks.
 - Aggregate technical pilot report produced; confirmed defects become regression evidence/follow-ups.
 - Human usefulness/commercial acceptance remains explicit HUMAN/REVIEW evidence and is never inferred.
-current: '44-FZ core is technically complete: 12 unique real procurements have completed reports, with the original W3-C blocker preserved plus a supplemental deterministic completion after its regression fix. Three exploratory 223-FZ cases are now frozen before detail/model inspection.'
+current: ARV-005 technical pilot completed. Twelve unique core 44-FZ procurements have completed reports; three frozen exploratory 223-FZ procurements are explicitly source-bound blocked and scored separately; aggregate technical report is published. Human usefulness/commercial acceptance remains HUMAN/REVIEW.
 subtasks:
 - id: A1
   status: completed
@@ -32,14 +32,18 @@ subtasks:
 - id: A6
   status: completed
   title: Apply Wave 1 -> Wave 2 gate and freeze five Wave 2 registry numbers before model-output inspection.
-pending:
-- Reacquire frozen W2-A/W2-C/W2-D/W2-E under b42aa9b and retain all initial blocker evidence.
-- Run counted analysis for source-complete Wave 2 cases with the unchanged frozen Gemma model/config and explicit section-level provenance.
-- Reconcile W2-B counted hidden-failure record under the fixed fail-closed provenance semantics without erasing the original evidence.
-- Apply Wave 2 -> Wave 3 gate, then freeze four unseen Wave 3 cases before model-output inspection.
-- Run three exploratory 223-FZ cases and produce the aggregate technical pilot report.
-updated_at: '2026-10-03T19:41:27+03:00'
-resume_instruction: Run read-only 223-FZ detail/acquisition for frozen E223-A 32616432990, E223-B 32616423713, E223-C 32616427405 without changing code/model/config. Record source completeness and attribution first. Analyze only source-complete cases, fail closed on unsupported 223-FZ semantics, then produce the aggregate technical pilot report. Do not fold 223-FZ scores into the 44-FZ core score.
+- id: A7
+  status: completed
+  title: Complete Wave 2 counted runs, provenance remediation, and Wave 2 -> Wave 3 gate.
+- id: A8
+  status: completed
+  title: Complete frozen Wave 3 confirmation set and post-confirmation regression remediation without rewriting counted evidence.
+- id: A9
+  status: completed
+  title: Run three frozen exploratory 223-FZ cases, record source-bound blockers separately, and publish aggregate technical report.
+pending: []
+updated_at: '2026-10-03T19:48:21+03:00'
+resume_instruction: ARV-005 is complete. Do not resume or mutate this pilot. Any work on 223-FZ detail support or local-LLM reliability must start as a new task with a new canonical checkpoint and a newly frozen evaluation phase; preserve this pilot evidence unchanged.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20260923-real-pilot
@@ -689,3 +693,77 @@ exploratory_223fz_freeze_20261003:
     search_customer_raw: 01.10.2026
     expected_review_or_blocker: true
     expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+remaining: []
+last_verified_commit: 34f72c565715d6da729e325f22826a5b04fbd3e2
+last_test_results:
+  focused_relevant: 105 passed, 1 Starlette/httpx deprecation warning
+  github_actions_ci_run: 37132350065
+  github_actions_ci_conclusion: success
+completion_summary_20261003:
+  completed_at: '2026-10-03T19:48:21+03:00'
+  unique_public_procurements_total: 15
+  core_44fz:
+    unique_registry_numbers: 12
+    completed_reports: 12
+    decision_core_distribution:
+      NO_GO: 1
+      NEEDS_REVIEW: 11
+    llm_invoked_cases: 11
+    clean_controlled_llm_without_fallback: 3
+    explicit_fail_closed_fallback_cases: 8
+    silent_fallback_after_provenance_fix_observed: 0
+    cross_procurement_source_ownership_violation_observed: 0
+    w3c_original_blocker_run: toa-run-20261003133919-19b390
+    w3c_supplemental_completion_run: toa-run-20261003163911-ba589b
+    w3c_supplemental_llm_invoked: false
+  exploratory_223fz:
+    score_separate_from_44fz: true
+    cases:
+      E223-A:
+        registry_number: '32616432990'
+        run_id: toa-run-20261003164237-5c8077
+        status: docs_required
+        document_set_status: empty
+        documents: 0
+        analysis_allowed: false
+        llm_invoked: false
+        source_bound_reason: public 223-FZ detail layout unsupported; no confirmed customer or document links
+      E223-B:
+        registry_number: '32616423713'
+        run_id: toa-run-20261003164238-cdb476
+        status: docs_required
+        document_set_status: empty
+        documents: 0
+        analysis_allowed: false
+        llm_invoked: false
+        source_bound_reason: public 223-FZ detail layout unsupported; no confirmed customer or document links
+      E223-C:
+        registry_number: '32616427405'
+        run_id: toa-run-20261003164238-1e3003
+        status: docs_required
+        document_set_status: empty
+        documents: 0
+        analysis_allowed: false
+        llm_invoked: false
+        source_bound_reason: public 223-FZ detail layout unsupported; no confirmed customer or document links
+    confirmed_followups:
+    - Implement and fixture-test the current notice223 detail layout with customer/source ownership and document-link extraction.
+    - Make public attachment dispatch law-aware instead of calling the 44-FZ detail helper unconditionally.
+    - Fix 223-FZ search-card field attribution so publication-date text cannot populate customer identity.
+    - Add live-read-only or sanitized fixture regressions for the three frozen 223-FZ cases.
+    - Run a separate frozen 223-FZ semantic/readiness pilot only after source completeness is reliable; do not inherit 44-FZ semantics implicitly.
+  verification:
+    code_head: 7653c0700f02a3886655950c4aa0431823c558c0
+    focused_relevant_tests: 105 passed, 1 Starlette/httpx deprecation warning
+    github_actions_ci_run: 37132350065
+    github_actions_ci_conclusion: success
+    aggregate_report: docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+    aggregate_report_commit: 34f72c565715d6da729e325f22826a5b04fbd3e2
+  safety:
+    authenticated_eis_etp_actions: false
+    submissions_or_modifications: false
+    digital_signature_operations: false
+    external_outreach: false
+    payments_or_commitments: false
+    human_usefulness_or_commercial_acceptance_inferred: false
+  principal_engineering_finding: After Wave 1, eight subsequent LLM-invoked 44-FZ cases failed all four controlled sections at validation/timeout; after the provenance fix they failed closed explicitly and used deterministic fallback. Future model/prompt/performance tuning must be a new frozen evaluation phase.
