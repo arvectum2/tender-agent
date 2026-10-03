@@ -15,15 +15,22 @@ definition_of_done:
   - Re-run the affected part of the flow after each fix until the end-to-end path completes or an objective external blocker is proven.
 completed:
   - Verified prior PRODUCT-SHELL-SEARCH-HARDENING-001 is completed at remote-synced head 4572797.
-current: Start a fresh UI search for "разработка ПО" and execute the complete operator flow through explicit local-LLM analysis.
+completed:
+  - Verified prior PRODUCT-SHELL-SEARCH-HARDENING-001 is completed at remote-synced head 4572797.
+  - Fresh rendered-UI search for "разработка ПО" returned Axioma 0187200001726001304 as the single result.
+  - Fresh rendered-UI handoff created toa-run-20261003182512-cc696a with 5 downloaded documents and analysis not started.
+  - First explicit analysis attempt exposed stale UI LLM preset (Qwen2.5/8088) and no RAG context; job 60c54a1d-962f-418e-8b35-b36f75d063a8 made 0 LLM calls.
+  - Corrected Mac mini preset to live Arvectum Gemma 4 12B at 127.0.0.1:8081; focused UI regression is green.
+  - Readiness correctly reported tender absent from RAG DB; prepare job 82b517f0-6111-483b-97cc-e2e7332f290d exposed a second integration gap by attempting separate SOAP ingestion.
+  - Implemented local operator-run-to-RAG ingestion bridge and extraction of already-downloaded local files; live verification pending.
+current: Restart the UI with the operator-run ingestion bridge, rerun RAG preparation for Axioma, then execute explicit local-LLM analysis and inspect the report.
 remaining:
-  - Run fresh public UI search and capture selected procurement.
-  - Acquire documents and create fresh run.
-  - Start explicit local-LLM analysis from UI.
+  - Rerun RAG preparation using the new local operator-run bridge and verify chunks/embeddings.
+  - Start explicit local-LLM analysis from UI with Arvectum Gemma 4 12B.
   - Inspect analysis result, provenance, Decision Core and report.
   - Fix and regress any observed defects.
   - Final end-to-end rerun/verification and close checkpoint.
 last_verified_commit: 4572797d6c7ad19e156d2e8d1d3b09ad90408635
 last_tests:
   - Prior search hardening exact-head tests passed and live Safari search/document acquisition was verified.
-resume_instruction: Open the canonical UI on 127.0.0.1:8092, perform a fresh "разработка ПО" public 44-FZ search, create a new run from Axioma 0187200001726001304, then explicitly start local-LLM analysis through the rendered UI and continue until report/Decision Core are inspected.
+resume_instruction: Restart the canonical UI on 127.0.0.1:8092 with current code, open toa-run-20261003182512-cc696a, rerun prepare for registry 0187200001726001304, verify local operator-run documents become RAG chunks/embeddings, then submit analysis with mac_mini_local Arvectum Gemma 4 12B and continue through report/Decision Core.
