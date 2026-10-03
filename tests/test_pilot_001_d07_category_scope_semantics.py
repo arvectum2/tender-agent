@@ -64,6 +64,49 @@ def test_d07_goods_subject_is_not_overridden_by_incidental_services_wording():
     assert scope["procurement_primary_scope"] == "goods"
 
 
+def test_d07_generic_goods_works_services_legal_clause_is_not_independent_scope_evidence():
+    documents = [
+        _document(
+            """1.1. Поставщик обязуется поставить светильники настольные Заказчику.
+4.2.5. Допускается поставка товара, выполнение работы или оказание услуги,
+качество и характеристики которых являются улучшенными по сравнению с контрактом.
+""",
+            role="contract_draft",
+            file_id="FILE-CONTRACT",
+        ),
+        _document(
+            """Описание объекта закупки: светильники электрические настольные.
+Необходимость поставки товара надлежащего качества.""",
+            role="technical_spec",
+            file_id="FILE-TZ",
+        ),
+        _document(
+            """Для участника закупки заключение контракта на поставку товара,
+выполнение работы или оказание услуги может являться крупной сделкой.""",
+            role="supporting",
+            file_id="FILE-REQ",
+        ),
+    ]
+
+    scope = _classify_procurement_scope(
+        {
+            "tender_title": "Поставка светильников электрических настольных",
+            "procurement": {},
+        },
+        documents,
+        "Поставка светильников электрических настольных",
+    )
+
+    assert scope["procurement_primary_scope"] == "goods"
+    assert scope["scope_classification_conflict"] is False
+    assert not any(
+        item["category"] in {"services", "works"}
+        and "поставка товара" in item["excerpt"].lower()
+        and "оказание услуги" in item["excerpt"].lower()
+        for item in scope["classification_evidence"]
+    )
+
+
 def test_d07_independent_goods_and_services_subjects_are_mixed():
     documents = [
         _document("Поставщик обязуется поставить товар Заказчику.", file_id="FILE-01"),

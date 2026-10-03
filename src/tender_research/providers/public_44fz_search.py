@@ -7,8 +7,8 @@ import re
 import ssl
 import time
 from dataclasses import dataclass, field
-from decimal import Decimal
 from datetime import date, datetime, timedelta, timezone
+from decimal import Decimal
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
@@ -623,6 +623,7 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         org_match = re.search(r'Заказчик[^:]*:\s*([^<]+)', entry_html, re.IGNORECASE)
         if org_match:
             customer_name = _strip_html(org_match.group(1))
+    customer_name = _sanitize_customer_name(customer_name)
 
     price_value = _first_matching_value(
         pairs,
@@ -653,14 +654,10 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         _first_matching_value(pairs, ("окончание подачи заявок", "дата окончания срока подачи заявок", "срок подачи заявок"))
     )
 
-    card_url = None
-    href_match = re.search(r'href="(https://[^"]*(?:zakupki\.gov\.ru)[^"]*)"', entry_html)
-    if href_match:
-        card_url = href_match.group(1)
-    if not card_url:
-        href_match = re.search(r'href="([^"]*(?:view|common-info)[^"]*)"', entry_html)
-        if href_match:
-            card_url = urljoin("https://zakupki.gov.ru", href_match.group(1))
+    card_url = _extract_preferred_notice_card_url(
+        entry_html,
+        registry_number=reestr_number or notice_number,
+    )
 
     procedure_status = _strip_html(
         _extract_between(entry_html, '<div class="registry-entry__header-mid__title text-normal">', "</div>")
@@ -684,6 +681,51 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         "card_url": card_url,
         "law": "44fz",
     }
+
+
+def _extract_preferred_notice_card_url(
+    entry_html: str,
+    registry_number: str | None,
+) -> str | None:
+    """Return the strongest procedure-owned public notice URL from a search card.
+
+    EIS cards also contain print-form actions and unrelated absolute report links.
+    Those are not valid detail-card identities and must never win merely because
+    they appear earlier in the HTML.  Prefer exact-registry common-info links,
+    with procedure-specific paths ahead of the generic notice path.
+    """
+
+    candidates: list[tuple[int, int, str]] = []
+    for position, match in enumerate(
+        re.finditer(r'href\s*=\s*["\']([^"\']+)["\']', entry_html, re.IGNORECASE)
+    ):
+        absolute = urljoin(f"https://{EIS_44FZ_HOST}", html.unescape(match.group(1)))
+        parsed = urlparse(absolute)
+        if (parsed.hostname or "").lower() != EIS_44FZ_HOST:
+            continue
+        path = parsed.path
+        if not path.startswith("/epz/order/notice/") or "/printForm/" in path:
+            continue
+        if registry_number:
+            candidate_registry = (parse_qs(parsed.query).get("regNumber") or [None])[0]
+            if candidate_registry != registry_number:
+                continue
+        procedure_common_info = bool(
+            re.fullmatch(r"/epz/order/notice/[^/]+/view/common-info\.html", path)
+        )
+        generic_common_info = path == "/epz/order/notice/view/common-info.html"
+        legacy_procedure_view = bool(
+            re.fullmatch(r"/epz/order/notice/[^/]+/view\.html", path)
+        )
+        if not (procedure_common_info or generic_common_info or legacy_procedure_view):
+            continue
+        priority = 0 if procedure_common_info else 1 if generic_common_info else 2
+        candidates.append((priority, position, absolute))
+
+    if not candidates:
+        return None
+    candidates.sort(key=lambda item: (item[0], item[1]))
+    return candidates[0][2]
 
 
 def _extract_registry_body_pairs(entry_html: str) -> dict[str, str]:
@@ -744,6 +786,32 @@ def _strip_html(value: str | None) -> str:
     cleaned = html.unescape(cleaned).replace("&nbsp;", " ").replace("\xa0", " ")
     cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned.strip()
+
+
+def _sanitize_customer_name(value: str | None) -> str | None:
+    """Reject search-card customer values contaminated by page JavaScript."""
+    cleaned = _strip_html(value)
+    if not cleaned:
+        return None
+    lowered = cleaned.lower()
+    suspicious = (
+        "function ",
+        "$(",
+        ".prop(",
+        "checkbox",
+        "event.",
+        "get_controller_",
+        "javascript:",
+        "document.",
+        "});",
+    )
+    if len(cleaned) > 320 or any(marker in lowered for marker in suspicious):
+        return None
+    if re.fullmatch(r"\d{2}\.\d{2}\.\d{4}(?:\s+\d{2}:\d{2})?", cleaned):
+        return None
+    if not re.search(r"[A-Za-zА-Яа-яЁё]", cleaned):
+        return None
+    return cleaned
 
 
 def _extract_price(text: str | None) -> float | None:
@@ -832,11 +900,33 @@ def _fallback_extract_by_number_patterns(html_str: str) -> list[dict[str, Any]]:
 def _parse_public_datetime(value: str | None) -> datetime | None:
     if not value:
         return None
-    cleaned = _strip_html(value).replace("(МСК)", "").strip()
+    cleaned = _strip_html(value).strip()
     cleaned = re.sub(r"\s+", " ", cleaned)
+
+    # EIS renders explicit Russian time-zone labels such as (МСК) and
+    # (МСК+4).  The numeric part is an offset from Moscow time (UTC+3),
+    # not from UTC. Preserve the exact instant whenever that label exists.
+    zone_match = re.search(
+        r"\(\s*МСК\s*(?:([+-])\s*(\d{1,2}))?\s*\)",
+        cleaned,
+        re.IGNORECASE,
+    )
+    explicit_timezone = None
+    if zone_match:
+        delta = 0
+        if zone_match.group(2):
+            delta = int(zone_match.group(2))
+            if zone_match.group(1) == "-":
+                delta = -delta
+        explicit_timezone = timezone(timedelta(hours=3 + delta))
+        cleaned = (cleaned[: zone_match.start()] + cleaned[zone_match.end() :]).strip()
+        cleaned = re.sub(r"\s+", " ", cleaned)
+
     for fmt in ("%d.%m.%Y %H:%M", "%d.%m.%Y %H:%M:%S", "%d.%m.%Y", "%Y-%m-%d"):
         try:
             parsed = datetime.strptime(cleaned, fmt)
+            if explicit_timezone is not None:
+                return parsed.replace(tzinfo=explicit_timezone).astimezone(timezone.utc)
             return parsed.replace(tzinfo=timezone.utc)
         except ValueError:
             continue
@@ -849,13 +939,25 @@ def _build_default_card_url(registry_number: str) -> str:
 
 def _build_documents_url(card_url: str | None, registry_number: str | None) -> str | None:
     if card_url:
-        if "documents.html" in card_url:
+        parsed = urlparse(card_url)
+        path = parsed.path
+        if (parsed.hostname or "").lower() != EIS_44FZ_HOST:
+            return None
+        if "/printForm/" in path or path.startswith("/rpt/"):
+            return None
+        if path.endswith("/documents.html"):
             return card_url
-        if "common-info.html" in card_url:
-            return card_url.replace("common-info.html", "documents.html")
-        if re.search(r"/view(?:\.html)?", card_url):
-            return re.sub(r"/view(?:\.html)?", "/view/documents.html", card_url, count=1)
-    if registry_number:
+        if path.endswith("/common-info.html") and path.startswith("/epz/order/notice/"):
+            return parsed._replace(
+                path=path[: -len("common-info.html")] + "documents.html"
+            ).geturl()
+        if re.fullmatch(r"/epz/order/notice/(?:[^/]+/)?view(?:\.html)?", path):
+            if path.endswith("/view.html"):
+                documents_path = path[: -len("/view.html")] + "/view/documents.html"
+            else:
+                documents_path = path.rstrip("/") + "/documents.html"
+            return parsed._replace(path=documents_path).geturl()
+    if registry_number and not card_url:
         return f"https://{EIS_44FZ_HOST}/epz/order/notice/ea44/view/documents.html?regNumber={registry_number}"
     return None
 
@@ -936,7 +1038,13 @@ def _parse_detail_metadata(html_str: str, card_url: str | None) -> dict[str, Any
     title = _extract_card_main_info_value(html_str, "Объект закупки")
     customer_name = _extract_explicit_customer_name(html_str)
     publication_date = _parse_public_datetime(_extract_card_main_info_value(html_str, "Размещено"))
-    application_deadline = _parse_public_datetime(_extract_card_main_info_value(html_str, "Окончание подачи заявок"))
+    application_deadline = _parse_public_datetime(
+        _extract_section_info_value(
+            html_str,
+            ("Дата и время окончания срока подачи заявок",),
+        )
+        or _extract_card_main_info_value(html_str, "Окончание подачи заявок")
+    )
     nmck_text = _extract_card_main_info_value(html_str, "Начальная цена")
     nmck_amount = _extract_price(nmck_text)
     customer_inn, customer_kpp = _extract_inn_kpp(html_str)
@@ -1144,8 +1252,22 @@ def _select_current_revision_document_links(
             },
         )
 
-    unknown = [item for item in revisions if item.active is None]
-    active = [item for item in revisions if item.active is True]
+    # The EIS documents page may interleave versioned notice revisions with
+    # auxiliary publications (for example clarification requests). Those
+    # auxiliary blocks can expose the same active/inactive UI state, but they
+    # are not competing versions of the notice itself. When explicit version
+    # numbers are present, only those versioned blocks participate in active
+    # notice selection; auxiliary blocks remain preserved for audit/provenance.
+    versioned_revisions = [item for item in revisions if item.revision is not None]
+    candidate_revisions = versioned_revisions or revisions
+    auxiliary_publications = (
+        [item for item in revisions if item.revision is None]
+        if versioned_revisions
+        else []
+    )
+
+    unknown = [item for item in candidate_revisions if item.active is None]
+    active = [item for item in candidate_revisions if item.active is True]
     if unknown or len(active) != 1:
         return (
             [],
@@ -1155,8 +1277,9 @@ def _select_current_revision_document_links(
                 "requires_review": True,
                 "reason": (
                     "Cannot bind public EIS attachments to one active notice revision: "
-                    f"active={len(active)}, unknown={len(unknown)}, total={len(revisions)}."
+                    f"active={len(active)}, unknown={len(unknown)}, total={len(candidate_revisions)}."
                 ),
+                "auxiliary_publication_count": len(auxiliary_publications),
             },
         )
 
@@ -1182,6 +1305,7 @@ def _select_current_revision_document_links(
             "requires_review": False,
             "reason": None,
             "active_revision": selected.provenance(),
+            "auxiliary_publication_count": len(auxiliary_publications),
         },
     )
 

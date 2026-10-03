@@ -493,9 +493,22 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                             </select>
                           </label>
                           <label>
+                            Статус
+                            <select name="status_filter">
+                              <option value="Подача заявок" selected>Действующие — подача заявок</option>
+                              <option value="">Все статусы</option>
+                              <option value="Работа комиссии">Работа комиссии</option>
+                              <option value="Закупка завершена">Завершённые</option>
+                              <option value="Закупка отменена">Отменённые</option>
+                            </select>
+                          </label>
+                        </div>
+                        <div class="split">
+                          <label>
                             ИНН заказчика
                             <input name="customer_inn" placeholder="Необязательно" />
                           </label>
+                          <div class="note" style="align-self:end">Для публичного поиска по умолчанию показываются закупки на стадии подачи заявок.</div>
                         </div>
                         <div class="split">
                           <label>
@@ -1048,6 +1061,26 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
               '</div>';
           }}
 
+          function queryMatchBadge(rel) {{
+            const score = Number(rel?.score || 0);
+            const status = rel?.status || 'unknown';
+            let cls = 'status-chip status-warning';
+            if (status === 'high') cls = 'status-chip status-done';
+            else if (status === 'medium') cls = 'status-chip status-review';
+            return `<span class="${{cls}}">${{Math.round(score)}}% · совпадение с запросом</span>`;
+          }}
+
+          function queryMatchHtml(rel) {{
+            if (!rel) return '';
+            const reasons = rel.reasons || [];
+            return `
+              <div style="margin-top:10px;padding:12px;background:var(--panel);border-radius:12px">
+                <div class="section-title" style="margin-bottom:6px">Совпадение с запросом</div>
+                <div class="run-meta">${{Math.round(Number(rel.score || 0))}}% · терминов совпало: ${{rel.matched_terms || 0}} из ${{rel.total_terms || 0}}</div>
+                ${{reasons.length ? `<div style="margin-top:6px;font-size:12px;color:var(--soft-gray)">${{reasons.map((reason) => `<div>· ${{escapeHtml(reason)}}</div>`).join('')}}</div>` : ''}}
+              </div>`;
+          }}
+
           function renderQuoteSection(run) {{
             const comparison = run.quote_comparison;
             if (!comparison) {{
@@ -1546,9 +1579,14 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
             }}
             const diagnostics = source.safe_diagnostics || {{}};
             const lastStatus = diagnostics.last_status || (source.configured ? 'configured' : 'not_configured');
+            const isPublicReadOnly = diagnostics.mode === 'public_html_read_only' || diagnostics.mode === 'public_html_fallback';
             const tokenState = diagnostics.token_present ? 'токен найден' : 'токен не найден';
-            const statusLabel = source.configured ? 'ЕИС настроена: токен найден' : (source.reason || 'ЕИС не настроена');
-            const structuredStatus = source.configured ? `настроен · ${{tokenState}}` : (source.reason || 'не настроен');
+            const statusLabel = isPublicReadOnly
+              ? 'Публичный read-only поиск: готов'
+              : (source.configured ? 'ЕИС настроена: токен найден' : (source.reason || 'ЕИС не настроена'));
+            const structuredStatus = isPublicReadOnly
+              ? 'без авторизации · токен не требуется'
+              : (source.configured ? `настроен · ${{tokenState}}` : (source.reason || 'не настроен'));
             node.innerHTML = `
               <div class="list-item">
                 <strong>${{escapeHtml(source.label)}}</strong>
@@ -1645,9 +1683,9 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
               return;
             }}
             node.innerHTML = cards.map((card, index) => {{
-              const rel = card.relevance || null;
-              const relBadge = rel ? relevanceBadge(rel) : '';
-              const relBreakdown = rel ? relevanceBreakdownHtml(rel) : '';
+              const queryRel = card.query_relevance || null;
+              const relBadge = queryRel ? queryMatchBadge(queryRel) : '';
+              const relBreakdown = queryRel ? queryMatchHtml(queryRel) : '';
               return `
               <div class="run-item">
                 <div class="step-top" style="margin-bottom:8px">
@@ -1664,12 +1702,14 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                   <div class="metric"><span class="metric-label">Номер извещения</span><span class="metric-value">${{escapeHtml(card.notice_number || card.reestr_number || 'не указан')}}</span></div>
                   <div class="metric"><span class="metric-label">Начальная цена</span><span class="metric-value">${{card.initial_price ? formatMoney(card.initial_price, 'RUB') : 'не указана'}}</span></div>
                   <div class="metric"><span class="metric-label">Дата публикации</span><span class="metric-value">${{escapeHtml(card.publication_date || 'не указана')}}</span></div>
+                  <div class="metric"><span class="metric-label">Срок подачи</span><span class="metric-value">${{escapeHtml(card.deadline || 'не указан')}}</span></div>
+                  <div class="metric"><span class="metric-label">Статус</span><span class="metric-value">${{escapeHtml(card.status || 'стадия определена фильтром ЕИС')}}</span></div>
                   <div class="metric"><span class="metric-label">Заказчик</span><span class="metric-value">${{escapeHtml(card.customer_name || 'не указан')}}</span></div>
                 </div>
                 ${{relBreakdown}}
                 ${{(card.warnings || []).length ? `<div class="note" style="margin-top:10px">${{escapeHtml(card.warnings.join('; '))}}</div>` : ''}}
                 <div class="form-actions" style="margin-top:12px">
-                  ${{card.reestr_number ? `<button class="button primary public-search-handoff-button" type="button" data-reestr="${{escapeHtml(card.reestr_number)}}" data-title="${{escapeHtml(card.title)}}" data-customer="${{escapeHtml(card.customer_name || '')}}" data-url="${{escapeHtml(card.source_url || '')}}">Получить документацию и анализировать</button>` : ''}}
+                  ${{card.reestr_number ? `<button class="button primary public-search-handoff-button" type="button" data-reestr="${{escapeHtml(card.reestr_number)}}" data-title="${{escapeHtml(card.title)}}" data-customer="${{escapeHtml(card.customer_name || '')}}" data-url="${{escapeHtml(card.source_url || '')}}">Получить документацию</button>` : ''}}
                   ${{card.source_url ? `<a class="link-button" href="${{escapeHtml(card.source_url)}}" target="_blank" rel="noreferrer">Открыть в ЕИС</a>` : ''}}
                 </div>
                 <div class="note" style="margin-top:8px">Поиск работает в read-only режиме. Система не входит в личный кабинет, не обходит captcha, не подаёт заявку.</div>
@@ -1727,7 +1767,7 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                     Или вставьте номер закупки (реестровый номер)
                     <div class="form-actions" style="margin-top:8px">
                       <input id="manual-reestr-input" placeholder="Например: 0888200000224000038" style="flex:1" />
-                      <button class="button primary" type="button" id="manual-reestr-handoff-button">Получить документацию и анализировать</button>
+                      <button class="button primary" type="button" id="manual-reestr-handoff-button">Получить документацию</button>
                     </div>
                   </label>
                 </div>
@@ -1746,7 +1786,21 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
               setFlash('procurement-flash', 'Не указан номер закупки.', true);
               return;
             }}
-            setFlash('procurement-flash', `Запрашиваем документацию по номеру ${{reestrNumber}} через getDocsIP…`);
+            const startedAt = Date.now();
+            const button = Array.from(document.querySelectorAll('.public-search-handoff-button'))
+              .find((node) => node.dataset.reestr === reestrNumber);
+            if (button) {{
+              button.disabled = true;
+              button.textContent = 'Получаем документацию…';
+            }}
+            const timer = window.setInterval(() => {{
+              const seconds = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+              setFlash(
+                'procurement-flash',
+                `Получаем документацию по ${{reestrNumber}} через getDocsIP · ${{seconds}} с. Анализ запускается отдельно после получения документов.`
+              );
+            }}, 1000);
+            setFlash('procurement-flash', `Получаем документацию по ${{reestrNumber}} через getDocsIP. Анализ запускается отдельно.`);
             try {{
               const payload = await fetchJson('/api/demo/tender-agent/runs/from-search-result', {{
                 method: 'POST',
@@ -1758,16 +1812,22 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                   customer_name: customerName || null,
                   source_url: sourceUrl || null,
                   download_archive: true,
-                  analyze_after_download: true,
+                  analyze_after_download: false,
                 }}),
               }});
-              setFlash('procurement-flash', `Создан run: ${{payload.run_id}}. Статус: ${{payload.status}}. Документов распаковано: ${{payload.documents_extracted_count}}.`);
+              setFlash('procurement-flash', `Создан run: ${{payload.run_id}}. Документов распаковано: ${{payload.documents_extracted_count}}. Анализ не запускался автоматически — проверьте документы и запустите его отдельно.`);
               await loadRuns();
               if (payload.run_id) {{
                 await selectRun(payload.run_id, true);
               }}
             }} catch (error) {{
               setFlash('procurement-flash', `Не удалось получить документацию: ${{error.message}}`, true);
+            }} finally {{
+              window.clearInterval(timer);
+              if (button) {{
+                button.disabled = false;
+                button.textContent = 'Получить документацию';
+              }}
             }}
           }}
 
@@ -1864,6 +1924,7 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                 if (payload.date_to) searchParams.set('date_to', String(payload.date_to));
                 if (payload.price_from) searchParams.set('price_from', String(payload.price_from));
                 if (payload.price_to) searchParams.set('price_to', String(payload.price_to));
+                if (payload.status_filter) searchParams.set('status_filter', String(payload.status_filter));
                 if (payload.max_results) searchParams.set('max_results', String(payload.max_results));
                 const searchResult = await fetchJson('/api/demo/tender-agent/procurement/public-44fz-search', {{
                   method: 'POST',

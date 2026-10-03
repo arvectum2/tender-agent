@@ -14,8 +14,6 @@ from urllib.request import Request
 
 from fastapi import HTTPException
 
-from src.shared.network.http_client import create_urllib_opener
-
 from src.modules.tender_operator_agent_demo import schemas as tender_schemas
 from src.modules.tender_operator_agent_demo.attachment_downloader import (
     download_procurement_attachments,
@@ -69,6 +67,7 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     save_demo_run_metadata,
 )
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
+from src.shared.network.http_client import create_urllib_opener
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
     PublicDocumentLink,
@@ -554,7 +553,7 @@ def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachm
     return attachments
 
 def _role_hint_from_procurement_attachment(name: str) -> str | None:
-    lowered = name.lower()
+    lowered = re.sub(r"_+", " ", name.lower())
     if any(token in lowered for token in ("обоснование нмцк", "обоснование начальной", "расчет нмцк", "расчёт нмцк")):
         return None
     if any(token in lowered for token in ("ткп", "кп", "коммерческое предложение", "supplier quote")):
@@ -574,6 +573,7 @@ def _role_hint_from_procurement_attachment(name: str) -> str | None:
         for token in (
             "проект контракта",
             "проект договора",
+            "проект гк",
             "электронный контракт",
             "муниципального контракта",
             "государственного контракта",
@@ -587,14 +587,18 @@ def _role_hint_from_procurement_attachment(name: str) -> str | None:
         token in lowered
         for token in (
             "техническое задание",
+            "техническая часть",
             "техзадание",
             "тз",
             "technical specification",
+            "technical spec",
             "спецификац",
             "описание объекта закупки",
             "описание товара",
             "описание работ",
             "описание услуг",
+            "ооз",
+            "oоз",
             "ведомост",
         )
     ):
