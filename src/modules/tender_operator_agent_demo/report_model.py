@@ -466,7 +466,14 @@ def build_procurement_report_model(
             "document_set_status": document_summary.get("status", "unknown"),
         }
     )
-    procurement_law = metadata.get("procurement_law") or metadata.get("procurement_regime")
+    procurement = metadata.get("procurement") if isinstance(metadata.get("procurement"), dict) else {}
+    procurement_law = (
+        metadata.get("procurement_law")
+        or metadata.get("procurement_regime")
+        or metadata.get("law")
+        or procurement.get("law")
+        or procurement.get("category")
+    )
     if procurement_law:
         model["procurement_law"] = procurement_law
     model["metadata"] = model_metadata

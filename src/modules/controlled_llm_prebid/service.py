@@ -777,6 +777,9 @@ class _OpenAICompatibleJSONProvider(_BaseJSONProvider):
         body = {
             "model": model,
             "temperature": 0,
+            # Bound local generation so malformed/non-terminating JSON cannot
+            # monopolize the single llama.cpp slot after prompt prefill.
+            "max_tokens": 1536,
             "response_format": {"type": "json_object", "schema": output_schema},
             "messages": [
                 {

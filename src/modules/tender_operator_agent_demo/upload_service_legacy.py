@@ -677,11 +677,34 @@ def _extract_text_from_legacy_doc(content: bytes) -> str | None:
     return extracted
 
 
-def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocument]:
+def _decode_zip_member_name(name: str, flag_bits: int) -> str:
+    """Recover legacy EIS CP866 filenames when ZIP UTF-8 flag is absent."""
+    if flag_bits & 0x800:
+        return name
+    try:
+        decoded = name.encode("cp437").decode("cp866")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return name
+    original_cyrillic = sum("А" <= char <= "я" or char in "Ёё" for char in name)
+    decoded_cyrillic = sum("А" <= char <= "я" or char in "Ёё" for char in decoded)
+    return decoded if decoded_cyrillic > original_cyrillic else name
+
+
+def _extract_zip_documents(
+    path: Path,
+    parent_file_id: str,
+    *,
+    parent_role: str | None = None,
+) -> list[AnalyzedDocument]:
     documents: list[AnalyzedDocument] = []
     try:
         with zipfile.ZipFile(path) as archive:
             members = [info for info in archive.infolist() if not info.is_dir()]
+            decoded_names = {
+                info.filename: _decode_zip_member_name(info.filename, info.flag_bits)
+                for info in members
+            }
+            decoded_name_set = {value.lower() for value in decoded_names.values()}
             if len(members) > MAX_ZIP_ENTRY_COUNT:
                 return [
                     AnalyzedDocument(
@@ -713,11 +736,12 @@ def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocu
                 ]
 
             for idx, info in enumerate(members, start=1):
-                entry_path = Path(info.filename)
+                decoded_name = decoded_names[info.filename]
+                entry_path = Path(decoded_name)
                 if entry_path.is_absolute() or ".." in entry_path.parts:
                     documents.append(
                         AnalyzedDocument(
-                            display_name=f"{path.name} :: {info.filename}",
+                            display_name=f"{path.name} :: {decoded_name}",
                             extension=entry_path.suffix.lower(),
                             role="supporting",
                             text=None,
@@ -733,13 +757,23 @@ def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocu
                 ext = Path(entry_name).suffix.lower()
                 if ext not in ALLOWED_EXTENSIONS or ext == ".zip":
                     continue
+                # EIS often places a generated PDF next to the original DOCX/XLS.
+                # Prefer the source office file and avoid duplicate extraction noise.
+                if ext == ".pdf" and entry_name[:-4].lower() in decoded_name_set:
+                    continue
                 raw = archive.read(info)
                 text, warnings, extraction_status = _extract_document_text(entry_name, raw)
+                detected_role = _detect_role(entry_name)
+                effective_role = (
+                    parent_role
+                    if parent_role and detected_role == "supporting"
+                    else detected_role
+                )
                 documents.append(
                     AnalyzedDocument(
                         display_name=f"{path.name} :: {entry_name}",
                         extension=ext,
-                        role=_detect_role(entry_name),
+                        role=effective_role,
                         text=text,
                         extracted_text_available=bool(text),
                         warnings=warnings,
@@ -773,22 +807,45 @@ def _collect_documents(run_id: str, metadata: dict[str, Any]) -> list[AnalyzedDo
     for item in metadata.get("files", []):
         stored_path = _input_dir(run_id) / item["stored_name"]
         ext = Path(item["stored_name"]).suffix.lower()
-        if ext == ".zip":
-            extracted_docs = _extract_zip_documents(stored_path, item["file_id"])
-            documents.extend(extracted_docs)
-            if extracted_docs:
-                item["warnings"] = list(dict.fromkeys(item.get("warnings", []) + ["ZIP archive inspected in safe local mode."]))
-            continue
-
-        raw = stored_path.read_bytes()
-        text, warnings, extraction_status = _extract_document_text(item["stored_name"], raw)
         document_kind = str(item.get("document_kind") or "").lower()
         role_from_kind = {
             "contract_draft": "contract_draft",
             "technical_specification": "technical_spec",
             "eis_notice": "notice",
         }.get(document_kind)
-        role = role_from_kind or item.get("role_hint") or _detect_role(item.get("display_name") or item["stored_name"])
+        parent_role = (
+            role_from_kind
+            or item.get("role_hint")
+            or _detect_role(item.get("display_name") or item["stored_name"])
+        )
+        if ext == ".zip":
+            extracted_docs = _extract_zip_documents(
+                stored_path,
+                item["file_id"],
+                parent_role=parent_role,
+            )
+            documents.extend(extracted_docs)
+            if extracted_docs:
+                child_warnings = [
+                    warning for doc in extracted_docs for warning in doc.warnings
+                ]
+                has_text = any(bool(doc.text) for doc in extracted_docs)
+                item["warnings"] = list(
+                    dict.fromkeys(
+                        item.get("warnings", [])
+                        + ["ZIP archive inspected in safe local mode."]
+                        + child_warnings
+                    )
+                )
+                item["extracted_text_available"] = has_text
+                item["text_extraction_status"] = (
+                    DOC_EXTRACTED_STATUS if has_text else DOC_UNSUPPORTED_STATUS
+                )
+            continue
+
+        raw = stored_path.read_bytes()
+        text, warnings, extraction_status = _extract_document_text(item["stored_name"], raw)
+        role = parent_role
         if text:
             normalized_name = f"{item['file_id'].lower()}-{role}.txt"
             (normalized_dir / normalized_name).write_text(text, encoding="utf-8")
@@ -836,7 +893,9 @@ def _collect_spreadsheet_sources(documents: list[AnalyzedDocument]) -> list[Spre
             role_hint=doc.role,
         )
         for doc in documents
-        if doc.extension in {".xlsx", ".xls"} and doc.raw_content
+        if doc.extension in {".xlsx", ".xls"}
+        and doc.raw_content
+        and doc.role == "tkp"
     ]
 
 
@@ -948,6 +1007,28 @@ def _import_runner_module():
     return pilot_runner
 
 
+def _bounded_controlled_llm_text(
+    text: str | None,
+    *,
+    max_chars: int = 8_000,
+) -> str:
+    """Bound local controlled-LLM context while preserving source evidence.
+
+    The frozen operator analysis can extract very large primary documents. The
+    controlled four-section workflow repeats the same context for each section,
+    so unbounded inputs can spend the whole provider timeout on prompt prefill.
+    Preserve both the beginning and end of each primary document and make the
+    omission explicit instead of silently truncating it.
+    """
+    value = str(text or "")
+    if len(value) <= max_chars:
+        return value
+    marker = "\n\n[... SOURCE TEXT OMITTED FOR LOCAL LLM CONTEXT BUDGET ...]\n\n"
+    head = max(1, int(max_chars * 0.7))
+    tail = max(1, max_chars - head - len(marker))
+    return value[:head] + marker + value[-tail:]
+
+
 def _try_run_llm_workflow(
     run_id: str,
     notice_text: str | None,
@@ -975,9 +1056,9 @@ def _try_run_llm_workflow(
             "operator_id": "tender_operator_demo",
             "operator_profile": {},
             "documents": {
-                "notice_text": notice_text or "",
-                "technical_spec_text": technical_spec_text or "",
-                "contract_draft_text": contract_draft_text or "",
+                "notice_text": _bounded_controlled_llm_text(notice_text),
+                "technical_spec_text": _bounded_controlled_llm_text(technical_spec_text),
+                "contract_draft_text": _bounded_controlled_llm_text(contract_draft_text),
             },
             "workflow_guardrails": {
                 "manual_only": True,
@@ -1085,9 +1166,10 @@ def _runtime_ai_provenance() -> dict[str, Any]:
         "hermes_healthcheck": "not_configured" if not settings.hermes_enabled else "not_checked",
         "prompt_version": "semantic-matcher-v1",
         "llm_calls_count": 0,
-        "llm_latency_ms": round((time.perf_counter() - started) * 1000),
+        "llm_latency_ms": 0,
         "fallback_reason": "local_llm_endpoint_unreachable" if healthcheck != "ok" else "local_llm_not_used_by_deterministic_extraction",
         "local_llm_healthcheck": healthcheck,
+        "local_llm_healthcheck_latency_ms": round((time.perf_counter() - started) * 1000),
     }
 
 
@@ -4068,8 +4150,8 @@ def _build_output_payloads(
         label = "нужна ручная проверка"
         rationale = [
             "Документы извлечены и дают предметное понимание закупки, но ценовая модель и подтверждение ресурсов отсутствуют.",
-            "Проект контракта, коммерческие входы и подтверждение ресурсов отсутствуют или требуют проверки.",
-            "Следующее действие должен подтвердить оператор после получения проекта контракта и внутренней оценки исполнения.",
+            "Коммерческие входы и подтверждение ресурсов отсутствуют или требуют проверки.",
+            "Следующее действие должен подтвердить оператор после внутренней оценки исполнения и проверки коммерческих входов.",
         ]
 
     final_recommendation = {
@@ -4288,7 +4370,11 @@ def _build_steps_from_outputs(metadata: dict[str, Any], outputs: dict[str, dict[
             short_title="Требования",
             status=DemoStepStatus.PARTIAL if partial_requirements else DemoStepStatus.DONE,
             description="Извлечение ключевых требований и обязательных документов из доступного локального пакета.",
-            agent_action="Собран снимок требований с помощью контролируемого парсера и fallback-адаптера.",
+            agent_action=(
+                "Собран снимок требований с помощью контролируемого парсера и принятого локального LLM-анализа."
+                if str(metadata.get("analysis_mode") or "").startswith("llm_")
+                else "Собран снимок требований с помощью контролируемого парсера и детерминированного fallback-адаптера."
+            ),
             result_summary=(
                 preliminary_analysis.get("overview", [f"Выделено требований: {len(requirements['requirements'])}."])[0]
                 if preliminary_analysis.get("overview")
@@ -5403,8 +5489,44 @@ def _ensure_procurement_blocked_report_html(run_id: str) -> Path | None:
     return path
 
 
+def _is_transient_analysis_warning(value: str) -> bool:
+    prefixes = (
+        "Contract draft text was not fully extracted",
+        "Контролируемый LLM-анализ ",
+        "Технические документы не выделены отдельно",
+        "Не удалось извлечь текст из ",
+        "Analysis failed safely:",
+    )
+    return str(value).startswith(prefixes)
+
+
+def _is_transient_analysis_limitation(value: str) -> bool:
+    prefixes = (
+        "Full runner integration was partially applied",
+        "TKP not uploaded.",
+        "Quote files were uploaded in non-spreadsheet format",
+        "Spreadsheet normalization uses deterministic heuristics",
+        "Spreadsheet files were uploaded, but structured extraction could not start",
+    )
+    return str(value).startswith(prefixes)
+
+
 def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeResponse:
     metadata = _load_metadata(run_id)
+    if "pre_analysis_warnings" not in metadata:
+        metadata["pre_analysis_warnings"] = [
+            item
+            for item in metadata.get("warnings", [])
+            if not _is_transient_analysis_warning(str(item))
+        ]
+    if "pre_analysis_limitations" not in metadata:
+        metadata["pre_analysis_limitations"] = [
+            item
+            for item in metadata.get("limitations", [])
+            if not _is_transient_analysis_limitation(str(item))
+        ]
+    metadata["warnings"] = list(metadata["pre_analysis_warnings"])
+    metadata["limitations"] = list(metadata["pre_analysis_limitations"])
     if not metadata.get("files") and metadata.get("status") == TenderOperatorUploadedRunStatus.DOCS_REQUIRED.value:
         metadata["analysis_status"] = "blocked"
         _save_metadata(run_id, metadata)
@@ -5478,6 +5600,7 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             warnings.append("Contract draft text was not fully extracted; contract risks are partially inferred.")
 
         provider_mode = "llm"
+        llm_started = time.perf_counter()
         llm_result = _try_run_llm_workflow(
             run_id=run_id,
             notice_text=notice_text,
@@ -5485,6 +5608,9 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             contract_draft_text=contract_draft_text,
             quote_paths=quote_paths,
             provider_mode=provider_mode,
+        )
+        ai_provenance["llm_latency_ms"] = round(
+            (time.perf_counter() - llm_started) * 1000
         )
         if llm_result is not None:
             llm_classification = _classify_controlled_llm_result(llm_result)

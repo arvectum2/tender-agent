@@ -1,5 +1,7 @@
+import io
 import subprocess
 import tempfile
+import zipfile
 from pathlib import Path
 
 from src.tender_research import document_text_extractor as extractor
@@ -32,6 +34,28 @@ def test_empty_file():
     assert status == "empty"
     assert text == ""
     Path(path).unlink()
+
+
+def test_eis_zip_container_extracts_nested_docx(tmp_path: Path):
+    inner = io.BytesIO()
+    with zipfile.ZipFile(inner, "w") as docx:
+        docx.writestr(
+            "word/document.xml",
+            """<?xml version="1.0" encoding="UTF-8"?>
+            <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+              <w:body><w:p><w:r><w:t>Техническое задание Аксиома</w:t></w:r></w:p></w:body>
+            </w:document>""",
+        )
+
+    source = tmp_path / "technical-spec.docx.zip"
+    with zipfile.ZipFile(source, "w") as archive:
+        archive.writestr("Техническое_задание.docx", inner.getvalue())
+        archive.writestr("Техническое_задание.docx.sig", b"signature")
+
+    status, text = extract_text(str(source))
+
+    assert status == extractor.EXTRACTED_STATUS
+    assert "Техническое задание Аксиома" in text
 
 
 def test_legacy_doc_extraction_uses_fixed_textutil_boundary(

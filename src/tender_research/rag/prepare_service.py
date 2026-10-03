@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import logging
+import os
+from datetime import UTC, datetime
 from pathlib import Path
 
 from sqlalchemy import create_engine
@@ -101,6 +105,125 @@ def _get_session() -> Session:
     return sessionmaker(bind=engine)()
 
 
+def _parse_operator_datetime(value: object) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    for fmt in ("%d.%m.%Y %H:%M", "%d.%m.%Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt).replace(tzinfo=UTC)
+        except ValueError:
+            continue
+    return None
+
+
+def _operator_runs_root() -> Path:
+    configured = os.environ.get("AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR")
+    if configured:
+        return Path(configured).expanduser().resolve()
+    return Path(__file__).resolve().parents[3] / "company_agent_runs" / "tender_operator_demo"
+
+
+def _find_operator_run_metadata(registry_number: str) -> tuple[Path, dict] | None:
+    root = _operator_runs_root()
+    if not root.is_dir():
+        return None
+    candidates: list[tuple[float, Path, dict]] = []
+    for metadata_path in root.glob("toa-run-*/metadata.json"):
+        try:
+            payload = json.loads(metadata_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        observed = {
+            str(payload.get("procurement_id") or ""),
+            str(payload.get("notice_number") or ""),
+            str(payload.get("reestr_number") or ""),
+            str((payload.get("procurement") or {}).get("procurement_number") or ""),
+        }
+        if registry_number not in observed:
+            continue
+        files = payload.get("files") or []
+        if not files:
+            continue
+        candidates.append((metadata_path.stat().st_mtime, metadata_path, payload))
+    if not candidates:
+        return None
+    _, metadata_path, payload = max(candidates, key=lambda item: item[0])
+    return metadata_path, payload
+
+
+def _ingest_from_operator_run(
+    repo: TenderRepository,
+    registry_number: str,
+) -> object | None:
+    found = _find_operator_run_metadata(registry_number)
+    if found is None:
+        return None
+    metadata_path, payload = found
+    procurement = payload.get("procurement") or {}
+    tender = repo.upsert_tender(
+        {
+            "source": "eis",
+            "external_id": registry_number,
+            "registry_number": registry_number,
+            "title": procurement.get("title") or payload.get("tender_title") or f"Tender {registry_number}",
+            "description": procurement.get("summary"),
+            "customer_name": procurement.get("customer_name") or payload.get("customer_name"),
+            "law_type": procurement.get("category") or payload.get("law"),
+            "nmck_amount": procurement.get("initial_price"),
+            "currency": procurement.get("currency"),
+            "publication_date": _parse_operator_datetime(
+                procurement.get("publication_date") or payload.get("publication_date")
+            ),
+            "application_deadline": _parse_operator_datetime(
+                procurement.get("deadline") or payload.get("deadline")
+            ),
+            "status": procurement.get("status"),
+            "eis_url": procurement.get("source_url") or payload.get("procurement_url"),
+            "raw_payload": {
+                "source": "tender_operator_demo_run",
+                "operator_run_id": payload.get("run_id"),
+                "metadata_path": str(metadata_path),
+            },
+        }
+    )
+    input_dir = metadata_path.parent / "input"
+    for item in payload.get("files") or []:
+        stored_name = str(item.get("stored_name") or "").strip()
+        if not stored_name:
+            continue
+        local_path = input_dir / stored_name
+        if not local_path.is_file():
+            continue
+        source_url = item.get("source_url")
+        raw_meta = {
+            "source": "tender_operator_demo_run",
+            "operator_run_id": payload.get("run_id"),
+            "file_id": item.get("file_id"),
+            "document_kind": item.get("document_kind"),
+            "source_provenance": item.get("source_provenance"),
+        }
+        repo.upsert_document(
+            {
+                "tender_id": tender.id,
+                "source_document_id": str(item.get("file_id") or source_url or stored_name),
+                "file_name": str(item.get("original_name") or item.get("display_name") or stored_name),
+                "file_url": source_url,
+                "local_path": str(local_path),
+                "content_type": item.get("content_type"),
+                "size_bytes": local_path.stat().st_size,
+                "sha256": hashlib.sha256(local_path.read_bytes()).hexdigest(),
+                "download_status": "downloaded",
+                "text_extraction_status": "pending",
+                "raw_meta": raw_meta,
+                "error_message": None,
+            }
+        )
+    repo._session.commit()
+    repo._session.refresh(tender)
+    return tender
+
+
 def prepare_tender_for_analysis(
     registry_number: str,
     *,
@@ -151,56 +274,72 @@ def prepare_tender_for_analysis(
 
         tender = repo.get_tender_by_registry_number(registry_number)
         if not tender:
-            step = TenderPreparationStep("check_tender_exists", "in_progress", "Tender not found in database, attempting to ingest...")
+            step = TenderPreparationStep(
+                "check_tender_exists",
+                "in_progress",
+                "Tender not found in database, checking operator run cache...",
+            )
             steps.append(step)
             emit_progress(10, "check_tender_exists", step.message)
             try:
-                loader = EisTenderLoader(mode="real")
-                raw_tender = loader.fetch_by_registry_number(registry_number)
-                if raw_tender:
-                    tender = repo.upsert_tender({
-                        "source": "eis",
-                        "external_id": raw_tender.registry_number or raw_tender.external_id,
-                        "registry_number": raw_tender.registry_number or registry_number,
-                        "title": raw_tender.title,
-                        "description": raw_tender.description,
-                        "customer_name": raw_tender.customer_name,
-                        "customer_inn": raw_tender.customer_inn,
-                        "law_type": raw_tender.law_type,
-                        "nmck_amount": raw_tender.nmck_amount,
-                        "currency": raw_tender.currency,
-                        "publication_date": raw_tender.publication_date,
-                        "application_deadline": raw_tender.application_deadline,
-                        "status": raw_tender.status,
-                        "raw_payload": raw_tender.raw_payload,
-                    })
-                    if raw_tender.documents:
-                        for doc in raw_tender.documents:
-                            repo.upsert_document({
-                                "tender_id": tender.id,
-                                "source_document_id": doc.source_document_id,
-                                "file_name": doc.file_name,
-                                "file_url": doc.file_url,
-                                "content_type": doc.content_type,
-                                "size_bytes": doc.size_bytes,
-                                "raw_meta": doc.raw_meta,
-                            })
-                    session.commit()
+                tender = _ingest_from_operator_run(repo, registry_number)
+                if tender is not None:
                     step.status = "completed"
-                    step.message = f"Tender {registry_number} ingested from EIS"
+                    step.message = f"Tender {registry_number} ingested from local operator run"
                     emit_progress(25, "load_or_ingest_tender", step.message)
                 else:
-                    step.status = "failed"
-                    step.message = f"Could not ingest tender {registry_number} from EIS"
-                    emit_progress(10, "check_tender_exists", step.message)
-                    errors.append(f"Tender {registry_number} not found in database and could not be ingested from EIS")
-                    return TenderPreparationResult(
-                        status="no_tender",
-                        registry_number=registry_number,
-                        ready_for_analysis=False,
-                        steps=steps,
-                        errors=errors,
-                    )
+                    loader = EisTenderLoader(mode="real")
+                    raw_tender = loader.fetch_by_registry_number(registry_number)
+                    if raw_tender:
+                        tender = repo.upsert_tender(
+                            {
+                                "source": "eis",
+                                "external_id": raw_tender.registry_number or raw_tender.external_id,
+                                "registry_number": raw_tender.registry_number or registry_number,
+                                "title": raw_tender.title,
+                                "description": raw_tender.description,
+                                "customer_name": raw_tender.customer_name,
+                                "customer_inn": raw_tender.customer_inn,
+                                "law_type": raw_tender.law_type,
+                                "nmck_amount": raw_tender.nmck_amount,
+                                "currency": raw_tender.currency,
+                                "publication_date": raw_tender.publication_date,
+                                "application_deadline": raw_tender.application_deadline,
+                                "status": raw_tender.status,
+                                "raw_payload": raw_tender.raw_payload,
+                            }
+                        )
+                        if raw_tender.documents:
+                            for doc in raw_tender.documents:
+                                repo.upsert_document(
+                                    {
+                                        "tender_id": tender.id,
+                                        "source_document_id": doc.source_document_id,
+                                        "file_name": doc.file_name,
+                                        "file_url": doc.file_url,
+                                        "content_type": doc.content_type,
+                                        "size_bytes": doc.size_bytes,
+                                        "raw_meta": doc.raw_meta,
+                                    }
+                                )
+                        session.commit()
+                        step.status = "completed"
+                        step.message = f"Tender {registry_number} ingested from EIS"
+                        emit_progress(25, "load_or_ingest_tender", step.message)
+                    else:
+                        step.status = "failed"
+                        step.message = f"Could not ingest tender {registry_number} from EIS"
+                        emit_progress(10, "check_tender_exists", step.message)
+                        errors.append(
+                            f"Tender {registry_number} not found in database and could not be ingested from EIS"
+                        )
+                        return TenderPreparationResult(
+                            status="no_tender",
+                            registry_number=registry_number,
+                            ready_for_analysis=False,
+                            steps=steps,
+                            errors=errors,
+                        )
             except Exception as e:
                 logger.error("Failed to ingest tender %s: %s", registry_number, e)
                 step.status = "failed"

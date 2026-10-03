@@ -41,7 +41,11 @@ _SUPPORTED_EXTENSIONS = (
     ".xml",
     ".csv",
     ".json",
+    ".zip",
 )
+_ARCHIVE_MEMBER_LIMIT = 25
+_ARCHIVE_MEMBER_MAX_BYTES = 24 * 1024 * 1024
+_ARCHIVE_TOTAL_MAX_BYTES = 64 * 1024 * 1024
 
 
 def extract_text(local_path: str, max_chars: int = 2_000_000) -> tuple[str, str]:
@@ -124,7 +128,68 @@ def _extract_by_ext(
         return _extract_txt(content)
     if ext == ".json":
         return _extract_txt(content)
+    if ext == ".zip":
+        return _extract_document_archive(content, max_chars)
     return None
+
+
+def _extract_document_archive(content: bytes, max_chars: int) -> str:
+    """Extract bounded text from EIS ZIP containers without writing members to disk.
+
+    EIS commonly wraps one source office document plus detached signatures and a
+    PDF rendering in a ZIP. Prefer a supported non-PDF source document; use PDF
+    only as a fallback when the source member cannot be parsed.
+    """
+
+    try:
+        with zipfile.ZipFile(io.BytesIO(content)) as archive:
+            infos = [
+                info
+                for info in archive.infolist()
+                if not info.is_dir()
+                and not info.filename.lower().endswith(".sig")
+                and info.file_size <= _ARCHIVE_MEMBER_MAX_BYTES
+            ][:_ARCHIVE_MEMBER_LIMIT]
+            if sum(info.file_size for info in infos) > _ARCHIVE_TOTAL_MAX_BYTES:
+                return ""
+
+            def candidate_text(info: zipfile.ZipInfo) -> str:
+                ext = Path(info.filename).suffix.lower()
+                if ext == ".zip" or ext not in _SUPPORTED_EXTENSIONS:
+                    return ""
+                try:
+                    member = archive.read(info)
+                except (KeyError, OSError, RuntimeError):
+                    return ""
+                detected = _sniff_supported_extension(member)
+                effective_ext = detected or ext
+                if effective_ext == ".zip":
+                    return ""
+                text = _extract_by_ext(
+                    effective_ext,
+                    member,
+                    max_chars,
+                    local_path=None,
+                )
+                return (text or "").strip()
+
+            primary_infos = [
+                info for info in infos if Path(info.filename).suffix.lower() != ".pdf"
+            ]
+            for info in primary_infos:
+                text = candidate_text(info)
+                if text:
+                    return text[:max_chars]
+
+            for info in infos:
+                if Path(info.filename).suffix.lower() != ".pdf":
+                    continue
+                text = candidate_text(info)
+                if text:
+                    return text[:max_chars]
+    except (OSError, zipfile.BadZipFile, zipfile.LargeZipFile):
+        return ""
+    return ""
 
 
 def _is_unsupported_ext(ext: str) -> bool:

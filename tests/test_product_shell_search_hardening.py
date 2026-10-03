@@ -116,3 +116,10 @@ def test_search_handoff_does_not_auto_run_llm_and_shows_progress(client):
     assert 'analyze_after_download: false' in html
     assert 'Получаем документацию' in html
     assert 'Анализ запускается отдельно' in html
+
+
+def test_mac_mini_analysis_preset_matches_live_local_llm():
+    html = render_tender_operator_console_html()
+    assert "llm_base_url: 'http://127.0.0.1:8081/v1'" in html
+    assert "llm_model: 'arvectum-gemma4-12b-it-qat-q4_0'" in html
+    assert 'Qwen2.5-14B' not in html

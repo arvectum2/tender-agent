@@ -6,7 +6,7 @@ unknown values explicit and never calculates a total from unit prices.
 from __future__ import annotations
 
 import re
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 from src.shared.config.settings import get_settings
@@ -91,9 +91,21 @@ def _parse_timestamp(value: Any) -> datetime | None:
         return None
     try:
         if "T" in text:
-            return datetime.fromisoformat(text)
-        match = re.match(r"(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}:\d{2}:\d{2}(?:\.\d+)?)\s*([+-]\d{2}:\d{2})", text)
-        return datetime.fromisoformat(f"{match.group(3)}-{match.group(2)}-{match.group(1)}T{match.group(4)}{match.group(5)}") if match else None
+            parsed = datetime.fromisoformat(text)
+            return parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=UTC)
+        match = re.match(
+            r"^(\d{2})\.(\d{2})\.(\d{4})\s+"
+            r"(\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?)"
+            r"\s*([+-]\d{2}:\d{2})?$",
+            text,
+        )
+        if not match:
+            return None
+        suffix = match.group(5) or "+00:00"
+        return datetime.fromisoformat(
+            f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
+            f"T{match.group(4)}{suffix}"
+        )
     except ValueError:
         return None
 

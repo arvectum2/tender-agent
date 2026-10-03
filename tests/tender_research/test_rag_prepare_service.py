@@ -7,6 +7,7 @@ import pytest
 from src.tender_research.rag.prepare_service import (
     TenderPreparationResult,
     TenderPreparationStep,
+    _ingest_from_operator_run,
     check_preparation_status,
     prepare_tender_for_analysis,
 )
@@ -31,6 +32,62 @@ def mock_tender():
 @pytest.fixture()
 def mock_session():
     return MagicMock()
+
+
+def test_ingest_from_operator_run_uses_local_downloaded_documents(tmp_path, monkeypatch):
+    registry = "0187200001726001304"
+    run_dir = tmp_path / "toa-run-test"
+    input_dir = run_dir / "input"
+    input_dir.mkdir(parents=True)
+    source = input_dir / "01-docx.zip"
+    source.write_bytes(b"local-eis-document")
+    (run_dir / "metadata.json").write_text(
+        """{
+          "run_id": "toa-run-test",
+          "mode": "procurement_search_intake",
+          "procurement_id": "0187200001726001304",
+          "notice_number": "0187200001726001304",
+          "tender_title": "Аксиома",
+          "customer_name": "Заказчик",
+          "publication_date": "23.09.2026",
+          "deadline": "05.10.2026 05:00",
+          "procurement": {
+            "procurement_number": "0187200001726001304",
+            "title": "Аксиома",
+            "customer_name": "Заказчик",
+            "category": "44-ФЗ",
+            "initial_price": 521000,
+            "currency": "RUB",
+            "source_url": "https://zakupki.gov.ru/example"
+          },
+          "files": [{
+            "file_id": "FILE-01",
+            "original_name": "Техническое задание.docx.zip",
+            "stored_name": "01-docx.zip",
+            "content_type": "application/zip",
+            "source_url": "https://zakupki.gov.ru/file"
+          }]
+        }""",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR", str(tmp_path))
+
+    repo = MagicMock()
+    tender = MagicMock()
+    tender.id = "tender-1"
+    repo.upsert_tender.return_value = tender
+
+    result = _ingest_from_operator_run(repo, registry)
+
+    assert result is tender
+    tender_payload = repo.upsert_tender.call_args.args[0]
+    assert tender_payload["registry_number"] == registry
+    assert tender_payload["title"] == "Аксиома"
+    doc_payload = repo.upsert_document.call_args.args[0]
+    assert doc_payload["local_path"] == str(source)
+    assert doc_payload["download_status"] == "downloaded"
+    assert doc_payload["text_extraction_status"] == "pending"
+    repo._session.commit.assert_called_once()
 
 
 class TestPrepareTenderForAnalysis:

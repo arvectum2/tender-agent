@@ -238,6 +238,11 @@ class LocalChatLlmClient:
             registry_number=registry_number,
             analysis_mode=analysis_mode,
         )
+        max_tokens = {
+            "fast": 384,
+            "balanced": 768,
+            "detailed": 1200,
+        }.get(analysis_mode, 768)
         payload = {
             "model": self.model_name,
             "messages": [
@@ -245,6 +250,7 @@ class LocalChatLlmClient:
                 {"role": "user", "content": user_prompt},
             ],
             "temperature": 0,
+            "max_tokens": max_tokens,
         }
         metrics = {
             "context_chars": len(context_block),

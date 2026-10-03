@@ -175,6 +175,35 @@ def test_local_chat_llm_client_retries_with_fewer_contexts_on_context_limit(monk
     assert answer.used_chunks_count == 1
 
 
+def test_local_chat_llm_client_fast_mode_bounds_output_tokens(monkeypatch):
+    client = LocalChatLlmClient(
+        base_url="http://127.0.0.1:8081/v1",
+        model_name="arvectum-gemma4-12b-it-qat-q4_0",
+    )
+    observed: dict = {}
+
+    def fake_urlopen(request, timeout):
+        observed.update(json.loads(request.data.decode("utf-8")))
+        return _FakeResponse(
+            json.dumps({"choices": [{"message": {"content": "Краткий ответ:\nОк."}}]})
+        )
+
+    monkeypatch.setattr(
+        "src.tender_research.rag.llm.urllib.request.urlopen",
+        fake_urlopen,
+    )
+
+    answer = client.generate_answer(
+        "Вопрос",
+        _hits(),
+        registry_number="123",
+        analysis_mode="fast",
+    )
+
+    assert answer.error is None
+    assert observed["max_tokens"] == 384
+
+
 def test_local_chat_llm_client_reports_prompt_metrics() -> None:
     client = LocalChatLlmClient(
         base_url="http://127.0.0.1:8088/v1",

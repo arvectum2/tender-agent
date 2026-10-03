@@ -55,6 +55,7 @@ def test_openai_compatible_provider_includes_strict_output_schema(monkeypatch) -
     assert isinstance(body, dict)
     user_payload = json.loads(body["messages"][1]["content"])
     assert body["response_format"] == {"type": "json_object", "schema": schema}
+    assert body["max_tokens"] == 1536
     assert user_payload["output_schema"] == schema
     assert "Match the supplied output schema exactly" in body["messages"][0]["content"]
     assert "Do not coerce JSON arrays" in body["messages"][0]["content"]

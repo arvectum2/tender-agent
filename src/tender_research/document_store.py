@@ -31,6 +31,9 @@ def download_tender_documents(
     for doc in documents:
         if doc.download_status == "downloaded":
             downloaded += 1
+            if doc.local_path and Path(doc.local_path).exists():
+                _try_extract(doc, text_dir, config)
+                repo._session.flush()
             continue
         if not doc.file_url:
             doc.download_status = "skipped"
@@ -72,9 +75,16 @@ def download_tender_documents(
 
 
 def _try_extract(doc, text_dir: Path, config: TenderResearchConfig) -> None:
-    if doc.text_extraction_status in ("extracted", "unsupported", "empty"):
+    if doc.text_extraction_status == "extracted":
         return
     if not doc.local_path or not Path(doc.local_path).exists():
+        return
+    # Retry archive-backed EIS documents that were previously marked
+    # unsupported/empty before ZIP container extraction was available.
+    if (
+        doc.text_extraction_status in ("unsupported", "empty")
+        and Path(doc.local_path).suffix.lower() != ".zip"
+    ):
         return
     status, text = extract_text(doc.local_path, max_chars=config.document_extract_max_chars)
     doc.text_extraction_status = status
