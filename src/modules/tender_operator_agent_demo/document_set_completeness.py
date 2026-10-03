@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import Counter
 from pathlib import Path
+import re
 from typing import Any
 
 NOTICE_KINDS = {"notice", "eis_notice", "notification"}
@@ -32,7 +33,7 @@ def _normalized_kind(item: dict[str, Any]) -> str:
         or item.get("stored_name")
         or ""
     ).strip()
-    lowered = name.lower()
+    lowered = re.sub(r"_+", " ", name.lower())
     # Older retained EIS runs could classify this attachment as a generic
     # contract draft.  Its explicit security wording is more specific and
     # must retain its own logical document group when the corpus is rebuilt.

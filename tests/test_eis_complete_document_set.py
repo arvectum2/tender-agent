@@ -354,3 +354,36 @@ def test_archive_extraction_failure_overrides_apparent_file_completeness():
 
     assert summary["status"] == "incomplete_archive"
     assert summary["analysis_allowed"] is False
+
+
+def test_wave3_underscore_document_aliases_are_classified_consistently():
+    aliases = {
+        "Проект_контракта_17256094-1.pdf": (
+            "contract_draft",
+            "contract_draft",
+        ),
+        "Техническое_задание_17256094-1.pdf": (
+            "technical_spec",
+            "technical_specification",
+        ),
+    }
+
+    for name, (role_hint, document_kind) in aliases.items():
+        assert _role_hint_from_procurement_attachment(name) == role_hint
+        summary = build_document_set_summary([{"original_name": name}])
+        assert summary["kind_counts"] == {document_kind: 1}
+
+    xml = """
+    <epNotification>
+      <documents>
+        <document documentName="Проект_контракта_17256094-1.pdf"
+                  href="/files/contract.pdf" />
+        <document documentName="Техническое_задание_17256094-1.pdf"
+                  href="/files/technical.pdf" />
+      </documents>
+    </epNotification>
+    """
+    assert [item["document_kind"] for item in extract_notice_attachments(xml)] == [
+        "contract_draft",
+        "technical_specification",
+    ]

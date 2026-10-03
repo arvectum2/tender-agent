@@ -422,7 +422,7 @@ def _extract_child_text(node: ET.Element, tag_names: tuple[str, ...]) -> str | N
 
 
 def _classify_notice_attachment_kind(name: str) -> str:
-    lowered = name.lower()
+    lowered = re.sub(r"_+", " ", name.lower())
     if any(token in lowered for token in ("обоснование нмцк", "обоснование начальной", "расчет нмцк", "расчёт нмцк")):
         return "estimate"
     if any(

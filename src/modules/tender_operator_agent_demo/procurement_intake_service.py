@@ -554,7 +554,7 @@ def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachm
     return attachments
 
 def _role_hint_from_procurement_attachment(name: str) -> str | None:
-    lowered = name.lower()
+    lowered = re.sub(r"_+", " ", name.lower())
     if any(token in lowered for token in ("обоснование нмцк", "обоснование начальной", "расчет нмцк", "расчёт нмцк")):
         return None
     if any(token in lowered for token in ("ткп", "кп", "коммерческое предложение", "supplier quote")):
