@@ -675,10 +675,14 @@ legacy_registry:
     comment: Последняя подтверждённая baseline-интеграция — 21.07.2026.
     dependencies_raw: ARV-001, ARV-005
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-10-03'
+    evidence:
+    - docs/roadmap/BASE-012_REVALIDATION_2026-10-03.md
+    - docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+    - PR #123
+    - CI run 37138206676
+    notes: 'The historical five-procurement quality baseline is expanded by the controlled pilot to 12 completed 44-FZ reports plus three separately scored source-bound 223-FZ blockers. Provenance and source ownership are durable; controlled-LLM reliability and 223-FZ source breadth remain explicit gaps requiring a newly admitted frozen phase.'
 - id: BASE-013
   legacy_snapshot:
     queue_order: 0
