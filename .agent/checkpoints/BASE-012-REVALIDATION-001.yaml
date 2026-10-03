@@ -1,0 +1,28 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: BASE-012-REVALIDATION-001
+authority: AUTO
+goal: Reconcile the historical Quality R1-R5 golden loop, provenance and source-graph baseline against completed controlled-pilot evidence.
+definition_of_done:
+- Reconcile BASE-012 against current main, merged evidence and the completed ARV-005 branch without rewriting frozen pilot truth.
+- Verify the expanded real-procurement denominator, provenance and source-ownership evidence.
+- Record concrete residual gaps without inventing implementation priority or acceptance criteria.
+- Preserve REVIEW/HUMAN gates and all procurement, external-action and benchmark-integrity hard stops.
+current: BASE-012 repository revalidation completed. The controlled pilot establishes 12 unique 44-FZ completed reports, three separately scored source-bound 223-FZ blockers, explicit provenance, aggregate reporting and regression capture.
+pending: []
+updated_at: '2026-10-03T21:03:00+03:00'
+resume_instruction: BASE-012-REVALIDATION-001 is complete. Preserve the frozen pilot evidence. Any local-LLM reliability or 223-FZ breadth work requires a new canonical task and newly frozen evaluation phase.
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20261003-base-012-revalidation
+  branch: agent/base-012-revalidation
+  base_commit: 4572797d6c7ad19e156d2e8d1d3b09ad90408635
+  issue: null
+  manual_override: false
+  lease_until: null
+evidence:
+- docs/roadmap/BASE-012_REVALIDATION_2026-10-03.md
+- docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+- PR #123 head 4572797d6c7ad19e156d2e8d1d3b09ad90408635
+- CI run 37143087979 success
