@@ -13,14 +13,20 @@ definition_of_done:
   - Preserve fail-closed source grounding and no external procurement actions.
 completed:
   - Confirmed prior PRODUCT-SHELL-E2E-LLM-001 is completed at 37dfd4e.
-current: Audit the actual Axioma source documents and compare them with both generated reports.
+  - Audited the acquired Axioma notice, application requirements, technical specification and contract text independently.
+  - Established authoritative high-value facts: request-for-quotations procedure; application deadline 05.10.2026 10:00 (МСК+2); NMCK 521000 RUB; service term through 13.11.2026; contract execution through 30.12.2026; no advance; 100% payment within 7 working days after acceptance; 10% performance security; one-year warranty; Python/axipy 7.x plugin for Windows/Linux; source-bound acceptance/performance criteria and IP/license terms.
+  - Classified key prior-output defects: lost deadline timezone, missing procurement procedure, submission deadline conflated with service term, generic/historical software template leakage, missing commercial/contract facts, misleading source-count label, and stale RAG card metadata.
+  - Implemented source-preserving deadline enrichment, full search-card handoff metadata, MSK timezone parsing, fresh operator-run metadata sync into RAG, structured source facts in RAG prompts, truthful source-count metrics, source-native software work rows, and richer source-bound contract highlights.
+  - Fresh rendered UI search now shows Axioma deadline 05.10.2026 10:00 (МСК+2), procedure Запрос котировок, active status and correct law/price/customer.
+  - Created fresh run toa-run-20261003222852-78f220 with current metadata and 5 public documents.
+  - Synced that fresh operator-run metadata into the RAG tender record while preserving 5 downloaded / 4 text-bearing / 60 chunks / 60 embeddings.
+current: Finish the fresh RAG and product controlled-LLM reruns, then inspect the corrected reports against the audited source facts and fix any remaining P0/P1 contradictions.
 remaining:
-  - Extract and inspect authoritative source facts from the 5 acquired documents.
-  - Classify report defects by severity.
-  - Implement P0/P1 quality fixes and regression tests.
-  - Rerun local LLM analysis and inspect corrected report/Decision Core.
+  - Let the fresh RAG analysis complete on the refreshed source facts and inspect all 10 sections.
+  - Run fresh product controlled-LLM analysis on toa-run-20261003222852-78f220 and inspect Decision Core/report.
+  - Fix any remaining P0/P1 factual or UX contradictions observed in those outputs.
   - Run final focused tests, commit/push and close checkpoint.
 last_verified_commit: 37dfd4e11b29ed76d6a3bef3635df96f12819990
 last_tests:
   - Previous E2E suite 68 passed, 3 warnings.
-resume_instruction: Inspect the five Axioma source documents in toa-run-20261003182512-cc696a, establish authoritative facts (deadline/timezone, price, contract/payment/acceptance, software scope/rights, application requirements), compare them to the RAG and canonical reports, then fix the highest-severity discrepancies.
+resume_instruction: Check RAG job 4cf44a1a-2313-4312-9a48-aeed6570c3da after the two earlier queued analyses release the thread pool; inspect its report for procedure/deadline/source-fact correctness. Then analyze fresh run toa-run-20261003222852-78f220 through the rendered product UI, compare Decision Core and report with the audited source facts, fix any remaining P0/P1 issues, run focused tests, commit/push and close the task.
