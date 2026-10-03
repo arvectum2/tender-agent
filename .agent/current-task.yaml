@@ -1,39 +1,28 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: PRODUCT-SHELL-SEARCH-HARDENING-001
+task_id: BASE-012-REVALIDATION-001
 authority: AUTO
-goal: Harden the current Tender Agent product shell based on the first live operator UX iteration so real software-development procurements can be found, understood and handed off to analysis reliably.
+goal: Reconcile the historical Quality R1-R5 golden loop, provenance and source-graph baseline against completed controlled-pilot evidence.
 definition_of_done:
-  - UI exposes an explicit active/current procurement filter and applies it to public search.
-  - Query handling for abbreviations/phrases such as "разработка ПО" no longer degenerates into generic "разработка" noise; target Axioma procurement remains discoverable.
-  - Search-card customer attribution fails closed on missing/corrupted HTML/JS contamination and uses safer extraction where supported.
-  - Discovery relevance reflects query-to-procurement match and is not mislabeled by supplier-profile-only scoring.
-  - EIS diagnostics copy is internally consistent and reflects the actual configured public-search path.
-  - Search-result handoff creates a run promptly and exposes visible progress/status rather than appearing hung in one synchronous action.
-  - Focused regression tests cover every confirmed defect.
-  - Real Safari/RDC regression reruns both software-development queries and verifies Axioma workflow.
-completed:
-  - Added explicit status selector; default is "Подача заявок" and public 44-FZ search sends status_filter to EIS (native af=on stage flag).
-  - Expanded standalone uppercase "ПО" to "программного обеспечения" and added strict query-title matching only for the confirmed software-search failure family; ordinary free-text search semantics remain unchanged.
-  - Added query_relevance separate from supplier_fit; public cards now display query-match score rather than supplier participation recommendation.
-  - Added fail-closed customer-name sanitization for JavaScript/HTML contamination.
-  - Added capped common-info enrichment for missing customer/deadline; Axioma resolves to the authoritative Department customer and 05.10.2026 deadline.
-  - Reworked public-source diagnostics to describe public read-only search without contradictory SOAP token language.
-  - Changed search-result action to "Получить документацию"; handoff shows elapsed progress and sends analyze_after_download=false so analysis remains an explicit next step.
-  - Added visible deadline and status fields to public result cards.
-  - Added focused regression suite tests/test_product_shell_search_hardening.py.
-  - Re-ran live Safari UI for "разработка ПО" and "разработка программн обеспеч": both returned only target Axioma procurement 0187200001726001304 in the tested active/date window, with 100% query match, correct customer, deadline and active status.
-  - Live Axioma handoff created run toa-run-20261003180241-ad8a9f, downloaded/extracted 5 documents, status ready_to_analyze, analysis_status not_started, and preserved correct customer/deadline.
-current: Search/product-shell hardening iteration is complete and verified on exact code commit 1f8396f49e6b0d223c6648f86cfc6e50b75209be.
-remaining: []
-last_verified_commit: 1f8396f49e6b0d223c6648f86cfc6e50b75209be
-last_tests:
-  - Exact-head focused parser/relevance/product-shell suite: 46 passed, 3 warnings.
-  - Exact-head discovery/public-search semantic suite: 51 passed, 6 deselected, 1 warning.
-  - Six deselected legacy TestClient cases are environment-coupled to local .env.local pilot-auth=true and otherwise receive 401 before tested routes; no search semantic failures remained.
-  - git diff --check passed.
-  - Live Safari/RDC query "разработка ПО": one result, Axioma 0187200001726001304, 100% query match, correct customer, deadline 05.10.2026, status Подача заявок.
-  - Live Safari/RDC query "разработка программн обеспеч": same target and fields.
-  - Live document handoff: toa-run-20261003180241-ad8a9f, 5 files, ready_to_analyze, analysis not started.
-resume_instruction: This hardening iteration is complete. Do not repeat it. The next product-shell task should start from a fresh checkpoint and exercise the created Axioma run through the document review -> explicit analysis -> report UX, fixing only defects observed in that next operator flow.
+- Reconcile BASE-012 against current main, merged evidence and the completed ARV-005 branch without rewriting frozen pilot truth.
+- Verify the expanded real-procurement denominator, provenance and source-ownership evidence.
+- Record concrete residual gaps without inventing implementation priority or acceptance criteria.
+- Preserve REVIEW/HUMAN gates and all procurement, external-action and benchmark-integrity hard stops.
+current: BASE-012 repository revalidation completed. The controlled pilot establishes 12 unique 44-FZ completed reports, three separately scored source-bound 223-FZ blockers, explicit provenance, aggregate reporting and regression capture.
+pending: []
+updated_at: '2026-10-03T21:03:00+03:00'
+resume_instruction: BASE-012-REVALIDATION-001 is complete. Preserve the frozen pilot evidence. Any local-LLM reliability or 223-FZ breadth work requires a new canonical task and newly frozen evaluation phase.
+execution:
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20261003-base-012-revalidation
+  branch: agent/base-012-revalidation
+  base_commit: 4572797d6c7ad19e156d2e8d1d3b09ad90408635
+  issue: null
+  manual_override: false
+  lease_until: null
+evidence:
+- docs/roadmap/BASE-012_REVALIDATION_2026-10-03.md
+- docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+- PR #123 head 4572797d6c7ad19e156d2e8d1d3b09ad90408635
+- CI run 37143087979 success
