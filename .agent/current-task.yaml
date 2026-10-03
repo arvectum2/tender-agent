@@ -25,9 +25,9 @@ completed:
   - Added focused regression suite tests/test_product_shell_search_hardening.py.
   - Re-ran live Safari UI for "разработка ПО" and "разработка программн обеспеч": both returned only target Axioma procurement 0187200001726001304 in the tested active/date window, with 100% query match, correct customer, deadline and active status.
   - Live Axioma handoff created run toa-run-20261003180241-ad8a9f, downloaded/extracted 5 documents, status ready_to_analyze, analysis_status not_started, and preserved correct customer/deadline.
-current: Search/product-shell hardening iteration is complete and verified on exact code commit 36b612b4cb771b873a35a496464b91faee90e5b7.
+current: Search/product-shell hardening iteration is complete and verified on exact code commit 1f8396f49e6b0d223c6648f86cfc6e50b75209be.
 remaining: []
-last_verified_commit: 36b612b4cb771b873a35a496464b91faee90e5b7
+last_verified_commit: 1f8396f49e6b0d223c6648f86cfc6e50b75209be
 last_tests:
   - Exact-head focused parser/relevance/product-shell suite: 46 passed, 3 warnings.
   - Exact-head discovery/public-search semantic suite: 51 passed, 6 deselected, 1 warning.
