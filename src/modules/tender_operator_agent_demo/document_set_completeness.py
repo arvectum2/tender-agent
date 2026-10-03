@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import re
 from collections import Counter
 from pathlib import Path
-import re
 from typing import Any
 
 NOTICE_KINDS = {"notice", "eis_notice", "notification"}
@@ -80,6 +80,7 @@ def _normalized_kind(item: dict[str, Any]) -> str:
             "проект контракта",
             "проект договора",
             "проект гк",
+            "contract draft",
             "contract_draft",
             "contract-draft",
             "contract",
@@ -97,6 +98,7 @@ def _normalized_kind(item: dict[str, Any]) -> str:
             "ооз",
             "oоз",
             "technical specification",
+            "technical spec",
             "technical_spec",
             "technical-spec",
             "спецификац",

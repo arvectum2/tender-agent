@@ -366,6 +366,14 @@ def test_wave3_underscore_document_aliases_are_classified_consistently():
             "technical_spec",
             "technical_specification",
         ),
+        "contract_draft.txt": (
+            "contract_draft",
+            "contract_draft",
+        ),
+        "technical_spec.txt": (
+            "technical_spec",
+            "technical_specification",
+        ),
     }
 
     for name, (role_hint, document_kind) in aliases.items():

@@ -14,8 +14,6 @@ from urllib.request import Request
 
 from fastapi import HTTPException
 
-from src.shared.network.http_client import create_urllib_opener
-
 from src.modules.tender_operator_agent_demo import schemas as tender_schemas
 from src.modules.tender_operator_agent_demo.attachment_downloader import (
     download_procurement_attachments,
@@ -69,6 +67,7 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     save_demo_run_metadata,
 )
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
+from src.shared.network.http_client import create_urllib_opener
 from src.tender_research.providers.public_44fz_search import (
     Public44FzSearchProvider,
     PublicDocumentLink,
@@ -592,6 +591,7 @@ def _role_hint_from_procurement_attachment(name: str) -> str | None:
             "техзадание",
             "тз",
             "technical specification",
+            "technical spec",
             "спецификац",
             "описание объекта закупки",
             "описание товара",
