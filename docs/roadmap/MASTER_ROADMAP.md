@@ -327,3 +327,10 @@ Merged 223-FZ intake and Decision Core already provide dedicated public search/c
 `.agent/execution-queue.yaml` must point back to this master roadmap and may contain only explicitly admitted executable items. The executor may update queue execution status/evidence within its existing authority, but it must not arbitrarily promote a master-roadmap item, resolve an ID collision, change priority/scope, or infer a new ARV mapping by itself.
 
 While `OWNER-CONTINUOUS-ROADMAP-2026-09-18` is active, its deterministic one-at-a-time bounded-materialization rule is itself an explicitly authorized canonical admission mechanism: the watchdog may select the next eligible continuation item in document order and admit only the bounded form permitted by `.agent/owner-directive.yaml`. Outside that mechanism, roadmap promotion still requires Product Owner/Owner or another separately authorized canonical source.
+
+
+## BASE-012 revalidation — 2026-10-03
+
+The completed ARV-005 controlled pilot expands the historical five-procurement R1–R5 baseline to 12 unique 44-FZ procurements with completed technical reports plus three separately scored source-bound 223-FZ blockers. Repository evidence now includes explicit provider/model/fallback provenance, zero observed post-fix silent fallback, zero observed Wave 3 cross-procurement source-ownership violation, an aggregate technical report and captured regressions.
+
+BASE-012 is reconciled as `revalidated_residual_gap`: controlled-LLM clean completion remained 3/11 LLM-invoked 44-FZ cases, and 223-FZ source breadth remains incomplete. Any reliability tuning or new semantic pilot requires a newly admitted, newly frozen evaluation phase. Human usefulness and commercial acceptance remain HUMAN/REVIEW and are not inferred.
