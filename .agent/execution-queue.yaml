@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-23T11:42:00+03:00'
+updated_at: '2026-10-03T21:00:55+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -534,7 +534,7 @@ items:
   strategy: REUSE
   continuation_mode: CONTROLLED_REAL_PILOT
   title: Controlled real-procurement pilot on Mac mini
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -544,7 +544,7 @@ items:
   dependencies:
   - ARV-012-REVALIDATION-001
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
-  done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
+  done_gate: 'Satisfied: 12 unique 44-FZ procurements have completed technical reports; three frozen exploratory 223-FZ cases are separately scored source-bound blockers; explicit local-LLM/fallback provenance, aggregate report docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md, regression capture, 105 focused/relevant tests and exact-head CI run 37138206676 SUCCESS are recorded on PR #123 head 8e14fe5106062b68cf6feb3a61613a80b36623de. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
