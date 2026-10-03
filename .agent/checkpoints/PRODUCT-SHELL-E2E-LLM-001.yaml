@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
+status: in_progress
 task_id: PRODUCT-SHELL-E2E-LLM-001
 authority: AUTO
 goal: Execute the real operator flow end-to-end through the product UI from public procurement search to document acquisition, explicit local LLM analysis, Decision Core and report, fixing defects observed in this exact flow.
@@ -31,10 +31,13 @@ completed:
   - Fixed false "contract missing" recommendation language when the contract is present.
   - Fixed NMCK spreadsheet being treated as a supplier quote; final output now correctly states that TKP is not uploaded.
   - Final report verified through Safari at /demo/tender-agent/runs/toa-run-20261003182512-cc696a/report: title/customer/NMCK/deadline/contract/software-modification scope and no-TKP state are coherent.
+  - Reconciled exact-head CI failure 37154396603: updated the rendered-console regression to the live Gemma 4 endpoint/model and restored Cyrillic ТКП/КП supplier-quote classification.
+  - Focused rendered-console, upload, and quote-normalizer suites pass after remediation (34 passed); source Ruff and git diff checks pass.
   - No external procurement action, RFQ sending, platform submission, email, signature, payment or commitment occurred.
-current: End-to-end product flow is completed and verified.
-remaining: []
-last_verified_commit: 2e2ac11755e2c117f50e7fb344056fd3dc226097
+current: Exact-head CI remediation is implemented and locally verified; remote exact-head CI is pending.
+remaining:
+  - Confirm required CI is green on the pushed remediation head, then restore completed status.
+last_verified_commit: 53cd22432e932065e01c65a3e1ada58c1a26720f
 last_tests:
   - Focused E2E/LLM/report/Decision Core/RAG suite: 68 passed, 3 warnings.
   - Additional modified-path RAG/document/LLM suite: 33 passed, 3 warnings.
@@ -43,4 +46,7 @@ last_tests:
   - Live product documents: 5 downloaded, 4 successfully text-extracted.
   - Live RAG: 60 chunks, 60 embeddings; 10 LLM calls; completed without warnings/errors.
   - Live product controlled LLM: 4 LLM calls, no fallback, Decision Core NEEDS_REVIEW.
-resume_instruction: This E2E task is complete. Do not repeat the Axioma flow unless running a new regression. Start the next product task from a fresh checkpoint; the most useful next scope is product UX cleanup of the now-working search -> documents -> analysis -> report flow.
+  - Exact CI failures reproduced locally before the fix: 2 failed.
+  - Remediated focused suites: 34 passed, 26 warnings.
+  - Ruff passed for the modified source classifier; git diff --check passed.
+resume_instruction: Check exact-head CI once. If green, record the workflow evidence and restore completed status without repeating the Axioma flow; if red, resume only from the first unverified failing stage.
