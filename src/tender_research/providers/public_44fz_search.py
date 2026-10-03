@@ -7,8 +7,8 @@ import re
 import ssl
 import time
 from dataclasses import dataclass, field
-from decimal import Decimal
 from datetime import date, datetime, timedelta, timezone
+from decimal import Decimal
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
@@ -623,6 +623,7 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         org_match = re.search(r'Заказчик[^:]*:\s*([^<]+)', entry_html, re.IGNORECASE)
         if org_match:
             customer_name = _strip_html(org_match.group(1))
+    customer_name = _sanitize_customer_name(customer_name)
 
     price_value = _first_matching_value(
         pairs,
@@ -785,6 +786,32 @@ def _strip_html(value: str | None) -> str:
     cleaned = html.unescape(cleaned).replace("&nbsp;", " ").replace("\xa0", " ")
     cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned.strip()
+
+
+def _sanitize_customer_name(value: str | None) -> str | None:
+    """Reject search-card customer values contaminated by page JavaScript."""
+    cleaned = _strip_html(value)
+    if not cleaned:
+        return None
+    lowered = cleaned.lower()
+    suspicious = (
+        "function ",
+        "$(",
+        ".prop(",
+        "checkbox",
+        "event.",
+        "get_controller_",
+        "javascript:",
+        "document.",
+        "});",
+    )
+    if len(cleaned) > 320 or any(marker in lowered for marker in suspicious):
+        return None
+    if re.fullmatch(r"\d{2}\.\d{2}\.\d{4}(?:\s+\d{2}:\d{2})?", cleaned):
+        return None
+    if not re.search(r"[A-Za-zА-Яа-яЁё]", cleaned):
+        return None
+    return cleaned
 
 
 def _extract_price(text: str | None) -> float | None:

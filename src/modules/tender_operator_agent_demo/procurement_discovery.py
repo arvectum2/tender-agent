@@ -4,28 +4,29 @@ import base64
 import json
 import os
 import re
-from pathlib import Path
 from datetime import date, datetime, timedelta
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from src.modules.tender_operator_agent_demo.procurement_schemas import (
+    ProcurementAttachment,
+    ProcurementDetails,
+    ProcurementSearchOutcome,
+    ProcurementSourceStatus,
+    PublicProcurementSearchResponse,
+)
+from src.modules.tender_operator_agent_demo.procurement_schemas import (
+    ProcurementSearchRequest as ProcurementSearchRequestV2,
+)
+from src.modules.tender_operator_agent_demo.procurement_schemas import (
+    ProcurementSearchResult as ProcurementSearchResultV2,
+)
 from src.modules.tender_operator_agent_demo.procurement_sources import (
     DemoProcurementRecord,
     get_demo_local_procurements,
     get_procurement_source_descriptors,
 )
-from src.modules.tender_operator_agent_demo.procurement_schemas import (
-    ProcurementAttachment,
-    ProcurementDetails,
-    PublicProcurementSearchResponse,
-    ProcurementSearchRequest as ProcurementSearchRequestV2,
-    ProcurementSearchOutcome,
-    ProcurementSearchResult as ProcurementSearchResultV2,
-    ProcurementSourceStatus,
-)
-from src.modules.tender_operator_agent_demo.relevance_scoring import score_procurement_card
-from src.modules.tender_operator_agent_demo.schemas import ProcurementSearchResponse, ProcurementSearchResult, PublicSearchUrlResponse
-from src.modules.tender_operator_agent_demo.supplier_profile import SupplierProfile
 from src.modules.tender_operator_agent_demo.public_44fz_parser import (
     Public44FzSearchStatus,
     extract_public_search_total_count,
@@ -33,13 +34,21 @@ from src.modules.tender_operator_agent_demo.public_44fz_parser import (
     parse_44fz_search_results,
 )
 from src.modules.tender_operator_agent_demo.public_44fz_search import (
+    Public44FzSearchProvider,
     build_public_eis_search_url,
     normalize_public_eis_law,
     resolve_public_eis_stage_flag,
 )
+from src.modules.tender_operator_agent_demo.relevance_scoring import (
+    score_procurement_card,
+)
+from src.modules.tender_operator_agent_demo.schemas import (
+    ProcurementSearchResponse,
+    ProcurementSearchResult,
+    PublicSearchUrlResponse,
+)
 from src.modules.tender_operator_agent_demo.settings import get_zakupki_soap_settings
-from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
-
+from src.modules.tender_operator_agent_demo.supplier_profile import SupplierProfile
 
 DEFAULT_SEARCH_PAGE_SIZE = 10
 MAX_BACKFILL_PAGES = 10
@@ -169,8 +178,15 @@ def list_procurement_sources() -> list[ProcurementSourceStatus]:
             label="Публичный поиск ЕИС 44-ФЗ",
             enabled=True,
             configured=True,
-            reason="Публичный HTML fallback. Поиск и выбор закупки выполняются вручную в ЕИС.",
-            safe_diagnostics={"mode": "public_html_fallback", "law": "44fz"},
+            reason="Публичный read-only поиск ЕИС без авторизации.",
+            safe_diagnostics={
+                "mode": "public_html_read_only",
+                "law": "44fz",
+                "auth_required": False,
+                "endpoint_host": "zakupki.gov.ru",
+                "endpoint_path": "/epz/order/extendedsearch/results.html",
+                "last_status": "ready",
+            },
         ),
         ProcurementSourceStatus(
             source="public_eis_html_223fz",
@@ -431,6 +447,80 @@ def set_supplier_profile(profile: SupplierProfile) -> None:
     _current_supplier_profile = profile
 
 
+def _normalize_public_search_query(query: str) -> str:
+    """Normalize operator shorthand without weakening the requested meaning.
+
+    EIS morphology handles Russian inflection reasonably well, but the common
+    operator abbreviation ПО is otherwise treated too loosely. Expand only
+    the uppercase standalone abbreviation; lowercase по remains a preposition.
+    """
+    cleaned = re.sub(r"\s+", " ", str(query or "")).strip()
+    return re.sub(r"(?<![0-9A-Za-zА-Яа-яЁё])ПО(?![0-9A-Za-zА-Яа-яЁё])", "программного обеспечения", cleaned)
+
+
+def _public_query_terms(query: str) -> list[str]:
+    normalized = _normalize_public_search_query(query).lower()
+    return [token for token in re.findall(r"[0-9a-zа-яё]+", normalized) if len(token) >= 4]
+
+
+def _query_term_matches_title(term: str, title_tokens: list[str]) -> bool:
+    if term in title_tokens:
+        return True
+    for token in title_tokens:
+        if min(len(term), len(token)) >= 5 and (token.startswith(term) or term.startswith(token)):
+            return True
+        prefix = 6 if min(len(term), len(token)) >= 6 else 5
+        if min(len(term), len(token)) >= prefix and term[:prefix] == token[:prefix]:
+            return True
+    return False
+
+
+def score_public_query_match(query: str, title: str) -> dict[str, Any]:
+    terms = _public_query_terms(query)
+    title_tokens = re.findall(r"[0-9a-zа-яё]+", str(title or "").lower())
+    if not terms:
+        return {
+            "score": 0.0,
+            "status": "unknown",
+            "matched_terms": 0,
+            "total_terms": 0,
+            "reasons": ["Поисковый запрос не содержит значимых терминов."],
+        }
+    matched = [term for term in terms if _query_term_matches_title(term, title_tokens)]
+    score = round(100.0 * len(matched) / len(terms), 1)
+    status = "high" if score == 100.0 else "medium" if score >= 66.0 else "low" if score > 0 else "no_match"
+    return {
+        "score": score,
+        "status": status,
+        "matched_terms": len(matched),
+        "total_terms": len(terms),
+        "matched": matched,
+        "reasons": [f"Совпало терминов запроса: {len(matched)} из {len(terms)}."],
+    }
+
+
+def _matches_public_card_query(title: str | None, query: str | None) -> bool:
+    if not query:
+        return True
+    result = score_public_query_match(query, title or "")
+    if result["total_terms"] >= 2:
+        return result["matched_terms"] == result["total_terms"]
+    return result["matched_terms"] > 0
+
+
+def _should_apply_strict_query_filter(original_query: str, effective_query: str) -> bool:
+    original = str(original_query or "").strip()
+    lowered = original.lower()
+    # EIS itself remains authoritative for ordinary free-text discovery. The
+    # strict AND boundary is only for the confirmed software-search failure
+    # family where ПО or truncated "программн обеспеч" was broadened into
+    # unrelated generic "разработка" cards.
+    return (
+        original != effective_query
+        or ("програм" in lowered and "обеспеч" in lowered)
+    )
+
+
 def _looks_like_exact_procurement_number(query: str) -> bool:
     normalized = re.sub(r"\s+", "", str(query or ""))
     return bool(re.fullmatch(r"\d{11,20}", normalized))
@@ -456,7 +546,13 @@ def search_public_44fz(
     reference_date: date | None = None,
 ) -> dict:
     normalized_law = normalize_public_eis_law(law)
+    effective_query = _normalize_public_search_query(query)
     exact_procurement_number = _looks_like_exact_procurement_number(query)
+    strict_query = (
+        effective_query
+        if not exact_procurement_number and _should_apply_strict_query_filter(query, effective_query)
+        else None
+    )
     page_num = max(page, 1)
     effective_page_size = min(max(page_size, 1), 50)
     requested_limit = min(max(max_results or effective_page_size, 1), 100)
@@ -494,7 +590,7 @@ def search_public_44fz(
 
     try:
         first_url = build_public_eis_search_url(
-            query=query,
+            query=effective_query,
             law=normalized_law,
             region=region,
             date_from=date_from,
@@ -615,7 +711,7 @@ def search_public_44fz(
             raw_html = fetch_result.get("html", "")
         else:
             fetch_url = build_public_eis_search_url(
-                query=query,
+                query=effective_query,
                 law=normalized_law,
                 region=region,
                 date_from=date_from,
@@ -640,6 +736,7 @@ def search_public_44fz(
 
         filtered = _filter_public_44fz_cards(
             page_cards,
+            query=strict_query,
             date_from=date_from,
             date_to=date_to,
             deadline_from=deadline_from,
@@ -701,6 +798,7 @@ def search_public_44fz(
         ).model_dump(mode="json")
 
     valid_cards = _sort_public_44fz_cards(valid_cards)
+    valid_cards = _enrich_public_search_cards(valid_cards, max_enrichments=min(requested_limit, 5))
     profile = None if exact_procurement_number else get_supplier_profile()
     scored_cards = []
     for card in valid_cards[:requested_limit]:
@@ -708,6 +806,9 @@ def search_public_44fz(
         card_with_relevance["law"] = normalized_law
         card_with_relevance["category"] = _public_law_label(normalized_law)
         card_with_relevance["source"] = _public_source_from_law(normalized_law)
+        card_with_relevance["query_relevance"] = score_public_query_match(
+            query, card.get("title", "")
+        )
         if profile is not None:
             result = score_procurement_card(
                 title=card.get("title", ""),
@@ -716,6 +817,7 @@ def search_public_44fz(
                 submission_deadline=card.get("deadline"),
                 profile=profile,
             )
+            card_with_relevance["supplier_fit"] = result.to_dict()
             card_with_relevance["relevance"] = result.to_dict()
         scored_cards.append(card_with_relevance)
 
@@ -857,6 +959,42 @@ def _parse_public_card_date(value: str | None) -> date | None:
     return None
 
 
+def _enrich_public_search_cards(cards: list[dict], *, max_enrichments: int = 5) -> list[dict]:
+    """Fill missing identity/deadline from the authoritative public detail page.
+
+    Search-card HTML is intentionally treated as untrusted for customer identity.
+    Only cards with missing fields are enriched, and the number of detail fetches
+    is capped so ordinary discovery remains responsive.
+    """
+    provider = Public44FzSearchProvider(timeout_seconds=10, bypass_proxy=True)
+    enriched: list[dict] = []
+    enrichments = 0
+    for original in cards:
+        card = dict(original)
+        needs_detail = not card.get("customer_name") or not card.get("deadline")
+        registry_number = card.get("reestr_number") or card.get("notice_number")
+        source_url = card.get("source_url") or card.get("card_url")
+        if needs_detail and registry_number and source_url and enrichments < max_enrichments:
+            enrichments += 1
+            try:
+                detail = provider.fetch_detail(
+                    registry_number=str(registry_number),
+                    card_url=str(source_url),
+                )
+                if detail.network_status == "success":
+                    if not card.get("customer_name") and detail.customer_name:
+                        card["customer_name"] = detail.customer_name
+                        card["customer_identity_source"] = "eis_common_info"
+                    if not card.get("deadline") and detail.application_deadline:
+                        card["deadline"] = detail.application_deadline.strftime("%d.%m.%Y %H:%M")
+                        card["deadline_source"] = "eis_common_info"
+            except Exception:
+                # Discovery stays fail-closed: missing identity remains missing.
+                pass
+        enriched.append(card)
+    return enriched
+
+
 def _sort_public_44fz_cards(cards: list[dict]) -> list[dict]:
     def sort_key(card: dict) -> tuple[int, int]:
         parsed_date = _parse_public_card_date(card.get("publication_date"))
@@ -902,6 +1040,7 @@ def _matches_public_card_status_consistency(card: dict, *, today: date | None = 
 def _filter_public_44fz_cards(
     cards: list[dict],
     *,
+    query: str | None = None,
     date_from: str | None = None,
     date_to: str | None = None,
     deadline_from: str | None = None,
@@ -917,6 +1056,8 @@ def _filter_public_44fz_cards(
     filtered: list[dict] = []
     effective_status_grace_days = status_grace_days or (2 if status_filter else 0)
     for card in cards:
+        if not _matches_public_card_query(card.get("title"), query):
+            continue
         # Explicit deadline ranges are authoritative. Otherwise retain the
         # normal active-status expiry check, with the caller-selected grace
         # period (the search path uses a small ingestion grace window).
