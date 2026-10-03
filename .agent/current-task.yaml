@@ -1,46 +1,26 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: PRODUCT-SHELL-E2E-LLM-001
+status: in_progress
+task_id: PRODUCT-ANALYSIS-QUALITY-001
 authority: AUTO
-goal: Execute the real operator flow end-to-end through the product UI from public procurement search to document acquisition, explicit local LLM analysis, Decision Core and report, fixing defects observed in this exact flow.
+goal: Independently audit the Axioma end-to-end analysis against the acquired procurement documents, then improve factual consistency, source grounding and decision usefulness and rerun the affected analysis.
 definition_of_done:
-  - Start from a fresh public 44-FZ search in the rendered UI, not a pre-existing run.
-  - Find the Axioma procurement 0187200001726001304 using the operator query "разработка ПО".
-  - Acquire procurement documents through the rendered UI and create a fresh run.
-  - Prepare the acquired documents for RAG using local text extraction, chunks and Qwen3 embeddings.
-  - Start explicit analysis through the rendered UI with the configured local LLM.
-  - Wait for terminal analysis state and inspect LLM provenance.
-  - Open and inspect the generated report and Decision Core.
-  - Fix blocking/materially corrupting defects observed in the flow with focused regressions.
-  - Re-run the affected path and verify final product output.
+  - Independently compare the RAG report and product report against the actual acquired Axioma documents and structured procurement facts.
+  - Record concrete factual contradictions, missing high-value facts and misleading product language.
+  - Fix P0/P1 issues in extraction, RAG prompting/reporting or canonical product report that caused those defects.
+  - Add focused regression coverage for every fixed defect.
+  - Rerun the relevant analysis path with the local Gemma 4 model and verify the corrected report/Decision Core in the rendered UI.
+  - Preserve fail-closed source grounding and no external procurement actions.
 completed:
-  - Fresh rendered-UI search for "разработка ПО" returned exactly one result in the tested active/date window: Axioma procurement 0187200001726001304.
-  - Fresh rendered-UI document handoff created run toa-run-20261003182512-cc696a with 5 public EIS documents.
-  - Fixed stale Mac mini LLM preset from Qwen2.5/8088 to live Arvectum Gemma 4 12B model arvectum-gemma4-12b-it-qat-q4_0 on 127.0.0.1:8081.
-  - Added local operator-run -> RAG ingestion bridge so already acquired product documents are reused instead of requiring a second SOAP ingestion path.
-  - Added bounded text extraction from EIS ZIP containers and retry of already-downloaded ZIP-backed documents.
-  - Live readiness reached 5 documents / 5 downloaded / 4 text-bearing / 60 chunks / 60 Qwen3 embeddings.
-  - Completed RAG+LLM job 18dbd368-c39b-45a9-a897-8b41775ed480: status completed, 10 sections, 29 unique sources, 10 local Gemma 4 calls, 270.6 seconds, no warnings/errors; analysis run 276f268c-7ecf-479a-9694-3f87201cc7b9.
-  - Opened the RAG report through the rendered UI history/report flow.
-  - Completed final product-run controlled LLM analysis on toa-run-20261003182512-cc696a after restart with current code.
-  - Final product LLM provenance: analysis_engine deterministic_with_local_llm; llm_invoked true; provider openai_compatible; model arvectum-gemma4-12b-it-qat-q4_0; 4 LLM calls; 141063 ms LLM latency; fallback_reason null; local healthcheck ok.
-  - Final product run status needs_review, analysis_status completed, analysis_mode llm_tender_operator_provider.
-  - Decision Core identifies 44fz, application window SATISFIED, contract draft SATISFIED, no hard blockers; decision NEEDS_REVIEW because supplier profile is not bound and risks require operator review.
-  - Fixed procurement-law propagation into Decision Core and corrected active application-window semantics.
-  - Fixed false "contract missing" recommendation language when the contract is present.
-  - Fixed NMCK spreadsheet being treated as a supplier quote; final output now correctly states that TKP is not uploaded.
-  - Final report verified through Safari at /demo/tender-agent/runs/toa-run-20261003182512-cc696a/report: title/customer/NMCK/deadline/contract/software-modification scope and no-TKP state are coherent.
-  - No external procurement action, RFQ sending, platform submission, email, signature, payment or commitment occurred.
-current: End-to-end product flow is completed and verified.
-remaining: []
-last_verified_commit: 2e2ac11755e2c117f50e7fb344056fd3dc226097
+  - Confirmed prior PRODUCT-SHELL-E2E-LLM-001 is completed at 37dfd4e.
+current: Audit the actual Axioma source documents and compare them with both generated reports.
+remaining:
+  - Extract and inspect authoritative source facts from the 5 acquired documents.
+  - Classify report defects by severity.
+  - Implement P0/P1 quality fixes and regression tests.
+  - Rerun local LLM analysis and inspect corrected report/Decision Core.
+  - Run final focused tests, commit/push and close checkpoint.
+last_verified_commit: 37dfd4e11b29ed76d6a3bef3635df96f12819990
 last_tests:
-  - Focused E2E/LLM/report/Decision Core/RAG suite: 68 passed, 3 warnings.
-  - Additional modified-path RAG/document/LLM suite: 33 passed, 3 warnings.
-  - git diff --check passed before commit.
-  - Live public search: Axioma 0187200001726001304 found as the single result for "разработка ПО" with active status.
-  - Live product documents: 5 downloaded, 4 successfully text-extracted.
-  - Live RAG: 60 chunks, 60 embeddings; 10 LLM calls; completed without warnings/errors.
-  - Live product controlled LLM: 4 LLM calls, no fallback, Decision Core NEEDS_REVIEW.
-resume_instruction: This E2E task is complete. Do not repeat the Axioma flow unless running a new regression. Start the next product task from a fresh checkpoint; the most useful next scope is product UX cleanup of the now-working search -> documents -> analysis -> report flow.
+  - Previous E2E suite 68 passed, 3 warnings.
+resume_instruction: Inspect the five Axioma source documents in toa-run-20261003182512-cc696a, establish authoritative facts (deadline/timezone, price, contract/payment/acceptance, software scope/rights, application requirements), compare them to the RAG and canonical reports, then fix the highest-severity discrepancies.
