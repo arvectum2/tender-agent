@@ -19,7 +19,10 @@ def detect_document_role(name: str) -> str:
         )
     ):
         return "notice"
-    if any(token in lowered for token in ("tkp", "quote", "kp", "коммер", "proposal")):
+    if any(
+        token in lowered
+        for token in ("tkp", "quote", "kp", "ткп", "кп", "коммер", "proposal")
+    ):
         return "tkp"
     if any(token in lowered for token in ("contract", "договор", "agreement", "проект гк", "гк.doc", "контракт")):
         return "contract_draft"
