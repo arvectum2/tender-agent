@@ -4673,6 +4673,8 @@ def _build_output_payloads(
         )
         quotes_payload["highlights"] = software_highlights
         quotes_payload["manual_checks"] = software_manual_checks
+        if not quote_files_present:
+            quotes_payload["status"] = "not_required"
 
     if procurement_kind == "goods":
         economics_payload = _build_goods_economics_payload(metadata, documents, analysis_mode, economics)
@@ -5197,12 +5199,16 @@ def _build_steps_from_outputs(metadata: dict[str, Any], outputs: dict[str, dict[
             description="Сопоставление коммерческих предложений, если они были загружены.",
             agent_action="Проверено наличие ТКП и собран локальный снимок сравнения с нормализацией таблиц.",
             result_summary=(
-                "ТКП не загружены."
-                if quote_blocked
+                "Для собственной разработки ПО внешние ТКП не обязательны; при субподряде их нужно добавить."
+                if quotes.get("status") == "not_required"
                 else (
-                    "ТКП загружены, но требуют ручной нормализации."
-                    if quotes.get("supplier_quotes_found", 0) == 0
-                    else f"Найдено ТКП: {quotes.get('supplier_quotes_found', 0)}, позиций: {quotes.get('items_extracted', 0)}."
+                    "ТКП не загружены."
+                    if quote_blocked
+                    else (
+                        "ТКП загружены, но требуют ручной нормализации."
+                        if quotes.get("supplier_quotes_found", 0) == 0
+                        else f"Найдено ТКП: {quotes.get('supplier_quotes_found', 0)}, позиций: {quotes.get('items_extracted', 0)}."
+                    )
                 )
             ),
             findings=quotes["highlights"],
@@ -6227,6 +6233,7 @@ def _is_transient_analysis_limitation(value: str) -> bool:
         "Full runner integration was partially applied",
         "TKP not uploaded.",
         "External TKP not uploaded;",
+        "Внешние ТКП не загружены;",
         "Quote files were uploaded in non-spreadsheet format",
         "Spreadsheet normalization uses deterministic heuristics",
         "Spreadsheet files were uploaded, but structured extraction could not start",
@@ -6472,8 +6479,8 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
         if not quote_inputs_present:
             if procurement_scope_kind in _SOFTWARE_SCOPES:
                 limitations.append(
-                    "External TKP not uploaded; this is not a blocker for in-house software delivery. "
-                    "Internal labor, team rates, reserves and cash-gap inputs are still required."
+                    "Внешние ТКП не загружены; для собственной разработки ПО это не блокер. "
+                    "Для решения нужны внутренние трудозатраты, ставки команды, проектный резерв и оценка кассового разрыва."
                 )
             else:
                 limitations.append("TKP not uploaded. Supplier comparison and economics remain blocked or partial.")
