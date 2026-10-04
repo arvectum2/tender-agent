@@ -958,6 +958,7 @@ def _coerce_quote_comparison_payload(payload: dict[str, Any]):
                 "suppliers": suppliers,
                 "items": payload.get("items", []),
                 "comparison_summary": payload.get("comparison_summary", {}),
+                "highlights": payload.get("highlights", []),
                 "manual_checks": manual_checks,
             "warnings": warnings,
             "limitations": payload.get("limitations", []),
@@ -993,6 +994,9 @@ def _coerce_economics_summary_payload(payload: dict[str, Any]):
             "cash_gap_estimate": payload.get("cash_gap_estimate"),
             "economics_status": payload.get("economics_status", "insufficient_data"),
             "selected_supplier_name": payload.get("selected_supplier_name"),
+            "result": payload.get("result"),
+            "metrics": payload.get("metrics", []),
+            "drivers": payload.get("drivers", []),
             "assumptions": payload.get("assumptions", {}),
             "manual_checks": manual_checks,
             "warnings": warnings,
@@ -4585,6 +4589,10 @@ def _build_output_payloads(
             ]
             if analysis_mode == "fallback_deterministic_adapter"
             else [
+                "Оценка трудозатрат, ресурсы команды и договорные условия требуют ручной валидации."
+            ]
+            if procurement_kind in _SOFTWARE_SCOPES
+            else [
                 "Параметры оплаты и допустимость аналогов требуют ручной валидации.",
             ]
         ),
@@ -6218,6 +6226,7 @@ def _is_transient_analysis_limitation(value: str) -> bool:
     prefixes = (
         "Full runner integration was partially applied",
         "TKP not uploaded.",
+        "External TKP not uploaded;",
         "Quote files were uploaded in non-spreadsheet format",
         "Spreadsheet normalization uses deterministic heuristics",
         "Spreadsheet files were uploaded, but structured extraction could not start",
@@ -6457,8 +6466,17 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
         if not core_complete:
             limitations.append("Full runner integration was partially applied because the uploaded package did not produce all core extracted texts.")
         quote_inputs_present = bool(quote_paths or spreadsheet_sources)
+        procurement_scope_kind = _classify_procurement_scope(
+            metadata, documents, notice_text
+        )["procurement_primary_scope"]
         if not quote_inputs_present:
-            limitations.append("TKP not uploaded. Supplier comparison and economics remain blocked or partial.")
+            if procurement_scope_kind in _SOFTWARE_SCOPES:
+                limitations.append(
+                    "External TKP not uploaded; this is not a blocker for in-house software delivery. "
+                    "Internal labor, team rates, reserves and cash-gap inputs are still required."
+                )
+            else:
+                limitations.append("TKP not uploaded. Supplier comparison and economics remain blocked or partial.")
         elif not spreadsheet_sources and quote_paths:
             limitations.append("Quote files were uploaded in non-spreadsheet format; structured comparison and economics require manual review or XLS/XLSX.")
         if spreadsheet_sources:

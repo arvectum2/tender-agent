@@ -477,6 +477,7 @@ class QuoteComparison(APIModel):
     suppliers: list[SupplierQuote] = Field(default_factory=list)
     items: list[QuoteItem] = Field(default_factory=list)
     comparison_summary: dict[str, Any] = Field(default_factory=dict)
+    highlights: list[str] = Field(default_factory=list)
     manual_checks: list[ManualCheck] = Field(default_factory=list)
     warnings: list[ExtractionWarning] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
@@ -498,6 +499,9 @@ class EconomicsSummary(APIModel):
     cash_gap_estimate: float | None = None
     economics_status: str
     selected_supplier_name: str | None = None
+    result: str | None = None
+    metrics: list[dict[str, Any]] = Field(default_factory=list)
+    drivers: list[str] = Field(default_factory=list)
     assumptions: dict[str, Any] = Field(default_factory=dict)
     manual_checks: list[ManualCheck] = Field(default_factory=list)
     warnings: list[ExtractionWarning] = Field(default_factory=list)

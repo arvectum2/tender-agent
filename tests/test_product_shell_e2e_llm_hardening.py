@@ -5,6 +5,7 @@ import zipfile
 from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
 from src.modules.tender_operator_agent_demo.report_model import _russian_datetime
 from src.modules.tender_operator_agent_demo.report_model_legacy import _item_rows, _parse_timestamp
+from src.modules.tender_operator_agent_demo.ui import render_tender_operator_console_html
 from src.modules.tender_operator_agent_demo.upload_service_legacy import (
     _bounded_controlled_llm_text,
     _build_document_grounded_questions,
@@ -13,6 +14,8 @@ from src.modules.tender_operator_agent_demo.upload_service_legacy import (
     _build_document_grounded_risks,
     _build_preliminary_procurement_analysis,
     _collect_spreadsheet_sources,
+    _coerce_economics_summary_payload,
+    _coerce_quote_comparison_payload,
     _decode_zip_member_name,
     _document_relevance_event_payload,
     _extract_service_items_from_notice_text,
@@ -26,6 +29,13 @@ from src.modules.tender_operator_agent_demo.upload_service_legacy import (
     _software_quote_guidance,
     _tender_summary_identity_fields,
 )
+
+
+def test_console_renders_dynamic_commercial_guidance_fields():
+    html = render_tender_operator_console_html("run-test")
+    assert "const highlights = comparison.highlights || [];" in html
+    assert "const metrics = economics.metrics || [];" in html
+    assert "economics.result" in html
 
 
 def test_controlled_llm_context_is_bounded_with_explicit_omission_marker():
@@ -85,6 +95,7 @@ def test_canonical_service_line_keeps_notice_pricing_from_source_item():
                     "display_name": name,
                     "quantity": "1",
                     "unit": "условная единица",
+                    "okpd2": "62.02.30.000",
                     "evidence_ids": ["notice-row-1"],
                     "field_provenance": {
                         "name": "notice-row-1",
@@ -112,6 +123,7 @@ def test_canonical_service_line_keeps_notice_pricing_from_source_item():
 
     assert row["quantity"] == "1"
     assert row["unit_normalized"] == "условная единица"
+    assert row["okpd2"] == "62.02.30.000"
     assert row["unit_price"] == "521 000,00"
     assert row["line_total"] == "521 000,00"
     assert row["line_total_display"] == "521 000,00"
@@ -150,6 +162,40 @@ def test_software_economics_calculates_security_cash_requirement():
     assert "внутренней оценки трудозатрат" in payload["result"]
 
 
+def test_api_coercion_preserves_software_quote_and_economics_guidance():
+    quote = _coerce_quote_comparison_payload(
+        {
+            "status": "blocked",
+            "analysis_mode": "llm_tender_operator_provider",
+            "supplier_quotes_found": 0,
+            "items_extracted": 0,
+            "highlights": [
+                "Внешние ТКП не загружены; для собственной разработки ПО это само по себе не является блокером."
+            ],
+            "manual_checks": ["Оценить трудозатраты по блокам ТЗ."],
+        }
+    )
+    economics = _coerce_economics_summary_payload(
+        {
+            "status": "blocked",
+            "analysis_mode": "llm_tender_operator_provider",
+            "economics_status": "insufficient_data",
+            "result": "Нужна внутренняя оценка разработки.",
+            "metrics": [
+                {"label": "НМЦК", "value": "521 000,00"},
+                {"label": "Обеспечение исполнения", "value": "10,00% от НМЦК ≈ 52 100,00 руб."},
+            ],
+            "drivers": ["Без аванса исполнитель финансирует разработку до приёмки."],
+            "manual_checks": ["Оценить ставки команды."],
+        }
+    )
+
+    assert quote.highlights and "не является блокером" in quote.highlights[0]
+    assert economics.result == "Нужна внутренняя оценка разработки."
+    assert economics.metrics[1]["label"] == "Обеспечение исполнения"
+    assert economics.drivers == ["Без аванса исполнитель финансирует разработку до приёмки."]
+
+
 def test_software_final_manual_checks_are_decision_specific():
     checks = " ".join(_final_recommendation_manual_checks("software_modification")).lower()
     assert "ч. 3 ст. 30" in checks
@@ -183,6 +229,9 @@ def test_previous_analysis_messages_are_recognized_as_transient():
     assert not _is_transient_analysis_warning("Входной архив был нормализован безопасно.")
     assert _is_transient_analysis_limitation(
         "TKP not uploaded. Supplier comparison and economics remain blocked or partial."
+    )
+    assert _is_transient_analysis_limitation(
+        "External TKP not uploaded; this is not a blocker for in-house software delivery."
     )
     assert not _is_transient_analysis_limitation(
         "Без авторизации, без обхода captcha, без подачи заявки."

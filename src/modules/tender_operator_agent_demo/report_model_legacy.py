@@ -232,6 +232,7 @@ def _item_rows(preliminary: dict[str, Any]) -> list[dict[str, Any]]:
             "normalized_name": item.get("normalized_name") or item.get("name") or name,
             "unit_original": unit or UNKNOWN,
             "unit_normalized": unit,
+            "okpd2": item.get("okpd2") or pricing_item.get("okpd2"),
             "quantity": quantity,
             "quantity_status": item.get("quantity_status") or ("specified" if quantity is not None and unit else "not_specified"),
             "quantity_display": "Не указан документацией" if quantity is None else str(quantity),

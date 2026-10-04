@@ -1088,6 +1088,7 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
             }}
             const suppliers = comparison.suppliers || [];
             const items = comparison.items || [];
+            const highlights = comparison.highlights || [];
             const manualChecks = [
               ...(comparison.manual_checks || []).map((item) => item.message),
               ...(comparison.limitations || []),
@@ -1104,6 +1105,8 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                         <div class="run-meta">${{escapeHtml(supplier.source_file)}} · позиций=${{supplier.items_count}} · уверенность=${{supplier.price_confidence}}</div>
                       </div>
                     `).join('')}}</div>`
+                    : highlights.length
+                    ? `<ul>${{highlights.map((item) => `<li>${{escapeHtml(item)}}</li>`).join('')}}</ul>`
                     : `<div class="empty">ТКП не распознаны как структурированные таблицы.</div>`
                 }}
               </div>
@@ -1141,18 +1144,30 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
               ...(economics.manual_checks || []).map((item) => item.message),
               ...(economics.limitations || []),
             ];
-            return `
-              <div class="card" style="padding:16px">
-                <div class="section-title">Экономика</div>
-                <div class="grid-2">
+            const metrics = economics.metrics || [];
+            const drivers = economics.drivers || [];
+            const metricGrid = metrics.length
+              ? `<div class="grid-2">${{metrics.map((item) => `
+                  <div class="metric">
+                    <span class="metric-label">${{escapeHtml(item.label || 'Показатель')}}</span>
+                    <span class="metric-value">${{escapeHtml(displayValue(item.value))}}</span>
+                  </div>
+                `).join('')}}</div>`
+              : `<div class="grid-2">
                   <div class="metric"><span class="metric-label">Минимальная закупочная стоимость</span><span class="metric-value">${{formatMoney(economics.supplier_cost_min, economics.currency || '')}}</span></div>
                   <div class="metric"><span class="metric-label">Выбранная закупочная стоимость</span><span class="metric-value">${{formatMoney(economics.supplier_cost_selected, economics.currency || '')}}</span></div>
                   <div class="metric"><span class="metric-label">Резерв логистики</span><span class="metric-value">${{formatMoney(economics.logistics_reserve, economics.currency || '')}}</span></div>
                   <div class="metric"><span class="metric-label">Резерв риска</span><span class="metric-value">${{formatMoney(economics.risk_reserve, economics.currency || '')}}</span></div>
                   <div class="metric"><span class="metric-label">Целевая маржа</span><span class="metric-value">${{economics.gross_margin_percent === null || economics.gross_margin_percent === undefined ? 'не определено' : `${{escapeHtml(economics.gross_margin_percent)}}%`}}</span></div>
                   <div class="metric"><span class="metric-label">Предварительная цена подачи</span><span class="metric-value">${{formatMoney(economics.preliminary_bid_price, economics.currency || '')}}</span></div>
-                </div>
-                <div class="trace" style="margin-top:12px">Статус экономики: ${{escapeHtml(displayValue(economics.economics_status))}}. Выбранный поставщик: ${{escapeHtml(displayValue(economics.selected_supplier_name))}}.</div>
+                </div>`;
+            return `
+              <div class="card" style="padding:16px">
+                <div class="section-title">Экономика</div>
+                ${{economics.result ? `<p>${{escapeHtml(economics.result)}}</p>` : ''}}
+                ${{metricGrid}}
+                ${{drivers.length ? `<ul style="margin-top:12px">${{drivers.map((item) => `<li>${{escapeHtml(item)}}</li>`).join('')}}</ul>` : ''}}
+                <div class="trace" style="margin-top:12px">Статус экономики: ${{escapeHtml(displayValue(economics.economics_status))}}.</div>
               </div>
               <div class="card" style="padding:16px">
                 <div class="section-title">Что проверить вручную</div>

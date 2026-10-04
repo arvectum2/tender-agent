@@ -3,38 +3,71 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: PRODUCT-ANALYSIS-QUALITY-001
 authority: AUTO
-goal: Independently audit the Axioma end-to-end analysis against the acquired procurement documents, then improve factual consistency, source grounding and decision usefulness and rerun the affected analysis.
+goal: Independently audit the Axioma end-to-end analysis against the acquired procurement documents, improve factual consistency,
+  source grounding and decision usefulness, and rerun the affected analysis.
 definition_of_done:
-  - Independently compare the RAG report and product report against the actual acquired Axioma documents and structured procurement facts.
-  - Record concrete factual contradictions, missing high-value facts and misleading product language.
-  - Fix P0/P1 issues in extraction, RAG prompting/reporting or canonical product report that caused those defects.
-  - Add focused regression coverage for every fixed defect.
-  - Rerun the relevant analysis path with the local Gemma 4 model and verify the corrected report/Decision Core in the rendered UI.
-  - Preserve fail-closed source grounding and no external procurement actions.
+- Independently compare the RAG report and product report against the actual acquired Axioma documents and structured procurement
+  facts.
+- Record concrete factual contradictions, missing high-value facts and misleading product language.
+- Fix P0/P1 issues in extraction, RAG prompting/reporting or canonical product report that caused those defects.
+- Add focused regression coverage for every fixed defect.
+- Rerun the relevant analysis path with the local Gemma 4 model and verify the corrected report/Decision Core in the rendered
+  UI.
+- Preserve fail-closed source grounding and no external procurement actions.
 completed:
-  - Confirmed prior PRODUCT-SHELL-E2E-LLM-001 is completed at 37dfd4e.
-  - Audited the acquired Axioma notice, application requirements, technical specification and contract text independently.
-  - Established authoritative high-value facts: request-for-quotations procedure; application deadline 05.10.2026 10:00 (МСК+2); NMCK 521000 RUB; service term through 13.11.2026; contract execution through 30.12.2026; no advance; 100% payment within 7 working days after acceptance; 10% performance security; one-year warranty; Python/axipy 7.x plugin for Windows/Linux; source-bound acceptance/performance criteria and IP/license terms.
-  - Classified key prior-output defects: lost deadline timezone, missing procurement procedure, submission deadline conflated with service term, generic/historical software template leakage, missing commercial/contract facts, misleading source-count label, and stale RAG card metadata.
-  - Implemented source-preserving deadline enrichment, full search-card handoff metadata, MSK timezone parsing, fresh operator-run metadata sync into RAG, structured source facts in RAG prompts, truthful source-count metrics, source-native software work rows, and richer source-bound contract highlights.
-  - Fresh rendered UI search now shows Axioma deadline 05.10.2026 10:00 (МСК+2), procedure Запрос котировок, active status and correct law/price/customer.
-  - Created fresh run toa-run-20261003222852-78f220 with current metadata and 5 public documents.
-  - Synced that fresh operator-run metadata into the RAG tender record while preserving 5 downloaded / 4 text-bearing / 60 chunks / 60 embeddings.
-  - Independently found the canonical notice purchase-object row: one service position, quantity 1, unit "Условная единица", OKPD2 62.02.30.000, unit/total 521000 RUB.
-  - Added bounded rendered-EIS notice service-row extraction; real run extraction now returns that position source-bound.
-  - Added RAG notice source facts/focused retrieval for purchase-object quantity/unit and the explicit ch. 3 art. 30 advantage.
-  - Added deterministic deadline timezone preservation and truthful RAG source-count wording.
-  - Corrected risk semantics so deal_breaker_candidate remains requires_review, while only confirmed hard blockers are labeled blocker.
-  - Added concrete NEEDS_REVIEW rationale items and synchronized top-level procurement_regime with Decision Core.
-  - Replaced generic software "совместимость аналогов" manual check with software-specific labor/acceptance/cash-gap/access/rights checks.
-  - Focused quality suite is green: 93 passed, 3 warnings; latest incremental RAG/product/Decision Core suite: 61 passed, 1 warning.
-current: Complete the final live RAG run e9cc0282-dfb4-482c-b1e8-693ad4f147dd, then rerun the fresh product controlled-LLM analysis and inspect the final customer report/Decision Core.
+- Confirmed prior PRODUCT-SHELL-E2E-LLM-001 is completed at 37dfd4e.
+- Audited the acquired Axioma notice, application requirements, technical specification and contract text independently.
+- 'Established authoritative facts: request for quotations; deadline 05.10.2026 10:00 (МСК+2); NMCK 521000 RUB; service term
+  through 13.11.2026; contract execution through 30.12.2026; no advance; 100% payment within 7 working days after acceptance;
+  10% performance security; one-year warranty; Python/axipy 7.x plugin; source-bound acceptance and IP/license terms.'
+- Fixed source-preserving deadline enrichment, procedure handoff, MSK parsing, fresh run metadata sync into RAG, structured
+  RAG source facts, source-count wording, source-native software work rows and richer contract highlights.
+- Created fresh run toa-run-20261003222852-78f220 with 5 public documents and synced it into RAG with 60 chunks / 60 embeddings.
+- Added rendered-EIS service row extraction; current source-bound line is quantity 1, conditional unit, OKPD2 62.02.30.000,
+  unit/total price 521000 RUB.
+- Added RAG focused retrieval for purchase-object quantity/unit and explicit ch. 3 art. 30 advantage.
+- Corrected risk semantics so candidate risks require review; only confirmed hard blockers produce NO_GO.
+- Added concrete NEEDS_REVIEW rationale and synchronized top-level procurement_regime with Decision Core.
+- Replaced goods-template software checks with labor/acceptance/cash-gap/access/rights checks.
+- Committed source-grounded quality package at c7fb7de29897d917f1e91568a7b80712d3f971c6.
+- Moved active work to dedicated branch agent/product-analysis-quality-001 so ARV-005 frozen evidence is not the active branch.
+- 'Added software-specific commercial guidance: external TKP is optional unless subcontracting/external licenses are planned;
+  primary economics uses internal labor, team rates, reserves and cash gap.'
+- Added software economics metrics for NMCK, internal development cost, performance security, no-advance burden, payment terms
+  and subcontractor-only quote usage.
+- Made Decision Core risk readiness name concrete unresolved risks.
+- 'Broader modified-path regression suite is green: 135 passed, 3 warnings.'
+- Committed commercial/Decision Core refinement at bd9e123a74fc11303f199f476c99ef665e1ddde3.
+- Validated final RAG job e9cc0282-dfb4-482c-b1e8-693ad4f147dd as completed; report preserves 05.10.2026 10:00 (МСК+2), quantity
+  1 conditional unit, 521000 RUB, service/contract dates, 10% security, one-year warranty, ch. 3 art. 30 advantage and PP
+  RF 1875 national regime.
+- 'Exact-head product rerun completed with local Gemma 4: 44-FZ, correct deadline, one source-bound service line, 521000 RUB
+  pricing, concrete NEEDS_REVIEW risk rationale and software-specific economics.'
+- 'Live UI audit found remaining P1 presentation defects: canonical line omitted explicit OKPD2 key, economics card rendered
+  reseller-only hardcoded fields, quote card hid software-specific guidance, stale TKP limitation and generic analog wording
+  remained visible.'
+- Fixed canonical line-item OKPD2 propagation, API preservation of quote highlights/economics result+metrics+drivers, dynamic
+  UI commercial rendering, software-specific ambiguity text and transient limitation cleanup.
+- 'Focused product/Decision Core suite is green: 45 passed, 1 warning.'
+- 'Broader modified-path quality suite is green: 137 passed, 3 warnings.'
+- 'Upload demo suite under auth/host-safe stub environment: 17 passed, 2 quote-normalization tests unavailable under stub
+  because those tests depend on the configured live quote-analysis path; no failure is in the modified-path quality suite.'
+current: Commit the final P1 UI/API/OKPD2 fixes, restart the loopback UI from the exact committed head, rerun Axioma once
+  more and verify the rendered screen/report is free of reseller/goods-template residue.
 remaining:
-  - Inspect final RAG report for source-bound service quantity/unit, ch. 3 art. 30 advantage, national regime and timezone-preserving deadline.
-  - Rerun product controlled-LLM analysis on toa-run-20261003222852-78f220 with current code.
-  - Verify line_items contains the single service position (quantity 1, conditional unit, OKPD2), risk candidates are review-only, customer decision names concrete unresolved checks, procurement_regime is 44fz, and software manual checks contain no goods-template residue.
-  - Run broader modified-path tests, diff check, commit/push, inspect CI and close checkpoint.
-last_verified_commit: 37dfd4e11b29ed76d6a3bef3635df96f12819990
+- Commit the final P1 UI/API/OKPD2 changes on agent/product-analysis-quality-001.
+- Restart loopback-only UI from that exact commit and rerun toa-run-20261003222852-78f220.
+- Verify canonical line_items explicitly includes OKPD2 62.02.30.000 and all previously audited facts.
+- Verify UI economics shows NMCK/internal development cost/10% security/no advance/payment/subcontractor-only quote guidance
+  instead of reseller metrics.
+- Verify UI question/limitation text has no stale TKP blocker or goods-template analog wording.
+- Run final tests/diff check, push branch, inspect CI and mark PRODUCT-ANALYSIS-QUALITY-001 completed.
+last_verified_commit: bd9e123a74fc11303f199f476c99ef665e1ddde3
 last_tests:
-  - Previous E2E suite 68 passed, 3 warnings.
-resume_instruction: Check RAG job e9cc0282-dfb4-482c-b1e8-693ad4f147dd to terminal state and inspect its report. Then restart current UI if needed and click Analyze for toa-run-20261003222852-78f220; wait for terminal product analysis, verify line_items/Decision Core/report against the audited facts, fix remaining P0/P1 issues only, run final tests, commit/push and close PRODUCT-ANALYSIS-QUALITY-001.
+- '137 passed, 3 warnings: document QA baseline + report fixes + product shell hardening/search + Decision Core + RAG analysis/modes/LLM/prepare.'
+- '45 passed, 1 warning: focused product-shell + Decision Core after UI/API/OKPD2 fixes.'
+- 17 passed, 2 environment-dependent quote tests under AI_CORP_LLM_PROVIDER=stub in upload demo suite; those two require the
+  live quote-analysis path.
+resume_instruction: Commit current P1 fixes, restart UI from exact commit, rerun toa-run-20261003222852-78f220, inspect canonical_report
+  plus rendered UI for explicit OKPD2 and corrected software commercial presentation, then run final tests, push branch, inspect
+  CI and set checkpoint completed.
