@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: PRODUCT-SHELL-E2E-LLM-001
 authority: AUTO
 goal: Execute the real operator flow end-to-end through the product UI from public procurement search to document acquisition, explicit local LLM analysis, Decision Core and report, fixing defects observed in this exact flow.
@@ -34,9 +34,8 @@ completed:
   - Reconciled exact-head CI failure 37154396603: updated the rendered-console regression to the live Gemma 4 endpoint/model and restored Cyrillic ТКП/КП supplier-quote classification.
   - Focused rendered-console, upload, and quote-normalizer suites pass after remediation (34 passed); source Ruff and git diff checks pass.
   - No external procurement action, RFQ sending, platform submission, email, signature, payment or commitment occurred.
-current: Exact-head CI remediation is implemented and locally verified; remote exact-head CI is pending.
-remaining:
-  - Confirm required CI is green on the pushed remediation head, then restore completed status.
+current: End-to-end product flow and exact-head CI remediation are completed and verified.
+remaining: []
 last_verified_commit: 53cd22432e932065e01c65a3e1ada58c1a26720f
 last_tests:
   - Focused E2E/LLM/report/Decision Core/RAG suite: 68 passed, 3 warnings.
@@ -49,4 +48,6 @@ last_tests:
   - Exact CI failures reproduced locally before the fix: 2 failed.
   - Remediated focused suites: 34 passed, 26 warnings.
   - Ruff passed for the modified source classifier; git diff --check passed.
-resume_instruction: Check exact-head CI once. If green, record the workflow evidence and restore completed status without repeating the Axioma flow; if red, resume only from the first unverified failing stage.
+  - Exact-head CI run 37161037412: all 9 jobs completed successfully at 00d1fb85cff28f96b3d1cbcb1307c24bab6bf576.
+  - No submitted reviews or review threads were present.
+resume_instruction: This task is complete. Do not repeat the Axioma flow. Preserve PR #123 under the REVIEW merge gate and continue only with an independently admitted canonical item.
