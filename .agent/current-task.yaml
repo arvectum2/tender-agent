@@ -20,13 +20,21 @@ completed:
   - Fresh rendered UI search now shows Axioma deadline 05.10.2026 10:00 (МСК+2), procedure Запрос котировок, active status and correct law/price/customer.
   - Created fresh run toa-run-20261003222852-78f220 with current metadata and 5 public documents.
   - Synced that fresh operator-run metadata into the RAG tender record while preserving 5 downloaded / 4 text-bearing / 60 chunks / 60 embeddings.
-current: Finish the fresh RAG and product controlled-LLM reruns, then inspect the corrected reports against the audited source facts and fix any remaining P0/P1 contradictions.
+  - Independently found the canonical notice purchase-object row: one service position, quantity 1, unit "Условная единица", OKPD2 62.02.30.000, unit/total 521000 RUB.
+  - Added bounded rendered-EIS notice service-row extraction; real run extraction now returns that position source-bound.
+  - Added RAG notice source facts/focused retrieval for purchase-object quantity/unit and the explicit ch. 3 art. 30 advantage.
+  - Added deterministic deadline timezone preservation and truthful RAG source-count wording.
+  - Corrected risk semantics so deal_breaker_candidate remains requires_review, while only confirmed hard blockers are labeled blocker.
+  - Added concrete NEEDS_REVIEW rationale items and synchronized top-level procurement_regime with Decision Core.
+  - Replaced generic software "совместимость аналогов" manual check with software-specific labor/acceptance/cash-gap/access/rights checks.
+  - Focused quality suite is green: 93 passed, 3 warnings; latest incremental RAG/product/Decision Core suite: 61 passed, 1 warning.
+current: Complete the final live RAG run e9cc0282-dfb4-482c-b1e8-693ad4f147dd, then rerun the fresh product controlled-LLM analysis and inspect the final customer report/Decision Core.
 remaining:
-  - Let the fresh RAG analysis complete on the refreshed source facts and inspect all 10 sections.
-  - Run fresh product controlled-LLM analysis on toa-run-20261003222852-78f220 and inspect Decision Core/report.
-  - Fix any remaining P0/P1 factual or UX contradictions observed in those outputs.
-  - Run final focused tests, commit/push and close checkpoint.
+  - Inspect final RAG report for source-bound service quantity/unit, ch. 3 art. 30 advantage, national regime and timezone-preserving deadline.
+  - Rerun product controlled-LLM analysis on toa-run-20261003222852-78f220 with current code.
+  - Verify line_items contains the single service position (quantity 1, conditional unit, OKPD2), risk candidates are review-only, customer decision names concrete unresolved checks, procurement_regime is 44fz, and software manual checks contain no goods-template residue.
+  - Run broader modified-path tests, diff check, commit/push, inspect CI and close checkpoint.
 last_verified_commit: 37dfd4e11b29ed76d6a3bef3635df96f12819990
 last_tests:
   - Previous E2E suite 68 passed, 3 warnings.
-resume_instruction: Check RAG job 4cf44a1a-2313-4312-9a48-aeed6570c3da after the two earlier queued analyses release the thread pool; inspect its report for procedure/deadline/source-fact correctness. Then analyze fresh run toa-run-20261003222852-78f220 through the rendered product UI, compare Decision Core and report with the audited source facts, fix any remaining P0/P1 issues, run focused tests, commit/push and close the task.
+resume_instruction: Check RAG job e9cc0282-dfb4-482c-b1e8-693ad4f147dd to terminal state and inspect its report. Then restart current UI if needed and click Analyze for toa-run-20261003222852-78f220; wait for terminal product analysis, verify line_items/Decision Core/report against the audited facts, fix remaining P0/P1 issues only, run final tests, commit/push and close PRODUCT-ANALYSIS-QUALITY-001.
