@@ -70,6 +70,7 @@ class LocalChatLlmClient:
         registry_number: str | None = None,
         *,
         analysis_mode: str = "balanced",
+        source_facts: str | None = None,
     ) -> RagAnswer:
         sources = build_source_citations(contexts)
         if not contexts:
@@ -100,6 +101,7 @@ class LocalChatLlmClient:
             selected_contexts,
             registry_number=registry_number,
             analysis_mode=analysis_mode,
+            source_facts=source_facts,
         )
 
     def build_prompt_metrics(
@@ -109,12 +111,14 @@ class LocalChatLlmClient:
         registry_number: str | None = None,
         *,
         analysis_mode: str = "balanced",
+        source_facts: str | None = None,
     ) -> dict[str, int]:
         payload, metrics = self._build_payload(
             question,
             contexts,
             registry_number=registry_number,
             analysis_mode=analysis_mode,
+            source_facts=source_facts,
         )
         _ = payload
         return metrics
@@ -126,6 +130,7 @@ class LocalChatLlmClient:
         *,
         registry_number: str | None,
         analysis_mode: str,
+        source_facts: str | None,
     ) -> RagAnswer:
         selected_contexts = list(contexts)
         sources = build_source_citations(selected_contexts)
@@ -134,6 +139,7 @@ class LocalChatLlmClient:
             selected_contexts,
             registry_number=registry_number,
             analysis_mode=analysis_mode,
+            source_facts=source_facts,
         )
         request = urllib.request.Request(
             f"{self.base_url}/chat/completions",
@@ -153,6 +159,7 @@ class LocalChatLlmClient:
                     selected_contexts[:-1],
                     registry_number=registry_number,
                     analysis_mode=analysis_mode,
+                    source_facts=source_facts,
                 )
             return RagAnswer(
                 answer="",
@@ -229,6 +236,7 @@ class LocalChatLlmClient:
         *,
         registry_number: str | None,
         analysis_mode: str,
+        source_facts: str | None,
     ) -> tuple[dict[str, Any], dict[str, int]]:
         context_block = self._build_context_block(contexts)
         system_prompt = self._system_prompt(analysis_mode=analysis_mode)
@@ -237,6 +245,7 @@ class LocalChatLlmClient:
             context_block=context_block,
             registry_number=registry_number,
             analysis_mode=analysis_mode,
+            source_facts=source_facts,
         )
         max_tokens = {
             "fast": 384,
@@ -292,6 +301,14 @@ class LocalChatLlmClient:
             "Не используй внешние знания и не додумывай факты.\n"
             'Если данных недостаточно, напиши: "В найденных документах недостаточно информации для ответа."\n'
             "Не делай окончательных юридических выводов.\n"
+            "Не объединяй разные обязательства в одну характеристику: обеспечение исполнения контракта, "
+            "срок независимой гарантии и гарантия на результат услуг — разные сущности.\n"
+            "Условные, шаблонные и применимые только при наступлении условия положения помечай как условные; "
+            "не представляй их как безусловное требование этой закупки.\n"
+            "Для закупки услуг не превращай товарные поля (например, страну происхождения товара) "
+            "в обязательное требование, если источник прямо не подтверждает их применимость к объекту закупки.\n"
+            "Не называй полученный комплект документов полным, достаточным или исчерпывающим только потому, "
+            "что перечислены доступные файлы; описывай его как фактически полученный комплект.\n"
             "Пиши деловым русским языком.\n"
             f"{detail_rule}\n"
             "В конце ответа обязательно добавь раздел 'Источники'.\n"
@@ -306,6 +323,7 @@ class LocalChatLlmClient:
         context_block: str,
         registry_number: str | None,
         analysis_mode: str,
+        source_facts: str | None,
     ) -> str:
         registry_line = f"registry_number_filter: {registry_number}\n" if registry_number else ""
         detail_line = {
@@ -313,12 +331,20 @@ class LocalChatLlmClient:
             "balanced": "Выдели ключевые условия и добавь короткие пояснения.",
             "detailed": "Раскрой условия подробнее, но не выходи за рамки контекста.",
         }.get(analysis_mode, "Выдели ключевые условия и добавь короткие пояснения.")
+        facts_block = (
+            "Структурированные source-bound факты источников (считай их подтверждёнными; "
+            "даты, время, часовой пояс, проценты и сроки сохраняй буквально):\n"
+            f"{source_facts.strip()}\n\n"
+            if source_facts and source_facts.strip()
+            else ""
+        )
         return (
             f"{registry_line}"
             f"Вопрос:\n{question.strip()}\n\n"
             f"Режим анализа: {analysis_mode}\n"
             f"Инструкция: {detail_line}\n\n"
-            "Контекст:\n"
+            f"{facts_block}"
+            "Контекст фрагментов документов:\n"
             f"{context_block}\n\n"
             "Сформируй ответ в формате:\n"
             "Краткий ответ:\n"

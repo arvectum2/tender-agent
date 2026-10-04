@@ -161,6 +161,15 @@ def test_missing_contract_and_missing_supplier_profile_block_go_not_force_no_go(
     assert states["SUPPLIER_PROFILE"] == "MISSING"
 
 
+def test_needs_review_rationale_names_unresolved_readiness_items() -> None:
+    model = _grounded_model()
+    result = build_decision_core(model)
+
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    rationale = " ".join(result["decision"]["rationale"])
+    assert "Профиль поставщика:" in rationale
+
+
 def test_supplier_price_outside_profile_requires_review_not_no_go() -> None:
     result = build_decision_core(_grounded_model(), supplier_profile=_profile(price_max=500_000))
 
@@ -217,6 +226,7 @@ def test_canonical_report_builder_attaches_fail_closed_decision_core() -> None:
             "nmck": "eis_notice:initial_price",
         },
         "deadline": "30.09.2026 12:00 +03:00",
+        "law": "44-ФЗ",
         "analysis_completed_at": "15.09.2026T12:00:00+00:00",
     }
     outputs = {
@@ -249,6 +259,8 @@ def test_canonical_report_builder_attaches_fail_closed_decision_core() -> None:
     model = build_procurement_report_model(metadata, outputs)
 
     assert model["decision_core"]["contract_version"] == DECISION_CORE_CONTRACT_VERSION
+    assert model["decision_core"]["procurement_regime"] == "44fz"
+    assert model["procurement_regime"] == "44fz"
     assert model["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
     assert model["bid_decision"]["status"] == "needs_review"
     assert model["decision_core"]["supplier_profile_bound"] is True

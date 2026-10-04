@@ -1709,7 +1709,7 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                 ${{relBreakdown}}
                 ${{(card.warnings || []).length ? `<div class="note" style="margin-top:10px">${{escapeHtml(card.warnings.join('; '))}}</div>` : ''}}
                 <div class="form-actions" style="margin-top:12px">
-                  ${{card.reestr_number ? `<button class="button primary public-search-handoff-button" type="button" data-reestr="${{escapeHtml(card.reestr_number)}}" data-title="${{escapeHtml(card.title)}}" data-customer="${{escapeHtml(card.customer_name || '')}}" data-url="${{escapeHtml(card.source_url || '')}}">Получить документацию</button>` : ''}}
+                  ${{card.reestr_number ? `<button class="button primary public-search-handoff-button" type="button" data-reestr="${{escapeHtml(card.reestr_number)}}" data-title="${{escapeHtml(card.title)}}" data-customer="${{escapeHtml(card.customer_name || '')}}" data-url="${{escapeHtml(card.source_url || '')}}" data-law="${{escapeHtml(card.category || card.law || '44-ФЗ')}}" data-price="${{escapeHtml(card.initial_price ?? '')}}" data-publication="${{escapeHtml(card.publication_date || '')}}" data-deadline="${{escapeHtml(card.deadline || '')}}" data-currency="${{escapeHtml(card.currency || 'RUB')}}" data-status="${{escapeHtml(card.status || '')}}" data-procedure="${{escapeHtml(card.procedure_type || '')}}">Получить документацию</button>` : ''}}
                   ${{card.source_url ? `<a class="link-button" href="${{escapeHtml(card.source_url)}}" target="_blank" rel="noreferrer">Открыть в ЕИС</a>` : ''}}
                 </div>
                 <div class="note" style="margin-top:8px">Поиск работает в read-only режиме. Система не входит в личный кабинет, не обходит captcha, не подаёт заявку.</div>
@@ -1721,7 +1721,19 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
               </div>`;
             for (const button of node.querySelectorAll('.public-search-handoff-button')) {{
               button.addEventListener('click', () => {{
-                handlePublicSearchHandoff(button.dataset.reestr, button.dataset.title, button.dataset.customer, button.dataset.url);
+                handlePublicSearchHandoff(
+                  button.dataset.reestr,
+                  button.dataset.title,
+                  button.dataset.customer,
+                  button.dataset.url,
+                  button.dataset.law,
+                  button.dataset.price,
+                  button.dataset.publication,
+                  button.dataset.deadline,
+                  button.dataset.currency,
+                  button.dataset.status,
+                  button.dataset.procedure
+                );
               }});
             }}
             document.getElementById('public-search-next-button')?.addEventListener('click', loadNextPublicSearchPage);
@@ -1781,7 +1793,19 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
             }});
           }}
 
-          async function handlePublicSearchHandoff(reestrNumber, title, customerName, sourceUrl) {{
+          async function handlePublicSearchHandoff(
+            reestrNumber,
+            title,
+            customerName,
+            sourceUrl,
+            law = null,
+            initialPrice = null,
+            publicationDate = null,
+            deadline = null,
+            currency = null,
+            status = null,
+            procedureType = null
+          ) {{
             if (!reestrNumber) {{
               setFlash('procurement-flash', 'Не указан номер закупки.', true);
               return;
@@ -1811,6 +1835,13 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                   title: title || null,
                   customer_name: customerName || null,
                   source_url: sourceUrl || null,
+                  law: law || null,
+                  initial_price: initialPrice ? Number(initialPrice) : null,
+                  publication_date: publicationDate || null,
+                  deadline: deadline || null,
+                  currency: currency || null,
+                  status: status || null,
+                  procedure_type: procedureType || null,
                   download_archive: true,
                   analyze_after_download: false,
                 }}),

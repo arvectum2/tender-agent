@@ -497,6 +497,11 @@ def build_decision_core(
     elif non_satisfied or unknowns:
         status = "NEEDS_REVIEW"
         rationale.insert(0, "Недостаточно подтверждённых данных для безусловного GO; требуется ручная проверка.")
+        for item in non_satisfied[:4]:
+            label = _text(item.get("label")) or _text(item.get("code")) or "Проверка"
+            summary = _text(item.get("summary"))
+            if summary:
+                rationale.append(f"{label}: {summary}")
         confidence = "medium" if not unknowns else "low"
         next_action = "Закрыть отмеченные пробелы/проверки и повторно оценить участие; внешние действия выполнять только после решения человека."
     else:

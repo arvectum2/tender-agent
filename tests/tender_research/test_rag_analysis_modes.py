@@ -97,7 +97,7 @@ def test_analyze_tender_llm_fallback_returns_timings_and_warning() -> None:
             return [hit]
 
     class FakeLlmClient:
-        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced"):  # noqa: ARG002
+        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced", source_facts=None):  # noqa: ARG002
             return {
                 "context_chars": 1400,
                 "system_prompt_chars": 200,
@@ -105,7 +105,7 @@ def test_analyze_tender_llm_fallback_returns_timings_and_warning() -> None:
                 "prompt_chars": 500,
             }
 
-        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced"):  # noqa: ARG002
+        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced", source_facts=None):  # noqa: ARG002
             return RagAnswer(
                 answer="",
                 sources=[],

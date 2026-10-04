@@ -2,13 +2,18 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from src.tender_research.rag.analysis_service import (
     _build_report_markdown,
     _finalize_analysis_status,
+    _focused_queries_for_section,
+    _notice_source_facts,
+    _preserve_structured_deadline,
     _save_report,
     _slugify,
+    _structured_fact_citation,
     _vector_store_path,
     analyze_tender,
 )
@@ -48,6 +53,70 @@ class TestVectorStorePath:
         assert "vector_store" in path
 
 
+def test_deadline_answer_preserves_structured_source_timezone():
+    answer = (
+        "Дата окончания подачи заявок — 05.10.2026 10:00. "
+        "Дата подведения итогов — 07.10.2026."
+    )
+    enriched = _preserve_structured_deadline(
+        "deadlines",
+        answer,
+        "Окончание подачи заявок: 05.10.2026 10:00 (МСК+2)",
+    )
+    assert "05.10.2026 10:00 (МСК+2)" in enriched
+    assert "05.10.2026 10:00." not in enriched
+
+
+def test_application_and_restrictions_use_focused_retrieval_queries():
+    subject_queries = " ".join(_focused_queries_for_section("subject")).lower()
+    application_queries = " ".join(_focused_queries_for_section("application_composition")).lower()
+    restrictions_queries = " ".join(_focused_queries_for_section("restrictions_benefits")).lower()
+    assert "условная единица" in subject_queries
+    assert "количество" in subject_queries
+    assert "реестровой записи российского программного обеспечения" in application_queries
+    assert "предложение о цене" in application_queries
+    assert "1875" in restrictions_queries
+    assert "ч. 3 ст. 30" in restrictions_queries
+    assert "8.1 статьи 96" in restrictions_queries
+
+
+def test_notice_source_facts_extract_position_and_procurement_advantage(tmp_path):
+    title = "Оказание услуг по разработке модуля для ГИС Аксиома"
+    notice = (
+        "Объект закупки\n"
+        "Наименование товара, работы, услугиКод позицииТип позицииЕдиница измерения"
+        "Цена за единицуЗаказчикКоличество (объем работы, услуги)Стоимость позиции"
+        f"{title}Идентификатор: 22318524862.02.30.000"
+        "УслугаУсловная единица521000.00"
+        "ДЕПАРТАМЕНТ ПРИРОДНЫХ РЕСУРСОВ - ЮГРЫ"
+        "1521000.00"
+        "Характеристики товара, работы, услуги"
+        "Преимущества Преимущество в соответствии с ч. 3 ст. 30 Закона № 44-ФЗ "
+        "Постановление Правительства Российской Федерации № 1875 "
+        "Запрет закупок товаров, работ, услуг иностранных лиц "
+        "Обеспечение заявок не требуется "
+        "Обеспечение гарантийных обязательств не требуется"
+    )
+    path = tmp_path / "Извещение.txt"
+    path.write_text(notice, encoding="utf-8")
+    repo = MagicMock()
+    repo.list_extracted_documents_by_tender.return_value = [
+        SimpleNamespace(file_name="Извещение о закупке.docx", extracted_text_path=str(path))
+    ]
+    tender = SimpleNamespace(id="tender-1")
+
+    facts = _notice_source_facts(repo, tender)
+
+    assert "Единица измерения: Условная единица" in facts
+    assert "Количество (объём): 1" in facts
+    assert "Цена за единицу: 521000.00 RUB" in facts
+    assert "Стоимость позиции: 521000.00 RUB" in facts
+    assert "ОКПД2: 62.02.30.000" in facts
+    assert "ч. 3 ст. 30 Закона № 44-ФЗ" in facts
+    assert "Обеспечение заявки: не требуется" in facts
+    assert "Обеспечение гарантийных обязательств: не требуется" in facts
+
+
 class TestBuildReportMarkdown:
     def test_empty_sections(self):
         result = _build_report_markdown(
@@ -60,6 +129,26 @@ class TestBuildReportMarkdown:
         )
         assert "123" in result
         assert "0" in result
+        assert "Уникальных источников (включая структурированную карточку)" in result
+
+    def test_report_surfaces_structured_source_facts_before_llm_sections(self):
+        result = _build_report_markdown(
+            registry_number="123",
+            sections=[],
+            used_llm=True,
+            llm_model="model",
+            retrieval_provider="hash",
+            retrieval_model="v1",
+            source_facts=(
+                "Способ закупки: Запрос котировок\n"
+                "Окончание подачи заявок: 05.10.2026 10:00 (МСК+2)\n"
+                "НМЦК: 521000 RUB"
+            ),
+        )
+        assert "## Подтверждённые факты карточки закупки" in result
+        assert "- Способ закупки: Запрос котировок" in result
+        assert "- Окончание подачи заявок: 05.10.2026 10:00 (МСК+2)" in result
+        assert "- НМЦК: 521000 RUB" in result
 
     def test_section_with_answer_and_sources(self):
         sections = [
@@ -126,6 +215,40 @@ class TestSaveReport:
 
 
 class TestAnalyzeTender:
+    def test_structured_card_fact_citation_is_explicit_source(self):
+        citation = _structured_fact_citation(
+            registry_number="0187200001726001304",
+            tender_title="Разработка ПО",
+            customer_name="Заказчик",
+            source_facts="Способ закупки: Запрос котировок",
+        )
+        assert citation.chunk_id == "structured-facts:0187200001726001304"
+        assert citation.document_file_name == "Карточка ЕИС — структурированные факты"
+        assert citation.quote_preview == "Способ закупки: Запрос котировок"
+
+    def test_analysis_refreshes_latest_operator_run_before_using_rag_tender(self):
+        mock_tender = MagicMock()
+        mock_tender.raw_payload = {}
+        mock_repo = MagicMock()
+        mock_repo.count_document_embeddings.return_value = 0
+        with patch(
+            "src.tender_research.rag.analysis_service.TenderRepository",
+            return_value=mock_repo,
+        ):
+            with patch(
+                "src.tender_research.rag.analysis_service.sync_tender_from_operator_run",
+                return_value=mock_tender,
+            ) as sync:
+                result = analyze_tender(
+                    registry_number="0187200001726001304",
+                    provider="hashing",
+                    model="local-hash-v1",
+                    session=MagicMock(),
+                )
+        sync.assert_called_once_with(mock_repo, "0187200001726001304")
+        assert result.status == "no_context"
+        mock_repo.get_tender_by_registry_number.assert_not_called()
+
     def test_finalize_analysis_status_adds_warning_when_sources_missing(self):
         status, warnings = _finalize_analysis_status(
             sections=[],

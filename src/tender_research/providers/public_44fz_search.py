@@ -1038,13 +1038,14 @@ def _parse_detail_metadata(html_str: str, card_url: str | None) -> dict[str, Any
     title = _extract_card_main_info_value(html_str, "Объект закупки")
     customer_name = _extract_explicit_customer_name(html_str)
     publication_date = _parse_public_datetime(_extract_card_main_info_value(html_str, "Размещено"))
-    application_deadline = _parse_public_datetime(
+    application_deadline_source_text = (
         _extract_section_info_value(
             html_str,
             ("Дата и время окончания срока подачи заявок",),
         )
         or _extract_card_main_info_value(html_str, "Окончание подачи заявок")
     )
+    application_deadline = _parse_public_datetime(application_deadline_source_text)
     nmck_text = _extract_card_main_info_value(html_str, "Начальная цена")
     nmck_amount = _extract_price(nmck_text)
     customer_inn, customer_kpp = _extract_inn_kpp(html_str)
@@ -1057,6 +1058,7 @@ def _parse_detail_metadata(html_str: str, card_url: str | None) -> dict[str, Any
         "customer_kpp": customer_kpp,
         "publication_date": publication_date,
         "application_deadline": application_deadline,
+        "application_deadline_source_text": application_deadline_source_text,
         "nmck_amount": nmck_amount,
         "law_type": "44fz",
         "card_url": card_url,

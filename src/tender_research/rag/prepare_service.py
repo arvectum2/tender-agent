@@ -4,10 +4,11 @@ import hashlib
 import json
 import logging
 import os
-from datetime import UTC, datetime
+import re
+from datetime import UTC, datetime, timedelta, timezone
 from pathlib import Path
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
 from src.shared.config.settings import get_settings
@@ -16,6 +17,7 @@ from src.shared.storage.gate import check_ingestion_allowed
 from src.tender_research.config import load_config
 from src.tender_research.document_store import download_tender_documents
 from src.tender_research.eis_loader import EisTenderLoader
+from src.tender_research.models import ProcurementTenderDocument
 from src.tender_research.rag.embeddings import build_embedding_provider
 from src.tender_research.rag.indexer import DocumentChunkIndexer, DocumentEmbeddingIndexer
 from src.tender_research.rag.vector_store import JsonVectorStore
@@ -109,9 +111,21 @@ def _parse_operator_datetime(value: object) -> datetime | None:
     text = str(value or "").strip()
     if not text:
         return None
+    zone_match = re.search(
+        r"\(\s*МСК\s*(?:([+-])\s*(\d{1,2}))?\s*\)$",
+        text,
+        flags=re.IGNORECASE,
+    )
+    source_timezone = UTC
+    if zone_match:
+        delta = int(zone_match.group(2) or 0)
+        if zone_match.group(1) == "-":
+            delta = -delta
+        source_timezone = timezone(timedelta(hours=3 + delta))
+        text = text[: zone_match.start()].strip()
     for fmt in ("%d.%m.%Y %H:%M", "%d.%m.%Y", "%Y-%m-%d"):
         try:
-            return datetime.strptime(text, fmt).replace(tzinfo=UTC)
+            return datetime.strptime(text, fmt).replace(tzinfo=source_timezone).astimezone(UTC)
         except ValueError:
             continue
     return None
@@ -184,6 +198,33 @@ def _ingest_from_operator_run(
                 "source": "tender_operator_demo_run",
                 "operator_run_id": payload.get("run_id"),
                 "metadata_path": str(metadata_path),
+                "procurement_law": payload.get("law") or procurement.get("category"),
+                "procedure_type_source_text": procurement.get("procedure_type"),
+                "status_source_text": procurement.get("status"),
+                "publication_date_source_text": (
+                    procurement.get("publication_date") or payload.get("publication_date")
+                ),
+                "application_deadline_source_text": (
+                    procurement.get("deadline") or payload.get("deadline")
+                ),
+                "customer_name_source_text": (
+                    procurement.get("customer_name") or payload.get("customer_name")
+                ),
+                "nmck_source_value": procurement.get("initial_price"),
+                "document_inventory": [
+                    str(
+                        item.get("original_name")
+                        or item.get("display_name")
+                        or item.get("stored_name")
+                        or ""
+                    )
+                    for item in payload.get("files") or []
+                    if (
+                        item.get("original_name")
+                        or item.get("display_name")
+                        or item.get("stored_name")
+                    )
+                ],
             },
         }
     )
@@ -203,25 +244,48 @@ def _ingest_from_operator_run(
             "document_kind": item.get("document_kind"),
             "source_provenance": item.get("source_provenance"),
         }
-        repo.upsert_document(
-            {
-                "tender_id": tender.id,
-                "source_document_id": str(item.get("file_id") or source_url or stored_name),
-                "file_name": str(item.get("original_name") or item.get("display_name") or stored_name),
-                "file_url": source_url,
-                "local_path": str(local_path),
-                "content_type": item.get("content_type"),
-                "size_bytes": local_path.stat().st_size,
-                "sha256": hashlib.sha256(local_path.read_bytes()).hexdigest(),
-                "download_status": "downloaded",
-                "text_extraction_status": "pending",
-                "raw_meta": raw_meta,
-                "error_message": None,
-            }
-        )
+        digest = hashlib.sha256(local_path.read_bytes()).hexdigest()
+        existing = repo._session.execute(
+            select(ProcurementTenderDocument).where(
+                ProcurementTenderDocument.tender_id == tender.id,
+                ProcurementTenderDocument.sha256 == digest,
+            )
+        ).scalar_one_or_none()
+        if not isinstance(existing, ProcurementTenderDocument):
+            existing = None
+        document_data = {
+            "tender_id": tender.id,
+            "source_document_id": str(item.get("file_id") or source_url or stored_name),
+            "file_name": str(item.get("original_name") or item.get("display_name") or stored_name),
+            "file_url": source_url,
+            "local_path": str(local_path),
+            "content_type": item.get("content_type"),
+            "size_bytes": local_path.stat().st_size,
+            "sha256": digest,
+            "download_status": "downloaded",
+            "raw_meta": raw_meta,
+        }
+        if existing is None:
+            document_data["text_extraction_status"] = "pending"
+            document_data["error_message"] = None
+        repo.upsert_document(document_data)
     repo._session.commit()
     repo._session.refresh(tender)
     return tender
+
+
+def sync_tender_from_operator_run(
+    repo: TenderRepository,
+    registry_number: str,
+) -> object | None:
+    """Refresh RAG tender metadata/documents from the newest local operator run.
+
+    Analysis can be launched while the vector corpus is already ready. In that
+    case the UI intentionally skips the prepare step, so source-bound card
+    facts (procedure, status, timezone-preserving deadline, price) still need a
+    lightweight refresh before prompt construction.
+    """
+    return _ingest_from_operator_run(repo, registry_number)
 
 
 def prepare_tender_for_analysis(
@@ -272,7 +336,9 @@ def prepare_tender_for_analysis(
 
         repo = TenderRepository(session)
 
-        tender = repo.get_tender_by_registry_number(registry_number)
+        tender = _ingest_from_operator_run(repo, registry_number)
+        if tender is None:
+            tender = repo.get_tender_by_registry_number(registry_number)
         if not tender:
             step = TenderPreparationStep(
                 "check_tender_exists",
@@ -508,6 +574,7 @@ def prepare_tender_for_analysis(
         if errors:
             overall_status = "failed"
 
+        session.commit()
         return TenderPreparationResult(
             status=overall_status,
             registry_number=registry_number,

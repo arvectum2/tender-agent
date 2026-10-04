@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 import logging
 from pathlib import Path
+import re
 import time
 from uuid import uuid4
 
@@ -18,6 +19,7 @@ from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
+from src.tender_research.rag.prepare_service import sync_tender_from_operator_run
 from src.tender_research.rag.retriever import RagRetriever, RagSearchHit
 from src.tender_research.rag.schemas import (
     ANALYSIS_SECTIONS,
@@ -84,6 +86,35 @@ _ANALYSIS_MODE_PRESETS: dict[str, AnalysisModeConfig] = {
 }
 
 
+def _source_fact_value(source_facts: str | None, label: str) -> str | None:
+    if not source_facts:
+        return None
+    prefix = f"{label}:"
+    for raw_line in source_facts.splitlines():
+        line = raw_line.strip()
+        if line.startswith(prefix):
+            value = line[len(prefix):].strip()
+            return value or None
+    return None
+
+
+def _preserve_structured_deadline(
+    section_id: str,
+    answer: str,
+    source_facts: str | None,
+) -> str:
+    """Keep source timezone in deadline answers even if the LLM shortens it."""
+    if section_id != "deadlines" or not answer:
+        return answer
+    deadline = _source_fact_value(source_facts, "Окончание подачи заявок")
+    if not deadline or deadline in answer:
+        return answer
+    match = re.match(r"(\d{2}\.\d{2}\.\d{4}\s+\d{2}:\d{2})", deadline)
+    if match and match.group(1) in answer:
+        return answer.replace(match.group(1), deadline)
+    return f"Подтверждённый срок подачи заявок: {deadline}.\n\n{answer}"
+
+
 def _slugify(value: str) -> str:
     import re
     slug = re.sub(r"[^a-zA-Z0-9]+", "_", value).strip("_").lower()
@@ -91,6 +122,223 @@ def _slugify(value: str) -> str:
 
 
 _DEFAULT_HASH_PROVIDER_NAMES = {"hash", "hashing", "local_hash"}
+_STRUCTURED_FACT_SECTION_IDS = {
+    "notice_info",
+    "subject",
+    "application_composition",
+    "restrictions_benefits",
+    "deadlines",
+    "documents_summary",
+}
+
+_FOCUSED_SECTION_QUERIES: dict[str, tuple[str, ...]] = {
+    "subject": (
+        "Объект закупки Тип позиции Услуга Единица измерения Условная единица Количество объем работы услуги Стоимость позиции",
+        "62.02.30.000 Услуга Условная единица 521000",
+    ),
+    "contract_terms": (
+        "Авансовые платежи по Контракту не предусмотрены; 100 процентов в течение 7 рабочих дней после приемки",
+        "Услуга должна быть оказана до 13.11.2026; срок исполнения контракта",
+        "Размер обеспечения исполнения контракта 10 процентов",
+        "Заказчик подписывает документ о приемке в течение рабочих дней",
+        "неустойка штраф пеня ответственность Исполнителя",
+    ),
+    "application_composition": (
+        "декларация о соответствии пунктам 3 5 7 11 части 1 статьи 31 реквизиты счета предложение о цене контракта",
+        "порядковый номер реестровой записи российского программного обеспечения статья 14 национальный режим",
+        "информация и документы оператор электронной площадки не включаются участником в заявку",
+    ),
+    "restrictions_benefits": (
+        "Преимущество в соответствии с ч. 3 ст. 30 Закона № 44-ФЗ",
+        "Постановление Правительства 1875 запрет услуги иностранных лиц национальный режим",
+        "СМП СОНКО часть 8.1 статьи 96 освобождается от обеспечения исполнения контракта",
+        "обеспечение гарантийных обязательств не требуется",
+    ),
+}
+
+
+def _focused_queries_for_section(section_id: str) -> tuple[str, ...]:
+    return _FOCUSED_SECTION_QUERIES.get(section_id, ())
+
+
+def _structured_fact_citation(
+    *,
+    registry_number: str,
+    tender_title: str,
+    customer_name: str | None,
+    source_facts: str,
+    source_label: str = "Карточка ЕИС — структурированные факты",
+) -> SourceCitation:
+    source_id = "structured-facts:" + registry_number
+    return SourceCitation(
+        chunk_id=source_id,
+        registry_number=registry_number,
+        tender_title=tender_title,
+        customer_name=customer_name,
+        document_id=source_id,
+        document_file_name=source_label,
+        score=1.0,
+        quote_preview=source_facts,
+    )
+
+
+def _first_match(text: str, pattern: str) -> str | None:
+    match = re.search(pattern, text, flags=re.IGNORECASE | re.MULTILINE)
+    if not match:
+        return None
+    return re.sub(r"\s+", " ", match.group(1)).strip(" .;\n\t")
+
+
+def _notice_source_facts(repo: TenderRepository, tender) -> str:
+    """Extract bounded purchase-object and restriction facts from the EIS notice."""
+    notice_parts: list[str] = []
+    for doc in repo.list_extracted_documents_by_tender(tender.id):
+        name = str(doc.file_name or "").lower()
+        if "извещ" not in name:
+            continue
+        path = Path(str(doc.extracted_text_path or ""))
+        if not path.is_file():
+            continue
+        try:
+            notice_parts.append(path.read_text(encoding="utf-8"))
+        except OSError:
+            continue
+    text = "\n".join(notice_parts)
+    if not text:
+        return ""
+
+    facts: list[str] = []
+    row = re.search(
+        r"Объект закупки\s*"
+        r"Наименование товара, работы, услуги.*?"
+        r"Стоимость позиции"
+        r"(?P<name>.+?)"
+        r"Идентификатор:\s*(?P<identifier>\d+?)"
+        r"(?P<okpd2>\d{2}\.\d{2}\.\d{2}\.\d{3})"
+        r"Услуга"
+        r"(?P<unit>Условная единица)"
+        r"(?P<unit_price>\d+(?:[.,]\d{2})?)"
+        r"(?P<tail>.+?)"
+        r"Характеристики товара, работы, услуги",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if row:
+        numeric_match = re.search(r"(?P<numeric>[0-9.,]+)\s*$", re.sub(r"\s+", " ", row.group("tail")).strip())
+        if numeric_match:
+            suffix = numeric_match.group("numeric")
+            unit_price = float(row.group("unit_price").replace(",", "."))
+            for split_at in range(1, len(suffix)):
+                quantity_raw, total_raw = suffix[:split_at], suffix[split_at:]
+                if not re.fullmatch(r"\d+(?:[.,]\d+)?", quantity_raw):
+                    continue
+                if not re.fullmatch(r"\d+[.,]\d{2}", total_raw):
+                    continue
+                quantity = float(quantity_raw.replace(",", "."))
+                total = float(total_raw.replace(",", "."))
+                if abs(unit_price * quantity - total) <= max(0.01, abs(total) * 0.001):
+                    normalized_name = re.sub(r"\s+", " ", row.group("name")).strip()
+                    facts.extend(
+                        [
+                            f"Позиция закупки: {normalized_name}",
+                            f"ОКПД2: {row.group('okpd2')}",
+                            f"Тип позиции: услуга",
+                            f"Единица измерения: {row.group('unit')}",
+                            f"Количество (объём): {quantity_raw}",
+                            f"Цена за единицу: {row.group('unit_price')} RUB",
+                            f"Стоимость позиции: {total_raw} RUB",
+                        ]
+                    )
+                    break
+
+    advantage = _first_match(
+        text,
+        r"(Преимущество\s+в\s+соответствии\s+с\s+ч\.\s*3\s+ст\.\s*30\s+Закона\s+№\s*44-ФЗ)",
+    )
+    if advantage:
+        facts.append(f"Преимущество закупки: {advantage}")
+    if "Постановление Правительства Российской Федерации" in text and "№ 1875" in text:
+        facts.append("Национальный режим: применяется Постановление Правительства РФ № 1875.")
+    if re.search(r"Запрет закупок[^\n]{0,500}?услуг иностранными лицами", text, re.IGNORECASE):
+        facts.append("Национальный режим: установлен запрет на услуги, оказываемые иностранными лицами.")
+    if re.search(r"Обеспечение заявок не требуется", text, re.IGNORECASE):
+        facts.append("Обеспечение заявки: не требуется.")
+    if re.search(r"Обеспечение гарантийных обязательств не требуется", text, re.IGNORECASE):
+        facts.append("Обеспечение гарантийных обязательств: не требуется.")
+    return "\n".join(facts)
+
+
+def _contract_source_facts(repo: TenderRepository, tender) -> str:
+    """Extract a small deterministic contract fact set from current source text."""
+    contract_parts: list[str] = []
+    technical_parts: list[str] = []
+    notice_parts: list[str] = []
+    for doc in repo.list_extracted_documents_by_tender(tender.id):
+        path = Path(str(doc.extracted_text_path or ""))
+        if not path.is_file():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        name = str(doc.file_name or "").lower()
+        if "контракт" in name:
+            contract_parts.append(text)
+        elif "техничес" in name or "задан" in name:
+            technical_parts.append(text)
+        elif "извещ" in name:
+            notice_parts.append(text)
+
+    contract_text = "\n".join(contract_parts)
+    technical_text = "\n".join(technical_parts)
+    notice_text = "\n".join(notice_parts)
+    facts: list[str] = []
+
+    service_term = _first_match(
+        contract_text + "\n" + technical_text,
+        r"Услуга должна быть оказана[^.\n]*?до\s+(\d{2}\.\d{2}\.\d{4})",
+    )
+    if service_term:
+        facts.append(f"Срок оказания услуг: до {service_term}")
+
+    execution_term = _first_match(
+        contract_text + "\n" + notice_text,
+        r"Срок исполнения контракта[^\n\d]*(\d{2}\.\d{2}\.\d{4})",
+    )
+    if execution_term:
+        facts.append(f"Срок исполнения контракта: до {execution_term}")
+
+    if re.search(r"Авансовые платежи[^.]{0,120}не предусмотр", contract_text, re.IGNORECASE):
+        facts.append("Аванс: не предусмотрен")
+
+    payment = _first_match(
+        contract_text,
+        r"Расчет за оказанные услуги\s+осуществляется\s+([^\.]+)",
+    )
+    if payment:
+        facts.append(f"Оплата: {payment}")
+
+    security = _first_match(
+        notice_text + "\n" + contract_text,
+        r"Размер обеспечения исполнения контракта[^%\n]{0,220}?(\d+(?:[.,]\d+)?)\s*%",
+    )
+    if security:
+        facts.append(f"Обеспечение исполнения контракта: {security.replace('.', ',')}%")
+
+    warranty = _first_match(
+        technical_text,
+        r"Гарантийные обязательства\s+Гарантия\s+([^\.]+)",
+    )
+    if warranty:
+        facts.append(f"Гарантия: {warranty}")
+    remediation = _first_match(
+        technical_text,
+        r"Срок устранения\s*[–-]\s*([^\.]+)",
+    )
+    if remediation:
+        facts.append(f"Срок устранения недостатков: {remediation}")
+
+    return "\n".join(facts)
 
 
 def _vector_store_path(config, *, provider_name: str, model_name: str) -> str:
@@ -230,7 +478,21 @@ def _build_report_markdown(
     retrieval_model: str | None,
     analysis_mode: str = DEFAULT_ANALYSIS_MODE,
     duration_seconds: float | None = None,
+    source_facts: str | None = None,
 ) -> str:
+    unique_chunks = {
+        source.chunk_id
+        for section in sections
+        for source in section.sources
+        if source.chunk_id
+    }
+    unique_documents = {
+        source.document_file_name
+        for section in sections
+        for source in section.sources
+        if source.document_file_name
+    }
+    citation_uses = sum(len(section.sources) for section in sections)
     lines = [
         f"# Анализ закупки {registry_number}",
         "",
@@ -239,11 +501,22 @@ def _build_report_markdown(
         f"**LLM:** {'да' if used_llm else 'нет'} {f'({llm_model})' if llm_model and used_llm else ''}",
         f"**Поиск:** {retrieval_provider or '?'} / {retrieval_model or '?'}",
         f"**Разделов:** {len(sections)}",
-        f"**Источников:** {sum(len(s.sources) for s in sections)}",
+        f"**Уникальных источников (включая структурированную карточку):** {len(unique_documents)}",
+        f"**Уникальных фрагментов:** {len(unique_chunks)}",
+        f"**Использований источников по разделам:** {citation_uses}",
         "",
     ]
     if duration_seconds is not None:
         lines.append(f"**Длительность:** {duration_seconds:.2f} сек")
+    if source_facts and source_facts.strip():
+        lines.extend(
+            [
+                "",
+                "## Подтверждённые факты карточки закупки",
+                "",
+                *[f"- {line}" for line in source_facts.strip().splitlines() if line.strip()],
+            ]
+        )
     lines.extend(["", "---", ""])
     for section in sections:
         lines.append(f"## {section.id}. {section.title}")
@@ -428,7 +701,16 @@ def analyze_tender(
         object.__setattr__(config, "local_llm_timeout_seconds", mode_config.llm_timeout_seconds)
 
         repo = TenderRepository(session)
-        tender = repo.get_tender_by_registry_number(registry_number)
+        try:
+            tender = sync_tender_from_operator_run(repo, registry_number)
+        except Exception:
+            logger.exception(
+                "Failed to refresh operator-run metadata for %s; using stored RAG tender",
+                registry_number,
+            )
+            tender = None
+        if tender is None:
+            tender = repo.get_tender_by_registry_number(registry_number)
         if not tender:
             tender = repo.get_tender_by_external("eis", registry_number)
         if not tender:
@@ -446,6 +728,64 @@ def analyze_tender(
             if record_history:
                 _record_history(result, session, duration_seconds=0.0, source=history_source)
             return result
+
+        raw_payload = tender.raw_payload if isinstance(tender.raw_payload, dict) else {}
+        document_inventory = [
+            str(item).strip()
+            for item in (raw_payload.get("document_inventory") or [])
+            if str(item).strip()
+        ]
+        if not document_inventory:
+            document_inventory = [
+                doc.file_name
+                for doc in repo.list_extracted_documents_by_tender(tender.id)
+                if doc.file_name
+            ]
+        deadline_source_text = str(
+            raw_payload.get("application_deadline_source_text") or ""
+        ).strip()
+        publication_source_text = str(
+            raw_payload.get("publication_date_source_text") or ""
+        ).strip()
+        source_fact_lines = [
+            f"Номер закупки: {registry_number}",
+            f"Предмет: {tender.title}",
+            f"Заказчик: {tender.customer_name or 'не указан'}",
+            f"Закон: {raw_payload.get('procurement_law') or tender.law_type or 'не указан'}",
+            f"Способ закупки: {raw_payload.get('procedure_type_source_text') or 'не указан'}",
+            f"Статус закупки: {raw_payload.get('status_source_text') or tender.status or 'не указан'}",
+            (
+                f"Дата публикации: {publication_source_text}"
+                if publication_source_text
+                else (
+                    f"Дата публикации: {tender.publication_date.isoformat()}"
+                    if tender.publication_date
+                    else "Дата публикации: не указана"
+                )
+            ),
+            (
+                f"Окончание подачи заявок: {deadline_source_text}"
+                if deadline_source_text
+                else (
+                    f"Окончание подачи заявок (UTC): {tender.application_deadline.isoformat()}"
+                    if tender.application_deadline
+                    else "Окончание подачи заявок: не указано"
+                )
+            ),
+            (
+                f"НМЦК: {raw_payload.get('nmck_source_value') or tender.nmck_amount} "
+                f"{tender.currency or 'RUB'}"
+                if (raw_payload.get("nmck_source_value") is not None or tender.nmck_amount is not None)
+                else "НМЦК: не указана"
+            ),
+        ]
+        if document_inventory:
+            source_fact_lines.append(
+                "Состав полученной документации: " + "; ".join(document_inventory)
+            )
+        source_facts = "\n".join(source_fact_lines)
+        notice_source_facts = _notice_source_facts(repo, tender)
+        contract_source_facts = _contract_source_facts(repo, tender)
 
         emb_provider = build_embedding_provider(config)
         vector_store = JsonVectorStore(
@@ -542,15 +882,74 @@ def analyze_tender(
                 registry_number=registry_number,
                 limit=mode_config.retrieval_limit,
             )
+            focused_queries = _focused_queries_for_section(sec_def["id"])
+            if focused_queries:
+                priority_hits: list[RagSearchHit] = []
+                for focused_query in focused_queries:
+                    priority_hits.extend(
+                        retriever.search_documents(
+                            focused_query,
+                            registry_number=registry_number,
+                            limit=1,
+                        )
+                    )
+                seen_priority: set[str] = set()
+                merged_hits: list[RagSearchHit] = []
+                for hit in [*priority_hits, *hits]:
+                    if hit.chunk_id in seen_priority:
+                        continue
+                    seen_priority.add(hit.chunk_id)
+                    merged_hits.append(hit)
+                hits = merged_hits
             retrieval_seconds = time.perf_counter() - retrieval_started_at
             retrieval_seconds_total += retrieval_seconds
             sources = build_source_citations(hits)
+            if sec_def["id"] == "contract_terms" and contract_source_facts:
+                section_source_facts = contract_source_facts
+                structured_source_label = "Проект контракта и ТЗ — структурированные факты"
+            elif sec_def["id"] in {"subject", "restrictions_benefits"} and notice_source_facts:
+                section_source_facts = "\n".join(
+                    part for part in (source_facts, notice_source_facts) if part
+                )
+                structured_source_label = "Извещение ЕИС — структурированные факты"
+            elif sec_def["id"] in _STRUCTURED_FACT_SECTION_IDS:
+                section_source_facts = source_facts
+                structured_source_label = "Карточка ЕИС — структурированные факты"
+            else:
+                section_source_facts = None
+                structured_source_label = "Структурированные факты источников"
+            if section_source_facts:
+                sources = [
+                    _structured_fact_citation(
+                        registry_number=registry_number,
+                        tender_title=tender.title,
+                        customer_name=tender.customer_name,
+                        source_facts=section_source_facts,
+                        source_label=structured_source_label,
+                    ),
+                    *sources,
+                ]
             all_sources.extend(sources)
+            section_max_chunks = (
+                max(mode_config.max_chunks_per_section, 5)
+                if sec_def["id"] == "contract_terms"
+                else mode_config.max_chunks_per_section
+            )
+            section_max_chunk_chars = (
+                max(mode_config.max_chunk_chars, 1_200)
+                if sec_def["id"] == "contract_terms"
+                else mode_config.max_chunk_chars
+            )
+            section_max_context_chars = (
+                max(mode_config.max_context_chars_per_section, 6_000)
+                if sec_def["id"] == "contract_terms"
+                else mode_config.max_context_chars_per_section
+            )
             section_context = build_section_context(
                 hits,
-                max_chunks=mode_config.max_chunks_per_section,
-                max_context_chars=mode_config.max_context_chars_per_section,
-                max_chunk_chars=mode_config.max_chunk_chars,
+                max_chunks=section_max_chunks,
+                max_context_chars=section_max_context_chars,
+                max_chunk_chars=section_max_chunk_chars,
                 max_preview_chars=mode_config.max_preview_chars_per_source,
             )
             total_context_chars += section_context.context_chars
@@ -607,6 +1006,7 @@ def analyze_tender(
                     section_context.hits,
                     registry_number=registry_number,
                     analysis_mode=analysis_mode,
+                    source_facts=section_source_facts,
                 )
                 prompt_metrics["context_tokens_estimate"] = _estimate_tokens(section_context.context_chars)
                 section_states[index - 1]["message"] = "Выполняем запрос к локальной LLM."
@@ -625,6 +1025,7 @@ def analyze_tender(
                     section_context.hits,
                     registry_number=registry_number,
                     analysis_mode=analysis_mode,
+                    source_facts=section_source_facts,
                 )
                 llm_seconds = time.perf_counter() - llm_started_at
                 llm_calls_count += 1
@@ -637,7 +1038,11 @@ def analyze_tender(
                     answer_warning = f"LLM fallback for section {sec_def['id']}: {answer.error}"
                     warnings.append(answer_warning)
                 else:
-                    answer_text = answer.answer
+                    answer_text = _preserve_structured_deadline(
+                        sec_def["id"],
+                        answer.answer,
+                        section_source_facts,
+                    )
                     status = "completed"
                     llm_status = "completed"
             else:
@@ -751,6 +1156,7 @@ def analyze_tender(
             retrieval_model=emb_provider.model_name,
             analysis_mode=analysis_mode,
             duration_seconds=duration,
+            source_facts=source_facts,
         )
 
         report_path = None

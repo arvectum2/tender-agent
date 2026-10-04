@@ -93,6 +93,19 @@ def _parse_timestamp(value: Any) -> datetime | None:
         if "T" in text:
             parsed = datetime.fromisoformat(text)
             return parsed if parsed.tzinfo is not None else parsed.replace(tzinfo=UTC)
+        msk_match = re.search(
+            r"\(\s*МСК\s*(?:([+-])\s*(\d{1,2}))?\s*\)$",
+            text,
+            flags=re.IGNORECASE,
+        )
+        timezone_suffix = None
+        if msk_match:
+            delta = int(msk_match.group(2) or 0)
+            if msk_match.group(1) == "-":
+                delta = -delta
+            offset_hours = 3 + delta
+            timezone_suffix = f"{offset_hours:+03d}:00"
+            text = text[: msk_match.start()].strip()
         match = re.match(
             r"^(\d{2})\.(\d{2})\.(\d{4})\s+"
             r"(\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?)"
@@ -101,7 +114,7 @@ def _parse_timestamp(value: Any) -> datetime | None:
         )
         if not match:
             return None
-        suffix = match.group(5) or "+00:00"
+        suffix = match.group(5) or timezone_suffix or "+00:00"
         return datetime.fromisoformat(
             f"{match.group(3)}-{match.group(2)}-{match.group(1)}"
             f"T{match.group(4)}{suffix}"
@@ -170,6 +183,24 @@ def _item_rows(preliminary: dict[str, Any]) -> list[dict[str, Any]]:
         source_items = None
     service_items = preliminary.get("service_items") or []
     supply_items = preliminary.get("supply_items") or []
+    def item_key(value: object) -> str:
+        return re.sub(r"\s+", " ", str(value or "").strip()).casefold()
+
+    service_pricing_by_name = {
+        item_key(
+            item.get("official_name")
+            or item.get("original_name")
+            or item.get("normalized_name")
+            or item.get("name")
+        ): item
+        for item in service_items
+        if item_key(
+            item.get("official_name")
+            or item.get("original_name")
+            or item.get("normalized_name")
+            or item.get("name")
+        )
+    }
     spec_rows = preliminary.get("spec_table", {}).get("rows", [])
     if source_items is None:
         if mode == "production":
@@ -184,6 +215,7 @@ def _item_rows(preliminary: dict[str, Any]) -> list[dict[str, Any]]:
         if official_name == UNKNOWN:
             continue
         name = item.get("display_name") or official_name
+        pricing_item = service_pricing_by_name.get(item_key(official_name), {})
         quantity = item.get("quantity")
         if quantity is None:
             quantity = item.get("Кол-во") if item.get("Кол-во") not in (None, "не указано") else None
@@ -203,11 +235,15 @@ def _item_rows(preliminary: dict[str, Any]) -> list[dict[str, Any]]:
             "quantity": quantity,
             "quantity_status": item.get("quantity_status") or ("specified" if quantity is not None and unit else "not_specified"),
             "quantity_display": "Не указан документацией" if quantity is None else str(quantity),
-            "unit_price": item.get("unit_price"),
-            "currency": item.get("currency") or "RUB",
-            "pricing_basis": item.get("pricing_basis") or "unknown",
-            "line_total": item.get("total_price"),
-            "line_total_display": "Не рассчитывается",
+            "unit_price": item.get("unit_price") or pricing_item.get("unit_price"),
+            "currency": item.get("currency") or pricing_item.get("currency") or "RUB",
+            "pricing_basis": item.get("pricing_basis") or pricing_item.get("pricing_basis") or "unknown",
+            "line_total": item.get("total_price") or pricing_item.get("total_price"),
+            "line_total_display": (
+                str(item.get("total_price") or pricing_item.get("total_price"))
+                if (item.get("total_price") or pricing_item.get("total_price"))
+                else "Не рассчитывается"
+            ),
             "evidence_ids": evidence_ids,
             "source_document_id": item.get("source_document") or (item.get("Источник") or None),
             "source_row": _format_source_location(item.get("source_row_number") or item.get("source_row")),
@@ -410,11 +446,21 @@ def build_procurement_report_model(metadata: dict[str, Any], outputs: dict[str, 
 
 def canonical_report_to_markdown(model: dict[str, Any]) -> str:
     meta, summary, passport = model["metadata"], model["executive_summary"], model["procurement_passport"]
-    lines = [f"# Анализ закупки {meta.get('procurement_number') or ''}", "", f"- Название закупки: {model.get('procurement_title') or summary['subject']}", f"- Номер закупки: {model.get('procurement_number')}", f"- Дата публикации: {model.get('publication_datetime')}", f"- Окончание подачи заявок: {model.get('application_deadline')}", f"- НМЦК: {model.get('nmck')} {model.get('currency')}", f"- Решение: {model.get('decision')}", "", "## Резюме для принятия решения", f"- Предмет: {summary['subject']}", f"- Строк состава закупки: {summary['service_item_count']}/{summary['analyzed_item_count']} проанализировано"]
+    non_quantified_scope = model.get("procurement_volume_status") == "not_applicable"
+    composition_summary = (
+        "- Товарное количество: не применимо; состав программных работ приведён в анализе требований."
+        if non_quantified_scope
+        else f"- Строк состава закупки: {summary['service_item_count']}/{summary['analyzed_item_count']} проанализировано"
+    )
+    lines = [f"# Анализ закупки {meta.get('procurement_number') or ''}", "", f"- Название закупки: {model.get('procurement_title') or summary['subject']}", f"- Номер закупки: {model.get('procurement_number')}", f"- Дата публикации: {model.get('publication_datetime')}", f"- Окончание подачи заявок: {model.get('application_deadline')}", f"- НМЦК: {model.get('nmck')} {model.get('currency')}", f"- Решение: {model.get('decision')}", "", "## Резюме для принятия решения", f"- Предмет: {summary['subject']}", composition_summary]
     lines += [f"- Блокер: {value}" for value in summary["blockers"]] or ["- Блокеры: не выявлены автоматически"]
     lines += ["", "## Паспорт закупки", f"- Категория: {passport.get('category')}", f"- ОКПД2: {passport.get('okpd2')}", "", "## Состав и объём закупки"]
     if not model["line_items"]:
-        lines.append("- Позиции и количество не удалось извлечь из доступных документов; требуется проверка первоисточника.")
+        lines.append(
+            "- Для данной программной закупки товарное количество неприменимо; состав работ раскрыт в ТЗ."
+            if non_quantified_scope
+            else "- Позиции и количество не удалось извлечь из доступных документов; требуется проверка первоисточника."
+        )
     for row in model["line_items"]:
         evidence = ", ".join(row["evidence_ids"])
         lines.append(f"- {row['sequence']}. {row['original_name']} | количество: {row['quantity_display']} | единица: {row['unit_original']} | статус количества: {row['quantity_status']} | источник: {row['source_document_id']} строка {row['source_row']} | [{evidence}]")

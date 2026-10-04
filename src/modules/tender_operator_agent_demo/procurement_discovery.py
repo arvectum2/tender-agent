@@ -971,7 +971,9 @@ def _enrich_public_search_cards(cards: list[dict], *, max_enrichments: int = 5) 
     enrichments = 0
     for original in cards:
         card = dict(original)
-        needs_detail = not card.get("customer_name") or not card.get("deadline")
+        deadline_text = str(card.get("deadline") or "").strip()
+        needs_deadline_detail = not re.search(r"\b\d{2}:\d{2}\b", deadline_text)
+        needs_detail = not card.get("customer_name") or needs_deadline_detail
         registry_number = card.get("reestr_number") or card.get("notice_number")
         source_url = card.get("source_url") or card.get("card_url")
         if needs_detail and registry_number and source_url and enrichments < max_enrichments:
@@ -985,8 +987,20 @@ def _enrich_public_search_cards(cards: list[dict], *, max_enrichments: int = 5) 
                     if not card.get("customer_name") and detail.customer_name:
                         card["customer_name"] = detail.customer_name
                         card["customer_identity_source"] = "eis_common_info"
-                    if not card.get("deadline") and detail.application_deadline:
-                        card["deadline"] = detail.application_deadline.strftime("%d.%m.%Y %H:%M")
+                    if needs_deadline_detail and detail.application_deadline:
+                        detail_metadata = (
+                            detail.raw.get("detail_metadata", {})
+                            if isinstance(detail.raw, dict)
+                            else {}
+                        )
+                        source_deadline = str(
+                            detail_metadata.get("application_deadline_source_text") or ""
+                        ).strip()
+                        card["deadline"] = (
+                            source_deadline
+                            or detail.application_deadline.strftime("%d.%m.%Y %H:%M")
+                        )
+                        card["deadline_utc"] = detail.application_deadline.isoformat()
                         card["deadline_source"] = "eis_common_info"
             except Exception:
                 # Discovery stays fail-closed: missing identity remains missing.

@@ -162,80 +162,24 @@ def _build_source_bound_requirements(
 
 
 def _build_source_bound_questions(procurement_kind: str, documents: list[Any]) -> list[str]:
-    if procurement_kind not in _SOFTWARE_SCOPES:
-        return _legacy_question_fallback(procurement_kind, documents)
-    return [
-        "Какие внешние системы, интерфейсы и сценарии интеграции прямо требуются документацией?",
-        "Кто предоставляет необходимые доступы, учетные данные и тестовые контуры?",
-        "Какие требования к данным, информационной безопасности и журналированию прямо установлены документами?",
-        "Входит ли в объем интеграционное тестирование и сопровождение приемки?",
-        "Какие результаты должны быть переданы заказчику: программные компоненты, документация, лицензии или права?",
-        "Какие критерии приемки и ограничения по срокам подтверждены первичными документами?",
-    ]
+    # The legacy implementation is now source-native for software scopes.
+    # Keep this final runtime patch as a thin guard rather than reintroducing
+    # historical named-system templates.
+    return _ORIGINAL_QUESTIONS(procurement_kind, documents)
 
 
 def _legacy_question_fallback(procurement_kind: str, documents: list[Any]) -> list[str]:
-    # Rebound during install to avoid recursion after monkey-patching.
     return _ORIGINAL_QUESTIONS(procurement_kind, documents)
 
 
 def _build_source_bound_risks(
     procurement_kind: str, documents: list[Any], contract_text: str
-) -> list[dict[str, str]]:
-    if procurement_kind not in _SOFTWARE_SCOPES:
-        return _ORIGINAL_RISKS(procurement_kind, documents, contract_text)
-
-    source_text = _document_text(documents) + "\n" + str(contract_text or "").lower()
-    risks: list[dict[str, str]] = []
-    if any(marker in source_text for marker in ("интеграц", " api ", "интерфейс", "внешн")):
-        risks.append(
-            {
-                "clause": "Интеграционные требования требуют проверки",
-                "classification": "market_standard_harsh_term",
-                "impact": "Объем, интерфейсы и критерии приемки интеграций нужно сверить с первичными документами.",
-                "mitigation": "Зафиксировать подтвержденные интерфейсы, сценарии, доступы и критерии приемки по источникам закупки.",
-            }
-        )
-    if "персональн" in source_text:
-        risks.append(
-            {
-                "clause": "Требования к обработке персональных данных требуют проверки",
-                "classification": "market_standard_harsh_term",
-                "impact": "Условия обработки и размещения персональных данных должны соответствовать документации закупки.",
-                "mitigation": "Сверить контур размещения, роли доступа и требования к защите данных с первичными документами.",
-            }
-        )
-    if any(marker in source_text for marker in ("лиценз", "исключительн", "передач")):
-        risks.append(
-            {
-                "clause": "Лицензионные условия и права требуют проверки",
-                "classification": "market_standard_harsh_term",
-                "impact": "Объем предоставляемых прав должен быть подтвержден условиями закупки и проекта контракта.",
-                "mitigation": "Сверить вид лицензии, право реализации и объем передаваемых прав по первичным документам.",
-            }
-        )
-    return risks or [
-        {
-            "clause": "Недостаточно подтвержденных оснований для автоматической классификации рисков",
-            "classification": "market_standard_harsh_term",
-            "impact": "Материальные риски нельзя надежно вывести без дополнительной проверки первичных документов.",
-            "mitigation": "Проверить техническое задание и проект контракта вручную.",
-        }
-    ]
+) -> list[dict[str, Any]]:
+    return _ORIGINAL_RISKS(procurement_kind, documents, contract_text)
 
 
 def _build_source_bound_rfq_sections(procurement_kind: str) -> list[str]:
-    if procurement_kind not in _SOFTWARE_SCOPES:
-        return _ORIGINAL_RFQ_SECTIONS(procurement_kind)
-    return [
-        "Опыт выполнения сопоставимых программных работ и интеграций",
-        "Команда проекта и роли по разработке, интеграции, тестированию и ИБ",
-        "Оценка трудоемкости по подтвержденным функциональным блокам и этапам",
-        "Подход к интеграциям и доступам, прямо указанным в документации",
-        "Состав передаваемых результатов, лицензий, прав и документации",
-        "Стоимость по подтвержденным блокам работ, тестированию и сопровождению",
-    ]
-
+    return _ORIGINAL_RFQ_SECTIONS(procurement_kind)
 
 def _unsupported_domain_markers(source_text: str) -> tuple[str, ...]:
     rules = (

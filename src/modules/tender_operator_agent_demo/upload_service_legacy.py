@@ -1473,10 +1473,12 @@ def _classify_procurement_scope(metadata: dict[str, Any], documents: list[Analyz
     elif strong_works and primary == "unresolved":
         primary = "works"
     applicable = primary == "goods"
+    meaningful_goods = scores["goods"] > 0 and primary in {"goods", "mixed"}
+    meaningful_works = strong_works and primary in {"works", "mixed"}
     return {
         "procurement_primary_scope": primary,
-        "contains_goods": scores["goods"] > 0,
-        "contains_works": strong_works,
+        "contains_goods": meaningful_goods,
+        "contains_works": meaningful_works,
         "contains_services": has_services,
         "contains_rental": scores["rental"] > 0,
         "scope_scores": scores,
@@ -1860,6 +1862,10 @@ def _normalize_supply_unit(value: str | None) -> str | None:
         "грамм": "г",
         "килограмм": "кг",
         "коробка": "короб",
+        "условнаяединица": "условная единица",
+        "нормочас": "нормо-час",
+        "нормочаса": "нормо-час",
+        "нормочасов": "нормо-час",
     }
     return aliases.get(cleaned, cleaned) or None
 
@@ -2299,6 +2305,105 @@ def _extract_service_items_from_nmck_text(text: str, source_document: str) -> li
     return rows
 
 
+def _extract_service_items_from_notice_text(
+    text: str,
+    source_document: str,
+) -> list[SupplyItem]:
+    """Extract the canonical service position from rendered EIS notice text.
+
+    Public EIS DOCX notice exports collapse the purchase-object table into one
+    text run, so generic tabular parsers cannot see its quantity/unit columns.
+    This parser is deliberately narrow: it requires the explicit EIS table
+    headers, a SERVICE row and a recognized service unit.
+    """
+    if not text or "Объект закупки" not in text or "Тип позиции" not in text:
+        return []
+    match = re.search(
+        r"Объект закупки\s*"
+        r"Наименование товара, работы, услуги.*?"
+        r"Стоимость позиции"
+        r"(?P<name>.+?)"
+        r"Идентификатор:\s*(?P<identifier>\d+?)"
+        r"(?P<okpd2>\d{2}\.\d{2}\.\d{2}\.\d{3})"
+        r"Услуга"
+        r"(?P<unit>Условная единица)"
+        r"(?P<unit_price>\d+(?:[.,]\d{2})?)"
+        r"(?P<tail>.+?)"
+        r"Характеристики товара, работы, услуги",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not match:
+        return []
+    name = _normalize_supply_name(_cleanup_tabular_value(match.group("name")) or "")
+    unit = _normalize_supply_unit(match.group("unit"))
+    unit_price_value = _parse_float(match.group("unit_price"))
+    tail = re.sub(r"\s+", " ", match.group("tail")).strip()
+    if not name or unit_price_value is None:
+        return []
+    numeric_match = re.search(r"(?P<numeric>[0-9.,]+)\s*$", tail)
+    if numeric_match is None:
+        return []
+    numeric_suffix = numeric_match.group("numeric")
+    quantity = None
+    quantity_number = None
+    total_value = None
+    for split_at in range(1, len(numeric_suffix)):
+        quantity_raw = numeric_suffix[:split_at]
+        total_raw = numeric_suffix[split_at:]
+        if not re.fullmatch(r"\d+(?:[.,]\d+)?", quantity_raw):
+            continue
+        if not re.fullmatch(r"\d+[.,]\d{2}", total_raw):
+            continue
+        candidate_quantity = _parse_float(quantity_raw)
+        candidate_total = _parse_float(total_raw)
+        if candidate_quantity is None or candidate_total is None:
+            continue
+        expected_total = unit_price_value * candidate_quantity
+        if abs(expected_total - candidate_total) <= max(0.01, abs(candidate_total) * 0.001):
+            quantity = _normalize_quantity_value(quantity_raw)
+            quantity_number = candidate_quantity
+            total_value = candidate_total
+            break
+    if quantity is None or quantity_number is None or total_value is None:
+        return []
+    evidence_seed = (
+        f"{source_document}|notice-service|{name}|{quantity}|{unit}|"
+        f"{unit_price_value}|{total_value}"
+    ).encode("utf-8")
+    return [
+        SupplyItem(
+            item_no="1",
+            name=name,
+            quantity=quantity,
+            unit=unit,
+            characteristics=[],
+            gost=[],
+            equivalent_allowed=None,
+            source_document=source_document,
+            source_kind="notice_purchase_object",
+            confidence="high",
+            raw_fragment=match.group(0),
+            unit_price=_format_decimal_price(unit_price_value),
+            total_price=_format_decimal_price(total_value),
+            source_documents=[source_document],
+            item_type="service",
+            quantity_status="specified",
+            pricing_basis="unit_price",
+            source_row_number=1,
+            evidence_id=f"ev-{hashlib.sha256(evidence_seed).hexdigest()[:16]}",
+            okpd2=match.group("okpd2"),
+            unit_original=match.group("unit"),
+            name_source_type="notice_purchase_object",
+            name_source_path="Объект закупки/Наименование",
+            quantity_source_path="Объект закупки/Количество (объем работы, услуги)",
+            unit_source_path="Объект закупки/Единица измерения",
+            source_record_id=match.group("identifier"),
+            extraction_strategy="eis_notice_rendered_purchase_object",
+        )
+    ]
+
+
 def _extract_supply_items_from_notification_xml(text: str, source_document: str) -> list[SupplyItem]:
     """Extract purchaseObject rows from the notification XML returned by EIS.
 
@@ -2452,6 +2557,7 @@ def _service_item_analysis_rows(items: list[SupplyItem]) -> list[dict[str, Any]]
             "normalized_name": item.name,
             "unit": item.unit_original or item.unit,
             "unit_price": item.unit_price,
+            "total_price": item.total_price,
             "pricing_basis": item.pricing_basis,
             "quantity": item.quantity,
             "quantity_status": item.quantity_status,
@@ -2716,6 +2822,8 @@ def _collect_unmerged_source_items(documents: list[AnalyzedDocument]) -> list[Su
         if doc.extension in {".xlsx", ".xls"} or "нмцк" in lowered_name or "обоснование" in lowered_name:
             extracted.extend(_extract_supply_items_from_xlsx_text(text, doc.display_name))
             extracted.extend(_extract_service_items_from_nmck_text(text, doc.display_name))
+        if doc.role == "notice":
+            extracted.extend(_extract_service_items_from_notice_text(text, doc.display_name))
         if doc.extension == ".xml" or "purchasenotice" in text.lower() or "epnotification" in text.lower() or "purchaseobject" in text.lower():
             extracted.extend(_extract_supply_items_from_notification_xml(text, doc.display_name))
     existing_names = {_normalize_supply_name_key(item.name) for item in extracted}
@@ -2803,6 +2911,50 @@ def _build_software_work_rows(documents: list[AnalyzedDocument]) -> list[dict[st
             or "техничес" in doc.display_name.lower()
         )
     ]
+    # Prefer source-native tabular work blocks from technical specifications.
+    # This keeps software analysis procurement-specific instead of projecting a
+    # historical named-system template onto unrelated software procurements.
+    for doc in candidate_docs:
+        for raw_line in (doc.text or "").splitlines():
+            cells = [cell.strip() for cell in raw_line.split("\t")]
+            if len(cells) < 3:
+                continue
+            section_no = cells[0].rstrip(".").strip()
+            if not re.fullmatch(r"\d+(?:\.\d+)*", section_no):
+                continue
+            heading = cells[1].strip()
+            detail = " ".join(cell for cell in cells[2:] if cell).strip()
+            if not heading or not detail:
+                continue
+            if section_no.split(".", 1)[0] not in {"6", "7", "8", "9", "10", "11", "12", "13"}:
+                continue
+            if section_no == "6" and detail.rstrip(":").lower() in {
+                "модуль должен обеспечивать следующее",
+                "модуль должен обеспечивать",
+            }:
+                continue
+            rows.append(
+                {
+                    "№": str(len(rows) + 1),
+                    "Блок работ / результат": heading,
+                    "Что нужно сделать": detail[:700],
+                    "Входные/внешние системы": (
+                        "Определяются исходным требованием ТЗ; сверить перечисленные API, платформы и форматы."
+                    ),
+                    "Результат для заказчика": heading,
+                    "Критерии приёмки": (
+                        detail[:500]
+                        if any(marker in (heading + " " + detail).lower() for marker in ("прием", "приём", "испыт", "критер"))
+                        else "Сверить с source-bound критериями приёмки в ТЗ и проекте контракта."
+                    ),
+                    "Источник": _document_source_label(doc),
+                }
+            )
+            if len(rows) >= 12:
+                break
+        if rows:
+            return rows
+
     block_definitions = [
         (
             "Новые структурированные электронные медицинские документы",
@@ -3009,26 +3161,117 @@ def _build_document_grounded_requirements(
         rows = _build_goods_requirement_rows(documents)
         if rows:
             return rows
+    if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
+        source_rows = _build_software_work_rows(documents)
+        requirements: list[dict[str, str]] = []
+        for row in source_rows:
+            title = str(row.get("Блок работ / результат") or "").strip()
+            detail = str(row.get("Что нужно сделать") or "").strip()
+            source = str(row.get("Источник") or "").strip()
+            if not title:
+                continue
+            lowered = (title + " " + detail).lower()
+            req_type = (
+                "приёмка"
+                if any(marker in lowered for marker in ("прием", "приём", "испыт", "критер"))
+                else "лицензионное"
+                if any(marker in lowered for marker in ("прав", "лиценз", "патент"))
+                else "информационная безопасность"
+                if any(marker in lowered for marker in ("конфиден", "защит", "безопасн"))
+                else "интеграционное"
+                if any(marker in lowered for marker in ("интеграц", "api", "обмен"))
+                else "функциональное"
+            )
+            requirements.append(
+                {
+                    "title": title,
+                    "detail": detail[:420] or title,
+                    "source": source or "Техническое задание",
+                    "type": req_type,
+                    "priority": "high" if req_type in {"функциональное", "интеграционное", "приёмка"} else "medium",
+                }
+            )
+        if requirements:
+            return requirements[:12]
+
+        # Some software procurements arrive as prose rather than numbered
+        # tabular requirements. Preserve only source-native statements instead
+        # of falling back to any historical domain template.
+        for doc in documents:
+            text = (doc.text or "").strip()
+            if not text:
+                continue
+            snippets = [
+                re.sub(r"\s+", " ", part).strip(" .;:")
+                for part in re.split(r"(?<=[.!?])\s+|\n+", text)
+                if part.strip()
+            ]
+            for snippet in snippets:
+                lowered = snippet.lower()
+                if not any(
+                    marker in lowered
+                    for marker in (
+                        "модификац",
+                        "доработ",
+                        "интеграц",
+                        "api",
+                        "программ",
+                        "приемк",
+                        "приёмк",
+                        "испыт",
+                        "персональн",
+                        "конфиден",
+                        "срок исполн",
+                    )
+                ):
+                    continue
+                req_type = (
+                    "приёмка"
+                    if any(marker in lowered for marker in ("приемк", "приёмк", "испыт"))
+                    else "интеграционное"
+                    if any(marker in lowered for marker in ("интеграц", "api", "обмен"))
+                    else "информационная безопасность"
+                    if any(marker in lowered for marker in ("персональн", "конфиден", "защит"))
+                    else "срок / этап"
+                    if "срок исполн" in lowered
+                    else "функциональное"
+                )
+                title = snippet[:140]
+                integration = re.search(
+                    r"интеграци[яи]\s+с\s+(.+?)(?:\s+и\s+(?:прием|приём|тест)|$)",
+                    snippet,
+                    flags=re.IGNORECASE,
+                )
+                if integration:
+                    title = f"Интеграция с {integration.group(1).strip(' .;:')}"
+                elif "модификац" in lowered:
+                    modification = re.search(
+                        r"(модификац\w*\s+программ\w+\s+комплекс\w*)",
+                        snippet,
+                        flags=re.IGNORECASE,
+                    )
+                    if modification:
+                        title = modification.group(1)
+                requirements.append(
+                    {
+                        "title": title[:180],
+                        "detail": snippet[:420],
+                        "source": doc.display_name,
+                        "type": req_type,
+                        "priority": "high" if req_type in {"функциональное", "интеграционное", "приёмка"} else "medium",
+                    }
+                )
+                if len(requirements) >= 12:
+                    return requirements
+        return requirements[:12]
+
     rows: list[dict[str, str]] = []
     for doc in documents:
         text = doc.text or ""
         if not text:
             continue
         doc_name = doc.display_name
-        if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
-            mapping = [
-                (("модификац", "программного комплекса", "модул"), "Модификация ПК «Здравоохранение»", "функциональное", "high"),
-                (("структурированных электронных медицинских документ", "сэмд"), "Разработка новых структурированных электронных медицинских документов", "функциональное", "high"),
-                (("ипра", "реабилитации и абилитации"), "Обработка информации об ИПРА", "функциональное", "high"),
-                (("ерн", "смэв"), "Интеграция с ЕРН через СМЭВ", "интеграционное", "high"),
-                (("сво", "витрины данных министерства обороны"), "Получение данных об участниках СВО из витрины Минобороны", "интеграционное", "high"),
-                (("лиценз", "передаче лицензии", "передача прав"), "Передача лицензии и прав на обновленный модуль", "лицензионное", "high"),
-                (("приемк", "испытан", "акт"), "Требования к приемке результатов работ", "приёмка", "medium"),
-                (("срок", "этап"), "Сроки и этапность выполнения работ", "срок / этап", "medium"),
-                (("заявк", "инструкц"), "Требования к заявке участника", "заявка участника", "medium"),
-                (("персональн", "медицинск"), "Требования к обработке медицинских и персональных данных", "информационная безопасность / персональные данные", "medium"),
-            ]
-        else:
+        if procurement_kind == "goods":
             mapping = [
                 (("поставка", "товар"), "Требования к предмету поставки", "функциональное", "high"),
                 (("приемк", "испытан", "акт"), "Требования к приемке", "приёмка", "medium"),
@@ -3054,16 +3297,27 @@ def _build_document_grounded_requirements(
 
 def _build_document_grounded_questions(procurement_kind: str, documents: list[AnalyzedDocument]) -> list[str]:
     if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
-        return [
-            "Есть ли у исполнителя опыт доработки медицинских информационных систем и аналогичных госинтеграций?",
-            "Есть ли подтвержденный опыт интеграции через СМЭВ и подключения внешних реестров?",
-            "Кто предоставляет доступы и тестовые контуры ЕРН, СМЭВ и витрины данных Минобороны?",
-            "Доступны ли форматы обмена, спецификации API и правила согласования СЭМД?",
-            "Входит ли в объем работ интеграционное тестирование и сопровождение приемки?",
-            "Какие результаты передаются заказчику: код, модуль, лицензия, документация, инструкции?",
-            "Как оформляется передача лицензии и прав на обновленный модуль?",
-            "Какие ограничения и риски есть по персональным данным, медданным и защищенным каналам?",
+        text = "\n".join(doc.text or "" for doc in documents).lower()
+        questions = [
+            "Подтверждена ли оценка трудозатрат по каждому функциональному блоку текущего ТЗ?",
+            "Какие исходные данные, доступы, тестовая среда и версии платформы обязан предоставить заказчик?",
+            "Какие результаты передаются заказчику: исполняемый модуль, исходный код, документация, инструкции и материалы испытаний?",
+            "Какие критерии приёмки и испытаний обязательны и есть ли ресурс на их прохождение в установленный срок?",
+            "Как условия оплаты, отсутствие аванса и обеспечение исполнения влияют на денежный разрыв проекта?",
         ]
+        if any(marker in text for marker in ("api", "интеграц", "обмен")):
+            questions.append(
+                "Какие API, форматы обмена, внешние зависимости и тестовые контуры прямо предусмотрены текущим ТЗ?"
+            )
+        if any(marker in text for marker in ("прав", "лиценз", "исходн")):
+            questions.append(
+                "Как распределяются исключительные и неисключительные права на код, модуль и документацию?"
+            )
+        if any(marker in text for marker in ("конфиден", "персональн", "защит", "безопасн")):
+            questions.append(
+                "Какие требования к конфиденциальности, размещению кода и информационной безопасности обязательны по текущим документам?"
+            )
+        return questions[:8]
     if procurement_kind == "goods":
         return _build_goods_questions(documents)
     service_text = "\n".join(doc.text or "" for doc in documents)
@@ -3083,16 +3337,121 @@ def _build_document_grounded_questions(procurement_kind: str, documents: list[An
     ]
 
 
-def _build_document_grounded_risks(procurement_kind: str, documents: list[AnalyzedDocument], contract_text: str) -> list[dict[str, str]]:
+def _risk_status_from_classification(value: object) -> str:
+    return (
+        "blocker"
+        if str(value or "").strip() in {"hard_blocker", "confirmed_hard_blocker"}
+        else "requires_review"
+    )
+
+
+def _final_recommendation_manual_checks(procurement_kind: str) -> list[str]:
     if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
         return [
-            {"clause": "Неполные требования к интеграциям", "classification": "deal_breaker_candidate", "impact": "Без описания форматов и сценариев обмена объем работ может быть занижен.", "mitigation": "Запросить спецификации API/СМЭВ и перечень обязательных сценариев обмена."},
-            {"clause": "Зависимость от доступов к СМЭВ/ЕРН/витрине Минобороны", "classification": "deal_breaker_candidate", "impact": "Без доступов и тестовых контуров сроки и приемка будут сдвигаться.", "mitigation": "Зафиксировать в переписке и контракте, кто и когда предоставляет доступы и тестовые среды."},
-            {"clause": "Риск по персональным и медицинским данным", "classification": "deal_breaker_candidate", "impact": "Ошибки в требованиях ИБ и обработке медданных создают юридический и проектный риск.", "mitigation": "Уточнить требования к ИБ, журналированию, ролям доступа и защите каналов."},
-            {"clause": "Неочевидный объем доработок", "classification": "market_standard_harsh_term", "impact": "Фактическая трудоемкость модификации модуля может быть выше, чем следует из краткого описания.", "mitigation": "Разбить оценку по функциональным блокам, этапам и интеграциям до запроса КП."},
-            {"clause": "Риск приемки по результатам интеграционного тестирования", "classification": "market_standard_harsh_term", "impact": "Приемка зависит от внешних систем и согласований, не полностью контролируемых исполнителем.", "mitigation": "Зафиксировать критерии приемки, тестовые сценарии и роль заказчика во внешних согласованиях."},
-            {"clause": "Риск лицензирования и передачи прав", "classification": "market_standard_harsh_term", "impact": "Неясные условия лицензии и передачи прав могут создать спор по результату работ.", "mitigation": "Проверить проект контракта и приложения на режим лицензии, объем прав и пакет передаваемых материалов."},
+            "Привязать профиль поставщика и проверить применимость преимущества по ч. 3 ст. 30 "
+            "Закона № 44-ФЗ и ограничений национального режима.",
+            "Подтвердить трудозатраты, состав команды и резерв по source-bound блокам ТЗ.",
+            "Посчитать кассовый разрыв без аванса до приёмки и оплаты, включая обеспечение исполнения контракта.",
+            "Подтвердить доступы/тестовую среду, критерии ПСИ, права на код и ограничения конфиденциальности.",
         ]
+    return [
+        "Проверить исходные документы и роли файлов.",
+        "Подтвердить коммерческие входы перед внешними коммуникациями.",
+        "Сделать финальное решение только после ручной проверки.",
+    ]
+
+
+def _risk_manual_checks(procurement_kind: str) -> list[str]:
+    if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
+        return [
+            "Подтвердить оценку трудозатрат по функциональным блокам ТЗ, критерии "
+            "приёмки, кассовый разрыв без аванса, доступы/тестовую среду заказчика "
+            "и режим прав/конфиденциальности до решения об участии."
+        ]
+    return ["Проверить договорные ограничения вручную."]
+
+
+def _build_document_grounded_risks(procurement_kind: str, documents: list[AnalyzedDocument], contract_text: str) -> list[dict[str, str]]:
+    if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
+        text = "\n".join(doc.text or "" for doc in documents)
+        lowered = text.lower()
+        risks: list[dict[str, str]] = [
+            {
+                "clause": "Трудоёмкость функционального объёма",
+                "classification": "deal_breaker_candidate",
+                "impact": "ТЗ содержит несколько функциональных и технических блоков; без оценки по каждому блоку цена может не покрыть фактические трудозатраты.",
+                "mitigation": "Разбить текущее ТЗ на source-bound блоки и подтвердить трудозатраты, роли и резерв до решения об участии.",
+            },
+            {
+                "clause": "Приёмка и испытания",
+                "classification": "market_standard_harsh_term",
+                "impact": "Результат должен пройти предусмотренные документацией испытания и критерии приёмки; замечания могут потребовать доработки в ограниченный срок.",
+                "mitigation": "Сверить каждый критерий приёмки с планом тестирования, ответственным и оценкой трудозатрат.",
+            },
+            {
+                "clause": "Финансирование без аванса",
+                "classification": "market_standard_harsh_term",
+                "impact": "При отсутствии аванса расходы на разработку финансируются исполнителем до приёмки и последующей оплаты.",
+                "mitigation": "Посчитать денежный разрыв с учётом срока оказания услуг, приёмки и договорного срока оплаты.",
+            },
+        ]
+        if any(marker in lowered for marker in ("api", "интеграц", "тестовой сред", "технических средствах заказчика")):
+            risks.append(
+                {
+                    "clause": "Зависимость от среды и доступов заказчика",
+                    "classification": "deal_breaker_candidate",
+                    "impact": "Часть установки, настройки, испытаний или интеграций зависит от среды и исходных данных, предоставляемых заказчиком.",
+                    "mitigation": "До старта зафиксировать перечень доступов, исходных данных, версий платформы и сроки их предоставления.",
+                }
+            )
+        if any(marker in lowered for marker in ("исключительн", "неисключительн", "лиценз", "патент")):
+            risks.append(
+                {
+                    "clause": "Права на результаты разработки",
+                    "classification": "market_standard_harsh_term",
+                    "impact": "Режим прав на модуль, исходный код и документацию влияет на повторное использование результата и обязательства исполнителя.",
+                    "mitigation": "Сверить режим исключительных/неисключительных прав и перечень передаваемых материалов с коммерческой моделью.",
+                }
+            )
+        if any(marker in lowered for marker in ("конфиден", "запрет публикации", "защит", "персональн")):
+            risks.append(
+                {
+                    "clause": "Конфиденциальность и размещение кода",
+                    "classification": "market_standard_harsh_term",
+                    "impact": "Документы содержат ограничения по обращению с данными или публикации кода, что может влиять на инструменты разработки и инфраструктуру.",
+                    "mitigation": "Проверить допустимые репозитории, инфраструктуру и процессы разработки до начала исполнения.",
+                }
+            )
+        technical_document = next(
+            (doc.display_name for doc in documents if doc.role == "technical_spec" and doc.text),
+            None,
+        )
+        contract_document = next(
+            (doc.display_name for doc in documents if doc.role == "contract_draft" and doc.text),
+            None,
+        )
+        for risk in risks:
+            clause = str(risk.get("clause") or "")
+            if clause == "Финансирование без аванса" and contract_document:
+                risk["evidence_locators"] = [
+                    {"document": contract_document, "locator": "раздел 2 — цена и порядок расчётов"}
+                ]
+            elif technical_document:
+                locator = (
+                    "раздел 8/13 — приёмка и критерии"
+                    if clause == "Приёмка и испытания"
+                    else "раздел 7 — права на результаты"
+                    if clause == "Права на результаты разработки"
+                    else "раздел 11 — конфиденциальность"
+                    if clause == "Конфиденциальность и размещение кода"
+                    else "разделы 2/6 — среда и интеграция"
+                    if clause == "Зависимость от среды и доступов заказчика"
+                    else "разделы 6–13 — функциональный и технический объём"
+                )
+                risk["evidence_locators"] = [
+                    {"document": technical_document, "locator": locator}
+                ]
+        return risks[:8]
     if procurement_kind == "goods":
         return [
             {"clause": "Несоответствие ГОСТ и характеристикам", "classification": "deal_breaker_candidate", "impact": "Поставка аналога с иными характеристиками приведет к отклонению или проблемам на приемке.", "mitigation": "Запросить производителя, ГОСТ/ТУ и паспорт качества по каждой позиции."},
@@ -3121,12 +3480,12 @@ def _build_document_grounded_risks(procurement_kind: str, documents: list[Analyz
 def _build_document_grounded_rfq_sections(procurement_kind: str) -> list[str]:
     if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
         return [
-            "Опыт аналогичных доработок медицинских ИС и интеграций",
-            "Команда проекта и роли по разработке, интеграции, тестированию и ИБ",
-            "Оценка трудоемкости по функциональным блокам и этапам",
-            "Подход к интеграции через СМЭВ, ЕРН и витрину Минобороны",
-            "Состав передаваемых результатов: модуль, документация, лицензия, права",
-            "Стоимость по блокам, тестированию, сопровождению и интеграционным рискам",
+            "Опыт аналогичных доработок ПО на требуемой платформе и стеке",
+            "Команда проекта и роли по разработке, интеграции, тестированию и информационной безопасности",
+            "Оценка трудоёмкости по функциональным блокам текущего ТЗ",
+            "Требуемые исходные данные, доступы, API и тестовые среды",
+            "Состав передаваемых результатов: модуль, исходный код, документация, лицензии и права",
+            "Стоимость по блокам, испытаниям, гарантийному сопровождению и проектным рискам",
         ]
     if procurement_kind == "goods":
         return [
@@ -3367,43 +3726,227 @@ def _build_preliminary_procurement_analysis(
         }
     if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
         work_rows = _build_software_work_rows(documents)
+        software_service_items = [
+            item for item in _collect_supply_items(documents) if item.item_type == "service"
+        ]
         initial_price = _extract_notice_price(metadata, notice, contract_text)
-        deadline = metadata.get("deadline") or _extract_notice_service_deadline(notice) or _extract_notice_delivery_deadline(notice)
+        submission_deadline = metadata.get("deadline")
+        service_deadline = _match_first(
+            tz_text,
+            (
+                r"Сроки оказания услуг\s*\t([^\n]+)",
+                r"Сроки оказания услуг\s*[:\-]?\s*([^\n]+)",
+            ),
+        ) or _extract_notice_service_deadline(notice)
+        service_deadline = _cleanup_tabular_value(service_deadline) or service_deadline
+        service_location = _match_first(
+            tz_text,
+            (
+                r"Место оказания услуг\s*\t([^\n]+)",
+                r"Место оказания услуг\s*[:\-]?\s*([^\n]+)",
+            ),
+        )
+        service_location = _cleanup_tabular_value(service_location) or service_location
         delivery_term = metadata.get("procurement", {}).get("delivery_term") if isinstance(metadata.get("procurement"), dict) else None
         tender_title = metadata.get("tender_title") or _cleanup_tabular_value(
             _match_first(combined, (r"Наименование работ:\s*(.+?)(?:\n|$)",))
         ) or "не указан"
+        procedure_type = (
+            metadata.get("procurement", {}).get("procedure_type")
+            if isinstance(metadata.get("procurement"), dict)
+            else None
+        )
         overview = [
             f"Предмет закупки: {tender_title}",
             f"НМЦК: {initial_price} руб." if initial_price else "",
+            f"Способ закупки: {procedure_type}." if procedure_type else "",
             f"Тип закупки: {procurement_kind}.",
-            f"Срок исполнения / подачи: {deadline}." if deadline else "",
-            f"Результат для заказчика: модифицированный модуль, интеграции и лицензионный пакет." if work_rows else "",
+            f"Срок подачи заявок: {submission_deadline}." if submission_deadline else "",
+            f"Срок оказания услуг: {service_deadline}." if service_deadline else "",
+            f"Место оказания услуг: {service_location}." if service_location else "",
         ]
         compliance = [
             "Нужно проверить полноту функциональных требований по каждому блоку доработки.",
             "Требования к интеграциям, доступам и форматам обмена должны быть подтверждены документами и перепиской с заказчиком.",
             "Нужно отдельно проверить требования к передаче лицензии, прав и итоговой документации.",
         ]
+        notice_lower = notice.lower()
+        if "обеспечение заявок не требуется" in notice_lower:
+            compliance.append("Обеспечение заявки: не требуется.")
+        if "обеспечение гарантийных обязательств не требуется" in notice_lower:
+            compliance.append("Обеспечение гарантийных обязательств: не требуется.")
+        if "ч. 3 ст. 30" in notice_lower or "части 3 статьи 30" in notice_lower:
+            compliance.append(
+                "Преимущество: извещение прямо устанавливает преимущество в соответствии "
+                "с ч. 3 ст. 30 Закона № 44-ФЗ; применимость к нашей организации нужно "
+                "проверить по профилю поставщика."
+            )
+        if "постановление правительства" in notice_lower and "1875" in notice_lower:
+            national_regime = (
+                "Национальный режим: применяется Постановление Правительства РФ № 1875; "
+                "извещение устанавливает запрет на услуги иностранных лиц."
+            )
+            compliance.append(national_regime)
         contract_terms = []
         if delivery_term:
             contract_terms.append(f"Срок исполнения по документам: {delivery_term}.")
+        contract_execution_deadline = _match_first(
+            notice,
+            (
+                r"Срок исполнения контракта\s*\t([^\n]+)",
+                r"Срок исполнения контракта\s*[:\-]?\s*([^\n]+)",
+            ),
+        )
+        contract_execution_deadline = (
+            _cleanup_tabular_value(contract_execution_deadline)
+            or contract_execution_deadline
+        )
+        if contract_execution_deadline:
+            contract_terms.append(
+                f"Срок исполнения контракта: {contract_execution_deadline.rstrip('.')}."
+            )
+        payment_terms = _match_first(
+            contract_text,
+            (
+                r"Расчет за оказанные услуги\s+осуществляется\s+([^\.]+)",
+                r"Оплата\s+производится\s+([^\.]+)",
+            ),
+        )
+        if payment_terms:
+            short_payment_terms = _shorten_payment_terms(payment_terms)
+            if short_payment_terms:
+                contract_terms.append(f"Оплата: {short_payment_terms.rstrip('.')}.")
+        if "авансовые платежи" in contract_text.lower() and "не предусмотр" in contract_text.lower():
+            contract_terms.append("Аванс: не предусмотрен.")
+        execution_security_percent = _match_first_dotall(
+            notice + "\n" + contract_text,
+            (
+                r"Размер обеспечения исполнения контракта\s*\t?\s*(\d+(?:[.,]\d+)?)\s*%",
+                r"обеспечени[ея]\s+исполнения\s+контракта[^%\n]{0,220}?(\d+(?:[.,]\d+)?)\s*%",
+            ),
+        )
+        if execution_security_percent:
+            contract_terms.append(
+                "Обеспечение исполнения контракта: "
+                f"{execution_security_percent.replace('.', ',')}%."
+            )
         if "акт" in contract_text.lower() or "приемк" in contract_text.lower():
-            contract_terms.append("В проекте контракта есть условия приемки и закрывающих документов.")
+            acceptance_window = _match_first(
+                contract_text,
+                (
+                    r"Не позднее\s+(\d+\s*\([^)]+\)\s*рабочих дней[^.]+документа о приемке)",
+                    r"Не позднее\s+(\d+\s*рабочих дней[^.]+документа о приемке)",
+                ),
+            )
+            short_acceptance = _shorten_acceptance_terms(acceptance_window) if acceptance_window else None
+            acceptance_spec = _match_first(
+                tz_text,
+                (
+                    r"Порядок приемки оказания услуг\s*\t([^\n]+)",
+                    r"Порядок приёмки оказания услуг\s*\t([^\n]+)",
+                ),
+            )
+            acceptance_criteria = _match_first(
+                tz_text,
+                (
+                    r"Критерии приемки Модуля\s*\t([^\n]+)",
+                    r"Критерии приёмки Модуля\s*\t([^\n]+)",
+                ),
+            )
+            if acceptance_spec or acceptance_criteria:
+                compact_acceptance: list[str] = []
+                acceptance_text = " ".join(
+                    value for value in (acceptance_spec, acceptance_criteria) if value
+                )
+                if "7 календарных дней" in acceptance_text:
+                    compact_acceptance.append("ПМИ передаётся за 7 календарных дней до испытаний")
+                if re.search(r"повторн\w*\s+ПСИ[^.]*5\s+рабочих дней", acceptance_text, re.IGNORECASE):
+                    compact_acceptance.append("повторные ПСИ — не позднее 5 рабочих дней после замечаний")
+                if "0,01 %" in acceptance_text:
+                    compact_acceptance.append("допустимое отклонение площади ≤ 0,01 %")
+                if "15 мин" in acceptance_text:
+                    compact_acceptance.append("полный цикл ≤ 15 мин")
+                if "блокирующих замечаний" in acceptance_text.lower():
+                    compact_acceptance.append("блокирующие замечания ПСИ отсутствуют")
+                contract_terms.append(
+                    "Приёмка: "
+                    + (
+                        "; ".join(compact_acceptance)
+                        if compact_acceptance
+                        else "условия ПСИ и критерии приёмки установлены ТЗ"
+                    )
+                    + "."
+                )
+            else:
+                contract_terms.append(
+                    f"Приёмка: {short_acceptance.rstrip('.')}."
+                    if short_acceptance
+                    else "В проекте контракта есть условия приёмки и закрывающих документов."
+                )
+        warranty_term = _match_first(
+            tz_text,
+            (
+                r"Гарантийные обязательства\s*\t([^\n]+)",
+                r"Гарантия\s+(\d+\s+(?:год|года|лет|месяц(?:а|ев)?))",
+            ),
+        )
+        if warranty_term:
+            warranty_duration = _match_first(
+                warranty_term,
+                (r"Гарантия\s+(\d+\s+(?:год|года|лет|месяц(?:а|ев)?))",),
+            )
+            warranty_fix = _match_first(
+                warranty_term,
+                (r"Срок устранения\s*[–-]\s*(\d+\s+рабочих дней)",),
+            )
+            warranty_parts = []
+            if warranty_duration:
+                warranty_parts.append(warranty_duration)
+            if warranty_fix:
+                warranty_parts.append(f"устранение недостатков — {warranty_fix}")
+            contract_terms.append(
+                "Гарантия: "
+                + (
+                    "; ".join(warranty_parts)
+                    if warranty_parts
+                    else (warranty_term.strip().rstrip("."))
+                )
+                + "."
+            )
         if "лиценз" in (tz_text + "\n" + contract_text).lower():
-            contract_terms.append("В составе результата работ фигурирует передача лицензии или прав использования.")
+            rights_summary = _match_first(
+                tz_text,
+                (
+                    r"Требования к патентной чистоте и правам на результаты\s*\t([^\n]+)",
+                ),
+            )
+            if rights_summary and (
+                "Исключительные права" in rights_summary
+                and "неисключительное право" in rights_summary
+            ):
+                contract_terms.append(
+                    "Права и лицензия: исключительные права на Модуль, исходный код и документацию остаются у Исполнителя; "
+                    "Заказчику предоставляется неисключительное право использования без передачи третьим лицам и без модификации исходного кода без согласия Исполнителя."
+                )
+            else:
+                contract_terms.append(
+                    f"Права и лицензия: {(rights_summary or 'условия передачи прав предусмотрены ТЗ').rstrip('.')}."
+                )
+        contract_terms = _dedupe_text_items(
+            [_normalize_analysis_sentence(item) or item for item in contract_terms[:8]]
+        )
         return {
-            "overview": [item for item in overview if item][:6],
-            "compliance_highlights": compliance[:6],
+            "overview": [item for item in overview if item][:8],
+            "compliance_highlights": compliance[:8],
             "delivery_model": [
                 "Работы зависят от внешних систем, доступов и интеграционного контура заказчика.",
                 "Часть требований относится к программной доработке, а не к поставке товара.",
             ],
-            "contract_highlights": contract_terms[:6],
+            "contract_highlights": contract_terms[:8],
             "next_actions": [
-                "Разбить объем работ по функциональным блокам и запросить оценку трудозатрат по каждому блоку.",
-                "Уточнить порядок предоставления доступов к СМЭВ, ЕРН и витрине Минобороны.",
-                "Проверить критерии приемки, тестирования и пакет лицензионных документов.",
+                "Разбить объем работ по source-bound функциональным блокам ТЗ и оценить трудозатраты по каждому блоку.",
+                "Сверить все внешние системы, API, форматы обмена и необходимые доступы только по текущему ТЗ.",
+                "Проверить критерии приёмки, испытаний, гарантийные обязательства и пакет лицензионных документов.",
             ],
             "extracted_fields": _dedupe_text_items(
                 [
@@ -3415,6 +3958,7 @@ def _build_preliminary_procurement_analysis(
             ),
             "procurement_kind": procurement_kind,
             "scope": scope,
+            "service_items": _service_item_analysis_rows(software_service_items),
             "supply_section_note": (
                 "Состав работ собран по техническим документам и проекту контракта."
                 if work_rows
@@ -3691,9 +4235,31 @@ def _normalize_supplier_questions(questions: list[dict[str, Any]], procurement_k
 
 def delivery_address_from_preliminary(preliminary_analysis: dict[str, Any]) -> str | None:
     for item in preliminary_analysis.get("overview", []):
-        if str(item).startswith("Адрес поставки:"):
-            return str(item).split(":", 1)[1].strip() or None
+        text = str(item)
+        if text.startswith(("Адрес поставки:", "Место оказания услуг:")):
+            return text.split(":", 1)[1].strip().rstrip(".") or None
     return None
+
+
+def _tender_summary_identity_fields(
+    metadata: dict[str, Any],
+    *,
+    analysis_mode: str,
+) -> dict[str, Any]:
+    procurement = metadata.get("procurement") if isinstance(metadata.get("procurement"), dict) else {}
+    deadline = metadata.get("deadline") or procurement.get("deadline")
+    procedure_type = (
+        procurement.get("procedure_type")
+        or metadata.get("procedure_type")
+        or ("Поиск закупки + intake" if metadata.get("mode") == "procurement_search_intake" else "Загруженный demo run")
+    )
+    return {
+        "procedure_type": procedure_type,
+        "intake_mode": metadata.get("mode") or "uploaded_demo",
+        "submission_deadline": deadline,
+        "analysis_status": metadata.get("analysis_status") or metadata.get("status"),
+        "analysis_mode": analysis_mode,
+    }
 
 
 def _build_output_payloads(
@@ -3813,11 +4379,9 @@ def _build_output_payloads(
         "run_id": metadata["run_id"],
         "prepared_at": _safe_datetime(),
         "title": metadata["tender_title"],
-        "procedure_type": "Поиск закупки + intake" if metadata.get("mode") == "procurement_search_intake" else "Загруженный demo run",
+        **_tender_summary_identity_fields(metadata, analysis_mode=analysis_mode),
         "customer": metadata["customer_name"],
         "category": metadata["tender_category"],
-        "submission_deadline": _safe_datetime(),
-        "analysis_status": metadata["status"],
         "procurement_code": metadata.get("procurement_id") or metadata["run_id"].upper(),
         "documents": [
             {
@@ -4107,7 +4671,7 @@ def _build_output_payloads(
                 "category": risk.get("category", "unknown"),
                 "evidence_ids": [value for value in str(risk.get("evidence_ids") or "").split(", ") if value],
                 "evidence_locators": normalized_risk_evidence_locators(risk.get("evidence_locators")),
-                "status": "blocker" if risk.get("classification") == "deal_breaker_candidate" else "requires_review",
+                "status": _risk_status_from_classification(risk.get("classification")),
             }
             for risk in risk_candidates
         ]
@@ -4119,9 +4683,7 @@ def _build_output_payloads(
                 "mitigation": "Проверить договор и комплектность вручную.",
             }
         ]),
-        "manual_checks": [
-            "Проверить договорные ограничения и совместимость аналогов вручную."
-        ],
+        "manual_checks": _risk_manual_checks(procurement_kind),
     }
 
     economics_ready = bool(economics and economics.get("economics_status") in {"conditionally_viable", "viable"})
@@ -4162,12 +4724,7 @@ def _build_output_payloads(
         "open_questions": supplier_questions_payload["questions"][:3],
         "risks": [item["risk"] for item in risks_payload["risks"][:4]],
         "economics": [f"{item['label']}: {item['value']}" for item in economics_payload["metrics"]],
-        "manual_checks": [
-            "Проверить исходные документы и роли файлов.",
-            "Подтвердить RFQ и вопросы перед внешними коммуникациями.",
-            "Проверить нормализацию Excel-таблиц и сопоставление позиций перед финансовым решением.",
-            "Сделать финальное решение только после ручной проверки.",
-        ],
+        "manual_checks": _final_recommendation_manual_checks(procurement_kind),
     }
 
     trace = {
@@ -5382,10 +5939,21 @@ def _render_product_report_html(model: dict[str, Any], *, customer: bool = True)
         return html.escape(str(value if value not in (None, "") else "Данных недостаточно — требуется проверка"))
     summary, passport, meta = model["executive_summary"], model["procurement_passport"], model["metadata"]
     compatibility = model.get("compatibility_sections", {})
+    non_quantified_scope = model.get("procurement_volume_status") == "not_applicable"
+    positions_summary = (
+        "Товарные позиции: не применимо; состав программных работ приведён ниже."
+        if non_quantified_scope
+        else f"Позиций: {len(model['line_items'])}"
+    )
     rows = "".join(
         f"<tr><td>{row['sequence']}</td><td>{esc(row['original_name'])}</td><td>{esc(row['quantity_display'])}</td><td>{esc(row['unit_original'])}</td><td>{esc(row['quantity_status'])}</td><td>{esc(row['source_document_id'])}, {row['source_row']} [{esc(', '.join(row['evidence_ids']))}]</td></tr>"
         for row in model["line_items"]
-    ) or '<tr><td colspan="6">Позиции и количество не удалось извлечь из доступных документов; требуется проверка первоисточника.</td></tr>'
+    ) or (
+        '<tr><td colspan="6">Для данной программной закупки товарное количество неприменимо; '
+        'состав работ приведён в предварительном анализе выше.</td></tr>'
+        if non_quantified_scope
+        else '<tr><td colspan="6">Позиции и количество не удалось извлечь из доступных документов; требуется проверка первоисточника.</td></tr>'
+    )
     risks = "".join(f"<li><strong>{esc(risk.get('status', 'Требует проверки'))}</strong>: {esc(risk.get('risk'))}. {esc(risk.get('impact'))}</li>" for risk in model["risks"])
     evidence = "".join(f"<li id='{esc(item['evidence_id'])}'><strong>[{esc(item['evidence_id'])}]</strong> {esc(item['document'])}, строка {esc(item['row'])}: {esc(item['short_excerpt'])}</li>" for item in model["evidence_map"])
     bullets = lambda values: "".join(f"<li>{esc(value)}</li>" for value in values) or "<li>Не применимо — подтверждённых данных нет.</li>"
@@ -5397,7 +5965,7 @@ def _render_product_report_html(model: dict[str, Any], *, customer: bool = True)
     return f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Анализ закупки {esc(meta.get('procurement_number'))}</title><style>
 body{{margin:0;background:#f5f8fa;color:#10243e;font:16px Arial,sans-serif}}main{{max-width:1180px;margin:auto;padding:24px}}section{{background:#fff;border:1px solid #dce5eb;border-radius:12px;padding:20px;margin:16px 0}}h1,h2{{color:#003b5c}}.decision{{border-left:6px solid #d08300}}.scroll{{overflow-x:auto}}table{{border-collapse:collapse;width:100%;min-width:760px}}th,td{{border-bottom:1px solid #dce5eb;padding:9px;text-align:left;vertical-align:top}}th{{background:#e9f7f5}}.label{{font-weight:bold;color:#006b66}}@media print{{body{{background:#fff}}section{{break-inside:avoid}}}}@media(max-width:700px){{main{{padding:12px}}section{{padding:14px}}}}</style></head><body><main>
 <section><h1>{esc(compatibility.get('report_title'))}</h1><p>Номер извещения: {esc(compatibility.get('notice_number'))}</p><p>{esc(compatibility.get('source_status'))}</p><p>Скачано документов: {esc(compatibility.get('downloaded_files_count'))}</p><details><summary>Показать документы</summary><p>Документы текущего run доступны через защищённые ссылки интерфейса.</p></details>{('<a href="#archive">Скачать архив</a>' if compatibility.get('archive_available') else '')}<p class="label">Версия: {esc(meta.get('report_version'))}; полнота источников: {esc(meta.get('completeness_status'))}</p></section>
-<section><h2>Резюме для принятия решения</h2><p><strong>Название закупки: {esc(model.get('procurement_title'))}</strong></p><p>Номер закупки: {esc(model.get('procurement_number'))}</p><p>Дата публикации: {esc(model.get('publication_datetime'))}</p><p>Окончание подачи заявок: {esc(model.get('application_deadline'))}</p><p>НМЦК: {esc(model.get('nmck'))} {esc(model.get('currency'))}</p><p>Заказчик: {esc(model.get('customer_name'))}</p><p>Место поставки: {esc(model.get('delivery_place'))}</p><p>Проект контракта: {esc('приложен' if model.get('contract_draft_status') == 'present' else ('приложен, но автоматически разобрать его не удалось' if model.get('contract_draft_status') == 'parse_failed' else model.get('contract_draft_status')))}</p><p>Позиций: {esc(len(model['line_items']))}</p><div class="decision"><strong>{esc(model.get('decision'))}</strong><ul>{bullets(summary['blockers'])}</ul><p>Следующее действие: {esc(summary['next_action'])}</p></div></section>
+<section><h2>Резюме для принятия решения</h2><p><strong>Название закупки: {esc(model.get('procurement_title'))}</strong></p><p>Номер закупки: {esc(model.get('procurement_number'))}</p><p>Дата публикации: {esc(model.get('publication_datetime'))}</p><p>Окончание подачи заявок: {esc(model.get('application_deadline'))}</p><p>НМЦК: {esc(model.get('nmck'))} {esc(model.get('currency'))}</p><p>Заказчик: {esc(model.get('customer_name'))}</p><p>Место поставки: {esc(model.get('delivery_place'))}</p><p>Проект контракта: {esc('приложен' if model.get('contract_draft_status') == 'present' else ('приложен, но автоматически разобрать его не удалось' if model.get('contract_draft_status') == 'parse_failed' else model.get('contract_draft_status')))}</p><p>{esc(positions_summary)}</p><div class="decision"><strong>{esc(model.get('decision'))}</strong><ul>{bullets(summary['blockers'])}</ul><p>Следующее действие: {esc(summary['next_action'])}</p></div></section>
 <section><h2>Паспорт закупки</h2><ul><li>Категория: {esc(passport.get('category'))}</li><li>ОКПД2: {esc(passport.get('okpd2'))}</li><li>Статус объёма: {esc(model.get('procurement_volume_status'))}</li><li>Причина статуса объёма: {esc(model.get('volume_status_reason'))}</li><li>Заказчик: {esc(passport.get('customer'))}</li><li>Место поставки: {esc(passport.get('delivery_place'))}</li></ul></section>
 <section><h2>Предварительный анализ закупки</h2><ul>{bullets(compatibility.get('preliminary_overview', []))}</ul><h3>Состав поставки</h3>{compatibility_table}<h3>Ключевые условия договора</h3><ul>{bullets(compatibility.get('contract_highlights', []))}</ul></section>
 <section><h2>Состав и объём закупки</h2><div class="scroll"><table><thead><tr><th>№</th><th>Наименование / Услуга</th><th>Количество</th><th>Единица</th><th>Статус количества</th><th>Источник и evidence</th></tr></thead><tbody>{rows}</tbody></table></div></section>
@@ -5511,6 +6079,29 @@ def _is_transient_analysis_limitation(value: str) -> bool:
     return str(value).startswith(prefixes)
 
 
+def _document_relevance_event_payload(
+    *,
+    profile,
+    doc_relevance: dict[str, Any],
+) -> tuple[str, dict[str, Any]]:
+    if profile is None:
+        return (
+            "Supplier-fit скоринг документов пропущен: профиль поставщика не привязан.",
+            {
+                "document_score": None,
+                "scoring_skipped": True,
+                "reason": "supplier_profile_not_bound",
+            },
+        )
+    return (
+        f"Supplier-fit скоринг документов выполнен: найдено {len(doc_relevance.get('document_matched_terms', []))} совпадений.",
+        {
+            "document_score": doc_relevance.get("document_score"),
+            "scoring_skipped": False,
+        },
+    )
+
+
 def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeResponse:
     metadata = _load_metadata(run_id)
     if "pre_analysis_warnings" not in metadata:
@@ -5573,11 +6164,15 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
         profile = None if metadata.get("mode") == "procurement_search_intake" else get_supplier_profile()
         doc_relevance = score_procurement_document_text(text=combined_text or "", profile=profile)
         metadata["document_relevance"] = doc_relevance
+        relevance_event_message, relevance_event_metadata = _document_relevance_event_payload(
+            profile=profile,
+            doc_relevance=doc_relevance,
+        )
         append_demo_run_event(
             run_id,
             "relevance_document_scoring_completed",
-            f"Скоринг документов выполнен: найдено {len(doc_relevance.get('document_matched_terms', []))} совпадений.",
-            {"document_score": doc_relevance.get("document_score")},
+            relevance_event_message,
+            relevance_event_metadata,
         )
 
         from src.modules.tender_operator_agent_demo.eis_notice_parser import (

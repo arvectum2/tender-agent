@@ -219,3 +219,53 @@ def test_local_chat_llm_client_reports_prompt_metrics() -> None:
 
     assert metrics["context_chars"] > 0
     assert metrics["prompt_chars"] >= metrics["user_prompt_chars"]
+
+
+def test_local_chat_llm_client_includes_source_bound_procurement_facts(monkeypatch):
+    client = LocalChatLlmClient(
+        base_url="http://127.0.0.1:8081/v1",
+        model_name="arvectum-gemma4-12b-it-qat-q4_0",
+    )
+    observed: dict = {}
+
+    def fake_urlopen(request, timeout):
+        observed.update(json.loads(request.data.decode("utf-8")))
+        return _FakeResponse(
+            json.dumps({"choices": [{"message": {"content": "Краткий ответ:\nОк."}}]})
+        )
+
+    monkeypatch.setattr(
+        "src.tender_research.rag.llm.urllib.request.urlopen",
+        fake_urlopen,
+    )
+
+    answer = client.generate_answer(
+        "Какая дата окончания подачи заявок?",
+        _hits(),
+        registry_number="123",
+        analysis_mode="fast",
+        source_facts=(
+            "Номер закупки: 123\n"
+            "Окончание подачи заявок: 05.10.2026 10:00 (МСК+2)\n"
+            "Состав полученной документации: Извещение.docx; Проект контракта.docx"
+        ),
+    )
+
+    assert answer.error is None
+    prompt = observed["messages"][1]["content"]
+    assert "Структурированные source-bound факты источников" in prompt
+    assert "05.10.2026 10:00 (МСК+2)" in prompt
+    assert "Извещение.docx; Проект контракта.docx" in prompt
+
+
+def test_local_chat_llm_client_guardrails_keep_contract_obligations_separate():
+    client = LocalChatLlmClient(
+        base_url="http://127.0.0.1:8081/v1",
+        model_name="arvectum-gemma4-12b-it-qat-q4_0",
+    )
+    system_prompt = client._system_prompt(analysis_mode="fast")
+    assert "обеспечение исполнения контракта" in system_prompt
+    assert "гарантия на результат услуг" in system_prompt
+    assert "разные сущности" in system_prompt
+    assert "товарные поля" in system_prompt
+    assert "условные" in system_prompt

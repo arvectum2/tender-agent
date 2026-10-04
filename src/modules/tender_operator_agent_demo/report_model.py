@@ -66,6 +66,22 @@ def _format_source_location(value: Any) -> str:
 
 def _russian_datetime(value: Any) -> str:
     text = str(value or "").strip()
+    source_zone = re.search(
+        r"\(\s*МСК\s*(?:[+-]\s*\d{1,2})?\s*\)$",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if source_zone:
+        match = re.match(
+            r"(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}:\d{2})",
+            text,
+        )
+        if match:
+            zone_label = re.sub(r"\s+", "", source_zone.group(0))
+            return (
+                f"{match.group(1)}.{match.group(2)}.{match.group(3)} "
+                f"{match.group(4)} {zone_label}"
+            )
     if "T" in text:
         parsed = _legacy._parse_timestamp(text)
         if parsed:
@@ -493,6 +509,8 @@ def build_procurement_report_model(
         model,
         supplier_profile=supplier_profile,
     )
+    if isinstance(model.get("decision_core"), dict):
+        model["procurement_regime"] = model["decision_core"].get("procurement_regime")
     model["bid_decision"] = legacy_bid_decision(model["decision_core"])
     _ground_customer_decision_claims(model)
     _align_customer_decision_with_decision_core(model)

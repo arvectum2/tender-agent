@@ -50,6 +50,11 @@ def test_missing_search_customer_is_enriched_from_common_info(monkeypatch):
         network_status = 'success'
         customer_name = 'ДЕПАРТАМЕНТ НЕДРОПОЛЬЗОВАНИЯ И ПРИРОДНЫХ РЕСУРСОВ ХМАО - ЮГРЫ'
         application_deadline = datetime(2026, 10, 5, 5, 0, tzinfo=timezone.utc)
+        raw = {
+            'detail_metadata': {
+                'application_deadline_source_text': '05.10.2026 10:00 (МСК+2)',
+            }
+        }
 
     class Provider:
         def __init__(self, *args, **kwargs):
@@ -66,12 +71,13 @@ def test_missing_search_customer_is_enriched_from_common_info(monkeypatch):
             'source_url': 'https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0187200001726001304',
             'title': AXIOMA_TITLE,
             'customer_name': None,
-            'deadline': None,
+            'deadline': '05.10.2026',
         }
     ])
     assert card['customer_name'].startswith('ДЕПАРТАМЕНТ НЕДРОПОЛЬЗОВАНИЯ')
     assert card['customer_identity_source'] == 'eis_common_info'
-    assert card['deadline'] == '05.10.2026 05:00'
+    assert card['deadline'] == '05.10.2026 10:00 (МСК+2)'
+    assert card['deadline_utc'] == '2026-10-05T05:00:00+00:00'
 
 
 def test_search_parser_rejects_javascript_contaminated_customer():
@@ -123,3 +129,12 @@ def test_mac_mini_analysis_preset_matches_live_local_llm():
     assert "llm_base_url: 'http://127.0.0.1:8081/v1'" in html
     assert "llm_model: 'arvectum-gemma4-12b-it-qat-q4_0'" in html
     assert 'Qwen2.5-14B' not in html
+
+
+def test_public_search_handoff_preserves_card_metadata_in_request():
+    html = render_tender_operator_console_html()
+    assert 'data-deadline=' in html
+    assert 'deadline: deadline || null' in html
+    assert 'publication_date: publicationDate || null' in html
+    assert 'initial_price: initialPrice ? Number(initialPrice) : null' in html
+    assert 'procedure_type: procedureType || null' in html
