@@ -523,7 +523,7 @@ AI_CORP_RAG_DATA_PLATFORM_API_KEY=
 AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS=30
 ```
 
-After switching, run the normal tender preparation flow. Tender Agent keeps its canonical procurement chunks, creates a versioned Data Platform collection for that tender, and indexes each chunk with a stable `tender-chunk://<chunk_id>` canonical URI. Search uses Data Platform hybrid retrieval and maps every hit back to the original Tender Agent chunk before citations or analysis are produced.
+After switching, run the normal tender preparation flow. Tender Agent keeps its canonical procurement chunks, creates a versioned Data Platform collection for that tender, and indexes each chunk with a stable `tender-chunk://<chunk_id>` canonical URI. Search uses Data Platform hybrid retrieval and maps every hit back to the original Tender Agent chunk before citations or analysis are produced. Tender RAG uses a semantic-first weighted RRF profile (lexical_weight=1, vector_weight=4); Data Platform defaults remain unchanged for other consumers.
 
 There is intentionally **no automatic fallback** from `data_platform` to the legacy JSON vector store. If the platform is unavailable or the versioned collection is incomplete, preparation/readiness fails closed and analysis returns `no_context` until the platform index is prepared.
 

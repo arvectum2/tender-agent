@@ -12,6 +12,11 @@ from src.tender_research.repository import TenderRepository
 _COLLECTION_PREFIX = "tender-agent"
 _CHUNK_URI_PREFIX = "tender-chunk://"
 
+# Procurement retrieval is semantic-first. Equal-weight RRF can over-promote
+# a weak lexical singleton that is only a deep semantic candidate.
+_TENDER_LEXICAL_WEIGHT = 1.0
+_TENDER_VECTOR_WEIGHT = 4.0
+
 
 class DataPlatformError(RuntimeError):
     pass
@@ -185,6 +190,8 @@ class DataPlatformClient:
                 "collections": collections,
                 "limit": limit,
                 "mode": "hybrid",
+                "lexical_weight": _TENDER_LEXICAL_WEIGHT,
+                "vector_weight": _TENDER_VECTOR_WEIGHT,
             },
         ).json()
         hits = payload.get("hits", [])

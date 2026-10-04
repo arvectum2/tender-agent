@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import httpx
 import pytest
 from sqlalchemy import create_engine
@@ -245,6 +247,34 @@ def test_http_client_uses_canonical_tender_chunk_uri() -> None:
     assert 'name="pre_chunked"' in captured["body"]
     assert "true" in captured["body"]
 
+
+
+
+def test_http_client_uses_semantic_first_hybrid_weights() -> None:
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/v1/search":
+            captured["payload"] = json.loads(request.read().decode("utf-8"))
+            return httpx.Response(200, json={"query": "оплата", "hits": []})
+        raise AssertionError(request.url)
+
+    client = DataPlatformClient(
+        base_url="http://data-platform.test",
+        client=httpx.Client(
+            base_url="http://data-platform.test",
+            transport=httpx.MockTransport(handler),
+        ),
+    )
+
+    assert client.search(
+        query="оплата",
+        collections=["tender-agent:x:y"],
+        limit=5,
+    ) == []
+    assert captured["payload"]["mode"] == "hybrid"
+    assert captured["payload"]["lexical_weight"] == 1.0
+    assert captured["payload"]["vector_weight"] == 4.0
 
 def test_http_client_fails_closed_without_legacy_fallback() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
