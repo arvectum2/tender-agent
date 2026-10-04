@@ -344,3 +344,118 @@ class TestAnalyzeTender:
                                 )
                                 assert result.report_path is not None
                                 mock_save.assert_called_once()
+class TestDataPlatformAnalysis:
+    def test_analysis_uses_data_platform_retriever_without_json_store(self):
+        from src.tender_research.config import TenderResearchConfig
+
+        mock_tender = MagicMock()
+        mock_tender.id = "tender-1"
+        mock_tender.title = "Test Tender"
+
+        mock_repo = MagicMock()
+        mock_repo.get_tender_by_registry_number.return_value = mock_tender
+        mock_repo.get_tender_by_external.return_value = mock_tender
+        mock_repo.count_chunks_by_tender.return_value = 2
+
+        platform_client = MagicMock()
+        platform_client.collection_stats.return_value = {
+            "resources": 2,
+            "embeddings": 2,
+        }
+        retriever = MagicMock()
+        retriever.search_documents.return_value = []
+
+        config = TenderResearchConfig(
+            rag_retrieval_backend="data_platform",
+            rag_data_platform_base_url="http://data-platform.test",
+        )
+
+        with (
+            patch(
+                "src.tender_research.rag.analysis_service.TenderRepository",
+                return_value=mock_repo,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.load_config",
+                return_value=config,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_tender_collection_id",
+                return_value="tender-agent:tender-1:rev",
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_data_platform_client",
+                return_value=platform_client,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.DataPlatformRagRetriever",
+                return_value=retriever,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_embedding_provider"
+            ) as local_embeddings,
+            patch(
+                "src.tender_research.rag.analysis_service.JsonVectorStore"
+            ) as json_store,
+        ):
+            result = analyze_tender(
+                registry_number="123",
+                session=MagicMock(),
+                use_llm=False,
+                record_history=False,
+            )
+
+        assert result.retrieval_provider == "data_platform"
+        assert result.retrieval_model == "hybrid"
+        assert result.sections_count == len(ANALYSIS_SECTIONS)
+        local_embeddings.assert_not_called()
+        json_store.assert_not_called()
+        platform_client.close.assert_called_once()
+
+    def test_analysis_fails_closed_for_incomplete_platform_index(self):
+        from src.tender_research.config import TenderResearchConfig
+
+        mock_tender = MagicMock()
+        mock_tender.id = "tender-1"
+        mock_repo = MagicMock()
+        mock_repo.get_tender_by_registry_number.return_value = mock_tender
+        mock_repo.get_tender_by_external.return_value = mock_tender
+        mock_repo.count_chunks_by_tender.return_value = 2
+
+        platform_client = MagicMock()
+        platform_client.collection_stats.return_value = {
+            "resources": 1,
+            "embeddings": 1,
+        }
+        config = TenderResearchConfig(rag_retrieval_backend="data_platform")
+
+        with (
+            patch(
+                "src.tender_research.rag.analysis_service.TenderRepository",
+                return_value=mock_repo,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.load_config",
+                return_value=config,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_tender_collection_id",
+                return_value="tender-agent:tender-1:rev",
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_data_platform_client",
+                return_value=platform_client,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.RagRetriever"
+            ) as legacy_retriever,
+        ):
+            result = analyze_tender(
+                registry_number="123",
+                session=MagicMock(),
+                record_history=False,
+            )
+
+        assert result.status == "no_context"
+        assert any("Data Platform index" in error for error in result.errors)
+        legacy_retriever.assert_not_called()

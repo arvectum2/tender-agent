@@ -12,8 +12,18 @@ from src.shared.storage.gate import check_ingestion_allowed
 from src.tender_research.config import load_config
 from src.tender_research.document_store import download_tender_documents
 from src.tender_research.eis_loader import EisTenderLoader
+from src.tender_research.rag.data_platform import (
+    DataPlatformError,
+    DataPlatformTenderIndexer,
+    build_data_platform_client,
+    build_tender_collection_id,
+    retrieval_backend_name,
+)
 from src.tender_research.rag.embeddings import build_embedding_provider
-from src.tender_research.rag.indexer import DocumentChunkIndexer, DocumentEmbeddingIndexer
+from src.tender_research.rag.indexer import (
+    DocumentChunkIndexer,
+    DocumentEmbeddingIndexer,
+)
 from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
 
@@ -266,11 +276,7 @@ def prepare_tender_for_analysis(
                 warnings.append("No documents have extracted text available")
         emit_progress(55, "extract_text", step.message)
 
-        emb_provider = build_embedding_provider(config)
-        vector_store = JsonVectorStore(
-            _vector_store_path(config, provider_name=emb_provider.provider_name, model_name=emb_provider.model_name),
-            dimension=emb_provider.dimension or None,
-        )
+        backend = retrieval_backend_name(config)
 
         chunk_indexer = DocumentChunkIndexer(repo, config)
         step = TenderPreparationStep("build_chunks", "in_progress", "Building chunks...")
@@ -288,15 +294,23 @@ def prepare_tender_for_analysis(
                 if chunks_created > 0:
                     step.status = "completed"
                     step.message = f"Created {chunks_created} chunk(s)"
-                    step.details = f"skipped_existing={chunks_skipped}" if chunks_skipped else ""
+                    step.details = (
+                        f"skipped_existing={chunks_skipped}"
+                        if chunks_skipped
+                        else ""
+                    )
                 elif chunks_skipped > 0:
                     step.status = "skipped"
-                    step.message = f"Chunks already exist ({chunks_skipped} skipped)"
+                    step.message = (
+                        f"Chunks already exist ({chunks_skipped} skipped)"
+                    )
                 else:
                     step.status = "completed"
                     step.message = "No chunks created"
                     if docs_with_text == 0:
-                        warnings.append("No chunks created because no documents have extracted text")
+                        warnings.append(
+                            "No chunks created because no documents have extracted text"
+                        )
             except Exception as e:
                 logger.error("Chunk build failed for %s: %s", registry_number, e)
                 step.status = "failed"
@@ -304,65 +318,198 @@ def prepare_tender_for_analysis(
                 warnings.append(f"Chunk build failed: {e}")
         emit_progress(70, "build_chunks", step.message)
 
-        emb_indexer = DocumentEmbeddingIndexer(repo, config, emb_provider, vector_store)
-        step = TenderPreparationStep("build_embeddings", "in_progress", "Building embeddings...")
+        chunks_count = repo.count_chunks_by_tender(tender.id)
+        embeddings_created_count = 0
+        indexed_chunks_count = 0
+        emb_provider = (
+            build_embedding_provider(config)
+            if backend == "legacy"
+            else None
+        )
+
+        step = TenderPreparationStep(
+            "build_embeddings",
+            "in_progress",
+            (
+                "Indexing chunks in Data Platform..."
+                if backend == "data_platform"
+                else "Building embeddings..."
+            ),
+        )
         steps.append(step)
         emit_progress(90, "build_embeddings", step.message)
-        emb_existing = repo.count_embeddings_by_tender(emb_provider.provider_name, emb_provider.model_name, tender.id)
-        chunks_count = repo.count_chunks_by_tender(tender.id)
-        if emb_existing >= chunks_count and not rebuild_embeddings:
+
+        if chunks_count == 0:
             step.status = "skipped"
-            step.message = f"Embeddings already exist ({emb_existing})"
-        elif chunks_count == 0:
-            step.status = "skipped"
-            step.message = "No chunks to embed"
-        else:
+            step.message = "No chunks to index"
+        elif backend == "data_platform":
             try:
-                emb_result = emb_indexer.build_for_tender(tender.id)
-                emb_created = emb_result.get("embeddings_created", 0)
-                emb_failed = emb_result.get("embeddings_failed", 0)
-                last_error = emb_result.get("last_error")
-                if emb_failed > 0 and emb_created == 0:
-                    step.status = "failed"
-                    step.message = f"Embedding failed: {last_error or 'unknown error'}"
-                    warnings.append(f"Embedding failed: {last_error}")
-                elif emb_created > 0:
+                with build_data_platform_client(config) as platform_client:
+                    platform_result = DataPlatformTenderIndexer(
+                        repo,
+                        platform_client,
+                    ).build_for_tender(tender.id)
+                indexed_chunks_count = platform_result.chunks_indexed
+                embeddings_created_count = platform_result.embeddings_created
+                if (
+                    indexed_chunks_count == chunks_count
+                    and embeddings_created_count > 0
+                ):
                     step.status = "completed"
-                    step.message = f"Created {emb_created} embedding(s)"
-                    step.details = f"failed={emb_failed}" if emb_failed else ""
+                    step.message = (
+                        "Indexed "
+                        f"{indexed_chunks_count} tender chunk(s) in Data Platform"
+                    )
+                    step.details = (
+                        f"collection={platform_result.collection_id}; "
+                        f"platform_chunks={platform_result.platform_chunks_created}; "
+                        f"embeddings={embeddings_created_count}"
+                    )
                 else:
-                    step.status = "skipped"
-                    step.message = "Embeddings already exist"
-            except Exception as e:
-                logger.error("Embedding build failed for %s: %s", registry_number, e)
+                    step.status = "failed"
+                    step.message = (
+                        "Data Platform indexing incomplete: "
+                        f"indexed={indexed_chunks_count}/{chunks_count}, "
+                        f"embeddings={embeddings_created_count}"
+                    )
+                    warnings.append(step.message)
+            except (DataPlatformError, ValueError) as e:
+                logger.error(
+                    "Data Platform indexing failed for %s: %s",
+                    registry_number,
+                    e,
+                )
                 step.status = "failed"
-                step.message = f"Embedding build failed: {e}"
-                warnings.append(f"Embedding build failed: {e}")
+                step.message = f"Data Platform indexing failed: {e}"
+                warnings.append(step.message)
+        else:
+            assert emb_provider is not None
+            vector_store = JsonVectorStore(
+                _vector_store_path(
+                    config,
+                    provider_name=emb_provider.provider_name,
+                    model_name=emb_provider.model_name,
+                ),
+                dimension=emb_provider.dimension or None,
+            )
+            emb_indexer = DocumentEmbeddingIndexer(
+                repo,
+                config,
+                emb_provider,
+                vector_store,
+            )
+            emb_existing = repo.count_embeddings_by_tender(
+                emb_provider.provider_name,
+                emb_provider.model_name,
+                tender.id,
+            )
+            if emb_existing >= chunks_count and not rebuild_embeddings:
+                step.status = "skipped"
+                step.message = f"Embeddings already exist ({emb_existing})"
+            else:
+                try:
+                    emb_result = emb_indexer.build_for_tender(tender.id)
+                    embeddings_created_count = emb_result.get(
+                        "embeddings_created",
+                        0,
+                    )
+                    emb_failed = emb_result.get("embeddings_failed", 0)
+                    last_error = emb_result.get("last_error")
+                    if emb_failed > 0 and embeddings_created_count == 0:
+                        step.status = "failed"
+                        step.message = (
+                            f"Embedding failed: {last_error or 'unknown error'}"
+                        )
+                        warnings.append(f"Embedding failed: {last_error}")
+                    elif embeddings_created_count > 0:
+                        step.status = "completed"
+                        step.message = (
+                            f"Created {embeddings_created_count} embedding(s)"
+                        )
+                        step.details = (
+                            f"failed={emb_failed}" if emb_failed else ""
+                        )
+                    else:
+                        step.status = "skipped"
+                        step.message = "Embeddings already exist"
+                except Exception as e:
+                    logger.error(
+                        "Embedding build failed for %s: %s",
+                        registry_number,
+                        e,
+                    )
+                    step.status = "failed"
+                    step.message = f"Embedding build failed: {e}"
+                    warnings.append(f"Embedding build failed: {e}")
         emit_progress(90, "build_embeddings", step.message)
 
-        step = TenderPreparationStep("readiness_check", "in_progress", "Checking readiness...")
+        step = TenderPreparationStep(
+            "readiness_check",
+            "in_progress",
+            "Checking readiness...",
+        )
         steps.append(step)
         emit_progress(100, "readiness_check", step.message)
         final_chunks = repo.count_chunks_by_tender(tender.id)
-        final_embeddings = repo.count_embeddings_by_tender(emb_provider.provider_name, emb_provider.model_name, tender.id)
         final_docs_with_text = repo.count_extracted_documents_by_tender(tender.id)
-        ready = final_chunks > 0 and final_embeddings > 0
 
-        if ready:
-            step.status = "completed"
-            step.message = f"Ready for analysis (chunks={final_chunks}, embeddings={final_embeddings})"
-        elif final_chunks > 0 and final_embeddings == 0:
-            step.status = "warning"
-            step.message = "Chunks exist but no embeddings"
-            warnings.append("Chunks built but embeddings are missing")
-        elif final_chunks == 0 and final_embeddings == 0:
-            step.status = "failed"
-            step.message = "No chunks or embeddings available"
-            errors.append("No chunks or embeddings available for analysis")
+        if backend == "data_platform":
+            final_embeddings = embeddings_created_count
+            ready = (
+                final_chunks > 0
+                and indexed_chunks_count == final_chunks
+                and final_embeddings > 0
+            )
+            if ready:
+                step.status = "completed"
+                step.message = (
+                    "Ready for analysis via Data Platform "
+                    f"(chunks={final_chunks}, embeddings={final_embeddings})"
+                )
+            elif final_chunks == 0:
+                step.status = "failed"
+                step.message = "No chunks available for Data Platform indexing"
+                errors.append(step.message)
+            else:
+                step.status = "failed"
+                step.message = (
+                    "Data Platform index is incomplete "
+                    f"(indexed={indexed_chunks_count}/{final_chunks}, "
+                    f"embeddings={final_embeddings})"
+                )
+                errors.append(step.message)
         else:
-            step.status = "warning"
-            step.message = f"Incomplete: chunks={final_chunks}, embeddings={final_embeddings}"
-            warnings.append(f"Incomplete preparation: chunks={final_chunks}, embeddings={final_embeddings}")
+            assert emb_provider is not None
+            final_embeddings = repo.count_embeddings_by_tender(
+                emb_provider.provider_name,
+                emb_provider.model_name,
+                tender.id,
+            )
+            ready = final_chunks > 0 and final_embeddings > 0
+            if ready:
+                step.status = "completed"
+                step.message = (
+                    f"Ready for analysis (chunks={final_chunks}, "
+                    f"embeddings={final_embeddings})"
+                )
+            elif final_chunks > 0 and final_embeddings == 0:
+                step.status = "warning"
+                step.message = "Chunks exist but no embeddings"
+                warnings.append("Chunks built but embeddings are missing")
+            elif final_chunks == 0 and final_embeddings == 0:
+                step.status = "failed"
+                step.message = "No chunks or embeddings available"
+                errors.append("No chunks or embeddings available for analysis")
+            else:
+                step.status = "warning"
+                step.message = (
+                    f"Incomplete: chunks={final_chunks}, "
+                    f"embeddings={final_embeddings}"
+                )
+                warnings.append(
+                    "Incomplete preparation: "
+                    f"chunks={final_chunks}, embeddings={final_embeddings}"
+                )
         emit_progress(100, "readiness_check", step.message)
 
         overall_status = "completed" if ready else "completed_with_warnings"
@@ -381,7 +528,7 @@ def prepare_tender_for_analysis(
             chunks_total=final_chunks,
             chunks_created=sum(s.name == "build_chunks" and s.status == "completed" for s in steps),
             embeddings_total=final_embeddings,
-            embeddings_created=sum(s.name == "build_embeddings" and s.status == "completed" for s in steps) if final_embeddings > 0 else 0,
+            embeddings_created=embeddings_created_count,
             warnings=warnings,
             errors=errors,
             tender_id=tender.id,
@@ -411,7 +558,7 @@ def check_preparation_status(
             object.__setattr__(config, "rag_embeddings_model", model)
 
         repo = TenderRepository(session)
-        emb_provider = build_embedding_provider(config)
+        backend = retrieval_backend_name(config)
         tender = repo.get_tender_by_registry_number(registry_number)
 
         if not tender:
@@ -431,9 +578,36 @@ def check_preparation_status(
         docs_downloaded = sum(1 for d in tender.documents if d.download_status == "downloaded")
         docs_with_text = repo.count_extracted_documents_by_tender(tender.id)
         chunks_total = repo.count_chunks_by_tender(tender.id)
-        embeddings_total = repo.count_embeddings_by_tender(
-            emb_provider.provider_name, emb_provider.model_name, tender.id
-        )
+        platform_error = None
+        platform_collection_id = None
+        if backend == "data_platform":
+            embeddings_total = 0
+            platform_collection_id = build_tender_collection_id(repo, tender.id)
+            if platform_collection_id and chunks_total > 0:
+                try:
+                    with build_data_platform_client(config) as platform_client:
+                        stats = platform_client.collection_stats(
+                            platform_collection_id
+                        )
+                    resources_indexed = int(stats.get("resources", 0))
+                    embeddings_total = int(stats.get("embeddings", 0))
+                    platform_ready = (
+                        resources_indexed == chunks_total
+                        and embeddings_total >= chunks_total
+                    )
+                except (DataPlatformError, ValueError) as exc:
+                    platform_ready = False
+                    platform_error = type(exc).__name__
+            else:
+                platform_ready = False
+        else:
+            emb_provider = build_embedding_provider(config)
+            embeddings_total = repo.count_embeddings_by_tender(
+                emb_provider.provider_name,
+                emb_provider.model_name,
+                tender.id,
+            )
+            platform_ready = False
 
         missing = []
         if not tender:
@@ -444,10 +618,14 @@ def check_preparation_status(
             missing.append("extracted_text")
         if chunks_total == 0:
             missing.append("chunks")
-        if embeddings_total == 0:
-            missing.append("embeddings")
-
-        ready = chunks_total > 0 and embeddings_total > 0
+        if backend == "data_platform":
+            if not platform_ready:
+                missing.append("data_platform_index")
+            ready = chunks_total > 0 and platform_ready
+        else:
+            if embeddings_total == 0:
+                missing.append("embeddings")
+            ready = chunks_total > 0 and embeddings_total > 0
 
         return {
             "registry_number": registry_number,
@@ -459,6 +637,9 @@ def check_preparation_status(
             "embeddings_total": embeddings_total,
             "ready_for_analysis": ready,
             "missing": missing,
+            "retrieval_backend": backend,
+            "data_platform_collection_id": platform_collection_id,
+            "data_platform_error": platform_error,
         }
     finally:
         if own_session:

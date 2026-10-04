@@ -17,15 +17,30 @@ _load_dotenv_local_result = load_dotenv(".env.local", override=False)
 from src.shared.config.settings import get_settings
 from src.shared.db.base import Base
 from src.tender_research.config import load_config
-from src.tender_research.rag.embeddings import build_embedding_provider, probe_embedding_provider
-from src.tender_research.rag.indexer import DocumentChunkIndexer, DocumentEmbeddingIndexer
 from src.tender_research.rag.analysis_service import analyze_tender
+from src.tender_research.rag.data_platform import (
+    DataPlatformRagRetriever,
+    build_data_platform_client,
+    retrieval_backend_name,
+)
+from src.tender_research.rag.embeddings import (
+    build_embedding_provider,
+    probe_embedding_provider,
+)
 from src.tender_research.rag.history_service import (
     get_analysis_run,
     get_analysis_run_report,
     list_analysis_runs,
 )
-from src.tender_research.rag.llm import LocalChatLlmClient, SourceCitation, build_source_citations
+from src.tender_research.rag.indexer import (
+    DocumentChunkIndexer,
+    DocumentEmbeddingIndexer,
+)
+from src.tender_research.rag.llm import (
+    LocalChatLlmClient,
+    SourceCitation,
+    build_source_citations,
+)
 from src.tender_research.rag.retriever import RagRetriever
 from src.tender_research.rag.schemas import DEFAULT_ANALYSIS_MODE
 from src.tender_research.rag.vector_store import JsonVectorStore
@@ -97,18 +112,41 @@ def _vector_store_path(config, *, provider_name: str, model_name: str) -> str:
     return str(path.with_name(named))
 
 
-def _build_runtime():
+def _build_runtime(*, retrieval_only: bool = False):
     session = _get_session()
     repo = TenderRepository(session)
     config = load_config()
     _apply_runtime_overrides(config, _RUNTIME_ARGS)
+    backend = retrieval_backend_name(config)
+
+    if retrieval_only and backend == "data_platform":
+        retriever = DataPlatformRagRetriever(
+            repo,
+            build_data_platform_client(config),
+        )
+        return session, repo, config, None, None, retriever
+
     provider = build_embedding_provider(config)
     vector_store = JsonVectorStore(
-        _vector_store_path(config, provider_name=provider.provider_name, model_name=provider.model_name),
+        _vector_store_path(
+            config,
+            provider_name=provider.provider_name,
+            model_name=provider.model_name,
+        ),
         dimension=provider.dimension or None,
     )
-    retriever = RagRetriever(repo, provider, vector_store)
+    retriever = (
+        DataPlatformRagRetriever(repo, build_data_platform_client(config))
+        if backend == "data_platform"
+        else RagRetriever(repo, provider, vector_store)
+    )
     return session, repo, config, provider, vector_store, retriever
+
+
+def _close_retriever(retriever) -> None:
+    close = getattr(retriever, "close", None)
+    if close is not None:
+        close()
 
 
 def _add_provider_args(parser: argparse.ArgumentParser) -> None:
@@ -161,15 +199,25 @@ def cmd_build_embeddings(args: argparse.Namespace) -> None:
 
 
 def cmd_search(args: argparse.Namespace) -> None:
-    session, repo, _config, provider, _vector_store, retriever = _build_runtime()
-    embeddings_count = repo.count_document_embeddings(provider=provider.provider_name, model=provider.model_name)
-    if embeddings_count == 0:
-        print(
-            f"No embeddings found for provider={args.provider or provider.provider_name} "
-            f"model={args.model or provider.model_name}. Run build-embeddings first."
+    session, repo, config, provider, _vector_store, retriever = _build_runtime(
+        retrieval_only=True
+    )
+    backend = retrieval_backend_name(config)
+    if backend == "legacy":
+        assert provider is not None
+        embeddings_count = repo.count_document_embeddings(
+            provider=provider.provider_name,
+            model=provider.model_name,
         )
-        session.close()
-        return
+        if embeddings_count == 0:
+            print(
+                "No embeddings found for "
+                f"provider={args.provider or provider.provider_name} "
+                f"model={args.model or provider.model_name}. "
+                "Run build-embeddings first."
+            )
+            session.close()
+            return
     if args.tender_id or args.registry_number:
         hits = retriever.search_documents(
             args.query,
@@ -180,8 +228,18 @@ def cmd_search(args: argparse.Namespace) -> None:
         )
     else:
         hits = retriever.search_all_documents(args.query, limit=args.limit)
-    print(f"provider: {args.provider or provider.provider_name}")
-    print(f"model: {args.model or provider.model_name}")
+    retrieval_provider = (
+        "data_platform"
+        if backend == "data_platform"
+        else args.provider or provider.provider_name
+    )
+    retrieval_model = (
+        "hybrid"
+        if backend == "data_platform"
+        else args.model or provider.model_name
+    )
+    print(f"provider: {retrieval_provider}")
+    print(f"model: {retrieval_model}")
     print(f"hits: {len(hits)}")
     for hit in hits:
         print(f"score: {hit.score:.4f}")
@@ -193,11 +251,14 @@ def cmd_search(args: argparse.Namespace) -> None:
         print(f"document: {hit.file_name}")
         print(f"preview: {hit.preview}")
         print()
+    _close_retriever(retriever)
     session.close()
 
 
 def cmd_ask(args: argparse.Namespace) -> None:
-    session, _repo, config, provider, _vector_store, retriever = _build_runtime()
+    session, _repo, config, provider, _vector_store, retriever = _build_runtime(
+        retrieval_only=True
+    )
     hits = retriever.search_documents(
         args.question,
         registry_number=args.registry_number,
@@ -208,8 +269,23 @@ def cmd_ask(args: argparse.Namespace) -> None:
 
     print(f"registry_number: {args.registry_number}")
     print(f"question: {args.question}")
-    print(f"retrieval_provider: {args.provider or provider.provider_name}")
-    print(f"retrieval_model: {args.model or provider.model_name}")
+    backend = retrieval_backend_name(config)
+    print(
+        "retrieval_provider: "
+        + (
+            "data_platform"
+            if backend == "data_platform"
+            else args.provider or provider.provider_name
+        )
+    )
+    print(
+        "retrieval_model: "
+        + (
+            "hybrid"
+            if backend == "data_platform"
+            else args.model or provider.model_name
+        )
+    )
     print(f"context_hits: {len(hits)}")
     if llm_enabled:
         print(f"llm_model: {config.local_llm_model}")
@@ -220,6 +296,7 @@ def cmd_ask(args: argparse.Namespace) -> None:
         print("answer:")
         print("Контекст не найден в локальном индексе.")
         print("sources: 0")
+        _close_retriever(retriever)
         session.close()
         return
 
@@ -245,6 +322,7 @@ def cmd_ask(args: argparse.Namespace) -> None:
         print("answer:")
         print("LLM не использовалась. Ниже релевантные фрагменты.")
         _print_sources(sources)
+    _close_retriever(retriever)
     session.close()
 
 
@@ -346,14 +424,27 @@ def cmd_check_embedding_server(args: argparse.Namespace) -> None:
 
 
 def cmd_eval(args: argparse.Namespace) -> None:
-    session, repo, config, provider, _vector_store, retriever = _build_runtime()
+    session, _repo, config, provider, _vector_store, retriever = _build_runtime(
+        retrieval_only=True
+    )
+    backend = retrieval_backend_name(config)
+    retrieval_provider = (
+        "data_platform"
+        if backend == "data_platform"
+        else args.provider or provider.provider_name
+    )
+    retrieval_model = (
+        "hybrid"
+        if backend == "data_platform"
+        else args.model or provider.model_name
+    )
     questions_path = Path(args.questions)
     questions = json.loads(questions_path.read_text(encoding="utf-8"))
 
     eval_dir = Path(config.data_dir) / "rag" / "eval"
     eval_dir.mkdir(parents=True, exist_ok=True)
     output_path = eval_dir / (
-        f"{_slugify(provider.provider_name)}__{_slugify(provider.model_name)}__"
+        f"{_slugify(retrieval_provider)}__{_slugify(retrieval_model)}__"
         f"{time.strftime('%Y%m%d-%H%M%S')}.jsonl"
     )
 
@@ -378,8 +469,8 @@ def cmd_eval(args: argparse.Namespace) -> None:
                 "id": item["id"],
                 "query": item["query"],
                 "category": item.get("category"),
-                "provider": args.provider or provider.provider_name,
-                "model": args.model or provider.model_name,
+                "provider": retrieval_provider,
+                "model": retrieval_model,
                 "results": [
                     {
                         "score": hit.score,
@@ -402,8 +493,8 @@ def cmd_eval(args: argparse.Namespace) -> None:
         "empty_results": empty_results,
         "avg_top_score": round(sum(top_scores) / len(top_scores), 4) if top_scores else 0.0,
         "top_documents": top_documents.most_common(5),
-        "provider": args.provider or provider.provider_name,
-        "model": args.model or provider.model_name,
+        "provider": retrieval_provider,
+        "model": retrieval_model,
         "output_path": str(output_path),
     }
     for key in (

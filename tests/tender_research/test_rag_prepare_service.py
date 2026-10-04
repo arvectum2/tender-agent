@@ -263,3 +263,127 @@ class TestPrepareTenderForAnalysis:
         assert status["tender_found"] is False
         assert status["ready_for_analysis"] is False
         assert "tender" in status["missing"]
+class TestDataPlatformPreparation:
+    def test_prepare_uses_data_platform_without_local_embeddings(
+        self,
+        mock_session,
+        mock_tender,
+    ):
+        from src.tender_research.config import TenderResearchConfig
+        from src.tender_research.rag.data_platform import DataPlatformIndexSummary
+
+        mock_repo = MagicMock()
+        mock_repo.get_tender_by_registry_number.return_value = mock_tender
+        mock_repo.count_chunks_by_tender.return_value = 2
+        mock_repo.count_extracted_documents_by_tender.return_value = 1
+        mock_doc = MagicMock()
+        mock_doc.download_status = "downloaded"
+        mock_doc.text_extraction_status = "extracted"
+        mock_doc.extracted_text_path = "/tmp/test.txt"
+        mock_tender.documents = [mock_doc]
+
+        platform_client = MagicMock()
+        platform_client.__enter__.return_value = platform_client
+        platform_client.__exit__.return_value = None
+        indexer = MagicMock()
+        indexer.build_for_tender.return_value = DataPlatformIndexSummary(
+            collection_id="tender-agent:tender-1:rev",
+            chunks_seen=2,
+            chunks_indexed=2,
+            platform_chunks_created=2,
+            embeddings_created=2,
+        )
+
+        config = TenderResearchConfig(
+            rag_retrieval_backend="data_platform",
+            rag_data_platform_base_url="http://data-platform.test",
+        )
+
+        with (
+            patch(
+                "src.tender_research.rag.prepare_service.TenderRepository",
+                return_value=mock_repo,
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.load_config",
+                return_value=config,
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.download_tender_documents",
+                return_value={"downloaded": 0, "failed": 0},
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.build_data_platform_client",
+                return_value=platform_client,
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.DataPlatformTenderIndexer",
+                return_value=indexer,
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.build_embedding_provider"
+            ) as local_embeddings,
+        ):
+            result = prepare_tender_for_analysis(
+                "0323100010326000013",
+                session=mock_session,
+            )
+
+        assert result.status == "completed"
+        assert result.ready_for_analysis is True
+        assert result.embeddings_total == 2
+        assert result.embeddings_created == 2
+        local_embeddings.assert_not_called()
+
+    def test_status_requires_complete_data_platform_collection(
+        self,
+        mock_session,
+        mock_tender,
+    ):
+        from src.tender_research.config import TenderResearchConfig
+
+        mock_repo = MagicMock()
+        mock_repo.get_tender_by_registry_number.return_value = mock_tender
+        mock_repo.count_extracted_documents_by_tender.return_value = 1
+        mock_repo.count_chunks_by_tender.return_value = 2
+        mock_tender.documents = [MagicMock(download_status="downloaded")]
+
+        platform_client = MagicMock()
+        platform_client.__enter__.return_value = platform_client
+        platform_client.__exit__.return_value = None
+        platform_client.collection_stats.return_value = {
+            "resources": 1,
+            "embeddings": 1,
+        }
+
+        config = TenderResearchConfig(
+            rag_retrieval_backend="data_platform",
+            rag_data_platform_base_url="http://data-platform.test",
+        )
+
+        with (
+            patch(
+                "src.tender_research.rag.prepare_service.TenderRepository",
+                return_value=mock_repo,
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.load_config",
+                return_value=config,
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.build_tender_collection_id",
+                return_value="tender-agent:tender-1:rev",
+            ),
+            patch(
+                "src.tender_research.rag.prepare_service.build_data_platform_client",
+                return_value=platform_client,
+            ),
+        ):
+            status = check_preparation_status(
+                "0323100010326000013",
+                session=mock_session,
+            )
+
+        assert status["ready_for_analysis"] is False
+        assert "data_platform_index" in status["missing"]
+        assert status["retrieval_backend"] == "data_platform"

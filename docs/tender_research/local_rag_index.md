@@ -3,8 +3,14 @@
 Mac mini is now the source of truth for Arvectum runtime data. PostgreSQL +
 pgvector is the server-side database, while SQLite remains the fast default for
 dev and tests. The local RAG layer sits on top of already downloaded and
-extracted tender documents and keeps vectors in provider/model-specific JSON
-stores under `data/rag/`.
+extracted tender documents. Retrieval has two explicit backends:
+
+- legacy: provider/model-specific JSON vector stores under data/rag/;
+- data_platform: shared Arvectum Data Platform hybrid retrieval
+  (PostgreSQL FTS + pgvector + RRF).
+
+The Data Platform backend is the target shared production architecture. The
+legacy backend remains an explicit compatibility mode during rollout.
 
 For the validated Mac mini runtime layout and exact live server commands, see
 [macmini_rag_runtime.md](/Users/master/Documents/AI-Corporation/docs/tender_research/macmini_rag_runtime.md).
@@ -193,6 +199,10 @@ AI_CORP_RAG_EMBEDDINGS_BATCH_SIZE=16
 AI_CORP_RAG_EMBEDDINGS_DIMENSION=auto
 AI_CORP_RAG_VECTOR_STORE=json
 AI_CORP_RAG_VECTOR_STORE_PATH=./data/rag/vector_store.json
+AI_CORP_RAG_RETRIEVAL_BACKEND=legacy
+AI_CORP_RAG_DATA_PLATFORM_BASE_URL=http://127.0.0.1:8094
+AI_CORP_RAG_DATA_PLATFORM_API_KEY=
+AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS=30
 AI_CORP_RAG_USE_LLM=false
 AI_CORP_LOCAL_LLM_BASE_URL=http://127.0.0.1:8088/v1
 AI_CORP_LOCAL_LLM_MODEL=qwen2.5-14b
@@ -214,12 +224,23 @@ If it is not installed, the CLI will fail with a clear error and the local
 
 ## Storage
 
-Vectors are stored locally in JSON files under `data/rag/` by default. The
-default `local_hash` path remains compatible with the existing MVP store, while
-other providers/models use namespaced files so their embeddings do not
-overwrite each other.
+With AI_CORP_RAG_RETRIEVAL_BACKEND=legacy, vectors are stored locally in JSON
+files under data/rag/.
 
-Eval results are written as JSONL under `data/rag/eval/`.
+With AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform, Tender Agent keeps its
+procurement-domain chunks and citation metadata in its own database, while
+Data Platform owns lexical/vector indexes. Each current tender chunk is sent as
+pre-chunked text with a stable tender-chunk://<chunk_id> canonical URI.
+
+A tender is indexed into a deterministic versioned collection:
+
+    tender-agent:<tender_id>:<chunk-set-revision>
+
+If the tender chunk set changes, the revision changes and retrieval will not
+silently use an old collection. Preparation is fail-closed: analysis requires
+Data Platform collection stats to match the current Tender Agent chunk count.
+
+Eval results are written as JSONL under data/rag/eval/.
 
 ## Retrieval Mode
 
@@ -488,3 +509,22 @@ If not ready:
 - **Unsupported document formats** are silently skipped during extraction.
 - **EIS SOAP availability** affects ingest of new tenders.
 - **Embedding server (port 8090)** must be running for `build_embeddings` step.
+
+## Data Platform Retrieval Backend
+
+Tender-specific ingestion, EIS/44-FZ/223-FZ semantics, chunk provenance, analysis, citations, and human-control rules remain in Tender Agent. Reusable lexical/vector indexing and hybrid retrieval can be delegated to Arvectum Data Platform.
+
+Activation is explicit:
+
+```bash
+AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform
+AI_CORP_RAG_DATA_PLATFORM_BASE_URL=http://127.0.0.1:8094
+AI_CORP_RAG_DATA_PLATFORM_API_KEY=
+AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS=30
+```
+
+After switching, run the normal tender preparation flow. Tender Agent keeps its canonical procurement chunks, creates a versioned Data Platform collection for that tender, and indexes each chunk with a stable `tender-chunk://<chunk_id>` canonical URI. Search uses Data Platform hybrid retrieval and maps every hit back to the original Tender Agent chunk before citations or analysis are produced.
+
+There is intentionally **no automatic fallback** from `data_platform` to the legacy JSON vector store. If the platform is unavailable or the versioned collection is incomplete, preparation/readiness fails closed and analysis returns `no_context` until the platform index is prepared.
+
+`legacy` remains available as an explicit rollback/compatibility backend during migration. `build-embeddings` and direct JSON-vector maintenance commands belong to that legacy path; normal `prepare` handles Data Platform indexing when `AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform`.
