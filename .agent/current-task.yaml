@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: PRODUCT-ANALYSIS-QUALITY-001
 authority: AUTO
 goal: Independently audit the Axioma end-to-end analysis against the acquired procurement documents, improve factual consistency,
@@ -77,14 +77,13 @@ completed:
   specific (local pg_restore plus two tests intentionally perturbed by local env overrides) and those same CI areas were green
   in run 37188814489.'
 - 'make check and git diff --check are green after the CI remediation.'
-current: Commit and push the CI remediation on agent/product-analysis-quality-001, then wait for the new GitHub CI run and
-  complete the task only when that run is green.
-remaining:
-- Commit and push the CI remediation and updated checkpoint.
-- Inspect the new GitHub CI run on the remediation head.
-- If CI is green, mark PRODUCT-ANALYSIS-QUALITY-001 completed with final commit/hash and verification results and push the
-  completed checkpoint. If CI fails, inspect and remediate the remaining failures first.
-last_verified_commit: 2f77336b0bff764eab897aa8565746eeaed1ae02
+- 'GitHub CI run 37199005465 on code head 58c79533c58353a41d6975e79973095754387496 completed successfully: all 9 jobs green,
+  including quality/make test, procurement domain regression registry, migrations, PostgreSQL/Redis integration, Docker, security,
+  dependency lock and bridge.'
+current: PRODUCT-ANALYSIS-QUALITY-001 is complete. Code head 58c79533c58353a41d6975e79973095754387496 passed GitHub CI run
+  37199005465 with all 9 jobs successful, including quality/make test and procurement domain regression registry.
+remaining: []
+last_verified_commit: 58c79533c58353a41d6975e79973095754387496
 last_tests:
 - '137 passed, 3 warnings: document QA baseline + report fixes + product shell hardening/search + Decision Core + RAG analysis/modes/LLM/prepare.'
 - '45 passed, 1 warning: focused product-shell + Decision Core after UI/API/OKPD2 fixes.'
@@ -92,6 +91,6 @@ last_tests:
 - '73 passed, 26 warnings: full affected RAG CLI + demo + meaningful-analysis + upload-demo files.'
 - '3114 passed, 244 skipped, 3 local-only environment/runtime failures in full local suite; the corresponding CI infrastructure
   areas passed in GitHub run 37188814489.'
-resume_instruction: Commit/push the current CI remediation, inspect the new GitHub Actions CI run on that head, and if all
-  jobs pass mark PRODUCT-ANALYSIS-QUALITY-001 completed and push the final checkpoint. Otherwise inspect the failing job logs
-  and continue remediation.
+- 'GitHub CI 37199005465 passed all jobs on verified code head 58c79533c58353a41d6975e79973095754387496.'
+resume_instruction: PRODUCT-ANALYSIS-QUALITY-001 is complete. Do not resume or mutate this completed quality audit.
+  Start any further product-shell, supplier-profile, 223-FZ breadth or production-runtime work as a new bounded task/checkpoint.
