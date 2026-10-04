@@ -38,8 +38,8 @@ def test_tender_operator_demo_page_and_report_render(client):
     assert "Qwen3-Embedding-4B" in page.text
     assert "llama_cpp" in page.text
     assert "http://127.0.0.1:8090/v1" in page.text
-    assert "http://127.0.0.1:8088/v1" in page.text
-    assert "/Users/master/models/Qwen2.5-14B-Instruct-Q4_K_M.gguf" in page.text
+    assert "http://127.0.0.1:8081/v1" in page.text
+    assert "arvectum-gemma4-12b-it-qat-q4_0" in page.text
     assert "local-hash-v1" in page.text
     assert "limit: 8" in page.text or "limit: 3" in page.text
     assert "Скачать DOCX" in page.text

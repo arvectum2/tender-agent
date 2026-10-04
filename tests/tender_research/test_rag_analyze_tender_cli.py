@@ -128,7 +128,7 @@ def test_analyze_tender_use_llm_with_mocked_client(tmp_path, monkeypatch, capsys
     observed_questions: list[str] = []
 
     class FakeClient:
-        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced"):
+        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced", source_facts=None):
             return {
                 "context_chars": 1200,
                 "system_prompt_chars": 200,
@@ -136,7 +136,7 @@ def test_analyze_tender_use_llm_with_mocked_client(tmp_path, monkeypatch, capsys
                 "prompt_chars": 500,
             }
 
-        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced"):
+        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced", source_facts=None):
             observed_questions.append(question)
             return RagAnswer(
                 answer=(
@@ -218,7 +218,7 @@ def test_analyze_tender_llm_unavailable_falls_back_to_retrieval(tmp_path, monkey
     _prepare_index(tmp_path, monkeypatch, capsys)
 
     class FakeClient:
-        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced"):
+        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced", source_facts=None):
             return {
                 "context_chars": 1200,
                 "system_prompt_chars": 200,
@@ -226,7 +226,7 @@ def test_analyze_tender_llm_unavailable_falls_back_to_retrieval(tmp_path, monkey
                 "prompt_chars": 500,
             }
 
-        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced"):
+        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced", source_facts=None):
             return RagAnswer(
                 answer="",
                 sources=build_source_citations(contexts),

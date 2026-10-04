@@ -432,7 +432,7 @@ def create_uploaded_demo_run(
                 file_id=file_id,
                 original_name=original_name,
                 stored_name=stored_name,
-                role_hint=_derive_role_hint(stored_name),
+                role_hint=_derive_role_hint(original_name),
                 size_bytes=len(content),
                 content_type=content_type,
             )
@@ -519,7 +519,7 @@ def append_files_to_demo_run(
                 file_id=file_id,
                 original_name=original_name,
                 stored_name=stored_name,
-                role_hint=_derive_role_hint(stored_name),
+                role_hint=_derive_role_hint(original_name),
                 size_bytes=len(content),
                 content_type=content_type,
                 source="manual_upload",
@@ -876,7 +876,11 @@ def _collect_role_text(documents: list[AnalyzedDocument], role: str) -> str:
 def _collect_quote_paths(run_id: str, metadata: dict[str, Any]) -> list[Path]:
     paths: list[Path] = []
     for item in metadata.get("files", []):
-        if _detect_role(item["stored_name"]) == "tkp":
+        role = (
+            item.get("role_hint")
+            or _detect_role(item.get("original_name") or item.get("display_name") or item["stored_name"])
+        )
+        if role == "tkp":
             paths.append(_input_dir(run_id) / item["stored_name"])
     return paths
 
@@ -3091,8 +3095,10 @@ def _build_goods_economics_payload(
         payload = dict(economics)
         payload.setdefault("analysis_mode", analysis_mode)
         payload.setdefault("economics_status", "needs_review")
-        payload.setdefault("result", "Экономика требует ручной проверки")
-        payload.setdefault("drivers", ["Сопоставление ТКП требует ручного подтверждения."])
+        if not payload.get("result"):
+            payload["result"] = "Экономика требует ручной проверки"
+        if not payload.get("drivers"):
+            payload["drivers"] = ["Сопоставление ТКП требует ручного подтверждения."]
         payload["manual_checks"] = [
             item.get("message", item.get("code", "Проверить расчёт по исходным ТКП вручную."))
             if isinstance(item, dict)
@@ -3188,7 +3194,11 @@ def _build_document_grounded_requirements(
             )
             requirements.append(
                 {
-                    "title": title,
+                    "title": (
+                        "Лицензионные требования и передача прав"
+                        if req_type == "лицензионное"
+                        else title
+                    ),
                     "detail": detail[:420] or title,
                     "source": source or "Техническое задание",
                     "type": req_type,
@@ -3308,6 +3318,8 @@ def _build_document_grounded_questions(procurement_kind: str, documents: list[An
             "Какие результаты передаются заказчику: исполняемый модуль, исходный код, документация, инструкции и материалы испытаний?",
             "Какие критерии приёмки и испытаний обязательны и есть ли ресурс на их прохождение в установленный срок?",
             "Как условия оплаты, отсутствие аванса и обеспечение исполнения влияют на денежный разрыв проекта?",
+            "Какие интеграции, API, форматы обмена и внешние зависимости предусмотрены текущим ТЗ?",
+            "Какие лицензионные условия и права на код, модуль и документацию необходимо подтвердить?",
         ]
         if any(marker in text for marker in ("api", "интеграц", "обмен")):
             questions.append(

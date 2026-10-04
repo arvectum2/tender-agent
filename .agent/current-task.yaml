@@ -52,22 +52,46 @@ completed:
 - 'Broader modified-path quality suite is green: 137 passed, 3 warnings.'
 - 'Upload demo suite under auth/host-safe stub environment: 17 passed, 2 quote-normalization tests unavailable under stub
   because those tests depend on the configured live quote-analysis path; no failure is in the modified-path quality suite.'
-current: Commit the final P1 UI/API/OKPD2 fixes, restart the loopback UI from the exact committed head, rerun Axioma once
-  more and verify the rendered screen/report is free of reseller/goods-template residue.
+- Restarted loopback-only UI on exact committed head 2f77336b0bff764eab897aa8565746eeaed1ae02 and reran Axioma with local
+  Gemma 4.
+- 'Exact-head live rerun completed: local Gemma 4 invoked 4 times, fallback_reason none, final run status needs_review; no
+  external procurement action occurred.'
+- Verified canonical line item now includes OKPD2 62.02.30.000, quantity 1 conditional unit, unit/total price 521000 RUB and
+  source provenance.
+- Verified live economics/report UI shows NMCK, internal development cost, 10% performance security (~52100 RUB), no advance,
+  7-working-day payment and subcontractor-only quote guidance.
+- 'Verified stale reseller/goods residue is absent from live run UI: no закупочная себестоимость, no generic TKP blocker/manual-TKP
+  instruction and no analog-compatibility wording.'
+- 'Final exact-head modified-path regression suite is green: 137 passed, 3 warnings; git diff --check clean before checkpoint
+  update.'
+- Pushed agent/product-analysis-quality-001 at 2f77336b0bff764eab897aa8565746eeaed1ae02; GitHub CI run 37188814489 started,
+  Mirror to GitVerse run 37188814477 succeeded.
+- 'GitHub CI run 37188814489 completed with one failing quality job: 7 regressions out of 3117 executed tests; all other CI
+  jobs (migrations, R8 integration/Postgres, bridge, dependency lock, security, Docker and Redis integration) passed.'
+- 'Remediated all 7 CI regressions: RAG fake-client source_facts compatibility; current local model/endpoint UI assertion;
+  software integration/licensing requirement compatibility; and TKP role detection after safe upload renaming, including
+  Cyrillic ТКП names and ZIP-contained quote spreadsheets.'
+- 'Exact failing CI set is green locally under CI-safe stub/auth/host environment: 7 passed.'
+- 'Affected full test files are green: 73 passed, 26 warnings.'
+- 'Full local suite with project venv reached 3114 passed, 244 skipped; 3 remaining local-only failures were environment/runtime
+  specific (local pg_restore plus two tests intentionally perturbed by local env overrides) and those same CI areas were green
+  in run 37188814489.'
+- 'make check and git diff --check are green after the CI remediation.'
+current: Commit and push the CI remediation on agent/product-analysis-quality-001, then wait for the new GitHub CI run and
+  complete the task only when that run is green.
 remaining:
-- Commit the final P1 UI/API/OKPD2 changes on agent/product-analysis-quality-001.
-- Restart loopback-only UI from that exact commit and rerun toa-run-20261003222852-78f220.
-- Verify canonical line_items explicitly includes OKPD2 62.02.30.000 and all previously audited facts.
-- Verify UI economics shows NMCK/internal development cost/10% security/no advance/payment/subcontractor-only quote guidance
-  instead of reseller metrics.
-- Verify UI question/limitation text has no stale TKP blocker or goods-template analog wording.
-- Run final tests/diff check, push branch, inspect CI and mark PRODUCT-ANALYSIS-QUALITY-001 completed.
-last_verified_commit: bd9e123a74fc11303f199f476c99ef665e1ddde3
+- Commit and push the CI remediation and updated checkpoint.
+- Inspect the new GitHub CI run on the remediation head.
+- If CI is green, mark PRODUCT-ANALYSIS-QUALITY-001 completed with final commit/hash and verification results and push the
+  completed checkpoint. If CI fails, inspect and remediate the remaining failures first.
+last_verified_commit: 2f77336b0bff764eab897aa8565746eeaed1ae02
 last_tests:
 - '137 passed, 3 warnings: document QA baseline + report fixes + product shell hardening/search + Decision Core + RAG analysis/modes/LLM/prepare.'
 - '45 passed, 1 warning: focused product-shell + Decision Core after UI/API/OKPD2 fixes.'
-- 17 passed, 2 environment-dependent quote tests under AI_CORP_LLM_PROVIDER=stub in upload demo suite; those two require the
-  live quote-analysis path.
-resume_instruction: Commit current P1 fixes, restart UI from exact commit, rerun toa-run-20261003222852-78f220, inspect canonical_report
-  plus rendered UI for explicit OKPD2 and corrected software commercial presentation, then run final tests, push branch, inspect
-  CI and set checkpoint completed.
+- '7 passed, 4 warnings: exact GitHub CI failure set after remediation.'
+- '73 passed, 26 warnings: full affected RAG CLI + demo + meaningful-analysis + upload-demo files.'
+- '3114 passed, 244 skipped, 3 local-only environment/runtime failures in full local suite; the corresponding CI infrastructure
+  areas passed in GitHub run 37188814489.'
+resume_instruction: Commit/push the current CI remediation, inspect the new GitHub Actions CI run on that head, and if all
+  jobs pass mark PRODUCT-ANALYSIS-QUALITY-001 completed and push the final checkpoint. Otherwise inspect the failing job logs
+  and continue remediation.
