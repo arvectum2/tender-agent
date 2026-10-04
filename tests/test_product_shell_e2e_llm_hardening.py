@@ -22,6 +22,8 @@ from src.modules.tender_operator_agent_demo.upload_service_legacy import (
     _is_transient_analysis_warning,
     _risk_manual_checks,
     _risk_status_from_classification,
+    _software_economics_payload,
+    _software_quote_guidance,
     _tender_summary_identity_fields,
 )
 
@@ -114,6 +116,38 @@ def test_canonical_service_line_keeps_notice_pricing_from_source_item():
     assert row["line_total"] == "521 000,00"
     assert row["line_total_display"] == "521 000,00"
     assert row["pricing_basis"] == "unit_price"
+
+
+def test_software_commercial_guidance_uses_internal_cost_model_not_reseller_tkp():
+    highlights, checks = _software_quote_guidance(quote_files_present=False)
+    rendered = " ".join([*highlights, *checks]).lower()
+    assert "собственной разработки" in rendered
+    assert "трудозатрат" in rendered
+    assert "субподряд" in rendered
+    assert "собрать ткп вручную" not in rendered
+
+
+def test_software_economics_calculates_security_cash_requirement():
+    payload = _software_economics_payload(
+        metadata={"procurement": {"initial_price": 521000}},
+        preliminary_analysis={
+            "contract_highlights": [
+                "Оплата: В размере 100 % в течение 7 рабочих дней после приёмки.",
+                "Аванс: не предусмотрен.",
+                "Обеспечение исполнения контракта: 10,00%.",
+            ]
+        },
+        notice_text="Размер обеспечения исполнения контракта\t10.00%",
+        contract_draft_text="Авансовые платежи по Контракту не предусмотрены.",
+        analysis_mode="llm_tender_operator_provider",
+    )
+    metrics = {item["label"]: item["value"] for item in payload["metrics"]}
+    assert metrics["НМЦК"] == "521 000,00"
+    assert "52 100,00" in metrics["Обеспечение исполнения"]
+    assert "не предусмотрен" in metrics["Аванс"]
+    assert "трудозатраты" in metrics["Внутренняя себестоимость разработки"]
+    assert "субподряд" in metrics["КП подрядчика"]
+    assert "внутренней оценки трудозатрат" in payload["result"]
 
 
 def test_software_final_manual_checks_are_decision_specific():

@@ -455,12 +455,24 @@ def build_decision_core(
                 risk_requires_review = True
 
         if risks:
+            review_risk_labels = [
+                _text(risk.get("risk") or risk.get("description"))
+                for risk in risks
+                if _text(risk.get("risk") or risk.get("description"))
+            ][:3]
+            risk_summary = (
+                "Требуют решения оператора: " + "; ".join(review_risk_labels) + "."
+                if risk_requires_review and review_risk_labels
+                else "Риски требуют решения оператора."
+                if risk_requires_review
+                else "Подтверждённые риски не требуют отдельной эскалации."
+            )
             readiness.append(
                 _readiness(
                     "RISK_REVIEW",
                     "Риски закупки",
                     "REVIEW" if risk_requires_review else "SATISFIED",
-                    "Риски требуют решения оператора." if risk_requires_review else "Подтверждённые риски не требуют отдельной эскалации.",
+                    risk_summary,
                     blocking=risk_requires_review,
                     evidence=_dedupe_evidence(risk_review_evidence),
                 )

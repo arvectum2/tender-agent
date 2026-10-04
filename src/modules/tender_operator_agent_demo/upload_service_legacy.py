@@ -3345,6 +3345,129 @@ def _risk_status_from_classification(value: object) -> str:
     )
 
 
+_SOFTWARE_SCOPES = {"mixed", "software_modification", "integration", "license"}
+
+
+def _software_quote_guidance(*, quote_files_present: bool) -> tuple[list[str], list[str]]:
+    if quote_files_present:
+        return (
+            [
+                "Загруженные коммерческие предложения можно использовать как вход для субподряда или внешних лицензий, но они не заменяют внутреннюю оценку разработки.",
+                "Основная экономика проекта должна быть подтверждена трудозатратами, ставками команды и резервами по текущему ТЗ.",
+            ],
+            [
+                "Сверить загруженные КП только с теми блоками, которые действительно планируется отдавать на субподряд или закупать извне.",
+                "Отдельно рассчитать внутреннюю стоимость собственной команды и проектный резерв.",
+            ],
+        )
+    return (
+        [
+            "Внешние ТКП не загружены; для собственной разработки ПО это само по себе не является блокером.",
+            "Для решения об участии нужна внутренняя оценка трудозатрат и ставок команды; КП подрядчика требуется только если планируется субподряд.",
+        ],
+        [
+            "Оценить трудозатраты по source-bound блокам ТЗ, ставки команды и проектный резерв.",
+            "Запрашивать КП подрядчика только для реально передаваемых на субподряд работ или внешних лицензий.",
+        ],
+    )
+
+
+def _software_economics_payload(
+    *,
+    metadata: dict[str, Any],
+    preliminary_analysis: dict[str, Any],
+    notice_text: str,
+    contract_draft_text: str,
+    analysis_mode: str,
+) -> dict[str, Any]:
+    nmck_display = _extract_notice_price(metadata, notice_text, contract_draft_text) or "не указана"
+    nmck_value = _parse_float(nmck_display) if nmck_display != "не указана" else None
+    security_percent_text = _match_first_dotall(
+        notice_text + "\n" + contract_draft_text,
+        (
+            r"Размер обеспечения исполнения контракта\s*\t?\s*(\d+(?:[.,]\d+)?)\s*%",
+            r"обеспечени[ея]\s+исполнения\s+контракта[^%\n]{0,220}?(\d+(?:[.,]\d+)?)\s*%",
+        ),
+    )
+    security_percent = _parse_float(security_percent_text)
+    security_amount = (
+        nmck_value * security_percent / 100
+        if nmck_value is not None and security_percent is not None
+        else None
+    )
+    contract_highlights = preliminary_analysis.get("contract_highlights") or []
+    no_advance = any("аванс: не предусмотрен" in str(item).lower() for item in contract_highlights)
+    payment_term = next(
+        (str(item) for item in contract_highlights if str(item).lower().startswith("оплата:")),
+        None,
+    )
+    metrics: list[dict[str, Any]] = [
+        {"label": "НМЦК", "value": nmck_display},
+        {
+            "label": "Внутренняя себестоимость разработки",
+            "value": "не рассчитана — нужны трудозатраты по блокам ТЗ × ставки команды и проектный резерв",
+        },
+    ]
+    if security_percent is not None:
+        amount_text = (
+            f" ≈ {_format_decimal_price(security_amount)} руб."
+            if security_amount is not None
+            else ""
+        )
+        metrics.append(
+            {
+                "label": "Обеспечение исполнения",
+                "value": f"{_format_decimal_price(security_percent)}% от НМЦК{amount_text}",
+            }
+        )
+    if no_advance:
+        metrics.append(
+            {
+                "label": "Аванс",
+                "value": "не предусмотрен — разработка финансируется исполнителем до приёмки",
+            }
+        )
+    if payment_term:
+        metrics.append({"label": "Оплата", "value": payment_term.removeprefix("Оплата: ").rstrip(".")})
+    metrics.append(
+        {
+            "label": "КП подрядчика",
+            "value": "нужно только для работ/лицензий, которые планируется закупать извне или отдавать на субподряд",
+        }
+    )
+    return {
+        "analysis_mode": analysis_mode,
+        "currency": "RUB",
+        "economics_status": "insufficient_data",
+        "supplier_cost_min": None,
+        "supplier_cost_selected": None,
+        "expected_revenue": None,
+        "preliminary_bid_price": None,
+        "gross_margin_amount": None,
+        "gross_margin_percent": None,
+        "logistics_reserve": None,
+        "risk_reserve": None,
+        "payment_delay_days": None,
+        "cash_gap_estimate": None,
+        "selected_supplier_name": None,
+        "result": "Экономика разработки требует внутренней оценки трудозатрат, ставок команды, резервов и кассового разрыва.",
+        "status": "blocked",
+        "metrics": metrics,
+        "drivers": [
+            "НМЦК — верхний ценовой ориентир заказчика, а не подтверждённая прибыль.",
+            "Без аванса исполнитель финансирует разработку до приёмки; стоимость обеспечения и задержка оплаты влияют на кассовый разрыв.",
+        ],
+        "manual_checks": [
+            "Оценить трудозатраты и ставки по каждому source-bound блоку ТЗ.",
+            "Посчитать стоимость команды, резерв на ПСИ/доработки, обеспечение исполнения и кассовый разрыв до оплаты.",
+            "Учитывать КП подрядчиков только для фактического субподряда или внешних лицензий.",
+        ],
+        "warnings": ["Маржа и рентабельность не рассчитываются без внутренней себестоимости разработки."],
+        "limitations": ["Нет подтверждённой оценки трудозатрат, ставок команды и проектного резерва."],
+        "assumptions": {},
+    }
+
+
 def _final_recommendation_manual_checks(procurement_kind: str) -> list[str]:
     if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
         return [
@@ -4536,9 +4659,23 @@ def _build_output_payloads(
             else ["Собрать ТКП вручную и повторно запустить анализ после загрузки коммерческих предложений."]
         ),
     }
+    if procurement_kind in _SOFTWARE_SCOPES:
+        software_highlights, software_manual_checks = _software_quote_guidance(
+            quote_files_present=quote_files_present
+        )
+        quotes_payload["highlights"] = software_highlights
+        quotes_payload["manual_checks"] = software_manual_checks
 
     if procurement_kind == "goods":
         economics_payload = _build_goods_economics_payload(metadata, documents, analysis_mode, economics)
+    elif procurement_kind in _SOFTWARE_SCOPES and not economics:
+        economics_payload = _software_economics_payload(
+            metadata=metadata,
+            preliminary_analysis=preliminary_analysis,
+            notice_text=notice_text,
+            contract_draft_text=contract_draft_text,
+            analysis_mode=analysis_mode,
+        )
     elif procurement_kind == "services" and not economics:
         service_items = preliminary_analysis.get("service_items", [])
         economics_payload = {
@@ -4706,6 +4843,15 @@ def _build_output_payloads(
             "Для участия нужно получить КП и подтверждение ГОСТ, сертификатов и сроков поставки по каждой позиции.",
             f"Особое внимание требует самая объёмная позиция: {largest_position}." if largest_position else "Нужно проверить наличие товара и срок поставки по всем позициям.",
             "Финальное решение возможно только после проверки цены, логистики и документов качества.",
+        ]
+    elif procurement_kind in _SOFTWARE_SCOPES:
+        recommendation = DemoRecommendationCode.MANUAL_REVIEW_REQUIRED
+        label = "нужна ручная проверка"
+        rationale = [
+            "ТЗ и проект контракта дают достаточное предметное описание разработки, но внутренняя себестоимость ещё не подтверждена.",
+            "Нужно оценить трудозатраты и ставки команды по функциональным блокам, резерв на испытания/доработки и кассовый разрыв.",
+            "Внешнее КП требуется только для фактического субподряда или закупаемых извне лицензий; отсутствие ТКП само по себе не блокирует собственную разработку.",
+            "Финальное решение требует привязанного профиля поставщика и проверки применимых условий участия.",
         ]
     else:
         recommendation = DemoRecommendationCode.MANUAL_REVIEW_REQUIRED

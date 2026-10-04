@@ -128,6 +128,8 @@ def test_source_grounded_deal_breaker_candidate_still_requires_human_review() ->
     )
     assert risk_review["status"] == "REVIEW"
     assert risk_review["evidence"]
+    assert "Одностороннее условие" in risk_review["summary"]
+    assert any("Одностороннее условие" in item for item in result["decision"]["rationale"])
 
 
 def test_unsupported_risk_never_becomes_a_hard_fact() -> None:
