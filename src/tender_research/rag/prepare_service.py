@@ -13,6 +13,7 @@ from src.tender_research.config import load_config
 from src.tender_research.document_store import download_tender_documents
 from src.tender_research.eis_loader import EisTenderLoader
 from src.tender_research.rag.data_platform import (
+    DataPlatformDocumentProjector,
     DataPlatformError,
     DataPlatformTenderIndexer,
     build_data_platform_client,
@@ -157,6 +158,7 @@ def prepare_tender_for_analysis(
         if base_url:
             object.__setattr__(config, "rag_embeddings_base_url", base_url)
 
+        backend = retrieval_backend_name(config)
         repo = TenderRepository(session)
 
         tender = repo.get_tender_by_registry_number(registry_number)
@@ -236,7 +238,12 @@ def prepare_tender_for_analysis(
         steps.append(step)
         emit_progress(40, "download_documents", step.message)
         try:
-            result = download_tender_documents(repo, tender, config)
+            result = download_tender_documents(
+                repo,
+                tender,
+                config,
+                extract_locally=backend == "legacy",
+            )
             downloaded = result.get("downloaded", 0)
             failed = result.get("failed", 0)
             if downloaded > 0 or failed == 0:
@@ -259,6 +266,26 @@ def prepare_tender_for_analysis(
             warnings.append(f"Document download failed: {e}")
             emit_progress(40, "download_documents", step.message)
 
+        platform_projection = None
+        if backend == "data_platform":
+            try:
+                with build_data_platform_client(config) as platform_client:
+                    platform_projection = DataPlatformDocumentProjector(
+                        repo,
+                        platform_client,
+                        config,
+                    ).build_for_tender(
+                        tender,
+                        rebuild=rebuild_chunks,
+                    )
+            except (DataPlatformError, ValueError, OSError) as e:
+                logger.error(
+                    "Data Platform document processing failed for %s: %s",
+                    registry_number,
+                    e,
+                )
+                warnings.append(f"Data Platform document processing failed: {e}")
+
         step = TenderPreparationStep("extract_text", "in_progress", "Checking extracted text...")
         steps.append(step)
         emit_progress(55, "extract_text", step.message)
@@ -276,46 +303,72 @@ def prepare_tender_for_analysis(
                 warnings.append("No documents have extracted text available")
         emit_progress(55, "extract_text", step.message)
 
-        backend = retrieval_backend_name(config)
-
-        chunk_indexer = DocumentChunkIndexer(repo, config)
-        step = TenderPreparationStep("build_chunks", "in_progress", "Building chunks...")
+        step = TenderPreparationStep(
+            "build_chunks",
+            "in_progress",
+            (
+                "Using Data Platform chunk projection..."
+                if backend == "data_platform"
+                else "Building chunks..."
+            ),
+        )
         steps.append(step)
         emit_progress(70, "build_chunks", step.message)
         chunks_existing = repo.count_chunks_by_tender(tender.id)
-        if chunks_existing > 0 and not rebuild_chunks:
-            step.status = "skipped"
-            step.message = f"Chunks already exist ({chunks_existing})"
-        else:
-            try:
-                chunk_result = chunk_indexer.build_for_tender(tender.id)
-                chunks_created = chunk_result.get("chunks_created", 0)
-                chunks_skipped = chunk_result.get("chunks_skipped_existing", 0)
-                if chunks_created > 0:
-                    step.status = "completed"
-                    step.message = f"Created {chunks_created} chunk(s)"
+        if backend == "data_platform":
+            if chunks_existing > 0:
+                step.status = "completed"
+                step.message = (
+                    f"Data Platform projection contains {chunks_existing} chunk(s)"
+                )
+                if platform_projection is not None:
                     step.details = (
-                        f"skipped_existing={chunks_skipped}"
-                        if chunks_skipped
-                        else ""
+                        f"processed_documents={platform_projection.documents_processed}; "
+                        f"projected={platform_projection.chunks_projected}; "
+                        f"pruned={platform_projection.chunks_pruned}"
                     )
-                elif chunks_skipped > 0:
-                    step.status = "skipped"
-                    step.message = (
-                        f"Chunks already exist ({chunks_skipped} skipped)"
+            else:
+                step.status = "completed"
+                step.message = "No chunks returned by Data Platform"
+                if docs_with_text == 0:
+                    warnings.append(
+                        "No chunks created because Data Platform returned no extracted text"
                     )
-                else:
-                    step.status = "completed"
-                    step.message = "No chunks created"
-                    if docs_with_text == 0:
-                        warnings.append(
-                            "No chunks created because no documents have extracted text"
+        else:
+            chunk_indexer = DocumentChunkIndexer(repo, config)
+            if chunks_existing > 0 and not rebuild_chunks:
+                step.status = "skipped"
+                step.message = f"Chunks already exist ({chunks_existing})"
+            else:
+                try:
+                    chunk_result = chunk_indexer.build_for_tender(tender.id)
+                    chunks_created = chunk_result.get("chunks_created", 0)
+                    chunks_skipped = chunk_result.get("chunks_skipped_existing", 0)
+                    if chunks_created > 0:
+                        step.status = "completed"
+                        step.message = f"Created {chunks_created} chunk(s)"
+                        step.details = (
+                            f"skipped_existing={chunks_skipped}"
+                            if chunks_skipped
+                            else ""
                         )
-            except Exception as e:
-                logger.error("Chunk build failed for %s: %s", registry_number, e)
-                step.status = "failed"
-                step.message = f"Chunk build failed: {e}"
-                warnings.append(f"Chunk build failed: {e}")
+                    elif chunks_skipped > 0:
+                        step.status = "skipped"
+                        step.message = (
+                            f"Chunks already exist ({chunks_skipped} skipped)"
+                        )
+                    else:
+                        step.status = "completed"
+                        step.message = "No chunks created"
+                        if docs_with_text == 0:
+                            warnings.append(
+                                "No chunks created because no documents have extracted text"
+                            )
+                except Exception as e:
+                    logger.error("Chunk build failed for %s: %s", registry_number, e)
+                    step.status = "failed"
+                    step.message = f"Chunk build failed: {e}"
+                    warnings.append(f"Chunk build failed: {e}")
         emit_progress(70, "build_chunks", step.message)
 
         chunks_count = repo.count_chunks_by_tender(tender.id)

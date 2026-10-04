@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
+from pathlib import Path
 
 from src.shared.data_platform import DataPlatformError, DataPlatformHttpClient
 from src.tender_research.rag.retriever import RagSearchHit
@@ -23,6 +24,25 @@ class DataPlatformIndexSummary:
     chunks_indexed: int
     platform_chunks_created: int
     embeddings_created: int
+
+
+@dataclass(frozen=True)
+class DataPlatformProjectionSummary:
+    documents_seen: int
+    documents_processed: int
+    documents_skipped_existing: int
+    documents_failed: int
+    extracted_documents: int
+    chunks_projected: int
+    chunks_pruned: int
+
+
+def _processing_collection_id(tender_id: str) -> str:
+    return f"{_COLLECTION_PREFIX}:{tender_id}:processing"
+
+
+def _document_uri(document_id: str) -> str:
+    return f"tender-document://{document_id}"
 
 
 def build_tender_collection_id(
@@ -113,6 +133,141 @@ class DataPlatformClient(DataPlatformHttpClient):
             mode="hybrid",
             lexical_weight=_TENDER_LEXICAL_WEIGHT,
             vector_weight=_TENDER_VECTOR_WEIGHT,
+        )
+
+
+class DataPlatformDocumentProjector:
+    """Project platform-owned extraction/chunking into Tender Agent domain storage.
+
+    Data Platform remains authoritative for generic document processing. Tender
+    Agent stores only a compatibility/domain projection so procurement evidence,
+    Decision Core and report code can keep stable local references during the
+    migration away from the legacy local RAG stack.
+    """
+
+    def __init__(
+        self,
+        repo: TenderRepository,
+        client: DataPlatformClient,
+        config,
+    ) -> None:
+        self._repo = repo
+        self._client = client
+        self._config = config
+
+    def build_for_tender(
+        self,
+        tender,
+        *,
+        rebuild: bool = False,
+    ) -> DataPlatformProjectionSummary:
+        seen = processed = skipped = failed = extracted = projected = pruned = 0
+        for document in list(tender.documents):
+            if document.download_status != "downloaded":
+                continue
+            seen += 1
+            existing_chunks = self._repo.list_document_chunks(document.id)
+            projected_chunks = [
+                chunk
+                for chunk in existing_chunks
+                if isinstance(chunk.raw_meta, dict)
+                and chunk.raw_meta.get("source") == "data_platform_projection"
+            ]
+            if (
+                not rebuild
+                and document.text_extraction_status == "extracted"
+                and document.extracted_text_path
+                and existing_chunks
+                and len(projected_chunks) == len(existing_chunks)
+            ):
+                skipped += 1
+                continue
+            if not document.local_path:
+                failed += 1
+                continue
+            local_path = Path(document.local_path)
+            if not local_path.is_file():
+                failed += 1
+                continue
+
+            payload = self._client.process_document(
+                collection_id=_processing_collection_id(str(tender.id)),
+                canonical_uri=_document_uri(str(document.id)),
+                title=document.file_name or str(document.id),
+                content=local_path.read_bytes(),
+                filename=document.file_name or local_path.name,
+                content_type=document.content_type or "application/octet-stream",
+                chunk_size_chars=self._config.rag_chunk_size_chars,
+                overlap_chars=self._config.rag_chunk_overlap_chars,
+                min_chunk_chars=self._config.rag_min_chunk_chars,
+                max_chars=self._config.document_extract_max_chars,
+            )
+            processed += 1
+            status = str(payload.get("extraction_status") or "failed")
+            text = str(payload.get("text") or "")
+            document.text_extraction_status = status
+            if status == "extracted" and text:
+                text_dir = local_path.parent.parent / "extracted_text"
+                text_dir.mkdir(parents=True, exist_ok=True)
+                text_path = text_dir / f"{document.id}.txt"
+                text_path.write_text(text, encoding="utf-8")
+                document.extracted_text_path = str(text_path)
+                document.extracted_text_chars = len(text)
+                extracted += 1
+            else:
+                document.extracted_text_path = None
+                document.extracted_text_chars = 0
+
+            keep_ids: set[str] = set()
+            raw_chunks = payload.get("chunks")
+            if not isinstance(raw_chunks, list):
+                raw_chunks = []
+            for item in raw_chunks:
+                if not isinstance(item, dict):
+                    continue
+                chunk_text = str(item.get("text") or "")
+                content_hash = str(item.get("content_hash") or "")
+                if not chunk_text or not content_hash:
+                    continue
+                chunk = self._repo.upsert_document_chunk(
+                    {
+                        "tender_id": document.tender_id,
+                        "document_id": document.id,
+                        "chunk_index": int(item.get("ordinal", 0)),
+                        "text": chunk_text,
+                        "text_hash": content_hash,
+                        "char_start": int(item.get("char_start", 0)),
+                        "char_end": int(item.get("char_end", 0)),
+                        "token_estimate": int(item.get("token_estimate", 0)),
+                        "source_file_name": document.file_name,
+                        "source_text_path": document.extracted_text_path,
+                        "raw_meta": {
+                            "source": "data_platform_projection",
+                            "data_platform": {
+                                "resource_id": payload.get("resource_id"),
+                                "document_id": payload.get("document_id"),
+                                "chunk_id": item.get("chunk_id"),
+                                "canonical_uri": payload.get("canonical_uri"),
+                                "content_hash": item.get("content_hash"),
+                            },
+                        },
+                    }
+                )
+                keep_ids.add(chunk.id)
+                projected += 1
+            pruned += self._repo.prune_document_chunks(
+                document.id,
+                keep_chunk_ids=keep_ids,
+            )
+        self._repo._session.commit()
+        return DataPlatformProjectionSummary(
+            documents_seen=seen,
+            documents_processed=processed,
+            documents_skipped_existing=skipped,
+            documents_failed=failed,
+            extracted_documents=extracted,
+            chunks_projected=projected,
+            chunks_pruned=pruned,
         )
 
 

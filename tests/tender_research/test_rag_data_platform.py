@@ -10,6 +10,7 @@ from sqlalchemy.orm import sessionmaker
 from src.shared.db.base import Base
 from src.tender_research.rag.data_platform import (
     DataPlatformClient,
+    DataPlatformDocumentProjector,
     DataPlatformError,
     DataPlatformRagRetriever,
     DataPlatformTenderIndexer,
@@ -64,6 +65,53 @@ class FakeDataPlatformClient:
         self.search_requests: list[dict] = []
         self.search_hits: list[dict] = []
 
+    def process_document(
+        self,
+        *,
+        collection_id: str,
+        canonical_uri: str,
+        title: str,
+        content: bytes,
+        filename: str,
+        content_type: str = "application/octet-stream",
+        chunk_size_chars: int = 1500,
+        overlap_chars: int = 200,
+        min_chunk_chars: int = 120,
+        max_chars: int = 2_000_000,
+    ):
+        self.ingested.append(
+            {
+                "operation": "process_document",
+                "collection_id": collection_id,
+                "canonical_uri": canonical_uri,
+                "title": title,
+                "filename": filename,
+                "content": content,
+            }
+        )
+        text = content.decode("utf-8")
+        return {
+            "collection_id": collection_id,
+            "resource_id": "platform-resource",
+            "document_id": "platform-document",
+            "canonical_uri": canonical_uri,
+            "title": title,
+            "media_type": content_type,
+            "extraction_status": "extracted",
+            "text": text,
+            "chunks": [
+                {
+                    "chunk_id": "platform-chunk-1",
+                    "ordinal": 0,
+                    "text": text,
+                    "content_hash": "platform-hash-1",
+                    "char_start": 0,
+                    "char_end": len(text),
+                    "token_estimate": max(1, len(text) // 4),
+                }
+            ],
+        }
+
     def ensure_collection(self, *, collection_id: str, name: str, owner: str = "tender-agent"):
         self.collections.append((collection_id, name))
         return {"collection_id": collection_id, "owner": owner, "name": name}
@@ -97,6 +145,115 @@ class FakeDataPlatformClient:
             }
         )
         return list(self.search_hits)
+
+
+
+def test_projector_uses_data_platform_for_extraction_and_chunking(tmp_path) -> None:
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = _repo()
+    tender = repo.upsert_tender(
+        {
+            "source": "eis",
+            "external_id": "t-projection",
+            "registry_number": "DP-PROJECTION",
+            "title": "Projection test",
+        }
+    )
+    source = tmp_path / "contract.txt"
+    source.write_text("Оплата производится после приемки.", encoding="utf-8")
+    document = repo.upsert_document(
+        {
+            "tender_id": tender.id,
+            "file_name": "contract.txt",
+            "local_path": str(source),
+            "content_type": "text/plain",
+            "download_status": "downloaded",
+            "text_extraction_status": "pending",
+        }
+    )
+    repo._session.commit()
+    client = FakeDataPlatformClient()
+
+    summary = DataPlatformDocumentProjector(
+        repo,
+        client,
+        TenderResearchConfig(data_dir=str(tmp_path)),
+    ).build_for_tender(tender)
+
+    assert summary.documents_processed == 1
+    assert summary.extracted_documents == 1
+    assert summary.chunks_projected == 1
+    repo._session.refresh(document)
+    assert document.text_extraction_status == "extracted"
+    assert document.extracted_text_path
+    chunks = repo.list_document_chunks(document.id)
+    assert len(chunks) == 1
+    assert chunks[0].raw_meta["source"] == "data_platform_projection"
+    assert chunks[0].raw_meta["data_platform"]["chunk_id"] == "platform-chunk-1"
+    assert client.ingested[0]["operation"] == "process_document"
+
+
+
+def test_projector_migrates_legacy_chunks_without_changing_local_chunk_id(tmp_path) -> None:
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = _repo()
+    tender = repo.upsert_tender(
+        {
+            "source": "eis",
+            "external_id": "t-legacy-projection",
+            "registry_number": "DP-LEGACY",
+            "title": "Legacy projection test",
+        }
+    )
+    source = tmp_path / "legacy-contract.txt"
+    source.write_text("Оплата производится после приемки.", encoding="utf-8")
+    text_path = tmp_path / "legacy-extracted.txt"
+    text_path.write_text("Оплата производится после приемки.", encoding="utf-8")
+    document = repo.upsert_document(
+        {
+            "tender_id": tender.id,
+            "file_name": "legacy-contract.txt",
+            "local_path": str(source),
+            "content_type": "text/plain",
+            "download_status": "downloaded",
+            "text_extraction_status": "extracted",
+            "extracted_text_path": str(text_path),
+            "extracted_text_chars": len("Оплата производится после приемки."),
+        }
+    )
+    legacy_chunk = repo.upsert_document_chunk(
+        {
+            "tender_id": tender.id,
+            "document_id": document.id,
+            "chunk_index": 0,
+            "text": "Оплата производится после приемки.",
+            "text_hash": "platform-hash-1",
+            "char_start": 0,
+            "char_end": len("Оплата производится после приемки."),
+            "token_estimate": 8,
+            "source_file_name": document.file_name,
+            "source_text_path": str(text_path),
+            "raw_meta": {"source": "extracted_text"},
+        }
+    )
+    original_chunk_id = legacy_chunk.id
+    repo._session.commit()
+    client = FakeDataPlatformClient()
+
+    summary = DataPlatformDocumentProjector(
+        repo,
+        client,
+        TenderResearchConfig(data_dir=str(tmp_path)),
+    ).build_for_tender(tender)
+
+    assert summary.documents_processed == 1
+    chunks = repo.list_document_chunks(document.id)
+    assert len(chunks) == 1
+    assert chunks[0].id == original_chunk_id
+    assert chunks[0].raw_meta["source"] == "data_platform_projection"
+    assert client.ingested[0]["operation"] == "process_document"
 
 
 def test_collection_id_changes_when_chunk_revision_changes() -> None:
@@ -250,6 +407,50 @@ def test_http_client_uses_canonical_tender_chunk_uri() -> None:
 
 
 
+
+def test_http_client_processes_raw_document_in_data_platform() -> None:
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/v1/process/document":
+            captured["body"] = request.read().decode("utf-8", errors="replace")
+            return httpx.Response(
+                200,
+                json={
+                    "collection_id": "tender-agent:tender-1:processing",
+                    "resource_id": "r1",
+                    "document_id": "d1",
+                    "canonical_uri": "tender-document://doc-1",
+                    "title": "contract.txt",
+                    "media_type": "text/plain",
+                    "extraction_status": "extracted",
+                    "text": "raw tender document",
+                    "chunks": [],
+                },
+            )
+        raise AssertionError(request.url)
+
+    client = DataPlatformClient(
+        base_url="http://data-platform.test",
+        client=httpx.Client(
+            base_url="http://data-platform.test",
+            transport=httpx.MockTransport(handler),
+        ),
+    )
+    result = client.process_document(
+        collection_id="tender-agent:tender-1:processing",
+        canonical_uri="tender-document://doc-1",
+        title="contract.txt",
+        content=b"raw tender document",
+        filename="contract.txt",
+        content_type="text/plain",
+    )
+
+    assert result["extraction_status"] == "extracted"
+    assert 'name="chunk_size_chars"' in captured["body"]
+    assert "raw tender document" in captured["body"]
+
+
 def test_http_client_uses_semantic_first_hybrid_weights() -> None:
     captured = {}
 
@@ -345,6 +546,16 @@ def test_prepare_service_uses_data_platform_without_legacy_embeddings(monkeypatc
     monkeypatch.setattr(
         "src.tender_research.rag.prepare_service.DataPlatformTenderIndexer",
         lambda *_args, **_kwargs: indexer,
+    )
+    projector = MagicMock()
+    projector.build_for_tender.return_value = MagicMock(
+        documents_processed=0,
+        chunks_projected=0,
+        chunks_pruned=0,
+    )
+    monkeypatch.setattr(
+        "src.tender_research.rag.prepare_service.DataPlatformDocumentProjector",
+        lambda *_args, **_kwargs: projector,
     )
 
     legacy_provider = MagicMock()

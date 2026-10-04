@@ -321,6 +321,9 @@ class TestDataPlatformPreparation:
                 return_value=indexer,
             ),
             patch(
+                "src.tender_research.rag.prepare_service.DataPlatformDocumentProjector"
+            ),
+            patch(
                 "src.tender_research.rag.prepare_service.build_embedding_provider"
             ) as local_embeddings,
         ):

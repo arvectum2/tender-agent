@@ -574,6 +574,23 @@ class TenderRepository:
         self._session.flush()
         return chunk
 
+    def prune_document_chunks(
+        self,
+        document_id: str,
+        *,
+        keep_chunk_ids: set[str],
+    ) -> int:
+        stale = [
+            chunk
+            for chunk in self.list_document_chunks(document_id)
+            if chunk.id not in keep_chunk_ids
+        ]
+        for chunk in stale:
+            self._session.delete(chunk)
+        if stale:
+            self._session.flush()
+        return len(stale)
+
     def count_document_chunks(self) -> int:
         return self._session.execute(select(func.count(ProcurementDocumentChunk.id))).scalar() or 0
 
