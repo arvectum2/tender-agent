@@ -1,10 +1,19 @@
-from fastapi import APIRouter, Query, status
+from fastapi import APIRouter, HTTPException, Query, status
 
+from src.modules.knowledge_assets.data_platform import (
+    index_knowledge_assets,
+    search_knowledge_assets,
+)
 from src.modules.knowledge_assets.schemas import (
     BuildKnowledgeAssetRequest,
+    IndexKnowledgeAssetsRequest,
+    KnowledgeAssetIndexResponse,
     KnowledgeAssetLinkResponse,
     KnowledgeAssetRecordResponse,
+    KnowledgeAssetSearchHitResponse,
+    KnowledgeAssetSearchResponse,
     KnowledgeAssetSetResponse,
+    SearchKnowledgeAssetsRequest,
 )
 from src.modules.knowledge_assets.service import (
     build_knowledge_asset,
@@ -13,6 +22,7 @@ from src.modules.knowledge_assets.service import (
     list_knowledge_asset_sets,
 )
 from src.shared.api.dependencies import DBSession
+from src.shared.data_platform import DataPlatformError
 
 router = APIRouter(tags=["knowledge-assets"])
 
@@ -77,3 +87,57 @@ def get_knowledge_asset_record_route(
     session: DBSession,
 ) -> KnowledgeAssetRecordResponse:
     return _to_record_response(get_knowledge_asset_record(session, knowledge_asset_id))
+
+
+@router.post(
+    "/knowledge-assets/index",
+    response_model=KnowledgeAssetIndexResponse,
+)
+def index_knowledge_assets_route(
+    payload: IndexKnowledgeAssetsRequest,
+    session: DBSession,
+) -> KnowledgeAssetIndexResponse:
+    try:
+        result = index_knowledge_assets(session, deal_id=payload.deal_id)
+    except DataPlatformError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    return KnowledgeAssetIndexResponse(
+        collection_id=result.collection_id,
+        records_seen=result.records_seen,
+        records_indexed=result.records_indexed,
+        chunks_created=result.chunks_created,
+        embeddings_created=result.embeddings_created,
+    )
+
+
+@router.post(
+    "/knowledge-assets/search",
+    response_model=KnowledgeAssetSearchResponse,
+)
+def search_knowledge_assets_route(
+    payload: SearchKnowledgeAssetsRequest,
+    session: DBSession,
+) -> KnowledgeAssetSearchResponse:
+    try:
+        collection_id, hits = search_knowledge_assets(
+            session,
+            deal_id=payload.deal_id,
+            query=payload.query,
+            limit=payload.limit,
+        )
+    except DataPlatformError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    return KnowledgeAssetSearchResponse(
+        collection_id=collection_id,
+        hits=[
+            KnowledgeAssetSearchHitResponse(
+                knowledge_asset_id=hit.knowledge_asset_id,
+                asset_title=hit.asset_title,
+                asset_type=hit.asset_type,
+                summary_text=hit.summary_text,
+                score=hit.score,
+                source_refs=list(hit.source_refs),
+            )
+            for hit in hits
+        ],
+    )

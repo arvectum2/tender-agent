@@ -2,10 +2,8 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
-from typing import Any, Self
 
-import httpx
-
+from src.shared.data_platform import DataPlatformError, DataPlatformHttpClient
 from src.tender_research.rag.retriever import RagSearchHit
 from src.tender_research.repository import TenderRepository
 
@@ -16,10 +14,6 @@ _CHUNK_URI_PREFIX = "tender-chunk://"
 # a weak lexical singleton that is only a deep semantic candidate.
 _TENDER_LEXICAL_WEIGHT = 1.0
 _TENDER_VECTOR_WEIGHT = 4.0
-
-
-class DataPlatformError(RuntimeError):
-    pass
 
 
 @dataclass(frozen=True)
@@ -74,80 +68,19 @@ def build_data_platform_client(config) -> DataPlatformClient:
     )
 
 
-class DataPlatformClient:
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        api_key: str = "",
-        timeout_seconds: int = 30,
-        client: httpx.Client | None = None,
-    ) -> None:
-        normalized = base_url.rstrip("/")
-        if not normalized:
-            raise ValueError("Data Platform base URL must not be blank")
-        headers = {"X-Arvectum-Key": api_key} if api_key else {}
-        self._owns_client = client is None
-        self._client = client or httpx.Client(
-            base_url=normalized,
-            timeout=timeout_seconds,
-            headers=headers,
-        )
-
-    def __enter__(self) -> Self:
-        return self
-
-    def __exit__(self, exc_type, exc, tb) -> None:
-        self.close()
-
-    def close(self) -> None:
-        if self._owns_client:
-            self._client.close()
-
-    def _request(self, method: str, path: str, **kwargs) -> httpx.Response:
-        try:
-            response = self._client.request(method, path, **kwargs)
-        except httpx.HTTPError as exc:
-            raise DataPlatformError(f"Data Platform request failed: {exc}") from exc
-        if response.status_code >= 400:
-            detail = response.text.strip()[:500]
-            raise DataPlatformError(
-                f"Data Platform {method} {path} returned HTTP "
-                f"{response.status_code}: {detail}"
-            )
-        return response
-
+class DataPlatformClient(DataPlatformHttpClient):
     def ensure_collection(
         self,
         *,
         collection_id: str,
         name: str,
         owner: str = "tender-agent",
-    ) -> dict[str, Any]:
-        try:
-            response = self._client.get(f"/v1/collections/{collection_id}")
-        except httpx.HTTPError as exc:
-            raise DataPlatformError(
-                f"Data Platform collection lookup failed: {exc}"
-            ) from exc
-        if response.status_code == 200:
-            return response.json()
-        if response.status_code != 404:
-            detail = response.text.strip()[:500]
-            raise DataPlatformError(
-                "Data Platform collection lookup failed with HTTP "
-                f"{response.status_code}: {detail}"
-            )
-        return self._request(
-            "POST",
-            "/v1/collections",
-            json={
-                "collection_id": collection_id,
-                "owner": owner,
-                "name": name,
-                "default_language": "russian",
-            },
-        ).json()
+    ) -> dict:
+        return super().ensure_collection(
+            collection_id=collection_id,
+            name=name,
+            owner=owner,
+        )
 
     def ingest_chunk(
         self,
@@ -156,24 +89,15 @@ class DataPlatformClient:
         chunk_id: str,
         file_name: str,
         text: str,
-    ) -> dict[str, Any]:
-        return self._request(
-            "POST",
-            "/v1/ingest/document",
-            data={
-                "collection_id": collection_id,
-                "title": file_name,
-                "canonical_uri": _chunk_uri(chunk_id),
-                "pre_chunked": "true",
-            },
-            files={
-                "file": (
-                    f"{chunk_id}.txt",
-                    text.encode("utf-8"),
-                    "text/plain",
-                )
-            },
-        ).json()
+    ) -> dict:
+        return self.ingest_document(
+            collection_id=collection_id,
+            canonical_uri=_chunk_uri(chunk_id),
+            title=file_name,
+            text=text,
+            filename=f"{chunk_id}.txt",
+            pre_chunked=True,
+        )
 
     def search(
         self,
@@ -181,44 +105,15 @@ class DataPlatformClient:
         query: str,
         collections: list[str],
         limit: int,
-    ) -> list[dict[str, Any]]:
-        payload = self._request(
-            "POST",
-            "/v1/search",
-            json={
-                "query": query,
-                "collections": collections,
-                "limit": limit,
-                "mode": "hybrid",
-                "lexical_weight": _TENDER_LEXICAL_WEIGHT,
-                "vector_weight": _TENDER_VECTOR_WEIGHT,
-            },
-        ).json()
-        hits = payload.get("hits", [])
-        if not isinstance(hits, list):
-            raise DataPlatformError("Data Platform search returned invalid hits payload")
-        return [item for item in hits if isinstance(item, dict)]
-
-    def collection_exists(self, collection_id: str) -> bool:
-        try:
-            response = self._client.get(f"/v1/collections/{collection_id}")
-        except httpx.HTTPError as exc:
-            raise DataPlatformError(f"Data Platform request failed: {exc}") from exc
-        if response.status_code == 200:
-            return True
-        if response.status_code == 404:
-            return False
-        raise DataPlatformError(
-            "Data Platform collection lookup failed with HTTP "
-            f"{response.status_code}: {response.text.strip()[:500]}"
+    ) -> list[dict]:
+        return super().search(
+            query=query,
+            collections=collections,
+            limit=limit,
+            mode="hybrid",
+            lexical_weight=_TENDER_LEXICAL_WEIGHT,
+            vector_weight=_TENDER_VECTOR_WEIGHT,
         )
-
-
-    def collection_stats(self, collection_id: str) -> dict[str, int | str]:
-        return self._request(
-            "GET",
-            f"/v1/collections/{collection_id}/stats",
-        ).json()
 
 
 class DataPlatformTenderIndexer:
