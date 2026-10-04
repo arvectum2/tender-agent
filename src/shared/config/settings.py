@@ -76,6 +76,10 @@ class Settings(BaseSettings):
     rag_vector_store: str = "json"
     rag_vector_store_path: str | None = None
     rag_embedding_dimension: str | int | None = 256
+    rag_retrieval_backend: str = "legacy"
+    rag_data_platform_base_url: str = "http://127.0.0.1:8094"
+    rag_data_platform_api_key: str = ""
+    rag_data_platform_timeout_seconds: int = 30
     rag_use_llm: bool = False
     local_llm_base_url: str = "http://127.0.0.1:8088/v1"
     local_llm_model: str = "qwen2.5-14b"
@@ -313,6 +317,15 @@ class Settings(BaseSettings):
                 raise ValueError("ARVECTUM_REDIS_NAMESPACE must not be empty in production")
             if not self.arvectum_redis_environment.strip():
                 raise ValueError("ARVECTUM_REDIS_ENVIRONMENT must not be empty when Redis is enabled")
+        retrieval_backend = self.rag_retrieval_backend.strip().lower()
+        if retrieval_backend not in {"legacy", "data_platform"}:
+            raise ValueError(
+                "AI_CORP_RAG_RETRIEVAL_BACKEND must be legacy or data_platform"
+            )
+        if retrieval_backend == "data_platform" and not self.rag_data_platform_base_url.strip():
+            raise ValueError(
+                "AI_CORP_RAG_DATA_PLATFORM_BASE_URL is required for data_platform retrieval"
+            )
         backend = self.tender_research_job_backend.strip().lower()
         if backend not in {"thread", "redis"}:
             raise ValueError("ARVECTUM_TENDER_RESEARCH_JOB_BACKEND must be thread or redis")

@@ -630,6 +630,15 @@ class TenderRepository:
             )
         ).scalar() or 0
 
+    def list_tender_ids_with_chunks(self) -> list[str]:
+        return list(
+            self._session.execute(
+                select(ProcurementDocumentChunk.tender_id)
+                .distinct()
+                .order_by(ProcurementDocumentChunk.tender_id.asc())
+            ).scalars().all()
+        )
+
     # ── ProcurementDocumentEmbedding ──
 
     def upsert_document_embedding(self, data: dict) -> ProcurementDocumentEmbedding:

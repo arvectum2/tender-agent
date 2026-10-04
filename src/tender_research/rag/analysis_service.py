@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
 import logging
-from pathlib import Path
 import time
+from dataclasses import dataclass, replace
+from datetime import UTC
+from pathlib import Path
 from uuid import uuid4
 
 from sqlalchemy import create_engine
@@ -12,6 +13,13 @@ from sqlalchemy.orm import Session
 from src.shared.config.settings import get_settings
 from src.shared.db.base import Base
 from src.tender_research.config import load_config
+from src.tender_research.rag.data_platform import (
+    DataPlatformError,
+    DataPlatformRagRetriever,
+    build_data_platform_client,
+    build_tender_collection_id,
+    retrieval_backend_name,
+)
 from src.tender_research.rag.embeddings import build_embedding_provider
 from src.tender_research.rag.history_service import record_analysis_run
 from src.tender_research.rag.llm import (
@@ -20,8 +28,8 @@ from src.tender_research.rag.llm import (
 )
 from src.tender_research.rag.retriever import RagRetriever, RagSearchHit
 from src.tender_research.rag.schemas import (
-    ANALYSIS_SECTIONS,
     ANALYSIS_MODE_CHOICES,
+    ANALYSIS_SECTIONS,
     DEFAULT_ANALYSIS_MODE,
     SourceCitation,
     TenderAnalysisResult,
@@ -234,7 +242,7 @@ def _build_report_markdown(
     lines = [
         f"# Анализ закупки {registry_number}",
         "",
-        f"**Статус:** завершено",
+        "**Статус:** завершено",
         f"**Режим анализа:** {analysis_mode}",
         f"**LLM:** {'да' if used_llm else 'нет'} {f'({llm_model})' if llm_model and used_llm else ''}",
         f"**Поиск:** {retrieval_provider or '?'} / {retrieval_model or '?'}",
@@ -277,9 +285,9 @@ def _save_report(report_markdown: str, registry_number: str, data_dir: str, *, r
     reports_dir = Path(data_dir) / "rag" / "reports"
     reports_dir.mkdir(parents=True, exist_ok=True)
     if run_token is None:
-        from datetime import datetime, timezone
+        from datetime import datetime
 
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+        timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
         run_token = f"{timestamp}_{uuid4().hex[:8]}"
     output_path = reports_dir / f"analyze_tender_{registry_number}_{run_token}.md"
     output_path.write_text(report_markdown, encoding="utf-8")
@@ -367,6 +375,7 @@ def analyze_tender(
     if session is None:
         session = _get_session()
         own_session = True
+    platform_client = None
 
     try:
         warnings: list[str] = []
@@ -447,34 +456,98 @@ def analyze_tender(
                 _record_history(result, session, duration_seconds=0.0, source=history_source)
             return result
 
-        emb_provider = build_embedding_provider(config)
-        vector_store = JsonVectorStore(
-            _vector_store_path(config, provider_name=emb_provider.provider_name, model_name=emb_provider.model_name),
-            dimension=emb_provider.dimension or None,
-        )
-        retriever = RagRetriever(repo, emb_provider, vector_store)
+        backend = retrieval_backend_name(config)
         emit_progress(10, "retrieval", "Подготавливаем поиск по документам…")
 
-        embeddings_count = repo.count_document_embeddings(
-            provider=emb_provider.provider_name,
-            model=emb_provider.model_name,
-        )
-        if embeddings_count == 0:
-            result = TenderAnalysisResult(
-                status="no_context",
-                registry_number=registry_number,
-                sections=[],
-                sections_count=0,
-                sources_count=0,
-                analysis_mode=analysis_mode,
-                errors=[f"No embeddings found for provider={emb_provider.provider_name} model={emb_provider.model_name}. Run build-embeddings first."],
-                retrieval_provider=emb_provider.provider_name,
-                retrieval_model=emb_provider.model_name,
-                retrieval_limit_used=mode_config.retrieval_limit,
+        if backend == "data_platform":
+            retrieval_provider = "data_platform"
+            retrieval_model = "hybrid"
+            platform_client = build_data_platform_client(config)
+            collection_id = build_tender_collection_id(repo, tender.id)
+            platform_index_ready = False
+            if collection_id is not None:
+                try:
+                    stats = platform_client.collection_stats(collection_id)
+                    expected_resources = repo.count_chunks_by_tender(tender.id)
+                    platform_index_ready = (
+                        expected_resources > 0
+                        and int(stats.get("resources", 0)) == expected_resources
+                        and int(stats.get("embeddings", 0)) >= expected_resources
+                    )
+                except (DataPlatformError, ValueError):
+                    platform_index_ready = False
+            if collection_id is None or not platform_index_ready:
+                result = TenderAnalysisResult(
+                    status="no_context",
+                    registry_number=registry_number,
+                    sections=[],
+                    sections_count=0,
+                    sources_count=0,
+                    analysis_mode=analysis_mode,
+                    errors=[
+                        (
+                            "Data Platform index is not prepared for this tender. "
+                            "Run tender preparation first."
+                        )
+                    ],
+                    retrieval_provider=retrieval_provider,
+                    retrieval_model=retrieval_model,
+                    retrieval_limit_used=mode_config.retrieval_limit,
+                )
+                if record_history:
+                    _record_history(
+                        result,
+                        session,
+                        duration_seconds=0.0,
+                        source=history_source,
+                    )
+                return result
+            retriever = DataPlatformRagRetriever(repo, platform_client)
+        else:
+            emb_provider = build_embedding_provider(config)
+            vector_store = JsonVectorStore(
+                _vector_store_path(
+                    config,
+                    provider_name=emb_provider.provider_name,
+                    model_name=emb_provider.model_name,
+                ),
+                dimension=emb_provider.dimension or None,
             )
-            if record_history:
-                _record_history(result, session, duration_seconds=0.0, source=history_source)
-            return result
+            retriever = RagRetriever(repo, emb_provider, vector_store)
+            retrieval_provider = emb_provider.provider_name
+            retrieval_model = emb_provider.model_name
+            embeddings_count = repo.count_document_embeddings(
+                provider=emb_provider.provider_name,
+                model=emb_provider.model_name,
+            )
+            if embeddings_count == 0:
+                result = TenderAnalysisResult(
+                    status="no_context",
+                    registry_number=registry_number,
+                    sections=[],
+                    sections_count=0,
+                    sources_count=0,
+                    analysis_mode=analysis_mode,
+                    errors=[
+                        (
+                            "No embeddings found for "
+                            f"provider={emb_provider.provider_name} "
+                            f"model={emb_provider.model_name}. "
+                            "Run build-embeddings first."
+                        )
+                    ],
+                    retrieval_provider=retrieval_provider,
+                    retrieval_model=retrieval_model,
+                    retrieval_limit_used=mode_config.retrieval_limit,
+                )
+                if record_history:
+                    _record_history(
+                        result,
+                        session,
+                        duration_seconds=0.0,
+                        source=history_source,
+                    )
+                return result
 
         llm_client: LocalChatLlmClient | None = None
         if use_llm:
@@ -707,7 +780,7 @@ def analyze_tender(
             )
         emit_progress(90, "section_analysis", "Анализ разделов завершён.", steps=section_states)
 
-        sources_count = len(set(source.chunk_id for source in all_sources))
+        sources_count = len({source.chunk_id for source in all_sources})
         overall_status, warnings = _finalize_analysis_status(
             sections=sections,
             sources_count=sources_count,
@@ -747,8 +820,8 @@ def analyze_tender(
             sections=sections,
             used_llm=use_llm and llm_client is not None,
             llm_model=config.local_llm_model if use_llm else None,
-            retrieval_provider=emb_provider.provider_name,
-            retrieval_model=emb_provider.model_name,
+            retrieval_provider=retrieval_provider,
+            retrieval_model=retrieval_model,
             analysis_mode=analysis_mode,
             duration_seconds=duration,
         )
@@ -770,8 +843,8 @@ def analyze_tender(
             used_llm=use_llm and llm_client is not None,
             llm_model=config.local_llm_model if use_llm else None,
             llm_endpoint=config.local_llm_base_url if use_llm else None,
-            retrieval_provider=emb_provider.provider_name,
-            retrieval_model=emb_provider.model_name,
+            retrieval_provider=retrieval_provider,
+            retrieval_model=retrieval_model,
             retrieval_limit_used=mode_config.retrieval_limit,
             duration_seconds=round(duration, 4),
             timings=timings,
@@ -790,6 +863,8 @@ def analyze_tender(
         emit_progress(100, "completed", "Анализ завершён.")
         return result
     finally:
+        if platform_client is not None:
+            platform_client.close()
         if own_session:
             session.close()
 
