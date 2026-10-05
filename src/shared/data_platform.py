@@ -85,6 +85,35 @@ class DataPlatformHttpClient:
             },
         ).json()
 
+    def process_document(
+        self,
+        *,
+        collection_id: str,
+        canonical_uri: str,
+        title: str,
+        content: bytes,
+        filename: str,
+        content_type: str = "application/octet-stream",
+        chunk_size_chars: int = 1500,
+        overlap_chars: int = 200,
+        min_chunk_chars: int = 120,
+        max_chars: int = 2_000_000,
+    ) -> dict[str, Any]:
+        return self._request(
+            "POST",
+            "/v1/process/document",
+            data={
+                "collection_id": collection_id,
+                "title": title,
+                "canonical_uri": canonical_uri,
+                "chunk_size_chars": str(chunk_size_chars),
+                "overlap_chars": str(overlap_chars),
+                "min_chunk_chars": str(min_chunk_chars),
+                "max_chars": str(max_chars),
+            },
+            files={"file": (filename, content, content_type)},
+        ).json()
+
     def ingest_document(
         self,
         *,

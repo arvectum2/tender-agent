@@ -6,7 +6,6 @@ from pathlib import Path
 from urllib.request import HTTPSHandler, ProxyHandler, build_opener
 
 from src.shared.network.http_client import create_urllib_context
-
 from src.tender_research.config import TenderResearchConfig
 from src.tender_research.document_text_extractor import extract_text
 from src.tender_research.models import ProcurementTender
@@ -17,6 +16,8 @@ def download_tender_documents(
     repo: TenderRepository,
     tender: ProcurementTender,
     config: TenderResearchConfig,
+    *,
+    extract_locally: bool = True,
 ) -> dict[str, int]:
     tender_dir = _tender_doc_dir(config.data_dir, tender.source, tender.external_id)
     doc_dir = tender_dir / "documents" / "original"
@@ -42,7 +43,8 @@ def download_tender_documents(
             doc = _mark_downloaded(repo, doc, local_path)
             repo._session.flush()
             downloaded += 1
-            _try_extract(doc, text_dir, config)
+            if extract_locally:
+                _try_extract(doc, text_dir, config)
             continue
         try:
             req = urllib.request.Request(
@@ -62,7 +64,8 @@ def download_tender_documents(
             doc = _mark_downloaded(repo, doc, local_path)
             repo._session.flush()
             downloaded += 1
-            _try_extract(doc, text_dir, config)
+            if extract_locally:
+                _try_extract(doc, text_dir, config)
         except Exception as e:
             doc.download_status = "failed"
             doc.error_message = str(e)
