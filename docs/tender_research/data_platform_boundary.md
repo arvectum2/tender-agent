@@ -30,4 +30,4 @@ For the current migration phase, Data Platform performs extraction/chunking and 
 
 ## Document recovery chunk rebuilding
 
-The production recovery path delegates chunk rebuilding to Data Platform. Tender Agent verifies that Data Platform extraction matches the already recovered and validated extracted text before writing the returned chunks into procurement storage. The legacy local chunk indexer remains test/compatibility code only and is no longer the default recovery implementation.
+The production recovery path delegates both staged text extraction and chunk rebuilding to Data Platform. Tender Agent verifies that Data Platform extraction matches the already recovered and validated extracted text before writing returned chunks into procurement storage. The local extractor and legacy local chunk indexer remain test/compatibility code only and are no longer production recovery defaults.
