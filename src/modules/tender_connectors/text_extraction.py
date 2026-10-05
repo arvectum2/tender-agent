@@ -77,7 +77,7 @@ def quality_gate_text(text: str | None) -> ExtractionDecision:
     if len(tokens) < 4:
         return ExtractionDecision(accepted=False, reason="insufficient_tokens", text=None)
 
-    unique_ratio = len(set(tok.lower() for tok in tokens)) / max(len(tokens), 1)
+    unique_ratio = len({tok.lower() for tok in tokens}) / max(len(tokens), 1)
     if unique_ratio < 0.22:
         return ExtractionDecision(accepted=False, reason="repetitive_noise", text=None)
 

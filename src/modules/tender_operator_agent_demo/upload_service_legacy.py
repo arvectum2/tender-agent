@@ -1,31 +1,33 @@
 from __future__ import annotations
 
-import html
 import hashlib
+import html
 import json
 import os
 import re
 import time
-from urllib.parse import urlparse
-from urllib.request import urlopen
-import zipfile
 import xml.etree.ElementTree as ET
+import zipfile
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from secrets import token_hex
 from typing import Any
+from urllib.parse import urlparse
+from urllib.request import urlopen
 
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
 
 from src.modules.procurement_analysis.document_roles import detect_document_role
+from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome
+from src.modules.tender_operator_agent_demo.contract_term_facts import (
+    extract_contract_term_facts,
+)
 from src.modules.tender_operator_agent_demo.event_log import (
     append_tender_demo_event,
     load_tender_demo_events,
 )
-from src.modules.tender_operator_agent_demo.procurement_discovery import get_supplier_profile
-from src.modules.tender_operator_agent_demo.relevance_scoring import score_procurement_document_text
 from src.modules.tender_operator_agent_demo.goods_source_facts import (
     build_complete_goods_positions,
     build_goods_requirements_from_source_facts,
@@ -33,19 +35,16 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
     extract_goods_source_facts,
     semantic_procurement_role,
 )
-from src.modules.tender_operator_agent_demo.contract_term_facts import extract_contract_term_facts
-from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome
-from src.shared.config.settings import get_settings
-from src.shared.data_platform import DataPlatformError
-from src.shared.document_processing import (
-    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
-    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
-    process_document_bytes,
+from src.modules.tender_operator_agent_demo.procurement_discovery import (
+    get_supplier_profile,
 )
 from src.modules.tender_operator_agent_demo.quote_normalizer import (
     SpreadsheetSource,
     build_economics_summary,
     build_quote_comparison,
+)
+from src.modules.tender_operator_agent_demo.relevance_scoring import (
+    score_procurement_document_text,
 )
 from src.modules.tender_operator_agent_demo.schemas import (
     DemoDetailSection,
@@ -54,17 +53,27 @@ from src.modules.tender_operator_agent_demo.schemas import (
     DemoStep,
     DemoStepStatus,
     TenderOperatorDemoReportResponse,
+    TenderOperatorRunEvent,
     TenderOperatorUploadedFile,
     TenderOperatorUploadedRunAnalyzeResponse,
     TenderOperatorUploadedRunCreateResponse,
     TenderOperatorUploadedRunListResponse,
     TenderOperatorUploadedRunResponse,
-    TenderOperatorRunEvent,
     TenderOperatorUploadedRunStatus,
     TenderOperatorUploadedRunStepsResponse,
     TenderOperatorUploadedRunSummary,
 )
-
+from src.shared.config.settings import get_settings
+from src.shared.data_platform import DataPlatformError
+from src.shared.document_processing import (
+    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
+)
+from src.shared.document_processing import (
+    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
+)
+from src.shared.document_processing import (
+    process_document_bytes,
+)
 
 ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".xlsx", ".xls", ".txt", ".csv", ".zip", ".xml", ".html", ".htm"}
 MAX_FILE_COUNT = 16
@@ -932,7 +941,9 @@ def _try_run_llm_workflow(
         from sqlalchemy import create_engine
         from sqlalchemy.orm import Session
 
-        from src.modules.controlled_llm_prebid.service import run_controlled_tender_operator_workflow
+        from src.modules.controlled_llm_prebid.service import (
+            run_controlled_tender_operator_workflow,
+        )
         from src.shared.db.base import Base
 
         settings = get_settings()
@@ -3579,9 +3590,17 @@ def _build_output_payloads(
     )
     # Candidate hints retain only legacy sequence/identity while the direct
     # fragments and resolver exclusively supply goods field values.
-    from src.modules.procurement_source_graph.model import direct_fragments_to_canonical_model, legacy_rows_to_canonical_model
-    from src.modules.procurement_source_graph.serialization import provenance_records, serialize_graph
-    from src.modules.procurement_source_graph.structured_fragment_collector import StructuredFragmentCollector
+    from src.modules.procurement_source_graph.model import (
+        direct_fragments_to_canonical_model,
+        legacy_rows_to_canonical_model,
+    )
+    from src.modules.procurement_source_graph.serialization import (
+        provenance_records,
+        serialize_graph,
+    )
+    from src.modules.procurement_source_graph.structured_fragment_collector import (
+        StructuredFragmentCollector,
+    )
     graph_input_rows = (
         preliminary_analysis.get("service_items") or preliminary_analysis.get("spec_table", {}).get("rows", [])
         if procurement_kind == "services"
@@ -5235,7 +5254,9 @@ body{{margin:0;background:#f5f8fa;color:#10243e;font:16px Arial,sans-serif}}main
 
 
 def _persist_outputs(run_id: str, metadata: dict[str, Any], outputs: dict[str, dict[str, Any]], steps: list[DemoStep]) -> None:
-    from src.modules.procurement_analysis.frozen_producer import persist_frozen_r7_outputs
+    from src.modules.procurement_analysis.frozen_producer import (
+        persist_frozen_r7_outputs,
+    )
     renderer = _render_customer_report_html if metadata.get("analysis_mode") == "production_llm_r10_1" else _render_canonical_report_html
     persist_frozen_r7_outputs(output_dir=_output_dir(run_id), run_id=run_id, metadata=metadata, outputs=outputs, steps=steps, render_html=renderer, now_factory=_safe_datetime)
 

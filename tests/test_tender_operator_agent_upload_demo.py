@@ -19,6 +19,21 @@ def _set_runs_root(monkeypatch, tmp_path: Path) -> Path:
     return runs_root
 
 
+def _mock_text_platform(monkeypatch) -> None:
+    def fake_process_document_bytes(**kwargs):
+        text = kwargs["content"].decode("utf-8")
+        return ProcessedDocument(
+            extraction_status="extracted",
+            text=text,
+            chunks=(),
+        )
+
+    monkeypatch.setattr(
+        "src.modules.tender_operator_agent_demo.upload_service_legacy.process_document_bytes",
+        fake_process_document_bytes,
+    )
+
+
 def _sample_upload_payload(include_quote: bool = True):
     files = [
         ("files", ("notice.txt", b"NOTICE\nProcurement of electrical equipment for switchgear upgrade.", "text/plain")),
@@ -291,6 +306,7 @@ def test_technical_spec_xlsx_is_not_misclassified_as_supplier_quote(client, monk
 
 def test_report_includes_preliminary_procurement_analysis_from_tz_and_contract(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Обучение по ИБ",
         "tender_category": "Услуги обучения",
@@ -349,6 +365,7 @@ def test_report_includes_preliminary_procurement_analysis_from_tz_and_contract(c
 
 def test_goods_tz_is_rendered_as_table_in_report(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Поставка электротехнических товаров",
         "tender_category": "Электротехническое оборудование",
@@ -405,6 +422,7 @@ def test_goods_tz_is_rendered_as_table_in_report(client, monkeypatch, tmp_path):
 
 def test_goods_address_is_not_cut_on_city_abbreviation(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Поставка нефтепродуктов",
         "tender_category": "Нефтепродукты",
@@ -526,6 +544,7 @@ def test_realistic_goods_supply_items_are_extracted_from_tz_and_nmck():
 
 def test_goods_report_uses_supply_items_and_goods_economics(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Поставка электротехнической продукции",
         "tender_category": "Электротехническая продукция",
