@@ -8,12 +8,12 @@ legacy callables. It changes no external-action or LLM provenance boundary.
 
 from __future__ import annotations
 
-from copy import deepcopy
 import re
-from typing import Any, Iterable
+from collections.abc import Iterable
+from copy import deepcopy
+from typing import Any
 
 from src.modules.tender_operator_agent_demo import upload_service_legacy as _legacy
-
 
 _INSTALLED = False
 # Capture these inside install(), after earlier compatibility layers are active.
@@ -36,6 +36,18 @@ _THEME_SPECS: dict[str, dict[str, tuple[str, ...]]] = {
     "delivery_logistics": {
         "detect": (r"\bдоставк",),
         "evidence": (r"\bдоставк",),
+    },
+    "delivery_price_inclusion": {
+        # Mentioning delivery alone does not support an economic conclusion
+        # about its price inclusion, unloading, or margin impact.
+        "detect": (
+            r"(?:доставк|разгруз)[^.\n]{0,120}(?:включен|цен|марж)",
+            r"(?:включен|цен|марж)[^.\n]{0,120}(?:доставк|разгруз)",
+        ),
+        "evidence": (
+            r"(?:доставк|разгруз)[^.\n]{0,120}(?:включен|цен|марж)",
+            r"(?:включен|цен|марж)[^.\n]{0,120}(?:доставк|разгруз)",
+        ),
     },
     "unloading": {"detect": (r"разгруз",), "evidence": (r"разгруз",)},
     "packaging": {"detect": (r"упаков",), "evidence": (r"упаков",)},
@@ -115,6 +127,7 @@ _THEME_SPECS: dict[str, dict[str, tuple[str, ...]]] = {
 _THEME_LABELS = {
     "delivery_deadline": "срок исполнения/поставки",
     "delivery_logistics": "условия доставки",
+    "delivery_price_inclusion": "включение доставки/разгрузки в цену",
     "unloading": "разгрузка",
     "packaging": "упаковка",
     "stock": "складской остаток/наличие",
