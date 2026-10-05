@@ -12,6 +12,16 @@ from src.tender_research.rag.prepare_service import (
 )
 
 
+@pytest.fixture(autouse=True)
+def explicit_legacy_backend_for_legacy_tests(monkeypatch):
+    from src.tender_research.config import TenderResearchConfig
+
+    monkeypatch.setattr(
+        "src.tender_research.rag.prepare_service.load_config",
+        lambda: TenderResearchConfig(rag_retrieval_backend="legacy"),
+    )
+
+
 @pytest.fixture()
 def mock_repo():
     return MagicMock()

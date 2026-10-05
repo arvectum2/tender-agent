@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -12,6 +13,14 @@ from src.tender_research.rag.cli import main
 from src.tender_research.rag.embeddings import BaseEmbeddingProvider
 from src.tender_research.rag.llm import RagAnswer, build_source_citations
 from src.tender_research.repository import TenderRepository
+
+
+@pytest.fixture(autouse=True)
+def explicit_legacy_backend_for_legacy_cli_tests(monkeypatch):
+    monkeypatch.setenv("AI_CORP_RAG_RETRIEVAL_BACKEND", "legacy")
+    get_settings.cache_clear()
+    yield
+    get_settings.cache_clear()
 
 
 class FakeEmbeddingProvider(BaseEmbeddingProvider):
@@ -209,7 +218,7 @@ def test_analyze_tender_registry_filter_applies(tmp_path, monkeypatch, capsys):
     main()
     out = capsys.readouterr().out
 
-    json_line, _, md = out.partition("\n\n")
+    json_line, _, _md = out.partition("\n\n")
     payload = json.loads(json_line)
     assert payload["status"] == "no_context"
 

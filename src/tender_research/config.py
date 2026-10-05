@@ -58,7 +58,7 @@ class TenderResearchConfig:
     rag_vector_store: str = "json"
     rag_vector_store_path: str | None = None
     rag_embedding_dimension: str | int | None = 256
-    rag_retrieval_backend: str = "legacy"
+    rag_retrieval_backend: str = "data_platform"
     rag_data_platform_base_url: str = "http://127.0.0.1:8094"
     rag_data_platform_api_key: str = ""
     rag_data_platform_timeout_seconds: int = 30
