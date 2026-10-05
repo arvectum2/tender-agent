@@ -43,3 +43,5 @@ def test_document_recovery_uses_data_platform_chunk_builder() -> None:
     assert "DocumentChunkIndexer" not in source
     assert "extract_document_with_data_platform" in source
     assert "_try_extract" not in source
+    assert "rag.chunker" not in source
+    assert "rag.indexer" not in source
