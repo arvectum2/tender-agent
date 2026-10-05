@@ -47,7 +47,7 @@ from src.tender_research.models import (
     ProcurementTenderDocument,
 )
 from src.tender_research.rag.chunker import normalize_text
-from src.tender_research.rag.indexer import DocumentChunkIndexer
+from src.tender_research.rag.data_platform import build_recovery_chunk_indexer
 from src.tender_research.repository import TenderRepository
 
 MAX_ENTRIES = 5_000
@@ -769,7 +769,7 @@ def recover_procurement_documents(
     *,
     soap_client_factory: Callable[[Any], Any] = ZakupkiSoapClient,
     extraction_helper: Callable[..., None] = _try_extract,
-    chunk_indexer_factory: Callable[..., Any] = DocumentChunkIndexer,
+    chunk_indexer_factory: Callable[..., Any] | None = None,
     engine_factory: Callable[..., Any] = create_engine,
     root_validator: Callable[[Path, Path], Path] = validate_data_root,
 ) -> dict[str, Any]:
@@ -808,7 +808,7 @@ def _recover_procurement_documents_impl(
     *,
     soap_client_factory: Callable[[Any], Any] = ZakupkiSoapClient,
     extraction_helper: Callable[..., None] = _try_extract,
-    chunk_indexer_factory: Callable[..., Any] = DocumentChunkIndexer,
+    chunk_indexer_factory: Callable[..., Any] | None = None,
     engine_factory: Callable[..., Any] = create_engine,
     root_validator: Callable[[Path, Path], Path] = validate_data_root,
     cleanup_state: dict[str, Any] | None = None,
@@ -816,6 +816,7 @@ def _recover_procurement_documents_impl(
     """Run a complete dry-run preflight; persistence requires explicit ``apply``."""
     if request.build_chunks and not request.apply:
         raise ValueError("--build-chunks requires --apply")
+    chunk_indexer_factory = chunk_indexer_factory or build_recovery_chunk_indexer
     data_root = root_validator(request.data_root, request.backup_dir)
     backup_dir = _safe_backup_dir(request.backup_dir, data_root, create=False)
     if request.env_file.is_symlink() or not request.env_file.is_file():
