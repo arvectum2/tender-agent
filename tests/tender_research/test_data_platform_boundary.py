@@ -29,3 +29,19 @@ def test_boundary_document_declares_dependency_direction() -> None:
     ).read_text(encoding="utf-8")
     assert "Tender Agent -> Data Platform" in text
     assert "Data Platform -> Tender Agent" not in text
+
+
+def test_document_recovery_uses_data_platform_chunk_builder() -> None:
+    source = (
+        Path(__file__).resolve().parents[2]
+        / "src"
+        / "modules"
+        / "production_llm_analysis"
+        / "document_recovery.py"
+    ).read_text(encoding="utf-8")
+    assert "build_recovery_chunk_indexer" in source
+    assert "DocumentChunkIndexer" not in source
+    assert "extract_document_with_data_platform" in source
+    assert "_try_extract" not in source
+    assert "rag.chunker" not in source
+    assert "rag.indexer" not in source
