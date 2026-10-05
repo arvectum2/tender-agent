@@ -84,3 +84,32 @@ def test_backend_neutral_search_hit_is_not_defined_by_legacy_retriever() -> None
     assert "rag.search_types import RagSearchHit" in adapter
     assert "rag.search_types import RagSearchHit" in llm
     assert "rag.search_types import RagSearchHit" in analysis
+
+
+def test_data_platform_runtime_import_graph_does_not_load_legacy_rag() -> None:
+    import subprocess
+    import sys
+
+    root = Path(__file__).resolve().parents[2]
+    code = """
+import sys
+import src.tender_research.rag.data_platform
+import src.tender_research.rag.analysis_service
+import src.tender_research.rag.prepare_service
+
+forbidden = {
+    'src.tender_research.rag.chunker',
+    'src.tender_research.rag.embeddings',
+    'src.tender_research.rag.indexer',
+    'src.tender_research.rag.retriever',
+    'src.tender_research.rag.vector_store',
+}
+loaded = sorted(forbidden.intersection(sys.modules))
+if loaded:
+    raise SystemExit('legacy modules loaded: ' + ', '.join(loaded))
+"""
+    subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=root,
+        check=True,
+    )
