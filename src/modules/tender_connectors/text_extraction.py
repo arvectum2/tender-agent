@@ -8,6 +8,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 from src.shared.document_processing import EXTRACTED_STATUS, process_document_bytes
+from src.tender_research.rag.presets import tender_processing_collection_id
 
 
 @dataclass(frozen=True)
@@ -149,7 +150,7 @@ def extract_text_from_attachment_bytes(url: str, content: bytes) -> str | None:
     processed = process_document_bytes(
         content=content,
         filename=filename,
-        collection_id="tender-agent:connector-processing",
+        collection_id=tender_processing_collection_id("connector"),
         canonical_uri=url if url.startswith(("http://", "https://")) else None,
         min_chunk_chars=1,
     )

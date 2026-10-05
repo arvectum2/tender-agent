@@ -12,11 +12,14 @@ from src.modules.knowledge_assets.models import (
     KnowledgeAssetRecord,
     KnowledgeAssetSet,
 )
+from src.modules.knowledge_assets.presets import (
+    ARVECTUM_OS_KNOWLEDGE_SEARCH_PROFILE,
+    knowledge_collection_id,
+)
 from src.shared.config.settings import get_settings
 from src.shared.data_platform import DataPlatformHttpClient
 from src.shared.errors import ConflictError, NotFoundError
 
-_COLLECTION_PREFIX = "arvectum-os:knowledge"
 _ASSET_URI_PREFIX = "arvectum-os-knowledge://"
 
 
@@ -115,7 +118,7 @@ def build_knowledge_collection_id(
         for record in sorted(records, key=lambda item: item.knowledge_asset_id)
     )
     revision = hashlib.sha256(revision_input.encode("utf-8")).hexdigest()[:16]
-    return f"{_COLLECTION_PREFIX}:{deal_id}:{revision}"
+    return knowledge_collection_id(str(deal_id), revision)
 
 
 def _asset_uri(knowledge_asset_id: str) -> str:
@@ -188,11 +191,11 @@ def search_knowledge_assets(
             raise ConflictError(
                 f"Knowledge index for deal '{deal_id}' is not prepared for the current revision"
             )
-        raw_hits = runtime_client.search(
+        raw_hits = runtime_client.search_with_profile(
             query=query,
             collections=[collection_id],
             limit=max(limit * 2, limit),
-            mode="hybrid",
+            profile=ARVECTUM_OS_KNOWLEDGE_SEARCH_PROFILE,
         )
         hits: list[KnowledgeAssetSearchHit] = []
         seen: set[str] = set()

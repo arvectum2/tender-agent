@@ -5,16 +5,17 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from src.shared.data_platform import DataPlatformError, DataPlatformHttpClient
+from src.tender_research.rag.presets import (
+    TENDER_SEARCH_PROFILE,
+    legacy_tender_collection_id,
+    tender_collection_id,
+    tender_processing_collection_id,
+    tender_recovery_processing_collection_id,
+)
 from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
 
-_COLLECTION_PREFIX = "tender-agent"
 _CHUNK_URI_PREFIX = "tender-chunk://"
-
-# Procurement retrieval is semantic-first. Equal-weight RRF can over-promote
-# a weak lexical singleton that is only a deep semantic candidate.
-_TENDER_LEXICAL_WEIGHT = 1.0
-_TENDER_VECTOR_WEIGHT = 4.0
 
 
 @dataclass(frozen=True)
@@ -38,14 +39,14 @@ class DataPlatformProjectionSummary:
 
 
 def _processing_collection_id(tender_id: str) -> str:
-    return f"{_COLLECTION_PREFIX}:{tender_id}:processing"
+    return tender_processing_collection_id(str(tender_id))
 
 
 def _document_uri(document_id: str) -> str:
     return f"tender-document://{document_id}"
 
 
-def build_tender_collection_id(
+def _tender_collection_revision(
     repo: TenderRepository,
     tender_id: str,
 ) -> str | None:
@@ -56,8 +57,43 @@ def build_tender_collection_id(
         f"{chunk.id}:{chunk.text_hash}"
         for chunk in sorted(chunks, key=lambda item: item.id)
     )
-    revision = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
-    return f"{_COLLECTION_PREFIX}:{tender_id}:{revision}"
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+
+def build_tender_collection_id(
+    repo: TenderRepository,
+    tender_id: str,
+) -> str | None:
+    revision = _tender_collection_revision(repo, tender_id)
+    if revision is None:
+        return None
+    return tender_collection_id(str(tender_id), revision)
+
+
+def build_legacy_tender_collection_id(
+    repo: TenderRepository,
+    tender_id: str,
+) -> str | None:
+    revision = _tender_collection_revision(repo, tender_id)
+    if revision is None:
+        return None
+    return legacy_tender_collection_id(str(tender_id), revision)
+
+
+def resolve_tender_collection_id(
+    repo: TenderRepository,
+    client: DataPlatformHttpClient,
+    tender_id: str,
+) -> str | None:
+    canonical = build_tender_collection_id(repo, tender_id)
+    if canonical is None:
+        return None
+    if client.collection_exists(canonical):
+        return canonical
+    legacy = build_legacy_tender_collection_id(repo, tender_id)
+    if legacy is not None and client.collection_exists(legacy):
+        return legacy
+    return None
 
 
 def _chunk_uri(chunk_id: str) -> str:
@@ -120,22 +156,6 @@ class DataPlatformClient(DataPlatformHttpClient):
             text=text,
             filename=f"{chunk_id}.txt",
             pre_chunked=True,
-        )
-
-    def search(
-        self,
-        *,
-        query: str,
-        collections: list[str],
-        limit: int,
-    ) -> list[dict]:
-        return super().search(
-            query=query,
-            collections=collections,
-            limit=limit,
-            mode="hybrid",
-            lexical_weight=_TENDER_LEXICAL_WEIGHT,
-            vector_weight=_TENDER_VECTOR_WEIGHT,
         )
 
 
@@ -291,7 +311,7 @@ def extract_document_with_data_platform(
     factory = client_factory or build_data_platform_client
     with factory(config) as client:
         payload = client.process_document(
-            collection_id=f"{_COLLECTION_PREFIX}:recovery:processing",
+            collection_id=tender_recovery_processing_collection_id(),
             canonical_uri=_document_uri(str(document.id)),
             title=document.file_name or str(document.id),
             content=source_path.read_bytes(),
@@ -541,7 +561,9 @@ class DataPlatformRagRetriever:
             if customer_name.casefold() not in actual:
                 return []
 
-        collection_id = build_tender_collection_id(self._repo, tender_id)
+        collection_id = resolve_tender_collection_id(
+            self._repo, self._client, tender_id
+        )
         if collection_id is None:
             return []
         return self._search(query, [collection_id], limit=limit)
@@ -557,7 +579,11 @@ class DataPlatformRagRetriever:
         collections = [
             collection_id
             for tender_id in self._repo.list_tender_ids_with_chunks()
-            if (collection_id := build_tender_collection_id(self._repo, tender_id))
+            if (
+                collection_id := resolve_tender_collection_id(
+                    self._repo, self._client, tender_id
+                )
+            )
             is not None
         ]
         if not collections:
@@ -571,10 +597,11 @@ class DataPlatformRagRetriever:
         *,
         limit: int,
     ) -> list[RagSearchHit]:
-        raw_hits = self._client.search(
+        raw_hits = self._client.search_with_profile(
             query=query,
             collections=collections,
             limit=max(limit * 2, limit),
+            profile=TENDER_SEARCH_PROFILE,
         )
         result: list[RagSearchHit] = []
         seen_chunk_ids: set[str] = set()

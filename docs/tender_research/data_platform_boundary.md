@@ -64,3 +64,9 @@ dependency. Product-specific adapters may choose ranking weights and map search
 hits into procurement or knowledge-asset domain objects, but HTTP paths,
 authentication headers, multipart encoding, error behavior and generic contract
 types belong to the shared SDK.
+
+## Consumer presets and namespaces
+
+Data Platform exposes only neutral SDK primitives for search profiles and collection-ID composition. Tender Agent owns the semantic-first retrieval preset (hybrid, lexical 1.0, vector 4.0) and the canonical `tender:*` namespace. New indexes use `tender:<tender-id>:<revision>`; processing collections use `tender:<scope>:processing`. During migration, retrieval may read an existing `tender-agent:<tender-id>:<revision>` index when the canonical collection has not yet been rebuilt.
+
+Arvectum OS knowledge keeps the product-owned balanced preset (lexical 1.0, vector 1.0) and `arvectum-os:knowledge:*` namespace. No procurement or Arvectum OS preset values are defined in the Data Platform server or SDK.

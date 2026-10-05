@@ -140,7 +140,7 @@ class TestDataPlatformAnalysis:
             ),
             patch(
                 "src.tender_research.rag.analysis_service.build_tender_collection_id",
-                return_value="tender-agent:tender-1:rev",
+                return_value="tender:tender-1:rev",
             ),
             patch(
                 "src.tender_research.rag.analysis_service.build_data_platform_client",
@@ -191,7 +191,7 @@ class TestDataPlatformAnalysis:
             ),
             patch(
                 "src.tender_research.rag.analysis_service.build_tender_collection_id",
-                return_value="tender-agent:tender-1:rev",
+                return_value="tender:tender-1:rev",
             ),
             patch(
                 "src.tender_research.rag.analysis_service.build_data_platform_client",

@@ -74,6 +74,7 @@ from src.shared.document_processing import (
 from src.shared.document_processing import (
     process_document_bytes,
 )
+from src.tender_research.rag.presets import tender_processing_collection_id
 
 ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".xlsx", ".xls", ".txt", ".csv", ".zip", ".xml", ".html", ".htm"}
 MAX_FILE_COUNT = 16
@@ -641,7 +642,7 @@ def _extract_document_text(
         processed = process_document_bytes(
             content=content,
             filename=file_name,
-            collection_id="tender-agent:upload-processing",
+            collection_id=tender_processing_collection_id("upload"),
             canonical_uri=f"tender-upload://{hashlib.sha256(content).hexdigest()}",
             min_chunk_chars=1,
         )

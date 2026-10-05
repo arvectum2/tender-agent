@@ -187,3 +187,12 @@ def test_generic_document_extraction_exists_only_behind_data_platform_adapter() 
         "def _extract_text_from_txt",
     )
     assert not any(marker in connector for marker in forbidden_parser_markers)
+
+
+def test_runtime_source_has_no_legacy_tender_collection_prefix() -> None:
+    source_root = Path("src")
+    offenders = []
+    for path in source_root.rglob("*.py"):
+        if "tender-agent:" in path.read_text(encoding="utf-8"):
+            offenders.append(str(path))
+    assert offenders == []

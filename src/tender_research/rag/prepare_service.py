@@ -18,6 +18,7 @@ from src.tender_research.rag.data_platform import (
     DataPlatformTenderIndexer,
     build_data_platform_client,
     build_tender_collection_id,
+    resolve_tender_collection_id,
     retrieval_backend_name,
 )
 from src.tender_research.repository import TenderRepository
@@ -483,12 +484,19 @@ def check_preparation_status(
         docs_with_text = repo.count_extracted_documents_by_tender(tender.id)
         chunks_total = repo.count_chunks_by_tender(tender.id)
         platform_error = None
-        platform_collection_id = build_tender_collection_id(repo, tender.id)
+        canonical_collection_id = build_tender_collection_id(repo, tender.id)
+        platform_collection_id = canonical_collection_id
         embeddings_total = 0
-        if platform_collection_id and chunks_total > 0:
+        if canonical_collection_id and chunks_total > 0:
             try:
                 with build_data_platform_client(config) as platform_client:
-                    stats = platform_client.collection_stats(platform_collection_id)
+                    resolved_collection_id = resolve_tender_collection_id(
+                        repo, platform_client, tender.id
+                    )
+                    if resolved_collection_id is None:
+                        raise DataPlatformError("Data Platform tender index is missing")
+                    platform_collection_id = resolved_collection_id
+                    stats = platform_client.collection_stats(resolved_collection_id)
                 resources_indexed = int(stats.get("resources", 0))
                 embeddings_total = int(stats.get("embeddings", 0))
                 platform_ready = (

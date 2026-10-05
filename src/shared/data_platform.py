@@ -9,10 +9,14 @@ from arvectum_data_client import (
     DataPlatformClient,
     DataPlatformError,
     DataPlatformHttpClient,
+    SearchProfile,
+    build_collection_id,
 )
 
 __all__ = [
     "DataPlatformClient",
     "DataPlatformError",
     "DataPlatformHttpClient",
+    "SearchProfile",
+    "build_collection_id",
 ]
