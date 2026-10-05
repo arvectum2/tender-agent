@@ -147,3 +147,30 @@ def test_legacy_generic_rag_modules_are_removed() -> None:
     root = Path(__file__).resolve().parents[2] / "src" / "tender_research" / "rag"
     for name in ("chunker.py", "embeddings.py", "indexer.py", "retriever.py", "vector_store.py"):
         assert not (root / name).exists()
+
+def test_generic_document_extraction_exists_only_behind_data_platform_adapter() -> None:
+    root = Path(__file__).resolve().parents[2]
+    assert not (root / "src/tender_research/document_text_extractor.py").exists()
+
+    connector = (
+        root / "src/modules/tender_connectors/text_extraction.py"
+    ).read_text(encoding="utf-8")
+    upload = (
+        root / "src/modules/tender_operator_agent_demo/upload_service_legacy.py"
+    ).read_text(encoding="utf-8")
+    acceptance = (
+        root / "scripts/arv001/complete_corpus_contract.py"
+    ).read_text(encoding="utf-8")
+
+    for source in (connector, upload, acceptance):
+        assert "process_document_bytes" in source
+        assert "document_text_extractor" not in source
+
+    forbidden_parser_markers = (
+        "PdfReader",
+        "word/document.xml",
+        "def _extract_text_from_pdf",
+        "def _extract_text_from_docx",
+        "def _extract_text_from_txt",
+    )
+    assert not any(marker in connector for marker in forbidden_parser_markers)

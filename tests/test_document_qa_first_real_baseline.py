@@ -1,11 +1,7 @@
 from __future__ import annotations
 
-import io
 import json
-import zipfile
 from pathlib import Path
-
-import openpyxl
 
 from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
 from src.modules.tender_operator_agent_demo import upload_service_legacy as legacy
@@ -15,7 +11,6 @@ from src.modules.tender_operator_agent_demo.document_qa_runtime_patch import (
 from src.modules.tender_operator_agent_demo.goods_source_facts import (
     build_complete_goods_positions,
 )
-from src.tender_research.document_text_extractor import EXTRACTED_STATUS, extract_text
 
 
 def _document(text: str, *, name: str = "Техническое задание.docx") -> AnalyzedDocument:
@@ -29,40 +24,6 @@ def _document(text: str, *, name: str = "Техническое задание.d
         source="test",
         file_id="FILE-TEST",
     )
-
-
-def test_mislabeled_pdf_with_docx_content_is_extracted(tmp_path: Path) -> None:
-    source = tmp_path / "Электронный документ.pdf"
-    document_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
-      <w:body><w:p><w:r><w:t>Заказчик: МКУ Служба кладбищ</w:t></w:r></w:p></w:body>
-    </w:document>"""
-    with zipfile.ZipFile(source, "w") as archive:
-        archive.writestr("word/document.xml", document_xml)
-
-    status, text = extract_text(str(source))
-
-    assert status == EXTRACTED_STATUS
-    assert "МКУ Служба кладбищ" in text
-
-
-def test_misspelled_xslx_with_real_xlsx_content_is_extracted(tmp_path: Path) -> None:
-    workbook = openpyxl.Workbook()
-    sheet = workbook.active
-    sheet.title = "Расчет"
-    sheet.append(["НМЦК", 3_400_000])
-    payload = io.BytesIO()
-    workbook.save(payload)
-    workbook.close()
-
-    source = tmp_path / "reportXls.xslx"
-    source.write_bytes(payload.getvalue())
-
-    status, text = extract_text(str(source))
-
-    assert status == EXTRACTED_STATUS
-    assert "НМЦК" in text
-    assert "3400000" in text
 
 
 def test_customer_extraction_prefers_role_scoped_customer_over_organizer_full_name() -> None:

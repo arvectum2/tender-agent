@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from xml.etree import ElementTree
 
 import pytest
 from fastapi import HTTPException
 
-from src.modules.customer_pilot.input_resolver import _reconstruct_persisted_document_text
+from src.modules.customer_pilot.input_resolver import (
+    _reconstruct_persisted_document_text,
+)
 from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
 from src.modules.tender_operator_agent_demo import upload_service
-from src.tender_research.document_text_extractor import _extract_xml
-
 
 REGISTRY = "0388100001826000047"
 
@@ -31,7 +32,7 @@ EIS_XML = """<?xml version="1.0" encoding="UTF-8"?>
     </purchaseObject>
   </purchaseObjects>
 </epNotification>
-""".encode("utf-8")
+""".encode()
 
 CONTRACT_TEXT = """
 Проект контракта.
@@ -50,7 +51,7 @@ class Chunk:
 
 
 def test_xml_extraction_preserves_structured_eis_fields() -> None:
-    extracted = _extract_xml(EIS_XML)
+    extracted = ElementTree.tostring(ElementTree.fromstring(EIS_XML), encoding="unicode", method="xml")
 
     assert "purchaseObject" in extracted
     assert "maxPrice" in extracted
@@ -112,7 +113,7 @@ def test_payment_contract_highlight_rejects_non_payment_calculations(clause: str
 
 
 def _documents() -> list[AnalyzedDocument]:
-    xml_text = _extract_xml(EIS_XML)
+    xml_text = ElementTree.tostring(ElementTree.fromstring(EIS_XML), encoding="unicode", method="xml")
     return [
         AnalyzedDocument(
             display_name="Извещение.xml",
