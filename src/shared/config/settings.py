@@ -318,9 +318,10 @@ class Settings(BaseSettings):
             if not self.arvectum_redis_environment.strip():
                 raise ValueError("ARVECTUM_REDIS_ENVIRONMENT must not be empty when Redis is enabled")
         retrieval_backend = self.rag_retrieval_backend.strip().lower()
-        if retrieval_backend not in {"legacy", "data_platform"}:
+        if retrieval_backend != "data_platform":
             raise ValueError(
-                "AI_CORP_RAG_RETRIEVAL_BACKEND must be legacy or data_platform"
+                "AI_CORP_RAG_RETRIEVAL_BACKEND must be data_platform; "
+                "the legacy local RAG backend has been removed"
             )
         if retrieval_backend == "data_platform" and not self.rag_data_platform_base_url.strip():
             raise ValueError(

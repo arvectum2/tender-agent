@@ -39,24 +39,6 @@ from src.tender_research.repository import TenderRepository
 logger = logging.getLogger(__name__)
 
 
-def build_embedding_provider(*args, **kwargs):
-    from src.tender_research.rag.embeddings import build_embedding_provider as impl
-
-    return impl(*args, **kwargs)
-
-
-def RagRetriever(*args, **kwargs):
-    from src.tender_research.rag.retriever import RagRetriever as impl
-
-    return impl(*args, **kwargs)
-
-
-def JsonVectorStore(*args, **kwargs):
-    from src.tender_research.rag.vector_store import JsonVectorStore as impl
-
-    return impl(*args, **kwargs)
-
-
 @dataclass(frozen=True)
 class AnalysisModeConfig:
     name: str
@@ -113,28 +95,6 @@ def _slugify(value: str) -> str:
     slug = re.sub(r"[^a-zA-Z0-9]+", "_", value).strip("_").lower()
     return slug or "default"
 
-
-_DEFAULT_HASH_PROVIDER_NAMES = {"hash", "hashing", "local_hash"}
-
-
-def _vector_store_path(config, *, provider_name: str, model_name: str) -> str:
-    if config.rag_vector_store_path:
-        raw_path = config.rag_vector_store_path.format(
-            provider=_slugify(provider_name),
-            model=_slugify(model_name),
-        )
-        path = Path(raw_path)
-    else:
-        path = Path(config.data_dir) / "rag" / "vector_store.json"
-
-    provider_alias = (config.rag_embeddings_provider or provider_name).strip().lower()
-    if provider_alias in _DEFAULT_HASH_PROVIDER_NAMES and model_name == "local-hash-v1":
-        return str(path)
-
-    suffix = path.suffix or ".json"
-    stem = path.stem if path.suffix else path.name
-    named = f"{stem}__{_slugify(provider_name)}__{_slugify(model_name)}{suffix}"
-    return str(path.with_name(named))
 
 
 def _normalize_analysis_mode(analysis_mode: str | None) -> str:
@@ -434,18 +394,6 @@ def analyze_tender(
                 payload["total_sections"] = total_sections
             progress_callback(payload)
 
-        if provider:
-            object.__setattr__(config, "rag_embeddings_provider", provider)
-            if provider.strip().lower() not in _DEFAULT_HASH_PROVIDER_NAMES:
-                object.__setattr__(config, "rag_embedding_dimension", None)
-        if model:
-            object.__setattr__(config, "rag_embeddings_model", model)
-        if base_url:
-            object.__setattr__(config, "rag_embeddings_base_url", base_url)
-        if timeout_seconds:
-            object.__setattr__(config, "rag_embeddings_timeout_seconds", timeout_seconds)
-        if batch_size:
-            object.__setattr__(config, "rag_embeddings_batch_size", batch_size)
         if llm_base_url:
             object.__setattr__(config, "local_llm_base_url", llm_base_url)
         if llm_model:
@@ -472,100 +420,52 @@ def analyze_tender(
                 _record_history(result, session, duration_seconds=0.0, source=history_source)
             return result
 
-        backend = retrieval_backend_name(config)
+        retrieval_backend_name(config)
         emit_progress(10, "retrieval", "Подготавливаем поиск по документам…")
 
-        if backend == "data_platform":
-            retrieval_provider = "data_platform"
-            retrieval_model = "hybrid"
-            platform_client = build_data_platform_client(config)
-            collection_id = build_tender_collection_id(repo, tender.id)
-            platform_index_ready = False
-            if collection_id is not None:
-                try:
-                    stats = platform_client.collection_stats(collection_id)
-                    expected_resources = repo.count_chunks_by_tender(tender.id)
-                    platform_index_ready = (
-                        expected_resources > 0
-                        and int(stats.get("resources", 0)) == expected_resources
-                        and int(stats.get("embeddings", 0)) >= expected_resources
-                    )
-                except (DataPlatformError, ValueError):
-                    platform_index_ready = False
-            if collection_id is None or not platform_index_ready:
-                result = TenderAnalysisResult(
-                    status="no_context",
-                    registry_number=registry_number,
-                    sections=[],
-                    sections_count=0,
-                    sources_count=0,
-                    analysis_mode=analysis_mode,
-                    errors=[
-                        (
-                            "Data Platform index is not prepared for this tender. "
-                            "Run tender preparation first."
-                        )
-                    ],
-                    retrieval_provider=retrieval_provider,
-                    retrieval_model=retrieval_model,
-                    retrieval_limit_used=mode_config.retrieval_limit,
+        retrieval_provider = "data_platform"
+        retrieval_model = "hybrid"
+        platform_client = build_data_platform_client(config)
+        collection_id = build_tender_collection_id(repo, tender.id)
+        platform_index_ready = False
+        if collection_id is not None:
+            try:
+                stats = platform_client.collection_stats(collection_id)
+                expected_resources = repo.count_chunks_by_tender(tender.id)
+                platform_index_ready = (
+                    expected_resources > 0
+                    and int(stats.get("resources", 0)) == expected_resources
+                    and int(stats.get("embeddings", 0)) >= expected_resources
                 )
-                if record_history:
-                    _record_history(
-                        result,
-                        session,
-                        duration_seconds=0.0,
-                        source=history_source,
+            except (DataPlatformError, ValueError):
+                platform_index_ready = False
+        if collection_id is None or not platform_index_ready:
+            result = TenderAnalysisResult(
+                status="no_context",
+                registry_number=registry_number,
+                sections=[],
+                sections_count=0,
+                sources_count=0,
+                analysis_mode=analysis_mode,
+                errors=[
+                    (
+                        "Data Platform index is not prepared for this tender. "
+                        "Run tender preparation first."
                     )
-                return result
-            retriever = DataPlatformRagRetriever(repo, platform_client)
-        else:
-            # Compatibility-only backend: lazy wrappers keep generic legacy RAG
-            # out of the normal Data Platform runtime import graph.
-            emb_provider = build_embedding_provider(config)
-            vector_store = JsonVectorStore(
-                _vector_store_path(
-                    config,
-                    provider_name=emb_provider.provider_name,
-                    model_name=emb_provider.model_name,
-                ),
-                dimension=emb_provider.dimension or None,
+                ],
+                retrieval_provider=retrieval_provider,
+                retrieval_model=retrieval_model,
+                retrieval_limit_used=mode_config.retrieval_limit,
             )
-            retriever = RagRetriever(repo, emb_provider, vector_store)
-            retrieval_provider = emb_provider.provider_name
-            retrieval_model = emb_provider.model_name
-            embeddings_count = repo.count_document_embeddings(
-                provider=emb_provider.provider_name,
-                model=emb_provider.model_name,
-            )
-            if embeddings_count == 0:
-                result = TenderAnalysisResult(
-                    status="no_context",
-                    registry_number=registry_number,
-                    sections=[],
-                    sections_count=0,
-                    sources_count=0,
-                    analysis_mode=analysis_mode,
-                    errors=[
-                        (
-                            "No embeddings found for "
-                            f"provider={emb_provider.provider_name} "
-                            f"model={emb_provider.model_name}. "
-                            "Run build-embeddings first."
-                        )
-                    ],
-                    retrieval_provider=retrieval_provider,
-                    retrieval_model=retrieval_model,
-                    retrieval_limit_used=mode_config.retrieval_limit,
+            if record_history:
+                _record_history(
+                    result,
+                    session,
+                    duration_seconds=0.0,
+                    source=history_source,
                 )
-                if record_history:
-                    _record_history(
-                        result,
-                        session,
-                        duration_seconds=0.0,
-                        source=history_source,
-                    )
-                return result
+            return result
+        retriever = DataPlatformRagRetriever(repo, platform_client)
 
         llm_client: LocalChatLlmClient | None = None
         if use_llm:

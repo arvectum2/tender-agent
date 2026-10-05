@@ -233,24 +233,12 @@ Check PostgreSQL and pgvector:
 ./.venv/bin/python -m src.tender_research.cli check-db
 ```
 
-Check embedding server reachability:
+Check the shared Data Platform instead of a Tender Agent embedding backend:
 
-```bash
-./.venv/bin/python -m src.tender_research.rag.cli check-embedding-server \
-  --provider llama_cpp \
-  --model Qwen3-Embedding-4B \
-  --base-url http://127.0.0.1:8090/v1
-```
+    curl -fsS http://127.0.0.1:8094/health
 
-Build embeddings:
-
-```bash
-./.venv/bin/python -m src.tender_research.rag.cli build-embeddings \
-  --provider llama_cpp \
-  --model Qwen3-Embedding-4B \
-  --base-url http://127.0.0.1:8090/v1 \
-  --limit 5000 \
-  --batch-size 1
+Chunking and embeddings are built as part of Tender preparation through Data
+Platform. Do not run a local Tender Agent embedding build.
 ```
 
 Search:

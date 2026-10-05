@@ -72,20 +72,15 @@ python -m src.tender_research.cli backfill-public-metadata \
 python -m src.tender_research.cli document-quality-report \
   --limit 100
 
-python -m src.tender_research.rag.cli build-chunks \
-  --limit 5000
-
-python -m src.tender_research.rag.cli build-embeddings \
-  --provider local_hash \
-  --model local-hash-v1 \
-  --limit 5000
+# Generic chunking and embeddings now belong to Data Platform.
+curl -fsS http://127.0.0.1:8094/health
 
 python -m src.tender_research.rag.cli search \
   --query "требования к содержанию и составу заявки" \
   --limit 10
 ```
 
-Repeat `research-discovered`, `backfill-public-metadata`, `build-chunks`, and `build-embeddings` once more to confirm idempotence.
+Repeat the domain ingestion/backfill steps and Tender preparation once more to confirm idempotence. Data Platform owns chunk/index/embedding idempotence.
 
 Healthy rebuild signals:
 

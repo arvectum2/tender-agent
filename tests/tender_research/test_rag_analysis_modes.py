@@ -1,26 +1,10 @@
 from __future__ import annotations
 
-from unittest.mock import MagicMock, patch
-
-import pytest
-
 from src.tender_research.rag.analysis_service import (
     _resolve_analysis_mode_config,
-    analyze_tender,
     build_section_context,
 )
-from src.tender_research.rag.llm import RagAnswer
-from src.tender_research.rag.retriever import RagSearchHit
-
-
-@pytest.fixture(autouse=True)
-def explicit_legacy_backend_for_legacy_analysis_tests(monkeypatch):
-    from src.tender_research.config import TenderResearchConfig
-
-    monkeypatch.setattr(
-        "src.tender_research.rag.analysis_service.load_config",
-        lambda: TenderResearchConfig(rag_retrieval_backend="legacy"),
-    )
+from src.tender_research.rag.search_types import RagSearchHit
 
 
 def _hit(*, chunk_id: str, text: str) -> RagSearchHit:
@@ -88,74 +72,3 @@ def test_build_section_context_respects_limits_and_preserves_metadata() -> None:
     assert context.truncated_chunks >= 1
     assert context.hits[0].chunk_id == "chunk-1"
     assert context.hits[0].document_id == "doc-chunk-1"
-
-
-def test_analyze_tender_llm_fallback_returns_timings_and_warning() -> None:
-    mock_tender = MagicMock()
-    mock_repo = MagicMock()
-    mock_repo.get_tender_by_registry_number.return_value = mock_tender
-    mock_repo.get_tender_by_external.return_value = mock_tender
-    mock_repo.count_document_embeddings.return_value = 10
-
-    mock_emb_provider = MagicMock()
-    mock_emb_provider.provider_name = "hashing"
-    mock_emb_provider.model_name = "local-hash-v1"
-    mock_emb_provider.dimension = 8
-
-    hit = _hit(chunk_id="chunk-1", text=("Требования к заявке и условия оплаты. " * 80).strip())
-
-    class FakeRetriever:
-        def search_documents(self, query, registry_number=None, limit=10):
-            return [hit]
-
-    class FakeLlmClient:
-        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced"):
-            return {
-                "context_chars": 1400,
-                "system_prompt_chars": 200,
-                "user_prompt_chars": 300,
-                "prompt_chars": 500,
-            }
-
-        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced"):
-            return RagAnswer(
-                answer="",
-                sources=[],
-                used_chunks_count=len(contexts),
-                model="qwen-local",
-                error="Local LLM request timed out.",
-            )
-
-    with patch("src.tender_research.rag.analysis_service.TenderRepository", return_value=mock_repo), patch(
-        "src.tender_research.rag.analysis_service.build_embedding_provider",
-        return_value=mock_emb_provider,
-    ), patch(
-        "src.tender_research.rag.analysis_service.JsonVectorStore",
-        return_value=MagicMock(),
-    ), patch(
-        "src.tender_research.rag.analysis_service.RagRetriever",
-        return_value=FakeRetriever(),
-    ), patch(
-        "src.tender_research.rag.analysis_service.LocalChatLlmClient",
-        return_value=FakeLlmClient(),
-    ):
-        result = analyze_tender(
-            registry_number="123",
-            provider="hashing",
-            model="local-hash-v1",
-            session=MagicMock(),
-            use_llm=True,
-            analysis_mode="fast",
-            record_history=False,
-        )
-
-    assert result.analysis_mode == "fast"
-    assert result.status == "completed_with_warnings"
-    assert result.sections_count > 0
-    assert result.sources_count > 0
-    assert result.llm_calls_count == result.sections_count
-    assert result.duration_seconds is not None
-    assert result.per_section_timings
-    assert result.per_section_timings[0]["status"] == "retrieval_only_fallback"
-    assert result.per_section_timings[0]["context_chars"] <= 4000
-    assert any("LLM fallback for section" in warning for warning in result.warnings)

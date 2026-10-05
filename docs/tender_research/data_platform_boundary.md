@@ -41,3 +41,10 @@ Those modules are loaded lazily only when the explicit legacy compatibility
 backend is selected. Backend-neutral retrieval results live in rag.search_types,
 so Data Platform integration and Tender Agent domain/LLM code do not depend on
 the legacy retriever implementation.
+
+## Legacy generic RAG removal
+
+The local Tender Agent chunker, embedding providers, JSON vector store, retriever,
+and generic indexer have been removed. Data Platform is the only supported
+retrieval backend. Historical CLI entry points for local chunk/embedding builds
+remain temporarily as deprecation notices only; they do not execute local RAG.
