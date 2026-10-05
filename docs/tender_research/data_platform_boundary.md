@@ -48,3 +48,11 @@ The local Tender Agent chunker, embedding providers, JSON vector store, retrieve
 and generic indexer have been removed. Data Platform is the only supported
 retrieval backend. Historical CLI entry points for local chunk/embedding builds
 remain temporarily as deprecation notices only; they do not execute local RAG.
+
+## Document extraction boundary
+
+Tender Agent no longer contains a format-specific document extractor. Download
+and procurement-domain quality gates remain local, but raw document bytes are
+sent to Data Platform through the thin shared document-processing adapter.
+The ARV-001 acceptance path also consumes Data Platform-returned chunks instead
+of constructing a second local chunking implementation.

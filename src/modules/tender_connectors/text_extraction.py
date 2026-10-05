@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import re
-import zipfile
+from collections.abc import Callable
 from dataclasses import dataclass
-from io import BytesIO
-from typing import Any, Callable
-from xml.etree import ElementTree
+from pathlib import Path
+from typing import Any
+from urllib.parse import urlparse
+
+from src.shared.document_processing import EXTRACTED_STATUS, process_document_bytes
 
 
 @dataclass(frozen=True)
@@ -143,58 +145,14 @@ def extract_attachment_urls(raw_payload: dict[str, Any]) -> list[str]:
 
 
 def extract_text_from_attachment_bytes(url: str, content: bytes) -> str | None:
-    lowered_url = url.lower()
-    if lowered_url.endswith(".txt"):
-        return _extract_text_from_txt(content)
-    if lowered_url.endswith(".docx"):
-        return _extract_text_from_docx(content)
-    if lowered_url.endswith(".pdf"):
-        return _extract_text_from_pdf(content)
-    return _extract_text_from_txt(content)
-
-
-def _extract_text_from_txt(content: bytes) -> str | None:
-    for encoding in ("utf-8", "cp1251", "koi8-r", "latin-1"):
-        try:
-            text = content.decode(encoding).strip()
-            if text:
-                return text
-        except Exception:
-            continue
-    return None
-
-
-def _extract_text_from_docx(content: bytes) -> str | None:
-    try:
-        with zipfile.ZipFile(BytesIO(content)) as archive:
-            xml_bytes = archive.read("word/document.xml")
-    except Exception:
+    filename = Path(urlparse(url).path).name or "attachment.bin"
+    processed = process_document_bytes(
+        content=content,
+        filename=filename,
+        collection_id="tender-agent:connector-processing",
+        canonical_uri=url if url.startswith(("http://", "https://")) else None,
+        min_chunk_chars=1,
+    )
+    if processed.extraction_status != EXTRACTED_STATUS:
         return None
-
-    try:
-        root = ElementTree.fromstring(xml_bytes)
-    except Exception:
-        return None
-
-    words = [node.text for node in root.iter() if node.tag.endswith("}t") and node.text]
-    text = " ".join(words).strip()
-    return text or None
-
-
-def _extract_text_from_pdf(content: bytes) -> str | None:
-    try:
-        from pypdf import PdfReader
-    except Exception:
-        return None
-
-    try:
-        reader = PdfReader(BytesIO(content))
-        pages: list[str] = []
-        for page in reader.pages[:10]:
-            page_text = (page.extract_text() or "").strip()
-            if page_text:
-                pages.append(page_text)
-        text = "\n".join(pages).strip()
-        return text or None
-    except Exception:
-        return None
+    return processed.text.strip() or None

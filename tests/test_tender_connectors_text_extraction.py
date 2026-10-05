@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from src.modules.tender_connectors import text_extraction
 from src.modules.tender_connectors.text_extraction import (
-    quality_gate_text,
     extract_attachment_urls,
     extract_text_from_attachment_bytes,
+    quality_gate_text,
 )
+from src.shared.document_processing import ProcessedDocument
 
 
 class TestQualityGate:
@@ -63,18 +65,37 @@ class TestExtractUrls:
 
 
 class TestExtractBytes:
-    def test_txt_utf8(self):
-        text = extract_text_from_attachment_bytes("file.txt", "Привет мир".encode("utf-8"))
+    def test_delegates_to_data_platform_processing(self, monkeypatch):
+        calls = []
+
+        def fake_process(**kwargs):
+            calls.append(kwargs)
+            return ProcessedDocument(
+                extraction_status="extracted",
+                text="Привет мир",
+                chunks=(),
+            )
+
+        monkeypatch.setattr(text_extraction, "process_document_bytes", fake_process)
+
+        text = extract_text_from_attachment_bytes(
+            "https://example.com/file.txt",
+            b"ignored",
+        )
+
         assert text == "Привет мир"
+        assert calls[0]["filename"] == "file.txt"
+        assert calls[0]["canonical_uri"] == "https://example.com/file.txt"
 
-    def test_txt_cp1251(self):
-        text = extract_text_from_attachment_bytes("file.txt", "Тест".encode("cp1251"))
-        assert text == "Тест"
+    def test_non_extracted_status_returns_none(self, monkeypatch):
+        monkeypatch.setattr(
+            text_extraction,
+            "process_document_bytes",
+            lambda **_kwargs: ProcessedDocument(
+                extraction_status="unsupported",
+                text="",
+                chunks=(),
+            ),
+        )
 
-    def test_unknown_extension(self):
-        text = extract_text_from_attachment_bytes("file.bin", b"hello world")
-        assert text == "hello world"
-
-    def test_empty_content(self):
-        text = extract_text_from_attachment_bytes("file.txt", b"")
-        assert text is None or text == ""
+        assert extract_text_from_attachment_bytes("file.bin", b"bytes") is None

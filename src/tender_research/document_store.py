@@ -15,14 +15,10 @@ def download_tender_documents(
     repo: TenderRepository,
     tender: ProcurementTender,
     config: TenderResearchConfig,
-    *,
-    extract_locally: bool = True,
 ) -> dict[str, int]:
     tender_dir = _tender_doc_dir(config.data_dir, tender.source, tender.external_id)
     doc_dir = tender_dir / "documents" / "original"
-    text_dir = tender_dir / "documents" / "extracted_text"
     doc_dir.mkdir(parents=True, exist_ok=True)
-    text_dir.mkdir(parents=True, exist_ok=True)
 
     documents = tender.documents
     max_bytes = config.document_download_max_size_mb * 1024 * 1024
@@ -42,8 +38,6 @@ def download_tender_documents(
             doc = _mark_downloaded(repo, doc, local_path)
             repo._session.flush()
             downloaded += 1
-            if extract_locally:
-                _try_extract(doc, text_dir, config)
             continue
         try:
             req = urllib.request.Request(
@@ -63,32 +57,12 @@ def download_tender_documents(
             doc = _mark_downloaded(repo, doc, local_path)
             repo._session.flush()
             downloaded += 1
-            if extract_locally:
-                _try_extract(doc, text_dir, config)
         except Exception as e:
             doc.download_status = "failed"
             doc.error_message = str(e)
             repo._session.flush()
             failed += 1
     return {"downloaded": downloaded, "failed": failed}
-
-
-def _try_extract(doc, text_dir: Path, config: TenderResearchConfig) -> None:
-    from src.tender_research.document_text_extractor import extract_text
-
-    if doc.text_extraction_status in ("extracted", "unsupported", "empty"):
-        return
-    if not doc.local_path or not Path(doc.local_path).exists():
-        return
-    status, text = extract_text(doc.local_path, max_chars=config.document_extract_max_chars)
-    doc.text_extraction_status = status
-    if status == "extracted" and text:
-        text_path = text_dir / f"{_safe_filename(doc.file_name, doc.id)}.txt"
-        text_path.write_text(text, encoding="utf-8")
-        doc.extracted_text_path = str(text_path)
-        doc.extracted_text_chars = len(text)
-    elif status == "extracted":
-        doc.extracted_text_chars = 0
 
 
 def _mark_downloaded(repo: TenderRepository, doc, path: Path):

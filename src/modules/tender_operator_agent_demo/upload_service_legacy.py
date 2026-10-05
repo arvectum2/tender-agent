@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import re
-import tempfile
 import time
 from urllib.parse import urlparse
 from urllib.request import urlopen
@@ -13,7 +12,6 @@ import zipfile
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from io import BytesIO
 from pathlib import Path
 from secrets import token_hex
 from typing import Any
@@ -21,14 +19,7 @@ from typing import Any
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
 
-from src.modules.tender_connectors.text_extraction import extract_text_from_attachment_bytes
 from src.modules.procurement_analysis.document_roles import detect_document_role
-from src.tender_research.document_text_extractor import (
-    EMPTY_STATUS as DOC_EMPTY_STATUS,
-    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
-    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
-    extract_text as extract_document_text_from_path,
-)
 from src.modules.tender_operator_agent_demo.event_log import (
     append_tender_demo_event,
     load_tender_demo_events,
@@ -43,9 +34,14 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
     semantic_procurement_role,
 )
 from src.modules.tender_operator_agent_demo.contract_term_facts import extract_contract_term_facts
-from src.modules.supplier_search.internet_supplier_search import search_suppliers
-from src.modules.supplier_search.yandex_search_client import YandexSearchClient
+from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome
 from src.shared.config.settings import get_settings
+from src.shared.data_platform import DataPlatformError
+from src.shared.document_processing import (
+    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
+    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
+    process_document_bytes,
+)
 from src.modules.tender_operator_agent_demo.quote_normalizer import (
     SpreadsheetSource,
     build_economics_summary,
@@ -626,55 +622,31 @@ def _derive_role_hint(filename: str) -> str | None:
     return detected if detected != "supporting" else None
 
 
-def _extract_document_text(file_name: str, content: bytes) -> tuple[str | None, list[str], str]:
+def _extract_document_text(
+    file_name: str,
+    content: bytes,
+) -> tuple[str | None, list[str], str]:
     ext = Path(file_name).suffix.lower()
     warnings: list[str] = []
-    if ext in {".txt", ".csv", ".xml"}:
-        return _decode_text(content), warnings, DOC_EXTRACTED_STATUS
-    if ext == ".pdf":
-        text = extract_text_from_attachment_bytes(url=file_name, content=content)
-        if text:
-            return text, warnings, DOC_EXTRACTED_STATUS
-    if ext == ".doc":
-        text = _extract_text_from_legacy_doc(content)
-        if text:
-            return text, warnings, DOC_EXTRACTED_STATUS
-
     try:
-        with tempfile.TemporaryDirectory(prefix="toa-extract-") as tmp_dir:
-            source_path = Path(tmp_dir) / Path(file_name).name
-            source_path.write_bytes(content)
-            status, extracted = extract_document_text_from_path(str(source_path))
-    except Exception:
-        status, extracted = DOC_EMPTY_STATUS, ""
+        processed = process_document_bytes(
+            content=content,
+            filename=file_name,
+            collection_id="tender-agent:upload-processing",
+            canonical_uri=f"tender-upload://{hashlib.sha256(content).hexdigest()}",
+            min_chunk_chars=1,
+        )
+        status = processed.extraction_status
+        normalized_text = processed.text.strip() or None
+    except (DataPlatformError, ValueError, OSError):
+        status = "failed"
+        normalized_text = None
 
-    normalized_text = extracted.strip() or None
     if status == DOC_UNSUPPORTED_STATUS:
         warnings.append(f"Извлечение текста для {ext} пока не поддерживается.")
     elif status != DOC_EXTRACTED_STATUS and not normalized_text:
         warnings.append(f"Не удалось извлечь текст из {Path(file_name).name}.")
     return normalized_text, warnings, status
-
-
-def _extract_text_from_legacy_doc(content: bytes) -> str | None:
-    """Extract legacy Word bytes through the shared structured-first path.
-
-    Previously this helper ran textutil directly and flattened every table,
-    bypassing the wvHtml structured extraction in the shared document text
-    extractor.  Delegating keeps one format boundary: wvHtml table projection
-    first, textutil plain-text fallback, fail-closed empty otherwise.
-    """
-
-    try:
-        with tempfile.TemporaryDirectory(prefix="toa-doc-") as tmp_dir:
-            source_path = Path(tmp_dir) / "source.doc"
-            source_path.write_bytes(content)
-            status, extracted = extract_document_text_from_path(str(source_path))
-    except Exception:
-        return None
-    if status != DOC_EXTRACTED_STATUS or not (extracted or "").strip():
-        return None
-    return extracted
 
 
 def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocument]:
@@ -734,7 +706,7 @@ def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocu
                 if ext not in ALLOWED_EXTENSIONS or ext == ".zip":
                     continue
                 raw = archive.read(info)
-                text, warnings, extraction_status = _extract_document_text(entry_name, raw)
+                text, warnings, _extraction_status = _extract_document_text(entry_name, raw)
                 documents.append(
                     AnalyzedDocument(
                         display_name=f"{path.name} :: {entry_name}",
@@ -1047,7 +1019,7 @@ def _run_supplier_internet_search(
     notice_text: str | None = None,
     technical_spec_text: str | None = None,
 ) -> SupplierSearchOutcome:
-    from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome, search_suppliers
+    from src.modules.supplier_search.internet_supplier_search import search_suppliers
     from src.modules.supplier_search.yandex_search_client import YandexSearchClient
 
     settings = get_settings()

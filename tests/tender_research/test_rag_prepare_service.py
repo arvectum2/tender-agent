@@ -108,7 +108,7 @@ def test_prepare_uses_data_platform_for_processing_and_indexing(mock_tender) -> 
     assert result.ready_for_analysis is True
     assert result.embeddings_total == 2
     download.assert_called_once()
-    assert download.call_args.kwargs["extract_locally"] is False
+    assert "extract_locally" not in download.call_args.kwargs
     projector.build_for_tender.assert_called_once()
     indexer.build_for_tender.assert_called_once_with("tender-1")
 

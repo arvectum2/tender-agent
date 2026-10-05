@@ -5,12 +5,13 @@ from pathlib import Path
 
 import pytest
 
+import scripts.arv001.complete_corpus_contract as corpus_contract
 from scripts.arv001.complete_corpus_contract import (
     AcceptanceBlocked,
     _resolve_regular_file,
     prepare_documents,
 )
-from src.tender_research import document_text_extractor
+from src.shared.document_processing import ProcessedChunk, ProcessedDocument
 
 
 def _sha256(value: bytes) -> str:
@@ -41,12 +42,23 @@ def test_prepare_documents_uses_frozen_identity_when_intake_name_changed(
     renamed.write_bytes(payload)
     original_name = "original-eis-source.xml"
 
+    text = "deterministic extracted procurement text"
     monkeypatch.setattr(
-        document_text_extractor,
-        "extract_text",
-        lambda _path, *, max_chars: (
-            document_text_extractor.EXTRACTED_STATUS,
-            "deterministic extracted procurement text",
+        corpus_contract,
+        "process_document_bytes",
+        lambda **_kwargs: ProcessedDocument(
+            extraction_status="extracted",
+            text=text,
+            chunks=(
+                ProcessedChunk(
+                    index=0,
+                    text=text,
+                    text_hash=_sha256(text.encode()),
+                    char_start=0,
+                    char_end=len(text),
+                    token_estimate=max(1, len(text) // 4),
+                ),
+            ),
         ),
     )
 

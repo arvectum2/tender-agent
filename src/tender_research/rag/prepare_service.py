@@ -236,7 +236,6 @@ def prepare_tender_for_analysis(
                 repo,
                 tender,
                 config,
-                extract_locally=False,
             )
             downloaded = result.get("downloaded", 0)
             failed = result.get("failed", 0)
