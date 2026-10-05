@@ -1,29 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import re
 
 from src.tender_research.rag.embeddings import BaseEmbeddingProvider
+from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
 
 
 _TOKEN_RE = re.compile(r"[а-яёa-z0-9]{4,}", re.IGNORECASE)
-
-
-@dataclass(frozen=True)
-class RagSearchHit:
-    chunk_id: str
-    score: float
-    registry_number: str | None
-    tender_id: str
-    tender_title: str
-    customer_name: str | None
-    document_id: str
-    file_name: str
-    chunk_index: int
-    preview: str
-    text: str
 
 
 class RagRetriever:

@@ -20,13 +20,12 @@ from src.tender_research.rag.data_platform import (
     build_tender_collection_id,
     retrieval_backend_name,
 )
-from src.tender_research.rag.embeddings import build_embedding_provider
 from src.tender_research.rag.history_service import record_analysis_run
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
-from src.tender_research.rag.retriever import RagRetriever, RagSearchHit
+from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.rag.schemas import (
     ANALYSIS_MODE_CHOICES,
     ANALYSIS_SECTIONS,
@@ -35,7 +34,6 @@ from src.tender_research.rag.schemas import (
     TenderAnalysisResult,
     TenderAnalysisSection,
 )
-from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
 
 logger = logging.getLogger(__name__)
@@ -504,6 +502,12 @@ def analyze_tender(
                 return result
             retriever = DataPlatformRagRetriever(repo, platform_client)
         else:
+            # Compatibility-only backend: keep generic legacy RAG imports out of
+            # the normal Data Platform runtime import graph.
+            from src.tender_research.rag.embeddings import build_embedding_provider
+            from src.tender_research.rag.retriever import RagRetriever
+            from src.tender_research.rag.vector_store import JsonVectorStore
+
             emb_provider = build_embedding_provider(config)
             vector_store = JsonVectorStore(
                 _vector_store_path(

@@ -31,3 +31,12 @@ For the current migration phase, Data Platform performs extraction/chunking and 
 ## Document recovery chunk rebuilding
 
 The production recovery path delegates both staged text extraction and chunk rebuilding to Data Platform. Tender Agent verifies that Data Platform extraction matches the already recovered and validated extracted text before writing returned chunks into procurement storage. The local extractor and legacy local chunk indexer remain test/compatibility code only and are no longer production recovery defaults.
+
+## Runtime import boundary
+
+The normal data_platform preparation and analysis paths do not import the
+legacy local embeddings, JSON vector-store, chunk indexer, or retriever stack.
+Those modules are loaded lazily only when the explicit legacy compatibility
+backend is selected. Backend-neutral retrieval results live in rag.search_types,
+so Data Platform integration and Tender Agent domain/LLM code do not depend on
+the legacy retriever implementation.

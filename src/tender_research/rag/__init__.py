@@ -12,7 +12,8 @@ from src.tender_research.rag.embeddings import (
 )
 from src.tender_research.rag.indexer import DocumentChunkIndexer, DocumentEmbeddingIndexer
 from src.tender_research.rag.llm import LocalChatLlmClient, RagAnswer, SourceCitation, build_source_citations
-from src.tender_research.rag.retriever import RagSearchHit, RagRetriever
+from src.tender_research.rag.retriever import RagRetriever
+from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.rag.vector_store import JsonVectorStore, SearchResult
 
 __all__ = [

@@ -45,3 +45,42 @@ def test_document_recovery_uses_data_platform_chunk_builder() -> None:
     assert "_try_extract" not in source
     assert "rag.chunker" not in source
     assert "rag.indexer" not in source
+
+
+def test_data_platform_runtime_has_no_top_level_legacy_rag_imports() -> None:
+    import ast
+
+    root = Path(__file__).resolve().parents[2]
+    forbidden = {
+        "src.tender_research.rag.chunker",
+        "src.tender_research.rag.embeddings",
+        "src.tender_research.rag.indexer",
+        "src.tender_research.rag.retriever",
+        "src.tender_research.rag.vector_store",
+    }
+    for relative in (
+        "src/tender_research/rag/data_platform.py",
+        "src/tender_research/rag/analysis_service.py",
+        "src/tender_research/rag/prepare_service.py",
+    ):
+        tree = ast.parse((root / relative).read_text(encoding="utf-8"))
+        imported = {
+            node.module
+            for node in tree.body
+            if isinstance(node, ast.ImportFrom) and node.module is not None
+        }
+        assert not (imported & forbidden), f"{relative}: {sorted(imported & forbidden)}"
+
+
+def test_backend_neutral_search_hit_is_not_defined_by_legacy_retriever() -> None:
+    root = Path(__file__).resolve().parents[2]
+    adapter = (root / "src/tender_research/rag/data_platform.py").read_text(
+        encoding="utf-8"
+    )
+    llm = (root / "src/tender_research/rag/llm.py").read_text(encoding="utf-8")
+    analysis = (root / "src/tender_research/rag/analysis_service.py").read_text(
+        encoding="utf-8"
+    )
+    assert "rag.search_types import RagSearchHit" in adapter
+    assert "rag.search_types import RagSearchHit" in llm
+    assert "rag.search_types import RagSearchHit" in analysis
