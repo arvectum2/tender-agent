@@ -25,22 +25,20 @@ Tender Agent is a consumer of Arvectum Data Platform.
 
 The dependency direction is Tender Agent -> Data Platform. Data Platform must not import Tender Agent or procurement-specific logic.
 
-For the current migration phase, Data Platform performs extraction/chunking and Tender Agent stores a local projection of returned chunks only to preserve stable procurement evidence references used by existing Decision Core/reporting code. The legacy local extractor/chunker/embedding/vector stack remains compatibility-only and must not be used by the data_platform backend.
+Data Platform performs extraction/chunking and Tender Agent stores a local projection of returned chunks only to preserve stable procurement evidence references used by existing Decision Core/reporting code. The former local extractor/chunker/embedding/vector stack has been removed.
 
 
 ## Document recovery chunk rebuilding
 
-The production recovery path delegates both staged text extraction and chunk rebuilding to Data Platform. Tender Agent verifies that Data Platform extraction matches the already recovered and validated extracted text before writing returned chunks into procurement storage. The local extractor and legacy local chunk indexer remain test/compatibility code only and are no longer production recovery defaults.
+The production recovery path delegates both staged text extraction and chunk rebuilding to Data Platform. Tender Agent verifies that Data Platform extraction matches the already recovered and validated extracted text before writing returned chunks into procurement storage. No local generic extractor or chunk indexer remains in Tender Agent.
 
 ## Runtime import boundary
 
-The normal data_platform preparation and analysis paths do not import the
-legacy local document extractor, embeddings, JSON vector-store, chunk indexer,
-or retriever stack.
-Those modules are loaded lazily only when the explicit legacy compatibility
-backend is selected. Backend-neutral retrieval results live in rag.search_types,
-so Data Platform integration and Tender Agent domain/LLM code do not depend on
-the legacy retriever implementation.
+The normal Data Platform preparation and analysis paths do not import a local
+document extractor, embeddings implementation, vector store, chunk indexer or
+retriever stack because those generic modules no longer exist in Tender Agent.
+Backend-neutral retrieval results live in rag.search_types, so Data Platform
+integration and Tender Agent domain/LLM code remain separated.
 
 ## Legacy generic RAG removal
 
@@ -56,3 +54,13 @@ and procurement-domain quality gates remain local, but raw document bytes are
 sent to Data Platform through the thin shared document-processing adapter.
 The ARV-001 acceptance path also consumes Data Platform-returned chunks instead
 of constructing a second local chunking implementation.
+
+## Consumer SDK boundary
+
+Tender Agent and Arvectum OS no longer implement their own Data Platform HTTP
+transport. The compatibility import src.shared.data_platform re-exports the
+standalone arvectum-data-client SDK pinned to a released wheel with a hash-locked
+dependency. Product-specific adapters may choose ranking weights and map search
+hits into procurement or knowledge-asset domain objects, but HTTP paths,
+authentication headers, multipart encoding, error behavior and generic contract
+types belong to the shared SDK.
