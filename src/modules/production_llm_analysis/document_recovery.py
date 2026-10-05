@@ -45,7 +45,6 @@ from src.tender_research.models import (
     ProcurementTender,
     ProcurementTenderDocument,
 )
-from src.tender_research.rag.chunker import normalize_text
 from src.tender_research.rag.data_platform import (
     build_recovery_chunk_indexer,
     extract_document_with_data_platform,
@@ -529,7 +528,7 @@ def _chunk_snapshot(chunks, documents, tender_id):
         if value is None:
             valid = False
             continue
-        document_lengths[document.id] = len(normalize_text(value))
+        document_lengths[document.id] = len(value)
     ordered = []
     previous_start: dict[str, int] = {}
     previous_index: dict[str, int] = {}
