@@ -9,7 +9,7 @@ description = "Sprint 1 foundation for the AI Corporation tender business platfo
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "arvectum-data-client @ https://github.com/arvectum2/data-platform/releases/download/consumer-sdk-v0.2.0/arvectum_data_client-0.2.0-py3-none-any.whl",
+  "arvectum-data-client @ https://github.com/arvectum2/data-platform/releases/download/consumer-sdk-v0.3.0/arvectum_data_client-0.3.0-py3-none-any.whl",
   "alembic>=1.14,<2.0",
   "fastapi>=0.115,<1.0",
   "httpx>=0.27,<1.0",

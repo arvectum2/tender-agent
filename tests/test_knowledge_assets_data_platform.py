@@ -5,6 +5,9 @@ from types import SimpleNamespace
 import pytest
 
 from src.modules.knowledge_assets import data_platform
+from src.modules.knowledge_assets.presets import (
+    ARVECTUM_OS_KNOWLEDGE_SEARCH_PROFILE,
+)
 from src.shared.errors import ConflictError
 
 
@@ -48,7 +51,7 @@ class FakeClient:
         self.last_collection_id = collection_id
         return self.exists
 
-    def search(self, **kwargs):
+    def search_with_profile(self, **kwargs):
         self.search_requests.append(kwargs)
         return list(self.search_hits)
 
@@ -142,7 +145,7 @@ def test_search_knowledge_assets_maps_only_current_deal_records(
             "query": "что улучшить в следующей закупке",
             "collections": [collection_id],
             "limit": 10,
-            "mode": "hybrid",
+            "profile": ARVECTUM_OS_KNOWLEDGE_SEARCH_PROFILE,
         }
     ]
 

@@ -68,7 +68,7 @@ def test_prepare_uses_data_platform_for_processing_and_indexing(mock_tender) -> 
     )
     indexer = MagicMock()
     indexer.build_for_tender.return_value = DataPlatformIndexSummary(
-        collection_id="tender-agent:tender-1:rev",
+        collection_id="tender:tender-1:rev",
         chunks_seen=2,
         chunks_indexed=2,
         platform_chunks_created=2,
@@ -133,7 +133,7 @@ def test_status_requires_complete_data_platform_collection(mock_tender) -> None:
         patch("src.tender_research.rag.prepare_service.load_config", return_value=config),
         patch(
             "src.tender_research.rag.prepare_service.build_tender_collection_id",
-            return_value="tender-agent:tender-1:rev",
+            return_value="tender:tender-1:rev",
         ),
         patch(
             "src.tender_research.rag.prepare_service.build_data_platform_client",

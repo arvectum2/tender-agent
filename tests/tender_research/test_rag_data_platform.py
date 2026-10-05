@@ -14,8 +14,10 @@ from src.tender_research.rag.data_platform import (
     DataPlatformError,
     DataPlatformRagRetriever,
     DataPlatformTenderIndexer,
+    build_legacy_tender_collection_id,
     build_tender_collection_id,
 )
+from src.tender_research.rag.presets import TENDER_SEARCH_PROFILE
 from src.tender_research.repository import TenderRepository
 
 
@@ -64,6 +66,7 @@ class FakeDataPlatformClient:
         self.ingested: list[dict] = []
         self.search_requests: list[dict] = []
         self.search_hits: list[dict] = []
+        self.collection_exists_responses: dict[str, bool] = {}
 
     def process_document(
         self,
@@ -136,12 +139,23 @@ class FakeDataPlatformClient:
             "embeddings": 1,
         }
 
-    def search(self, *, query: str, collections: list[str], limit: int):
+    def collection_exists(self, collection_id: str) -> bool:
+        return self.collection_exists_responses.get(collection_id, True)
+
+    def search_with_profile(
+        self,
+        *,
+        query: str,
+        collections: list[str],
+        limit: int,
+        profile: dict,
+    ):
         self.search_requests.append(
             {
                 "query": query,
                 "collections": list(collections),
                 "limit": limit,
+                "profile": dict(profile),
             }
         )
         return list(self.search_hits)
@@ -268,7 +282,32 @@ def test_collection_id_changes_when_chunk_revision_changes() -> None:
     assert first
     assert second
     assert first != second
-    assert first.startswith(f"tender-agent:{tender.id}:")
+    assert first.startswith(f"tender:{tender.id}:")
+
+
+def test_retriever_falls_back_to_legacy_tender_collection() -> None:
+    repo = _repo()
+    tender, _document, chunk = _seed_chunk(repo)
+    client = FakeDataPlatformClient()
+    canonical = build_tender_collection_id(repo, tender.id)
+    legacy = build_legacy_tender_collection_id(repo, tender.id)
+    assert canonical is not None
+    assert legacy is not None
+    client.collection_exists_responses = {canonical: False, legacy: True}
+    client.search_hits = [
+        {
+            "canonical_uri": f"tender-chunk://{chunk.id}",
+            "scores": {"fusion": 0.5},
+        }
+    ]
+
+    hits = DataPlatformRagRetriever(repo, client).search_documents(
+        "оплата", registry_number="001", limit=5
+    )
+
+    assert len(hits) == 1
+    assert client.search_requests[0]["collections"] == [legacy]
+    assert client.search_requests[0]["profile"] == TENDER_SEARCH_PROFILE
 
 
 def test_indexer_creates_versioned_collection_and_ingests_chunks() -> None:
@@ -318,6 +357,7 @@ def test_retriever_maps_platform_hit_back_to_tender_chunk() -> None:
     assert hit.tender_id == tender.id
     assert hit.file_name == "contract.txt"
     assert hit.score == pytest.approx(0.031)
+    assert client.search_requests[0]["profile"] == TENDER_SEARCH_PROFILE
     assert client.search_requests[0]["collections"] == [
         build_tender_collection_id(repo, tender.id)
     ]
@@ -417,7 +457,7 @@ def test_http_client_processes_raw_document_in_data_platform() -> None:
             return httpx.Response(
                 200,
                 json={
-                    "collection_id": "tender-agent:tender-1:processing",
+                    "collection_id": "tender:tender-1:processing",
                     "resource_id": "r1",
                     "document_id": "d1",
                     "canonical_uri": "tender-document://doc-1",
@@ -438,7 +478,7 @@ def test_http_client_processes_raw_document_in_data_platform() -> None:
         ),
     )
     result = client.process_document(
-        collection_id="tender-agent:tender-1:processing",
+        collection_id="tender:tender-1:processing",
         canonical_uri="tender-document://doc-1",
         title="contract.txt",
         content=b"raw tender document",
@@ -468,10 +508,11 @@ def test_http_client_uses_semantic_first_hybrid_weights() -> None:
         ),
     )
 
-    assert client.search(
+    assert client.search_with_profile(
         query="оплата",
-        collections=["tender-agent:x:y"],
+        collections=["tender:x:y"],
         limit=5,
+        profile=TENDER_SEARCH_PROFILE,
     ) == []
     assert captured["payload"]["mode"] == "hybrid"
     assert captured["payload"]["lexical_weight"] == 1.0
@@ -490,7 +531,7 @@ def test_http_client_fails_closed_without_legacy_fallback() -> None:
     )
 
     with pytest.raises(DataPlatformError, match="HTTP 503"):
-        client.search(query="оплата", collections=["tender-agent:x:y"], limit=5)
+        client.search(query="оплата", collections=["tender:x:y"], limit=5)
 
 
 def test_prepare_service_uses_data_platform_without_legacy_embeddings(monkeypatch) -> None:
@@ -520,7 +561,7 @@ def test_prepare_service_uses_data_platform_without_legacy_embeddings(monkeypatc
     platform_client.__exit__.return_value = None
     indexer = MagicMock()
     indexer.build_for_tender.return_value = DataPlatformIndexSummary(
-        collection_id="tender-agent:tender-dp:rev",
+        collection_id="tender:tender-dp:rev",
         chunks_seen=2,
         chunks_indexed=2,
         platform_chunks_created=2,
@@ -601,7 +642,7 @@ def test_analysis_service_uses_data_platform_without_legacy_retriever(monkeypatc
     )
     monkeypatch.setattr(
         "src.tender_research.rag.analysis_service.build_tender_collection_id",
-        lambda *_args: "tender-agent:tender-dp:rev",
+        lambda *_args: "tender:tender-dp:rev",
     )
     monkeypatch.setattr(
         "src.tender_research.rag.analysis_service.build_data_platform_client",
@@ -658,7 +699,7 @@ def test_analysis_service_fails_closed_when_platform_index_is_unavailable(
     )
     monkeypatch.setattr(
         "src.tender_research.rag.analysis_service.build_tender_collection_id",
-        lambda *_args: "tender-agent:tender-dp:rev",
+        lambda *_args: "tender:tender-dp:rev",
     )
     monkeypatch.setattr(
         "src.tender_research.rag.analysis_service.build_data_platform_client",
