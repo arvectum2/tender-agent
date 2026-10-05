@@ -35,7 +35,8 @@ The production recovery path delegates both staged text extraction and chunk reb
 ## Runtime import boundary
 
 The normal data_platform preparation and analysis paths do not import the
-legacy local embeddings, JSON vector-store, chunk indexer, or retriever stack.
+legacy local document extractor, embeddings, JSON vector-store, chunk indexer,
+or retriever stack.
 Those modules are loaded lazily only when the explicit legacy compatibility
 backend is selected. Backend-neutral retrieval results live in rag.search_types,
 so Data Platform integration and Tender Agent domain/LLM code do not depend on

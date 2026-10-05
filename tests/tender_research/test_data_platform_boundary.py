@@ -57,6 +57,7 @@ def test_data_platform_runtime_has_no_top_level_legacy_rag_imports() -> None:
         "src.tender_research.rag.indexer",
         "src.tender_research.rag.retriever",
         "src.tender_research.rag.vector_store",
+        "src.tender_research.document_text_extractor",
     }
     for relative in (
         "src/tender_research/rag/data_platform.py",
@@ -103,6 +104,7 @@ forbidden = {
     'src.tender_research.rag.indexer',
     'src.tender_research.rag.retriever',
     'src.tender_research.rag.vector_store',
+    'src.tender_research.document_text_extractor',
 }
 loaded = sorted(forbidden.intersection(sys.modules))
 if loaded:
