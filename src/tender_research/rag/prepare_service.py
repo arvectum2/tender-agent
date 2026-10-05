@@ -25,6 +25,30 @@ from src.tender_research.repository import TenderRepository
 logger = logging.getLogger(__name__)
 
 
+def build_embedding_provider(*args, **kwargs):
+    from src.tender_research.rag.embeddings import build_embedding_provider as impl
+
+    return impl(*args, **kwargs)
+
+
+def DocumentChunkIndexer(*args, **kwargs):
+    from src.tender_research.rag.indexer import DocumentChunkIndexer as impl
+
+    return impl(*args, **kwargs)
+
+
+def DocumentEmbeddingIndexer(*args, **kwargs):
+    from src.tender_research.rag.indexer import DocumentEmbeddingIndexer as impl
+
+    return impl(*args, **kwargs)
+
+
+def JsonVectorStore(*args, **kwargs):
+    from src.tender_research.rag.vector_store import JsonVectorStore as impl
+
+    return impl(*args, **kwargs)
+
+
 class TenderPreparationStep:
     def __init__(self, name: str, status: str = "pending", message: str = "", details: str = ""):
         self.name = name
@@ -329,10 +353,8 @@ def prepare_tender_for_analysis(
                         "No chunks created because Data Platform returned no extracted text"
                     )
         else:
-            # Compatibility-only backend: Data Platform preparation must not
-            # import the local generic chunking/indexing stack.
-            from src.tender_research.rag.indexer import DocumentChunkIndexer
-
+            # Compatibility-only backend: lazy wrappers keep the local generic
+            # chunking/indexing stack out of Data Platform runtime imports.
             chunk_indexer = DocumentChunkIndexer(repo, config)
             if chunks_existing > 0 and not rebuild_chunks:
                 step.status = "skipped"
@@ -374,8 +396,6 @@ def prepare_tender_for_analysis(
         indexed_chunks_count = 0
         emb_provider = None
         if backend == "legacy":
-            from src.tender_research.rag.embeddings import build_embedding_provider
-
             emb_provider = build_embedding_provider(config)
 
         step = TenderPreparationStep(
@@ -434,9 +454,6 @@ def prepare_tender_for_analysis(
                 step.message = f"Data Platform indexing failed: {e}"
                 warnings.append(step.message)
         else:
-            from src.tender_research.rag.indexer import DocumentEmbeddingIndexer
-            from src.tender_research.rag.vector_store import JsonVectorStore
-
             assert emb_provider is not None
             vector_store = JsonVectorStore(
                 _vector_store_path(
@@ -655,8 +672,6 @@ def check_preparation_status(
             else:
                 platform_ready = False
         else:
-            from src.tender_research.rag.embeddings import build_embedding_provider
-
             emb_provider = build_embedding_provider(config)
             embeddings_total = repo.count_embeddings_by_tender(
                 emb_provider.provider_name,

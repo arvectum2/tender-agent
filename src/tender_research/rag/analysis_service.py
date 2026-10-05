@@ -39,6 +39,24 @@ from src.tender_research.repository import TenderRepository
 logger = logging.getLogger(__name__)
 
 
+def build_embedding_provider(*args, **kwargs):
+    from src.tender_research.rag.embeddings import build_embedding_provider as impl
+
+    return impl(*args, **kwargs)
+
+
+def RagRetriever(*args, **kwargs):
+    from src.tender_research.rag.retriever import RagRetriever as impl
+
+    return impl(*args, **kwargs)
+
+
+def JsonVectorStore(*args, **kwargs):
+    from src.tender_research.rag.vector_store import JsonVectorStore as impl
+
+    return impl(*args, **kwargs)
+
+
 @dataclass(frozen=True)
 class AnalysisModeConfig:
     name: str
@@ -502,12 +520,8 @@ def analyze_tender(
                 return result
             retriever = DataPlatformRagRetriever(repo, platform_client)
         else:
-            # Compatibility-only backend: keep generic legacy RAG imports out of
-            # the normal Data Platform runtime import graph.
-            from src.tender_research.rag.embeddings import build_embedding_provider
-            from src.tender_research.rag.retriever import RagRetriever
-            from src.tender_research.rag.vector_store import JsonVectorStore
-
+            # Compatibility-only backend: lazy wrappers keep generic legacy RAG
+            # out of the normal Data Platform runtime import graph.
             emb_provider = build_embedding_provider(config)
             vector_store = JsonVectorStore(
                 _vector_store_path(
