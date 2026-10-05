@@ -115,3 +115,26 @@ if loaded:
         cwd=root,
         check=True,
     )
+
+
+
+def test_data_platform_is_the_default_retrieval_backend() -> None:
+    from src.shared.config.settings import Settings
+    from src.tender_research.config import TenderResearchConfig
+    from src.tender_research.rag.data_platform import retrieval_backend_name
+
+    assert TenderResearchConfig().rag_retrieval_backend == "data_platform"
+    assert Settings().rag_retrieval_backend == "data_platform"
+
+    class ConfigWithoutBackend:
+        pass
+
+    assert retrieval_backend_name(ConfigWithoutBackend()) == "data_platform"
+
+
+def test_legacy_retrieval_backend_requires_explicit_opt_in() -> None:
+    from src.tender_research.config import TenderResearchConfig
+    from src.tender_research.rag.data_platform import retrieval_backend_name
+
+    config = TenderResearchConfig(rag_retrieval_backend="legacy")
+    assert retrieval_backend_name(config) == "legacy"

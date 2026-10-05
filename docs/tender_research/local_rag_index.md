@@ -9,8 +9,8 @@ extracted tender documents. Retrieval has two explicit backends:
 - data_platform: shared Arvectum Data Platform hybrid retrieval
   (PostgreSQL FTS + pgvector + RRF).
 
-The Data Platform backend is the target shared production architecture. The
-legacy backend remains an explicit compatibility mode during rollout.
+The Data Platform backend is the default shared production architecture. The
+legacy backend remains an explicit rollback/compatibility mode.
 
 For the validated Mac mini runtime layout and exact live server commands, see
 [macmini_rag_runtime.md](/Users/master/Documents/AI-Corporation/docs/tender_research/macmini_rag_runtime.md).
@@ -199,7 +199,7 @@ AI_CORP_RAG_EMBEDDINGS_BATCH_SIZE=16
 AI_CORP_RAG_EMBEDDINGS_DIMENSION=auto
 AI_CORP_RAG_VECTOR_STORE=json
 AI_CORP_RAG_VECTOR_STORE_PATH=./data/rag/vector_store.json
-AI_CORP_RAG_RETRIEVAL_BACKEND=legacy
+AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform
 AI_CORP_RAG_DATA_PLATFORM_BASE_URL=http://127.0.0.1:8094
 AI_CORP_RAG_DATA_PLATFORM_API_KEY=
 AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS=30
@@ -224,13 +224,14 @@ If it is not installed, the CLI will fail with a clear error and the local
 
 ## Storage
 
-With AI_CORP_RAG_RETRIEVAL_BACKEND=legacy, vectors are stored locally in JSON
-files under data/rag/.
-
-With AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform, Tender Agent keeps its
+With the default AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform, Tender Agent keeps its
 procurement-domain chunks and citation metadata in its own database, while
 Data Platform owns lexical/vector indexes. Each current tender chunk is sent as
 pre-chunked text with a stable tender-chunk://<chunk_id> canonical URI.
+
+With AI_CORP_RAG_RETRIEVAL_BACKEND=legacy, vectors are stored locally in JSON
+files under data/rag/. This path is retained only for explicit rollback and
+compatibility testing.
 
 A tender is indexed into a deterministic versioned collection:
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -12,6 +13,14 @@ from src.tender_research.rag.cli import main
 from src.tender_research.rag.embeddings import BaseEmbeddingProvider
 from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
+
+
+@pytest.fixture(autouse=True)
+def explicit_legacy_backend_for_legacy_cli_tests(monkeypatch):
+    monkeypatch.setenv("AI_CORP_RAG_RETRIEVAL_BACKEND", "legacy")
+    get_settings.cache_clear()
+    yield
+    get_settings.cache_clear()
 
 
 class _EvalProvider(BaseEmbeddingProvider):

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from src.tender_research.rag.analysis_service import (
     _resolve_analysis_mode_config,
     analyze_tender,
@@ -9,6 +11,16 @@ from src.tender_research.rag.analysis_service import (
 )
 from src.tender_research.rag.llm import RagAnswer
 from src.tender_research.rag.retriever import RagSearchHit
+
+
+@pytest.fixture(autouse=True)
+def explicit_legacy_backend_for_legacy_analysis_tests(monkeypatch):
+    from src.tender_research.config import TenderResearchConfig
+
+    monkeypatch.setattr(
+        "src.tender_research.rag.analysis_service.load_config",
+        lambda: TenderResearchConfig(rag_retrieval_backend="legacy"),
+    )
 
 
 def _hit(*, chunk_id: str, text: str) -> RagSearchHit:
@@ -93,11 +105,11 @@ def test_analyze_tender_llm_fallback_returns_timings_and_warning() -> None:
     hit = _hit(chunk_id="chunk-1", text=("Требования к заявке и условия оплаты. " * 80).strip())
 
     class FakeRetriever:
-        def search_documents(self, query, registry_number=None, limit=10):  # noqa: ARG002
+        def search_documents(self, query, registry_number=None, limit=10):
             return [hit]
 
     class FakeLlmClient:
-        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced"):  # noqa: ARG002
+        def build_prompt_metrics(self, question, contexts, registry_number=None, analysis_mode="balanced"):
             return {
                 "context_chars": 1400,
                 "system_prompt_chars": 200,
@@ -105,7 +117,7 @@ def test_analyze_tender_llm_fallback_returns_timings_and_warning() -> None:
                 "prompt_chars": 500,
             }
 
-        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced"):  # noqa: ARG002
+        def generate_answer(self, question, contexts, registry_number=None, analysis_mode="balanced"):
             return RagAnswer(
                 answer="",
                 sources=[],

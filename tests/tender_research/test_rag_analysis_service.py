@@ -4,6 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from src.tender_research.rag.analysis_service import (
     _build_report_markdown,
     _finalize_analysis_status,
@@ -17,6 +19,16 @@ from src.tender_research.rag.schemas import (
     ANALYSIS_SECTIONS,
     TenderAnalysisSection,
 )
+
+
+@pytest.fixture(autouse=True)
+def explicit_legacy_backend_for_legacy_tests(monkeypatch):
+    from src.tender_research.config import TenderResearchConfig
+
+    monkeypatch.setattr(
+        "src.tender_research.rag.analysis_service.load_config",
+        lambda: TenderResearchConfig(rag_retrieval_backend="legacy"),
+    )
 
 
 class TestSlugify:
@@ -141,7 +153,7 @@ class TestAnalyzeTender:
     def test_no_tender_found(self):
         with patch(
             "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
+        ):
             mock_repo = MagicMock()
             mock_repo.get_tender_by_registry_number.return_value = None
             mock_repo.get_tender_by_external.return_value = None
@@ -159,7 +171,7 @@ class TestAnalyzeTender:
     def test_no_embeddings(self):
         with patch(
             "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
+        ):
             mock_repo = MagicMock()
             mock_repo.get_tender_by_registry_number.return_value = MagicMock()
             mock_repo.get_tender_by_external.return_value = MagicMock()
@@ -198,7 +210,7 @@ class TestAnalyzeTender:
 
         with patch(
             "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
+        ):
             with patch(
                 "src.tender_research.rag.analysis_service.TenderRepository",
                 return_value=mock_repo,
@@ -261,7 +273,7 @@ class TestAnalyzeTender:
 
         with patch(
             "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
+        ):
             with patch(
                 "src.tender_research.rag.analysis_service.TenderRepository",
                 return_value=mock_repo,
@@ -313,7 +325,7 @@ class TestAnalyzeTender:
 
         with patch(
             "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
+        ):
             with patch(
                 "src.tender_research.rag.analysis_service.TenderRepository",
                 return_value=mock_repo,
