@@ -20,16 +20,15 @@ import argparse
 import base64
 import json
 import os
-import sys
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from time import perf_counter
-from typing import Any, Iterable
+from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-
 
 READY_STATUSES = {"completed", "completed_with_warnings", "needs_review"}
 _SELECTION_HISTORY_FILENAME = "selection-history.json"
@@ -90,7 +89,7 @@ def _basic_auth_header(credentials: tuple[str, str] | None) -> str | None:
     if credentials is None:
         return None
     username, password = credentials
-    token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+    token = base64.b64encode(f"{username}:{password}".encode()).decode("ascii")
     return f"Basic {token}"
 
 
@@ -165,7 +164,7 @@ class BackendClient:
             method=method,
         )
         try:
-            with urlopen(request, timeout=self.timeout_seconds) as response:  # noqa: S310 - localhost/operator URL by design
+            with urlopen(request, timeout=self.timeout_seconds) as response:
                 raw = response.read().decode("utf-8")
         except HTTPError as exc:
             self._raise_http_error(exc, path=path)
@@ -194,7 +193,7 @@ class BackendClient:
             method="GET",
         )
         try:
-            with urlopen(request, timeout=self.timeout_seconds) as response:  # noqa: S310 - localhost/operator URL by design
+            with urlopen(request, timeout=self.timeout_seconds) as response:
                 return response.read().decode("utf-8")
         except HTTPError as exc:
             self._raise_http_error(exc, path=path, report=True)

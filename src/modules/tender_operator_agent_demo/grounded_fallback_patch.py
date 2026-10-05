@@ -8,12 +8,12 @@ legacy callables. It changes no external-action or LLM provenance boundary.
 
 from __future__ import annotations
 
-from copy import deepcopy
 import re
-from typing import Any, Iterable
+from collections.abc import Iterable
+from copy import deepcopy
+from typing import Any
 
 from src.modules.tender_operator_agent_demo import upload_service_legacy as _legacy
-
 
 _INSTALLED = False
 # Capture these inside install(), after earlier compatibility layers are active.
