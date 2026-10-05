@@ -271,6 +271,46 @@ class DataPlatformDocumentProjector:
         )
 
 
+def extract_document_with_data_platform(
+    document,
+    output_dir: Path,
+    config,
+    *,
+    client_factory=None,
+) -> None:
+    """Populate the legacy extraction-shaped object through Data Platform."""
+
+    source_path = Path(document.local_path or "")
+    if not source_path.is_file():
+        raise DataPlatformError(
+            f"recovery document {document.id} source file is unavailable"
+        )
+    factory = client_factory or build_data_platform_client
+    with factory(config) as client:
+        payload = client.process_document(
+            collection_id=f"{_COLLECTION_PREFIX}:recovery:processing",
+            canonical_uri=_document_uri(str(document.id)),
+            title=document.file_name or str(document.id),
+            content=source_path.read_bytes(),
+            filename=document.file_name or source_path.name,
+            content_type="application/octet-stream",
+            chunk_size_chars=config.rag_chunk_size_chars,
+            overlap_chars=config.rag_chunk_overlap_chars,
+            min_chunk_chars=config.rag_min_chunk_chars,
+            max_chars=config.document_extract_max_chars,
+        )
+    status = str(payload.get("extraction_status") or "failed")
+    text = str(payload.get("text") or "")
+    document.text_extraction_status = status
+    document.extracted_text_chars = len(text) if status == "extracted" else 0
+    document.extracted_text_path = None
+    if status == "extracted" and text:
+        output_dir.mkdir(parents=True, exist_ok=True)
+        text_path = output_dir / f"{document.id}.txt"
+        text_path.write_text(text, encoding="utf-8")
+        document.extracted_text_path = str(text_path)
+
+
 class DataPlatformRecoveryChunkIndexer:
     """Build recovery chunks through Data Platform without local chunking.
 
