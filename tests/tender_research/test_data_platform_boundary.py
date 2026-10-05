@@ -118,6 +118,19 @@ if loaded:
 
 
 
+def test_shared_http_transport_is_the_released_consumer_sdk() -> None:
+    root = Path(__file__).resolve().parents[2]
+    source = (root / "src/shared/data_platform.py").read_text(encoding="utf-8")
+    assert "from arvectum_data_client import" in source
+    assert "import httpx" not in source
+
+    from arvectum_data_client import DataPlatformHttpClient as SdkClient
+
+    from src.shared.data_platform import DataPlatformHttpClient as SharedClient
+
+    assert SharedClient is SdkClient
+
+
 def test_data_platform_is_the_default_retrieval_backend() -> None:
     from src.shared.config.settings import Settings
     from src.tender_research.config import TenderResearchConfig
