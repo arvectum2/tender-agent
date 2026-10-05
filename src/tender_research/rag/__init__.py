@@ -72,7 +72,30 @@ _LAZY_EXPORTS: dict[str, tuple[str, str]] = {
     ),
 }
 
-__all__ = sorted(_LAZY_EXPORTS)
+__all__ = [
+    "BaseEmbeddingProvider",
+    "ChunkDraft",
+    "ChunkingConfig",
+    "DocumentChunkIndexer",
+    "DocumentEmbeddingIndexer",
+    "EmbeddingProviderError",
+    "EmbeddingServerUnavailableError",
+    "HashingEmbeddingProvider",
+    "JsonVectorStore",
+    "LlamaCppEmbeddingProvider",
+    "LocalChatLlmClient",
+    "RagAnswer",
+    "RagRetriever",
+    "RagSearchHit",
+    "SearchResult",
+    "SentenceTransformersEmbeddingProvider",
+    "SourceCitation",
+    "build_embedding_provider",
+    "build_source_citations",
+    "chunk_text",
+    "probe_embedding_provider",
+    "resolve_embedding_dimension",
+]
 
 
 def __getattr__(name: str) -> Any:

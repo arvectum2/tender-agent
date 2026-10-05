@@ -25,7 +25,6 @@ from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
-from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.rag.schemas import (
     ANALYSIS_MODE_CHOICES,
     ANALYSIS_SECTIONS,
@@ -34,6 +33,7 @@ from src.tender_research.rag.schemas import (
     TenderAnalysisResult,
     TenderAnalysisSection,
 )
+from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
 
 logger = logging.getLogger(__name__)

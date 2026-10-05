@@ -7,7 +7,6 @@ from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
 
-
 _TOKEN_RE = re.compile(r"[а-яёa-z0-9]{4,}", re.IGNORECASE)
 
 
@@ -183,7 +182,6 @@ def _extract_keywords(query: str) -> list[str]:
         "входит",
         "входят",
         "должны",
-        "нужно",
         "нужно",
         "подается",
         "подаётся",
