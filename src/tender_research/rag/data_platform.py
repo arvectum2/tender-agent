@@ -72,7 +72,7 @@ def _chunk_id_from_uri(uri: str) -> str | None:
 
 
 def retrieval_backend_name(config) -> str:
-    backend = str(getattr(config, "rag_retrieval_backend", "legacy") or "legacy").strip().lower()
+    backend = str(getattr(config, "rag_retrieval_backend", "data_platform") or "data_platform").strip().lower()
     if backend not in {"legacy", "data_platform"}:
         raise ValueError(
             "rag_retrieval_backend must be either 'legacy' or 'data_platform'"

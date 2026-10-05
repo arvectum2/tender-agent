@@ -84,6 +84,17 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
             item.add_marker(pytest.mark.skip(reason=skip_reason))
 
 
+@pytest.fixture(autouse=True)
+def _legacy_rag_backend_for_legacy_tests(monkeypatch: pytest.MonkeyPatch):
+    """Keep pre-cutover generic RAG tests on the explicit rollback backend."""
+    from src.shared.config.settings import get_settings
+
+    monkeypatch.setenv("AI_CORP_RAG_RETRIEVAL_BACKEND", "legacy")
+    get_settings.cache_clear()
+    yield
+    get_settings.cache_clear()
+
+
 @pytest.fixture()
 def session() -> Generator[Session, None, None]:
     engine = create_engine(

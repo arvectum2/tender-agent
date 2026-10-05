@@ -256,6 +256,31 @@ def test_projector_migrates_legacy_chunks_without_changing_local_chunk_id(tmp_pa
     assert client.ingested[0]["operation"] == "process_document"
 
 
+
+def test_data_platform_is_the_runtime_default(monkeypatch) -> None:
+    from types import SimpleNamespace
+
+    from src.shared.config.settings import Settings, get_settings
+    from src.tender_research.config import TenderResearchConfig
+    from src.tender_research.rag.data_platform import retrieval_backend_name
+
+    monkeypatch.delenv("AI_CORP_RAG_RETRIEVAL_BACKEND", raising=False)
+    get_settings.cache_clear()
+    try:
+        assert Settings(_env_file=None).rag_retrieval_backend == "data_platform"
+        assert TenderResearchConfig().rag_retrieval_backend == "data_platform"
+        assert retrieval_backend_name(SimpleNamespace()) == "data_platform"
+    finally:
+        get_settings.cache_clear()
+
+
+def test_legacy_backend_remains_explicit_rollback_option() -> None:
+    from src.shared.config.settings import Settings
+    from src.tender_research.config import TenderResearchConfig
+
+    assert Settings(rag_retrieval_backend="legacy").rag_retrieval_backend == "legacy"
+    assert TenderResearchConfig(rag_retrieval_backend="legacy").rag_retrieval_backend == "legacy"
+
 def test_collection_id_changes_when_chunk_revision_changes() -> None:
     repo = _repo()
     tender, _document, chunk = _seed_chunk(repo)

@@ -199,7 +199,7 @@ AI_CORP_RAG_EMBEDDINGS_BATCH_SIZE=16
 AI_CORP_RAG_EMBEDDINGS_DIMENSION=auto
 AI_CORP_RAG_VECTOR_STORE=json
 AI_CORP_RAG_VECTOR_STORE_PATH=./data/rag/vector_store.json
-AI_CORP_RAG_RETRIEVAL_BACKEND=legacy
+AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform
 AI_CORP_RAG_DATA_PLATFORM_BASE_URL=http://127.0.0.1:8094
 AI_CORP_RAG_DATA_PLATFORM_API_KEY=
 AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS=30
@@ -514,17 +514,16 @@ If not ready:
 
 Tender-specific ingestion, EIS/44-FZ/223-FZ semantics, chunk provenance, analysis, citations, and human-control rules remain in Tender Agent. Reusable lexical/vector indexing and hybrid retrieval can be delegated to Arvectum Data Platform.
 
-Activation is explicit:
+Data Platform is the default retrieval backend. Normal runtime configuration:
 
 ```bash
-AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform
 AI_CORP_RAG_DATA_PLATFORM_BASE_URL=http://127.0.0.1:8094
 AI_CORP_RAG_DATA_PLATFORM_API_KEY=
 AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS=30
 ```
 
-After switching, run the normal tender preparation flow. Tender Agent keeps its canonical procurement chunks, creates a versioned Data Platform collection for that tender, and indexes each chunk with a stable `tender-chunk://<chunk_id>` canonical URI. Search uses Data Platform hybrid retrieval and maps every hit back to the original Tender Agent chunk before citations or analysis are produced. Tender RAG uses a semantic-first weighted RRF profile (lexical_weight=1, vector_weight=4); Data Platform defaults remain unchanged for other consumers.
+Run the normal tender preparation flow; no retrieval-backend override is required. Tender Agent keeps its canonical procurement chunks, creates a versioned Data Platform collection for that tender, and indexes each chunk with a stable `tender-chunk://<chunk_id>` canonical URI. Search uses Data Platform hybrid retrieval and maps every hit back to the original Tender Agent chunk before citations or analysis are produced. Tender RAG uses a semantic-first weighted RRF profile (lexical_weight=1, vector_weight=4); Data Platform defaults remain unchanged for other consumers.
 
 There is intentionally **no automatic fallback** from `data_platform` to the legacy JSON vector store. If the platform is unavailable or the versioned collection is incomplete, preparation/readiness fails closed and analysis returns `no_context` until the platform index is prepared.
 
-`legacy` remains available as an explicit rollback/compatibility backend during migration. `build-embeddings` and direct JSON-vector maintenance commands belong to that legacy path; normal `prepare` handles Data Platform indexing when `AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform`.
+`legacy` remains available only as an explicit rollback/compatibility backend during migration. `build-embeddings` and direct JSON-vector maintenance commands belong to that legacy path; normal `prepare` handles Data Platform indexing when `AI_CORP_RAG_RETRIEVAL_BACKEND=data_platform`.
