@@ -63,6 +63,10 @@ class ProcurementChannel(StrEnum):
 
 class DirectionType(StrEnum):
     SUPPLY = "SUPPLY"
+    SERVICE = "SERVICE"
+    WORK = "WORK"
+    MIXED = "MIXED"
+    OTHER = "OTHER"
 
 
 class InitialSourceType(StrEnum):
