@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from sqlalchemy import create_engine
@@ -11,6 +13,7 @@ from src.tender_research.config import TenderResearchConfig
 from src.tender_research.rag.data_platform import (
     DataPlatformError,
     DataPlatformRecoveryChunkIndexer,
+    extract_document_with_data_platform,
 )
 from src.tender_research.repository import TenderRepository
 
@@ -43,9 +46,7 @@ class FakeDataPlatformClient:
                     "chunk_id": "platform-chunk-1",
                     "ordinal": 0,
                     "text": text,
-                    "content_hash": __import__("hashlib").sha256(
-                        text.encode("utf-8")
-                    ).hexdigest(),
+                    "content_hash": hashlib.sha256(text.encode("utf-8")).hexdigest(),
                     "char_start": 0,
                     "char_end": len(text),
                     "token_estimate": max(1, len(text) // 4),
@@ -132,3 +133,32 @@ def test_recovery_chunk_builder_fails_closed_on_extraction_mismatch(
 
     with pytest.raises(DataPlatformError, match="extraction mismatch"):
         indexer.build_for_tender(tender.id, commit=False)
+
+
+def test_recovery_extraction_adapter_uses_data_platform(tmp_path: Path) -> None:
+    source = tmp_path / "source.txt"
+    source.write_text("platform extracted text", encoding="utf-8")
+    document = SimpleNamespace(
+        id="document-extract",
+        local_path=str(source),
+        file_name="source.txt",
+        text_extraction_status="pending",
+        extracted_text_path=None,
+        extracted_text_chars=None,
+    )
+    client = FakeDataPlatformClient(extracted_text="platform extracted text")
+    output_dir = tmp_path / "extracted"
+
+    extract_document_with_data_platform(
+        document,
+        output_dir,
+        TenderResearchConfig(data_dir=str(tmp_path)),
+        client_factory=lambda _config: client,
+    )
+
+    assert document.text_extraction_status == "extracted"
+    assert document.extracted_text_chars == len("platform extracted text")
+    assert Path(document.extracted_text_path).read_text(encoding="utf-8") == (
+        "platform extracted text"
+    )
+    assert client.requests[0]["content"] == b"platform extracted text"
