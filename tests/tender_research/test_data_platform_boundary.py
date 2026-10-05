@@ -132,9 +132,18 @@ def test_data_platform_is_the_default_retrieval_backend() -> None:
     assert retrieval_backend_name(ConfigWithoutBackend()) == "data_platform"
 
 
-def test_legacy_retrieval_backend_requires_explicit_opt_in() -> None:
+def test_legacy_retrieval_backend_is_rejected() -> None:
+    import pytest
+
     from src.tender_research.config import TenderResearchConfig
     from src.tender_research.rag.data_platform import retrieval_backend_name
 
     config = TenderResearchConfig(rag_retrieval_backend="legacy")
-    assert retrieval_backend_name(config) == "legacy"
+    with pytest.raises(ValueError, match="legacy local RAG backend has been removed"):
+        retrieval_backend_name(config)
+
+
+def test_legacy_generic_rag_modules_are_removed() -> None:
+    root = Path(__file__).resolve().parents[2] / "src" / "tender_research" / "rag"
+    for name in ("chunker.py", "embeddings.py", "indexer.py", "retriever.py", "vector_store.py"):
+        assert not (root / name).exists()

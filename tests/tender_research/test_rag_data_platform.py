@@ -558,18 +558,12 @@ def test_prepare_service_uses_data_platform_without_legacy_embeddings(monkeypatc
         lambda *_args, **_kwargs: projector,
     )
 
-    legacy_provider = MagicMock()
-    monkeypatch.setattr(
-        "src.tender_research.rag.prepare_service.build_embedding_provider",
-        legacy_provider,
-    )
 
     result = prepare_tender_for_analysis("DP-001", session=MagicMock())
 
     assert result.ready_for_analysis is True
     assert result.embeddings_total == 2
     indexer.build_for_tender.assert_called_once_with("tender-dp")
-    legacy_provider.assert_not_called()
 
 
 def test_analysis_service_uses_data_platform_without_legacy_retriever(monkeypatch) -> None:
@@ -618,16 +612,6 @@ def test_analysis_service_uses_data_platform_without_legacy_retriever(monkeypatc
         lambda *_args: retriever,
     )
 
-    legacy_provider = MagicMock()
-    legacy_retriever = MagicMock()
-    monkeypatch.setattr(
-        "src.tender_research.rag.analysis_service.build_embedding_provider",
-        legacy_provider,
-    )
-    monkeypatch.setattr(
-        "src.tender_research.rag.analysis_service.RagRetriever",
-        legacy_retriever,
-    )
 
     result = analyze_tender(
         registry_number="DP-001",
@@ -639,8 +623,6 @@ def test_analysis_service_uses_data_platform_without_legacy_retriever(monkeypatc
     assert result.retrieval_provider == "data_platform"
     assert result.retrieval_model == "hybrid"
     assert retriever.search_documents.call_count > 0
-    legacy_provider.assert_not_called()
-    legacy_retriever.assert_not_called()
     platform_client.close.assert_called_once()
 
 
@@ -683,11 +665,6 @@ def test_analysis_service_fails_closed_when_platform_index_is_unavailable(
         lambda _config: platform_client,
     )
 
-    legacy_retriever = MagicMock()
-    monkeypatch.setattr(
-        "src.tender_research.rag.analysis_service.RagRetriever",
-        legacy_retriever,
-    )
 
     result = analyze_tender(
         registry_number="DP-001",
@@ -698,7 +675,6 @@ def test_analysis_service_fails_closed_when_platform_index_is_unavailable(
 
     assert result.status == "no_context"
     assert any("Data Platform" in error for error in result.errors)
-    legacy_retriever.assert_not_called()
     platform_client.close.assert_called_once()
 
 
@@ -726,8 +702,6 @@ def test_cli_retrieval_runtime_skips_legacy_embedding_provider(monkeypatch) -> N
         lambda _config: platform_client,
     )
 
-    legacy_provider = MagicMock(side_effect=AssertionError("legacy provider used"))
-    monkeypatch.setattr(cli, "build_embedding_provider", legacy_provider)
 
     (
         returned_session,
@@ -743,6 +717,5 @@ def test_cli_retrieval_runtime_skips_legacy_embedding_provider(monkeypatch) -> N
     assert config.rag_retrieval_backend == "data_platform"
     assert provider is None
     assert vector_store is None
-    legacy_provider.assert_not_called()
     retriever.close()
     platform_client.close.assert_called_once()

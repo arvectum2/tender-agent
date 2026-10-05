@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import io
 import json
-from urllib.error import HTTPError
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 
 from src.tender_research.rag.llm import LocalChatLlmClient
-from src.tender_research.rag.retriever import RagSearchHit
+from src.tender_research.rag.search_types import RagSearchHit
 
 
 class _FakeResponse:

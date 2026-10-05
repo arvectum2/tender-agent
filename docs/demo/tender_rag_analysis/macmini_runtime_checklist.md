@@ -44,20 +44,13 @@ lsof -nP -iTCP:8001 -sTCP:LISTEN
 tail -n 40 /tmp/ai_corp_uvicorn_8001.log
 ```
 
-## 4. Embeddings
+## 4. Data Platform
 
-```bash
-python -m src.tender_research.rag.cli check-embedding-server \
-  --provider llama_cpp \
-  --model Qwen3-Embedding-4B \
-  --base-url http://127.0.0.1:8090/v1
-```
+    curl -fsS http://127.0.0.1:8094/health
 
-Ожидаем:
+Tender preparation calls Data Platform for chunking, embeddings and indexing;
+Tender Agent does not maintain a separate embedding backend.
 
-- endpoint `http://127.0.0.1:8090/v1`
-- model `Qwen3-Embedding-4B`
-- `dimension=2560`
 
 ## 5. LLM
 

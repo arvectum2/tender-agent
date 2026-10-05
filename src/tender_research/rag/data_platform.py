@@ -75,9 +75,10 @@ def retrieval_backend_name(config) -> str:
     backend = str(
         getattr(config, "rag_retrieval_backend", "data_platform") or "data_platform"
     ).strip().lower()
-    if backend not in {"legacy", "data_platform"}:
+    if backend != "data_platform":
         raise ValueError(
-            "rag_retrieval_backend must be either 'legacy' or 'data_platform'"
+            "rag_retrieval_backend must be 'data_platform'; "
+            "the legacy local RAG backend has been removed"
         )
     return backend
 
