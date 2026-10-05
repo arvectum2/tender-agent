@@ -90,6 +90,9 @@ from src.modules.procedure_monitor.router import router as procedure_monitor_rou
 from src.modules.procurement_monitoring.router import (
     router as procurement_monitoring_router,
 )
+from src.modules.procurement_portfolio.router import (
+    router as procurement_portfolio_router,
+)
 from src.modules.prompt_schema_library.router import (
     router as prompt_schema_library_router,
 )
@@ -232,6 +235,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     runtime_metadata_slices_router,
     procedure_monitor_router,
     procurement_monitoring_router,
+    procurement_portfolio_router,
     supplier_contracts_router,
     purchase_orders_router,
     outcome_intake_router,
