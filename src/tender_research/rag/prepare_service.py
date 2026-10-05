@@ -20,15 +20,33 @@ from src.tender_research.rag.data_platform import (
     build_tender_collection_id,
     retrieval_backend_name,
 )
-from src.tender_research.rag.embeddings import build_embedding_provider
-from src.tender_research.rag.indexer import (
-    DocumentChunkIndexer,
-    DocumentEmbeddingIndexer,
-)
-from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
 
 logger = logging.getLogger(__name__)
+
+
+def build_embedding_provider(*args, **kwargs):
+    from src.tender_research.rag.embeddings import build_embedding_provider as impl
+
+    return impl(*args, **kwargs)
+
+
+def DocumentChunkIndexer(*args, **kwargs):
+    from src.tender_research.rag.indexer import DocumentChunkIndexer as impl
+
+    return impl(*args, **kwargs)
+
+
+def DocumentEmbeddingIndexer(*args, **kwargs):
+    from src.tender_research.rag.indexer import DocumentEmbeddingIndexer as impl
+
+    return impl(*args, **kwargs)
+
+
+def JsonVectorStore(*args, **kwargs):
+    from src.tender_research.rag.vector_store import JsonVectorStore as impl
+
+    return impl(*args, **kwargs)
 
 
 class TenderPreparationStep:
@@ -335,6 +353,8 @@ def prepare_tender_for_analysis(
                         "No chunks created because Data Platform returned no extracted text"
                     )
         else:
+            # Compatibility-only backend: lazy wrappers keep the local generic
+            # chunking/indexing stack out of Data Platform runtime imports.
             chunk_indexer = DocumentChunkIndexer(repo, config)
             if chunks_existing > 0 and not rebuild_chunks:
                 step.status = "skipped"
@@ -374,11 +394,9 @@ def prepare_tender_for_analysis(
         chunks_count = repo.count_chunks_by_tender(tender.id)
         embeddings_created_count = 0
         indexed_chunks_count = 0
-        emb_provider = (
-            build_embedding_provider(config)
-            if backend == "legacy"
-            else None
-        )
+        emb_provider = None
+        if backend == "legacy":
+            emb_provider = build_embedding_provider(config)
 
         step = TenderPreparationStep(
             "build_embeddings",

@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from src.tender_research.rag.retriever import RagSearchHit
+    from src.tender_research.rag.search_types import RagSearchHit
 
 
 @dataclass(frozen=True)
@@ -71,7 +71,6 @@ class LocalChatLlmClient:
         *,
         analysis_mode: str = "balanced",
     ) -> RagAnswer:
-        sources = build_source_citations(contexts)
         if not contexts:
             return RagAnswer(
                 answer="В найденных документах недостаточно информации для ответа.",
@@ -82,7 +81,6 @@ class LocalChatLlmClient:
             )
 
         selected_contexts = self._select_contexts_within_budget(contexts)
-        sources = build_source_citations(selected_contexts)
         if not selected_contexts:
             return RagAnswer(
                 answer="В найденных документах недостаточно информации для ответа.",

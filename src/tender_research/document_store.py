@@ -7,7 +7,6 @@ from urllib.request import HTTPSHandler, ProxyHandler, build_opener
 
 from src.shared.network.http_client import create_urllib_context
 from src.tender_research.config import TenderResearchConfig
-from src.tender_research.document_text_extractor import extract_text
 from src.tender_research.models import ProcurementTender
 from src.tender_research.repository import TenderRepository
 
@@ -75,6 +74,8 @@ def download_tender_documents(
 
 
 def _try_extract(doc, text_dir: Path, config: TenderResearchConfig) -> None:
+    from src.tender_research.document_text_extractor import extract_text
+
     if doc.text_extraction_status in ("extracted", "unsupported", "empty"):
         return
     if not doc.local_path or not Path(doc.local_path).exists():

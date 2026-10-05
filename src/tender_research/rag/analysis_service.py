@@ -20,13 +20,11 @@ from src.tender_research.rag.data_platform import (
     build_tender_collection_id,
     retrieval_backend_name,
 )
-from src.tender_research.rag.embeddings import build_embedding_provider
 from src.tender_research.rag.history_service import record_analysis_run
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
-from src.tender_research.rag.retriever import RagRetriever, RagSearchHit
 from src.tender_research.rag.schemas import (
     ANALYSIS_MODE_CHOICES,
     ANALYSIS_SECTIONS,
@@ -35,10 +33,28 @@ from src.tender_research.rag.schemas import (
     TenderAnalysisResult,
     TenderAnalysisSection,
 )
-from src.tender_research.rag.vector_store import JsonVectorStore
+from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
 
 logger = logging.getLogger(__name__)
+
+
+def build_embedding_provider(*args, **kwargs):
+    from src.tender_research.rag.embeddings import build_embedding_provider as impl
+
+    return impl(*args, **kwargs)
+
+
+def RagRetriever(*args, **kwargs):
+    from src.tender_research.rag.retriever import RagRetriever as impl
+
+    return impl(*args, **kwargs)
+
+
+def JsonVectorStore(*args, **kwargs):
+    from src.tender_research.rag.vector_store import JsonVectorStore as impl
+
+    return impl(*args, **kwargs)
 
 
 @dataclass(frozen=True)
@@ -504,6 +520,8 @@ def analyze_tender(
                 return result
             retriever = DataPlatformRagRetriever(repo, platform_client)
         else:
+            # Compatibility-only backend: lazy wrappers keep generic legacy RAG
+            # out of the normal Data Platform runtime import graph.
             emb_provider = build_embedding_provider(config)
             vector_store = JsonVectorStore(
                 _vector_store_path(

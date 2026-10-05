@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from src.shared.data_platform import DataPlatformError, DataPlatformHttpClient
-from src.tender_research.rag.retriever import RagSearchHit
+from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
 
 _COLLECTION_PREFIX = "tender-agent"
