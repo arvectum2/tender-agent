@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     pilot_auth_enabled: bool = False
     pilot_auth_username: str | None = None
     pilot_auth_password: str | None = None
-    pilot_auth_protected_prefixes: str = "/api,/demo,/pilot,/customers,/docs,/redoc,/openapi.json,/health/ready"
+    pilot_auth_protected_prefixes: str = "/api,/demo,/pilot,/customers,/mobile,/docs,/redoc,/openapi.json,/health/ready"
     pilot_auth_public_paths: str = "/health"
     llm_provider: str = "stub"
     llm_model: str | None = None
