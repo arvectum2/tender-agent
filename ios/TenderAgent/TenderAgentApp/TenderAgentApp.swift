@@ -9,7 +9,7 @@ struct TenderAgentApp: App {
             RootView()
                 .environmentObject(store)
                 .task {
-                    await store.refresh()
+                    await store.bootstrap()
                 }
         }
     }

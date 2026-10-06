@@ -37,27 +37,56 @@ final class AppStore: ObservableObject {
     var connectionLabel: String {
         if isLoading { return "Подключение…" }
         if isLive { return "Live backend" }
-        if apiClient == nil { return "Mock data" }
+        if apiClient == nil { return "Не подключено" }
         return "Ошибка backend"
+    }
+
+    func bootstrap() async {
+        let environment = ProcessInfo.processInfo.environment
+
+        if apiClient == nil,
+           let code = environment["TENDER_AGENT_PAIRING_CODE"],
+           !code.isEmpty {
+            let baseURL =
+                environment["TENDER_AGENT_API_BASE_URL"]
+                ?? BackendCredentialStore.defaultBaseURLString
+            await pair(baseURL: baseURL, pairingCode: code)
+            return
+        }
+
+        await refresh()
     }
 
     func procurement(id: String) -> Procurement? {
         procurements.first { $0.id == id }
     }
 
-
-    func configureConnection(
+    func pair(
         baseURL: String,
-        username: String,
-        password: String
+        pairingCode: String
     ) async {
+        isLoading = true
+        defer { isLoading = false }
+
         do {
-            let configuration = try BackendCredentialStore.save(
+            guard let url = URL(
+                string: baseURL.trimmingCharacters(in: .whitespacesAndNewlines)
+            ) else {
+                throw CredentialStoreError.invalidURL
+            }
+
+            let pairingClient = TenderAgentPairingClient(baseURL: url)
+            let response = try await pairingClient.pair(
+                code: pairingCode.trimmingCharacters(in: .whitespacesAndNewlines),
+                deviceID: BackendCredentialStore.deviceID,
+                deviceName: BackendCredentialStore.deviceName
+            )
+            let configuration = try BackendCredentialStore.savePairing(
                 baseURLString: baseURL,
-                username: username,
-                password: password
+                accessToken: response.accessToken
             )
             apiClient = TenderAgentAPIClient(configuration: configuration)
+            lastError = nil
             await refresh()
         } catch {
             isLive = false
@@ -77,6 +106,7 @@ final class AppStore: ObservableObject {
             isLive = false
             return
         }
+
         isLoading = true
         defer { isLoading = false }
 
@@ -97,11 +127,14 @@ final class AppStore: ObservableObject {
         comment: String? = nil,
         deferredUntil: Date? = nil
     ) {
-        guard let index = procurements.firstIndex(where: { $0.id == id }) else { return }
+        guard let index = procurements.firstIndex(where: { $0.id == id }) else {
+            return
+        }
 
         procurements[index].decision = decision
         procurements[index].decisionComment = comment
-        procurements[index].deferredUntil = decision == .deferred ? deferredUntil : nil
+        procurements[index].deferredUntil =
+            decision == .deferred ? deferredUntil : nil
     }
 
     func submitDecision(
@@ -111,16 +144,25 @@ final class AppStore: ObservableObject {
         deferredUntil: Date? = nil
     ) async {
         guard let apiClient else {
-            setDecision(decision, for: id, comment: comment, deferredUntil: deferredUntil)
+            setDecision(
+                decision,
+                for: id,
+                comment: comment,
+                deferredUntil: deferredUntil
+            )
             return
         }
 
         let action: String
         switch decision {
-        case .go: action = "GO"
-        case .noGo: action = "NO_GO"
-        case .deferred: action = "DEFER"
-        case .pending: return
+        case .go:
+            action = "GO"
+        case .noGo:
+            action = "NO_GO"
+        case .deferred:
+            action = "DEFER"
+        case .pending:
+            return
         }
 
         do {

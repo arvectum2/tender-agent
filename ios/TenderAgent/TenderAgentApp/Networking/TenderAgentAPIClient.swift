@@ -2,28 +2,7 @@ import Foundation
 
 struct TenderAgentAPIConfiguration {
     let baseURL: URL
-    let username: String
-    let password: String
-
-    static func fromEnvironment(
-        _ environment: [String: String] = ProcessInfo.processInfo.environment
-    ) -> TenderAgentAPIConfiguration? {
-        guard
-            let rawURL = environment["TENDER_AGENT_API_BASE_URL"],
-            let baseURL = URL(string: rawURL),
-            let username = environment["TENDER_AGENT_API_USERNAME"],
-            let password = environment["TENDER_AGENT_API_PASSWORD"],
-            !username.isEmpty,
-            !password.isEmpty
-        else {
-            return nil
-        }
-        return TenderAgentAPIConfiguration(
-            baseURL: baseURL,
-            username: username,
-            password: password
-        )
-    }
+    let accessToken: String
 }
 
 enum TenderAgentAPIError: LocalizedError {
@@ -40,6 +19,55 @@ enum TenderAgentAPIError: LocalizedError {
     }
 }
 
+struct TenderAgentPairingClient {
+    let baseURL: URL
+    let session: URLSession
+
+    init(baseURL: URL, session: URLSession = .shared) {
+        self.baseURL = baseURL
+        self.session = session
+    }
+
+    func pair(
+        code: String,
+        deviceID: String,
+        deviceName: String
+    ) async throws -> MobilePairResponse {
+        let body = MobilePairRequest(
+            pairingCode: code,
+            deviceId: deviceID,
+            deviceName: deviceName
+        )
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let data = try encoder.encode(body)
+
+        var request = URLRequest(url: baseURL.appending(path: "mobile/v1/pair"))
+        request.httpMethod = "POST"
+        request.timeoutInterval = 20
+        request.httpBody = data
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        return try await perform(request)
+    }
+
+    private func perform<Response: Decodable>(_ request: URLRequest) async throws -> Response {
+        let (data, response) = try await session.data(for: request)
+        guard let http = response as? HTTPURLResponse else {
+            throw TenderAgentAPIError.invalidResponse
+        }
+        guard 200..<300 ~= http.statusCode else {
+            let body = String(data: data, encoding: .utf8) ?? ""
+            throw TenderAgentAPIError.httpStatus(http.statusCode, body)
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode(Response.self, from: data)
+    }
+}
+
 struct TenderAgentAPIClient {
     let configuration: TenderAgentAPIConfiguration
     let session: URLSession
@@ -53,17 +81,6 @@ struct TenderAgentAPIClient {
     }
 
     static func preferred() -> TenderAgentAPIClient? {
-        let environment = ProcessInfo.processInfo.environment
-        if let configuration = TenderAgentAPIConfiguration.fromEnvironment(environment) {
-            if environment["TENDER_AGENT_PERSIST_ENV"] == "1" {
-                try? BackendCredentialStore.save(
-                    baseURLString: configuration.baseURL.absoluteString,
-                    username: configuration.username,
-                    password: configuration.password
-                )
-            }
-            return TenderAgentAPIClient(configuration: configuration)
-        }
         guard let configuration = BackendCredentialStore.loadConfiguration() else {
             return nil
         }
@@ -91,8 +108,7 @@ struct TenderAgentAPIClient {
             rationale: rationale,
             reasonCodes: reasonCodes,
             deferredUntil: deferredUntil,
-            idempotencyKey: idempotencyKey,
-            actorRef: "tender-agent-ios"
+            idempotencyKey: idempotencyKey
         )
         return try await request(
             path: "mobile/v1/procurements/\(dealID)/decision",
@@ -105,7 +121,7 @@ struct TenderAgentAPIClient {
         path: String,
         method: String = "GET"
     ) async throws -> Response {
-        let request = try makeRequest(path: path, method: method, bodyData: nil)
+        let request = makeRequest(path: path, method: method, bodyData: nil)
         return try await perform(request)
     }
 
@@ -115,9 +131,10 @@ struct TenderAgentAPIClient {
         body: Body
     ) async throws -> Response {
         let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.dateEncodingStrategy = .iso8601
         let data = try encoder.encode(body)
-        let request = try makeRequest(path: path, method: method, bodyData: data)
+        let request = makeRequest(path: path, method: method, bodyData: data)
         return try await perform(request)
     }
 
@@ -125,7 +142,7 @@ struct TenderAgentAPIClient {
         path: String,
         method: String,
         bodyData: Data?
-    ) throws -> URLRequest {
+    ) -> URLRequest {
         let url = configuration.baseURL.appending(path: path)
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -135,10 +152,10 @@ struct TenderAgentAPIClient {
         if bodyData != nil {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-
-        let credentials = "\(configuration.username):\(configuration.password)"
-        let encoded = Data(credentials.utf8).base64EncodedString()
-        request.setValue("Basic \(encoded)", forHTTPHeaderField: "Authorization")
+        request.setValue(
+            "Bearer \(configuration.accessToken)",
+            forHTTPHeaderField: "Authorization"
+        )
         return request
     }
 
@@ -159,13 +176,25 @@ struct TenderAgentAPIClient {
     }
 }
 
+private struct MobilePairRequest: Encodable {
+    let pairingCode: String
+    let deviceId: String
+    let deviceName: String
+}
+
+struct MobilePairResponse: Decodable {
+    let accessToken: String
+    let tokenType: String
+    let expiresAt: Date
+    let deviceId: String
+}
+
 private struct MobileDecisionBody: Encodable {
     let action: String
     let rationale: String?
     let reasonCodes: [String]
     let deferredUntil: Date?
     let idempotencyKey: String
-    let actorRef: String
 }
 
 struct MobilePortfolioEnvelope: Decodable {

@@ -4,8 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject private var store: AppStore
 
     @State private var baseURL = BackendCredentialStore.savedBaseURL
-    @State private var username = BackendCredentialStore.savedUsername
-    @State private var password = ""
+    @State private var pairingCode = ""
 
     @State private var reportPush = true
     @State private var changePush = true
@@ -17,7 +16,9 @@ struct SettingsView: View {
                 LabeledContent("Mac mini") {
                     Label(
                         store.isLive ? "Подключено" : "Не подключено",
-                        systemImage: store.isLive ? "checkmark.circle.fill" : "exclamationmark.circle"
+                        systemImage: store.isLive
+                            ? "checkmark.circle.fill"
+                            : "exclamationmark.circle"
                     )
                     .foregroundStyle(store.isLive ? .green : .orange)
                 }
@@ -26,11 +27,13 @@ struct SettingsView: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
 
-                TextField("Логин", text: $username)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
+                TextField("6-значный код", text: $pairingCode)
+                    .keyboardType(.numberPad)
 
-                SecureField("Пароль", text: $password)
+                LabeledContent("Устройство") {
+                    Text(BackendCredentialStore.deviceName)
+                        .lineLimit(1)
+                }
 
                 LabeledContent("Канал") {
                     Text("Tailscale HTTPS")
@@ -47,30 +50,30 @@ struct SettingsView: View {
                         .foregroundStyle(.red)
                 }
 
-                Button("Сохранить и проверить") {
+                Button("Подключить по коду") {
                     Task {
-                        await store.configureConnection(
+                        await store.pair(
                             baseURL: baseURL,
-                            username: username,
-                            password: password
+                            pairingCode: pairingCode
                         )
                         if store.isLive {
-                            password = ""
+                            pairingCode = ""
                         }
                     }
                 }
+                .disabled(pairingCode.count != 6)
 
                 Button("Обновить") {
                     Task {
                         await store.refresh()
                     }
                 }
+                .disabled(!store.isLive)
 
                 Button("Сбросить подключение", role: .destructive) {
                     store.disconnect()
                     baseURL = BackendCredentialStore.defaultBaseURLString
-                    username = ""
-                    password = ""
+                    pairingCode = ""
                 }
             }
 
@@ -81,8 +84,11 @@ struct SettingsView: View {
             }
 
             Section("Приложение") {
-                LabeledContent("Версия", value: "0.3.0-dev")
-                LabeledContent("Режим", value: store.isLive ? "Live" : "Mock fallback")
+                LabeledContent("Версия", value: "0.4.0-dev")
+                LabeledContent(
+                    "Режим",
+                    value: store.isLive ? "Live" : "Mock fallback"
+                )
             }
         }
         .navigationTitle("Настройки")
