@@ -44,7 +44,7 @@ owner_product_directive_2026_10_06:
   execution_queue_modified: false
   daily_tender_run:
     priority: P0
-    implementation_status: DTR_1_DTR_2_IMPLEMENTED_VALIDATING
+    implementation_status: DTR_1_DTR_2_DEPLOYED
     scope: "Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio."
     human_gate: "GO / NO GO / DEFER remains attributable to a human manager."
     reuse_existing_modules: true
@@ -59,8 +59,13 @@ owner_product_directive_2026_10_06:
       - run_latest_resume_digest_api
       - mobile_digest_and_recommendation_projection
       - unattended_macmini_cli
+    deployed_runtime_2026_10_06:
+      main_commit: 00df6f0c6d6219b9301cd3f9372566377630e366
+      migration: 100_add_daily_tender_runs
+      data_platform: http://127.0.0.1:8094
+      schedule: '08:00 Europe/Moscow via com.arvectum.daily-tender-run'
+      human_gate_preserved: true
     next:
-      - live_acceptance_on_macmini
       - native_swiftui_client
       - post_go_readiness_submission_outcome_automation
   mobile:
