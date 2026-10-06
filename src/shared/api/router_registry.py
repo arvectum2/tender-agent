@@ -39,6 +39,7 @@ from src.modules.customer_pilot.expert_review_router import (
 )
 from src.modules.customer_pilot.router import router as customer_pilot_router
 from src.modules.customer_registry.router import router as customer_registry_router
+from src.modules.daily_tender_run.router import router as daily_tender_run_router
 from src.modules.dashboard_snapshots.router import router as dashboard_snapshots_router
 from src.modules.deal_closure.router import router as deal_closure_router
 from src.modules.deal_closure_reports.router import (
@@ -153,6 +154,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     internal_company_agents_router,
     hermes_agent_router,
     dashboard_snapshots_router,
+    daily_tender_run_router,
     archive_export_router,
     workflow_runs_router,
     optimization_router,

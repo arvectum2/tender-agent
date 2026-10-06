@@ -297,7 +297,12 @@ def _record_history(
             metadata=_build_history_metadata(result),
         )
         return run.id
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
+        # record_analysis_run() writes through the caller's Session. If its
+        # flush/commit fails, SQLAlchemy leaves that Session in failed-
+        # transaction state. History is best-effort, so recover the Session
+        # before returning the already completed analysis to the orchestrator.
+        session.rollback()
         logger.warning("Analysis completed, but history record was not saved: %s", e)
         return None
 
@@ -476,7 +481,7 @@ def analyze_tender(
                     timeout_seconds=mode_config.llm_timeout_seconds,
                     max_context_chars=mode_config.max_context_chars_per_section,
                 )
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 warnings.append(f"LLM client init failed: {e}")
                 use_llm = False
 

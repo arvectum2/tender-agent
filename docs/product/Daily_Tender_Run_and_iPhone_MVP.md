@@ -19,6 +19,34 @@ Turn the proven daily procurement routine into one reliable system:
 
 The manager should not need to run searches, download documents, request analyses one-by-one or manually maintain the dashboard.
 
+## Implementation status — 2026-10-06
+
+Implemented in feature/daily-tender-run-autonomy:
+
+- durable DailyTenderRun / DailyTenderRunItem state with migration 100_add_daily_tender_runs;
+- versioned saved-filter profile arvectum-it;
+- multi-query public EIS discovery, deduplication and deterministic cheap screening;
+- canonical Deal/Intake linkage for shortlisted procurements;
+- public EIS detail/document ingestion into Tender Research before preparation;
+- Data Platform preparation/index readiness gate and source-grounded deep analysis;
+- fail-closed manager synthesis with advisory GO / NO_GO / NEEDS_REVIEW, confidence, reasons, blockers and unknowns;
+- run/latest/resume/digest backend API;
+- mobile inbox/portfolio projection of NMCK, deadline and DTR recommendation metadata;
+- /mobile/v1/digest/latest with canonical human decision state;
+- unattended CLI scripts/run_daily_tender_run.py.
+
+The implemented contour stops at WAIT_HUMAN. It does not submit applications, log into ETPs, sign, pay, or replace the manager's GO / NO GO / DEFER decision.
+
+## Arvectum IT screening profile v2 — 2026-10-06
+
+The arvectum-it profile is calibrated to the manual selection workflow used on 2026-10-05 rather than to generic IT procurement volume.
+
+Cheap screening now prioritizes custom software/site/GIS/module/integration work and rejects obvious non-target work before documents and LLM analysis: pure vendor support, ready-made license-right supply, hardware/crypto/security-infrastructure supply without a strong custom-development component, non-IT work, expired deadlines, and contracts above the current hard scale ceiling. NMCK above the preferred scale remains a ranking/review signal before the hard ceiling.
+
+The deep-analysis decision policy then checks the factors used manually: mandatory vendor rights/partner status, participant licenses/SRO/certification, qualification-heavy narrow experience, onsite work, FSTEK/FSB/SKZI/attestation, security/cash-gap economics, source-code/data/API/access dependencies, acceptance clarity and execution deadline. Exclusive-rights transfer, remote region and no advance are not blockers by themselves.
+
+The screening profile does not make the manager decision. It decides what deserves expensive analysis; the final agent recommendation remains advisory and GO / NO GO / DEFER remains human.
+
 ## Daily Tender Run
 
 DailyTenderRun is a durable orchestration record, not an ephemeral cron script.

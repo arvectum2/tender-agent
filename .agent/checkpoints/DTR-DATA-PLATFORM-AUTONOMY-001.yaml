@@ -1,0 +1,56 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: DTR-DATA-PLATFORM-AUTONOMY-001
+authority: OWNER_DIRECTIVE
+goal: Turn the proven manual daily tender-selection workflow into a durable autonomous Daily Tender Run that uses Data Platform for procurement document indexing/retrieval and leaves GO/NO GO/DEFER to the human manager.
+definition_of_done:
+  - Durable DailyTenderRun and per-procurement stage state are persisted and restartable/idempotent.
+  - A versioned saved-filter profile drives multi-query public EIS discovery, dedupe and cheap deterministic screening.
+  - Shortlisted procurements are linked to canonical Deal/Intake records, prepared into Data Platform and deeply analyzed with source-grounded Tender Agent analysis.
+  - A fail-closed manager synthesis stores an advisory agent recommendation, strongest reasons, blockers/unknowns and report references without authorizing submission.
+  - One run produces an actionable manager digest and exposes run/latest/digest API surfaces.
+  - Mobile Tender Agent consumes latest DTR NMCK/deadline/recommendation while human decisions remain canonical DecisionRecord writes.
+  - CLI entry point exists for unattended Mac mini execution.
+  - Migration, focused tests, and a local runtime smoke prove the flow without procurement submission, ETP login or signature.
+completed:
+  - Confirmed Data Platform is live on 127.0.0.1:8094 and Tender Agent retrieval backend is data_platform.
+  - Confirmed exactly one enabled hourly Tender Agent Watchdog exists.
+  - Implemented durable DailyTenderRun/DailyTenderRunItem persistence and migration 100.
+  - Implemented versioned arvectum-it saved-filter profile, multi-query public EIS discovery, dedupe and cheap deterministic screening.
+  - Implemented canonical Deal/Intake linkage and a public-EIS detail/document ingestion seam before Data Platform preparation.
+  - Implemented Data Platform prepare/index gate, source-grounded deep analysis, fail-closed manager synthesis and WAIT_HUMAN boundary.
+  - Implemented run/latest/resume/digest API, unattended CLI, and mobile DTR projection while preserving DecisionRecord as the only human GO/NO GO/DEFER write.
+  - Updated product spec and canonical roadmap implementation overlay.
+  - Validated migration 100 upgrade/downgrade on isolated SQLite.
+  - Focused and regression-relevant tests pass: 97 passed.
+  - New DTR/mobile/CLI Ruff checks, py_compile and git diff --check pass.
+  - Live isolated Mac mini smoke passed on public procurement 0169300035826000229: 4 EIS documents acquired, Data Platform analysis completed, manager synthesis returned NEEDS_REVIEW for FSTEC-license/attestation unknowns, run stopped at WAIT_HUMAN with external_submission_allowed=false.
+  - PR #164 merged as 1825ad973fa9921b76a6adfeb4b5bdabc6db641c.
+  - Live deployment reached migration 100_add_daily_tender_runs; backend and Data Platform health are green; DTR routes/tables verified.
+  - Verified backup /Users/master/arvectum-backups/tender-agent/20261006-153415 including PostgreSQL dump before migration.
+  - Initial production run exposed shortlist cap bypass because SessionLocal has autoflush=False; run and scheduler were stopped before continuing broad analysis.
+  - PR #165 fixed the autoflush/deep-analysis-cap defect and merged as 00df6f0c6d6219b9301cd3f9372566377630e366.
+  - Production deployment completed on Mac mini: runtime fast-forwarded to 00df6f0, backend healthy, Data Platform v0.6.0 healthy, PostgreSQL restored after Docker Desktop recovery, migration 100 remains head.
+  - Live resumed run DTR-20261006T153629Z-60b82733 verified at exactly 20 active deep-analysis slots (1 PROCESSING + 19 SHORTLISTED), with 26 screened out by the fixed cap and no failed items at verification time.
+  - Daily operational launchd trigger com.arvectum.daily-tender-run is installed for 08:00 Europe/Moscow; wrapper self-heals Docker/PostgreSQL, prevents overlapping scheduled runs, and leaves all procurement decisions/actions human-controlled.
+current: Deployment complete; first production Daily Tender Run is continuing asynchronously under the fixed 20-item deep-analysis cap.
+remaining: []
+last_verified_commit: 00df6f0c6d6219b9301cd3f9372566377630e366
+last_tests:
+  - Live deployment: backend /health PASS; Data Platform /health PASS (v0.6.0); PostgreSQL select 1 PASS; alembic 100_add_daily_tender_runs head.
+  - Live cap verification after PR #165: active=20 (1 PROCESSING + 19 SHORTLISTED), SCREENED_OUT=26, failed=0.
+  - Local scheduler: com.arvectum.daily-tender-run loaded at 08:00 Europe/Moscow; wrapper --help does not create a run.
+  - Pre-migration verified backup: /Users/master/arvectum-backups/tender-agent/20261006-153415.
+  - 97 focused/regression-relevant tests passed, 15 warnings.
+  - Migration 100 isolated SQLite upgrade/downgrade smoke: PASS.
+  - Live DTR smoke DTR-LIVE-SMOKE-20261006-B: WAITING_HUMAN, 1 discovered, 1 deep analyzed, 0 failed, recommendation NEEDS_REVIEW, analysis_status completed.
+  - Ruff on src/modules/daily_tender_run, src/modules/mobile_api, scripts/run_daily_tender_run.py, tests/test_daily_tender_run.py: PASS.
+  - py_compile on DTR/mobile/CLI: PASS.
+  - git diff --check: PASS.
+resume_instruction: Task completed. On a future request, read this checkpoint and the current production Daily Tender Run/digest; do not repeat deployment. Adjust profile/schedule or post-decision automation only as a new bounded task. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
+execution:
+  claimed_by: ChatGPT interactive
+  branch: chore/dtr-deployment-checkpoint
+  base_commit: 00df6f0c6d6219b9301cd3f9372566377630e366
+  manual_override: true
