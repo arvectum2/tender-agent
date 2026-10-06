@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-09-23T11:42:00+03:00'
+updated_at: '2026-10-06T22:22:04+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -545,6 +545,23 @@ items:
   - ARV-012-REVALIDATION-001
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
+
+- order: 230
+  task_id: MOB-1-IOS-INBOX-001
+  strategy: COPY_PATTERN
+  continuation_mode: OWNER_DIRECTIVE
+  title: Native iPhone read-only inbox and procurement summary over live mobile API
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  source: 'Owner product directive 2026-10-06 promotes ARV-044 mobile companion to P0; explicit continuation instruction in project chat authorizes implementation.'
+  roadmap_scope:
+  - ARV-044
+  dependencies:
+  - DTR-V2-RULES-FAILURE-001
+  executor_scope: 'Completed bounded MOB-1 slice: native read-only manager inbox/detail over the current Mac mini mobile API with dedicated Bearer pairing and Keychain token storage. Preserve human decision/external-action hard stops; MOB-2 is a separate future admission.'
+  done_gate: 'Satisfied for implementation/review readiness: implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300 passed Xcode 27 build-for-testing, focused iPhone AppStoreTests 2/2, backend mobile contract tests 9/9, runtime bearer-boundary check, git diff check, and exact-head GitHub CI run 37517210451 SUCCESS 9/9. PR #171 is review-ready and remains unmerged while Company AM-4 is review-due at 10/10.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001

@@ -1,0 +1,90 @@
+import Foundation
+
+enum MockData {
+    static var procurements: [Procurement] {
+        [
+            Procurement(
+                id: "DL-MOCK-001",
+                registryNumber: "0801200000226000750",
+                title: "Модернизация подсистемы ГИСЗ РБ «Диагностическая информационная система»",
+                customer: "МИАЦ Республики Башкортостан",
+                nmckRub: 4_820_000.0,
+                deadline: .now.addingTimeInterval(60 * 60 * 24 * 2),
+                sourceURL: URL(string: "https://zakupki.gov.ru"),
+                recommendation: .go,
+                confidenceLabel: "HIGH",
+                goReasons: ["Понятный объём работ", "Низкие входные требования", "Риски исполнения контролируемы"],
+                noGoReasons: ["Неизвестное состояние исходного кода"],
+                blockers: [],
+                unknowns: ["Нужен доступ к текущей версии ПО после заключения контракта"],
+                risks: ["Интеграция с существующей инфраструктурой заказчика"],
+                summary: "Модернизация действующей диагностической подсистемы. Критических блокеров для участия не выявлено.",
+                lifecycle: .analysisReady,
+                needsAttention: true,
+                decision: .pending
+            ),
+            Procurement(
+                id: "DL-MOCK-002",
+                registryNumber: "0816500000626015086",
+                title: "Сбор и анализ реестровой части медицинской информационной системы",
+                customer: "Горная ЦРБ, Якутия",
+                nmckRub: 1_150_000.0,
+                deadline: .now.addingTimeInterval(60 * 60 * 24 * 4),
+                sourceURL: URL(string: "https://zakupki.gov.ru"),
+                recommendation: .review,
+                confidenceLabel: "MEDIUM",
+                goReasons: ["Работа соответствует профилю команды", "Технически реализуемо"],
+                noGoReasons: ["Неясны права на стороннее ПО"],
+                blockers: [],
+                unknowns: ["Подтвердить права и доступ к используемому ПО"],
+                risks: ["Зависимость от стороннего правообладателя"],
+                summary: "Подходит по профилю, но перед GO нужно подтвердить законный доступ к программному обеспечению.",
+                lifecycle: .analysisReady,
+                needsAttention: true,
+                decision: .pending
+            ),
+            Procurement(
+                id: "DL-MOCK-003",
+                registryNumber: "0158300034526000388",
+                title: "Разработка веб-сайта Молодёжного центра",
+                customer: "МБУ Аксайского района «Молодёжный центр»",
+                nmckRub: 650_000.0,
+                deadline: .now.addingTimeInterval(60 * 60 * 24),
+                sourceURL: URL(string: "https://zakupki.gov.ru"),
+                recommendation: .go,
+                confidenceLabel: "HIGH",
+                goReasons: ["Простой понятный предмет", "Нет критических требований к опыту", "Исполнение полностью в компетенции"],
+                noGoReasons: [],
+                blockers: [],
+                unknowns: [],
+                risks: ["Короткий срок исполнения"],
+                summary: "Типовая разработка сайта без критических технических или квалификационных блокеров.",
+                lifecycle: .submitted,
+                needsAttention: false,
+                decision: .go,
+                decisionComment: "Заявка уже подана."
+            ),
+            Procurement(
+                id: "DL-MOCK-004",
+                registryNumber: "0187200001726001304",
+                title: "Модуль пересечений земельных участков для АГИС «Аксиома»",
+                customer: "Департамент недропользования ХМАО — Югры",
+                nmckRub: 521_000.0,
+                deadline: .now.addingTimeInterval(60 * 60 * 12),
+                sourceURL: URL(string: "https://zakupki.gov.ru"),
+                recommendation: .go,
+                confidenceLabel: "HIGH",
+                goReasons: ["Исполнение подготовлено", "Требования изучены", "Экономика приемлема"],
+                noGoReasons: [],
+                blockers: [],
+                unknowns: [],
+                risks: ["Интеграция с существующей АГИС"],
+                summary: "Заявка подготовлена и подана через Росэлторг с ценой 399 000 ₽.",
+                lifecycle: .submitted,
+                needsAttention: false,
+                decision: .go,
+                decisionComment: "Подано через Росэлторг."
+            )
+        ]
+    }
+}

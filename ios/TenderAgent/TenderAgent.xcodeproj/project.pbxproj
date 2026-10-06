@@ -1,0 +1,490 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DC81C86275A7F63F6A0E79D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC006CED5D95401AA55F5192 /* SettingsView.swift */; };
+		20E45DDDE7C284356864313D /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD03EAF94FE53BF82E4A5103 /* InboxView.swift */; };
+		2154BB37893C4764D4F23621 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC0CF601A87129A01E05070 /* AppStore.swift */; };
+		29670F774487CF2C19240A83 /* MetricCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A068187644F40EAD3CE2CF0 /* MetricCard.swift */; };
+		38F8EA89A247320C6261C9C2 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F597DEEA9726A7F68E108DFE /* RootView.swift */; };
+		3FA75078E296829DD4A21EEE /* Procurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */; };
+		461A2123E5A53BB2E8BBC39F /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167630F2410F52C1B413A7F7 /* MockData.swift */; };
+		4B2DD51A08B482214F785F8D /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */; };
+		4E817B3599B477D8BDAA31E5 /* BackendCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */; };
+		4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */; };
+		6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */; };
+		8C8BF9F58E4BE090420C219C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */; };
+		E59636291B9C3F5D72A7302F /* TenderAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		17B7B6F94526092AEBBBE360 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 21031C22ECD254D8436CA179 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C971D4DF5B2DEF7F710117B;
+			remoteInfo = TenderAgent;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0A068187644F40EAD3CE2CF0 /* MetricCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricCard.swift; sourceTree = "<group>"; };
+		0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendCredentialStore.swift; sourceTree = "<group>"; };
+		10E8F574449E167BDD2D678D /* TenderAgentTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TenderAgentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		167630F2410F52C1B413A7F7 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		1DC0CF601A87129A01E05070 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreTests.swift; sourceTree = "<group>"; };
+		AD03EAF94FE53BF82E4A5103 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
+		B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Procurement.swift; sourceTree = "<group>"; };
+		BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
+		D849579AD346A4140F744DC0 /* TenderAgent.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TenderAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenderAgentApp.swift; sourceTree = "<group>"; };
+		E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenderAgentAPIClient.swift; sourceTree = "<group>"; };
+		F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurementDetailView.swift; sourceTree = "<group>"; };
+		F597DEEA9726A7F68E108DFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		FC006CED5D95401AA55F5192 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		189468A53AC224A3DC74283A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AD03EAF94FE53BF82E4A5103 /* InboxView.swift */,
+				BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */,
+				F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */,
+				F597DEEA9726A7F68E108DFE /* RootView.swift */,
+				FC006CED5D95401AA55F5192 /* SettingsView.swift */,
+				A92553882965DE7D9D82448F /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		449A45AE9BD96B6822FEBF34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D849579AD346A4140F744DC0 /* TenderAgent.app */,
+				10E8F574449E167BDD2D678D /* TenderAgentTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		45E318DB666E973828382138 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				1DC0CF601A87129A01E05070 /* AppStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		704C444AFA455E5AB6E6E133 = {
+			isa = PBXGroup;
+			children = (
+				7D023015803A25CA3E581875 /* TenderAgentApp */,
+				A5AFA0A6202882F02610B3FB /* TenderAgentAppTests */,
+				449A45AE9BD96B6822FEBF34 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7D023015803A25CA3E581875 /* TenderAgentApp */ = {
+			isa = PBXGroup;
+			children = (
+				D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */,
+				EC70BA1865DE658CB848B8DB /* Models */,
+				9E5EA4510BD56F678DD6550A /* Networking */,
+				45E318DB666E973828382138 /* Store */,
+				189468A53AC224A3DC74283A /* Views */,
+			);
+			path = TenderAgentApp;
+			sourceTree = "<group>";
+		};
+		9E5EA4510BD56F678DD6550A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */,
+				E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		A5AFA0A6202882F02610B3FB /* TenderAgentAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */,
+			);
+			path = TenderAgentAppTests;
+			sourceTree = "<group>";
+		};
+		A92553882965DE7D9D82448F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0A068187644F40EAD3CE2CF0 /* MetricCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		EC70BA1865DE658CB848B8DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				167630F2410F52C1B413A7F7 /* MockData.swift */,
+				B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3C971D4DF5B2DEF7F710117B /* TenderAgent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00B0698450ECEBD87B42788C /* Build configuration list for PBXNativeTarget "TenderAgent" */;
+			buildPhases = (
+				1FEAD17F3ABCE0679D79C902 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TenderAgent;
+			packageProductDependencies = (
+			);
+			productName = TenderAgent;
+			productReference = D849579AD346A4140F744DC0 /* TenderAgent.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7622D073EA16BC51726D899C /* TenderAgentTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28A95EFA7DCB800144183B9C /* Build configuration list for PBXNativeTarget "TenderAgentTests" */;
+			buildPhases = (
+				D9D45B6F164BCA084D893EDA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01E42A16D1796C25539CCB97 /* PBXTargetDependency */,
+			);
+			name = TenderAgentTests;
+			packageProductDependencies = (
+			);
+			productName = TenderAgentTests;
+			productReference = 10E8F574449E167BDD2D678D /* TenderAgentTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		21031C22ECD254D8436CA179 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					3C971D4DF5B2DEF7F710117B = {
+						DevelopmentTeam = VML75VY94V;
+						ProvisioningStyle = Automatic;
+					};
+					7622D073EA16BC51726D899C = {
+						DevelopmentTeam = VML75VY94V;
+					};
+				};
+			};
+			buildConfigurationList = DCABCF045E9B0EE4D47D6158 /* Build configuration list for PBXProject "TenderAgent" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 704C444AFA455E5AB6E6E133;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 449A45AE9BD96B6822FEBF34 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3C971D4DF5B2DEF7F710117B /* TenderAgent */,
+				7622D073EA16BC51726D899C /* TenderAgentTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FEAD17F3ABCE0679D79C902 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2154BB37893C4764D4F23621 /* AppStore.swift in Sources */,
+				4E817B3599B477D8BDAA31E5 /* BackendCredentialStore.swift in Sources */,
+				20E45DDDE7C284356864313D /* InboxView.swift in Sources */,
+				29670F774487CF2C19240A83 /* MetricCard.swift in Sources */,
+				461A2123E5A53BB2E8BBC39F /* MockData.swift in Sources */,
+				4B2DD51A08B482214F785F8D /* PortfolioView.swift in Sources */,
+				3FA75078E296829DD4A21EEE /* Procurement.swift in Sources */,
+				6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */,
+				38F8EA89A247320C6261C9C2 /* RootView.swift in Sources */,
+				0DC81C86275A7F63F6A0E79D /* SettingsView.swift in Sources */,
+				4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */,
+				E59636291B9C3F5D72A7302F /* TenderAgentApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9D45B6F164BCA084D893EDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C8BF9F58E4BE090420C219C /* AppStoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01E42A16D1796C25539CCB97 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C971D4DF5B2DEF7F710117B /* TenderAgent */;
+			targetProxy = 17B7B6F94526092AEBBBE360 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0689198E37D548ACD0C9BF01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tender Agent";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.arvectum.tenderagent;
+				PRODUCT_NAME = TenderAgent;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		19990A50C8760FF32BAF75F4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.arvectum.tenderagent.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TenderAgent.app/TenderAgent";
+			};
+			name = Release;
+		};
+		2637ADEE513BD263B4F172CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.arvectum.tenderagent.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TenderAgent.app/TenderAgent";
+			};
+			name = Debug;
+		};
+		5DC13B1F500C34C88977B15D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VML75VY94V;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 0.5.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		9A342FDDF35ABAE29C8A2777 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VML75VY94V;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 0.5.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A469CE2F9E976B044338ED78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tender Agent";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.arvectum.tenderagent;
+				PRODUCT_NAME = TenderAgent;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00B0698450ECEBD87B42788C /* Build configuration list for PBXNativeTarget "TenderAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0689198E37D548ACD0C9BF01 /* Debug */,
+				A469CE2F9E976B044338ED78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		28A95EFA7DCB800144183B9C /* Build configuration list for PBXNativeTarget "TenderAgentTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2637ADEE513BD263B4F172CF /* Debug */,
+				19990A50C8760FF32BAF75F4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DCABCF045E9B0EE4D47D6158 /* Build configuration list for PBXProject "TenderAgent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A342FDDF35ABAE29C8A2777 /* Debug */,
+				5DC13B1F500C34C88977B15D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 21031C22ECD254D8436CA179 /* Project object */;
+}
