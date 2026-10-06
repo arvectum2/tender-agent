@@ -1,35 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ROADMAP-SYNC-20261006-MOB1
+status: in_progress
+task_id: MOB-2-IOS-DECISIONS-001
 authority: OWNER_DIRECTIVE
-goal: Update the canonical roadmap after the explicit Owner-approved merge of MOB-1 / PR #171, without changing the historical snapshot or admitting a new development task.
+goal: "Deliver the second bounded ARV-044 mobile slice: explicit human GO / NO GO / DEFER actions from the native iPhone client, persisted through the existing mobile API into the canonical Tender Agent decision log and reflected in Procurement Portfolio."
 definition_of_done:
-- Record MOB-1 as completed and merged with PR #171 / merge 01b4be72d456185f1840f407aa36471a7622897a.
-- Update the ARV-044 current reconciliation overlay while preserving the immutable 2026-07-30 legacy snapshot.
-- Update the 2026-10-06 mobile delivery sequence so MOB-1 is visibly done and MOB-2 remains next/not admitted.
-- Reconcile the execution snapshot with the current queue: ARV-005 pilot remains in progress; MOB-1 is done.
-- Keep all human decision, ETP/signature/payment/external-action hard stops unchanged.
-- Validate YAML/markdown consistency, open a roadmap-only PR, and merge it under the current explicit Owner request.
+  - MOB-2 starts from current main with completed MOB-1 behavior preserved.
+  - Native SwiftUI procurement detail exposes explicit GO / NO GO / DEFER controls only as human-triggered actions.
+  - Mobile writes use the dedicated Bearer pairing boundary and the existing /mobile/v1 decision contract; no Basic Auth/password embedding.
+  - Successful decisions are audited in the canonical decision/event lifecycle and become visible after refresh in the mobile detail/portfolio projection.
+  - UI clearly represents submitting, success, validation failure, auth failure, and offline/network failure without silently mutating local state.
+  - Backend contract tests cover mobile decision writes and canonical portfolio visibility; focused iOS tests cover request/action state.
+  - Xcode project builds on current Xcode and focused tests pass on the connected iPhone or, if the device is unavailable, on the configured simulator with the device limitation recorded.
+  - No automatic procurement decision, ETP action, signature, payment, bid submission, or external communication is introduced.
+  - Roadmap/checkpoint are reconciled, exact-head CI is green, and the implementation is merged under this explicit Owner directive unless a real blocker appears.
 completed:
-- Owner explicitly instructed merge of PR #171 and clarified that the original intent was only to update the roadmap.
-- PR #171 exact-head CI 37518592972 succeeded and PR #171 was squash-merged as 01b4be72d456185f1840f407aa36471a7622897a.
-current: Completed; roadmap-only PR/merge bookkeeping remains.
-pending: []
-last_verified_commit: 81e04d2713164cea2ec1f7f6eeb3db85f1eefdd3
+  - Owner explicitly admitted MOB-2 on 2026-10-06.
+  - Preserved divergent local main commit on backup branch and reset working main to origin/main before creating the MOB-2 branch.
+current: Inspect current mobile decision API, canonical decision persistence, portfolio projection, and MOB-1 SwiftUI structure; then implement the smallest audited write path.
+pending:
+  - Inspect backend/mobile/portfolio decision flow and current tests.
+  - Implement iOS action UI and API client/store state.
+  - Add/adjust backend and iOS tests.
+  - Run focused backend + iOS build/tests and runtime boundary checks.
+  - Update roadmap/checkpoint, open PR, verify exact-head CI, and merge if green.
+last_verified_commit: "451a181dbf3997606a094e4a315bff0210bd52e0"
 test_results:
-- "PR #171 exact-head CI 37518592972: SUCCESS."
-- "Historical machine legacy registry preserved byte-for-byte: 93 IDs / 93 unique."
-- "Human Complete recovered roadmap section preserved byte-for-byte."
-- "Execution queue reconciliation: only ARV-005-CONTROLLED-PILOT-EVIDENCE-001 remains non-done."
-- "YAML parse PASS; git diff --check PASS."
-updated_at: '2026-10-06T22:31:00+03:00'
-resume_instruction: Task complete. Do not start MOB-2 from this sync; only merge the roadmap-only PR under the current explicit Owner request.
+  - "Not run yet for MOB-2."
+updated_at: '2026-10-06T23:05:00+03:00'
+resume_instruction: "Continue MOB-2 from current branch. First inspect the existing /mobile/v1 decision endpoint, canonical decision log/portfolio projection, and MOB-1 SwiftUI client; do not re-implement MOB-1. Then add the smallest explicit human-only decision write path and verify end-to-end."
 execution:
   claimed_by: ChatGPT interactive
-  execution_id: interactive-20261006-roadmap-sync-mob1
-  branch: owner/roadmap-sync-20261006-mob1
-  base_commit: 01b4be72d456185f1840f407aa36471a7622897a
+  execution_id: interactive-20261006-mob2
+  branch: feature/mob-2-ios-decisions-20261006
+  base_commit: "451a181dbf3997606a094e4a315bff0210bd52e0"
   issue: null
   manual_override: true
   lease_until: null
