@@ -6,6 +6,13 @@ struct SettingsView: View {
     @State private var baseURL = BackendCredentialStore.savedBaseURL
     @State private var pairingCode = ""
 
+    private var appVersion: String {
+        let version =
+            Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
+            as? String
+        return version ?? "0.7.0"
+    }
+
     var body: some View {
         Form {
             Section("Backend") {
@@ -67,21 +74,50 @@ struct SettingsView: View {
                 .disabled(!store.isLive)
 
                 Button("Сбросить подключение", role: .destructive) {
-                    store.disconnect()
-                    baseURL = BackendCredentialStore.defaultBaseURLString
-                    pairingCode = ""
+                    Task {
+                        await store.disconnect()
+                        baseURL = BackendCredentialStore.defaultBaseURLString
+                        pairingCode = ""
+                    }
                 }
             }
 
+            Section("Уведомления") {
+                LabeledContent("APNs", value: store.pushStatusLabel)
+
+                if let error = store.pushRegistrationError {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
+
+                Button("Включить уведомления") {
+                    Task {
+                        await store.requestPushNotifications()
+                    }
+                }
+
+                Text(
+                    "Уведомления открывают только отчёт или карточку закупки. "
+                        + "Push не принимает решение и не выполняет действие на ЭТП."
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+
             Section("Приложение") {
-                LabeledContent("Версия", value: "0.5.0-dev")
+                LabeledContent("Версия", value: "\(appVersion)-dev")
                 LabeledContent(
                     "Режим",
                     value: store.isLive ? "Live" : "Demo / offline"
                 )
-                Text("MOB-1 работает только на чтение. Решения и push-уведомления включаются отдельными этапами.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                Text(
+                    "MOB-3: live-отчёты, человеческие GO / NO GO / DEFER, "
+                        + "APNs-регистрация и безопасные deep links. "
+                        + "Подписание, оплата и отправка заявки остаются вне мобильного контура."
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
             }
         }
         .navigationTitle("Настройки")

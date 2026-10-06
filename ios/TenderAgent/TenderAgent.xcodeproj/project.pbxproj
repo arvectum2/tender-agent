@@ -19,6 +19,7 @@
 		4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */; };
 		6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */; };
 		8C8BF9F58E4BE090420C219C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */; };
+		BB3FC37DDE15B30267B43B37 /* PushNotificationSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62BD5F703EEBD96D89896A7 /* PushNotificationSupport.swift */; };
 		E59636291B9C3F5D72A7302F /* TenderAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,11 +40,14 @@
 		167630F2410F52C1B413A7F7 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		1DC0CF601A87129A01E05070 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreTests.swift; sourceTree = "<group>"; };
+		4E77160366E78EE18C2E31F0 /* TenderAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TenderAgent.entitlements; sourceTree = "<group>"; };
+		7054265C24E8B3F24BA62996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AD03EAF94FE53BF82E4A5103 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Procurement.swift; sourceTree = "<group>"; };
 		BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
 		D849579AD346A4140F744DC0 /* TenderAgent.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TenderAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenderAgentApp.swift; sourceTree = "<group>"; };
+		E62BD5F703EEBD96D89896A7 /* PushNotificationSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSupport.swift; sourceTree = "<group>"; };
 		E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenderAgentAPIClient.swift; sourceTree = "<group>"; };
 		F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurementDetailView.swift; sourceTree = "<group>"; };
 		F597DEEA9726A7F68E108DFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -81,6 +85,14 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		62FD728EBCC1EAE0DD735DB0 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				E62BD5F703EEBD96D89896A7 /* PushNotificationSupport.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		704C444AFA455E5AB6E6E133 = {
 			isa = PBXGroup;
 			children = (
@@ -93,9 +105,12 @@
 		7D023015803A25CA3E581875 /* TenderAgentApp */ = {
 			isa = PBXGroup;
 			children = (
+				7054265C24E8B3F24BA62996 /* Info.plist */,
+				4E77160366E78EE18C2E31F0 /* TenderAgent.entitlements */,
 				D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */,
 				EC70BA1865DE658CB848B8DB /* Models */,
 				9E5EA4510BD56F678DD6550A /* Networking */,
+				62FD728EBCC1EAE0DD735DB0 /* Notifications */,
 				45E318DB666E973828382138 /* Store */,
 				189468A53AC224A3DC74283A /* Views */,
 			);
@@ -225,6 +240,7 @@
 				4B2DD51A08B482214F785F8D /* PortfolioView.swift in Sources */,
 				3FA75078E296829DD4A21EEE /* Procurement.swift in Sources */,
 				6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */,
+				BB3FC37DDE15B30267B43B37 /* PushNotificationSupport.swift in Sources */,
 				38F8EA89A247320C6261C9C2 /* RootView.swift in Sources */,
 				0DC81C86275A7F63F6A0E79D /* SettingsView.swift in Sources */,
 				4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */,
@@ -255,13 +271,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TenderAgentApp/TenderAgent.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Tender Agent";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_FILE = TenderAgentApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -355,7 +368,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 0.6.0;
+				MARKETING_VERSION = 0.7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -420,7 +433,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 0.6.0;
+				MARKETING_VERSION = 0.7.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -436,13 +449,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TenderAgentApp/TenderAgent.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Tender Agent";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_FILE = TenderAgentApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -13,8 +13,11 @@ final class AppStore: ObservableObject {
     @Published private(set) var decisionMessage: String?
     @Published private(set) var decisionError: String?
     @Published private(set) var lastDecisionDealID: String?
+    @Published private(set) var pushStatusLabel = "Не запрошены"
+    @Published private(set) var pushRegistrationError: String?
 
     private var apiClient: TenderAgentAPIClient?
+    private var pendingAPNSToken: String?
 
     init(
         procurements: [Procurement] = MockData.procurements,
@@ -109,6 +112,7 @@ final class AppStore: ObservableObject {
             apiClient = TenderAgentAPIClient(configuration: configuration)
             lastError = nil
             await refresh()
+            await syncPendingPushToken()
         } catch {
             isLive = false
             isMockData = true
@@ -116,18 +120,31 @@ final class AppStore: ObservableObject {
         }
     }
 
-    func disconnect() {
+    func disconnect() async {
+        var revocationWarning: String?
+        if let apiClient {
+            do {
+                try await apiClient.revokeDevice(deviceID: BackendCredentialStore.deviceID)
+            } catch {
+                revocationWarning =
+                    "Локальное подключение сброшено, но push-регистрацию backend отозвать не удалось: \(error.localizedDescription)"
+            }
+        }
+
         BackendCredentialStore.clear()
         apiClient = nil
         procurements = MockData.procurements
         inboxSummary = nil
         isLive = false
         isMockData = true
-        lastError = nil
+        lastError = revocationWarning
         decisionInFlightID = nil
         decisionMessage = nil
         decisionError = nil
         lastDecisionDealID = nil
+        pendingAPNSToken = nil
+        pushStatusLabel = "Не подключено"
+        pushRegistrationError = revocationWarning
     }
 
     func refresh() async {
@@ -151,6 +168,55 @@ final class AppStore: ObservableObject {
         } catch {
             isLive = false
             lastError = error.localizedDescription
+        }
+    }
+
+    func restorePushRegistrationIfAuthorized() async {
+        let status = await PushNotificationRegistrar.registerIfAuthorized()
+        pushStatusLabel = PushNotificationRegistrar.statusLabel(status)
+    }
+
+    func requestPushNotifications() async {
+        pushRegistrationError = nil
+        let status = await PushNotificationRegistrar.requestAuthorization()
+        pushStatusLabel = PushNotificationRegistrar.statusLabel(status)
+    }
+
+    func receiveAPNSToken(_ token: String) async {
+        let trimmed = token.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            handlePushRegistrationFailure("iOS вернула пустой APNs token.")
+            return
+        }
+        pendingAPNSToken = trimmed
+        pushStatusLabel = "APNs token получен — синхронизация"
+        pushRegistrationError = nil
+        await syncPendingPushToken()
+    }
+
+    func handlePushRegistrationFailure(_ message: String) {
+        pushStatusLabel = "Ошибка APNs"
+        pushRegistrationError = message
+    }
+
+    @discardableResult
+    func ensureProcurementLoaded(id: String) async -> Bool {
+        if procurement(id: id) != nil {
+            return true
+        }
+        guard let apiClient, !isMockData else {
+            lastError = "Не удалось открыть закупку из push: live backend не подключён."
+            return false
+        }
+        do {
+            let item = try await apiClient.fetchProcurement(dealID: id)
+            upsert(Procurement.fromAPI(item))
+            isLive = true
+            lastError = nil
+            return true
+        } catch {
+            lastError = "Не удалось открыть закупку из push: \(error.localizedDescription)"
+            return false
         }
     }
 
@@ -202,11 +268,43 @@ final class AppStore: ObservableObject {
         }
     }
 
+    private func syncPendingPushToken() async {
+        guard let pendingAPNSToken else {
+            return
+        }
+        guard let apiClient, !isMockData else {
+            pushStatusLabel = "APNs готов — подключите backend"
+            return
+        }
+
+        do {
+            let registration = try await apiClient.registerDevice(
+                apnsToken: pendingAPNSToken,
+                environment: .current,
+                deviceName: BackendCredentialStore.deviceName,
+                appVersion: Self.appVersion
+            )
+            pushStatusLabel = registration.enabled
+                ? "Активны (\(registration.environment.rawValue))"
+                : "Отключены backend"
+            pushRegistrationError = nil
+        } catch {
+            pushStatusLabel = "Ошибка синхронизации push"
+            pushRegistrationError = error.localizedDescription
+        }
+    }
+
     private func upsert(_ procurement: Procurement) {
         if let index = procurements.firstIndex(where: { $0.id == procurement.id }) {
             procurements[index] = procurement
         } else {
             procurements.append(procurement)
         }
+    }
+
+    private static var appVersion: String? {
+        Bundle.main.object(
+            forInfoDictionaryKey: "CFBundleShortVersionString"
+        ) as? String
     }
 }

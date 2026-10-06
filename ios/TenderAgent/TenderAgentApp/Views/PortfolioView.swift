@@ -50,9 +50,6 @@ struct PortfolioView: View {
             .padding()
         }
         .navigationTitle("Портфель")
-        .navigationDestination(for: String.self) { id in
-            ProcurementDetailView(procurementID: id)
-        }
         .refreshable {
             await store.refresh()
         }

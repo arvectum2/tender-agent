@@ -47,9 +47,6 @@ struct InboxView: View {
             }
         }
         .navigationTitle("Tender Agent")
-        .navigationDestination(for: String.self) { id in
-            ProcurementDetailView(procurementID: id)
-        }
         .refreshable {
             await store.refresh()
         }

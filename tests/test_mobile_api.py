@@ -1,5 +1,9 @@
 from datetime import UTC, datetime, timedelta
 
+import httpx
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import ec
+
 from src.main import app
 from src.modules.deal_registry.models import Deal
 from src.modules.event_log.models import DecisionRecord
@@ -10,6 +14,18 @@ from src.modules.mobile_api.auth import (
     require_mobile_bearer,
     resolve_mobile_auth_secret,
     verify_mobile_token,
+)
+from src.modules.mobile_api.models import (
+    MobileDeviceAccess,
+    MobileDeviceRegistration,
+    MobilePushDelivery,
+)
+from src.modules.mobile_api.push import (
+    APNsSendResult,
+    build_mobile_push_payload,
+    dispatch_due_deferred_notifications,
+    dispatch_mobile_push_event,
+    send_apns_notification,
 )
 from src.shared.config.settings import Settings
 from src.shared.enums import DealStatus
@@ -96,6 +112,38 @@ def test_mobile_bearer_rejects_missing_token(client):
     response = client.get("/mobile/v1/inbox")
 
     assert response.status_code == 401
+
+
+def test_revoked_mobile_device_bearer_is_rejected(client, session):
+    app.dependency_overrides[get_mobile_auth_secret] = lambda: TEST_SECRET
+    code = pairing_code(TEST_SECRET)
+    paired = client.post(
+        "/mobile/v1/pair",
+        json={
+            "pairing_code": code,
+            "device_id": "device-revoke-auth-001",
+            "device_name": "Lost iPhone",
+        },
+    )
+    assert paired.status_code == 200
+    token = paired.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    assert client.get("/mobile/v1/inbox", headers=headers).status_code == 200
+    revoked = client.delete(
+        "/mobile/v1/devices/device-revoke-auth-001",
+        headers=headers,
+    )
+    assert revoked.status_code == 204
+
+    access = session.query(MobileDeviceAccess).one()
+    assert access.device_id == "device-revoke-auth-001"
+    assert access.is_revoked is True
+    assert access.revoked_at is not None
+
+    rejected = client.get("/mobile/v1/inbox", headers=headers)
+    assert rejected.status_code == 401
+    assert rejected.json()["detail"] == "Mobile device access was revoked."
 
 
 def test_mobile_token_expires():
@@ -226,3 +274,237 @@ def test_mobile_defer_requires_date(client, session):
         },
     )
     assert response.status_code == 422
+
+def test_mobile_device_registration_is_idempotent_and_never_echoes_token(client, session):
+    _allow_mobile("device-push-001")
+    first_token = "ab" * 32
+    response = client.post(
+        "/mobile/v1/devices",
+        json={
+            "apns_token": first_token,
+            "environment": "sandbox",
+            "device_name": "Test iPhone",
+            "app_version": "0.7.0",
+        },
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["device_id"] == "device-push-001"
+    assert body["environment"] == "sandbox"
+    assert body["enabled"] is True
+    assert "apns_token" not in body
+
+    second_token = "cd" * 32
+    repeated = client.post(
+        "/mobile/v1/devices",
+        json={
+            "apns_token": second_token,
+            "environment": "production",
+            "device_name": "Test iPhone renamed",
+            "app_version": "0.7.1",
+        },
+    )
+    assert repeated.status_code == 200
+    rows = session.query(MobileDeviceRegistration).all()
+    assert len(rows) == 1
+    assert rows[0].device_id == "device-push-001"
+    assert rows[0].apns_token == second_token
+    assert rows[0].apns_environment == "production"
+    assert rows[0].device_name == "Test iPhone renamed"
+
+
+def test_mobile_device_registration_rejects_invalid_apns_token(client):
+    _allow_mobile("device-push-invalid")
+    response = client.post(
+        "/mobile/v1/devices",
+        json={
+            "apns_token": "zz" * 32,
+            "environment": "sandbox",
+        },
+    )
+    assert response.status_code == 422
+
+
+def test_mobile_device_can_revoke_only_itself(client, session):
+    _allow_mobile("device-push-revoke")
+    register = client.post(
+        "/mobile/v1/devices",
+        json={
+            "apns_token": "ef" * 32,
+            "environment": "sandbox",
+        },
+    )
+    assert register.status_code == 200
+
+    forbidden = client.delete("/mobile/v1/devices/another-device")
+    assert forbidden.status_code == 403
+
+    revoked = client.delete("/mobile/v1/devices/device-push-revoke")
+    assert revoked.status_code == 204
+    row = session.query(MobileDeviceRegistration).one()
+    assert row.is_enabled is False
+    assert row.apns_token == ""
+
+
+def test_mobile_push_payload_deep_links_to_procurement_and_digest():
+    procurement = build_mobile_push_payload(
+        event_type="REPORT_READY",
+        title="Отчёт готов",
+        body="Проверьте закупку",
+        deal_id="DL-MOB-PUSH-001",
+    )
+    assert procurement["event_type"] == "REPORT_READY"
+    assert procurement["deal_id"] == "DL-MOB-PUSH-001"
+    assert procurement["deep_link"] == "tenderagent://procurement/DL-MOB-PUSH-001"
+
+    digest = build_mobile_push_payload(
+        event_type="DEADLINE_RISK",
+        title="Срок",
+        body="Есть закупки с близким сроком",
+    )
+    assert digest["deep_link"] == "tenderagent://digest"
+    assert "deal_id" not in digest
+
+
+def test_apns_sender_uses_http2_token_auth_and_expected_topic(tmp_path):
+    private_key = ec.generate_private_key(ec.SECP256R1())
+    key_path = tmp_path / "AuthKey_TEST.p8"
+    key_path.write_bytes(
+        private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption(),
+        )
+    )
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["url"] = str(request.url)
+        captured["authorization"] = request.headers["authorization"]
+        captured["topic"] = request.headers["apns-topic"]
+        captured["push_type"] = request.headers["apns-push-type"]
+        return httpx.Response(
+            200,
+            headers={"apns-id": "apns-mock-001"},
+            request=request,
+        )
+
+    settings = Settings(
+        _env_file=None,
+        mobile_apns_enabled=True,
+        mobile_apns_team_id="TEAM123456",
+        mobile_apns_key_id="KEY1234567",
+        mobile_apns_private_key_path=str(key_path),
+        mobile_apns_bundle_id="com.arvectum.tenderagent",
+    )
+    result = send_apns_notification(
+        token="ab" * 32,
+        environment="sandbox",
+        payload=build_mobile_push_payload(
+            event_type="REPORT_READY",
+            title="Отчёт готов",
+            body="Проверьте закупку",
+            deal_id="DL-MOB-APNS-001",
+        ),
+        settings=settings,
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert result.ok is True
+    assert result.apns_id == "apns-mock-001"
+    assert captured["url"].startswith(
+        "https://api.sandbox.push.apple.com/3/device/"
+    )
+    assert captured["authorization"].startswith("bearer ")
+    assert captured["topic"] == "com.arvectum.tenderagent"
+    assert captured["push_type"] == "alert"
+
+
+def test_mobile_push_delivery_is_idempotent_per_device_and_source(client, session):
+    _allow_mobile("device-push-send")
+    register = client.post(
+        "/mobile/v1/devices",
+        json={
+            "apns_token": "12" * 32,
+            "environment": "sandbox",
+        },
+    )
+    assert register.status_code == 200
+
+    calls = []
+
+    def fake_sender(registration, payload):
+        calls.append((registration.device_id, payload["deep_link"]))
+        return APNsSendResult(ok=True, status_code=200, apns_id="apns-test-1")
+
+    first = dispatch_mobile_push_event(
+        session,
+        event_type="REPORT_READY",
+        source_key="report-ready-source-1",
+        title="Новый отчёт",
+        body="Tender 3005",
+        deal_id="DL-MOB-005",
+        sender=fake_sender,
+    )
+    second = dispatch_mobile_push_event(
+        session,
+        event_type="REPORT_READY",
+        source_key="report-ready-source-1",
+        title="Новый отчёт",
+        body="Tender 3005",
+        deal_id="DL-MOB-005",
+        sender=fake_sender,
+    )
+
+    assert first.sent == 1
+    assert second.duplicate == 1
+    assert calls == [
+        ("device-push-send", "tenderagent://procurement/DL-MOB-005")
+    ]
+    deliveries = session.query(MobilePushDelivery).all()
+    assert len(deliveries) == 1
+    assert deliveries[0].status == "SENT"
+    assert deliveries[0].attempts == 1
+
+
+def test_due_deferred_decision_dispatches_deep_linked_push(client, session):
+    _allow_mobile("device-push-due")
+    deal = _deal("DL-MOB-006", "3006")
+    session.add(deal)
+    session.commit()
+    register = client.post(
+        "/mobile/v1/devices",
+        json={
+            "apns_token": "34" * 32,
+            "environment": "sandbox",
+        },
+    )
+    assert register.status_code == 200
+
+    deferred_until = datetime.now(UTC) - timedelta(minutes=1)
+    decision = client.post(
+        f"/mobile/v1/procurements/{deal.deal_id}/decision",
+        json={
+            "action": "DEFER",
+            "deferred_until": deferred_until.isoformat(),
+            "idempotency_key": "mobile-due-3006",
+        },
+    )
+    assert decision.status_code == 200
+
+    payloads = []
+
+    def fake_sender(registration, payload):
+        payloads.append(payload)
+        return APNsSendResult(ok=True, status_code=200, apns_id="apns-due-1")
+
+    summaries = dispatch_due_deferred_notifications(
+        session,
+        now=datetime.now(UTC),
+        sender=fake_sender,
+    )
+    assert len(summaries) == 1
+    assert summaries[0].sent == 1
+    assert payloads[0]["event_type"] == "DEFERRED_DUE"
+    assert payloads[0]["deal_id"] == deal.deal_id
+    assert payloads[0]["deep_link"] == f"tenderagent://procurement/{deal.deal_id}"

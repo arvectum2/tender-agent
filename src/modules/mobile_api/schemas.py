@@ -11,6 +11,7 @@ from src.shared.types.common import APIModel
 MobileDecisionAction = Literal["GO", "NO_GO", "DEFER"]
 MobileHumanDecision = Literal["PENDING", "GO", "NO_GO", "DEFER"]
 MobileRecommendation = Literal["GO", "NO_GO", "NEEDS_REVIEW", "UNDECIDED"]
+MobileAPNsEnvironment = Literal["sandbox", "production"]
 
 
 class MobileDecisionRequest(APIModel):
@@ -42,6 +43,23 @@ class MobilePairResponse(APIModel):
     token_type: Literal["bearer"] = "bearer"
     expires_at: datetime
     device_id: str
+
+
+class MobileDeviceRegistrationRequest(APIModel):
+    apns_token: str = Field(min_length=32, max_length=256)
+    environment: MobileAPNsEnvironment
+    device_name: str | None = Field(default=None, max_length=128)
+    app_version: str | None = Field(default=None, max_length=64)
+
+
+class MobileDeviceRegistrationResponse(APIModel):
+    device_id: str
+    environment: MobileAPNsEnvironment
+    device_name: str | None = None
+    app_version: str | None = None
+    enabled: bool
+    registered_at: datetime
+    updated_at: datetime
 
 
 class MobileProcurementItemResponse(APIModel):
