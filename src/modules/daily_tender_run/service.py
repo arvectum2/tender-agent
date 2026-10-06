@@ -335,6 +335,25 @@ def _screen(session: Session, run: DailyTenderRun, profile: DailyTenderProfile) 
         item.updated_at = utcnow()
         session.add(item)
 
+    # SessionLocal deliberately uses autoflush=False. Flush screening decisions
+    # before querying them, otherwise the DB still sees the pre-screen
+    # DISCOVERED statuses and the deep-analysis cap is silently bypassed.
+    session.flush()
+    run_items = list(
+        session.scalars(
+            select(DailyTenderRunItem).where(DailyTenderRunItem.run_id == run.run_id)
+        )
+    )
+    reserved_ids = {
+        item.id
+        for item in run_items
+        if item.status in {"PROCESSING", "MANAGER_READY"}
+        or item.analysis_run_id is not None
+    }
+    available_shortlist_slots = max(
+        0,
+        profile.max_deep_analysis - len(reserved_ids),
+    )
     shortlisted = list(
         session.scalars(
             select(DailyTenderRunItem)
@@ -348,7 +367,7 @@ def _screen(session: Session, run: DailyTenderRun, profile: DailyTenderProfile) 
             )
         )
     )
-    for item in shortlisted[profile.max_deep_analysis :]:
+    for item in shortlisted[available_shortlist_slots:]:
         item.status = "SCREENED_OUT"
         item.screening_status = "OUT"
         item.screening_reasons_json = [
