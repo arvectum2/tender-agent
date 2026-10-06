@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: DTR-DATA-PLATFORM-AUTONOMY-001
 authority: OWNER_DIRECTIVE
 goal: Turn the proven manual daily tender-selection workflow into a durable autonomous Daily Tender Run that uses Data Platform for procurement document indexing/retrieval and leaves GO/NO GO/DEFER to the human manager.
@@ -30,23 +30,27 @@ completed:
   - Live deployment reached migration 100_add_daily_tender_runs; backend and Data Platform health are green; DTR routes/tables verified.
   - Verified backup /Users/master/arvectum-backups/tender-agent/20261006-153415 including PostgreSQL dump before migration.
   - Initial production run exposed shortlist cap bypass because SessionLocal has autoflush=False; run and scheduler were stopped before continuing broad analysis.
-current: Live deployment exposed an autoflush-related shortlist-cap defect. Scheduler is temporarily unloaded while the cap/resume fix is implemented and verified.
-remaining:
-  - Verify shortlist cap/resume fix with focused regression tests.
-  - Merge the bounded fix after review/CI under the active interactive Owner-directed deployment task.
-  - Fast-forward runtime, resume the interrupted production run with the corrected cap, reinstall the 08:00 Europe/Moscow daily launchd trigger, and verify health.
-  - Mark the canonical checkpoint completed with final deployment evidence.
-last_verified_commit: 2e4854769732710efc81fa95ea20133934210b19
+  - PR #165 fixed the autoflush/deep-analysis-cap defect and merged as 00df6f0c6d6219b9301cd3f9372566377630e366.
+  - Production deployment completed on Mac mini: runtime fast-forwarded to 00df6f0, backend healthy, Data Platform v0.6.0 healthy, PostgreSQL restored after Docker Desktop recovery, migration 100 remains head.
+  - Live resumed run DTR-20261006T153629Z-60b82733 verified at exactly 20 active deep-analysis slots (1 PROCESSING + 19 SHORTLISTED), with 26 screened out by the fixed cap and no failed items at verification time.
+  - Daily operational launchd trigger com.arvectum.daily-tender-run is installed for 08:00 Europe/Moscow; wrapper self-heals Docker/PostgreSQL, prevents overlapping scheduled runs, and leaves all procurement decisions/actions human-controlled.
+current: Deployment complete; first production Daily Tender Run is continuing asynchronously under the fixed 20-item deep-analysis cap.
+remaining: []
+last_verified_commit: 00df6f0c6d6219b9301cd3f9372566377630e366
 last_tests:
+  - Live deployment: backend /health PASS; Data Platform /health PASS (v0.6.0); PostgreSQL select 1 PASS; alembic 100_add_daily_tender_runs head.
+  - Live cap verification after PR #165: active=20 (1 PROCESSING + 19 SHORTLISTED), SCREENED_OUT=26, failed=0.
+  - Local scheduler: com.arvectum.daily-tender-run loaded at 08:00 Europe/Moscow; wrapper --help does not create a run.
+  - Pre-migration verified backup: /Users/master/arvectum-backups/tender-agent/20261006-153415.
   - 97 focused/regression-relevant tests passed, 15 warnings.
   - Migration 100 isolated SQLite upgrade/downgrade smoke: PASS.
   - Live DTR smoke DTR-LIVE-SMOKE-20261006-B: WAITING_HUMAN, 1 discovered, 1 deep analyzed, 0 failed, recommendation NEEDS_REVIEW, analysis_status completed.
   - Ruff on src/modules/daily_tender_run, src/modules/mobile_api, scripts/run_daily_tender_run.py, tests/test_daily_tender_run.py: PASS.
   - py_compile on DTR/mobile/CLI: PASS.
   - git diff --check: PASS.
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/tender-dtr-cap-fix. Verify the autoflush/deep-analysis-cap fix, then complete the current interactive Owner-directed deployment: merge the bounded fix after green CI/review, fast-forward AI-Corporation-next, resume DTR-20261006T153629Z-60b82733, and reinstall the daily 08:00 Europe/Moscow trigger. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
+resume_instruction: Task completed. On a future request, read this checkpoint and the current production Daily Tender Run/digest; do not repeat deployment. Adjust profile/schedule or post-decision automation only as a new bounded task. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
 execution:
   claimed_by: ChatGPT interactive
-  branch: fix/dtr-shortlist-cap
-  base_commit: 1825ad973fa9921b76a6adfeb4b5bdabc6db641c
+  branch: chore/dtr-deployment-checkpoint
+  base_commit: 00df6f0c6d6219b9301cd3f9372566377630e366
   manual_override: true
