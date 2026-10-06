@@ -35,22 +35,21 @@ completed:
   - Fresh v2 run continues autonomously; human GO/NO GO/DEFER gate remains unchanged.
 current: Completed. arvectum-it v2 is merged/deployed; both production history defects are fixed; fresh v2 run is resumed and has produced two MANAGER_READY items with persisted Data Platform analysis history; 08:00 scheduler is re-enabled.
 remaining: []
-last_verified_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee de2b0159175c45c28e94fee52360da4ea6dbde41
+last_verified_commit: 8ce399aea45089b11506effff14e22ceca2bf605
 last_tests:
+  - Canonical completion checkpoint merged as PR #169; runtime metadata fast-forwarded to 8ce399aea45089b11506effff14e22ceca2bf605.
+  - Fresh v2 production run remains RUNNING with two MANAGER_READY items, one PROCESSING item, seven SHORTLISTED, twelve SCREENED_OUT and five DUPLICATE at final checkpoint verification.
   - PR #168 exact-head CI: all checks completed, no failures.
   - 56 focused DTR/RAG/mobile tests passed after history-source fix; Ruff, py_compile and git diff --check passed.
   - Second post-fix live item 0335200007526000126: completed, MANAGER_READY, analysis_run_id=49db2094-329b-4fa6-9286-cc3b54d9e222, history source=daily_tender_run.
   - Scheduler verification: com.arvectum.daily-tender-run loaded, Hour=8, Minute=0, RunAtLoad=false.
-  - Fresh v2 run first item 0358200040626000014: analysis_status=completed, MANAGER_READY, recommendation=NEEDS_REVIEW; history save rejected source length >32 without poisoning the Session.
-  - Scheduler remains disabled and no DTR worker is running while this second bug is fixed.
   - 102 broader DTR/Data Platform/mobile/portfolio regression tests passed; Ruff and diff checks passed.
   - Fresh direct analysis import registers tender_analysis_runs, customer_profiles, pilot_projects and procurement_cases.
   - "Live diagnostic 0358200040626000014: completed, Data Platform hybrid, 10 sections, 15 sources, history persisted, Session usable."
   - "v2 replay: 46 existing items -> 5 deep-analysis candidates; fresh EIS: 27 unique -> 11 candidates, 0 search errors."
-  - Scheduler paused pending v2 merge/deploy so the old profile v1 cannot start another automatic run at 08:00.
 resume_instruction: Task completed. Do not repeat the v2 migration or failure-recovery work. For future tuning, start a new bounded task from the deployed arvectum-it v2 profile and inspect the latest DTR digest/results first. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or payment.
 execution:
   claimed_by: ChatGPT interactive
-  branch: chore/dtr-v2-finalize
-  base_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee
+  branch: chore/dtr-v2-checkpoint-cleanup
+  base_commit: 8ce399aea45089b11506effff14e22ceca2bf605
   manual_override: true
