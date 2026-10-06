@@ -15,6 +15,7 @@
 		3FA75078E296829DD4A21EEE /* Procurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */; };
 		461A2123E5A53BB2E8BBC39F /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167630F2410F52C1B413A7F7 /* MockData.swift */; };
 		4B2DD51A08B482214F785F8D /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */; };
+		4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */; };
 		6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */; };
 		8C8BF9F58E4BE090420C219C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */; };
 		E59636291B9C3F5D72A7302F /* TenderAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */; };
@@ -41,6 +42,7 @@
 		BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
 		D849579AD346A4140F744DC0 /* TenderAgent.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TenderAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenderAgentApp.swift; sourceTree = "<group>"; };
+		E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenderAgentAPIClient.swift; sourceTree = "<group>"; };
 		F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurementDetailView.swift; sourceTree = "<group>"; };
 		F597DEEA9726A7F68E108DFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		FC006CED5D95401AA55F5192 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -91,10 +93,19 @@
 			children = (
 				D915C6B202A84FE1587C0E23 /* TenderAgentApp.swift */,
 				EC70BA1865DE658CB848B8DB /* Models */,
+				9E5EA4510BD56F678DD6550A /* Networking */,
 				45E318DB666E973828382138 /* Store */,
 				189468A53AC224A3DC74283A /* Views */,
 			);
 			path = TenderAgentApp;
+			sourceTree = "<group>";
+		};
+		9E5EA4510BD56F678DD6550A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		A5AFA0A6202882F02610B3FB /* TenderAgentAppTests */ = {
@@ -212,6 +223,7 @@
 				6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */,
 				38F8EA89A247320C6261C9C2 /* RootView.swift in Sources */,
 				0DC81C86275A7F63F6A0E79D /* SettingsView.swift in Sources */,
+				4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */,
 				E59636291B9C3F5D72A7302F /* TenderAgentApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

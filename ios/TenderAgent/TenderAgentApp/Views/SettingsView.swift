@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject private var store: AppStore
     @State private var reportPush = true
     @State private var changePush = true
     @State private var resultPush = true
@@ -9,15 +10,30 @@ struct SettingsView: View {
         Form {
             Section("Backend") {
                 LabeledContent("Mac mini") {
-                    Label("Подключено", systemImage: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
+                    Label(
+                        store.isLive ? "Подключено" : "Не подключено",
+                        systemImage: store.isLive ? "checkmark.circle.fill" : "exclamationmark.circle"
+                    )
+                    .foregroundStyle(store.isLive ? .green : .orange)
                 }
                 LabeledContent("Канал") {
-                    Text("Tailscale")
+                    Text("Tailscale / local dev")
                 }
                 LabeledContent("API") {
-                    Text("Mock")
+                    Text(store.connectionLabel)
                         .foregroundStyle(.secondary)
+                }
+
+                if let error = store.lastError {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
+
+                Button("Обновить") {
+                    Task {
+                        await store.refresh()
+                    }
                 }
             }
 
@@ -28,8 +44,8 @@ struct SettingsView: View {
             }
 
             Section("Приложение") {
-                LabeledContent("Версия", value: "0.1.0-dev")
-                LabeledContent("Режим", value: "Mock data")
+                LabeledContent("Версия", value: "0.2.0-dev")
+                LabeledContent("Режим", value: store.isLive ? "Live" : "Mock fallback")
             }
         }
         .navigationTitle("Настройки")

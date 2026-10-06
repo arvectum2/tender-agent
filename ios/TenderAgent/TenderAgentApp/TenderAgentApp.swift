@@ -8,6 +8,9 @@ struct TenderAgentApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(store)
+                .task {
+                    await store.refresh()
+                }
         }
     }
 }

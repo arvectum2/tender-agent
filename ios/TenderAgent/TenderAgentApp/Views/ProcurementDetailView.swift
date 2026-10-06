@@ -69,7 +69,7 @@ struct ProcurementDetailView: View {
             HStack {
                 Label(procurement.formattedNMCK, systemImage: "rublesign.circle")
                 Spacer()
-                Label("\(procurement.daysUntilDeadline) дн. до срока", systemImage: "clock")
+                Label(procurement.deadline.map { _ in "\(procurement.deadlineText) до срока" } ?? procurement.deadlineText, systemImage: "clock")
             }
             .font(.subheadline)
         }
@@ -84,11 +84,15 @@ struct ProcurementDetailView: View {
                 Text(procurement.recommendation.rawValue)
                     .font(.title2.bold())
                 Spacer()
-                Text("\(Int(procurement.confidence * 100))% уверенность")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                if let confidence = procurement.confidence {
+                    Text("\(Int(confidence * 100))% уверенность")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
-            ProgressView(value: procurement.confidence)
+            if let confidence = procurement.confidence {
+                ProgressView(value: confidence)
+            }
         }
         .padding()
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
@@ -120,7 +124,9 @@ struct ProcurementDetailView: View {
     private func decisionBar(_ procurement: Procurement) -> some View {
         HStack(spacing: 10) {
             Button("NO GO") {
-                store.setDecision(.noGo, for: procurement.id)
+                Task {
+                    await store.submitDecision(.noGo, for: procurement.id)
+                }
             }
             .buttonStyle(.bordered)
             .tint(.red)
@@ -131,7 +137,9 @@ struct ProcurementDetailView: View {
             .buttonStyle(.bordered)
 
             Button("GO") {
-                store.setDecision(.go, for: procurement.id)
+                Task {
+                    await store.submitDecision(.go, for: procurement.id)
+                }
             }
             .buttonStyle(.borderedProminent)
             .tint(.green)
@@ -159,7 +167,13 @@ struct ProcurementDetailView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Готово") {
-                        store.setDecision(.deferred, for: procurement.id, deferredUntil: deferUntil)
+                        Task {
+                            await store.submitDecision(
+                                .deferred,
+                                for: procurement.id,
+                                deferredUntil: deferUntil
+                            )
+                        }
                         showDeferSheet = false
                     }
                 }

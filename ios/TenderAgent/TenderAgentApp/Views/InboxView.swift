@@ -108,7 +108,7 @@ private struct ProcurementRow: View {
             HStack {
                 Label(procurement.formattedNMCK, systemImage: "rublesign.circle")
                 Spacer()
-                Label("\(procurement.daysUntilDeadline) дн.", systemImage: "clock")
+                Label(procurement.deadlineText, systemImage: "clock")
             }
             .font(.caption)
             .foregroundStyle(.secondary)
@@ -125,6 +125,7 @@ struct RecommendationBadge: View {
         case .go: .green
         case .noGo: .red
         case .review: .orange
+        case .undecided: .secondary
         }
     }
 

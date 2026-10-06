@@ -32,7 +32,7 @@ final class AppStoreTests: XCTestCase {
             registryNumber: "0000000000000000001",
             title: "Тестовая закупка",
             customer: "Тестовый заказчик",
-            nmckRub: 100_000,
+            nmckRub: 100_000.0,
             deadline: .now.addingTimeInterval(86_400),
             sourceURL: nil,
             recommendation: .go,
