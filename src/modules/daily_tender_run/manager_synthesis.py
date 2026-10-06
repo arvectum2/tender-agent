@@ -117,6 +117,7 @@ def synthesize_manager_brief(
     customer_name: str | None,
     nmck_amount: float | None,
     deadline_text: str | None,
+    selection_policy: dict[str, list[str]] | None = None,
     use_llm: bool = True,
 ) -> ManagerSynthesis:
     if not str(analysis.status).startswith("completed"):
@@ -145,8 +146,12 @@ def synthesize_manager_brief(
                     "Ты внутренний тендерный аналитик ООО «Арвектум». Сформируй только JSON по заданной схеме. "
                     "Используй исключительно переданный source-grounded анализ закупки. Не додумывай факты. "
                     "Если существенный факт не подтверждён, внеси его в unknowns и выбери NEEDS_REVIEW. "
-                    "NO_GO допустим только при явном существенном блокере из источников. "
+                    "Применяй переданную selection_policy как правила отбора Арвектум. "
+                    "NO_GO допустим только при явном существенном hard_blocker, подтверждённом источниками. "
+                    "Если blocker или review_signal требует знания о возможностях Арвектум, которого нет в анализе, "
+                    "выбирай NEEDS_REVIEW, а не додумывай отсутствие возможности. "
                     "GO допустим только когда нет существенных блокеров и критичных неизвестных. "
+                    "Признаки из non_blockers сами по себе не являются причиной NO_GO. "
                     "Это рекомендация для руководителя, а не разрешение на подачу заявки. "
                     "Никогда не разрешай отправку заявки, подписание, оплату или иное внешнее действие."
                 ),
@@ -163,6 +168,7 @@ def synthesize_manager_brief(
                         "analysis_status": analysis.status,
                         "analysis_warnings": analysis.warnings,
                         "analysis_errors": analysis.errors,
+                        "selection_policy": selection_policy or {},
                         "sections": section_payload,
                     },
                     ensure_ascii=False,

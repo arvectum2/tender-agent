@@ -37,6 +37,16 @@ Implemented in feature/daily-tender-run-autonomy:
 
 The implemented contour stops at WAIT_HUMAN. It does not submit applications, log into ETPs, sign, pay, or replace the manager's GO / NO GO / DEFER decision.
 
+## Arvectum IT screening profile v2 — 2026-10-06
+
+The arvectum-it profile is calibrated to the manual selection workflow used on 2026-10-05 rather than to generic IT procurement volume.
+
+Cheap screening now prioritizes custom software/site/GIS/module/integration work and rejects obvious non-target work before documents and LLM analysis: pure vendor support, ready-made license-right supply, hardware/crypto/security-infrastructure supply without a strong custom-development component, non-IT work, expired deadlines, and contracts above the current hard scale ceiling. NMCK above the preferred scale remains a ranking/review signal before the hard ceiling.
+
+The deep-analysis decision policy then checks the factors used manually: mandatory vendor rights/partner status, participant licenses/SRO/certification, qualification-heavy narrow experience, onsite work, FSTEK/FSB/SKZI/attestation, security/cash-gap economics, source-code/data/API/access dependencies, acceptance clarity and execution deadline. Exclusive-rights transfer, remote region and no advance are not blockers by themselves.
+
+The screening profile does not make the manager decision. It decides what deserves expensive analysis; the final agent recommendation remains advisory and GO / NO GO / DEFER remains human.
+
 ## Daily Tender Run
 
 DailyTenderRun is a durable orchestration record, not an ephemeral cron script.
