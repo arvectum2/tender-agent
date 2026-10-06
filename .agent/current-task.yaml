@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: MOB-1-IOS-INBOX-001
 authority: OWNER_DIRECTIVE
 goal: "Deliver the first bounded ARV-044 mobile slice: a native SwiftUI iPhone read-only inbox and procurement summary connected to the current Tender Agent mobile API on the Mac mini."
@@ -21,26 +21,29 @@ completed:
 - Added app build/version metadata and regenerated the Xcode project.
 - Verified generic iOS Simulator build-for-testing succeeds on Xcode 27.0.
 - "Verified focused AppStoreTests on the connected iPhone: 2 tests passed, 0 failed."
+- "Verified backend mobile contract tests: 9 passed."
+- "Verified Mac mini runtime boundary: /health=200 and unauthenticated /mobile/v1/inbox=401 Mobile bearer token required."
 - Verified git diff --check passes and no decision-write method/button remains in the MOB-1 app/test sources.
-current: Commit and push the verified MOB-1 implementation, then open a review-ready PR and evaluate exact-head CI.
-pending:
-- Commit verified implementation/checkpoint changes.
-- Push branch and open review-ready PR.
-- Check exact-head GitHub CI and record the result.
-- Mark task completed once the review-ready PR and verification evidence are durable.
-last_verified_commit: 9fee7d6
+- Opened review-ready PR #171 at implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300.
+- "Exact-head GitHub CI run 37517210451 for implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300 completed SUCCESS 9/9."
+current: Completed. MOB-1 is review-ready in PR #171; merge remains blocked while Company AM-4 is review-due at 10/10.
+pending: []
+last_verified_commit: da9a7f0dd1df7d957856a0405c525ad6c74f5300
 test_results:
 - "PASS: xcodegen generate"
 - "PASS: xcodebuild generic iOS Simulator build-for-testing on Xcode 27.0"
 - "PASS: focused physical-iPhone AppStoreTests — 2 passed, 0 failed"
+- "PASS: backend tests/test_mobile_api.py — 9 passed"
+- "PASS: runtime auth boundary — health 200; unauthenticated mobile inbox 401"
 - "PASS: git diff --check"
-updated_at: '2026-10-06T21:58:00+03:00'
-resume_instruction: Commit and push the verified MOB-1 implementation, open a review-ready PR to main, check exact-head CI, then mark this checkpoint completed without merging while AM-4 remains review-due.
+- "PASS: exact-head GitHub CI 37517210451 — 9/9 jobs"
+updated_at: '2026-10-06T22:22:04+03:00'
+resume_instruction: Task completed. Do not reopen MOB-1. Keep PR #171 review-ready and unmerged until the Company AM-4 review-due condition is resolved or the Product Owner gives a separately valid merge authorization. The next mobile slice is MOB-2 and must be admitted separately.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20261006-mob1
+  claimed_by: null
+  execution_id: null
   branch: feature/mob-1-ios-inbox-20261006
   base_commit: f130703e019eaa64ca1c399ddfabd45c4b6f4d08
   issue: null
-  manual_override: true
+  manual_override: false
   lease_until: null
