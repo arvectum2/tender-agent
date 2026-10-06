@@ -3,31 +3,39 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: MOB-1-IOS-INBOX-001
 authority: OWNER_DIRECTIVE
-goal: Deliver the first bounded ARV-044 mobile slice: a native SwiftUI iPhone read-only inbox and procurement summary connected to the current Tender Agent mobile API on the Mac mini.
+goal: "Deliver the first bounded ARV-044 mobile slice: a native SwiftUI iPhone read-only inbox and procurement summary connected to the current Tender Agent mobile API on the Mac mini."
 definition_of_done:
 - Existing feature/tender-agent-ios work is reconciled with current main without losing completed DTR/mobile API changes.
 - App uses the existing mobile bearer pairing boundary and Keychain token storage; no pilot Basic Auth/password embedding.
 - Inbox and procurement detail use the current /mobile/v1 contract and clearly distinguish live data from mock/offline fallback.
-- MOB-1 remains read-only: no GO/NO GO/DEFER requirement for this slice even if legacy branch code already contains decision methods.
-- Xcode project generates/builds on current Xcode; focused unit tests pass.
+- "MOB-1 is read-only: no GO/NO GO/DEFER write path is exposed by the app slice."
+- Xcode project generates/builds on current Xcode; focused unit tests pass on the connected iPhone.
 - No ETP action, signature, payment, procurement decision automation, production mutation, or external communication is introduced.
 - Prepare a review-ready PR; do not merge while Company AM-4 remains review-due at 10/10.
 completed:
-- Reconciled existing feature/tender-agent-ios branch with current main at merge commit 986f039.
-- Confirmed current main exposes /mobile/v1/inbox, /mobile/v1/digest/latest, /mobile/v1/portfolio and pairing/decision endpoints.
-- Confirmed existing iOS branch already contains SwiftUI inbox/detail, bearer pairing client and Keychain credential storage.
-current: Validate the rebased/reconciled iOS client against the current mobile API contract and current Xcode, then close any MOB-1 gaps.
+- Reconciled existing feature/tender-agent-ios work with current main at merge commit 986f039.
+- Confirmed current main exposes the mobile pairing/inbox/digest/portfolio contract.
+- Switched the app to the manager-attention inbox endpoint and aligned Swift models with current recommendation evidence fields.
+- Made live/demo/offline state explicit and removed GO/NO GO/DEFER write methods and visible decision controls from MOB-1.
+- Preserved dedicated mobile Bearer pairing with Keychain token storage and fixed Xcode 27 actor-isolation warning on device name.
+- Added app build/version metadata and regenerated the Xcode project.
+- Verified generic iOS Simulator build-for-testing succeeds on Xcode 27.0.
+- "Verified focused AppStoreTests on the connected iPhone: 2 tests passed, 0 failed."
+- Verified git diff --check passes and no decision-write method/button remains in the MOB-1 app/test sources.
+current: Commit and push the verified MOB-1 implementation, then open a review-ready PR and evaluate exact-head CI.
 pending:
-- Generate/build the Xcode project on current Xcode.
-- Run iOS unit tests.
-- Compare Swift Decodable models against current backend schemas and fix mismatches.
-- Make live-vs-mock state explicit and keep MOB-1 read-only in the visible UX.
-- Update iOS README/checkpoint with verified connection steps and evidence.
-- Push branch and open/update a review-ready PR.
-last_verified_commit: 986f039
-test_results: []
-updated_at: '2026-10-06T21:02:00+03:00'
-resume_instruction: Continue on feature/mob-1-ios-inbox-20261006. First build/test the existing SwiftUI client against current main; fix only demonstrated MOB-1 contract/build gaps, then prepare a review-ready PR. Do not merge while AM-4 is review-due.
+- Commit verified implementation/checkpoint changes.
+- Push branch and open review-ready PR.
+- Check exact-head GitHub CI and record the result.
+- Mark task completed once the review-ready PR and verification evidence are durable.
+last_verified_commit: 9fee7d6
+test_results:
+- "PASS: xcodegen generate"
+- "PASS: xcodebuild generic iOS Simulator build-for-testing on Xcode 27.0"
+- "PASS: focused physical-iPhone AppStoreTests — 2 passed, 0 failed"
+- "PASS: git diff --check"
+updated_at: '2026-10-06T21:58:00+03:00'
+resume_instruction: Commit and push the verified MOB-1 implementation, open a review-ready PR to main, check exact-head CI, then mark this checkpoint completed without merging while AM-4 remains review-due.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261006-mob1

@@ -5,6 +5,21 @@ struct InboxView: View {
 
     var body: some View {
         List {
+            if store.isMockData || !store.isLive {
+                Section {
+                    Label(
+                        store.isMockData
+                            ? "Демо-данные — backend не подключён"
+                            : "Нет соединения с backend",
+                        systemImage: store.isMockData
+                            ? "testtube.2"
+                            : "wifi.exclamationmark"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                }
+            }
+
             Section {
                 DailyDigestView()
                     .listRowInsets(EdgeInsets())
@@ -16,7 +31,11 @@ struct InboxView: View {
                     ContentUnavailableView(
                         "Решений не требуется",
                         systemImage: "checkmark.circle",
-                        description: Text("Новые отчёты появятся здесь после Daily Tender Run.")
+                        description: Text(
+                            store.isLive
+                                ? "Новые manager-ready отчёты появятся здесь после Daily Tender Run."
+                                : "Подключите Mac mini, чтобы увидеть live manager inbox."
+                        )
                     )
                 } else {
                     ForEach(store.decisionNeeded) { procurement in
@@ -26,18 +45,13 @@ struct InboxView: View {
                     }
                 }
             }
-
-            Section("Уже обработаны") {
-                ForEach(store.procurements.filter { $0.decision == .go || $0.decision == .noGo }) { procurement in
-                    NavigationLink(value: procurement.id) {
-                        ProcurementRow(procurement: procurement)
-                    }
-                }
-            }
         }
         .navigationTitle("Tender Agent")
         .navigationDestination(for: String.self) { id in
             ProcurementDetailView(procurementID: id)
+        }
+        .refreshable {
+            await store.refresh()
         }
     }
 }
@@ -51,17 +65,17 @@ private struct DailyDigestView: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Daily Tender Run")
                         .font(.headline)
-                    Text("Последний запуск • сегодня")
+                    Text(store.isLive ? "Live manager inbox" : "Демо-режим")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
-                Image(systemName: "checkmark.seal.fill")
-                    .foregroundStyle(.green)
+                Image(systemName: store.isLive ? "checkmark.seal.fill" : "testtube.2")
+                    .foregroundStyle(store.isLive ? .green : .orange)
             }
 
             HStack(spacing: 12) {
-                digestMetric("\(store.procurements.count)", "разобрано")
+                digestMetric("\(store.totalPortfolioCount)", "в портфеле")
                 digestMetric("\(store.decisionNeeded.count)", "ждут решения")
                 digestMetric("\(store.submittedCount)", "подались")
             }

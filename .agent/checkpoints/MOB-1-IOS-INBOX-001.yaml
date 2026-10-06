@@ -1,25 +1,35 @@
 task_id: MOB-1-IOS-INBOX-001
 status: in_progress
 authority: OWNER_DIRECTIVE
-goal: Native SwiftUI read-only inbox/detail connected to the current Tender Agent mobile API.
+goal: Native SwiftUI read-only manager inbox/detail connected to the current Tender Agent mobile API.
 definition_of_done:
   - Existing iOS branch reconciled with current main.
-  - Current backend mobile contract decodes correctly.
-  - Pairing uses bearer token stored in Keychain.
-  - Visible MOB-1 flow is read-only and live/mock state is explicit.
-  - Xcode build and focused tests pass.
+  - Current backend mobile contract decodes correctly, including current recommendation evidence fields.
+  - Pairing uses a dedicated Bearer token stored in Keychain.
+  - MOB-1 app surface is read-only and live/mock state is explicit.
+  - Xcode 27 build-for-testing and focused unit tests pass.
   - Review-ready PR prepared; merge remains separately gated.
 completed:
-  - Existing iOS branch reconciled with current main at 986f039.
-  - Existing mobile API/pairing implementation inventoried.
-current: Build/test and contract reconciliation.
+  - Reconciled existing iOS branch with current main at 986f039.
+  - Switched live refresh to GET /mobile/v1/inbox and current attention-only semantics.
+  - Aligned mobile procurement model with recommendation confidence/reasons/blockers/unknowns.
+  - Removed decision-write methods/buttons from the MOB-1 app slice.
+  - Preserved Bearer pairing and Keychain-backed mobile token storage.
+  - Added build/version metadata and regenerated the Xcode project.
+  - Verified generic simulator build-for-testing on Xcode 27.0.
+  - "Verified AppStoreTests on connected iPhone: 2 passed, 0 failed."
+  - Verified git diff --check and no decision-write methods/buttons in app/test source.
+current: Commit/push and PR preparation.
 remaining:
-  - Build/test.
-  - Contract diff and fixes.
-  - Live/mock UX boundary.
-  - README/evidence.
-  - PR.
-last_verified_commit: 986f039
-test_results: []
-resume_instruction: Build first; fix only observed MOB-1 gaps; preserve human decision hard stops and do not merge under review-due AM-4.
-updated_at: '2026-10-06T21:02:00+03:00'
+  - Commit and push verified implementation.
+  - Open review-ready PR.
+  - Check exact-head CI.
+  - Finalize checkpoint as completed; do not auto-merge under review-due AM-4.
+last_verified_commit: 9fee7d6
+test_results:
+  - "xcodegen generate: PASS"
+  - "xcodebuild generic iOS Simulator build-for-testing: PASS"
+  - "AppStoreTests on connected iPhone: 2 passed, 0 failed"
+  - "git diff --check: PASS"
+resume_instruction: Commit/push MOB-1, create review-ready PR, verify exact-head CI, then mark completed without merging.
+updated_at: '2026-10-06T21:58:00+03:00'

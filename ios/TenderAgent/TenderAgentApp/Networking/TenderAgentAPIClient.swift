@@ -1,5 +1,34 @@
 import Foundation
 
+enum TenderAgentJSON {
+    static func makeDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(String.self)
+
+            let fractional = ISO8601DateFormatter()
+            fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let date = fractional.date(from: value) {
+                return date
+            }
+
+            let standard = ISO8601DateFormatter()
+            standard.formatOptions = [.withInternetDateTime]
+            if let date = standard.date(from: value) {
+                return date
+            }
+
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unsupported ISO-8601 date: \(value)"
+            )
+        }
+        return decoder
+    }
+}
+
 struct TenderAgentAPIConfiguration {
     let baseURL: URL
     let accessToken: String
@@ -61,10 +90,7 @@ struct TenderAgentPairingClient {
             let body = String(data: data, encoding: .utf8) ?? ""
             throw TenderAgentAPIError.httpStatus(http.statusCode, body)
         }
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(Response.self, from: data)
+        return try TenderAgentJSON.makeDecoder().decode(Response.self, from: data)
     }
 }
 
@@ -95,71 +121,17 @@ struct TenderAgentAPIClient {
         try await request(path: "mobile/v1/inbox")
     }
 
-    func recordDecision(
-        dealID: String,
-        action: String,
-        rationale: String?,
-        reasonCodes: [String] = [],
-        deferredUntil: Date? = nil,
-        idempotencyKey: String = UUID().uuidString
-    ) async throws -> MobileAPIProcurement {
-        let body = MobileDecisionBody(
-            action: action,
-            rationale: rationale,
-            reasonCodes: reasonCodes,
-            deferredUntil: deferredUntil,
-            idempotencyKey: idempotencyKey
-        )
-        return try await request(
-            path: "mobile/v1/procurements/\(dealID)/decision",
-            method: "POST",
-            body: body
-        )
-    }
-
-    private func request<Response: Decodable>(
-        path: String,
-        method: String = "GET"
-    ) async throws -> Response {
-        let request = makeRequest(path: path, method: method, bodyData: nil)
-        return try await perform(request)
-    }
-
-    private func request<Response: Decodable, Body: Encodable>(
-        path: String,
-        method: String,
-        body: Body
-    ) async throws -> Response {
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
-        encoder.dateEncodingStrategy = .iso8601
-        let data = try encoder.encode(body)
-        let request = makeRequest(path: path, method: method, bodyData: data)
-        return try await perform(request)
-    }
-
-    private func makeRequest(
-        path: String,
-        method: String,
-        bodyData: Data?
-    ) -> URLRequest {
+    private func request<Response: Decodable>(path: String) async throws -> Response {
         let url = configuration.baseURL.appending(path: path)
         var request = URLRequest(url: url)
-        request.httpMethod = method
+        request.httpMethod = "GET"
         request.timeoutInterval = 20
-        request.httpBody = bodyData
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        if bodyData != nil {
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
         request.setValue(
             "Bearer \(configuration.accessToken)",
             forHTTPHeaderField: "Authorization"
         )
-        return request
-    }
 
-    private func perform<Response: Decodable>(_ request: URLRequest) async throws -> Response {
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw TenderAgentAPIError.invalidResponse
@@ -168,11 +140,7 @@ struct TenderAgentAPIClient {
             let body = String(data: data, encoding: .utf8) ?? ""
             throw TenderAgentAPIError.httpStatus(http.statusCode, body)
         }
-
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(Response.self, from: data)
+        return try TenderAgentJSON.makeDecoder().decode(Response.self, from: data)
     }
 }
 
@@ -187,14 +155,6 @@ struct MobilePairResponse: Decodable {
     let tokenType: String
     let expiresAt: Date
     let deviceId: String
-}
-
-private struct MobileDecisionBody: Encodable {
-    let action: String
-    let rationale: String?
-    let reasonCodes: [String]
-    let deferredUntil: Date?
-    let idempotencyKey: String
 }
 
 struct MobilePortfolioEnvelope: Decodable {
@@ -240,14 +200,23 @@ struct MobileAPIProcurement: Decodable {
     let sourceUrl: String?
     let nmckRub: Double?
     let deadlineAt: Date?
+
     let recommendation: String
     let recommendationRationale: String?
     let recommendationReasonCodes: [String]
+    let recommendationConfidence: String?
+    let recommendationReasons: [String]
+    let recommendationBlockers: [String]
+    let recommendationUnknowns: [String]
+    let analysisRunId: String?
+    let analysisReportPath: String?
+
     let humanDecision: String
     let humanRationale: String?
     let humanReasonCodes: [String]
     let deferredUntil: Date?
     let needsAttention: Bool
+
     let submitted: Bool
     let submittedAt: Date?
     let outcome: String?

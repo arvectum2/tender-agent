@@ -24,6 +24,7 @@ enum BackendCredentialStore {
         return generated
     }
 
+    @MainActor
     static var deviceName: String {
         UIDevice.current.name
     }

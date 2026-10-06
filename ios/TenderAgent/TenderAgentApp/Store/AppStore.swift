@@ -4,8 +4,10 @@ import Foundation
 @MainActor
 final class AppStore: ObservableObject {
     @Published private(set) var procurements: [Procurement]
+    @Published private(set) var inboxSummary: MobileInboxSummary?
     @Published private(set) var isLive = false
     @Published private(set) var isLoading = false
+    @Published private(set) var isMockData = true
     @Published private(set) var lastError: String?
 
     private var apiClient: TenderAgentAPIClient?
@@ -16,14 +18,21 @@ final class AppStore: ObservableObject {
     ) {
         self.procurements = procurements
         self.apiClient = apiClient
+        self.inboxSummary = nil
+        self.isMockData = true
     }
 
     var decisionNeeded: [Procurement] {
         procurements.filter(\.needsAttention)
     }
 
+    var totalPortfolioCount: Int {
+        inboxSummary?.totalPortfolio ?? procurements.count
+    }
+
     var submittedCount: Int {
-        procurements.filter { $0.lifecycle == .submitted || $0.lifecycle == .outcome }.count
+        inboxSummary?.submitted
+            ?? procurements.filter { $0.lifecycle == .submitted || $0.lifecycle == .outcome }.count
     }
 
     var goCount: Int {
@@ -90,6 +99,7 @@ final class AppStore: ObservableObject {
             await refresh()
         } catch {
             isLive = false
+            isMockData = true
             lastError = error.localizedDescription
         }
     }
@@ -97,13 +107,17 @@ final class AppStore: ObservableObject {
     func disconnect() {
         BackendCredentialStore.clear()
         apiClient = nil
+        procurements = MockData.procurements
+        inboxSummary = nil
         isLive = false
+        isMockData = true
         lastError = nil
     }
 
     func refresh() async {
         guard let apiClient else {
             isLive = false
+            isMockData = true
             return
         }
 
@@ -111,75 +125,14 @@ final class AppStore: ObservableObject {
         defer { isLoading = false }
 
         do {
-            let response = try await apiClient.fetchPortfolio()
+            let response = try await apiClient.fetchInbox()
             procurements = response.items.map(Procurement.fromAPI)
+            inboxSummary = response.summary
             isLive = true
+            isMockData = false
             lastError = nil
         } catch {
             isLive = false
-            lastError = error.localizedDescription
-        }
-    }
-
-    func setDecision(
-        _ decision: HumanDecision,
-        for id: String,
-        comment: String? = nil,
-        deferredUntil: Date? = nil
-    ) {
-        guard let index = procurements.firstIndex(where: { $0.id == id }) else {
-            return
-        }
-
-        procurements[index].decision = decision
-        procurements[index].decisionComment = comment
-        procurements[index].deferredUntil =
-            decision == .deferred ? deferredUntil : nil
-        procurements[index].needsAttention = decision == .pending
-    }
-
-    func submitDecision(
-        _ decision: HumanDecision,
-        for id: String,
-        comment: String? = nil,
-        deferredUntil: Date? = nil
-    ) async {
-        guard let apiClient else {
-            setDecision(
-                decision,
-                for: id,
-                comment: comment,
-                deferredUntil: deferredUntil
-            )
-            return
-        }
-
-        let action: String
-        switch decision {
-        case .go:
-            action = "GO"
-        case .noGo:
-            action = "NO_GO"
-        case .deferred:
-            action = "DEFER"
-        case .pending:
-            return
-        }
-
-        do {
-            let item = try await apiClient.recordDecision(
-                dealID: id,
-                action: action,
-                rationale: comment,
-                deferredUntil: deferredUntil
-            )
-            let updated = Procurement.fromAPI(item)
-            if let index = procurements.firstIndex(where: { $0.id == id }) {
-                procurements[index] = updated
-            }
-            isLive = true
-            lastError = nil
-        } catch {
             lastError = error.localizedDescription
         }
     }

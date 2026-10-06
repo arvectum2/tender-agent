@@ -30,7 +30,7 @@ struct Procurement: Identifiable, Equatable {
     let deadline: Date?
     let sourceURL: URL?
     let recommendation: AgentRecommendation
-    let confidence: Double?
+    let confidenceLabel: String?
     let goReasons: [String]
     let noGoReasons: [String]
     let blockers: [String]
@@ -91,10 +91,15 @@ extension Procurement {
             lifecycle = .analysisReady
         }
 
-        let rationale = item.recommendationRationale ?? item.humanRationale ?? "Анализ доступен в Tender Agent."
-        let codes = item.recommendationReasonCodes
-        let goReasons = recommendation == .go ? codes : []
-        let noGoReasons = recommendation == .noGo ? codes : []
+        let rationale =
+            item.recommendationRationale
+            ?? item.humanRationale
+            ?? "Анализ доступен в Tender Agent."
+        let reasons = item.recommendationReasons.isEmpty
+            ? item.recommendationReasonCodes
+            : item.recommendationReasons
+        let goReasons = recommendation == .go ? reasons : []
+        let noGoReasons = recommendation == .noGo ? reasons : []
 
         return Procurement(
             id: item.dealId,
@@ -105,11 +110,11 @@ extension Procurement {
             deadline: item.deadlineAt,
             sourceURL: item.sourceUrl.flatMap(URL.init(string:)),
             recommendation: recommendation,
-            confidence: nil,
+            confidenceLabel: item.recommendationConfidence,
             goReasons: goReasons,
             noGoReasons: noGoReasons,
-            blockers: [],
-            unknowns: [],
+            blockers: item.recommendationBlockers,
+            unknowns: item.recommendationUnknowns,
             risks: [],
             summary: rationale,
             lifecycle: lifecycle,

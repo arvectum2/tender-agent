@@ -6,10 +6,6 @@ struct SettingsView: View {
     @State private var baseURL = BackendCredentialStore.savedBaseURL
     @State private var pairingCode = ""
 
-    @State private var reportPush = true
-    @State private var changePush = true
-    @State private var resultPush = true
-
     var body: some View {
         Form {
             Section("Backend") {
@@ -77,18 +73,15 @@ struct SettingsView: View {
                 }
             }
 
-            Section("Уведомления") {
-                Toggle("Новые отчёты", isOn: $reportPush)
-                Toggle("Изменения закупок", isOn: $changePush)
-                Toggle("Результаты", isOn: $resultPush)
-            }
-
             Section("Приложение") {
-                LabeledContent("Версия", value: "0.4.0-dev")
+                LabeledContent("Версия", value: "0.5.0-dev")
                 LabeledContent(
                     "Режим",
-                    value: store.isLive ? "Live" : "Mock fallback"
+                    value: store.isLive ? "Live" : "Demo / offline"
                 )
+                Text("MOB-1 работает только на чтение. Решения и push-уведомления включаются отдельными этапами.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .navigationTitle("Настройки")

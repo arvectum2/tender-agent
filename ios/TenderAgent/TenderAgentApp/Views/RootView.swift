@@ -9,12 +9,6 @@ struct RootView: View {
                 }
             }
 
-            Tab("Портфель", systemImage: "chart.bar.xaxis") {
-                NavigationStack {
-                    PortfolioView()
-                }
-            }
-
             Tab("Настройки", systemImage: "gearshape") {
                 NavigationStack {
                     SettingsView()

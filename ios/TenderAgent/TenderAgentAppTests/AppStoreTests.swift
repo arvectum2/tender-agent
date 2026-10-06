@@ -3,27 +3,55 @@ import XCTest
 
 @MainActor
 final class AppStoreTests: XCTestCase {
-    func testGoDecisionUpdatesProcurement() {
-        let procurement = makeProcurement()
-        let store = AppStore(procurements: [procurement])
+    func testMockModeIsExplicitWithoutBackend() {
+        let store = AppStore(procurements: [makeProcurement()], apiClient: nil)
 
-        store.setDecision(.go, for: procurement.id)
-
-        XCTAssertEqual(store.procurement(id: procurement.id)?.decision, .go)
-        XCTAssertEqual(store.goCount, 1)
-        XCTAssertEqual(store.decisionNeeded.count, 0)
+        XCTAssertTrue(store.isMockData)
+        XCTAssertFalse(store.isLive)
+        XCTAssertEqual(store.connectionLabel, "Не подключено")
     }
 
-    func testDeferredDecisionTracksReturnDate() {
-        let procurement = makeProcurement()
-        let store = AppStore(procurements: [procurement])
-        let returnDate = Date.now.addingTimeInterval(3_600)
+    func testAPIProjectionPreservesRecommendationEvidence() {
+        let item = MobileAPIProcurement(
+            dealId: "DL-1",
+            procurementNumber: "0123456789012345678",
+            title: "Тестовая закупка",
+            customerName: "Заказчик",
+            sourceUrl: "https://zakupki.gov.ru",
+            nmckRub: 1_500_000,
+            deadlineAt: Date(timeIntervalSince1970: 1_800_000_000),
+            recommendation: "NEEDS_REVIEW",
+            recommendationRationale: "Нужно проверить блокеры.",
+            recommendationReasonCodes: ["DTR"],
+            recommendationConfidence: "MEDIUM",
+            recommendationReasons: ["Технически выполнимо"],
+            recommendationBlockers: ["Нужна проверка лицензии"],
+            recommendationUnknowns: ["Неясен объём интеграции"],
+            analysisRunId: "analysis-1",
+            analysisReportPath: "/reports/analysis-1",
+            humanDecision: "PENDING",
+            humanRationale: nil,
+            humanReasonCodes: [],
+            deferredUntil: nil,
+            needsAttention: true,
+            submitted: false,
+            submittedAt: nil,
+            outcome: nil,
+            outcomeRationale: nil,
+            outcomeAt: nil,
+            postmortemRootCause: nil,
+            currentStatus: "analysis_ready",
+            updatedAt: Date(timeIntervalSince1970: 1_800_000_100)
+        )
 
-        store.setDecision(.deferred, for: procurement.id, deferredUntil: returnDate)
+        let procurement = Procurement.fromAPI(item)
 
-        XCTAssertEqual(store.procurement(id: procurement.id)?.decision, .deferred)
-        XCTAssertEqual(store.procurement(id: procurement.id)?.deferredUntil, returnDate)
-        XCTAssertEqual(store.decisionNeeded.count, 0)
+        XCTAssertEqual(procurement.recommendation, .review)
+        XCTAssertEqual(procurement.confidenceLabel, "MEDIUM")
+        XCTAssertEqual(procurement.blockers, ["Нужна проверка лицензии"])
+        XCTAssertEqual(procurement.unknowns, ["Неясен объём интеграции"])
+        XCTAssertEqual(procurement.summary, "Нужно проверить блокеры.")
+        XCTAssertTrue(procurement.needsAttention)
     }
 
     private func makeProcurement() -> Procurement {
@@ -36,7 +64,7 @@ final class AppStoreTests: XCTestCase {
             deadline: .now.addingTimeInterval(86_400),
             sourceURL: nil,
             recommendation: .go,
-            confidence: 0.9,
+            confidenceLabel: "HIGH",
             goReasons: ["Подходит"],
             noGoReasons: [],
             blockers: [],
