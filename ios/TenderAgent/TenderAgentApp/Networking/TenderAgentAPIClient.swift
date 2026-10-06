@@ -52,8 +52,19 @@ struct TenderAgentAPIClient {
         self.session = session
     }
 
-    static func fromEnvironment() -> TenderAgentAPIClient? {
-        guard let configuration = TenderAgentAPIConfiguration.fromEnvironment() else {
+    static func preferred() -> TenderAgentAPIClient? {
+        let environment = ProcessInfo.processInfo.environment
+        if let configuration = TenderAgentAPIConfiguration.fromEnvironment(environment) {
+            if environment["TENDER_AGENT_PERSIST_ENV"] == "1" {
+                try? BackendCredentialStore.save(
+                    baseURLString: configuration.baseURL.absoluteString,
+                    username: configuration.username,
+                    password: configuration.password
+                )
+            }
+            return TenderAgentAPIClient(configuration: configuration)
+        }
+        guard let configuration = BackendCredentialStore.loadConfiguration() else {
             return nil
         }
         return TenderAgentAPIClient(configuration: configuration)

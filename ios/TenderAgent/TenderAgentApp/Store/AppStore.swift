@@ -8,11 +8,11 @@ final class AppStore: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var lastError: String?
 
-    private let apiClient: TenderAgentAPIClient?
+    private var apiClient: TenderAgentAPIClient?
 
     init(
         procurements: [Procurement] = MockData.procurements,
-        apiClient: TenderAgentAPIClient? = TenderAgentAPIClient.fromEnvironment()
+        apiClient: TenderAgentAPIClient? = TenderAgentAPIClient.preferred()
     ) {
         self.procurements = procurements
         self.apiClient = apiClient
@@ -43,6 +43,33 @@ final class AppStore: ObservableObject {
 
     func procurement(id: String) -> Procurement? {
         procurements.first { $0.id == id }
+    }
+
+
+    func configureConnection(
+        baseURL: String,
+        username: String,
+        password: String
+    ) async {
+        do {
+            let configuration = try BackendCredentialStore.save(
+                baseURLString: baseURL,
+                username: username,
+                password: password
+            )
+            apiClient = TenderAgentAPIClient(configuration: configuration)
+            await refresh()
+        } catch {
+            isLive = false
+            lastError = error.localizedDescription
+        }
+    }
+
+    func disconnect() {
+        BackendCredentialStore.clear()
+        apiClient = nil
+        isLive = false
+        lastError = nil
     }
 
     func refresh() async {

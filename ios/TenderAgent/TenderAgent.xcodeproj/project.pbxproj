@@ -15,6 +15,7 @@
 		3FA75078E296829DD4A21EEE /* Procurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DF06A61F85DBA5BC8DDFED /* Procurement.swift */; };
 		461A2123E5A53BB2E8BBC39F /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167630F2410F52C1B413A7F7 /* MockData.swift */; };
 		4B2DD51A08B482214F785F8D /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FDD05A123B0EC7E91002D /* PortfolioView.swift */; };
+		4E817B3599B477D8BDAA31E5 /* BackendCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */; };
 		4F5593049C716B86B00FAE5C /* TenderAgentAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */; };
 		6C0A749738C81384BE7548F8 /* ProcurementDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32E8008C90AD3ED0314B92B /* ProcurementDetailView.swift */; };
 		8C8BF9F58E4BE090420C219C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E245B87A0AB371ED2929F4 /* AppStoreTests.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		0A068187644F40EAD3CE2CF0 /* MetricCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricCard.swift; sourceTree = "<group>"; };
+		0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendCredentialStore.swift; sourceTree = "<group>"; };
 		10E8F574449E167BDD2D678D /* TenderAgentTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = TenderAgentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		167630F2410F52C1B413A7F7 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		1DC0CF601A87129A01E05070 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 		9E5EA4510BD56F678DD6550A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				0F5B9566E9BE57399B114C38 /* BackendCredentialStore.swift */,
 				E94335717CF8E25562261D61 /* TenderAgentAPIClient.swift */,
 			);
 			path = Networking;
@@ -181,11 +184,11 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					3C971D4DF5B2DEF7F710117B = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = VML75VY94V;
 						ProvisioningStyle = Automatic;
 					};
 					7622D073EA16BC51726D899C = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = VML75VY94V;
 					};
 				};
 			};
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2154BB37893C4764D4F23621 /* AppStore.swift in Sources */,
+				4E817B3599B477D8BDAA31E5 /* BackendCredentialStore.swift in Sources */,
 				20E45DDDE7C284356864313D /* InboxView.swift in Sources */,
 				29670F774487CF2C19240A83 /* MetricCard.swift in Sources */,
 				461A2123E5A53BB2E8BBC39F /* MockData.swift in Sources */,
@@ -338,7 +342,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VML75VY94V;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -395,7 +399,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VML75VY94V;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
