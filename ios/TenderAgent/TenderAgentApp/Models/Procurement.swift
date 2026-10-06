@@ -38,6 +38,7 @@ struct Procurement: Identifiable, Equatable {
     let risks: [String]
     let summary: String
     let lifecycle: LifecycleState
+    var needsAttention: Bool
     var decision: HumanDecision
     var decisionComment: String?
     var deferredUntil: Date?
@@ -112,6 +113,7 @@ extension Procurement {
             risks: [],
             summary: rationale,
             lifecycle: lifecycle,
+            needsAttention: item.needsAttention,
             decision: decision,
             decisionComment: item.humanRationale,
             deferredUntil: item.deferredUntil

@@ -23,7 +23,7 @@ final class AppStoreTests: XCTestCase {
 
         XCTAssertEqual(store.procurement(id: procurement.id)?.decision, .deferred)
         XCTAssertEqual(store.procurement(id: procurement.id)?.deferredUntil, returnDate)
-        XCTAssertEqual(store.decisionNeeded.count, 1)
+        XCTAssertEqual(store.decisionNeeded.count, 0)
     }
 
     private func makeProcurement() -> Procurement {
@@ -44,6 +44,7 @@ final class AppStoreTests: XCTestCase {
             risks: [],
             summary: "Тест.",
             lifecycle: .analysisReady,
+            needsAttention: true,
             decision: .pending
         )
     }

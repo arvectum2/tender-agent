@@ -19,7 +19,7 @@ final class AppStore: ObservableObject {
     }
 
     var decisionNeeded: [Procurement] {
-        procurements.filter { $0.decision == .pending || $0.decision == .deferred }
+        procurements.filter(\.needsAttention)
     }
 
     var submittedCount: Int {
@@ -135,6 +135,7 @@ final class AppStore: ObservableObject {
         procurements[index].decisionComment = comment
         procurements[index].deferredUntil =
             decision == .deferred ? deferredUntil : nil
+        procurements[index].needsAttention = decision == .pending
     }
 
     func submitDecision(

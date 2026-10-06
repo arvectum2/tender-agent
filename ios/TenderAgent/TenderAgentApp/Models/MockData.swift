@@ -20,6 +20,7 @@ enum MockData {
                 risks: ["Интеграция с существующей инфраструктурой заказчика"],
                 summary: "Модернизация действующей диагностической подсистемы. Критических блокеров для участия не выявлено.",
                 lifecycle: .analysisReady,
+                needsAttention: true,
                 decision: .pending
             ),
             Procurement(
@@ -39,6 +40,7 @@ enum MockData {
                 risks: ["Зависимость от стороннего правообладателя"],
                 summary: "Подходит по профилю, но перед GO нужно подтвердить законный доступ к программному обеспечению.",
                 lifecycle: .analysisReady,
+                needsAttention: true,
                 decision: .pending
             ),
             Procurement(
@@ -58,6 +60,7 @@ enum MockData {
                 risks: ["Короткий срок исполнения"],
                 summary: "Типовая разработка сайта без критических технических или квалификационных блокеров.",
                 lifecycle: .submitted,
+                needsAttention: false,
                 decision: .go,
                 decisionComment: "Заявка уже подана."
             ),
@@ -78,6 +81,7 @@ enum MockData {
                 risks: ["Интеграция с существующей АГИС"],
                 summary: "Заявка подготовлена и подана через Росэлторг с ценой 399 000 ₽.",
                 lifecycle: .submitted,
+                needsAttention: false,
                 decision: .go,
                 decisionComment: "Подано через Росэлторг."
             )
