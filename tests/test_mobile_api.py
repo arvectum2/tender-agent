@@ -8,6 +8,7 @@ from src.modules.mobile_api.auth import (
     issue_mobile_token,
     pairing_code,
     require_mobile_bearer,
+    resolve_mobile_auth_secret,
     verify_mobile_token,
 )
 from src.shared.config.settings import Settings
@@ -38,6 +39,35 @@ def _allow_mobile(device_id: str = "device-test-001") -> None:
 
 def test_mobile_routes_use_dedicated_auth_boundary():
     assert "/mobile" not in Settings().pilot_auth_protected_prefixes.split(",")
+
+
+def test_mobile_auth_secret_prefers_explicit_secret():
+    explicit = "x" * 40
+    settings = Settings(
+        _env_file=None,
+        mobile_auth_secret=explicit,
+        pilot_auth_username="operator",
+        pilot_auth_password="pilot-secret-" + ("y" * 32),
+    )
+
+    assert resolve_mobile_auth_secret(settings) == explicit
+
+
+def test_mobile_auth_secret_derives_from_safe_pilot_password():
+    password = "pilot-secret-" + ("z" * 32)
+    settings = Settings(
+        _env_file=None,
+        mobile_auth_secret=None,
+        pilot_auth_username="operator",
+        pilot_auth_password=password,
+    )
+
+    derived = resolve_mobile_auth_secret(settings)
+    assert derived is not None
+    assert len(derived) == 64
+    assert derived != password
+
+
 
 
 def test_pairing_code_issues_and_verifies_bearer(client):
