@@ -1,12 +1,15 @@
-from src.modules.mobile_api.auth import pairing_code
+from src.modules.mobile_api.auth import pairing_code, resolve_mobile_auth_secret
 from src.shared.config.settings import get_settings
 
 
 def main() -> None:
     settings = get_settings()
-    secret = (settings.mobile_auth_secret or "").strip()
-    if len(secret) < 32:
-        raise SystemExit("AI_CORP_MOBILE_AUTH_SECRET is not configured")
+    secret = resolve_mobile_auth_secret(settings)
+    if secret is None:
+        raise SystemExit(
+            "Mobile auth is not configured: set AI_CORP_MOBILE_AUTH_SECRET "
+            "or enable safe pilot auth credentials."
+        )
     print(
         pairing_code(
             secret,

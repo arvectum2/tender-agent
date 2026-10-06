@@ -9,15 +9,28 @@ from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request, status
 
-from src.shared.config.settings import get_settings
+from src.shared.config.settings import Settings, get_settings
 
 PAIRING_DIGITS = 6
+_MOBILE_SECRET_CONTEXT = "arvectum-mobile-auth-v1"
+
+
+def resolve_mobile_auth_secret(settings: Settings) -> str | None:
+    explicit = (settings.mobile_auth_secret or "").strip()
+    if len(explicit) >= 32:
+        return explicit
+
+    _, pilot_password = settings.pilot_auth_credentials()
+    if not pilot_password or not settings.pilot_auth_password_safe():
+        return None
+
+    material = f"{_MOBILE_SECRET_CONTEXT}:{pilot_password}".encode()
+    return hashlib.sha256(material).hexdigest()
 
 
 def get_mobile_auth_secret() -> str:
-    settings = get_settings()
-    secret = (settings.mobile_auth_secret or "").strip()
-    if len(secret) < 32:
+    secret = resolve_mobile_auth_secret(get_settings())
+    if secret is None:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Mobile auth is not configured.",
