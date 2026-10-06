@@ -5,7 +5,7 @@ from unittest.mock import Mock
 
 from src.main import app
 from src.modules.daily_tender_run.manager_synthesis import ManagerSynthesis
-from src.modules.daily_tender_run.models import DailyTenderRunItem
+from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.mobile_api.auth import require_mobile_bearer
 from src.modules.tender_intake.models import TenderIntakeRecord
 from src.tender_research.rag.schemas import TenderAnalysisResult, TenderAnalysisSection
@@ -96,6 +96,87 @@ def _install_happy_path(monkeypatch, *, registry_number: str = "0123456789012345
         ),
     )
     return analyze
+
+
+
+
+def test_screen_enforces_deep_analysis_cap_with_autoflush_disabled_and_resume_state(
+    session,
+):
+    from src.modules.daily_tender_run import service
+    from src.modules.daily_tender_run.schemas import DailyTenderProfile
+
+    profile = DailyTenderProfile(
+        profile_id="cap-test",
+        version="1",
+        queries=["программное обеспечение"],
+        max_deep_analysis=3,
+        include_keywords=["программ"],
+        exclude_keywords=[],
+        require_include_keyword=True,
+        analysis_use_llm=False,
+        synthesis_use_llm=False,
+    )
+    run = DailyTenderRun(
+        run_id="DTR-CAP-TEST",
+        profile_id=profile.profile_id,
+        profile_version=profile.version,
+        profile_snapshot_json=profile.model_dump(mode="json"),
+        status="RUNNING",
+        current_stage="SCREEN",
+        counts_json={},
+    )
+    session.add(run)
+    session.commit()
+
+    processing = DailyTenderRunItem(
+        run_id=run.run_id,
+        registry_number="1000000000000000000",
+        law="44fz",
+        source="test",
+        title="Разработка программного обеспечения",
+        source_fingerprint="processing",
+        query_hits_json=["q"],
+        stage="INDEX_DATA_PLATFORM",
+        status="PROCESSING",
+        screening_status="IN",
+        screening_score=100.0,
+        screening_reasons_json=["already_processing"],
+    )
+    session.add(processing)
+
+    for idx in range(5):
+        session.add(
+            DailyTenderRunItem(
+                run_id=run.run_id,
+                registry_number=f"200000000000000000{idx}",
+                law="44fz",
+                source="test",
+                title=f"Разработка программного обеспечения {idx}",
+                source_fingerprint=f"discovered-{idx}",
+                query_hits_json=["q"],
+                stage="DISCOVER",
+                status="DISCOVERED",
+                screening_reasons_json=[],
+            )
+        )
+    session.commit()
+
+    service._screen(session, run, profile)
+
+    items = list(
+        session.query(DailyTenderRunItem)
+        .filter(DailyTenderRunItem.run_id == run.run_id)
+        .all()
+    )
+    assert sum(item.status == "PROCESSING" for item in items) == 1
+    assert sum(item.status == "SHORTLISTED" for item in items) == 2
+    screened_out = [item for item in items if item.status == "SCREENED_OUT"]
+    assert len(screened_out) == 3
+    assert all(
+        "daily_deep_analysis_limit" in item.screening_reasons_json
+        for item in screened_out
+    )
 
 
 def test_daily_tender_run_builds_manager_ready_case_and_mobile_projection(

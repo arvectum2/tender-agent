@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: DTR-DATA-PLATFORM-AUTONOMY-001
 authority: OWNER_DIRECTIVE
 goal: Turn the proven manual daily tender-selection workflow into a durable autonomous Daily Tender Run that uses Data Platform for procurement document indexing/retrieval and leaves GO/NO GO/DEFER to the human manager.
@@ -26,11 +26,16 @@ completed:
   - Focused and regression-relevant tests pass: 97 passed.
   - New DTR/mobile/CLI Ruff checks, py_compile and git diff --check pass.
   - Live isolated Mac mini smoke passed on public procurement 0169300035826000229: 4 EIS documents acquired, Data Platform analysis completed, manager synthesis returned NEEDS_REVIEW for FSTEC-license/attestation unknowns, run stopped at WAIT_HUMAN with external_submission_allowed=false.
-current: Review-ready implementation is pushed in PR #164; final merge is blocked by the repository Company AM-4 automatic-merge gate.
+  - PR #164 merged as 1825ad973fa9921b76a6adfeb4b5bdabc6db641c.
+  - Live deployment reached migration 100_add_daily_tender_runs; backend and Data Platform health are green; DTR routes/tables verified.
+  - Verified backup /Users/master/arvectum-backups/tender-agent/20261006-153415 including PostgreSQL dump before migration.
+  - Initial production run exposed shortlist cap bypass because SessionLocal has autoflush=False; run and scheduler were stopped before continuing broad analysis.
+current: Live deployment exposed an autoflush-related shortlist-cap defect. Scheduler is temporarily unloaded while the cap/resume fix is implemented and verified.
 remaining:
-  - Let PR #164 exact-head CI complete or re-check it on the next continuation.
-  - Obtain the required human/Owner authority for the final merge, or an applicable renewed Company AM-4 cycle plus explicit queue auto_merge grant.
-  - After merge, deploy/migrate the Mac mini runtime and choose/configure the operational daily trigger cadence.
+  - Verify shortlist cap/resume fix with focused regression tests.
+  - Merge the bounded fix after review/CI under the active interactive Owner-directed deployment task.
+  - Fast-forward runtime, resume the interrupted production run with the corrected cap, reinstall the 08:00 Europe/Moscow daily launchd trigger, and verify health.
+  - Mark the canonical checkpoint completed with final deployment evidence.
 last_verified_commit: 2e4854769732710efc81fa95ea20133934210b19
 last_tests:
   - 97 focused/regression-relevant tests passed, 15 warnings.
@@ -39,9 +44,9 @@ last_tests:
   - Ruff on src/modules/daily_tender_run, src/modules/mobile_api, scripts/run_daily_tender_run.py, tests/test_daily_tender_run.py: PASS.
   - py_compile on DTR/mobile/CLI: PASS.
   - git diff --check: PASS.
-resume_instruction: Continue from PR #164 on feature/daily-tender-run-autonomy. First reconcile exact-head CI and canonical main. Do not auto-merge: current executor policy records 10/10 automatic merges since the 2026-09-22 review and this task has no explicit queue auto_merge grant. If a human/Owner merge or renewed applicable authority makes main integration permissible, merge only after exact-head required CI is green; then migrate/deploy the Mac mini runtime and configure the operational daily trigger cadence. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
+resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/tender-dtr-cap-fix. Verify the autoflush/deep-analysis-cap fix, then complete the current interactive Owner-directed deployment: merge the bounded fix after green CI/review, fast-forward AI-Corporation-next, resume DTR-20261006T153629Z-60b82733, and reinstall the daily 08:00 Europe/Moscow trigger. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
 execution:
   claimed_by: ChatGPT interactive
-  branch: feature/daily-tender-run-autonomy
-  base_commit: 3938d4a5d221add4207a717f1a3b0ff0c15ffd38
+  branch: fix/dtr-shortlist-cap
+  base_commit: 1825ad973fa9921b76a6adfeb4b5bdabc6db641c
   manual_override: true
