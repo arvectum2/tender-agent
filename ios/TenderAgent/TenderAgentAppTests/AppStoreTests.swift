@@ -9,6 +9,7 @@ final class AppStoreTests: XCTestCase {
         XCTAssertTrue(store.isMockData)
         XCTAssertFalse(store.isLive)
         XCTAssertEqual(store.connectionLabel, "Не подключено")
+        XCTAssertFalse(store.canSubmitDecisions)
     }
 
     func testAPIProjectionPreservesRecommendationEvidence() {
@@ -52,6 +53,48 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(procurement.unknowns, ["Неясен объём интеграции"])
         XCTAssertEqual(procurement.summary, "Нужно проверить блокеры.")
         XCTAssertTrue(procurement.needsAttention)
+    }
+
+    func testDecisionActionWireValuesMatchBackendContract() {
+        XCTAssertEqual(MobileDecisionAction.go.rawValue, "GO")
+        XCTAssertEqual(MobileDecisionAction.noGo.rawValue, "NO_GO")
+        XCTAssertEqual(MobileDecisionAction.deferDecision.rawValue, "DEFER")
+    }
+
+    func testDecisionPayloadEncodesBackendFieldNames() throws {
+        let payload = MobileDecisionRequest(
+            action: .deferDecision,
+            rationale: "Проверить завтра",
+            reasonCodes: [],
+            deferredUntil: Date(timeIntervalSince1970: 1_800_000_000),
+            idempotencyKey: "ios-test-idempotency"
+        )
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
+        let data = try encoder.encode(payload)
+        let json = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+
+        XCTAssertEqual(json["action"] as? String, "DEFER")
+        XCTAssertEqual(json["rationale"] as? String, "Проверить завтра")
+        XCTAssertEqual(json["idempotency_key"] as? String, "ios-test-idempotency")
+        XCTAssertNotNil(json["deferred_until"])
+    }
+
+    func testOfflineDecisionDoesNotMutateMockState() async {
+        let original = makeProcurement()
+        let store = AppStore(procurements: [original], apiClient: nil)
+
+        let saved = await store.submitDecision(
+            dealID: original.id,
+            action: .go,
+            rationale: "Не должно сохраниться"
+        )
+
+        XCTAssertFalse(saved)
+        XCTAssertEqual(store.procurement(id: original.id)?.decision, .pending)
+        XCTAssertNotNil(store.decisionError)
+        XCTAssertNil(store.decisionMessage)
     }
 
     private func makeProcurement() -> Procurement {

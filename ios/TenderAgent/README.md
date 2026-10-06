@@ -2,14 +2,17 @@
 
 Native SwiftUI companion for the Tender Agent backend.
 
-## Current slice — MOB-1
+## Current slice — MOB-2
 
 - Native SwiftUI manager inbox backed by `GET /mobile/v1/inbox`
+- Full mobile portfolio backed by `GET /mobile/v1/portfolio`
 - Procurement summary/detail with NMCK, deadline, recommendation, reasons, blockers and unknowns
-- Explicit live-vs-demo state; mock data is never presented as live
+- Explicit human GO / NO GO / DEFER actions from procurement detail
+- Two-step decision flow: choose an action, then confirm it in a separate sheet; optional rationale and required defer date
+- Decisions use `POST /mobile/v1/procurements/{deal_id}/decision` and are written as human decisions into the canonical event/decision lifecycle
+- Explicit live-vs-demo state; mock/offline data cannot be mutated
 - Pairing with the Mac mini mobile API through a dedicated Bearer token stored in Keychain
 - Settings for the internal Tailscale HTTPS endpoint
-- Read-only UI: GO / NO GO / DEFER remains a separate MOB-2 stage
 
 ## Generate project
 
@@ -40,8 +43,8 @@ The default internal endpoint is the Tailnet-only HTTPS address on port 9443.
 
 ## Safety boundary
 
-MOB-1 is read-only. It reads manager-ready items and source evidence but does not expose a control that records GO / NO GO / DEFER, submit an application, sign, pay, send external messages, or mutate ETP state.
+MOB-2 records only an explicit human GO / NO GO / DEFER decision. It does not autonomously decide, submit an application, sign, pay, send external messages, or mutate ETP state. Demo/offline mode is read-only.
 
-## Next slices
+## Next slice
 
-MOB-2 adds explicit authenticated GO / NO GO / DEFER writes through the existing canonical decision log. MOB-3 then adds APNs/deep links. Neither is part of MOB-1.
+MOB-3 adds APNs push notifications and deep links into the relevant Tender Agent case.

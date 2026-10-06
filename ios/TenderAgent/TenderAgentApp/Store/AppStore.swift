@@ -9,6 +9,10 @@ final class AppStore: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var isMockData = true
     @Published private(set) var lastError: String?
+    @Published private(set) var decisionInFlightID: String?
+    @Published private(set) var decisionMessage: String?
+    @Published private(set) var decisionError: String?
+    @Published private(set) var lastDecisionDealID: String?
 
     private var apiClient: TenderAgentAPIClient?
 
@@ -43,11 +47,19 @@ final class AppStore: ObservableObject {
         procurements.filter { $0.decision == .noGo }.count
     }
 
+    var canSubmitDecisions: Bool {
+        apiClient != nil && !isMockData
+    }
+
     var connectionLabel: String {
         if isLoading { return "Подключение…" }
         if isLive { return "Live backend" }
         if apiClient == nil { return "Не подключено" }
         return "Ошибка backend"
+    }
+
+    func isSubmittingDecision(for dealID: String) -> Bool {
+        decisionInFlightID == dealID
     }
 
     func bootstrap() async {
@@ -112,6 +124,10 @@ final class AppStore: ObservableObject {
         isLive = false
         isMockData = true
         lastError = nil
+        decisionInFlightID = nil
+        decisionMessage = nil
+        decisionError = nil
+        lastDecisionDealID = nil
     }
 
     func refresh() async {
@@ -125,15 +141,72 @@ final class AppStore: ObservableObject {
         defer { isLoading = false }
 
         do {
-            let response = try await apiClient.fetchInbox()
-            procurements = response.items.map(Procurement.fromAPI)
-            inboxSummary = response.summary
+            let portfolio = try await apiClient.fetchPortfolio()
+            let inbox = try await apiClient.fetchInbox()
+            procurements = portfolio.items.map(Procurement.fromAPI)
+            inboxSummary = inbox.summary
             isLive = true
             isMockData = false
             lastError = nil
         } catch {
             isLive = false
             lastError = error.localizedDescription
+        }
+    }
+
+    @discardableResult
+    func submitDecision(
+        dealID: String,
+        action: MobileDecisionAction,
+        rationale: String,
+        deferredUntil: Date? = nil
+    ) async -> Bool {
+        lastDecisionDealID = dealID
+        decisionMessage = nil
+        decisionError = nil
+
+        guard let apiClient, !isMockData else {
+            decisionError = "Решения можно сохранять только в live backend. Подключите Tender Agent в настройках."
+            return false
+        }
+
+        decisionInFlightID = dealID
+        defer { decisionInFlightID = nil }
+
+        let trimmedRationale = rationale.trimmingCharacters(in: .whitespacesAndNewlines)
+        let effectiveDeferredUntil = action == .deferDecision ? deferredUntil : nil
+
+        do {
+            let response = try await apiClient.recordDecision(
+                dealID: dealID,
+                action: action,
+                rationale: trimmedRationale.isEmpty ? nil : trimmedRationale,
+                deferredUntil: effectiveDeferredUntil
+            )
+            upsert(Procurement.fromAPI(response))
+            isLive = true
+            isMockData = false
+            decisionMessage = "\(action.displayTitle) сохранено в журнале решений."
+            lastError = nil
+
+            do {
+                let inbox = try await apiClient.fetchInbox()
+                inboxSummary = inbox.summary
+            } catch {
+                lastError = "Решение сохранено, но сводку входящих обновить не удалось: \(error.localizedDescription)"
+            }
+            return true
+        } catch {
+            decisionError = error.localizedDescription
+            return false
+        }
+    }
+
+    private func upsert(_ procurement: Procurement) {
+        if let index = procurements.firstIndex(where: { $0.id == procurement.id }) {
+            procurements[index] = procurement
+        } else {
+            procurements.append(procurement)
         }
     }
 }

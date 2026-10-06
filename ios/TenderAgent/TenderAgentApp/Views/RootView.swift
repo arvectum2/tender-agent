@@ -9,6 +9,12 @@ struct RootView: View {
                 }
             }
 
+            Tab("Портфель", systemImage: "briefcase") {
+                NavigationStack {
+                    PortfolioView()
+                }
+            }
+
             Tab("Настройки", systemImage: "gearshape") {
                 NavigationStack {
                     SettingsView()
