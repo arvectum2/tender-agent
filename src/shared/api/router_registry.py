@@ -77,6 +77,7 @@ from src.modules.kpi_learning.router import router as kpi_learning_router
 from src.modules.launch_visibility.router import router as launch_visibility_router
 from src.modules.learning_automation.router import router as learning_automation_router
 from src.modules.logistics_tracking.router import router as logistics_tracking_router
+from src.modules.mobile_api.router import router as mobile_api_router
 from src.modules.operator_sessions.router import router as operator_sessions_router
 from src.modules.ops_observability.router import router as ops_observability_router
 from src.modules.optimization.router import router as optimization_router
@@ -235,6 +236,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     runtime_metadata_slices_router,
     procedure_monitor_router,
     procurement_monitoring_router,
+    mobile_api_router,
     procurement_portfolio_router,
     supplier_contracts_router,
     purchase_orders_router,
