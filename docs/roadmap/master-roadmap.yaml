@@ -38,6 +38,32 @@ continuous_execution:
     - 'If the admitted queue is empty while .agent/owner-directive.yaml is active, deterministically select the first eligible continuation branch/item in document order and materialize at most one bounded item; prefer an existing bounded task, otherwise use the standard evidence/revalidation slice. This is not authority to invent product priority or implementation scope.'
     - 'A material executor-policy change triggers the Company AM-4 review gate: repository preparation/testing may continue, but automatic merges fail closed until attributable Owner renewal.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
+owner_product_directive_2026_10_06:
+  title: Daily Tender Run + iPhone Tender Agent
+  status: roadmap_priority
+  execution_queue_modified: false
+  daily_tender_run:
+    priority: P0
+    scope: "Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio."
+    human_gate: "GO / NO GO / DEFER remains attributable to a human manager."
+    reuse_existing_modules: true
+    implementation_spec: /docs/product/Daily_Tender_Run_and_iPhone_MVP.md
+  mobile:
+    historical_item: ARV-044
+    owner_priority_override: P0
+    current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
+    backend: "Tender Agent FastAPI on Mac mini"
+    initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
+    push: APNs
+    required_actions: [GO, NO_GO, DEFER]
+    source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
+  deferred:
+    - Android
+    - public multi-tenant mobile release
+    - autonomous bid decision
+    - direct public Internet exposure of Mac mini
+  admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
+
 execution_snapshot:
   updated_at: '2026-09-18T19:31:00Z'
   watchdog:
