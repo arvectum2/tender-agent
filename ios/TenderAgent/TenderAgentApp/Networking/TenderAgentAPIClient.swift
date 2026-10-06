@@ -34,6 +34,22 @@ struct TenderAgentAPIConfiguration {
     let accessToken: String
 }
 
+enum MobileDecisionAction: String, Codable, CaseIterable, Identifiable {
+    case go = "GO"
+    case noGo = "NO_GO"
+    case deferDecision = "DEFER"
+
+    var id: String { rawValue }
+
+    var displayTitle: String {
+        switch self {
+        case .go: "GO"
+        case .noGo: "NO GO"
+        case .deferDecision: "Отложить"
+        }
+    }
+}
+
 enum TenderAgentAPIError: LocalizedError {
     case invalidResponse
     case httpStatus(Int, String)
@@ -43,7 +59,17 @@ enum TenderAgentAPIError: LocalizedError {
         case .invalidResponse:
             return "Некорректный ответ backend."
         case let .httpStatus(code, body):
-            return "Backend вернул HTTP \(code): \(body)"
+            switch code {
+            case 401:
+                return "Сессия iPhone не авторизована. Переподключите Tender Agent в настройках."
+            case 404:
+                return "Закупка не найдена в Tender Agent."
+            case 422:
+                return "Backend отклонил параметры решения. Проверьте действие и дату отсрочки."
+            default:
+                let suffix = body.isEmpty ? "" : ": \(body)"
+                return "Backend вернул HTTP \(code)\(suffix)"
+            }
         }
     }
 }
@@ -121,17 +147,51 @@ struct TenderAgentAPIClient {
         try await request(path: "mobile/v1/inbox")
     }
 
+    func recordDecision(
+        dealID: String,
+        action: MobileDecisionAction,
+        rationale: String?,
+        deferredUntil: Date?,
+        idempotencyKey: String = UUID().uuidString
+    ) async throws -> MobileAPIProcurement {
+        let payload = MobileDecisionRequest(
+            action: action,
+            rationale: rationale,
+            reasonCodes: [],
+            deferredUntil: deferredUntil,
+            idempotencyKey: idempotencyKey
+        )
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
+
+        var request = authorizedRequest(
+            path: "mobile/v1/procurements/\(dealID)/decision",
+            method: "POST"
+        )
+        request.httpBody = try encoder.encode(payload)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        return try await perform(request)
+    }
+
     private func request<Response: Decodable>(path: String) async throws -> Response {
+        try await perform(authorizedRequest(path: path, method: "GET"))
+    }
+
+    private func authorizedRequest(path: String, method: String) -> URLRequest {
         let url = configuration.baseURL.appending(path: path)
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = method
         request.timeoutInterval = 20
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(
             "Bearer \(configuration.accessToken)",
             forHTTPHeaderField: "Authorization"
         )
+        return request
+    }
 
+    private func perform<Response: Decodable>(_ request: URLRequest) async throws -> Response {
         let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw TenderAgentAPIError.invalidResponse
@@ -148,6 +208,14 @@ private struct MobilePairRequest: Encodable {
     let pairingCode: String
     let deviceId: String
     let deviceName: String
+}
+
+struct MobileDecisionRequest: Encodable {
+    let action: MobileDecisionAction
+    let rationale: String?
+    let reasonCodes: [String]
+    let deferredUntil: Date?
+    let idempotencyKey: String
 }
 
 struct MobilePairResponse: Decodable {

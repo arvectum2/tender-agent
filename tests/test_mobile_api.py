@@ -149,6 +149,11 @@ def test_mobile_inbox_lists_pending_and_accepts_go(client, session):
     assert len(decisions) == 1
     assert decisions[0].decided_by_ref == "ios:device-go-001"
 
+    canonical = client.get("/procurement-portfolio").json()
+    canonical_item = next(item for item in canonical["items"] if item["deal_id"] == deal.deal_id)
+    assert canonical_item["decision"] == "GO"
+    assert canonical_item["decision_source"] == "HUMAN"
+
 
 def test_mobile_defer_hides_future_item_until_due(client, session):
     _allow_mobile()
@@ -173,6 +178,38 @@ def test_mobile_defer_hides_future_item_until_due(client, session):
     inbox = client.get("/mobile/v1/inbox").json()
     assert inbox["summary"]["deferred"] == 1
     assert inbox["summary"]["needs_attention"] == 0
+
+    canonical = client.get("/procurement-portfolio").json()
+    canonical_item = next(item for item in canonical["items"] if item["deal_id"] == deal.deal_id)
+    assert canonical_item["decision"] == "NEEDS_REVIEW"
+    assert canonical_item["decision_source"] == "HUMAN"
+
+
+def test_mobile_no_go_is_visible_in_canonical_portfolio(client, session):
+    _allow_mobile("device-no-go-001")
+    deal = _deal("DL-MOB-004", "3004")
+    session.add(deal)
+    session.commit()
+
+    response = client.post(
+        f"/mobile/v1/procurements/{deal.deal_id}/decision",
+        json={
+            "action": "NO_GO",
+            "rationale": "Manager rejected from iPhone",
+            "reason_codes": ["ECONOMICS"],
+            "idempotency_key": "mobile-no-go-3004",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json()["human_decision"] == "NO_GO"
+    assert response.json()["needs_attention"] is False
+
+    canonical = client.get("/procurement-portfolio").json()
+    canonical_item = next(item for item in canonical["items"] if item["deal_id"] == deal.deal_id)
+    assert canonical_item["decision"] == "NO_GO"
+    assert canonical_item["decision_source"] == "HUMAN"
+    assert canonical_item["decision_rationale"] == "Manager rejected from iPhone"
+    assert canonical_item["decision_reason_codes"] == ["ECONOMICS"]
 
 
 def test_mobile_defer_requires_date(client, session):

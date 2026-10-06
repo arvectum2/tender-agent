@@ -23,30 +23,39 @@ struct PortfolioView: View {
                         .font(.headline)
 
                     ForEach(store.procurements) { procurement in
-                        HStack(alignment: .top) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(procurement.registryNumber)
-                                    .font(.caption.monospacedDigit())
-                                    .foregroundStyle(.secondary)
-                                Text(procurement.title)
-                                    .font(.subheadline)
-                                    .lineLimit(2)
+                        NavigationLink(value: procurement.id) {
+                            HStack(alignment: .top) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(procurement.registryNumber)
+                                        .font(.caption.monospacedDigit())
+                                        .foregroundStyle(.secondary)
+                                    Text(procurement.title)
+                                        .font(.subheadline)
+                                        .lineLimit(2)
+                                }
+
+                                Spacer()
+
+                                Text(procurement.decision.rawValue)
+                                    .font(.caption.bold())
+                                    .foregroundStyle(decisionColor(procurement.decision))
                             }
-
-                            Spacer()
-
-                            Text(procurement.decision.rawValue)
-                                .font(.caption.bold())
-                                .foregroundStyle(decisionColor(procurement.decision))
+                            .padding()
+                            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14))
                         }
-                        .padding()
-                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14))
+                        .buttonStyle(.plain)
                     }
                 }
             }
             .padding()
         }
         .navigationTitle("Портфель")
+        .navigationDestination(for: String.self) { id in
+            ProcurementDetailView(procurementID: id)
+        }
+        .refreshable {
+            await store.refresh()
+        }
     }
 
     private func decisionColor(_ decision: HumanDecision) -> Color {
