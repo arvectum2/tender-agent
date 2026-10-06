@@ -1,0 +1,21 @@
+task_id: ROADMAP-SYNC-20261006-MOB1
+status: in_progress
+goal: Reconcile canonical roadmap after MOB-1 merge, without new development admission.
+definition_of_done:
+  - MOB-1 merge evidence recorded.
+  - ARV-044 current overlay updated; legacy snapshot unchanged.
+  - Human delivery sequence marks MOB-1 done and MOB-2 next/not admitted.
+  - Execution snapshot reflects ARV-005 in progress and MOB-1 done.
+  - Roadmap-only PR validated and merged.
+completed:
+  - PR #171 merged as 01b4be72d456185f1840f407aa36471a7622897a after exact-head green CI.
+current: Roadmap overlay edits.
+remaining:
+  - Machine roadmap.
+  - Human roadmap.
+  - Validation.
+  - PR/merge.
+last_verified_commit: 01b4be72d456185f1840f407aa36471a7622897a
+test_results:
+  - "PR #171 exact-head CI 37518592972 SUCCESS."
+resume_instruction: Roadmap only; do not admit or implement MOB-2.
