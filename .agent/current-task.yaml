@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: DTR-DATA-PLATFORM-AUTONOMY-001
 authority: OWNER_DIRECTIVE
 goal: Turn the proven manual daily tender-selection workflow into a durable autonomous Daily Tender Run that uses Data Platform for procurement document indexing/retrieval and leaves GO/NO GO/DEFER to the human manager.
@@ -26,13 +26,12 @@ completed:
   - Focused and regression-relevant tests pass: 97 passed.
   - New DTR/mobile/CLI Ruff checks, py_compile and git diff --check pass.
   - Live isolated Mac mini smoke passed on public procurement 0169300035826000229: 4 EIS documents acquired, Data Platform analysis completed, manager synthesis returned NEEDS_REVIEW for FSTEC-license/attestation unknowns, run stopped at WAIT_HUMAN with external_submission_allowed=false.
-current: Commit and push the review-ready implementation, open PR, and verify exact-head CI once.
+current: Review-ready implementation is pushed in PR #164; final merge is blocked by the repository Company AM-4 automatic-merge gate.
 remaining:
-  - Commit and push feature/daily-tender-run-autonomy.
-  - Open/update PR against main.
-  - Check exact-head CI once and record status.
-  - Stop before automatic merge because repository policy shows the renewed AM-4 automatic-merge counter at 10/10 and this Owner-directive task has no queue auto_merge grant.
-last_verified_commit: 3938d4a5d221add4207a717f1a3b0ff0c15ffd38
+  - Let PR #164 exact-head CI complete or re-check it on the next continuation.
+  - Obtain the required human/Owner authority for the final merge, or an applicable renewed Company AM-4 cycle plus explicit queue auto_merge grant.
+  - After merge, deploy/migrate the Mac mini runtime and choose/configure the operational daily trigger cadence.
+last_verified_commit: 2e4854769732710efc81fa95ea20133934210b19
 last_tests:
   - 97 focused/regression-relevant tests passed, 15 warnings.
   - Migration 100 isolated SQLite upgrade/downgrade smoke: PASS.
@@ -40,7 +39,7 @@ last_tests:
   - Ruff on src/modules/daily_tender_run, src/modules/mobile_api, scripts/run_daily_tender_run.py, tests/test_daily_tender_run.py: PASS.
   - py_compile on DTR/mobile/CLI: PASS.
   - git diff --check: PASS.
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/tender-daily-run. Commit/push, open PR and check exact-head CI once. Do not auto-merge: current executor policy records 10/10 automatic merges since the 2026-09-22 review and the task has no explicit queue auto_merge grant. Do not automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
+resume_instruction: Continue from PR #164 on feature/daily-tender-run-autonomy. First reconcile exact-head CI and canonical main. Do not auto-merge: current executor policy records 10/10 automatic merges since the 2026-09-22 review and this task has no explicit queue auto_merge grant. If a human/Owner merge or renewed applicable authority makes main integration permissible, merge only after exact-head required CI is green; then migrate/deploy the Mac mini runtime and configure the operational daily trigger cadence. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or other consequential procurement action.
 execution:
   claimed_by: ChatGPT interactive
   branch: feature/daily-tender-run-autonomy
