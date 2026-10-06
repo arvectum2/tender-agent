@@ -75,7 +75,7 @@ owner_product_directive_2026_10_06:
     historical_item: ARV-044
     owner_priority_override: P0
     current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
-    implementation_status: MOB_1_MERGED
+    implementation_status: MOB_2_MERGED
     backend: "Tender Agent FastAPI on Mac mini"
     initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
     source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
@@ -87,6 +87,10 @@ owner_product_directive_2026_10_06:
       - explicit_live_demo_offline_state
       - recommendation_reasons_blockers_unknowns_projection
       - read_only_human_decision_boundary
+      - explicit_human_go_no_go_defer_actions
+      - human_confirmation_before_decision_write
+      - full_mobile_portfolio_projection
+      - canonical_decision_log_write
     mob_1:
       status: done
       pr: 171
@@ -94,11 +98,18 @@ owner_product_directive_2026_10_06:
       exact_head_ci_run: 37518592972
       exact_head_ci: success
       note: "Read-only iPhone manager inbox/detail is merged. No GO/NO GO/DEFER write control is exposed in MOB-1."
+    mob_2:
+      status: done
+      pr: 173
+      merge_commit: fe92b39e7a5944ccb519ee1f7579a811d91153f3
+      exact_head_ci_run: 37524387682
+      exact_head_ci: success
+      note: "Explicit human-confirmed GO / NO GO / DEFER writes are merged. Decisions are audited in the canonical decision log; ETP, signature, payment, bid submission and external-action hard stops remain unchanged."
     next:
-      stage: MOB-2
+      stage: MOB-3
       status: not_admitted
-      scope: "Explicit human GO / NO GO / DEFER mobile actions written to the canonical decision log."
-      gate: "Requires separate bounded admission; human decision and all consequential external-action hard stops remain unchanged."
+      scope: "APNs push notifications and deep links into the relevant Tender Agent case."
+      gate: "Requires separate bounded admission; consequential external-action hard stops remain unchanged."
     push: APNs
     required_actions: [GO, NO_GO, DEFER]
   deferred:
@@ -109,7 +120,7 @@ owner_product_directive_2026_10_06:
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
 execution_snapshot:
-  updated_at: '2026-10-06T19:28:00Z'
+  updated_at: '2026-10-06T20:19:28Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -134,7 +145,8 @@ execution_snapshot:
     - PROCUREMENT-KANBAN-V1-001
     - WATCHDOG-CONTINUATION-V2-001
     - MOB-1-IOS-INBOX-001
-  note: 'As of 2026-10-06, MOB-1 is merged as PR #171 / 01b4be72 and is no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. MOB-2 is not admitted by this roadmap sync.'
+    - MOB-2-IOS-DECISIONS-001
+  note: 'As of 2026-10-06, MOB-1 and MOB-2 are merged as PR #171 / 01b4be72 and PR #173 / fe92b39 respectively and are no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. MOB-3 is not admitted by this roadmap sync.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
@@ -380,6 +392,12 @@ current_programs:
   roadmap_mapping: [ARV-044]
   strategy: COPY_PATTERN
   completion_evidence: 'Native SwiftUI read-only manager inbox/detail; Bearer pairing + Keychain; current mobile API evidence projection; exact-head CI 37518592972 SUCCESS; Owner-approved merge 01b4be72d456185f1840f407aa36471a7622897a.'
+- task_id: MOB-2-IOS-DECISIONS-001
+  state: done
+  source: 'Owner directive 2026-10-06; PR #173 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: COPY_PATTERN
+  completion_evidence: 'Explicit human GO / NO GO / DEFER confirmation flow; canonical HUMAN decision-log writes; full mobile portfolio visibility; exact-head CI 37524387682 SUCCESS; Owner-approved merge fe92b39e7a5944ccb519ee1f7579a811d91153f3.'
 
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive
