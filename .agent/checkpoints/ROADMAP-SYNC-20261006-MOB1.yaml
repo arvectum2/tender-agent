@@ -1,5 +1,5 @@
 task_id: ROADMAP-SYNC-20261006-MOB1
-status: in_progress
+status: completed
 goal: Reconcile canonical roadmap after MOB-1 merge, without new development admission.
 definition_of_done:
   - MOB-1 merge evidence recorded.
@@ -9,13 +9,13 @@ definition_of_done:
   - Roadmap-only PR validated and merged.
 completed:
   - PR #171 merged as 01b4be72d456185f1840f407aa36471a7622897a after exact-head green CI.
-current: Roadmap overlay edits.
-remaining:
-  - Machine roadmap.
-  - Human roadmap.
-  - Validation.
-  - PR/merge.
-last_verified_commit: 01b4be72d456185f1840f407aa36471a7622897a
+current: Completed; roadmap-only PR/merge bookkeeping remains.
+remaining: []
+last_verified_commit: 81e04d2713164cea2ec1f7f6eeb3db85f1eefdd3
 test_results:
   - "PR #171 exact-head CI 37518592972 SUCCESS."
-resume_instruction: Roadmap only; do not admit or implement MOB-2.
+  - "Historical machine registry preserved: 93/93 unique and byte-identical."
+  - "Human recovered-roadmap historical section byte-identical."
+  - "Queue reconciliation: ARV-005 pilot is the only non-done item."
+  - "YAML parse PASS; git diff --check PASS."
+resume_instruction: Completed. Merge roadmap-only PR under current explicit Owner request; do not admit MOB-2.
