@@ -2,12 +2,19 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
+# TenderAnalysisRun has optional foreign keys into the customer-pilot contour.
+# Register those tables even when analysis is invoked directly (CLI/library)
+# rather than through src.main / src.shared.db.models.
+from src.modules.customer_pilot import models as _customer_pilot_models  # noqa: F401
+from src.modules.customer_registry import (
+    models as _customer_registry_models,  # noqa: F401
+)
 from src.tender_research.models import TenderAnalysisRun
 
 logger = logging.getLogger(__name__)
@@ -106,7 +113,7 @@ def record_analysis_run(
     source: str | None = None,
     metadata: dict | None = None,
 ) -> TenderAnalysisRun:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     preview = _generate_preview(report_markdown) if report_markdown else None
     run = TenderAnalysisRun(
         registry_number=registry_number,
@@ -183,7 +190,7 @@ def get_analysis_run_report(session: Session, run_id: str, data_dir: str) -> tup
         return record, None, "No report file was saved for this run"
     try:
         markdown = Path(resolved).read_text(encoding="utf-8")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         return record, None, f"Failed to read report file: {e}"
     return record, markdown, None
 
@@ -211,6 +218,6 @@ def get_latest_analysis_report(session: Session, registry_number: str, data_dir:
         return record, None, "No report file was saved for this run"
     try:
         markdown = Path(resolved).read_text(encoding="utf-8")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         return record, None, f"Failed to read report file: {e}"
     return record, markdown, None

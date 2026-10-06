@@ -114,8 +114,7 @@ def _screen_card(
 ) -> tuple[str, float, list[str]]:
     now = now or datetime.now(UTC)
     title = str(card.get("title") or "").strip()
-    customer = str(card.get("customer_name") or "").strip()
-    text = f"{title} {customer}".casefold()
+    title_text = title.casefold()
     reasons: list[str] = []
     score = 0.0
 
@@ -128,19 +127,80 @@ def _screen_card(
         return "OUT", 0.0, ["application_deadline_expired"]
 
     excluded = [
-        keyword for keyword in profile.exclude_keywords if keyword.casefold() in text
+        keyword for keyword in profile.exclude_keywords if keyword.casefold() in title_text
     ]
     if excluded:
         return "OUT", 0.0, [f"excluded_keyword:{keyword}" for keyword in excluded]
 
     matches = [
-        keyword for keyword in profile.include_keywords if keyword.casefold() in text
+        keyword for keyword in profile.include_keywords if keyword.casefold() in title_text
     ]
-    score += min(len(matches), 6) * 12.0
+    custom_matches = [
+        keyword
+        for keyword in profile.custom_work_keywords
+        if keyword.casefold() in title_text
+    ]
+    strong_custom_matches = [
+        keyword
+        for keyword in profile.strong_custom_work_keywords
+        if keyword.casefold() in title_text
+    ]
+    license_supply_matches = [
+        keyword
+        for keyword in profile.license_supply_keywords
+        if keyword.casefold() in title_text
+    ]
+    support_matches = [
+        keyword
+        for keyword in profile.support_only_keywords
+        if keyword.casefold() in title_text
+    ]
+    security_matches = [
+        keyword
+        for keyword in profile.security_infra_keywords
+        if keyword.casefold() in title_text
+    ]
+
+    score += min(len(matches), 6) * 6.0
+    score += min(len(custom_matches), 4) * 16.0
+
+    if license_supply_matches and not strong_custom_matches:
+        return "OUT", score, [
+            "license_or_hardware_supply_without_custom_development",
+            *[f"supply_signal:{keyword}" for keyword in license_supply_matches[:4]],
+        ]
+    if support_matches and not strong_custom_matches:
+        return "OUT", score, [
+            "support_only_without_custom_development",
+            *[f"support_signal:{keyword}" for keyword in support_matches[:4]],
+        ]
+    if security_matches and not strong_custom_matches:
+        return "OUT", score, [
+            "security_infrastructure_without_custom_development",
+            *[f"security_signal:{keyword}" for keyword in security_matches[:4]],
+        ]
     if profile.require_include_keyword and profile.include_keywords and not matches:
         return "OUT", score, ["no_profile_keyword_match"]
+    if (
+        profile.require_custom_work_keyword
+        and profile.custom_work_keywords
+        and not custom_matches
+    ):
+        return "OUT", score, ["no_custom_work_signal"]
+
     if matches:
         reasons.append("profile_keywords:" + ",".join(matches[:6]))
+    if custom_matches:
+        reasons.append("custom_work:" + ",".join(custom_matches[:4]))
+    if license_supply_matches and strong_custom_matches:
+        reasons.append("license_supply_requires_deep_review")
+        score -= 8
+    if support_matches and strong_custom_matches:
+        reasons.append("support_dependency_requires_deep_review")
+        score -= 6
+    if security_matches and strong_custom_matches:
+        reasons.append("security_requirements_require_deep_review")
+        score -= 10
 
     nmck = _number(card.get("initial_price"))
     if profile.min_nmck is not None:
@@ -155,6 +215,13 @@ def _screen_card(
             score -= 5
         elif nmck > profile.max_nmck:
             return "OUT", score, ["nmck_above_profile_maximum"]
+    if profile.preferred_max_nmck is not None and nmck is not None:
+        if nmck > profile.preferred_max_nmck:
+            reasons.append("nmck_above_preferred_scale")
+            score -= 20
+        if nmck > profile.preferred_max_nmck * 5:
+            reasons.append("nmck_enterprise_scale")
+            score -= 20
 
     if deadline is not None:
         hours = max(0.0, (deadline - now).total_seconds() / 3600)
@@ -505,6 +572,7 @@ def _process_item(
         customer_name=item.customer_name,
         nmck_amount=item.nmck_amount,
         deadline_text=item.deadline_at.isoformat() if item.deadline_at else None,
+        selection_policy=profile.decision_policy.model_dump(mode="json"),
         use_llm=profile.synthesis_use_llm,
     )
     item.agent_recommendation = synthesis.recommendation

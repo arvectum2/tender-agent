@@ -100,6 +100,123 @@ def _install_happy_path(monkeypatch, *, registry_number: str = "0123456789012345
 
 
 
+
+def test_v2_screen_matches_manual_arvectum_selection_shapes():
+    from datetime import UTC, datetime
+
+    from src.modules.daily_tender_run.profiles import load_daily_tender_profile
+    from src.modules.daily_tender_run.service import _screen_card
+
+    profile = load_daily_tender_profile("arvectum-it")
+    now = datetime(2026, 10, 6, 12, 0, tzinfo=UTC)
+
+    cases = [
+        (
+            "Разработка сайта на платформе Tilda",
+            152_033.33,
+            "IN",
+            None,
+        ),
+        (
+            "Разработка GIS-плагина для Axioma 7.x",
+            521_000,
+            "IN",
+            None,
+        ),
+        (
+            "Доработка программного обеспечения сервера и автоматизированной информационной системы в части разработки дополнительной подсистемы",
+            2_500_000,
+            "IN",
+            None,
+        ),
+        (
+            "Доработка государственной информационной системы GeoPrime",
+            3_475_918,
+            "IN",
+            None,
+        ),
+        (
+            "Сопровождение систем информационного обеспечения деятельности: Консультант плюс",
+            350_000,
+            "OUT",
+            "support_only_without_custom_development",
+        ),
+        (
+            "Поставка оборудования, передача неисключительных прав на использование программного обеспечения, сертификатов технической поддержки и выполнение работ в целях модернизации программно-аппаратных комплексов",
+            568_351_039.94,
+            "OUT",
+            "license_or_hardware_supply_without_custom_development",
+        ),
+        (
+            "Оказание услуг по установке, настройке СКЗИ ViPNet и предоставлению сертификатов технической поддержки",
+            1_199_100,
+            "OUT",
+            "license_or_hardware_supply_without_custom_development",
+        ),
+    ]
+
+    for title, nmck, expected_status, expected_reason in cases:
+        status, _score, reasons = _screen_card(
+            profile,
+            {
+                "title": title,
+                "customer_name": "Заказчик",
+                "initial_price": nmck,
+                "deadline": "20.10.2026 18:00",
+                "status": "Подача заявок",
+            },
+            now=now,
+        )
+        assert status == expected_status, (title, reasons)
+        if expected_reason:
+            assert expected_reason in reasons
+
+
+def test_v2_screen_hard_caps_obviously_out_of_scale_enterprise_contracts():
+    from datetime import UTC, datetime
+
+    from src.modules.daily_tender_run.profiles import load_daily_tender_profile
+    from src.modules.daily_tender_run.service import _screen_card
+
+    profile = load_daily_tender_profile("arvectum-it")
+    status, _score, reasons = _screen_card(
+        profile,
+        {
+            "title": "Модернизация информационной системы и развитие пользовательских сервисов",
+            "customer_name": "Центр развития цифровых технологий",
+            "initial_price": 143_864_502.27,
+            "deadline": "20.10.2026 18:00",
+            "status": "Подача заявок",
+        },
+        now=datetime(2026, 10, 6, 12, 0, tzinfo=UTC),
+    )
+
+    assert status == "OUT"
+    assert reasons == ["nmck_above_profile_maximum"]
+
+
+def test_v2_screen_does_not_use_customer_name_as_relevance_signal():
+    from datetime import UTC, datetime
+
+    from src.modules.daily_tender_run.profiles import load_daily_tender_profile
+    from src.modules.daily_tender_run.service import _screen_card
+
+    profile = load_daily_tender_profile("arvectum-it")
+    status, _score, reasons = _screen_card(
+        profile,
+        {
+            "title": "Оказание консультационных услуг",
+            "customer_name": "Центр развития информационных технологий",
+            "initial_price": 1_000_000,
+            "deadline": "20.10.2026 18:00",
+            "status": "Подача заявок",
+        },
+        now=datetime(2026, 10, 6, 12, 0, tzinfo=UTC),
+    )
+
+    assert status == "OUT"
+    assert reasons == ["no_profile_keyword_match"]
+
 def test_screen_enforces_deep_analysis_cap_with_autoflush_disabled_and_resume_state(
     session,
 ):

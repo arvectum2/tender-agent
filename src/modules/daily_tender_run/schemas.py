@@ -8,6 +8,13 @@ from pydantic import Field
 from src.shared.types.common import APIModel
 
 
+class DailyTenderDecisionPolicy(APIModel):
+    positive_signals: list[str] = Field(default_factory=list)
+    hard_blockers: list[str] = Field(default_factory=list)
+    review_signals: list[str] = Field(default_factory=list)
+    non_blockers: list[str] = Field(default_factory=list)
+
+
 class DailyTenderProfile(APIModel):
     profile_id: str = Field(min_length=1)
     version: str = Field(min_length=1)
@@ -22,6 +29,16 @@ class DailyTenderProfile(APIModel):
     include_keywords: list[str] = Field(default_factory=list)
     exclude_keywords: list[str] = Field(default_factory=list)
     require_include_keyword: bool = True
+    require_custom_work_keyword: bool = False
+    custom_work_keywords: list[str] = Field(default_factory=list)
+    strong_custom_work_keywords: list[str] = Field(default_factory=list)
+    license_supply_keywords: list[str] = Field(default_factory=list)
+    support_only_keywords: list[str] = Field(default_factory=list)
+    security_infra_keywords: list[str] = Field(default_factory=list)
+    preferred_max_nmck: float | None = Field(default=None, ge=0)
+    decision_policy: DailyTenderDecisionPolicy = Field(
+        default_factory=DailyTenderDecisionPolicy
+    )
     analysis_mode: Literal["fast", "balanced", "detailed"] = "balanced"
     analysis_use_llm: bool = True
     synthesis_use_llm: bool = True
