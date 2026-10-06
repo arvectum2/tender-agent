@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: MOB-2-IOS-DECISIONS-001
 authority: OWNER_DIRECTIVE
 goal: 'Deliver the second bounded ARV-044 mobile slice: explicit human GO / NO GO / DEFER actions from the native iPhone client,
@@ -46,12 +46,12 @@ completed:
 - 'Implementation PR #173 squash-merged as fe92b39e7a5944ccb519ee1f7579a811d91153f3.'
 - Roadmap overlay updated to mark MOB-2 done and MOB-3 next/not admitted while preserving all consequential-action hard stops.
 - 'PASS: roadmap YAML/checkpoint YAML parse, git diff --check, and historical roadmap tail preservation against fe92b39.'
-current: Open the roadmap-only PR, verify exact-head CI, merge it, and then mark the canonical checkpoint completed.
-pending:
-- Open roadmap-only PR and verify its exact-head CI.
-- Merge roadmap-only PR under the current Owner directive.
-- Mark canonical checkpoint completed on the merged main state.
-last_verified_commit: fe92b39e7a5944ccb519ee1f7579a811d91153f3
+- 'Roadmap reconciliation PR #174 exact-head CI run 37525851145 completed SUCCESS 9/9 at fdb371476c551aec5b9edd5ed237bf68ecfdc03d.'
+- 'Roadmap reconciliation PR #174 squash-merged as be214b9c83c96129a90d1afae41d34c43dc4cc07.'
+- Canonical roadmap now marks MOB-2 done and MOB-3 next/not admitted.
+current: 'MOB-2 completed: implementation and roadmap reconciliation are merged; no further MOB-2 work remains.'
+pending: []
+last_verified_commit: be214b9c83c96129a90d1afae41d34c43dc4cc07
 test_results:
 - 'PASS: backend mobile + canonical portfolio tests — 14 passed, 11 warnings.'
 - 'PASS: xcodegen generate.'
@@ -60,14 +60,15 @@ test_results:
 - 'PASS: implementation exact-head GitHub CI 37524387682 — 9/9 jobs.'
 - 'PASS: runtime auth boundary — health 200; unauthenticated mobile inbox 401.'
 - 'PASS: implementation git diff --check.'
-updated_at: '2026-10-06T23:25:00+03:00'
-resume_instruction: Continue MOB-2 reconciliation only. Validate the roadmap-only diff, open/verify/merge its PR, then set
-  this checkpoint to completed with final merge evidence. Do not start MOB-3.
+- 'PASS: roadmap reconciliation exact-head GitHub CI 37525851145 — 9/9 jobs.'
+updated_at: '2026-10-06T23:31:00+03:00'
+resume_instruction: MOB-2 is completed. Do not reopen it automatically. MOB-3 (APNs + deep links) requires a separate explicit
+  admission.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261006-mob2
-  branch: owner/roadmap-sync-20261006-mob2
-  base_commit: fe92b39e7a5944ccb519ee1f7579a811d91153f3
+  branch: chore/complete-mob2-checkpoint-20261006
+  base_commit: be214b9c83c96129a90d1afae41d34c43dc4cc07
   issue: null
   manual_override: true
   lease_until: null
