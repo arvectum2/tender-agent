@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ROADMAP-SYNC-20261006-MOB1
 authority: OWNER_DIRECTIVE
 goal: Update the canonical roadmap after the explicit Owner-approved merge of MOB-1 / PR #171, without changing the historical snapshot or admitting a new development task.
@@ -14,17 +14,17 @@ definition_of_done:
 completed:
 - Owner explicitly instructed merge of PR #171 and clarified that the original intent was only to update the roadmap.
 - PR #171 exact-head CI 37518592972 succeeded and PR #171 was squash-merged as 01b4be72d456185f1840f407aa36471a7622897a.
-current: Update machine and human roadmap overlays only.
-pending:
-- Update docs/roadmap/master-roadmap.yaml.
-- Update docs/roadmap/MASTER_ROADMAP.md.
-- Validate historical registry preservation and queue snapshot.
-- Open and merge roadmap-only PR.
-last_verified_commit: 01b4be72d456185f1840f407aa36471a7622897a
+current: Completed; roadmap-only PR/merge bookkeeping remains.
+pending: []
+last_verified_commit: 81e04d2713164cea2ec1f7f6eeb3db85f1eefdd3
 test_results:
 - "PR #171 exact-head CI 37518592972: SUCCESS."
-updated_at: '2026-10-06T22:28:00+03:00'
-resume_instruction: Continue only the roadmap sync. Do not start MOB-2 or any unrelated product implementation.
+- "Historical machine legacy registry preserved byte-for-byte: 93 IDs / 93 unique."
+- "Human Complete recovered roadmap section preserved byte-for-byte."
+- "Execution queue reconciliation: only ARV-005-CONTROLLED-PILOT-EVIDENCE-001 remains non-done."
+- "YAML parse PASS; git diff --check PASS."
+updated_at: '2026-10-06T22:31:00+03:00'
+resume_instruction: Task complete. Do not start MOB-2 from this sync; only merge the roadmap-only PR under the current explicit Owner request.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261006-roadmap-sync-mob1
