@@ -19,7 +19,6 @@ class MobileDecisionRequest(APIModel):
     reason_codes: list[str] = Field(default_factory=list)
     deferred_until: datetime | None = None
     idempotency_key: str = Field(min_length=8, max_length=128)
-    actor_ref: str = Field(default="tender-agent-ios", min_length=1, max_length=128)
 
     @model_validator(mode="after")
     def validate_defer(self):
@@ -28,6 +27,21 @@ class MobileDecisionRequest(APIModel):
         if self.action != "DEFER" and self.deferred_until is not None:
             raise ValueError("deferred_until is only allowed for DEFER")
         return self
+
+
+
+
+class MobilePairRequest(APIModel):
+    pairing_code: str = Field(min_length=6, max_length=6)
+    device_id: str = Field(min_length=8, max_length=128)
+    device_name: str | None = Field(default=None, max_length=128)
+
+
+class MobilePairResponse(APIModel):
+    access_token: str
+    token_type: Literal["bearer"] = "bearer"
+    expires_at: datetime
+    device_id: str
 
 
 class MobileProcurementItemResponse(APIModel):

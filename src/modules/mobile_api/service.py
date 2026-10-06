@@ -202,7 +202,13 @@ def _existing_idempotent_decision(
     return None
 
 
-def record_mobile_decision(session: Session, deal_id: str, payload: MobileDecisionRequest) -> dict:
+def record_mobile_decision(
+    session: Session,
+    deal_id: str,
+    payload: MobileDecisionRequest,
+    *,
+    actor_ref: str,
+) -> dict:
     if _existing_idempotent_decision(
         session,
         deal_id=deal_id,
@@ -228,7 +234,7 @@ def record_mobile_decision(session: Session, deal_id: str, payload: MobileDecisi
             deal_id=deal_id,
             decision_code="PORTFOLIO_BID_DECISION",
             decided_by_type=DecisionByType.HUMAN,
-            decided_by_ref=payload.actor_ref,
+            decided_by_ref=actor_ref,
             rationale=rationale,
             payload_json={
                 "decision": decision,
