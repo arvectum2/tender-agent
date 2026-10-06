@@ -2929,15 +2929,10 @@ legacy_registry:
     comment: 'Не копировать мобильный агрегатор: приложение — companion к глубокому web-анализу.'
     dependencies_raw: ARV-021, ARV-043
   reconciliation:
-    state: current_owner_priority_p0_mob1_done
-    verified_at: '2026-10-06'
-    evidence:
-    - pr: 171
-      merge_commit: 01b4be72d456185f1840f407aa36471a7622897a
-      detail: 'MOB-1 native SwiftUI read-only manager inbox/detail merged after exact-head CI run 37518592972 SUCCESS.'
-    - path: docs/product/Daily_Tender_Run_and_iPhone_MVP.md
-      detail: 'Current product meaning and mobile delivery sequence; MOB-2/MOB-3 remain separate future bounded stages.'
-    notes: 'Legacy 2026-07-30 snapshot stays immutable. Current overlay records P0 owner priority and completed MOB-1 only; ARV-044 broader mobile companion is not claimed complete.'
+    state: needs_revalidation
+    verified_at: null
+    evidence: []
+    notes: null
 - id: ARV-070
   legacy_snapshot:
     queue_order: 64
