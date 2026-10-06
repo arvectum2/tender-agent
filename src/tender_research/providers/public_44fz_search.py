@@ -546,6 +546,46 @@ def _split_registry_entries(html_str: str) -> list[str]:
     return []
 
 
+def _extract_procurement_card_url(
+    entry_html: str,
+    registry_number: str | None,
+) -> str | None:
+    """Return the canonical procurement notice page, not print/export asset links."""
+    ranked: list[tuple[int, str]] = []
+    candidates = re.findall(r'href=["\\\']([^"\\\']+)["\\\']', entry_html, re.IGNORECASE)
+    for raw_href in candidates:
+        href = html.unescape(raw_href).strip()
+        if not href:
+            continue
+        absolute = urljoin(f"https://{EIS_44FZ_HOST}", href)
+        parsed = urlparse(absolute)
+        if (parsed.hostname or "").lower() != EIS_44FZ_HOST:
+            continue
+        path_lower = parsed.path.lower()
+        if "/epz/order/notice/" not in path_lower or "/printform/" in path_lower:
+            continue
+        if registry_number:
+            reg_values = parse_qs(parsed.query).get("regNumber", [])
+            if reg_values and registry_number not in reg_values:
+                continue
+        if path_lower.endswith("/view/common-info.html"):
+            rank = 0
+        elif re.search(r"/view(?:\.html)?$", path_lower):
+            rank = 1
+        elif path_lower.endswith("/view/documents.html"):
+            rank = 2
+        else:
+            continue
+        ranked.append((rank, absolute))
+    if not ranked:
+        return None
+    ranked.sort(key=lambda item: item[0])
+    selected = ranked[0][1]
+    if "/view/documents.html" in selected:
+        selected = selected.replace("/view/documents.html", "/view/common-info.html")
+    return selected
+
+
 def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | None:
     pairs: dict[str, str] = _extract_registry_body_pairs(entry_html)
     for title_class, value_class in (
@@ -653,14 +693,10 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
         _first_matching_value(pairs, ("окончание подачи заявок", "дата окончания срока подачи заявок", "срок подачи заявок"))
     )
 
-    card_url = None
-    href_match = re.search(r'href="(https://[^"]*(?:zakupki\.gov\.ru)[^"]*)"', entry_html)
-    if href_match:
-        card_url = href_match.group(1)
-    if not card_url:
-        href_match = re.search(r'href="([^"]*(?:view|common-info)[^"]*)"', entry_html)
-        if href_match:
-            card_url = urljoin("https://zakupki.gov.ru", href_match.group(1))
+    card_url = _extract_procurement_card_url(
+        entry_html,
+        reestr_number or notice_number,
+    )
 
     procedure_status = _strip_html(
         _extract_between(entry_html, '<div class="registry-entry__header-mid__title text-normal">', "</div>")

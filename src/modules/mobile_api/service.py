@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.event_log.models import DecisionRecord
 from src.modules.event_log.schemas import AppendDecisionRequest
 from src.modules.event_log.service import append_decision
@@ -30,6 +31,31 @@ def _latest_mobile_decisions(session: Session, deal_ids: list[str]) -> dict[str,
         )
     )
     return {row.deal_id: row for row in rows}
+
+
+
+def _latest_daily_tender_items(
+    session: Session,
+    deal_ids: list[str],
+) -> dict[str, DailyTenderRunItem]:
+    if not deal_ids:
+        return {}
+    rows = list(
+        session.scalars(
+            select(DailyTenderRunItem)
+            .join(DailyTenderRun, DailyTenderRun.run_id == DailyTenderRunItem.run_id)
+            .where(
+                DailyTenderRunItem.deal_id.in_(deal_ids),
+                DailyTenderRunItem.status == "MANAGER_READY",
+            )
+            .order_by(
+                DailyTenderRun.created_at.asc(),
+                DailyTenderRunItem.updated_at.asc(),
+                DailyTenderRunItem.id.asc(),
+            )
+        )
+    )
+    return {row.deal_id: row for row in rows if row.deal_id}
 
 
 def _source_urls(session: Session, deal_ids: list[str]) -> dict[str, str]:
@@ -114,10 +140,16 @@ def build_mobile_portfolio(session: Session) -> dict:
     deal_ids = [row["deal_id"] for row in rows]
     mobile_decisions = _latest_mobile_decisions(session, deal_ids)
     urls = _source_urls(session, deal_ids)
+    daily_items = _latest_daily_tender_items(session, deal_ids)
 
     items = []
     for row in rows:
+        daily_item = daily_items.get(row["deal_id"])
         recommendation, recommendation_rationale, recommendation_codes = _recommendation(row)
+        if daily_item is not None and daily_item.agent_recommendation in {"GO", "NO_GO", "NEEDS_REVIEW"}:
+            recommendation = daily_item.agent_recommendation
+            recommendation_rationale = daily_item.agent_rationale
+            recommendation_codes = ["DAILY_TENDER_RUN"]
         human_decision, human_rationale, human_codes, deferred_until = _human_state(
             mobile_decisions.get(row["deal_id"]),
             row,
@@ -128,12 +160,37 @@ def build_mobile_portfolio(session: Session) -> dict:
                 "procurement_number": row["procurement_number"],
                 "title": row["title"],
                 "customer_name": row["customer_name"],
-                "source_url": urls.get(row["deal_id"]),
-                "nmck_rub": None,
-                "deadline_at": None,
+                "source_url": (
+                    daily_item.source_url if daily_item is not None and daily_item.source_url
+                    else urls.get(row["deal_id"])
+                ),
+                "nmck_rub": daily_item.nmck_amount if daily_item is not None else None,
+                "deadline_at": daily_item.deadline_at if daily_item is not None else None,
                 "recommendation": recommendation,
                 "recommendation_rationale": recommendation_rationale,
                 "recommendation_reason_codes": recommendation_codes,
+                "recommendation_confidence": (
+                    daily_item.agent_confidence if daily_item is not None else None
+                ),
+                "recommendation_reasons": (
+                    list(daily_item.strongest_reasons_json or [])
+                    if daily_item is not None
+                    else []
+                ),
+                "recommendation_blockers": (
+                    list(daily_item.blockers_json or [])
+                    if daily_item is not None
+                    else []
+                ),
+                "recommendation_unknowns": (
+                    list(daily_item.unknowns_json or [])
+                    if daily_item is not None
+                    else []
+                ),
+                "analysis_run_id": daily_item.analysis_run_id if daily_item is not None else None,
+                "analysis_report_path": (
+                    daily_item.analysis_report_path if daily_item is not None else None
+                ),
                 "human_decision": human_decision,
                 "human_rationale": human_rationale,
                 "human_reason_codes": human_codes,
@@ -170,6 +227,60 @@ def build_mobile_inbox(session: Session) -> dict:
         "items": items,
     }
 
+
+
+def build_mobile_digest(session: Session) -> dict:
+    run = session.scalar(
+        select(DailyTenderRun)
+        .order_by(DailyTenderRun.created_at.desc(), DailyTenderRun.id.desc())
+        .limit(1)
+    )
+    if run is None or not isinstance(run.digest_json, dict):
+        return {
+            "run_id": None,
+            "profile_id": None,
+            "profile_version": None,
+            "counts": {},
+            "actionable": [],
+            "human_control": {
+                "decision_required": True,
+                "allowed_actions": ["GO", "NO_GO", "DEFER"],
+                "external_submission_allowed": False,
+            },
+        }
+
+    digest = dict(run.digest_json)
+    portfolio = build_mobile_portfolio(session)
+    current_by_deal = {item["deal_id"]: item for item in portfolio["items"]}
+    actionable: list[dict] = []
+    for snapshot in digest.get("actionable", []):
+        if not isinstance(snapshot, dict):
+            continue
+        deal_id = snapshot.get("deal_id")
+        current = current_by_deal.get(deal_id)
+        if current is None or not current["needs_attention"]:
+            continue
+        merged = dict(snapshot)
+        merged.update(
+            {
+                "human_decision": current["human_decision"],
+                "human_rationale": current["human_rationale"],
+                "human_reason_codes": current["human_reason_codes"],
+                "deferred_until": (
+                    current["deferred_until"].isoformat()
+                    if current["deferred_until"] is not None
+                    else None
+                ),
+                "needs_attention": current["needs_attention"],
+            }
+        )
+        actionable.append(merged)
+
+    counts = dict(digest.get("counts") or {})
+    counts["needs_manager"] = len(actionable)
+    digest["counts"] = counts
+    digest["actionable"] = actionable
+    return digest
 
 def get_mobile_procurement(session: Session, deal_id: str) -> dict:
     portfolio = build_mobile_portfolio(session)

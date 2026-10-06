@@ -56,6 +56,12 @@ class MobileProcurementItemResponse(APIModel):
     recommendation: MobileRecommendation
     recommendation_rationale: str | None = None
     recommendation_reason_codes: list[str] = Field(default_factory=list)
+    recommendation_confidence: str | None = None
+    recommendation_reasons: list[str] = Field(default_factory=list)
+    recommendation_blockers: list[str] = Field(default_factory=list)
+    recommendation_unknowns: list[str] = Field(default_factory=list)
+    analysis_run_id: str | None = None
+    analysis_report_path: str | None = None
 
     human_decision: MobileHumanDecision
     human_rationale: str | None = None
@@ -91,3 +97,12 @@ class MobileInboxResponse(APIModel):
 class MobilePortfolioResponse(APIModel):
     summary: ProcurementPortfolioSummaryResponse
     items: list[MobileProcurementItemResponse]
+
+
+class MobileDigestResponse(APIModel):
+    run_id: str | None = None
+    profile_id: str | None = None
+    profile_version: str | None = None
+    counts: dict = Field(default_factory=dict)
+    actionable: list[dict] = Field(default_factory=list)
+    human_control: dict = Field(default_factory=dict)

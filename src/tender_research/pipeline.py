@@ -335,6 +335,17 @@ class TenderResearchPipeline:
             "errors": [],
         }
 
+    def ingest_public_by_registry_number(self, registry_number: str) -> tuple[Any, dict[str, int]]:
+        """Ingest or refresh one public EIS procurement by registry number."""
+        normalized = str(registry_number or "").strip()
+        if not normalized:
+            raise ValueError("registry_number is required")
+        existing = self._repo.get_tender_by_registry_number(normalized)
+        discovered = self._lookup_public_discovered_item(normalized, existing)
+        tender, summary = self._ingest_discovered_tender(discovered)
+        self._session.commit()
+        return tender, summary
+
     def _ingest_discovered_tender(
         self,
         discovered: DiscoveredRegistryNumber,

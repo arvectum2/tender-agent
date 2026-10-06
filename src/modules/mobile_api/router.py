@@ -11,6 +11,7 @@ from .auth import (
 )
 from .schemas import (
     MobileDecisionRequest,
+    MobileDigestResponse,
     MobileInboxResponse,
     MobilePairRequest,
     MobilePairResponse,
@@ -18,6 +19,7 @@ from .schemas import (
     MobileProcurementItemResponse,
 )
 from .service import (
+    build_mobile_digest,
     build_mobile_inbox,
     build_mobile_portfolio,
     get_mobile_procurement,
@@ -60,6 +62,14 @@ def mobile_inbox(
     _device_id: MobileDeviceID,
 ) -> MobileInboxResponse:
     return MobileInboxResponse.model_validate(build_mobile_inbox(session))
+
+
+@router.get("/digest/latest", response_model=MobileDigestResponse)
+def mobile_digest_latest(
+    session: DBSession,
+    _device_id: MobileDeviceID,
+) -> MobileDigestResponse:
+    return MobileDigestResponse.model_validate(build_mobile_digest(session))
 
 
 @router.get("/portfolio", response_model=MobilePortfolioResponse)
