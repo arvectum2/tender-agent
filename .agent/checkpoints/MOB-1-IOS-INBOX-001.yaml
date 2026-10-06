@@ -1,0 +1,25 @@
+task_id: MOB-1-IOS-INBOX-001
+status: in_progress
+authority: OWNER_DIRECTIVE
+goal: Native SwiftUI read-only inbox/detail connected to the current Tender Agent mobile API.
+definition_of_done:
+  - Existing iOS branch reconciled with current main.
+  - Current backend mobile contract decodes correctly.
+  - Pairing uses bearer token stored in Keychain.
+  - Visible MOB-1 flow is read-only and live/mock state is explicit.
+  - Xcode build and focused tests pass.
+  - Review-ready PR prepared; merge remains separately gated.
+completed:
+  - Existing iOS branch reconciled with current main at 986f039.
+  - Existing mobile API/pairing implementation inventoried.
+current: Build/test and contract reconciliation.
+remaining:
+  - Build/test.
+  - Contract diff and fixes.
+  - Live/mock UX boundary.
+  - README/evidence.
+  - PR.
+last_verified_commit: 986f039
+test_results: []
+resume_instruction: Build first; fix only observed MOB-1 gaps; preserve human decision hard stops and do not merge under review-due AM-4.
+updated_at: '2026-10-06T21:02:00+03:00'

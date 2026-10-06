@@ -546,6 +546,23 @@ items:
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
   done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
+- order: 230
+  task_id: MOB-1-IOS-INBOX-001
+  strategy: COPY_PATTERN
+  continuation_mode: OWNER_DIRECTIVE
+  title: Native iPhone read-only inbox and procurement summary over live mobile API
+  status: in_progress
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  source: 'Owner product directive 2026-10-06 promotes ARV-044 mobile companion to P0; explicit continuation instruction in project chat authorizes implementation.'
+  roadmap_scope:
+  - ARV-044
+  dependencies:
+  - DTR-V2-RULES-FAILURE-001
+  executor_scope: 'Reconcile the existing SwiftUI feature branch with current main; make MOB-1 read-only inbox/detail work against the current Mac mini mobile API over the existing bearer pairing boundary; no bid decision automation, no ETP/signature/payment/external side effect.'
+  done_gate: 'SwiftUI app builds/tests on current Xcode; read-only inbox and procurement detail decode the live mobile API contract; pairing/token storage remains Keychain-backed; mock fallback is explicit rather than silently presented as live; focused iOS tests pass; review-ready PR prepared. Merge remains separately gated while Company AM-4 is review-due.'
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
