@@ -66,6 +66,74 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 
 **Current execution status (2026-09-18):** every explicitly admitted execution-queue item through order 80 is completed. The final REVIEW item, `223FZ-DECISION-V1-001` / PR #81, was merged after explicit Product Owner approval and successful exact-head CI. The canonical queue is now exhausted: there is **no admitted executable item**. The single `Tender Agent Watchdog` remains enabled exact-hourly and audit-logged in issue #57, but it must report/reconcile only and must not invent or promote roadmap work until the Product Owner admits a new bounded item.
 
+## Owner product directive — 2026-10-06: Daily Tender Run + iPhone Tender Agent
+
+The Product Owner promotes the real daily procurement workflow observed in production use into the next product layer.
+
+### A. Daily Tender Run — P0
+
+Goal: make the routine workflow reproducible end-to-end with one scheduled/backend run while keeping the substantive bid decision human.
+
+Canonical flow:
+
+EIS search/filter → dedupe → shortlist → document acquisition on Mac mini → Data Platform → deep analysis → evidence-bound summary → manager inbox → HUMAN GO / NO GO / DEFER → application readiness → submission tracking → outcome → postmortem → portfolio metrics.
+
+Required behavior:
+
+- saved filters on a configurable schedule plus manual rerun;
+- deduplicate already-seen procurements and reprocess only material changes;
+- cheap screening before expensive deep analysis;
+- EIS documents acquired through Mac mini and analyzed locally via Data Platform;
+- one manager digest plus one evidence-grounded report per shortlisted procurement;
+- agent recommendation, rationale, confidence, blockers and evidence persisted separately from the human decision;
+- GO / NO GO / DEFER is the explicit manager gate;
+- after GO, prepare readiness artifacts automatically without fabricating submission/signature success;
+- capture factual submission, platform, price, timestamps, outcome, winning price/participant and postmortem cause when evidence exists;
+- write stages into the canonical event/decision/outcome lifecycle and Procurement Portfolio.
+
+Success gate: a normal business day can be processed without chat-driven orchestration; the manager only reviews prepared summaries and records a decision.
+
+This reuses existing search, intake, Data Platform, screening, decision log, submission control, outcome intake, postmortem and Procurement Portfolio capabilities. It is not a parallel data model.
+
+### B. ARV-044 mobile companion — promoted to P0 owner priority
+
+Historical ARV-044 remains immutable in the recovered snapshot. The Owner now promotes its current product meaning from a deferred lightweight “tender radar” into the primary iPhone decision client for Tender Agent.
+
+MVP contract:
+
+- native SwiftUI iPhone app;
+- Mac mini remains the Tender Agent backend;
+- private backend access through Tailscale for the internal MVP;
+- APNs push for new reports, deferred-due items, material procurement changes, deadline risk and published outcomes;
+- inbox/digest with manager-ready summaries;
+- procurement card with NMCK, deadline, recommendation, blockers, risks, unknowns and evidence;
+- explicit GO / NO GO / DEFER actions with optional reason/comment;
+- mobile Portfolio for decisions, submissions and outcomes;
+- deep links to EIS/full web report;
+- mobile decisions written to the same canonical decision log as web decisions.
+
+Human boundary:
+
+- the app may present the agent recommendation but never turns it into a bid decision automatically;
+- ETP/EDS/signature actions remain explicit human steps where required;
+- submission/result states are recorded only from real evidence or explicit human confirmation.
+
+Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
+
+### Delivery sequence
+
+| Stage | Priority | Deliverable | Exit condition |
+|---|---|---|---|
+| DTR-1 | P0 | Daily Tender Run domain/orchestrator + persisted state | Saved filters process idempotently to manager-ready reports |
+| DTR-2 | P0 | Manager inbox/digest API | Mobile/web fetches only cases requiring attention |
+| MOB-1 | P0 | SwiftUI read-only inbox + procurement summary | iPhone securely reads live Mac mini reports |
+| MOB-2 | P0 | GO / NO GO / DEFER API + mobile actions | Mobile decision is audited and visible in Procurement Portfolio |
+| MOB-3 | P0 | APNs push + deep links | Notification opens the correct report/case |
+| DTR-3 | P1 | Post-GO readiness + submission/result monitoring | Portfolio advances automatically when grounded evidence exists |
+| MOB-4 | P1 | Mobile portfolio/metrics polish | Pipeline/outcomes are comfortable to review from phone |
+
+The execution queue is not modified by this roadmap entry. Implementation requires a separately admitted bounded item or explicit implementation directive.
+
 ### DOCUMENT-QA-005 reconciliation
 
 `DOCUMENT-QA-005` is **done**: issue #16 had already met its unbiased strict `customer_name` acceptance gate and was closed `completed` before the later #52 calibration. Case #52 is retained as post-acceptance regression evidence. Its generic EIS placement-organization/customer defect was fixed by PR #54 and issue #53 is completed; this does not silently reopen #16 or authorize an endless sequence of fresh blind cases.
