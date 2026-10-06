@@ -120,19 +120,21 @@ Human boundary:
 
 Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
 
+**Current mobile status (2026-10-06):** **MOB-1 completed and merged** in PR #171 as `01b4be72d456185f1840f407aa36471a7622897a`. Exact-head CI run `37518592972` passed. The merged slice is intentionally read-only: native SwiftUI inbox/detail, live Mac mini mobile API, dedicated Bearer pairing with Keychain storage, and explicit live/demo/offline state. **MOB-2 is next but not admitted by this roadmap update**; it will add explicit human GO / NO GO / DEFER writes to the canonical decision log under a separate bounded task.
+
 ### Delivery sequence
 
 | Stage | Priority | Deliverable | Exit condition |
 |---|---|---|---|
 | DTR-1 | P0 | Daily Tender Run domain/orchestrator + persisted state | Saved filters process idempotently to manager-ready reports |
 | DTR-2 | P0 | Manager inbox/digest API | Mobile/web fetches only cases requiring attention |
-| MOB-1 | P0 | SwiftUI read-only inbox + procurement summary | iPhone securely reads live Mac mini reports |
+| MOB-1 | P0 | **DONE — SwiftUI read-only inbox + procurement summary** | PR #171 merged; iPhone securely reads live Mac mini reports |
 | MOB-2 | P0 | GO / NO GO / DEFER API + mobile actions | Mobile decision is audited and visible in Procurement Portfolio |
 | MOB-3 | P0 | APNs push + deep links | Notification opens the correct report/case |
 | DTR-3 | P1 | Post-GO readiness + submission/result monitoring | Portfolio advances automatically when grounded evidence exists |
 | MOB-4 | P1 | Mobile portfolio/metrics polish | Pipeline/outcomes are comfortable to review from phone |
 
-The execution queue is not modified by this roadmap entry. Implementation requires a separately admitted bounded item or explicit implementation directive.
+Roadmap status is now reconciled to execution: MOB-1 was separately admitted, completed, and merged. This roadmap update does **not** admit MOB-2 or any other new development item; new implementation still requires a separately admitted bounded task or explicit implementation directive.
 
 ### DOCUMENT-QA-005 reconciliation
 
@@ -140,6 +142,7 @@ The execution queue is not modified by this roadmap entry. Implementation requir
 
 ## Current reconciliation highlights
 
+- **ARV-044 — mobile companion:** current Owner priority is P0; MOB-1 is complete and merged in PR #171 (`01b4be72`). Historical 2026-07-30 P2/5% fields remain unchanged in the immutable snapshot. The broader mobile track is not complete: MOB-2/MOB-3 remain future separately gated stages.
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
 - **ARV-003 — production LLM analysis:** current docs refer to an accepted ARV-003 bundle, while an older R10.1 backlog status still says Gate 5 ready. This inconsistency is preserved as a status-revalidation item rather than silently resolved.
 - **ARV-041 — legal SaaS/pilot package:** repository package exists, but the canonical legal release gate remains human: director approval, qualified Russian counsel review and infrastructure/Roskomnadzor/localization/retention checks.
@@ -172,10 +175,11 @@ The accelerated admitted pipeline that was active on 2026-09-15 is now fully rec
 | `223FZ-INGEST-V1-001` | **done** | issue #69; PR #80 merged as `dc87a0b` |
 | `223FZ-DECISION-V1-001` | **done** | issue #70; PR #81 merged as `f603c9f` after explicit Product Owner approval |
 | `DOMAIN-REGRESSION-V1-001` | **done** | issue #71; PR #77 merged as `c5e653a` |
+| `MOB-1-IOS-INBOX-001` | **done** | ARV-044 P0 slice; PR #171 merged as `01b4be72`; exact-head CI `37518592972` SUCCESS |
 
 ### Execution queue after reconciliation
 
-All queue entries through order 80 are `done`. There is currently **no admitted READY/AUTO/REVIEW item** to execute. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
+The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-06**, `MOB-1-IOS-INBOX-001` is **done and merged**, while `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` remains the only non-done admitted queue item. MOB-2 is not admitted. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
 
 ### Available continuation branches — candidate matrix
 
