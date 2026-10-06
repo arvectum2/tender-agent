@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-09-18T05:20:12Z'
+strategy_updated_at: '2026-10-06T19:28:00Z'
 continuous_execution:
   owner_directive_date: '2026-09-18'
   principle: work_conserving_hourly_executor
@@ -75,11 +75,32 @@ owner_product_directive_2026_10_06:
     historical_item: ARV-044
     owner_priority_override: P0
     current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
+    implementation_status: MOB_1_MERGED
     backend: "Tender Agent FastAPI on Mac mini"
     initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
+    source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
+    implemented_2026_10_06:
+      - native_swiftui_manager_inbox
+      - procurement_summary_and_detail
+      - mobile_bearer_pairing
+      - keychain_token_storage
+      - explicit_live_demo_offline_state
+      - recommendation_reasons_blockers_unknowns_projection
+      - read_only_human_decision_boundary
+    mob_1:
+      status: done
+      pr: 171
+      merge_commit: 01b4be72d456185f1840f407aa36471a7622897a
+      exact_head_ci_run: 37518592972
+      exact_head_ci: success
+      note: "Read-only iPhone manager inbox/detail is merged. No GO/NO GO/DEFER write control is exposed in MOB-1."
+    next:
+      stage: MOB-2
+      status: not_admitted
+      scope: "Explicit human GO / NO GO / DEFER mobile actions written to the canonical decision log."
+      gate: "Requires separate bounded admission; human decision and all consequential external-action hard stops remain unchanged."
     push: APNs
     required_actions: [GO, NO_GO, DEFER]
-    source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
   deferred:
     - Android
     - public multi-tenant mobile release
@@ -88,7 +109,7 @@ owner_product_directive_2026_10_06:
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
 execution_snapshot:
-  updated_at: '2026-09-18T19:31:00Z'
+  updated_at: '2026-10-06T19:28:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -97,10 +118,10 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: owner_directed_continuation_admitted
-  next_admitted_item: ARV-002-REVALIDATION-001
+  queue_state: owner_directed_work_in_progress
+  next_admitted_item: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
   admitted_pipeline:
-    - ARV-002-REVALIDATION-001
+    - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
   completed_pipeline:
     - DOCUMENT-QA-NEXT-INCREMENT
     - CHANGE-MONITORING-V1-001
@@ -112,7 +133,9 @@ execution_snapshot:
     - DOMAIN-REGRESSION-V1-001
     - PROCUREMENT-KANBAN-V1-001
     - WATCHDOG-CONTINUATION-V2-001
-  note: 'Items through order 95 are completed. Active OWNER-CONTINUOUS-ROADMAP-2026-09-18 permits deterministic bounded continuation when the queue would otherwise be empty; it does not permit priority invention or hard-stop bypass. ARV-002-REVALIDATION-001 is admitted and ready as the first materialized continuation slice.'
+    - MOB-1-IOS-INBOX-001
+  note: 'As of 2026-10-06, MOB-1 is merged as PR #171 / 01b4be72 and is no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. MOB-2 is not admitted by this roadmap sync.'
+
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -351,6 +374,12 @@ current_programs:
   roadmap_mapping: [ARV-072]
   strategy: INVENT
   completion_evidence: 'Versioned procurement regression registry and outcome telemetry foundation; merge c5e653a11a894360b1b05c1834495330b3a64cbb.'
+- task_id: MOB-1-IOS-INBOX-001
+  state: done
+  source: 'Owner directive 2026-10-06; PR #171 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: COPY_PATTERN
+  completion_evidence: 'Native SwiftUI read-only manager inbox/detail; Bearer pairing + Keychain; current mobile API evidence projection; exact-head CI 37518592972 SUCCESS; Owner-approved merge 01b4be72d456185f1840f407aa36471a7622897a.'
 
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive

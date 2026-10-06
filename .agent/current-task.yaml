@@ -1,49 +1,35 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: MOB-1-IOS-INBOX-001
+task_id: ROADMAP-SYNC-20261006-MOB1
 authority: OWNER_DIRECTIVE
-goal: "Deliver the first bounded ARV-044 mobile slice: a native SwiftUI iPhone read-only inbox and procurement summary connected to the current Tender Agent mobile API on the Mac mini."
+goal: Update the canonical roadmap after the explicit Owner-approved merge of MOB-1 / PR #171, without changing the historical snapshot or admitting a new development task.
 definition_of_done:
-- Existing feature/tender-agent-ios work is reconciled with current main without losing completed DTR/mobile API changes.
-- App uses the existing mobile bearer pairing boundary and Keychain token storage; no pilot Basic Auth/password embedding.
-- Inbox and procurement detail use the current /mobile/v1 contract and clearly distinguish live data from mock/offline fallback.
-- "MOB-1 is read-only: no GO/NO GO/DEFER write path is exposed by the app slice."
-- Xcode project generates/builds on current Xcode; focused unit tests pass on the connected iPhone.
-- No ETP action, signature, payment, procurement decision automation, production mutation, or external communication is introduced.
-- Prepare a review-ready PR; do not merge while Company AM-4 remains review-due at 10/10.
+- Record MOB-1 as completed and merged with PR #171 / merge 01b4be72d456185f1840f407aa36471a7622897a.
+- Update the ARV-044 current reconciliation overlay while preserving the immutable 2026-07-30 legacy snapshot.
+- Update the 2026-10-06 mobile delivery sequence so MOB-1 is visibly done and MOB-2 remains next/not admitted.
+- Reconcile the execution snapshot with the current queue: ARV-005 pilot remains in progress; MOB-1 is done.
+- Keep all human decision, ETP/signature/payment/external-action hard stops unchanged.
+- Validate YAML/markdown consistency, open a roadmap-only PR, and merge it under the current explicit Owner request.
 completed:
-- Reconciled existing feature/tender-agent-ios work with current main at merge commit 986f039.
-- Confirmed current main exposes the mobile pairing/inbox/digest/portfolio contract.
-- Switched the app to the manager-attention inbox endpoint and aligned Swift models with current recommendation evidence fields.
-- Made live/demo/offline state explicit and removed GO/NO GO/DEFER write methods and visible decision controls from MOB-1.
-- Preserved dedicated mobile Bearer pairing with Keychain token storage and fixed Xcode 27 actor-isolation warning on device name.
-- Added app build/version metadata and regenerated the Xcode project.
-- Verified generic iOS Simulator build-for-testing succeeds on Xcode 27.0.
-- "Verified focused AppStoreTests on the connected iPhone: 2 tests passed, 0 failed."
-- "Verified backend mobile contract tests: 9 passed."
-- "Verified Mac mini runtime boundary: /health=200 and unauthenticated /mobile/v1/inbox=401 Mobile bearer token required."
-- Verified git diff --check passes and no decision-write method/button remains in the MOB-1 app/test sources.
-- Opened review-ready PR #171 at implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300.
-- "Exact-head GitHub CI run 37517210451 for implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300 completed SUCCESS 9/9."
-current: Completed. MOB-1 is review-ready in PR #171; merge remains blocked while Company AM-4 is review-due at 10/10.
+- Owner explicitly instructed merge of PR #171 and clarified that the original intent was only to update the roadmap.
+- PR #171 exact-head CI 37518592972 succeeded and PR #171 was squash-merged as 01b4be72d456185f1840f407aa36471a7622897a.
+current: Completed; roadmap-only PR/merge bookkeeping remains.
 pending: []
-last_verified_commit: da9a7f0dd1df7d957856a0405c525ad6c74f5300
+last_verified_commit: 81e04d2713164cea2ec1f7f6eeb3db85f1eefdd3
 test_results:
-- "PASS: xcodegen generate"
-- "PASS: xcodebuild generic iOS Simulator build-for-testing on Xcode 27.0"
-- "PASS: focused physical-iPhone AppStoreTests — 2 passed, 0 failed"
-- "PASS: backend tests/test_mobile_api.py — 9 passed"
-- "PASS: runtime auth boundary — health 200; unauthenticated mobile inbox 401"
-- "PASS: git diff --check"
-- "PASS: exact-head GitHub CI 37517210451 — 9/9 jobs"
-updated_at: '2026-10-06T22:22:04+03:00'
-resume_instruction: Task completed. Do not reopen MOB-1. Keep PR #171 review-ready and unmerged until the Company AM-4 review-due condition is resolved or the Product Owner gives a separately valid merge authorization. The next mobile slice is MOB-2 and must be admitted separately.
+- "PR #171 exact-head CI 37518592972: SUCCESS."
+- "Historical machine legacy registry preserved byte-for-byte: 93 IDs / 93 unique."
+- "Human Complete recovered roadmap section preserved byte-for-byte."
+- "Execution queue reconciliation: only ARV-005-CONTROLLED-PILOT-EVIDENCE-001 remains non-done."
+- "YAML parse PASS; git diff --check PASS."
+updated_at: '2026-10-06T22:31:00+03:00'
+resume_instruction: Task complete. Do not start MOB-2 from this sync; only merge the roadmap-only PR under the current explicit Owner request.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: feature/mob-1-ios-inbox-20261006
-  base_commit: f130703e019eaa64ca1c399ddfabd45c4b6f4d08
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20261006-roadmap-sync-mob1
+  branch: owner/roadmap-sync-20261006-mob1
+  base_commit: 01b4be72d456185f1840f407aa36471a7622897a
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
