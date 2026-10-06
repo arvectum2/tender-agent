@@ -324,6 +324,7 @@ def test_daily_tender_run_builds_manager_ready_case_and_mobile_projection(
     assert item["analysis_run_id"] == "ANALYSIS-DTR-001"
     assert item["deal_id"]
     assert analyze.call_count == 1
+    assert analyze.call_args.kwargs["history_source"] == "daily_tender_run"
     assert session.query(TenderIntakeRecord).count() == 1
 
     app.dependency_overrides[require_mobile_bearer] = lambda: "device-dtr-001"

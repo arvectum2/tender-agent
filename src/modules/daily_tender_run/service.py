@@ -547,7 +547,7 @@ def _process_item(
         session=session,
         save_report=True,
         record_history=True,
-        history_source=f"daily_tender_run:{run.run_id}",
+        history_source="daily_tender_run",
     )
     item.analysis_run_id = analysis.run_id
     item.analysis_status = analysis.status

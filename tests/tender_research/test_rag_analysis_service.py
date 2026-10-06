@@ -243,3 +243,26 @@ def test_record_history_failure_rolls_back_shared_session(session):
     assert run_id is None
     rollback_spy.assert_called_once()
     assert session.scalar(text("select 1")) == 1
+
+
+
+def test_record_history_normalizes_oversize_source(session):
+    import json
+
+    from src.tender_research.rag.history_service import record_analysis_run
+
+    source = "daily_tender_run:DTR-20261006T171139Z-79cfe20b"
+    row = record_analysis_run(
+        session,
+        registry_number="0358200040626000014",
+        status="completed",
+        source=source,
+        metadata={"analysis_mode": "balanced"},
+    )
+
+    assert row.source is not None
+    assert len(row.source) <= 32
+    assert json.loads(row.metadata_json or "{}") == {
+        "analysis_mode": "balanced",
+        "history_source_full": source,
+    }
