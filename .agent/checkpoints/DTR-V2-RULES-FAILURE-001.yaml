@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: DTR-V2-RULES-FAILURE-001
 authority: OWNER_DIRECTIVE
 goal: Align Daily Tender Run screening with the 2026-10-05 manual Arvectum tender-selection workflow and diagnose/fix the first production-run failures before allowing the remaining shortlist to continue.
@@ -22,19 +22,20 @@ completed:
   - Upgraded arvectum-it to profile version 2 with custom-work screening, pure support/license/hardware/security-infrastructure blockers, preferred scale 10M RUB and hard ceiling 50M RUB, plus explicit deep-analysis decision policy based on the manual workflow.
   - Replayed v2 against the 46 procurements from the first production run: only 5 remain eligible for deep analysis versus 20 under v1.
   - Fresh read-only EIS search using all 13 v2 queries returned 27 unique procurements and 11 shortlisted candidates with zero search errors.
-current: Implementation and regression are green. Commit/push/open PR, verify exact-head CI, then stop at the repository human merge gate before production resume.
+current: PR #167 is review-ready; production v1 run and 08:00 scheduler are paused. Waiting for exact-head CI completion and explicit human/Owner merge authorization because the repository AM-4 automatic-merge counter is 10/10.
 remaining:
-  - Run broader DTR/Data Platform regression suite.
-  - Commit/push and open PR.
-  - Verify exact-head CI and repository merge authority.
+  - Let exact-head PR #167 CI complete green.
+  - Obtain explicit human/Owner authorization to merge PR #167; do not bypass AM-4 10/10 gate.
   - After permitted merge, deploy v2, close/supersede the interrupted v1 run and start a fresh v2 production run rather than resuming the v1 snapshot.
+  - Re-enable com.arvectum.daily-tender-run only after v2 is deployed and a fresh v2 run is verified.
 last_verified_commit: 3da1307ed6d4508a2f15a6a243a0d80f84cf2f94
 last_tests:
   - 102 broader DTR/Data Platform/mobile/portfolio regression tests passed; Ruff and diff checks passed.
   - Fresh direct analysis import registers tender_analysis_runs, customer_profiles, pilot_projects and procurement_cases.
   - "Live diagnostic 0358200040626000014: completed, Data Platform hybrid, 10 sections, 15 sources, history persisted, Session usable."
   - "v2 replay: 46 existing items -> 5 deep-analysis candidates; fresh EIS: 27 unique -> 11 candidates, 0 search errors."
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/dtr-v2-rules-fix. Run broader regression, commit/push/open PR and check exact-head CI. Keep DTR-20261006T153629Z-60b82733 paused; after merge/deploy do not resume its v1 profile snapshot—mark it superseded/completed-with-errors and start a fresh arvectum-it v2 run. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or payment.
+  - Scheduler paused pending v2 merge/deploy so the old profile v1 cannot start another automatic run at 08:00.
+resume_instruction: Continue from PR #167 on feature/dtr-v2-rules-and-failure-fix. Re-check exact-head CI. Do not merge without explicit human/Owner authorization because AM-4 automatic merges are 10/10. Keep DTR-20261006T153629Z-60b82733 and the daily scheduler paused. After an authorized green merge, deploy v2, mark the v1 run superseded/completed-with-errors, start a fresh arvectum-it v2 run, verify it, then re-enable the 08:00 scheduler. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or payment.
 execution:
   claimed_by: ChatGPT interactive
   branch: feature/dtr-v2-rules-and-failure-fix
