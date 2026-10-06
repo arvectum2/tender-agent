@@ -66,6 +66,7 @@ from src.modules.cost_model.models import CostModelLine, CostModelRecord, CostMo
 from src.modules.cash_gap.models import CashGapRecord, CashGapScenario, CashGapSet
 from src.modules.deal_closure.models import DealArchiveSnapshot, DealClosureRecord, DealClosureSet
 from src.modules.deal_registry.models import Deal, DealExternalRef, DealTag
+from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.dashboard_snapshots.models import (
     DashboardMetricRecord,
     DashboardSnapshotRecord,
@@ -347,6 +348,8 @@ __all__ = [
     "DealClosureRecord",
     "DealClosureSet",
     "Deal",
+    "DailyTenderRun",
+    "DailyTenderRunItem",
     "DashboardMetricRecord",
     "DashboardSnapshotRecord",
     "DashboardSnapshotSet",

@@ -44,10 +44,25 @@ owner_product_directive_2026_10_06:
   execution_queue_modified: false
   daily_tender_run:
     priority: P0
+    implementation_status: DTR_1_DTR_2_IMPLEMENTED_VALIDATING
     scope: "Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio."
     human_gate: "GO / NO GO / DEFER remains attributable to a human manager."
     reuse_existing_modules: true
     implementation_spec: /docs/product/Daily_Tender_Run_and_iPhone_MVP.md
+    implemented_2026_10_06:
+      - durable_run_and_item_state
+      - versioned_arvectum_it_saved_filter
+      - public_eis_discovery_dedupe_screen
+      - tender_research_public_detail_document_ingest
+      - data_platform_prepare_and_hybrid_analysis
+      - fail_closed_manager_synthesis
+      - run_latest_resume_digest_api
+      - mobile_digest_and_recommendation_projection
+      - unattended_macmini_cli
+    next:
+      - live_acceptance_on_macmini
+      - native_swiftui_client
+      - post_go_readiness_submission_outcome_automation
   mobile:
     historical_item: ARV-044
     owner_priority_override: P0

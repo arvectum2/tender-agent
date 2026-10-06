@@ -19,6 +19,24 @@ Turn the proven daily procurement routine into one reliable system:
 
 The manager should not need to run searches, download documents, request analyses one-by-one or manually maintain the dashboard.
 
+## Implementation status — 2026-10-06
+
+Implemented in feature/daily-tender-run-autonomy:
+
+- durable DailyTenderRun / DailyTenderRunItem state with migration 100_add_daily_tender_runs;
+- versioned saved-filter profile arvectum-it;
+- multi-query public EIS discovery, deduplication and deterministic cheap screening;
+- canonical Deal/Intake linkage for shortlisted procurements;
+- public EIS detail/document ingestion into Tender Research before preparation;
+- Data Platform preparation/index readiness gate and source-grounded deep analysis;
+- fail-closed manager synthesis with advisory GO / NO_GO / NEEDS_REVIEW, confidence, reasons, blockers and unknowns;
+- run/latest/resume/digest backend API;
+- mobile inbox/portfolio projection of NMCK, deadline and DTR recommendation metadata;
+- /mobile/v1/digest/latest with canonical human decision state;
+- unattended CLI scripts/run_daily_tender_run.py.
+
+The implemented contour stops at WAIT_HUMAN. It does not submit applications, log into ETPs, sign, pay, or replace the manager's GO / NO GO / DEFER decision.
+
 ## Daily Tender Run
 
 DailyTenderRun is a durable orchestration record, not an ephemeral cron script.
