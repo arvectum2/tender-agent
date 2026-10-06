@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: DTR-V2-RULES-FAILURE-001
 authority: OWNER_DIRECTIVE
 goal: Align Daily Tender Run screening with the 2026-10-05 manual Arvectum tender-selection workflow and diagnose/fix the first production-run failures before allowing the remaining shortlist to continue.
@@ -27,15 +27,20 @@ completed:
   - Fresh v2 run found 27 procurements; 12 screened out, 5 deduplicated, 10 entered the active deep-analysis set.
   - First v2 procurement 0358200040626000014 completed balanced Data Platform analysis and manager synthesis to MANAGER_READY, proving the original PendingRollback bug is fixed.
   - The same first item exposed a second non-fatal history defect: history source daily_tender_run:<run_id> exceeds VARCHAR(32), so analysis_run_id was not persisted; the run was paused before processing the remaining items.
-current: PR #167 is merged/deployed. Fresh v2 run exposed a second history bug: daily_tender_run:<run_id> exceeds TenderAnalysisRun.source VARCHAR(32). The run is paused after one MANAGER_READY item and before further deep analysis.
-remaining:
-  - Fix history source overflow defensively and add regression coverage.
-  - Repair the first v2 item history link from its already-saved balanced report without rerunning expensive LLM analysis.
-  - Merge/deploy the bounded fix after green CI.
-  - Resume v2 run, verify at least one subsequent item persists history successfully, then re-enable the 08:00 scheduler.
-  - Mark canonical checkpoint completed with final runtime evidence.
-last_verified_commit: de2b0159175c45c28e94fee52360da4ea6dbde41
+  - PR #168 fixed the history source overflow and merged as dc60744251a9edbaa8ae99e5b7c370d07da3b8ee; exact-head CI finished with no failed or pending checks.
+  - Deployed PR #168 to AI-Corporation-next; backend health and Data Platform v0.6.0 health remained green; migration head remains 100_add_daily_tender_runs.
+  - Repaired the first v2 item's missing history link from its already-saved balanced report without repeating LLM analysis; analysis_run_id=68f03c9e-a156-4c5a-b725-280962bbc8fe.
+  - Resumed fresh v2 run DTR-20261006T171139Z-79cfe20b. Second procurement 0335200007526000126 completed analysis and manager synthesis to MANAGER_READY with persisted analysis_run_id=49db2094-329b-4fa6-9286-cc3b54d9e222 and history source=daily_tender_run.
+  - Re-enabled launchd com.arvectum.daily-tender-run at 08:00 Europe/Moscow after post-fix history persistence was verified.
+  - Fresh v2 run continues autonomously; human GO/NO GO/DEFER gate remains unchanged.
+current: Completed. arvectum-it v2 is merged/deployed; both production history defects are fixed; fresh v2 run is resumed and has produced two MANAGER_READY items with persisted Data Platform analysis history; 08:00 scheduler is re-enabled.
+remaining: []
+last_verified_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee de2b0159175c45c28e94fee52360da4ea6dbde41
 last_tests:
+  - PR #168 exact-head CI: all checks completed, no failures.
+  - 56 focused DTR/RAG/mobile tests passed after history-source fix; Ruff, py_compile and git diff --check passed.
+  - Second post-fix live item 0335200007526000126: completed, MANAGER_READY, analysis_run_id=49db2094-329b-4fa6-9286-cc3b54d9e222, history source=daily_tender_run.
+  - Scheduler verification: com.arvectum.daily-tender-run loaded, Hour=8, Minute=0, RunAtLoad=false.
   - Fresh v2 run first item 0358200040626000014: analysis_status=completed, MANAGER_READY, recommendation=NEEDS_REVIEW; history save rejected source length >32 without poisoning the Session.
   - Scheduler remains disabled and no DTR worker is running while this second bug is fixed.
   - 102 broader DTR/Data Platform/mobile/portfolio regression tests passed; Ruff and diff checks passed.
@@ -43,9 +48,9 @@ last_tests:
   - "Live diagnostic 0358200040626000014: completed, Data Platform hybrid, 10 sections, 15 sources, history persisted, Session usable."
   - "v2 replay: 46 existing items -> 5 deep-analysis candidates; fresh EIS: 27 unique -> 11 candidates, 0 search errors."
   - Scheduler paused pending v2 merge/deploy so the old profile v1 cannot start another automatic run at 08:00.
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/dtr-history-source-fix. Fix TenderAnalysisRun history source overflow, repair the first v2 item's missing history link from its saved report, merge/deploy after green CI, resume DTR-20261006T171139Z-79cfe20b, and re-enable the 08:00 scheduler only after successful history persistence is verified. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or payment.
+resume_instruction: Task completed. Do not repeat the v2 migration or failure-recovery work. For future tuning, start a new bounded task from the deployed arvectum-it v2 profile and inspect the latest DTR digest/results first. Never automate GO/NO GO/DEFER, bid submission, ETP mutation, signing or payment.
 execution:
   claimed_by: ChatGPT interactive
-  branch: fix/dtr-history-source-overflow
-  base_commit: de2b0159175c45c28e94fee52360da4ea6dbde41
+  branch: chore/dtr-v2-finalize
+  base_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee
   manual_override: true
