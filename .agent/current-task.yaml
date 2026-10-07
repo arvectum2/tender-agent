@@ -13,18 +13,22 @@ definition_of_done:
 - Merge only if exact-head CI is green and no frozen benchmark regresses.
 completed:
 - DP-QUALITY-CORE-3.2-001 real-source faithfulness gate completed and merged in data-platform PR #80 at e4f0db89a300f0493410474842ee43b7f059acab.
-current: Reproduce and diagnose the growth-photo-pixels ranking gap on current data-platform main.
+- Reproduced growth-photo-pixels: baseline RRF nDCG@5=0.906 with accepted top-1; vector-only improves to 0.967 but is not a safe global replacement.
+- BGE cross-encoder diagnostic ranks compress-to-kb first and lowers the case to nDCG@5=0.733 while remaining inside STANDARD latency budget.
+- Score-aware fusion diagnostics on 19 single-collection acceptance cases improve the local case only by regressing yandex-tkp-comparison and aggregate top-1/MRR.
+- Frozen relevance judgments were not changed. Decision: no default ranking-code change from this isolated ambiguous case.
+- Added benchmark result artifact and documentation in the data-platform worktree.
+current: Verify the no-change ranking decision, commit/push the evidence branch, run exact-head CI, and merge if green.
 pending:
-- Diagnose component lexical/vector/fusion scores for growth-photo-pixels and adjacent cases.
-- Test bounded ranking alternatives against the frozen suites without editing judgments.
-- Implement the smallest justified fix, or explicitly close as measured non-action if no safe improvement exists.
-- Run focused and full relevant regressions.
-- Update benchmark evidence and merge with green CI.
+- Validate result JSON/docs and run relevant focused checks.
+- Commit and push evidence branch.
+- Open PR, verify exact-head CI, merge if green.
+- Mark checkpoint completed with final merge SHA and checks.
 last_verified_commit: e4f0db89a300f0493410474842ee43b7f059acab
 test_results:
 - "Previous step: real-source faithfulness 5/5; all safety metrics 1.0; PR #80 CI green."
-updated_at: '2026-10-07T15:05:00+03:00'
-resume_instruction: Continue from current data-platform main e4f0db89. Reproduce growth-photo-pixels on the frozen benchmark, inspect component scores and ranking identities, then test only benchmark-preserving product-neutral fixes. Do not change frozen relevance judgments to improve metrics.
+updated_at: '2026-10-07T15:32:00+03:00'
+resume_instruction: Continue in data-platform branch feature/dp-quality-core-3-2-ranking-gap. Validate the frozen diagnostic artifact/docs, run focused checks, commit/push, open PR, require exact-head CI green, merge, then mark this checkpoint completed.
 execution:
   claimed_by: ChatGPT
   execution_id: dp-quality-core-3.2-002
