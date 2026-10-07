@@ -850,12 +850,14 @@ legacy_registry:
     comment: Базовая реализация есть, полноценный автономный цикл ещё не завершён.
     dependencies_raw: ARV-004
   reconciliation:
-    state: revalidated_residual_gap
+    state: confirmed_done
     verified_at: '2026-10-07'
     evidence:
     - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
-      detail: Current BASE revalidation evidence matrix and verification run.
-    notes: 'Hermes components remain present/tested, but current policy still treats autonomous/external Hermes runtime as opt-in/manual; a real user-correction production self-improvement loop is not proven.'
+      detail: Current BASE revalidation evidence matrix plus Owner-approved product-boundary reconciliation.
+    - path: docs/product/Feedback_Learning_Loop.md
+      detail: Post-MVP successor scope separated from the completed BASE foundation.
+    notes: 'Hermes H1-H4 infrastructure foundation is present/tested: client/fallback, runtime context, category profiles, normalization, quality gates, feedback/memory primitives, eval-case generation, supplier-readiness and bid-decision helpers. Real-user self-improvement is no longer a BASE completion criterion; it is deferred to non-admitted post-MVP ARV-004. Autonomous/external Hermes runtime remains optional and human GO/NO-GO boundaries are unchanged.'
 - id: BASE-012
   legacy_snapshot:
     queue_order: 0
@@ -1384,9 +1386,11 @@ legacy_registry:
     dependencies_raw: ARV-003, ARV-001
   reconciliation:
     state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/product/Feedback_Learning_Loop.md
+      detail: Owner-approved post-MVP successor scope for real-user correction learning.
+    notes: 'Post-MVP Feedback & Learning Loop, deliberately not admitted to the execution queue. Reuse existing TenderAnalysisFeedback, AgentMemory, TenderEvalCase, domain-regression, Customer/Project/Case and Decision Core. Target loop: attributable user correction -> immutable human review -> regression case -> validated reusable rule candidate -> reviewed promotion. No autonomous GO/NO-GO, no mandatory external Hermes runtime, no automatic cross-customer learning.'
 - id: ARV-005
   legacy_snapshot:
     queue_order: 5
