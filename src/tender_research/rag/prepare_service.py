@@ -283,9 +283,28 @@ def prepare_tender_for_analysis(
         steps.append(step)
         emit_progress(55, "extract_text", step.message)
         docs_with_text = 0
+        ocr_review_documents: list = []
         for doc in tender.documents:
             if doc.text_extraction_status == "extracted" and doc.extracted_text_path:
                 docs_with_text += 1
+            raw_meta = doc.raw_meta if isinstance(doc.raw_meta, dict) else {}
+            processing = raw_meta.get("data_platform_processing")
+            review = (
+                processing.get("ocr_review")
+                if isinstance(processing, dict)
+                else None
+            )
+            if isinstance(review, dict) and review.get("requires_review") is True:
+                ocr_review_documents.append(doc)
+        if ocr_review_documents:
+            names = ", ".join(
+                str(doc.file_name or doc.id) for doc in ocr_review_documents[:5]
+            )
+            suffix = "" if len(ocr_review_documents) <= 5 else ", ..."
+            warnings.append(
+                f"{len(ocr_review_documents)} OCR document(s) require human review: "
+                f"{names}{suffix}"
+            )
         if docs_with_text > 0:
             step.status = "completed"
             step.message = f"Text extracted for {docs_with_text} document(s)"
@@ -418,6 +437,8 @@ def prepare_tender_for_analysis(
         emit_progress(100, "readiness_check", step.message)
 
         overall_status = "completed" if ready else "completed_with_warnings"
+        if ready and ocr_review_documents:
+            overall_status = "completed_with_warnings"
         if errors:
             overall_status = "failed"
 

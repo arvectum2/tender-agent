@@ -267,6 +267,8 @@ def build_document_quality_report(repo: TenderRepository, limit: int = 100) -> d
     suspicious_html = []
     empty_examples = []
     unsupported_examples = []
+    ocr_review_examples = []
+    ocr_review_required = 0
     largest = []
     for doc in docs:
         ext = _document_extension(doc)
@@ -292,6 +294,20 @@ def build_document_quality_report(repo: TenderRepository, limit: int = 100) -> d
                 })
         if doc.download_status == "failed" and doc.error_message:
             failed_by_error[doc.error_message] += 1
+        raw_meta = doc.raw_meta if isinstance(doc.raw_meta, dict) else {}
+        processing = raw_meta.get("data_platform_processing")
+        review = processing.get("ocr_review") if isinstance(processing, dict) else None
+        if isinstance(review, dict) and review.get("requires_review") is True:
+            ocr_review_required += 1
+            if len(ocr_review_examples) < 10:
+                ocr_review_examples.append(
+                    {
+                        "file_name": doc.file_name,
+                        "provider": review.get("provider"),
+                        "mean_confidence": review.get("mean_confidence"),
+                        "reason": review.get("reason"),
+                    }
+                )
         if _looks_like_html(doc.local_path) and ext not in {".html", ".htm"}:
             suspicious_html.append({
                 "file_name": doc.file_name,
@@ -318,6 +334,8 @@ def build_document_quality_report(repo: TenderRepository, limit: int = 100) -> d
         "empty_by_extension": empty_by_ext.most_common(10),
         "unsupported_by_extension": unsupported_by_ext.most_common(10),
         "failed_by_error_message": failed_by_error.most_common(10),
+        "ocr_review_required": ocr_review_required,
+        "ocr_review_examples": ocr_review_examples,
         "zip_count": sum(count for ext, count in ext_counter.items() if ext == ".zip"),
         "pdf_count": sum(count for ext, count in ext_counter.items() if ext == ".pdf"),
         "docx_count": sum(count for ext, count in ext_counter.items() if ext == ".docx"),

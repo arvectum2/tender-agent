@@ -16,6 +16,90 @@ from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
 
 _CHUNK_URI_PREFIX = "tender-chunk://"
+_OCR_REVIEW_CONFIDENCE_THRESHOLD = 90.0
+
+
+def _processing_metadata(payload: dict) -> dict | None:
+    value = payload.get("metadata")
+    return dict(value) if isinstance(value, dict) else None
+
+
+def _ocr_review_projection(metadata: dict | None) -> dict:
+    if metadata is None:
+        return {
+            "ocr_used": None,
+            "requires_review": True,
+            "reason": "processing_metadata_unavailable",
+            "provider": None,
+            "mean_confidence": None,
+            "review_below_confidence": _OCR_REVIEW_CONFIDENCE_THRESHOLD,
+        }
+
+    ocr = metadata.get("ocr")
+    if not isinstance(ocr, dict):
+        return {
+            "ocr_used": False,
+            "requires_review": False,
+            "reason": "ocr_not_used",
+            "provider": None,
+            "mean_confidence": None,
+            "review_below_confidence": _OCR_REVIEW_CONFIDENCE_THRESHOLD,
+        }
+
+    provider = str(ocr.get("provider") or "").strip() or None
+    raw_pages = ocr.get("page_numbers")
+    page_numbers = list(raw_pages) if isinstance(raw_pages, (list, tuple)) else []
+    ocr_used = bool(provider or page_numbers)
+    if not ocr_used:
+        return {
+            "ocr_used": False,
+            "requires_review": False,
+            "reason": "ocr_not_used",
+            "provider": provider,
+            "mean_confidence": None,
+            "review_below_confidence": _OCR_REVIEW_CONFIDENCE_THRESHOLD,
+        }
+
+    raw_confidence = ocr.get("mean_confidence")
+    confidence = (
+        float(raw_confidence)
+        if isinstance(raw_confidence, (int, float)) and not isinstance(raw_confidence, bool)
+        else None
+    )
+    if confidence is None:
+        return {
+            "ocr_used": True,
+            "requires_review": True,
+            "reason": "ocr_confidence_missing",
+            "provider": provider,
+            "mean_confidence": None,
+            "review_below_confidence": _OCR_REVIEW_CONFIDENCE_THRESHOLD,
+        }
+    requires_review = confidence < _OCR_REVIEW_CONFIDENCE_THRESHOLD
+    return {
+        "ocr_used": True,
+        "requires_review": requires_review,
+        "reason": "ocr_low_confidence" if requires_review else "ocr_confidence_accepted",
+        "provider": provider,
+        "mean_confidence": confidence,
+        "review_below_confidence": _OCR_REVIEW_CONFIDENCE_THRESHOLD,
+    }
+
+
+def _project_processing_evidence(document, payload: dict) -> dict:
+    metadata = _processing_metadata(payload)
+    review = _ocr_review_projection(metadata)
+    raw_meta = dict(getattr(document, "raw_meta", None) or {})
+    raw_meta["data_platform_processing"] = {
+        "resource_id": payload.get("resource_id"),
+        "document_id": payload.get("document_id"),
+        "canonical_uri": payload.get("canonical_uri"),
+        "metadata_available": metadata is not None,
+        "metadata": metadata or {},
+        "ocr_review": review,
+    }
+    document.raw_meta = raw_meta
+    return review
 
 
 @dataclass(frozen=True)
@@ -226,6 +310,7 @@ class DataPlatformDocumentProjector:
                 max_chars=self._config.document_extract_max_chars,
             )
             processed += 1
+            _project_processing_evidence(document, payload)
             status = str(payload.get("extraction_status") or "failed")
             text = str(payload.get("text") or "")
             document.text_extraction_status = status
@@ -322,6 +407,7 @@ def extract_document_with_data_platform(
             min_chunk_chars=config.rag_min_chunk_chars,
             max_chars=config.document_extract_max_chars,
         )
+    _project_processing_evidence(document, payload)
     status = str(payload.get("extraction_status") or "failed")
     text = str(payload.get("text") or "")
     document.text_extraction_status = status
@@ -386,6 +472,7 @@ class DataPlatformRecoveryChunkIndexer:
                     min_chunk_chars=self._config.rag_min_chunk_chars,
                     max_chars=self._config.document_extract_max_chars,
                 )
+                _project_processing_evidence(document, payload)
                 if (
                     str(payload.get("extraction_status") or "") != "extracted"
                     or str(payload.get("text") or "") != expected_text

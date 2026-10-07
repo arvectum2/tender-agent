@@ -61,7 +61,14 @@ def _seed_chunk(repo: TenderRepository, *, registry_number: str = "001"):
 
 
 class FakeDataPlatformClient:
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        *,
+        process_text: str | None = None,
+        process_metadata: dict | None = None,
+    ) -> None:
+        self.process_text = process_text
+        self.process_metadata = process_metadata
         self.collections: list[tuple[str, str]] = []
         self.ingested: list[dict] = []
         self.search_requests: list[dict] = []
@@ -92,7 +99,12 @@ class FakeDataPlatformClient:
                 "content": content,
             }
         )
-        text = content.decode("utf-8")
+        text = self.process_text if self.process_text is not None else content.decode("utf-8")
+        metadata = (
+            dict(self.process_metadata)
+            if self.process_metadata is not None
+            else {"file_name": filename}
+        )
         return {
             "collection_id": collection_id,
             "resource_id": "platform-resource",
@@ -101,6 +113,7 @@ class FakeDataPlatformClient:
             "title": title,
             "media_type": content_type,
             "extraction_status": "extracted",
+            "metadata": metadata,
             "text": text,
             "chunks": [
                 {
@@ -205,8 +218,151 @@ def test_projector_uses_data_platform_for_extraction_and_chunking(tmp_path) -> N
     assert len(chunks) == 1
     assert chunks[0].raw_meta["source"] == "data_platform_projection"
     assert chunks[0].raw_meta["data_platform"]["chunk_id"] == "platform-chunk-1"
+    processing = document.raw_meta["data_platform_processing"]
+    assert processing["metadata"]["file_name"] == "contract.txt"
+    assert processing["ocr_review"]["ocr_used"] is False
+    assert processing["ocr_review"]["requires_review"] is False
     assert client.ingested[0]["operation"] == "process_document"
 
+
+def test_projector_preserves_ocr_provenance_and_routes_low_confidence_to_review(
+    tmp_path,
+) -> None:
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = _repo()
+    tender = repo.upsert_tender(
+        {
+            "source": "eis",
+            "external_id": "t-ocr-projection",
+            "registry_number": "DP-OCR",
+            "title": "OCR projection test",
+        }
+    )
+    source = tmp_path / "scan.pdf"
+    source.write_bytes(b"%PDF-synthetic-scan")
+    document = repo.upsert_document(
+        {
+            "tender_id": tender.id,
+            "file_name": "scan.pdf",
+            "local_path": str(source),
+            "content_type": "application/pdf",
+            "download_status": "downloaded",
+            "text_extraction_status": "pending",
+            "raw_meta": {"revision": 3},
+        }
+    )
+    repo._session.commit()
+    client = FakeDataPlatformClient(
+        process_text="Техническое задание",
+        process_metadata={
+            "pdf_pages": [
+                {"page_number": 1, "native_char_count": 0, "needs_ocr": True}
+            ],
+            "ocr": {
+                "provider": "tesseract",
+                "page_numbers": [1],
+                "mean_confidence": 86.89,
+                "pages": [
+                    {
+                        "page_number": 1,
+                        "confidence": 86.89,
+                        "regions": [
+                            {
+                                "text": "Техническое",
+                                "confidence": 87.5,
+                                "left": 10,
+                                "top": 20,
+                                "width": 140,
+                                "height": 30,
+                            }
+                        ],
+                    }
+                ],
+            },
+            "vlm": [],
+        },
+    )
+
+    summary = DataPlatformDocumentProjector(
+        repo,
+        client,
+        TenderResearchConfig(data_dir=str(tmp_path)),
+    ).build_for_tender(tender)
+
+    assert summary.extracted_documents == 1
+    repo._session.refresh(document)
+    assert document.raw_meta["revision"] == 3
+    processing = document.raw_meta["data_platform_processing"]
+    assert processing["metadata_available"] is True
+    assert processing["metadata"]["ocr"]["provider"] == "tesseract"
+    region = processing["metadata"]["ocr"]["pages"][0]["regions"][0]
+    assert region == {
+        "text": "Техническое",
+        "confidence": 87.5,
+        "left": 10,
+        "top": 20,
+        "width": 140,
+        "height": 30,
+    }
+    assert processing["ocr_review"] == {
+        "ocr_used": True,
+        "requires_review": True,
+        "reason": "ocr_low_confidence",
+        "provider": "tesseract",
+        "mean_confidence": 86.89,
+        "review_below_confidence": 90.0,
+    }
+
+
+def test_projector_fails_closed_when_ocr_confidence_is_missing(tmp_path) -> None:
+    from src.tender_research.config import TenderResearchConfig
+
+    repo = _repo()
+    tender = repo.upsert_tender(
+        {
+            "source": "eis",
+            "external_id": "t-ocr-no-confidence",
+            "registry_number": "DP-OCR-NO-CONF",
+            "title": "OCR missing confidence",
+        }
+    )
+    source = tmp_path / "scan.pdf"
+    source.write_bytes(b"%PDF-synthetic-scan")
+    document = repo.upsert_document(
+        {
+            "tender_id": tender.id,
+            "file_name": "scan.pdf",
+            "local_path": str(source),
+            "content_type": "application/pdf",
+            "download_status": "downloaded",
+            "text_extraction_status": "pending",
+        }
+    )
+    repo._session.commit()
+    client = FakeDataPlatformClient(
+        process_text="Распознанный текст",
+        process_metadata={
+            "ocr": {
+                "provider": "tesseract",
+                "page_numbers": [1],
+                "mean_confidence": None,
+                "pages": [],
+            }
+        },
+    )
+
+    DataPlatformDocumentProjector(
+        repo,
+        client,
+        TenderResearchConfig(data_dir=str(tmp_path)),
+    ).build_for_tender(tender)
+
+    repo._session.refresh(document)
+    review = document.raw_meta["data_platform_processing"]["ocr_review"]
+    assert review["ocr_used"] is True
+    assert review["requires_review"] is True
+    assert review["reason"] == "ocr_confidence_missing"
 
 
 def test_projector_migrates_legacy_chunks_without_changing_local_chunk_id(tmp_path) -> None:

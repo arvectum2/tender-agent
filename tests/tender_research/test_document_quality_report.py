@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -29,6 +27,16 @@ def test_document_quality_report_summarizes_extensions_and_html_detection(tmp_pa
         "download_status": "downloaded",
         "text_extraction_status": "empty",
         "content_type": "application/pdf",
+        "raw_meta": {
+            "data_platform_processing": {
+                "ocr_review": {
+                    "requires_review": True,
+                    "reason": "ocr_low_confidence",
+                    "provider": "tesseract",
+                    "mean_confidence": 86.89,
+                }
+            }
+        },
     })
     repo.upsert_document({
         "tender_id": tender.id,
@@ -58,6 +66,15 @@ def test_document_quality_report_summarizes_extensions_and_html_detection(tmp_pa
     assert report["zip_count"] == 1
     assert report["docx_count"] == 1
     assert report["pdf_count"] == 1
+    assert report["ocr_review_required"] == 1
+    assert report["ocr_review_examples"] == [
+        {
+            "file_name": "spec.pdf",
+            "provider": "tesseract",
+            "mean_confidence": 86.89,
+            "reason": "ocr_low_confidence",
+        }
+    ]
     assert report["files_with_suspicious_html_instead_of_document"][0]["file_name"] == "spec.pdf"
     assert report["empty_examples"][0]["file_name"] == "spec.pdf"
     assert report["unsupported_examples"][0]["file_name"] == "archive.zip"
