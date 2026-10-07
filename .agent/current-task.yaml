@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
 authority: OWNER_DIRECTIVE
 goal: 'Reclassify BASE-011 as completed Hermes infrastructure foundation and move the unfinished real-user self-improvement scope into the existing ARV-004 successor as a post-MVP Feedback & Learning Loop, without introducing a second autonomous decision engine.'
@@ -19,20 +19,24 @@ completed:
 - 'Updated BASE-011 current reconciliation to confirmed_done without changing any legacy_snapshot field; BASE overlay is now 18/18 confirmed_done.'
 - 'Updated ARV-004 current reconciliation notes/evidence to the post-MVP Learning Loop while keeping state needs_revalidation and leaving it out of the execution queue.'
 - 'Opened PR #190 from chore/base-011-learning-loop-reclass-20261007 at exact head 69060e7aa475f624240e622aee9e48d18cce0dec.'
-current: 'PR #190 is review-ready. Local checks are green and exact-head CI run 37606117463 completed SUCCESS with all 9 jobs green on 69060e7aa475f624240e622aee9e48d18cce0dec. Only the current AM-4 Owner merge/review authorization remains.'
-pending:
-- 'Merge PR #190 only if explicitly authorized under the current AM-4 review gate.'
-- 'After authorized merge, verify main has BASE 18/18 confirmed_done and ARV-004 remains post-MVP/not admitted, then mark this checkpoint completed.'
-last_verified_commit: 69060e7aa475f624240e622aee9e48d18cce0dec
+- 'PR #190 exact-head CI run 37606117463 completed SUCCESS with all 9 jobs green on 69060e7aa475f624240e622aee9e48d18cce0dec.'
+- 'Owner explicitly authorized merge of PR #190 under the current AM-4 review gate.'
+- 'PR #190 was squash-merged to main as f31c3339b377d4f9d6971759f68e43c402799451.'
+- 'Post-merge verification on main confirms BASE-011=confirmed_done, BASE overlay=18/18 confirmed_done, ARV-004 remains needs_revalidation with post-MVP/non-admitted scope, and docs/product/Feedback_Learning_Loop.md is present.'
+current: 'Task completed. BASE-011 is closed as the Hermes infrastructure foundation; all BASE-001..018 are confirmed_done. The real-user Feedback & Learning Loop remains under ARV-004 as a post-MVP, non-admitted successor with existing human-control boundaries preserved.'
+pending: []
+last_verified_commit: f31c3339b377d4f9d6971759f68e43c402799451
 test_results:
 - 'make check: PASS on branch head 69060e7aa475f624240e622aee9e48d18cce0dec.'
 - 'Focused Hermes/company-agent boundary tests: 131 passed, 7 warnings.'
 - 'Legacy snapshot equality: BASE-001..018 plus ARV-004 = 19/19 unchanged against task base 742f4319683036837a9bafb358ad87016efd7486.'
 - 'Roadmap assertion: BASE reconciliation = 18/18 confirmed_done; ARV-004 remains needs_revalidation with post-MVP scope documented.'
+- 'PR #190 exact-head CI run 37606117463: SUCCESS, 9/9 jobs green.'
+- 'Post-merge main verification: PASS at f31c3339b377d4f9d6971759f68e43c402799451; BASE-011=confirmed_done, BASE=18/18 confirmed_done, ARV-004=needs_revalidation/post-MVP, learning-loop spec present.'
 - 'Prior BASE revalidation task completed with PR #189 exact-head CI 9/9 green.'
-blocked_reason: 'Governance only: PR #190 is fully tested and CI-green, but the current AM-4 gate requires explicit Owner merge/review authorization before merge.'
-updated_at: '2026-10-07T13:24:37+0300'
-resume_instruction: 'PR #190 is CI-green at exact head 69060e7aa475f624240e622aee9e48d18cce0dec. Do not merge without explicit Owner authorization under AM-4. After authorized merge, verify main has BASE 18/18 confirmed_done, ARV-004 remains post-MVP/not admitted, and mark the checkpoint completed with the merge SHA.'
+blocked_reason: null
+updated_at: '2026-10-07T13:26:34+0300'
+resume_instruction: 'This task is completed. If revisited, start from main after f31c3339b377d4f9d6971759f68e43c402799451. Do not admit or implement ARV-004 until post-MVP production usage yields meaningful real corrections and the Owner explicitly admits a bounded slice. Preserve human GO/NO-GO/DEFER authority and immutable historical snapshots.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-base011-learning-loop
