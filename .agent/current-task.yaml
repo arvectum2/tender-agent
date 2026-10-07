@@ -28,12 +28,12 @@ test_results:
 - 'git diff --check origin/main...HEAD: PASS.'
 - 'GitHub exact-head push CI run 37665152795: SUCCESS; migrations, docker-build, redis-integration, r8-acceptance-integration, p6-03 bridge, dependency-lock, r8-postgres-integration, quality and security all green.'
 updated_at: '2026-10-07T21:30:00+03:00'
-resume_instruction: Task completed. Do not reopen ARV-050 for R8 workspace implementation; BASE-017 remains the verified shared baseline. Continue with the next independently admitted Tender Agent item.
+resume_instruction: Task completed. Do not reopen ARV-050 for R8 workspace implementation; BASE-017 remains the verified shared baseline. Continue with the next independently admitted Tender Agent item, COMMERCIAL-WORKFLOW-ARV-022-001, recovering existing OCR adapter work rather than duplicating it.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20261007-arv050-base017
-  branch: fix/arv-050-base017-reconciliation-20261007
-  base_commit: 0948f5f438fbe3b25a8251684dd4eebc36775e05
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: a2f936db3485557a6a4b2ff27093526baf195f9f
   issue: null
-  manual_override: true
+  manual_override: false
   lease_until: null
