@@ -679,7 +679,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-022-001
   strategy: REUSE
   title: Reused OCR fallback for scanned tender documents
-  status: in_progress
+  status: ready
   authority: AUTO
   independent: true
   auto_merge: true

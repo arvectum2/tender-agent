@@ -38,28 +38,35 @@ completed:
   on the existing path.'
 - '2026-10-07: Focused OCR/Data Platform/boundary/quality/prepare tests passed (38
   passed).'
-current: 'Run full repository verification, then exact-head CI for Data Platform PR
-  #85 and Tender Agent ARV-022 PR.'
+- '2026-10-07: Full pytest reached 3107 passed / 236 skipped; the ARV-022 queue-policy
+  regression was identified and corrected by leaving the admitted queue item ready
+  while current-task owns execution.'
+- '2026-10-07: The only remaining full-suite failure is the pre-existing R9 pg_restore
+  acceptance failure; the identical single test fails on clean origin/main 1b95d668,
+  proving it is not introduced by ARV-022.'
+current: Verify the Data Platform metadata bridge PR and Tender Agent exact-head CI;
+  local ARV-022 tests are green apart from an origin/main R9 environment baseline
+  failure.
 pending:
-- Run full Tender Agent make check and resolve any regressions.
+- Commit and push the queue-policy correction/checkpoint.
 - 'Verify Data Platform PR #85 exact-head CI and merge the additive metadata bridge
-  when repository gates permit.'
-- Open/update the Tender Agent ARV-022 PR against current main and verify exact-head
-  CI.
-- Merge only if renewed Company AM-4 and ordinary auto-merge gates remain valid; reconcile
-  old superseded OCR PRs and mark the checkpoint completed.
+  if gates permit.'
+- Open the Tender Agent ARV-022 PR against current main and verify exact-head CI.
+- Merge only if renewed Company AM-4 and ordinary auto-merge gates remain valid; then
+  reconcile superseded OCR PRs and mark completed.
 last_verified_commit: 603603ce686fc079a6bc81e75388f4dbc901b9d5
 test_results:
-- 'focused pytest: 38 passed (OCR projection, Data Platform boundary/recovery, document-quality
-  report, preparation service)'
-- 'ruff: changed OCR projection/tests clean; prepare_service only retains pre-existing
-  BLE001 findings outside the ARV-022 diff'
+- 'focused pytest: 38 passed'
+- 'make check: PASS'
+- 'full pytest: 3107 passed, 236 skipped, 2 failed before queue correction; queue-policy
+  failure fixed and targeted test passes'
+- 'R9 backup/restore acceptance: FAILS identically on clean origin/main 1b95d668 (pg_restore
+  exit 1), therefore baseline/environmental and unrelated to ARV-022'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T22:18:00+03:00'
-resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv022-commercial-20261007.
-  First run full make check. Then verify/merge Data Platform PR #85 if green, open
-  the Tender Agent ARV-022 PR, require exact-head CI, and complete/merge under renewed
-  AM-4.'
+updated_at: '2026-10-07T22:28:00+03:00'
+resume_instruction: 'Commit/push the queue-policy correction. Then verify/merge Data
+  Platform PR #85 if exact-head CI is green, create the Tender Agent ARV-022 PR, require
+  exact-head CI, and finish guarded merge/bookkeeping.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv022

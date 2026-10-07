@@ -27,16 +27,23 @@ completed:
   on the existing path.'
 - '2026-10-07: Focused OCR/Data Platform/boundary/quality/prepare tests passed (38
   passed).'
-current_stage: verification
+- '2026-10-07: Full pytest reached 3107 passed / 236 skipped; the ARV-022 queue-policy
+  regression was identified and corrected by leaving the admitted queue item ready
+  while current-task owns execution.'
+- '2026-10-07: The only remaining full-suite failure is the pre-existing R9 pg_restore
+  acceptance failure; the identical single test fails on clean origin/main 1b95d668,
+  proving it is not introduced by ARV-022.'
+current_stage: ci_and_dependency_verification
 remaining:
-- full Tender Agent repository verification
+- commit/push queue-policy correction
 - 'Data Platform PR #85 exact-head CI/merge'
 - Tender Agent PR exact-head CI/guarded merge
 - completion bookkeeping and superseded OCR PR reconciliation
 last_verified_commit: 603603ce686fc079a6bc81e75388f4dbc901b9d5
 test_results:
-- 38 focused tests passed
-- changed OCR projection/tests lint clean; diff check passed
-resume_instruction: Run full make check, then finish the Data Platform metadata bridge
-  and Tender Agent PR through exact-head CI before guarded merge.
-updated_at: '2026-10-07T22:18:00+03:00'
+- focused 38 passed; make check passed
+- full pytest 3107 passed / 236 skipped; queue-policy failure fixed; only R9 pg_restore
+  failure reproduces unchanged on origin/main
+resume_instruction: Finish dependency/PR CI after pushing the queue-policy correction;
+  treat R9 pg_restore as documented origin/main baseline, not an ARV-022 regression.
+updated_at: '2026-10-07T22:28:00+03:00'
