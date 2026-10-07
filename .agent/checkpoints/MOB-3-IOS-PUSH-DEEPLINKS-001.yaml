@@ -48,14 +48,11 @@ completed:
   Apple provisioning profile lacks Push Notifications and aps-environment. No real APNs delivery was claimed.
 - 'First PR #176 CI run 37533477063 exposed a stale requirements.lock after adding APNs HTTP/2/JWT dependencies; regenerated
   the lock with the CI-pinned uv 0.12.8 command.'
-current: 'Push the requirements.lock correction, then require a new exact-head PR #176 CI run to pass before merging.'
+current: 'Implementation PR #176 is merged with exact-head CI green. Reconcile the canonical roadmap, then close the MOB-3 checkpoint.'
 pending:
-- Commit and push the CI-discovered requirements.lock correction.
-- 'Verify the new exact-head PR #176 CI is fully green.'
-- Merge the implementation PR if repository gates remain green.
 - Reconcile the master roadmap with the merged MOB-3 evidence.
 - Merge roadmap reconciliation, close the canonical checkpoint as completed, and return main to a clean synced state.
-last_verified_commit: 75898944a75889cc07a55fb6164da05104afa811
+last_verified_commit: 3ab3872f95c9d8934403533f4411fcddd7569ba4
 test_results:
 - 'Python targeted quality: Ruff PASS; git diff --check PASS.'
 - 'Mobile/portfolio backend: 22 passed, 18 warnings in 1.75s.'
@@ -68,11 +65,10 @@ test_results:
   entitlement.'
 - Current deployed Tailnet backend health is 200, but pre-merge runtime returns 404 for POST /mobile/v1/devices because MOB-3
   is not deployed yet.
-- 'PR #176 initial exact-head run 37533477063: dependency-lock FAILED because requirements.lock had not yet been regenerated
-  for httpx[http2] + PyJWT[crypto]; correction prepared with uv==0.12.8.'
-updated_at: '2026-10-07T00:24:11+03:00'
-resume_instruction: 'Continue MOB-3 by committing/pushing the regenerated requirements.lock plus checkpoint update; then verify
-  the new PR #176 exact-head CI, merge when green, reconcile roadmap, and close the checkpoint.'
+- 'PR #176 initial exact-head run 37533477063 exposed stale requirements.lock; regenerated with uv==0.12.8.'
+- 'PR #176 corrected exact-head run 37533637202: SUCCESS; implementation squash-merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4.'
+updated_at: '2026-10-07T07:20:00+03:00'
+resume_instruction: 'Continue MOB-3 from merged implementation 3ab3872: finish roadmap reconciliation, merge it after exact-head CI, then mark the checkpoint completed and return main clean/synced.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261006-mob3

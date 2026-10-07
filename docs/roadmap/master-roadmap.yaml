@@ -75,7 +75,7 @@ owner_product_directive_2026_10_06:
     historical_item: ARV-044
     owner_priority_override: P0
     current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
-    implementation_status: MOB_2_MERGED
+    implementation_status: MOB_3_MERGED
     backend: "Tender Agent FastAPI on Mac mini"
     initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
     source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
@@ -91,6 +91,11 @@ owner_product_directive_2026_10_06:
       - human_confirmation_before_decision_write
       - full_mobile_portfolio_projection
       - canonical_decision_log_write
+      - revocable_apns_device_registration
+      - bounded_push_payload_contract
+      - tenderagent_deep_link_routing
+      - notification_tap_case_routing
+      - fetch_on_deep_link
     mob_1:
       status: done
       pr: 171
@@ -105,11 +110,18 @@ owner_product_directive_2026_10_06:
       exact_head_ci_run: 37524387682
       exact_head_ci: success
       note: "Explicit human-confirmed GO / NO GO / DEFER writes are merged. Decisions are audited in the canonical decision log; ETP, signature, payment, bid submission and external-action hard stops remain unchanged."
+    mob_3:
+      status: done
+      pr: 176
+      merge_commit: 3ab3872f95c9d8934403533f4411fcddd7569ba4
+      exact_head_ci_run: 37533637202
+      exact_head_ci: success
+      note: "Revocable APNs device registration, bounded push payloads and safe tenderagent deep links are merged. Simulator push/deep-link smoke passed. Real-device APNs delivery remains externally blocked by the current Apple provisioning profile lacking Push Notifications / aps-environment and by provider credentials being intentionally disabled by default."
     next:
-      stage: MOB-3
+      stage: DTR-3
       status: not_admitted
-      scope: "APNs push notifications and deep links into the relevant Tender Agent case."
-      gate: "Requires separate bounded admission; consequential external-action hard stops remain unchanged."
+      scope: "Post-GO readiness plus submission/result monitoring grounded in real evidence."
+      gate: "Requires separate bounded admission; ETP/signature/payment/submission and other consequential external-action hard stops remain unchanged."
     push: APNs
     required_actions: [GO, NO_GO, DEFER]
   deferred:
@@ -120,7 +132,7 @@ owner_product_directive_2026_10_06:
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
 execution_snapshot:
-  updated_at: '2026-10-06T20:19:28Z'
+  updated_at: '2026-10-07T04:20:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -146,7 +158,8 @@ execution_snapshot:
     - WATCHDOG-CONTINUATION-V2-001
     - MOB-1-IOS-INBOX-001
     - MOB-2-IOS-DECISIONS-001
-  note: 'As of 2026-10-06, MOB-1 and MOB-2 are merged as PR #171 / 01b4be72 and PR #173 / fe92b39 respectively and are no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. MOB-3 is not admitted by this roadmap sync.'
+    - MOB-3-IOS-PUSH-DEEPLINKS-001
+  note: 'As of 2026-10-07, MOB-1, MOB-2 and MOB-3 are merged as PR #171 / 01b4be72, PR #173 / fe92b39 and PR #176 / 3ab3872 respectively and are no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. DTR-3 and MOB-4 are not admitted by this roadmap sync.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
@@ -398,6 +411,12 @@ current_programs:
   roadmap_mapping: [ARV-044]
   strategy: COPY_PATTERN
   completion_evidence: 'Explicit human GO / NO GO / DEFER confirmation flow; canonical HUMAN decision-log writes; full mobile portfolio visibility; exact-head CI 37524387682 SUCCESS; Owner-approved merge fe92b39e7a5944ccb519ee1f7579a811d91153f3.'
+- task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
+  state: done
+  source: 'Owner directive 2026-10-06; PR #176 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: ADAPT
+  completion_evidence: 'Revocable APNs registration and access, audited delivery ledger, Apple token-auth HTTP/2 sender disabled by default pending credentials, bounded push/deep-link routing, simulator smoke, exact-head CI 37533637202 SUCCESS; Owner-approved merge 3ab3872f95c9d8934403533f4411fcddd7569ba4. Physical-device APNs remains blocked by current provisioning entitlement.'
 
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive
