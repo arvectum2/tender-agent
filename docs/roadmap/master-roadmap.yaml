@@ -44,7 +44,7 @@ owner_product_directive_2026_10_06:
   execution_queue_modified: false
   daily_tender_run:
     priority: P0
-    implementation_status: DTR_V2_DEPLOYED_AND_VERIFIED
+    implementation_status: DTR_3_MERGED
     scope: "Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio."
     human_gate: "GO / NO GO / DEFER remains attributable to a human manager."
     reuse_existing_modules: true
@@ -59,6 +59,12 @@ owner_product_directive_2026_10_06:
       - run_latest_resume_digest_api
       - mobile_digest_and_recommendation_projection
       - unattended_macmini_cli
+    implemented_2026_10_07:
+      - human_go_post_decision_resume
+      - canonical_submission_readiness_reuse
+      - fail_closed_submission_evidence_tracking
+      - artifact_bound_outcome_tracking
+      - restartable_post_decision_states
     deployed_runtime_2026_10_06:
       main_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee
       migration: 100_add_daily_tender_runs
@@ -68,9 +74,15 @@ owner_product_directive_2026_10_06:
       filter_profile: 'arvectum-it v2'
       production_acceptance_run: DTR-20261006T171139Z-79cfe20b
       production_acceptance: 'two MANAGER_READY items with persisted Data Platform analysis history; run continuing autonomously'
+    dtr_3:
+      status: done
+      pr: 180
+      merge_commit: 3b25e10bab2930f954d39a444b8258ad597010c9
+      exact_head_ci_run: 37575956723
+      exact_head_ci: success
+      note: "HUMAN GO resumes into canonical readiness preparation and evidence-gated submission/outcome tracking. The system never starts/submits an ETP action; unattributed SUBMITTED state and unbound outcome records remain pending."
     next:
-      - native_swiftui_client
-      - post_go_readiness_submission_outcome_automation
+      - mobile_portfolio_metrics_polish
   mobile:
     historical_item: ARV-044
     owner_priority_override: P0
@@ -118,10 +130,10 @@ owner_product_directive_2026_10_06:
       exact_head_ci: success
       note: "Revocable APNs device registration, bounded push payloads and safe tenderagent deep links are merged. Simulator push/deep-link smoke passed. Real-device APNs delivery remains externally blocked by the current Apple provisioning profile lacking Push Notifications / aps-environment and by provider credentials being intentionally disabled by default."
     next:
-      stage: DTR-3
+      stage: MOB-4
       status: not_admitted
-      scope: "Post-GO readiness plus submission/result monitoring grounded in real evidence."
-      gate: "Requires separate bounded admission; ETP/signature/payment/submission and other consequential external-action hard stops remain unchanged."
+      scope: "Mobile Procurement Portfolio and metrics UX polish."
+      gate: "Requires separate bounded admission; consequential external-action hard stops remain unchanged."
     push: APNs
     required_actions: [GO, NO_GO, DEFER]
   deferred:
@@ -132,7 +144,7 @@ owner_product_directive_2026_10_06:
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
 execution_snapshot:
-  updated_at: '2026-10-07T04:20:00Z'
+  updated_at: '2026-10-07T05:35:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -159,7 +171,8 @@ execution_snapshot:
     - MOB-1-IOS-INBOX-001
     - MOB-2-IOS-DECISIONS-001
     - MOB-3-IOS-PUSH-DEEPLINKS-001
-  note: 'As of 2026-10-07, MOB-1, MOB-2 and MOB-3 are merged as PR #171 / 01b4be72, PR #173 / fe92b39 and PR #176 / 3ab3872 respectively and are no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. DTR-3 and MOB-4 are not admitted by this roadmap sync.'
+    - DTR-3-POST-GO-AUTOMATION-001
+  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3 and DTR-3 are merged as PR #171 / 01b4be72, PR #173 / fe92b39, PR #176 / 3ab3872 and PR #180 / 3b25e10 respectively and are no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. MOB-4 is not admitted by this roadmap sync.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
@@ -417,6 +430,12 @@ current_programs:
   roadmap_mapping: [ARV-044]
   strategy: ADAPT
   completion_evidence: 'Revocable APNs registration and access, audited delivery ledger, Apple token-auth HTTP/2 sender disabled by default pending credentials, bounded push/deep-link routing, simulator smoke, exact-head CI 37533637202 SUCCESS; Owner-approved merge 3ab3872f95c9d8934403533f4411fcddd7569ba4. Physical-device APNs remains blocked by current provisioning entitlement.'
+- task_id: DTR-3-POST-GO-AUTOMATION-001
+  state: done
+  source: 'Owner directive 2026-10-07; PR #180 merged'
+  roadmap_mapping: null
+  strategy: ADAPT
+  completion_evidence: 'HUMAN GO post-decision resume, canonical readiness reuse, local submission-control preparation without submission, attributable/source-bound submission evidence gate, artifact-bound outcome gate, unattended pending-run resume, migration 102; exact-head CI 37575956723 SUCCESS 9/9; Owner-approved merge 3b25e10bab2930f954d39a444b8258ad597010c9.'
 
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive
