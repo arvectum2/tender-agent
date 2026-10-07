@@ -120,7 +120,7 @@ Human boundary:
 
 Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
 
-**Current mobile status (2026-10-07):** **MOB-3 completed and merged** in PR #176 as `3ab3872f95c9d8934403533f4411fcddd7569ba4`. Exact-head CI run `37533637202` passed. MOB-1 remains the read-only foundation; MOB-2 adds explicit human-confirmed GO / NO GO / DEFER writes; MOB-3 adds revocable APNs device registration, bounded push payloads, safe `tenderagent://` deep links, notification-tap routing, and fetch-on-deep-link without broadening any procurement-action authority. Provider delivery remains disabled by default until Apple APNs credentials/provisioning are supplied. Physical-device verification reached signing but the current profile lacks Push Notifications / `aps-environment`; simulator push/deep-link smoke passed and no real APNs delivery is claimed. **DTR-3 is next in the delivery sequence but is not admitted by this roadmap update.**
+**Current product status (2026-10-07):** **MOB-3** remains completed in PR #176 (`3ab3872`, exact-head CI `37533637202`). **DTR-3 is now completed and merged** in PR #180 as `3b25e10bab2930f954d39a444b8258ad597010c9`, with exact-head CI run `37575956723` passing all 9 jobs. DTR-3 resumes an attributable HUMAN GO into canonical readiness preparation, submission-evidence tracking and outcome-evidence tracking; it fails closed on missing/not-ready prerequisites, does not start or submit an ETP action, does not treat an un-attributed SUBMITTED state as proof, and completes an outcome only when canonical outcome intake is artifact-bound. The unattended Daily Tender Run now resumes pending post-decision stages before a new discovery run. **MOB-4 is next in the delivery sequence but is not admitted by this roadmap update.**
 
 ### Delivery sequence
 
@@ -131,10 +131,10 @@ Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
 | MOB-1 | P0 | **DONE — SwiftUI read-only inbox + procurement summary** | PR #171 merged; iPhone securely reads live Mac mini reports |
 | MOB-2 | P0 | **DONE — GO / NO GO / DEFER API + mobile actions** | PR #173 merged; human mobile decisions are audited and visible in Procurement Portfolio |
 | MOB-3 | P0 | **DONE — APNs push + deep links** | PR #176 merged; bounded push/deep-link routing opens the correct Tender Agent case |
-| DTR-3 | P1 | Post-GO readiness + submission/result monitoring | Portfolio advances automatically when grounded evidence exists |
+| DTR-3 | P1 | **DONE — post-GO readiness + submission/result monitoring** | PR #180 merged; only HUMAN/source-grounded evidence advances readiness, submission and outcome state |
 | MOB-4 | P1 | Mobile portfolio/metrics polish | Pipeline/outcomes are comfortable to review from phone |
 
-Roadmap status is now reconciled to execution: MOB-1, MOB-2 and MOB-3 were separately admitted, completed, and merged. This roadmap update does **not** admit DTR-3, MOB-4 or any other new development item; new implementation still requires a separately admitted bounded task or explicit implementation directive.
+Roadmap status is now reconciled to execution: MOB-1, MOB-2, MOB-3 and DTR-3 were separately admitted, completed, and merged. This roadmap update does **not** admit MOB-4 or any other new development item; new implementation still requires a separately admitted bounded task or explicit implementation directive.
 
 ### DOCUMENT-QA-005 reconciliation
 
@@ -142,7 +142,7 @@ Roadmap status is now reconciled to execution: MOB-1, MOB-2 and MOB-3 were separ
 
 ## Current reconciliation highlights
 
-- **ARV-044 — mobile companion:** current Owner priority is P0; MOB-1 is complete in PR #171 (`01b4be72`), MOB-2 in PR #173 (`fe92b39`), and MOB-3 in PR #176 (`3ab3872`). Historical 2026-07-30 P2/5% fields remain unchanged in the immutable snapshot. The broader mobile track is not complete: MOB-4 remains future separately gated polish, while DTR-3 is the next product delivery stage.
+- **ARV-044 — mobile companion:** current Owner priority is P0; MOB-1 is complete in PR #171 (`01b4be72`), MOB-2 in PR #173 (`fe92b39`), and MOB-3 in PR #176 (`3ab3872`). DTR-3 post-GO orchestration is also complete in PR #180 (`3b25e10`) and preserves the same HUMAN participation boundary. Historical 2026-07-30 P2/5% fields remain unchanged in the immutable snapshot. The broader mobile track is not complete: MOB-4 remains future separately gated polish.
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
 - **ARV-003 — production LLM analysis:** current docs refer to an accepted ARV-003 bundle, while an older R10.1 backlog status still says Gate 5 ready. This inconsistency is preserved as a status-revalidation item rather than silently resolved.
 - **ARV-041 — legal SaaS/pilot package:** repository package exists, but the canonical legal release gate remains human: director approval, qualified Russian counsel review and infrastructure/Roskomnadzor/localization/retention checks.
@@ -178,10 +178,11 @@ The accelerated admitted pipeline that was active on 2026-09-15 is now fully rec
 | `MOB-1-IOS-INBOX-001` | **done** | ARV-044 P0 slice; PR #171 merged as `01b4be72`; exact-head CI `37518592972` SUCCESS |
 | `MOB-2-IOS-DECISIONS-001` | **done** | ARV-044 P0 slice; PR #173 merged as `fe92b39`; exact-head CI `37524387682` SUCCESS |
 | `MOB-3-IOS-PUSH-DEEPLINKS-001` | **done** | ARV-044 P0 slice; PR #176 merged as `3ab3872`; exact-head CI `37533637202` SUCCESS; physical APNs delivery still requires Apple push entitlement/credentials |
+| `DTR-3-POST-GO-AUTOMATION-001` | **done** | Daily Tender Run post-GO slice; PR #180 merged as `3b25e10`; exact-head CI `37575956723` SUCCESS 9/9; readiness/submission/outcome advancement remains HUMAN/source-evidence gated |
 
 ### Execution queue after reconciliation
 
-The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, and `MOB-3-IOS-PUSH-DEEPLINKS-001` are **done and merged**, while `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` remains the only non-done admitted queue item. DTR-3 and MOB-4 are not admitted. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
+The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, and `DTR-3-POST-GO-AUTOMATION-001` are **done and merged**, while `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` remains the only non-done admitted queue item. MOB-4 is not admitted. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
 
 ### Available continuation branches — candidate matrix
 

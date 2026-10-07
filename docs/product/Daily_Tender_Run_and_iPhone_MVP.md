@@ -1,6 +1,6 @@
 # Daily Tender Run + iPhone Tender Agent — MVP
 
-Updated: 2026-10-06
+Updated: 2026-10-07
 Owner: Product Owner / ООО «Арвектум»
 Backend: Tender Agent on Mac mini
 Client: native iPhone app (SwiftUI)
@@ -19,23 +19,20 @@ Turn the proven daily procurement routine into one reliable system:
 
 The manager should not need to run searches, download documents, request analyses one-by-one or manually maintain the dashboard.
 
-## Implementation status — 2026-10-06
+## Implementation status — 2026-10-07
 
-Implemented in feature/daily-tender-run-autonomy:
+The pre-decision contour remains implemented from DTR-1/DTR-2: durable DailyTenderRun / DailyTenderRunItem state, versioned saved filters, public EIS discovery/dedupe/screening, canonical Deal/Intake linkage, Tender Research document ingestion, Data Platform preparation and deep analysis, fail-closed manager synthesis, run/latest/resume/digest API, mobile projection and unattended Mac mini CLI.
 
-- durable DailyTenderRun / DailyTenderRunItem state with migration 100_add_daily_tender_runs;
-- versioned saved-filter profile arvectum-it;
-- multi-query public EIS discovery, deduplication and deterministic cheap screening;
-- canonical Deal/Intake linkage for shortlisted procurements;
-- public EIS detail/document ingestion into Tender Research before preparation;
-- Data Platform preparation/index readiness gate and source-grounded deep analysis;
-- fail-closed manager synthesis with advisory GO / NO_GO / NEEDS_REVIEW, confidence, reasons, blockers and unknowns;
-- run/latest/resume/digest backend API;
-- mobile inbox/portfolio projection of NMCK, deadline and DTR recommendation metadata;
-- /mobile/v1/digest/latest with canonical human decision state;
-- unattended CLI scripts/run_daily_tender_run.py.
+DTR-3 is merged in PR #180 (`3b25e10bab2930f954d39a444b8258ad597010c9`; exact-head CI `37575956723` SUCCESS 9/9). After an attributable HUMAN GO, a run can now continue through POST_DECISION → TRACK_SUBMISSION → TRACK_OUTCOME using the existing canonical services:
 
-The implemented contour stops at WAIT_HUMAN. It does not submit applications, log into ETPs, sign, pay, or replace the manager's GO / NO GO / DEFER decision.
+- readiness is reused or built only from coherent persisted bid-completeness, CEO-approval, finance and integrated-risk records;
+- missing prerequisites or a non-READY readiness result stay explicitly blocked;
+- submission-control preparation may be created locally, but the orchestrator never starts or performs a submission;
+- a SUBMITTED state advances only when there is an attributable successful human execution or a source-bound registered receipt;
+- outcome completion requires canonical outcome intake with an artifact binding; unbound or absent outcomes stay pending;
+- pending WAITING_READINESS / WAITING_SUBMISSION / WAITING_OUTCOME runs are restartable and are resumed by the unattended CLI before a new discovery run.
+
+The human-control boundary is unchanged: the system does not submit or modify applications, log into ETPs, use EDS/UKЭП/private keys, sign, pay, purchase guarantees, contact suppliers/customers, or replace the manager's GO / NO GO / DEFER decision. The prior 2026-10-06 Mac mini deployment evidence in the roadmap predates DTR-3 and is not evidence that this merged slice has already been deployed to that runtime.
 
 ## Arvectum IT screening profile v2 — 2026-10-06
 
@@ -230,7 +227,7 @@ iPhone MVP is accepted when the phone securely reads live Mac mini reports, push
 3. MOB-1 — SwiftUI shell, Tailnet auth, Inbox + Procurement read-only.
 4. MOB-2 — GO/NO GO/DEFER with idempotent audited write.
 5. MOB-3 — APNs registration, push and deep links.
-6. DTR-3 — post-GO readiness/submission/outcome automation.
+6. DTR-3 — **DONE** — post-GO readiness/submission/outcome automation (PR #180).
 7. MOB-4 — Portfolio/metrics UX polish.
 
 ## Deferred from MVP
