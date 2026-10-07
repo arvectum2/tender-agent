@@ -225,7 +225,7 @@ current_status_summary:
     cadence: hourly
   automatic_merge_governance:
     state: active_renewed_2026_10_07_7_of_10
-    note: 'Attributable Owner review on 2026-10-07 reset the AM-4 cycle. Seven automatic merges are conservatively counted after this completion reconciliation: PR #199 (ARV-015), PR #198 (ARV-019 implementation), PR #201 (ARV-019 completion bookkeeping), PR #205 (ARV-022 implementation), #206 (ARV-022 completion bookkeeping), #207 (ARV-053 implementation) and #BOOKKEEPING_PR_TBD (ARV-053 completion bookkeeping). Current counter 7/10; next time-based review deadline 2026-11-07. Existing hard stops remain unchanged.'
+    note: 'Attributable Owner review on 2026-10-07 reset the AM-4 cycle. Seven automatic merges are conservatively counted after this completion reconciliation: PR #199 (ARV-015), PR #198 (ARV-019 implementation), PR #201 (ARV-019 completion bookkeeping), PR #205 (ARV-022 implementation), #206 (ARV-022 completion bookkeeping), #207 (ARV-053 implementation) and #208 (ARV-053 completion bookkeeping). Current counter 7/10; next time-based review deadline 2026-11-07. Existing hard stops remain unchanged.'
   note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is actively executing: ARV-015, ARV-019, ARV-022 and ARV-053 are complete, 8 items remain admitted, and ARV-055 is next. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
 
 execution_snapshot:

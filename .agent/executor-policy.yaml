@@ -107,7 +107,7 @@ company_authority_gate:
       merge_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
       task: COMMERCIAL-WORKFLOW-ARV-053-001
       note: evidence-backed counterparty cards merged automatically after exact-head CI run 37684732897 passed
-    - pr: BOOKKEEPING_PR_TBD
+    - pr: 208
       merge_commit: pending_until_merge
       task: COMMERCIAL-WORKFLOW-ARV-053-001
       note: completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
