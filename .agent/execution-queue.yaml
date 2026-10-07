@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-10-07T14:05:00+03:00'
+updated_at: '2026-10-07T14:41:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -635,7 +635,7 @@ items:
   strategy: REUSE
   continuation_mode: OWNER_DIRECTIVE
   title: Strategic Stage 1 thin commodity shell completion gate
-  status: in_progress
+  status: done
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
@@ -643,7 +643,7 @@ items:
   roadmap_scope: []
   dependencies: []
   executor_scope: 'Audit and close the existing commodity shell across search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export. Reuse existing components; fix only demonstrated bounded gaps. No custom commodity subsystem and no authority expansion.'
-  done_gate: 'Acceptance matrix proves the shell usable end-to-end; focused/relevant tests and exact-head CI pass; roadmap Stage 1 set to done with evidence. Merge only under the explicit Owner directive and unchanged hard stops.'
+  done_gate: 'SATISFIED: acceptance matrix and focused gate prove the shell usable end-to-end; focused gate 67 passed / 10 skipped; exact-head CI 37612128040 SUCCESS 9/9; PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b. Hard stops unchanged.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
