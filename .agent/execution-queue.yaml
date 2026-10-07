@@ -649,7 +649,7 @@ items:
   task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
   strategy: ADAPT
   title: Structured RFQ-first operator profile ingestion
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -658,7 +658,7 @@ items:
   - ARV-015
   dependencies: []
   executor_scope: 'Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.'
-  done_gate: 'Synthetic operator_profile.md deterministically yields the already-defined structured supplier-profile fields; missing/malformed values stay unknown/null; Decision Core consumes the profile without external-action widening; focused tests and exact-head CI pass.'
+  done_gate: 'SATISFIED: structured RFQ-first profile ingestion implemented and fail-closed; implementation head 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95 passed exact-head CI 37654505822 with 9/9 jobs green, quality make check PASS and 3104 passed / 236 skipped; Decision Core external-action safety unchanged. PR #199 remains guarded by fresh exact-head CI after final bookkeeping.'
 
 - order: 300
   task_id: COMMERCIAL-WORKFLOW-ARV-019-001
