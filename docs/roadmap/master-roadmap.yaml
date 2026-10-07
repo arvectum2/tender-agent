@@ -156,10 +156,21 @@ owner_product_directive_2026_10_06:
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
 current_status_summary:
-  as_of: '2026-10-07T10:55:00+03:00'
-  verified_main_commit: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
+  as_of: '2026-10-07T13:35:00+03:00'
+  verified_main_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
   active_execution_item: null
   active_execution_state: no_non_done_admitted_items
+  last_completed_task: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
+  base_foundation:
+    historical_ids: [BASE-001, BASE-002, BASE-003, BASE-004, BASE-005, BASE-006, BASE-007, BASE-008, BASE-009, BASE-010, BASE-011, BASE-012, BASE-013, BASE-014, BASE-015, BASE-016, BASE-017, BASE-018]
+    confirmed_done: 18
+    total: 18
+    state: complete
+    note: 'All BASE-001..BASE-018 are confirmed_done in the current reconciliation overlay. Historical July percentages/statuses remain immutable.'
+  feedback_learning_loop:
+    roadmap_item: ARV-004
+    state: post_mvp_not_admitted
+    note: 'BASE-011 closes the Hermes infrastructure foundation. Real-user self-improvement remains a separately gated post-MVP Feedback & Learning Loop under ARV-004.'
   mobile_product:
     owner_priority: P0
     bounded_sequence_state: complete
@@ -177,7 +188,7 @@ current_status_summary:
   note: 'ARV-005 technical pilot is complete on preserved frozen evidence; no non-done queue item remains admitted after this closure. Historical 2026-07-30 progress/status fields below remain immutable and are not current execution percentages.'
 
 execution_snapshot:
-  updated_at: '2026-10-07T07:55:00Z'
+  updated_at: '2026-10-07T10:35:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -206,7 +217,7 @@ execution_snapshot:
     - MOB-3-IOS-PUSH-DEEPLINKS-001
     - DTR-3-POST-GO-AUTOMATION-001
     - MOB-4-IOS-PORTFOLIO-METRICS-001
-  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged and recorded as completed execution history. ARV-005-CONTROLLED-PILOT-EVIDENCE-001 has now also satisfied its technical done gate using preserved frozen pilot evidence. No non-done queue item remains admitted; the next bounded item must be admitted under the active Owner continuation rule without inventing scope or acceptance criteria.'
+  note: 'As of 2026-10-07, the mobile/DTR sequence and ARV-005 controlled pilot are completed, BASE-001..BASE-018 are 18/18 confirmed_done, and no non-done queue item remains admitted. The next bounded item must be admitted under the active Owner continuation rule without inventing scope or acceptance criteria; ARV-004 learning-loop work is explicitly post-MVP and not admitted.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
