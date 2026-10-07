@@ -31,7 +31,7 @@ resume_instruction: "Do not repeat ARV-015 implementation or tests. Check the fi
 execution:
   claimed_by: "ChatGPT interactive"
   execution_id: "interactive-20261007-arv015-r2"
-  branch: "agent/arv-015-operator-profile-parser-001-final"
+  branch: "agent/arv015-final2"
   base_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
   issue: null
   manual_override: true

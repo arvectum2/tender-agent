@@ -7,7 +7,7 @@ definition_of_done:
   - "Bind the validated profile into analysis_context.supplier_profile for the existing Decision Core."
   - "Preserve RFQ-first/no-fixed-catalog semantics and all external-action hard stops."
   - "Focused tests and exact-head CI pass before merge."
-branch: agent/arv-015-operator-profile-parser-001-final
+branch: agent/arv015-final2
 base_commit: 61e7f38196e6b7046fff421380714b1a692e1307
 completed:
   - "Recovered the historical task/PR instead of duplicating product scope."
