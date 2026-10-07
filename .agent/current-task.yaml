@@ -25,11 +25,11 @@ completed:
 - 'Exact-head CI run 37597511204 for 4f6559fde5f86624dba242c031e7f430b65ce36d completed SUCCESS with all 9 jobs green before merge.'
 - 'Post-merge BASE-007 production-smoke preparation: current TLS trust verification PASS for zakupki.gov.ru and int.zakupki.gov.ru using macOS system trust, TLSv1.2, Russian Trusted Sub CA issuer, direct proxy-bypassed route.'
 - 'Post-merge BASE-007 authenticated getDocsIP smoke attempted against known procurement 0352300080626000109; application correctly failed closed because no current SOAP token is configured. Protected token file /Users/master/.config/arvectum/r3-soap-token.env exists but is zero bytes; launchctl token is absent.'
-current: 'PR #188 is merged and canonical revalidation artifacts are on main. Fresh EIS TLS/certificate smoke passes, but the authenticated getDocsIP production smoke is blocked by missing current SOAP token material.'
+current: 'PR #188 is merged. Fresh EIS production smoke now reaches the service with configured local access material, but EIS returns an external account/service-access blocker instead of a completed getDocsIP response.'
 pending:
-- 'Restore or provide the current EIS SOAP token through the protected local secret source (preferred: /Users/master/.config/arvectum/r3-soap-token.env, mode 0600) without committing or printing the token.'
-- 'Rerun the read-only authenticated getDocsIP production smoke against a known procurement and record sanitized PASS/FAIL evidence.'
-- 'If the authenticated smoke passes, reconcile BASE-007 from revalidated_residual_gap to confirmed_done in a reviewed follow-up change; BASE-011 remains independently residual.'
+- 'External: restore EIS-side PMD/output-service access for an applicable credential.'
+- 'After EIS-side access changes, rerun the same read-only getDocsByReestrNumber smoke and require status completed plus an archive URL before promoting BASE-007 to confirmed_done.'
+- 'BASE-011 remains independently residual.'
 last_verified_commit: 4107045a6a8bc109392939a2b83d33de866b6767
 test_results:
 - 'make check: PASS.'
@@ -40,10 +40,12 @@ test_results:
 - 'master-roadmap.yaml parses; 18 BASE entries = 16 confirmed_done + 2 revalidated_residual_gap.'
 - 'GitHub exact-head CI run 37597511204: SUCCESS, 9/9 jobs green on PR head 4f6559fde5f86624dba242c031e7f430b65ce36d.'
 - 'EIS TLS trust smoke: PASS for zakupki.gov.ru and int.zakupki.gov.ru; TLSv1.2, Russian Trusted Sub CA, proxy_bypassed=True.'
-- 'Authenticated getDocsIP smoke: BLOCKED_EIS_CREDENTIAL_MISSING. ZakupkiSoapSettings configured=false/token_present=false; protected token source exists but is empty (0 bytes).'
-blocked_reason: 'Fresh authenticated BASE-007 production smoke cannot proceed because the current EIS SOAP token is not configured on the authorized Mac mini. TLS/certificate trust is healthy; only credential material is missing.'
-updated_at: '2026-10-07T12:16:04+0300'
-resume_instruction: 'On continuation, first verify the current SOAP token is present in the protected local secret source without printing it. If present, rerun TLS host verification and the read-only getDocsByReestrNumber smoke for 0352300080626000109. If the smoke passes, update BASE-007 overlay evidence/status via a reviewed follow-up change and then complete this checkpoint. Do not alter the immutable 2026-07-30 snapshot or expose token material.'
+- 'Fresh authenticated getDocsIP smoke: local configuration present and request reaches EIS over the verified direct TLS route.'
+- 'Two current individual-style candidates return processing_error with sanitized EIS message indicating temporary PMD account blocking; repeated across previously validated procurement numbers.'
+- 'The company-labelled candidate returns processing_error with sanitized EIS message indicating output-service access is absent. No tested candidate returns an archive URL.'
+blocked_reason: 'BASE-007 is externally blocked by EIS-side account/service-access state. Transport, TLS verification, direct routing, local configuration, and request delivery to EIS are working, but no tested access credential currently returns a completed archive response.'
+updated_at: '2026-10-07T12:29:06+0300'
+resume_instruction: 'Do not retry BASE-007 until EIS-side PMD/output-service access changes. After access restoration, rerun TLS verification and the read-only getDocsByReestrNumber smoke against a previously validated procurement; require status completed plus archive URL. If it passes, reconcile BASE-007 to confirmed_done via a reviewed follow-up change. Do not alter the immutable 2026-07-30 snapshot or expose access material.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-base-revalidation
