@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: completed
 task_id: BASE-001-018-REVALIDATION-20261007
 authority: OWNER_DIRECTIVE
 goal: 'Formally revalidate BASE-001 through BASE-018 against the current Arvectum/Tender Agent state, preserve the 2026-07-30 historical snapshot unchanged, close any objective repository/documentation gaps that can be fixed safely, and reconcile the current roadmap with evidence-backed statuses.'
@@ -25,16 +25,17 @@ completed:
 - 'Exact-head CI run 37597511204 for 4f6559fde5f86624dba242c031e7f430b65ce36d completed SUCCESS with all 9 jobs green before merge.'
 - 'Post-merge BASE-007 production-smoke preparation: current TLS trust verification PASS for zakupki.gov.ru and int.zakupki.gov.ru using macOS system trust, TLSv1.2, Russian Trusted Sub CA issuer, direct proxy-bypassed route.'
 - 'Post-merge BASE-007 authenticated getDocsIP smoke attempted against known procurement 0352300080626000109; application correctly failed closed because no current SOAP token is configured. Protected token file /Users/master/.config/arvectum/r3-soap-token.env exists but is zero bytes; launchctl token is absent.'
-current: 'Fresh BASE-007 EIS production smoke now passes with the Owner-restored individual/extract credential: getDocsByReestrNumber completed and returned one archive URL with zero warnings. Follow-up PR #189 records the closure and is awaiting exact-head CI plus the existing Owner/review merge gate.'
-pending:
-- 'Wait for exact-head CI on PR #189 and confirm it is green.'
-- 'Merge PR #189 only with explicit Owner/review authorization under the current AM-4 review-due gate.'
-- 'After merge, verify main reflects 17 confirmed_done + 1 revalidated_residual_gap and mark this revalidation task completed; BASE-011 remains independently residual.'
-last_verified_commit: 7fc18ea206163777467cfe683c7f35d6f7ca151d
+current: 'Task completed. BASE-001…018 revalidation is reconciled on main: 17 confirmed_done, with BASE-011 retained as the single explicit residual gap. BASE-007 is closed by fresh authenticated EIS production evidence.'
+pending: []
+last_verified_commit: 6b74ae3917dceb2682dfd01617dd31e7c8e86367
 test_results:
 - 'Fresh BASE-007 production smoke after EIS-side unblock: PASS; getDocsByReestrNumber(0116300036226000029) status=completed, archive URL count=1, warnings=0; TLS trust PASS for zakupki.gov.ru and int.zakupki.gov.ru.'
 - 'PR #189 local validation: make check PASS; roadmap reconciliation parse PASS (18 BASE = 17 confirmed_done + 1 revalidated_residual_gap).'
 - 'Protected runtime-source smoke: PASS; configured=true, token_present=true, owner=individual, getDocsByReestrNumber status=completed, archive URL count=1, warnings=0.'
+- 'PR #189 exact-head CI run 37602246832: SUCCESS, 9/9 jobs green; quality make test and procurement domain regression both passed on Linux.'
+- 'Additional local full make test on macOS: 3092 passed, 236 skipped, 1 failed in 116.12s; sole failure is the already documented environment-sensitive R9 backup/restore case caused by local pg_restore compatibility, while exact-head Linux CI is green.'
+- 'Post-merge main verification at 6b74ae3917dceb2682dfd01617dd31e7c8e86367: BASE-007=confirmed_done; report and compact roadmap both state 17 confirmed_done + 1 residual (BASE-011).'
+- 'No separate workflow run was emitted for merge commit 6b74ae3917dceb2682dfd01617dd31e7c8e86367; the authoritative CI gate is the successful exact PR head run immediately preceding the Owner-authorized squash merge.'
 - 'make check: PASS.'
 - 'Historical BASE snapshot equality against ffc698ef: 18/18 unchanged.'
 - 'Focused BASE batch including R9 backup/restore: 545 passed, 12 skipped, 1 failed in 50.01s.'
@@ -50,15 +51,18 @@ test_results:
 - 'Follow-up branch chore/base-007-production-smoke-20261007 updates only the current reconciliation overlay/report; immutable historical BASE fields remain unchanged. Local make check passed and roadmap parse confirms 18 BASE = 17 confirmed_done + 1 residual.'
 - 'Opened PR #189 for BASE-007 closure at exact head 7fc18ea206163777467cfe683c7f35d6f7ca151d.'
 - 'Installed the newly issued individual/extract credential into the protected Mac mini runtime secret source /Users/master/.config/arvectum/r3-soap-token.env with mode 0600, without exposing the value; reran the smoke through ZakupkiSoapSettings.from_env and confirmed the same completed response with one archive URL and zero warnings.'
-blocked_reason: 'Implementation/runtime blocker is cleared. Remaining blocker is governance: PR #189 must pass exact-head CI and may not be merged automatically while the current AM-4 cycle is review-due without explicit Owner/review authorization.'
-updated_at: '2026-10-07T12:44:00+0300'
-resume_instruction: 'Read PR #189 and its exact-head CI for 7fc18ea206163777467cfe683c7f35d6f7ca151d. If CI is green, do not merge unless the Owner explicitly authorizes merge/review under AM-4. After authorized merge, verify main has BASE-007 confirmed_done, 17 confirmed_done + 1 residual, preserve the immutable 2026-07-30 snapshot, then set this checkpoint completed with the merge SHA and final verification evidence.'
+- 'PR #189 exact-head GitHub CI run 37602246832 completed SUCCESS on 7fc18ea206163777467cfe683c7f35d6f7ca151d; all 9 jobs green, including full make test and procurement domain regression.'
+- 'Owner explicitly authorized completion of CI and merge of PR #189 under the current review gate; PR #189 was squash-merged to main as 6b74ae3917dceb2682dfd01617dd31e7c8e86367.'
+- 'Post-merge main verification confirms BASE-007 reconciliation=confirmed_done and overall BASE overlay=17 confirmed_done + 1 revalidated_residual_gap; BASE-011 is the sole explicitly recorded residual and the immutable historical BASE fields remain unchanged.'
+blocked_reason: null
+updated_at: '2026-10-07T12:49:57+0300'
+resume_instruction: 'This task is completed. If re-opened, verify main from merge commit 6b74ae3917dceb2682dfd01617dd31e7c8e86367 forward and do not reinterpret BASE-011 as complete without new production evidence for the user-correction/Hermes loop. Preserve the immutable 2026-07-30 snapshot.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-base-revalidation
-  branch: chore/base-001-018-revalidation-20261007
+  branch: chore/base-007-production-smoke-20261007
   base_commit: ffc698efb02a1c662d92fa46ec65f4f0f0112552
   issue: null
-  pull_request: 188
+  pull_request: 189
   manual_override: true
   lease_until: null
