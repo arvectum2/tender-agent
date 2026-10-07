@@ -99,7 +99,7 @@ company_authority_gate:
       merge_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
       task: COMMERCIAL-WORKFLOW-ARV-022-001
       note: OCR fallback implementation merged automatically after exact-head CI run 37674689621 passed
-    - pr: BOOKKEEPING_PR_TBD
+    - pr: 206
       merge_commit: pending_until_merge
       task: COMMERCIAL-WORKFLOW-ARV-022-001
       note: completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
