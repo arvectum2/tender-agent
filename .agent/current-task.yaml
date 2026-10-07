@@ -19,21 +19,20 @@ completed:
 - 'Updated BASE-011 current reconciliation to confirmed_done without changing any legacy_snapshot field; BASE overlay is now 18/18 confirmed_done.'
 - 'Updated ARV-004 current reconciliation notes/evidence to the post-MVP Learning Loop while keeping state needs_revalidation and leaving it out of the execution queue.'
 - 'Opened PR #190 from chore/base-011-learning-loop-reclass-20261007 at exact head 69060e7aa475f624240e622aee9e48d18cce0dec.'
-current: 'PR #190 is open for the roadmap-only BASE-011/ARV-004 reconciliation. Local checks are green; exact-head CI run 37606117463 is in progress on 69060e7aa475f624240e622aee9e48d18cce0dec.'
+current: 'PR #190 is review-ready. Local checks are green and exact-head CI run 37606117463 completed SUCCESS with all 9 jobs green on 69060e7aa475f624240e622aee9e48d18cce0dec. Only the current AM-4 Owner merge/review authorization remains.'
 pending:
-- 'Open review-ready PR and obtain exact-head CI.'
-- 'Merge only if explicitly authorized under the current AM-4 review gate.'
-- 'After authorized merge, verify main and mark this checkpoint completed.'
-last_verified_commit: 948c068abda678e1f3c4ff724fc680304c2cb55e
+- 'Merge PR #190 only if explicitly authorized under the current AM-4 review gate.'
+- 'After authorized merge, verify main has BASE 18/18 confirmed_done and ARV-004 remains post-MVP/not admitted, then mark this checkpoint completed.'
+last_verified_commit: 69060e7aa475f624240e622aee9e48d18cce0dec
 test_results:
 - 'make check: PASS on branch head 69060e7aa475f624240e622aee9e48d18cce0dec.'
 - 'Focused Hermes/company-agent boundary tests: 131 passed, 7 warnings.'
 - 'Legacy snapshot equality: BASE-001..018 plus ARV-004 = 19/19 unchanged against task base 742f4319683036837a9bafb358ad87016efd7486.'
 - 'Roadmap assertion: BASE reconciliation = 18/18 confirmed_done; ARV-004 remains needs_revalidation with post-MVP scope documented.'
 - 'Prior BASE revalidation task completed with PR #189 exact-head CI 9/9 green.'
-blocked_reason: null
-updated_at: '2026-10-07T13:16:00+0300'
-resume_instruction: 'Open/inspect the review-ready PR for branch chore/base-011-learning-loop-reclass-20261007 and obtain exact-head CI. If CI is green, do not merge without explicit Owner authorization under AM-4. After authorized merge, verify main has BASE 18/18 confirmed_done, ARV-004 remains post-MVP/not admitted, then mark the checkpoint completed.'
+blocked_reason: 'Governance only: PR #190 is fully tested and CI-green, but the current AM-4 gate requires explicit Owner merge/review authorization before merge.'
+updated_at: '2026-10-07T13:24:37+0300'
+resume_instruction: 'PR #190 is CI-green at exact head 69060e7aa475f624240e622aee9e48d18cce0dec. Do not merge without explicit Owner authorization under AM-4. After authorized merge, verify main has BASE 18/18 confirmed_done, ARV-004 remains post-MVP/not admitted, and mark the checkpoint completed with the merge SHA.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-base011-learning-loop
