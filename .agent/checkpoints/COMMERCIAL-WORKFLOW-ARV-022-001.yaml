@@ -1,0 +1,53 @@
+version: 1
+task_id: COMMERCIAL-WORKFLOW-ARV-022-001
+status: in_progress
+goal: Reuse Data Platform OCR fallback for scanned tender documents and project its
+  evidence into Tender Agent with fail-closed review semantics.
+definition_of_done:
+- Data Platform OCR is reused; no duplicate/custom Tender Agent OCR engine.
+- OCR provenance, coordinates and confidence are retained in the Tender Agent document
+  projection.
+- Low-confidence OCR is marked for human review.
+- Native-text paths remain unchanged.
+- Focused/relevant tests and exact-head CI pass.
+completed:
+- Canonical task/queue and renewed AM-4 state reconciled against current main.
+- Historical PR
+- Current Data Platform boundary verified; legacy local extraction is intentionally
+  removed.
+- DP-OCR-001 contract inspected: native first, local Tesseract fallback, coordinates/confidence,
+    threshold 90; process endpoint metadata exposure is the remaining bridge gap.
+- '2026-10-07: Opened Data Platform PR #85 (7958e6a0949c6d36d8175950d8bc230e479ede2a)
+  to expose the already-produced process_document metadata additively; no OCR engine/routing
+  changes.'
+- '2026-10-07: Implemented Tender Agent projection of Data Platform OCR provenance/coordinates/confidence
+  into procurement document raw_meta while preserving existing source metadata.'
+- '2026-10-07: Low/missing OCR confidence now produces an explicit human-review flag
+  and preparation warning; native-text metadata is marked OCR-not-used and remains
+  on the existing path.'
+- '2026-10-07: Focused OCR/Data Platform/boundary/quality/prepare tests passed (38
+  passed).'
+- '2026-10-07: Full pytest reached 3107 passed / 236 skipped; the ARV-022 queue-policy
+  regression was identified and corrected by leaving the admitted queue item ready
+  while current-task owns execution.'
+- '2026-10-07: The only remaining full-suite failure is the pre-existing R9 pg_restore
+  acceptance failure; the identical single test fails on clean origin/main 1b95d668,
+  proving it is not introduced by ARV-022.'
+- '2026-10-07: Data Platform PR #85 exact-head CI passed and PR merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7;
+  the additive process_document metadata bridge is now on Data Platform main.'
+- '2026-10-07: PR #205 exact-head CI run 37673321734 stalled in GitHub-hosted apt
+  installation while all other jobs reached success; cancellation was requested after
+  the same apt-runner symptom was observed on unrelated main CI. A fresh exact-head
+  verification run will be triggered from this checkpoint commit.'
+current_stage: retry_exact_head_ci
+remaining:
+- Tender Agent PR exact-head CI/guarded merge
+- completion bookkeeping and superseded OCR PR reconciliation
+last_verified_commit: a47d6f20c08fe65b4a9085a1e1d7af92267296d8
+test_results:
+- focused 38 passed; make check passed
+- full pytest 3107 passed / 236 skipped; queue-policy failure fixed; only R9 pg_restore
+  failure reproduces unchanged on origin/main
+resume_instruction: 'Verify the fresh exact-head CI run for PR #205; merge only when
+  green, then finalize completion bookkeeping.'
+updated_at: '2026-10-07T22:30:00+03:00'
