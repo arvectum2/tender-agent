@@ -1,6 +1,6 @@
 version: 1
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-053-001
 authority: AUTO
 goal: Build evidence-backed customer/supplier counterparty cards with transparent
@@ -68,32 +68,25 @@ completed:
 - '2026-10-08: After reconciling current main, the scoring-reuse correction passed
   the ARV-053/customer-role/recovery/supplier regression set (46 passed, 34 skipped),
   Ruff check/format, make check and git diff --check.'
-current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
-  evidence adapters and scoring primitives before choosing the minimal reuse-first
-  implementation slice.
-pending:
-- Inventory reusable counterparty/profile/evidence/scoring primitives and historical
-  ARV-053 intent.
-- Implement the evidence-backed counterparty card and explainable factor projection
-  without a second registry or opaque legal score.
-- Add focused role/provenance/unknown-state/regression tests.
-- Run full relevant verification and exact-head CI, then merge/bookkeep under active
-  AM-4.
-last_verified_commit: bd1de98bf764daa0280be6bd9ba3964cf6f90338
+- '2026-10-08: Fresh exact-head GitHub CI run 37689743505 passed all 9 jobs for corrective
+  PR #209 at head d0efcff05d4aee71a1ad0a0fe2a3c27533e17229.'
+- '2026-10-08: Corrective PR #209 squash-merged to main as 82bf13c691fdbff1922ac4bb2e03ec0f33c10406;
+  ARV-053 now reuses canonical M-020 confidence/result semantics without ARV-053-specific
+  severity weights.'
+current: ARV-053 is complete including the canonical-scoring correction; COMMERCIAL-WORKFLOW-ARV-055-001
+  remains the next ready admitted item.
+pending: []
+last_verified_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
 test_results:
-- 'ARV-053 + customer-role + recovery/supplier regressions after main reconciliation:
+- 'ARV-053 + customer-role + recovery/supplier regressions after current-main reconciliation:
   46 passed, 34 skipped'
 - 'Ruff check/format on correction slice: PASS'
 - 'make check: PASS'
 - 'git diff --check: PASS'
-- 'pre-reconciliation PR #209 exact-head CI run 37686654714: SUCCESS; fresh exact-head
-  CI required after current-main merge'
-updated_at: '2026-10-08T00:29:08+03:00'
-resume_instruction: 'Push and verify the reconciled correction on PR #209; merge only
-  after exact-head CI is green, then finalize ARV-053 correction bookkeeping.'
-current_stage: fresh_exact_head_ci
-remaining:
-- push reconciled correction
-- 'fresh exact-head PR #209 CI'
-- guarded corrective merge
-- final correction bookkeeping
+- 'corrective PR #209 exact-head CI run 37689743505: SUCCESS (9/9 jobs)'
+- 'corrective PR #209 merged to main as 82bf13c691fdbff1922ac4bb2e03ec0f33c10406'
+updated_at: '2026-10-08T00:42:28+03:00'
+resume_instruction: ARV-053 is complete including its scoring-reuse correction. Continue
+  with COMMERCIAL-WORKFLOW-ARV-055-001 after reconciling main.
+current_stage: completed
+remaining: []

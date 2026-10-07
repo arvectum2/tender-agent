@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-053-001
 authority: AUTO
 goal: Build evidence-backed customer/supplier counterparty cards with transparent
@@ -68,32 +68,31 @@ completed:
 - '2026-10-08: After reconciling current main, the scoring-reuse correction passed
   the ARV-053/customer-role/recovery/supplier regression set (46 passed, 34 skipped),
   Ruff check/format, make check and git diff --check.'
-current: 'Push the reconciled ARV-053 scoring-reuse correction and require fresh exact-head
-  CI on PR #209 before guarded merge.'
-pending:
-- Push the reconciled correction/checkpoint head.
-- 'Verify fresh exact-head GitHub CI for PR #209.'
-- 'Merge PR #209 under active AM-4 only if all gates remain valid.'
-- Perform final ARV-053 correction bookkeeping, update AM-4 evidence/counter, and
-  keep ARV-055 as the next ready admitted item.
-last_verified_commit: bd1de98bf764daa0280be6bd9ba3964cf6f90338
+- '2026-10-08: Fresh exact-head GitHub CI run 37689743505 passed all 9 jobs for corrective
+  PR #209 at head d0efcff05d4aee71a1ad0a0fe2a3c27533e17229.'
+- '2026-10-08: Corrective PR #209 squash-merged to main as 82bf13c691fdbff1922ac4bb2e03ec0f33c10406;
+  ARV-053 now reuses canonical M-020 confidence/result semantics without ARV-053-specific
+  severity weights.'
+current: ARV-053 is complete including the canonical-scoring correction; COMMERCIAL-WORKFLOW-ARV-055-001
+  remains the next ready admitted item.
+pending: []
+last_verified_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
 test_results:
-- 'ARV-053 + customer-role + recovery/supplier regressions after main reconciliation:
+- 'ARV-053 + customer-role + recovery/supplier regressions after current-main reconciliation:
   46 passed, 34 skipped'
 - 'Ruff check/format on correction slice: PASS'
 - 'make check: PASS'
 - 'git diff --check: PASS'
-- 'pre-reconciliation PR #209 exact-head CI run 37686654714: SUCCESS; fresh exact-head
-  CI required after current-main merge'
-updated_at: '2026-10-08T00:29:08+03:00'
-resume_instruction: 'Verify PR #209 exact-head CI after pushing the reconciled head.
-  If fully green and AM-4 remains valid, merge #209, then finalize ARV-053 correction
-  bookkeeping and leave COMMERCIAL-WORKFLOW-ARV-055-001 next.'
+- 'corrective PR #209 exact-head CI run 37689743505: SUCCESS (9/9 jobs)'
+- 'corrective PR #209 merged to main as 82bf13c691fdbff1922ac4bb2e03ec0f33c10406'
+updated_at: '2026-10-08T00:42:28+03:00'
+resume_instruction: ARV-053 is complete including its scoring-reuse correction. Continue
+  with COMMERCIAL-WORKFLOW-ARV-055-001 after reconciling main.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053
-  branch: agent/arv-053-scoring-reuse-001
-  base_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+  branch: agent/arv-053-correction-completion-001
+  base_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
   issue: null
   manual_override: false
   lease_until: null
