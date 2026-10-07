@@ -58,15 +58,23 @@ completed:
 - '2026-10-08: The scoring-reuse correction is isolated on agent/arv-053-scoring-reuse-001
   from merged main; relevant regressions passed 46/46 with 34 expected skips, make
   check passed, Ruff format/check and git diff --check passed.'
-current: Open and verify a bounded follow-up PR for the scoring-reuse correction before
-  declaring ARV-053 complete.
+- '2026-10-08: Reconciled correction branch with canonical main 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07.
+  Main had already merged completion bookkeeping PR #208; this bounded follow-up remains
+  necessary because it removes an ARV-053-specific scoring rule and restores reuse
+  of canonical M-020 scoring semantics.'
+- '2026-10-08: PR #209 exact-head CI run 37686654714 passed on pre-reconciliation
+  head 233bed67b907e087f5252d1ebcf897924f6b651f; exact-head CI must be rerun after
+  this main reconciliation before merge.'
+current: 'Verify the reconciled ARV-053 scoring-reuse correction on top of current
+  main, then require fresh exact-head CI for PR #209 before guarded merge.'
 pending:
-- Push the scoring-reuse branch and open a follow-up PR against current main.
-- Require exact-head GitHub CI for the follow-up PR.
-- Merge the corrective PR under AM-4 only if all merge gates remain valid.
-- Perform completion bookkeeping, update AM-4 merge evidence/counter, and advance
-  canonical queue to ARV-055.
-last_verified_commit: 6e8a1f713192c77ff348ac9b1ae18b14001c18fe
+- Run focused ARV-053 regressions and make check after reconciling current main.
+- 'Push the reconciled correction head and require fresh exact-head GitHub CI for
+  PR #209.'
+- 'Merge PR #209 under active AM-4 only if all gates remain valid.'
+- Perform final ARV-053 correction bookkeeping, update AM-4 evidence/counter, and
+  leave ARV-055 as the next ready admitted item.
+last_verified_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
 test_results:
 - 'PR #207 exact-head GitHub CI run 37684732897: SUCCESS; merged as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e'
 - 'full local suite before merge: 3112 passed, 236 skipped; only known main-baseline
@@ -74,15 +82,16 @@ test_results:
 - 'scoring-reuse correction relevant regressions: 46 passed, 34 skipped'
 - 'scoring-reuse correction make check: PASS'
 - 'scoring-reuse correction Ruff/format + git diff --check: PASS'
-updated_at: '2026-10-08T00:03:13+03:00'
-resume_instruction: Continue on /Volumes/ArvectumSSD/Arvectum/worktrees/arv053-scoring-reuse-20261007.
-  Open/verify the bounded scoring-reuse follow-up PR, require exact-head CI, merge
-  if AM-4 remains valid, then complete ARV-053 bookkeeping and advance to COMMERCIAL-WORKFLOW-ARV-055-001.
+updated_at: '2026-10-08T00:28:35+03:00'
+resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv053-scoring-reuse-20261007.
+  Run focused tests/make check, push the reconciled head, require exact-head CI on
+  PR #209, merge if green under AM-4, then finalize correction bookkeeping without
+  duplicating ARV-055 work.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053
   branch: agent/arv-053-scoring-reuse-001
-  base_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
+  base_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
   issue: null
   manual_override: false
   lease_until: null
