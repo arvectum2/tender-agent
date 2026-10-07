@@ -15,18 +15,16 @@ definition_of_done:
 completed:
 - '2026-10-07: Owner explicitly requested ARV-050 P0 reconciliation against already closed BASE-017.'
 - '2026-10-07: Verified BASE-017 is already confirmed_done and ARV-050 preserves the same R8 customer-pilot workspace completion snapshot but still has stale needs_revalidation overlay.'
-current: Reconcile ARV-050 overlay and add evidence without changing historical task semantics.
+- '2026-10-07: Added explicit ARV-050 reconciliation evidence, changed only the current overlay to confirmed_done, and synchronized MASTER_ROADMAP.md; both legacy snapshots remain untouched.'
+current: Roadmap reconciliation and evidence note implemented; focused verification remains.
 pending:
-- Add ARV-050 reconciliation evidence note.
-- Update master-roadmap.yaml current reconciliation overlay only.
-- Update MASTER_ROADMAP.md current reconciliation column.
 - Run focused R8 tests and roadmap consistency assertions.
 - Commit, push, open PR, verify exact-head CI and merge if gates remain green.
 - Mark checkpoint completed with final merge/test evidence.
 last_verified_commit: 0948f5f438fbe3b25a8251684dd4eebc36775e05
 test_results: []
 updated_at: '2026-10-07T21:20:00+03:00'
-resume_instruction: Reconcile only ARV-050 current overlay to the already verified BASE-017 R8 scope, run the focused R8 and YAML checks, then finish through PR/CI/merge and mark completed.
+resume_instruction: Run the focused R8 regression and roadmap/YAML assertions; if green, commit/push, open PR, verify exact-head CI, merge, and mark the checkpoint completed.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-arv050-base017
