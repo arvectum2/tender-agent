@@ -1,4 +1,5 @@
 import html
+from collections import Counter
 
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
@@ -25,6 +26,7 @@ from src.modules.initial_tech_risks.models import (
     InitialTechRiskFlag,
     InitialTechRiskFlagSet,
 )
+from src.modules.procurement_portfolio.service import build_procurement_portfolio
 from src.modules.prompt_schema_library.models import PromptSchemaRecord
 from src.modules.requirement_extraction.models import (
     RequirementExtractionRecord,
@@ -34,9 +36,42 @@ from src.modules.runtime_control_traces.models import RuntimeControlTrace
 from src.modules.status_engine.models import DealStatusHistory
 from src.modules.status_engine.schemas import ApplyTransitionRequest
 from src.modules.status_engine.service import apply_transition
+from src.modules.submission_readiness.models import (
+    SubmissionReadinessFlag,
+    SubmissionReadinessRecord,
+    SubmissionReadinessSet,
+)
 from src.modules.tender_summary.models import TenderSummary
 from src.shared.enums import ChangedByType, DealStatus, DecisionByType, EventSeverity
 from src.shared.errors import NotFoundError
+
+_FUNNEL_STAGE_BY_STATUS = {
+    DealStatus.NEW: "INTAKE",
+    DealStatus.CANDIDATE: "INTAKE",
+    DealStatus.DOCS_ANALYSIS: "ANALYSIS",
+    DealStatus.SUPPLIER_SOURCING: "SOURCING",
+    DealStatus.ECONOMICS_REVIEW: "DECISION",
+    DealStatus.WAITING_CEO_APPROVAL_TO_BID: "DECISION",
+    DealStatus.BID_PREPARATION: "PREPARATION",
+    DealStatus.PRE_SUBMISSION: "PREPARATION",
+    DealStatus.SUBMISSION: "SUBMISSION",
+    DealStatus.POST_SUBMISSION: "SUBMISSION",
+    DealStatus.OUTCOME_CAPTURE: "OUTCOME",
+    DealStatus.DECLINED_TO_BID: "CLOSED",
+    DealStatus.REJECTED_EARLY: "CLOSED",
+}
+_FUNNEL_STAGE_ORDER = (
+    "INTAKE",
+    "ANALYSIS",
+    "SOURCING",
+    "DECISION",
+    "PREPARATION",
+    "SUBMISSION",
+    "OUTCOME",
+    "CLOSED",
+    "INTEGRITY_REVIEW",
+)
+_READINESS_REQUIRED_STAGES = {"PREPARATION", "SUBMISSION"}
 
 
 def _latest(session: Session, model, *conditions):
@@ -166,6 +201,114 @@ def render_dashboard_html(session: Session) -> str:
     )
 
 
+def _latest_readiness_by_deal(session: Session, deal_ids: list[str]) -> dict[str, dict]:
+    if not deal_ids:
+        return {}
+    latest_sets: dict[str, SubmissionReadinessSet] = {}
+    for item in session.scalars(
+        select(SubmissionReadinessSet)
+        .where(SubmissionReadinessSet.deal_id.in_(deal_ids))
+        .order_by(SubmissionReadinessSet.created_at.asc(), SubmissionReadinessSet.id.asc())
+    ):
+        latest_sets[item.deal_id] = item
+    if not latest_sets:
+        return {}
+
+    set_ids = [item.submission_readiness_set_id for item in latest_sets.values()]
+    latest_records: dict[str, SubmissionReadinessRecord] = {}
+    for item in session.scalars(
+        select(SubmissionReadinessRecord)
+        .where(SubmissionReadinessRecord.submission_readiness_set_id.in_(set_ids))
+        .order_by(SubmissionReadinessRecord.created_at.asc(), SubmissionReadinessRecord.id.asc())
+    ):
+        latest_records[item.submission_readiness_set_id] = item
+
+    record_ids = [item.submission_readiness_id for item in latest_records.values()]
+    flags_by_record: dict[str, list[SubmissionReadinessFlag]] = {
+        record_id: [] for record_id in record_ids
+    }
+    if record_ids:
+        for flag in session.scalars(
+            select(SubmissionReadinessFlag)
+            .where(SubmissionReadinessFlag.submission_readiness_id.in_(record_ids))
+            .order_by(SubmissionReadinessFlag.created_at.asc(), SubmissionReadinessFlag.id.asc())
+        ):
+            flags_by_record[flag.submission_readiness_id].append(flag)
+
+    result: dict[str, dict] = {}
+    for deal_id, readiness_set in latest_sets.items():
+        record = latest_records.get(readiness_set.submission_readiness_set_id)
+        result[deal_id] = {
+            "status": str(readiness_set.readiness_status),
+            "flags": flags_by_record.get(record.submission_readiness_id, []) if record else [],
+        }
+    return result
+
+
+def build_operator_workflow_projection(session: Session) -> dict:
+    portfolio = build_procurement_portfolio(session)
+    portfolio_items = portfolio["items"]
+    readiness_by_deal = _latest_readiness_by_deal(
+        session, [item["deal_id"] for item in portfolio_items]
+    )
+    grouped: dict[str, list[dict]] = {stage: [] for stage in _FUNNEL_STAGE_ORDER}
+    readiness_counts: Counter[str] = Counter()
+    blocker_count = 0
+
+    for item in portfolio_items:
+        try:
+            stage = _FUNNEL_STAGE_BY_STATUS[DealStatus(item["current_status"])]
+        except (KeyError, ValueError):
+            stage = "INTEGRITY_REVIEW"
+        readiness = readiness_by_deal.get(item["deal_id"])
+        readiness_status = readiness["status"] if readiness else None
+        blockers = [
+            {
+                "code": flag.flag_code,
+                "severity": str(flag.severity),
+                "summary": flag.summary,
+                "source_ref": flag.source_ref,
+            }
+            for flag in (readiness["flags"] if readiness else [])
+        ]
+        if readiness is None and stage in _READINESS_REQUIRED_STAGES:
+            blockers.append(
+                {
+                    "code": "READINESS_EVIDENCE_MISSING",
+                    "severity": "HIGH",
+                    "summary": "No canonical submission-readiness evidence is available for this stage.",
+                    "source_ref": None,
+                }
+            )
+        blocker_count += len(blockers)
+        readiness_counts[readiness_status or "UNKNOWN"] += 1
+        grouped[stage].append(
+            {
+                "deal_id": item["deal_id"],
+                "procurement_number": item["procurement_number"],
+                "title": item["title"],
+                "current_status": item["current_status"],
+                "funnel_stage": stage,
+                "decision": item["decision"],
+                "readiness_status": readiness_status,
+                "blockers": blockers,
+                "submitted": item["submitted"],
+                "outcome": item["outcome"],
+            }
+        )
+
+    return {
+        "kpis": portfolio["summary"],
+        "stage_counts": {stage: len(grouped[stage]) for stage in _FUNNEL_STAGE_ORDER},
+        "readiness_counts": dict(sorted(readiness_counts.items())),
+        "blocker_count": blocker_count,
+        "stages": [
+            {"stage": stage, "count": len(grouped[stage]), "items": grouped[stage]}
+            for stage in _FUNNEL_STAGE_ORDER
+        ],
+    }
+
+
 
 def _kanban_deals(
     session: Session,
@@ -201,17 +344,26 @@ def _kanban_deals(
     return list(session.scalars(query))
 
 
-def _kanban_card(deal: Deal) -> str:
+def _kanban_card(deal: Deal, workflow: dict | None = None) -> str:
     customer = html.escape(deal.customer_name or "—")
     procurement = html.escape(deal.procurement_number or "—")
     priority = html.escape(deal.priority_bucket or "—")
     deal_id = html.escape(deal.deal_id)
+    workflow = workflow or {}
+    readiness = html.escape(workflow.get("readiness_status") or "UNKNOWN")
+    decision = html.escape(workflow.get("decision") or "UNDECIDED")
+    outcome = html.escape(workflow.get("outcome") or "PENDING")
+    blockers = workflow.get("blockers") or []
     return (
         "<article class='kanban-card'>"
         f"<h3><a href='/commercial-console/deals/{deal_id}'>{html.escape(deal.title)}</a></h3>"
         f"<p><strong>Procurement:</strong> {procurement}<br>"
         f"<strong>Customer:</strong> {customer}<br>"
-        f"<strong>Priority:</strong> {priority}</p>"
+        f"<strong>Priority:</strong> {priority}<br>"
+        f"<strong>Decision:</strong> {decision}<br>"
+        f"<strong>Readiness:</strong> {readiness}<br>"
+        f"<strong>Blockers:</strong> {len(blockers)}<br>"
+        f"<strong>Outcome:</strong> {outcome}</p>"
         f"<small>{deal_id}</small>"
         "</article>"
     )
@@ -226,6 +378,12 @@ def render_kanban_html(
     procurement_number: str | None = None,
     search: str | None = None,
 ) -> str:
+    workflow_projection = build_operator_workflow_projection(session)
+    workflow_by_deal = {
+        item["deal_id"]: item
+        for stage in workflow_projection["stages"]
+        for item in stage["items"]
+    }
     deals = _kanban_deals(
         session,
         status_filter=status_filter,
@@ -246,7 +404,13 @@ def render_kanban_html(
         (
             f"<section class='kanban-column' data-status='{html.escape(status.value)}'>"
             f"<h2>{html.escape(status.value)} <span class='count'>{len(grouped[status])}</span></h2>"
-            + ("".join(_kanban_card(deal) for deal in grouped[status]) or "<p class='empty'>No deals.</p>")
+            + (
+                "".join(
+                    _kanban_card(deal, workflow_by_deal.get(deal.deal_id))
+                    for deal in grouped[status]
+                )
+                or "<p class='empty'>No deals.</p>"
+            )
             + "</section>"
         )
         for status in DealStatus
@@ -283,11 +447,19 @@ def render_kanban_html(
         "<a href='/commercial-console/kanban'>Reset</a>"
         "</form>"
     )
+    kpis = workflow_projection["kpis"]
+    workflow_summary = (
+        "<section class='workflow-summary'><strong>Team KPI:</strong> "
+        f"considered={kpis['total_considered']}, GO={kpis['go']}, submitted={kpis['submitted']}, "
+        f"won={kpis['won']}, readiness blockers={workflow_projection['blocker_count']}"
+        "</section>"
+    )
     return _layout(
         "Procurement Kanban",
         "<nav><a href='/commercial-console'>dashboard</a> <a href='/commercial-console/kanban'>kanban</a></nav>"
         "<h1>Procurement Kanban</h1>"
         "<p>Internal board over the canonical deal status engine. Archived and deleted deals are excluded.</p>"
+        + workflow_summary
         + filters
         + integrity_warning
         + "<div class='kanban-board'>"
