@@ -1,43 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ROADMAP-SYNC-FULL-20261007
-authority: OWNER_DIRECTIVE
-goal: Refresh the canonical Tender Agent roadmap to the actual 2026-10-07 repository state and present a complete status view without changing historical snapshot fields or admitting new product work.
+status: in_progress
+task_id: ARV-014-REVALIDATION-001
+authority: AUTO
+goal: Revalidate historical ARV-014 against current repository-owned trust, allowlist, permanent-IP and Anti-DDoS evidence without any provider, network, credential, production or external mutation.
 definition_of_done:
-- Preserve the immutable 2026-07-30 historical registry byte-for-byte.
-- Refresh current-status metadata to the latest verified main commit.
-- Record BASE-001..BASE-018 as 18/18 confirmed_done in the current summary.
-- Keep execution queue state accurate: zero non-done admitted items.
-- Keep completed mobile/DTR/ARV-005 execution history and all HUMAN/REVIEW/OWNER hard stops unchanged.
-- Make the human roadmap explicitly distinguish current verified status from historical progress percentages.
-- Validate YAML/markdown consistency, queue uniqueness and historical preservation.
-- Open and merge a roadmap-only PR after exact-head CI succeeds under this explicit Owner request.
+  - Reconcile ARV-014 against current main and completed predecessor revalidations.
+  - Verify the repository-owned ETP/EIS trust and host-allowlist controls with deterministic tests.
+  - Record exactly which external permanent-IP, allowlist and Anti-DDoS outcomes remain unproven.
+  - Preserve all REVIEW/HUMAN/OWNER gates and make no external or production change.
+  - Open a review-ready PR and obtain exact-head CI evidence.
 completed:
-- Owner explicitly requested a full roadmap refresh and complete status display on 2026-10-07.
-- Reconciled current main at 617a6410dfe8864912411339fc169cce1e9d56b5.
-- Verified execution queue has zero non-done admitted items.
-- Verified BASE-001..BASE-018 current reconciliation is 18/18 confirmed_done after PR #190.
-current: Task completed. Full roadmap refresh merged to main in PR #191.
-pending: []
-last_verified_commit: b5b070d691a33648c2c2f804d84d1391a5d53ebb
+  - Selected ARV-014 deterministically after earlier PRODUCTION-RUNTIME items were satisfied, represented, or externally gated.
+  - Reconciled current trust-policy implementation, EIS source allowlist, and predecessor ARV-011/ARV-012 evidence.
+  - Recorded the bounded ARV-014 report, checkpoint, queue admission, and roadmap overlay without changing historical snapshot fields.
+  - Focused trust and public-EIS transport tests pass 14/14; repository make check and diff checks pass.
+  - Parsed all changed YAML and verified all 93 immutable legacy_snapshot records remain identical to canonical main.
+current: Commit and push the isolated branch, open a PR, and check exact-head CI once.
+pending:
+  - Commit, push, PR, and exact-head CI evidence.
+last_verified_commit: null
 test_results:
-- "Historical machine legacy registry preserved byte-for-byte: 93 IDs / 93 unique."
-- "Human Complete recovered roadmap section preserved byte-for-byte."
-- "Execution queue has zero non-done admitted items."
-- "BASE reconciliation is 18/18 confirmed_done."
-- "YAML parse PASS for roadmap/queue/current/checkpoint."
-- "git diff --check PASS."
-- "Local uv run make check: PASS after dev dependency sync."
-- "PR #191 exact-head CI run 37609345502: SUCCESS, 9/9 jobs green."
-- "PR #191 merged to main as b5b070d691a33648c2c2f804d84d1391a5d53ebb."
-updated_at: '2026-10-07T13:53:00+03:00'
-resume_instruction: Task completed. Start any next work from main after b5b070d691a33648c2c2f804d84d1391a5d53ebb; do not infer or admit new product scope without the active continuation rule or explicit Owner direction.
+  - 'uv run pytest -q tests/test_etp_trust.py tests/test_public_eis_transport_policy.py: 14 passed, 1 deprecation warning.'
+  - 'uv run make check: PASS.'
+  - 'YAML parse and invariants: PASS; 4 files parsed, 93 legacy snapshots unchanged, one ARV-014 queue item and one roadmap item.'
+  - 'git diff --check: PASS.'
+blocked_reason: null
+updated_at: '2026-10-07T14:10:05+03:00'
+resume_instruction: Commit and push the validated branch, open a PR, then check exact-head CI once; do not auto-merge while AM-4 remains review-due at 10/10.
 execution:
-  claimed_by: ChatGPT interactive
-  execution_id: interactive-20261007-roadmap-full-sync
-  branch: docs/roadmap-sync-full-20261007
-  base_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
+  claimed_by: Tender Agent Watchdog
+  execution_id: watchdog-20261007T140025+0300
+  branch: watchdog/arv014-revalidation-20261007
+  base_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
   issue: null
-  manual_override: true
-  lease_until: null
+  pull_request: null
+  manual_override: false
+  lease_until: '2026-10-07T15:50:25+03:00'
