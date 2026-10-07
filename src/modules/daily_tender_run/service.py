@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
+from src.modules.daily_tender_run.post_go import advance_post_decision_items
 from src.modules.daily_tender_run.profiles import load_daily_tender_profile
 from src.modules.daily_tender_run.schemas import (
     DailyTenderProfile,
@@ -607,9 +608,29 @@ def _counts(items: list[DailyTenderRunItem]) -> dict[str, int]:
         "discovered": len(items),
         "duplicates": sum(item.status == "DUPLICATE" for item in items),
         "screened_out": sum(item.status == "SCREENED_OUT" for item in items),
-        "deep_analyzed": sum(item.status == "MANAGER_READY" for item in items),
-        "failed": sum(item.status == "FAILED" for item in items),
+        "deep_analyzed": sum(
+            str(item.analysis_status or "").startswith("completed")
+            for item in items
+        ),
+        "failed": sum(
+            item.status in {"FAILED", "POST_DECISION_FAILED"} for item in items
+        ),
         "needs_manager": sum(item.status == "MANAGER_READY" for item in items),
+        "deferred": sum(item.status == "DEFERRED" for item in items),
+        "human_go": sum(item.human_decision == "GO" for item in items),
+        "human_no_go": sum(item.human_decision == "NO_GO" for item in items),
+        "readiness_blocked": sum(
+            item.status == "READINESS_BLOCKED" for item in items
+        ),
+        "awaiting_submission": sum(
+            item.status == "AWAITING_SUBMISSION_EVIDENCE" for item in items
+        ),
+        "awaiting_outcome": sum(
+            item.status == "AWAITING_OUTCOME_EVIDENCE" for item in items
+        ),
+        "outcome_recorded": sum(
+            item.status == "OUTCOME_RECORDED" for item in items
+        ),
         "agent_go": recommendations["GO"],
         "agent_no_go": recommendations["NO_GO"],
         "agent_needs_review": recommendations["NEEDS_REVIEW"],
@@ -764,6 +785,8 @@ def execute_daily_tender_run(
                 session.add(failed_item)
                 session.commit()
 
+    advance_post_decision_items(session, run)
+
     items = list(
         session.scalars(
             select(DailyTenderRunItem)
@@ -776,9 +799,18 @@ def execute_daily_tender_run(
         raise NotFoundError(f"Daily Tender Run '{run_id}' was not found")
     run.counts_json = _counts(items)
     run.digest_json = _digest(run, items)
-    if run.counts_json["needs_manager"]:
+    if run.counts_json["needs_manager"] or run.counts_json["deferred"]:
         run.current_stage = "WAIT_HUMAN"
         run.status = "WAITING_HUMAN"
+    elif run.counts_json["readiness_blocked"]:
+        run.current_stage = "POST_DECISION"
+        run.status = "WAITING_READINESS"
+    elif run.counts_json["awaiting_submission"]:
+        run.current_stage = "TRACK_SUBMISSION"
+        run.status = "WAITING_SUBMISSION"
+    elif run.counts_json["awaiting_outcome"]:
+        run.current_stage = "TRACK_OUTCOME"
+        run.status = "WAITING_OUTCOME"
     elif run.counts_json["failed"]:
         run.current_stage = "DONE"
         run.status = "COMPLETED_WITH_ERRORS"
@@ -860,6 +892,39 @@ def get_latest_daily_tender_run(
     )
 
 
+def resume_pending_daily_tender_runs(
+    session: Session,
+    *,
+    profile_id: str | None = None,
+    retry_failed: bool = False,
+) -> list[DailyTenderRun]:
+    resumable_statuses = {
+        "WAITING_HUMAN",
+        "WAITING_READINESS",
+        "WAITING_SUBMISSION",
+        "WAITING_OUTCOME",
+        "COMPLETED_WITH_ERRORS",
+    }
+    query = select(DailyTenderRun).where(
+        DailyTenderRun.status.in_(tuple(resumable_statuses))
+    )
+    if profile_id:
+        query = query.where(DailyTenderRun.profile_id == profile_id)
+    runs = list(
+        session.scalars(
+            query.order_by(DailyTenderRun.created_at.asc(), DailyTenderRun.id.asc())
+        )
+    )
+    return [
+        execute_daily_tender_run(
+            session,
+            run.run_id,
+            retry_failed=retry_failed,
+        )
+        for run in runs
+    ]
+
+
 def list_daily_tender_run_items(
     session: Session,
     run_id: str,
@@ -918,6 +983,9 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
                 strongest_reasons=list(item.strongest_reasons_json or []),
                 blockers=list(item.blockers_json or []),
                 unknowns=list(item.unknowns_json or []),
+                human_decision=item.human_decision,
+                human_decision_id=item.human_decision_id,
+                post_decision=dict(item.post_decision_json or {}),
                 error=item.error,
                 created_at=item.created_at,
                 updated_at=item.updated_at,
