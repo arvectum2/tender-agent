@@ -1,43 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ROADMAP-SYNC-FULL-20261007
+status: in_progress
+task_id: STAGE1-THIN-COMMODITY-SHELL-001
 authority: OWNER_DIRECTIVE
-goal: Refresh the canonical Tender Agent roadmap to the actual 2026-10-07 repository state and present a complete status view without changing historical snapshot fields or admitting new product work.
+goal: Close Strategic Program Stage 1 (thin commodity shell) at its explicit exit gate using the existing product surface, reuse-first principles and only bounded gap fixes proven necessary by audit.
 definition_of_done:
-- Preserve the immutable 2026-07-30 historical registry byte-for-byte.
-- Refresh current-status metadata to the latest verified main commit.
-- Record BASE-001..BASE-018 as 18/18 confirmed_done in the current summary.
-- Keep execution queue state accurate: zero non-done admitted items.
-- Keep completed mobile/DTR/ARV-005 execution history and all HUMAN/REVIEW/OWNER hard stops unchanged.
-- Make the human roadmap explicitly distinguish current verified status from historical progress percentages.
-- Validate YAML/markdown consistency, queue uniqueness and historical preservation.
-- Open and merge a roadmap-only PR after exact-head CI succeeds under this explicit Owner request.
+- Audit the existing shell against the Stage 1 contract: search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export.
+- Prove the commodity shell is usable end-to-end through a bounded integration/acceptance path from authenticated discovery to tender/document/report/export/alert surfaces.
+- Reuse existing modules/components; do not introduce a custom OCR engine, viewer, auth framework, notification platform, CRM clone or other commodity subsystem.
+- Fix only concrete shell gaps demonstrated by the audit, with focused regression coverage.
+- Record a Stage 1 acceptance matrix with evidence and explicit reuse/custom boundaries.
+- Update strategic roadmap Stage 1 current_state to done only after the acceptance gate passes.
+- Run focused tests plus relevant full checks and exact-head CI.
+- Merge the bounded Stage 1 PR under this explicit Owner directive if scope remains within this DoD and CI is green.
 completed:
-- Owner explicitly requested a full roadmap refresh and complete status display on 2026-10-07.
-- Reconciled current main at 617a6410dfe8864912411339fc169cce1e9d56b5.
-- Verified execution queue has zero non-done admitted items.
-- Verified BASE-001..BASE-018 current reconciliation is 18/18 confirmed_done after PR #190.
-current: Task completed. Full roadmap refresh merged to main in PR #191.
-pending: []
-last_verified_commit: b5b070d691a33648c2c2f804d84d1391a5d53ebb
-test_results:
-- "Historical machine legacy registry preserved byte-for-byte: 93 IDs / 93 unique."
-- "Human Complete recovered roadmap section preserved byte-for-byte."
-- "Execution queue has zero non-done admitted items."
-- "BASE reconciliation is 18/18 confirmed_done."
-- "YAML parse PASS for roadmap/queue/current/checkpoint."
-- "git diff --check PASS."
-- "Local uv run make check: PASS after dev dependency sync."
-- "PR #191 exact-head CI run 37609345502: SUCCESS, 9/9 jobs green."
-- "PR #191 merged to main as b5b070d691a33648c2c2f804d84d1391a5d53ebb."
-updated_at: '2026-10-07T13:53:00+03:00'
-resume_instruction: Task completed. Start any next work from main after b5b070d691a33648c2c2f804d84d1391a5d53ebb; do not infer or admit new product scope without the active continuation rule or explicit Owner direction.
+- Owner explicitly directed completion of Strategic Program Stage 1.
+- Started from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9 after the completed full roadmap sync.
+current: Audit existing commodity shell against the Stage 1 exit gate and identify only demonstrated gaps.
+pending:
+- Inventory shell modules/routes/tests for search/filter/saved views, tender card, documents/parsing, auth/roles, alerts and export.
+- Define acceptance matrix and end-to-end shell path.
+- Implement only demonstrated bounded gaps.
+- Add/adjust acceptance regression tests and evidence docs.
+- Update roadmap Stage 1 to done if gate passes.
+- Run focused/full checks and exact-head CI.
+- Merge bounded PR if green.
+last_verified_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
+test_results: []
+updated_at: '2026-10-07T14:05:00+03:00'
+resume_instruction: Continue from the Stage 1 acceptance audit. Prefer proving existing capability over building new commodity infrastructure; fix only demonstrated gaps, then validate and close the Stage 1 gate.
 execution:
   claimed_by: ChatGPT interactive
-  execution_id: interactive-20261007-roadmap-full-sync
-  branch: docs/roadmap-sync-full-20261007
-  base_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
+  execution_id: interactive-20261007-stage1-shell
+  branch: stage1/thin-commodity-shell-completion
+  base_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
   issue: null
   manual_override: true
   lease_until: null
