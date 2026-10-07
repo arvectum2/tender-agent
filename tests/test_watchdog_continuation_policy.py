@@ -52,8 +52,9 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert company_gate["material_policy_change_recorded_2026_09_18"] is True
     assert company_gate["mandatory_review_deadline"] == "2026-11-07"
     assert company_gate["automatic_merge_after_material_policy_change"] == "ALLOWED_UNDER_RENEWED_AM4"
-    assert company_gate["automatic_merge_cycle_state"] == "ACTIVE_RENEWED_2026_10_07"
-    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 9
+    assert company_gate["automatic_merge_cycle_state"] == "EXHAUSTED_10_OF_10_REVIEW_REQUIRED"
+    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 10
+    assert company_gate["next_automatic_merge"] == "REVIEW_REQUIRED_PENDING_OWNER_RENEWAL"
     assert policy["sources"]["company_authority"]["latest_renewal"].endswith(
         "DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
     )
@@ -126,19 +127,20 @@ def test_full_commercial_workflow_branch_is_explicitly_admitted_in_order():
         assert item["auto_merge"] is True
 
 
-def test_commercial_workflow_progress_points_to_arv055_after_four_completions():
+def test_commercial_workflow_progress_points_to_arv057_after_five_completions():
     roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
     queue = _yaml(".agent/execution-queue.yaml")
 
     progress = roadmap["current_status_summary"]["commercial_workflow"]
-    assert progress["completed"] == 4
+    assert progress["completed"] == 5
     assert progress["total"] == 12
-    assert progress["completed_items"] == ["ARV-015", "ARV-019", "ARV-022", "ARV-053"]
-    assert progress["next_queue_item"] == "COMMERCIAL-WORKFLOW-ARV-055-001"
+    assert progress["completed_items"] == ["ARV-015", "ARV-019", "ARV-022", "ARV-053", "ARV-055"]
+    assert progress["next_queue_item"] == "COMMERCIAL-WORKFLOW-ARV-057-001"
 
     items = {item["task_id"]: item for item in queue["items"]}
     assert items["ARV-015-OPERATOR-PROFILE-PARSER-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-019-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-022-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-053-001"]["status"] == "done"
-    assert items["COMMERCIAL-WORKFLOW-ARV-055-001"]["status"] == "ready"
+    assert items["COMMERCIAL-WORKFLOW-ARV-055-001"]["status"] == "done"
+    assert items["COMMERCIAL-WORKFLOW-ARV-057-001"]["status"] == "ready"

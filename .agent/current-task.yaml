@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-055-001
 authority: AUTO
 goal: Add explainable similar-procurement retrieval over existing Tender Agent/Data
@@ -58,29 +58,36 @@ completed:
 - '2026-10-08: Post-reconciliation full local make test reached 3118 passed / 236
   skipped with only the previously proven main-baseline R9 pg_restore acceptance failure;
   no ARV-055 regression was observed.'
-current: Open the reconciled ARV-055 implementation PR, require exact-head CI, then
-  fold final completion bookkeeping into the same PR so the renewed AM-4 cycle does
-  not require an extra bookkeeping merge beyond its 10-merge limit.
-pending:
-- Push reconciled implementation/checkpoint and open ARV-055 PR against current main.
-- Require exact-head GitHub CI on the implementation head.
-- After green CI, add final ARV-055 completion bookkeeping to the same PR, including
-  prospective AM-4 count 10/10 and queue advance to ARV-057.
-- Require exact-head CI again on the final bookkeeping head; merge only if green and
-  AM-4 remains valid.
-last_verified_commit: 36c68f64a7d5662446226b19349221eeddfe498a
+- '2026-10-08: PR #211 implementation head 2e438b2d6c6228f78064e3a1d41c292d023571d5
+  passed exact-head CI run 37693335144; all 9 jobs succeeded.'
+- '2026-10-08: ARV-055 Definition of Done is satisfied by the explainable Data Platform-backed
+  retrieval adapter, deterministic false-analogue guards, explicit unknown signals,
+  focused/relevant regressions and the green implementation-head CI.'
+- '2026-10-08: Completion bookkeeping is folded into PR #211 itself so that its merge
+  is the tenth and final automatic merge in the renewed AM-4 cycle; this checkpoint
+  lands only after a second final exact-head CI run on the bookkeeping head succeeds.'
+current: 'ARV-055 completed in the combined PR #211 implementation/completion package;
+  canonical queue advances to COMMERCIAL-WORKFLOW-ARV-057-001. PR #211 consumes AM-4
+  merge 10/10, so subsequent automatic merges require Owner renewal/review.'
+pending: []
+last_verified_commit: 2e438b2d6c6228f78064e3a1d41c292d023571d5
 test_results:
 - 'ARV-055 + Data Platform/retrieval/discovery/relevance regressions after current-main
   reconciliation: 96 passed'
+- 'focused ARV-055/API tests: 6 passed'
 - 'Ruff check/format on ARV-055 slice: PASS'
 - 'make check: PASS'
 - 'git diff --check: PASS'
 - 'full local make test: 3118 passed, 236 skipped, 1 failed (known main-baseline R9
   pg_restore acceptance failure)'
-updated_at: '2026-10-08T01:00:34+03:00'
-resume_instruction: Push/open the reconciled ARV-055 PR. After green implementation-head
-  CI, finalize queue/roadmap/checkpoint and AM-4 count inside the same PR, rerun exact-head
-  CI, then merge as the 10th and final automatic merge of the current AM-4 cycle.
+- 'PR #211 implementation-head exact CI run 37693335144: SUCCESS (9/9 jobs)'
+- 'PR #211 final bookkeeping-head exact CI: mandatory merge gate; this checkpoint
+  cannot land unless it succeeds'
+updated_at: '2026-10-08T01:12:04+03:00'
+resume_instruction: 'After PR #211 lands, start COMMERCIAL-WORKFLOW-ARV-057-001 only
+  for preparation/implementation/testing. Do not automatically merge ARV-057 or any
+  later PR: the renewed AM-4 cycle is exhausted at 10/10 and must fail closed to REVIEW
+  until the Owner renews/reviews merge authority.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv055
