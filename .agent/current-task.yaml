@@ -1,43 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-002-LIVE-CUSTOMER-PARSE-001
-authority: OWNER_DIRECTIVE
-goal: "Close the proven ARV-002 P0 residual gap in live exact-number 44-FZ parsing without introducing any hidden/demo fallback or weakening source precedence."
+status: in_progress
+task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+authority: AUTO
+goal: "Parse the existing RFQ-first operator profile contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry or decision engine."
 definition_of_done:
-  - "Exact-number public 44-FZ search-card parsing extracts customer_name only from explicit customer fields/links and cannot consume unrelated page JavaScript."
-  - "A deterministic current-layout regression fixture reproduces the historical contamination failure and passes with a clean customer_name."
-  - "Common-info/detail-page customer precedence is preserved."
-  - "Exact-number live E2E and no-hidden-demo-fallback behavior remain fail-closed and unchanged."
-  - "Focused parser/live-path/source-graph/no-fallback tests pass."
-  - "A read-only exact-number live EIS verification succeeds without consequential external action."
-  - "Relevant broader deterministic tests pass and exact-head CI is green before merge."
-  - "Roadmap/reconciliation evidence is updated and the checkpoint is marked completed after merge."
+  - "Synthetic operator_profile.md deterministically yields structured working/excluded categories, regions, NMCK range, VAT, financial/cash constraints, licenses/SRO/experience and risk preferences already defined by the canonical template."
+  - "Missing, malformed, contradictory or ambiguous values remain unknown/null rather than inferred."
+  - "The existing Decision Core consumes the structured supplier profile and price range without changing external-action safety."
+  - "RFQ-first semantics remain intact: no fixed SKU/catalog or known supplier price is assumed."
+  - "Focused regression tests and exact-head CI pass."
 completed:
-  - "2026-10-07: User explicitly prioritized ARV-002 P0 residual-gap closure."
-  - "2026-10-07: Isolated worktree created from current origin/main so unrelated in-progress DTR-3 local work remains untouched."
-  - "2026-10-07: Removed the raw-HTML customer regex fallback; search cards now fail closed unless an explicit customer-scoped label/value pair exists."
-  - "2026-10-07: Added a deterministic JavaScript-pollution fixture plus positive explicit-customer regression coverage; initial 41 focused tests passed."
-  - "2026-10-07: Full bounded ARV-002 focused gate passed 87 tests; persistence/recovery companion passed 32 tests with 12 environment/profile skips; make check passed."
-  - "2026-10-07: Read-only live exact-number search returned one card with customer_name=null, while common-info detail returned the correct explicit Chukotka health department customer and 5 document links."
-current: "Implementation and evidence are complete. This completion record becomes canonical only through guarded merge of PR #195 after exact-head CI is green."
-pending: []
-last_verified_commit: "756b7c76df702142fac9b621a698aab4f6aa374e"
+  - "2026-10-07: Recovered the existing historical PR #127 and its watchdog checkpoint instead of duplicating the admitted task."
+  - "2026-10-07: Verified that the stale PR branch diverged from current main and GitHub branch-ref update was failing with a transient GraphQL internal error."
+  - "2026-10-07: Created clean recovery branch agent/arv-015-operator-profile-parser-001-r2 from current main 61e7f38196e6b7046fff421380714b1a692e1307."
+  - "2026-10-07: Reconciled the parser onto current main and expanded the existing SupplierProfile contract with backward-compatible typed commercial/qualification/risk fields."
+  - "2026-10-07: The pilot runner now binds structured supplier_profile into analysis_context before and after controlled-LLM requirement updates and reuses parsed target margin in stub economics."
+current: "Recovery branch implementation is in progress; deterministic tests, queue/roadmap evidence and exact-head CI remain to be completed."
+pending:
+  - "Add deterministic regression coverage for fixture/full-template/malformed values/Decision Core safety."
+  - "Update admitted queue and roadmap evidence without closing broader ARV-015 residual scope."
+  - "Run exact-head CI and inspect all jobs."
+  - "If green and renewed AM-4 automatic-merge gates remain satisfied, merge the recovery PR and close superseded PR #127."
+  - "After merge, verify canonical main and mark checkpoint completed."
+last_verified_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
 test_results:
-  - "87 passed: parser + ARV-002 live-path/source-graph/no-fallback focused gate."
-  - "32 passed, 12 skipped: persistence/recovery companion gate."
-  - "make check: PASS."
-  - "read-only live exact-number 0888500000226000399: search parsed 1 card with customer_name=null; detail success with explicit customer and 5 document links."
-  - "full local suite: 3097 passed, 236 skipped, 1 unrelated R9 backup/restore failure; the identical pg_restore failure was reproduced on clean origin/main 05a939eb, proving it is pre-existing/environmental."
-  - "latest-main rebase head b4980cd4 on ba84bb80: 90 focused/policy tests PASS; make check PASS; live exact-number verification PASS; git diff --check PASS; Commercial Workflow admission/AM-4 reset preserved."
-  - "implementation/evidence commit 756b7c76 is retained as the parent of the final checkpoint commit; final PR merge remains gated on exact-head CI."
-updated_at: "2026-10-07T17:51:26+03:00"
-resume_instruction: "ARV-002-LIVE-CUSTOMER-PARSE-001 is complete. Do not repeat it. On canonical main after guarded PR #195 merge, reconcile the admitted execution queue and continue with ARV-015-OPERATOR-PROFILE-PARSER-001 unless a newer explicit Owner directive supersedes it."
+  - "Historical PR #127 before recovery: 41 focused tests passed and its then-current exact-head CI was green."
+  - "Current recovery branch: validation pending."
+updated_at: "2026-10-07T19:35:00+03:00"
+resume_instruction: "Continue only on agent/arv-015-operator-profile-parser-001-r2. Add the deterministic tests and canonical evidence, then use exact-head CI as the validation gate. Do not start ARV-019. If CI is green and AM-4 gates remain valid, merge, close superseded PR #127, verify main, and finalize this checkpoint."
 execution:
   claimed_by: "ChatGPT interactive"
-  execution_id: "interactive-20261007-arv002"
-  branch: "feature/arv-002-live-customer-parse-20261007"
-  base_commit: "ba84bb808636944543a8799f1519ae0cbb3b4eea"
+  execution_id: "interactive-20261007-arv015-r2"
+  branch: "agent/arv-015-operator-profile-parser-001-r2"
+  base_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
   issue: null
   manual_override: true
   lease_until: null
