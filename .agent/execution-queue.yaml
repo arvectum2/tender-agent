@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-10-06T22:22:04+03:00'
+updated_at: '2026-10-07T10:55:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -562,6 +562,73 @@ items:
   - DTR-V2-RULES-FAILURE-001
   executor_scope: 'Completed bounded MOB-1 slice: native read-only manager inbox/detail over the current Mac mini mobile API with dedicated Bearer pairing and Keychain token storage. Preserve human decision/external-action hard stops; MOB-2 is a separate future admission.'
   done_gate: 'Satisfied for implementation/review readiness: implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300 passed Xcode 27 build-for-testing, focused iPhone AppStoreTests 2/2, backend mobile contract tests 9/9, runtime bearer-boundary check, git diff check, and exact-head GitHub CI run 37517210451 SUCCESS 9/9. PR #171 is review-ready and remains unmerged while Company AM-4 is review-due at 10/10.'
+
+- order: 240
+  task_id: MOB-2-IOS-DECISIONS-001
+  strategy: COPY_PATTERN
+  continuation_mode: OWNER_DIRECTIVE
+  title: Native iPhone audited GO / NO GO / DEFER actions
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  source: 'Explicit Owner admission 2026-10-06; implementation PR #173 and roadmap PR #174 merged.'
+  roadmap_scope:
+  - ARV-044
+  dependencies:
+  - MOB-1-IOS-INBOX-001
+  executor_scope: 'Completed bounded MOB-2 slice: explicit two-step human GO / NO GO / DEFER writes through the existing mobile Bearer boundary into the canonical decision log and Procurement Portfolio. No automatic participation decision or ETP/signature/payment/external action.'
+  done_gate: 'Satisfied: implementation PR #173 exact-head CI 37524387682 SUCCESS 9/9 and merged as fe92b39e7a5944ccb519ee1f7579a811d91153f3; roadmap reconciliation PR #174 merged as be214b9c83c96129a90d1afae41d34c43dc4cc07.'
+
+- order: 250
+  task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  title: iPhone APNs push and bounded deep links
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  source: 'Explicit Owner admission 2026-10-06; implementation PR #176 and roadmap PR #177 merged.'
+  roadmap_scope:
+  - ARV-044
+  dependencies:
+  - MOB-2-IOS-DECISIONS-001
+  executor_scope: 'Completed bounded MOB-3 slice: revocable APNs registration, audited delivery ledger, disabled-by-default provider sender pending Apple credentials, and safe procurement/digest deep links. No procurement decision or consequential external action is automated.'
+  done_gate: 'Satisfied: corrected exact-head CI 37533637202 SUCCESS; implementation PR #176 merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4; roadmap PR #177 merged as 8a6a6bea994226422cc54c36156f16a6c2b44aa9. Physical-device APNs delivery remains separately blocked by provisioning entitlement.'
+
+- order: 260
+  task_id: DTR-3-POST-GO-AUTOMATION-001
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  title: Grounded post-GO readiness, submission tracking and outcome tracking
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  source: 'Explicit Owner admission 2026-10-07; canonical implementation PR #180 and roadmap PR #181 merged.'
+  roadmap_scope: []
+  dependencies:
+  - MOB-3-IOS-PUSH-DEEPLINKS-001
+  executor_scope: 'Completed bounded DTR-3 slice: after attributable HUMAN GO, reuse canonical readiness, prepare local submission-control artifacts, and advance submission/outcome only from attributable or source-bound evidence. Never submit, sign, pay, use private keys or infer success.'
+  done_gate: 'Satisfied: implementation PR #180 exact-head CI 37575956723 SUCCESS 9/9 and merged as 3b25e10bab2930f954d39a444b8258ad597010c9; roadmap PR #181 merged as 205455ae3e87719792928015258481cc39e27102.'
+
+- order: 270
+  task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
+  strategy: COPY_PATTERN
+  continuation_mode: OWNER_DIRECTIVE
+  title: iPhone Procurement Portfolio metrics and outcome review
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  source: 'Explicit Owner admission 2026-10-07; implementation PR #183 and roadmap PR #184 merged.'
+  roadmap_scope:
+  - ARV-044
+  dependencies:
+  - DTR-3-POST-GO-AUTOMATION-001
+  executor_scope: 'Completed bounded MOB-4 slice: canonical Procurement Portfolio totals/rates, deterministic pipeline/outcome filters, grounded submission/outcome detail and coherent deep-link refresh. Existing human-decision and consequential-action boundaries remain unchanged.'
+  done_gate: 'Satisfied: implementation PR #183 exact-head CI 37584606448 SUCCESS 9/9 and merged as bdcd868f1c42f3d3165cc8cad2c83b63b682521b; roadmap PR #184 exact-head CI 37586513047 SUCCESS 9/9 and merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
