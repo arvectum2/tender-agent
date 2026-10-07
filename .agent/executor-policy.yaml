@@ -115,7 +115,7 @@ company_authority_gate:
       merge_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
       task: COMMERCIAL-WORKFLOW-ARV-053-001
       note: corrective scoring-reuse slice merged automatically after exact-head CI run 37689743505 passed
-    - pr: BOOKKEEPING_PR_TBD
+    - pr: 210
       merge_commit: pending_until_merge
       task: COMMERCIAL-WORKFLOW-ARV-053-001
       note: corrective completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
