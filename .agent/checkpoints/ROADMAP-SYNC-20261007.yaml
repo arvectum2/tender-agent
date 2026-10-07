@@ -1,0 +1,19 @@
+task_id: ROADMAP-SYNC-20261007
+status: in_progress
+goal: Update canonical roadmap to current 2026-10-07 repository state.
+definition_of_done:
+  - Historical registry preserved.
+  - Completed mobile and DTR execution history reconciled.
+  - ARV-005 remains the only non-done admitted item.
+  - Roadmap-only PR validated and merged.
+completed:
+  - Repository, queue, mobile/DTR PRs and watchdog state reconciled.
+  - Roadmap and queue history updated.
+  - Superseded DTR-3 PR #179 closed.
+current: Validation.
+remaining:
+  - Consistency checks.
+  - PR / exact-head CI / merge.
+last_verified_commit: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
+test_results: []
+resume_instruction: Validate and finish roadmap-only PR; do not admit new product work.
