@@ -3,31 +3,63 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-022-001
 authority: AUTO
-goal: Integrate the existing OCR fallback for scanned tender documents without duplicating Data Platform OCR, preserving provenance/confidence/coordinates and failing low-confidence output closed to human review.
+goal: Integrate the existing OCR fallback for scanned tender documents without duplicating
+  Data Platform OCR, preserving provenance/confidence/coordinates and failing low-confidence
+  output closed to human review.
 definition_of_done:
-  - Scanned-document fallback reuses the existing Data Platform OCR/CV contract; no custom OCR engine is introduced in Tender Agent.
-  - OCR provenance, page/word coordinates and confidence are preserved when the platform supplies them.
-  - Low-confidence OCR is explicitly routed to human review/fail-closed semantics.
-  - Native-text document paths do not regress or get forced through OCR.
-  - Focused tests and relevant regression tests pass.
-  - Exact-head GitHub CI passes before merge.
+- Scanned-document fallback reuses the existing Data Platform OCR/CV contract; no
+  custom OCR engine is introduced in Tender Agent.
+- OCR provenance, page/word coordinates and confidence are preserved when the platform
+  supplies them.
+- Low-confidence OCR is explicitly routed to human review/fail-closed semantics.
+- Native-text document paths do not regress or get forced through OCR.
+- Focused tests and relevant regression tests pass.
+- Exact-head GitHub CI passes before merge.
 completed:
-  - '2026-10-07: Reconciled canonical queue/main. COMMERCIAL-WORKFLOW-ARV-022-001 is the next admitted AUTO item after ARV-015 and ARV-019.'
-  - '2026-10-07: Recovered historical OCR work from PR #129 instead of duplicating it; its local Tesseract adapter proved coordinates/confidence/review signaling but intentionally excluded production wiring.'
-  - '2026-10-07: Verified current Tender Agent architecture removed the legacy generic document extractor and delegates generic extraction/chunking to Data Platform.'
-  - '2026-10-07: Verified Data Platform DP-OCR-001 already implements native-text-first PDF extraction, local Tesseract fallback, word bounding boxes/confidence and benchmark-driven low-confidence escalation. The current non-persistent process_document response does not expose document metadata, so Tender Agent cannot yet consume OCR provenance through that endpoint.'
-current: Define and implement the smallest compatibility bridge that consumes existing Data Platform OCR metadata without reintroducing local OCR ownership in Tender Agent.
+- '2026-10-07: Reconciled canonical queue/main. COMMERCIAL-WORKFLOW-ARV-022-001 is
+  the next admitted AUTO item after ARV-015 and ARV-019.'
+- '2026-10-07: Recovered historical OCR work from PR #129 instead of duplicating it;
+  its local Tesseract adapter proved coordinates/confidence/review signaling but intentionally
+  excluded production wiring.'
+- '2026-10-07: Verified current Tender Agent architecture removed the legacy generic
+  document extractor and delegates generic extraction/chunking to Data Platform.'
+- '2026-10-07: Verified Data Platform DP-OCR-001 already implements native-text-first
+  PDF extraction, local Tesseract fallback, word bounding boxes/confidence and benchmark-driven
+  low-confidence escalation. The current non-persistent process_document response
+  does not expose document metadata, so Tender Agent cannot yet consume OCR provenance
+  through that endpoint.'
+- '2026-10-07: Opened Data Platform PR #85 (7958e6a0949c6d36d8175950d8bc230e479ede2a)
+  to expose the already-produced process_document metadata additively; no OCR engine/routing
+  changes.'
+- '2026-10-07: Implemented Tender Agent projection of Data Platform OCR provenance/coordinates/confidence
+  into procurement document raw_meta while preserving existing source metadata.'
+- '2026-10-07: Low/missing OCR confidence now produces an explicit human-review flag
+  and preparation warning; native-text metadata is marked OCR-not-used and remains
+  on the existing path.'
+- '2026-10-07: Focused OCR/Data Platform/boundary/quality/prepare tests passed (38
+  passed).'
+current: 'Run full repository verification, then exact-head CI for Data Platform PR
+  #85 and Tender Agent ARV-022 PR.'
 pending:
-  - Implement the bounded OCR metadata/review projection on the current Data Platform-backed document path.
-  - Add focused tests covering scanned OCR provenance, low-confidence review and native-text non-regression.
-  - Run focused and boundary/regression tests.
-  - Commit and push the bounded implementation.
-  - Open or update a reviewable PR and verify exact-head CI.
-  - Merge only if renewed Company AM-4 and all ordinary auto-merge gates are still valid, then mark the checkpoint completed.
-last_verified_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
-test_results: []
-updated_at: '2026-10-07T22:08:00+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv022-commercial-20261007 on agent/commercial-workflow-arv-022-001. Reuse Data Platform DP-OCR-001; do not restore the old local Tender Agent OCR engine. First close the process_document metadata bridge, then implement provenance/review projection and tests.
+- Run full Tender Agent make check and resolve any regressions.
+- 'Verify Data Platform PR #85 exact-head CI and merge the additive metadata bridge
+  when repository gates permit.'
+- Open/update the Tender Agent ARV-022 PR against current main and verify exact-head
+  CI.
+- Merge only if renewed Company AM-4 and ordinary auto-merge gates remain valid; reconcile
+  old superseded OCR PRs and mark the checkpoint completed.
+last_verified_commit: 603603ce686fc079a6bc81e75388f4dbc901b9d5
+test_results:
+- 'focused pytest: 38 passed (OCR projection, Data Platform boundary/recovery, document-quality
+  report, preparation service)'
+- 'ruff: changed OCR projection/tests clean; prepare_service only retains pre-existing
+  BLE001 findings outside the ARV-022 diff'
+- 'git diff --check: PASS'
+updated_at: '2026-10-07T22:18:00+03:00'
+resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv022-commercial-20261007.
+  First run full make check. Then verify/merge Data Platform PR #85 if green, open
+  the Tender Agent ARV-022 PR, require exact-head CI, and complete/merge under renewed
+  AM-4.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv022
