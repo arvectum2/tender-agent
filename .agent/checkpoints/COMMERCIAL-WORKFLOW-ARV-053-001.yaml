@@ -22,10 +22,26 @@ completed:
 - '2026-10-07: Reconciled origin/main at 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c;
   ARV-022 is completed and COMMERCIAL-WORKFLOW-ARV-053-001 is the next ready admitted
   AUTO item.'
+- '2026-10-07: Inventory confirmed reusable canonical M-005 customer registry, M-006
+  supplier registry, M-020 supplier verification flags, M-035 supplier contract history,
+  M-047 post-execution supplier ratings, and tender_research EIS procurement history;
+  no second counterparty registry is required.'
+- '2026-10-07: Implemented read-only /counterparties customer/supplier cards as an
+  adapter over existing stores. Customer procurement history is joined only by exact
+  INN; missing INN fails closed and never falls back to ambiguous name matching.'
+- '2026-10-07: Supplier risk projection uses only explicit latest M-020 verification
+  flags with visible severity weights (LOW=5, MEDIUM=15, HIGH=30, CRITICAL=50, capped
+  at 100). Contract history and M-047 execution rating are displayed as separate evidence
+  and are not double-counted.'
+- '2026-10-07: Cards explicitly mark missing customer adverse-risk data or missing
+  supplier verification as INSUFFICIENT_EVIDENCE; responses hard-code authoritative_reliability_conclusion=false
+  and participation_decision=false.'
+- '2026-10-07: Focused/relevant regression suite passed: 46 passed, 34 skipped; make
+  check and git diff --check passed.'
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
-pending: &id001
+pending:
 - Inventory reusable counterparty/profile/evidence/scoring primitives and historical
   ARV-053 intent.
 - Implement the evidence-backed counterparty card and explainable factor projection
@@ -33,12 +49,18 @@ pending: &id001
 - Add focused role/provenance/unknown-state/regression tests.
 - Run full relevant verification and exact-head CI, then merge/bookkeep under active
   AM-4.
-last_verified_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
-test_results: []
-updated_at: '2026-10-07T23:25:58+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv053-commercial-20261007.
-  Start by inventorying M-005/M-006 identity/profile models plus existing evidence/scoring
-  primitives and the canonical ARV-053 next_result; then implement the smallest reuse-first
-  evidence-backed card slice that satisfies the queue done gate.
-current_stage: inventory
-remaining: *id001
+last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
+test_results:
+- 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
+- 'make check: PASS'
+- 'ruff on changed ARV-053/router files: PASS'
+- 'git diff --check: PASS'
+updated_at: '2026-10-07T23:32:23+03:00'
+resume_instruction: Run full make test, then take the implementation through exact-head
+  PR CI and guarded merge; finish ARV-053 bookkeeping afterward.
+current_stage: full_verification
+remaining:
+- full repository make test
+- implementation commit/push
+- exact-head PR CI and guarded merge
+- completion bookkeeping and queue advance to ARV-055
