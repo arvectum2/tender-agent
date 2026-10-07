@@ -664,7 +664,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-019-001
   strategy: COPY_PATTERN
   title: Complete procurement kanban and operator workflow
-  status: ready
+  status: in_progress
   authority: AUTO
   independent: true
   auto_merge: true

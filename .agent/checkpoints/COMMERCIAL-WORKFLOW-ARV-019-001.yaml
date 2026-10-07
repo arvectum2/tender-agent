@@ -1,0 +1,15 @@
+schema_version: 1
+task_id: COMMERCIAL-WORKFLOW-ARV-019-001
+status: in_progress
+branch: agent/commercial-workflow-arv-019-001
+base_commit: 94534c81afd786b9c8944817ffc49c12396c7d3b
+implementation_commit: null
+pull_request: 198
+updated_at: '2026-10-07T20:40:00+03:00'
+evidence:
+- The workflow projection reuses canonical DealStatus, Procurement Portfolio and Submission Readiness records.
+- Expanded kanban cards show decision, readiness, blocker count and outcome without adding write-side automation.
+- A read-only /commercial-console/workflow API returns canonical stages, readiness/blockers and team KPI/outcome projections.
+- The existing implementation branch was rebuilt on current main to remove stale governance conflicts without reopening product scope.
+blocker: null
+resume_instruction: Run focused verification, publish the current-base implementation head to PR #198, then require exact-head green CI before merge.

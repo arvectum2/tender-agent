@@ -7,9 +7,11 @@ from src.modules.commercial_operator_console.schemas import (
     CommercialOperatorActionRequest,
     CommercialOperatorActionResponse,
     KanbanStatusTransitionRequest,
+    OperatorWorkflowResponse,
 )
 from src.modules.commercial_operator_console.service import (
     apply_kanban_status_transition,
+    build_operator_workflow_projection,
     record_operator_action,
     render_dashboard_html,
     render_decision_html,
@@ -49,6 +51,14 @@ def commercial_console_kanban(
         procurement_number=procurement_number,
         search=q,
     )
+
+
+@router.get(
+    "/commercial-console/workflow",
+    response_model=OperatorWorkflowResponse,
+)
+def commercial_console_workflow(session: DBSession) -> OperatorWorkflowResponse:
+    return OperatorWorkflowResponse.model_validate(build_operator_workflow_projection(session))
 
 
 @router.post(

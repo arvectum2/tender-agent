@@ -1,37 +1,35 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+status: in_progress
+task_id: COMMERCIAL-WORKFLOW-ARV-019-001
 authority: AUTO
-goal: "Parse the existing RFQ-first operator profile contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry or decision engine."
+goal: Extend the existing canonical Procurement Kanban into a deterministic operator funnel with readiness, blocker, submission, outcome and team KPI visibility.
 definition_of_done:
-  - "Synthetic operator_profile.md deterministically yields structured working/excluded categories, regions, NMCK range, VAT, financial/cash constraints, licenses/SRO/experience and risk preferences already defined by the canonical template."
-  - "Missing, malformed, contradictory or ambiguous values remain unknown/null rather than inferred."
-  - "The existing Decision Core consumes the structured supplier profile and price range without changing external-action safety."
-  - "RFQ-first semantics remain intact: no fixed SKU/catalog or known supplier price is assumed."
-  - "Focused regression tests and exact-head CI pass."
+- The existing DealStatus lifecycle powers the workflow stages; no second state model is introduced.
+- Kanban/workspace projections expose decision, readiness, blockers, submission and outcome evidence.
+- Team KPI projection reuses the canonical Procurement Portfolio calculations.
+- Human-control and no-autonomous-submission boundaries remain unchanged.
+- Focused tests and exact-head CI pass.
 completed:
-  - "2026-10-07: Recovered historical PR #127 without duplicating the admitted product task; stale conflict handling was replaced by a clean recovery branch from current main."
-  - "2026-10-07: Added backward-compatible typed SupplierProfile fields for operator commercial, qualification and risk constraints and a deterministic parser for the canonical RFQ-first markdown contract."
-  - "2026-10-07: Working/excluded categories, regions, NMCK bounds, VAT, margin/payment/security/prepayment/cash constraints, licenses/SRO/experience and risky/forbidden categories are parsed only from explicit profile evidence."
-  - "2026-10-07: Missing, malformed, contradictory and ambiguous values fail closed to empty/null; no fixed SKU/catalog/known-price assumption was introduced."
-  - "2026-10-07: Pilot requirements bind the structured profile into analysis_context before and after controlled-LLM updates; existing Decision Core price-range behavior is reused and all external-action safety flags remain false."
-  - "2026-10-07: CI diagnostic 37653121154 proved product code and exposed one stale governance lifecycle assertion; that assertion was corrected without widening product scope."
-  - "2026-10-07: Corrected implementation head 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95 passed exact-head CI 37654505822 with all 9 jobs green; quality make check PASS and full suite 3104 passed / 236 skipped."
-current: "Definition of Done is satisfied. This completion record becomes canonical only after the final bookkeeping head re-earns exact-head CI and PR #199 merges under renewed AM-4."
-pending: []
-last_verified_commit: "6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95"
-test_results:
-  - "Historical PR #127 before recovery: 41 focused tests passed and its then-current exact-head CI was green."
-  - "Recovery diagnostic CI 37653121154 at 7bd071b145efc382a84e8b6513797605ab0550f8: 8/9 jobs green; quality had 3103 passed / 236 skipped and one governance-only lifecycle assertion failure."
-  - "Corrected implementation CI 37654505822 at 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95: SUCCESS 9/9; make check PASS; 3104 passed / 236 skipped; procurement-domain regression PASS."
-updated_at: "2026-10-07T20:02:00+03:00"
-resume_instruction: "Do not modify product implementation. Check exact-head CI on the final bookkeeping head. If green and AM-4 gates remain valid, merge PR #199, close superseded PR #127, verify canonical main contains the completion state, and do not reopen ARV-015-OPERATOR-PROFILE-PARSER-001."
+- '2026-10-07: Owner explicitly requested COMMERCIAL-WORKFLOW-ARV-019-001.'
+- '2026-10-07: Existing PR #198 implementation was recovered instead of duplicated.'
+- '2026-10-07: Implementation was rebuilt on current main to discard stale governance conflicts while preserving the bounded ARV-019 product diff.'
+current: Current-main reconciliation complete; run focused tests, publish the refreshed exact head, and require green exact-head CI before merge.
+pending:
+- Run focused commercial-console/status/portfolio tests and diff/YAML checks.
+- Push refreshed PR #198 exact head.
+- Require exact-head CI green and verify ordinary AM-4 merge gates.
+- Merge PR #198 if all gates remain satisfied.
+- Reconcile final merge evidence and mark the canonical checkpoint completed.
+last_verified_commit: null
+test_results: []
+updated_at: '2026-10-07T20:40:00+03:00'
+resume_instruction: Run focused verification on the current-main rebuilt branch, push it to PR #198, then check exact-head CI once. If green, merge under renewed AM-4 and finish checkpoint reconciliation.
 execution:
-  claimed_by: "ChatGPT interactive"
-  execution_id: "interactive-20261007-arv015-r2"
-  branch: "agent/arv-015-operator-profile-parser-001-r2"
-  base_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
-  issue: null
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20261007-arv019-r2
+  branch: agent/commercial-workflow-arv-019-001
+  base_commit: 94534c81afd786b9c8944817ffc49c12396c7d3b
+  issue: 83
   manual_override: true
   lease_until: null

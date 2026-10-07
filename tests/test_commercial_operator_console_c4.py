@@ -31,6 +31,9 @@ def test_commercial_operator_console_views_render_for_demo_deal(client):
     assert kanban.status_code == 200
     assert "Procurement Kanban" in kanban.text
     assert deal_id in kanban.text
+    assert "Team KPI:" in kanban.text
+    assert "Readiness:" in kanban.text
+    assert "Blockers:" in kanban.text
     assert tender_card.status_code == 200 and deal_id in tender_card.text
     assert report.status_code == 200 and "Pre-Bid Report View" in report.text
     assert requirements.status_code == 200 and "Requirements" in requirements.text
@@ -135,3 +138,42 @@ def test_commercial_operator_kanban_status_change_uses_canonical_engine(client, 
         .all()
     )
     assert len(blocked_events) == 1
+
+
+def test_operator_workflow_projection_reuses_canonical_lifecycle_and_portfolio(client, session):
+    deal_id = _prepare_demo_deal(client)
+    deal = session.query(Deal).filter_by(deal_id=deal_id).one()
+    deal.current_status = DealStatus.BID_PREPARATION
+    session.add(
+        DecisionRecord(
+            decision_id="DEC-C4-WORKFLOW-001",
+            deal_id=deal_id,
+            decision_code="PORTFOLIO_BID_DECISION",
+            decided_by_type="HUMAN",
+            decided_by_ref="commercial.operator",
+            rationale="Proceed to human-controlled preparation.",
+            payload_json={"decision": "GO", "reason_codes": ["FIT"]},
+        )
+    )
+    session.commit()
+
+    response = client.get("/commercial-console/workflow")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["kpis"]["total_considered"] == 1
+    assert payload["kpis"]["go"] == 1
+    assert payload["stage_counts"]["PREPARATION"] == 1
+    preparation = next(stage for stage in payload["stages"] if stage["stage"] == "PREPARATION")
+    item = preparation["items"][0]
+    assert item["deal_id"] == deal_id
+    assert item["current_status"] == DealStatus.BID_PREPARATION
+    assert item["decision"] == "GO"
+    assert item["readiness_status"] is None
+    assert item["blockers"] == [
+        {
+            "code": "READINESS_EVIDENCE_MISSING",
+            "severity": "HIGH",
+            "summary": "No canonical submission-readiness evidence is available for this stage.",
+            "source_ref": None,
+        }
+    ]
