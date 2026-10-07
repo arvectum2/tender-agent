@@ -11,14 +11,16 @@ definition_of_done:
   - Merge bounded PR under explicit Owner direction.
 completed:
   - Task admitted from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9.
-current: Capability audit.
+current: Acceptance gate passed; PR/CI pending.
 remaining:
-  - Inventory.
-  - Acceptance matrix.
-  - Gap fixes if any.
-  - Tests/docs/roadmap.
-  - CI/merge.
-last_verified_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
-test_results: []
-resume_instruction: Prove before building; use existing shell components and close only demonstrated gaps.
-updated_at: '2026-10-07T14:05:00+03:00'
+  - Open bounded completion PR.
+  - Exact-head CI.
+  - Merge and finalize queue/checkpoint.
+last_verified_commit: b2dee5d
+test_results:
+  - "Focused Stage 1 gate: 67 passed, 10 skipped."
+  - "uv run make check: PASS."
+  - "git diff --check: PASS."
+  - "No demonstrated gap requires a new commodity subsystem."
+resume_instruction: Open completion PR; wait for exact-head CI; merge under explicit Owner directive if green.
+updated_at: '2026-10-07T14:22:00+03:00'
