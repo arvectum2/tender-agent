@@ -20,7 +20,9 @@ from src.shared.enums import CustomerStatus, SupplierStatus
 from src.tender_research.models import ProcurementTender
 
 
-def _customer(session, *, customer_id: str = "CUST-053", inn: str | None = "7701000000") -> CustomerProfile:
+def _customer(
+    session, *, customer_id: str = "CUST-053", inn: str | None = "7701000000"
+) -> CustomerProfile:
     item = CustomerProfile(
         customer_id=customer_id,
         legal_name="АО Тестовый заказчик",
@@ -47,7 +49,9 @@ def _supplier(session, *, supplier_id: str = "SUP-053") -> SupplierProfile:
     return item
 
 
-def test_customer_card_uses_exact_inn_procurement_evidence_and_does_not_invent_risk(client, session):
+def test_customer_card_uses_exact_inn_procurement_evidence_and_does_not_invent_risk(
+    client, session
+):
     customer = _customer(session)
     session.add(
         CustomerExternalRef(
@@ -101,14 +105,19 @@ def test_customer_card_uses_exact_inn_procurement_evidence_and_does_not_invent_r
     assert payload["history"]["procurement_count"] == 2
     assert payload["history"]["procurement_nmck_total"] == 2_000_000.0
     assert len(payload["history"]["items"]) == 2
-    assert payload["history"]["items"][0]["evidence"][0]["source_type"] == "PROCUREMENT_NOTICE"
+    assert (
+        payload["history"]["items"][0]["evidence"][0]["source_type"]
+        == "PROCUREMENT_NOTICE"
+    )
     factors = {item["factor_code"]: item for item in payload["factors"]}
     assert factors["PROCUREMENT_HISTORY"]["state"] == "OBSERVED"
     assert factors["PROCUREMENT_HISTORY"]["evidence"]
     assert factors["CUSTOMER_RISK_SIGNALS"]["state"] == "UNKNOWN"
 
 
-def test_customer_card_without_inn_fails_closed_instead_of_name_matching(client, session):
+def test_customer_card_without_inn_fails_closed_instead_of_name_matching(
+    client, session
+):
     customer = _customer(session, customer_id="CUST-NO-INN", inn=None)
     session.add(
         ProcurementTender(
@@ -126,12 +135,18 @@ def test_customer_card_without_inn_fails_closed_instead_of_name_matching(client,
 
     assert payload["history"]["procurement_count"] == 0
     assert payload["history"]["items"] == []
-    history_factor = next(item for item in payload["factors"] if item["factor_code"] == "PROCUREMENT_HISTORY")
+    history_factor = next(
+        item
+        for item in payload["factors"]
+        if item["factor_code"] == "PROCUREMENT_HISTORY"
+    )
     assert history_factor["state"] == "UNKNOWN"
     assert "not matched by name" in history_factor["summary"]
 
 
-def test_supplier_card_projects_verification_flags_contracts_and_rating_with_transparent_score(client, session):
+def test_supplier_card_projects_verification_flags_contracts_and_rating_with_transparent_score(
+    client, session
+):
     supplier = _supplier(session)
     session.add(
         SupplierExternalRef(
@@ -240,7 +255,10 @@ def test_supplier_card_projects_verification_flags_contracts_and_rating_with_tra
     assert payload["history"]["supplier_contract_count"] == 1
     factors = {item["factor_code"]: item for item in payload["factors"]}
     assert factors["MISSING_PRIMARY_CONTACT"]["risk_points"] == 15.0
-    assert factors["MISSING_PRIMARY_CONTACT"]["evidence"][0]["source_ref"] == f"SUPPLIER:{supplier.supplier_id}"
+    assert (
+        factors["MISSING_PRIMARY_CONTACT"]["evidence"][0]["source_ref"]
+        == f"SUPPLIER:{supplier.supplier_id}"
+    )
     assert factors["NO_TENDER_READY_TAG"]["risk_points"] == 5.0
     assert factors["INTERNAL_EXECUTION_RATING"]["contributes_to_score"] is False
     assert any(
@@ -250,7 +268,9 @@ def test_supplier_card_projects_verification_flags_contracts_and_rating_with_tra
     assert factors["SUPPLIER_CONTRACT_HISTORY"]["state"] == "OBSERVED"
 
 
-def test_supplier_card_without_verification_does_not_score_registry_presence_as_reliability(client, session):
+def test_supplier_card_without_verification_does_not_score_registry_presence_as_reliability(
+    client, session
+):
     supplier = _supplier(session, supplier_id="SUP-NO-VERIFICATION")
     session.commit()
 
@@ -260,7 +280,9 @@ def test_supplier_card_without_verification_does_not_score_registry_presence_as_
     assert payload["risk"]["observed_risk_score"] is None
     assert payload["risk"]["band"] == "INSUFFICIENT_EVIDENCE"
     verification_factor = next(
-        item for item in payload["factors"] if item["factor_code"] == "SUPPLIER_VERIFICATION"
+        item
+        for item in payload["factors"]
+        if item["factor_code"] == "SUPPLIER_VERIFICATION"
     )
     assert verification_factor["state"] == "UNKNOWN"
     assert verification_factor["evidence"] == []

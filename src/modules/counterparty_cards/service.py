@@ -89,7 +89,9 @@ def _customer_refs(session: Session, customer_id: str) -> list[CustomerExternalR
         session.scalars(
             select(CustomerExternalRef)
             .where(CustomerExternalRef.customer_id == customer_id)
-            .order_by(CustomerExternalRef.created_at.asc(), CustomerExternalRef.id.asc())
+            .order_by(
+                CustomerExternalRef.created_at.asc(), CustomerExternalRef.id.asc()
+            )
         )
     )
 
@@ -99,13 +101,19 @@ def _supplier_refs(session: Session, supplier_id: str) -> list[SupplierExternalR
         session.scalars(
             select(SupplierExternalRef)
             .where(SupplierExternalRef.supplier_id == supplier_id)
-            .order_by(SupplierExternalRef.created_at.asc(), SupplierExternalRef.id.asc())
+            .order_by(
+                SupplierExternalRef.created_at.asc(), SupplierExternalRef.id.asc()
+            )
         )
     )
 
 
-def get_customer_counterparty_card(session: Session, customer_id: str) -> CounterpartyCardResponse:
-    customer = session.scalar(select(CustomerProfile).where(CustomerProfile.customer_id == customer_id))
+def get_customer_counterparty_card(
+    session: Session, customer_id: str
+) -> CounterpartyCardResponse:
+    customer = session.scalar(
+        select(CustomerProfile).where(CustomerProfile.customer_id == customer_id)
+    )
     if not customer:
         raise NotFoundError(f"Customer '{customer_id}' was not found")
 
@@ -115,7 +123,9 @@ def get_customer_counterparty_card(session: Session, customer_id: str) -> Counte
             "CUSTOMER_EXTERNAL_REF",
             f"{item.source_type}:{item.source_ref}",
             f"{item.source_type} customer reference",
-            url=item.source_ref if str(item.source_ref).startswith(("http://", "https://")) else None,
+            url=item.source_ref
+            if str(item.source_ref).startswith(("http://", "https://"))
+            else None,
         )
         for item in external_refs
     ]
@@ -149,7 +159,11 @@ def get_customer_counterparty_card(session: Session, customer_id: str) -> Counte
             ).where(ProcurementTender.customer_inn == customer.inn)
         ).one()
         procurement_count = int(procurement_count or 0)
-        procurement_nmck_total = float(procurement_nmck_total) if procurement_nmck_total is not None else None
+        procurement_nmck_total = (
+            float(procurement_nmck_total)
+            if procurement_nmck_total is not None
+            else None
+        )
         tenders = list(
             session.scalars(
                 select(ProcurementTender)
@@ -196,9 +210,7 @@ def get_customer_counterparty_card(session: Session, customer_id: str) -> Counte
                         "this is activity evidence, not a reliability conclusion."
                     ),
                     evidence=[
-                        item.evidence[0]
-                        for item in history_items
-                        if item.evidence
+                        item.evidence[0] for item in history_items if item.evidence
                     ],
                 )
             )
@@ -271,7 +283,10 @@ def _latest_supplier_verification(
     record = session.scalar(
         select(SupplierVerificationRecord)
         .where(SupplierVerificationRecord.supplier_id == supplier_id)
-        .order_by(SupplierVerificationRecord.created_at.desc(), SupplierVerificationRecord.id.desc())
+        .order_by(
+            SupplierVerificationRecord.created_at.desc(),
+            SupplierVerificationRecord.id.desc(),
+        )
         .limit(1)
     )
     if not record:
@@ -279,8 +294,14 @@ def _latest_supplier_verification(
     flags = list(
         session.scalars(
             select(SupplierVerificationFlag)
-            .where(SupplierVerificationFlag.supplier_verification_id == record.supplier_verification_id)
-            .order_by(SupplierVerificationFlag.created_at.asc(), SupplierVerificationFlag.id.asc())
+            .where(
+                SupplierVerificationFlag.supplier_verification_id
+                == record.supplier_verification_id
+            )
+            .order_by(
+                SupplierVerificationFlag.created_at.asc(),
+                SupplierVerificationFlag.id.asc(),
+            )
         )
     )
     return record, flags
@@ -298,7 +319,10 @@ def _latest_supplier_rating(
             == SupplierRatingUpdateRecord.supplier_rating_update_set_id,
         )
         .where(SupplierRatingUpdateSet.supplier_id == supplier_id)
-        .order_by(SupplierRatingUpdateRecord.created_at.desc(), SupplierRatingUpdateRecord.id.desc())
+        .order_by(
+            SupplierRatingUpdateRecord.created_at.desc(),
+            SupplierRatingUpdateRecord.id.desc(),
+        )
         .limit(1)
     ).first()
     if not row:
@@ -307,8 +331,13 @@ def _latest_supplier_rating(
     factors = list(
         session.scalars(
             select(SupplierRatingFactor)
-            .where(SupplierRatingFactor.supplier_rating_update_id == record.supplier_rating_update_id)
-            .order_by(SupplierRatingFactor.created_at.asc(), SupplierRatingFactor.id.asc())
+            .where(
+                SupplierRatingFactor.supplier_rating_update_id
+                == record.supplier_rating_update_id
+            )
+            .order_by(
+                SupplierRatingFactor.created_at.asc(), SupplierRatingFactor.id.asc()
+            )
         )
     )
     return record, factors
@@ -320,7 +349,9 @@ def _supplier_contract_history(
 ) -> tuple[int, list[CounterpartyHistoryItemResponse]]:
     total = int(
         session.scalar(
-            select(func.count(SupplierContractSet.id)).where(SupplierContractSet.supplier_id == supplier_id)
+            select(func.count(SupplierContractSet.id)).where(
+                SupplierContractSet.supplier_id == supplier_id
+            )
         )
         or 0
     )
@@ -328,7 +359,9 @@ def _supplier_contract_history(
         session.scalars(
             select(SupplierContractSet)
             .where(SupplierContractSet.supplier_id == supplier_id)
-            .order_by(SupplierContractSet.created_at.desc(), SupplierContractSet.id.desc())
+            .order_by(
+                SupplierContractSet.created_at.desc(), SupplierContractSet.id.desc()
+            )
             .limit(_HISTORY_LIMIT)
         )
     )
@@ -336,8 +369,14 @@ def _supplier_contract_history(
     for contract_set in sets:
         record = session.scalar(
             select(SupplierContractRecord)
-            .where(SupplierContractRecord.supplier_contract_set_id == contract_set.supplier_contract_set_id)
-            .order_by(SupplierContractRecord.created_at.desc(), SupplierContractRecord.id.desc())
+            .where(
+                SupplierContractRecord.supplier_contract_set_id
+                == contract_set.supplier_contract_set_id
+            )
+            .order_by(
+                SupplierContractRecord.created_at.desc(),
+                SupplierContractRecord.id.desc(),
+            )
             .limit(1)
         )
         evidence = [
@@ -359,7 +398,9 @@ def _supplier_contract_history(
             CounterpartyHistoryItemResponse(
                 history_type="SUPPLIER_CONTRACT",
                 record_id=contract_set.supplier_contract_set_id,
-                title=record.summary_text if record else f"Supplier contract for deal {contract_set.deal_id}",
+                title=record.summary_text
+                if record
+                else f"Supplier contract for deal {contract_set.deal_id}",
                 status=str(contract_set.contract_status),
                 occurred_at=contract_set.created_at,
                 evidence=evidence,
@@ -368,8 +409,12 @@ def _supplier_contract_history(
     return total, items
 
 
-def get_supplier_counterparty_card(session: Session, supplier_id: str) -> CounterpartyCardResponse:
-    supplier = session.scalar(select(SupplierProfile).where(SupplierProfile.supplier_id == supplier_id))
+def get_supplier_counterparty_card(
+    session: Session, supplier_id: str
+) -> CounterpartyCardResponse:
+    supplier = session.scalar(
+        select(SupplierProfile).where(SupplierProfile.supplier_id == supplier_id)
+    )
     if not supplier:
         raise NotFoundError(f"Supplier '{supplier_id}' was not found")
 
@@ -392,7 +437,9 @@ def get_supplier_counterparty_card(session: Session, supplier_id: str) -> Counte
                         "SUPPLIER_EXTERNAL_REF",
                         f"{item.ref_type}:{item.ref_value}",
                         f"{item.ref_type} supplier reference",
-                        url=item.ref_value if str(item.ref_value).startswith(("http://", "https://")) else None,
+                        url=item.ref_value
+                        if str(item.ref_value).startswith(("http://", "https://"))
+                        else None,
                     )
                     for item in external_refs
                 ],
@@ -427,13 +474,17 @@ def get_supplier_counterparty_card(session: Session, supplier_id: str) -> Counte
                 code = str(flag.flag_code)
                 included_factor_codes.append(code)
                 score += points
-                evidence_ref = flag.source_ref or f"SUPPLIER_VERIFICATION_FLAG:{flag.id}"
+                evidence_ref = (
+                    flag.source_ref or f"SUPPLIER_VERIFICATION_FLAG:{flag.id}"
+                )
                 factors.append(
                     CounterpartyFactorResponse(
                         factor_code=code,
                         category="RISK",
                         state="ADVERSE",
-                        severity=severity if severity in _RISK_WEIGHT_BY_SEVERITY else "LOW",
+                        severity=severity
+                        if severity in _RISK_WEIGHT_BY_SEVERITY
+                        else "LOW",
                         risk_points=points,
                         contributes_to_score=True,
                         summary=flag.summary,
@@ -537,11 +588,7 @@ def get_supplier_counterparty_card(session: Session, supplier_id: str) -> Counte
                     f"Found {contract_count} canonical supplier contract set(s). "
                     "Contract existence/status is activity evidence and is not treated as proof of reliability."
                 ),
-                evidence=[
-                    item.evidence[0]
-                    for item in contract_items
-                    if item.evidence
-                ],
+                evidence=[item.evidence[0] for item in contract_items if item.evidence],
             )
         )
     else:
