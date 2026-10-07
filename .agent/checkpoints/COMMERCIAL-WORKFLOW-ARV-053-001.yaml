@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-053-001
@@ -25,7 +25,7 @@ completed:
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
-pending:
+pending: &id001
 - Inventory reusable counterparty/profile/evidence/scoring primitives and historical
   ARV-053 intent.
 - Implement the evidence-backed counterparty card and explainable factor projection
@@ -40,11 +40,5 @@ resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv053-c
   Start by inventorying M-005/M-006 identity/profile models plus existing evidence/scoring
   primitives and the canonical ARV-053 next_result; then implement the smallest reuse-first
   evidence-backed card slice that satisfies the queue done gate.
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261007-arv053
-  branch: agent/commercial-workflow-arv-053-001
-  base_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: inventory
+remaining: *id001
