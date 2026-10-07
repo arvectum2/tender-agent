@@ -66,7 +66,7 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 
 **Historical execution snapshot (2026-09-18):** at that point every explicitly admitted queue item through order 80 was completed and the queue was temporarily exhausted. This paragraph is retained only as history; it is **not** the current executor state.
 
-**Current execution status (2026-10-07, 13:35 MSK):** the bounded iPhone/Daily Tender sequence **MOB-1 → MOB-2 → MOB-3 → DTR-3 → MOB-4 is complete and merged**. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate on preserved frozen evidence: **12/12** core 44-FZ procurements have completed reports and **3/3** exploratory 223-FZ cases are separately scored source-bound blockers. The current BASE reconciliation is now **18/18 confirmed_done** after BASE-011 was closed as the Hermes infrastructure foundation; the unfinished real-user self-improvement scope remains under `ARV-004` as a **post-MVP, not-admitted Feedback & Learning Loop**. There is now **no non-done admitted queue item**. The single `Tender Agent Watchdog` remains enabled hourly; any next bounded item must be admitted under the active Owner continuation rule. Company AM-4 remains at the **10/10 mandatory review ceiling**, so automatic merge fails closed absent attributable Owner review/renewal.
+**Current execution status (2026-10-07, 13:35 MSK):** the bounded Daily Tender/iPhone sequence **DTR-1 → DTR-2 → MOB-1 → MOB-2 → MOB-3 → DTR-3 → MOB-4 is complete**; merged bounded increments are recorded in the execution history. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate on preserved frozen evidence: **12/12** core 44-FZ procurements have completed reports and **3/3** exploratory 223-FZ cases are separately scored source-bound blockers. The current BASE reconciliation is now **18/18 confirmed_done** after BASE-011 was closed as the Hermes infrastructure foundation; the unfinished real-user self-improvement scope remains under `ARV-004` as a **post-MVP, not-admitted Feedback & Learning Loop**. There is now **no non-done admitted queue item**. The single `Tender Agent Watchdog` remains enabled hourly; any next bounded item must be admitted under the active Owner continuation rule. Company AM-4 remains at the **10/10 mandatory review ceiling**, so automatic merge fails closed absent attributable Owner review/renewal.
 
 ## Owner product directive — 2026-10-06: Daily Tender Run + iPhone Tender Agent
 
@@ -128,8 +128,8 @@ Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
 
 | Stage | Priority | Deliverable | Exit condition |
 |---|---|---|---|
-| DTR-1 | P0 | Daily Tender Run domain/orchestrator + persisted state | Saved filters process idempotently to manager-ready reports |
-| DTR-2 | P0 | Manager inbox/digest API | Mobile/web fetches only cases requiring attention |
+| DTR-1 | P0 | **DONE — Daily Tender Run domain/orchestrator + persisted state** | Pre-decision contour remains implemented and restartable |
+| DTR-2 | P0 | **DONE — manager inbox/digest API + mobile façade** | Pre-decision manager-attention contour remains implemented |
 | MOB-1 | P0 | **DONE — SwiftUI read-only inbox + procurement summary** | PR #171 merged; iPhone securely reads live Mac mini reports |
 | MOB-2 | P0 | **DONE — GO / NO GO / DEFER API + mobile actions** | PR #173 merged; human mobile decisions are audited and visible in Procurement Portfolio |
 | MOB-3 | P0 | **DONE — APNs push + deep links** | PR #176 merged; bounded push/deep-link routing opens the correct Tender Agent case |
