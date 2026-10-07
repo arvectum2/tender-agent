@@ -51,30 +51,36 @@ completed:
   failure; no ARV-055 regression was observed.'
 - '2026-10-08: Post-reconciliation focused/relevant suite passed again (55 passed);
   make check and git diff --check passed.'
-current: Open the ARV-055 implementation PR from the reconciled head, require exact-head
-  GitHub CI, and enforce the AM-4 10/10 review-cycle boundary before merge.
+- '2026-10-08: Reconciled ARV-055 implementation with canonical main 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf,
+  including final ARV-053 correction bookkeeping PR #210.'
+- '2026-10-08: Post-reconciliation relevant search/retrieval suite passed 96 tests;
+  Ruff check/format, make check and git diff --check passed.'
+- '2026-10-08: Post-reconciliation full local make test reached 3118 passed / 236
+  skipped with only the previously proven main-baseline R9 pg_restore acceptance failure;
+  no ARV-055 regression was observed.'
+current: Open the reconciled ARV-055 implementation PR, require exact-head CI, then
+  fold final completion bookkeeping into the same PR so the renewed AM-4 cycle does
+  not require an extra bookkeeping merge beyond its 10-merge limit.
 pending:
-- Push the reconciled ARV-055 head and checkpoint.
-- Open ARV-055 PR against current main and verify exact-head GitHub CI.
-- If exact-head CI is fully green and all other AM-4 gates remain valid, ARV-055 may
-  be the tenth automatic merge in this renewed cycle.
-- After the tenth merge, fail closed to REVIEW before any further automatic merge;
-  prepare completion bookkeeping without merging it until Owner review renews AM-4.
-last_verified_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
+- Push reconciled implementation/checkpoint and open ARV-055 PR against current main.
+- Require exact-head GitHub CI on the implementation head.
+- After green CI, add final ARV-055 completion bookkeeping to the same PR, including
+  prospective AM-4 count 10/10 and queue advance to ARV-057.
+- Require exact-head CI again on the final bookkeeping head; merge only if green and
+  AM-4 remains valid.
+last_verified_commit: 36c68f64a7d5662446226b19349221eeddfe498a
 test_results:
-- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions
-  after main reconciliation: 55 passed'
-- 'ARV-055 API route focused test: PASS'
-- 'Ruff check/format on changed slice: PASS'
+- 'ARV-055 + Data Platform/retrieval/discovery/relevance regressions after current-main
+  reconciliation: 96 passed'
+- 'Ruff check/format on ARV-055 slice: PASS'
 - 'make check: PASS'
-- 'full local suite before metadata-only reconciliation: 3118 passed, 236 skipped,
-  1 known main-baseline R9 pg_restore failure'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T00:58:05+03:00'
-resume_instruction: Push/open ARV-055 PR from the reconciled head, require exact-head
-  CI and merge only if all gates remain valid. If ARV-055 becomes merge 10/10, stop
-  all later automatic merges at REVIEW and only prepare completion bookkeeping pending
-  Owner renewal.
+- 'full local make test: 3118 passed, 236 skipped, 1 failed (known main-baseline R9
+  pg_restore acceptance failure)'
+updated_at: '2026-10-08T01:00:34+03:00'
+resume_instruction: Push/open the reconciled ARV-055 PR. After green implementation-head
+  CI, finalize queue/roadmap/checkpoint and AM-4 count inside the same PR, rerun exact-head
+  CI, then merge as the 10th and final automatic merge of the current AM-4 cycle.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv055

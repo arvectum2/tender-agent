@@ -51,6 +51,13 @@ completed:
   failure; no ARV-055 regression was observed.'
 - '2026-10-08: Post-reconciliation focused/relevant suite passed again (55 passed);
   make check and git diff --check passed.'
+- '2026-10-08: Reconciled ARV-055 implementation with canonical main 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf,
+  including final ARV-053 correction bookkeeping PR #210.'
+- '2026-10-08: Post-reconciliation relevant search/retrieval suite passed 96 tests;
+  Ruff check/format, make check and git diff --check passed.'
+- '2026-10-08: Post-reconciliation full local make test reached 3118 passed / 236
+  skipped with only the previously proven main-baseline R9 pg_restore acceptance failure;
+  no ARV-055 regression was observed.'
 current: Open/verify the reconciled ARV-055 implementation PR.
 pending:
 - Map available canonical subject, position, customer and requirements signals to
@@ -60,23 +67,22 @@ pending:
 - Add deterministic false-analogue guards and focused explanation regressions.
 - Run relevant/full verification, open PR, require exact-head CI and merge only under
   valid AM-4.
-last_verified_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
+last_verified_commit: 36c68f64a7d5662446226b19349221eeddfe498a
 test_results:
-- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions
-  after main reconciliation: 55 passed'
-- 'ARV-055 API route focused test: PASS'
-- 'Ruff check/format on changed slice: PASS'
+- 'ARV-055 + Data Platform/retrieval/discovery/relevance regressions after current-main
+  reconciliation: 96 passed'
+- 'Ruff check/format on ARV-055 slice: PASS'
 - 'make check: PASS'
-- 'full local suite before metadata-only reconciliation: 3118 passed, 236 skipped,
-  1 known main-baseline R9 pg_restore failure'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T00:58:05+03:00'
-resume_instruction: Open ARV-055 PR, require exact-head CI, and preserve the 10/10
-  AM-4 review boundary.
-current_stage: implementation_pr_ci
+- 'full local make test: 3118 passed, 236 skipped, 1 failed (known main-baseline R9
+  pg_restore acceptance failure)'
+updated_at: '2026-10-08T01:00:34+03:00'
+resume_instruction: Open the reconciled ARV-055 PR, then complete bookkeeping inside
+  that same PR after green CI and merge only on a final green exact-head head within
+  AM-4 10/10.
+current_stage: pr_ready
 remaining:
-- push reconciled head
-- open implementation PR
-- exact-head CI
-- guarded tenth automatic merge if gates remain valid
-- prepare but do not auto-merge post-10/10 completion bookkeeping without Owner renewal
+- push/open implementation PR
+- green exact-head implementation CI
+- same-PR final completion bookkeeping with AM-4 10/10
+- green final exact-head CI and guarded merge
