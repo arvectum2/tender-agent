@@ -34,6 +34,7 @@ from src.modules.contract_negotiation.router import (
 from src.modules.contract_risks.router import router as contract_risks_router
 from src.modules.copilot_feed.router import router as copilot_feed_router
 from src.modules.cost_model.router import router as cost_model_router
+from src.modules.counterparty_cards.router import router as counterparty_cards_router
 from src.modules.customer_pilot.expert_review_router import (
     router as expert_review_router,
 )
@@ -165,6 +166,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     action_console_router,
     acceptance_control_router,
     customer_registry_router,
+    counterparty_cards_router,
     customer_pilot_router,
     expert_review_router,
     integration_tasks_router,

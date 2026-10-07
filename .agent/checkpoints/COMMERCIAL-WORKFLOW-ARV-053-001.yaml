@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-053-001
@@ -48,15 +48,17 @@ completed:
 - '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
   cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
   a new exact-head CI run.'
-current: 'Trigger a fresh exact-head CI run for PR #207 from a checkpoint-only head
-  after GitHub runner cancellation propagation; merge only after the fresh run is
-  fully green.'
+current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
+  evidence adapters and scoring primitives before choosing the minimal reuse-first
+  implementation slice.
 pending:
-- 'Push this checkpoint-only head to trigger fresh PR #207 exact-head CI.'
-- Verify all required jobs on the fresh exact-head run.
-- 'Merge PR #207 under active AM-4 only if all gates remain valid.'
-- Perform completion bookkeeping, update the AM-4 counter, and advance canonical queue
-  to ARV-055.
+- Inventory reusable counterparty/profile/evidence/scoring primitives and historical
+  ARV-053 intent.
+- Implement the evidence-backed counterparty card and explainable factor projection
+  without a second registry or opaque legal score.
+- Add focused role/provenance/unknown-state/regression tests.
+- Run full relevant verification and exact-head CI, then merge/bookkeep under active
+  AM-4.
 last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
@@ -67,14 +69,10 @@ test_results:
   acceptance failure)'
 - 'git diff --check: PASS'
 updated_at: '2026-10-07T23:47:36+03:00'
-resume_instruction: 'Verify the fresh exact-head CI run for PR #207 after this checkpoint-only
-  commit. If fully green and AM-4 remains active, merge PR #207, then complete bookkeeping
-  and advance to COMMERCIAL-WORKFLOW-ARV-055-001.'
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261007-arv053
-  branch: agent/commercial-workflow-arv-053-001
-  base_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
-  issue: null
-  manual_override: false
-  lease_until: null
+resume_instruction: 'Verify fresh exact-head PR #207 CI; merge only when fully green,
+  then complete ARV-053 bookkeeping.'
+current_stage: retry_exact_head_ci
+remaining:
+- 'fresh exact-head PR #207 CI'
+- guarded implementation merge
+- completion bookkeeping and queue advance to ARV-055
