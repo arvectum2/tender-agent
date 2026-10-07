@@ -1,0 +1,29 @@
+schema_version: 1
+task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+status: in_progress
+goal: "Structured RFQ-first operator profile ingestion into the existing Decision Core supplier_profile boundary."
+definition_of_done:
+  - "Parse the canonical operator profile fields deterministically and fail closed on malformed/ambiguous values."
+  - "Bind the validated profile into analysis_context.supplier_profile for the existing Decision Core."
+  - "Preserve RFQ-first/no-fixed-catalog semantics and all external-action hard stops."
+  - "Focused tests and exact-head CI pass before merge."
+branch: agent/arv-015-operator-profile-parser-001-r2
+base_commit: 61e7f38196e6b7046fff421380714b1a692e1307
+completed:
+  - "Recovered the historical task/PR instead of duplicating product scope."
+  - "Created a clean recovery branch from current main after the stale branch diverged."
+  - "Implemented typed operator commercial/qualification/risk fields in the existing SupplierProfile model."
+  - "Implemented deterministic markdown parsing and analysis_context binding."
+current: "Add deterministic tests and canonical queue/roadmap evidence, then validate exact head."
+remaining:
+  - "Add regression tests."
+  - "Update queue/roadmap evidence."
+  - "Run exact-head CI."
+  - "Merge if all renewed AM-4 gates remain green."
+  - "Verify main and finalize canonical task state."
+last_verified_commit: 61e7f38196e6b7046fff421380714b1a692e1307
+test_results:
+  - "Historical pre-recovery focused gate on PR #127: 41 passed."
+  - "Recovery branch exact-head validation: pending."
+updated_at: "2026-10-07T19:36:00+03:00"
+resume_instruction: "Continue on agent/arv-015-operator-profile-parser-001-r2 only. Add tests and evidence, then validate exact head. If CI is green and AM-4 gates remain valid, merge the recovery PR, close superseded PR #127, verify main, and mark completed."
