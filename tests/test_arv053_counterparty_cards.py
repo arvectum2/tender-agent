@@ -245,8 +245,9 @@ def test_supplier_card_projects_verification_flags_contracts_and_rating_with_tra
 
     assert payload["counterparty_type"] == "SUPPLIER"
     assert payload["risk"]["available"] is True
-    assert payload["risk"]["observed_risk_score"] == 20.0
-    assert payload["risk"]["band"] == "MEDIUM"
+    assert payload["risk"]["observed_risk_score"] == 28.0
+    assert payload["risk"]["source_confidence_score"] == 0.72
+    assert payload["risk"]["band"] == "NEEDS_REVIEW"
     assert payload["risk"]["included_factor_codes"] == [
         "MISSING_PRIMARY_CONTACT",
         "NO_TENDER_READY_TAG",
@@ -254,12 +255,12 @@ def test_supplier_card_projects_verification_flags_contracts_and_rating_with_tra
     assert payload["risk"]["authoritative_reliability_conclusion"] is False
     assert payload["history"]["supplier_contract_count"] == 1
     factors = {item["factor_code"]: item for item in payload["factors"]}
-    assert factors["MISSING_PRIMARY_CONTACT"]["risk_points"] == 15.0
+    assert factors["MISSING_PRIMARY_CONTACT"]["risk_points"] is None
     assert (
         factors["MISSING_PRIMARY_CONTACT"]["evidence"][0]["source_ref"]
         == f"SUPPLIER:{supplier.supplier_id}"
     )
-    assert factors["NO_TENDER_READY_TAG"]["risk_points"] == 5.0
+    assert factors["NO_TENDER_READY_TAG"]["risk_points"] is None
     assert factors["INTERNAL_EXECUTION_RATING"]["contributes_to_score"] is False
     assert any(
         item["source_type"] == "SUPPLIER_RATING_FACTOR"

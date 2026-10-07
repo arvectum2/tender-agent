@@ -30,16 +30,11 @@ from src.shared.errors import NotFoundError
 from src.tender_research.models import ProcurementTender
 
 _HISTORY_LIMIT = 10
-_RISK_WEIGHT_BY_SEVERITY = {
-    "LOW": 5.0,
-    "MEDIUM": 15.0,
-    "HIGH": 30.0,
-    "CRITICAL": 50.0,
-}
 _RISK_CALCULATION = (
-    "Sum of explicit flags from the latest canonical supplier-verification record "
-    "(LOW=5, MEDIUM=15, HIGH=30, CRITICAL=50), capped at 100. "
-    "Neutral history/rating context is not added to this score."
+    "Observed risk score = 100 * (1 - confidence_score) from the latest canonical "
+    "M-020 supplier-verification record. The band mirrors that record's verification_result. "
+    "Factor-level deductions are not reconstructed because M-020 does not persist a "
+    "per-flag numeric deduction. Neutral history/rating context is not added to this score."
 )
 
 
@@ -58,16 +53,11 @@ def _evidence(
     )
 
 
-def _band(score: float) -> str:
-    if score <= 0:
-        return "NO_OBSERVED_ADVERSE_FLAGS"
-    if score < 20:
-        return "LOW"
-    if score < 40:
-        return "MEDIUM"
-    if score < 70:
-        return "HIGH"
-    return "CRITICAL"
+def _verification_band(result: object) -> str:
+    normalized = str(result).strip().upper()
+    if normalized in {"PASS", "NEEDS_REVIEW", "FAIL"}:
+        return normalized
+    return "NEEDS_REVIEW"
 
 
 def _unknown_risk(*, reason: str) -> CounterpartyRiskAggregateResponse:
@@ -449,7 +439,6 @@ def get_supplier_counterparty_card(
 
     verification, flags = _latest_supplier_verification(session, supplier_id)
     included_factor_codes: list[str] = []
-    score = 0.0
     if verification is None:
         factors.append(
             CounterpartyFactorResponse(
@@ -470,10 +459,8 @@ def get_supplier_counterparty_card(
         if flags:
             for flag in flags:
                 severity = str(flag.severity).upper()
-                points = _RISK_WEIGHT_BY_SEVERITY.get(severity, 0.0)
                 code = str(flag.flag_code)
                 included_factor_codes.append(code)
-                score += points
                 evidence_ref = (
                     flag.source_ref or f"SUPPLIER_VERIFICATION_FLAG:{flag.id}"
                 )
@@ -483,9 +470,9 @@ def get_supplier_counterparty_card(
                         category="RISK",
                         state="ADVERSE",
                         severity=severity
-                        if severity in _RISK_WEIGHT_BY_SEVERITY
-                        else "LOW",
-                        risk_points=points,
+                        if severity in {"LOW", "MEDIUM", "HIGH", "CRITICAL"}
+                        else "UNKNOWN",
+                        risk_points=None,
                         contributes_to_score=True,
                         summary=flag.summary,
                         evidence=[
@@ -505,7 +492,7 @@ def get_supplier_counterparty_card(
                     category="RISK",
                     state="OBSERVED",
                     severity="INFO",
-                    risk_points=0.0,
+                    risk_points=None,
                     contributes_to_score=True,
                     summary=(
                         f"Latest canonical supplier verification has no adverse flags "
@@ -520,18 +507,25 @@ def get_supplier_counterparty_card(
                     ],
                 )
             )
-        score = round(min(100.0, score), 2)
+        confidence = max(0.0, min(1.0, float(verification.confidence_score)))
+        score = round((1.0 - confidence) * 100.0, 2)
         risk = CounterpartyRiskAggregateResponse(
             available=True,
             observed_risk_score=score,
-            band=_band(score),
+            source_confidence_score=confidence,
+            band=_verification_band(verification.verification_result),
             calculation=_RISK_CALCULATION,
             included_factor_codes=included_factor_codes,
             limitations=[
                 (
-                    f"Score uses only the latest canonical supplier-verification record "
-                    f"{verification.supplier_verification_id}; it is not a legal, sanctions, solvency, or reliability opinion."
+                    f"Score reuses the latest canonical M-020 supplier-verification record "
+                    f"{verification.supplier_verification_id}; no ARV-053-specific factor weights are invented."
                 ),
+                (
+                    "Per-flag numeric deductions are intentionally omitted because the canonical "
+                    "verification record persists only the aggregate confidence and evidence flags."
+                ),
+                "This is not a legal, sanctions, solvency, or reliability opinion.",
                 "Neutral contract history and internal execution ratings are displayed separately and are not double-counted.",
             ],
         )
