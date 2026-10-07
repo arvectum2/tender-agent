@@ -1,42 +1,45 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: DP-QUALITY-CORE-3.2-003
 authority: OWNER_DIRECTIVE
-goal: Prepare the remaining human-reviewed OCR gold gate for arvectum2/data-platform without falsely promoting silver references or mutating frozen public_v1 benchmark truth.
+goal: Close the human-reviewed OCR gold gate for arvectum2/data-platform without mutating frozen public_v1 benchmark truth.
 definition_of_done:
-- Inventory every public_v1 OCR scan that currently uses native-extraction silver reference text.
-- Create a separate immutable human-review packet that pins the existing scan and candidate-gold hashes without changing public_v1.
-- Define a fail-closed acceptance record: human acceptance must carry reviewer identity/date and must not be inferred from model output.
-- Add focused validation/tests for the review packet.
-- Document the exact post-review promotion path as a new corpus/benchmark revision rather than silently editing frozen v1.
-- Run focused checks and exact-head CI; merge safe preparation work if green.
-- Stop at the actual HUMAN review gate; do not mark OCR gold human-reviewed without explicit human confirmation.
+- Inventory every public_v1 OCR scan that used native-extraction silver reference text.
+- Preserve public_v1 unchanged and keep a hash-pinned pending human-review packet.
+- Record explicit human acceptance in a separate fail-closed attestation with reviewer/date and accepted truth.
+- Promote accepted OCR truth only through a new corpus revision.
+- Freeze truth before any live OCR rerun.
+- Validate attestation and corpus, run focused and evaluation tests, run live OCR acceptance, exact-head CI and post-merge CI.
+- Merge the completed change and record final commit/results.
 completed:
 - DP-QUALITY-CORE-3.2-001 real-source faithfulness merged in data-platform PR #80.
-- DP-QUALITY-CORE-3.2-002 ranking-gap diagnosis merged in data-platform PR #81 as ac2bbf00a0378322ef1778c2859f93c3652d1457; no default fusion change justified.
-- DP-QUALITY-CORE-3.2-003 engineering gate preparation merged in data-platform PR #82 as 1bda6b2e67f210ba193723e6d4bbd6151ea13722.
-- AI visual audit performed through RDC against both pinned scan PDFs. Control-notice scan: no substantive text/number mismatch found. Technical-spec scan: one definite reading-order/list-marker mismatch found; the bullet is at the start of the silver text but visibly belongs before the section 1.7 “Приложение 1…” line.
-- AI audit and proposed corrected candidate merged in data-platform PR #83 as 4ee9eed5ad23c81200d23334bd0c01e59915dc50; public_v1 remains unchanged.
-current: HUMAN acceptance received explicitly in chat on 2026-10-07. Promote the accepted conclusions through a separate attestation and a new corpus revision; preserve public_v1 unchanged.
-pending:
-- Create a separate accepted human attestation recording the Product Owner chat confirmation and the reviewed conclusions.
-- Create a new corpus revision with human-reviewed OCR gold: control-notice unchanged; technical-spec uses the accepted bullet-placement correction.
-- Freeze hashes before any SUT/OCR rerun.
-- Validate attestation/corpus, run focused tests and OCR benchmark, PR/CI/merge, then mark completed.
-last_verified_commit: 4ee9eed5ad23c81200d23334bd0c01e59915dc50
+- DP-QUALITY-CORE-3.2-002 ranking-gap diagnosis merged in data-platform PR #81; no default fusion change was justified.
+- DP-QUALITY-CORE-3.2-003 engineering review gate merged in PR #82.
+- AI visual audit merged in PR #83; control notice matched substantively and the technical-spec silver reference had one bullet/list-marker reading-order defect.
+- Explicit human acceptance was received in project chat on 2026-10-07.
+- Accepted attestation benchmarks/reviews/ocr_gold_public_v1_accepted_2026-10-07.json validates with 2/2 accepted and 0 pending.
+- benchmarks/corpora/public_v2 promotes both OCR references to human-reviewed truth while public_v1 remains unchanged.
+- Control-notice gold was accepted as-is; technical-spec gold applies the accepted bullet-placement correction.
+- Truth was frozen before the live OCR run in commit e4202d7873ff512fc42032efa782f1bd77119f81.
+- Live Tesseract rus+eng at 220 DPI passed 7/7 public_v2 artifacts.
+- Evaluation suite passed locally and PR #84 exact-head CI was green.
+- PR #84 merged; local Data Platform main was fast-forwarded and the feature worktree/branch was removed.
+current: Task complete.
+pending: []
+last_verified_commit: f21e9324e054560067a0286943282be55d93f1a1
 test_results:
-- "PR #81 exact-head CI run 37620125711: SUCCESS."
-- "Post-merge data-platform-ci run 37620284400: SUCCESS."
-- "OCR review packet validates: 2 pinned items, 0 accepted, 2 pending; source manifest and scan/gold hashes match frozen public_v1."
-- "Focused OCR review/corpus tests: 6 passed; Ruff and git diff --check PASS."
-- "Data Platform PR #82 exact-head CI run 37621007299: SUCCESS; Python 3.11/3.12/3.13 and JavaScript SDK green."
-- "PR #82 merged as 1bda6b2e67f210ba193723e6d4bbd6151ea13722."
-- "Post-merge data-platform-ci run 37621160669: SUCCESS; Mirror to GitVerse SUCCESS."
-- "RDC visual audit: control-notice scan matched substantively; technical-spec scan has one list-marker/reading-order defect in the silver reference."
-- "PR #83 merged as 4ee9eed5ad23c81200d23334bd0c01e59915dc50; post-merge data-platform-ci run 37630689405 SUCCESS; Mirror to GitVerse SUCCESS."
-updated_at: '2026-10-07T16:47:00+03:00'
-resume_instruction: HUMAN acceptance is now explicit. Create a separate accepted attestation, preserve public_v1, promote corrected/accepted gold via a new corpus revision, freeze hashes before OCR reruns, validate, benchmark, merge, and complete the task.
+- "Human attestation validation: 2 accepted, 0 pending."
+- "public_v2 manifest validation: PASS; public_v1 unchanged."
+- "Live Tesseract public_v2: 7/7 passed; ingestion_success_rate=1.0; benchmark_success_rate=1.0."
+- "Control-notice scan: CER 35.78%, WER 74.47%, confidence 86.89%."
+- "Technical-spec scan: CER 3.50%, WER 5.54%, confidence 94.41%."
+- "Local tests/evaluation: 61 passed, 4 skipped; Ruff PASS; git diff --check PASS."
+- "PR #84 exact-head data-platform-ci run 37632924746: SUCCESS; GitVerse Mirror Health SUCCESS."
+- "PR #84 merged as f21e9324e054560067a0286943282be55d93f1a1."
+- "Post-merge data-platform-ci run 37633152271: SUCCESS; Mirror to GitVerse run 37633152149: SUCCESS."
+updated_at: '2026-10-07T17:02:00+03:00'
+resume_instruction: Task is complete. Do not repeat OCR-gold promotion work. Start the next quality-core roadmap item from the current Data Platform main at f21e9324e054560067a0286943282be55d93f1a1.
 execution:
   claimed_by: ChatGPT
   execution_id: dp-quality-core-3.2-003
