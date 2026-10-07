@@ -89,3 +89,48 @@ def test_unrelated_field_precedence_unchanged() -> None:
     # customer_name uses documents-first precedence
     assert merged["customer_name"]["value"] == "doc_customer"
     assert merged["customer_name"]["source"] == "documents"
+
+
+def test_public_44fz_search_intake_keeps_explicit_card_customer_over_attachment_customer() -> None:
+    from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
+    from src.modules.tender_operator_agent_demo.upload_service import (
+        _enrich_procurement_metadata_from_documents,
+    )
+
+    card_customer = 'ГОСУДАРСТВЕННОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ "КАРТОЧКА ЕИС"'
+    metadata = {
+        "mode": "procurement_search_intake",
+        "procurement_source": "public_eis_html_44fz",
+        "customer_name": card_customer,
+        "tender_title": "Поставка кабельной продукции",
+        "procurement": {
+            "customer_name": card_customer,
+            "title": "Поставка кабельной продукции",
+            "source": "public_eis_html_44fz",
+        },
+    }
+    contract = AnalyzedDocument(
+        display_name="Проект контракта.docx",
+        extension=".docx",
+        role="contract_draft",
+        text='Заказчик: ООО "НЕВЕРНЫЙ ЗАКАЗЧИК"',
+        extracted_text_available=True,
+        warnings=[],
+        source="public_eis",
+        file_id="contract-1",
+    )
+
+    enriched = _enrich_procurement_metadata_from_documents(
+        metadata,
+        documents=[contract],
+        combined_text=contract.text,
+        notice_text="",
+        technical_spec_text="",
+        contract_draft_text=contract.text,
+    )
+
+    assert enriched["customer_name"] == card_customer
+    assert enriched["procurement"]["customer_name"] == card_customer
+    assert enriched["_field_evidence"]["customer_name"] == "card:customer_name"
+    assert enriched["procurement_title"] == "Поставка кабельной продукции"
+    assert enriched["_field_evidence"]["procurement_title"] == "card:procurement_subject"

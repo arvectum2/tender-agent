@@ -259,3 +259,44 @@ def test_search_card_does_not_alias_placement_organization_to_customer():
 
     assert len(cards) == 1
     assert cards[0]["customer_name"] is None
+
+
+def test_search_card_prefers_procedure_common_info_over_printform_and_report_href():
+    html = """
+    <div class="registry-entry">
+      <div class="registry-entry__header-mid__title">Поставка электротехнической продукции</div>
+      <a href="https://zakupki.gov.ru/rpt/cat02/zakupki-traffic.xlsx">report</a>
+      <a href="/epz/order/notice/printForm/view.html?regNumber=0333300006126000121">print</a>
+      <a href="/epz/order/notice/zk20/view/documents.html?regNumber=0333300006126000121">docs</a>
+      <a href="/epz/order/notice/zk20/view/common-info.html?regNumber=0333300006126000121">0333300006126000121</a>
+    </div>
+    """
+
+    cards = parse_44fz_search_results(html)
+
+    assert len(cards) == 1
+    assert cards[0]["card_url"] == (
+        "https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html"
+        "?regNumber=0333300006126000121"
+    )
+
+
+def test_documents_url_builder_refuses_printform_and_report_guessing():
+    from src.tender_research.providers.public_44fz_search import _build_documents_url
+
+    registry_number = "0333300006126000121"
+    assert _build_documents_url(
+        f"https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber={registry_number}",
+        registry_number,
+    ) is None
+    assert _build_documents_url(
+        "https://zakupki.gov.ru/rpt/cat02/zakupki-traffic.xlsx",
+        registry_number,
+    ) is None
+    assert _build_documents_url(
+        f"https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber={registry_number}",
+        registry_number,
+    ) == (
+        "https://zakupki.gov.ru/epz/order/notice/zk20/view/documents.html"
+        f"?regNumber={registry_number}"
+    )

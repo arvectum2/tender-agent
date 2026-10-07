@@ -280,6 +280,33 @@ def test_revision_selector_fails_closed_on_ambiguous_active_state():
     assert selection["requires_review"] is True
 
 
+def test_wave2_d_revision_shape_remains_fail_closed():
+    from src.tender_research.providers.public_44fz_search import (
+        _select_current_revision_document_links,
+    )
+
+    page_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0348200027326000071"
+    page_html = "".join(
+        [
+            _revision_block(version=1, state="Недействующая", published="15.09.2026 08:00", attachments=[("old.pdf", "OLD")]),
+            _revision_block(version=2, state="Действующая", published="15.09.2026 09:00", attachments=[("a.pdf", "A")]),
+            _revision_block(version=3, state="Действующая", published="15.09.2026 10:00", attachments=[("b.pdf", "B")]),
+        ]
+    )
+
+    links, revisions, selection = _select_current_revision_document_links(page_html, page_url)
+
+    assert links == []
+    assert [(item.revision, item.active) for item in revisions] == [
+        (1, False),
+        (2, True),
+        (3, True),
+    ]
+    assert selection["status"] == "ambiguous_revision_state"
+    assert selection["requires_review"] is True
+    assert "active=2, unknown=0, total=3" in selection["reason"]
+
+
 def test_revision_selector_fails_closed_when_active_binding_is_missing():
     from src.tender_research.providers.public_44fz_search import _select_current_revision_document_links
 
@@ -341,3 +368,100 @@ def test_revision_selector_fails_closed_when_revision_controls_are_exposed_but_u
     assert revisions == []
     assert selection["status"] == "revision_binding_unparsed"
     assert selection["requires_review"] is True
+
+
+def test_revision_selector_does_not_treat_active_clarification_as_notice_revision():
+    from src.tender_research.providers.public_44fz_search import (
+        _select_current_revision_document_links,
+    )
+
+    page_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0348200027326000071"
+    page_html = "".join(
+        [
+            _revision_block(
+                version=1,
+                state="Недействующая",
+                published="24.09.2026 08:17",
+                attachments=[("old.pdf", "OLD")],
+            ),
+            _revision_block(
+                version=2,
+                state="Действующая",
+                published="25.09.2026 11:13",
+                attachments=[
+                    ("Описание объекта закупки (Техническое задание).docx", "CURRENT-TZ"),
+                    ("Проект контракта.zip", "CURRENT-CONTRACT"),
+                ],
+            ),
+            """
+            <div class="notice-documents">
+              <div class="section__value docName">
+                <span>Разъяснения положений извещения об осуществлении закупки от 25.09.2026 №РИ1</span>
+              </div>
+              <div><div class="section__attrib">Размещено</div><div class="section__value">25.09.2026 09:30 (МСК)</div></div>
+              <div><div class="section__attrib">Редакция</div><div class="section__value">Действующая</div></div>
+              <div class="attachmentsTabDocs">
+                <div class="attachment row"><div>
+                  <a href="/44fz/filestore/public/1.0/download/priz/file.html?uid=CLARIFICATION"
+                     title="Вопрос.docx">Вопрос.docx</a>
+                </div></div>
+              </div>
+            </div>
+            """,
+        ]
+    )
+
+    links, revisions, selection = _select_current_revision_document_links(
+        page_html,
+        page_url,
+    )
+
+    assert [(item.revision, item.active) for item in revisions] == [
+        (1, False),
+        (2, True),
+        (None, True),
+    ]
+    assert selection["status"] == "active_revision_selected"
+    assert selection["requires_review"] is False
+    assert selection["active_revision"]["revision"] == 2
+    assert selection["auxiliary_publication_count"] == 1
+    assert {item.raw["uid"] for item in links} == {
+        "CURRENT-TZ",
+        "CURRENT-CONTRACT",
+    }
+    assert "CLARIFICATION" not in {item.raw["uid"] for item in links}
+
+
+def test_detail_prefers_exact_section_deadline_with_eis_moscow_offset():
+    card_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0351100020326000084"
+    docs_url = "https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0351100020326000084"
+    detail_html = """
+    <div class="cardMainInfo__section">
+      <span class="cardMainInfo__title">Окончание подачи заявок</span>
+      <span class="cardMainInfo__content">02.10.2026</span>
+    </div>
+    <section class="blockInfo__section">
+      <span class="section__title">Дата и время окончания срока подачи заявок</span>
+      <span class="section__info">
+        02.10.2026 10:00
+        <span class="timeZoneName">(МСК+4)</span>
+      </span>
+    </section>
+    """
+    provider = FakeProvider({
+        card_url: {"status": PublicSearchStatus.SUCCESS, "html": detail_html, "error": None},
+        docs_url: {"status": PublicSearchStatus.SUCCESS, "html": "", "error": None},
+    })
+
+    detail = provider.fetch_detail(
+        PublicTenderSearchItem(
+            registry_number="0351100020326000084",
+            application_deadline=datetime(2026, 10, 2, tzinfo=timezone.utc),
+            card_url=card_url,
+        )
+    )
+
+    # 10:00 МСК+4 means UTC+7, therefore 03:00 UTC.
+    assert detail.application_deadline == datetime(
+        2026, 10, 2, 3, 0, tzinfo=timezone.utc
+    )

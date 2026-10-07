@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -32,7 +33,7 @@ def _normalized_kind(item: dict[str, Any]) -> str:
         or item.get("stored_name")
         or ""
     ).strip()
-    lowered = name.lower()
+    lowered = re.sub(r"_+", " ", name.lower())
     # Older retained EIS runs could classify this attachment as a generic
     # contract draft.  Its explicit security wording is more specific and
     # must retain its own logical document group when the corpus is rebuilt.
@@ -78,6 +79,8 @@ def _normalized_kind(item: dict[str, Any]) -> str:
         for token in (
             "проект контракта",
             "проект договора",
+            "проект гк",
+            "contract draft",
             "contract_draft",
             "contract-draft",
             "contract",
@@ -89,9 +92,13 @@ def _normalized_kind(item: dict[str, Any]) -> str:
         token in lowered
         for token in (
             "техническое задание",
+            "техническая часть",
             "техзадание",
             "описание объекта закупки",
+            "ооз",
+            "oоз",
             "technical specification",
+            "technical spec",
             "technical_spec",
             "technical-spec",
             "спецификац",

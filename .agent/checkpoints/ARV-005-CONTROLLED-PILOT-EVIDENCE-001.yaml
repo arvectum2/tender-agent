@@ -932,3 +932,18 @@ completion_summary_20261003:
     payments_or_commitments: false
     human_usefulness_or_commercial_acceptance_inferred: false
   principal_engineering_finding: After Wave 1, eight subsequent LLM-invoked 44-FZ cases failed all four controlled sections at validation/timeout; after the provenance fix they failed closed explicitly and used deterministic fallback. Future model/prompt/performance tuning must be a new frozen evaluation phase.
+
+canonical_closure_integration_20261007:
+  source_branch: agent/arv-005-wave1-frozen
+  frozen_pilot_code_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  target_base: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
+  strategy: port validated net src/tests delta only; exclude later PRODUCT-SHELL work
+  conflict_resolution:
+    file: src/tender_research/providers/public_44fz_search.py
+    decision: preserved current-main _extract_procurement_card_url implementation and omitted older duplicate _extract_preferred_notice_card_url helper
+  verification:
+    focused_arv005_tests: 142 passed, 19 warnings
+    compatibility_tests: 25 passed, 19 warnings
+    make_check: passed
+    frozen_procurements_rerun: false
+  next: publish preserved report/evidence, reconcile canonical queue/roadmap, exact-head CI

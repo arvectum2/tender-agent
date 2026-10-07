@@ -16,18 +16,19 @@ completed:
 - '2026-10-07: Product Owner explicitly requested ARV-005 Controlled Pilot.'
 - 'Recovered completed frozen pilot evidence from agent/arv-005-wave1-frozen instead of repeating the evaluation: 12/12 44-FZ reports, 3/3 separately scored source-bound 223-FZ blockers, aggregate report, and prior exact-head CI evidence.'
 - 'Verified current origin/main does not yet contain the completion checkpoint/report and PR #123 is stale/diverged and also contains later unrelated PRODUCT-SHELL work, so direct merge is unsafe.'
-current: 'Port the validated ARV-005-only src/tests delta onto current main in an isolated worktree, preserving frozen evidence.'
+- 'Ported the validated net ARV-005 src/tests delta through frozen pilot code head 7653c070 onto current main; resolved the only overlap by preserving main current canonical card-URL helper instead of adding the older duplicate helper.'
+- 'Integrated verification: 142 focused ARV-005/source/Decision Core tests passed; 25 current controlled-LLM/operator/Daily Tender Run compatibility tests passed; uv run make check passed.'
+current: 'Publish preserved pilot report/evidence and reconcile queue/roadmap to completed, then run exact-head CI.'
 pending:
-- port ARV-005-only validated code/tests
-- run focused verification and integration fixes
 - publish preserved report/checkpoint
 - reconcile queue and roadmap
 - exact-head CI and merge
-last_verified_commit: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
+last_verified_commit: 7653c0700f02a3886655950c4aa0431823c558c0
 test_results:
 - 'Historical frozen pilot verification: 105 focused/relevant tests passed; GitHub Actions CI 37132350065 success at pre-report code head 7653c0700f02a3886655950c4aa0431823c558c0.'
+- 'Current-main integration: 142 focused ARV-005/source/Decision Core tests passed; 25 compatibility tests passed; uv run make check passed.'
 updated_at: '2026-10-07T11:15:00+03:00'
-resume_instruction: 'Do not rerun frozen procurements. Apply only the validated ARV-005 code/test delta through the pre-report pilot code head to current main, excluding later PRODUCT-SHELL commits, then verify and reconcile canonical metadata.'
+resume_instruction: 'Do not rerun frozen procurements. Copy the preserved aggregate report/Wave 1 freeze evidence, reconcile queue/roadmap/checkpoint to completed, then push and require exact-head CI. Do not import later PRODUCT-SHELL work from PR #123.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-arv005-finalize
