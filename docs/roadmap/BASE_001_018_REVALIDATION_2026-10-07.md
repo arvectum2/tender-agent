@@ -26,7 +26,7 @@ Evidence classes used here:
 | BASE-008 | confirmed_done | Procurement ingestion/analysis/report export is present across current operator and RAG flows. |
 | BASE-009 | confirmed_done | Product/requirement extraction remains implemented with source-first and role-aware regression coverage. |
 | BASE-010 | confirmed_done | Live/demo boundary and fail-closed/no-silent-synthetic behavior are covered by current transport/output tests. |
-| BASE-011 | revalidated_residual_gap | Hermes components and focused tests remain, but canonical docs still classify external Hermes/autonomous runtime as opt-in/manual/experimental; a real user-correction production self-improvement loop is not proven. |
+| BASE-011 | confirmed_done | The Hermes H1–H4 foundation is implemented and tested: client/fallback, runtime context, category profiles, normalization, quality gates, feedback/memory primitives, eval-case generation, supplier-readiness and bid-decision helpers. The unfinished real-user learning loop is reclassified as post-MVP ARV-004 rather than a BASE prerequisite. |
 | BASE-012 | confirmed_done | Quality/provenance/source-graph work has materially exceeded the July baseline; the frozen ARV-005 pilot added 12 unique 44-FZ cases plus three separately scored 223-FZ cases with regression capture and source-bound failure behavior. |
 | BASE-013 | confirmed_done | Demo/pilot package is extensive and has been updated with current controlled-pilot, live-walkthrough and ARV-005 technical evidence. |
 | BASE-014 | confirmed_done | Historical client/project/search UI foundation is now complemented by customer pilot, partner workspace, workspace feed, procurement UI/wizard, portfolio and tenant-isolation flows. |
@@ -35,7 +35,7 @@ Evidence classes used here:
 | BASE-017 | confirmed_done | R8 customer-pilot lifecycle, tenant isolation and artifact binding remain present with current regression coverage. |
 | BASE-018 | confirmed_done | R9 fail-closed/idempotency/concurrency/recovery contracts remain present. One local macOS backup/restore acceptance case is environment-sensitive; exact-head Linux CI is required before closure. |
 
-Overall current classification after the fresh EIS production smoke: **17 confirmed_done, 1 revalidated_residual_gap**. BASE-007 is now closed with current runtime evidence. BASE-011 remains the only bounded residual gap: an intentionally unproven autonomous/user-correction production loop.
+Overall current classification after the BASE-011 product-boundary reconciliation: **18 confirmed_done, 0 BASE residual gaps**. This does not claim an autonomous Hermes production runtime or a self-improving cross-customer loop. That unfinished product capability is explicitly moved to post-MVP roadmap item ARV-004.
 
 ## Item evidence
 
@@ -149,15 +149,20 @@ Result: `confirmed_done`.
 
 ### BASE-011 — Hermes H1–H4
 
-Hermes package, category profiles, runtime analysis, supplier-readiness and bid-decision tests remain present. Canonical recovery/runtime policy still says Hermes is opt-in, external Hermes runtime is not required, and company-agent execution remains manual/sequential. Therefore the July next result — a production loop grounded in real user corrections — cannot be claimed complete from current repository evidence.
+The historical BASE item is a foundation item: basic memory, quality gates and feedback primitives. That foundation is present and tested. Current code includes the Hermes client with deterministic fallback, runtime context assembly, category profiles, normalization, quality gates, feedback persisted into memory, eval-case creation, supplier-readiness and bid-decision helpers.
+
+The previous residual classification conflated this completed foundation with its historical `next_result`: a production self-improvement loop grounded in real user corrections. Product Owner reconciliation on 2026-10-07 separates those scopes. The real-user learning loop is now the post-MVP successor under existing roadmap item `ARV-004`, documented in `docs/product/Feedback_Learning_Loop.md`, and is not admitted into the current execution queue.
+
+Canonical policy remains unchanged: external Hermes runtime is optional, company-agent execution stays manual/sequential, and Hermes does not become a second autonomous GO / NO GO decision engine.
 
 Evidence:
 - `src/modules/hermes_agent/`
 - `tests/tender_research/test_hermes_*.py`
 - `docs/ops/r0/experiments/HERMES_RECOVERY.md`
 - `docs/agents/company/Company_Agent_Runtime_Policy.md`
+- `docs/product/Feedback_Learning_Loop.md`
 
-Result: `revalidated_residual_gap`.
+Result: `confirmed_done` for the BASE infrastructure foundation. The post-MVP learning loop remains separate under `ARV-004`.
 
 ### BASE-012 — quality, provenance and source graph
 
@@ -279,10 +284,8 @@ After PR #188 was merged, the current Mac mini runtime contour was rechecked rat
 
 This closes the current-runtime evidence gap for BASE-007.
 
-## Closure gate
+## Current closure state
 
-Before this revalidation can be marked completed:
-1. update the canonical overlay for BASE-001…018;
-2. run repository checks on the changed documentation/roadmap state;
-3. obtain exact-head GitHub CI for the revalidation branch;
-4. merge only under an applicable Owner/review gate. Automatic merge remains fail-closed while the current AM-4 cycle is review-due.
+The BASE revalidation is now conceptually complete at the product-boundary level: all 18 BASE items are `confirmed_done`. BASE-011 closure means the tested Hermes infrastructure foundation is complete; it does **not** assert that the post-MVP Feedback & Learning Loop is implemented.
+
+Any future ARV-004 implementation remains separately gated and must preserve the existing human-decision and consequential-action boundaries.
