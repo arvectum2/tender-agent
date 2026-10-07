@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-022-001
 authority: AUTO
 goal: Integrate the existing OCR fallback for scanned tender documents without duplicating
@@ -50,31 +50,28 @@ completed:
   installation while all other jobs reached success; cancellation was requested after
   the same apt-runner symptom was observed on unrelated main CI. A fresh exact-head
   verification run will be triggered from this checkpoint commit.'
-current: 'Retry exact-head PR #205 CI from a fresh head after GitHub-hosted apt installation
-  stalled; merge only after the fresh exact-head run is fully green.'
-pending:
-- Open the Tender Agent ARV-022 PR against current main and verify exact-head CI.
-- Merge only if renewed Company AM-4 and ordinary auto-merge gates remain valid.
-- 'Reconcile superseded OCR PRs #128/#129 and mark the checkpoint completed with final
-  merge/test evidence.'
-last_verified_commit: a47d6f20c08fe65b4a9085a1e1d7af92267296d8
+- '2026-10-07: Fresh exact-head GitHub CI run 37674689621 completed successfully for
+  PR #205 at head 6d90fc6cc6e663e0746823a7c8efbfb8f4c4a1bf.'
+- '2026-10-07: Tender Agent PR #205 squash-merged to main as b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc;
+  ARV-022 Definition of Done is satisfied.'
+current: ARV-022 completed; completion bookkeeping advances canonical queue to COMMERCIAL-WORKFLOW-ARV-053-001.
+pending: []
+last_verified_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
 test_results:
-- 'focused pytest: 38 passed'
+- 'focused OCR/Data Platform/boundary/recovery/prepare pytest: 38 passed'
 - 'make check: PASS'
-- 'full pytest: 3107 passed, 236 skipped, 2 failed before queue correction; queue-policy
-  failure fixed and targeted test passes'
-- 'R9 backup/restore acceptance: FAILS identically on clean origin/main 1b95d668 (pg_restore
-  exit 1), therefore baseline/environmental and unrelated to ARV-022'
-- 'git diff --check: PASS'
-updated_at: '2026-10-07T22:30:00+03:00'
-resume_instruction: 'Verify the fresh exact-head CI run for PR #205. If all required
-  jobs are green and AM-4 remains valid, merge PR #205, then create completion bookkeeping
-  from new main and advance to ARV-053.'
+- 'exact-head GitHub CI run 37674689621 for PR #205: SUCCESS'
+- 'PR #205 merged to main as b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc'
+- local full-suite R9 pg_restore failure was separately proven to reproduce on the
+  prior clean main and was not an ARV-022 regression
+updated_at: '2026-10-07T23:11:15+03:00'
+resume_instruction: ARV-022 is complete. On the next engineering continuation, reconcile
+  main and start COMMERCIAL-WORKFLOW-ARV-053-001, the next ready admitted AUTO item.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv022
-  branch: agent/commercial-workflow-arv-022-001
-  base_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
+  branch: agent/arv-022-completion-001
+  base_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
   issue: null
   manual_override: false
   lease_until: null

@@ -1,6 +1,6 @@
 version: 1
 task_id: COMMERCIAL-WORKFLOW-ARV-022-001
-status: in_progress
+status: completed
 goal: Reuse Data Platform OCR fallback for scanned tender documents and project its
   evidence into Tender Agent with fail-closed review semantics.
 definition_of_done:
@@ -39,15 +39,20 @@ completed:
   installation while all other jobs reached success; cancellation was requested after
   the same apt-runner symptom was observed on unrelated main CI. A fresh exact-head
   verification run will be triggered from this checkpoint commit.'
-current_stage: retry_exact_head_ci
-remaining:
-- Tender Agent PR exact-head CI/guarded merge
-- completion bookkeeping and superseded OCR PR reconciliation
-last_verified_commit: a47d6f20c08fe65b4a9085a1e1d7af92267296d8
+- '2026-10-07: Fresh exact-head GitHub CI run 37674689621 completed successfully for
+  PR #205 at head 6d90fc6cc6e663e0746823a7c8efbfb8f4c4a1bf.'
+- '2026-10-07: Tender Agent PR #205 squash-merged to main as b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc;
+  ARV-022 Definition of Done is satisfied.'
+current_stage: completed
+remaining: []
+last_verified_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
 test_results:
-- focused 38 passed; make check passed
-- full pytest 3107 passed / 236 skipped; queue-policy failure fixed; only R9 pg_restore
-  failure reproduces unchanged on origin/main
-resume_instruction: 'Verify the fresh exact-head CI run for PR #205; merge only when
-  green, then finalize completion bookkeeping.'
-updated_at: '2026-10-07T22:30:00+03:00'
+- 'focused OCR/Data Platform/boundary/recovery/prepare pytest: 38 passed'
+- 'make check: PASS'
+- 'exact-head GitHub CI run 37674689621 for PR #205: SUCCESS'
+- 'PR #205 merged to main as b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc'
+- local full-suite R9 pg_restore failure was separately proven to reproduce on the
+  prior clean main and was not an ARV-022 regression
+resume_instruction: ARV-022 is complete. Continue with COMMERCIAL-WORKFLOW-ARV-053-001
+  after reconciling main.
+updated_at: '2026-10-07T23:11:15+03:00'

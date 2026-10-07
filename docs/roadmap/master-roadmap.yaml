@@ -185,17 +185,17 @@ owner_commercial_workflow_directive_2026_10_07:
     next_time_review_deadline: '2026-11-07'
 
 current_status_summary:
-  as_of: '2026-10-07T21:32:00+03:00'
-  verified_main_commit: a2f936db3485557a6a4b2ff27093526baf195f9f
+  as_of: '2026-10-07T23:11:15+03:00'
+  verified_main_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
   active_execution_item: null
   active_execution_state: admitted_queue_ready
-  last_completed_task: ARV-050-BASE-017-RECONCILIATION-20261007
+  last_completed_task: COMMERCIAL-WORKFLOW-ARV-022-001
   commercial_workflow:
-    completed: 2
+    completed: 3
     total: 12
-    completed_items: [ARV-015, ARV-019]
-    next_queue_item: COMMERCIAL-WORKFLOW-ARV-022-001
-    next_historical_item: ARV-022
+    completed_items: [ARV-015, ARV-019, ARV-022]
+    next_queue_item: COMMERCIAL-WORKFLOW-ARV-053-001
+    next_historical_item: ARV-053
     state: in_progress
   base_foundation:
     historical_ids: [BASE-001, BASE-002, BASE-003, BASE-004, BASE-005, BASE-006, BASE-007, BASE-008, BASE-009, BASE-010, BASE-011, BASE-012, BASE-013, BASE-014, BASE-015, BASE-016, BASE-017, BASE-018]
@@ -224,12 +224,12 @@ current_status_summary:
     enabled: true
     cadence: hourly
   automatic_merge_governance:
-    state: active_renewed_2026_10_07_3_of_10
-    note: 'Attributable Owner review on 2026-10-07 reset the AM-4 cycle. Three automatic merges are now counted in the renewed cycle: PR #199 (ARV-015), PR #198 (ARV-019 implementation) and PR #201 (ARV-019 completion bookkeeping). Current counter 3/10; next time-based review deadline 2026-11-07. Existing hard stops remain unchanged.'
-  note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is actively executing: ARV-015 and ARV-019 are complete, 10 items remain admitted, and ARV-022 is next. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
+    state: active_renewed_2026_10_07_5_of_10
+    note: 'Attributable Owner review on 2026-10-07 reset the AM-4 cycle. Five automatic merges are conservatively counted after this completion reconciliation: PR #199 (ARV-015), PR #198 (ARV-019 implementation), PR #201 (ARV-019 completion bookkeeping), PR #205 (ARV-022 implementation) and #BOOKKEEPING_PR_TBD (ARV-022 completion bookkeeping). Current counter 5/10; next time-based review deadline 2026-11-07. Existing hard stops remain unchanged.'
+  note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is actively executing: ARV-015, ARV-019 and ARV-022 are complete, 9 items remain admitted, and ARV-053 is next. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
 
 execution_snapshot:
-  updated_at: '2026-10-07T18:32:00Z'
+  updated_at: '2026-10-07T20:11:15Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -239,9 +239,8 @@ execution_snapshot:
     single_watchdog: true
     audit_issue: 57
   queue_state: commercial_workflow_in_progress
-  next_admitted_item: COMMERCIAL-WORKFLOW-ARV-022-001
+  next_admitted_item: COMMERCIAL-WORKFLOW-ARV-053-001
   admitted_pipeline:
-    - COMMERCIAL-WORKFLOW-ARV-022-001
     - COMMERCIAL-WORKFLOW-ARV-053-001
     - COMMERCIAL-WORKFLOW-ARV-055-001
     - COMMERCIAL-WORKFLOW-ARV-057-001
@@ -270,7 +269,8 @@ execution_snapshot:
     - MOB-4-IOS-PORTFOLIO-METRICS-001
     - ARV-015-OPERATOR-PROFILE-PARSER-001
     - COMMERCIAL-WORKFLOW-ARV-019-001
-  note: 'As of 2026-10-07 21:32 MSK, COMMERCIAL-WORKFLOW is 2/12 complete. The next ready item is COMMERCIAL-WORKFLOW-ARV-022-001; the remaining ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066 and ARV-069 items remain admitted. ARV-004 learning-loop work remains post-MVP and is not part of this admission.'
+    - COMMERCIAL-WORKFLOW-ARV-022-001
+  note: 'As of 2026-10-07, COMMERCIAL-WORKFLOW is 3/12 complete. ARV-022 OCR fallback is complete in PR #205 after exact-head CI; the next ready item is COMMERCIAL-WORKFLOW-ARV-053-001. The remaining ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066 and ARV-069 items remain admitted. ARV-004 learning-loop work remains post-MVP and is not part of this admission.'
 
 development_strategy:
   principle: copy_commodity_invent_moat

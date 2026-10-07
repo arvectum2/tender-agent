@@ -679,7 +679,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-022-001
   strategy: REUSE
   title: Reused OCR fallback for scanned tender documents
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -688,7 +688,7 @@ items:
   - ARV-022
   dependencies: []
   executor_scope: 'Integrate an existing OCR/CV engine or the existing Data Platform OCR contract as a fallback for scanned pages/tables, preserving coordinates/confidence and routing low-confidence output to human review. Do not build a custom OCR engine or duplicate Data Platform roadmap work.'
-  done_gate: 'Scanned-document fallback is deterministic and provenance-aware, low-confidence output fails closed to review, native-text paths do not regress, and focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied: Tender Agent reuses Data Platform DP-OCR-001 rather than owning a duplicate OCR engine; Data Platform PR #85 exposed existing OCR metadata additively and merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7; Tender Agent preserves OCR provider/page/word confidence and bounding boxes, routes low/missing confidence to human review, and leaves native-text paths unchanged. Focused tests passed, exact-head CI run 37674689621 was green, and PR #205 squash-merged as b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc.'
 
 - order: 320
   task_id: COMMERCIAL-WORKFLOW-ARV-053-001
