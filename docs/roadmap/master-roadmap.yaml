@@ -186,7 +186,7 @@ owner_commercial_workflow_directive_2026_10_07:
 
 current_status_summary:
   as_of: '2026-10-07T17:52:00+03:00'
-  verified_main_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
+  verified_main_commit: b4723cc913f455158caf6f27b86d4039bee1af8b
   active_execution_item: null
   active_execution_state: admitted_queue_ready
   last_completed_task: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
