@@ -65,28 +65,30 @@ completed:
 - '2026-10-08: PR #209 exact-head CI run 37686654714 passed on pre-reconciliation
   head 233bed67b907e087f5252d1ebcf897924f6b651f; exact-head CI must be rerun after
   this main reconciliation before merge.'
-current: 'Verify the reconciled ARV-053 scoring-reuse correction on top of current
-  main, then require fresh exact-head CI for PR #209 before guarded merge.'
+- '2026-10-08: After reconciling current main, the scoring-reuse correction passed
+  the ARV-053/customer-role/recovery/supplier regression set (46 passed, 34 skipped),
+  Ruff check/format, make check and git diff --check.'
+current: 'Push the reconciled ARV-053 scoring-reuse correction and require fresh exact-head
+  CI on PR #209 before guarded merge.'
 pending:
-- Run focused ARV-053 regressions and make check after reconciling current main.
-- 'Push the reconciled correction head and require fresh exact-head GitHub CI for
-  PR #209.'
+- Push the reconciled correction/checkpoint head.
+- 'Verify fresh exact-head GitHub CI for PR #209.'
 - 'Merge PR #209 under active AM-4 only if all gates remain valid.'
 - Perform final ARV-053 correction bookkeeping, update AM-4 evidence/counter, and
-  leave ARV-055 as the next ready admitted item.
-last_verified_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+  keep ARV-055 as the next ready admitted item.
+last_verified_commit: bd1de98bf764daa0280be6bd9ba3964cf6f90338
 test_results:
-- 'PR #207 exact-head GitHub CI run 37684732897: SUCCESS; merged as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e'
-- 'full local suite before merge: 3112 passed, 236 skipped; only known main-baseline
-  R9 pg_restore failure'
-- 'scoring-reuse correction relevant regressions: 46 passed, 34 skipped'
-- 'scoring-reuse correction make check: PASS'
-- 'scoring-reuse correction Ruff/format + git diff --check: PASS'
-updated_at: '2026-10-08T00:28:35+03:00'
-resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv053-scoring-reuse-20261007.
-  Run focused tests/make check, push the reconciled head, require exact-head CI on
-  PR #209, merge if green under AM-4, then finalize correction bookkeeping without
-  duplicating ARV-055 work.'
+- 'ARV-053 + customer-role + recovery/supplier regressions after main reconciliation:
+  46 passed, 34 skipped'
+- 'Ruff check/format on correction slice: PASS'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+- 'pre-reconciliation PR #209 exact-head CI run 37686654714: SUCCESS; fresh exact-head
+  CI required after current-main merge'
+updated_at: '2026-10-08T00:29:08+03:00'
+resume_instruction: 'Verify PR #209 exact-head CI after pushing the reconciled head.
+  If fully green and AM-4 remains valid, merge #209, then finalize ARV-053 correction
+  bookkeeping and leave COMMERCIAL-WORKFLOW-ARV-055-001 next.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053

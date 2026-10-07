@@ -65,6 +65,9 @@ completed:
 - '2026-10-08: PR #209 exact-head CI run 37686654714 passed on pre-reconciliation
   head 233bed67b907e087f5252d1ebcf897924f6b651f; exact-head CI must be rerun after
   this main reconciliation before merge.'
+- '2026-10-08: After reconciling current main, the scoring-reuse correction passed
+  the ARV-053/customer-role/recovery/supplier regression set (46 passed, 34 skipped),
+  Ruff check/format, make check and git diff --check.'
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
@@ -76,20 +79,21 @@ pending:
 - Add focused role/provenance/unknown-state/regression tests.
 - Run full relevant verification and exact-head CI, then merge/bookkeep under active
   AM-4.
-last_verified_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+last_verified_commit: bd1de98bf764daa0280be6bd9ba3964cf6f90338
 test_results:
-- 'PR #207 exact-head GitHub CI run 37684732897: SUCCESS; merged as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e'
-- 'full local suite before merge: 3112 passed, 236 skipped; only known main-baseline
-  R9 pg_restore failure'
-- 'scoring-reuse correction relevant regressions: 46 passed, 34 skipped'
-- 'scoring-reuse correction make check: PASS'
-- 'scoring-reuse correction Ruff/format + git diff --check: PASS'
-updated_at: '2026-10-08T00:28:35+03:00'
-resume_instruction: 'Verify the reconciled correction, rerun exact-head CI for PR
-  #209, merge if green, then finalize ARV-053 correction bookkeeping.'
-current_stage: reconciled_correction_verification
+- 'ARV-053 + customer-role + recovery/supplier regressions after main reconciliation:
+  46 passed, 34 skipped'
+- 'Ruff check/format on correction slice: PASS'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+- 'pre-reconciliation PR #209 exact-head CI run 37686654714: SUCCESS; fresh exact-head
+  CI required after current-main merge'
+updated_at: '2026-10-08T00:29:08+03:00'
+resume_instruction: 'Push and verify the reconciled correction on PR #209; merge only
+  after exact-head CI is green, then finalize ARV-053 correction bookkeeping.'
+current_stage: fresh_exact_head_ci
 remaining:
-- focused verification after main reconciliation
+- push reconciled correction
 - 'fresh exact-head PR #209 CI'
 - guarded corrective merge
 - final correction bookkeeping
