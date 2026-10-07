@@ -1,78 +1,49 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
+status: in_progress
+task_id: DTR-3-POST-GO-AUTOMATION-001
 authority: OWNER_DIRECTIVE
-goal: 'Deliver the third bounded ARV-044 mobile slice: APNs push plumbing and safe deep links that open the correct Tender
-  Agent procurement case on iPhone.'
+goal: 'Deliver the next bounded Daily Tender Run stage: after an attributable human GO, automatically prepare factual readiness artifacts and advance submission/outcome tracking only from grounded evidence, without performing consequential ETP/signature/payment/submission actions.'
 definition_of_done:
-- MOB-3 starts from current main with completed MOB-1 and MOB-2 behavior preserved.
-- Native iOS app can request notification permission, register for remote notifications, receive an APNs device token, and
-  persist/sync that token through a dedicated Bearer-authenticated mobile API boundary.
-- Backend stores mobile push registrations idempotently without exposing APNs credentials or broadening the existing private
-  Tailscale MVP boundary.
-- Push payload contract identifies a Tender Agent case with a bounded deep-link target; tapping a notification opens the correct
-  procurement detail when that case exists.
-- App accepts the same bounded deep-link contract from custom URL handling without performing any procurement decision or
-  external commercial action.
-- Token/auth/network failures are surfaced safely and do not mutate procurement decision state.
-- Backend contract tests cover registration/idempotency and push/deep-link payload generation; focused iOS tests cover deep-link
-  parsing/routing and token request encoding.
-- Xcode project builds on current Xcode and focused tests pass on a configured simulator; physical-device APNs delivery is
-  attempted only if available and any external Apple credential/provisioning limitation is recorded rather than fabricated.
-- No automatic procurement decision, ETP action, signature, payment, bid submission, or external customer/supplier communication
-  is introduced.
-- Roadmap/checkpoint are reconciled, exact-head CI is green, and the implementation is merged under the explicit Owner directive
-  unless a real blocker appears.
+- Start from current main with DTR-1/DTR-2 and MOB-1/MOB-2/MOB-3 behavior preserved.
+- A canonical human GO can move an eligible Daily Tender Run item from WAIT_HUMAN into a restartable POST_DECISION stage without auto-deciding participation.
+- POST_DECISION reuses existing canonical readiness/application/package services and records a deterministic readiness snapshot or explicit blocked/unknown state; it does not fabricate application completeness.
+- TRACK_SUBMISSION advances only from canonical explicit-human or source-grounded submission evidence; absence of evidence leaves the case pending and never claims submission.
+- TRACK_OUTCOME consumes existing source-grounded outcome evidence and updates the canonical lifecycle/portfolio idempotently; absence or ambiguity remains pending/unknown.
+- DTR resume/run paths can continue already-decided items through the new stages without chat orchestration and without redoing completed work.
+- Failures in one procurement remain isolated, persisted and restartable.
+- No ETP login/action, bid submission/modification, EDS/UKEP/private-key use, payment, bank guarantee purchase, supplier/customer outreach, or autonomous GO/NO GO is introduced.
+- Focused backend tests cover GO transition, readiness grounding, submission evidence gating, outcome grounding, idempotent resume and fail-closed behavior.
+- Relevant deterministic tests and git diff checks pass; exact-head CI is green before merge.
+- Roadmap/checkpoint are reconciled after merge and the canonical checkpoint is marked completed.
 completed:
-- Owner explicitly admitted the next mobile stage (MOB-3) on 2026-10-06.
-- Verified canonical checkpoint had MOB-2 completed and explicitly required separate admission for MOB-3.
-- Verified main at 75898944a75889cc07a55fb6164da05104afa811 and clean/synced before branching.
-- Verified the single hourly Tender Agent Watchdog already exists and is enabled.
-- Inspected the MOB-3 roadmap/product contract and the existing iOS/mobile API architecture.
-- Added revocable mobile-device access, idempotent APNs registrations, sanitized mobile device API responses, a delivery ledger,
-  Apple token-auth sender, and bounded procurement/digest deep-link payloads.
-- Wired REPORT_READY, PROCUREMENT_CHANGED, DEADLINE_RISK, OUTCOME_AVAILABLE, and due DEFER reminders as non-authoritative
-  post-commit notification side effects.
-- Added Mac mini maintenance CLI for due reminders and lost-device revocation; APNs provider delivery remains disabled by
-  default until local Apple credentials are provisioned.
-- Added iOS notification permission/APNs token plumbing, Bearer-authenticated token sync/revocation, safe tenderagent URL
-  routing, notification-tap routing, and fetch-on-deep-link for uncached procurement cases.
-- Added backend tests for registration, invalid tokens, revocable bearer access, APNs sender headers/token auth, delivery
-  idempotency, payload deep links, and deferred reminders.
-- Added focused Swift tests for deep-link parsing, notification payload routing, registration payload encoding, and offline
-  non-mutation.
-- Verified Alembic has a single head at 101_add_mobile_push.
-- Verified simulator custom URL opening and simulated APNs injection; simctl reported the notification sent to com.arvectum.tenderagent.
-- Attempted physical iPhone verification on device 00008110-001C51810A12401E; Xcode stopped before launch because the current
-  Apple provisioning profile lacks Push Notifications and aps-environment. No real APNs delivery was claimed.
-- 'First PR #176 CI run 37533477063 exposed a stale requirements.lock after adding APNs HTTP/2/JWT dependencies; regenerated
-  the lock with the CI-pinned uv 0.12.8 command.'
-current: 'MOB-3 is complete: implementation and roadmap reconciliation are merged with exact-head CI green.'
-pending: []
-last_verified_commit: 8a6a6bea994226422cc54c36156f16a6c2b44aa9
+- '2026-10-07: Verified MOB-3 completed on main at 4f823ae5e8dc67e836f8cc4192479b917ea0fbd6 and the single hourly Tender Agent Watchdog remains enabled.'
+- '2026-10-07: Owner continuation command admitted DTR-3 as the next product delivery stage before MOB-4.'
+- 'Inspected Daily Tender Run, event/decision log, readiness, bid package, submission control, post-submission, outcome intake and Procurement Portfolio contracts.'
+- 'Implemented reuse-first post-GO orchestration with persisted post_go state inside the existing DTR item synthesis payload; no schema migration or parallel lifecycle was added.'
+- 'Human GO now fails closed to READINESS_BLOCKED when canonical prerequisites are absent, advances to TRACK_SUBMISSION only when readiness/package state is ready, and advances to TRACK_OUTCOME only from canonical SUBMITTED evidence.'
+- 'Recorded outcome evidence closes the DTR item as OUTCOME_RECORDED; NO_GO terminates the item and DEFER remains under the human gate.'
+- 'Mobile and portfolio human decisions can resume the DTR item; canonical submitted and outcome evidence also trigger a safe DTR continuation.'
+- 'No start_submission_execution, ETP action, signature, payment, supplier/customer communication or automatic participation decision was added.'
+- 'Added DTR API regression coverage for fail-closed GO, idempotent resume, no fabricated submission, and DEFER.'
+- 'Opened implementation PR #179 at head 776ccf78c4ba17e3abafcafa79b2d51cc974f8a0; exact-head CI run 37574296771 is in progress.'
+current: 'Wait for exact-head PR #179 CI. Fix any deterministic failures, then merge only when all repository gates are green.'
+pending:
+- Verify PR #179 exact-head CI is fully green and address any failure.
+- Merge the implementation PR under the explicit Owner directive if repository gates remain green.
+- Reconcile the master roadmap with merged DTR-3 evidence.
+- Merge roadmap reconciliation, close the canonical checkpoint as completed, and return main clean/synced.
+last_verified_commit: 4f823ae5e8dc67e836f8cc4192479b917ea0fbd6
 test_results:
-- 'Python targeted quality: Ruff PASS; git diff --check PASS.'
-- 'Mobile/portfolio backend: 22 passed, 18 warnings in 1.75s.'
-- 'Combined mobile/portfolio/Daily Tender Run/procurement monitoring: 37 passed, 24 warnings in 2.62s.'
-- 'Sprint 5B integration with --run-integration: 8 passed, 9 warnings in 2.55s, including outcome intake.'
-- 'Xcode 27 generic iOS Simulator build-for-testing: TEST BUILD SUCCEEDED.'
-- 'iPhone 17 / iOS 27.0 simulator focused TenderAgentTests: 9 tests, 0 failures, TEST SUCCEEDED.'
-- 'Simulator smoke: tenderagent://digest opened and simctl push accepted the MOB-3 payload.'
-- 'Physical iPhone attempt: blocked by current provisioning profile missing Push Notifications capability and aps-environment
-  entitlement.'
-- Current deployed Tailnet backend health is 200, but pre-merge runtime returns 404 for POST /mobile/v1/devices because MOB-3
-  is not deployed yet.
-- 'PR #176 initial exact-head run 37533477063 exposed stale requirements.lock; regenerated with uv==0.12.8.'
-- 'PR #176 corrected exact-head run 37533637202: SUCCESS; implementation squash-merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4.'
-- 'PR #177 roadmap reconciliation exact-head run 37570631734: SUCCESS; squash-merged as 8a6a6bea994226422cc54c36156f16a6c2b44aa9.'
-updated_at: '2026-10-07T07:35:00+03:00'
-resume_instruction: 'MOB-3 is completed. Do not reopen it automatically. DTR-3 or MOB-4 requires a separate explicit admission.'
+- 'Focused local execution unavailable in the current Remote Desktop command channel during this run; exact-head GitHub CI is the active executable verification.'
+- 'PR #179 exact-head CI run 37574296771: in progress.'
+updated_at: '2026-10-07T08:10:00+03:00'
+resume_instruction: 'Continue DTR-3 at PR #179: inspect exact-head CI 37574296771, fix failures if any, merge when green, then reconcile roadmap and close the checkpoint.'
 execution:
   claimed_by: ChatGPT interactive
-  execution_id: interactive-20261006-mob3
-  branch: feature/mob-3-ios-push-deeplinks-20261006
-  base_commit: 75898944a75889cc07a55fb6164da05104afa811
+  execution_id: interactive-20261007-dtr3
+  branch: feature/dtr-3-post-go-automation-20261007
+  base_commit: 4f823ae5e8dc67e836f8cc4192479b917ea0fbd6
   issue: null
   manual_override: true
   lease_until: null
