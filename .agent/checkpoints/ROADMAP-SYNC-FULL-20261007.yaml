@@ -1,0 +1,22 @@
+task_id: ROADMAP-SYNC-FULL-20261007
+status: in_progress
+goal: Refresh canonical roadmap status to current 2026-10-07 main without new product admission.
+definition_of_done:
+  - Historical registry preserved byte-for-byte.
+  - Current summary points to latest verified main.
+  - BASE overlay shows 18/18 confirmed_done.
+  - Queue shows zero non-done admitted items.
+  - Human roadmap clearly separates current status from historical progress.
+  - Validation/CI green and roadmap-only PR merged.
+completed:
+  - Current main/queue/BASE reconciliation verified.
+current: Roadmap metadata edits.
+remaining:
+  - Machine roadmap.
+  - Human roadmap.
+  - Validation.
+  - PR / CI / merge.
+last_verified_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
+test_results: []
+resume_instruction: Roadmap only; no new implementation admission.
+updated_at: '2026-10-07T13:36:00+03:00'
