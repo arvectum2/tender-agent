@@ -38,6 +38,9 @@ completed:
   and participation_decision=false.'
 - '2026-10-07: Focused/relevant regression suite passed: 46 passed, 34 skipped; make
   check and git diff --check passed.'
+- '2026-10-07: Full local make test completed with 3112 passed / 236 skipped and only
+  the known R9 pg_restore acceptance failure; that identical failure was already reproduced
+  on clean main during ARV-022 and is unrelated to this slice.'
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
@@ -52,15 +55,16 @@ pending:
 last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
+- 'new ARV-053 focused tests after formatting: 4 passed'
 - 'make check: PASS'
-- 'ruff on changed ARV-053/router files: PASS'
+- 'ruff + ruff format on changed files: PASS'
+- 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
+  acceptance failure)'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T23:32:23+03:00'
-resume_instruction: Run full make test, then take the implementation through exact-head
-  PR CI and guarded merge; finish ARV-053 bookkeeping afterward.
-current_stage: full_verification
+updated_at: '2026-10-07T23:35:21+03:00'
+resume_instruction: Take the ARV-053 branch through exact-head PR CI/merge, then perform
+  completion bookkeeping and advance to ARV-055.
+current_stage: pr_ci
 remaining:
-- full repository make test
-- implementation commit/push
-- exact-head PR CI and guarded merge
+- implementation PR exact-head CI and guarded merge
 - completion bookkeeping and queue advance to ARV-055

@@ -38,24 +38,30 @@ completed:
   and participation_decision=false.'
 - '2026-10-07: Focused/relevant regression suite passed: 46 passed, 34 skipped; make
   check and git diff --check passed.'
-current: Run full repository tests, then open the ARV-053 implementation PR and require
-  exact-head CI before guarded merge.
+- '2026-10-07: Full local make test completed with 3112 passed / 236 skipped and only
+  the known R9 pg_restore acceptance failure; that identical failure was already reproduced
+  on clean main during ARV-022 and is unrelated to this slice.'
+current: Open the ARV-053 implementation PR against current main, require exact-head
+  GitHub CI, and merge only if AM-4 remains active.
 pending:
-- Run full make test and resolve any ARV-053 regressions.
-- Commit/push the implementation and checkpoint.
-- Open ARV-053 PR against current main and require exact-head GitHub CI.
-- Merge under active AM-4 only if all gates remain valid, then perform completion
-  bookkeeping and advance to ARV-055.
+- Push formatting/checkpoint commits.
+- Open ARV-053 PR against current main and verify exact-head GitHub CI.
+- Merge under active AM-4 only if all gates remain valid.
+- Perform completion bookkeeping, update the AM-4 counter, and advance canonical queue
+  to ARV-055.
 last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
+- 'new ARV-053 focused tests after formatting: 4 passed'
 - 'make check: PASS'
-- 'ruff on changed ARV-053/router files: PASS'
+- 'ruff + ruff format on changed files: PASS'
+- 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
+  acceptance failure)'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T23:32:23+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv053-commercial-20261007.
-  Run full make test first. If only known main-baseline failures remain, commit/push,
-  open the ARV-053 PR, verify exact-head CI, then merge/bookkeep under AM-4.
+updated_at: '2026-10-07T23:35:21+03:00'
+resume_instruction: Open the ARV-053 implementation PR from agent/commercial-workflow-arv-053-001,
+  require exact-head CI, merge under active AM-4 if green, then complete bookkeeping
+  and advance to COMMERCIAL-WORKFLOW-ARV-055-001.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053
