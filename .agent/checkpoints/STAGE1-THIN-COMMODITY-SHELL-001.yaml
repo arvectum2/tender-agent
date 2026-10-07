@@ -1,5 +1,5 @@
 task_id: STAGE1-THIN-COMMODITY-SHELL-001
-status: in_progress
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Close Strategic Program Stage 1 at the thin-commodity-shell exit gate.
 definition_of_done:
@@ -11,16 +11,15 @@ definition_of_done:
   - Merge bounded PR under explicit Owner direction.
 completed:
   - Task admitted from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9.
-current: Acceptance gate passed; PR/CI pending.
-remaining:
-  - Open bounded completion PR.
-  - Exact-head CI.
-  - Merge and finalize queue/checkpoint.
-last_verified_commit: b2dee5d
+current: Completed; Stage 1 merged in PR #192.
+remaining: []
+last_verified_commit: a58ec11ef4324f80fe516a68b1441e3db4208e6b
 test_results:
   - "Focused Stage 1 gate: 67 passed, 10 skipped."
   - "uv run make check: PASS."
   - "git diff --check: PASS."
   - "No demonstrated gap requires a new commodity subsystem."
-resume_instruction: Open completion PR; wait for exact-head CI; merge under explicit Owner directive if green.
-updated_at: '2026-10-07T14:22:00+03:00'
+  - "PR #192 exact-head CI 37612128040: SUCCESS 9/9."
+  - "PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b."
+resume_instruction: Completed. Do not reopen Stage 1 without a new measured gap or explicit Owner direction.
+updated_at: '2026-10-07T14:41:00+03:00'
