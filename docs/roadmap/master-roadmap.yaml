@@ -2135,12 +2135,15 @@ legacy_registry:
     comment: Рынок смещается от отдельного отчёта к рабочему месту и outcome-tracking.
     dependencies_raw: BASE-014, ARV-008
   reconciliation:
-    state: admitted_in_progress
+    state: completed
     verified_at: '2026-10-07'
     evidence:
     - path: docs/roadmap/ARV-019_COMMERCIAL_WORKFLOW_2026-10-07.md
       detail: Canonical lifecycle, readiness/blocker, submission/outcome and team KPI projection implementation.
-    notes: The bounded slice reuses DealStatus, Procurement Portfolio and Submission Readiness. It adds no parallel lifecycle or consequential external action.
+    - pull_request: 198
+      merge_commit: 8f13060bdef0a1db81e0d29fb8f21f883de62284
+      ci_runs: [37660214910, 37660223117]
+    notes: Completed by reusing DealStatus, Procurement Portfolio and Submission Readiness; no parallel lifecycle or consequential external action.
 - id: ARV-063
   legacy_snapshot:
     queue_order: 28

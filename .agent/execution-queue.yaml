@@ -664,7 +664,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-019-001
   strategy: COPY_PATTERN
   title: Complete procurement kanban and operator workflow
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -673,7 +673,7 @@ items:
   - ARV-019
   dependencies: []
   executor_scope: 'Extend the existing Procurement Kanban/status engine into the roadmap-defined automatic funnel, readiness/blockers, submission/execution/outcome visibility and team KPI projection without creating a second workflow state model.'
-  done_gate: 'The existing canonical lifecycle powers the expanded kanban/workspace views and deterministic KPI/outcome projections; no autonomous participation/submission action is introduced; focused tests and exact-head CI pass.'
+  done_gate: 'Satisfied: canonical DealStatus powers the expanded operator workflow; readiness/blocker, submission/outcome and team KPI projections reuse existing services; focused tests passed; PR #198 exact-head CI runs 37660214910/37660223117 were green and the PR squash-merged as 8f13060bdef0a1db81e0d29fb8f21f883de62284; no autonomous participation/submission or external effect was introduced.'
 
 - order: 310
   task_id: COMMERCIAL-WORKFLOW-ARV-022-001

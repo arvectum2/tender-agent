@@ -6,4 +6,4 @@ Each projected item exposes its canonical status, human/agent decision, submissi
 
 The kanban cards now display decision, readiness, blocker count and outcome. The `/commercial-console/workflow` endpoint exposes the same stages together with the existing portfolio KPI calculations. Status changes remain human-initiated through the canonical status engine; this slice adds no autonomous participation, submission, signing, external communication or commercial effect.
 
-Focused verification covers the operator console, portfolio and canonical status engine. Exact-head CI remains required before completion or merge.
+Focused verification covers the operator console, portfolio and canonical status engine. PR #198 passed exact-head CI in runs 37660214910 and 37660223117 and was squash-merged to main as 8f13060bdef0a1db81e0d29fb8f21f883de62284.
