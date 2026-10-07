@@ -83,7 +83,7 @@ company_authority_gate:
   material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   material_policy_change_review_satisfied_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 3
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 5
   automatic_merge_evidence:
     - pr: 199
       merge_commit: 94534c81afd786b9c8944817ffc49c12396c7d3b
@@ -95,6 +95,14 @@ company_authority_gate:
       merge_commit: 0948f5f438fbe3b25a8251684dd4eebc36775e05
       task: COMMERCIAL-WORKFLOW-ARV-019-001
       note: completion bookkeeping merged automatically under the same AUTO task
+    - pr: 205
+      merge_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
+      task: COMMERCIAL-WORKFLOW-ARV-022-001
+      note: OCR fallback implementation merged automatically after exact-head CI run 37674689621 passed
+    - pr: 206
+      merge_commit: pending_until_merge
+      task: COMMERCIAL-WORKFLOW-ARV-022-001
+      note: completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 
 authority:
