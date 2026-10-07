@@ -14,16 +14,15 @@ completed:
   - "Created a clean recovery branch from current main after the stale branch diverged."
   - "Implemented typed operator commercial/qualification/risk fields in the existing SupplierProfile model."
   - "Implemented deterministic markdown parsing and analysis_context binding."
-current: "Add deterministic tests and canonical queue/roadmap evidence, then validate exact head."
+current: "Implementation/evidence complete; fresh exact-head CI pending after fixing a stale governance lifecycle assertion."
 remaining:
-  - "Add regression tests."
-  - "Update queue/roadmap evidence."
-  - "Run exact-head CI."
+  - "Run fresh exact-head CI."
   - "Merge if all renewed AM-4 gates remain green."
   - "Verify main and finalize canonical task state."
 last_verified_commit: 61e7f38196e6b7046fff421380714b1a692e1307
 test_results:
   - "Historical pre-recovery focused gate on PR #127: 41 passed."
-  - "Recovery branch exact-head validation: pending."
-updated_at: "2026-10-07T19:36:00+03:00"
-resume_instruction: "Continue on agent/arv-015-operator-profile-parser-001-r2 only. Add tests and evidence, then validate exact head. If CI is green and AM-4 gates remain valid, merge the recovery PR, close superseded PR #127, verify main, and mark completed."
+  - "CI run 37653121154: 8/9 jobs green; quality had 3103 passed / 236 skipped and one governance-only failure caused by status=ready being frozen in tests after legitimate queue progress."
+  - "Governance lifecycle assertion fixed; fresh exact-head CI pending."
+updated_at: "2026-10-07T19:48:00+03:00"
+resume_instruction: "Check fresh exact-head CI on the recovery branch. If green, finalize done/completed bookkeeping on the same branch, re-earn exact-head green, merge PR #199 under renewed AM-4, close superseded PR #127, and verify canonical main."
