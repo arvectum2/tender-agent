@@ -225,6 +225,13 @@ def record_submission_attempt(session: Session, payload: RegisterSubmissionAttem
             },
         )
     session.commit()
+    if terminal_status == SubmissionExecutionStatus.SUBMITTED:
+        try:
+            from src.modules.daily_tender_run.post_go import advance_post_decision_for_deal
+
+            advance_post_decision_for_deal(session, execution_set.deal_id)
+        except Exception:  # noqa: BLE001 - submission evidence is already canonical
+            session.rollback()
     session.refresh(attempt)
     return attempt
 
