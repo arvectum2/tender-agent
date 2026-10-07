@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from src.modules.daily_tender_run.manager_synthesis import synthesize_manager_brief
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
+from src.modules.daily_tender_run.post_go import advance_post_go_for_run, post_go_state
 from src.modules.daily_tender_run.profiles import load_daily_tender_profile
 from src.modules.daily_tender_run.schemas import (
     DailyTenderProfile,
@@ -791,6 +792,17 @@ def execute_daily_tender_run(
     session.commit()
     session.refresh(run)
 
+    # DTR-3 continues only from persisted human/source evidence. This pass is
+    # idempotent and never starts a submission execution.
+    run = advance_post_go_for_run(session, run.run_id)
+    items = list(
+        session.scalars(
+            select(DailyTenderRunItem)
+            .where(DailyTenderRunItem.run_id == run.run_id)
+            .order_by(DailyTenderRunItem.created_at.asc(), DailyTenderRunItem.id.asc())
+        )
+    )
+
     # MOB-3 notifications are non-authoritative side effects. The canonical
     # Daily Tender Run is already committed before any APNs work starts.
     from src.modules.mobile_api.push import (
@@ -918,6 +930,7 @@ def to_run_response(session: Session, run: DailyTenderRun) -> DailyTenderRunResp
                 strongest_reasons=list(item.strongest_reasons_json or []),
                 blockers=list(item.blockers_json or []),
                 unknowns=list(item.unknowns_json or []),
+                post_go=post_go_state(item),
                 error=item.error,
                 created_at=item.created_at,
                 updated_at=item.updated_at,
