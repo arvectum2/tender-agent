@@ -27,13 +27,12 @@ class CounterpartyFactorResponse(APIModel):
 class CounterpartyRiskAggregateResponse(APIModel):
     available: bool
     observed_risk_score: float | None = None
+    source_confidence_score: float | None = None
     band: Literal[
         "INSUFFICIENT_EVIDENCE",
-        "NO_OBSERVED_ADVERSE_FLAGS",
-        "LOW",
-        "MEDIUM",
-        "HIGH",
-        "CRITICAL",
+        "PASS",
+        "NEEDS_REVIEW",
+        "FAIL",
     ]
     calculation: str
     included_factor_codes: list[str] = Field(default_factory=list)

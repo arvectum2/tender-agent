@@ -83,7 +83,7 @@ company_authority_gate:
   material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   material_policy_change_review_satisfied_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 7
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 9
   automatic_merge_evidence:
     - pr: 199
       merge_commit: 94534c81afd786b9c8944817ffc49c12396c7d3b
@@ -108,9 +108,17 @@ company_authority_gate:
       task: COMMERCIAL-WORKFLOW-ARV-053-001
       note: evidence-backed counterparty cards merged automatically after exact-head CI run 37684732897 passed
     - pr: 208
+      merge_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+      task: COMMERCIAL-WORKFLOW-ARV-053-001
+      note: initial ARV-053 completion bookkeeping merged automatically under the same AUTO task
+    - pr: 209
+      merge_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
+      task: COMMERCIAL-WORKFLOW-ARV-053-001
+      note: corrective scoring-reuse slice merged automatically after exact-head CI run 37689743505 passed
+    - pr: 210
       merge_commit: pending_until_merge
       task: COMMERCIAL-WORKFLOW-ARV-053-001
-      note: completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
+      note: corrective completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 
 authority:
