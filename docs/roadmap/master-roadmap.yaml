@@ -171,6 +171,11 @@ current_status_summary:
     roadmap_item: ARV-004
     state: post_mvp_not_admitted
     note: 'BASE-011 closes the Hermes infrastructure foundation. Real-user self-improvement remains a separately gated post-MVP Feedback & Learning Loop under ARV-004.'
+  daily_tender_run:
+    owner_priority: P0
+    bounded_sequence_state: complete
+    completed_stages: [DTR-1, DTR-2, DTR-3]
+    note: 'DTR-1/DTR-2 pre-decision contour remains implemented; DTR-3 post-GO orchestration is merged. Human GO / NO GO / DEFER and source-grounded submission/outcome evidence boundaries remain unchanged.'
   mobile_product:
     owner_priority: P0
     bounded_sequence_state: complete
