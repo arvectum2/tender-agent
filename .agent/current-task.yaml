@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: DP-QUALITY-CORE-3.2-002
 authority: OWNER_DIRECTIVE
 goal: Close the remaining measurable quality-core retrieval/ranking debt in arvectum2/data-platform without moving frozen benchmark truth or weakening existing gates.
@@ -18,21 +18,23 @@ completed:
 - Score-aware fusion diagnostics on 19 single-collection acceptance cases improve the local case only by regressing yandex-tkp-comparison and aggregate top-1/MRR.
 - Frozen relevance judgments were not changed. Decision: no default ranking-code change from this isolated ambiguous case.
 - Added benchmark result artifact and documentation in the data-platform worktree.
-current: Verify the no-change ranking decision, commit/push the evidence branch, run exact-head CI, and merge if green.
-pending:
-- Validate result JSON/docs and run relevant focused checks.
-- Commit and push evidence branch.
-- Open PR, verify exact-head CI, merge if green.
-- Mark checkpoint completed with final merge SHA and checks.
-last_verified_commit: e4f0db89a300f0493410474842ee43b7f059acab
+current: Completed. The remaining growth-photo-pixels gap is closed as a measured non-action; benchmark truth and default ranking code remain unchanged.
+pending: []
+last_verified_commit: ac2bbf00a0378322ef1778c2859f93c3652d1457
 test_results:
 - "Previous step: real-source faithfulness 5/5; all safety metrics 1.0; PR #80 CI green."
-updated_at: '2026-10-07T15:32:00+03:00'
-resume_instruction: Continue in data-platform branch feature/dp-quality-core-3-2-ranking-gap. Validate the frozen diagnostic artifact/docs, run focused checks, commit/push, open PR, require exact-head CI green, merge, then mark this checkpoint completed.
+- "growth-photo-pixels reproduced: baseline RRF nDCG@5=0.906 with accepted top-1; vector-only diagnostic nDCG@5=0.967; BGE rerank nDCG@5=0.733."
+- "19 single-collection diagnostic: current RRF top1=1.0, MRR=1.0, mean nDCG@5=0.9951; tested score-aware alternatives regressed yandex-tkp-comparison and aggregate top1/MRR."
+- "Focused evaluation/search regression: 35 passed; JSON parse and git diff --check PASS."
+- "Data Platform PR #81 exact-head CI run 37620125711: SUCCESS; Python 3.11/3.12/3.13 and JavaScript SDK green."
+- "PR #81 merged as ac2bbf00a0378322ef1778c2859f93c3652d1457."
+- "Post-merge data-platform-ci run 37620284400: SUCCESS; Mirror to GitVerse also SUCCESS."
+updated_at: '2026-10-07T15:22:00+03:00'
+resume_instruction: Task completed. Do not change default fusion or frozen growth-photo-pixels judgments from this isolated ambiguous case. Reopen ranking work only with broader benchmark evidence or explicit human relevance adjudication.
 execution:
   claimed_by: ChatGPT
   execution_id: dp-quality-core-3.2-002
-  branch: feature/dp-quality-core-3-2-ranking-gap
+  branch: null
   base_commit: e4f0db89a300f0493410474842ee43b7f059acab
   issue: null
   manual_override: true
