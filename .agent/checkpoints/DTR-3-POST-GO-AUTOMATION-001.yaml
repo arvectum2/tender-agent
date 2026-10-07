@@ -31,14 +31,14 @@ completed:
 - 'Added focused tests covering missing-readiness fail-closed behavior, HUMAN NO_GO stop, unverified SUBMITTED rejection, source-bound receipt acceptance, ungrounded outcome rejection, grounded outcome completion and idempotent resume.'
 - 'Final Sprint 5A + 5B integration regression passed after the readiness-coherence and unattended-resume refinements.'
 - 'Full local suite ran 3070 passed / 236 skipped with one R9 backup-restore failure at pg_restore; the exact same R9 test fails on an untouched clean worktree at base 4f823ae, proving the failure is pre-existing/environmental rather than introduced by DTR-3.'
-current: 'Local DTR-3 implementation and relevant verification are complete. Finalize checkpoint evidence, commit/push the isolated branch, open PR, and require exact-head CI before merge.'
+current: 'Implementation commit 15e21848186ad2a5aba22f276fe9eee42a7459bd is pushed and PR #180 is open. Checkpoint the verification state, then require the new exact-head CI to pass before merge.'
 pending:
-- Commit and push the isolated DTR-3 implementation branch.
-- Open implementation PR and require exact-head CI green.
+- Commit/push this checkpoint update so PR #180 has one final exact head.
+- Require exact-head PR #180 CI green.
 - Merge under the explicit Owner directive if repository gates remain green.
 - Reconcile master roadmap with merged DTR-3 evidence.
 - Merge roadmap reconciliation, close the canonical checkpoint as completed, and return canonical main clean/synced without overwriting unrelated shared-checkout work.
-last_verified_commit: 4f823ae5e8dc67e836f8cc4192479b917ea0fbd6
+last_verified_commit: 15e21848186ad2a5aba22f276fe9eee42a7459bd
 test_results:
 - 'Ruff on DTR module, DTR tests, CLI and migration: PASS.'
 - 'Alembic heads: single head 102_add_daily_tender_post_decision.'
@@ -48,8 +48,9 @@ test_results:
 - 'uv run make test: 3070 passed, 236 skipped, 1 failed; only failure is tests/test_r9_backup_restore.py at pg_restore.'
 - 'Clean untouched base 4f823ae comparison: tests/test_r9_backup_restore.py reproduces the same pg_restore failure (1 failed, 3 passed), so the local full-suite failure is not a DTR-3 regression.'
 - 'make check and git diff --check: PASS.'
-updated_at: '2026-10-07T08:18:00+03:00'
-resume_instruction: 'Continue in isolated worktree /Volumes/ArvectumSSD/Arvectum/repos/tender-agent-dtr3. Commit/push the verified implementation, open a PR, require exact-head CI green, merge if green, then reconcile roadmap and close the checkpoint. Do not modify the unrelated dirty shared checkout.'
+- 'Implementation PR #180 opened from 15e21848186ad2a5aba22f276fe9eee42a7459bd.'
+updated_at: '2026-10-07T08:24:00+03:00'
+resume_instruction: 'Continue in isolated worktree /Volumes/ArvectumSSD/Arvectum/repos/tender-agent-dtr3. Commit/push this checkpoint-only update, verify exact-head PR #180 CI, merge when green, then reconcile roadmap and close the checkpoint. Do not modify the unrelated dirty shared checkout.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-dtr3
