@@ -1,0 +1,25 @@
+version: 1
+task_id: COMMERCIAL-WORKFLOW-ARV-022-001
+status: in_progress
+goal: Reuse Data Platform OCR fallback for scanned tender documents and project its evidence into Tender Agent with fail-closed review semantics.
+definition_of_done:
+  - Data Platform OCR is reused; no duplicate/custom Tender Agent OCR engine.
+  - OCR provenance, coordinates and confidence are retained in the Tender Agent document projection.
+  - Low-confidence OCR is marked for human review.
+  - Native-text paths remain unchanged.
+  - Focused/relevant tests and exact-head CI pass.
+completed:
+  - Canonical task/queue and renewed AM-4 state reconciled against current main.
+  - Historical PR #129 inspected and retained only as reusable evidence/pattern.
+  - Current Data Platform boundary verified; legacy local extraction is intentionally removed.
+  - DP-OCR-001 contract inspected: native first, local Tesseract fallback, coordinates/confidence, threshold 90; process endpoint metadata exposure is the remaining bridge gap.
+current_stage: compatibility_bridge
+remaining:
+  - close metadata exposure/consumption gap
+  - implement Tender Agent OCR provenance/review projection
+  - focused regression verification
+  - exact-head CI and guarded merge
+last_verified_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
+test_results: []
+resume_instruction: Work only in the isolated ARV-022 worktree. Prefer the existing Data Platform OCR result metadata over any local OCR implementation. Preserve native-text behavior and fail closed when OCR evidence is insufficient.
+updated_at: '2026-10-07T22:08:00+03:00'

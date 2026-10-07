@@ -1,39 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-050-BASE-017-RECONCILIATION-20261007
-authority: OWNER_DIRECTIVE
-goal: Reconcile historical ARV-050 R8 customer-pilot workspace with already confirmed BASE-017 without rewriting the immutable legacy snapshot.
+status: in_progress
+task_id: COMMERCIAL-WORKFLOW-ARV-022-001
+authority: AUTO
+goal: Integrate the existing OCR fallback for scanned tender documents without duplicating Data Platform OCR, preserving provenance/confidence/coordinates and failing low-confidence output closed to human review.
 definition_of_done:
-- Preserve ARV-050 and BASE-017 historical snapshot fields and IDs unchanged.
-- Revalidate that ARV-050 scope is materially the same completed R8 customer-pilot workspace already confirmed under BASE-017.
-- Set only the current ARV-050 reconciliation overlay to confirmed_done with explicit evidence and notes tying closure to BASE-017.
-- Synchronize the human MASTER_ROADMAP.md status row.
-- Add focused reconciliation evidence and verify the current R8 regression slice.
-- Parse roadmap YAML successfully and assert BASE-017 and ARV-050 are both confirmed_done.
-- Commit and push the bounded reconciliation; exact-head CI must be green before merge.
+  - Scanned-document fallback reuses the existing Data Platform OCR/CV contract; no custom OCR engine is introduced in Tender Agent.
+  - OCR provenance, page/word coordinates and confidence are preserved when the platform supplies them.
+  - Low-confidence OCR is explicitly routed to human review/fail-closed semantics.
+  - Native-text document paths do not regress or get forced through OCR.
+  - Focused tests and relevant regression tests pass.
+  - Exact-head GitHub CI passes before merge.
 completed:
-- '2026-10-07: Owner explicitly requested ARV-050 P0 reconciliation against already closed BASE-017.'
-- '2026-10-07: Verified BASE-017 is already confirmed_done and ARV-050 preserves the same R8 customer-pilot workspace completion snapshot but still has stale needs_revalidation overlay.'
-- '2026-10-07: Added explicit ARV-050 reconciliation evidence, changed only the current overlay to confirmed_done, and synchronized MASTER_ROADMAP.md; both legacy snapshots remain untouched.'
-- '2026-10-07: Focused R8 regression passed 22 tests; roadmap YAML assertions and git diff --check passed. A first ad-hoc assertion used the wrong YAML collection key and was corrected without repository changes.'
-- '2026-10-07: PR #202 exact-head push CI run 37665152795 succeeded on bc07d91a472b130909c60cbbebbaf4d6c15bcc9d with all 9 jobs green; GitHub reported no required branch checks.'
-- '2026-10-07: PR #202 squash-merged to main as bca06de3ac50adccb3b51e7cf2db43516bb6a770. No runtime, deployment, procurement or external side effect was introduced.'
-current: Definition of Done satisfied; historical ARV-050 is reconciled with the already closed BASE-017 R8 workspace baseline.
-pending: []
-last_verified_commit: bca06de3ac50adccb3b51e7cf2db43516bb6a770
-test_results:
-- 'Focused R8 regression: 22 passed, 5 warnings.'
-- 'Roadmap YAML parse/assertions: PASS (BASE-017 and ARV-050 both confirmed_done; shared R8 source preserved).'
-- 'git diff --check origin/main...HEAD: PASS.'
-- 'GitHub exact-head push CI run 37665152795: SUCCESS; migrations, docker-build, redis-integration, r8-acceptance-integration, p6-03 bridge, dependency-lock, r8-postgres-integration, quality and security all green.'
-updated_at: '2026-10-07T21:30:00+03:00'
-resume_instruction: Task completed. Do not reopen ARV-050 for R8 workspace implementation; BASE-017 remains the verified shared baseline. Continue with the next independently admitted Tender Agent item, COMMERCIAL-WORKFLOW-ARV-022-001, recovering existing OCR adapter work rather than duplicating it.
+  - '2026-10-07: Reconciled canonical queue/main. COMMERCIAL-WORKFLOW-ARV-022-001 is the next admitted AUTO item after ARV-015 and ARV-019.'
+  - '2026-10-07: Recovered historical OCR work from PR #129 instead of duplicating it; its local Tesseract adapter proved coordinates/confidence/review signaling but intentionally excluded production wiring.'
+  - '2026-10-07: Verified current Tender Agent architecture removed the legacy generic document extractor and delegates generic extraction/chunking to Data Platform.'
+  - '2026-10-07: Verified Data Platform DP-OCR-001 already implements native-text-first PDF extraction, local Tesseract fallback, word bounding boxes/confidence and benchmark-driven low-confidence escalation. The current non-persistent process_document response does not expose document metadata, so Tender Agent cannot yet consume OCR provenance through that endpoint.'
+current: Define and implement the smallest compatibility bridge that consumes existing Data Platform OCR metadata without reintroducing local OCR ownership in Tender Agent.
+pending:
+  - Implement the bounded OCR metadata/review projection on the current Data Platform-backed document path.
+  - Add focused tests covering scanned OCR provenance, low-confidence review and native-text non-regression.
+  - Run focused and boundary/regression tests.
+  - Commit and push the bounded implementation.
+  - Open or update a reviewable PR and verify exact-head CI.
+  - Merge only if renewed Company AM-4 and all ordinary auto-merge gates are still valid, then mark the checkpoint completed.
+last_verified_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
+test_results: []
+updated_at: '2026-10-07T22:08:00+03:00'
+resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv022-commercial-20261007 on agent/commercial-workflow-arv-022-001. Reuse Data Platform DP-OCR-001; do not restore the old local Tender Agent OCR engine. First close the process_document metadata bridge, then implement provenance/review projection and tests.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: a2f936db3485557a6a4b2ff27093526baf195f9f
+  claimed_by: ChatGPT
+  execution_id: chat-20261007-arv022
+  branch: agent/commercial-workflow-arv-022-001
+  base_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
   issue: null
   manual_override: false
   lease_until: null
