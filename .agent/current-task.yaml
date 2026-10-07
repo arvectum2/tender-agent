@@ -15,19 +15,25 @@ definition_of_done:
 completed:
 - Interpreted Owner request "всю ветку Commercial Core" as the canonical roadmap branch COMMERCIAL-WORKFLOW; accelerated Commercial Core v1 Stage 3 is already completed.
 - Verified COMMERCIAL-WORKFLOW canonical order: ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069.
-current: Create the fresh Company AM-4 renewal decision, then reconcile Tender Agent policy, queue, roadmap and tests.
+- Created Company governance PR #10 with the attributable 2026-10-07 Owner AM-4 review and renewal.
+- Merged Company PR #10 as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388; hard stops unchanged, counter reset to 0/10, next time-based review 2026-11-07.
+- Updated Tender Agent executor policy and watchdog authority source to the 2026-10-07 renewal.
+- Explicitly admitted all 12 COMMERCIAL-WORKFLOW roadmap items as ready AUTO queue entries with auto_merge=true and preserved hard stops.
+- Updated owner directive, canonical roadmap, human-readable roadmap and watchdog continuation tests.
+- Performed structural branch checks confirming the renewed authority reference, 0/10 counter and all 12 queue task IDs are present.
+current: Open the Tender Agent reconciliation PR, verify exact-head CI, then merge this Owner-directed governance/queue change.
 pending:
-- Create and merge the Company AM-4 renewal decision for 2026-10-07.
-- Update Tender Agent authority references and reset the automatic merge counter to 0/10.
-- Admit all 12 COMMERCIAL-WORKFLOW items into the execution queue.
-- Update roadmap/status overlays and policy tests.
-- Verify exact-head CI and merge.
-last_verified_commit: 05a939ebf0ecf770f5f3294c6cb2a44c11941541
+- Open Tender Agent PR from owner/commercial-workflow-am4-reset-20261007.
+- Verify exact-head CI/checks.
+- Merge the reconciliation and record final evidence.
+last_verified_commit: eadc53a44a29f8ef63354d0004681be4336c259c
 test_results:
-- "Pre-change canonical branch mapping: PASS."
-- "Pre-change queue state: no non-done admitted items."
-updated_at: '2026-10-07T17:40:00+03:00'
-resume_instruction: Continue only this Tender Agent governance/queue admission task. First complete the attributable Company AM-4 renewal, then update Tender Agent policy/queue/roadmap/tests on owner/commercial-workflow-am4-reset-20261007. Do not begin Commercial Workflow product implementation until the admission change is merged.
+- "Company AM-4 renewal PR #10: merged as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388."
+- "Structural authority reconciliation: PASS."
+- "Commercial Workflow queue presence: 12/12 task IDs present."
+- "Roadmap admission/state markers: PASS."
+updated_at: '2026-10-07T18:00:00+03:00'
+resume_instruction: Continue this reconciliation only. Open/inspect the Tender Agent PR, require exact-head CI green, merge on Owner instruction authority, then mark this checkpoint completed. The next watchdog run should start with ARV-015-OPERATOR-PROFILE-PARSER-001.
 execution:
   claimed_by: ChatGPT
   execution_id: commercial-workflow-am4-reset-20261007
