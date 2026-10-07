@@ -1,6 +1,6 @@
 version: 3
 repository: arvectum2/tender-agent
-updated_at: '2026-10-07T14:41:00+03:00'
+updated_at: '2026-10-07T17:52:00+03:00'
 owner_controls_order: true
 master_roadmap: docs/roadmap/master-roadmap.yaml
 master_roadmap_human: docs/roadmap/MASTER_ROADMAP.md
@@ -644,6 +644,186 @@ items:
   dependencies: []
   executor_scope: 'Audit and close the existing commodity shell across search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export. Reuse existing components; fix only demonstrated bounded gaps. No custom commodity subsystem and no authority expansion.'
   done_gate: 'SATISFIED: acceptance matrix and focused gate prove the shell usable end-to-end; focused gate 67 passed / 10 skipped; exact-head CI 37612128040 SUCCESS 9/9; PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b. Hard stops unchanged.'
+
+- order: 290
+  task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+  strategy: ADAPT
+  title: Structured RFQ-first operator profile ingestion
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Existing canonical successor candidate under ARV-015; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-015
+  dependencies: []
+  executor_scope: 'Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.'
+  done_gate: 'Synthetic operator_profile.md deterministically yields the already-defined structured supplier-profile fields; missing/malformed values stay unknown/null; Decision Core consumes the profile without external-action widening; focused tests and exact-head CI pass.'
+
+- order: 300
+  task_id: COMMERCIAL-WORKFLOW-ARV-019-001
+  strategy: COPY_PATTERN
+  title: Complete procurement kanban and operator workflow
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-019 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-019
+  dependencies: []
+  executor_scope: 'Extend the existing Procurement Kanban/status engine into the roadmap-defined automatic funnel, readiness/blockers, submission/execution/outcome visibility and team KPI projection without creating a second workflow state model.'
+  done_gate: 'The existing canonical lifecycle powers the expanded kanban/workspace views and deterministic KPI/outcome projections; no autonomous participation/submission action is introduced; focused tests and exact-head CI pass.'
+
+- order: 310
+  task_id: COMMERCIAL-WORKFLOW-ARV-022-001
+  strategy: REUSE
+  title: Reused OCR fallback for scanned tender documents
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-022 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-022
+  dependencies: []
+  executor_scope: 'Integrate an existing OCR/CV engine or the existing Data Platform OCR contract as a fallback for scanned pages/tables, preserving coordinates/confidence and routing low-confidence output to human review. Do not build a custom OCR engine or duplicate Data Platform roadmap work.'
+  done_gate: 'Scanned-document fallback is deterministic and provenance-aware, low-confidence output fails closed to review, native-text paths do not regress, and focused tests/exact-head CI pass.'
+
+- order: 320
+  task_id: COMMERCIAL-WORKFLOW-ARV-053-001
+  strategy: ADAPT
+  title: Evidence-backed counterparty card and risk scoring
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-053 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-053
+  dependencies: []
+  executor_scope: 'Build customer/supplier counterparty cards and transparent factor-level risk signals from source-bound procurement/contract evidence, reusing current data adapters and scoring primitives. Never collapse uncertainty into an opaque legal/reliability conclusion.'
+  done_gate: 'Every displayed factor is evidence-linked or explicitly unknown, aggregate presentation is explainable, no legal approval or participation decision is inferred, and focused tests/exact-head CI pass.'
+
+- order: 330
+  task_id: COMMERCIAL-WORKFLOW-ARV-055-001
+  strategy: ADAPT
+  title: Explainable similar-procurement search
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-055 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-055
+  dependencies: []
+  executor_scope: 'Add explainable similar-procurement retrieval over existing search/vector infrastructure using subject, positions, customer and requirements signals; expose why results are similar and deterministic guards against obvious false analogues.'
+  done_gate: 'Similarity results include evidence/explanations, false-analogue regressions are covered, no new generic search engine is introduced, and focused tests/exact-head CI pass.'
+
+- order: 340
+  task_id: COMMERCIAL-WORKFLOW-ARV-057-001
+  strategy: ADAPT
+  title: Historical price evidence and NMCK range
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-057 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-057
+  dependencies: []
+  executor_scope: 'Normalize source-bound historical price observations and expose comparable ranges/NMCK orientation with evidence for every comparison. Keep forecasts separate from observed facts and fail closed on incomparable or insufficient samples.'
+  done_gate: 'Historical-price ranges are reproducible from cited observations with explicit comparability/uncertainty, no commercial commitment is made, and focused tests/exact-head CI pass.'
+
+- order: 350
+  task_id: COMMERCIAL-WORKFLOW-ARV-059-001
+  strategy: ADAPT
+  title: Contract execution and outcome analytics
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-059 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-059
+  dependencies: []
+  executor_scope: 'Create the source-bound procurement -> contract -> execution stages -> payments -> timing -> penalties -> actual price -> outcome projection using existing canonical lifecycle/evidence primitives; feed factual outcomes back into analytics without autonomous learning promotion.'
+  done_gate: 'Execution/outcome facts remain artifact/source-bound with unknown states for missing evidence; portfolio/analytics consume the same canonical lifecycle; focused tests and exact-head CI pass.'
+
+- order: 360
+  task_id: COMMERCIAL-WORKFLOW-ARV-060-001
+  strategy: COPY_PATTERN
+  title: Case discussion, mentions and immutable decision journal
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-060 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-060
+  dependencies: []
+  executor_scope: 'Add internal ProcurementCase discussion, @mentions, evidence links and immutable decision/comment history by reusing current audit/event primitives. Notifications stay internal unless a separately admitted external delivery adapter exists.'
+  done_gate: 'Discussion records are tenant/case scoped, attributable and evidence-linkable; immutable decision history is preserved; no external communication is sent; focused tests/exact-head CI pass.'
+
+- order: 370
+  task_id: COMMERCIAL-WORKFLOW-ARV-063-001
+  strategy: ADAPT
+  title: Application package and client-template generator
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-063 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-063
+  dependencies: []
+  executor_scope: 'Generate reviewable Form 2, commercial proposal, declarations, specifications and inventories using reusable document/template tooling while preserving layout, working_kp.xlsx/version lineage and field provenance. Output remains draft/review-only.'
+  done_gate: 'Representative templates round-trip without destructive layout loss, generated fields have provenance/version evidence, artifacts remain review-only and are never submitted/signed, and focused tests/exact-head CI pass.'
+
+- order: 380
+  task_id: COMMERCIAL-WORKFLOW-ARV-064-001
+  strategy: ADAPT
+  title: Reusable company document store and profile
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-064 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-064
+  dependencies: []
+  executor_scope: 'Implement tenant-isolated reusable company-document/profile primitives for statutory documents, licenses, certificates, experience, requisites and templates with versions/expiry and safe autofill hooks. Use synthetic fixtures; do not import unrelated real private documents automatically.'
+  done_gate: 'Version/expiry/tenant-isolation rules are enforced, safe autofill consumes only explicitly stored profile facts, private-data boundaries remain unchanged, and focused tests/exact-head CI pass.'
+
+- order: 390
+  task_id: COMMERCIAL-WORKFLOW-ARV-066-001
+  strategy: ADAPT
+  title: One-click procurement import boundary
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-066 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-066
+  dependencies: []
+  executor_scope: 'Add a safe canonical import contract for procurement URL/registry number and bounded browser/share-action handoff surfaces that resolve into the existing customer case/intake path; DOM scraping must not be the sole source of truth.'
+  done_gate: 'Supported URL/number inputs resolve idempotently into canonical intake with provenance, unsupported/ambiguous inputs fail closed, handoff surfaces do not create a parallel data model, and focused tests/exact-head CI pass.'
+
+- order: 400
+  task_id: COMMERCIAL-WORKFLOW-ARV-069-001
+  strategy: ADAPT
+  title: Competition and bid-price forecast context
+  status: ready
+  authority: AUTO
+  independent: true
+  auto_merge: true
+  source: 'Canonical ARV-069 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  roadmap_scope:
+  - ARV-069
+  dependencies: []
+  executor_scope: 'Build evidence-backed forecast context for likely participants, price range and win factors using only validated historical/source features; surface sample size, model/evaluation quality and uncertainty. Never present forecast output as a promise of winning or an autonomous participation decision.'
+  done_gate: 'Forecast output clearly separates observed facts from model estimates, reports uncertainty/sample/evaluation evidence, stays advisory under HUMAN decision control, and focused tests/exact-head CI pass.'
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
