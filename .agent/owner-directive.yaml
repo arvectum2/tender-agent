@@ -87,5 +87,5 @@ governance:
   am4_effect: renewed_am4_active_after_attributable_owner_review_2026_10_07
   renewal_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   renewal_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
-  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms. Seven automatic merges are conservatively counted in that renewed cycle after this completion reconciliation (PRs #199, #198, #201, #205, #206, #207 and #208), so the current counter is 7/10; all hard stops and review-cycle conditions remain in force.
+  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms. Nine automatic merges are conservatively counted in that renewed cycle after this corrective completion reconciliation (PRs #199, #198, #201, #205, #206, #207, #208, #209 and #210), so the current counter is 9/10; all hard stops and review-cycle conditions remain in force.
 revocation: Owner may revoke or supersede this directive at any time.
