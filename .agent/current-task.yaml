@@ -34,6 +34,7 @@ last_verified_commit: 7fc18ea206163777467cfe683c7f35d6f7ca151d
 test_results:
 - 'Fresh BASE-007 production smoke after EIS-side unblock: PASS; getDocsByReestrNumber(0116300036226000029) status=completed, archive URL count=1, warnings=0; TLS trust PASS for zakupki.gov.ru and int.zakupki.gov.ru.'
 - 'PR #189 local validation: make check PASS; roadmap reconciliation parse PASS (18 BASE = 17 confirmed_done + 1 revalidated_residual_gap).'
+- 'Protected runtime-source smoke: PASS; configured=true, token_present=true, owner=individual, getDocsByReestrNumber status=completed, archive URL count=1, warnings=0.'
 - 'make check: PASS.'
 - 'Historical BASE snapshot equality against ffc698ef: 18/18 unchanged.'
 - 'Focused BASE batch including R9 backup/restore: 545 passed, 12 skipped, 1 failed in 50.01s.'
@@ -48,8 +49,9 @@ test_results:
 - 'Owner removed the EIS-side block and saved a newly issued individual/extract credential locally. Fresh read-only getDocsByReestrNumber smoke for previously validated procurement 0116300036226000029 returned status=completed, one archive URL, zero warnings; TLS trust checks passed for both EIS hosts.'
 - 'Follow-up branch chore/base-007-production-smoke-20261007 updates only the current reconciliation overlay/report; immutable historical BASE fields remain unchanged. Local make check passed and roadmap parse confirms 18 BASE = 17 confirmed_done + 1 residual.'
 - 'Opened PR #189 for BASE-007 closure at exact head 7fc18ea206163777467cfe683c7f35d6f7ca151d.'
+- 'Installed the newly issued individual/extract credential into the protected Mac mini runtime secret source /Users/master/.config/arvectum/r3-soap-token.env with mode 0600, without exposing the value; reran the smoke through ZakupkiSoapSettings.from_env and confirmed the same completed response with one archive URL and zero warnings.'
 blocked_reason: 'Implementation/runtime blocker is cleared. Remaining blocker is governance: PR #189 must pass exact-head CI and may not be merged automatically while the current AM-4 cycle is review-due without explicit Owner/review authorization.'
-updated_at: '2026-10-07T12:42:00+0300'
+updated_at: '2026-10-07T12:44:00+0300'
 resume_instruction: 'Read PR #189 and its exact-head CI for 7fc18ea206163777467cfe683c7f35d6f7ca151d. If CI is green, do not merge unless the Owner explicitly authorizes merge/review under AM-4. After authorized merge, verify main has BASE-007 confirmed_done, 17 confirmed_done + 1 residual, preserve the immutable 2026-07-30 snapshot, then set this checkpoint completed with the merge SHA and final verification evidence.'
 execution:
   claimed_by: ChatGPT interactive
