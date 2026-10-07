@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-053-001
 authority: AUTO
 goal: Build evidence-backed customer/supplier counterparty cards with transparent
@@ -48,33 +48,29 @@ completed:
 - '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
   cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
   a new exact-head CI run.'
-current: 'Trigger a fresh exact-head CI run for PR #207 from a checkpoint-only head
-  after GitHub runner cancellation propagation; merge only after the fresh run is
-  fully green.'
-pending:
-- 'Push this checkpoint-only head to trigger fresh PR #207 exact-head CI.'
-- Verify all required jobs on the fresh exact-head run.
-- 'Merge PR #207 under active AM-4 only if all gates remain valid.'
-- Perform completion bookkeeping, update the AM-4 counter, and advance canonical queue
-  to ARV-055.
-last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
+- '2026-10-07: Fresh exact-head GitHub CI run 37684732897 completed successfully for
+  PR #207 at head 01e2b46407d1dfa95275a2054a2cbd7ba9811291; all 9 jobs passed.'
+- '2026-10-07: Tender Agent PR #207 squash-merged to main as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e;
+  ARV-053 Definition of Done is satisfied.'
+current: ARV-053 completed; completion bookkeeping advances canonical queue to COMMERCIAL-WORKFLOW-ARV-055-001.
+pending: []
+last_verified_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
-- 'new ARV-053 focused tests after formatting: 4 passed'
 - 'make check: PASS'
 - 'ruff + ruff format on changed files: PASS'
-- 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
-  acceptance failure)'
-- 'git diff --check: PASS'
-updated_at: '2026-10-07T23:47:36+03:00'
-resume_instruction: 'Verify the fresh exact-head CI run for PR #207 after this checkpoint-only
-  commit. If fully green and AM-4 remains active, merge PR #207, then complete bookkeeping
-  and advance to COMMERCIAL-WORKFLOW-ARV-055-001.'
+- 'full local make test: 3112 passed, 236 skipped; only the known main-baseline R9
+  pg_restore acceptance failure remained'
+- 'exact-head GitHub CI run 37684732897 for PR #207: SUCCESS (9/9 jobs)'
+- 'PR #207 merged to main as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e'
+updated_at: '2026-10-08T00:01:36+03:00'
+resume_instruction: ARV-053 is complete. On the next engineering continuation, reconcile
+  main and start COMMERCIAL-WORKFLOW-ARV-055-001, the next ready admitted AUTO item.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053
-  branch: agent/commercial-workflow-arv-053-001
-  base_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
+  branch: agent/arv-053-completion-001
+  base_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
   issue: null
   manual_override: false
   lease_until: null
