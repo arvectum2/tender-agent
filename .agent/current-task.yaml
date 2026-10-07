@@ -48,16 +48,21 @@ completed:
 - '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
   cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
   a new exact-head CI run.'
-current: 'Trigger a fresh exact-head CI run for PR #207 from a checkpoint-only head
-  after GitHub runner cancellation propagation; merge only after the fresh run is
-  fully green.'
+- '2026-10-07: Pre-merge self-review removed the provisional ARV-053-specific severity
+  weights. Aggregate supplier risk now reuses the canonical M-020 confidence_score
+  as risk=100*(1-confidence), and the band mirrors M-020 verification_result; per-flag
+  deductions are not reconstructed when the canonical record does not persist them.'
+- '2026-10-07: After the scoring reuse correction, ARV-053/relevant regressions again
+  passed (46 passed, 34 skipped), make check passed, Ruff/format and diff checks passed.'
+current: 'Push the canonical-scoring correction and require a fresh exact-head CI
+  run for PR #207 before guarded merge.'
 pending:
-- 'Push this checkpoint-only head to trigger fresh PR #207 exact-head CI.'
-- Verify all required jobs on the fresh exact-head run.
-- 'Merge PR #207 under active AM-4 only if all gates remain valid.'
+- Push the canonical-scoring correction/checkpoint.
+- 'Verify a fresh exact-head GitHub CI run for PR #207 at the new head.'
+- Merge under active AM-4 only if all gates remain valid.
 - Perform completion bookkeeping, update the AM-4 counter, and advance canonical queue
   to ARV-055.
-last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
+last_verified_commit: 16c63f98233473fab49e51b9898a45a2c91cf216
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
 - 'new ARV-053 focused tests after formatting: 4 passed'
@@ -66,10 +71,13 @@ test_results:
 - 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
   acceptance failure)'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T23:47:36+03:00'
-resume_instruction: 'Verify the fresh exact-head CI run for PR #207 after this checkpoint-only
-  commit. If fully green and AM-4 remains active, merge PR #207, then complete bookkeeping
-  and advance to COMMERCIAL-WORKFLOW-ARV-055-001.'
+- 'post-self-review ARV-053/relevant regressions: 46 passed, 34 skipped'
+- 'post-self-review make check: PASS'
+- 'post-self-review Ruff/format + git diff --check: PASS'
+updated_at: '2026-10-08T00:00:52+03:00'
+resume_instruction: 'Push the current ARV-053 head, verify fresh exact-head CI for
+  PR #207, merge under AM-4 if fully green, then complete bookkeeping and advance
+  to COMMERCIAL-WORKFLOW-ARV-055-001.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053

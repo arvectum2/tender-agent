@@ -48,6 +48,12 @@ completed:
 - '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
   cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
   a new exact-head CI run.'
+- '2026-10-07: Pre-merge self-review removed the provisional ARV-053-specific severity
+  weights. Aggregate supplier risk now reuses the canonical M-020 confidence_score
+  as risk=100*(1-confidence), and the band mirrors M-020 verification_result; per-flag
+  deductions are not reconstructed when the canonical record does not persist them.'
+- '2026-10-07: After the scoring reuse correction, ARV-053/relevant regressions again
+  passed (46 passed, 34 skipped), make check passed, Ruff/format and diff checks passed.'
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
@@ -59,7 +65,7 @@ pending:
 - Add focused role/provenance/unknown-state/regression tests.
 - Run full relevant verification and exact-head CI, then merge/bookkeep under active
   AM-4.
-last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
+last_verified_commit: 16c63f98233473fab49e51b9898a45a2c91cf216
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
 - 'new ARV-053 focused tests after formatting: 4 passed'
@@ -68,11 +74,15 @@ test_results:
 - 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
   acceptance failure)'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T23:47:36+03:00'
-resume_instruction: 'Verify fresh exact-head PR #207 CI; merge only when fully green,
-  then complete ARV-053 bookkeeping.'
-current_stage: retry_exact_head_ci
+- 'post-self-review ARV-053/relevant regressions: 46 passed, 34 skipped'
+- 'post-self-review make check: PASS'
+- 'post-self-review Ruff/format + git diff --check: PASS'
+updated_at: '2026-10-08T00:00:52+03:00'
+resume_instruction: 'Push the current head and require fresh exact-head PR #207 CI;
+  merge only when fully green, then complete bookkeeping.'
+current_stage: fresh_exact_head_ci_after_scoring_reuse
 remaining:
+- push scoring-reuse correction/checkpoint
 - 'fresh exact-head PR #207 CI'
 - guarded implementation merge
 - completion bookkeeping and queue advance to ARV-055
