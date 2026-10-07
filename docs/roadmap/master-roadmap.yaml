@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-10-06T19:28:00Z'
+strategy_updated_at: '2026-10-07T07:55:00Z'
 continuous_execution:
   owner_directive_date: '2026-09-18'
   principle: work_conserving_hourly_executor
@@ -155,8 +155,29 @@ owner_product_directive_2026_10_06:
     - direct public Internet exposure of Mac mini
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
+current_status_summary:
+  as_of: '2026-10-07T10:55:00+03:00'
+  verified_main_commit: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
+  active_execution_item: null
+  active_execution_state: no_non_done_admitted_items
+  mobile_product:
+    owner_priority: P0
+    bounded_sequence_state: complete
+    completed_stages: [MOB-1, MOB-2, MOB-3, MOB-4]
+    completed_dtr_post_go_stage: DTR-3
+    next_mobile_stage: null
+    note: 'No additional mobile stage is admitted. The completed internal iPhone sequence remains bounded by human GO / NO GO / DEFER and consequential-action hard stops.'
+  watchdog:
+    title: Tender Agent Watchdog
+    enabled: true
+    cadence: hourly
+  automatic_merge_governance:
+    state: review_due_at_10_of_10
+    note: 'Automatic merge fails closed until a fresh attributable Owner review/renewal. Explicit Owner-directed work and permitted preparation/testing remain governed by their own authority.'
+  note: 'ARV-005 technical pilot is complete on preserved frozen evidence; no non-done queue item remains admitted after this closure. Historical 2026-07-30 progress/status fields below remain immutable and are not current execution percentages.'
+
 execution_snapshot:
-  updated_at: '2026-10-07T07:12:00Z'
+  updated_at: '2026-10-07T07:55:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -185,7 +206,7 @@ execution_snapshot:
     - MOB-3-IOS-PUSH-DEEPLINKS-001
     - DTR-3-POST-GO-AUTOMATION-001
     - MOB-4-IOS-PORTFOLIO-METRICS-001
-  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged and done, and ARV-005-CONTROLLED-PILOT-EVIDENCE-001 has now satisfied its technical done gate using preserved frozen pilot evidence. There are no non-done admitted queue items after this closure; any next item must be admitted under the active Owner continuation rule without inventing priority or acceptance criteria.'
+  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged and recorded as completed execution history. ARV-005-CONTROLLED-PILOT-EVIDENCE-001 has now also satisfied its technical done gate using preserved frozen pilot evidence. No non-done queue item remains admitted; the next bounded item must be admitted under the active Owner continuation rule without inventing scope or acceptance criteria.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
@@ -449,6 +470,20 @@ current_programs:
   roadmap_mapping: null
   strategy: ADAPT
   completion_evidence: 'HUMAN GO post-decision resume, canonical readiness reuse, local submission-control preparation without submission, attributable/source-bound submission evidence gate, artifact-bound outcome gate, unattended pending-run resume, migration 102; exact-head CI 37575956723 SUCCESS 9/9; Owner-approved merge 3b25e10bab2930f954d39a444b8258ad597010c9.'
+- task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
+  state: done
+  source: 'Owner directive 2026-10-07; PR #183 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: COPY_PATTERN
+  completion_evidence: 'Canonical Procurement Portfolio totals/rates, deterministic pipeline/outcome filters, grounded submission/outcome detail and refresh-before-deep-link behavior; exact-head CI 37584606448 SUCCESS 9/9; implementation merge bdcd868f1c42f3d3165cc8cad2c83b63b682521b; roadmap merge 66c0839d400c076388e93b212e1adb0b59b21fd7.'
+
+- task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+  state: done
+  source: 'Owner directive 2026-09-23 renewed by explicit Owner request 2026-10-07'
+  roadmap_mapping: [ARV-005]
+  strategy: REUSE
+  completion_evidence: '12/12 frozen 44-FZ core reports; 3 separately scored source-bound 223-FZ blockers; aggregate report docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md; preserved regression evidence; human usefulness/commercial acceptance remains HUMAN/REVIEW.'
+
 
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive
@@ -502,7 +537,7 @@ continuation_branches:
   - branch_id: SAAS-SCALE
     title: Multi-tenant SaaS, usage limits and enterprise integrations
     historical_items: [ARV-043, ARV-044, ARV-045, ARV-046, ARV-068, ARV-070]
-    residual_scope: 'Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile companion and later finance/integration surfaces.'
+    residual_scope: 'Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile expansion beyond the completed internal iPhone MVP (for example public/multi-tenant or Android), and later finance/integration surfaces.'
     gates: 'Bank guarantees/financing and external enterprise commitments remain HUMAN/commercial gates.'
   - branch_id: DEVELOPMENT-GOVERNANCE
     title: Development protocol, mirrors and watchdog maintenance
