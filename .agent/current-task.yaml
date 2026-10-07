@@ -1,27 +1,31 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: TENDER-AGENT-CHECKPOINT-RECONCILIATION-20261007
 authority: OWNER_DIRECTIVE
-goal: Restore the Tender Agent canonical checkpoint after .agent/current-task.yaml was accidentally overwritten by a completed arvectum2/data-platform OCR quality task.
+goal: Restore a repository-local Tender Agent checkpoint that resumes only from Tender Agent canonical state.
 definition_of_done:
-- .agent/current-task.yaml refers only to arvectum2/tender-agent state and sources.
-- The checkpoint points continuation to docs/roadmap/master-roadmap.yaml, .agent/execution-queue.yaml and .agent/owner-directive.yaml.
-- The completed Data Platform OCR task cannot be resumed from this Tender Agent checkpoint.
-- Current Tender Agent queue state and main commit are verified before completion.
+- .agent/current-task.yaml contains only arvectum2/tender-agent state and sources.
+- Continuation is anchored to docs/roadmap/master-roadmap.yaml, .agent/execution-queue.yaml and .agent/owner-directive.yaml.
+- The current execution queue is reconciled before any continuation.
+- A future "continue" request starts from Tender Agent canonical roadmap state rather than unrelated repository work.
 completed:
-- Confirmed the previous checkpoint belonged to arvectum2/data-platform task DP-QUALITY-CORE-3.2-003 and was cross-repository contamination.
-- Confirmed docs/roadmap/master-roadmap.yaml remains the canonical Tender Agent scope/history source.
-current: Reconcile the Tender Agent execution queue and current main, then freeze a repository-local completed checkpoint with a safe resume instruction.
-pending:
-- Verify there is no non-done admitted Tender Agent execution item.
-- Record the verified Tender Agent main commit and final resume instruction.
+- Replaced the stale cross-repository checkpoint with a Tender Agent-specific canonical checkpoint.
+- Verified docs/roadmap/master-roadmap.yaml declares canonical_role: master_product_roadmap.
+- Verified .agent/execution-queue.yaml has no non-done admitted items.
+- Verified the roadmap current-status overlay also states active_execution_state: no_non_done_admitted_items.
+- Preserved the active Owner continuous-roadmap directive as the only fallback when the admitted queue is empty.
+current: No active Tender Agent execution item is admitted. Canonical checkpoint reconciliation is complete.
+pending: []
 last_verified_commit: 9c51916a7911bceda04986b4a7e361076c594914
 test_results:
-- "Checkpoint target repository: arvectum2/tender-agent."
-- "Canonical roadmap source: docs/roadmap/master-roadmap.yaml."
-updated_at: '2026-10-07T17:20:00+03:00'
-resume_instruction: Continue this checkpoint reconciliation only. Do not execute or resume any arvectum2/data-platform task from Tender Agent state.
+- "Checkpoint repository identity: PASS (arvectum2/tender-agent)."
+- "Canonical roadmap identity: PASS."
+- "Execution queue reconciliation: PASS; 0 non-done admitted items."
+- "Roadmap execution-state reconciliation: PASS; no_non_done_admitted_items."
+- "Cross-repository resume references: removed."
+updated_at: '2026-10-07T17:24:00+03:00'
+resume_instruction: On the next Tender Agent continuation, read this checkpoint, then reconcile .agent/execution-queue.yaml and docs/roadmap/master-roadmap.yaml against current main. If no non-done admitted item exists, follow .agent/owner-directive.yaml to select at most one bounded Tender Agent continuation item. Do not resume work from any other repository.
 execution:
   claimed_by: ChatGPT
   execution_id: tender-agent-checkpoint-reconciliation-20261007
