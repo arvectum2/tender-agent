@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: completed
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: OWNER_DIRECTIVE
 goal: 'Finish ARV-005 Controlled Pilot canonically: preserve the already completed frozen 15-procurement evidence, port only validated ARV-005 regression fixes onto current main, verify the integrated code, and reconcile queue/roadmap without rerunning or contaminating the frozen pilot.'
@@ -19,12 +19,8 @@ completed:
 - 'Ported the validated net ARV-005 src/tests delta through frozen pilot code head 7653c070 onto current main; resolved the only overlap by preserving main current canonical card-URL helper instead of adding the older duplicate helper.'
 - 'Integrated verification: 142 focused ARV-005/source/Decision Core tests passed; 25 current controlled-LLM/operator/Daily Tender Run compatibility tests passed; uv run make check passed.'
 - 'Published the preserved aggregate technical report and Wave 1 freeze document on the closure branch; reconciled ARV-005 queue and roadmap overlays to technical completion without changing historical snapshot fields or human-acceptance gates.'
-current: 'Technical ARV-005 closure is review-ready in PR #187. Final merge is blocked by the Company AM-4 mandatory REVIEW gate at 10/10; do not infer the current task admission as Owner review/renewal.'
-pending:
-- attributable Owner review/approval for PR #187 under the AM-4 REVIEW gate
-- require exact-head CI green on the then-current PR head and resolve any required review/change request
-- merge PR #187 only after the human review gate is satisfied
-- after merge, close superseded PRs #123, #110 and #186 and reconcile final checkpoint to completed
+current: 'ARV-005 technical closure is complete and Owner-approved for PR #187; this completion marker becomes canonical when the exact-head green PR is merged.'
+pending: []
 last_verified_commit: bb98cf95051a4547bae903e8829152e626c28ced
 test_results:
 - 'Historical frozen pilot verification: 105 focused/relevant tests passed; GitHub Actions CI 37132350065 success at pre-report code head 7653c0700f02a3886655950c4aa0431823c558c0.'
@@ -32,8 +28,10 @@ test_results:
 - 'Full local suite on the integrated closure head: 3092 passed, 236 skipped, 1 failed only at the known Mac pg_restore R9 environment test; the same R9 failure was previously reproduced on untouched main during MOB-4 validation.'
 - 'Canonical consistency check: ARV-005 queue item done, zero non-done admitted queue items, roadmap active execution item null, preserved aggregate report present.'
 - 'PR #187 opened from bb98cf9; CI run 37592078040 was in progress when the AM-4 REVIEW blocker was checkpointed. Do not treat pending CI as success.'
-updated_at: '2026-10-07T11:16:57+0300'
-resume_instruction: 'Do not rerun frozen procurements. First require attributable Owner review/approval for PR #187 because Company AM-4 is REVIEW-due at 10/10. After approval, verify the current PR head has exact-head CI green and no unresolved required review/change request, merge #187, then close superseded PRs #123/#110/#186 and reconcile this checkpoint to completed. Do not import later PRODUCT-SHELL work from PR #123.'
+- '2026-10-07: Product Owner explicitly approved and instructed merge of PR #187 after the AM-4 REVIEW gate was surfaced.'
+- 'Exact-head CI run 37592742160 on head 1ab35f3ff56615e760895a93472f83899bf135ea completed SUCCESS before the final completion-marker commit.'
+updated_at: '2026-10-07T11:26:26+0300'
+resume_instruction: 'ARV-005 is completed and Owner-approved. Do not rerun frozen procurements or reopen the pilot. Require exact-head CI green on the final completion-marker head, merge PR #187, then close superseded PRs #123/#110/#186. Any 223-FZ breadth or local-LLM reliability work must start as a new frozen task.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-arv005-finalize
