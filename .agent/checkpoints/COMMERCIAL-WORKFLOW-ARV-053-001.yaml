@@ -1,6 +1,6 @@
 version: 1
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-053-001
 authority: AUTO
 goal: Build evidence-backed customer/supplier counterparty cards with transparent
@@ -48,6 +48,10 @@ completed:
 - '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
   cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
   a new exact-head CI run.'
+- '2026-10-07: Fresh exact-head GitHub CI run 37684732897 completed successfully for
+  PR #207 at head 01e2b46407d1dfa95275a2054a2cbd7ba9811291; all 9 jobs passed.'
+- '2026-10-07: Tender Agent PR #207 squash-merged to main as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e;
+  ARV-053 Definition of Done is satisfied.'
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
@@ -59,20 +63,17 @@ pending:
 - Add focused role/provenance/unknown-state/regression tests.
 - Run full relevant verification and exact-head CI, then merge/bookkeep under active
   AM-4.
-last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
+last_verified_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
 test_results:
 - 'ARV-053 + customer-role + recovery/supplier-flow regressions: 46 passed, 34 skipped'
-- 'new ARV-053 focused tests after formatting: 4 passed'
 - 'make check: PASS'
 - 'ruff + ruff format on changed files: PASS'
-- 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
-  acceptance failure)'
-- 'git diff --check: PASS'
-updated_at: '2026-10-07T23:47:36+03:00'
-resume_instruction: 'Verify fresh exact-head PR #207 CI; merge only when fully green,
-  then complete ARV-053 bookkeeping.'
-current_stage: retry_exact_head_ci
-remaining:
-- 'fresh exact-head PR #207 CI'
-- guarded implementation merge
-- completion bookkeeping and queue advance to ARV-055
+- 'full local make test: 3112 passed, 236 skipped; only the known main-baseline R9
+  pg_restore acceptance failure remained'
+- 'exact-head GitHub CI run 37684732897 for PR #207: SUCCESS (9/9 jobs)'
+- 'PR #207 merged to main as 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e'
+updated_at: '2026-10-08T00:01:36+03:00'
+resume_instruction: ARV-053 is complete. Continue with COMMERCIAL-WORKFLOW-ARV-055-001
+  after reconciling main.
+current_stage: completed
+remaining: []
