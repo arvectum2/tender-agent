@@ -45,3 +45,7 @@ Deterministic regression coverage includes:
 - structured target-margin reuse in economics.
 
 Exact-head CI is the merge authority for the recovery PR.
+
+## First exact-head CI diagnostic
+
+CI run `37653121154` on head `7bd071b145efc382a84e8b6513797605ab0550f8` completed with eight jobs green. The quality job executed the full suite: `3103 passed, 236 skipped`; its sole failure was the Commercial Workflow admission test asserting that every admitted queue item must remain `ready`. That assertion conflicts with the executor policy's legitimate lifecycle transitions once ARV-015 is claimed. The test was narrowed to admission invariants while allowing the defined runtime states `ready | in_progress | blocked | done`. No product-code failure was observed in that run.
