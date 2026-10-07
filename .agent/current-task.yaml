@@ -1,48 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
+status: in_progress
+task_id: ROADMAP-SYNC-FULL-20261007
 authority: OWNER_DIRECTIVE
-goal: 'Reclassify BASE-011 as completed Hermes infrastructure foundation and move the unfinished real-user self-improvement scope into the existing ARV-004 successor as a post-MVP Feedback & Learning Loop, without introducing a second autonomous decision engine.'
+goal: Refresh the canonical Tender Agent roadmap to the actual 2026-10-07 repository state and present a complete status view without changing historical snapshot fields or admitting new product work.
 definition_of_done:
-- 'Preserve every BASE-011 and ARV-004 legacy_snapshot field unchanged.'
-- 'Mark only the current BASE-011 reconciliation overlay as confirmed_done, based on the already implemented/tested Hermes foundation: client/fallback, runtime context, quality gates, memory/feedback primitives, category profiles, supplier-readiness and bid-decision helpers.'
-- 'Reframe the unfinished scope under existing ARV-004 as a post-MVP Feedback & Learning Loop: user correction -> attributable immutable review -> regression case -> validated reusable rule.'
-- 'Keep ARV-004 out of the admitted execution queue for now; external/autonomous Hermes runtime and autonomous GO/NO-GO remain out of scope.'
-- 'Update the BASE revalidation report and compact roadmap so the current BASE overlay reads 18 confirmed_done, with no residual BASE gap.'
-- 'Run repository checks and exact-head CI; merge only under applicable Owner/review authorization.'
+- Preserve the immutable 2026-07-30 historical registry byte-for-byte.
+- Refresh current-status metadata to the latest verified main commit.
+- Record BASE-001..BASE-018 as 18/18 confirmed_done in the current summary.
+- Keep execution queue state accurate: zero non-done admitted items.
+- Keep completed mobile/DTR/ARV-005 execution history and all HUMAN/REVIEW/OWNER hard stops unchanged.
+- Make the human roadmap explicitly distinguish current verified status from historical progress percentages.
+- Validate YAML/markdown consistency, queue uniqueness and historical preservation.
+- Open and merge a roadmap-only PR after exact-head CI succeeds under this explicit Owner request.
 completed:
-- '2026-10-07: Owner accepted the recommendation to close BASE-011 as infrastructure foundation and defer the real-user learning loop to post-MVP.'
-- 'Verified current Hermes foundation exists in src/modules/hermes_agent with client/fallback, runtime analysis, memory/feedback, quality gates, category profiles, supplier-readiness and bid-decision helpers, with focused tests.'
-- 'Verified canonical company-agent/Hermes policy still keeps autonomous execution and external Hermes runtime outside the required production path.'
-- 'Created docs/product/Feedback_Learning_Loop.md defining the non-admitted post-MVP successor under existing ARV-004, with attributable correction -> immutable human review -> regression case -> validated reusable-rule candidate -> reviewed promotion.'
-- 'Updated BASE-011 current reconciliation to confirmed_done without changing any legacy_snapshot field; BASE overlay is now 18/18 confirmed_done.'
-- 'Updated ARV-004 current reconciliation notes/evidence to the post-MVP Learning Loop while keeping state needs_revalidation and leaving it out of the execution queue.'
-- 'Opened PR #190 from chore/base-011-learning-loop-reclass-20261007 at exact head 69060e7aa475f624240e622aee9e48d18cce0dec.'
-- 'PR #190 exact-head CI run 37606117463 completed SUCCESS with all 9 jobs green on 69060e7aa475f624240e622aee9e48d18cce0dec.'
-- 'Owner explicitly authorized merge of PR #190 under the current AM-4 review gate.'
-- 'PR #190 was squash-merged to main as f31c3339b377d4f9d6971759f68e43c402799451.'
-- 'Post-merge verification on main confirms BASE-011=confirmed_done, BASE overlay=18/18 confirmed_done, ARV-004 remains needs_revalidation with post-MVP/non-admitted scope, and docs/product/Feedback_Learning_Loop.md is present.'
-current: 'Task completed. BASE-011 is closed as the Hermes infrastructure foundation; all BASE-001..018 are confirmed_done. The real-user Feedback & Learning Loop remains under ARV-004 as a post-MVP, non-admitted successor with existing human-control boundaries preserved.'
-pending: []
-last_verified_commit: f31c3339b377d4f9d6971759f68e43c402799451
-test_results:
-- 'make check: PASS on branch head 69060e7aa475f624240e622aee9e48d18cce0dec.'
-- 'Focused Hermes/company-agent boundary tests: 131 passed, 7 warnings.'
-- 'Legacy snapshot equality: BASE-001..018 plus ARV-004 = 19/19 unchanged against task base 742f4319683036837a9bafb358ad87016efd7486.'
-- 'Roadmap assertion: BASE reconciliation = 18/18 confirmed_done; ARV-004 remains needs_revalidation with post-MVP scope documented.'
-- 'PR #190 exact-head CI run 37606117463: SUCCESS, 9/9 jobs green.'
-- 'Post-merge main verification: PASS at f31c3339b377d4f9d6971759f68e43c402799451; BASE-011=confirmed_done, BASE=18/18 confirmed_done, ARV-004=needs_revalidation/post-MVP, learning-loop spec present.'
-- 'Prior BASE revalidation task completed with PR #189 exact-head CI 9/9 green.'
-blocked_reason: null
-updated_at: '2026-10-07T13:26:34+0300'
-resume_instruction: 'This task is completed. If revisited, start from main after f31c3339b377d4f9d6971759f68e43c402799451. Do not admit or implement ARV-004 until post-MVP production usage yields meaningful real corrections and the Owner explicitly admits a bounded slice. Preserve human GO/NO-GO/DEFER authority and immutable historical snapshots.'
+- Owner explicitly requested a full roadmap refresh and complete status display on 2026-10-07.
+- Reconciled current main at 617a6410dfe8864912411339fc169cce1e9d56b5.
+- Verified execution queue has zero non-done admitted items.
+- Verified BASE-001..BASE-018 current reconciliation is 18/18 confirmed_done after PR #190.
+current: Refresh machine/human roadmap current-status metadata only.
+pending:
+- Update docs/roadmap/master-roadmap.yaml current summary.
+- Update docs/roadmap/MASTER_ROADMAP.md current summary/status legend.
+- Validate preservation/queue consistency.
+- Open and merge roadmap-only PR after green exact-head CI.
+last_verified_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
+test_results: []
+updated_at: '2026-10-07T13:36:00+03:00'
+resume_instruction: Continue only roadmap synchronization. Do not admit or implement a new product item.
 execution:
   claimed_by: ChatGPT interactive
-  execution_id: interactive-20261007-base011-learning-loop
-  branch: chore/base-011-learning-loop-reclass-20261007
-  base_commit: 948c068abda678e1f3c4ff724fc680304c2cb55e
+  execution_id: interactive-20261007-roadmap-full-sync
+  branch: docs/roadmap-sync-full-20261007
+  base_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
   issue: null
-  pull_request: 190
   manual_override: true
   lease_until: null
