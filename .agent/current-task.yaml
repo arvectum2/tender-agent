@@ -16,19 +16,20 @@ definition_of_done:
 completed:
 - Owner explicitly directed completion of Strategic Program Stage 1.
 - Started from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9 after the completed full roadmap sync.
-current: Audit existing commodity shell against the Stage 1 exit gate and identify only demonstrated gaps.
+current: Stage 1 acceptance audit is complete with no commodity subsystem gap; focused gate and make check pass. Open PR and obtain exact-head CI.
 pending:
-- Inventory shell modules/routes/tests for search/filter/saved views, tender card, documents/parsing, auth/roles, alerts and export.
-- Define acceptance matrix and end-to-end shell path.
-- Implement only demonstrated bounded gaps.
-- Add/adjust acceptance regression tests and evidence docs.
-- Update roadmap Stage 1 to done if gate passes.
-- Run focused/full checks and exact-head CI.
-- Merge bounded PR if green.
-last_verified_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
-test_results: []
-updated_at: '2026-10-07T14:05:00+03:00'
-resume_instruction: Continue from the Stage 1 acceptance audit. Prefer proving existing capability over building new commodity infrastructure; fix only demonstrated gaps, then validate and close the Stage 1 gate.
+- Open bounded Stage 1 completion PR.
+- Obtain exact-head CI.
+- Merge under the explicit Owner directive if scope stays within this DoD.
+- Mark queue/checkpoint completed after merge.
+last_verified_commit: b2dee5d
+test_results:
+- "Stage 1 focused acceptance gate: 67 passed, 10 skipped."
+- "uv run make check: PASS."
+- "git diff --check origin/main...HEAD: PASS."
+- "Gap audit: no new commodity subsystem required; existing search/saved-profile/card/document/auth/visibility/alert/export surfaces satisfy the bounded exit gate."
+updated_at: '2026-10-07T14:22:00+03:00'
+resume_instruction: Open the Stage 1 completion PR and obtain exact-head CI. Do not add new commodity infrastructure; merge only the proven bounded closure if green.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-stage1-shell
