@@ -22,7 +22,7 @@ completed:
   - "2026-10-07: Read-only live exact-number search returned one card with customer_name=null, while common-info detail returned the correct explicit Chukotka health department customer and 5 document links."
 current: "Implementation and evidence are complete. This completion record becomes canonical only through guarded merge of PR #195 after exact-head CI is green."
 pending: []
-last_verified_commit: "b4980cd413f24995c395ea547ab2a6c184cc689a"
+last_verified_commit: "756b7c76df702142fac9b621a698aab4f6aa374e"
 test_results:
   - "87 passed: parser + ARV-002 live-path/source-graph/no-fallback focused gate."
   - "32 passed, 12 skipped: persistence/recovery companion gate."
@@ -30,6 +30,7 @@ test_results:
   - "read-only live exact-number 0888500000226000399: search parsed 1 card with customer_name=null; detail success with explicit customer and 5 document links."
   - "full local suite: 3097 passed, 236 skipped, 1 unrelated R9 backup/restore failure; the identical pg_restore failure was reproduced on clean origin/main 05a939eb, proving it is pre-existing/environmental."
   - "latest-main rebase head b4980cd4 on ba84bb80: 90 focused/policy tests PASS; make check PASS; live exact-number verification PASS; git diff --check PASS; Commercial Workflow admission/AM-4 reset preserved."
+  - "implementation/evidence commit 756b7c76 is retained as the parent of the final checkpoint commit; final PR merge remains gated on exact-head CI."
 updated_at: "2026-10-07T17:51:26+03:00"
 resume_instruction: "ARV-002-LIVE-CUSTOMER-PARSE-001 is complete. Do not repeat it. On canonical main after guarded PR #195 merge, reconcile the admitted execution queue and continue with ARV-015-OPERATOR-PROFILE-PARSER-001 unless a newer explicit Owner directive supersedes it."
 execution:
