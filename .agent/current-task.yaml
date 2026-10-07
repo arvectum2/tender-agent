@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
 authority: AUTO
 goal: "Parse the existing RFQ-first operator profile contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry or decision engine."
@@ -16,22 +16,22 @@ completed:
   - "2026-10-07: Created clean recovery branch agent/arv-015-operator-profile-parser-001-r2 from current main 61e7f38196e6b7046fff421380714b1a692e1307."
   - "2026-10-07: Reconciled the parser onto current main and expanded the existing SupplierProfile contract with backward-compatible typed commercial/qualification/risk fields."
   - "2026-10-07: The pilot runner now binds structured supplier_profile into analysis_context before and after controlled-LLM requirement updates and reuses parsed target margin in stub economics."
-current: "Implementation and deterministic coverage are complete. First exact-head CI proved the product code/tests but exposed one stale governance assertion that incorrectly froze admitted queue items at ready; that regression was corrected and fresh exact-head CI is pending."
+current: "ARV-015-OPERATOR-PROFILE-PARSER-001 satisfies its bounded Definition of Done. Completion becomes canonical after guarded merge of the final recovery PR and main verification."
 pending:
-  - "Run fresh exact-head CI after the governance lifecycle-test correction and inspect all jobs."
-  - "If green and renewed AM-4 automatic-merge gates remain satisfied, merge the recovery PR and close superseded PR #127."
-  - "After merge, verify canonical main and mark checkpoint completed."
-last_verified_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
+  - "Guarded-merge the final recovery PR after fresh exact-head CI on bookkeeping head."
+  - "Verify canonical main contains the completed checkpoint/queue/roadmap evidence and close superseded PR #127."
+last_verified_commit: "6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95"
 test_results:
   - "Historical PR #127 before recovery: 41 focused tests passed and its then-current exact-head CI was green."
   - "Recovery CI run 37653121154 at 7bd071b145efc382a84e8b6513797605ab0550f8: 8/9 jobs green; quality ran 3103 passed / 236 skipped and failed only tests/test_watchdog_continuation_policy.py because it required every admitted Commercial Workflow item to remain status=ready after legitimate ready->in_progress execution."
-  - "Stale governance assertion corrected to accept admitted executor lifecycle states ready/in_progress/blocked/done; fresh exact-head CI pending."
-updated_at: "2026-10-07T19:48:00+03:00"
-resume_instruction: "Continue only on agent/arv-015-operator-profile-parser-001-r2. Check fresh exact-head CI after the governance lifecycle-test correction. If green and AM-4 gates remain valid, finalize queue/checkpoint state on the tested branch, re-earn exact-head green, merge PR #199, close superseded PR #127, and verify main. Do not start ARV-019 before ARV-015 is complete."
+  - "Stale governance assertion corrected to accept admitted executor lifecycle states ready/in_progress/blocked/done."
+  - "Exact-head CI run 37654505822 at 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95: SUCCESS 9/9; full suite 3104 passed, 236 skipped; domain regression green."
+updated_at: "2026-10-07T20:02:00+03:00"
+resume_instruction: "Do not repeat ARV-015 implementation or tests. Check the final recovery PR exact head. If CI is green and renewed AM-4 gates remain valid, merge it, verify canonical main, close superseded PR #127, then continue with the next admitted queue item unless a newer Owner directive supersedes it."
 execution:
   claimed_by: "ChatGPT interactive"
   execution_id: "interactive-20261007-arv015-r2"
-  branch: "agent/arv-015-operator-profile-parser-001-r2"
+  branch: "agent/arv-015-operator-profile-parser-001-final"
   base_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
   issue: null
   manual_override: true

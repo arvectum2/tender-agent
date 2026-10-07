@@ -49,3 +49,10 @@ Exact-head CI is the merge authority for the recovery PR.
 ## First exact-head CI diagnostic
 
 CI run `37653121154` on head `7bd071b145efc382a84e8b6513797605ab0550f8` completed with eight jobs green. The quality job executed the full suite: `3103 passed, 236 skipped`; its sole failure was the Commercial Workflow admission test asserting that every admitted queue item must remain `ready`. That assertion conflicts with the executor policy's legitimate lifecycle transitions once ARV-015 is claimed. The test was narrowed to admission invariants while allowing the defined runtime states `ready | in_progress | blocked | done`. No product-code failure was observed in that run.
+
+
+## Successful exact-head validation
+
+After correcting the stale admission-status assertion, exact-head CI run `37654505822` on `6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95` passed all 9 jobs. The quality job reported `3104 passed, 236 skipped` for the full repository suite, and the procurement domain-regression gate passed. Security, dependency lock, migrations, Docker build, Redis integration, PostgreSQL/R8 integration, acceptance integration and the Arvectum OS bridge were also green.
+
+This satisfies the bounded parser slice Definition of Done. The remaining merge/bookkeeping commit changes only canonical task/queue/roadmap completion state and must itself re-earn exact-head CI before guarded merge.
