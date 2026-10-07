@@ -1,0 +1,24 @@
+task_id: STAGE1-THIN-COMMODITY-SHELL-001
+status: in_progress
+authority: OWNER_DIRECTIVE
+goal: Close Strategic Program Stage 1 at the thin-commodity-shell exit gate.
+definition_of_done:
+  - Audit all required commodity shell surfaces.
+  - Prove one bounded authenticated end-to-end shell path.
+  - Fix only demonstrated gaps using reuse-first boundaries.
+  - Add acceptance matrix and regression evidence.
+  - Mark Stage 1 done only after tests/CI pass.
+  - Merge bounded PR under explicit Owner direction.
+completed:
+  - Task admitted from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9.
+current: Capability audit.
+remaining:
+  - Inventory.
+  - Acceptance matrix.
+  - Gap fixes if any.
+  - Tests/docs/roadmap.
+  - CI/merge.
+last_verified_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
+test_results: []
+resume_instruction: Prove before building; use existing shell components and close only demonstrated gaps.
+updated_at: '2026-10-07T14:05:00+03:00'
