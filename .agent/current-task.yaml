@@ -16,24 +16,26 @@ completed:
   - Recorded the bounded ARV-014 report, checkpoint, queue admission, and roadmap overlay without changing historical snapshot fields.
   - Focused trust and public-EIS transport tests pass 14/14; repository make check and diff checks pass.
   - Parsed all changed YAML and verified all 93 immutable legacy_snapshot records remain identical to canonical main.
-current: Commit and push the isolated branch, open a PR, and check exact-head CI once.
+  - Published review-ready PR #193 from the isolated branch; its repaired content head contains exactly the intended six-file diff against canonical main.
+current: PR #193 is open; check exact-head CI once and preserve the AM-4 REVIEW gate.
 pending:
-  - Commit, push, PR, and exact-head CI evidence.
-last_verified_commit: null
+  - Exact-head CI evidence for PR #193.
+  - Authorized review/renewal before merge because AM-4 is at 10/10.
+last_verified_commit: d74b293b81b33230ca319a3aefcf20d4cd57bcde
 test_results:
   - 'uv run pytest -q tests/test_etp_trust.py tests/test_public_eis_transport_policy.py: 14 passed, 1 deprecation warning.'
   - 'uv run make check: PASS.'
   - 'YAML parse and invariants: PASS; 4 files parsed, 93 legacy snapshots unchanged, one ARV-014 queue item and one roadmap item.'
   - 'git diff --check: PASS.'
 blocked_reason: null
-updated_at: '2026-10-07T14:10:05+03:00'
-resume_instruction: Commit and push the validated branch, open a PR, then check exact-head CI once; do not auto-merge while AM-4 remains review-due at 10/10.
+updated_at: '2026-10-07T14:14:21+03:00'
+resume_instruction: Check exact-head CI for PR #193 once. If green, keep the task waiting for authorized review/renewal; do not auto-merge while AM-4 remains review-due at 10/10.
 execution:
   claimed_by: Tender Agent Watchdog
   execution_id: watchdog-20261007T140025+0300
   branch: watchdog/arv014-revalidation-20261007
   base_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
   issue: null
-  pull_request: null
+  pull_request: 193
   manual_override: false
   lease_until: '2026-10-07T15:50:25+03:00'
