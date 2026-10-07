@@ -18,7 +18,8 @@ completed:
 - 'Created docs/product/Feedback_Learning_Loop.md defining the non-admitted post-MVP successor under existing ARV-004, with attributable correction -> immutable human review -> regression case -> validated reusable-rule candidate -> reviewed promotion.'
 - 'Updated BASE-011 current reconciliation to confirmed_done without changing any legacy_snapshot field; BASE overlay is now 18/18 confirmed_done.'
 - 'Updated ARV-004 current reconciliation notes/evidence to the post-MVP Learning Loop while keeping state needs_revalidation and leaving it out of the execution queue.'
-current: 'Roadmap-only reconciliation is implemented on chore/base-011-learning-loop-reclass-20261007. BASE-011 is confirmed_done as infrastructure foundation; ARV-004 is documented as the non-admitted post-MVP Feedback & Learning Loop successor. Local checks are green; PR/CI remains.'
+- 'Opened PR #190 from chore/base-011-learning-loop-reclass-20261007 at exact head 69060e7aa475f624240e622aee9e48d18cce0dec.'
+current: 'PR #190 is open for the roadmap-only BASE-011/ARV-004 reconciliation. Local checks are green; exact-head CI run 37606117463 is in progress on 69060e7aa475f624240e622aee9e48d18cce0dec.'
 pending:
 - 'Open review-ready PR and obtain exact-head CI.'
 - 'Merge only if explicitly authorized under the current AM-4 review gate.'
@@ -31,7 +32,7 @@ test_results:
 - 'Roadmap assertion: BASE reconciliation = 18/18 confirmed_done; ARV-004 remains needs_revalidation with post-MVP scope documented.'
 - 'Prior BASE revalidation task completed with PR #189 exact-head CI 9/9 green.'
 blocked_reason: null
-updated_at: '2026-10-07T13:02:00+0300'
+updated_at: '2026-10-07T13:16:00+0300'
 resume_instruction: 'Open/inspect the review-ready PR for branch chore/base-011-learning-loop-reclass-20261007 and obtain exact-head CI. If CI is green, do not merge without explicit Owner authorization under AM-4. After authorized merge, verify main has BASE 18/18 confirmed_done, ARV-004 remains post-MVP/not admitted, then mark the checkpoint completed.'
 execution:
   claimed_by: ChatGPT interactive
@@ -39,6 +40,6 @@ execution:
   branch: chore/base-011-learning-loop-reclass-20261007
   base_commit: 948c068abda678e1f3c4ff724fc680304c2cb55e
   issue: null
-  pull_request: null
+  pull_request: 190
   manual_override: true
   lease_until: null
