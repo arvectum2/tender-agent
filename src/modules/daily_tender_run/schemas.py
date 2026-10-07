@@ -76,6 +76,7 @@ class DailyTenderRunItemResponse(APIModel):
     strongest_reasons: list[str] = Field(default_factory=list)
     blockers: list[str] = Field(default_factory=list)
     unknowns: list[str] = Field(default_factory=list)
+    post_go: dict | None = None
     error: str | None
     created_at: datetime
     updated_at: datetime
