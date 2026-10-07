@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
 authority: OWNER_DIRECTIVE
 goal: 'Deliver the third bounded ARV-044 mobile slice: APNs push plumbing and safe deep links that open the correct Tender
@@ -48,11 +48,9 @@ completed:
   Apple provisioning profile lacks Push Notifications and aps-environment. No real APNs delivery was claimed.
 - 'First PR #176 CI run 37533477063 exposed a stale requirements.lock after adding APNs HTTP/2/JWT dependencies; regenerated
   the lock with the CI-pinned uv 0.12.8 command.'
-current: 'Implementation PR #176 is merged with exact-head CI green. Reconcile the canonical roadmap, then close the MOB-3 checkpoint.'
-pending:
-- Reconcile the master roadmap with the merged MOB-3 evidence.
-- Merge roadmap reconciliation, close the canonical checkpoint as completed, and return main to a clean synced state.
-last_verified_commit: 3ab3872f95c9d8934403533f4411fcddd7569ba4
+current: 'MOB-3 is complete: implementation and roadmap reconciliation are merged with exact-head CI green.'
+pending: []
+last_verified_commit: 8a6a6bea994226422cc54c36156f16a6c2b44aa9
 test_results:
 - 'Python targeted quality: Ruff PASS; git diff --check PASS.'
 - 'Mobile/portfolio backend: 22 passed, 18 warnings in 1.75s.'
@@ -67,8 +65,9 @@ test_results:
   is not deployed yet.
 - 'PR #176 initial exact-head run 37533477063 exposed stale requirements.lock; regenerated with uv==0.12.8.'
 - 'PR #176 corrected exact-head run 37533637202: SUCCESS; implementation squash-merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4.'
-updated_at: '2026-10-07T07:20:00+03:00'
-resume_instruction: 'Continue MOB-3 from merged implementation 3ab3872: finish roadmap reconciliation, merge it after exact-head CI, then mark the checkpoint completed and return main clean/synced.'
+- 'PR #177 roadmap reconciliation exact-head run 37570631734: SUCCESS; squash-merged as 8a6a6bea994226422cc54c36156f16a6c2b44aa9.'
+updated_at: '2026-10-07T07:35:00+03:00'
+resume_instruction: 'MOB-3 is completed. Do not reopen it automatically. DTR-3 or MOB-4 requires a separate explicit admission.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261006-mob3
