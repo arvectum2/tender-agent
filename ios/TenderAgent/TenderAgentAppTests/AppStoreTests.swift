@@ -35,6 +35,9 @@ final class AppStoreTests: XCTestCase {
             humanReasonCodes: [],
             deferredUntil: nil,
             needsAttention: true,
+            portfolioDecision: "NEEDS_REVIEW",
+            portfolioDecisionSource: "AGENT_SCREENING",
+            portfolioDecisionAt: Date(timeIntervalSince1970: 1_800_000_050),
             submitted: false,
             submittedAt: nil,
             outcome: nil,
@@ -53,6 +56,78 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(procurement.unknowns, ["Неясен объём интеграции"])
         XCTAssertEqual(procurement.summary, "Нужно проверить блокеры.")
         XCTAssertTrue(procurement.needsAttention)
+        XCTAssertEqual(procurement.portfolioDecision, .needsReview)
+        XCTAssertEqual(procurement.portfolioDecisionSource, "AGENT_SCREENING")
+    }
+
+    func testPortfolioSummaryDecodesCanonicalMetrics() throws {
+        let json = #"""
+        {
+          "total_considered": 10,
+          "go": 6,
+          "no_go": 2,
+          "needs_review": 1,
+          "undecided": 1,
+          "submitted": 4,
+          "won": 2,
+          "lost": 1,
+          "rejected": 1,
+          "cancelled": 1,
+          "submission_rate": 0.6667,
+          "win_rate": 0.5,
+          "no_go_reason_counts": {"ECONOMICS": 2}
+        }
+        """#.data(using: .utf8)!
+
+        let summary = try TenderAgentJSON.makeDecoder().decode(
+            MobilePortfolioSummary.self,
+            from: json
+        )
+
+        XCTAssertEqual(summary.totalConsidered, 10)
+        XCTAssertEqual(summary.submitted, 4)
+        XCTAssertEqual(summary.won, 2)
+        XCTAssertEqual(summary.rejected, 1)
+        XCTAssertEqual(summary.submissionRate, 0.6667, accuracy: 0.0001)
+        XCTAssertEqual(summary.winRate, 0.5, accuracy: 0.0001)
+    }
+
+    func testPortfolioFiltersUseCanonicalFacts() {
+        let awaiting = makeProcurement(
+            id: "WAIT",
+            portfolioDecision: .go,
+            submitted: true,
+            outcomeCode: nil,
+            needsAttention: false
+        )
+        let won = makeProcurement(
+            id: "WON",
+            portfolioDecision: .go,
+            submitted: true,
+            outcomeCode: "WON",
+            needsAttention: false
+        )
+        let rejected = makeProcurement(
+            id: "REJECTED",
+            portfolioDecision: .go,
+            submitted: true,
+            outcomeCode: "REJECTED",
+            needsAttention: false
+        )
+        let noGo = makeProcurement(
+            id: "NO-GO",
+            portfolioDecision: .noGo,
+            submitted: false,
+            outcomeCode: nil,
+            needsAttention: false
+        )
+
+        XCTAssertTrue(PortfolioFilter.awaitingOutcome.matches(awaiting))
+        XCTAssertFalse(PortfolioFilter.awaitingOutcome.matches(won))
+        XCTAssertTrue(PortfolioFilter.won.matches(won))
+        XCTAssertTrue(PortfolioFilter.notWon.matches(rejected))
+        XCTAssertTrue(PortfolioFilter.noGo.matches(noGo))
+        XCTAssertFalse(PortfolioFilter.submitted.matches(noGo))
     }
 
     func testDecisionActionWireValuesMatchBackendContract() {
@@ -158,9 +233,15 @@ final class AppStoreTests: XCTestCase {
         XCTAssertNil(store.pushRegistrationError)
     }
 
-    private func makeProcurement() -> Procurement {
+    private func makeProcurement(
+        id: String = "TEST-1",
+        portfolioDecision: PortfolioDecision = .undecided,
+        submitted: Bool = false,
+        outcomeCode: String? = nil,
+        needsAttention: Bool = true
+    ) -> Procurement {
         Procurement(
-            id: "TEST-1",
+            id: id,
             registryNumber: "0000000000000000001",
             title: "Тестовая закупка",
             customer: "Тестовый заказчик",
@@ -175,9 +256,13 @@ final class AppStoreTests: XCTestCase {
             unknowns: [],
             risks: [],
             summary: "Тест.",
-            lifecycle: .analysisReady,
-            needsAttention: true,
-            decision: .pending
+            lifecycle: outcomeCode == nil ? (submitted ? .submitted : .analysisReady) : .outcome,
+            needsAttention: needsAttention,
+            decision: .pending,
+            portfolioDecision: portfolioDecision,
+            submitted: submitted,
+            outcomeCode: outcomeCode,
+            updatedAt: .now
         )
     }
 }

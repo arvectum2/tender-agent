@@ -16,6 +16,7 @@ struct ProcurementDetailView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header(procurement)
+                        portfolioStatusSection(procurement)
                         recommendationCard(procurement)
                         summarySection(procurement)
                         bulletSection("Аргументы GO", items: procurement.goReasons, symbol: "checkmark.circle")
@@ -76,6 +77,86 @@ struct ProcurementDetailView: View {
                 )
             }
             .font(.subheadline)
+        }
+    }
+
+    private func portfolioStatusSection(_ procurement: Procurement) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Портфель и результат")
+                .font(.headline)
+
+            LabeledContent("Решение в портфеле") {
+                Text(procurement.portfolioDecision.displayTitle)
+                    .fontWeight(.semibold)
+            }
+
+            if let source = procurement.portfolioDecisionSource, !source.isEmpty {
+                LabeledContent("Источник решения", value: portfolioDecisionSourceLabel(source))
+                    .font(.subheadline)
+            }
+            if let decidedAt = procurement.portfolioDecisionAt {
+                LabeledContent(
+                    "Зафиксировано",
+                    value: decidedAt.formatted(date: .abbreviated, time: .shortened)
+                )
+                .font(.subheadline)
+            }
+
+            Divider()
+
+            if procurement.submitted {
+                Label(
+                    procurement.submittedAt.map {
+                        "Подача подтверждена: \($0.formatted(date: .abbreviated, time: .shortened))"
+                    } ?? "Подача подтверждена",
+                    systemImage: "paperplane.circle.fill"
+                )
+                .foregroundStyle(.green)
+            } else {
+                Label("Факт подачи не подтверждён", systemImage: "paperplane.circle")
+                    .foregroundStyle(.secondary)
+            }
+
+            if let outcomeLabel = procurement.outcomeLabel {
+                Label(outcomeLabel, systemImage: "flag.checkered")
+                    .fontWeight(.semibold)
+                if let outcomeAt = procurement.outcomeAt {
+                    Text("Результат зафиксирован: \(outcomeAt.formatted(date: .abbreviated, time: .shortened))")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                if let rationale = procurement.outcomeRationale, !rationale.isEmpty {
+                    Text(rationale)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                if let rootCause = procurement.postmortemRootCause, !rootCause.isEmpty {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Постмортем")
+                            .font(.caption.bold())
+                        Text(rootCause)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } else {
+                Label(
+                    procurement.submitted ? "Результат ещё не зафиксирован" : "Результат отсутствует",
+                    systemImage: "hourglass"
+                )
+                .foregroundStyle(.secondary)
+            }
+        }
+        .padding()
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    private func portfolioDecisionSourceLabel(_ source: String) -> String {
+        switch source.uppercased() {
+        case "HUMAN": "Менеджер"
+        case "WORKFLOW": "Workflow"
+        case "AGENT_SCREENING": "Screening агента"
+        default: source
         }
     }
 

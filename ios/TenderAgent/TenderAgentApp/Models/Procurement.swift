@@ -14,11 +14,78 @@ enum HumanDecision: String, Codable, CaseIterable {
     case deferred = "Отложено"
 }
 
+enum PortfolioDecision: String, Codable, CaseIterable {
+    case go = "GO"
+    case noGo = "NO_GO"
+    case needsReview = "NEEDS_REVIEW"
+    case undecided = "UNDECIDED"
+
+    var displayTitle: String {
+        switch self {
+        case .go: "GO"
+        case .noGo: "NO GO"
+        case .needsReview: "Проверить"
+        case .undecided: "Не решено"
+        }
+    }
+}
+
 enum LifecycleState: String, Codable {
     case new = "Новая"
     case analysisReady = "Отчёт готов"
     case submitted = "Подались"
     case outcome = "Есть результат"
+}
+
+enum PortfolioFilter: String, CaseIterable, Identifiable {
+    case all
+    case attention
+    case go
+    case noGo
+    case submitted
+    case won
+    case notWon
+    case cancelled
+    case awaitingOutcome
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .all: "Все"
+        case .attention: "Решить"
+        case .go: "GO"
+        case .noGo: "NO GO"
+        case .submitted: "Подались"
+        case .won: "Победы"
+        case .notWon: "Не выиграли"
+        case .cancelled: "Отменены"
+        case .awaitingOutcome: "Ждём итог"
+        }
+    }
+
+    func matches(_ procurement: Procurement) -> Bool {
+        switch self {
+        case .all:
+            true
+        case .attention:
+            procurement.needsAttention
+        case .go:
+            procurement.portfolioDecision == .go
+        case .noGo:
+            procurement.portfolioDecision == .noGo
+        case .submitted:
+            procurement.submitted
+        case .won:
+            procurement.outcomeCode == "WON"
+        case .notWon:
+            procurement.outcomeCode == "LOST" || procurement.outcomeCode == "REJECTED"
+        case .cancelled:
+            procurement.outcomeCode == "CANCELLED"
+        case .awaitingOutcome:
+            procurement.submitted && procurement.outcomeCode == nil
+        }
+    }
 }
 
 struct Procurement: Identifiable, Equatable {
@@ -42,6 +109,18 @@ struct Procurement: Identifiable, Equatable {
     var decision: HumanDecision
     var decisionComment: String?
     var deferredUntil: Date?
+
+    var portfolioDecision: PortfolioDecision = .undecided
+    var portfolioDecisionSource: String? = nil
+    var portfolioDecisionAt: Date? = nil
+    var submitted: Bool = false
+    var submittedAt: Date? = nil
+    var outcomeCode: String? = nil
+    var outcomeRationale: String? = nil
+    var outcomeAt: Date? = nil
+    var postmortemRootCause: String? = nil
+    var backendStatus: String = ""
+    var updatedAt: Date = .distantPast
 }
 
 extension Procurement {
@@ -65,6 +144,28 @@ extension Procurement {
         return "\(daysUntilDeadline) дн."
     }
 
+    var outcomeLabel: String? {
+        switch outcomeCode {
+        case "WON": "Выиграли"
+        case "LOST": "Проиграли"
+        case "REJECTED": "Заявка отклонена"
+        case "CANCELLED": "Закупка отменена"
+        case "NO_RESULT": "Результата нет"
+        case let code?: code
+        case nil: nil
+        }
+    }
+
+    var portfolioStateLabel: String {
+        if let outcomeLabel {
+            return outcomeLabel
+        }
+        if submitted {
+            return "Подались"
+        }
+        return portfolioDecision.displayTitle
+    }
+
     static func fromAPI(_ item: MobileAPIProcurement) -> Procurement {
         let recommendation: AgentRecommendation
         switch item.recommendation {
@@ -82,8 +183,11 @@ extension Procurement {
         default: decision = .pending
         }
 
+        let portfolioDecision = PortfolioDecision(rawValue: item.portfolioDecision) ?? .undecided
+        let normalizedOutcome = item.outcome?.uppercased()
+
         let lifecycle: LifecycleState
-        if item.outcome != nil {
+        if normalizedOutcome != nil {
             lifecycle = .outcome
         } else if item.submitted {
             lifecycle = .submitted
@@ -121,7 +225,18 @@ extension Procurement {
             needsAttention: item.needsAttention,
             decision: decision,
             decisionComment: item.humanRationale,
-            deferredUntil: item.deferredUntil
+            deferredUntil: item.deferredUntil,
+            portfolioDecision: portfolioDecision,
+            portfolioDecisionSource: item.portfolioDecisionSource,
+            portfolioDecisionAt: item.portfolioDecisionAt,
+            submitted: item.submitted,
+            submittedAt: item.submittedAt,
+            outcomeCode: normalizedOutcome,
+            outcomeRationale: item.outcomeRationale,
+            outcomeAt: item.outcomeAt,
+            postmortemRootCause: item.postmortemRootCause,
+            backendStatus: item.currentStatus,
+            updatedAt: item.updatedAt
         )
     }
 }

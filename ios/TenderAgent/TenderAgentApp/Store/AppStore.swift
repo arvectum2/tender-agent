@@ -5,6 +5,7 @@ import Foundation
 final class AppStore: ObservableObject {
     @Published private(set) var procurements: [Procurement]
     @Published private(set) var inboxSummary: MobileInboxSummary?
+    @Published private(set) var portfolioSummary: MobilePortfolioSummary?
     @Published private(set) var isLive = false
     @Published private(set) var isLoading = false
     @Published private(set) var isMockData = true
@@ -26,6 +27,7 @@ final class AppStore: ObservableObject {
         self.procurements = procurements
         self.apiClient = apiClient
         self.inboxSummary = nil
+        self.portfolioSummary = nil
         self.isMockData = true
     }
 
@@ -34,20 +36,63 @@ final class AppStore: ObservableObject {
     }
 
     var totalPortfolioCount: Int {
-        inboxSummary?.totalPortfolio ?? procurements.count
+        portfolioSummary?.totalConsidered ?? inboxSummary?.totalPortfolio ?? procurements.count
     }
 
     var submittedCount: Int {
-        inboxSummary?.submitted
-            ?? procurements.filter { $0.lifecycle == .submitted || $0.lifecycle == .outcome }.count
+        portfolioSummary?.submitted ?? procurements.filter(\.submitted).count
     }
 
     var goCount: Int {
-        procurements.filter { $0.decision == .go }.count
+        portfolioSummary?.go ?? procurements.filter { $0.portfolioDecision == .go }.count
     }
 
     var noGoCount: Int {
-        procurements.filter { $0.decision == .noGo }.count
+        portfolioSummary?.noGo ?? procurements.filter { $0.portfolioDecision == .noGo }.count
+    }
+
+    var wonCount: Int {
+        portfolioSummary?.won ?? procurements.filter { $0.outcomeCode == "WON" }.count
+    }
+
+    var notWonCount: Int {
+        if let portfolioSummary {
+            return portfolioSummary.lost + portfolioSummary.rejected
+        }
+        return procurements.filter {
+            $0.outcomeCode == "LOST" || $0.outcomeCode == "REJECTED"
+        }.count
+    }
+
+    var cancelledCount: Int {
+        portfolioSummary?.cancelled ?? procurements.filter { $0.outcomeCode == "CANCELLED" }.count
+    }
+
+    var submissionRate: Double {
+        portfolioSummary?.submissionRate ?? (goCount == 0 ? 0 : Double(submittedCount) / Double(goCount))
+    }
+
+    var winRate: Double {
+        if let portfolioSummary {
+            return portfolioSummary.winRate
+        }
+        let decided = wonCount + notWonCount
+        return decided == 0 ? 0 : Double(wonCount) / Double(decided)
+    }
+
+    func portfolioItems(for filter: PortfolioFilter) -> [Procurement] {
+        procurements
+            .filter(filter.matches)
+            .sorted {
+                if $0.updatedAt == $1.updatedAt {
+                    return $0.registryNumber > $1.registryNumber
+                }
+                return $0.updatedAt > $1.updatedAt
+            }
+    }
+
+    func portfolioCount(for filter: PortfolioFilter) -> Int {
+        portfolioItems(for: filter).count
     }
 
     var canSubmitDecisions: Bool {
@@ -135,6 +180,7 @@ final class AppStore: ObservableObject {
         apiClient = nil
         procurements = MockData.procurements
         inboxSummary = nil
+        portfolioSummary = nil
         isLive = false
         isMockData = true
         lastError = revocationWarning
@@ -161,6 +207,7 @@ final class AppStore: ObservableObject {
             let portfolio = try await apiClient.fetchPortfolio()
             let inbox = try await apiClient.fetchInbox()
             procurements = portfolio.items.map(Procurement.fromAPI)
+            portfolioSummary = portfolio.summary
             inboxSummary = inbox.summary
             isLive = true
             isMockData = false
@@ -197,6 +244,15 @@ final class AppStore: ObservableObject {
     func handlePushRegistrationFailure(_ message: String) {
         pushStatusLabel = "Ошибка APNs"
         pushRegistrationError = message
+    }
+
+    @discardableResult
+    func refreshAndEnsureProcurementLoaded(id: String) async -> Bool {
+        await refresh()
+        if procurement(id: id) != nil {
+            return true
+        }
+        return await ensureProcurementLoaded(id: id)
     }
 
     @discardableResult
@@ -256,10 +312,13 @@ final class AppStore: ObservableObject {
             lastError = nil
 
             do {
+                let portfolio = try await apiClient.fetchPortfolio()
                 let inbox = try await apiClient.fetchInbox()
+                procurements = portfolio.items.map(Procurement.fromAPI)
+                portfolioSummary = portfolio.summary
                 inboxSummary = inbox.summary
             } catch {
-                lastError = "Решение сохранено, но сводку входящих обновить не удалось: \(error.localizedDescription)"
+                lastError = "Решение сохранено, но портфель обновить не удалось: \(error.localizedDescription)"
             }
             return true
         } catch {

@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives.asymmetric import ec
 
 from src.main import app
 from src.modules.deal_registry.models import Deal
-from src.modules.event_log.models import DecisionRecord
+from src.modules.event_log.models import DecisionRecord, EventRecord
 from src.modules.mobile_api.auth import (
     get_mobile_auth_secret,
     issue_mobile_token,
@@ -27,6 +27,7 @@ from src.modules.mobile_api.push import (
     dispatch_mobile_push_event,
     send_apns_notification,
 )
+from src.modules.outcome_intake.models import OutcomeIntakeRecord, OutcomeIntakeSet
 from src.shared.config.settings import Settings
 from src.shared.enums import DealStatus
 
@@ -258,6 +259,74 @@ def test_mobile_no_go_is_visible_in_canonical_portfolio(client, session):
     assert canonical_item["decision_source"] == "HUMAN"
     assert canonical_item["decision_rationale"] == "Manager rejected from iPhone"
     assert canonical_item["decision_reason_codes"] == ["ECONOMICS"]
+
+
+def test_mobile_portfolio_projects_canonical_metrics_and_lifecycle_evidence(client, session):
+    _allow_mobile("device-portfolio-001")
+    deal = _deal("DL-MOB-PORT-001", "3010")
+    session.add(deal)
+    session.commit()
+
+    decision = client.post(
+        f"/mobile/v1/procurements/{deal.deal_id}/decision",
+        json={
+            "action": "GO",
+            "rationale": "Manager approved from iPhone",
+            "idempotency_key": "mobile-portfolio-go-3010",
+        },
+    )
+    assert decision.status_code == 200
+
+    submitted_at = datetime(2026, 10, 7, 6, 30, tzinfo=UTC)
+    session.add(
+        EventRecord(
+            event_id="EVT-MOB-PORT-001",
+            deal_id=deal.deal_id,
+            event_code="submission_execution_submitted",
+            source_module_id="M-033",
+            severity="INFO",
+            payload_json={},
+            created_at=submitted_at,
+        )
+    )
+    outcome_set = OutcomeIntakeSet(
+        outcome_intake_set_id="OUT-SET-MOB-PORT-001",
+        deal_id=deal.deal_id,
+        post_submission_tracker_set_id="PST-MOB-PORT-001",
+        outcome_status="RECORDED",
+    )
+    session.add(outcome_set)
+    session.flush()
+    session.add(
+        OutcomeIntakeRecord(
+            outcome_intake_id="OUT-MOB-PORT-001",
+            outcome_intake_set_id=outcome_set.outcome_intake_set_id,
+            outcome_code="WON",
+            effective_at=datetime(2026, 10, 7, 7, 15, tzinfo=UTC),
+            rationale="Award protocol confirms Arvectum as winner",
+        )
+    )
+    session.commit()
+
+    response = client.get("/mobile/v1/portfolio")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["summary"]["total_considered"] == 1
+    assert body["summary"]["go"] == 1
+    assert body["summary"]["submitted"] == 1
+    assert body["summary"]["won"] == 1
+    assert body["summary"]["submission_rate"] == 1.0
+    assert body["summary"]["win_rate"] == 1.0
+
+    item = body["items"][0]
+    assert item["portfolio_decision"] == "GO"
+    assert item["portfolio_decision_source"] == "HUMAN"
+    assert item["portfolio_decision_at"] is not None
+    assert item["submitted"] is True
+    assert item["submitted_at"] is not None
+    assert item["outcome"] == "WON"
+    assert item["outcome_rationale"] == "Award protocol confirms Arvectum as winner"
+    assert item["outcome_at"] is not None
 
 
 def test_mobile_defer_requires_date(client, session):
