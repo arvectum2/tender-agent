@@ -1131,10 +1131,14 @@ legacy_registry:
     comment: Этап завершён 23.07.2026 и больше не является активным блокером.
     dependencies_raw: BASE-016
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/ARV-050_REVALIDATION_2026-10-07.md
+      detail: Explicit reconciliation maps historical ARV-050 R8 workspace scope to already confirmed BASE-017 without rewriting either legacy snapshot.
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: BASE-017 current-state evidence for customer-pilot lifecycle, tenant isolation, artifact binding and PDF publication.
+    notes: 'Historical ARV-050 is a duplicate roadmap expression of the completed R8 Customer Pilot Workspace already closed by BASE-017. Current overlay is confirmed_done; legacy snapshot fields and IDs remain unchanged.'
 - id: ARV-073
   legacy_snapshot:
     queue_order: 0
