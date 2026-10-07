@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Run the durable Daily Tender workflow on the Mac mini.
+"""Run and resume the durable Daily Tender workflow on the Mac mini.
 
-This command is safe for unattended scheduling: it reads public procurement
-sources, writes internal Tender Agent/Data Platform state and reports, and
-stops at WAIT_HUMAN. It never submits an application, logs in to an ETP,
-signs, pays, sends supplier mail, or makes the manager's GO/NO GO/DEFER choice.
+This command is safe for unattended scheduling: it first resumes open runs so
+human-decided cases can advance through local readiness and evidence tracking,
+then starts the current discovery run. It never submits or modifies an
+application, logs in to an ETP, signs, pays, sends supplier mail, or makes the
+manager's GO/NO GO/DEFER choice.
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ if str(ROOT) not in sys.path:
 from src.modules.daily_tender_run.schemas import StartDailyTenderRunRequest
 from src.modules.daily_tender_run.service import (
     create_daily_tender_run,
+    resume_pending_daily_tender_runs,
     to_run_response,
 )
 from src.shared.db import models as _db_models  # noqa: F401
@@ -36,6 +38,11 @@ def _parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = _parser().parse_args()
     with SessionLocal() as session:
+        resumed = resume_pending_daily_tender_runs(
+            session,
+            profile_id=args.profile,
+            retry_failed=args.retry_failed,
+        )
         run = create_daily_tender_run(
             session,
             StartDailyTenderRunRequest(
@@ -46,7 +53,16 @@ def main() -> int:
         )
         response = to_run_response(session, run)
         print(response.model_dump_json(indent=2))
-        if response.status in {"WAITING_HUMAN", "COMPLETED"}:
+
+        non_error_waits = {
+            "WAITING_HUMAN",
+            "WAITING_READINESS",
+            "WAITING_SUBMISSION",
+            "WAITING_OUTCOME",
+            "COMPLETED",
+        }
+        resumed_ok = all(item.status in non_error_waits for item in resumed)
+        if resumed_ok and response.status in non_error_waits:
             return 0
         return 20
 

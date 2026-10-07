@@ -76,6 +76,9 @@ class DailyTenderRunItemResponse(APIModel):
     strongest_reasons: list[str] = Field(default_factory=list)
     blockers: list[str] = Field(default_factory=list)
     unknowns: list[str] = Field(default_factory=list)
+    human_decision: str | None = None
+    human_decision_id: str | None = None
+    post_decision: dict = Field(default_factory=dict)
     error: str | None
     created_at: datetime
     updated_at: datetime
