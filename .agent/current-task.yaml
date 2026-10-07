@@ -1,36 +1,44 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: TENDER-AGENT-CHECKPOINT-RECONCILIATION-20261007
+status: in_progress
+task_id: COMMERCIAL-WORKFLOW-ADMISSION-20261007
 authority: OWNER_DIRECTIVE
-goal: Restore a repository-local Tender Agent checkpoint that resumes only from Tender Agent canonical state.
+goal: Reset the bounded Company AM-4 automatic-merge review cycle after attributable Owner review and explicitly admit the full canonical COMMERCIAL-WORKFLOW branch into the Tender Agent execution queue.
 definition_of_done:
-- .agent/current-task.yaml contains only arvectum2/tender-agent state and sources.
-- Continuation is anchored to docs/roadmap/master-roadmap.yaml, .agent/execution-queue.yaml and .agent/owner-directive.yaml.
-- The current execution queue is reconciled before any continuation.
-- A future "continue" request starts from Tender Agent canonical roadmap state rather than unrelated repository work.
+- A new attributable Owner AM-4 renewal exists in arvectum2/arvectum-company with unchanged hard stops and a fresh 0/10 cycle.
+- Tender Agent executor policy/watchdog references the new renewal and no longer reports review_due_at_10_of_10.
+- Every canonical COMMERCIAL-WORKFLOW historical item is explicitly represented by a ready queue item in canonical branch order.
+- Queue items remain bounded by existing human-control, legal, procurement-submission and external-action hard stops.
+- Watchdog policy tests cover the renewed AM-4 state and full Commercial Workflow queue admission.
+- Canonical roadmap and human-readable roadmap reflect the admission.
+- Relevant CI/checks pass and the Owner-directed reconciliation is merged.
 completed:
-- Replaced the stale cross-repository checkpoint with a Tender Agent-specific canonical checkpoint.
-- Verified docs/roadmap/master-roadmap.yaml declares canonical_role: master_product_roadmap.
-- Verified .agent/execution-queue.yaml has no non-done admitted items.
-- Verified the roadmap current-status overlay also states active_execution_state: no_non_done_admitted_items.
-- Preserved the active Owner continuous-roadmap directive as the only fallback when the admitted queue is empty.
-current: No active Tender Agent execution item is admitted. Canonical checkpoint reconciliation is complete.
-pending: []
-last_verified_commit: 9c51916a7911bceda04986b4a7e361076c594914
+- Interpreted Owner request "всю ветку Commercial Core" as the canonical roadmap branch COMMERCIAL-WORKFLOW; accelerated Commercial Core v1 Stage 3 is already completed.
+- Verified COMMERCIAL-WORKFLOW canonical order: ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069.
+- Created Company governance PR #10 with the attributable 2026-10-07 Owner AM-4 review and renewal.
+- Merged Company PR #10 as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388; hard stops unchanged, counter reset to 0/10, next time-based review 2026-11-07.
+- Updated Tender Agent executor policy and watchdog authority source to the 2026-10-07 renewal.
+- Explicitly admitted all 12 COMMERCIAL-WORKFLOW roadmap items as ready AUTO queue entries with auto_merge=true and preserved hard stops.
+- Updated owner directive, canonical roadmap, human-readable roadmap and watchdog continuation tests.
+- Performed structural branch checks confirming the renewed authority reference, 0/10 counter and all 12 queue task IDs are present.
+current: Open the Tender Agent reconciliation PR, verify exact-head CI, then merge this Owner-directed governance/queue change.
+pending:
+- Open Tender Agent PR from owner/commercial-workflow-am4-reset-20261007.
+- Verify exact-head CI/checks.
+- Merge the reconciliation and record final evidence.
+last_verified_commit: eadc53a44a29f8ef63354d0004681be4336c259c
 test_results:
-- "Checkpoint repository identity: PASS (arvectum2/tender-agent)."
-- "Canonical roadmap identity: PASS."
-- "Execution queue reconciliation: PASS; 0 non-done admitted items."
-- "Roadmap execution-state reconciliation: PASS; no_non_done_admitted_items."
-- "Cross-repository resume references: removed."
-updated_at: '2026-10-07T17:24:00+03:00'
-resume_instruction: On the next Tender Agent continuation, read this checkpoint, then reconcile .agent/execution-queue.yaml and docs/roadmap/master-roadmap.yaml against current main. If no non-done admitted item exists, follow .agent/owner-directive.yaml to select at most one bounded Tender Agent continuation item. Do not resume work from any other repository.
+- "Company AM-4 renewal PR #10: merged as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388."
+- "Structural authority reconciliation: PASS."
+- "Commercial Workflow queue presence: 12/12 task IDs present."
+- "Roadmap admission/state markers: PASS."
+updated_at: '2026-10-07T18:00:00+03:00'
+resume_instruction: Continue this reconciliation only. Open/inspect the Tender Agent PR, require exact-head CI green, merge on Owner instruction authority, then mark this checkpoint completed. The next watchdog run should start with ARV-015-OPERATOR-PROFILE-PARSER-001.
 execution:
   claimed_by: ChatGPT
-  execution_id: tender-agent-checkpoint-reconciliation-20261007
-  branch: fix/tender-agent-current-task-checkpoint
-  base_commit: 9c51916a7911bceda04986b4a7e361076c594914
+  execution_id: commercial-workflow-am4-reset-20261007
+  branch: owner/commercial-workflow-am4-reset-20261007
+  base_commit: 05a939ebf0ecf770f5f3294c6cb2a44c11941541
   issue: null
   manual_override: true
   lease_until: null

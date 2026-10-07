@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-10-07T07:55:00Z'
+strategy_updated_at: '2026-10-07T14:52:00Z'
 continuous_execution:
   owner_directive_date: '2026-09-18'
   principle: work_conserving_hourly_executor
@@ -155,11 +155,40 @@ owner_product_directive_2026_10_06:
     - direct public Internet exposure of Mac mini
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
+owner_commercial_workflow_directive_2026_10_07:
+  title: Commercial Workflow full-branch admission
+  status: admitted
+  source: 'Explicit Product Owner directive in Tender Agent project conversation on 2026-10-07.'
+  canonical_branch_id: COMMERCIAL-WORKFLOW
+  interpretation: 'Accelerated Stage 3 Commercial Core v1 is already done; this directive admits the remaining canonical COMMERCIAL-WORKFLOW branch.'
+  historical_items: [ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069]
+  queue_items:
+    - ARV-015-OPERATOR-PROFILE-PARSER-001
+    - COMMERCIAL-WORKFLOW-ARV-019-001
+    - COMMERCIAL-WORKFLOW-ARV-022-001
+    - COMMERCIAL-WORKFLOW-ARV-053-001
+    - COMMERCIAL-WORKFLOW-ARV-055-001
+    - COMMERCIAL-WORKFLOW-ARV-057-001
+    - COMMERCIAL-WORKFLOW-ARV-059-001
+    - COMMERCIAL-WORKFLOW-ARV-060-001
+    - COMMERCIAL-WORKFLOW-ARV-063-001
+    - COMMERCIAL-WORKFLOW-ARV-064-001
+    - COMMERCIAL-WORKFLOW-ARV-066-001
+    - COMMERCIAL-WORKFLOW-ARV-069-001
+  execution: 'Queue in canonical branch order. AUTO repository implementation/verification is allowed inside existing roadmap outcomes and hard stops; consequential external actions remain prohibited.'
+  am4_review:
+    renewed_on: '2026-10-07'
+    company_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+    company_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
+    automatic_merge_counter: 0
+    automatic_merge_counter_limit: 10
+    next_time_review_deadline: '2026-11-07'
+
 current_status_summary:
-  as_of: '2026-10-07T13:35:00+03:00'
+  as_of: '2026-10-07T17:52:00+03:00'
   verified_main_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
   active_execution_item: null
-  active_execution_state: no_non_done_admitted_items
+  active_execution_state: admitted_queue_ready
   last_completed_task: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
   base_foundation:
     historical_ids: [BASE-001, BASE-002, BASE-003, BASE-004, BASE-005, BASE-006, BASE-007, BASE-008, BASE-009, BASE-010, BASE-011, BASE-012, BASE-013, BASE-014, BASE-015, BASE-016, BASE-017, BASE-018]
@@ -188,12 +217,12 @@ current_status_summary:
     enabled: true
     cadence: hourly
   automatic_merge_governance:
-    state: review_due_at_10_of_10
-    note: 'Automatic merge fails closed until a fresh attributable Owner review/renewal. Explicit Owner-directed work and permitted preparation/testing remain governed by their own authority.'
-  note: 'ARV-005 technical pilot is complete on preserved frozen evidence; no non-done queue item remains admitted after this closure. Historical 2026-07-30 progress/status fields below remain immutable and are not current execution percentages.'
+    state: active_renewed_2026_10_07_0_of_10
+    note: 'Attributable Owner review on 2026-10-07 reset the AM-4 automatic-merge counter to 0/10; next time-based review deadline is 2026-11-07. Existing hard stops remain unchanged.'
+  note: 'ARV-005 technical pilot remains complete. The full canonical COMMERCIAL-WORKFLOW branch is now explicitly admitted as 12 ready queue items under the 2026-10-07 Owner directive; historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
 
 execution_snapshot:
-  updated_at: '2026-10-07T10:35:00Z'
+  updated_at: '2026-10-07T14:52:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -202,9 +231,21 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: no_non_done_admitted_items
-  next_admitted_item: null
-  admitted_pipeline: []
+  queue_state: commercial_workflow_admitted
+  next_admitted_item: ARV-015-OPERATOR-PROFILE-PARSER-001
+  admitted_pipeline:
+    - ARV-015-OPERATOR-PROFILE-PARSER-001
+    - COMMERCIAL-WORKFLOW-ARV-019-001
+    - COMMERCIAL-WORKFLOW-ARV-022-001
+    - COMMERCIAL-WORKFLOW-ARV-053-001
+    - COMMERCIAL-WORKFLOW-ARV-055-001
+    - COMMERCIAL-WORKFLOW-ARV-057-001
+    - COMMERCIAL-WORKFLOW-ARV-059-001
+    - COMMERCIAL-WORKFLOW-ARV-060-001
+    - COMMERCIAL-WORKFLOW-ARV-063-001
+    - COMMERCIAL-WORKFLOW-ARV-064-001
+    - COMMERCIAL-WORKFLOW-ARV-066-001
+    - COMMERCIAL-WORKFLOW-ARV-069-001
   completed_pipeline:
     - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
     - DOCUMENT-QA-NEXT-INCREMENT
@@ -222,7 +263,7 @@ execution_snapshot:
     - MOB-3-IOS-PUSH-DEEPLINKS-001
     - DTR-3-POST-GO-AUTOMATION-001
     - MOB-4-IOS-PORTFOLIO-METRICS-001
-  note: 'As of 2026-10-07, the mobile/DTR sequence and ARV-005 controlled pilot are completed, BASE-001..BASE-018 are 18/18 confirmed_done, and no non-done queue item remains admitted. The next bounded item must be admitted under the active Owner continuation rule without inventing scope or acceptance criteria; ARV-004 learning-loop work is explicitly post-MVP and not admitted.'
+  note: 'As of 2026-10-07, the mobile/DTR sequence and ARV-005 controlled pilot are completed, BASE-001..BASE-018 are 18/18 confirmed_done, and the full COMMERCIAL-WORKFLOW branch is explicitly admitted in the execution queue. ARV-004 learning-loop work remains post-MVP and is not part of this admission.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
