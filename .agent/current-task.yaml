@@ -1,39 +1,33 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ARV-050-BASE-017-RECONCILIATION-20261007
+status: in_progress
+task_id: AM4-DISABLE-MERGE-COUNTER-20261007
 authority: OWNER_DIRECTIVE
-goal: Reconcile historical ARV-050 R8 customer-pilot workspace with already confirmed BASE-017 without rewriting the immutable legacy snapshot.
+goal: Remove the automatic-merge-count review trigger from AM-4 so watchdog execution no longer stops after a fixed number of automatic merges, while preserving time/event review gates and all existing hard stops.
 definition_of_done:
-- Preserve ARV-050 and BASE-017 historical snapshot fields and IDs unchanged.
-- Revalidate that ARV-050 scope is materially the same completed R8 customer-pilot workspace already confirmed under BASE-017.
-- Set only the current ARV-050 reconciliation overlay to confirmed_done with explicit evidence and notes tying closure to BASE-017.
-- Synchronize the human MASTER_ROADMAP.md status row.
-- Add focused reconciliation evidence and verify the current R8 regression slice.
-- Parse roadmap YAML successfully and assert BASE-017 and ARV-050 are both confirmed_done.
-- Commit and push the bounded reconciliation; exact-head CI must be green before merge.
+- Company governance records an attributable Owner amendment disabling the AM-4 automatic-merge counter.
+- The ten-merge review trigger and counter bookkeeping are removed from Tender Agent executor policy.
+- Time-based, incident-based, material-change, revocation and hard-stop fail-closed conditions remain unchanged.
+- Roadmap, owner directive and tests no longer present AM-4 as N/10.
+- Watchdog can continue AUTO/auto_merge queue work without a merge-count ceiling.
+- Focused governance tests and exact-head CI pass before merge.
 completed:
-- '2026-10-07: Owner explicitly requested ARV-050 P0 reconciliation against already closed BASE-017.'
-- '2026-10-07: Verified BASE-017 is already confirmed_done and ARV-050 preserves the same R8 customer-pilot workspace completion snapshot but still has stale needs_revalidation overlay.'
-- '2026-10-07: Added explicit ARV-050 reconciliation evidence, changed only the current overlay to confirmed_done, and synchronized MASTER_ROADMAP.md; both legacy snapshots remain untouched.'
-- '2026-10-07: Focused R8 regression passed 22 tests; roadmap YAML assertions and git diff --check passed. A first ad-hoc assertion used the wrong YAML collection key and was corrected without repository changes.'
-- '2026-10-07: PR #202 exact-head push CI run 37665152795 succeeded on bc07d91a472b130909c60cbbebbaf4d6c15bcc9d with all 9 jobs green; GitHub reported no required branch checks.'
-- '2026-10-07: PR #202 squash-merged to main as bca06de3ac50adccb3b51e7cf2db43516bb6a770. No runtime, deployment, procurement or external side effect was introduced.'
-current: Definition of Done satisfied; historical ARV-050 is reconciled with the already closed BASE-017 R8 workspace baseline.
-pending: []
-last_verified_commit: bca06de3ac50adccb3b51e7cf2db43516bb6a770
-test_results:
-- 'Focused R8 regression: 22 passed, 5 warnings.'
-- 'Roadmap YAML parse/assertions: PASS (BASE-017 and ARV-050 both confirmed_done; shared R8 source preserved).'
-- 'git diff --check origin/main...HEAD: PASS.'
-- 'GitHub exact-head push CI run 37665152795: SUCCESS; migrations, docker-build, redis-integration, r8-acceptance-integration, p6-03 bridge, dependency-lock, r8-postgres-integration, quality and security all green.'
-updated_at: '2026-10-07T21:30:00+03:00'
-resume_instruction: Task completed. Do not reopen ARV-050 for R8 workspace implementation; BASE-017 remains the verified shared baseline. Continue with the next independently admitted Tender Agent item, COMMERCIAL-WORKFLOW-ARV-022-001, recovering existing OCR adapter work rather than duplicating it.
+- '2026-10-07: Owner explicitly instructed: выключи ты этот счетчик АМ-4.'
+current: Record the Company governance amendment, then reconcile Tender Agent policy/roadmap/tests.
+pending:
+- Create and merge the Company AM-4 no-counter amendment.
+- Update Tender Agent authority references and remove count-based gating/bookkeeping.
+- Update roadmap/directive/tests and verify.
+- Merge the Tender Agent reconciliation after exact-head CI.
+last_verified_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
+test_results: []
+updated_at: '2026-10-07T21:35:00+03:00'
+resume_instruction: Continue only AM4-DISABLE-MERGE-COUNTER-20261007. Preserve the 2026-11-07 time review, incident/material-change review triggers and all hard stops; remove only merge-count-based review/counter semantics.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: a2f936db3485557a6a4b2ff27093526baf195f9f
+  claimed_by: ChatGPT
+  execution_id: am4-disable-merge-counter-20261007
+  branch: governance/disable-am4-counter-20261007
+  base_commit: 1b95d668febcb2dcadd42a1cba64a5e7ecd38153
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
