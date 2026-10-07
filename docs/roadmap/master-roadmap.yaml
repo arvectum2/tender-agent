@@ -30,21 +30,14 @@ continuous_execution:
   max_productive_quantum_minutes: 45
   stale_progress_recovery_minutes: 90
   rules:
-  - Reconcile canonical issue/PR/done-gate state before continuing a checkpoint; a satisfied/closed gate wins over stale checkpoint text.
-  - Do not passively poll or sleep waiting for CI, external acquisition, human review or another future condition; checkpoint the wait and end
-    or continue independent admitted AUTO work.
-  - When an AUTO item is waiting on CI/external state, another independent admitted AUTO item may progress in an isolated branch/checkpoint without
-    widening authority.
-  - After a queue done gate is satisfied, do not create another acceptance cycle for that same gate unless an explicit new queue item or Owner
-    directive reopens it.
-  - If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and
-    resume immediately.
-  - If the admitted queue is empty while .agent/owner-directive.yaml is active, deterministically select the first eligible continuation branch/item
-    in document order and materialize at most one bounded item; prefer an existing bounded task, otherwise use the standard evidence/revalidation
-    slice. This is not authority to invent product priority or implementation scope.
-  - 'A material executor-policy change triggers the Company AM-4 review gate: repository preparation/testing may continue, but automatic merges
-    fail closed until attributable Owner renewal.'
-  authority_note: Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.
+    - 'Reconcile canonical issue/PR/done-gate state before continuing a checkpoint; a satisfied/closed gate wins over stale checkpoint text.'
+    - 'Do not passively poll or sleep waiting for CI, external acquisition, human review or another future condition; checkpoint the wait and end or continue independent admitted AUTO work.'
+    - 'When an AUTO item is waiting on CI/external state, another independent admitted AUTO item may progress in an isolated branch/checkpoint without widening authority.'
+    - 'After a queue done gate is satisfied, do not create another acceptance cycle for that same gate unless an explicit new queue item or Owner directive reopens it.'
+    - 'If executable work exists and no valid active lease/progress is observed for more than 90 minutes, reclaim from the canonical checkpoint and resume immediately.'
+    - 'If the admitted queue is empty while .agent/owner-directive.yaml is active, deterministically select the first eligible continuation branch/item in document order and materialize at most one bounded item; prefer an existing bounded task, otherwise use the standard evidence/revalidation slice. This is not authority to invent product priority or implementation scope.'
+    - 'A material executor-policy change triggers the Company AM-4 review gate: repository preparation/testing may continue, but automatic merges fail closed until attributable Owner renewal.'
+  authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
 owner_product_directive_2026_10_06:
   title: Daily Tender Run + iPhone Tender Agent
   status: roadmap_priority
@@ -52,133 +45,118 @@ owner_product_directive_2026_10_06:
   daily_tender_run:
     priority: P0
     implementation_status: DTR_3_MERGED
-    scope: Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest
-      -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio.
-    human_gate: GO / NO GO / DEFER remains attributable to a human manager.
+    scope: "Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio."
+    human_gate: "GO / NO GO / DEFER remains attributable to a human manager."
     reuse_existing_modules: true
     implementation_spec: /docs/product/Daily_Tender_Run_and_iPhone_MVP.md
     implemented_2026_10_06:
-    - durable_run_and_item_state
-    - versioned_arvectum_it_saved_filter
-    - public_eis_discovery_dedupe_screen
-    - tender_research_public_detail_document_ingest
-    - data_platform_prepare_and_hybrid_analysis
-    - fail_closed_manager_synthesis
-    - run_latest_resume_digest_api
-    - mobile_digest_and_recommendation_projection
-    - unattended_macmini_cli
+      - durable_run_and_item_state
+      - versioned_arvectum_it_saved_filter
+      - public_eis_discovery_dedupe_screen
+      - tender_research_public_detail_document_ingest
+      - data_platform_prepare_and_hybrid_analysis
+      - fail_closed_manager_synthesis
+      - run_latest_resume_digest_api
+      - mobile_digest_and_recommendation_projection
+      - unattended_macmini_cli
     implemented_2026_10_07:
-    - human_go_post_decision_resume
-    - canonical_submission_readiness_reuse
-    - fail_closed_submission_evidence_tracking
-    - artifact_bound_outcome_tracking
-    - restartable_post_decision_states
+      - human_go_post_decision_resume
+      - canonical_submission_readiness_reuse
+      - fail_closed_submission_evidence_tracking
+      - artifact_bound_outcome_tracking
+      - restartable_post_decision_states
     deployed_runtime_2026_10_06:
       main_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee
       migration: 100_add_daily_tender_runs
       data_platform: http://127.0.0.1:8094
-      schedule: 08:00 Europe/Moscow via com.arvectum.daily-tender-run
+      schedule: '08:00 Europe/Moscow via com.arvectum.daily-tender-run'
       human_gate_preserved: true
-      filter_profile: arvectum-it v2
+      filter_profile: 'arvectum-it v2'
       production_acceptance_run: DTR-20261006T171139Z-79cfe20b
-      production_acceptance: two MANAGER_READY items with persisted Data Platform analysis history; run continuing autonomously
+      production_acceptance: 'two MANAGER_READY items with persisted Data Platform analysis history; run continuing autonomously'
     dtr_3:
       status: done
       pr: 180
       merge_commit: 3b25e10bab2930f954d39a444b8258ad597010c9
       exact_head_ci_run: 37575956723
       exact_head_ci: success
-      note: HUMAN GO resumes into canonical readiness preparation and evidence-gated submission/outcome tracking. The system never starts/submits
-        an ETP action; unattributed SUBMITTED state and unbound outcome records remain pending.
+      note: "HUMAN GO resumes into canonical readiness preparation and evidence-gated submission/outcome tracking. The system never starts/submits an ETP action; unattributed SUBMITTED state and unbound outcome records remain pending."
     next: []
   mobile:
     historical_item: ARV-044
     owner_priority_override: P0
-    current_product_meaning: Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini.
+    current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
     implementation_status: MOB_4_MERGED
-    backend: Tender Agent FastAPI on Mac mini
-    initial_connectivity: Private Tailscale access; no direct public Mac mini API exposure.
-    source_of_truth: Canonical Tender Agent deal/decision/event/submission/outcome lifecycle.
+    backend: "Tender Agent FastAPI on Mac mini"
+    initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
+    source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
     implemented_2026_10_06:
-    - native_swiftui_manager_inbox
-    - procurement_summary_and_detail
-    - mobile_bearer_pairing
-    - keychain_token_storage
-    - explicit_live_demo_offline_state
-    - recommendation_reasons_blockers_unknowns_projection
-    - read_only_human_decision_boundary
-    - explicit_human_go_no_go_defer_actions
-    - human_confirmation_before_decision_write
-    - full_mobile_portfolio_projection
-    - canonical_decision_log_write
-    - revocable_apns_device_registration
-    - bounded_push_payload_contract
-    - tenderagent_deep_link_routing
-    - notification_tap_case_routing
-    - fetch_on_deep_link
+      - native_swiftui_manager_inbox
+      - procurement_summary_and_detail
+      - mobile_bearer_pairing
+      - keychain_token_storage
+      - explicit_live_demo_offline_state
+      - recommendation_reasons_blockers_unknowns_projection
+      - read_only_human_decision_boundary
+      - explicit_human_go_no_go_defer_actions
+      - human_confirmation_before_decision_write
+      - full_mobile_portfolio_projection
+      - canonical_decision_log_write
+      - revocable_apns_device_registration
+      - bounded_push_payload_contract
+      - tenderagent_deep_link_routing
+      - notification_tap_case_routing
+      - fetch_on_deep_link
     implemented_2026_10_07:
-    - canonical_mobile_portfolio_summary_metrics
-    - deterministic_mobile_portfolio_filters
-    - canonical_portfolio_decision_source_timestamp_projection
-    - grounded_submission_outcome_detail
-    - deep_link_refresh_before_case_open
-    - canonical_portfolio_decision_projection
-    - canonical_portfolio_metrics
-    - deterministic_pipeline_outcome_filters
-    - portfolio_refresh_on_deep_link_and_decision
+      - canonical_mobile_portfolio_summary_metrics
+      - deterministic_mobile_portfolio_filters
+      - canonical_portfolio_decision_source_timestamp_projection
+      - grounded_submission_outcome_detail
+      - deep_link_refresh_before_case_open
     mob_1:
       status: done
       pr: 171
       merge_commit: 01b4be72d456185f1840f407aa36471a7622897a
       exact_head_ci_run: 37518592972
       exact_head_ci: success
-      note: Read-only iPhone manager inbox/detail is merged. No GO/NO GO/DEFER write control is exposed in MOB-1.
+      note: "Read-only iPhone manager inbox/detail is merged. No GO/NO GO/DEFER write control is exposed in MOB-1."
     mob_2:
       status: done
       pr: 173
       merge_commit: fe92b39e7a5944ccb519ee1f7579a811d91153f3
       exact_head_ci_run: 37524387682
       exact_head_ci: success
-      note: Explicit human-confirmed GO / NO GO / DEFER writes are merged. Decisions are audited in the canonical decision log; ETP, signature,
-        payment, bid submission and external-action hard stops remain unchanged.
+      note: "Explicit human-confirmed GO / NO GO / DEFER writes are merged. Decisions are audited in the canonical decision log; ETP, signature, payment, bid submission and external-action hard stops remain unchanged."
     mob_3:
       status: done
       pr: 176
       merge_commit: 3ab3872f95c9d8934403533f4411fcddd7569ba4
       exact_head_ci_run: 37533637202
       exact_head_ci: success
-      note: Revocable APNs device registration, bounded push payloads and safe tenderagent deep links are merged. Simulator push/deep-link smoke
-        passed. Real-device APNs delivery remains externally blocked by the current Apple provisioning profile lacking Push Notifications / aps-environment
-        and by provider credentials being intentionally disabled by default.
+      note: "Revocable APNs device registration, bounded push payloads and safe tenderagent deep links are merged. Simulator push/deep-link smoke passed. Real-device APNs delivery remains externally blocked by the current Apple provisioning profile lacking Push Notifications / aps-environment and by provider credentials being intentionally disabled by default."
     mob_4:
       status: done
       pr: 183
       merge_commit: bdcd868f1c42f3d3165cc8cad2c83b63b682521b
       exact_head_ci_run: 37584606448
       exact_head_ci: success
-      note: Canonical Procurement Portfolio decision/source/timestamp, factual submission/outcome detail, canonical funnel/result metrics, deterministic
-        lifecycle filters and deep-link/post-decision refresh coherence are merged. HUMAN GO / NO GO / DEFER and all consequential-action hard
-        stops remain unchanged.
+      note: "Canonical Procurement Portfolio metrics/outcome UX is merged. Missing submission/outcome evidence stays pending/unknown; existing explicit HUMAN GO / NO GO / DEFER and consequential-action hard stops are unchanged."
     next:
       stage: null
       status: none_admitted
-      scope: null
-      gate: The bounded Daily Tender Run + iPhone MVP delivery sequence is complete. Any successor product/mobile stage requires separate explicit
-        admission; consequential external-action hard stops remain unchanged.
+      scope: "No additional ARV-044 mobile stage is admitted by this reconciliation."
+      gate: "Any new mobile development requires a separate bounded admission; consequential external-action hard stops remain unchanged."
     push: APNs
-    required_actions:
-    - GO
-    - NO_GO
-    - DEFER
+    required_actions: [GO, NO_GO, DEFER]
   deferred:
-  - Android
-  - public multi-tenant mobile release
-  - autonomous bid decision
-  - direct public Internet exposure of Mac mini
-  admission_note: Bounded internal Daily Tender Run + iPhone MVP is complete through DTR-3/MOB-4. Deferred/future scope still requires a separately
-    admitted bounded execution item or explicit implementation directive.
+    - Android
+    - public multi-tenant mobile release
+    - autonomous bid decision
+    - direct public Internet exposure of Mac mini
+  admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
+
 execution_snapshot:
-  updated_at: '2026-10-07T07:10:00Z'
+  updated_at: '2026-10-07T07:12:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -190,148 +168,131 @@ execution_snapshot:
   queue_state: owner_directed_work_in_progress
   next_admitted_item: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
   admitted_pipeline:
-  - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+    - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
   completed_pipeline:
-  - DOCUMENT-QA-NEXT-INCREMENT
-  - CHANGE-MONITORING-V1-001
-  - INGEST-RESILIENCE-V1-001
-  - INTEGRATION-OUTBOX-V1-001
-  - OPS-OBSERVABILITY-V1-001
-  - 223FZ-INGEST-V1-001
-  - 223FZ-DECISION-V1-001
-  - DOMAIN-REGRESSION-V1-001
-  - PROCUREMENT-KANBAN-V1-001
-  - WATCHDOG-CONTINUATION-V2-001
-  - MOB-1-IOS-INBOX-001
-  - MOB-2-IOS-DECISIONS-001
-  - MOB-3-IOS-PUSH-DEEPLINKS-001
-  - DTR-3-POST-GO-AUTOMATION-001
-  - MOB-4-IOS-PORTFOLIO-METRICS-001
-  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged as PR #171 / 01b4be72, PR #173 / fe92b39, PR #176 / 3ab3872, PR #180
-    / 3b25e10 and PR #183 / bdcd868 respectively and are no longer executable work. The bounded Daily Tender Run + iPhone MVP sequence is complete.
-    Existing unrelated queue/admission state is preserved; this sync does not admit a successor mobile/product stage.'
+    - DOCUMENT-QA-NEXT-INCREMENT
+    - CHANGE-MONITORING-V1-001
+    - INGEST-RESILIENCE-V1-001
+    - INTEGRATION-OUTBOX-V1-001
+    - OPS-OBSERVABILITY-V1-001
+    - 223FZ-INGEST-V1-001
+    - 223FZ-DECISION-V1-001
+    - DOMAIN-REGRESSION-V1-001
+    - PROCUREMENT-KANBAN-V1-001
+    - WATCHDOG-CONTINUATION-V2-001
+    - MOB-1-IOS-INBOX-001
+    - MOB-2-IOS-DECISIONS-001
+    - MOB-3-IOS-PUSH-DEEPLINKS-001
+    - DTR-3-POST-GO-AUTOMATION-001
+    - MOB-4-IOS-PORTFOLIO-METRICS-001
+  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged as PR #171 / 01b4be72, PR #173 / fe92b39, PR #176 / 3ab3872, PR #180 / 3b25e10 and PR #183 / bdcd868 respectively and are no longer executable work. The only non-done queue item remains ARV-005-CONTROLLED-PILOT-EVIDENCE-001. No additional mobile stage is admitted by this roadmap sync.'
+
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
-  owner_directive: Before designing a feature from scratch, identify who already solved the problem and prefer reuse or reimplementation of the
-    proven public pattern.
+  owner_directive: "Before designing a feature from scratch, identify who already solved the problem and prefer reuse or reimplementation of the proven public pattern."
   allowed_delivery_strategies:
-    REUSE: Use an existing OSS/library/component when licensing, security and maintenance fit.
-    COPY_PATTERN: Reimplement a proven public UX/workflow/functional pattern; do not copy proprietary source code, assets, text or private datasets.
-    ADAPT: Integrate or adapt an existing API, protocol, service or standard component.
-    INVENT: Build custom behavior only when a documented gap or defensible product advantage justifies ownership.
+    REUSE: "Use an existing OSS/library/component when licensing, security and maintenance fit."
+    COPY_PATTERN: "Reimplement a proven public UX/workflow/functional pattern; do not copy proprietary source code, assets, text or private datasets."
+    ADAPT: "Integrate or adapt an existing API, protocol, service or standard component."
+    INVENT: "Build custom behavior only when a documented gap or defensible product advantage justifies ownership."
   invent_gate:
     required: true
     checks:
-    - reusable OSS/API/public patterns checked
-    - gap documented with evidence
-    - differentiation tied to Decision Core, Commercial Core or procurement-specific edge cases
-    - maintenance cost justified
-    fallback_without_justification: REUSE, COPY_PATTERN or ADAPT
+      - reusable OSS/API/public patterns checked
+      - gap documented with evidence
+      - differentiation tied to Decision Core, Commercial Core or procurement-specific edge cases
+      - maintenance cost justified
+    fallback_without_justification: "REUSE, COPY_PATTERN or ADAPT"
   commodity_reuse_target_pct: 70
   success_metrics:
-  - At least 70% of new P0/P1 commodity work resolves through REUSE/COPY_PATTERN/ADAPT.
-  - 100% of substantive GO/NO-GO claims have source evidence or explicit Unknown.
-  - No hard decision without a traceable document/page/fragment evidence chain.
-  - Every confirmed real failure or procurement edge case becomes a regression case.
-  - Competitor benchmark/reverse-spec is refreshed at milestone boundaries before widening commodity scope.
+    - "At least 70% of new P0/P1 commodity work resolves through REUSE/COPY_PATTERN/ADAPT."
+    - "100% of substantive GO/NO-GO claims have source evidence or explicit Unknown."
+    - "No hard decision without a traceable document/page/fragment evidence chain."
+    - "Every confirmed real failure or procurement edge case becomes a regression case."
+    - "Competitor benchmark/reverse-spec is refreshed at milestone boundaries before widening commodity scope."
   do_not_build_from_scratch_without_explicit_gap:
-  - custom OCR engine
-  - custom PDF renderer/viewer
-  - custom vector database or generic search infrastructure
-  - custom authentication framework
-  - generic chatbot or generic RAG shell
-  - bespoke notification service
-  - custom analytics/dashboard platform
-  - CRM clone
-  - premature distributed infrastructure or performance optimization
-  - AI feature without a measurable decision or next-action outcome
+    - custom OCR engine
+    - custom PDF renderer/viewer
+    - custom vector database or generic search infrastructure
+    - custom authentication framework
+    - generic chatbot or generic RAG shell
+    - bespoke notification service
+    - custom analytics/dashboard platform
+    - CRM clone
+    - premature distributed infrastructure or performance optimization
+    - AI feature without a measurable decision or next-action outcome
 accelerated_plan:
-- stage: 0
-  name: competitive_reverse_spec_and_reuse_registry
-  priority: P0
-  objective: Benchmark 8-10 direct competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action;
-    record best public patterns, reusable components/APIs, legal/license constraints and de-scope decisions.
-  exit_gate: Every active P0/P1 item is classified REUSE/COPY_PATTERN/ADAPT/INVENT; every INVENT has written justification.
-  current_state: done
-  current_evidence: 'PR #56 merged as 8b1c131941e76b079a1eac18cf3a71201a6c01ce; 9 direct products, 10 reuse candidates, active P0/P1 classification
-    and commodity de-scope.'
-- stage: 1
-  name: thin_commodity_shell
-  priority: P0
-  objective: Keep only baseline search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export; prefer
-    proven components and patterns, no gold-plating.
-  exit_gate: Commodity shell is usable end-to-end and no commodity item has become a custom multi-sprint build without an approved gap.
-  current_state: partial_existing_not_separately_gated
-  current_evidence: 'Baseline shell pre-existed this acceleration cycle; Docker-context hardening PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3.
-    No standalone Stage 1 completion gate is admitted.'
-- stage: 2
-  name: decision_core_v1
-  priority: P0
-  objective: Invest custom engineering in canonical tender facts, evidence primitives, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW,
-    risk/unknown/confidence and clickable evidence.
-  exit_gate: Decision outputs are measurable against a regression corpus and every material conclusion is source-bound or explicitly unknown.
-  current_state: done
-  current_evidence: 'DISCOVERY-QA-001 PR #59 merged as 762a392207a73ed77b04af69a378746920960ba8; Decision Core v1 PR #61 merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
-- stage: 3
-  name: commercial_core
-  priority: P0
-  objective: Build nomenclature normalization, customer-catalog matching, substitutes/compatibility, Supplier -> RFQ -> TKP, landed cost, margin
-    and bid economics, with recomputation when quotes change.
-  exit_gate: Bid/no-bid can be tied to commercial feasibility with auditable inputs and human control.
-  current_state: done
-  current_evidence: 'Commercial Core v1 PR #63 merged as 4257cd23d68d4ad69ebbedf075195f34969bace1 after Product Owner approval and post-sync exact-head
-    CI 34990327143 SUCCESS 9/9.'
-- stage: 4
-  name: automation_and_integrations
-  priority: P1
-  objective: Add integrations, webhooks/APIs, saved-search alerts, email/CRM/source connectors and scheduled reporting only where they shorten
-    validated workflows.
-  exit_gate: Automations reduce operator work without crossing external-action/human-control boundaries.
-  current_state: done
-  current_evidence: 'Stage 4 completed: change monitoring PR #74 merged as 56ca227fb3ab0073d5afd89657f083b427a5187b; ingest resilience PR #75
-    merged as fbf6d3cbac246af2c28db242465d52617890bf0c; integration outbox PR #79 merged as 4149801221f1. External email/SMS/Telegram/webhook/CRM
-    delivery remains disabled and separately gated.'
-- stage: 5
-  name: reliability_and_moat
-  priority: P1
-  objective: Compound 44-FZ/223-FZ/private-procurement edge cases, regression evidence, decision/outcome telemetry, security/compliance and workflow
-    integration depth.
-  exit_gate: Moat is evidenced by domain-specific regression depth, integration depth and measured decision quality rather than commodity feature
-    count.
-  current_state: done
-  current_evidence: 'Stage 5 completed at the admitted v1 boundary: ops observability PR #76 merged as c335c60fa92742d7c464739e057df7eac89fa191;
-    domain regression registry PR #77 merged as c5e653a11a894360b1b05c1834495330b3a64cbb; read-only 223-FZ ingest PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609;
-    review-approved 223-FZ Decision Core PR #81 merged as f603c9f62859b49287456069d7be98ac1c8ce1dd.'
+  - stage: 0
+    name: competitive_reverse_spec_and_reuse_registry
+    priority: P0
+    objective: "Benchmark 8-10 direct competitors across search -> results -> tender card -> documents -> AI analysis -> decision -> next action; record best public patterns, reusable components/APIs, legal/license constraints and de-scope decisions."
+    exit_gate: "Every active P0/P1 item is classified REUSE/COPY_PATTERN/ADAPT/INVENT; every INVENT has written justification."
+    current_state: done
+    current_evidence: 'PR #56 merged as 8b1c131941e76b079a1eac18cf3a71201a6c01ce; 9 direct products, 10 reuse candidates, active P0/P1 classification and commodity de-scope.'
+  - stage: 1
+    name: thin_commodity_shell
+    priority: P0
+    objective: "Keep only baseline search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export; prefer proven components and patterns, no gold-plating."
+    exit_gate: "Commodity shell is usable end-to-end and no commodity item has become a custom multi-sprint build without an approved gap."
+    current_state: partial_existing_not_separately_gated
+    current_evidence: 'Baseline shell pre-existed this acceleration cycle; Docker-context hardening PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3. No standalone Stage 1 completion gate is admitted.'
+  - stage: 2
+    name: decision_core_v1
+    priority: P0
+    objective: "Invest custom engineering in canonical tender facts, evidence primitives, hard blockers, deterministic rules, GO/NO-GO/NEEDS REVIEW, risk/unknown/confidence and clickable evidence."
+    exit_gate: "Decision outputs are measurable against a regression corpus and every material conclusion is source-bound or explicitly unknown."
+    current_state: done
+    current_evidence: 'DISCOVERY-QA-001 PR #59 merged as 762a392207a73ed77b04af69a378746920960ba8; Decision Core v1 PR #61 merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
+  - stage: 3
+    name: commercial_core
+    priority: P0
+    objective: "Build nomenclature normalization, customer-catalog matching, substitutes/compatibility, Supplier -> RFQ -> TKP, landed cost, margin and bid economics, with recomputation when quotes change."
+    exit_gate: "Bid/no-bid can be tied to commercial feasibility with auditable inputs and human control."
+    current_state: done
+    current_evidence: 'Commercial Core v1 PR #63 merged as 4257cd23d68d4ad69ebbedf075195f34969bace1 after Product Owner approval and post-sync exact-head CI 34990327143 SUCCESS 9/9.'
+  - stage: 4
+    name: automation_and_integrations
+    priority: P1
+    objective: "Add integrations, webhooks/APIs, saved-search alerts, email/CRM/source connectors and scheduled reporting only where they shorten validated workflows."
+    exit_gate: "Automations reduce operator work without crossing external-action/human-control boundaries."
+    current_state: done
+    current_evidence: 'Stage 4 completed: change monitoring PR #74 merged as 56ca227fb3ab0073d5afd89657f083b427a5187b; ingest resilience PR #75 merged as fbf6d3cbac246af2c28db242465d52617890bf0c; integration outbox PR #79 merged as 4149801221f1. External email/SMS/Telegram/webhook/CRM delivery remains disabled and separately gated.'
+  - stage: 5
+    name: reliability_and_moat
+    priority: P1
+    objective: "Compound 44-FZ/223-FZ/private-procurement edge cases, regression evidence, decision/outcome telemetry, security/compliance and workflow integration depth."
+    exit_gate: "Moat is evidenced by domain-specific regression depth, integration depth and measured decision quality rather than commodity feature count."
+    current_state: done
+    current_evidence: 'Stage 5 completed at the admitted v1 boundary: ops observability PR #76 merged as c335c60fa92742d7c464739e057df7eac89fa191; domain regression registry PR #77 merged as c5e653a11a894360b1b05c1834495330b3a64cbb; read-only 223-FZ ingest PR #80 merged as dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609; review-approved 223-FZ Decision Core PR #81 merged as f603c9f62859b49287456069d7be98ac1c8ce1dd.'
 strategy_overlay:
   REUSE_FIRST_001:
     delivery_strategy: COPY_PATTERN
-    scope: Competitive reverse-spec and reuse registry; this is the next admitted strategy workstream after the already-live task finishes.
+    scope: "Competitive reverse-spec and reuse registry; this is the next admitted strategy workstream after the already-live task finishes."
   DOCUMENT_QA_005:
     delivery_strategy: INVENT
-    invent_justification: Source-bound role/entity precedence is procurement-specific decision integrity and directly strengthens the evidence
-      moat.
+    invent_justification: "Source-bound role/entity precedence is procurement-specific decision integrity and directly strengthens the evidence moat."
   ARV_018:
     delivery_strategy: INVENT
-    invent_justification: Evidence-grounded GO/NO-GO/NEEDS REVIEW is the core differentiated decision product.
+    invent_justification: "Evidence-grounded GO/NO-GO/NEEDS REVIEW is the core differentiated decision product."
   ARV_020:
     delivery_strategy: INVENT
-    invent_justification: Application-readiness logic is valuable only when procurement-specific, evidence-bound and tied to hard blockers.
+    invent_justification: "Application-readiness logic is valuable only when procurement-specific, evidence-bound and tied to hard blockers."
   ARV_061:
     delivery_strategy: ADAPT
-    custom_boundary: Reuse generic retrieval/extraction; own only cited procurement reasoning and decision mapping.
+    custom_boundary: "Reuse generic retrieval/extraction; own only cited procurement reasoning and decision mapping."
   ARV_065:
     delivery_strategy: ADAPT
-    custom_boundary: Do not build a generic chat product; reuse Q&A/RAG primitives and differentiate through procurement evidence/actions.
+    custom_boundary: "Do not build a generic chat product; reuse Q&A/RAG primitives and differentiate through procurement evidence/actions."
   ARV_016:
     delivery_strategy: ADAPT
-    custom_boundary: Reuse XLSX/CSV/PDF parsing; custom logic starts at nomenclature normalization and commercial matching.
+    custom_boundary: "Reuse XLSX/CSV/PDF parsing; custom logic starts at nomenclature normalization and commercial matching."
   ARV_017:
     delivery_strategy: INVENT
-    invent_justification: Tender-to-catalog matching and substitution logic is a core commercial moat.
+    invent_justification: "Tender-to-catalog matching and substitution logic is a core commercial moat."
   ARV_023:
     delivery_strategy: ADAPT
-    custom_boundary: Reuse supplier discovery sources/connectors; own procurement-specific ranking, qualification and RFQ handoff.
+    custom_boundary: "Reuse supplier discovery sources/connectors; own procurement-specific ranking, qualification and RFQ handoff."
   ARV_019:
     delivery_strategy: COPY_PATTERN
   ARV_021:
@@ -380,7 +341,7 @@ current_programs:
   source: 'PR #56 merged 2026-09-15'
   roadmap_mapping: null
   strategy: COPY_PATTERN
-  completion_evidence: 9-product reverse-spec + 10-candidate reuse registry; merge 8b1c131941e76b079a1eac18cf3a71201a6c01ce.
+  completion_evidence: '9-product reverse-spec + 10-candidate reuse registry; merge 8b1c131941e76b079a1eac18cf3a71201a6c01ce.'
 - task_id: BENCHMARK-PIPELINE-001
   state: done
   source: 'issue #1'
@@ -397,293 +358,173 @@ current_programs:
   state: done
   source: 'issue #19; PR #58 merged'
   roadmap_mapping: null
-  completion_evidence: merge 8924a8576a96ccac490682be737f2b041c8a06e3; clean-checkout Docker build gate.
+  completion_evidence: 'merge 8924a8576a96ccac490682be737f2b041c8a06e3; clean-checkout Docker build gate.'
 - task_id: DISCOVERY-QA-001
   state: done
   source: 'issue #2; PR #59 merged after Product Owner approval'
   roadmap_mapping: null
   strategy: ADAPT
-  completion_evidence: 45-case frozen 44-FZ benchmark and relevance hardening; merge 762a392207a73ed77b04af69a378746920960ba8.
+  completion_evidence: '45-case frozen 44-FZ benchmark and relevance hardening; merge 762a392207a73ed77b04af69a378746920960ba8.'
 - task_id: DECISION-CORE-V1-001
   state: done
   source: 'issue #60; PR #61 merged after Product Owner approval'
-  roadmap_mapping:
-  - ARV-018
-  - ARV-020
+  roadmap_mapping: [ARV-018, ARV-020]
   strategy: INVENT
-  completion_evidence: Evidence-bound fail-closed Decision Core v1; merge 3bf397f24c997f2465af38b8c51c329309b1f8d1.
+  completion_evidence: 'Evidence-bound fail-closed Decision Core v1; merge 3bf397f24c997f2465af38b8c51c329309b1f8d1.'
 - task_id: COMMERCIAL-CORE-V1-001
   state: done
   source: 'issue #62; PR #63 merged after Product Owner approval'
-  roadmap_mapping:
-  - ARV-016
-  - ARV-017
+  roadmap_mapping: [ARV-016, ARV-017]
   strategy: INVENT
-  completion_evidence: Commercial Core v1 price-list ingest, matching and auditable economics; merge 4257cd23d68d4ad69ebbedf075195f34969bace1.
+  completion_evidence: 'Commercial Core v1 price-list ingest, matching and auditable economics; merge 4257cd23d68d4ad69ebbedf075195f34969bace1.'
 - task_id: DOCUMENT-QA-NEXT-INCREMENT
   state: done
   source: 'issue #51; PR #73'
   roadmap_mapping: null
   strategy: INVENT
-  completion_evidence: Active/current EIS notice revision binding with fail-closed ambiguity routing; merge dca11d460912e805abc634a37ca731f03d4bb24c.
+  completion_evidence: 'Active/current EIS notice revision binding with fail-closed ambiguity routing; merge dca11d460912e805abc634a37ca731f03d4bb24c.'
 - task_id: CHANGE-MONITORING-V1-001
   state: done
   source: 'issue #65; PR #74'
-  roadmap_mapping:
-  - ARV-021
-  - ARV-056
+  roadmap_mapping: [ARV-021, ARV-056]
   strategy: ADAPT
-  completion_evidence: Source-bound saved-watch snapshots/diffs and idempotent internal feed; merge 56ca227fb3ab0073d5afd89657f083b427a5187b.
+  completion_evidence: 'Source-bound saved-watch snapshots/diffs and idempotent internal feed; merge 56ca227fb3ab0073d5afd89657f083b427a5187b.'
 - task_id: INGEST-RESILIENCE-V1-001
   state: done
   source: 'issue #66; PR #75'
-  roadmap_mapping:
-  - ARV-031
-  - ARV-058
+  roadmap_mapping: [ARV-031, ARV-058]
   strategy: ADAPT
-  completion_evidence: Resumable idempotent revision-aware ingest/dedupe; merge fbf6d3cbac246af2c28db242465d52617890bf0c.
+  completion_evidence: 'Resumable idempotent revision-aware ingest/dedupe; merge fbf6d3cbac246af2c28db242465d52617890bf0c.'
 - task_id: INTEGRATION-OUTBOX-V1-001
   state: done
   source: 'issue #67; PR #79'
-  roadmap_mapping:
-  - ARV-025
-  - ARV-029
-  - ARV-045
+  roadmap_mapping: [ARV-025, ARV-029, ARV-045]
   strategy: ADAPT
-  completion_evidence: Versioned internal integration events/outbox with disabled-by-default external adapter boundary; merge 4149801221f1.
+  completion_evidence: 'Versioned internal integration events/outbox with disabled-by-default external adapter boundary; merge 4149801221f1.'
 - task_id: OPS-OBSERVABILITY-V1-001
   state: done
   source: 'issue #68; PR #76'
-  roadmap_mapping:
-  - ARV-010
+  roadmap_mapping: [ARV-010]
   strategy: REUSE
-  completion_evidence: Repository-native queue/ingest/storage/recovery observability; merge c335c60fa92742d7c464739e057df7eac89fa191.
+  completion_evidence: 'Repository-native queue/ingest/storage/recovery observability; merge c335c60fa92742d7c464739e057df7eac89fa191.'
 - task_id: 223FZ-INGEST-V1-001
   state: done
   source: 'issue #69; PR #80'
-  roadmap_mapping:
-  - ARV-006
+  roadmap_mapping: [ARV-006]
   strategy: ADAPT
-  completion_evidence: Separate read-only 223-FZ intake path; merge dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.
+  completion_evidence: 'Separate read-only 223-FZ intake path; merge dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609.'
 - task_id: 223FZ-DECISION-V1-001
   state: done
   source: 'issue #70; PR #81'
-  roadmap_mapping:
-  - ARV-006
+  roadmap_mapping: [ARV-006]
   strategy: INVENT
-  completion_evidence: Source-bound fail-closed 223-FZ decision/readiness semantics after explicit Product Owner approval; merge f603c9f62859b49287456069d7be98ac1c8ce1dd.
+  completion_evidence: 'Source-bound fail-closed 223-FZ decision/readiness semantics after explicit Product Owner approval; merge f603c9f62859b49287456069d7be98ac1c8ce1dd.'
 - task_id: DOMAIN-REGRESSION-V1-001
   state: done
   source: 'issue #71; PR #77'
-  roadmap_mapping:
-  - ARV-072
+  roadmap_mapping: [ARV-072]
   strategy: INVENT
-  completion_evidence: Versioned procurement regression registry and outcome telemetry foundation; merge c5e653a11a894360b1b05c1834495330b3a64cbb.
+  completion_evidence: 'Versioned procurement regression registry and outcome telemetry foundation; merge c5e653a11a894360b1b05c1834495330b3a64cbb.'
 - task_id: MOB-1-IOS-INBOX-001
   state: done
   source: 'Owner directive 2026-10-06; PR #171 merged'
-  roadmap_mapping:
-  - ARV-044
+  roadmap_mapping: [ARV-044]
   strategy: COPY_PATTERN
-  completion_evidence: Native SwiftUI read-only manager inbox/detail; Bearer pairing + Keychain; current mobile API evidence projection; exact-head
-    CI 37518592972 SUCCESS; Owner-approved merge 01b4be72d456185f1840f407aa36471a7622897a.
+  completion_evidence: 'Native SwiftUI read-only manager inbox/detail; Bearer pairing + Keychain; current mobile API evidence projection; exact-head CI 37518592972 SUCCESS; Owner-approved merge 01b4be72d456185f1840f407aa36471a7622897a.'
 - task_id: MOB-2-IOS-DECISIONS-001
   state: done
   source: 'Owner directive 2026-10-06; PR #173 merged'
-  roadmap_mapping:
-  - ARV-044
+  roadmap_mapping: [ARV-044]
   strategy: COPY_PATTERN
-  completion_evidence: Explicit human GO / NO GO / DEFER confirmation flow; canonical HUMAN decision-log writes; full mobile portfolio visibility;
-    exact-head CI 37524387682 SUCCESS; Owner-approved merge fe92b39e7a5944ccb519ee1f7579a811d91153f3.
+  completion_evidence: 'Explicit human GO / NO GO / DEFER confirmation flow; canonical HUMAN decision-log writes; full mobile portfolio visibility; exact-head CI 37524387682 SUCCESS; Owner-approved merge fe92b39e7a5944ccb519ee1f7579a811d91153f3.'
 - task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
   state: done
   source: 'Owner directive 2026-10-06; PR #176 merged'
-  roadmap_mapping:
-  - ARV-044
+  roadmap_mapping: [ARV-044]
   strategy: ADAPT
-  completion_evidence: Revocable APNs registration and access, audited delivery ledger, Apple token-auth HTTP/2 sender disabled by default pending
-    credentials, bounded push/deep-link routing, simulator smoke, exact-head CI 37533637202 SUCCESS; Owner-approved merge 3ab3872f95c9d8934403533f4411fcddd7569ba4.
-    Physical-device APNs remains blocked by current provisioning entitlement.
+  completion_evidence: 'Revocable APNs registration and access, audited delivery ledger, Apple token-auth HTTP/2 sender disabled by default pending credentials, bounded push/deep-link routing, simulator smoke, exact-head CI 37533637202 SUCCESS; Owner-approved merge 3ab3872f95c9d8934403533f4411fcddd7569ba4. Physical-device APNs remains blocked by current provisioning entitlement.'
 - task_id: DTR-3-POST-GO-AUTOMATION-001
   state: done
   source: 'Owner directive 2026-10-07; PR #180 merged'
   roadmap_mapping: null
   strategy: ADAPT
-  completion_evidence: HUMAN GO post-decision resume, canonical readiness reuse, local submission-control preparation without submission, attributable/source-bound
-    submission evidence gate, artifact-bound outcome gate, unattended pending-run resume, migration 102; exact-head CI 37575956723 SUCCESS 9/9;
-    Owner-approved merge 3b25e10bab2930f954d39a444b8258ad597010c9.
-- task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
-  state: done
-  source: 'Owner directive 2026-10-07; PR #183 merged'
-  roadmap_mapping:
-  - ARV-044
-  strategy: COPY_PATTERN
-  completion_evidence: Canonical mobile Procurement Portfolio metrics and lifecycle review; factual decision/submission/outcome projection, deterministic
-    filters, grounded detail and refresh/deep-link coherence; exact-head CI 37584606448 SUCCESS 9/9; Owner-approved merge bdcd868f1c42f3d3165cc8cad2c83b63b682521b.
+  completion_evidence: 'HUMAN GO post-decision resume, canonical readiness reuse, local submission-control preparation without submission, attributable/source-bound submission evidence gate, artifact-bound outcome gate, unattended pending-run resume, migration 102; exact-head CI 37575956723 SUCCESS 9/9; Owner-approved merge 3b25e10bab2930f954d39a444b8258ad597010c9.'
+
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive
-  admission_rule: This matrix remains a navigation aid, not blanket implementation authority. While OWNER-CONTINUOUS-ROADMAP-2026-09-18 is active
-    and the admitted queue is empty, the watchdog may deterministically materialize at most one next bounded item in branch/item document order.
-    It must prefer an already-defined bounded task; otherwise it may admit only the standard evidence/revalidation slice from .agent/owner-directive.yaml.
-    It may not invent product priority, material architecture, implementation acceptance criteria, or downgrade REVIEW/HUMAN/OWNER gates.
+  admission_rule: 'This matrix remains a navigation aid, not blanket implementation authority. While OWNER-CONTINUOUS-ROADMAP-2026-09-18 is active and the admitted queue is empty, the watchdog may deterministically materialize at most one next bounded item in branch/item document order. It must prefer an already-defined bounded task; otherwise it may admit only the standard evidence/revalidation slice from .agent/owner-directive.yaml. It may not invent product priority, material architecture, implementation acceptance criteria, or downgrade REVIEW/HUMAN/OWNER gates.'
   branches:
   - branch_id: CORE-QUALITY-PILOT
     title: Quality closure, production reasoning and controlled pilot
-    historical_items:
-    - ARV-002
-    - ARV-003
-    - ARV-004
-    - ARV-005
-    - ARV-061
-    - ARV-065
-    - ARV-067
-    residual_scope: Revalidate live E2E/LLM readiness, finish Hermes/customer feedback loop, run controlled 10-20 procurement pilot, fast cited
-      pre-analysis and evidence-grounded copilot; ARV-067 remains expert-gated.
-    gates: Pilot/customer evidence and ontology expert acceptance are HUMAN/REVIEW evidence; no fabricated acceptance.
+    historical_items: [ARV-002, ARV-003, ARV-004, ARV-005, ARV-061, ARV-065, ARV-067]
+    residual_scope: 'Revalidate live E2E/LLM readiness, finish Hermes/customer feedback loop, run controlled 10-20 procurement pilot, fast cited pre-analysis and evidence-grounded copilot; ARV-067 remains expert-gated.'
+    gates: 'Pilot/customer evidence and ontology expert acceptance are HUMAN/REVIEW evidence; no fabricated acceptance.'
   - branch_id: PRODUCTION-RUNTIME
     title: Workers, production hosting, access, security and recovery
-    historical_items:
-    - ARV-008
-    - ARV-010
-    - ARV-011
-    - ARV-012
-    - ARV-013
-    - ARV-014
-    - ARV-075
-    residual_scope: Workers/jobs, residual security/recovery beyond observability v1, VPS choice/migration, production access/allowlists/Anti-DDoS,
-      and local Mac storage revalidation.
-    gates: Production/network/provider mutations and local destructive cleanup require explicit applicable authority; repository-only preparation
-      may be separately admitted.
+    historical_items: [ARV-008, ARV-010, ARV-011, ARV-012, ARV-013, ARV-014, ARV-075]
+    residual_scope: 'Workers/jobs, residual security/recovery beyond observability v1, VPS choice/migration, production access/allowlists/Anti-DDoS, and local Mac storage revalidation.'
+    gates: 'Production/network/provider mutations and local destructive cleanup require explicit applicable authority; repository-only preparation may be separately admitted.'
   - branch_id: COMMERCIAL-WORKFLOW
     title: Supplier profile, workspace workflow and application preparation
-    historical_items:
-    - ARV-015
-    - ARV-019
-    - ARV-022
-    - ARV-053
-    - ARV-055
-    - ARV-057
-    - ARV-059
-    - ARV-060
-    - ARV-063
-    - ARV-064
-    - ARV-066
-    - ARV-069
-    residual_scope: Supplier profile, kanban, OCR fallback via reuse, counterparty checks, reusable company docs, application package generation,
-      collaboration/import and later analytics/intelligence.
-    gates: No participation decision, legal conclusion or application submission may be automated.
+    historical_items: [ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069]
+    residual_scope: 'Supplier profile, kanban, OCR fallback via reuse, counterparty checks, reusable company docs, application package generation, collaboration/import and later analytics/intelligence.'
+    gates: 'No participation decision, legal conclusion or application submission may be automated.'
   - branch_id: SUPPLIER-RFQ
     title: Supplier discovery, RFQ/TKP and orchestration
-    historical_items:
-    - ARV-023
-    - ARV-024
-    - ARV-025
-    - ARV-026
-    - ARV-027
-    - ARV-028
-    - ARV-029
-    residual_scope: Supplier search/database, user-mail adapter, RFQ/TKP preparation/comparison, self-hosted n8n and bounded workflow automation.
-    gates: External supplier/customer email or RFQ sending remains REVIEW/HUMAN; internal outbox foundation is complete but live transports stay
-      disabled.
+    historical_items: [ARV-023, ARV-024, ARV-025, ARV-026, ARV-027, ARV-028, ARV-029]
+    residual_scope: 'Supplier search/database, user-mail adapter, RFQ/TKP preparation/comparison, self-hosted n8n and bounded workflow automation.'
+    gates: 'External supplier/customer email or RFQ sending remains REVIEW/HUMAN; internal outbox foundation is complete but live transports stay disabled.'
   - branch_id: ETP-CONNECTORS
     title: Marketplace/ETP connector expansion
-    historical_items:
-    - ARV-030
-    - ARV-031
-    - ARV-032
-    - ARV-033
-    - ARV-034
-    - ARV-035
-    - ARV-036
-    - ARV-037
-    - ARV-071
-    residual_scope: Unified connector layer, federal ETP uniqueness research, TEK-Torg/Fabrikant/B2B-Center/Tender-Pro and remaining ETPs; revision-aware
-      dedupe v1 is already available as infrastructure.
-    gates: Read-only acquisition can be bounded; authenticated/private or consequential platform actions require separate authority.
+    historical_items: [ARV-030, ARV-031, ARV-032, ARV-033, ARV-034, ARV-035, ARV-036, ARV-037, ARV-071]
+    residual_scope: 'Unified connector layer, federal ETP uniqueness research, TEK-Torg/Fabrikant/B2B-Center/Tender-Pro and remaining ETPs; revision-aware dedupe v1 is already available as infrastructure.'
+    gates: 'Read-only acquisition can be bounded; authenticated/private or consequential platform actions require separate authority.'
   - branch_id: 223FZ-BREADTH
     title: Expand 223-FZ beyond the completed v1 intake/decision boundary
-    historical_items:
-    - ARV-006
-    residual_scope: Broaden 223-FZ source/document/procedure coverage only from measured gaps; preserve separate regime semantics and source-bound
-      fail-closed decisions.
-    gates: The v1 foundation is done; new breadth requires a concrete regression/corpus gap and explicit bounded admission. Unsupported legal/procedural
-      assumptions remain UNKNOWN/NEEDS_REVIEW.
+    historical_items: [ARV-006]
+    residual_scope: 'Broaden 223-FZ source/document/procedure coverage only from measured gaps; preserve separate regime semantics and source-bound fail-closed decisions.'
+    gates: 'The v1 foundation is done; new breadth requires a concrete regression/corpus gap and explicit bounded admission. Unsupported legal/procedural assumptions remain UNKNOWN/NEEDS_REVIEW.'
   - branch_id: MONITORING-DELIVERY
     title: Extend internal monitoring into user-facing delivery channels
-    historical_items:
-    - ARV-021
-    - ARV-056
-    - ARV-025
-    - ARV-029
-    - ARV-045
-    residual_scope: Build only explicitly approved adapters from the completed internal monitoring/outbox foundation to email/CRM/webhook/scheduled
-      reporting surfaces.
-    gates: Real external delivery is disabled by default and requires separate REVIEW/HUMAN authority; no autonomous supplier/customer communication.
+    historical_items: [ARV-021, ARV-056, ARV-025, ARV-029, ARV-045]
+    residual_scope: 'Build only explicitly approved adapters from the completed internal monitoring/outbox foundation to email/CRM/webhook/scheduled reporting surfaces.'
+    gates: 'Real external delivery is disabled by default and requires separate REVIEW/HUMAN authority; no autonomous supplier/customer communication.'
   - branch_id: COMPETITIVE-BENCHMARK
     title: Identical-procurement competitive benchmark refresh
-    historical_items:
-    - ARV-072
-    residual_scope: Use the completed domain-regression registry as infrastructure for a controlled same-procurement competitor benchmark refreshed
-      at milestone boundaries.
-    gates: Benchmark method/corpus must be frozen before evaluated outputs; exposed cases are regression-only and anti-circularity remains mandatory.
+    historical_items: [ARV-072]
+    residual_scope: 'Use the completed domain-regression registry as infrastructure for a controlled same-procurement competitor benchmark refreshed at milestone boundaries.'
+    gates: 'Benchmark method/corpus must be frozen before evaluated outputs; exposed cases are regression-only and anti-circularity remains mandatory.'
   - branch_id: GO-TO-MARKET
     title: Legal/commercial packaging, pricing, site and acquisition metrics
-    historical_items:
-    - ARV-038
-    - ARV-039
-    - ARV-040
-    - ARV-041
-    - ARV-054
-    residual_scope: Product-first site, site/product metrics, search indexing, tariffs/demo packaging and completion of the legal SaaS/pilot package.
-    gates: ARV-041 remains director/counsel/regulatory HUMAN gate; commercial pricing/public commitments require Owner approval.
+    historical_items: [ARV-038, ARV-039, ARV-040, ARV-041, ARV-054]
+    residual_scope: 'Product-first site, site/product metrics, search indexing, tariffs/demo packaging and completion of the legal SaaS/pilot package.'
+    gates: 'ARV-041 remains director/counsel/regulatory HUMAN gate; commercial pricing/public commitments require Owner approval.'
   - branch_id: SAAS-SCALE
     title: Multi-tenant SaaS, usage limits and enterprise integrations
-    historical_items:
-    - ARV-043
-    - ARV-044
-    - ARV-045
-    - ARV-046
-    - ARV-068
-    - ARV-070
-    residual_scope: Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile companion and later
-      finance/integration surfaces.
-    gates: Bank guarantees/financing and external enterprise commitments remain HUMAN/commercial gates.
+    historical_items: [ARV-043, ARV-044, ARV-045, ARV-046, ARV-068, ARV-070]
+    residual_scope: 'Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile companion and later finance/integration surfaces.'
+    gates: 'Bank guarantees/financing and external enterprise commitments remain HUMAN/commercial gates.'
   - branch_id: DEVELOPMENT-GOVERNANCE
     title: Development protocol, mirrors and watchdog maintenance
-    historical_items:
-    - ARV-051
-    - ARV-062
-    residual_scope: 'Revalidate near-complete parallel-development protocol, repository mirror posture and reusable Project Watchdog binding;
-      open PR #78 is a maintenance candidate, not admitted product work.'
-    gates: Must not change Company/Product authority or roadmap priority by implication.
+    historical_items: [ARV-051, ARV-062]
+    residual_scope: 'Revalidate near-complete parallel-development protocol, repository mirror posture and reusable Project Watchdog binding; open PR #78 is a maintenance candidate, not admitted product work.'
+    gates: 'Must not change Company/Product authority or roadmap priority by implication.'
   - branch_id: LATE-INFRA
     title: Deferred search/analytics/orchestration infrastructure
-    historical_items:
-    - ARV-047
-    - ARV-048
-    - ARV-049
-    residual_scope: OpenSearch/Elasticsearch, ClickHouse and Kubernetes/Helm only after measured need.
-    gates: Remain deferred by default; reuse-first and measured-gap gate applies.
+    historical_items: [ARV-047, ARV-048, ARV-049]
+    residual_scope: 'OpenSearch/Elasticsearch, ClickHouse and Kubernetes/Helm only after measured need.'
+    gates: 'Remain deferred by default; reuse-first and measured-gap gate applies.'
   - branch_id: STATUS-REVALIDATION
     title: Historical partial-status reconciliation
-    historical_items:
-    - BASE-003
-    - BASE-007
-    - BASE-011
-    - BASE-012
-    - BASE-014
-    - ARV-003
-    - ARV-051
-    - ARV-075
-    residual_scope: Reconcile July snapshot partial statuses against current repository/runtime evidence without rewriting history.
-    gates: Status-only reconciliation does not grant implementation or merge authority.
+    historical_items: [BASE-003, BASE-007, BASE-011, BASE-012, BASE-014, ARV-003, ARV-051, ARV-075]
+    residual_scope: 'Reconcile July snapshot partial statuses against current repository/runtime evidence without rewriting history.'
+    gates: 'Status-only reconciliation does not grant implementation or merge authority.'
   - branch_id: ID-CONFLICT-RESOLUTION
     title: Resolve historical ARV-073 / ARV-074 ID collisions
-    historical_items:
-    - ARV-073
-    - ARV-074
-    residual_scope: Owner-level reconciliation of later reused IDs versus preserved 2026-07-30 historical meanings; no silent renumbering.
-    gates: Blocked on explicit OWNER reconciliation; not executable engineering work until resolved.
+    historical_items: [ARV-073, ARV-074]
+    residual_scope: 'Owner-level reconciliation of later reused IDs versus preserved 2026-07-30 historical meanings; no silent renumbering.'
+    gates: 'Blocked on explicit OWNER reconciliation; not executable engineering work until resolved.'
+
 legacy_registry:
 - id: BASE-001
   legacy_snapshot:
@@ -1229,9 +1070,10 @@ legacy_registry:
       detail: Search-result handoff to public detail/getDocs path and persisted run context remain covered.
     - path: tests/test_procurement_source_graph_production.py
       detail: Production source graph continues to bind canonical values to direct source fragments rather than synthetic candidate values.
-    notes: 'Current live exact-number lookup succeeds and the stricter common-info extractor returns the correct explicit customer. Revalidation
+    notes: >-
+      Current live exact-number lookup succeeds and the stricter common-info extractor returns the correct explicit customer. Revalidation
       also exposed one concrete residual: the search-result-card customer fallback can consume EIS page JavaScript and emit malformed customer_name.
-      ARV-002 is therefore not marked confirmed_done.'
+      ARV-002 is therefore not marked confirmed_done.
     successor_candidate:
       task_id: ARV-002-LIVE-CUSTOMER-PARSE-001
       status: candidate_not_admitted
@@ -1239,8 +1081,7 @@ legacy_registry:
       scope: Constrain public EIS search-card customer extraction to explicit visible customer-scoped evidence; fail closed to null when absent/ambiguous;
         add a deterministic current-layout regression fixture; preserve detail-page precedence and exact-number/no-hidden-demo-fallback behavior.
       definition_of_done:
-      - Observed JavaScript-polluted customer_name layout is reproduced by a deterministic fixture and no longer leaks script/placement text into
-        customer_name.
+      - Observed JavaScript-polluted customer_name layout is reproduced by a deterministic fixture and no longer leaks script/placement text into customer_name.
       - Search-card customer_name is explicit customer-role evidence or null; no hidden demo fallback is introduced.
       - Common-info/detail-page customer precedence and exact-number search behavior remain green.
       - Default repository tests and exact-head CI pass; no external/procurement/production effect.
@@ -1412,13 +1253,12 @@ legacy_registry:
     verified_at: '2026-09-20'
     evidence:
     - path: docs/local/ARV-001_MAC_MINI_OPENCODE.md
-      detail: Repository-owned downstream acceptance runbook records ARV-003 Gate 5 accepted in issue
+      detail: Repository-owned downstream acceptance runbook records ARV-003 Gate 5 accepted in issue #68 on merged commit f96e3588f2e1f61f19d54e44594debfc81a745bf and the sanitized ARV003_GATE5_CONTROLLED_ACCEPTANCE_COMPLETE result.
     - path: docs/local/ARV-096_EIS_DOCUMENT_SET_ACCEPTANCE.md
       detail: Current runbook explicitly protects the accepted ARV-003 bundle from mutation or provider reinvocation.
     - commit: f96e3588f2e1f61f19d54e44594debfc81a745bf
       detail: Final merged ARV-003 controlled-runner metadata hardening commit referenced by the accepted Gate 5 evidence.
-    notes: Gate 5 acceptance is now reconciled into the stale R10.1 backlog status. Historical Gate 1-4 and pre-acceptance text remains preserved;
-      no provider/runtime rerun or accepted-bundle mutation was performed by revalidation.
+    notes: Gate 5 acceptance is now reconciled into the stale R10.1 backlog status. Historical Gate 1-4 and pre-acceptance text remains preserved; no provider/runtime rerun or accepted-bundle mutation was performed by revalidation.
 - id: ARV-001
   legacy_snapshot:
     queue_order: 3
@@ -1505,8 +1345,7 @@ legacy_registry:
     verified_at: '2026-09-23'
     evidence:
     - docs/pilot/ARV-005_REAL_PROCUREMENT_PILOT_PLAN_2026-09-23.md
-    notes: Owner directed real-procurement runs on Mac mini; VPS deferred. Technical runs are read-only/local; human usefulness/commercial acceptance
-      remains gated.
+    notes: 'Owner directed real-procurement runs on Mac mini; VPS deferred. Technical runs are read-only/local; human usefulness/commercial acceptance remains gated.'
 - id: ARV-008
   legacy_snapshot:
     queue_order: 6
@@ -1627,16 +1466,15 @@ legacy_registry:
     - commit: da7b078
       detail: 'ARV-010 storage capacity ingestion guardrails (PR #35): warning/critical/protected thresholds and fail-closed ingestion enforcement.'
     - commit: c335c60fa92742d7c464739e057df7eac89fa191
-      detail: 'OPS-OBSERVABILITY-V1 / PR #76 merged: versioned machine-readable queue, ingestion, storage, backup and worker-error observability
-        with deterministic warning/critical states.'
+      detail: 'OPS-OBSERVABILITY-V1 / PR #76 merged: versioned machine-readable queue, ingestion, storage, backup and worker-error observability with deterministic warning/critical states.'
     - path: docs/ops/OPS_OBSERVABILITY_RUNBOOK.md
-      detail: Non-destructive incident diagnosis/recovery guidance covers stale queue, ingestion/document failures, storage guard, backup state
-        and unavailable dependencies.
+      detail: Non-destructive incident diagnosis/recovery guidance covers stale queue, ingestion/document failures, storage guard, backup state and unavailable dependencies.
     - path: tests/test_ops_observability_v1.py
       detail: Deterministic regressions cover healthy/degraded/stale queue, storage protection, backup freshness and unavailable dependency states.
-    notes: Later merged OPS-OBSERVABILITY-V1 evidence closes the historical repository-side monitoring/alert-state, backup-freshness and incident-runbook
-      follow-up. Warning/critical status and machine-readable reasons are internal operational alert signals. Live external notification delivery
-      or third-party telemetry is intentionally not claimed here and remains governed by separate delivery/production gates.
+    notes: >-
+      Later merged OPS-OBSERVABILITY-V1 evidence closes the historical repository-side monitoring/alert-state, backup-freshness and incident-runbook follow-up.
+      Warning/critical status and machine-readable reasons are internal operational alert signals. Live external notification delivery or third-party telemetry
+      is intentionally not claimed here and remains governed by separate delivery/production gates.
 - id: ARV-051
   legacy_snapshot:
     queue_order: 10
@@ -1795,24 +1633,22 @@ legacy_registry:
     verified_at: '2026-09-21'
     evidence:
     - commit: dc87a0bf4a8ad870d8e611e2e83d736c7c7a3609
-      detail: Merged read-only 223-FZ intake with dedicated provider/parser, source-aware dispatch, document-link discovery, revision ambiguity
-        guard and idempotent persistence.
+      detail: Merged read-only 223-FZ intake with dedicated provider/parser, source-aware dispatch, document-link discovery, revision ambiguity guard and idempotent persistence.
     - commit: f603c9f62859b49287456069d7be98ac1c8ce1dd
       detail: Merged fail-closed 223-FZ Decision Core semantics that preserve regime separation and human control.
     - path: docs/223fz/INGEST_SUPPORT_MATRIX.md
       detail: Current v1 support and explicit fail-closed boundaries for public 223-FZ acquisition.
     - path: docs/roadmap/ARV-006_REVALIDATION_2026-09-21.md
       detail: Capability-by-capability reconciliation against the broader historical ARV-006 target.
-    notes: Search/registry intake/basic facts/documents and conservative revision ambiguity handling are implemented. Lots, positions, structured
-      change history, clarifications, protocols and normalized procedure/status lifecycle are not established. Unsupported legal/procedural semantics
-      remain UNKNOWN/NEEDS_REVIEW rather than inheriting 44-FZ rules.
+    notes: >-
+      Search/registry intake/basic facts/documents and conservative revision ambiguity handling are implemented.
+      Lots, positions, structured change history, clarifications, protocols and normalized procedure/status lifecycle are not established.
+      Unsupported legal/procedural semantics remain UNKNOWN/NEEDS_REVIEW rather than inheriting 44-FZ rules.
     successor_candidate:
       task_id: ARV-006-223FZ-BREADTH-V2-001
       status: candidate_not_admitted
       title: Source-bound 223-FZ lots, positions and lifecycle breadth
-      scope: Freeze source evidence first, then extend only the existing dedicated read-only 223-FZ adapter for source-backed lots/positions and
-        explicit change/clarification/protocol/status artifacts; preserve fail-closed UNKNOWN/NEEDS_REVIEW, no 44-FZ fallback, no authenticated/private
-        actions and no new legal decision rules.
+      scope: Freeze source evidence first, then extend only the existing dedicated read-only 223-FZ adapter for source-backed lots/positions and explicit change/clarification/protocol/status artifacts; preserve fail-closed UNKNOWN/NEEDS_REVIEW, no 44-FZ fallback, no authenticated/private actions and no new legal decision rules.
 - id: ARV-074
   legacy_snapshot:
     queue_order: 16
@@ -2001,31 +1837,25 @@ legacy_registry:
     verified_at: '2026-09-21'
     evidence:
     - path: src/modules/supplier_registry/models.py
-      detail: M-006 persists reusable supplier identity, status, external refs, contacts and tags, but not the full ARV-015 operator/business
-        constraint set.
+      detail: M-006 persists reusable supplier identity, status, external refs, contacts and tags, but not the full ARV-015 operator/business constraint set.
     - path: docs/product/templates/Tender_Operator_Profile_Template.md
-      detail: Existing RFQ-first operator profile contract already defines categories, regions, NMCK, VAT, financial/risk constraints, licenses/SRO/experience
-        and supplier-search preferences.
+      detail: Existing RFQ-first operator profile contract already defines categories, regions, NMCK, VAT, financial/risk constraints, licenses/SRO/experience and supplier-search preferences.
     - path: scripts/run_tender_operator_pilot.py
-      detail: Current _read_operator_profile only returns presence booleans, line count and preview; it does not parse the defined profile fields
-        into reusable structured values.
+      detail: Current _read_operator_profile only returns presence booleans, line count and preview; it does not parse the defined profile fields into reusable structured values.
     - path: src/modules/tender_operator_agent_demo/decision_core.py
-      detail: Decision Core already accepts structured supplier_profile input and consumes configured price-range criteria without permitting
-        external procurement action.
+      detail: Decision Core already accepts structured supplier_profile input and consumes configured price-range criteria without permitting external procurement action.
     - path: docs/roadmap/ARV-015_REVALIDATION_2026-09-21.md
       detail: Full evidence matrix and bounded non-admitted successor candidate.
-    notes: 'ARV-015 is partially implemented: reusable supplier identity and Decision Core profile binding exist, and a richer RFQ-first operator-profile
-      contract is documented/tested. The concrete gap is structured ingestion/reuse of that existing business-profile contract; brands, 1C nomenclature
-      and corporate-document persistence remain later residuals.'
+    notes: >-
+      ARV-015 is partially implemented: reusable supplier identity and Decision Core profile binding exist, and a richer RFQ-first operator-profile contract is documented/tested.
+      The concrete gap is structured ingestion/reuse of that existing business-profile contract; brands, 1C nomenclature and corporate-document persistence remain later residuals.
     successor_candidate:
       task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
       status: candidate_not_admitted
       title: Structured RFQ-first operator profile ingestion
-      scope: Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the
-        existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.
+      scope: Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.
       definition_of_done:
-      - Existing synthetic operator_profile.md deterministically yields structured categories, regions, NMCK range, VAT, financial/risk constraints
-        and license/SRO/experience values.
+      - Existing synthetic operator_profile.md deterministically yields structured categories, regions, NMCK range, VAT, financial/risk constraints and license/SRO/experience values.
       - Missing or malformed fields remain unknown/null rather than inferred.
       - Existing Decision Core supplier-profile/price-range behavior consumes the structured profile without changing external-action safety.
       - RFQ-first no-fixed-catalog/no-known-price assumptions remain covered.
@@ -2348,11 +2178,8 @@ legacy_registry:
     - path: arvectum2/arvectum-landing:public/site-config.js
       detail: Current public navigation routes procurementAiAgent to services/ai-tender-agent.html.
     - path: arvectum2/arvectum-landing:public/services/ai-tender-agent.html
-      detail: Existing product page already contains product-first Tender Agent positioning, synthetic demo report, package/work-format cards,
-        2-4 week RFQ+TKP pilot, closed-contour option and explicit human-decision limitations.
-    notes: Read-only revalidation resolves the former unknown-site-surface gap. The page intentionally avoids arbitrary public prices; explicit
-      pricing/pay-per-analysis and material public-claim/publication decisions remain Owner/commercial REVIEW gates. No site mutation or deployment
-      was performed.
+      detail: Existing product page already contains product-first Tender Agent positioning, synthetic demo report, package/work-format cards, 2-4 week RFQ+TKP pilot, closed-contour option and explicit human-decision limitations.
+    notes: Read-only revalidation resolves the former unknown-site-surface gap. The page intentionally avoids arbitrary public prices; explicit pricing/pay-per-analysis and material public-claim/publication decisions remain Owner/commercial REVIEW gates. No site mutation or deployment was performed.
 - id: ARV-039
   legacy_snapshot:
     queue_order: 34
@@ -2850,15 +2677,14 @@ legacy_registry:
       detail: Existing SearchProvider ABC covers generic web search, not the procurement marketplace adapter contract required by ARV-030.
     - path: docs/roadmap/ARV-030_REVALIDATION_2026-09-21.md
       detail: Repository evidence matrix and bounded non-admitted successor candidate.
-    notes: 'ARV-030 is partially implemented: shared source/result/provenance seams and isolated 44-FZ/223-FZ public providers exist. The concrete
-      residual is a standard procurement marketplace adapter protocol/registry for future ETPs; no specific new provider or authenticated/private
-      integration is admitted here.'
+    notes: >-
+      ARV-030 is partially implemented: shared source/result/provenance seams and isolated 44-FZ/223-FZ public providers exist.
+      The concrete residual is a standard procurement marketplace adapter protocol/registry for future ETPs; no specific new provider or authenticated/private integration is admitted here.
     successor_candidate:
       task_id: ARV-030-MARKETPLACE-ADAPTER-CONTRACT-001
       status: candidate_not_admitted
       title: Standard procurement marketplace adapter protocol and registry
-      scope: Extract the proven public-source seams into a versioned adapter protocol/registry and adapt existing 44-FZ/223-FZ providers first;
-        do not add a new ETP, credentials, authenticated access or external writes.
+      scope: Extract the proven public-source seams into a versioned adapter protocol/registry and adapt existing 44-FZ/223-FZ providers first; do not add a new ETP, credentials, authenticated access or external writes.
 - id: ARV-031
   legacy_snapshot:
     queue_order: 52
