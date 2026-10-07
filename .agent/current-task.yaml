@@ -1,39 +1,35 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: STAGE1-THIN-COMMODITY-SHELL-001
+status: in_progress
+task_id: DP-QUALITY-CORE-3.2-002
 authority: OWNER_DIRECTIVE
-goal: Close Strategic Program Stage 1 (thin commodity shell) at its explicit exit gate using the existing product surface, reuse-first principles and only bounded gap fixes proven necessary by audit.
+goal: Close the remaining measurable quality-core retrieval/ranking debt in arvectum2/data-platform without moving frozen benchmark truth or weakening existing gates.
 definition_of_done:
-- Audit the existing shell against the Stage 1 contract: search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export.
-- Prove the commodity shell is usable end-to-end through a bounded integration/acceptance path from authenticated discovery to tender/document/report/export/alert surfaces.
-- Reuse existing modules/components; do not introduce a custom OCR engine, viewer, auth framework, notification platform, CRM clone or other commodity subsystem.
-- Fix only concrete shell gaps demonstrated by the audit, with focused regression coverage.
-- Record a Stage 1 acceptance matrix with evidence and explicit reuse/custom boundaries.
-- Update strategic roadmap Stage 1 current_state to done only after the acceptance gate passes.
-- Run focused tests plus relevant full checks and exact-head CI.
-- Merge the bounded Stage 1 PR under this explicit Owner directive if scope remains within this DoD and CI is green.
+- Reproduce and explain the growth-photo-pixels ranking gap on the frozen production acceptance benchmark.
+- Identify the smallest product-neutral retrieval/ranking change, if any, that improves the case without weakening security, provenance, determinism, or benchmark thresholds.
+- Preserve benchmark truth and all frozen judgments unchanged.
+- Run the affected retrieval/evaluation suite plus relevant regression checks.
+- Record before/after quality and latency evidence in canonical Data Platform docs/results.
+- Merge only if exact-head CI is green and no frozen benchmark regresses.
 completed:
-- Owner explicitly directed completion of Strategic Program Stage 1.
-- Started from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9 after the completed full roadmap sync.
-current: Completed. Stage 1 accepted, CI-green and merged in PR #192.
-pending: []
-last_verified_commit: a58ec11ef4324f80fe516a68b1441e3db4208e6b
+- DP-QUALITY-CORE-3.2-001 real-source faithfulness gate completed and merged in data-platform PR #80 at e4f0db89a300f0493410474842ee43b7f059acab.
+current: Reproduce and diagnose the growth-photo-pixels ranking gap on current data-platform main.
+pending:
+- Diagnose component lexical/vector/fusion scores for growth-photo-pixels and adjacent cases.
+- Test bounded ranking alternatives against the frozen suites without editing judgments.
+- Implement the smallest justified fix, or explicitly close as measured non-action if no safe improvement exists.
+- Run focused and full relevant regressions.
+- Update benchmark evidence and merge with green CI.
+last_verified_commit: e4f0db89a300f0493410474842ee43b7f059acab
 test_results:
-- "Stage 1 focused acceptance gate: 67 passed, 10 skipped."
-- "uv run make check: PASS."
-- "git diff --check origin/main...HEAD: PASS."
-- "Gap audit: no new commodity subsystem required; existing search/saved-profile/card/document/auth/visibility/alert/export surfaces satisfy the bounded exit gate."
-- "Local full pytest: 3095 passed, 236 skipped; one environment-specific local R9 pg_restore failure outside the Stage 1 diff."
-- "PR #192 exact-head CI run 37612128040: SUCCESS, all 9 jobs green; CI make test passed."
-- "PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b."
-updated_at: '2026-10-07T14:41:00+03:00'
-resume_instruction: Task completed. Stage 1 is closed; do not reopen without a new measured commodity-shell gap or explicit Owner direction.
+- "Previous step: real-source faithfulness 5/5; all safety metrics 1.0; PR #80 CI green."
+updated_at: '2026-10-07T15:05:00+03:00'
+resume_instruction: Continue from current data-platform main e4f0db89. Reproduce growth-photo-pixels on the frozen benchmark, inspect component scores and ranking identities, then test only benchmark-preserving product-neutral fixes. Do not change frozen relevance judgments to improve metrics.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: stage1/thin-commodity-shell-completion
-  base_commit: a143d218b1c039ab4197a3f61ab7215182f7ccd9
+  claimed_by: ChatGPT
+  execution_id: dp-quality-core-3.2-002
+  branch: feature/dp-quality-core-3-2-ranking-gap
+  base_commit: e4f0db89a300f0493410474842ee43b7f059acab
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
