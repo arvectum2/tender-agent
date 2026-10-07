@@ -165,11 +165,11 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: owner_directed_work_in_progress
-  next_admitted_item: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
-  admitted_pipeline:
-    - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+  queue_state: no_non_done_admitted_items
+  next_admitted_item: null
+  admitted_pipeline: []
   completed_pipeline:
+    - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
     - DOCUMENT-QA-NEXT-INCREMENT
     - CHANGE-MONITORING-V1-001
     - INGEST-RESILIENCE-V1-001
@@ -185,7 +185,7 @@ execution_snapshot:
     - MOB-3-IOS-PUSH-DEEPLINKS-001
     - DTR-3-POST-GO-AUTOMATION-001
     - MOB-4-IOS-PORTFOLIO-METRICS-001
-  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged as PR #171 / 01b4be72, PR #173 / fe92b39, PR #176 / 3ab3872, PR #180 / 3b25e10 and PR #183 / bdcd868 respectively and are no longer executable work. The only non-done queue item remains ARV-005-CONTROLLED-PILOT-EVIDENCE-001. No additional mobile stage is admitted by this roadmap sync.'
+  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged and done, and ARV-005-CONTROLLED-PILOT-EVIDENCE-001 has now satisfied its technical done gate using preserved frozen pilot evidence. There are no non-done admitted queue items after this closure; any next item must be admitted under the active Owner continuation rule without inventing priority or acceptance criteria.'
 
 development_strategy:
   principle: copy_commodity_invent_moat
@@ -1341,11 +1341,14 @@ legacy_registry:
     comment: Главный gate перед Commercial MVP и платным пилотом.
     dependencies_raw: ARV-001, ARV-003, ARV-004
   reconciliation:
-    state: controlled_real_pilot_admitted
-    verified_at: '2026-09-23'
+    state: confirmed_done
+    verified_at: '2026-10-07'
     evidence:
     - docs/pilot/ARV-005_REAL_PROCUREMENT_PILOT_PLAN_2026-09-23.md
-    notes: 'Owner directed real-procurement runs on Mac mini; VPS deferred. Technical runs are read-only/local; human usefulness/commercial acceptance remains gated.'
+    - docs/pilot/ARV-005_WAVE1_FREEZE_2026-09-23.md
+    - docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+    - .agent/checkpoints/ARV-005-CONTROLLED-PILOT-EVIDENCE-001.yaml
+    notes: 'Technical pilot complete: 12/12 frozen core 44-FZ procurements have reports and three exploratory 223-FZ cases are separately scored source-bound blockers. Frozen evidence is preserved; human usefulness/commercial acceptance remains HUMAN/REVIEW. Local controlled-LLM reliability after Wave 1 is a measured follow-up, not retroactively tuned.'
 - id: ARV-008
   legacy_snapshot:
     queue_order: 6

@@ -534,7 +534,7 @@ items:
   strategy: REUSE
   continuation_mode: CONTROLLED_REAL_PILOT
   title: Controlled real-procurement pilot on Mac mini
-  status: in_progress
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -544,7 +544,7 @@ items:
   dependencies:
   - ARV-012-REVALIDATION-001
   executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
-  done_gate: 'Technical completion requires Wave 0 local-LLM schema validation, then 12 real 44-FZ runs in frozen 3+5+4 waves plus 3 separately scored exploratory 223-FZ runs, explicit local-LLM/fallback provenance, aggregate report and regression capture. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
+  done_gate: 'Satisfied: the frozen pilot exercised 12 unique 44-FZ procurements in 3+5+4 waves with 12/12 completed technical reports, plus three separately scored exploratory 223-FZ cases that failed closed as source-bound blockers. Local-LLM/fallback provenance is explicit, confirmed defects have regression capture, and docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md records the aggregate result. Frozen pilot code head 7653c070 passed 105 focused/relevant tests and GitHub Actions CI 37132350065; the 2026-10-07 current-main port passed 142 focused tests, 25 compatibility tests, and make check without rerunning frozen cases. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
 
 - order: 230
   task_id: MOB-1-IOS-INBOX-001

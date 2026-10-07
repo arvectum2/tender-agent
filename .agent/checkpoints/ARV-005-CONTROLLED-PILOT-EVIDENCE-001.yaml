@@ -5,7 +5,7 @@ status: in_progress
 authority: AUTO
 branch: chore/arv-005-controlled-pilot-finalize-20261007
 base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
-updated_at: '2026-10-07T11:15:00+03:00'
+updated_at: '2026-10-07T11:32:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -34,7 +34,7 @@ completed:
 - Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
 - W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
 - W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
-current: 'Canonical closure in progress: preserve the completed frozen pilot evidence, port only validated ARV-005 regressions onto current main, verify current code, then reconcile queue/roadmap without rerunning frozen procurements.'
+current: 'Canonical closure integration is verified locally and queue/roadmap/report evidence is reconciled; exact-head CI/merge remains.'
 subtasks:
 - id: A1
   status: completed
@@ -64,10 +64,7 @@ subtasks:
   status: completed
   title: Run three frozen exploratory 223-FZ cases, record source-bound blockers separately, and publish aggregate technical report.
 remaining:
-- port validated ARV-005 code/regression delta onto current main without importing later unrelated product-shell work
-- run focused/current-main verification and fix integration regressions
-- publish aggregate technical report and frozen evidence on canonical main
-- reconcile execution queue, roadmap and current-task to completed
+- finalize completion checkpoint/current-task on closure branch
 - exact-head CI and merge final closure PR
 validation:
   canonical_main: 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845
@@ -107,7 +104,7 @@ validation:
   am4_automatic_merge_counter: 10
   repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Continue canonical closure only: do not rerun or mutate frozen pilot cases. Port the validated pre-report ARV-005 src/tests delta onto current main, verify it, publish preserved evidence, reconcile queue/roadmap, and finish via exact-head CI. Do not import later PRODUCT-SHELL work from PR #123.
+resume_instruction: Do not rerun or mutate frozen pilot cases. Finalize the closure checkpoint/current-task, push exact-head PR, repair any CI integration failure, and merge if repository gates permit. Do not import later PRODUCT-SHELL work from PR #123.
 wave1_acquisition_diagnosis_20260923:
   cache_check: no_existing_public_package_for_w1b_or_w1c
   frozen_source_url_shape: printForm/view.html

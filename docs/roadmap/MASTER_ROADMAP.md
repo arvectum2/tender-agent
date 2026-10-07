@@ -183,7 +183,7 @@ The accelerated admitted pipeline that was active on 2026-09-15 is now fully rec
 
 ### Execution queue after reconciliation
 
-The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, `DTR-3-POST-GO-AUTOMATION-001`, and `MOB-4-IOS-PORTFOLIO-METRICS-001` are **done and merged**, while `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` remains the only non-done admitted queue item. No additional mobile stage is admitted. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
+The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, `DTR-3-POST-GO-AUTOMATION-001`, and `MOB-4-IOS-PORTFOLIO-METRICS-001` are **done and merged**. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate: the frozen 12-case 44-FZ core produced 12 reports, the three exploratory 223-FZ cases are separately scored source-bound blockers, and the aggregate technical report is preserved under `docs/pilot/`. Human usefulness/commercial acceptance remains HUMAN/REVIEW. There are now no non-done admitted queue items; the next bounded item must be admitted under the active Owner continuation rule rather than inferred from roadmap presence.
 
 ### Available continuation branches — candidate matrix
 
@@ -253,7 +253,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-003` | 2 | В работе | P0 | 97% | R10.1: production LLM-анализ с evidence map и confidence | accepted_evidence_present_needs_status_revalidation |
 | `ARV-001` | 3 | Запланировано | P0 | 85% | R10.2: Quality & Product Readiness — golden report и release gates | completed_governed |
 | `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation |
-| `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | needs_revalidation |
+| `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | confirmed_done |
 | `ARV-067` | 7 | На проверке | P1 | 90% | Вертикальные онтологии и настраиваемые схемы извлечения по категориям | review |
 | `ARV-061` | 12 | Запланировано | P1 | 5% | Commercial MVP v1: быстрый cited-преданализ | needs_revalidation |
 | `ARV-065` | 37 | Запланировано | P1 | 0% | Evidence-grounded copilot по закупке: Q&A, AI-юрист и сметчик | needs_revalidation |
