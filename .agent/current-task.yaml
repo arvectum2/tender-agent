@@ -41,12 +41,20 @@ completed:
 - '2026-10-07: Full local make test completed with 3112 passed / 236 skipped and only
   the known R9 pg_restore acceptance failure; that identical failure was already reproduced
   on clean main during ARV-022 and is unrelated to this slice.'
-current: Open the ARV-053 implementation PR against current main, require exact-head
-  GitHub CI, and merge only if AM-4 remains active.
+- '2026-10-07: PR #207 exact-head CI run 37683228749 attempt 1 completed all jobs
+  successfully except r8-acceptance-integration, which stalled in GitHub-hosted apt
+  installation after the same runner symptom previously seen on unrelated CI; the
+  run was cancelled only after quality and every other job were green.'
+- '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
+  cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
+  a new exact-head CI run.'
+current: 'Trigger a fresh exact-head CI run for PR #207 from a checkpoint-only head
+  after GitHub runner cancellation propagation; merge only after the fresh run is
+  fully green.'
 pending:
-- Push formatting/checkpoint commits.
-- Open ARV-053 PR against current main and verify exact-head GitHub CI.
-- Merge under active AM-4 only if all gates remain valid.
+- 'Push this checkpoint-only head to trigger fresh PR #207 exact-head CI.'
+- Verify all required jobs on the fresh exact-head run.
+- 'Merge PR #207 under active AM-4 only if all gates remain valid.'
 - Perform completion bookkeeping, update the AM-4 counter, and advance canonical queue
   to ARV-055.
 last_verified_commit: 278312683ce227270d4a1a649fb938ba24342d29
@@ -58,10 +66,10 @@ test_results:
 - 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
   acceptance failure)'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T23:35:21+03:00'
-resume_instruction: Open the ARV-053 implementation PR from agent/commercial-workflow-arv-053-001,
-  require exact-head CI, merge under active AM-4 if green, then complete bookkeeping
-  and advance to COMMERCIAL-WORKFLOW-ARV-055-001.
+updated_at: '2026-10-07T23:47:36+03:00'
+resume_instruction: 'Verify the fresh exact-head CI run for PR #207 after this checkpoint-only
+  commit. If fully green and AM-4 remains active, merge PR #207, then complete bookkeeping
+  and advance to COMMERCIAL-WORKFLOW-ARV-055-001.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv053

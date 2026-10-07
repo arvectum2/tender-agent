@@ -41,6 +41,13 @@ completed:
 - '2026-10-07: Full local make test completed with 3112 passed / 236 skipped and only
   the known R9 pg_restore acceptance failure; that identical failure was already reproduced
   on clean main during ARV-022 and is unrelated to this slice.'
+- '2026-10-07: PR #207 exact-head CI run 37683228749 attempt 1 completed all jobs
+  successfully except r8-acceptance-integration, which stalled in GitHub-hosted apt
+  installation after the same runner symptom previously seen on unrelated CI; the
+  run was cancelled only after quality and every other job were green.'
+- '2026-10-07: Immediate rerun attempt 2 inherited the cancellation and completed
+  cancelled; no test failure was reported. A fresh checkpoint-only head will trigger
+  a new exact-head CI run.'
 current: Inventory existing M-005/M-006 counterparty identity/profile models, procurement/contract
   evidence adapters and scoring primitives before choosing the minimal reuse-first
   implementation slice.
@@ -61,10 +68,11 @@ test_results:
 - 'full make test: 3112 passed, 236 skipped, 1 failed (known main-baseline R9 pg_restore
   acceptance failure)'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T23:35:21+03:00'
-resume_instruction: Take the ARV-053 branch through exact-head PR CI/merge, then perform
-  completion bookkeeping and advance to ARV-055.
-current_stage: pr_ci
+updated_at: '2026-10-07T23:47:36+03:00'
+resume_instruction: 'Verify fresh exact-head PR #207 CI; merge only when fully green,
+  then complete ARV-053 bookkeeping.'
+current_stage: retry_exact_head_ci
 remaining:
-- implementation PR exact-head CI and guarded merge
+- 'fresh exact-head PR #207 CI'
+- guarded implementation merge
 - completion bookkeeping and queue advance to ARV-055
