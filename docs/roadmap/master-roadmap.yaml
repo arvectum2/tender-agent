@@ -81,13 +81,12 @@ owner_product_directive_2026_10_06:
       exact_head_ci_run: 37575956723
       exact_head_ci: success
       note: "HUMAN GO resumes into canonical readiness preparation and evidence-gated submission/outcome tracking. The system never starts/submits an ETP action; unattributed SUBMITTED state and unbound outcome records remain pending."
-    next:
-      - mobile_portfolio_metrics_polish
+    next: []
   mobile:
     historical_item: ARV-044
     owner_priority_override: P0
     current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
-    implementation_status: MOB_3_MERGED
+    implementation_status: MOB_4_MERGED
     backend: "Tender Agent FastAPI on Mac mini"
     initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
     source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
@@ -108,6 +107,12 @@ owner_product_directive_2026_10_06:
       - tenderagent_deep_link_routing
       - notification_tap_case_routing
       - fetch_on_deep_link
+    implemented_2026_10_07:
+      - canonical_mobile_portfolio_summary_metrics
+      - deterministic_mobile_portfolio_filters
+      - canonical_portfolio_decision_source_timestamp_projection
+      - grounded_submission_outcome_detail
+      - deep_link_refresh_before_case_open
     mob_1:
       status: done
       pr: 171
@@ -129,11 +134,18 @@ owner_product_directive_2026_10_06:
       exact_head_ci_run: 37533637202
       exact_head_ci: success
       note: "Revocable APNs device registration, bounded push payloads and safe tenderagent deep links are merged. Simulator push/deep-link smoke passed. Real-device APNs delivery remains externally blocked by the current Apple provisioning profile lacking Push Notifications / aps-environment and by provider credentials being intentionally disabled by default."
+    mob_4:
+      status: done
+      pr: 183
+      merge_commit: bdcd868f1c42f3d3165cc8cad2c83b63b682521b
+      exact_head_ci_run: 37584606448
+      exact_head_ci: success
+      note: "Canonical Procurement Portfolio metrics/outcome UX is merged. Missing submission/outcome evidence stays pending/unknown; existing explicit HUMAN GO / NO GO / DEFER and consequential-action hard stops are unchanged."
     next:
-      stage: MOB-4
-      status: not_admitted
-      scope: "Mobile Procurement Portfolio and metrics UX polish."
-      gate: "Requires separate bounded admission; consequential external-action hard stops remain unchanged."
+      stage: null
+      status: none_admitted
+      scope: "No additional ARV-044 mobile stage is admitted by this reconciliation."
+      gate: "Any new mobile development requires a separate bounded admission; consequential external-action hard stops remain unchanged."
     push: APNs
     required_actions: [GO, NO_GO, DEFER]
   deferred:
@@ -144,7 +156,7 @@ owner_product_directive_2026_10_06:
   admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
 
 execution_snapshot:
-  updated_at: '2026-10-07T05:35:00Z'
+  updated_at: '2026-10-07T07:12:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -172,7 +184,8 @@ execution_snapshot:
     - MOB-2-IOS-DECISIONS-001
     - MOB-3-IOS-PUSH-DEEPLINKS-001
     - DTR-3-POST-GO-AUTOMATION-001
-  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3 and DTR-3 are merged as PR #171 / 01b4be72, PR #173 / fe92b39, PR #176 / 3ab3872 and PR #180 / 3b25e10 respectively and are no longer executable work. The only non-done queue item is ARV-005-CONTROLLED-PILOT-EVIDENCE-001. MOB-4 is not admitted by this roadmap sync.'
+    - MOB-4-IOS-PORTFOLIO-METRICS-001
+  note: 'As of 2026-10-07, MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 are merged as PR #171 / 01b4be72, PR #173 / fe92b39, PR #176 / 3ab3872, PR #180 / 3b25e10 and PR #183 / bdcd868 respectively and are no longer executable work. The only non-done queue item remains ARV-005-CONTROLLED-PILOT-EVIDENCE-001. No additional mobile stage is admitted by this roadmap sync.'
 
 development_strategy:
   principle: copy_commodity_invent_moat

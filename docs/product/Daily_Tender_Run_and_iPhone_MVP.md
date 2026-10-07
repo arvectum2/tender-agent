@@ -32,7 +32,16 @@ DTR-3 is merged in PR #180 (`3b25e10bab2930f954d39a444b8258ad597010c9`; exact-he
 - outcome completion requires canonical outcome intake with an artifact binding; unbound or absent outcomes stay pending;
 - pending WAITING_READINESS / WAITING_SUBMISSION / WAITING_OUTCOME runs are restartable and are resumed by the unattended CLI before a new discovery run.
 
-The human-control boundary is unchanged: the system does not submit or modify applications, log into ETPs, use EDS/UKЭП/private keys, sign, pay, purchase guarantees, contact suppliers/customers, or replace the manager's GO / NO GO / DEFER decision. The prior 2026-10-06 Mac mini deployment evidence in the roadmap predates DTR-3 and is not evidence that this merged slice has already been deployed to that runtime.
+MOB-4 is merged in PR #183 (`bdcd868f1c42f3d3165cc8cad2c83b63b682521b`; exact-head CI `37584606448` SUCCESS 9/9). The native iPhone Portfolio now completes the bounded mobile review slice by reusing the canonical Procurement Portfolio/mobile façade rather than creating a second data model:
+
+- factual considered/GO/submitted/won/not-won/cancelled counts plus canonical submission and win rates;
+- deterministic filters for attention-needed, GO, NO GO, submitted, won, not-won, cancelled and submitted-without-outcome cases;
+- canonical portfolio decision/source/timestamp on case detail;
+- grounded submission/outcome timestamps, rationale and postmortem root cause when present;
+- explicit pending/unknown presentation when submission or outcome evidence is absent;
+- refresh-before-open behavior for procurement deep links so portfolio metrics and case detail stay coherent after backend state changes.
+
+The human-control boundary is unchanged: the system does not submit or modify applications, log into ETPs, use EDS/UKЭП/private keys, sign, pay, purchase guarantees, contact suppliers/customers, or replace the manager's GO / NO GO / DEFER decision. The prior 2026-10-06 Mac mini deployment evidence in the roadmap predates DTR-3/MOB-4 and is not evidence that these merged slices have already been deployed to that runtime.
 
 ## Arvectum IT screening profile v2 — 2026-10-06
 
@@ -228,7 +237,7 @@ iPhone MVP is accepted when the phone securely reads live Mac mini reports, push
 4. MOB-2 — GO/NO GO/DEFER with idempotent audited write.
 5. MOB-3 — APNs registration, push and deep links.
 6. DTR-3 — **DONE** — post-GO readiness/submission/outcome automation (PR #180).
-7. MOB-4 — Portfolio/metrics UX polish.
+7. MOB-4 — **DONE** — Portfolio/metrics UX polish (PR #183).
 
 ## Deferred from MVP
 
