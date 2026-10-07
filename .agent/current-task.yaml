@@ -25,24 +25,45 @@ completed:
 - '2026-10-08: Read-only inventory identified DataPlatformRagRetriever.search_all_documents/search_with_profile
   as the existing semantic retrieval boundary; Tender Agent must reuse that boundary
   rather than own a new embedding/vector engine.'
-current: Inventory canonical tender subject/position/customer/requirements representations
-  and existing search adapters, then define the smallest explainable candidate-ranking
-  layer over Data Platform retrieval.
+- '2026-10-08: Canonical signal inventory found subject/customer fields on ProcurementTender
+  and structured positions/requirements/OKPD signals in admitted raw payloads; unavailable
+  structured signals are kept explicit rather than synthesized.'
+- '2026-10-08: Implemented /api/tender-research/similar/{registry_number} as a bounded
+  ranking/explanation adapter over DataPlatformRagRetriever.search_all_documents.
+  Data Platform hybrid/vector search only generates candidates/evidence; Tender Agent
+  does not own a new embedding/vector backend.'
+- '2026-10-08: Deterministic similarity explanations cover subject token overlap with
+  the existing conservative Russian inflection normalizer, structured position overlap,
+  exact/normalized customer identity, and structured requirement overlap. The final
+  score is the visible arithmetic mean of available deterministic signals; Data Platform
+  fusion scores remain evidence only.'
+- '2026-10-08: Added fail-closed false-analogue guards for self/same registry, identical
+  content hash, disjoint available OKPD major classes, and zero subject plus zero/unknown
+  position overlap.'
+- '2026-10-08: Focused/relevant ARV-055, Data Platform retrieval, procurement discovery
+  and relevance regressions passed (55 passed); API route test, Ruff, make check and
+  git diff --check passed.'
+current: Reconcile the ARV-055 implementation with current main after ARV-053 correction
+  bookkeeping, then run full repository verification and exact-head PR CI.
 pending:
-- Map available canonical subject, position, customer and requirements signals to
-  evidence sources.
-- Implement explainable similar-procurement retrieval over the existing Data Platform
-  search boundary.
-- Add deterministic false-analogue guards and focused explanation regressions.
-- Run relevant/full verification, open PR, require exact-head CI and merge only under
-  valid AM-4.
+- Commit/push the bounded ARV-055 implementation and checkpoint.
+- 'Reconcile branch with current main after PR #210 completion bookkeeping merges.'
+- Run full make test and resolve any ARV-055 regressions; document only proven main-baseline
+  failures.
+- Open/update ARV-055 PR and require exact-head GitHub CI before any merge.
 last_verified_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
-test_results: []
-updated_at: '2026-10-08T00:39:22+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv055-commercial-20261008.
-  Inventory canonical tender/position/requirement fields and existing DataPlatformRagRetriever/public
-  procurement search paths first; then implement a bounded explanation/ranking adapter
-  without a new vector backend.
+test_results:
+- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions:
+  55 passed'
+- 'ARV-055 API route focused test: PASS'
+- 'Ruff check/format on changed slice: PASS'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+updated_at: '2026-10-08T00:52:09+03:00'
+resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv055-commercial-20261008.
+  Commit/push the implementation, then reconcile current main after ARV-053 correction
+  bookkeeping PR #210. Re-run focused checks/full make test and open ARV-055 PR only
+  from the reconciled head.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv055
