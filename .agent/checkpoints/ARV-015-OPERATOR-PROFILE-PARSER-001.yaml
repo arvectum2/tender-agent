@@ -1,0 +1,25 @@
+schema_version: 1
+task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+status: completed
+goal: "Structured RFQ-first operator profile ingestion into the existing Decision Core supplier_profile boundary."
+definition_of_done:
+  - "Parse the canonical operator profile fields deterministically and fail closed on malformed/ambiguous values."
+  - "Bind the validated profile into analysis_context.supplier_profile for the existing Decision Core."
+  - "Preserve RFQ-first/no-fixed-catalog semantics and all external-action hard stops."
+  - "Focused tests and exact-head CI pass before merge."
+branch: agent/arv-015-operator-profile-parser-001-r2
+base_commit: 61e7f38196e6b7046fff421380714b1a692e1307
+completed:
+  - "Recovered the historical task/PR instead of duplicating product scope."
+  - "Created a clean recovery branch from current main after the stale branch diverged."
+  - "Implemented typed operator commercial/qualification/risk fields in the existing SupplierProfile model."
+  - "Implemented deterministic markdown parsing and analysis_context binding."
+current: "Definition of Done satisfied on implementation head 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95; final bookkeeping merge gate remains."
+remaining: []
+last_verified_commit: 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95
+test_results:
+  - "Historical pre-recovery focused gate on PR #127: 41 passed."
+  - "CI run 37653121154: 8/9 jobs green; quality had 3103 passed / 236 skipped and one governance-only failure caused by status=ready being frozen in tests after legitimate queue progress."
+  - "Governance lifecycle assertion fixed; CI 37654505822 passed 9/9 with quality 3104 passed / 236 skipped and make check PASS."
+updated_at: "2026-10-07T19:48:00+03:00"
+resume_instruction: "Do not change product code. Finalize queue/current-task bookkeeping, re-earn exact-head CI, merge PR #199 under renewed AM-4, close superseded PR #127, and verify canonical main."

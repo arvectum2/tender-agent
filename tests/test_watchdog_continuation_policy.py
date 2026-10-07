@@ -117,8 +117,10 @@ def test_full_commercial_workflow_branch_is_explicitly_admitted_in_order():
         if item["task_id"] in expected_tasks
     ]
     assert actual_tasks == expected_tasks
+    admitted_runtime_statuses = {"ready", "in_progress", "blocked", "done"}
     for task_id in expected_tasks:
         item = queue_items[task_id]
-        assert item["status"] == "ready"
+        # Admission is durable while executor lifecycle status advances.
+        assert item["status"] in admitted_runtime_statuses
         assert item["authority"] == "AUTO"
         assert item["auto_merge"] is True

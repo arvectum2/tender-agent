@@ -1,43 +1,37 @@
 version: 2
 repository: arvectum2/tender-agent
 status: completed
-task_id: ARV-002-LIVE-CUSTOMER-PARSE-001
-authority: OWNER_DIRECTIVE
-goal: "Close the proven ARV-002 P0 residual gap in live exact-number 44-FZ parsing without introducing any hidden/demo fallback or weakening source precedence."
+task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
+authority: AUTO
+goal: "Parse the existing RFQ-first operator profile contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry or decision engine."
 definition_of_done:
-  - "Exact-number public 44-FZ search-card parsing extracts customer_name only from explicit customer fields/links and cannot consume unrelated page JavaScript."
-  - "A deterministic current-layout regression fixture reproduces the historical contamination failure and passes with a clean customer_name."
-  - "Common-info/detail-page customer precedence is preserved."
-  - "Exact-number live E2E and no-hidden-demo-fallback behavior remain fail-closed and unchanged."
-  - "Focused parser/live-path/source-graph/no-fallback tests pass."
-  - "A read-only exact-number live EIS verification succeeds without consequential external action."
-  - "Relevant broader deterministic tests pass and exact-head CI is green before merge."
-  - "Roadmap/reconciliation evidence is updated and the checkpoint is marked completed after merge."
+  - "Synthetic operator_profile.md deterministically yields structured working/excluded categories, regions, NMCK range, VAT, financial/cash constraints, licenses/SRO/experience and risk preferences already defined by the canonical template."
+  - "Missing, malformed, contradictory or ambiguous values remain unknown/null rather than inferred."
+  - "The existing Decision Core consumes the structured supplier profile and price range without changing external-action safety."
+  - "RFQ-first semantics remain intact: no fixed SKU/catalog or known supplier price is assumed."
+  - "Focused regression tests and exact-head CI pass."
 completed:
-  - "2026-10-07: User explicitly prioritized ARV-002 P0 residual-gap closure."
-  - "2026-10-07: Isolated worktree created from current origin/main so unrelated in-progress DTR-3 local work remains untouched."
-  - "2026-10-07: Removed the raw-HTML customer regex fallback; search cards now fail closed unless an explicit customer-scoped label/value pair exists."
-  - "2026-10-07: Added a deterministic JavaScript-pollution fixture plus positive explicit-customer regression coverage; initial 41 focused tests passed."
-  - "2026-10-07: Full bounded ARV-002 focused gate passed 87 tests; persistence/recovery companion passed 32 tests with 12 environment/profile skips; make check passed."
-  - "2026-10-07: Read-only live exact-number search returned one card with customer_name=null, while common-info detail returned the correct explicit Chukotka health department customer and 5 document links."
-current: "Implementation and evidence are complete. This completion record becomes canonical only through guarded merge of PR #195 after exact-head CI is green."
+  - "2026-10-07: Recovered historical PR #127 without duplicating the admitted product task; stale conflict handling was replaced by a clean recovery branch from current main."
+  - "2026-10-07: Added backward-compatible typed SupplierProfile fields for operator commercial, qualification and risk constraints and a deterministic parser for the canonical RFQ-first markdown contract."
+  - "2026-10-07: Working/excluded categories, regions, NMCK bounds, VAT, margin/payment/security/prepayment/cash constraints, licenses/SRO/experience and risky/forbidden categories are parsed only from explicit profile evidence."
+  - "2026-10-07: Missing, malformed, contradictory and ambiguous values fail closed to empty/null; no fixed SKU/catalog/known-price assumption was introduced."
+  - "2026-10-07: Pilot requirements bind the structured profile into analysis_context before and after controlled-LLM updates; existing Decision Core price-range behavior is reused and all external-action safety flags remain false."
+  - "2026-10-07: CI diagnostic 37653121154 proved product code and exposed one stale governance lifecycle assertion; that assertion was corrected without widening product scope."
+  - "2026-10-07: Corrected implementation head 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95 passed exact-head CI 37654505822 with all 9 jobs green; quality make check PASS and full suite 3104 passed / 236 skipped."
+current: "Definition of Done is satisfied. This completion record becomes canonical only after the final bookkeeping head re-earns exact-head CI and PR #199 merges under renewed AM-4."
 pending: []
-last_verified_commit: "756b7c76df702142fac9b621a698aab4f6aa374e"
+last_verified_commit: "6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95"
 test_results:
-  - "87 passed: parser + ARV-002 live-path/source-graph/no-fallback focused gate."
-  - "32 passed, 12 skipped: persistence/recovery companion gate."
-  - "make check: PASS."
-  - "read-only live exact-number 0888500000226000399: search parsed 1 card with customer_name=null; detail success with explicit customer and 5 document links."
-  - "full local suite: 3097 passed, 236 skipped, 1 unrelated R9 backup/restore failure; the identical pg_restore failure was reproduced on clean origin/main 05a939eb, proving it is pre-existing/environmental."
-  - "latest-main rebase head b4980cd4 on ba84bb80: 90 focused/policy tests PASS; make check PASS; live exact-number verification PASS; git diff --check PASS; Commercial Workflow admission/AM-4 reset preserved."
-  - "implementation/evidence commit 756b7c76 is retained as the parent of the final checkpoint commit; final PR merge remains gated on exact-head CI."
-updated_at: "2026-10-07T17:51:26+03:00"
-resume_instruction: "ARV-002-LIVE-CUSTOMER-PARSE-001 is complete. Do not repeat it. On canonical main after guarded PR #195 merge, reconcile the admitted execution queue and continue with ARV-015-OPERATOR-PROFILE-PARSER-001 unless a newer explicit Owner directive supersedes it."
+  - "Historical PR #127 before recovery: 41 focused tests passed and its then-current exact-head CI was green."
+  - "Recovery diagnostic CI 37653121154 at 7bd071b145efc382a84e8b6513797605ab0550f8: 8/9 jobs green; quality had 3103 passed / 236 skipped and one governance-only lifecycle assertion failure."
+  - "Corrected implementation CI 37654505822 at 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95: SUCCESS 9/9; make check PASS; 3104 passed / 236 skipped; procurement-domain regression PASS."
+updated_at: "2026-10-07T20:02:00+03:00"
+resume_instruction: "Do not modify product implementation. Check exact-head CI on the final bookkeeping head. If green and AM-4 gates remain valid, merge PR #199, close superseded PR #127, verify canonical main contains the completion state, and do not reopen ARV-015-OPERATOR-PROFILE-PARSER-001."
 execution:
   claimed_by: "ChatGPT interactive"
-  execution_id: "interactive-20261007-arv002"
-  branch: "feature/arv-002-live-customer-parse-20261007"
-  base_commit: "ba84bb808636944543a8799f1519ae0cbb3b4eea"
+  execution_id: "interactive-20261007-arv015-r2"
+  branch: "agent/arv-015-operator-profile-parser-001-r2"
+  base_commit: "61e7f38196e6b7046fff421380714b1a692e1307"
   issue: null
   manual_override: true
   lease_until: null

@@ -54,6 +54,7 @@ from src.modules.quote_repository.tkp_normalization import (
     build_tkp_normalization_report,
     normalize_tkp_quotes,
 )
+from src.modules.tender_operator_agent_demo.supplier_profile import parse_operator_profile_markdown
 from src.modules.tender_operator_review.service import (
     build_human_review_checklist_markdown,
     build_human_review_pack,
@@ -143,28 +144,51 @@ def _resolve_provider_request(requested_provider: str, env_provider: str) -> tup
 
 def _read_operator_profile(operator_dir: Path) -> dict[str, Any]:
     profile_path = operator_dir / "operator_profile.md"
-    if profile_path.is_file():
-        text = profile_path.read_text(encoding="utf-8")
-        lines = [line.strip() for line in text.splitlines() if line.strip()]
-        has_vat = "VAT" in text
-        has_margin = "margin" in text.lower() or "margin" in text
-        has_categories = "Category" in text
+    if not profile_path.is_file():
         return {
-            "found": True,
-            "line_count": len(lines),
-            "has_vat_info": has_vat,
-            "has_margin_info": has_margin,
-            "has_categories": has_categories,
-            "preview": " ".join(lines[:5])[:200],
+            "found": False,
+            "line_count": 0,
+            "has_vat_info": False,
+            "has_margin_info": False,
+            "has_categories": False,
+            "preview": "",
+            "supplier_profile": {},
         }
+
+    text = profile_path.read_text(encoding="utf-8")
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    parsed = parse_operator_profile_markdown(text, supplier_id=operator_dir.name)
+    supplier_profile = parsed.model_dump(mode="json") if parsed is not None else {}
+    criteria = supplier_profile.get("criteria") if isinstance(supplier_profile.get("criteria"), dict) else {}
+    commercial = (
+        supplier_profile.get("commercial")
+        if isinstance(supplier_profile.get("commercial"), dict)
+        else {}
+    )
     return {
-        "found": False,
-        "line_count": 0,
-        "has_vat_info": False,
-        "has_margin_info": False,
-        "has_categories": False,
-        "preview": "",
+        "found": True,
+        "line_count": len(lines),
+        "has_vat_info": commercial.get("vat_mode") is not None,
+        "has_margin_info": commercial.get("target_margin_percent") is not None,
+        "has_categories": bool(criteria.get("categories")),
+        "preview": " ".join(lines[:5])[:200],
+        "supplier_profile": supplier_profile,
     }
+
+
+def _bind_operator_supplier_profile(
+    requirements: dict[str, Any],
+    operator_profile: dict[str, Any],
+) -> None:
+    supplier_profile = operator_profile.get("supplier_profile")
+    if not isinstance(supplier_profile, dict) or not supplier_profile:
+        return
+
+    analysis_context = requirements.get("analysis_context")
+    if not isinstance(analysis_context, dict):
+        analysis_context = {}
+        requirements["analysis_context"] = analysis_context
+    analysis_context["supplier_profile"] = copy.deepcopy(supplier_profile)
 
 
 def _read_supplier_candidates_notes(tender_dir: Path) -> dict[str, Any]:
@@ -398,9 +422,17 @@ def _extract_numeric_value(value: Any) -> float | None:
 
 def _run_stub_economics(tkp_comparison: dict[str, Any], operator_profile: dict[str, Any]) -> dict[str, Any]:
     suppliers = tkp_comparison.get("suppliers", [])
-    target_margin = None
-    if operator_profile.get("found") and operator_profile.get("has_margin_info"):
-        target_margin = "needs_extraction"
+    supplier_profile = (
+        operator_profile.get("supplier_profile")
+        if isinstance(operator_profile.get("supplier_profile"), dict)
+        else {}
+    )
+    commercial = (
+        supplier_profile.get("commercial")
+        if isinstance(supplier_profile.get("commercial"), dict)
+        else {}
+    )
+    target_margin = commercial.get("target_margin_percent")
 
     price_values: list[float] = []
     for supplier in suppliers:
@@ -1354,6 +1386,7 @@ def main() -> None:
     requirements["_notice_chars"] = len(notice_text)
     requirements["_spec_chars"] = len(technical_spec_text)
     requirements["_contract_chars"] = len(contract_draft_text)
+    _bind_operator_supplier_profile(requirements, operator_profile)
     analysis_mode = "stub"
 
     calibrated_risks = _run_stub_calibrated_contract_risk(contract_draft_text)
@@ -1390,6 +1423,7 @@ def main() -> None:
             resolved_provider = llm_result.get("resolved_provider", resolved_provider)
             llm_requirements = llm_result.get("requirements") or {}
             requirements.update(llm_requirements)
+            _bind_operator_supplier_profile(requirements, operator_profile)
             requirements["llm_control"] = llm_result.get("llm_control", {})
 
             if llm_result.get("supplier_questions"):
