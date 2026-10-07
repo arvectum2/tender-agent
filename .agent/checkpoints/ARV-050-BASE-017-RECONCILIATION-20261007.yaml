@@ -16,15 +16,18 @@ completed:
 - '2026-10-07: Owner explicitly requested ARV-050 P0 reconciliation against already closed BASE-017.'
 - '2026-10-07: Verified BASE-017 is already confirmed_done and ARV-050 preserves the same R8 customer-pilot workspace completion snapshot but still has stale needs_revalidation overlay.'
 - '2026-10-07: Added explicit ARV-050 reconciliation evidence, changed only the current overlay to confirmed_done, and synchronized MASTER_ROADMAP.md; both legacy snapshots remain untouched.'
-current: Roadmap reconciliation and evidence note implemented; focused verification remains.
+- '2026-10-07: Focused R8 regression passed 22 tests; roadmap YAML assertions and git diff --check passed. A first ad-hoc assertion used the wrong YAML collection key and was corrected without repository changes.'
+current: Local reconciliation verification passed; PR and exact-head CI remain.
 pending:
-- Run focused R8 tests and roadmap consistency assertions.
-- Commit, push, open PR, verify exact-head CI and merge if gates remain green.
+- Open PR, verify exact-head CI and merge if gates remain green.
 - Mark checkpoint completed with final merge/test evidence.
 last_verified_commit: 0948f5f438fbe3b25a8251684dd4eebc36775e05
-test_results: []
+test_results:
+- 'Focused R8 regression: 22 passed, 5 warnings.'
+- 'Roadmap YAML parse/assertions: PASS (BASE-017 and ARV-050 both confirmed_done; shared R8 source preserved).'
+- 'git diff --check origin/main...HEAD: PASS.'
 updated_at: '2026-10-07T21:20:00+03:00'
-resume_instruction: Run the focused R8 regression and roadmap/YAML assertions; if green, commit/push, open PR, verify exact-head CI, merge, and mark the checkpoint completed.
+resume_instruction: Open/update the bounded ARV-050 reconciliation PR, verify exact-head CI, merge if green, then mark the canonical checkpoint completed with merge SHA.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-arv050-base017
