@@ -113,6 +113,9 @@ from src.modules.runtime_metadata_slices.router import (
     router as runtime_metadata_slices_router,
 )
 from src.modules.shipping_acceptance.router import router as shipping_acceptance_router
+from src.modules.similar_procurements.router import (
+    router as similar_procurements_router,
+)
 from src.modules.status_engine.router import router as status_router
 from src.modules.submission_archive.router import router as submission_archive_router
 from src.modules.submission_control.router import router as submission_control_router
@@ -251,6 +254,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     incident_register_router,
     supplier_fulfillment_router,
     supplier_progress_router,
+    similar_procurements_router,
     tender_research_router,
 )
 
