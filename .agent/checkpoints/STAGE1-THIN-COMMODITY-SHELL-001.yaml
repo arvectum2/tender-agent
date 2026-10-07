@@ -1,0 +1,26 @@
+task_id: STAGE1-THIN-COMMODITY-SHELL-001
+status: in_progress
+authority: OWNER_DIRECTIVE
+goal: Close Strategic Program Stage 1 at the thin-commodity-shell exit gate.
+definition_of_done:
+  - Audit all required commodity shell surfaces.
+  - Prove one bounded authenticated end-to-end shell path.
+  - Fix only demonstrated gaps using reuse-first boundaries.
+  - Add acceptance matrix and regression evidence.
+  - Mark Stage 1 done only after tests/CI pass.
+  - Merge bounded PR under explicit Owner direction.
+completed:
+  - Task admitted from canonical main a143d218b1c039ab4197a3f61ab7215182f7ccd9.
+current: Acceptance gate passed; PR/CI pending.
+remaining:
+  - Open bounded completion PR.
+  - Exact-head CI.
+  - Merge and finalize queue/checkpoint.
+last_verified_commit: b2dee5d
+test_results:
+  - "Focused Stage 1 gate: 67 passed, 10 skipped."
+  - "uv run make check: PASS."
+  - "git diff --check: PASS."
+  - "No demonstrated gap requires a new commodity subsystem."
+resume_instruction: Open completion PR; wait for exact-head CI; merge under explicit Owner directive if green.
+updated_at: '2026-10-07T14:22:00+03:00'

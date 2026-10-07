@@ -34,11 +34,19 @@ The Product Owner changes the default development posture from **build-first** t
 | Stage | Priority | Current state | Outcome / evidence |
 |---|---|---|---|
 | **0. Competitive reverse-spec + reuse registry** | P0 | **done** | PR #56 merged (`8b1c131`): 9 direct products, 10 reuse candidates, active P0/P1 strategy classification and explicit commodity de-scope. |
-| **1. Thin commodity shell** | P0 | partial / not separately gated | Baseline shell pre-existed this cycle; Docker-context hardening PR #58 merged (`8924a857`). No standalone Stage 1 completion gate is currently admitted. |
+| **1. Thin commodity shell** | P0 | **done** | Dedicated Stage 1 acceptance matrix proves baseline search/filter + versioned saved profiles + tender card + document download/parsing adapters + auth/visibility + monitoring alerts + export. Focused gate: 67 passed / 10 skipped. No new commodity subsystem was required; Docker hardening remains PR #58 (`8924a857`). |
 | **2. Decision Core v1** | P0 | **done** | Discovery benchmark/hardening PR #59 merged (`762a392`); Decision Core v1 PR #61 merged (`3bf397f`) with evidence-bound fail-closed decisions. |
 | **3. Commercial Core** | P0 | **done** | PR #63 merged (`4257cd2`): price-list ingest, tender-to-catalog matching, coverage/cost/headroom and auditable commercial feasibility with HUMAN control. |
 | **4. Automation + integrations** | P1 | **done at admitted v1 boundary** | PR #74 (`56ca227`) change monitoring + PR #75 (`fbf6d3c`) ingest resilience + PR #79 (`4149801`) internal integration outbox. External delivery remains disabled and separately gated. |
 | **5. Reliability + moat** | P1 | **done at admitted v1 boundary** | PR #76 (`c335c60`) ops observability + PR #77 (`c5e653a`) domain regression registry + PR #80 (`dc87a0b`) read-only 223-ФЗ intake + review-approved PR #81 (`f603c9f`) 223-ФЗ Decision Core. |
+
+### Stage 1 acceptance — 2026-10-07
+
+Stage 1 is now closed at its original exit gate. The accepted commodity journey is:
+
+`authenticated operator → search/filter or versioned saved profile → result/tender card → source document download/parsing adapter → watch/alert feed → report/export`
+
+The closure reuses existing Tender Agent components rather than introducing a new search engine, viewer, auth framework, notification platform, CRM or export stack. Full enterprise IAM/SSO, arbitrary dashboard CRUD, inline PDF.js-style viewing and external notification delivery remain separate future scopes and are not Stage 1 blockers. Acceptance evidence is recorded in `docs/strategy/STAGE1_THIN_COMMODITY_SHELL_ACCEPTANCE.md` and `tests/test_stage1_thin_commodity_shell.py`.
 
 ### Commodity default: do not build from scratch
 
