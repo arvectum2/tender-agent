@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
 authority: OWNER_DIRECTIVE
 goal: 'Deliver the fourth bounded ARV-044 mobile slice: make the canonical Procurement Portfolio, pipeline state and outcome
@@ -60,12 +60,12 @@ completed:
 - Reconciled MASTER_ROADMAP.md, master-roadmap.yaml and Daily_Tender_Run_and_iPhone_MVP.md to the merged MOB-4 state without
   admitting a new mobile stage.
 - Verified the single hourly Tender Agent Watchdog remains enabled; no duplicate watchdog was created.
-current: MOB-4 implementation is merged; roadmap/product reconciliation is prepared on owner/roadmap-sync-20261007-mob4 and
-  must pass exact-head CI before merge.
-pending:
-- Commit/push/open the MOB-4 roadmap reconciliation PR, require exact-head CI green, then merge it.
-- Create the final checkpoint-only reconciliation, require exact-head CI green, merge it and leave canonical status completed.
-last_verified_commit: bdcd868f1c42f3d3165cc8cad2c83b63b682521b
+- 'Roadmap PR #184 exact-head d1234d555c7a5343ab25676d57ce195401a83d09 CI run 37586513047 completed SUCCESS 9/9.'
+- 'PR #184 was squash-merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
+- 'Final verification confirmed the MOB-4 roadmap/product state is on origin/main and no additional mobile stage was admitted.'
+current: 'MOB-4 is fully completed: implementation, roadmap/product reconciliation, exact-head CI and merges are complete.'
+pending: []
+last_verified_commit: 66c0839d400c076388e93b212e1adb0b59b21fd7
 test_results:
 - 'Ruff on src/modules/mobile_api and tests/test_mobile_api.py: PASS.'
 - 'Focused backend mobile API + Procurement Portfolio: 23 passed, 19 warnings in 1.86s.'
@@ -78,14 +78,13 @@ test_results:
 - 'iPhone 17 / iOS 27.0 simulator tests after final polish: 11 passed, 0 failures; TEST SUCCEEDED.'
 - 'Connected physical iPhone Nikita / iOS 27.0.1 signed Debug build: BUILD SUCCEEDED.'
 - 'Implementation PR #183 exact-head CI run 37584606448: SUCCESS 9/9; squash-merged as bdcd868f1c42f3d3165cc8cad2c83b63b682521b.'
-updated_at: '2026-10-07T10:12:00+03:00'
-resume_instruction: MOB-4 implementation is merged. Finish roadmap/product reconciliation on owner/roadmap-sync-20261007-mob4
-  with exact-head CI green and merge, then mark the canonical checkpoint completed in a final checkpoint-only PR. Preserve
-  the unrelated shared checkout.
+- 'Roadmap PR #184 exact-head d1234d555c7a5343ab25676d57ce195401a83d09 CI run 37586513047: SUCCESS 9/9; squash-merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
+updated_at: '2026-10-07T10:29:21+03:00'
+resume_instruction: 'MOB-4 is completed. Do not reopen it automatically. No further mobile stage is admitted; any new development stage requires separate explicit admission. Preserve the unrelated shared-checkout work.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-mob4
-  branch: owner/roadmap-sync-20261007-mob4
+  branch: chore/complete-mob4-checkpoint-20261007
   base_commit: 5314b34e0927c424addbd377e58ad08c49b3b452
   issue: null
   manual_override: true
