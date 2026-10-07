@@ -43,32 +43,43 @@ completed:
 - '2026-10-08: Focused/relevant ARV-055, Data Platform retrieval, procurement discovery
   and relevance regressions passed (55 passed); API route test, Ruff, make check and
   git diff --check passed.'
-current: Reconcile the ARV-055 implementation with current main after ARV-053 correction
-  bookkeeping, then run full repository verification and exact-head PR CI.
+- '2026-10-08: Reconciled the ARV-055 implementation onto canonical main 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
+  after ARV-053 correction/bookkeeping PRs #209/#210; no ARV-055 code conflict was
+  introduced.'
+- '2026-10-08: Full local suite before the metadata-only main reconciliation reached
+  3118 passed / 236 skipped with only the already-proven main-baseline R9 pg_restore
+  failure; no ARV-055 regression was observed.'
+- '2026-10-08: Post-reconciliation focused/relevant suite passed again (55 passed);
+  make check and git diff --check passed.'
+current: Open the ARV-055 implementation PR from the reconciled head, require exact-head
+  GitHub CI, and enforce the AM-4 10/10 review-cycle boundary before merge.
 pending:
-- Commit/push the bounded ARV-055 implementation and checkpoint.
-- 'Reconcile branch with current main after PR #210 completion bookkeeping merges.'
-- Run full make test and resolve any ARV-055 regressions; document only proven main-baseline
-  failures.
-- Open/update ARV-055 PR and require exact-head GitHub CI before any merge.
-last_verified_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+- Push the reconciled ARV-055 head and checkpoint.
+- Open ARV-055 PR against current main and verify exact-head GitHub CI.
+- If exact-head CI is fully green and all other AM-4 gates remain valid, ARV-055 may
+  be the tenth automatic merge in this renewed cycle.
+- After the tenth merge, fail closed to REVIEW before any further automatic merge;
+  prepare completion bookkeeping without merging it until Owner review renews AM-4.
+last_verified_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
 test_results:
-- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions:
-  55 passed'
+- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions
+  after main reconciliation: 55 passed'
 - 'ARV-055 API route focused test: PASS'
 - 'Ruff check/format on changed slice: PASS'
 - 'make check: PASS'
+- 'full local suite before metadata-only reconciliation: 3118 passed, 236 skipped,
+  1 known main-baseline R9 pg_restore failure'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T00:52:09+03:00'
-resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv055-commercial-20261008.
-  Commit/push the implementation, then reconcile current main after ARV-053 correction
-  bookkeeping PR #210. Re-run focused checks/full make test and open ARV-055 PR only
-  from the reconciled head.'
+updated_at: '2026-10-08T00:58:05+03:00'
+resume_instruction: Push/open ARV-055 PR from the reconciled head, require exact-head
+  CI and merge only if all gates remain valid. If ARV-055 becomes merge 10/10, stop
+  all later automatic merges at REVIEW and only prepare completion bookkeeping pending
+  Owner renewal.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv055
   branch: agent/commercial-workflow-arv-055-001
-  base_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+  base_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
   issue: null
   manual_override: false
   lease_until: null

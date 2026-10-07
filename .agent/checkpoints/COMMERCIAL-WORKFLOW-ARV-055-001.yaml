@@ -43,9 +43,15 @@ completed:
 - '2026-10-08: Focused/relevant ARV-055, Data Platform retrieval, procurement discovery
   and relevance regressions passed (55 passed); API route test, Ruff, make check and
   git diff --check passed.'
-current: Inventory canonical tender subject/position/customer/requirements representations
-  and existing search adapters, then define the smallest explainable candidate-ranking
-  layer over Data Platform retrieval.
+- '2026-10-08: Reconciled the ARV-055 implementation onto canonical main 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
+  after ARV-053 correction/bookkeeping PRs #209/#210; no ARV-055 code conflict was
+  introduced.'
+- '2026-10-08: Full local suite before the metadata-only main reconciliation reached
+  3118 passed / 236 skipped with only the already-proven main-baseline R9 pg_restore
+  failure; no ARV-055 regression was observed.'
+- '2026-10-08: Post-reconciliation focused/relevant suite passed again (55 passed);
+  make check and git diff --check passed.'
+current: Open/verify the reconciled ARV-055 implementation PR.
 pending:
 - Map available canonical subject, position, customer and requirements signals to
   evidence sources.
@@ -54,20 +60,23 @@ pending:
 - Add deterministic false-analogue guards and focused explanation regressions.
 - Run relevant/full verification, open PR, require exact-head CI and merge only under
   valid AM-4.
-last_verified_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
+last_verified_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
 test_results:
-- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions:
-  55 passed'
+- 'ARV-055 + Data Platform retrieval + procurement discovery + relevance regressions
+  after main reconciliation: 55 passed'
 - 'ARV-055 API route focused test: PASS'
 - 'Ruff check/format on changed slice: PASS'
 - 'make check: PASS'
+- 'full local suite before metadata-only reconciliation: 3118 passed, 236 skipped,
+  1 known main-baseline R9 pg_restore failure'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T00:52:09+03:00'
-resume_instruction: 'Commit/push, reconcile current main after PR #210, then run full
-  verification and take ARV-055 through exact-head PR CI.'
-current_stage: implementation_verified_waiting_main_reconciliation
+updated_at: '2026-10-08T00:58:05+03:00'
+resume_instruction: Open ARV-055 PR, require exact-head CI, and preserve the 10/10
+  AM-4 review boundary.
+current_stage: implementation_pr_ci
 remaining:
-- commit/push implementation
-- reconcile current main after ARV-053 correction bookkeeping
-- full repository verification
-- exact-head PR CI and guarded merge
+- push reconciled head
+- open implementation PR
+- exact-head CI
+- guarded tenth automatic merge if gates remain valid
+- prepare but do not auto-merge post-10/10 completion bookkeeping without Owner renewal
