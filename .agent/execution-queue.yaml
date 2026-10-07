@@ -649,7 +649,7 @@ items:
   task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
   strategy: ADAPT
   title: Structured RFQ-first operator profile ingestion
-  status: ready
+  status: in_progress
   authority: AUTO
   independent: true
   auto_merge: true
