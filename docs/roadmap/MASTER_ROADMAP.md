@@ -237,7 +237,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `BASE-008` | 0 | Готово | P0 | 100% | Загрузка закупки и формирование отчётов | confirmed_done |
 | `BASE-009` | 0 | Готово | P0 | 100% | Извлечение товарных позиций и характеристик | confirmed_done |
 | `BASE-010` | 0 | Готово | P0 | 100% | Разделение demo/live и отказ от тихих синтетических fallback | confirmed_done |
-| `BASE-011` | 0 | Базовый контур готов | P0 | 70% | Hermes H1–H4: базовая память, quality gates и feedback | revalidated_residual_gap |
+| `BASE-011` | 0 | Базовый контур готов | P0 | 70% | Hermes H1–H4: базовая память, quality gates и feedback | confirmed_done |
 | `BASE-012` | 0 | Базовый контур готов | P0 | 80% | Quality R1–R5: golden loop, provenance и source graph | confirmed_done |
 | `BASE-013` | 0 | Готово | P1 | 100% | Демо- и пилотный пакет документов | confirmed_done |
 | `BASE-014` | 0 | Базовый контур готов | P1 | 65% | Базовый личный кабинет: клиенты, проекты и мастер поиска | confirmed_done |
@@ -255,7 +255,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-002` | 0 | Базовый контур готов | P0 | 90% | Стабильный live end-to-end pipeline без скрытых fallback | revalidated_residual_gap |
 | `ARV-003` | 2 | В работе | P0 | 97% | R10.1: production LLM-анализ с evidence map и confidence | accepted_evidence_present_needs_status_revalidation |
 | `ARV-001` | 3 | Запланировано | P0 | 85% | R10.2: Quality & Product Readiness — golden report и release gates | completed_governed |
-| `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation |
+| `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation — post-MVP, not admitted |
 | `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | confirmed_done |
 | `ARV-067` | 7 | На проверке | P1 | 90% | Вертикальные онтологии и настраиваемые схемы извлечения по категориям | review |
 | `ARV-061` | 12 | Запланировано | P1 | 5% | Commercial MVP v1: быстрый cited-преданализ | needs_revalidation |
@@ -400,6 +400,14 @@ The bounded non-admitted successor `ARV-015-OPERATOR-PROFILE-PARSER-001` is reco
 ## ARV-006 revalidation — 2026-09-21
 
 Merged 223-FZ intake and Decision Core already provide dedicated public search/card intake, source-bound basic facts, document discovery, revision ambiguity guards and fail-closed regime semantics. ARV-006 remains partial: lots/positions and structured changes, clarifications, protocols and status lifecycle are not yet established. One source-traceable successor candidate is recorded as `candidate_not_admitted`; no new 223-FZ implementation or legal rule is authorized by this reconciliation.
+
+## BASE-011 / ARV-004 product-boundary reconciliation — 2026-10-07
+
+BASE-011 is now `confirmed_done` as the Hermes infrastructure foundation. The repository already has the bounded primitives named by the BASE item: client/fallback behavior, runtime context, category profiles, normalization, quality gates, feedback/memory, eval-case generation, supplier-readiness and bid-decision helpers.
+
+The unfinished real-user self-improvement capability is not a BASE prerequisite. It is retained under existing `ARV-004` as the **post-MVP Feedback & Learning Loop**, documented in `docs/product/Feedback_Learning_Loop.md`. ARV-004 is deliberately not admitted to the execution queue at this stage.
+
+The successor loop is constrained to attributable correction → immutable human review → regression case → validated reusable-rule candidate → reviewed promotion. External Hermes runtime is optional, automatic cross-customer learning is prohibited, and canonical HUMAN GO / NO GO / DEFER authority remains unchanged.
 
 ## Executor rule
 
