@@ -5,17 +5,55 @@ from pathlib import Path
 
 from openpyxl import Workbook
 
+from src.modules.tender_operator_agent_demo import upload_service_legacy
 from src.modules.tender_operator_agent_demo.upload_service import (
+    AnalyzedDocument,
     _collect_supply_items,
     _extract_supply_items_from_spec_text,
-    AnalyzedDocument,
 )
+from src.shared.document_processing import ProcessedDocument
+
+
+def _controlled_llm_result(*, failed_sections: set[str]) -> dict:
+    section_names = {"requirements", "supplier_questions", "rfq_draft", "contract_risks"}
+    return {
+        "analysis_mode": "llm_tender_operator_provider",
+        "resolved_provider": "test-provider",
+        "requirements": {},
+        "supplier_questions": [],
+        "rfq_draft": {},
+        "contract_risks": [],
+        "bid_decision": None,
+        "sections": {
+            section: {
+                "validation_status": "FAILED" if section in failed_sections else "PASSED",
+                "trace_id": f"TRACE-{section}",
+            }
+            for section in sorted(section_names)
+        },
+        "trace_ids": [f"TRACE-{section}" for section in sorted(section_names)],
+    }
 
 
 def _set_runs_root(monkeypatch, tmp_path: Path) -> Path:
     runs_root = tmp_path / "tender_operator_demo_runs"
     monkeypatch.setenv("AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR", str(runs_root))
     return runs_root
+
+
+def _mock_text_platform(monkeypatch) -> None:
+    def fake_process_document_bytes(**kwargs):
+        text = kwargs["content"].decode("utf-8")
+        return ProcessedDocument(
+            extraction_status="extracted",
+            text=text,
+            chunks=(),
+        )
+
+    monkeypatch.setattr(
+        "src.modules.tender_operator_agent_demo.upload_service_legacy.process_document_bytes",
+        fake_process_document_bytes,
+    )
 
 
 def _sample_upload_payload(include_quote: bool = True):
@@ -182,6 +220,58 @@ def test_analyze_uploaded_run_returns_completed_and_report_endpoints_work(client
     assert (runs_root / run_id / "output" / "report.html").exists()
 
 
+def test_all_failed_controlled_llm_sections_cannot_report_clean_completion(client, monkeypatch, tmp_path):
+    runs_root = _set_runs_root(monkeypatch, tmp_path)
+    data, files = _sample_upload_payload(include_quote=True)
+    monkeypatch.setattr(
+        upload_service_legacy,
+        "_try_run_llm_workflow",
+        lambda **_kwargs: _controlled_llm_result(
+            failed_sections={"requirements", "supplier_questions", "rfq_draft", "contract_risks"}
+        ),
+    )
+
+    create_response = client.post("/api/demo/tender-agent/runs", data=data, files=files)
+    run_id = create_response.json()["run_id"]
+    analyze = client.post(f"/api/demo/tender-agent/runs/{run_id}/analyze")
+
+    assert analyze.status_code == 200
+    assert analyze.json()["analysis_mode"] == "fallback_deterministic_adapter"
+    metadata = json.loads((runs_root / run_id / "metadata.json").read_text(encoding="utf-8"))
+    provenance = metadata["ai_runtime_provenance"]
+    assert provenance["llm_invoked"] is True
+    assert provenance["llm_calls_count"] == 4
+    assert provenance["fallback_reason"] == "controlled_llm_all_sections_failed"
+    events = [json.loads(line) for line in (runs_root / run_id / "events.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert "llm_analysis_completed" not in {event["event_type"] for event in events}
+    assert "llm_analysis_validation_failed" in {event["event_type"] for event in events}
+
+
+def test_partial_controlled_llm_failure_cannot_report_clean_completion(client, monkeypatch, tmp_path):
+    runs_root = _set_runs_root(monkeypatch, tmp_path)
+    data, files = _sample_upload_payload(include_quote=True)
+    monkeypatch.setattr(
+        upload_service_legacy,
+        "_try_run_llm_workflow",
+        lambda **_kwargs: _controlled_llm_result(failed_sections={"contract_risks"}),
+    )
+
+    create_response = client.post("/api/demo/tender-agent/runs", data=data, files=files)
+    run_id = create_response.json()["run_id"]
+    analyze = client.post(f"/api/demo/tender-agent/runs/{run_id}/analyze")
+
+    assert analyze.status_code == 200
+    assert analyze.json()["analysis_mode"] == "llm_tender_operator_provider"
+    metadata = json.loads((runs_root / run_id / "metadata.json").read_text(encoding="utf-8"))
+    provenance = metadata["ai_runtime_provenance"]
+    assert provenance["llm_invoked"] is True
+    assert provenance["llm_calls_count"] == 4
+    assert provenance["fallback_reason"] == "controlled_llm_partial_section_failure:contract_risks"
+    events = [json.loads(line) for line in (runs_root / run_id / "events.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert "llm_analysis_completed" not in {event["event_type"] for event in events}
+    assert "llm_analysis_completed_with_warnings" in {event["event_type"] for event in events}
+
+
 def test_analyze_without_quotes_stays_honest_and_needs_review(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
     data, files = _sample_upload_payload(include_quote=False)
@@ -205,8 +295,12 @@ def test_analyze_without_quotes_stays_honest_and_needs_review(client, monkeypatc
 def test_fallback_mode_does_not_crash_when_pdf_extraction_is_unavailable(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
     monkeypatch.setattr(
-        "src.modules.tender_operator_agent_demo.upload_service.extract_text_from_attachment_bytes",
-        lambda **_kwargs: None,
+        "src.modules.tender_operator_agent_demo.upload_service_legacy.process_document_bytes",
+        lambda **_kwargs: ProcessedDocument(
+            extraction_status="empty",
+            text="",
+            chunks=(),
+        ),
     )
     data = {
         "tender_title": "PDF fallback demo",
@@ -286,13 +380,14 @@ def test_technical_spec_xlsx_is_not_misclassified_as_supplier_quote(client, monk
 
 def test_report_includes_preliminary_procurement_analysis_from_tz_and_contract(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Обучение по ИБ",
         "tender_category": "Услуги обучения",
         "customer_name": "Администрация города",
     }
     files = [
-        ("files", ("notice.txt", "Извещение о закупке образовательных услуг.".encode("utf-8"), "text/plain")),
+        ("files", ("notice.txt", "Извещение о закупке образовательных услуг.".encode(), "text/plain")),
         (
             "files",
             (
@@ -304,7 +399,7 @@ def test_report_includes_preliminary_procurement_analysis_from_tz_and_contract(c
                     "2\n"
                     "3. Место оказания услуг: очное обучение в городе Хабаровске; дистанционная часть на территории Заказчика.\n"
                     "Услуги должны быть согласованы с Федеральной службой по техническому и экспортному контролю.\n"
-                ).encode("utf-8"),
+                ).encode(),
                 "text/plain",
             ),
         ),
@@ -316,7 +411,7 @@ def test_report_includes_preliminary_procurement_analysis_from_tz_and_contract(c
                     "Цена Контракта является твердой и не подлежит изменению.\n"
                     "Оплата оказанных Исполнителем Услуг осуществляется Заказчиком в течение 7 рабочих дней после подписания документа о приемке.\n"
                     "Требуется обеспечение исполнения контракта.\n"
-                ).encode("utf-8"),
+                ).encode(),
                 "text/plain",
             ),
         ),
@@ -344,13 +439,14 @@ def test_report_includes_preliminary_procurement_analysis_from_tz_and_contract(c
 
 def test_goods_tz_is_rendered_as_table_in_report(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Поставка электротехнических товаров",
         "tender_category": "Электротехническое оборудование",
         "customer_name": "Промышленный заказчик",
     }
     files = [
-        ("files", ("notice.txt", "Извещение о поставке товаров.".encode("utf-8"), "text/plain")),
+        ("files", ("notice.txt", "Извещение о поставке товаров.".encode(), "text/plain")),
         (
             "files",
             (
@@ -370,7 +466,7 @@ def test_goods_tz_is_rendered_as_table_in_report(client, monkeypatch, tmp_path):
                     "1 2 1 Московская область, г. Бронницы, Заводской проезд д. 1\n"
                     "17. Сроки поставки товара\n"
                     "1 2 1 В течение 10 рабочих дней с момента подписания контракта.\n"
-                ).encode("utf-8"),
+                ).encode(),
                 "text/plain",
             ),
         ),
@@ -378,7 +474,7 @@ def test_goods_tz_is_rendered_as_table_in_report(client, monkeypatch, tmp_path):
             "files",
             (
                 "contract_draft.txt",
-                "Оплата осуществляется в течение 7 рабочих дней после подписания документа о приемке.".encode("utf-8"),
+                "Оплата осуществляется в течение 7 рабочих дней после подписания документа о приемке.".encode(),
                 "text/plain",
             ),
         ),
@@ -400,13 +496,14 @@ def test_goods_tz_is_rendered_as_table_in_report(client, monkeypatch, tmp_path):
 
 def test_goods_address_is_not_cut_on_city_abbreviation(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Поставка нефтепродуктов",
         "tender_category": "Нефтепродукты",
         "customer_name": "Промышленный заказчик",
     }
     files = [
-        ("files", ("notice.txt", "Извещение о поставке товаров.".encode("utf-8"), "text/plain")),
+        ("files", ("notice.txt", "Извещение о поставке товаров.".encode(), "text/plain")),
         (
             "files",
             (
@@ -414,11 +511,11 @@ def test_goods_address_is_not_cut_on_city_abbreviation(client, monkeypatch, tmp_
                 (
                     "Место поставки товаров : Автозаправочные станции г. Екатеринбург . "
                     "Условия поставки товаров: Заправка осуществляется по электронным картам.\n"
-                ).encode("utf-8"),
+                ).encode(),
                 "text/plain",
             ),
         ),
-        ("files", ("contract_draft.txt", "Оплата в течение 20 рабочих дней после приемки.".encode("utf-8"), "text/plain")),
+        ("files", ("contract_draft.txt", "Оплата в течение 20 рабочих дней после приемки.".encode(), "text/plain")),
     ]
 
     create_response = client.post("/api/demo/tender-agent/runs", data=data, files=files)
@@ -521,13 +618,14 @@ def test_realistic_goods_supply_items_are_extracted_from_tz_and_nmck():
 
 def test_goods_report_uses_supply_items_and_goods_economics(client, monkeypatch, tmp_path):
     _set_runs_root(monkeypatch, tmp_path)
+    _mock_text_platform(monkeypatch)
     data = {
         "tender_title": "Поставка электротехнической продукции",
         "tender_category": "Электротехническая продукция",
         "customer_name": "МБУ СБСК",
     }
     files = [
-        ("files", ("notice.txt", "Извещение о поставке товаров. НМЦК 123046 руб.".encode("utf-8"), "text/plain")),
+        ("files", ("notice.txt", "Извещение о поставке товаров. НМЦК 123046 руб.".encode(), "text/plain")),
         (
             "files",
             (
@@ -569,7 +667,7 @@ def test_goods_report_uses_supply_items_and_goods_economics(client, monkeypatch,
                     "700.00\n"
                     "Соответствие\n"
                     "ГОСТ 31946-2012\n"
-                ).encode("utf-8"),
+                ).encode(),
                 "text/plain",
             ),
         ),
@@ -583,11 +681,11 @@ def test_goods_report_uses_supply_items_and_goods_economics(client, monkeypatch,
                     "1\tКабель силовой АВВГ-П 2х2.5 или эквивалент\tм.\t200\t16.75\t3350\n"
                     "2\tПровод СИП-4 2х16 0.6/1 ГОСТ (намотка на барабане №8) или эквивалент\tм.\t1300\t44.35\t57655\n"
                     "3\tПровод СИП-4 4х16 0.6/1 ГОСТ (намотка на барабане №8) или эквивалент\tм.\t700\t88.63\t62041\n"
-                ).encode("utf-8"),
+                ).encode(),
                 "text/plain",
             ),
         ),
-        ("files", ("contract_draft.txt", "Оплата осуществляется в течение 7 рабочих дней после подписания документа о приемке.".encode("utf-8"), "text/plain")),
+        ("files", ("contract_draft.txt", "Оплата осуществляется в течение 7 рабочих дней после подписания документа о приемке.".encode(), "text/plain")),
     ]
 
     create_response = client.post("/api/demo/tender-agent/runs", data=data, files=files)
@@ -615,13 +713,13 @@ def test_eis_protocol_xml_is_not_misclassified_as_quote(client, monkeypatch, tmp
         "customer_name": "Промышленный заказчик",
     }
     files = [
-        ("files", ("technical_spec.txt", "Место поставки товаров: АЗС.".encode("utf-8"), "text/plain")),
-        ("files", ("contract_draft.txt", "Оплата после приемки.".encode("utf-8"), "text/plain")),
+        ("files", ("technical_spec.txt", "Место поставки товаров: АЗС.".encode(), "text/plain")),
+        ("files", ("contract_draft.txt", "Оплата после приемки.".encode(), "text/plain")),
         (
             "files",
             (
                 "fcsProposalsResult_0162300005326001258_1.xml",
-                "<xml>служебный протокол закупки</xml>".encode("utf-8"),
+                "<xml>служебный протокол закупки</xml>".encode(),
                 "application/xml",
             ),
         ),

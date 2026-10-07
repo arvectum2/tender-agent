@@ -20,6 +20,15 @@ class Settings(BaseSettings):
     pilot_auth_password: str | None = None
     pilot_auth_protected_prefixes: str = "/api,/demo,/pilot,/customers,/docs,/redoc,/openapi.json,/health/ready"
     pilot_auth_public_paths: str = "/health"
+    mobile_auth_secret: str | None = None
+    mobile_token_ttl_days: int = 180
+    mobile_pairing_window_seconds: int = 300
+    mobile_apns_enabled: bool = False
+    mobile_apns_team_id: str | None = None
+    mobile_apns_key_id: str | None = None
+    mobile_apns_private_key_path: str | None = None
+    mobile_apns_bundle_id: str = "com.arvectum.tenderagent"
+    mobile_apns_timeout_seconds: float = 10.0
     llm_provider: str = "stub"
     llm_model: str | None = None
     llm_timeout_seconds: int = 30
@@ -76,6 +85,10 @@ class Settings(BaseSettings):
     rag_vector_store: str = "json"
     rag_vector_store_path: str | None = None
     rag_embedding_dimension: str | int | None = 256
+    rag_retrieval_backend: str = "data_platform"
+    rag_data_platform_base_url: str = "http://127.0.0.1:8094"
+    rag_data_platform_api_key: str = ""
+    rag_data_platform_timeout_seconds: int = 30
     rag_use_llm: bool = False
     local_llm_base_url: str = "http://127.0.0.1:8088/v1"
     local_llm_model: str = "qwen2.5-14b"
@@ -313,6 +326,16 @@ class Settings(BaseSettings):
                 raise ValueError("ARVECTUM_REDIS_NAMESPACE must not be empty in production")
             if not self.arvectum_redis_environment.strip():
                 raise ValueError("ARVECTUM_REDIS_ENVIRONMENT must not be empty when Redis is enabled")
+        retrieval_backend = self.rag_retrieval_backend.strip().lower()
+        if retrieval_backend != "data_platform":
+            raise ValueError(
+                "AI_CORP_RAG_RETRIEVAL_BACKEND must be data_platform; "
+                "the legacy local RAG backend has been removed"
+            )
+        if retrieval_backend == "data_platform" and not self.rag_data_platform_base_url.strip():
+            raise ValueError(
+                "AI_CORP_RAG_DATA_PLATFORM_BASE_URL is required for data_platform retrieval"
+            )
         backend = self.tender_research_job_backend.strip().lower()
         if backend not in {"thread", "redis"}:
             raise ValueError("ARVECTUM_TENDER_RESEARCH_JOB_BACKEND must be thread or redis")

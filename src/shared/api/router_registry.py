@@ -39,6 +39,7 @@ from src.modules.customer_pilot.expert_review_router import (
 )
 from src.modules.customer_pilot.router import router as customer_pilot_router
 from src.modules.customer_registry.router import router as customer_registry_router
+from src.modules.daily_tender_run.router import router as daily_tender_run_router
 from src.modules.dashboard_snapshots.router import router as dashboard_snapshots_router
 from src.modules.deal_closure.router import router as deal_closure_router
 from src.modules.deal_closure_reports.router import (
@@ -77,6 +78,7 @@ from src.modules.kpi_learning.router import router as kpi_learning_router
 from src.modules.launch_visibility.router import router as launch_visibility_router
 from src.modules.learning_automation.router import router as learning_automation_router
 from src.modules.logistics_tracking.router import router as logistics_tracking_router
+from src.modules.mobile_api.router import router as mobile_api_router
 from src.modules.operator_sessions.router import router as operator_sessions_router
 from src.modules.ops_observability.router import router as ops_observability_router
 from src.modules.optimization.router import router as optimization_router
@@ -89,6 +91,9 @@ from src.modules.priority_scoring.router import router as priority_scoring_route
 from src.modules.procedure_monitor.router import router as procedure_monitor_router
 from src.modules.procurement_monitoring.router import (
     router as procurement_monitoring_router,
+)
+from src.modules.procurement_portfolio.router import (
+    router as procurement_portfolio_router,
 )
 from src.modules.prompt_schema_library.router import (
     router as prompt_schema_library_router,
@@ -149,6 +154,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     internal_company_agents_router,
     hermes_agent_router,
     dashboard_snapshots_router,
+    daily_tender_run_router,
     archive_export_router,
     workflow_runs_router,
     optimization_router,
@@ -232,6 +238,8 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     runtime_metadata_slices_router,
     procedure_monitor_router,
     procurement_monitoring_router,
+    mobile_api_router,
+    procurement_portfolio_router,
     supplier_contracts_router,
     purchase_orders_router,
     outcome_intake_router,

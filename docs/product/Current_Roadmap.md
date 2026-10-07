@@ -4,6 +4,18 @@ Updated: 2026-09-10
 Canonical repository: `arvectum2/tender-agent`
 Current canonical main at this status update follows the migration-doc sequence after product baseline `81f77d5f97ae92733f5887136aa0c1f67ceb22ae`.
 
+## Owner update — 2026-10-06
+
+Current Product Owner priority:
+
+1. Daily Tender Run (P0): scheduled search/filter → dedupe → screening → EIS document download on Mac mini → Data Platform → deep analysis → manager digest → human GO / NO GO / DEFER → readiness/submission/outcome tracking → Procurement Portfolio.
+2. ARV-044 iPhone Tender Agent (P0 owner override): native SwiftUI decision client backed by the Mac mini Tender Agent API, initially private over Tailscale, with APNs push, report inbox, evidence-grounded summaries, GO / NO GO / DEFER and portfolio/outcome views.
+3. Human boundary: the agent prepares and recommends; the manager makes the bid decision. Signature/EDS and consequential platform actions remain explicit human steps where required.
+
+Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
+
+Older sections below remain historical context and do not override this newer Owner directive.
+
 ## 1. Migration / recovery status
 
 The previous GitHub account was blocked. The repository has been restored from the mirror into the new canonical GitHub owner `arvectum2`.

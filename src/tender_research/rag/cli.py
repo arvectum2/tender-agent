@@ -17,18 +17,23 @@ _load_dotenv_local_result = load_dotenv(".env.local", override=False)
 from src.shared.config.settings import get_settings
 from src.shared.db.base import Base
 from src.tender_research.config import load_config
-from src.tender_research.rag.embeddings import build_embedding_provider, probe_embedding_provider
-from src.tender_research.rag.indexer import DocumentChunkIndexer, DocumentEmbeddingIndexer
 from src.tender_research.rag.analysis_service import analyze_tender
+from src.tender_research.rag.data_platform import (
+    DataPlatformRagRetriever,
+    build_data_platform_client,
+    retrieval_backend_name,
+)
 from src.tender_research.rag.history_service import (
     get_analysis_run,
     get_analysis_run_report,
     list_analysis_runs,
 )
-from src.tender_research.rag.llm import LocalChatLlmClient, SourceCitation, build_source_citations
-from src.tender_research.rag.retriever import RagRetriever
+from src.tender_research.rag.llm import (
+    LocalChatLlmClient,
+    SourceCitation,
+    build_source_citations,
+)
 from src.tender_research.rag.schemas import DEFAULT_ANALYSIS_MODE
-from src.tender_research.rag.vector_store import JsonVectorStore
 from src.tender_research.repository import TenderRepository
 
 _RUNTIME_ARGS: argparse.Namespace | None = None
@@ -56,19 +61,6 @@ def _slugify(value: str) -> str:
 def _apply_runtime_overrides(config, args: argparse.Namespace | None) -> None:
     if not args:
         return
-    if getattr(args, "provider", None):
-        provider = args.provider
-        object.__setattr__(config, "rag_embeddings_provider", provider)
-        if provider.strip().lower() not in _DEFAULT_HASH_PROVIDER_NAMES:
-            object.__setattr__(config, "rag_embedding_dimension", None)
-    if getattr(args, "model", None):
-        object.__setattr__(config, "rag_embeddings_model", args.model)
-    if getattr(args, "base_url", None):
-        object.__setattr__(config, "rag_embeddings_base_url", args.base_url)
-    if getattr(args, "batch_size", None):
-        object.__setattr__(config, "rag_embeddings_batch_size", args.batch_size)
-    if getattr(args, "timeout_seconds", None):
-        object.__setattr__(config, "rag_embeddings_timeout_seconds", args.timeout_seconds)
     if getattr(args, "llm_base_url", None):
         object.__setattr__(config, "local_llm_base_url", args.llm_base_url)
     if getattr(args, "llm_model", None):
@@ -77,46 +69,28 @@ def _apply_runtime_overrides(config, args: argparse.Namespace | None) -> None:
         object.__setattr__(config, "local_llm_timeout_seconds", args.llm_timeout_seconds)
 
 
-def _vector_store_path(config, *, provider_name: str, model_name: str) -> str:
-    if config.rag_vector_store_path:
-        raw_path = config.rag_vector_store_path.format(
-            provider=_slugify(provider_name),
-            model=_slugify(model_name),
-        )
-        path = Path(raw_path)
-    else:
-        path = Path(config.data_dir) / "rag" / "vector_store.json"
-
-    provider_alias = (config.rag_embeddings_provider or provider_name).strip().lower()
-    if provider_alias in _DEFAULT_HASH_PROVIDER_NAMES and model_name == "local-hash-v1":
-        return str(path)
-
-    suffix = path.suffix or ".json"
-    stem = path.stem if path.suffix else path.name
-    named = f"{stem}__{_slugify(provider_name)}__{_slugify(model_name)}{suffix}"
-    return str(path.with_name(named))
-
-
-def _build_runtime():
+def _build_runtime(*, retrieval_only: bool = False):
     session = _get_session()
     repo = TenderRepository(session)
     config = load_config()
     _apply_runtime_overrides(config, _RUNTIME_ARGS)
-    provider = build_embedding_provider(config)
-    vector_store = JsonVectorStore(
-        _vector_store_path(config, provider_name=provider.provider_name, model_name=provider.model_name),
-        dimension=provider.dimension or None,
-    )
-    retriever = RagRetriever(repo, provider, vector_store)
-    return session, repo, config, provider, vector_store, retriever
+    retrieval_backend_name(config)
+    retriever = DataPlatformRagRetriever(repo, build_data_platform_client(config))
+    return session, repo, config, None, None, retriever
+
+
+def _close_retriever(retriever) -> None:
+    close = getattr(retriever, "close", None)
+    if close is not None:
+        close()
 
 
 def _add_provider_args(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--provider", default=None, help="Embedding provider override, e.g. local_hash or llama_cpp")
-    parser.add_argument("--model", default=None, help="Embedding model override")
-    parser.add_argument("--base-url", default=None, help="Embedding server base URL override")
-    parser.add_argument("--timeout-seconds", type=int, default=None, help="Embedding server timeout override")
-    parser.add_argument("--batch-size", type=int, default=None, help="Embedding batch size override")
+    parser.add_argument("--provider", default=None, help="Deprecated; embeddings are managed by Data Platform")
+    parser.add_argument("--model", default=None, help="Deprecated; embeddings are managed by Data Platform")
+    parser.add_argument("--base-url", default=None, help="Deprecated; embeddings are managed by Data Platform")
+    parser.add_argument("--timeout-seconds", type=int, default=None, help="Deprecated; embeddings are managed by Data Platform")
+    parser.add_argument("--batch-size", type=int, default=None, help="Deprecated; embeddings are managed by Data Platform")
 
 
 def _add_llm_args(parser: argparse.ArgumentParser) -> None:
@@ -126,50 +100,18 @@ def _add_llm_args(parser: argparse.ArgumentParser) -> None:
 
 
 def cmd_build_chunks(args: argparse.Namespace) -> None:
-    session, repo, config, _provider, _vector_store, _retriever = _build_runtime()
-    summary = DocumentChunkIndexer(repo, config).build(limit=args.limit)
-    for key in (
-        "documents_seen",
-        "documents_chunked",
-        "chunks_created",
-        "chunks_skipped_existing",
-        "empty_text_skipped",
-    ):
-        print(f"{key}: {summary[key]}")
-    session.close()
+    print("build-chunks is deprecated: document chunking is managed by Data Platform. Run tender preparation instead.")
 
 
 def cmd_build_embeddings(args: argparse.Namespace) -> None:
-    session, repo, config, provider, vector_store, _retriever = _build_runtime()
-    summary = DocumentEmbeddingIndexer(repo, config, provider, vector_store).build(limit=args.limit)
-    for key in (
-        "chunks_seen",
-        "embeddings_created",
-        "embeddings_skipped_existing",
-        "embeddings_failed",
-        "provider",
-        "model",
-        "dimension",
-        "batch_size",
-        "elapsed_seconds",
-        "avg_chunks_per_second",
-    ):
-        print(f"{key}: {summary[key]}")
-    if summary.get("last_error"):
-        print(f"last_error: {summary['last_error']}")
-    session.close()
+    print("build-embeddings is deprecated: embeddings are managed by Data Platform. Run tender preparation instead.")
 
 
 def cmd_search(args: argparse.Namespace) -> None:
-    session, repo, _config, provider, _vector_store, retriever = _build_runtime()
-    embeddings_count = repo.count_document_embeddings(provider=provider.provider_name, model=provider.model_name)
-    if embeddings_count == 0:
-        print(
-            f"No embeddings found for provider={args.provider or provider.provider_name} "
-            f"model={args.model or provider.model_name}. Run build-embeddings first."
-        )
-        session.close()
-        return
+    session, _repo, config, _provider, _vector_store, retriever = _build_runtime(
+        retrieval_only=True
+    )
+    retrieval_backend_name(config)
     if args.tender_id or args.registry_number:
         hits = retriever.search_documents(
             args.query,
@@ -180,8 +122,10 @@ def cmd_search(args: argparse.Namespace) -> None:
         )
     else:
         hits = retriever.search_all_documents(args.query, limit=args.limit)
-    print(f"provider: {args.provider or provider.provider_name}")
-    print(f"model: {args.model or provider.model_name}")
+    retrieval_provider = "data_platform"
+    retrieval_model = "hybrid"
+    print(f"provider: {retrieval_provider}")
+    print(f"model: {retrieval_model}")
     print(f"hits: {len(hits)}")
     for hit in hits:
         print(f"score: {hit.score:.4f}")
@@ -193,11 +137,14 @@ def cmd_search(args: argparse.Namespace) -> None:
         print(f"document: {hit.file_name}")
         print(f"preview: {hit.preview}")
         print()
+    _close_retriever(retriever)
     session.close()
 
 
 def cmd_ask(args: argparse.Namespace) -> None:
-    session, _repo, config, provider, _vector_store, retriever = _build_runtime()
+    session, _repo, config, _provider, _vector_store, retriever = _build_runtime(
+        retrieval_only=True
+    )
     hits = retriever.search_documents(
         args.question,
         registry_number=args.registry_number,
@@ -208,8 +155,9 @@ def cmd_ask(args: argparse.Namespace) -> None:
 
     print(f"registry_number: {args.registry_number}")
     print(f"question: {args.question}")
-    print(f"retrieval_provider: {args.provider or provider.provider_name}")
-    print(f"retrieval_model: {args.model or provider.model_name}")
+    retrieval_backend_name(config)
+    print("retrieval_provider: data_platform")
+    print("retrieval_model: hybrid")
     print(f"context_hits: {len(hits)}")
     if llm_enabled:
         print(f"llm_model: {config.local_llm_model}")
@@ -220,6 +168,7 @@ def cmd_ask(args: argparse.Namespace) -> None:
         print("answer:")
         print("Контекст не найден в локальном индексе.")
         print("sources: 0")
+        _close_retriever(retriever)
         session.close()
         return
 
@@ -245,6 +194,7 @@ def cmd_ask(args: argparse.Namespace) -> None:
         print("answer:")
         print("LLM не использовалась. Ниже релевантные фрагменты.")
         _print_sources(sources)
+    _close_retriever(retriever)
     session.close()
 
 
@@ -326,34 +276,23 @@ def _print_sources(sources: list[SourceCitation]) -> None:
 
 
 def cmd_check_embedding_server(args: argparse.Namespace) -> None:
-    session, _repo, _config, provider, _vector_store, _retriever = _build_runtime()
-    info = probe_embedding_provider(provider)
-    info["provider"] = args.provider or provider.provider_name
-    info["model"] = args.model or provider.model_name
-    info["base_url"] = args.base_url or getattr(provider, "base_url", None)
-    for key in (
-        "provider",
-        "base_url",
-        "model",
-        "reachable",
-        "test_embedding_dimension",
-        "latency_ms",
-    ):
-        print(f"{key}: {info.get(key)}")
-    if info.get("error"):
-        print(f"error: {info['error']}")
-    session.close()
+    print("check-embedding-server is deprecated: embedding health belongs to Data Platform.")
 
 
 def cmd_eval(args: argparse.Namespace) -> None:
-    session, repo, config, provider, _vector_store, retriever = _build_runtime()
+    session, _repo, config, _provider, _vector_store, retriever = _build_runtime(
+        retrieval_only=True
+    )
+    retrieval_backend_name(config)
+    retrieval_provider = "data_platform"
+    retrieval_model = "hybrid"
     questions_path = Path(args.questions)
     questions = json.loads(questions_path.read_text(encoding="utf-8"))
 
     eval_dir = Path(config.data_dir) / "rag" / "eval"
     eval_dir.mkdir(parents=True, exist_ok=True)
     output_path = eval_dir / (
-        f"{_slugify(provider.provider_name)}__{_slugify(provider.model_name)}__"
+        f"{_slugify(retrieval_provider)}__{_slugify(retrieval_model)}__"
         f"{time.strftime('%Y%m%d-%H%M%S')}.jsonl"
     )
 
@@ -378,8 +317,8 @@ def cmd_eval(args: argparse.Namespace) -> None:
                 "id": item["id"],
                 "query": item["query"],
                 "category": item.get("category"),
-                "provider": args.provider or provider.provider_name,
-                "model": args.model or provider.model_name,
+                "provider": retrieval_provider,
+                "model": retrieval_model,
                 "results": [
                     {
                         "score": hit.score,
@@ -402,8 +341,8 @@ def cmd_eval(args: argparse.Namespace) -> None:
         "empty_results": empty_results,
         "avg_top_score": round(sum(top_scores) / len(top_scores), 4) if top_scores else 0.0,
         "top_documents": top_documents.most_common(5),
-        "provider": args.provider or provider.provider_name,
-        "model": args.model or provider.model_name,
+        "provider": retrieval_provider,
+        "model": retrieval_model,
         "output_path": str(output_path),
     }
     for key in (
@@ -472,13 +411,13 @@ def cmd_show_analysis_report(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Tender Research local RAG CLI")
+    parser = argparse.ArgumentParser(description="Tender Research CLI backed by Arvectum Data Platform")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p_chunks = sub.add_parser("build-chunks", help="Build local RAG chunks from extracted texts")
+    p_chunks = sub.add_parser("build-chunks", help="Deprecated: chunking is managed by Data Platform")
     p_chunks.add_argument("--limit", type=int, default=100)
 
-    p_embeddings = sub.add_parser("build-embeddings", help="Build local embeddings for document chunks")
+    p_embeddings = sub.add_parser("build-embeddings", help="Deprecated: embeddings are managed by Data Platform")
     p_embeddings.add_argument("--limit", type=int, default=1000)
     _add_provider_args(p_embeddings)
 
@@ -527,7 +466,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_history_report = sub.add_parser("show-analysis-report", help="Show report markdown for a specific analysis run")
     p_history_report.add_argument("--run-id", required=True)
 
-    p_check = sub.add_parser("check-embedding-server", help="Check embedding provider reachability and sample dimension")
+    p_check = sub.add_parser("check-embedding-server", help="Deprecated: check Data Platform /health instead")
     _add_provider_args(p_check)
 
     p_eval = sub.add_parser("eval", help="Run retrieval eval on a set of procurement questions")

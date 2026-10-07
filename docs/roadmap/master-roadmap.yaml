@@ -22,7 +22,7 @@ governance:
   queue_must_not_expand_authority: true
   id_conflicts_fail_closed: OWNER_RECONCILIATION_REQUIRED
 strategy_revision: reuse_first_2026_09_14
-strategy_updated_at: '2026-09-18T05:20:12Z'
+strategy_updated_at: '2026-10-07T14:52:00Z'
 continuous_execution:
   owner_directive_date: '2026-09-18'
   principle: work_conserving_hourly_executor
@@ -38,8 +38,191 @@ continuous_execution:
     - 'If the admitted queue is empty while .agent/owner-directive.yaml is active, deterministically select the first eligible continuation branch/item in document order and materialize at most one bounded item; prefer an existing bounded task, otherwise use the standard evidence/revalidation slice. This is not authority to invent product priority or implementation scope.'
     - 'A material executor-policy change triggers the Company AM-4 review gate: repository preparation/testing may continue, but automatic merges fail closed until attributable Owner renewal.'
   authority_note: 'Cadence/utilization only; executor-policy, AM-4 hard stops and REVIEW/OWNER/HUMAN gates remain unchanged.'
+owner_product_directive_2026_10_06:
+  title: Daily Tender Run + iPhone Tender Agent
+  status: roadmap_priority
+  execution_queue_modified: false
+  daily_tender_run:
+    priority: P0
+    implementation_status: DTR_3_MERGED
+    scope: "Saved-filter search -> dedupe -> screening -> Mac mini EIS document acquisition -> Data Platform -> deep analysis -> manager digest -> HUMAN GO/NO GO/DEFER -> readiness/submission/outcome tracking -> Procurement Portfolio."
+    human_gate: "GO / NO GO / DEFER remains attributable to a human manager."
+    reuse_existing_modules: true
+    implementation_spec: /docs/product/Daily_Tender_Run_and_iPhone_MVP.md
+    implemented_2026_10_06:
+      - durable_run_and_item_state
+      - versioned_arvectum_it_saved_filter
+      - public_eis_discovery_dedupe_screen
+      - tender_research_public_detail_document_ingest
+      - data_platform_prepare_and_hybrid_analysis
+      - fail_closed_manager_synthesis
+      - run_latest_resume_digest_api
+      - mobile_digest_and_recommendation_projection
+      - unattended_macmini_cli
+    implemented_2026_10_07:
+      - human_go_post_decision_resume
+      - canonical_submission_readiness_reuse
+      - fail_closed_submission_evidence_tracking
+      - artifact_bound_outcome_tracking
+      - restartable_post_decision_states
+    deployed_runtime_2026_10_06:
+      main_commit: dc60744251a9edbaa8ae99e5b7c370d07da3b8ee
+      migration: 100_add_daily_tender_runs
+      data_platform: http://127.0.0.1:8094
+      schedule: '08:00 Europe/Moscow via com.arvectum.daily-tender-run'
+      human_gate_preserved: true
+      filter_profile: 'arvectum-it v2'
+      production_acceptance_run: DTR-20261006T171139Z-79cfe20b
+      production_acceptance: 'two MANAGER_READY items with persisted Data Platform analysis history; run continuing autonomously'
+    dtr_3:
+      status: done
+      pr: 180
+      merge_commit: 3b25e10bab2930f954d39a444b8258ad597010c9
+      exact_head_ci_run: 37575956723
+      exact_head_ci: success
+      note: "HUMAN GO resumes into canonical readiness preparation and evidence-gated submission/outcome tracking. The system never starts/submits an ETP action; unattributed SUBMITTED state and unbound outcome records remain pending."
+    next: []
+  mobile:
+    historical_item: ARV-044
+    owner_priority_override: P0
+    current_product_meaning: "Native SwiftUI iPhone decision client for Tender Agent, backed by the Mac mini."
+    implementation_status: MOB_4_MERGED
+    backend: "Tender Agent FastAPI on Mac mini"
+    initial_connectivity: "Private Tailscale access; no direct public Mac mini API exposure."
+    source_of_truth: "Canonical Tender Agent deal/decision/event/submission/outcome lifecycle."
+    implemented_2026_10_06:
+      - native_swiftui_manager_inbox
+      - procurement_summary_and_detail
+      - mobile_bearer_pairing
+      - keychain_token_storage
+      - explicit_live_demo_offline_state
+      - recommendation_reasons_blockers_unknowns_projection
+      - read_only_human_decision_boundary
+      - explicit_human_go_no_go_defer_actions
+      - human_confirmation_before_decision_write
+      - full_mobile_portfolio_projection
+      - canonical_decision_log_write
+      - revocable_apns_device_registration
+      - bounded_push_payload_contract
+      - tenderagent_deep_link_routing
+      - notification_tap_case_routing
+      - fetch_on_deep_link
+    implemented_2026_10_07:
+      - canonical_mobile_portfolio_summary_metrics
+      - deterministic_mobile_portfolio_filters
+      - canonical_portfolio_decision_source_timestamp_projection
+      - grounded_submission_outcome_detail
+      - deep_link_refresh_before_case_open
+    mob_1:
+      status: done
+      pr: 171
+      merge_commit: 01b4be72d456185f1840f407aa36471a7622897a
+      exact_head_ci_run: 37518592972
+      exact_head_ci: success
+      note: "Read-only iPhone manager inbox/detail is merged. No GO/NO GO/DEFER write control is exposed in MOB-1."
+    mob_2:
+      status: done
+      pr: 173
+      merge_commit: fe92b39e7a5944ccb519ee1f7579a811d91153f3
+      exact_head_ci_run: 37524387682
+      exact_head_ci: success
+      note: "Explicit human-confirmed GO / NO GO / DEFER writes are merged. Decisions are audited in the canonical decision log; ETP, signature, payment, bid submission and external-action hard stops remain unchanged."
+    mob_3:
+      status: done
+      pr: 176
+      merge_commit: 3ab3872f95c9d8934403533f4411fcddd7569ba4
+      exact_head_ci_run: 37533637202
+      exact_head_ci: success
+      note: "Revocable APNs device registration, bounded push payloads and safe tenderagent deep links are merged. Simulator push/deep-link smoke passed. Real-device APNs delivery remains externally blocked by the current Apple provisioning profile lacking Push Notifications / aps-environment and by provider credentials being intentionally disabled by default."
+    mob_4:
+      status: done
+      pr: 183
+      merge_commit: bdcd868f1c42f3d3165cc8cad2c83b63b682521b
+      exact_head_ci_run: 37584606448
+      exact_head_ci: success
+      note: "Canonical Procurement Portfolio metrics/outcome UX is merged. Missing submission/outcome evidence stays pending/unknown; existing explicit HUMAN GO / NO GO / DEFER and consequential-action hard stops are unchanged."
+    next:
+      stage: null
+      status: none_admitted
+      scope: "No additional ARV-044 mobile stage is admitted by this reconciliation."
+      gate: "Any new mobile development requires a separate bounded admission; consequential external-action hard stops remain unchanged."
+    push: APNs
+    required_actions: [GO, NO_GO, DEFER]
+  deferred:
+    - Android
+    - public multi-tenant mobile release
+    - autonomous bid decision
+    - direct public Internet exposure of Mac mini
+  admission_note: "Roadmap priority only. Implementation requires a separately admitted bounded execution item or explicit implementation directive."
+
+owner_commercial_workflow_directive_2026_10_07:
+  title: Commercial Workflow full-branch admission
+  status: admitted
+  source: 'Explicit Product Owner directive in Tender Agent project conversation on 2026-10-07.'
+  canonical_branch_id: COMMERCIAL-WORKFLOW
+  interpretation: 'Accelerated Stage 3 Commercial Core v1 is already done; this directive admits the remaining canonical COMMERCIAL-WORKFLOW branch.'
+  historical_items: [ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069]
+  queue_items:
+    - ARV-015-OPERATOR-PROFILE-PARSER-001
+    - COMMERCIAL-WORKFLOW-ARV-019-001
+    - COMMERCIAL-WORKFLOW-ARV-022-001
+    - COMMERCIAL-WORKFLOW-ARV-053-001
+    - COMMERCIAL-WORKFLOW-ARV-055-001
+    - COMMERCIAL-WORKFLOW-ARV-057-001
+    - COMMERCIAL-WORKFLOW-ARV-059-001
+    - COMMERCIAL-WORKFLOW-ARV-060-001
+    - COMMERCIAL-WORKFLOW-ARV-063-001
+    - COMMERCIAL-WORKFLOW-ARV-064-001
+    - COMMERCIAL-WORKFLOW-ARV-066-001
+    - COMMERCIAL-WORKFLOW-ARV-069-001
+  execution: 'Queue in canonical branch order. AUTO repository implementation/verification is allowed inside existing roadmap outcomes and hard stops; consequential external actions remain prohibited.'
+  am4_review:
+    renewed_on: '2026-10-07'
+    company_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+    company_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
+    automatic_merge_counter: 0
+    automatic_merge_counter_limit: 10
+    next_time_review_deadline: '2026-11-07'
+
+current_status_summary:
+  as_of: '2026-10-07T17:52:00+03:00'
+  verified_main_commit: b4723cc913f455158caf6f27b86d4039bee1af8b
+  active_execution_item: null
+  active_execution_state: admitted_queue_ready
+  last_completed_task: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
+  base_foundation:
+    historical_ids: [BASE-001, BASE-002, BASE-003, BASE-004, BASE-005, BASE-006, BASE-007, BASE-008, BASE-009, BASE-010, BASE-011, BASE-012, BASE-013, BASE-014, BASE-015, BASE-016, BASE-017, BASE-018]
+    confirmed_done: 18
+    total: 18
+    state: complete
+    note: 'All BASE-001..BASE-018 are confirmed_done in the current reconciliation overlay. Historical July percentages/statuses remain immutable.'
+  feedback_learning_loop:
+    roadmap_item: ARV-004
+    state: post_mvp_not_admitted
+    note: 'BASE-011 closes the Hermes infrastructure foundation. Real-user self-improvement remains a separately gated post-MVP Feedback & Learning Loop under ARV-004.'
+  daily_tender_run:
+    owner_priority: P0
+    bounded_sequence_state: complete
+    completed_stages: [DTR-1, DTR-2, DTR-3]
+    note: 'DTR-1/DTR-2 pre-decision contour remains implemented; DTR-3 post-GO orchestration is merged. Human GO / NO GO / DEFER and source-grounded submission/outcome evidence boundaries remain unchanged.'
+  mobile_product:
+    owner_priority: P0
+    bounded_sequence_state: complete
+    completed_stages: [MOB-1, MOB-2, MOB-3, MOB-4]
+    completed_dtr_post_go_stage: DTR-3
+    next_mobile_stage: null
+    note: 'No additional mobile stage is admitted. The completed internal iPhone sequence remains bounded by human GO / NO GO / DEFER and consequential-action hard stops.'
+  watchdog:
+    title: Tender Agent Watchdog
+    enabled: true
+    cadence: hourly
+  automatic_merge_governance:
+    state: active_renewed_2026_10_07_0_of_10
+    note: 'Attributable Owner review on 2026-10-07 reset the AM-4 automatic-merge counter to 0/10; next time-based review deadline is 2026-11-07. Existing hard stops remain unchanged.'
+  note: 'ARV-005 technical pilot remains complete. The full canonical COMMERCIAL-WORKFLOW branch is now explicitly admitted as 12 ready queue items under the 2026-10-07 Owner directive; historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
+
 execution_snapshot:
-  updated_at: '2026-09-18T19:31:00Z'
+  updated_at: '2026-10-07T14:52:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -48,11 +231,23 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: owner_directed_continuation_admitted
-  next_admitted_item: ARV-002-REVALIDATION-001
+  queue_state: commercial_workflow_admitted
+  next_admitted_item: ARV-015-OPERATOR-PROFILE-PARSER-001
   admitted_pipeline:
-    - ARV-002-REVALIDATION-001
+    - ARV-015-OPERATOR-PROFILE-PARSER-001
+    - COMMERCIAL-WORKFLOW-ARV-019-001
+    - COMMERCIAL-WORKFLOW-ARV-022-001
+    - COMMERCIAL-WORKFLOW-ARV-053-001
+    - COMMERCIAL-WORKFLOW-ARV-055-001
+    - COMMERCIAL-WORKFLOW-ARV-057-001
+    - COMMERCIAL-WORKFLOW-ARV-059-001
+    - COMMERCIAL-WORKFLOW-ARV-060-001
+    - COMMERCIAL-WORKFLOW-ARV-063-001
+    - COMMERCIAL-WORKFLOW-ARV-064-001
+    - COMMERCIAL-WORKFLOW-ARV-066-001
+    - COMMERCIAL-WORKFLOW-ARV-069-001
   completed_pipeline:
+    - ARV-005-CONTROLLED-PILOT-EVIDENCE-001
     - DOCUMENT-QA-NEXT-INCREMENT
     - CHANGE-MONITORING-V1-001
     - INGEST-RESILIENCE-V1-001
@@ -63,7 +258,13 @@ execution_snapshot:
     - DOMAIN-REGRESSION-V1-001
     - PROCUREMENT-KANBAN-V1-001
     - WATCHDOG-CONTINUATION-V2-001
-  note: 'Items through order 95 are completed. Active OWNER-CONTINUOUS-ROADMAP-2026-09-18 permits deterministic bounded continuation when the queue would otherwise be empty; it does not permit priority invention or hard-stop bypass. ARV-002-REVALIDATION-001 is admitted and ready as the first materialized continuation slice.'
+    - MOB-1-IOS-INBOX-001
+    - MOB-2-IOS-DECISIONS-001
+    - MOB-3-IOS-PUSH-DEEPLINKS-001
+    - DTR-3-POST-GO-AUTOMATION-001
+    - MOB-4-IOS-PORTFOLIO-METRICS-001
+  note: 'As of 2026-10-07, the mobile/DTR sequence and ARV-005 controlled pilot are completed, BASE-001..BASE-018 are 18/18 confirmed_done, and the full COMMERCIAL-WORKFLOW branch is explicitly admitted in the execution queue. ARV-004 learning-loop work remains post-MVP and is not part of this admission.'
+
 development_strategy:
   principle: copy_commodity_invent_moat
   architecture_thesis: thin_commodity_shell_plus_deep_decision_core
@@ -112,8 +313,8 @@ accelerated_plan:
     priority: P0
     objective: "Keep only baseline search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export; prefer proven components and patterns, no gold-plating."
     exit_gate: "Commodity shell is usable end-to-end and no commodity item has become a custom multi-sprint build without an approved gap."
-    current_state: partial_existing_not_separately_gated
-    current_evidence: 'Baseline shell pre-existed this acceleration cycle; Docker-context hardening PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3. No standalone Stage 1 completion gate is admitted.'
+    current_state: done
+    current_evidence: 'Stage 1 acceptance matrix docs/strategy/STAGE1_THIN_COMMODITY_SHELL_ACCEPTANCE.md proves the existing shell across search/filter, versioned saved profiles, tender card, source document download/parsing adapter, auth/visibility boundaries, monitoring alerts and export. Focused acceptance gate: 67 passed / 10 skipped. Exact-head CI 37612128040 SUCCESS 9/9; closure PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b. No new commodity subsystem was required; Docker-context hardening remains PR #58 / 8924a8576a96ccac490682be737f2b041c8a06e3.'
   - stage: 2
     name: decision_core_v1
     priority: P0
@@ -302,6 +503,44 @@ current_programs:
   roadmap_mapping: [ARV-072]
   strategy: INVENT
   completion_evidence: 'Versioned procurement regression registry and outcome telemetry foundation; merge c5e653a11a894360b1b05c1834495330b3a64cbb.'
+- task_id: MOB-1-IOS-INBOX-001
+  state: done
+  source: 'Owner directive 2026-10-06; PR #171 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: COPY_PATTERN
+  completion_evidence: 'Native SwiftUI read-only manager inbox/detail; Bearer pairing + Keychain; current mobile API evidence projection; exact-head CI 37518592972 SUCCESS; Owner-approved merge 01b4be72d456185f1840f407aa36471a7622897a.'
+- task_id: MOB-2-IOS-DECISIONS-001
+  state: done
+  source: 'Owner directive 2026-10-06; PR #173 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: COPY_PATTERN
+  completion_evidence: 'Explicit human GO / NO GO / DEFER confirmation flow; canonical HUMAN decision-log writes; full mobile portfolio visibility; exact-head CI 37524387682 SUCCESS; Owner-approved merge fe92b39e7a5944ccb519ee1f7579a811d91153f3.'
+- task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
+  state: done
+  source: 'Owner directive 2026-10-06; PR #176 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: ADAPT
+  completion_evidence: 'Revocable APNs registration and access, audited delivery ledger, Apple token-auth HTTP/2 sender disabled by default pending credentials, bounded push/deep-link routing, simulator smoke, exact-head CI 37533637202 SUCCESS; Owner-approved merge 3ab3872f95c9d8934403533f4411fcddd7569ba4. Physical-device APNs remains blocked by current provisioning entitlement.'
+- task_id: DTR-3-POST-GO-AUTOMATION-001
+  state: done
+  source: 'Owner directive 2026-10-07; PR #180 merged'
+  roadmap_mapping: null
+  strategy: ADAPT
+  completion_evidence: 'HUMAN GO post-decision resume, canonical readiness reuse, local submission-control preparation without submission, attributable/source-bound submission evidence gate, artifact-bound outcome gate, unattended pending-run resume, migration 102; exact-head CI 37575956723 SUCCESS 9/9; Owner-approved merge 3b25e10bab2930f954d39a444b8258ad597010c9.'
+- task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
+  state: done
+  source: 'Owner directive 2026-10-07; PR #183 merged'
+  roadmap_mapping: [ARV-044]
+  strategy: COPY_PATTERN
+  completion_evidence: 'Canonical Procurement Portfolio totals/rates, deterministic pipeline/outcome filters, grounded submission/outcome detail and refresh-before-deep-link behavior; exact-head CI 37584606448 SUCCESS 9/9; implementation merge bdcd868f1c42f3d3165cc8cad2c83b63b682521b; roadmap merge 66c0839d400c076388e93b212e1adb0b59b21fd7.'
+
+- task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
+  state: done
+  source: 'Owner directive 2026-09-23 renewed by explicit Owner request 2026-10-07'
+  roadmap_mapping: [ARV-005]
+  strategy: REUSE
+  completion_evidence: '12/12 frozen 44-FZ core reports; 3 separately scored source-bound 223-FZ blockers; aggregate report docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md; preserved regression evidence; human usefulness/commercial acceptance remains HUMAN/REVIEW.'
+
 
 continuation_branches:
   status: active_navigation_under_owner_continuation_directive
@@ -355,7 +594,7 @@ continuation_branches:
   - branch_id: SAAS-SCALE
     title: Multi-tenant SaaS, usage limits and enterprise integrations
     historical_items: [ARV-043, ARV-044, ARV-045, ARV-046, ARV-068, ARV-070]
-    residual_scope: 'Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile companion and later finance/integration surfaces.'
+    residual_scope: 'Organizations/roles/isolation, usage quotas/tariff limits, enterprise/on-prem/air-gapped packaging, mobile expansion beyond the completed internal iPhone MVP (for example public/multi-tenant or Android), and later finance/integration surfaces.'
     gates: 'Bank guarantees/financing and external enterprise commitments remain HUMAN/commercial gates.'
   - branch_id: DEVELOPMENT-GOVERNANCE
     title: Development protocol, mirrors and watchdog maintenance
@@ -399,10 +638,12 @@ legacy_registry:
     comment: Фундамент для договоров, интеграций и пилотов.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current corporate/legal foundation revalidated from current official Owner-session records; no private artifacts or sensitive values committed.'
 - id: BASE-002
   legacy_snapshot:
     queue_order: 0
@@ -423,10 +664,12 @@ legacy_registry:
     comment: 'В книге использована палитра бренда: Mint / Deep Navy / Graphite.'
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current brand system revalidated from Brandbook v2 and the current public surface.'
 - id: BASE-003
   legacy_snapshot:
     queue_order: 0
@@ -448,10 +691,12 @@ legacy_registry:
     comment: Технический сайт готов, продуктовая упаковка ещё не завершена.
     dependencies_raw: ARV-038
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current public site is product-first and includes multilingual, CTA, privacy/cookie, human-control and social/contact surfaces; historical July progress remains immutable.'
 - id: BASE-004
   legacy_snapshot:
     queue_order: 0
@@ -472,10 +717,12 @@ legacy_registry:
     comment: Основной технический фундамент продукта.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'FastAPI/SQLAlchemy/Alembic/Docker foundation remains active and materially expanded.'
 - id: BASE-005
   legacy_snapshot:
     queue_order: 0
@@ -497,10 +744,12 @@ legacy_registry:
     comment: PostgreSQL остаётся источником истины.
     dependencies_raw: ARV-009
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Capability is current under evolved architecture: PostgreSQL remains product/domain storage while generic RAG is delegated to Arvectum Data Platform.'
 - id: BASE-006
   legacy_snapshot:
     queue_order: 0
@@ -521,10 +770,12 @@ legacy_registry:
     comment: Ключевой пользовательский вход в продукт.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Public 44-FZ discovery and exact-number paths remain implemented and regression-tested.'
 - id: BASE-007
   legacy_snapshot:
     queue_order: 0
@@ -548,10 +799,12 @@ legacy_registry:
     comment: Legacy int44 не считается рабочим основным маршрутом.
     dependencies_raw: ARV-010, ARV-014
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix, verification run, and sanitized post-merge EIS production smoke.
+    notes: 'Fresh authenticated read-only getDocsByReestrNumber production smoke completed successfully on 2026-10-07 with one archive URL and zero warnings; TLS/hostname/direct-route checks passed. Token material remained local and uncommitted.'
 - id: BASE-008
   legacy_snapshot:
     queue_order: 0
@@ -573,10 +826,12 @@ legacy_registry:
     comment: Форматный контур готов, качество анализа развивается.
     dependencies_raw: ARV-001
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Procurement ingestion, analysis and report/export capability remains current and source-bound.'
 - id: BASE-009
   legacy_snapshot:
     queue_order: 0
@@ -598,10 +853,12 @@ legacy_registry:
     comment: Уже подтверждено на электротехнической закупке.
     dependencies_raw: ARV-001
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Product/requirement extraction remains current with broader source-first and document-role regression coverage.'
 - id: BASE-010
   legacy_snapshot:
     queue_order: 0
@@ -623,10 +880,12 @@ legacy_registry:
     comment: Критически важное исправление доверия к продукту.
     dependencies_raw: ARV-002
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current tests preserve explicit demo/live boundaries and fail closed instead of silently synthesizing live success.'
 - id: BASE-011
   legacy_snapshot:
     queue_order: 0
@@ -648,10 +907,14 @@ legacy_registry:
     comment: Базовая реализация есть, полноценный автономный цикл ещё не завершён.
     dependencies_raw: ARV-004
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix plus Owner-approved product-boundary reconciliation.
+    - path: docs/product/Feedback_Learning_Loop.md
+      detail: Post-MVP successor scope separated from the completed BASE foundation.
+    notes: 'Hermes H1-H4 infrastructure foundation is present/tested: client/fallback, runtime context, category profiles, normalization, quality gates, feedback/memory primitives, eval-case generation, supplier-readiness and bid-decision helpers. Real-user self-improvement is no longer a BASE completion criterion; it is deferred to non-admitted post-MVP ARV-004. Autonomous/external Hermes runtime remains optional and human GO/NO-GO boundaries are unchanged.'
 - id: BASE-012
   legacy_snapshot:
     queue_order: 0
@@ -675,10 +938,12 @@ legacy_registry:
     comment: Последняя подтверждённая baseline-интеграция — 21.07.2026.
     dependencies_raw: ARV-001, ARV-005
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Quality/provenance/source-graph evidence materially exceeds the July baseline, including the frozen ARV-005 real-procurement pilot.'
 - id: BASE-013
   legacy_snapshot:
     queue_order: 0
@@ -700,10 +965,12 @@ legacy_registry:
     comment: Материалы готовы как основа, но требуют синхронизации с текущим продуктом.
     dependencies_raw: ARV-042
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Demo/pilot collateral is current and supplemented by restricted-pilot, live-walkthrough and ARV-005 technical evidence.'
 - id: BASE-014
   legacy_snapshot:
     queue_order: 0
@@ -726,10 +993,12 @@ legacy_registry:
     comment: Основа интерфейса есть, рабочее место тендерщика ещё не завершено.
     dependencies_raw: ARV-019, ARV-043
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Historical client/project/search foundation has evolved into current customer-pilot, partner/workspace, procurement UI and tenant-isolation flows.'
 - id: BASE-015
   legacy_snapshot:
     queue_order: 0
@@ -751,10 +1020,12 @@ legacy_registry:
     comment: Снижает риск поломки отчётов при переезде на Linux.
     dependencies_raw: ARV-012
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Unicode-capable PDF implementation and regressions remain current; exact-head Linux CI is the final platform signal.'
 - id: BASE-016
   legacy_snapshot:
     queue_order: 0
@@ -776,10 +1047,12 @@ legacy_registry:
     comment: Канонический production-like baseline проекта на 22.07.2026.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'R7 remains a valid frozen production-like baseline; later controlled-pilot work is additive and does not rewrite it.'
 - id: BASE-017
   legacy_snapshot:
     queue_order: 0
@@ -802,10 +1075,12 @@ legacy_registry:
     comment: Завершён 23.07.2026.
     dependencies_raw: BASE-016
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'R8 customer-pilot lifecycle, tenant isolation and artifact binding remain present and regression-covered.'
 - id: BASE-018
   legacy_snapshot:
     queue_order: 0
@@ -828,10 +1103,12 @@ legacy_registry:
     comment: 'Final CI: quality, migrations, security, PostgreSQL integration и acceptance integration — success.'
     dependencies_raw: BASE-017
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'R9 contracts remain present; focused local batch had 545 passed, 12 skipped and one known macOS pg_restore environment failure, so exact-head Linux CI remains closure authority.'
 - id: ARV-050
   legacy_snapshot:
     queue_order: 0
@@ -1166,9 +1443,11 @@ legacy_registry:
     dependencies_raw: ARV-003, ARV-001
   reconciliation:
     state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/product/Feedback_Learning_Loop.md
+      detail: Owner-approved post-MVP successor scope for real-user correction learning.
+    notes: 'Post-MVP Feedback & Learning Loop, deliberately not admitted to the execution queue. Reuse existing TenderAnalysisFeedback, AgentMemory, TenderEvalCase, domain-regression, Customer/Project/Case and Decision Core. Target loop: attributable user correction -> immutable human review -> regression case -> validated reusable rule candidate -> reviewed promotion. No autonomous GO/NO-GO, no mandatory external Hermes runtime, no automatic cross-customer learning.'
 - id: ARV-005
   legacy_snapshot:
     queue_order: 5
@@ -1194,11 +1473,14 @@ legacy_registry:
     comment: Главный gate перед Commercial MVP и платным пилотом.
     dependencies_raw: ARV-001, ARV-003, ARV-004
   reconciliation:
-    state: controlled_real_pilot_admitted
-    verified_at: '2026-09-23'
+    state: confirmed_done
+    verified_at: '2026-10-07'
     evidence:
     - docs/pilot/ARV-005_REAL_PROCUREMENT_PILOT_PLAN_2026-09-23.md
-    notes: 'Owner directed real-procurement runs on Mac mini; VPS deferred. Technical runs are read-only/local; human usefulness/commercial acceptance remains gated.'
+    - docs/pilot/ARV-005_WAVE1_FREEZE_2026-09-23.md
+    - docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+    - .agent/checkpoints/ARV-005-CONTROLLED-PILOT-EVIDENCE-001.yaml
+    notes: 'Technical pilot complete: 12/12 frozen core 44-FZ procurements have reports and three exploratory 223-FZ cases are separately scored source-bound blockers. Frozen evidence is preserved; human usefulness/commercial acceptance remains HUMAN/REVIEW. Local controlled-LLM reliability after Wave 1 is a measured follow-up, not retroactively tuned.'
 - id: ARV-008
   legacy_snapshot:
     queue_order: 6

@@ -1,40 +1,33 @@
 from __future__ import annotations
 
-import html
 import hashlib
+import html
 import json
 import os
 import re
-import tempfile
 import time
-from urllib.parse import urlparse
-from urllib.request import urlopen
-import zipfile
 import xml.etree.ElementTree as ET
+import zipfile
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from io import BytesIO
 from pathlib import Path
 from secrets import token_hex
 from typing import Any
+from urllib.parse import urlparse
+from urllib.request import urlopen
 
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
 
-from src.modules.tender_connectors.text_extraction import extract_text_from_attachment_bytes
 from src.modules.procurement_analysis.document_roles import detect_document_role
-from src.tender_research.document_text_extractor import (
-    EMPTY_STATUS as DOC_EMPTY_STATUS,
-    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
-    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
-    extract_text as extract_document_text_from_path,
+from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome
+from src.modules.tender_operator_agent_demo.contract_term_facts import (
+    extract_contract_term_facts,
 )
 from src.modules.tender_operator_agent_demo.event_log import (
     append_tender_demo_event,
     load_tender_demo_events,
 )
-from src.modules.tender_operator_agent_demo.procurement_discovery import get_supplier_profile
-from src.modules.tender_operator_agent_demo.relevance_scoring import score_procurement_document_text
 from src.modules.tender_operator_agent_demo.goods_source_facts import (
     build_complete_goods_positions,
     build_goods_requirements_from_source_facts,
@@ -42,14 +35,16 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
     extract_goods_source_facts,
     semantic_procurement_role,
 )
-from src.modules.tender_operator_agent_demo.contract_term_facts import extract_contract_term_facts
-from src.modules.supplier_search.internet_supplier_search import search_suppliers
-from src.modules.supplier_search.yandex_search_client import YandexSearchClient
-from src.shared.config.settings import get_settings
+from src.modules.tender_operator_agent_demo.procurement_discovery import (
+    get_supplier_profile,
+)
 from src.modules.tender_operator_agent_demo.quote_normalizer import (
     SpreadsheetSource,
     build_economics_summary,
     build_quote_comparison,
+)
+from src.modules.tender_operator_agent_demo.relevance_scoring import (
+    score_procurement_document_text,
 )
 from src.modules.tender_operator_agent_demo.schemas import (
     DemoDetailSection,
@@ -58,17 +53,28 @@ from src.modules.tender_operator_agent_demo.schemas import (
     DemoStep,
     DemoStepStatus,
     TenderOperatorDemoReportResponse,
+    TenderOperatorRunEvent,
     TenderOperatorUploadedFile,
     TenderOperatorUploadedRunAnalyzeResponse,
     TenderOperatorUploadedRunCreateResponse,
     TenderOperatorUploadedRunListResponse,
     TenderOperatorUploadedRunResponse,
-    TenderOperatorRunEvent,
     TenderOperatorUploadedRunStatus,
     TenderOperatorUploadedRunStepsResponse,
     TenderOperatorUploadedRunSummary,
 )
-
+from src.shared.config.settings import get_settings
+from src.shared.data_platform import DataPlatformError
+from src.shared.document_processing import (
+    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
+)
+from src.shared.document_processing import (
+    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
+)
+from src.shared.document_processing import (
+    process_document_bytes,
+)
+from src.tender_research.rag.presets import tender_processing_collection_id
 
 ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".xlsx", ".xls", ".txt", ".csv", ".zip", ".xml", ".html", ".htm"}
 MAX_FILE_COUNT = 16
@@ -626,55 +632,31 @@ def _derive_role_hint(filename: str) -> str | None:
     return detected if detected != "supporting" else None
 
 
-def _extract_document_text(file_name: str, content: bytes) -> tuple[str | None, list[str], str]:
+def _extract_document_text(
+    file_name: str,
+    content: bytes,
+) -> tuple[str | None, list[str], str]:
     ext = Path(file_name).suffix.lower()
     warnings: list[str] = []
-    if ext in {".txt", ".csv", ".xml"}:
-        return _decode_text(content), warnings, DOC_EXTRACTED_STATUS
-    if ext == ".pdf":
-        text = extract_text_from_attachment_bytes(url=file_name, content=content)
-        if text:
-            return text, warnings, DOC_EXTRACTED_STATUS
-    if ext == ".doc":
-        text = _extract_text_from_legacy_doc(content)
-        if text:
-            return text, warnings, DOC_EXTRACTED_STATUS
-
     try:
-        with tempfile.TemporaryDirectory(prefix="toa-extract-") as tmp_dir:
-            source_path = Path(tmp_dir) / Path(file_name).name
-            source_path.write_bytes(content)
-            status, extracted = extract_document_text_from_path(str(source_path))
-    except Exception:
-        status, extracted = DOC_EMPTY_STATUS, ""
+        processed = process_document_bytes(
+            content=content,
+            filename=file_name,
+            collection_id=tender_processing_collection_id("upload"),
+            canonical_uri=f"tender-upload://{hashlib.sha256(content).hexdigest()}",
+            min_chunk_chars=1,
+        )
+        status = processed.extraction_status
+        normalized_text = processed.text.strip() or None
+    except (DataPlatformError, ValueError, OSError):
+        status = "failed"
+        normalized_text = None
 
-    normalized_text = extracted.strip() or None
     if status == DOC_UNSUPPORTED_STATUS:
         warnings.append(f"Извлечение текста для {ext} пока не поддерживается.")
     elif status != DOC_EXTRACTED_STATUS and not normalized_text:
         warnings.append(f"Не удалось извлечь текст из {Path(file_name).name}.")
     return normalized_text, warnings, status
-
-
-def _extract_text_from_legacy_doc(content: bytes) -> str | None:
-    """Extract legacy Word bytes through the shared structured-first path.
-
-    Previously this helper ran textutil directly and flattened every table,
-    bypassing the wvHtml structured extraction in the shared document text
-    extractor.  Delegating keeps one format boundary: wvHtml table projection
-    first, textutil plain-text fallback, fail-closed empty otherwise.
-    """
-
-    try:
-        with tempfile.TemporaryDirectory(prefix="toa-doc-") as tmp_dir:
-            source_path = Path(tmp_dir) / "source.doc"
-            source_path.write_bytes(content)
-            status, extracted = extract_document_text_from_path(str(source_path))
-    except Exception:
-        return None
-    if status != DOC_EXTRACTED_STATUS or not (extracted or "").strip():
-        return None
-    return extracted
 
 
 def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocument]:
@@ -734,7 +716,7 @@ def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocu
                 if ext not in ALLOWED_EXTENSIONS or ext == ".zip":
                     continue
                 raw = archive.read(info)
-                text, warnings, extraction_status = _extract_document_text(entry_name, raw)
+                text, warnings, _extraction_status = _extract_document_text(entry_name, raw)
                 documents.append(
                     AnalyzedDocument(
                         display_name=f"{path.name} :: {entry_name}",
@@ -960,7 +942,9 @@ def _try_run_llm_workflow(
         from sqlalchemy import create_engine
         from sqlalchemy.orm import Session
 
-        from src.modules.controlled_llm_prebid.service import run_controlled_tender_operator_workflow
+        from src.modules.controlled_llm_prebid.service import (
+            run_controlled_tender_operator_workflow,
+        )
         from src.shared.db.base import Base
 
         settings = get_settings()
@@ -1000,6 +984,8 @@ def _try_run_llm_workflow(
             return {
                 "analysis_mode": result.analysis_mode,
                 "resolved_provider": result.resolved_provider,
+                "sections": result.sections,
+                "trace_ids": result.trace_ids,
                 "requirements": result.requirements,
                 "supplier_questions": result.supplier_questions,
                 "rfq_draft": result.rfq_draft,
@@ -1008,6 +994,53 @@ def _try_run_llm_workflow(
             }
     except Exception:
         return None
+
+
+def _classify_controlled_llm_result(llm_result: dict[str, Any]) -> dict[str, Any]:
+    sections = llm_result.get("sections")
+    if not isinstance(sections, dict) or not sections:
+        return {
+            "analysis_engine": "deterministic_with_failed_local_llm",
+            "analysis_mode": "fallback_deterministic_adapter",
+            "event_type": "llm_analysis_validation_failed",
+            "fallback_reason": "controlled_llm_validation_evidence_missing",
+            "failed_sections": [],
+            "llm_calls_count": 0,
+        }
+
+    failed_sections = sorted(
+        section_name
+        for section_name, section_result in sections.items()
+        if not isinstance(section_result, dict) or section_result.get("validation_status") != "PASSED"
+    )
+    if not failed_sections:
+        return {
+            "analysis_engine": "deterministic_with_local_llm",
+            "analysis_mode": llm_result.get("analysis_mode", "llm_tender_operator_provider"),
+            "event_type": "llm_analysis_completed",
+            "fallback_reason": None,
+            "failed_sections": [],
+            "llm_calls_count": len(sections),
+        }
+
+    if len(failed_sections) == len(sections):
+        return {
+            "analysis_engine": "deterministic_with_failed_local_llm",
+            "analysis_mode": "fallback_deterministic_adapter",
+            "event_type": "llm_analysis_validation_failed",
+            "fallback_reason": "controlled_llm_all_sections_failed",
+            "failed_sections": failed_sections,
+            "llm_calls_count": len(sections),
+        }
+
+    return {
+        "analysis_engine": "deterministic_with_partial_local_llm",
+        "analysis_mode": llm_result.get("analysis_mode", "llm_tender_operator_provider"),
+        "event_type": "llm_analysis_completed_with_warnings",
+        "fallback_reason": f"controlled_llm_partial_section_failure:{','.join(failed_sections)}",
+        "failed_sections": failed_sections,
+        "llm_calls_count": len(sections),
+    }
 
 
 def _runtime_ai_provenance() -> dict[str, Any]:
@@ -1047,7 +1080,7 @@ def _run_supplier_internet_search(
     notice_text: str | None = None,
     technical_spec_text: str | None = None,
 ) -> SupplierSearchOutcome:
-    from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome, search_suppliers
+    from src.modules.supplier_search.internet_supplier_search import search_suppliers
     from src.modules.supplier_search.yandex_search_client import YandexSearchClient
 
     settings = get_settings()
@@ -1215,6 +1248,16 @@ def _infer_procurement_kind(*texts: str | None) -> str:
     return "generic"
 
 
+def _is_generic_procurement_scope_boilerplate(text: str) -> bool:
+    normalized = " ".join((text or "").lower().replace("ё", "е").split())
+    if not normalized:
+        return False
+    has_goods = bool(re.search(r"\bпоставк\w*\s+товар", normalized))
+    has_works = bool(re.search(r"\bвыполнени[ея]\s+работ", normalized))
+    has_services = bool(re.search(r"\bоказани[ея]\s+услуг", normalized))
+    return has_goods and has_works and has_services
+
+
 _SCOPE_SIGNALS: tuple[tuple[str, str, int, str], ...] = (
     ("rental", r"\bарендодатель\w*(?:\s+обяз\w*)?\s+предостав\w*.*\bвременн\w*(?:\s+\w+){0,3}\s+пользован", 6, "rental_temporary_use"),
     ("rental", r"\bарендн\w*\s+плат", 5, "rental_payment"),
@@ -1256,7 +1299,7 @@ def _scope_signal_evidence(metadata: dict[str, Any], documents: list[AnalyzedDoc
         semantic_role = declared_roles.get(str(getattr(document, "role", "")).lower()) or semantic_procurement_role(document)
         for row, raw_line in enumerate((document.text or "").splitlines(), start=1):
             line = " ".join(raw_line.split())
-            if line:
+            if line and not _is_generic_procurement_scope_boilerplate(line):
                 sources.append((document.display_name, document.file_id, f"line:{row}", line, semantic_role))
 
     evidence: list[dict[str, Any]] = []
@@ -3607,9 +3650,17 @@ def _build_output_payloads(
     )
     # Candidate hints retain only legacy sequence/identity while the direct
     # fragments and resolver exclusively supply goods field values.
-    from src.modules.procurement_source_graph.model import direct_fragments_to_canonical_model, legacy_rows_to_canonical_model
-    from src.modules.procurement_source_graph.serialization import provenance_records, serialize_graph
-    from src.modules.procurement_source_graph.structured_fragment_collector import StructuredFragmentCollector
+    from src.modules.procurement_source_graph.model import (
+        direct_fragments_to_canonical_model,
+        legacy_rows_to_canonical_model,
+    )
+    from src.modules.procurement_source_graph.serialization import (
+        provenance_records,
+        serialize_graph,
+    )
+    from src.modules.procurement_source_graph.structured_fragment_collector import (
+        StructuredFragmentCollector,
+    )
     graph_input_rows = (
         preliminary_analysis.get("service_items") or preliminary_analysis.get("spec_table", {}).get("rows", [])
         if procurement_kind == "services"
@@ -5263,7 +5314,9 @@ body{{margin:0;background:#f5f8fa;color:#10243e;font:16px Arial,sans-serif}}main
 
 
 def _persist_outputs(run_id: str, metadata: dict[str, Any], outputs: dict[str, dict[str, Any]], steps: list[DemoStep]) -> None:
-    from src.modules.procurement_analysis.frozen_producer import persist_frozen_r7_outputs
+    from src.modules.procurement_analysis.frozen_producer import (
+        persist_frozen_r7_outputs,
+    )
     renderer = _render_customer_report_html if metadata.get("analysis_mode") == "production_llm_r10_1" else _render_canonical_report_html
     persist_frozen_r7_outputs(output_dir=_output_dir(run_id), run_id=run_id, metadata=metadata, outputs=outputs, steps=steps, render_html=renderer, now_factory=_safe_datetime)
 
@@ -5428,17 +5481,47 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             provider_mode=provider_mode,
         )
         if llm_result is not None:
-            ai_provenance.update({"analysis_engine": "deterministic_with_local_llm", "llm_invoked": True, "llm_calls_count": 1, "fallback_reason": None})
+            llm_classification = _classify_controlled_llm_result(llm_result)
+            failed_sections = llm_classification["failed_sections"]
+            llm_validation_failed = llm_classification["event_type"] != "llm_analysis_completed"
+            ai_provenance.update(
+                {
+                    "analysis_engine": llm_classification["analysis_engine"],
+                    "llm_invoked": True,
+                    "llm_calls_count": llm_classification["llm_calls_count"],
+                    "fallback_reason": llm_classification["fallback_reason"],
+                }
+            )
             requirements = llm_result.get("requirements", {})
             calibrated_risks = llm_result.get("contract_risks", [])
             supplier_questions = llm_result.get("supplier_questions", [])
             rfq_draft = llm_result.get("rfq_draft", {})
-            analysis_mode = llm_result.get("analysis_mode", "llm_tender_operator_provider")
+            analysis_mode = llm_classification["analysis_mode"]
+            if llm_validation_failed:
+                warnings.append(
+                    (
+                        "Контролируемый LLM-анализ не прошёл валидацию для разделов: "
+                        + ", ".join(failed_sections)
+                        if failed_sections
+                        else "Контролируемый LLM-анализ не предоставил сведения о валидации разделов"
+                    )
+                    + ". Невалидированные результаты не приняты."
+                )
             append_demo_run_event(
                 run_id,
-                "llm_analysis_completed",
-                f"LLM-анализ выполнен через {llm_result.get('resolved_provider', 'llm')}.",
-                {"analysis_mode": analysis_mode, "resolved_provider": llm_result.get("resolved_provider")},
+                llm_classification["event_type"],
+                (
+                    f"LLM-анализ выполнен через {llm_result.get('resolved_provider', 'llm')}."
+                    if not llm_validation_failed
+                    else "Контролируемый LLM-анализ завершён с ошибками валидации; "
+                    "невалидированные результаты не приняты."
+                ),
+                {
+                    "analysis_mode": analysis_mode,
+                    "resolved_provider": llm_result.get("resolved_provider"),
+                    "failed_sections": failed_sections,
+                    "trace_ids": llm_result.get("trace_ids", []),
+                },
             )
         else:
             requirements = {

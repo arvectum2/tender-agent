@@ -1,0 +1,78 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
+authority: OWNER_DIRECTIVE
+goal: 'Deliver the third bounded ARV-044 mobile slice: APNs push plumbing and safe deep links that open the correct Tender
+  Agent procurement case on iPhone.'
+definition_of_done:
+- MOB-3 starts from current main with completed MOB-1 and MOB-2 behavior preserved.
+- Native iOS app can request notification permission, register for remote notifications, receive an APNs device token, and
+  persist/sync that token through a dedicated Bearer-authenticated mobile API boundary.
+- Backend stores mobile push registrations idempotently without exposing APNs credentials or broadening the existing private
+  Tailscale MVP boundary.
+- Push payload contract identifies a Tender Agent case with a bounded deep-link target; tapping a notification opens the correct
+  procurement detail when that case exists.
+- App accepts the same bounded deep-link contract from custom URL handling without performing any procurement decision or
+  external commercial action.
+- Token/auth/network failures are surfaced safely and do not mutate procurement decision state.
+- Backend contract tests cover registration/idempotency and push/deep-link payload generation; focused iOS tests cover deep-link
+  parsing/routing and token request encoding.
+- Xcode project builds on current Xcode and focused tests pass on a configured simulator; physical-device APNs delivery is
+  attempted only if available and any external Apple credential/provisioning limitation is recorded rather than fabricated.
+- No automatic procurement decision, ETP action, signature, payment, bid submission, or external customer/supplier communication
+  is introduced.
+- Roadmap/checkpoint are reconciled, exact-head CI is green, and the implementation is merged under the explicit Owner directive
+  unless a real blocker appears.
+completed:
+- Owner explicitly admitted the next mobile stage (MOB-3) on 2026-10-06.
+- Verified canonical checkpoint had MOB-2 completed and explicitly required separate admission for MOB-3.
+- Verified main at 75898944a75889cc07a55fb6164da05104afa811 and clean/synced before branching.
+- Verified the single hourly Tender Agent Watchdog already exists and is enabled.
+- Inspected the MOB-3 roadmap/product contract and the existing iOS/mobile API architecture.
+- Added revocable mobile-device access, idempotent APNs registrations, sanitized mobile device API responses, a delivery ledger,
+  Apple token-auth sender, and bounded procurement/digest deep-link payloads.
+- Wired REPORT_READY, PROCUREMENT_CHANGED, DEADLINE_RISK, OUTCOME_AVAILABLE, and due DEFER reminders as non-authoritative
+  post-commit notification side effects.
+- Added Mac mini maintenance CLI for due reminders and lost-device revocation; APNs provider delivery remains disabled by
+  default until local Apple credentials are provisioned.
+- Added iOS notification permission/APNs token plumbing, Bearer-authenticated token sync/revocation, safe tenderagent URL
+  routing, notification-tap routing, and fetch-on-deep-link for uncached procurement cases.
+- Added backend tests for registration, invalid tokens, revocable bearer access, APNs sender headers/token auth, delivery
+  idempotency, payload deep links, and deferred reminders.
+- Added focused Swift tests for deep-link parsing, notification payload routing, registration payload encoding, and offline
+  non-mutation.
+- Verified Alembic has a single head at 101_add_mobile_push.
+- Verified simulator custom URL opening and simulated APNs injection; simctl reported the notification sent to com.arvectum.tenderagent.
+- Attempted physical iPhone verification on device 00008110-001C51810A12401E; Xcode stopped before launch because the current
+  Apple provisioning profile lacks Push Notifications and aps-environment. No real APNs delivery was claimed.
+- 'First PR #176 CI run 37533477063 exposed a stale requirements.lock after adding APNs HTTP/2/JWT dependencies; regenerated
+  the lock with the CI-pinned uv 0.12.8 command.'
+current: 'MOB-3 is complete: implementation and roadmap reconciliation are merged with exact-head CI green.'
+pending: []
+last_verified_commit: 8a6a6bea994226422cc54c36156f16a6c2b44aa9
+test_results:
+- 'Python targeted quality: Ruff PASS; git diff --check PASS.'
+- 'Mobile/portfolio backend: 22 passed, 18 warnings in 1.75s.'
+- 'Combined mobile/portfolio/Daily Tender Run/procurement monitoring: 37 passed, 24 warnings in 2.62s.'
+- 'Sprint 5B integration with --run-integration: 8 passed, 9 warnings in 2.55s, including outcome intake.'
+- 'Xcode 27 generic iOS Simulator build-for-testing: TEST BUILD SUCCEEDED.'
+- 'iPhone 17 / iOS 27.0 simulator focused TenderAgentTests: 9 tests, 0 failures, TEST SUCCEEDED.'
+- 'Simulator smoke: tenderagent://digest opened and simctl push accepted the MOB-3 payload.'
+- 'Physical iPhone attempt: blocked by current provisioning profile missing Push Notifications capability and aps-environment
+  entitlement.'
+- Current deployed Tailnet backend health is 200, but pre-merge runtime returns 404 for POST /mobile/v1/devices because MOB-3
+  is not deployed yet.
+- 'PR #176 initial exact-head run 37533477063 exposed stale requirements.lock; regenerated with uv==0.12.8.'
+- 'PR #176 corrected exact-head run 37533637202: SUCCESS; implementation squash-merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4.'
+- 'PR #177 roadmap reconciliation exact-head run 37570631734: SUCCESS; squash-merged as 8a6a6bea994226422cc54c36156f16a6c2b44aa9.'
+updated_at: '2026-10-07T07:35:00+03:00'
+resume_instruction: 'MOB-3 is completed. Do not reopen it automatically. DTR-3 or MOB-4 requires a separate explicit admission.'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20261006-mob3
+  branch: feature/mob-3-ios-push-deeplinks-20261006
+  base_commit: 75898944a75889cc07a55fb6164da05104afa811
+  issue: null
+  manual_override: true
+  lease_until: null

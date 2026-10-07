@@ -20,14 +20,12 @@ from src.modules.production_llm_analysis.document_recovery import (
 )
 from src.shared.config.settings import Settings as SharedSettings
 from src.shared.db.base import Base
-from src.tender_research.config import TenderResearchConfig, load_config
+from src.tender_research.config import load_config
 from src.tender_research.models import (
     ProcurementDocumentChunk,
     ProcurementTender,
     ProcurementTenderDocument,
 )
-from src.tender_research.rag.chunker import chunk_text
-from src.tender_research.rag.indexer import DocumentChunkIndexer
 
 
 def make_zip(path: Path, entries: list[tuple[str, bytes]]) -> Path:
@@ -690,51 +688,9 @@ def test_recovery_rejects_schema_revision_mismatch_before_soap(
     engine.dispose()
 
 
-def test_legacy_chunk_indexer_commits_by_default() -> None:
-    class FakeSession:
-        def __init__(self):
-            self.commits = 0
-            self.flushes = 0
-
-        def commit(self):
-            self.commits += 1
-
-        def flush(self):
-            self.flushes += 1
-
-    class FakeRepo:
-        def __init__(self):
-            self._session = FakeSession()
-
-        def list_extracted_documents_by_tender(self, _tender_id):
-            return []
-
-    repo = FakeRepo()
-    indexer = DocumentChunkIndexer(repo, TenderResearchConfig())
-
-    indexer.build_for_tender("tender")
-    assert repo._session.commits == 1
-    assert repo._session.flushes == 0
-
-    indexer.build_for_tender("tender", commit=False)
-    assert repo._session.commits == 1
-    assert repo._session.flushes == 1
-
 
 def _multi_chunk_fixture(tmp_path: Path):
     tmp_path.mkdir(parents=True, exist_ok=True)
-
-    class FakeSession:
-        def __init__(self):
-            self.commits = 0
-            self.flushes = 0
-
-        def commit(self):
-            self.commits += 1
-
-        def flush(self):
-            self.flushes += 1
-
     text_value = " ".join(f"word-{index}" for index in range(2_000))
     text_path = tmp_path / "full.txt"
     text_path.write_text(text_value, encoding="utf-8")
@@ -745,37 +701,32 @@ def _multi_chunk_fixture(tmp_path: Path):
         file_name="document.xml",
         sha256=hashlib.sha256(text_value.encode()).hexdigest(),
     )
-
-    class FakeRepo:
-        def __init__(self):
-            self._session = FakeSession()
-            self.chunks = []
-
-        def list_extracted_documents_by_tender(self, _tender_id):
-            return [document]
-
-        def list_document_chunks(self, document_id):
-            return [chunk for chunk in self.chunks if chunk.document_id == document_id]
-
-        def upsert_document_chunk(self, data):
-            chunk = SimpleNamespace(**data, id=f"chunk-{len(self.chunks)}")
-            self.chunks.append(chunk)
-            return chunk
-
-    repo = FakeRepo()
-    indexer = DocumentChunkIndexer(
-        repo,
-        TenderResearchConfig(
-            rag_chunk_size_chars=1500,
-            rag_chunk_overlap_chars=200,
-            rag_min_chunk_chars=120,
-        ),
-    )
-    expected_drafts = chunk_text(text_value, indexer._chunking)
-    indexer.build_for_tender("tender-1", commit=False)
-    assert len(repo.chunks) == len(expected_drafts)
-    return document, repo.chunks, text_value
-
+    chunks = []
+    chunk_size = 1500
+    overlap = 200
+    start_at = 0
+    index = 0
+    while start_at < len(text_value):
+        end_at = min(len(text_value), start_at + chunk_size)
+        chunk_text_value = text_value[start_at:end_at]
+        chunks.append(
+            SimpleNamespace(
+                id=f"chunk-{index}",
+                document_id=document.id,
+                tender_id=document.tender_id,
+                chunk_index=index,
+                text=chunk_text_value,
+                text_hash=hashlib.sha256(chunk_text_value.encode()).hexdigest(),
+                char_start=start_at,
+                char_end=end_at,
+                token_estimate=max(1, len(chunk_text_value) // 4),
+            )
+        )
+        if end_at == len(text_value):
+            break
+        start_at = end_at - overlap
+        index += 1
+    return document, chunks, text_value
 
 def test_chunk_snapshot_accepts_real_multichunk_bounds(tmp_path: Path) -> None:
     document, chunks, _text_value = _multi_chunk_fixture(tmp_path)

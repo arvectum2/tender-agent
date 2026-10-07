@@ -1,0 +1,38 @@
+task_id: MOB-1-IOS-INBOX-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Native SwiftUI read-only manager inbox/detail connected to the current Tender Agent mobile API.
+definition_of_done:
+  - Existing iOS branch reconciled with current main.
+  - Current backend mobile contract decodes correctly, including current recommendation evidence fields.
+  - Pairing uses a dedicated Bearer token stored in Keychain.
+  - MOB-1 app surface is read-only and live/mock state is explicit.
+  - Xcode 27 build-for-testing and focused unit tests pass.
+  - Review-ready PR prepared; merge remains separately gated.
+completed:
+  - Reconciled existing iOS branch with current main at 986f039.
+  - Switched live refresh to GET /mobile/v1/inbox and current attention-only semantics.
+  - Aligned mobile procurement model with recommendation confidence/reasons/blockers/unknowns.
+  - Removed decision-write methods/buttons from the MOB-1 app slice.
+  - Preserved Bearer pairing and Keychain-backed mobile token storage.
+  - Added build/version metadata and regenerated the Xcode project.
+  - Verified generic simulator build-for-testing on Xcode 27.0.
+  - "Verified AppStoreTests on connected iPhone: 2 passed, 0 failed."
+  - "Verified backend mobile contract tests: 9 passed."
+  - "Verified Mac mini runtime auth boundary: health 200; unauthenticated mobile inbox 401."
+  - Verified git diff --check and no decision-write methods/buttons in app/test source.
+  - Opened review-ready PR #171 at implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300.
+  - "Exact-head GitHub CI run 37517210451 completed SUCCESS 9/9."
+current: Completed; review-ready PR #171 remains intentionally unmerged.
+remaining: []
+last_verified_commit: da9a7f0dd1df7d957856a0405c525ad6c74f5300
+test_results:
+  - "xcodegen generate: PASS"
+  - "xcodebuild generic iOS Simulator build-for-testing: PASS"
+  - "AppStoreTests on connected iPhone: 2 passed, 0 failed"
+  - "tests/test_mobile_api.py: 9 passed"
+  - "runtime mobile auth boundary: PASS"
+  - "git diff --check: PASS"
+  - "GitHub CI 37517210451: SUCCESS 9/9"
+resume_instruction: Task completed. Preserve PR #171 as review-ready; do not merge until the AM-4 review-due gate is resolved. MOB-2 requires a new bounded admission.
+updated_at: '2026-10-06T22:22:04+03:00'

@@ -17,6 +17,7 @@ from src.modules.tender_operator_agent_demo.report_model import (
 from src.modules.tender_operator_agent_demo.upload_service import (
     _render_customer_report_html,
 )
+from src.shared.document_processing import ProcessedChunk, ProcessedDocument
 
 
 def _digest(path: Path) -> str:
@@ -33,7 +34,7 @@ def test_repository_contract_preflight_uses_current_customer_and_run_schemas():
     assert "serialize_graph" in report["source_graph_entry_points"]
 
 
-def test_intake_mapping_uses_metadata_stored_name_and_verifies_bytes(tmp_path: Path):
+def test_intake_mapping_uses_metadata_stored_name_and_verifies_bytes(tmp_path: Path, monkeypatch):
     first = tmp_path / "stored-a.txt"
     second = tmp_path / "stored-b.txt"
     first.write_text("Первый документ закупки содержит достаточно текста.", encoding="utf-8")
@@ -62,6 +63,25 @@ def test_intake_mapping_uses_metadata_stored_name_and_verifies_bytes(tmp_path: P
             {"original_name": "A.txt", "stored_name": "stored-a.txt"},
         ]
     }
+
+    def fake_process_document_bytes(**kwargs):
+        text = kwargs["content"].decode("utf-8")
+        return ProcessedDocument(
+            extraction_status="extracted",
+            text=text,
+            chunks=(
+                ProcessedChunk(
+                    index=0,
+                    text=text,
+                    text_hash=hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                    char_start=0,
+                    char_end=len(text),
+                    token_estimate=max(1, len(text.split())),
+                ),
+            ),
+        )
+
+    monkeypatch.setattr(runner._contract, "process_document_bytes", fake_process_document_bytes)
 
     prepared = runner._prepare_documents(
         physical=physical,

@@ -20,15 +20,15 @@ import argparse
 import base64
 import json
 import os
-import sys
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
-from typing import Any, Iterable
+from time import perf_counter
+from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-
 
 READY_STATUSES = {"completed", "completed_with_warnings", "needs_review"}
 _SELECTION_HISTORY_FILENAME = "selection-history.json"
@@ -89,7 +89,7 @@ def _basic_auth_header(credentials: tuple[str, str] | None) -> str | None:
     if credentials is None:
         return None
     username, password = credentials
-    token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+    token = base64.b64encode(f"{username}:{password}".encode()).decode("ascii")
     return f"Basic {token}"
 
 
@@ -164,7 +164,7 @@ class BackendClient:
             method=method,
         )
         try:
-            with urlopen(request, timeout=self.timeout_seconds) as response:  # noqa: S310 - localhost/operator URL by design
+            with urlopen(request, timeout=self.timeout_seconds) as response:
                 raw = response.read().decode("utf-8")
         except HTTPError as exc:
             self._raise_http_error(exc, path=path)
@@ -193,7 +193,7 @@ class BackendClient:
             method="GET",
         )
         try:
-            with urlopen(request, timeout=self.timeout_seconds) as response:  # noqa: S310 - localhost/operator URL by design
+            with urlopen(request, timeout=self.timeout_seconds) as response:
                 return response.read().decode("utf-8")
         except HTTPError as exc:
             self._raise_http_error(exc, path=path, report=True)
@@ -501,6 +501,8 @@ def execute(
             details={
                 "run_id": run_id,
                 "registry_number": selected.registry_number,
+                "source_url": selected.card.get("source_url"),
+                "title": selected.card.get("title"),
                 "selection_history_path": str(history_path.resolve()),
                 "attachments_status": run_payload.get("attachments_status"),
                 "downloaded_files_count": run_payload.get("downloaded_files_count"),
@@ -587,6 +589,50 @@ def execute(
     }
 
 
+def _write_evidence_summary(output_dir: Path, result: dict[str, Any]) -> Path:
+    """Write the local operator-evidence checklist for every terminal attempt."""
+
+    selection = result.get("selection") if isinstance(result.get("selection"), dict) else {}
+    run = result.get("run") if isinstance(result.get("run"), dict) else {}
+    details = result.get("details") if isinstance(result.get("details"), dict) else {}
+    llm = result.get("llm") if isinstance(result.get("llm"), dict) else {}
+    report = result.get("report") if isinstance(result.get("report"), dict) else {}
+    recommendation = run.get("final_recommendation")
+    if isinstance(recommendation, dict):
+        recommendation = recommendation.get("recommendation")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    evidence_path = output_dir / "_evidence.md"
+    evidence_path.write_text(
+        "\n".join(
+            (
+                "# PILOT-001 attempt evidence",
+                "",
+                f"- query: {result.get('query') or 'N/A'}",
+                f"- law: {result.get('law') or 'N/A'}",
+                f"- registry number: {selection.get('registry_number') or details.get('registry_number') or 'N/A'}",
+                f"- source URL: {selection.get('source_url') or details.get('source_url') or 'N/A'}",
+                f"- run ID: {run.get('run_id') or details.get('run_id') or 'N/A'}",
+                f"- result: {result.get('status') or 'unknown'}",
+                f"- recommendation: {recommendation or 'N/A'}",
+                f"- document status/count: {run.get('attachments_status') or details.get('attachments_status') or 'N/A'} / {run.get('downloaded_files_count') or details.get('downloaded_files_count') or 0}",
+                f"- analysis mode: {run.get('analysis_mode') or 'not_started'}",
+                f"- local LLM actually completed: {'yes' if llm.get('invoked') else 'no'}",
+                f"- fallback used: {'yes' if llm.get('fallback_used') else 'no'}",
+                f"- report path/status: {report.get('saved_path') or 'N/A'} / {'REPORT_READY' if report else 'N/A'}",
+                f"- wall-clock duration: {result.get('duration_seconds', 0):.3f} seconds",
+                "- operator intervention: none",
+                "- PO verdict: PENDING_REVIEW",
+                "- PO corrections: pending",
+                "- defect IDs: PENDING_TRIAGE",
+                "",
+            )
+        ),
+        encoding="utf-8",
+    )
+    return evidence_path
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run Mac mini procurement discovery -> analysis -> report E2E proof")
     parser.add_argument("--query", required=True, help="Procurement keyword query")
@@ -607,6 +653,7 @@ def _parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    started_at = perf_counter()
     try:
         basic_auth = _auth_credentials_from_env()
         client = BackendClient(
@@ -624,22 +671,23 @@ def main(argv: list[str] | None = None) -> int:
             excluded_registry_numbers=args.exclude_registry_number,
         )
     except E2EBlocked as exc:
-        print(
-            json.dumps(
-                {
-                    "status": "blocked",
-                    "marker": "MACMINI_AUTONOMOUS_PROCUREMENT_E2E_BLOCKED",
-                    "code": exc.code,
-                    "message": exc.message,
-                    "details": exc.details,
-                },
-                ensure_ascii=False,
-                sort_keys=True,
-            )
-        )
-        return 20
+        result = {
+            "status": "blocked",
+            "marker": "MACMINI_AUTONOMOUS_PROCUREMENT_E2E_BLOCKED",
+            "query": args.query,
+            "law": args.law,
+            "code": exc.code,
+            "message": exc.message,
+            "details": exc.details,
+        }
+        exit_code = 20
+    else:
+        exit_code = 0
+    result["duration_seconds"] = perf_counter() - started_at
+    evidence_path = _write_evidence_summary(args.output_dir, result)
+    result["evidence_path"] = str(evidence_path.resolve())
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
-    return 0
+    return exit_code
 
 
 if __name__ == "__main__":

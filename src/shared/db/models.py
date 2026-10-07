@@ -66,6 +66,7 @@ from src.modules.cost_model.models import CostModelLine, CostModelRecord, CostMo
 from src.modules.cash_gap.models import CashGapRecord, CashGapScenario, CashGapSet
 from src.modules.deal_closure.models import DealArchiveSnapshot, DealClosureRecord, DealClosureSet
 from src.modules.deal_registry.models import Deal, DealExternalRef, DealTag
+from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem
 from src.modules.dashboard_snapshots.models import (
     DashboardMetricRecord,
     DashboardSnapshotRecord,
@@ -82,6 +83,7 @@ from src.modules.document_requirements.models import DocumentRequirementRow, Doc
 from src.modules.document_store.models import ArtifactLink, ArtifactVersion, DocumentArtifact
 from src.modules.event_log.models import DecisionRecord, EventRecord
 from src.modules.integration_outbox.models import IntegrationOutboxEvent  # noqa: F401
+from src.modules.mobile_api.models import MobileDeviceAccess, MobileDeviceRegistration, MobilePushDelivery  # noqa: F401
 from src.modules.execution_command.models import (
     ExecutionCommandBinding,
     ExecutionCommandRecord,
@@ -347,6 +349,8 @@ __all__ = [
     "DealClosureRecord",
     "DealClosureSet",
     "Deal",
+    "DailyTenderRun",
+    "DailyTenderRunItem",
     "DashboardMetricRecord",
     "DashboardSnapshotRecord",
     "DashboardSnapshotSet",

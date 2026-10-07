@@ -1,0 +1,59 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: DTR-3-POST-GO-AUTOMATION-001
+authority: OWNER_DIRECTIVE
+goal: 'Deliver the next bounded Daily Tender Run stage: after an attributable human GO, automatically prepare factual readiness artifacts and advance submission/outcome tracking only from grounded evidence, without performing consequential ETP/signature/payment/submission actions.'
+definition_of_done:
+- Start from current main with DTR-1/DTR-2 and MOB-1/MOB-2/MOB-3 behavior preserved.
+- A canonical human GO can move an eligible Daily Tender Run item from WAIT_HUMAN into a restartable POST_DECISION stage without auto-deciding participation.
+- POST_DECISION reuses existing canonical readiness/application/package services and records a deterministic readiness snapshot or explicit blocked/unknown state; it does not fabricate application completeness.
+- TRACK_SUBMISSION advances only from canonical explicit-human or source-grounded submission evidence; absence of evidence leaves the case pending and never claims submission.
+- TRACK_OUTCOME consumes existing public/source-grounded outcome evidence and updates the canonical lifecycle/portfolio idempotently; absence or ambiguity remains pending/unknown.
+- DTR resume/run paths can continue already-decided items through the new stages without chat orchestration and without redoing completed work.
+- Failures in one procurement remain isolated, persisted and restartable.
+- No ETP login/action, bid submission/modification, EDS/UKЭП/private-key use, payment, bank guarantee purchase, supplier/customer outreach, or autonomous GO/NO GO is introduced.
+- Focused backend tests cover GO transition, readiness grounding, submission evidence gating, outcome grounding, idempotent resume and fail-closed behavior.
+- Relevant deterministic tests and git diff checks pass; exact-head CI is green before merge.
+- Roadmap/checkpoint are reconciled after merge and the canonical checkpoint is marked completed.
+completed:
+- '2026-10-07: MOB-3 canonical checkpoint verified completed on main; final checkpoint merge is 4f823ae5e8dc67e836f8cc4192479b917ea0fbd6.'
+- '2026-10-07: Owner continuation command admitted DTR-3, the next delivery stage before MOB-4.'
+- '2026-10-07: Verified the single hourly Tender Agent Watchdog already exists and remains enabled.'
+- 'Inspected Daily Tender Run, canonical HUMAN portfolio/mobile decisions, bid package/completeness/readiness, submission control/receipts, post-submission tracking, outcome intake and Procurement Portfolio.'
+- 'Moved implementation to isolated worktree /Volumes/ArvectumSSD/Arvectum/repos/tender-agent-dtr3 after detecting unrelated concurrent Procurement Portfolio edits in the shared checkout; unrelated work was preserved and excluded from DTR-3.'
+- 'Added durable DTR post-decision state fields plus Alembic migration 102_add_daily_tender_post_decision.'
+- 'Added reuse-first post-GO orchestration: HUMAN GO gates readiness, reuses/builds coherent canonical readiness, creates local submission-control preparation only when READY, and never starts a submission.'
+- 'Added fail-closed submission tracking: SUBMITTED alone is insufficient; advancement requires either an attributable successful human execution or a source-bound registered receipt.'
+- 'Added fail-closed outcome tracking: DTR advances to DONE only for an outcome intake bound to a persisted artifact; unbound outcomes remain pending.'
+- 'Added HUMAN NO_GO and DEFER handling, per-item failure isolation, restartable WAITING_READINESS / WAITING_SUBMISSION / WAITING_OUTCOME run states, and DTR response/count projections.'
+- 'Updated unattended Daily Tender Run CLI to resume open runs before starting the new discovery run, while preserving the no-ETP/no-sign/no-pay/no-autonomous-decision boundary.'
+- 'Added focused tests covering missing-readiness fail-closed behavior, HUMAN NO_GO stop, unverified SUBMITTED rejection, source-bound receipt acceptance, ungrounded outcome rejection, grounded outcome completion and idempotent resume.'
+- 'Final Sprint 5A + 5B integration regression passed after the readiness-coherence and unattended-resume refinements.'
+- 'Full local suite ran 3070 passed / 236 skipped with one R9 backup-restore failure at pg_restore; the exact same R9 test fails on an untouched clean worktree at base 4f823ae, proving the failure is pre-existing/environmental rather than introduced by DTR-3.'
+current: 'DTR-3 is fully completed: implementation, roadmap reconciliation, exact-head CI and Owner-approved merges are complete.'
+pending: []
+last_verified_commit: 205455ae3e87719792928015258481cc39e27102
+test_results:
+- 'Ruff on DTR module, DTR tests, CLI and migration: PASS.'
+- 'Alembic heads: single head 102_add_daily_tender_post_decision.'
+- 'Focused Daily Tender Run tests: 11 passed, 9 warnings in 1.29s.'
+- 'DTR + mobile API + Procurement Portfolio: 33 passed, 26 warnings in 2.84s.'
+- 'Sprint 5A + 5B integration after final readiness-coherence refinement: 15 passed, 16 warnings in 3.92s.'
+- 'uv run make test: 3070 passed, 236 skipped, 1 failed; only failure is tests/test_r9_backup_restore.py at pg_restore.'
+- 'Clean untouched base 4f823ae comparison: tests/test_r9_backup_restore.py reproduces the same pg_restore failure (1 failed, 3 passed), so the local full-suite failure is not a DTR-3 regression.'
+- 'make check and git diff --check: PASS.'
+- 'Implementation PR #180 opened from 15e21848186ad2a5aba22f276fe9eee42a7459bd.'
+- 'PR #180 exact-head 8f85f789ec7daaa1f91ae4fe1455950038ece0fd CI run 37575956723: SUCCESS 9/9; squash-merged as 3b25e10bab2930f954d39a444b8258ad597010c9.'
+- 'Reconciled MASTER_ROADMAP.md, master-roadmap.yaml and Daily_Tender_Run_and_iPhone_MVP.md to DTR-3 merged state; historical continuation tail remains byte-identical to origin/main.'
+- 'Roadmap PR #181 exact-head 070f9151c23cd36841193fa93d6ae792155758f4 CI run 37577205313: SUCCESS 9/9; squash-merged as 205455ae3e87719792928015258481cc39e27102.'
+updated_at: '2026-10-07T08:50:00+03:00'
+resume_instruction: 'DTR-3 is completed. Do not reopen it automatically. MOB-4 (mobile Procurement Portfolio and metrics UX polish) requires a separate explicit admission before implementation. Preserve the unrelated shared-checkout work.'
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20261007-dtr3
+  branch: chore/complete-dtr3-checkpoint-20261007
+  base_commit: 4f823ae5e8dc67e836f8cc4192479b917ea0fbd6
+  issue: null
+  manual_override: true
+  lease_until: null

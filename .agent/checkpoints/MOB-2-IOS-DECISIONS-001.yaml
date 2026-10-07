@@ -1,0 +1,76 @@
+version: 2
+repository: arvectum2/tender-agent
+status: completed
+task_id: MOB-2-IOS-DECISIONS-001
+authority: OWNER_DIRECTIVE
+goal: 'Deliver the second bounded ARV-044 mobile slice: explicit human GO / NO GO / DEFER actions from the native iPhone client,
+  persisted through the existing mobile API into the canonical Tender Agent decision log and reflected in Procurement Portfolio.'
+definition_of_done:
+- MOB-2 starts from current main with completed MOB-1 behavior preserved.
+- Native SwiftUI procurement detail exposes explicit GO / NO GO / DEFER controls only as human-triggered actions.
+- Mobile writes use the dedicated Bearer pairing boundary and the existing /mobile/v1 decision contract; no Basic Auth/password
+  embedding.
+- Successful decisions are audited in the canonical decision/event lifecycle and become visible after refresh in the mobile
+  detail/portfolio projection.
+- UI clearly represents submitting, success, validation failure, auth failure, and offline/network failure without silently
+  mutating local state.
+- Backend contract tests cover mobile decision writes and canonical portfolio visibility; focused iOS tests cover request/action
+  state.
+- Xcode project builds on current Xcode and focused tests pass on the connected iPhone or, if the device is unavailable, on
+  the configured simulator with the device limitation recorded.
+- No automatic procurement decision, ETP action, signature, payment, bid submission, or external communication is introduced.
+- Roadmap/checkpoint are reconciled, exact-head CI is green, and the implementation is merged under this explicit Owner directive
+  unless a real blocker appears.
+completed:
+- Owner explicitly admitted MOB-2 on 2026-10-06.
+- Preserved divergent local main commit on backup branch and reset working main to origin/main before creating the MOB-2 branch.
+- Inspected the existing mobile decision endpoint and confirmed it appends PORTFOLIO_BID_DECISION records as DecisionByType.HUMAN
+  with ios:<device_id>, source=tender_agent_ios and idempotency keys.
+- Added authenticated iOS GO / NO GO / DEFER writes with optional rationale and required defer date, using the existing Bearer
+  token boundary.
+- Added a two-step SwiftUI decision flow so a human must choose an action and confirm it before any write occurs.
+- Added explicit submitting/success/error states; demo/offline mode refuses writes without mutating local procurement state.
+- Changed mobile refresh to load the full canonical mobile portfolio plus inbox summary, so decided items remain visible after
+  they leave the manager inbox.
+- Added a Portfolio tab with navigation back into procurement detail and current human decision visibility.
+- Extended backend tests so GO, NO_GO and DEFER are verified in the canonical /procurement-portfolio projection.
+- Bumped the iOS slice version to 0.6.0 and updated the mobile README safety boundary.
+- 'PASS: uv run python -m pytest tests/test_mobile_api.py tests/test_procurement_portfolio.py -q — 14 passed.'
+- 'PASS: xcodegen generate and generic iOS Simulator build-for-testing on Xcode 27.0.'
+- 'PASS: iPhone 17 / iOS 27 simulator focused TenderAgentTests — 5 passed, 0 failed.'
+- Physical iPhone test was attempted; Xcode reported the connected iPhone Nikita was locked, so the configured simulator fallback
+  was used per DoD.
+- 'PASS: runtime boundary at https://mac-mini-master.tail786c4b.ts.net:9443 — /health=200; unauthenticated /mobile/v1/inbox=401.'
+- 'PASS: git diff --check before implementation commit.'
+- Implementation committed as 122f428c98b0ce42d255a31274b83d90c5b847a8.
+- 'Implementation PR #173 exact-head CI run 37524387682 completed SUCCESS 9/9 at d2fe2fa211682e4cc41995683e4b19f5310529ba.'
+- 'Implementation PR #173 squash-merged as fe92b39e7a5944ccb519ee1f7579a811d91153f3.'
+- Roadmap overlay updated to mark MOB-2 done and MOB-3 next/not admitted while preserving all consequential-action hard stops.
+- 'PASS: roadmap YAML/checkpoint YAML parse, git diff --check, and historical roadmap tail preservation against fe92b39.'
+- 'Roadmap reconciliation PR #174 exact-head CI run 37525851145 completed SUCCESS 9/9 at fdb371476c551aec5b9edd5ed237bf68ecfdc03d.'
+- 'Roadmap reconciliation PR #174 squash-merged as be214b9c83c96129a90d1afae41d34c43dc4cc07.'
+- Canonical roadmap now marks MOB-2 done and MOB-3 next/not admitted.
+current: 'MOB-2 completed: implementation and roadmap reconciliation are merged; no further MOB-2 work remains.'
+pending: []
+last_verified_commit: be214b9c83c96129a90d1afae41d34c43dc4cc07
+test_results:
+- 'PASS: backend mobile + canonical portfolio tests — 14 passed, 11 warnings.'
+- 'PASS: xcodegen generate.'
+- 'PASS: generic iOS Simulator build-for-testing on Xcode 27.0.'
+- 'PASS: focused iOS simulator tests — 5 passed, 0 failed.'
+- 'DEVICE LIMITATION: connected physical iPhone was locked during test launch; no code-signing/provisioning failure occurred.'
+- 'PASS: runtime auth boundary — health 200; unauthenticated mobile inbox 401.'
+- 'PASS: git diff --check.'
+- 'PASS: implementation exact-head GitHub CI 37524387682 — 9/9 jobs.'
+- 'PASS: roadmap reconciliation exact-head GitHub CI 37525851145 — 9/9 jobs.'
+updated_at: '2026-10-06T23:31:00+03:00'
+resume_instruction: MOB-2 is completed. Do not reopen it automatically. MOB-3 (APNs + deep links) requires a separate explicit
+  admission.
+execution:
+  claimed_by: ChatGPT interactive
+  execution_id: interactive-20261006-mob2
+  branch: chore/complete-mob2-checkpoint-20261006
+  base_commit: be214b9c83c96129a90d1afae41d34c43dc4cc07
+  issue: null
+  manual_override: true
+  lease_until: null

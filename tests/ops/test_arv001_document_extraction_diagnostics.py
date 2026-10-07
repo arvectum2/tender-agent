@@ -5,8 +5,9 @@ from pathlib import Path
 
 import pytest
 
+import scripts.arv001.complete_corpus_contract as corpus_contract
 from scripts.arv001.complete_corpus_contract import AcceptanceBlocked, prepare_documents
-from src.tender_research import document_text_extractor as extractor
+from src.shared.document_processing import ProcessedDocument
 
 
 def test_prepare_documents_reports_ordinal_extension_and_status_without_path(
@@ -18,9 +19,13 @@ def test_prepare_documents_reports_ordinal_extension_and_status_without_path(
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
 
     monkeypatch.setattr(
-        extractor,
-        "extract_text",
-        lambda local_path, max_chars: (extractor.EMPTY_STATUS, ""),
+        corpus_contract,
+        "process_document_bytes",
+        lambda **_kwargs: ProcessedDocument(
+            extraction_status="empty",
+            text="",
+            chunks=(),
+        ),
     )
 
     with pytest.raises(AcceptanceBlocked) as raised:

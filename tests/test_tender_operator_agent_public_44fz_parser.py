@@ -147,3 +147,26 @@ def test_parser_does_not_use_token():
     source = __import__(parser_module.__name__, fromlist=["token"])
     assert not hasattr(source, "token") or source.token is None
     assert not hasattr(parser_module, "ZAKUPKI_GOV_RU_SOAP_TOKEN")
+
+
+def test_parse_prefers_procurement_notice_url_over_unrelated_absolute_asset():
+    html = """<html><body>
+    <div class="registry-entry">
+      <a href="https://zakupki.gov.ru/rpt/cat02/zakupki-traffic.xlsx">traffic</a>
+      <div class="registry-entry__header-mid__title">Электронный аукцион</div>
+      <div class="registry-entry__header-mid__number">
+        <a href="/epz/order/notice/ea20/view/common-info.html?regNumber=0262200000126000037">0262200000126000037</a>
+      </div>
+      <div class="registry-entry__body-title">Объект закупки</div>
+      <div class="registry-entry__body-value">Разработка программного обеспечения</div>
+    </div>
+    </body></html>"""
+
+    cards = parse_44fz_search_results(html)
+
+    assert len(cards) == 1
+    assert cards[0]["reestr_number"] == "0262200000126000037"
+    assert cards[0]["source_url"] == (
+        "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html"
+        "?regNumber=0262200000126000037"
+    )

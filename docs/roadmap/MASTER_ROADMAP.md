@@ -34,11 +34,19 @@ The Product Owner changes the default development posture from **build-first** t
 | Stage | Priority | Current state | Outcome / evidence |
 |---|---|---|---|
 | **0. Competitive reverse-spec + reuse registry** | P0 | **done** | PR #56 merged (`8b1c131`): 9 direct products, 10 reuse candidates, active P0/P1 strategy classification and explicit commodity de-scope. |
-| **1. Thin commodity shell** | P0 | partial / not separately gated | Baseline shell pre-existed this cycle; Docker-context hardening PR #58 merged (`8924a857`). No standalone Stage 1 completion gate is currently admitted. |
+| **1. Thin commodity shell** | P0 | **done** | Dedicated acceptance matrix proves baseline search/filter + versioned saved profiles + tender card + document download/parsing adapters + auth/visibility + monitoring alerts + export. Focused gate 67 passed / 10 skipped; exact-head CI `37612128040` SUCCESS 9/9; closure PR #192 merged as `a58ec11`. No new commodity subsystem was required. |
 | **2. Decision Core v1** | P0 | **done** | Discovery benchmark/hardening PR #59 merged (`762a392`); Decision Core v1 PR #61 merged (`3bf397f`) with evidence-bound fail-closed decisions. |
 | **3. Commercial Core** | P0 | **done** | PR #63 merged (`4257cd2`): price-list ingest, tender-to-catalog matching, coverage/cost/headroom and auditable commercial feasibility with HUMAN control. |
 | **4. Automation + integrations** | P1 | **done at admitted v1 boundary** | PR #74 (`56ca227`) change monitoring + PR #75 (`fbf6d3c`) ingest resilience + PR #79 (`4149801`) internal integration outbox. External delivery remains disabled and separately gated. |
 | **5. Reliability + moat** | P1 | **done at admitted v1 boundary** | PR #76 (`c335c60`) ops observability + PR #77 (`c5e653a`) domain regression registry + PR #80 (`dc87a0b`) read-only 223-ФЗ intake + review-approved PR #81 (`f603c9f`) 223-ФЗ Decision Core. |
+
+### Stage 1 acceptance — 2026-10-07
+
+Stage 1 is now closed at its original exit gate. The accepted commodity journey is:
+
+`authenticated operator → search/filter or versioned saved profile → result/tender card → source document download/parsing adapter → watch/alert feed → report/export`
+
+The closure reuses existing Tender Agent components rather than introducing a new search engine, viewer, auth framework, notification platform, CRM or export stack. Full enterprise IAM/SSO, arbitrary dashboard CRUD, inline PDF.js-style viewing and external notification delivery remain separate future scopes and are not Stage 1 blockers. Acceptance evidence is recorded in `docs/strategy/STAGE1_THIN_COMMODITY_SHELL_ACCEPTANCE.md` and `tests/test_stage1_thin_commodity_shell.py`.
 
 ### Commodity default: do not build from scratch
 
@@ -64,7 +72,79 @@ The executor must reconcile issue/PR/done-gate state before continuing a stale c
 
 This changes utilization/cadence only. It does **not** expand AM-4 authority, queue admission, external-action rights, or `REVIEW` / `OWNER` / `HUMAN` gates.
 
-**Current execution status (2026-09-18):** every explicitly admitted execution-queue item through order 80 is completed. The final REVIEW item, `223FZ-DECISION-V1-001` / PR #81, was merged after explicit Product Owner approval and successful exact-head CI. The canonical queue is now exhausted: there is **no admitted executable item**. The single `Tender Agent Watchdog` remains enabled exact-hourly and audit-logged in issue #57, but it must report/reconcile only and must not invent or promote roadmap work until the Product Owner admits a new bounded item.
+**Historical execution snapshot (2026-09-18):** at that point every explicitly admitted queue item through order 80 was completed and the queue was temporarily exhausted. This paragraph is retained only as history; it is **not** the current executor state.
+
+**Current execution status (2026-10-07, 17:52 MSK):** the bounded Daily Tender/iPhone sequence remains complete, and the Owner has now explicitly admitted the full canonical **COMMERCIAL-WORKFLOW** branch to the execution queue: ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066 and ARV-069. The first ready item is `ARV-015-OPERATOR-PROFILE-PARSER-001`; the remaining eleven bounded items are queued behind it in canonical branch order. On the same attributable Owner review, Company AM-4 was renewed on unchanged terms and reset to **0/10** automatic merges; the next time-based review deadline is 2026-11-07. All procurement submission, EDS/signature, external communication, legal/commercial acceptance and other hard stops remain unchanged.
+
+## Owner product directive — 2026-10-06: Daily Tender Run + iPhone Tender Agent
+
+The Product Owner promotes the real daily procurement workflow observed in production use into the next product layer.
+
+### A. Daily Tender Run — P0
+
+Goal: make the routine workflow reproducible end-to-end with one scheduled/backend run while keeping the substantive bid decision human.
+
+Canonical flow:
+
+EIS search/filter → dedupe → shortlist → document acquisition on Mac mini → Data Platform → deep analysis → evidence-bound summary → manager inbox → HUMAN GO / NO GO / DEFER → application readiness → submission tracking → outcome → postmortem → portfolio metrics.
+
+Required behavior:
+
+- saved filters on a configurable schedule plus manual rerun;
+- deduplicate already-seen procurements and reprocess only material changes;
+- cheap screening before expensive deep analysis;
+- EIS documents acquired through Mac mini and analyzed locally via Data Platform;
+- one manager digest plus one evidence-grounded report per shortlisted procurement;
+- agent recommendation, rationale, confidence, blockers and evidence persisted separately from the human decision;
+- GO / NO GO / DEFER is the explicit manager gate;
+- after GO, prepare readiness artifacts automatically without fabricating submission/signature success;
+- capture factual submission, platform, price, timestamps, outcome, winning price/participant and postmortem cause when evidence exists;
+- write stages into the canonical event/decision/outcome lifecycle and Procurement Portfolio.
+
+Success gate: a normal business day can be processed without chat-driven orchestration; the manager only reviews prepared summaries and records a decision.
+
+This reuses existing search, intake, Data Platform, screening, decision log, submission control, outcome intake, postmortem and Procurement Portfolio capabilities. It is not a parallel data model.
+
+### B. ARV-044 mobile companion — promoted to P0 owner priority
+
+Historical ARV-044 remains immutable in the recovered snapshot. The Owner now promotes its current product meaning from a deferred lightweight “tender radar” into the primary iPhone decision client for Tender Agent.
+
+MVP contract:
+
+- native SwiftUI iPhone app;
+- Mac mini remains the Tender Agent backend;
+- private backend access through Tailscale for the internal MVP;
+- APNs push for new reports, deferred-due items, material procurement changes, deadline risk and published outcomes;
+- inbox/digest with manager-ready summaries;
+- procurement card with NMCK, deadline, recommendation, blockers, risks, unknowns and evidence;
+- explicit GO / NO GO / DEFER actions with optional reason/comment;
+- mobile Portfolio for decisions, submissions and outcomes;
+- deep links to EIS/full web report;
+- mobile decisions written to the same canonical decision log as web decisions.
+
+Human boundary:
+
+- the app may present the agent recommendation but never turns it into a bid decision automatically;
+- ETP/EDS/signature actions remain explicit human steps where required;
+- submission/result states are recorded only from real evidence or explicit human confirmation.
+
+Detailed spec: docs/product/Daily_Tender_Run_and_iPhone_MVP.md.
+
+**Current product status (2026-10-07):** **MOB-4 is completed and merged** in PR #183 as `bdcd868f1c42f3d3165cc8cad2c83b63b682521b`; exact-head CI run `37584606448` passed all 9 jobs. The iPhone Portfolio now consumes the canonical Procurement Portfolio projection for decision/submission/outcome totals and rates, provides deterministic pipeline/outcome filters, shows grounded submission/outcome timestamps and rationale/postmortem data, and refreshes canonical state before opening a deep-linked case. Missing evidence remains pending/unknown. **DTR-3** remains completed in PR #180 (`3b25e10`) and preserves the same HUMAN/source-evidence gates. No new mobile stage is admitted by this reconciliation.
+
+### Delivery sequence
+
+| Stage | Priority | Deliverable | Exit condition |
+|---|---|---|---|
+| DTR-1 | P0 | **DONE — Daily Tender Run domain/orchestrator + persisted state** | Pre-decision contour remains implemented and restartable |
+| DTR-2 | P0 | **DONE — manager inbox/digest API + mobile façade** | Pre-decision manager-attention contour remains implemented |
+| MOB-1 | P0 | **DONE — SwiftUI read-only inbox + procurement summary** | PR #171 merged; iPhone securely reads live Mac mini reports |
+| MOB-2 | P0 | **DONE — GO / NO GO / DEFER API + mobile actions** | PR #173 merged; human mobile decisions are audited and visible in Procurement Portfolio |
+| MOB-3 | P0 | **DONE — APNs push + deep links** | PR #176 merged; bounded push/deep-link routing opens the correct Tender Agent case |
+| DTR-3 | P1 | **DONE — post-GO readiness + submission/result monitoring** | PR #180 merged; only HUMAN/source-grounded evidence advances readiness, submission and outcome state |
+| MOB-4 | P1 | **DONE — mobile portfolio/metrics polish** | PR #183 merged; canonical pipeline/outcomes and factual rates are comfortable to review from phone |
+
+Roadmap status is now reconciled to execution: MOB-1, MOB-2, MOB-3, DTR-3 and MOB-4 were separately admitted, completed, and merged. This closes the currently defined bounded iPhone delivery sequence; this roadmap update does **not** admit a new development item.
 
 ### DOCUMENT-QA-005 reconciliation
 
@@ -72,6 +152,9 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 
 ## Current reconciliation highlights
 
+- **BASE-001..BASE-018:** current reconciliation is **18/18 confirmed_done**. This is a current evidence overlay only; the historical 2026-07-30 percentages and statuses remain unchanged. BASE-011 is closed as the Hermes infrastructure foundation, while real-user self-improvement is retained under ARV-004 as a post-MVP, not-admitted Feedback & Learning Loop.
+- **Current queue — 2026-10-07:** the full canonical COMMERCIAL-WORKFLOW branch is admitted as 12 ready AUTO queue items in roadmap order. The watchdog may implement/test/merge eligible items under renewed AM-4, but consequential external actions and Product/HUMAN/REVIEW gates remain fail-closed.
+- **ARV-044 — mobile companion:** current Owner priority is P0; MOB-1 is complete in PR #171 (`01b4be72`), MOB-2 in PR #173 (`fe92b39`), MOB-3 in PR #176 (`3ab3872`), and MOB-4 in PR #183 (`bdcd868`). DTR-3 post-GO orchestration is also complete in PR #180 (`3b25e10`) and preserves the same HUMAN participation boundary. The currently defined native-iPhone MVP sequence is implemented; Android, public multi-tenant release and autonomous decision/submission remain deferred and are not implied complete. Historical 2026-07-30 P2/5% fields remain unchanged in the immutable snapshot.
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
 - **ARV-003 — production LLM analysis:** current docs refer to an accepted ARV-003 bundle, while an older R10.1 backlog status still says Gate 5 ready. This inconsistency is preserved as a status-revalidation item rather than silently resolved.
 - **ARV-041 — legal SaaS/pilot package:** repository package exists, but the canonical legal release gate remains human: director approval, qualified Russian counsel review and infrastructure/Roskomnadzor/localization/retention checks.
@@ -104,10 +187,15 @@ The accelerated admitted pipeline that was active on 2026-09-15 is now fully rec
 | `223FZ-INGEST-V1-001` | **done** | issue #69; PR #80 merged as `dc87a0b` |
 | `223FZ-DECISION-V1-001` | **done** | issue #70; PR #81 merged as `f603c9f` after explicit Product Owner approval |
 | `DOMAIN-REGRESSION-V1-001` | **done** | issue #71; PR #77 merged as `c5e653a` |
+| `MOB-1-IOS-INBOX-001` | **done** | ARV-044 P0 slice; PR #171 merged as `01b4be72`; exact-head CI `37518592972` SUCCESS |
+| `MOB-2-IOS-DECISIONS-001` | **done** | ARV-044 P0 slice; PR #173 merged as `fe92b39`; exact-head CI `37524387682` SUCCESS |
+| `MOB-3-IOS-PUSH-DEEPLINKS-001` | **done** | ARV-044 P0 slice; PR #176 merged as `3ab3872`; exact-head CI `37533637202` SUCCESS; physical APNs delivery still requires Apple push entitlement/credentials |
+| `DTR-3-POST-GO-AUTOMATION-001` | **done** | Daily Tender Run post-GO slice; PR #180 merged as `3b25e10`; exact-head CI `37575956723` SUCCESS 9/9; readiness/submission/outcome advancement remains HUMAN/source-evidence gated |
+| `MOB-4-IOS-PORTFOLIO-METRICS-001` | **done** | ARV-044 P1 polish; PR #183 merged as `bdcd868`; exact-head CI `37584606448` SUCCESS 9/9; canonical portfolio metrics/outcomes only, no new consequential action |
 
 ### Execution queue after reconciliation
 
-All queue entries through order 80 are `done`. There is currently **no admitted READY/AUTO/REVIEW item** to execute. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
+The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, `DTR-3-POST-GO-AUTOMATION-001`, and `MOB-4-IOS-PORTFOLIO-METRICS-001` are **done and merged**. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate: the frozen 12-case 44-FZ core produced 12 reports, the three exploratory 223-FZ cases are separately scored source-bound blockers, and the aggregate report is preserved under `docs/pilot/`. BASE-001..BASE-018 are now **18/18 confirmed_done** in the current reconciliation overlay. Human usefulness/commercial acceptance remains HUMAN/REVIEW. There are now **no non-done admitted queue items**; the next bounded item must be admitted under the active Owner continuation rule rather than inferred from roadmap presence.
 
 ### Available continuation branches — candidate matrix
 
@@ -124,7 +212,7 @@ These are **roadmap branches, not admitted work**. Selecting one means creating 
 | **MONITORING-DELIVERY** | ARV-021, 056, 025, 029, 045 | Extend completed internal monitoring/outbox foundation to approved email/CRM/webhook/scheduled-reporting adapters | Live external delivery remains disabled until separate REVIEW/HUMAN authority |
 | **COMPETITIVE-BENCHMARK** | ARV-072 | Use completed domain-regression infrastructure for identical-procurement competitor benchmark refresh | Corpus/method frozen before outputs; anti-circularity mandatory |
 | **GO-TO-MARKET** | ARV-038–041, 054 | Product-first site; metrics; indexing; tariffs/demo; legal SaaS/pilot package | ARV-041 remains director/counsel/regulatory HUMAN gate; pricing/public commitments need Owner approval |
-| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas; on-prem/air-gapped; mobile companion; later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
+| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas; on-prem/air-gapped; mobile expansion beyond the completed internal iPhone MVP (for example public/multi-tenant or Android); later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
 | **DEVELOPMENT-GOVERNANCE** | ARV-051, 062 | Revalidate parallel-development protocol; mirror posture; reusable Project Watchdog binding | Must not alter Company/Product authority; open PR #78 is maintenance only |
 | **LATE-INFRA** | ARV-047–049 | OpenSearch, ClickHouse, Kubernetes/Helm when measured need appears | Deferred + reuse-first measured-gap gate |
 | **STATUS-REVALIDATION** | BASE-003, 007, 011, 012, 014; ARV-003, 051, 075 | Reconcile stale July progress/status values against current repository/runtime evidence | Status reconciliation only; no implementation authority |
@@ -148,24 +236,24 @@ The table below is a compact view grouped by product block. The machine-readable
 
 | ID | Queue | Historical status | Priority | Progress | Task | Current reconciliation |
 |---|---:|---|---|---:|---|---|
-| `BASE-001` | 0 | Готово | P0 | 100% | ООО «Арвектум» зарегистрировано, реквизиты и корпоративный контур оформлены | needs_revalidation |
-| `BASE-002` | 0 | Готово | P1 | 100% | Фирменный стиль, логотип и брендбук | needs_revalidation |
-| `BASE-003` | 0 | Базовый контур готов | P1 | 75% | Сайт arvectum.com и базовые digital-каналы | needs_revalidation |
-| `BASE-004` | 0 | Готово | P0 | 100% | Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI | needs_revalidation |
-| `BASE-005` | 0 | Готово | P0 | 100% | PostgreSQL + pgvector + RAG-контур | needs_revalidation |
-| `BASE-006` | 0 | Готово | P0 | 100% | Публичный поиск 44-ФЗ и точный поиск по номеру | needs_revalidation |
-| `BASE-007` | 0 | Базовый контур готов | P0 | 85% | Рабочий SOAP-контур ЕИС для машиночитаемых данных | needs_revalidation |
-| `BASE-008` | 0 | Готово | P0 | 100% | Загрузка закупки и формирование отчётов | needs_revalidation |
-| `BASE-009` | 0 | Готово | P0 | 100% | Извлечение товарных позиций и характеристик | needs_revalidation |
-| `BASE-010` | 0 | Готово | P0 | 100% | Разделение demo/live и отказ от тихих синтетических fallback | needs_revalidation |
-| `BASE-011` | 0 | Базовый контур готов | P0 | 70% | Hermes H1–H4: базовая память, quality gates и feedback | needs_revalidation |
-| `BASE-012` | 0 | Базовый контур готов | P0 | 80% | Quality R1–R5: golden loop, provenance и source graph | needs_revalidation |
-| `BASE-013` | 0 | Готово | P1 | 100% | Демо- и пилотный пакет документов | needs_revalidation |
-| `BASE-014` | 0 | Базовый контур готов | P1 | 65% | Базовый личный кабинет: клиенты, проекты и мастер поиска | needs_revalidation |
-| `BASE-015` | 0 | Готово | P1 | 100% | Стабильный рендер PDF на Linux | needs_revalidation |
-| `BASE-016` | 0 | Готово | P0 | 100% | R7 controlled pilot baseline: deployment, artifacts, backup/restore и recovery | needs_revalidation |
-| `BASE-017` | 0 | Готово | P0 | 100% | R8 Customer Pilot Workspace: изолированный клиентский жизненный цикл | needs_revalidation |
-| `BASE-018` | 0 | Готово | P0 | 100% | R9 Operational Hardening: fail-closed recovery, concurrency и backup/restore | needs_revalidation |
+| `BASE-001` | 0 | Готово | P0 | 100% | ООО «Арвектум» зарегистрировано, реквизиты и корпоративный контур оформлены | confirmed_done |
+| `BASE-002` | 0 | Готово | P1 | 100% | Фирменный стиль, логотип и брендбук | confirmed_done |
+| `BASE-003` | 0 | Базовый контур готов | P1 | 75% | Сайт arvectum.com и базовые digital-каналы | confirmed_done |
+| `BASE-004` | 0 | Готово | P0 | 100% | Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI | confirmed_done |
+| `BASE-005` | 0 | Готово | P0 | 100% | PostgreSQL + pgvector + RAG-контур | confirmed_done |
+| `BASE-006` | 0 | Готово | P0 | 100% | Публичный поиск 44-ФЗ и точный поиск по номеру | confirmed_done |
+| `BASE-007` | 0 | Базовый контур готов | P0 | 85% | Рабочий SOAP-контур ЕИС для машиночитаемых данных | confirmed_done |
+| `BASE-008` | 0 | Готово | P0 | 100% | Загрузка закупки и формирование отчётов | confirmed_done |
+| `BASE-009` | 0 | Готово | P0 | 100% | Извлечение товарных позиций и характеристик | confirmed_done |
+| `BASE-010` | 0 | Готово | P0 | 100% | Разделение demo/live и отказ от тихих синтетических fallback | confirmed_done |
+| `BASE-011` | 0 | Базовый контур готов | P0 | 70% | Hermes H1–H4: базовая память, quality gates и feedback | confirmed_done |
+| `BASE-012` | 0 | Базовый контур готов | P0 | 80% | Quality R1–R5: golden loop, provenance и source graph | confirmed_done |
+| `BASE-013` | 0 | Готово | P1 | 100% | Демо- и пилотный пакет документов | confirmed_done |
+| `BASE-014` | 0 | Базовый контур готов | P1 | 65% | Базовый личный кабинет: клиенты, проекты и мастер поиска | confirmed_done |
+| `BASE-015` | 0 | Готово | P1 | 100% | Стабильный рендер PDF на Linux | confirmed_done |
+| `BASE-016` | 0 | Готово | P0 | 100% | R7 controlled pilot baseline: deployment, artifacts, backup/restore и recovery | confirmed_done |
+| `BASE-017` | 0 | Готово | P0 | 100% | R8 Customer Pilot Workspace: изолированный клиентский жизненный цикл | confirmed_done |
+| `BASE-018` | 0 | Готово | P0 | 100% | R9 Operational Hardening: fail-closed recovery, concurrency и backup/restore | confirmed_done |
 
 ### 1. Качество ядра
 
@@ -176,8 +264,8 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-002` | 0 | Базовый контур готов | P0 | 90% | Стабильный live end-to-end pipeline без скрытых fallback | revalidated_residual_gap |
 | `ARV-003` | 2 | В работе | P0 | 97% | R10.1: production LLM-анализ с evidence map и confidence | accepted_evidence_present_needs_status_revalidation |
 | `ARV-001` | 3 | Запланировано | P0 | 85% | R10.2: Quality & Product Readiness — golden report и release gates | completed_governed |
-| `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation |
-| `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | needs_revalidation |
+| `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation — post-MVP, not admitted |
+| `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | confirmed_done |
 | `ARV-067` | 7 | На проверке | P1 | 90% | Вертикальные онтологии и настраиваемые схемы извлечения по категориям | review |
 | `ARV-061` | 12 | Запланировано | P1 | 5% | Commercial MVP v1: быстрый cited-преданализ | needs_revalidation |
 | `ARV-065` | 37 | Запланировано | P1 | 0% | Evidence-grounded copilot по закупке: Q&A, AI-юрист и сметчик | needs_revalidation |
@@ -321,6 +409,14 @@ The bounded non-admitted successor `ARV-015-OPERATOR-PROFILE-PARSER-001` is reco
 ## ARV-006 revalidation — 2026-09-21
 
 Merged 223-FZ intake and Decision Core already provide dedicated public search/card intake, source-bound basic facts, document discovery, revision ambiguity guards and fail-closed regime semantics. ARV-006 remains partial: lots/positions and structured changes, clarifications, protocols and status lifecycle are not yet established. One source-traceable successor candidate is recorded as `candidate_not_admitted`; no new 223-FZ implementation or legal rule is authorized by this reconciliation.
+
+## BASE-011 / ARV-004 product-boundary reconciliation — 2026-10-07
+
+BASE-011 is now `confirmed_done` as the Hermes infrastructure foundation. The repository already has the bounded primitives named by the BASE item: client/fallback behavior, runtime context, category profiles, normalization, quality gates, feedback/memory, eval-case generation, supplier-readiness and bid-decision helpers.
+
+The unfinished real-user self-improvement capability is not a BASE prerequisite. It is retained under existing `ARV-004` as the **post-MVP Feedback & Learning Loop**, documented in `docs/product/Feedback_Learning_Loop.md`. ARV-004 is deliberately not admitted to the execution queue at this stage.
+
+The successor loop is constrained to attributable correction → immutable human review → regression case → validated reusable-rule candidate → reviewed promotion. External Hermes runtime is optional, automatic cross-customer learning is prohibited, and canonical HUMAN GO / NO GO / DEFER authority remains unchanged.
 
 ## Executor rule
 

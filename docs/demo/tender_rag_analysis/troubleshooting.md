@@ -40,22 +40,15 @@ nohup ./.venv/bin/python -m uvicorn src.main:app --host 127.0.0.1 --port 8001 --
 
 - health показывает `database_dialect=sqlite` вместо `postgresql`.
 
-## 3. Embedding server недоступен
+## 3. Data Platform недоступна
 
 Проверить:
 
-```bash
-python -m src.tender_research.rag.cli check-embedding-server \
-  --provider llama_cpp \
-  --model Qwen3-Embedding-4B \
-  --base-url http://127.0.0.1:8090/v1
-```
+    curl -fsS http://127.0.0.1:8094/health
 
-Что делать:
+Если health не отвечает, восстановить runtime Data Platform. Tender Agent
+больше не имеет отдельного локального embedding/vector backend.
 
-- проверить `8090`;
-- проверить процесс `llama-server`;
-- проверить модель embeddings.
 
 ## 4. LLM server недоступен
 

@@ -9,17 +9,18 @@ definition_of_done:
 - Missing or malformed values remain unknown/null rather than inferred.
 - Existing Decision Core consumes the structured profile without changing external-action safety.
 - Relevant tests and exact-head CI pass.
-current: Parser and Decision Core binding implemented on isolated branch; focused tests pass locally.
+current: Existing PR #127 implementation reconciled onto canonical main after the 2026-10-07 Commercial Workflow admission and AM-4 renewal; focused verification is pending on the reconciled head.
 pending:
-- Commit and push exact branch head.
-- Open PR and check exact-head CI once.
-updated_at: '2026-09-24T16:05:00+03:00'
-resume_instruction: Check exact-head CI once. If green, mark implementation done but leave merge REVIEW-gated while Company AM-4 remains review-due at 10/10.
+- Run focused lint/tests on the reconciled head.
+- Push the exact branch head and check exact-head CI once.
+- Merge only if renewed AM-4 and all automatic-merge gates remain satisfied.
+updated_at: '2026-10-07T18:08:02+03:00'
+resume_instruction: Finish conflict reconciliation without duplicating the canonical queue item, run focused verification, push PR #127, and check exact-head CI once. If green and all renewed AM-4 gates remain satisfied, merge and finalize canonical task state.
 execution:
   claimed_by: Tender Agent Watchdog
-  execution_id: watchdog-20260924-155823
+  execution_id: watchdog-20261007-180511
   branch: agent/arv-015-operator-profile-parser-001
-  base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+  base_commit: ba84bb808636944543a8799f1519ae0cbb3b4eea
   issue: null
   manual_override: false
-  lease_until: '2026-09-24T18:08:00+03:00'
+  lease_until: '2026-10-07T20:08:02+03:00'

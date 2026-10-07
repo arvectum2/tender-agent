@@ -1,0 +1,60 @@
+name: TenderAgent
+options:
+  bundleIdPrefix: com.arvectum
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: "VML75VY94V"
+    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "0.8.0"
+targets:
+  TenderAgent:
+    type: application
+    platform: iOS
+    sources:
+      - TenderAgentApp
+    info:
+      path: TenderAgentApp/Info.plist
+      properties:
+        CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
+        CFBundleDisplayName: Tender Agent
+        CFBundleExecutable: "$(EXECUTABLE_NAME)"
+        CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        CFBundleInfoDictionaryVersion: "6.0"
+        CFBundleName: "$(PRODUCT_NAME)"
+        CFBundlePackageType: "$(PRODUCT_BUNDLE_PACKAGE_TYPE)"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        LSRequiresIPhoneOS: true
+        UIApplicationSupportsIndirectInputEvents: true
+        UILaunchScreen: {}
+        CFBundleURLTypes:
+          - CFBundleURLName: com.arvectum.tenderagent
+            CFBundleURLSchemes:
+              - tenderagent
+    entitlements:
+      path: TenderAgentApp/TenderAgent.entitlements
+      properties:
+        aps-environment: development
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.arvectum.tenderagent
+        PRODUCT_NAME: TenderAgent
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+    scheme:
+      testTargets:
+        - TenderAgentTests
+  TenderAgentTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - TenderAgentAppTests
+    dependencies:
+      - target: TenderAgent
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.arvectum.tenderagent.tests
+        GENERATE_INFOPLIST_FILE: YES

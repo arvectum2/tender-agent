@@ -5,9 +5,13 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any
+
+from src.shared.data_platform import DataPlatformError
+from src.shared.document_processing import EXTRACTED_STATUS, process_document_bytes
 
 DEFAULT_REGISTRY_NUMBER = "0388100001826000047"
 DEFAULT_CORPUS_SHA256 = "6557c0fa0dcc85bbab1a1e72a556505734c65eea6a29e649082eafbe80dc1d0a"
@@ -282,38 +286,6 @@ def _resolve_regular_file(
     raise AcceptanceBlocked("stored_file_identity_not_found")
 
 
-def _fixed_chunks(text: str, *, size: int, overlap: int) -> tuple[ChunkDraft, ...]:
-    if size <= 0 or overlap < 0 or overlap >= size:
-        raise AcceptanceBlocked("invalid_chunk_policy")
-    result: list[ChunkDraft] = []
-    start = 0
-    while start < len(text):
-        end = min(len(text), start + size)
-        raw = text[start:end]
-        left = len(raw) - len(raw.lstrip())
-        trimmed = raw.rstrip()
-        char_start = start + left
-        char_end = start + len(trimmed)
-        if char_end > char_start:
-            value = text[char_start:char_end]
-            result.append(
-                ChunkDraft(
-                    index=len(result),
-                    text=value,
-                    text_hash=sha256_bytes(value.encode("utf-8")),
-                    char_start=char_start,
-                    char_end=char_end,
-                    token_estimate=max(1, (len(value) + 3) // 4),
-                )
-            )
-        if end >= len(text):
-            break
-        start = end - overlap
-    if not result:
-        raise AcceptanceBlocked("document_chunks_empty")
-    return tuple(result)
-
-
 def prepare_documents(
     *,
     physical: list[dict[str, Any]],
@@ -323,8 +295,6 @@ def prepare_documents(
     chunk_size: int,
     chunk_overlap: int,
 ) -> list[PreparedDocument]:
-    from src.tender_research.document_text_extractor import EXTRACTED_STATUS, extract_text
-
     metadata_files = metadata.get("files") if isinstance(metadata, dict) else None
     if not isinstance(metadata_files, list) or any(
         not isinstance(item, dict) for item in metadata_files
@@ -364,13 +334,43 @@ def prepare_documents(
             raise AcceptanceBlocked("source_file_sha256_mismatch")
         if actual_size != expected_size:
             raise AcceptanceBlocked("source_file_size_mismatch")
-        status, text = extract_text(str(path), max_chars=max_chars)
+        if chunk_size <= 0 or chunk_overlap < 0 or chunk_overlap >= chunk_size:
+            raise AcceptanceBlocked("invalid_chunk_policy")
+        try:
+            processed = process_document_bytes(
+                content=path.read_bytes(),
+                filename=path.name,
+                collection_id="tender-agent:arv001-processing",
+                canonical_uri=f"arv001-source://{actual_hash}",
+                content_type=descriptor.get("content_type"),
+                max_chars=max_chars,
+                chunk_size_chars=chunk_size,
+                overlap_chars=chunk_overlap,
+                min_chunk_chars=1,
+            )
+        except (DataPlatformError, ValueError, OSError):
+            processed = None
+        status = processed.extraction_status if processed is not None else "failed"
+        text = processed.text if processed is not None else ""
         if status != EXTRACTED_STATUS or not text.strip():
             extension = path.suffix.lower() or "none"
             raise AcceptanceBlocked(
                 "document_text_extraction_failed:"
                 f"ordinal={ordinal}:ext={extension}:status={status}"
             )
+        chunks = tuple(
+            ChunkDraft(
+                index=chunk.index,
+                text=chunk.text,
+                text_hash=chunk.text_hash,
+                char_start=chunk.char_start,
+                char_end=chunk.char_end,
+                token_estimate=chunk.token_estimate,
+            )
+            for chunk in processed.chunks
+        )
+        if not chunks:
+            raise AcceptanceBlocked("document_chunks_empty")
         prepared.append(
             PreparedDocument(
                 original_name=original_name,
@@ -383,7 +383,7 @@ def prepare_documents(
                 source_type=descriptor.get("source_type"),
                 source_url=metadata_item.get("source_url"),
                 text=text,
-                chunks=_fixed_chunks(text, size=chunk_size, overlap=chunk_overlap),
+                chunks=chunks,
                 corpus_descriptor=dict(descriptor),
             )
         )

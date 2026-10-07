@@ -40,14 +40,15 @@ from src.shared.network.etp_trust import (
     resolve_host_policy,
 )
 from src.tender_research.config import load_config
-from src.tender_research.document_store import _try_extract
 from src.tender_research.models import (
     ProcurementDocumentChunk,
     ProcurementTender,
     ProcurementTenderDocument,
 )
-from src.tender_research.rag.chunker import normalize_text
-from src.tender_research.rag.indexer import DocumentChunkIndexer
+from src.tender_research.rag.data_platform import (
+    build_recovery_chunk_indexer,
+    extract_document_with_data_platform,
+)
 from src.tender_research.repository import TenderRepository
 
 MAX_ENTRIES = 5_000
@@ -527,7 +528,7 @@ def _chunk_snapshot(chunks, documents, tender_id):
         if value is None:
             valid = False
             continue
-        document_lengths[document.id] = len(normalize_text(value))
+        document_lengths[document.id] = len(value)
     ordered = []
     previous_start: dict[str, int] = {}
     previous_index: dict[str, int] = {}
@@ -768,8 +769,8 @@ def recover_procurement_documents(
     request: DocumentRecoveryRequest,
     *,
     soap_client_factory: Callable[[Any], Any] = ZakupkiSoapClient,
-    extraction_helper: Callable[..., None] = _try_extract,
-    chunk_indexer_factory: Callable[..., Any] = DocumentChunkIndexer,
+    extraction_helper: Callable[..., None] | None = None,
+    chunk_indexer_factory: Callable[..., Any] | None = None,
     engine_factory: Callable[..., Any] = create_engine,
     root_validator: Callable[[Path, Path], Path] = validate_data_root,
 ) -> dict[str, Any]:
@@ -807,8 +808,8 @@ def _recover_procurement_documents_impl(
     request: DocumentRecoveryRequest,
     *,
     soap_client_factory: Callable[[Any], Any] = ZakupkiSoapClient,
-    extraction_helper: Callable[..., None] = _try_extract,
-    chunk_indexer_factory: Callable[..., Any] = DocumentChunkIndexer,
+    extraction_helper: Callable[..., None] | None = None,
+    chunk_indexer_factory: Callable[..., Any] | None = None,
     engine_factory: Callable[..., Any] = create_engine,
     root_validator: Callable[[Path, Path], Path] = validate_data_root,
     cleanup_state: dict[str, Any] | None = None,
@@ -816,6 +817,8 @@ def _recover_procurement_documents_impl(
     """Run a complete dry-run preflight; persistence requires explicit ``apply``."""
     if request.build_chunks and not request.apply:
         raise ValueError("--build-chunks requires --apply")
+    extraction_helper = extraction_helper or extract_document_with_data_platform
+    chunk_indexer_factory = chunk_indexer_factory or build_recovery_chunk_indexer
     data_root = root_validator(request.data_root, request.backup_dir)
     backup_dir = _safe_backup_dir(request.backup_dir, data_root, create=False)
     if request.env_file.is_symlink() or not request.env_file.is_file():

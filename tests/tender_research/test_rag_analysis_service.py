@@ -1,18 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 from src.tender_research.rag.analysis_service import (
     _build_report_markdown,
-    _finalize_analysis_status,
     _save_report,
     _slugify,
-    _vector_store_path,
     analyze_tender,
 )
-from src.tender_research.rag.retriever import RagSearchHit
 from src.tender_research.rag.schemas import (
     ANALYSIS_SECTIONS,
     TenderAnalysisSection,
@@ -28,24 +24,6 @@ class TestSlugify:
 
     def test_empty(self):
         assert _slugify("") == "default"
-
-
-class TestVectorStorePath:
-    def test_default_format(self):
-        class FakeConfig:
-            rag_vector_store_path = "{provider}_{model}.json"
-            data_dir = "/tmp"
-            rag_embeddings_provider = "hashing"
-        path = _vector_store_path(FakeConfig(), provider_name="hash", model_name="local-hash-v1")
-        assert path.endswith("hash_local_hash_v1.json") or "hash_local_hash_v1" in path
-
-    def test_default_path_when_no_format(self):
-        class FakeConfig:
-            rag_vector_store_path = None
-            data_dir = "/tmp"
-            rag_embeddings_provider = "hashing"
-        path = _vector_store_path(FakeConfig(), provider_name="hash", model_name="local-hash-v1")
-        assert "vector_store" in path
 
 
 class TestBuildReportMarkdown:
@@ -125,222 +103,166 @@ class TestSaveReport:
         assert Path(second_path).name.startswith("analyze_tender_123_")
 
 
-class TestAnalyzeTender:
-    def test_finalize_analysis_status_adds_warning_when_sources_missing(self):
-        status, warnings = _finalize_analysis_status(
-            sections=[],
-            sources_count=0,
-            warnings=[],
-            errors=[],
-            use_llm=True,
-        )
+class TestDataPlatformAnalysis:
+    def test_analysis_uses_data_platform_retriever_without_json_store(self):
+        from src.tender_research.config import TenderResearchConfig
 
-        assert status == "completed_with_warnings"
-        assert warnings == ["Analysis completed, but no cited sources were found."]
-
-    def test_no_tender_found(self):
-        with patch(
-            "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
-            mock_repo = MagicMock()
-            mock_repo.get_tender_by_registry_number.return_value = None
-            mock_repo.get_tender_by_external.return_value = None
-            with patch(
-                "src.tender_research.rag.analysis_service.TenderRepository",
-                return_value=mock_repo,
-            ):
-                result = analyze_tender(
-                    registry_number="nonexistent-123",
-                    session=MagicMock(),
-                )
-                assert result.status == "no_context"
-                assert "not found" in " ".join(result.errors).lower()
-
-    def test_no_embeddings(self):
-        with patch(
-            "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
-            mock_repo = MagicMock()
-            mock_repo.get_tender_by_registry_number.return_value = MagicMock()
-            mock_repo.get_tender_by_external.return_value = MagicMock()
-            mock_repo.count_document_embeddings.return_value = 0
-            with patch(
-                "src.tender_research.rag.analysis_service.TenderRepository",
-                return_value=mock_repo,
-            ):
-                result = analyze_tender(
-                    registry_number="123",
-                    provider="hashing",
-                    model="local-hash-v1",
-                    session=MagicMock(),
-                )
-                assert result.status == "no_context"
-                assert any("embeddings" in e.lower() for e in result.errors)
-
-    def test_retrieval_only_mode(self):
         mock_tender = MagicMock()
+        mock_tender.id = "tender-1"
         mock_tender.title = "Test Tender"
 
         mock_repo = MagicMock()
         mock_repo.get_tender_by_registry_number.return_value = mock_tender
         mock_repo.get_tender_by_external.return_value = mock_tender
-        mock_repo.count_document_embeddings.return_value = 10
+        mock_repo.count_chunks_by_tender.return_value = 2
 
-        mock_emb_provider = MagicMock()
-        mock_emb_provider.provider_name = "hashing"
-        mock_emb_provider.model_name = "local-hash-v1"
-        mock_emb_provider.dimension = 8
+        platform_client = MagicMock()
+        platform_client.collection_stats.return_value = {
+            "resources": 2,
+            "embeddings": 2,
+        }
+        retriever = MagicMock()
+        retriever.search_documents.return_value = []
 
-        mock_vector_store = MagicMock()
-
-        mock_retriever = MagicMock()
-        mock_retriever.search_documents.return_value = []
-
-        with patch(
-            "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
-            with patch(
-                "src.tender_research.rag.analysis_service.TenderRepository",
-                return_value=mock_repo,
-            ):
-                with patch(
-                    "src.tender_research.rag.analysis_service.build_embedding_provider",
-                    return_value=mock_emb_provider,
-                ):
-                    with patch(
-                        "src.tender_research.rag.analysis_service.JsonVectorStore",
-                        return_value=mock_vector_store,
-                    ):
-                        with patch(
-                            "src.tender_research.rag.analysis_service.RagRetriever",
-                            return_value=mock_retriever,
-                        ):
-                            result = analyze_tender(
-                                registry_number="123",
-                                provider="hashing",
-                                model="local-hash-v1",
-                                session=MagicMock(),
-                                use_llm=False,
-                            )
-                            assert result.status in (
-                                "completed",
-                                "completed_with_warnings",
-                            )
-                            assert result.sections_count == len(ANALYSIS_SECTIONS)
-                            assert result.registry_number == "123"
-
-    def test_with_search_hits_retrieval_only(self):
-        mock_tender = MagicMock()
-        mock_repo = MagicMock()
-        mock_repo.get_tender_by_registry_number.return_value = mock_tender
-        mock_repo.get_tender_by_external.return_value = mock_tender
-        mock_repo.count_document_embeddings.return_value = 10
-
-        mock_emb_provider = MagicMock()
-        mock_emb_provider.provider_name = "hashing"
-        mock_emb_provider.model_name = "local-hash-v1"
-        mock_emb_provider.dimension = 8
-
-        mock_vector_store = MagicMock()
-        mock_retriever = MagicMock()
-
-        hit = RagSearchHit(
-            chunk_id="chunk-1",
-            score=0.95,
-            registry_number="123",
-            tender_id="tender-1",
-            tender_title="Test Tender",
-            customer_name="Test Customer",
-            document_id="doc-1",
-            file_name="test.pdf",
-            chunk_index=0,
-            preview="Test preview content...",
-            text="Test content for retrieval only mode.",
+        config = TenderResearchConfig(
+            rag_retrieval_backend="data_platform",
+            rag_data_platform_base_url="http://data-platform.test",
         )
-        mock_retriever.search_documents.return_value = [hit]
 
-        with patch(
-            "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
-            with patch(
+        with (
+            patch(
                 "src.tender_research.rag.analysis_service.TenderRepository",
                 return_value=mock_repo,
-            ):
-                with patch(
-                    "src.tender_research.rag.analysis_service.build_embedding_provider",
-                    return_value=mock_emb_provider,
-                ):
-                    with patch(
-                        "src.tender_research.rag.analysis_service.JsonVectorStore",
-                        return_value=mock_vector_store,
-                    ):
-                        with patch(
-                            "src.tender_research.rag.analysis_service.RagRetriever",
-                            return_value=mock_retriever,
-                        ):
-                            result = analyze_tender(
-                                registry_number="123",
-                                provider="hashing",
-                                model="local-hash-v1",
-                                session=MagicMock(),
-                                use_llm=False,
-                            )
-                            assert result.status in (
-                                "completed",
-                                "completed_with_warnings",
-                            )
-                            assert result.sections_count == len(ANALYSIS_SECTIONS)
-                            assert any(
-                                s.status == "retrieval_only"
-                                for s in result.sections
-                            )
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.load_config",
+                return_value=config,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_tender_collection_id",
+                return_value="tender:tender-1:rev",
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_data_platform_client",
+                return_value=platform_client,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.DataPlatformRagRetriever",
+                return_value=retriever,
+            ),
+        ):
+            result = analyze_tender(
+                registry_number="123",
+                session=MagicMock(),
+                use_llm=False,
+                record_history=False,
+            )
 
-    def test_report_saving(self):
+        assert result.retrieval_provider == "data_platform"
+        assert result.retrieval_model == "hybrid"
+        assert result.sections_count == len(ANALYSIS_SECTIONS)
+        platform_client.close.assert_called_once()
+
+    def test_analysis_fails_closed_for_incomplete_platform_index(self):
+        from src.tender_research.config import TenderResearchConfig
+
         mock_tender = MagicMock()
+        mock_tender.id = "tender-1"
         mock_repo = MagicMock()
         mock_repo.get_tender_by_registry_number.return_value = mock_tender
         mock_repo.get_tender_by_external.return_value = mock_tender
-        mock_repo.count_document_embeddings.return_value = 10
+        mock_repo.count_chunks_by_tender.return_value = 2
 
-        mock_emb_provider = MagicMock()
-        mock_emb_provider.provider_name = "hashing"
-        mock_emb_provider.model_name = "local-hash-v1"
-        mock_emb_provider.dimension = 8
+        platform_client = MagicMock()
+        platform_client.collection_stats.return_value = {
+            "resources": 1,
+            "embeddings": 1,
+        }
+        config = TenderResearchConfig(rag_retrieval_backend="data_platform")
 
-        mock_vector_store = MagicMock()
-        mock_retriever = MagicMock()
-        mock_retriever.search_documents.return_value = []
-
-        with patch(
-            "src.tender_research.rag.analysis_service._get_session"
-        ) as mock_session:
-            with patch(
+        with (
+            patch(
                 "src.tender_research.rag.analysis_service.TenderRepository",
                 return_value=mock_repo,
-            ):
-                with patch(
-                    "src.tender_research.rag.analysis_service.build_embedding_provider",
-                    return_value=mock_emb_provider,
-                ):
-                    with patch(
-                        "src.tender_research.rag.analysis_service.JsonVectorStore",
-                        return_value=mock_vector_store,
-                    ):
-                        with patch(
-                            "src.tender_research.rag.analysis_service.RagRetriever",
-                            return_value=mock_retriever,
-                        ):
-                            with patch(
-                                "src.tender_research.rag.analysis_service._save_report"
-                            ) as mock_save:
-                                mock_save.return_value = "/tmp/report.md"
-                                result = analyze_tender(
-                                    registry_number="123",
-                                    provider="hashing",
-                                    model="local-hash-v1",
-                                    session=MagicMock(),
-                                    use_llm=False,
-                                    save_report=True,
-                                )
-                                assert result.report_path is not None
-                                mock_save.assert_called_once()
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.load_config",
+                return_value=config,
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_tender_collection_id",
+                return_value="tender:tender-1:rev",
+            ),
+            patch(
+                "src.tender_research.rag.analysis_service.build_data_platform_client",
+                return_value=platform_client,
+            ),
+        ):
+            result = analyze_tender(
+                registry_number="123",
+                session=MagicMock(),
+                record_history=False,
+            )
+
+        assert result.status == "no_context"
+        assert any("Data Platform index" in error for error in result.errors)
+
+
+
+def test_record_history_failure_rolls_back_shared_session(session):
+    from unittest.mock import Mock, patch
+
+    from sqlalchemy import text
+
+    from src.tender_research.rag import analysis_service
+    from src.tender_research.rag.schemas import TenderAnalysisResult
+
+    original_rollback = session.rollback
+    rollback_spy = Mock(side_effect=original_rollback)
+    session.rollback = rollback_spy
+
+    result = TenderAnalysisResult(
+        status="completed",
+        registry_number="0358200040626000014",
+        sections=[],
+        sections_count=0,
+        sources_count=0,
+        analysis_mode="fast",
+    )
+    with patch.object(
+        analysis_service,
+        "record_analysis_run",
+        side_effect=RuntimeError("history write failed"),
+    ):
+        run_id = analysis_service._record_history(
+            result,
+            session,
+            source="daily_tender_run:test",
+        )
+
+    assert run_id is None
+    rollback_spy.assert_called_once()
+    assert session.scalar(text("select 1")) == 1
+
+
+
+def test_record_history_normalizes_oversize_source(session):
+    import json
+
+    from src.tender_research.rag.history_service import record_analysis_run
+
+    source = "daily_tender_run:DTR-20261006T171139Z-79cfe20b"
+    row = record_analysis_run(
+        session,
+        registry_number="0358200040626000014",
+        status="completed",
+        source=source,
+        metadata={"analysis_mode": "balanced"},
+    )
+
+    assert row.source is not None
+    assert len(row.source) <= 32
+    assert json.loads(row.metadata_json or "{}") == {
+        "analysis_mode": "balanced",
+        "history_source_full": source,
+    }

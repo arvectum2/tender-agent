@@ -224,3 +224,43 @@ def test_public_document_links_are_idempotent_fallback():
     document = tender.documents[0]
     assert document.file_name == "spec.pdf"
     assert document.raw_meta["source"] == "external_public_44fz_detail"
+
+
+def test_public_registry_ingestion_seam_persists_public_detail_and_documents():
+    registry_number = "0373200000000000005"
+    detail = PublicTenderDetail(
+        registry_number=registry_number,
+        title="Разработка информационной системы",
+        customer_name="ГБУ Тест",
+        network_status=PublicSearchStatus.SUCCESS,
+        document_links=[
+            PublicDocumentLink(
+                title="Техническое задание",
+                file_name="tz.pdf",
+                url="https://zakupki.gov.ru/tz.pdf?doc=5",
+                content_type="application/pdf",
+                raw={"uid": "UID-5"},
+            )
+        ],
+    )
+    pipeline = _pipeline(
+        raw_by_number={registry_number: EisNoDataError("no data")},
+        details={registry_number: detail},
+    )
+    pipeline._lookup_public_discovered_item = lambda number, existing=None: DiscoveredRegistryNumber(
+        registry_number=number,
+        source="external_public_44fz",
+        source_type=SourceType.EXTERNAL_PUBLIC_44FZ,
+        tender_title="Разработка информационной системы",
+        customer_name="ГБУ Тест",
+        card_url="https://zakupki.gov.ru/card-5",
+        source_url="https://zakupki.gov.ru/card-5",
+    )
+
+    tender, summary = pipeline.ingest_public_by_registry_number(registry_number)
+
+    assert tender.registry_number == registry_number
+    assert tender.title == "Разработка информационной системы"
+    assert tender.customer_name == "ГБУ Тест"
+    assert summary["public_document_links_found"] == 1
+    assert TenderRepository(pipeline._session).count_documents() == 1

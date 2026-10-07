@@ -2,18 +2,26 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
+# TenderAnalysisRun has optional foreign keys into the customer-pilot contour.
+# Register those tables even when analysis is invoked directly (CLI/library)
+# rather than through src.main / src.shared.db.models.
+from src.modules.customer_pilot import models as _customer_pilot_models  # noqa: F401
+from src.modules.customer_registry import (
+    models as _customer_registry_models,  # noqa: F401
+)
 from src.tender_research.models import TenderAnalysisRun
 
 logger = logging.getLogger(__name__)
 
 _REPORTS_DIR_NAME = "rag"
 _REPORTS_SUBDIR = "reports"
+_SOURCE_MAX_LENGTH = 32
 
 
 def _safe_reports_dir(data_dir: str) -> Path:
@@ -106,8 +114,13 @@ def record_analysis_run(
     source: str | None = None,
     metadata: dict | None = None,
 ) -> TenderAnalysisRun:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     preview = _generate_preview(report_markdown) if report_markdown else None
+    source_value = str(source).strip() if source is not None else None
+    metadata_value = dict(metadata or {})
+    if source_value and len(source_value) > _SOURCE_MAX_LENGTH:
+        metadata_value.setdefault("history_source_full", source_value)
+        source_value = source_value[:_SOURCE_MAX_LENGTH]
     run = TenderAnalysisRun(
         registry_number=registry_number,
         status=status,
@@ -122,8 +135,12 @@ def record_analysis_run(
         warnings_json=json.dumps(warnings, ensure_ascii=False) if warnings else None,
         errors_json=json.dumps(errors, ensure_ascii=False) if errors else None,
         duration_seconds=duration_seconds,
-        source=source,
-        metadata_json=json.dumps(metadata, ensure_ascii=False) if metadata else None,
+        source=source_value,
+        metadata_json=(
+            json.dumps(metadata_value, ensure_ascii=False)
+            if metadata_value
+            else None
+        ),
         created_at=now,
         updated_at=now,
     )
@@ -183,7 +200,7 @@ def get_analysis_run_report(session: Session, run_id: str, data_dir: str) -> tup
         return record, None, "No report file was saved for this run"
     try:
         markdown = Path(resolved).read_text(encoding="utf-8")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         return record, None, f"Failed to read report file: {e}"
     return record, markdown, None
 
@@ -211,6 +228,6 @@ def get_latest_analysis_report(session: Session, registry_number: str, data_dir:
         return record, None, "No report file was saved for this run"
     try:
         markdown = Path(resolved).read_text(encoding="utf-8")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         return record, None, f"Failed to read report file: {e}"
     return record, markdown, None

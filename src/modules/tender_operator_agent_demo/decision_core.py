@@ -12,9 +12,23 @@ def _text(value: Any) -> str:
 def _number(value: Any) -> float | None:
     if isinstance(value, bool):
         return None
-    try:
+    if isinstance(value, (int, float)):
         return float(value)
-    except (TypeError, ValueError):
+    text = str(value or "").strip()
+    if not text:
+        return None
+    normalized = (
+        text.replace("\u00a0", "")
+        .replace("\u202f", "")
+        .replace(" ", "")
+        .replace(",", ".")
+    )
+    normalized = "".join(ch for ch in normalized if ch.isdigit() or ch in ".-")
+    if normalized.count(".") > 1 or normalized in {"", "-", ".", "-."}:
+        return None
+    try:
+        return float(normalized)
+    except ValueError:
         return None
 
 
@@ -283,6 +297,44 @@ def build_decision_core(
                     "Проект контракта присутствует и связан с доказательством.",
                     evidence=contract_evidence,
                 )
+            )
+        elif contract_status == "parse_failed" and contract_evidence:
+            facts["contract_draft"] = {
+                "status": "KNOWN",
+                "value": "present_unparsed",
+                "evidence": contract_evidence,
+            }
+            readiness.append(
+                _readiness(
+                    "CONTRACT_DRAFT",
+                    "Проект контракта",
+                    "REVIEW",
+                    "Проект контракта присутствует, но его текст не извлечён полностью; договорные условия требуют ручной проверки.",
+                    blocking=True,
+                    evidence=contract_evidence,
+                )
+            )
+            unknowns.append(
+                {
+                    "code": "CONTRACT_DRAFT_PARSE",
+                    "summary": "Проект контракта найден, но его содержимое не разобрано полностью.",
+                }
+            )
+        elif contract_status == "parse_failed":
+            readiness.append(
+                _readiness(
+                    "CONTRACT_DRAFT",
+                    "Проект контракта",
+                    "UNKNOWN",
+                    "Проект контракта отмечен как неразобранный, но source binding его присутствия отсутствует.",
+                    blocking=True,
+                )
+            )
+            unknowns.append(
+                {
+                    "code": "CONTRACT_DRAFT_EVIDENCE",
+                    "summary": "Нужна source-bound привязка присутствующего, но неразобранного проекта контракта.",
+                }
             )
         elif contract_status == "present":
             readiness.append(
