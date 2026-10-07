@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from src.modules.tender_operator_agent_demo.public_44fz_parser import (
     Public44FzSearchStatus,
     classify_public_search_response,
@@ -170,3 +172,31 @@ def test_parse_prefers_procurement_notice_url_over_unrelated_absolute_asset():
         "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html"
         "?regNumber=0262200000126000037"
     )
+
+
+def test_parse_customer_name_fails_closed_on_javascript_pollution_fixture():
+    html = (
+        Path(__file__).parent
+        / "fixtures"
+        / "public_44fz"
+        / "search_card_customer_js_pollution.html"
+    ).read_text()
+
+    cards = parse_44fz_search_results(html)
+
+    assert len(cards) == 1
+    assert cards[0]["reestr_number"] == "0888500000226000399"
+    assert cards[0]["title"] == "Поставка медицинских изделий"
+    assert cards[0]["customer_name"] is None
+    assert cards[0]["source_url"] == (
+        "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html"
+        "?regNumber=0888500000226000399"
+    )
+
+
+def test_parse_customer_name_keeps_explicit_customer_pair():
+    cards = parse_44fz_search_results(SAMPLE_SEARCH_HTML)
+
+    by_number = {card["reestr_number"]: card for card in cards}
+    assert by_number["0888200000224000038"]["customer_name"] == 'ООО "Примерный заказчик"'
+    assert by_number["0778200000224000055"]["customer_name"] == 'АО "Кабельный завод"'

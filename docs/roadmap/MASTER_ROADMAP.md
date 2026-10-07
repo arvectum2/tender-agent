@@ -261,7 +261,7 @@ The table below is a compact view grouped by product block. The machine-readable
 |---|---:|---|---|---:|---|---|
 | `ARV-050` | 0 | Готово | P0 | 100% | R8: изолированное рабочее пространство клиентского пилота | needs_revalidation |
 | `ARV-073` | 0 | Готово | P0 | 100% | R9 Operational Hardening: завершить инженерную отладку и заморозить ядро | id_conflict |
-| `ARV-002` | 0 | Базовый контур готов | P0 | 90% | Стабильный live end-to-end pipeline без скрытых fallback | revalidated_residual_gap |
+| `ARV-002` | 0 | Базовый контур готов | P0 | 90% | Стабильный live end-to-end pipeline без скрытых fallback | confirmed_done |
 | `ARV-003` | 2 | В работе | P0 | 97% | R10.1: production LLM-анализ с evidence map и confidence | accepted_evidence_present_needs_status_revalidation |
 | `ARV-001` | 3 | Запланировано | P0 | 85% | R10.2: Quality & Product Readiness — golden report и release gates | completed_governed |
 | `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation — post-MVP, not admitted |
@@ -393,6 +393,12 @@ The first materialized continuation slice is `ARV-002-REVALIDATION-001` under `C
 Current exact-number public EIS lookup is live and the source-to-handoff/source-graph/recovery regressions are green. The revalidation did **not** mark ARV-002 fully done: the current EIS search-card parser can populate `customer_name` with page JavaScript via an overly broad fallback, while the stricter common-info detail extractor returns the correct explicit customer.
 
 Evidence and the single bounded, non-admitted successor candidate `ARV-002-LIVE-CUSTOMER-PARSE-001` are recorded in `docs/roadmap/ARV-002_REVALIDATION_2026-09-19.md` and the ARV-002 reconciliation overlay. No implementation authority is inferred from candidate status.
+
+### ARV-002 residual closure — 2026-10-07
+
+The Owner explicitly admitted ARV-002-LIVE-CUSTOMER-PARSE-001. The raw-HTML customer regex fallback was removed, a deterministic JavaScript-pollution regression fixture was added, and search cards now fail closed to customer_name=null unless explicit customer-scoped evidence exists. The common-info detail extractor remains authoritative.
+
+Verification: 87 focused live-path/parser/source-graph/no-fallback tests passed; the companion persistence/recovery gate passed 32 tests with 12 environment/profile skips; make check passed; and a read-only exact-number EIS run for 0888500000226000399 returned a clean fail-closed search card plus the correct explicit detail-page customer. Evidence is in docs/roadmap/ARV-002_LIVE_CUSTOMER_PARSE_2026-10-07.md. The reconciliation state is now confirmed_done, subject to exact-head CI/merge of the closure commit.
 
 ## ARV-010 revalidation — 2026-09-20
 
