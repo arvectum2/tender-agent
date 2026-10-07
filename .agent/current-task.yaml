@@ -14,17 +14,18 @@ completed:
 - '2026-10-07: Owner explicitly requested COMMERCIAL-WORKFLOW-ARV-019-001.'
 - '2026-10-07: Existing PR #198 implementation was recovered instead of duplicated.'
 - '2026-10-07: Implementation was rebuilt on current main to discard stale governance conflicts while preserving the bounded ARV-019 product diff.'
-current: Current-main reconciliation complete; run focused tests, publish the refreshed exact head, and require green exact-head CI before merge.
+current: Current-base implementation and focused verification are complete; publish the refreshed PR #198 head and require green exact-head CI before merge.
 pending:
-- Run focused commercial-console/status/portfolio tests and diff/YAML checks.
 - Push refreshed PR #198 exact head.
 - Require exact-head CI green and verify ordinary AM-4 merge gates.
 - Merge PR #198 if all gates remain satisfied.
 - Reconcile final merge evidence and mark the canonical checkpoint completed.
-last_verified_commit: null
-test_results: []
-updated_at: '2026-10-07T20:40:00+03:00'
-resume_instruction: Run focused verification on the current-main rebuilt branch, push it to PR #198, then check exact-head CI once. If green, merge under renewed AM-4 and finish checkpoint reconciliation.
+last_verified_commit: e1a8522854fa68a9317c14666b3e2ea1c60dc57f
+test_results:
+- 'Focused verification on current main: 9 passed, 13 skipped; Ruff PASS; YAML parse PASS; git diff --check PASS.'
+- 'Prior implementation branch had repository make check PASS; fresh exact-head GitHub CI is required after this current-base rebuild.'
+updated_at: '2026-10-07T20:44:00+03:00'
+resume_instruction: Push the current-base implementation/checkpoint head to PR #198, then check exact-head CI once. If green, verify renewed AM-4 gates, merge, and finish checkpoint reconciliation.
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-arv019-r2
