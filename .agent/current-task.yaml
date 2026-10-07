@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ADMISSION-20261007
 authority: OWNER_DIRECTIVE
 goal: Reset the bounded Company AM-4 automatic-merge review cycle after attributable Owner review and explicitly admit the full canonical COMMERCIAL-WORKFLOW branch into the Tender Agent execution queue.
@@ -13,32 +13,31 @@ definition_of_done:
 - Canonical roadmap and human-readable roadmap reflect the admission.
 - Relevant CI/checks pass and the Owner-directed reconciliation is merged.
 completed:
-- Interpreted Owner request "всю ветку Commercial Core" as the canonical roadmap branch COMMERCIAL-WORKFLOW; accelerated Commercial Core v1 Stage 3 is already completed.
+- Interpreted Owner request "всю ветку Commercial Core" as the canonical roadmap branch COMMERCIAL-WORKFLOW; accelerated Commercial Core v1 Stage 3 was already completed.
 - Verified COMMERCIAL-WORKFLOW canonical order: ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064, ARV-066, ARV-069.
-- Created Company governance PR #10 with the attributable 2026-10-07 Owner AM-4 review and renewal.
-- Merged Company PR #10 as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388; hard stops unchanged, counter reset to 0/10, next time-based review 2026-11-07.
-- Updated Tender Agent executor policy and watchdog authority source to the 2026-10-07 renewal.
+- Created and merged Company governance PR #10 as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388, renewing AM-4 on unchanged terms, resetting the automatic-merge cycle to 0/10 and setting the next time-based review deadline to 2026-11-07.
+- Updated Tender Agent executor policy and watchdog authority source to the 2026-10-07 Company renewal.
 - Explicitly admitted all 12 COMMERCIAL-WORKFLOW roadmap items as ready AUTO queue entries with auto_merge=true and preserved hard stops.
 - Updated owner directive, canonical roadmap, human-readable roadmap and watchdog continuation tests.
-- Performed structural branch checks confirming the renewed authority reference, 0/10 counter and all 12 queue task IDs are present.
-current: Open the Tender Agent reconciliation PR, verify exact-head CI, then merge this Owner-directed governance/queue change.
-pending:
-- Open Tender Agent PR from owner/commercial-workflow-am4-reset-20261007.
-- Verify exact-head CI/checks.
-- Merge the reconciliation and record final evidence.
-last_verified_commit: eadc53a44a29f8ef63354d0004681be4336c259c
+- Focused local validation on Mac mini passed: 3 watchdog-policy tests, YAML parse PASS.
+- Tender Agent PR #196 exact-head CI run 37638422964 completed SUCCESS on head 29967543f66e295e9b2f5291339c856b0811a9f4; all 9 jobs passed.
+- Tender Agent PR #196 merged as b4723cc913f455158caf6f27b86d4039bee1af8b.
+current: Admission/reset task complete. The watchdog should claim the first ready Commercial Workflow item on its next run.
+pending: []
+last_verified_commit: b4723cc913f455158caf6f27b86d4039bee1af8b
 test_results:
-- "Company AM-4 renewal PR #10: merged as 59a64579ce31bf006e15d5d5f0507fdcb1eb7388."
-- "Structural authority reconciliation: PASS."
-- "Commercial Workflow queue presence: 12/12 task IDs present."
-- "Roadmap admission/state markers: PASS."
-updated_at: '2026-10-07T18:00:00+03:00'
-resume_instruction: Continue this reconciliation only. Open/inspect the Tender Agent PR, require exact-head CI green, merge on Owner instruction authority, then mark this checkpoint completed. The next watchdog run should start with ARV-015-OPERATOR-PROFILE-PARSER-001.
+- "Company AM-4 renewal: PASS; main commit 59a64579ce31bf006e15d5d5f0507fdcb1eb7388."
+- "Mac mini focused watchdog policy tests: 3 passed, 1 warning."
+- "YAML parse for executor/watchdog/directive/queue/roadmap: PASS."
+- "Tender Agent PR #196 exact-head CI run 37638422964: SUCCESS, 9/9 jobs."
+- "Commercial Workflow queue admission: 12/12 ready AUTO items."
+updated_at: '2026-10-07T18:47:00+03:00'
+resume_instruction: On the next Tender Agent run, reconcile current main and .agent/execution-queue.yaml, then claim the earliest ready Commercial Workflow item: ARV-015-OPERATOR-PROFILE-PARSER-001. Continue autonomously under renewed AM-4 while preserving all hard stops; after each completed automatic merge increment the renewed 0/10 cycle counter and fail closed at the next review trigger.
 execution:
-  claimed_by: ChatGPT
-  execution_id: commercial-workflow-am4-reset-20261007
-  branch: owner/commercial-workflow-am4-reset-20261007
-  base_commit: 05a939ebf0ecf770f5f3294c6cb2a44c11941541
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: b4723cc913f455158caf6f27b86d4039bee1af8b
   issue: null
-  manual_override: true
+  manual_override: false
   lease_until: null
