@@ -10,13 +10,17 @@ definition_of_done:
   - Validation/CI green and roadmap-only PR merged.
 completed:
   - Current main/queue/BASE reconciliation verified.
-current: Roadmap metadata edits.
+current: Validation passed; PR/CI pending.
 remaining:
-  - Machine roadmap.
-  - Human roadmap.
-  - Validation.
-  - PR / CI / merge.
+  - Open roadmap-only PR.
+  - Obtain exact-head CI.
+  - Merge under explicit Owner request.
 last_verified_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
-test_results: []
-resume_instruction: Roadmap only; no new implementation admission.
+test_results:
+  - "Historical registry: 93/93 unique, byte-identical."
+  - "Human recovered-roadmap section: byte-identical."
+  - "Queue open items: 0."
+  - "BASE confirmed_done: 18/18."
+  - "YAML parse PASS; git diff --check PASS."
+resume_instruction: Open roadmap PR, obtain exact-head CI, merge if green; no new product work.
 updated_at: '2026-10-07T13:36:00+03:00'
