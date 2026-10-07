@@ -1,68 +1,39 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: BASE-001-018-REVALIDATION-20261007
+status: in_progress
+task_id: BASE-011-LEARNING-LOOP-RECLASSIFICATION-20261007
 authority: OWNER_DIRECTIVE
-goal: 'Formally revalidate BASE-001 through BASE-018 against the current Arvectum/Tender Agent state, preserve the 2026-07-30 historical snapshot unchanged, close any objective repository/documentation gaps that can be fixed safely, and reconcile the current roadmap with evidence-backed statuses.'
+goal: 'Reclassify BASE-011 as completed Hermes infrastructure foundation and move the unfinished real-user self-improvement scope into the existing ARV-004 successor as a post-MVP Feedback & Learning Loop, without introducing a second autonomous decision engine.'
 definition_of_done:
-- Revalidate all 18 BASE items individually against current evidence; no BASE item is skipped or inferred from historical completion alone.
-- Preserve the historical 2026-07-30 snapshot and percentages unchanged; current revalidation is recorded as a separate overlay/report.
-- For each BASE item record scope, evidence, checks performed, result, remaining gap if any, and whether the gap is technical, operational, external, or HUMAN/REVIEW.
-- Run relevant repository tests/checks for technical BASE items and verify live/public evidence for company/brand/site items where available.
-- Fix only clear, bounded, low-risk repository/documentation defects discovered during revalidation; do not broaden product scope.
-- Reconcile canonical roadmap/status/queue artifacts so they reflect revalidation results without rewriting historical facts.
-- Final exact-head CI is green, or any objective external/environment blocker is explicitly recorded with reproducible evidence.
+- 'Preserve every BASE-011 and ARV-004 legacy_snapshot field unchanged.'
+- 'Mark only the current BASE-011 reconciliation overlay as confirmed_done, based on the already implemented/tested Hermes foundation: client/fallback, runtime context, quality gates, memory/feedback primitives, category profiles, supplier-readiness and bid-decision helpers.'
+- 'Reframe the unfinished scope under existing ARV-004 as a post-MVP Feedback & Learning Loop: user correction -> attributable immutable review -> regression case -> validated reusable rule.'
+- 'Keep ARV-004 out of the admitted execution queue for now; external/autonomous Hermes runtime and autonomous GO/NO-GO remain out of scope.'
+- 'Update the BASE revalidation report and compact roadmap so the current BASE overlay reads 18 confirmed_done, with no residual BASE gap.'
+- 'Run repository checks and exact-head CI; merge only under applicable Owner/review authorization.'
 completed:
-- '2026-10-07: Product Owner explicitly requested Revalidation BASE-001…018.'
-- 'Confirmed prior ARV-005 Controlled Pilot closure PR #187 is merged on canonical main at ffc698efb02a1c662d92fa46ec65f4f0f0112552.'
-- 'Mapped all 18 immutable historical BASE items and individually revalidated current repository/public/Owner-session evidence.'
-- 'Recorded current overlay: 16 confirmed_done; BASE-007 and BASE-011 revalidated_residual_gap with explicit external/runtime or autonomous-loop boundaries.'
-- 'Created docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md and reconciled BASE overlay states without modifying historical progress/status fields.'
-- 'Local make check passed; historical BASE legacy_snapshot deep equality is 18/18 unchanged.'
-- 'Focused green batch excluding the known environment-sensitive R9 backup/restore matrix: 542 passed, 12 skipped.'
-- 'Opened PR #188 from chore/base-001-018-revalidation-20261007 to main.'
-- 'Owner explicitly authorized merge of PR #188; merged by squash as 4107045a6a8bc109392939a2b83d33de866b6767.'
-- 'Exact-head CI run 37597511204 for 4f6559fde5f86624dba242c031e7f430b65ce36d completed SUCCESS with all 9 jobs green before merge.'
-- 'Post-merge BASE-007 production-smoke preparation: current TLS trust verification PASS for zakupki.gov.ru and int.zakupki.gov.ru using macOS system trust, TLSv1.2, Russian Trusted Sub CA issuer, direct proxy-bypassed route.'
-- 'Post-merge BASE-007 authenticated getDocsIP smoke attempted against known procurement 0352300080626000109; application correctly failed closed because no current SOAP token is configured. Protected token file /Users/master/.config/arvectum/r3-soap-token.env exists but is zero bytes; launchctl token is absent.'
-current: 'Task completed. BASE-001…018 revalidation is reconciled on main: 17 confirmed_done, with BASE-011 retained as the single explicit residual gap. BASE-007 is closed by fresh authenticated EIS production evidence.'
-pending: []
-last_verified_commit: 6b74ae3917dceb2682dfd01617dd31e7c8e86367
+- '2026-10-07: Owner accepted the recommendation to close BASE-011 as infrastructure foundation and defer the real-user learning loop to post-MVP.'
+- 'Verified current Hermes foundation exists in src/modules/hermes_agent with client/fallback, runtime analysis, memory/feedback, quality gates, category profiles, supplier-readiness and bid-decision helpers, with focused tests.'
+- 'Verified canonical company-agent/Hermes policy still keeps autonomous execution and external Hermes runtime outside the required production path.'
+current: 'Preparing a bounded roadmap-only reconciliation. No runtime behavior or execution policy will be changed.'
+pending:
+- 'Create isolated branch from current main.'
+- 'Update BASE-011 reconciliation/report/compact roadmap and reframe ARV-004 current reconciliation as the post-MVP Feedback & Learning Loop without changing legacy fields.'
+- 'Run checks and verify historical BASE/ARV legacy snapshots remain unchanged.'
+- 'Open review-ready PR and run exact-head CI.'
+- 'Merge only if explicitly authorized under the current AM-4 review gate.'
+last_verified_commit: 948c068abda678e1f3c4ff724fc680304c2cb55e
 test_results:
-- 'Fresh BASE-007 production smoke after EIS-side unblock: PASS; getDocsByReestrNumber(0116300036226000029) status=completed, archive URL count=1, warnings=0; TLS trust PASS for zakupki.gov.ru and int.zakupki.gov.ru.'
-- 'PR #189 local validation: make check PASS; roadmap reconciliation parse PASS (18 BASE = 17 confirmed_done + 1 revalidated_residual_gap).'
-- 'Protected runtime-source smoke: PASS; configured=true, token_present=true, owner=individual, getDocsByReestrNumber status=completed, archive URL count=1, warnings=0.'
-- 'PR #189 exact-head CI run 37602246832: SUCCESS, 9/9 jobs green; quality make test and procurement domain regression both passed on Linux.'
-- 'Additional local full make test on macOS: 3092 passed, 236 skipped, 1 failed in 116.12s; sole failure is the already documented environment-sensitive R9 backup/restore case caused by local pg_restore compatibility, while exact-head Linux CI is green.'
-- 'Post-merge main verification at 6b74ae3917dceb2682dfd01617dd31e7c8e86367: BASE-007=confirmed_done; report and compact roadmap both state 17 confirmed_done + 1 residual (BASE-011).'
-- 'No separate workflow run was emitted for merge commit 6b74ae3917dceb2682dfd01617dd31e7c8e86367; the authoritative CI gate is the successful exact PR head run immediately preceding the Owner-authorized squash merge.'
-- 'make check: PASS.'
-- 'Historical BASE snapshot equality against ffc698ef: 18/18 unchanged.'
-- 'Focused BASE batch including R9 backup/restore: 545 passed, 12 skipped, 1 failed in 50.01s.'
-- 'Only failure: tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed; local Homebrew pg_restore 18.6 failed in the disposable pgvector/pgvector:pg16 acceptance contour. This known environment class is reproduced elsewhere in repository checkpoints and exact-head Linux CI is authoritative.'
-- 'Focused batch excluding that environment-sensitive file: 542 passed, 12 skipped, 39 warnings in 38.35s.'
-- 'master-roadmap.yaml parses; 18 BASE entries = 16 confirmed_done + 2 revalidated_residual_gap.'
-- 'GitHub exact-head CI run 37597511204: SUCCESS, 9/9 jobs green on PR head 4f6559fde5f86624dba242c031e7f430b65ce36d.'
-- 'EIS TLS trust smoke: PASS for zakupki.gov.ru and int.zakupki.gov.ru; TLSv1.2, Russian Trusted Sub CA, proxy_bypassed=True.'
-- 'Fresh authenticated getDocsIP smoke: local configuration present and request reaches EIS over the verified direct TLS route.'
-- 'Two current individual-style candidates return processing_error with sanitized EIS message indicating temporary PMD account blocking; repeated across previously validated procurement numbers.'
-- 'The company-labelled candidate returns processing_error with sanitized EIS message indicating output-service access is absent. No tested candidate returns an archive URL.'
-- 'Owner removed the EIS-side block and saved a newly issued individual/extract credential locally. Fresh read-only getDocsByReestrNumber smoke for previously validated procurement 0116300036226000029 returned status=completed, one archive URL, zero warnings; TLS trust checks passed for both EIS hosts.'
-- 'Follow-up branch chore/base-007-production-smoke-20261007 updates only the current reconciliation overlay/report; immutable historical BASE fields remain unchanged. Local make check passed and roadmap parse confirms 18 BASE = 17 confirmed_done + 1 residual.'
-- 'Opened PR #189 for BASE-007 closure at exact head 7fc18ea206163777467cfe683c7f35d6f7ca151d.'
-- 'Installed the newly issued individual/extract credential into the protected Mac mini runtime secret source /Users/master/.config/arvectum/r3-soap-token.env with mode 0600, without exposing the value; reran the smoke through ZakupkiSoapSettings.from_env and confirmed the same completed response with one archive URL and zero warnings.'
-- 'PR #189 exact-head GitHub CI run 37602246832 completed SUCCESS on 7fc18ea206163777467cfe683c7f35d6f7ca151d; all 9 jobs green, including full make test and procurement domain regression.'
-- 'Owner explicitly authorized completion of CI and merge of PR #189 under the current review gate; PR #189 was squash-merged to main as 6b74ae3917dceb2682dfd01617dd31e7c8e86367.'
-- 'Post-merge main verification confirms BASE-007 reconciliation=confirmed_done and overall BASE overlay=17 confirmed_done + 1 revalidated_residual_gap; BASE-011 is the sole explicitly recorded residual and the immutable historical BASE fields remain unchanged.'
+- 'Prior BASE revalidation task completed with PR #189 exact-head CI 9/9 green.'
 blocked_reason: null
-updated_at: '2026-10-07T12:49:57+0300'
-resume_instruction: 'This task is completed. If re-opened, verify main from merge commit 6b74ae3917dceb2682dfd01617dd31e7c8e86367 forward and do not reinterpret BASE-011 as complete without new production evidence for the user-correction/Hermes loop. Preserve the immutable 2026-07-30 snapshot.'
+updated_at: '2026-10-07T12:55:00+0300'
+resume_instruction: 'Resume on an isolated branch from main. Change only reconciliation/current planning docs: BASE-011 -> confirmed_done; ARV-004 becomes the non-admitted post-MVP Feedback & Learning Loop successor. Preserve immutable legacy_snapshot fields and human GO/NO-GO boundaries. Run make check plus roadmap/snapshot assertions, open PR, obtain exact-head CI, and do not merge without explicit Owner authorization under AM-4.'
 execution:
   claimed_by: ChatGPT interactive
-  execution_id: interactive-20261007-base-revalidation
-  branch: chore/base-007-production-smoke-20261007
-  base_commit: ffc698efb02a1c662d92fa46ec65f4f0f0112552
+  execution_id: interactive-20261007-base011-learning-loop
+  branch: chore/base-011-learning-loop-reclass-20261007
+  base_commit: 948c068abda678e1f3c4ff724fc680304c2cb55e
   issue: null
-  pull_request: 189
+  pull_request: null
   manual_override: true
   lease_until: null
