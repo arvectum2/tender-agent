@@ -1186,8 +1186,8 @@ legacy_registry:
     comment: После R9 это не отдельный этап отладки, а регрессионный gate каждого релиза.
     dependencies_raw: ARV-073
   reconciliation:
-    state: revalidated_residual_gap
-    verified_at: '2026-09-19'
+    state: confirmed_done
+    verified_at: '2026-10-07'
     evidence:
     - commit: 128c6328b6a6b7ed40cc60e94e4712dbbc0d9f2b
       detail: Current main after ARV-008 and 2026-09-19 AM-4 reconciliation; default CI executes make test.
@@ -1200,13 +1200,17 @@ legacy_registry:
       detail: Search-result handoff to public detail/getDocs path and persisted run context remain covered.
     - path: tests/test_procurement_source_graph_production.py
       detail: Production source graph continues to bind canonical values to direct source fragments rather than synthetic candidate values.
+    - path: docs/roadmap/ARV-002_LIVE_CUSTOMER_PARSE_2026-10-07.md
+      detail: Owner-admitted residual closure; 87 focused tests passed, 32 persistence/recovery tests passed with 12 profile skips, make check passed, and read-only live exact-number search/detail verification succeeded.
+    - path: tests/fixtures/public_44fz/search_card_customer_js_pollution.html
+      detail: Deterministic regression fixture reproduces the historical raw-HTML JavaScript contamination boundary.
     notes: >-
-      Current live exact-number lookup succeeds and the stricter common-info extractor returns the correct explicit customer. Revalidation
-      also exposed one concrete residual: the search-result-card customer fallback can consume EIS page JavaScript and emit malformed customer_name.
-      ARV-002 is therefore not marked confirmed_done.
+      The proven search-card customer parser residual is closed. Search-card customer_name now requires explicit visible customer-role evidence
+      and fails closed to null otherwise; the common-info/detail extractor remains authoritative and returned the correct explicit customer
+      in the read-only live exact-number verification. No hidden demo fallback was introduced.
     successor_candidate:
       task_id: ARV-002-LIVE-CUSTOMER-PARSE-001
-      status: candidate_not_admitted
+      status: completed
       title: Exact-number live customer parsing regression gate
       scope: Constrain public EIS search-card customer extraction to explicit visible customer-scoped evidence; fail closed to null when absent/ambiguous;
         add a deterministic current-layout regression fixture; preserve detail-page precedence and exact-number/no-hidden-demo-fallback behavior.

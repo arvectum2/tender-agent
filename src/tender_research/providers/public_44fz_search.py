@@ -659,10 +659,13 @@ def _parse_single_entry(entry_html: str, full_html: str) -> dict[str, Any] | Non
     )
     customer_inn = _first_matching_value(pairs, ("инн", "инн заказчика"))
     customer_kpp = _first_matching_value(pairs, ("кпп", "кпп заказчика"))
-    if not customer_name:
-        org_match = re.search(r'Заказчик[^:]*:\s*([^<]+)', entry_html, re.IGNORECASE)
-        if org_match:
-            customer_name = _strip_html(org_match.group(1))
+
+    # Fail closed when the search card does not expose an explicit visible
+    # customer label/value pair.  A historical regex fallback scanned raw card
+    # HTML for the word "Заказчик" and could cross into embedded JavaScript,
+    # producing script text as an organization name.  Placement/general
+    # organization fields and script payloads are not customer evidence; the
+    # stricter common-info detail extractor remains authoritative downstream.
 
     price_value = _first_matching_value(
         pairs,
