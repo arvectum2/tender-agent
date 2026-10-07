@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: DP-QUALITY-CORE-3.2-003
 authority: OWNER_DIRECTIVE
 goal: Prepare the remaining human-reviewed OCR gold gate for arvectum2/data-platform without falsely promoting silver references or mutating frozen public_v1 benchmark truth.
@@ -15,22 +15,26 @@ definition_of_done:
 completed:
 - DP-QUALITY-CORE-3.2-001 real-source faithfulness merged in data-platform PR #80.
 - DP-QUALITY-CORE-3.2-002 ranking-gap diagnosis merged in data-platform PR #81 as ac2bbf00a0378322ef1778c2859f93c3652d1457; no default fusion change justified.
-current: Inventory the existing silver OCR references and prepare a separate hash-pinned human review packet.
+current: Engineering preparation is complete and merged. The remaining gate is an actual human visual comparison of the two pinned scan PDFs against their candidate reference texts.
 pending:
-- Add review packet and validator/tests.
-- Document promotion path to a new corpus revision.
-- Run focused checks, PR/CI, merge if green.
-- Stop with explicit human review action required.
-last_verified_commit: ac2bbf00a0378322ef1778c2859f93c3652d1457
+- HUMAN: review procurement-control-notice-scan against its pinned candidate text and record reviewer/date/notes.
+- HUMAN: review procurement-technical-spec-scan against its pinned candidate text and record reviewer/date/notes.
+- After both human reviews are accepted, create a separate accepted attestation and promote through a new corpus revision; do not mutate public_v1.
+last_verified_commit: 1bda6b2e67f210ba193723e6d4bbd6151ea13722
 test_results:
 - "PR #81 exact-head CI run 37620125711: SUCCESS."
 - "Post-merge data-platform-ci run 37620284400: SUCCESS."
-updated_at: '2026-10-07T15:28:00+03:00'
-resume_instruction: Continue from data-platform main ac2bbf00. Keep public_v1 and its silver gold files immutable. Build only a separate hash-pinned human-review packet plus fail-closed validation/docs; stop before any claim of human review.
+- "OCR review packet validates: 2 pinned items, 0 accepted, 2 pending; source manifest and scan/gold hashes match frozen public_v1."
+- "Focused OCR review/corpus tests: 6 passed; Ruff and git diff --check PASS."
+- "Data Platform PR #82 exact-head CI run 37621007299: SUCCESS; Python 3.11/3.12/3.13 and JavaScript SDK green."
+- "PR #82 merged as 1bda6b2e67f210ba193723e6d4bbd6151ea13722."
+- "Post-merge data-platform-ci run 37621160669: SUCCESS; Mirror to GitVerse SUCCESS."
+updated_at: '2026-10-07T15:29:00+03:00'
+resume_instruction: Blocked on HUMAN review. Do not claim human-reviewed OCR gold or alter public_v1. When a human supplies acceptance/corrections for both pinned scan/text pairs, create a separate accepted attestation, validate it, then create a new corpus revision carrying the reviewed gold.
 execution:
   claimed_by: ChatGPT
   execution_id: dp-quality-core-3.2-003
-  branch: feature/dp-quality-core-3-2-human-ocr-gold
+  branch: null
   base_commit: ac2bbf00a0378322ef1778c2859f93c3652d1457
   issue: null
   manual_override: true
