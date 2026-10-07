@@ -33,17 +33,17 @@ completed:
 - '2026-10-07: The only remaining full-suite failure is the pre-existing R9 pg_restore
   acceptance failure; the identical single test fails on clean origin/main 1b95d668,
   proving it is not introduced by ARV-022.'
-current_stage: ci_and_dependency_verification
+- '2026-10-07: Data Platform PR #85 exact-head CI passed and PR merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7;
+  the additive process_document metadata bridge is now on Data Platform main.'
+current_stage: tender_agent_pr_ci
 remaining:
-- commit/push queue-policy correction
-- 'Data Platform PR #85 exact-head CI/merge'
 - Tender Agent PR exact-head CI/guarded merge
 - completion bookkeeping and superseded OCR PR reconciliation
-last_verified_commit: 603603ce686fc079a6bc81e75388f4dbc901b9d5
+last_verified_commit: a47d6f20c08fe65b4a9085a1e1d7af92267296d8
 test_results:
 - focused 38 passed; make check passed
 - full pytest 3107 passed / 236 skipped; queue-policy failure fixed; only R9 pg_restore
   failure reproduces unchanged on origin/main
-resume_instruction: Finish dependency/PR CI after pushing the queue-policy correction;
-  treat R9 pg_restore as documented origin/main baseline, not an ARV-022 regression.
-updated_at: '2026-10-07T22:28:00+03:00'
+resume_instruction: Open/verify/merge the Tender Agent ARV-022 PR, then finalize checkpoint
+  and old OCR PR reconciliation.
+updated_at: '2026-10-07T22:31:00+03:00'

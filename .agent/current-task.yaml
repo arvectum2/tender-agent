@@ -44,17 +44,16 @@ completed:
 - '2026-10-07: The only remaining full-suite failure is the pre-existing R9 pg_restore
   acceptance failure; the identical single test fails on clean origin/main 1b95d668,
   proving it is not introduced by ARV-022.'
-current: Verify the Data Platform metadata bridge PR and Tender Agent exact-head CI;
-  local ARV-022 tests are green apart from an origin/main R9 environment baseline
-  failure.
+- '2026-10-07: Data Platform PR #85 exact-head CI passed and PR merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7;
+  the additive process_document metadata bridge is now on Data Platform main.'
+current: Open the Tender Agent ARV-022 PR, verify exact-head CI, then merge/bookkeep
+  under renewed AM-4.
 pending:
-- Commit and push the queue-policy correction/checkpoint.
-- 'Verify Data Platform PR #85 exact-head CI and merge the additive metadata bridge
-  if gates permit.'
 - Open the Tender Agent ARV-022 PR against current main and verify exact-head CI.
-- Merge only if renewed Company AM-4 and ordinary auto-merge gates remain valid; then
-  reconcile superseded OCR PRs and mark completed.
-last_verified_commit: 603603ce686fc079a6bc81e75388f4dbc901b9d5
+- Merge only if renewed Company AM-4 and ordinary auto-merge gates remain valid.
+- 'Reconcile superseded OCR PRs #128/#129 and mark the checkpoint completed with final
+  merge/test evidence.'
+last_verified_commit: a47d6f20c08fe65b4a9085a1e1d7af92267296d8
 test_results:
 - 'focused pytest: 38 passed'
 - 'make check: PASS'
@@ -63,10 +62,10 @@ test_results:
 - 'R9 backup/restore acceptance: FAILS identically on clean origin/main 1b95d668 (pg_restore
   exit 1), therefore baseline/environmental and unrelated to ARV-022'
 - 'git diff --check: PASS'
-updated_at: '2026-10-07T22:28:00+03:00'
-resume_instruction: 'Commit/push the queue-policy correction. Then verify/merge Data
-  Platform PR #85 if exact-head CI is green, create the Tender Agent ARV-022 PR, require
-  exact-head CI, and finish guarded merge/bookkeeping.'
+updated_at: '2026-10-07T22:31:00+03:00'
+resume_instruction: Create the Tender Agent ARV-022 PR from agent/commercial-workflow-arv-022-001,
+  require exact-head CI, merge under renewed AM-4 if green, then close/supersede old
+  OCR PRs and mark completed.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261007-arv022
