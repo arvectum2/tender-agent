@@ -3,9 +3,9 @@ repository: arvectum2/tender-agent
 task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 status: in_progress
 authority: AUTO
-branch: agent/arv-005-local-llm-response-schema
-base_commit: 37d6ad8c8300906737b5b1fd2ae37b7d88043116
-updated_at: '2026-09-23T12:12:00+03:00'
+branch: chore/arv-005-controlled-pilot-finalize-20261007
+base_commit: 189799ce4cc44a4e83e75169d689613bd14b55bf
+updated_at: '2026-10-07T11:15:00+03:00'
 canonical_item: ARV-005
 continuation_branch: CORE-QUALITY-PILOT
 scope: Controlled technical pilot on real public procurements using Mac mini local runtime and local inference; no consequential external action.
@@ -15,28 +15,60 @@ owner_direction:
   vps_deferred: true
   real_procurement_runs_authorized: true
 completed:
-  - Canonical development chain reconciled through PR #119 / main 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845.
-  - Pilot admission plan PR #120 merged as 32410164e81e1d477911fe593f1874faeca52247 (automatic merge 8/10).
-  - Isolated canonical Mac mini clone created; legacy runtime copy left untouched.
-  - Local Python 3.11 pilot venv created; focused controlled-LLM/provider tests pass 26/26 when runtime secrets are isolated from test env.
-  - Direct local Gemma smoke returned valid compact JSON through llama.cpp loopback.
-  - Local Qwen3 embedding service is present on loopback and pilot config points retrieval embeddings to it.
-  - Existing legacy backend was verified not to enable controlled LLM provider mode, so its analyses can silently fall back to deterministic mode.
-  - Pilot provider config now targets local Gemma via llama.cpp and uses 120s timeout; one-section requirements smoke passed schema validation in 43.64s.
-  - Full four-section smoke completed in 240.22s: requirements/supplier_questions/contract_risk_memo passed; rfq_draft failed closed because list-typed fields were returned as strings.
-  - RFQ failure reproduced in isolation and classified as output-schema prompt mismatch, not transport failure.
-  - PR #121 schema-prompt hardening merged as 37d6ad8c8300906737b5b1fd2ae37b7d88043116 after 19/19 exact-head checks succeeded.
-  - Existing production LLM transport pattern proved llama.cpp supports response_format.schema; controlled provider now reuses its stored schema as a generation constraint.
-  - Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
-current: Complete exact-head CI for llama.cpp response schema constraint, then run one full four-section synthetic proof before counted Wave 1.
+- Canonical development chain reconciled through PR
+- Pilot admission plan PR
+- Isolated canonical Mac mini clone created; legacy runtime copy left untouched.
+- Local Python 3.11 pilot venv created; focused controlled-LLM/provider tests pass 26/26 when runtime secrets are isolated from test env.
+- Direct local Gemma smoke returned valid compact JSON through llama.cpp loopback.
+- Local Qwen3 embedding service is present on loopback and pilot config points retrieval embeddings to it.
+- Existing legacy backend was verified not to enable controlled LLM provider mode, so its analyses can silently fall back to deterministic mode.
+- Pilot provider config now targets local Gemma via llama.cpp and uses 120s timeout; one-section requirements smoke passed schema validation in 43.64s.
+- Full four-section smoke completed in 240.22s: requirements/supplier_questions/contract_risk_memo passed; rfq_draft failed closed because list-typed fields were returned as strings.
+- RFQ failure reproduced in isolation and classified as output-schema prompt mismatch, not transport failure.
+- PR
+- Existing production LLM transport pattern proved llama.cpp supports response_format.schema; controlled provider now reuses its stored schema as a generation constraint.
+- Focused provider/controlled-workflow tests pass 4/4; targeted local Gemma smoke for rfq_draft + contract_risk_memo passes 2/2 schema validation in 156.65s.
+- PR
+- Isolated Mac mini runtime synced to exact merged main 189799ce4cc44a4e83e75169d689613bd14b55bf; legacy runtime remained untouched.
+- Full four-section controlled-provider smoke passed requirements, supplier_questions, rfq_draft and contract_risk_memo 4/4 in 250.62s; provider=openai_compatible, review=needs_human_review, trace_count=4.
+- Wave 1 selection frozen before analysis output inspection: 0342200026726000083 (simple automatic breakers), 0333300006126000121 (multi-position electrical products proxy), 0301200067526000236 (higher-materiality cable supply proxy).
+- W2-B top-level provenance now fails closed for all-failed and partially-failed controlled sections at 9921180; 21 touched tests pass and no Wave 2 inference was rerun.
+- W2-A/C/E frozen document aliases are recognized across public intake, retained-corpus completeness, and notice XML paths at 1a3225e; 37 relevant tests pass.
+current: 'Canonical closure in progress: preserve the completed frozen pilot evidence, port only validated ARV-005 regressions onto current main, verify current code, then reconcile queue/roadmap without rerunning frozen procurements.'
+subtasks:
+- id: A1
+  status: completed
+  title: deterministic 44-FZ source-link selection + printForm fail-closed hardening
+- id: A2
+  status: completed
+  title: focused regression suite + live read-only W1-B/W1-C proof
+- id: A3
+  status: completed
+  title: W1-B acquisition rerun + evidence
+- id: A4
+  status: completed
+  title: W1-C acquisition rerun + evidence
+- id: A5
+  status: completed
+  title: controlled LLM/report runs for source-complete W1-B/W1-C + provenance
+- id: A6
+  status: completed
+  title: Wave 1 gate + Wave 2 five-case freeze
+- id: A7
+  status: completed
+  title: Complete Wave 2 counted runs, provenance remediation, and Wave 2 -> Wave 3 gate.
+- id: A8
+  status: completed
+  title: Complete frozen Wave 3 confirmation set and post-confirmation regression remediation without rewriting counted evidence.
+- id: A9
+  status: completed
+  title: Run three frozen exploratory 223-FZ cases, record source-bound blockers separately, and publish aggregate technical report.
 remaining:
-  - exact-head CI/merge for controlled-provider response schema constraint
-  - repeat full controlled-provider fixture proof with all four core sections valid
-  - Wave 1 case freeze and 3 runs
-  - Wave 2 case freeze and 5 runs
-  - Wave 3 confirmation 4 runs
-  - 3 exploratory 223-FZ runs
-  - aggregate technical report
+- port validated ARV-005 code/regression delta onto current main without importing later unrelated product-shell work
+- run focused/current-main verification and fix integration regressions
+- publish aggregate technical report and frozen evidence on canonical main
+- reconcile execution queue, roadmap and current-task to completed
+- exact-head CI and merge final closure PR
 validation:
   canonical_main: 4f5d0551a27ac0b6c92c59e3d9a85896ce22e845
   local_generation_endpoint_observed: http://127.0.0.1:8081/v1
@@ -46,9 +78,857 @@ validation:
   existing_backend_controlled_llm_enabled: false
   direct_local_generation_smoke: pass
   controlled_requirements_schema_smoke: pass
-  controlled_full_smoke_seconds: 240.22
-  controlled_full_smoke_sections_passed: 3
-  controlled_full_smoke_sections_failed: 1
-  controlled_full_smoke_failure: rfq_draft list fields emitted as strings
+  controlled_full_smoke_seconds: 250.62
+  controlled_full_smoke_sections_passed: 4
+  controlled_full_smoke_sections_failed: 0
+  controlled_full_smoke_failure: null
+  frozen_wave1_registry_numbers:
+  - 0342200026726000083
+  - '0333300006126000121'
+  - '0301200067526000236'
+  wave1_w1a_run_id: toa-run-20260923092953-986c09
+  wave1_w1a_documents: 6
+  wave1_w1a_analysis_mode: llm_tender_operator_provider
+  wave1_w1a_llm_invoked: true
+  wave1_w1a_provider: openai_compatible
+  wave1_w1a_model: arvectum-gemma4-12b-it-qat-q4_0
+  wave1_w1a_fallback_reason: null
+  wave1_w1a_runtime_seconds: 487.66
+  wave1_w1b_run_id: toa-run-20260923140657-3d3613
+  wave1_w1b_status: docs_required
+  wave1_w1b_documents: 0
+  wave1_w1b_llm_invoked: false
+  wave1_w1b_blocker: public acquisition returned no archive/documents; manual_upload_required
+  wave1_w1c_run_id: toa-run-20260923140728-f2b896
+  wave1_w1c_status: docs_required
+  wave1_w1c_documents: 0
+  wave1_w1c_llm_invoked: false
+  wave1_w1c_blocker: public acquisition returned no archive/documents; manual_upload_required
+  am4_automatic_merge_counter: 10
+  repository_merge_gate: REVIEW_REQUIRED
   pilot_llm_timeout_seconds: 120
-resume_instruction: Merge the response-schema constraint only after exact-head CI and ordinary AM-4 gates. Then sync isolated Mac mini runtime to exact main and run one full four-section synthetic LLM smoke. Freeze Wave 1 only if all four sections validate; otherwise fail closed and record the blocker.
+resume_instruction: Continue canonical closure only: do not rerun or mutate frozen pilot cases. Port the validated pre-report ARV-005 src/tests delta onto current main, verify it, publish preserved evidence, reconcile queue/roadmap, and finish via exact-head CI. Do not import later PRODUCT-SHELL work from PR #123.
+wave1_acquisition_diagnosis_20260923:
+  cache_check: no_existing_public_package_for_w1b_or_w1c
+  frozen_source_url_shape: printForm/view.html
+  resolver_gap: current_public_documents_url_builder_does_not_resolve_printForm_to_procedure_specific_documents_url
+  direct_printform_link_check: no_documents_or_public_filestore_link_found
+  safe_boundary: do_not_guess_procedure_code_or_authenticate_to_eis
+wave1_live_source_evidence_20260927:
+  w1b_registry: '0333300006126000121'
+  w1b_common_info: /epz/order/notice/zk20/view/common-info.html?regNumber=0333300006126000121
+  w1b_documents: /epz/order/notice/zk20/view/documents.html?regNumber=0333300006126000121
+  w1c_registry: '0301200067526000236'
+  w1c_common_info: /epz/order/notice/ea20/view/common-info.html?regNumber=0301200067526000236
+  w1c_documents: /epz/order/notice/ea20/view/documents.html?regNumber=0301200067526000236
+  evidence_boundary: public exact-number search cards only; no authentication; no guessed procedure code
+wave1_resolver_fix_validation_20260927:
+  provider_tests: 44_passed
+  provider_test_warning_count: 1
+  live_w1b_search_card_url: https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0333300006126000121
+  live_w1b_documents_url: https://zakupki.gov.ru/epz/order/notice/zk20/view/documents.html?regNumber=0333300006126000121
+  live_w1b_document_links: 13
+  live_w1c_search_card_url: https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0301200067526000236
+  live_w1c_documents_url: https://zakupki.gov.ru/epz/order/notice/ea20/view/documents.html?regNumber=0301200067526000236
+  live_w1c_document_links: 4
+  w1b_acquisition_run_id: toa-run-20260927163252-70f1dc
+  w1b_acquisition_status: ready_to_analyze
+  w1b_acquired_documents: 13
+  w1b_manual_upload_required: false
+  w1c_acquisition_run_id: toa-run-20260927163340-2ce555
+  w1c_acquisition_status: ready_to_analyze
+  w1c_acquired_documents: 4
+  w1c_manual_upload_required: false
+  flow_suite_note: full TestClient handoff suite was not accepted as evidence in this shell because pilot-local host/auth settings contaminated TestClient host validation; provider-focused regression plus live read-only proof are the accepted A1/A2 evidence.
+wave1_a5_runtime_blocker_20260927:
+  w1b_run_id: toa-run-20260927163252-70f1dc
+  w1b_analysis_status: completed_with_warnings
+  w1b_analysis_mode: llm_tender_operator_provider
+  w1b_llm_invoked: true
+  w1b_provider: openai_compatible
+  w1b_model: arvectum-gemma4-12b-it-qat-q4_0
+  w1b_fallback_reason: null
+  w1b_decision_core: NEEDS_REVIEW
+  w1b_report_consistency_defect: canonical_report.customer_decision says Участвовать while final recommendation and Decision Core require review
+  w1c_run_id: toa-run-20260927163340-2ce555
+  w1c_documents: 4
+  w1c_analysis_status: blocked_runtime
+  runtime_observation: local llama.cpp request hung beyond configured 120s; duplicate/orphan request was removed; after controlled inference-service restart the frozen 6.9G model cannot be reopened through the ArvectumSSD symlink
+  model_path: /Volumes/ArvectumSSD/Models/ollama/blobs/sha256-1278394b693672ac2799eadc9a83fd98259a6a88a40acfb1dcaa6c6fc895a606
+  access_error: Operation not permitted
+  finder_copy_attempt: blocked because automation process is not authorized to send Apple events to Finder
+  required_human_action: restore removable-volume/full-disk access for the llama-server launch context or otherwise make the exact frozen model readable locally
+  safe_boundary: do not substitute model or procurement case; do not authenticate to EIS/ETP
+wave1_w1b_report_consistency_fix_20260927:
+  pr: 123
+  implementation_commit: 6f27658710fee1dc9e78e29113c9d87c931f8b59
+  regression_commit: f9bcb68a44fc9affa21e560b4703109fb995f140
+  behavior: NEEDS_REVIEW and NO_GO Decision Core outcomes reconcile the legacy customer_decision recommendation, rationale and next action
+  focused_regression: 1_passed
+  related_report_tests: 24_passed
+  make_check: passed
+  broad_suite: 3051_passed_244_skipped_6_environment_or_time_sensitive_failures
+  broad_suite_failures: public EIS DNS unavailable; wall-clock deadline boundary; Docker unavailable for three R9 acceptance matrices; SOCKS extra unavailable in inherited environment
+  merge_gate: REVIEW_REQUIRED
+wave1_a5_recovery_and_fix_20260927:
+  local_llama_health: ok
+  local_llama_model: arvectum-gemma4-12b-it-qat-q4_0
+  short_completion_smoke: pass
+  w1b_run_id: toa-run-20260927163252-70f1dc
+  w1b_llm_invoked: true
+  w1b_fallback_reason: null
+  w1b_decision_core: NEEDS_REVIEW
+  w1b_report_consistency_fix: customer_decision now Требуется проверка when Decision Core is NEEDS_REVIEW
+  w1b_production_model_hash_unchanged: true
+  w1b_llm_rerun_for_report_fix: false
+  w1c_run_id: toa-run-20260927163340-2ce555
+  w1c_analysis_status: needs_review
+  w1c_analysis_mode: llm_tender_operator_provider
+  w1c_llm_invoked: true
+  w1c_provider: openai_compatible
+  w1c_model: arvectum-gemma4-12b-it-qat-q4_0
+  w1c_fallback_reason: null
+  w1c_decision_core: NEEDS_REVIEW
+  duplicate_w1c_retry_aborted: true
+  duplicate_retry_llm_rerun_completed: false
+  focused_regression: 1 passed
+  touched_regression_suite: 62 passed, 1 deprecation warning
+  note: Python/FastAPI cold imports on this host showed high I/O wait; test body itself remained fast.
+wave1_gate_20260928:
+  status: PASS
+  w1a: PASS
+  w1b: PASS
+  w1c: PASS
+  checks:
+  - completed final state
+  - llm_tender_operator_provider
+  - llm_invoked=true
+  - provider=openai_compatible
+  - frozen Gemma model
+  - fallback_reason=null
+  - explicit llm_analysis_completed event
+  - human control required/external action false
+  - customer report consistent with Decision Core
+  - accepted customer-facing claims source-bound
+  w1a_fallback_history: Three earlier stub_analysis_fallback events remain explicitly logged; final counted result has no fallback.
+  w1c_contract_reconciliation: Document set confirms contract draft presence while text extraction failed; Decision Core now records present_unparsed + REVIEW instead of MISSING.
+  tests: 73 passed after rebase integration, 1 Starlette/httpx deprecation warning
+wave2_freeze_20260928:
+  before_model_output_inspection: true
+  registry_numbers:
+  - 0351100020326000084
+  - 0338300012526000076
+  - 0822500000926000094
+  - 0348200027326000071
+  - 0119200000126016261
+  expected_review_cases:
+  - 0348200027326000071
+  - 0119200000126016261
+  selection_basis: Public 44-FZ search cards and document/revision structure only; no Wave 2 model output inspected.
+wave2_runtime_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
+last_verified_commit: 34f72c565715d6da729e325f22826a5b04fbd3e2
+rebase_integration_20260928:
+  remote_head_before_rebase: 5abbbc7
+  remote_commits_preserved:
+  - 4b8363a
+  - 6f27658
+  - f9bcb68
+  - 3d29252
+  - 5abbbc7
+  integrated_code_commit: 211d7b0cc8e91ef036afcee27eb447edbaa0a370
+  focused_regression: 73 passed, 1 deprecation warning
+  force_push_used: false
+wave2_initial_acquisition_20260928:
+  W2-A:
+    registry_number: 0351100020326000084
+    run_id: toa-run-20260928063520-0f8807
+    status: docs_required
+    documents: 5
+    document_set_status: incomplete
+    missing:
+    - contract_draft
+    analysis_allowed: false
+    defect: 2. Проект ГК.docx downloaded but document-kind classifier did not recognize contract draft
+  W2-B:
+    registry_number: 0338300012526000076
+    run_id: toa-run-20260928063523-e3b615
+    status: ready_to_analyze
+    documents: 4
+    document_set_status: complete
+    missing: []
+    analysis_allowed: true
+  W2-C:
+    registry_number: 0822500000926000094
+    run_id: toa-run-20260928063528-3674d8
+    status: docs_required
+    documents: 6
+    document_set_status: incomplete
+    missing:
+    - technical_specification
+    analysis_allowed: false
+    defect: III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx downloaded but document-kind classifier did not recognize technical specification
+  W2-D:
+    registry_number: 0348200027326000071
+    run_id: toa-run-20260928063532-51f3ec
+    status: docs_required
+    documents: 0
+    document_set_status: empty
+    missing:
+    - technical_specification
+    - contract_draft
+    analysis_allowed: false
+    defect: 'revision selection fail-closed: active=2, unknown=0, total=3; no attachments accepted'
+  W2-E:
+    registry_number: 0119200000126016261
+    run_id: toa-run-20260928063535-f3d3ca
+    status: docs_required
+    documents: 6
+    document_set_status: incomplete
+    missing:
+    - technical_specification
+    analysis_allowed: false
+    defect: card customer contamination resolved by common-info page, but OОЗ/technical document kind not recognized
+wave2_w2b_counted_20260928:
+  registry_number: 0338300012526000076
+  run_id: toa-run-20260928063523-e3b615
+  status: completed_with_warnings
+  analysis_status: completed
+  analysis_mode: llm_tender_operator_provider
+  decision_core: NEEDS_REVIEW
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: null
+    llm_calls_count: 1
+  runtime_traces:
+  - trace_id: RTC-2026-000054
+    section: requirements
+    validation_status: FAILED
+    review_status: validation_failed
+  - trace_id: RTC-2026-000055
+    section: supplier_questions
+    validation_status: FAILED
+    review_status: validation_failed
+  - trace_id: RTC-2026-000056
+    section: rfq_draft
+    validation_status: FAILED
+    review_status: validation_failed
+  - trace_id: RTC-2026-000057
+    section: contract_risk_memo
+    validation_status: FAILED
+    review_status: validation_failed
+  observed_transport: all four llama.cpp section requests were cancelled at the frozen 120-second provider timeout after very large prompt evaluation; no runtime/model/config change was made
+  critical_defect: Top-level provenance/event reports successful LLM completion with fallback_reason=null even though every controlled LLM section failed validation. Empty/placeholder downstream payloads are therefore presented under llm_tender_operator_provider without explicit failure provenance.
+wave2_provenance_remediation_20260928:
+  implementation_commit: 9921180a8f8022df38320b51edf53a1bd851502e
+  behavior:
+  - all failed sections emit llm_analysis_validation_failed and deterministic fallback
+  - partial failure emits llm_analysis_completed_with_warnings and explicit fallback_reason
+  - top-level llm_calls_count reflects the controlled section count
+  - trace IDs and failed section names remain explicit in event evidence
+  regression: 2 passed
+  touched_suites: 21 passed, 21 warnings
+  lint: 51 pre-existing Ruff findings remain in the two legacy touched files; no finding points to the added classification or regression lines
+  frozen_inputs_changed: false
+  wave2_llm_rerun: false
+wave2_document_alias_remediation_20260928:
+  implementation_head: 1a3225e18ca0f8baf485b734e0bbb1142af56351
+  exact_aliases:
+  - 2. Проект ГК.docx -> contract_draft
+  - III. ТЕХНИЧЕСКАЯ ЧАСТЬ.docx -> technical_specification
+  - ООЗ.docx and mixed-script OОЗ.docx -> technical_specification
+  paths_hardened:
+  - public attachment intake role hints
+  - retained document-set completeness reconstruction
+  - notice XML attachment classification
+  regression_first_reproduction: 3 failed as expected before implementation
+  focused_regression: 3 passed
+  relevant_suites: 37 passed, 2 deprecation warnings
+  w2d_revision_inspection: Synthetic exact observed shape active=2, unknown=0, total=3 returns no attachments, ambiguous_revision_state, requires_review=true.
+  w2d_behavior_changed: false
+  lint: repository files retain pre-existing Ruff formatting/import/UTC findings; git diff --check passed and the bounded test suites are green
+  frozen_inputs_changed: false
+  procurement_reacquisition: false
+  wave2_llm_rerun: false
+wave2_reacquisition_executor_blocker_20260928:
+  verified_pr_head: 1889e7712a56213a06d9405aa25f7ab734215ae5
+  ci_run: 36395983945
+  ci_status: completed_success
+  submitted_reviews: 0
+  review_threads: 0
+  preserved_wave2_run_directories_available: false
+  public_eis_probe: timed_out_after_10_seconds_without_response_content
+  required_executor: canonical Mac mini pilot context
+  lease_released: true
+  procurement_reacquisition: false
+  wave2_llm_rerun: false
+wave2_w2d_revision_remediation_20261002:
+  regression_commit: b42aa9bf9c1cca2c7824fe9de6eec5da9e0c195a
+  registry_number: 0348200027326000071
+  live_search_status: success
+  live_exact_matches: 1
+  notice_revisions:
+  - revision: 1
+    active: false
+    publication_timestamp: 24.09.2026 08:17 (МСК)
+  - revision: 2
+    active: true
+    publication_timestamp: 25.09.2026 11:13 (МСК)
+  auxiliary_publication:
+    revision: null
+    active: true
+    title_prefix: Разъяснения положений извещения об осуществлении закупки
+  selection_status: active_revision_selected
+  selected_revision: 2
+  selected_document_links: 5
+  auxiliary_publication_count: 1
+  requires_review: false
+  provider_regression: 46 passed, 1 deprecation warning
+  interpretation: 'The former active=2 ambiguity was false: the second active block is an auxiliary clarification, not a competing notice revision.'
+wave2_reacquisition_20261002:
+  code_commit: b42aa9bf9c1cca2c7824fe9de6eec5da9e0c195a
+  all_source_complete: true
+  all_analysis_allowed: true
+  cases:
+    W2-A:
+      registry_number: 0351100020326000084
+      run_id: toa-run-20261002084643-c9157e
+      documents: 5
+      status: ready_to_analyze
+      document_set_status: complete
+    W2-B:
+      registry_number: 0338300012526000076
+      run_id: toa-run-20261002084715-3b5d13
+      documents: 4
+      status: ready_to_analyze
+      document_set_status: complete
+      note: new source-equivalent run; original hidden-provenance-failure run retained unchanged
+    W2-C:
+      registry_number: 0822500000926000094
+      run_id: toa-run-20261002084644-d6a081
+      documents: 6
+      status: ready_to_analyze
+      document_set_status: complete
+    W2-D:
+      registry_number: 0348200027326000071
+      run_id: toa-run-20261002084646-6af11a
+      documents: 5
+      status: ready_to_analyze
+      document_set_status: complete
+      selected_notice_revision: 2
+      auxiliary_publications: 1
+    W2-E:
+      registry_number: 0119200000126016261
+      run_id: toa-run-20261002084648-1bc4f2
+      documents: 6
+      status: ready_to_analyze
+      document_set_status: complete
+      customer_identity_source: public common-info page
+  initial_blocker_evidence_retained: true
+  llm_started_during_reacquisition: false
+wave2_runtime_blocker_20261002:
+  database_target: 127.0.0.1:55432/arvectum
+  database_ready: false
+  legacy_postgres_5432_touched: false
+  docker_context_required: desktop-linux
+  docker_daemon_ready: false
+  docker_desktop_launched: true
+  macos_privileged_dialog_pending: true
+  dialog_prompt: Docker Desktop requires privileged access to configure privileged port mapping
+  alternate_database_substituted: false
+  counted_llm_started_after_reacquisition: false
+  resolved: true
+  resolved_at: '2026-10-02T12:49:06+03:00'
+wave2_database_recovery_20261002:
+  docker_context: desktop-linux
+  docker_state_loss_detected: true
+  new_docker_raw_birth: '2026-10-02 12:42:07'
+  original_volume_present_after_restart: false
+  restored_dump: /Users/master/arvectum-backups/postgres/20260713T141620Z/arvectum-postgres.dump
+  restored_dump_sha256: 4300f65a26afa3babbbfd40a1ba1dfe55b0b5a932f78c7a96e44c056d90df5d7
+  restored_dump_revision: 092_create_tender_analysis_jobs_table
+  migrated_revision: 099_add_integration_outbox
+  database_target: 127.0.0.1:55432/arvectum
+  pgvector_version: 0.8.7
+  runtime_control_traces_after_restore: 0
+  historical_post_july_db_trace_limitation: true
+  historical_evidence_preserved_in_run_files_and_checkpoint: true
+  legacy_postgres_5432_touched: false
+  pilot_env_db_credentials_reconciled_locally: true
+  pilot_env_committed: false
+wave2_w2a_counted_20261002:
+  registry_number: 0351100020326000084
+  run_id: toa-run-20261002084643-c9157e
+  elapsed_seconds: 481.22
+  status: needs_review
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  llm_invoked: true
+  llm_provider: openai_compatible
+  llm_model: arvectum-gemma4-12b-it-qat-q4_0
+  llm_calls_count: 4
+  fallback_reason: controlled_llm_all_sections_failed
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000001
+  - RTC-2026-000002
+  - RTC-2026-000003
+  - RTC-2026-000004
+  trace_validation_status: FAILED
+  trace_human_review_status: validation_failed
+  trace_final_disposition: NEEDS_HUMAN_REVIEW
+  invalid_llm_outputs_accepted: false
+  decision_core: NO_GO
+  decision_core_confidence: high
+  decision_evidence_source: card:submission_deadline
+  decision_evidence_excerpt: '2026-10-02T00:00:00+00:00'
+  customer_decision: Не участвовать
+  contract_draft_status: present
+  human_control_required: true
+  external_action_allowed: false
+  open_quality_check: Verify whether the application deadline exact time exists on live EIS; stored date-only midnight must not create a false hard blocker.
+  db_trace_namespace_note: Recovered DB started new runtime trace sequence at RTC-2026-000001; these IDs are scoped to the recovered 2026-10-02 DB baseline.
+wave2_w2a_deadline_correction_20261002:
+  parser_fix_commit: 2579e2a263e64d98274bdcf4faaf793acc081481
+  live_eis_raw: 02.10.2026 10:00 (МСК+4)
+  normalized_utc: '2026-10-02T03:00:00+00:00'
+  old_incorrect_value: '2026-10-02T00:00:00+00:00'
+  provider_regression: 47 passed, 1 deprecation warning
+  canonical_rerendered_without_llm_rerun: true
+  production_model_hash_unchanged: true
+  verified_persisted_outputs: true
+  deadline_status: expired
+  decision_core_after_correction: NO_GO
+  decision_changed: false
+  decision_evidence_excerpt: '2026-10-02T03:00:00+00:00'
+wave2_exact_deadline_refresh_20261002:
+  parser_fix_commit: 2579e2a263e64d98274bdcf4faaf793acc081481
+  before_counted_analysis: true
+  cases:
+    W2-B:
+      raw: 06.10.2026 09:33 (МСК+9)
+      normalized_utc: '2026-10-05T21:33:00+00:00'
+    W2-C:
+      raw: 05.10.2026 10:00 (МСК+7)
+      normalized_utc: '2026-10-05T00:00:00+00:00'
+    W2-D:
+      raw: 05.10.2026 10:00 (МСК)
+      normalized_utc: '2026-10-05T07:00:00+00:00'
+    W2-E:
+      raw: 06.10.2026 08:00 (МСК+4)
+      normalized_utc: '2026-10-06T01:00:00+00:00'
+  documents_reacquired: false
+  llm_invoked: false
+wave2_w2b_counted_20261002:
+  registry_number: 0338300012526000076
+  run_id: toa-run-20261002084715-3b5d13
+  status: completed_with_warnings
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  llm_invoked: true
+  llm_provider: openai_compatible
+  llm_model: arvectum-gemma4-12b-it-qat-q4_0
+  llm_calls_count: 4
+  fallback_reason: controlled_llm_all_sections_failed
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000005
+  - RTC-2026-000006
+  - RTC-2026-000007
+  - RTC-2026-000008
+  deadline: '2026-10-05T21:33:00+00:00'
+  deadline_status: open
+  decision_core: NEEDS_REVIEW
+  decision_confidence: low
+  customer_decision: Требуется проверка
+  contract_draft_status: present
+  warnings:
+  - all controlled LLM sections failed validation and were rejected
+  - 03-attachment-3.pdf text extraction failed
+  invalid_llm_outputs_accepted: false
+  human_control_required: true
+  external_action_allowed: false
+wave2_w2c_counted_20261002:
+  registry_number: 0822500000926000094
+  run_id: toa-run-20261002084644-d6a081
+  status: needs_review
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: controlled_llm_all_sections_failed
+    llm_calls_count: 4
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000009
+  - RTC-2026-000010
+  - RTC-2026-000011
+  - RTC-2026-000012
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  duplicate_retry_note: A later duplicate invocation was stopped before completion; metadata was restored from the prior confirmed analysis_completed event and the duplicate was audit-recorded.
+wave2_w2d_counted_20261002:
+  registry_number: 0348200027326000071
+  run_id: toa-run-20261002084646-6af11a
+  status: needs_review
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: controlled_llm_all_sections_failed
+    llm_calls_count: 4
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000013
+  - RTC-2026-000014
+  - RTC-2026-000015
+  - RTC-2026-000016
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  warnings:
+  - Не удалось извлечь текст из Обоснование начальной (максимальной) цены контракта от 23.09.2026 09_22 (МСК).pdf.
+  - Не удалось извлечь текст из Определение начальной (максимальной) цены контракта (Расчет) от 23.09.2026 09_22 (МСК).pdf.
+  elapsed_seconds: 481.02
+wave2_w2e_counted_20261002:
+  registry_number: 0119200000126016261
+  run_id: toa-run-20261002084648-1bc4f2
+  status: completed_with_warnings
+  analysis_status: completed
+  analysis_mode: fallback_deterministic_adapter
+  metadata_provenance:
+    llm_invoked: true
+    llm_provider: openai_compatible
+    llm_model: arvectum-gemma4-12b-it-qat-q4_0
+    fallback_reason: controlled_llm_all_sections_failed
+    llm_calls_count: 4
+  failed_sections:
+  - contract_risk_memo
+  - requirements
+  - rfq_draft
+  - supplier_questions
+  trace_ids:
+  - RTC-2026-000017
+  - RTC-2026-000018
+  - RTC-2026-000019
+  - RTC-2026-000020
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  warnings:
+  - Не удалось извлечь текст из 06-1875new-15.pdf.
+  elapsed_seconds: 482.68
+  critical_quality_defect: Desk-lamp goods procurement was classified as mixed because generic procurement boilerplate was counted as independent services/works subject evidence.
+wave2_to_wave3_gate_20261002:
+  status: passed
+  date: '2026-10-02'
+  criteria:
+    no_unresolved_critical_source_attribution_or_cross_procurement_contamination: true
+    schema_and_fail_closed_behavior_stable: true
+    regressions_captured: true
+  validation: W2-A/B/C/D/E counted runs complete; explicit section-level fail-closed provenance; W2-E cross-domain contamination regression fixed and deterministic rerender verified; 15 focused tests passed.
+  known_non_gate_limitation: All five Wave 2 controlled LLM runs failed all four sections at the frozen 120s timeout and were explicitly rejected into deterministic fallback; this remains visible provenance and is not treated as model success.
+wave2_w2e_scope_remediation_20261002:
+  implementation_commit: 5964695cec5660222ae0bac0bd8cbed277deb4f9
+  regression: 15 passed, 1 Starlette/httpx deprecation warning
+  w2e_run_id: toa-run-20261002084648-1bc4f2
+  prior_scope: mixed
+  repaired_scope: goods
+  deterministic_rerender: true
+  llm_reinvoked: false
+  llm_provenance_unchanged: true
+  counted_trace_ids:
+  - RTC-2026-000017
+  - RTC-2026-000018
+  - RTC-2026-000019
+  - RTC-2026-000020
+  cross_domain_tokens_after_rerender:
+    integration: false
+    software: false
+    modification: false
+    license_risk: false
+  decision_core: NEEDS_REVIEW
+  customer_decision: Требуется проверка
+  audit_event: deterministic_scope_remediation_rerendered
+wave3_freeze:
+  frozen_at: '2026-10-02T14:20:16+03:00'
+  before_model_output_inspection: true
+  selection_basis: read-only public EIS search/detail metadata and source document shape only; no LLM/model output inspected
+  runtime_code_commit: 5964695cec5660222ae0bac0bd8cbed277deb4f9
+  runtime_model: arvectum-gemma4-12b-it-qat-q4_0
+  provider: openai_compatible
+  provider_timeout_seconds: 120
+  cases:
+  - id: W3-A
+    registry_number: 0853500000326006680
+    title: Поставка электротехнической продукции
+    nmck_rub: 17202.3
+    procedure: Запрос котировок
+    source_shape: '4 files: XLSX + DOC + 2 DOCX; search-card customer field contaminated, common-info resolution expected'
+    document_links: 4
+  - id: W3-B
+    registry_number: 0348200027026000447
+    title: Поставка электротехнических товаров в 2026 году (лот 1.2)
+    nmck_rub: 1687517.12
+    procedure: Электронный аукцион
+    source_shape: 5 files including two ZIP-wrapped contract/price appendices + DOCX technical/application docs
+    document_links: 5
+  - id: W3-C
+    registry_number: 0373200074826000979
+    title: Электронный запрос котировок на поставку светильника светодиодного внутреннего освещения для оснащения пищеблока для нужд ГКБ №1 им. Н.И. Пирогова
+    nmck_rub: 581500.8
+    procedure: Запрос котировок
+    source_shape: '8 mixed files: PDFs + XLSX + DOCX; PDF-heavy confirmation case'
+    document_links: 8
+  - id: W3-D
+    registry_number: 0329100002526000044
+    title: Поставка автоматического выключателя в рамках текущего ремонта
+    nmck_rub: 459944.01
+    procedure: Запрос котировок
+    source_shape: '4 files: XLSX + 3 DOCX; catalog-like breaker case'
+    document_links: 4
+wave3_acquisition_20261003:
+  frozen_code_head: a5053554b33925dd1c6129e7c8350275b80c8c53
+  analysis_disabled_during_acquisition: true
+  cases:
+    W3-A:
+      registry_number: 0853500000326006680
+      run_id: toa-run-20261003133916-ad847c
+      documents: 4
+      status: ready_to_analyze
+      document_set_status: complete
+      analysis_allowed: true
+    W3-B:
+      registry_number: 0348200027026000447
+      run_id: toa-run-20261003133917-1bbc28
+      documents: 5
+      status: ready_to_analyze
+      document_set_status: complete
+      analysis_allowed: true
+    W3-C:
+      registry_number: 0373200074826000979
+      run_id: toa-run-20261003133919-19b390
+      documents: 8
+      status: docs_required
+      document_set_status: incomplete
+      analysis_allowed: false
+      missing:
+      - technical_specification
+      - contract_draft
+      observed_names:
+      - Проект_контракта_17256094-1.pdf
+      - Техническое_задание_17256094-1.pdf
+      disposition: source-bound blocker retained; no Wave 3 tuning before confirmation-set completion
+    W3-D:
+      registry_number: 0329100002526000044
+      run_id: toa-run-20261003133920-eb1257
+      documents: 4
+      status: ready_to_analyze
+      document_set_status: complete
+      analysis_allowed: true
+wave3_confirmation_20261003:
+  closed_at: '2026-10-03T17:01:24+03:00'
+  frozen_head: a5053554b33925dd1c6129e7c8350275b80c8c53
+  no_tuning_before_completion: true
+  cases:
+    W3-A:
+      registry_number: 0853500000326006680
+      run_id: toa-run-20261003133916-ad847c
+      status: completed_with_warnings
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: application-template drug/equivalence boilerplate is surfaced as goods requirements in an electrical procurement
+    W3-B:
+      registry_number: 0348200027026000447
+      run_id: toa-run-20261003133917-1bbc28
+      status: needs_review
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: generic table fallback promotes contract appendix PIK/ЕАСУЗ SLA rows as procurement line items
+    W3-C:
+      registry_number: 0373200074826000979
+      run_id: toa-run-20261003133919-19b390
+      status: docs_required
+      analysis_mode: not_started
+      analysis_allowed: false
+      source_bound_blocker: true
+      confirmed_defect: underscore-separated filenames Проект_контракта_* and Техническое_задание_* are not classified as required document kinds
+    W3-D:
+      registry_number: 0329100002526000044
+      run_id: toa-run-20261003133920-eb1257
+      status: completed_with_warnings
+      analysis_mode: fallback_deterministic_adapter
+      llm_invoked: true
+      fallback_reason: controlled_llm_all_sections_failed
+      llm_calls_count: 4
+      decision_core: NEEDS_REVIEW
+      customer_decision: Требуется проверка
+      confirmed_defect: generic table fallback promotes a delivery-address row from the contract as a procurement line item
+  cross_case_contamination_observed: false
+  source_ownership_isolation_preserved: true
+wave3_post_confirmation_remediation_20261003:
+  implementation_parent_head: e0dce9590b2f98a2390042cc83731155358404f3
+  compatibility_fix_commit: 1c90fcdafdf2b4c4ec1517966ec8b2df0e11a290
+  ci_failure:
+    run_id: 37128389582
+    job_id: 111218317702
+    failing_test: tests/test_tender_operator_agent_getdocs_ip_intake.py::test_getdocs_archive_can_auto_analyze_after_download
+    observed_status: docs_required
+    root_cause: underscore normalization converted technical_spec to technical spec, but the normalized English alias was not recognized
+  remediation:
+  - preserve underscore-separated Russian document aliases introduced for W3-C
+  - recognize normalized technical_spec and contract_draft English fixture aliases
+  - retain deterministic document-set completeness and analysis gating
+  verification:
+    original_failure_reproduced: true
+    getdocs_module: 7 passed
+    document_set_module: 14 passed
+    source_first_suite: 20 passed
+    ruff_changed_paths: passed
+    make_check_locked_environment: passed
+    diff_check: passed
+  safety_review: no external action, archive extraction, data-handling, or human-control boundary changed
+  exact_head_ci: pending
+  counted_llm_rerun: false
+core_44fz_completion_20261003:
+  unique_44fz_registry_numbers: 12
+  completed_with_report: 12
+  w3c_original_counted_blocker_run: toa-run-20261003133919-19b390
+  w3c_supplemental_completion_run: toa-run-20261003163911-ba589b
+  w3c_supplemental_llm_invoked: false
+  w3c_supplemental_reason: post-confirmation deterministic remediation; original blocker evidence preserved
+  exact_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  exact_head_local_tests: 105 passed, 1 Starlette/httpx deprecation warning
+  exact_head_ci_run: 37132350065
+  exact_head_ci_conclusion: success
+  technical_core_status: completed
+exploratory_223fz_freeze_20261003:
+  frozen_at: '2026-10-03T19:41:27+03:00'
+  before_detail_or_model_output_inspection: true
+  runtime_head: 7653c0700f02a3886655950c4aa0431823c558c0
+  score_separately: true
+  cases:
+  - id: E223-A
+    registry_number: '32616432990'
+    title: Право заключения договора на кабель
+    query: кабель
+    search_deadline: '2026-10-09T00:00:00+00:00'
+    search_customer_raw: 02.10.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+  - id: E223-B
+    registry_number: '32616423713'
+    title: Поставка прожекторов, светильник
+    query: светильник
+    search_deadline: '2026-10-09T00:00:00+00:00'
+    search_customer_raw: 30.09.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+  - id: E223-C
+    registry_number: '32616427405'
+    title: Поставка электротехническ
+    query: электротехническая продукция
+    search_deadline: '2026-10-08T00:00:00+00:00'
+    search_customer_raw: 01.10.2026
+    expected_review_or_blocker: true
+    expected_reason: 223-FZ search customer attribution appears contaminated by publication-date text; must fail closed or recover from detail.
+pending: []
+last_test_results:
+  focused_relevant: 105 passed, 1 Starlette/httpx deprecation warning
+  github_actions_ci_run: 37132350065
+  github_actions_ci_conclusion: success
+completion_summary_20261003:
+  completed_at: '2026-10-03T19:48:21+03:00'
+  unique_public_procurements_total: 15
+  core_44fz:
+    unique_registry_numbers: 12
+    completed_reports: 12
+    decision_core_distribution:
+      NO_GO: 1
+      NEEDS_REVIEW: 11
+    llm_invoked_cases: 11
+    clean_controlled_llm_without_fallback: 3
+    explicit_fail_closed_fallback_cases: 8
+    silent_fallback_after_provenance_fix_observed: 0
+    cross_procurement_source_ownership_violation_observed: 0
+    w3c_original_blocker_run: toa-run-20261003133919-19b390
+    w3c_supplemental_completion_run: toa-run-20261003163911-ba589b
+    w3c_supplemental_llm_invoked: false
+  exploratory_223fz:
+    score_separate_from_44fz: true
+    cases:
+      E223-A:
+        registry_number: '32616432990'
+        run_id: toa-run-20261003164237-5c8077
+        status: docs_required
+        document_set_status: empty
+        documents: 0
+        analysis_allowed: false
+        llm_invoked: false
+        source_bound_reason: public 223-FZ detail layout unsupported; no confirmed customer or document links
+      E223-B:
+        registry_number: '32616423713'
+        run_id: toa-run-20261003164238-cdb476
+        status: docs_required
+        document_set_status: empty
+        documents: 0
+        analysis_allowed: false
+        llm_invoked: false
+        source_bound_reason: public 223-FZ detail layout unsupported; no confirmed customer or document links
+      E223-C:
+        registry_number: '32616427405'
+        run_id: toa-run-20261003164238-1e3003
+        status: docs_required
+        document_set_status: empty
+        documents: 0
+        analysis_allowed: false
+        llm_invoked: false
+        source_bound_reason: public 223-FZ detail layout unsupported; no confirmed customer or document links
+    confirmed_followups:
+    - Implement and fixture-test the current notice223 detail layout with customer/source ownership and document-link extraction.
+    - Make public attachment dispatch law-aware instead of calling the 44-FZ detail helper unconditionally.
+    - Fix 223-FZ search-card field attribution so publication-date text cannot populate customer identity.
+    - Add live-read-only or sanitized fixture regressions for the three frozen 223-FZ cases.
+    - Run a separate frozen 223-FZ semantic/readiness pilot only after source completeness is reliable; do not inherit 44-FZ semantics implicitly.
+  verification:
+    code_head: 7653c0700f02a3886655950c4aa0431823c558c0
+    focused_relevant_tests: 105 passed, 1 Starlette/httpx deprecation warning
+    github_actions_ci_run: 37132350065
+    github_actions_ci_conclusion: success
+    aggregate_report: docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+    aggregate_report_commit: 34f72c565715d6da729e325f22826a5b04fbd3e2
+  safety:
+    authenticated_eis_etp_actions: false
+    submissions_or_modifications: false
+    digital_signature_operations: false
+    external_outreach: false
+    payments_or_commitments: false
+    human_usefulness_or_commercial_acceptance_inferred: false
+  principal_engineering_finding: After Wave 1, eight subsequent LLM-invoked 44-FZ cases failed all four controlled sections at validation/timeout; after the provenance fix they failed closed explicitly and used deterministic fallback. Future model/prompt/performance tuning must be a new frozen evaluation phase.

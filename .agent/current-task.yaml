@@ -1,91 +1,38 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
+status: in_progress
+task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
 authority: OWNER_DIRECTIVE
-goal: 'Deliver the fourth bounded ARV-044 mobile slice: make the canonical Procurement Portfolio, pipeline state and outcome
-  metrics comfortable to review from iPhone without creating a second source of truth or broadening consequential-action authority.'
+goal: 'Finish ARV-005 Controlled Pilot canonically: preserve the already completed frozen 15-procurement evidence, port only validated ARV-005 regression fixes onto current main, verify the integrated code, and reconcile queue/roadmap without rerunning or contaminating the frozen pilot.'
 definition_of_done:
-- Start from current origin/main with MOB-1, MOB-2, MOB-3 and DTR-3 behavior preserved.
-- Mobile Portfolio uses the canonical mobile/Procurement Portfolio projection and presents factual portfolio metrics including
-  decision, submission and outcome totals/rates without inventing missing evidence.
-- Mobile Portfolio offers practical phone-sized pipeline/outcome review with deterministic filtering/grouping so pending decisions,
-  GO/NO GO, submitted, won/lost/cancelled and unresolved cases are easy to inspect.
-- Procurement detail preserves and displays factual submission/outcome state, timestamps and grounded rationale/postmortem
-  information when present; absent evidence is shown as pending/unknown rather than inferred.
-- Refresh and deep-link flows keep portfolio metrics and the selected case coherent after canonical state changes.
-- Existing human GO / NO GO / DEFER actions remain explicit two-step user actions; MOB-4 introduces no automatic procurement
-  decision or consequential external action.
-- Backend/mobile contract tests cover canonical portfolio metrics and outcome/submission projection; focused Swift tests cover
-  metric derivation, filters and grounded outcome mapping.
-- Xcode project builds with current Xcode and focused simulator tests pass; physical-device verification is attempted only
-  when locally available and external Apple provisioning limits are recorded, not fabricated.
-- Relevant backend tests, Ruff/make checks and git diff checks pass; exact-head CI is green before merge.
-- Roadmap, iOS README and canonical checkpoint are reconciled after merge; final checkpoint status is completed.
+- Preserve the frozen 12-case 44-FZ core and separately scored 3-case exploratory 223-FZ evidence unchanged; do not rerun counted cases.
+- Port only validated ARV-005 code/regression fixes from the historical pilot branch onto current main; exclude later unrelated PRODUCT-SHELL work.
+- Current-main focused pilot/provider/source/Decision Core regression suites pass and repository checks relevant to changed paths pass.
+- Aggregate technical report and completed ARV-005 checkpoint are present on canonical main.
+- Execution queue marks ARV-005 done and roadmap reconciliation records technical completion while keeping human usefulness/commercial acceptance HUMAN/REVIEW.
+- No procurement submission/modification, authenticated consequential ETP action, EDS/signing, outreach, payment, commitment, or inferred human acceptance occurs.
+- Exact-head CI is green and the closure PR is merged or an objective repository gate is recorded.
 completed:
-- '2026-10-07: Owner explicitly admitted MOB-4.'
-- Verified prior canonical checkpoint DTR-3 completed and origin/main at 5314b34e0927c424addbd377e58ad08c49b3b452.
-- Preserved the dirty shared checkout and created isolated worktree /Volumes/ArvectumSSD/Arvectum/repos/tender-agent-mob4
-  from origin/main.
-- Inspected current roadmap/product spec plus existing SwiftUI Portfolio, AppStore, mobile API and canonical Procurement Portfolio
-  projection.
-- 'Frozen MOB-4 reuse-first data contract: keep canonical Procurement Portfolio summary metrics, extend the mobile item projection
-  only with canonical portfolio decision/source/timestamp, and consume existing submission/outcome evidence fields; no new
-  domain table or parallel portfolio model.'
-- Implemented canonical mobile portfolio projection of decision/source/timestamp while reusing existing submission/outcome
-  evidence and canonical summary metrics.
-- Implemented iPhone Portfolio metrics, factual rate definitions, deterministic pipeline/outcome filters, grounded portfolio
-  rows and submission/outcome detail; deep-linked cases refresh canonical state first.
-- Preserved the existing explicit two-step human GO / NO GO / DEFER safety boundary; MOB-4 adds no ETP/signature/payment/submission/external-communication
-  action.
-- Added backend contract coverage for canonical GO/submission/WON projection and Swift coverage for portfolio summary decoding,
-  filter semantics and canonical decision mapping.
-- 'Focused backend verification passed: Ruff PASS; tests/test_mobile_api.py + tests/test_procurement_portfolio.py = 23 passed,
-  19 warnings.'
-- 'Xcode generic simulator build-for-testing PASS; iPhone 17 / iOS 27.0 focused simulator suite PASS: 11 tests, 0 failures.'
-- Updated iOS demo portfolio evidence, README current slice/safety/verification notes and bumped MARKETING_VERSION to 0.8.0.
-- 'Broader MOB-4 regression passed: mobile API + Procurement Portfolio + Daily Tender Run + Sprint 5A/5B integration = 49
-  passed, 42 warnings.'
-- 'Repository make check: PASS.'
-- 'Full local suite: 3071 passed, 236 skipped, 1 failed; only failure is the known R9 backup/restore pg_restore environment
-  failure.'
-- Clean untouched origin/main 5314b34 comparison reproduces the same tests/test_r9_backup_restore.py failure at pg_restore,
-  confirming it is not introduced by MOB-4.
-- 'Connected iPhone Nikita (iOS 27.0.1) physical-device signed build: BUILD SUCCEEDED with the existing Apple Development
-  profile.'
-- 'Final iPhone 17 / iOS 27.0 simulator rerun after README/version/mock polish: 11 tests, 0 failures; TEST SUCCEEDED.'
-- 'Implementation commit b37bd501602cfdba75f2b0d9fbe8866a9a94db7d was pushed and opened as PR #183.'
-- 'PR #183 exact-head pull_request CI run 37584606448 completed SUCCESS 9/9.'
-- 'PR #183 was squash-merged as bdcd868f1c42f3d3165cc8cad2c83b63b682521b.'
-- Reconciled MASTER_ROADMAP.md, master-roadmap.yaml and Daily_Tender_Run_and_iPhone_MVP.md to the merged MOB-4 state without
-  admitting a new mobile stage.
-- Verified the single hourly Tender Agent Watchdog remains enabled; no duplicate watchdog was created.
-- 'Roadmap PR #184 exact-head d1234d555c7a5343ab25676d57ce195401a83d09 CI run 37586513047 completed SUCCESS 9/9.'
-- 'PR #184 was squash-merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
-- 'Final verification confirmed the MOB-4 roadmap/product state is on origin/main and no additional mobile stage was admitted.'
-current: 'MOB-4 is fully completed: implementation, roadmap/product reconciliation, exact-head CI and merges are complete.'
-pending: []
-last_verified_commit: 66c0839d400c076388e93b212e1adb0b59b21fd7
+- '2026-10-07: Product Owner explicitly requested ARV-005 Controlled Pilot.'
+- 'Recovered completed frozen pilot evidence from agent/arv-005-wave1-frozen instead of repeating the evaluation: 12/12 44-FZ reports, 3/3 separately scored source-bound 223-FZ blockers, aggregate report, and prior exact-head CI evidence.'
+- 'Verified current origin/main does not yet contain the completion checkpoint/report and PR #123 is stale/diverged and also contains later unrelated PRODUCT-SHELL work, so direct merge is unsafe.'
+current: 'Port the validated ARV-005-only src/tests delta onto current main in an isolated worktree, preserving frozen evidence.'
+pending:
+- port ARV-005-only validated code/tests
+- run focused verification and integration fixes
+- publish preserved report/checkpoint
+- reconcile queue and roadmap
+- exact-head CI and merge
+last_verified_commit: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
 test_results:
-- 'Ruff on src/modules/mobile_api and tests/test_mobile_api.py: PASS.'
-- 'Focused backend mobile API + Procurement Portfolio: 23 passed, 19 warnings in 1.86s.'
-- 'Broader mobile/portfolio/DTR/Sprint 5A+5B regression: 49 passed, 42 warnings in 6.70s.'
-- 'uv run make check: PASS.'
-- 'uv run make test: 3071 passed, 236 skipped, 1 failed; only tests/test_r9_backup_restore.py fails at pg_restore.'
-- 'Untouched clean origin/main 5314b34: the same R9 backup/restore test fails at pg_restore (1 failed), proving the local
-  full-suite failure is pre-existing/environmental.'
-- 'Xcode generic iOS Simulator build-for-testing: PASS.'
-- 'iPhone 17 / iOS 27.0 simulator tests after final polish: 11 passed, 0 failures; TEST SUCCEEDED.'
-- 'Connected physical iPhone Nikita / iOS 27.0.1 signed Debug build: BUILD SUCCEEDED.'
-- 'Implementation PR #183 exact-head CI run 37584606448: SUCCESS 9/9; squash-merged as bdcd868f1c42f3d3165cc8cad2c83b63b682521b.'
-- 'Roadmap PR #184 exact-head d1234d555c7a5343ab25676d57ce195401a83d09 CI run 37586513047: SUCCESS 9/9; squash-merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
-updated_at: '2026-10-07T10:29:21+03:00'
-resume_instruction: 'MOB-4 is completed. Do not reopen it automatically. No further mobile stage is admitted; any new development stage requires separate explicit admission. Preserve the unrelated shared-checkout work.'
+- 'Historical frozen pilot verification: 105 focused/relevant tests passed; GitHub Actions CI 37132350065 success at pre-report code head 7653c0700f02a3886655950c4aa0431823c558c0.'
+updated_at: '2026-10-07T11:15:00+03:00'
+resume_instruction: 'Do not rerun frozen procurements. Apply only the validated ARV-005 code/test delta through the pre-report pilot code head to current main, excluding later PRODUCT-SHELL commits, then verify and reconcile canonical metadata.'
 execution:
   claimed_by: ChatGPT interactive
-  execution_id: interactive-20261007-mob4
-  branch: chore/complete-mob4-checkpoint-20261007
-  base_commit: 5314b34e0927c424addbd377e58ad08c49b3b452
+  execution_id: interactive-20261007-arv005-finalize
+  branch: chore/arv-005-controlled-pilot-finalize-20261007
+  base_commit: b51a4f28d17bafedc3d8ca73f68c8d58c65f8f38
   issue: null
   manual_override: true
   lease_until: null
