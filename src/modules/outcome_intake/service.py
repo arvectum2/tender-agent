@@ -128,6 +128,13 @@ def register_outcome_intake(session: Session, payload: RegisterOutcomeIntakeRequ
         session.commit()
         raise
 
+    try:
+        from src.modules.daily_tender_run.post_go import advance_post_decision_for_deal
+
+        advance_post_decision_for_deal(session, payload.deal_id)
+    except Exception:  # noqa: BLE001 - outcome evidence is already canonical
+        session.rollback()
+
     # Push is a non-authoritative notification side effect. It runs only after
     # the canonical outcome commit and cannot turn a recorded outcome into a
     # failed one.
