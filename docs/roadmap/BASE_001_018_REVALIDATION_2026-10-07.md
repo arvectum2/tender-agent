@@ -22,7 +22,7 @@ Evidence classes used here:
 | BASE-004 | confirmed_done | FastAPI/SQLAlchemy/Alembic/Docker application foundation remains active and materially expanded. |
 | BASE-005 | confirmed_done | Capability remains present, but generic RAG ownership has deliberately moved to Arvectum Data Platform; PostgreSQL remains Tender Agent source-of-truth/domain storage and pgvector-backed platform retrieval is the supported architecture. |
 | BASE-006 | confirmed_done | Public 44-FZ discovery and exact-number paths remain implemented and regression-tested. |
-| BASE-007 | revalidated_residual_gap | SOAP/getDocsIP/getDocsByReestrNumber code and deterministic tests remain valid; current credential/certificate/host production smoke is an external runtime gate and is not inferred from repository state. |
+| BASE-007 | confirmed_done | SOAP/getDocsIP/getDocsByReestrNumber code and deterministic tests remain valid; a fresh authenticated production smoke on 2026-10-07 completed successfully against EIS and returned an archive URL over the verified direct TLS route. |
 | BASE-008 | confirmed_done | Procurement ingestion/analysis/report export is present across current operator and RAG flows. |
 | BASE-009 | confirmed_done | Product/requirement extraction remains implemented with source-first and role-aware regression coverage. |
 | BASE-010 | confirmed_done | Live/demo boundary and fail-closed/no-silent-synthetic behavior are covered by current transport/output tests. |
@@ -35,7 +35,7 @@ Evidence classes used here:
 | BASE-017 | confirmed_done | R8 customer-pilot lifecycle, tenant isolation and artifact binding remain present with current regression coverage. |
 | BASE-018 | confirmed_done | R9 fail-closed/idempotency/concurrency/recovery contracts remain present. One local macOS backup/restore acceptance case is environment-sensitive; exact-head Linux CI is required before closure. |
 
-Overall current classification: **16 confirmed_done, 2 revalidated_residual_gap**. The two gaps are bounded and do not invalidate the historical baseline: BASE-007 is external runtime evidence, BASE-011 is an intentionally unproven autonomous/user-correction loop.
+Overall current classification after the fresh EIS production smoke: **17 confirmed_done, 1 revalidated_residual_gap**. BASE-007 is now closed with current runtime evidence. BASE-011 remains the only bounded residual gap: an intentionally unproven autonomous/user-correction production loop.
 
 ## Item evidence
 
@@ -97,7 +97,9 @@ Result: `confirmed_done`.
 
 ### BASE-007 — EIS SOAP machine-readable contour
 
-`RealEisLoader` still supports registry-number retrieval through `getDocsByReestrNumber`/getDocsIP semantics and fails closed on missing token, SOAP fault, validation/processing failure and no-data states. Focused SOAP/getDocs tests pass. A fresh authenticated production smoke against the current certificate/token/host contour was intentionally not performed by this repository-only revalidation.
+`RealEisLoader` still supports registry-number retrieval through `getDocsByReestrNumber`/getDocsIP semantics and fails closed on missing token, SOAP fault, validation/processing failure and no-data states. Focused SOAP/getDocs tests pass.
+
+Fresh production evidence was obtained on 2026-10-07 after the Owner restored EIS-side PMD access and issued a new individual/extract token. The token value remained local and was neither printed into repository artifacts nor committed. The read-only `getDocsByReestrNumber` smoke for previously validated procurement `0116300036226000029` reached `int.zakupki.gov.ru`, returned `status=completed`, produced one archive URL and no warnings. TLS verification for both `zakupki.gov.ru` and `int.zakupki.gov.ru` passed with hostname verification, macOS system trust and direct proxy-bypassed routing.
 
 Evidence:
 - `src/tender_research/eis_real_loader.py`
@@ -106,8 +108,9 @@ Evidence:
 - `tests/test_tender_operator_agent_getdocs_ip_client.py`
 - `tests/test_tender_operator_agent_zakupki_soap_client.py`
 - `tests/test_zakupki_soap_diagnostics.py`
+- sanitized Owner-session production smoke, 2026-10-07: `completed`, archive URL present, zero warnings
 
-Result: `revalidated_residual_gap` — external runtime smoke/certificate evidence only.
+Result: `confirmed_done`.
 
 ### BASE-008 — procurement ingest and reporting
 
@@ -261,6 +264,20 @@ Focused BASE revalidation batch on the isolated worktree:
 - the same R9 local environment failure had already been observed independently during the preceding ARV-005 current-main verification; it is not newly introduced by this documentation-only reconciliation.
 
 No procurement action, ETP write, signing, private-key access, supplier/customer outreach, payment, commitment or production mutation was performed.
+
+## Post-merge BASE-007 production smoke
+
+After PR #188 was merged, the current Mac mini runtime contour was rechecked rather than inferred from repository state.
+
+- TLS trust verification: PASS for `zakupki.gov.ru` and `int.zakupki.gov.ru`; TLSv1.2, hostname verification and direct proxy-bypassed route confirmed.
+- EIS credential: current individual/extract token loaded only from the protected local Owner environment; the token value is not stored in this repository.
+- Read-only smoke: `getDocsByReestrNumber(0116300036226000029)`.
+- Result: `completed`.
+- Archive URL: present (1).
+- Warnings: 0.
+- No ETP write, signing, submission, private-key action or account mutation was performed by Tender Agent.
+
+This closes the current-runtime evidence gap for BASE-007.
 
 ## Closure gate
 
