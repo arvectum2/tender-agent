@@ -15,18 +15,21 @@ definition_of_done:
 completed:
 - '2026-10-07: Product Owner explicitly requested Revalidation BASE-001…018.'
 - 'Confirmed prior ARV-005 Controlled Pilot closure PR #187 is merged on canonical main at ffc698efb02a1c662d92fa46ec65f4f0f0112552.'
-current: 'Establish the canonical BASE-001…018 mapping and evidence matrix, then revalidate each item against current repository/live state.'
+- 'Mapped all 18 immutable historical BASE items and individually revalidated current repository/public/Owner-session evidence.'
+- 'Recorded current overlay: 16 confirmed_done; BASE-007 and BASE-011 revalidated_residual_gap with explicit external/runtime or autonomous-loop boundaries.'
+- 'Created docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md and reconciled BASE overlay states without modifying historical progress/status fields.'
+current: 'Run repository checks, commit/push the revalidation overlay, obtain exact-head CI, then close or stop at the applicable merge gate.'
 pending:
-- 'Read roadmap/governance/status artifacts and prior revalidation patterns.'
-- 'Build evidence matrix for BASE-001…018.'
-- 'Run targeted verification for technical BASE items and live/public verification for corporate/site items.'
-- 'Apply any bounded fixes and reconcile roadmap/status documentation.'
-- 'Run final repository checks and exact-head CI; merge closure PR when gates permit.'
+- 'Run make check and targeted YAML/roadmap consistency checks.'
+- 'Commit and push the revalidation branch; open the closure PR.'
+- 'Obtain final exact-head GitHub CI; merge only if the applicable Owner/review gate permits.'
 last_verified_commit: ffc698efb02a1c662d92fa46ec65f4f0f0112552
 test_results:
-- 'No BASE revalidation tests run yet in this task.'
-updated_at: '2026-10-07T11:42:00+0300'
-resume_instruction: 'Continue BASE-001…018 revalidation from the evidence matrix. Do not alter the historical 2026-07-30 snapshot. Start with the first unverified BASE item, use current repository/live evidence, fix only bounded defects, update the checkpoint after each substantive batch, and continue autonomously until all 18 are classified and final checks are complete or an objective blocker remains.'
+- 'Focused BASE batch: 545 passed, 12 skipped, 1 failed in 50.01s.'
+- 'Only failure: tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed; local Homebrew pg_restore 18.6 failed in the disposable pgvector/pgvector:pg16 acceptance contour. Exact-head Linux CI remains closure authority.'
+- 'master-roadmap.yaml parses after targeted reconciliation edits; 18 BASE entries = 16 confirmed_done + 2 revalidated_residual_gap.'
+updated_at: '2026-10-07T12:20:00+0300'
+resume_instruction: 'Run the remaining repository checks on the isolated BASE revalidation worktree, commit/push, open a PR, require exact-head green CI, then mark completed if merged under an applicable gate or mark blocked with the exact review/merge blocker. Do not alter the immutable 2026-07-30 snapshot.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-base-revalidation

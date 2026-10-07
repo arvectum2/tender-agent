@@ -227,24 +227,24 @@ The table below is a compact view grouped by product block. The machine-readable
 
 | ID | Queue | Historical status | Priority | Progress | Task | Current reconciliation |
 |---|---:|---|---|---:|---|---|
-| `BASE-001` | 0 | Готово | P0 | 100% | ООО «Арвектум» зарегистрировано, реквизиты и корпоративный контур оформлены | needs_revalidation |
-| `BASE-002` | 0 | Готово | P1 | 100% | Фирменный стиль, логотип и брендбук | needs_revalidation |
-| `BASE-003` | 0 | Базовый контур готов | P1 | 75% | Сайт arvectum.com и базовые digital-каналы | needs_revalidation |
-| `BASE-004` | 0 | Готово | P0 | 100% | Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI | needs_revalidation |
-| `BASE-005` | 0 | Готово | P0 | 100% | PostgreSQL + pgvector + RAG-контур | needs_revalidation |
-| `BASE-006` | 0 | Готово | P0 | 100% | Публичный поиск 44-ФЗ и точный поиск по номеру | needs_revalidation |
-| `BASE-007` | 0 | Базовый контур готов | P0 | 85% | Рабочий SOAP-контур ЕИС для машиночитаемых данных | needs_revalidation |
-| `BASE-008` | 0 | Готово | P0 | 100% | Загрузка закупки и формирование отчётов | needs_revalidation |
-| `BASE-009` | 0 | Готово | P0 | 100% | Извлечение товарных позиций и характеристик | needs_revalidation |
-| `BASE-010` | 0 | Готово | P0 | 100% | Разделение demo/live и отказ от тихих синтетических fallback | needs_revalidation |
-| `BASE-011` | 0 | Базовый контур готов | P0 | 70% | Hermes H1–H4: базовая память, quality gates и feedback | needs_revalidation |
-| `BASE-012` | 0 | Базовый контур готов | P0 | 80% | Quality R1–R5: golden loop, provenance и source graph | needs_revalidation |
-| `BASE-013` | 0 | Готово | P1 | 100% | Демо- и пилотный пакет документов | needs_revalidation |
-| `BASE-014` | 0 | Базовый контур готов | P1 | 65% | Базовый личный кабинет: клиенты, проекты и мастер поиска | needs_revalidation |
-| `BASE-015` | 0 | Готово | P1 | 100% | Стабильный рендер PDF на Linux | needs_revalidation |
-| `BASE-016` | 0 | Готово | P0 | 100% | R7 controlled pilot baseline: deployment, artifacts, backup/restore и recovery | needs_revalidation |
-| `BASE-017` | 0 | Готово | P0 | 100% | R8 Customer Pilot Workspace: изолированный клиентский жизненный цикл | needs_revalidation |
-| `BASE-018` | 0 | Готово | P0 | 100% | R9 Operational Hardening: fail-closed recovery, concurrency и backup/restore | needs_revalidation |
+| `BASE-001` | 0 | Готово | P0 | 100% | ООО «Арвектум» зарегистрировано, реквизиты и корпоративный контур оформлены | confirmed_done |
+| `BASE-002` | 0 | Готово | P1 | 100% | Фирменный стиль, логотип и брендбук | confirmed_done |
+| `BASE-003` | 0 | Базовый контур готов | P1 | 75% | Сайт arvectum.com и базовые digital-каналы | confirmed_done |
+| `BASE-004` | 0 | Готово | P0 | 100% | Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI | confirmed_done |
+| `BASE-005` | 0 | Готово | P0 | 100% | PostgreSQL + pgvector + RAG-контур | confirmed_done |
+| `BASE-006` | 0 | Готово | P0 | 100% | Публичный поиск 44-ФЗ и точный поиск по номеру | confirmed_done |
+| `BASE-007` | 0 | Базовый контур готов | P0 | 85% | Рабочий SOAP-контур ЕИС для машиночитаемых данных | revalidated_residual_gap |
+| `BASE-008` | 0 | Готово | P0 | 100% | Загрузка закупки и формирование отчётов | confirmed_done |
+| `BASE-009` | 0 | Готово | P0 | 100% | Извлечение товарных позиций и характеристик | confirmed_done |
+| `BASE-010` | 0 | Готово | P0 | 100% | Разделение demo/live и отказ от тихих синтетических fallback | confirmed_done |
+| `BASE-011` | 0 | Базовый контур готов | P0 | 70% | Hermes H1–H4: базовая память, quality gates и feedback | revalidated_residual_gap |
+| `BASE-012` | 0 | Базовый контур готов | P0 | 80% | Quality R1–R5: golden loop, provenance и source graph | confirmed_done |
+| `BASE-013` | 0 | Готово | P1 | 100% | Демо- и пилотный пакет документов | confirmed_done |
+| `BASE-014` | 0 | Базовый контур готов | P1 | 65% | Базовый личный кабинет: клиенты, проекты и мастер поиска | confirmed_done |
+| `BASE-015` | 0 | Готово | P1 | 100% | Стабильный рендер PDF на Linux | confirmed_done |
+| `BASE-016` | 0 | Готово | P0 | 100% | R7 controlled pilot baseline: deployment, artifacts, backup/restore и recovery | confirmed_done |
+| `BASE-017` | 0 | Готово | P0 | 100% | R8 Customer Pilot Workspace: изолированный клиентский жизненный цикл | confirmed_done |
+| `BASE-018` | 0 | Готово | P0 | 100% | R9 Operational Hardening: fail-closed recovery, concurrency и backup/restore | confirmed_done |
 
 ### 1. Качество ядра
 

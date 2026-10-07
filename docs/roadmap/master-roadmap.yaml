@@ -581,10 +581,12 @@ legacy_registry:
     comment: Фундамент для договоров, интеграций и пилотов.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current corporate/legal foundation revalidated from current official Owner-session records; no private artifacts or sensitive values committed.'
 - id: BASE-002
   legacy_snapshot:
     queue_order: 0
@@ -605,10 +607,12 @@ legacy_registry:
     comment: 'В книге использована палитра бренда: Mint / Deep Navy / Graphite.'
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current brand system revalidated from Brandbook v2 and the current public surface.'
 - id: BASE-003
   legacy_snapshot:
     queue_order: 0
@@ -630,10 +634,12 @@ legacy_registry:
     comment: Технический сайт готов, продуктовая упаковка ещё не завершена.
     dependencies_raw: ARV-038
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current public site is product-first and includes multilingual, CTA, privacy/cookie, human-control and social/contact surfaces; historical July progress remains immutable.'
 - id: BASE-004
   legacy_snapshot:
     queue_order: 0
@@ -654,10 +660,12 @@ legacy_registry:
     comment: Основной технический фундамент продукта.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'FastAPI/SQLAlchemy/Alembic/Docker foundation remains active and materially expanded.'
 - id: BASE-005
   legacy_snapshot:
     queue_order: 0
@@ -679,10 +687,12 @@ legacy_registry:
     comment: PostgreSQL остаётся источником истины.
     dependencies_raw: ARV-009
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Capability is current under evolved architecture: PostgreSQL remains product/domain storage while generic RAG is delegated to Arvectum Data Platform.'
 - id: BASE-006
   legacy_snapshot:
     queue_order: 0
@@ -703,10 +713,12 @@ legacy_registry:
     comment: Ключевой пользовательский вход в продукт.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Public 44-FZ discovery and exact-number paths remain implemented and regression-tested.'
 - id: BASE-007
   legacy_snapshot:
     queue_order: 0
@@ -730,10 +742,12 @@ legacy_registry:
     comment: Legacy int44 не считается рабочим основным маршрутом.
     dependencies_raw: ARV-010, ARV-014
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Repository SOAP/getDocs implementation and deterministic tests are current; fresh authenticated token/certificate/host production smoke is external runtime evidence and is not inferred.'
 - id: BASE-008
   legacy_snapshot:
     queue_order: 0
@@ -755,10 +769,12 @@ legacy_registry:
     comment: Форматный контур готов, качество анализа развивается.
     dependencies_raw: ARV-001
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Procurement ingestion, analysis and report/export capability remains current and source-bound.'
 - id: BASE-009
   legacy_snapshot:
     queue_order: 0
@@ -780,10 +796,12 @@ legacy_registry:
     comment: Уже подтверждено на электротехнической закупке.
     dependencies_raw: ARV-001
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Product/requirement extraction remains current with broader source-first and document-role regression coverage.'
 - id: BASE-010
   legacy_snapshot:
     queue_order: 0
@@ -805,10 +823,12 @@ legacy_registry:
     comment: Критически важное исправление доверия к продукту.
     dependencies_raw: ARV-002
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Current tests preserve explicit demo/live boundaries and fail closed instead of silently synthesizing live success.'
 - id: BASE-011
   legacy_snapshot:
     queue_order: 0
@@ -830,10 +850,12 @@ legacy_registry:
     comment: Базовая реализация есть, полноценный автономный цикл ещё не завершён.
     dependencies_raw: ARV-004
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: revalidated_residual_gap
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Hermes components remain present/tested, but current policy still treats autonomous/external Hermes runtime as opt-in/manual; a real user-correction production self-improvement loop is not proven.'
 - id: BASE-012
   legacy_snapshot:
     queue_order: 0
@@ -857,10 +879,12 @@ legacy_registry:
     comment: Последняя подтверждённая baseline-интеграция — 21.07.2026.
     dependencies_raw: ARV-001, ARV-005
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Quality/provenance/source-graph evidence materially exceeds the July baseline, including the frozen ARV-005 real-procurement pilot.'
 - id: BASE-013
   legacy_snapshot:
     queue_order: 0
@@ -882,10 +906,12 @@ legacy_registry:
     comment: Материалы готовы как основа, но требуют синхронизации с текущим продуктом.
     dependencies_raw: ARV-042
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Demo/pilot collateral is current and supplemented by restricted-pilot, live-walkthrough and ARV-005 technical evidence.'
 - id: BASE-014
   legacy_snapshot:
     queue_order: 0
@@ -908,10 +934,12 @@ legacy_registry:
     comment: Основа интерфейса есть, рабочее место тендерщика ещё не завершено.
     dependencies_raw: ARV-019, ARV-043
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Historical client/project/search foundation has evolved into current customer-pilot, partner/workspace, procurement UI and tenant-isolation flows.'
 - id: BASE-015
   legacy_snapshot:
     queue_order: 0
@@ -933,10 +961,12 @@ legacy_registry:
     comment: Снижает риск поломки отчётов при переезде на Linux.
     dependencies_raw: ARV-012
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'Unicode-capable PDF implementation and regressions remain current; exact-head Linux CI is the final platform signal.'
 - id: BASE-016
   legacy_snapshot:
     queue_order: 0
@@ -958,10 +988,12 @@ legacy_registry:
     comment: Канонический production-like baseline проекта на 22.07.2026.
     dependencies_raw: —
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'R7 remains a valid frozen production-like baseline; later controlled-pilot work is additive and does not rewrite it.'
 - id: BASE-017
   legacy_snapshot:
     queue_order: 0
@@ -984,10 +1016,12 @@ legacy_registry:
     comment: Завершён 23.07.2026.
     dependencies_raw: BASE-016
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'R8 customer-pilot lifecycle, tenant isolation and artifact binding remain present and regression-covered.'
 - id: BASE-018
   legacy_snapshot:
     queue_order: 0
@@ -1010,10 +1044,12 @@ legacy_registry:
     comment: 'Final CI: quality, migrations, security, PostgreSQL integration и acceptance integration — success.'
     dependencies_raw: BASE-017
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: confirmed_done
+    verified_at: '2026-10-07'
+    evidence:
+    - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
+      detail: Current BASE revalidation evidence matrix and verification run.
+    notes: 'R9 contracts remain present; focused local batch had 545 passed, 12 skipped and one known macOS pg_restore environment failure, so exact-head Linux CI remains closure authority.'
 - id: ARV-050
   legacy_snapshot:
     queue_order: 0
