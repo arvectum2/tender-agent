@@ -23,6 +23,12 @@ class Settings(BaseSettings):
     mobile_auth_secret: str | None = None
     mobile_token_ttl_days: int = 180
     mobile_pairing_window_seconds: int = 300
+    mobile_apns_enabled: bool = False
+    mobile_apns_team_id: str | None = None
+    mobile_apns_key_id: str | None = None
+    mobile_apns_private_key_path: str | None = None
+    mobile_apns_bundle_id: str = "com.arvectum.tenderagent"
+    mobile_apns_timeout_seconds: float = 10.0
     llm_provider: str = "stub"
     llm_model: str | None = None
     llm_timeout_seconds: int = 30

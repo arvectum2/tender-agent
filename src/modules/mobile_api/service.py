@@ -14,7 +14,9 @@ from src.modules.tender_intake.models import TenderIntakeRecord, TenderSourcePay
 from src.shared.enums import DecisionByType
 from src.shared.errors import NotFoundError
 
-from .schemas import MobileDecisionRequest
+from .models import MobileDeviceAccess, MobileDeviceRegistration
+from .push import normalize_apns_token
+from .schemas import MobileDecisionRequest, MobileDeviceRegistrationRequest
 
 
 def _latest_mobile_decisions(session: Session, deal_ids: list[str]) -> dict[str, DecisionRecord]:
@@ -358,3 +360,112 @@ def record_mobile_decision(
         ),
     )
     return get_mobile_procurement(session, deal_id)
+
+def activate_mobile_device_access(
+    session: Session,
+    *,
+    device_id: str,
+    device_name: str | None,
+) -> MobileDeviceAccess:
+    access = session.scalar(
+        select(MobileDeviceAccess).where(MobileDeviceAccess.device_id == device_id)
+    )
+    now = datetime.now(UTC)
+    if access is None:
+        access = MobileDeviceAccess(
+            device_id=device_id,
+            device_name=device_name,
+            is_revoked=False,
+            paired_at=now,
+            revoked_at=None,
+            updated_at=now,
+        )
+    else:
+        access.device_name = device_name
+        access.is_revoked = False
+        access.paired_at = now
+        access.revoked_at = None
+        access.updated_at = now
+    session.add(access)
+    session.commit()
+    session.refresh(access)
+    return access
+
+
+def register_mobile_device(
+    session: Session,
+    *,
+    device_id: str,
+    payload: MobileDeviceRegistrationRequest,
+) -> dict:
+    token = normalize_apns_token(payload.apns_token)
+    registration = session.scalar(
+        select(MobileDeviceRegistration).where(
+            MobileDeviceRegistration.device_id == device_id
+        )
+    )
+    now = datetime.now(UTC)
+    if registration is None:
+        registration = MobileDeviceRegistration(
+            device_id=device_id,
+            device_name=payload.device_name,
+            apns_token=token,
+            apns_environment=payload.environment,
+            app_version=payload.app_version,
+            is_enabled=True,
+            registered_at=now,
+            updated_at=now,
+        )
+    else:
+        registration.device_name = payload.device_name
+        registration.apns_token = token
+        registration.apns_environment = payload.environment
+        registration.app_version = payload.app_version
+        registration.is_enabled = True
+        registration.updated_at = now
+    session.add(registration)
+    session.commit()
+    session.refresh(registration)
+    return {
+        "device_id": registration.device_id,
+        "environment": registration.apns_environment,
+        "device_name": registration.device_name,
+        "app_version": registration.app_version,
+        "enabled": registration.is_enabled,
+        "registered_at": registration.registered_at,
+        "updated_at": registration.updated_at,
+    }
+
+
+def revoke_mobile_device(session: Session, *, device_id: str) -> bool:
+    now = datetime.now(UTC)
+    registration = session.scalar(
+        select(MobileDeviceRegistration).where(
+            MobileDeviceRegistration.device_id == device_id
+        )
+    )
+    if registration is not None:
+        registration.is_enabled = False
+        registration.apns_token = ""
+        registration.updated_at = now
+        session.add(registration)
+
+    access = session.scalar(
+        select(MobileDeviceAccess).where(MobileDeviceAccess.device_id == device_id)
+    )
+    if access is None:
+        access = MobileDeviceAccess(
+            device_id=device_id,
+            device_name=None,
+            is_revoked=True,
+            paired_at=now,
+            revoked_at=now,
+            updated_at=now,
+        )
+    else:
+        access.is_revoked = True
+        access.revoked_at = now
+        access.updated_at = now
+    session.add(access)
+    session.commit()
+    return True

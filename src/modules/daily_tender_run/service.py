@@ -90,6 +90,14 @@ def _parse_deadline(value: Any) -> datetime | None:
     return parsed.astimezone(UTC)
 
 
+def _as_utc(value: datetime | None) -> datetime | None:
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        return value.replace(tzinfo=UTC)
+    return value.astimezone(UTC)
+
+
 def _fingerprint(card: dict[str, Any]) -> str:
     stable = {
         "registry_number": _registry_number(card),
@@ -782,6 +790,53 @@ def execute_daily_tender_run(
     session.add(run)
     session.commit()
     session.refresh(run)
+
+    # MOB-3 notifications are non-authoritative side effects. The canonical
+    # Daily Tender Run is already committed before any APNs work starts.
+    from src.modules.mobile_api.push import (
+        dispatch_due_deferred_notifications,
+        safely_dispatch_mobile_push_event,
+    )
+
+    notification_now = datetime.now(UTC)
+    for item in items:
+        if item.status != "MANAGER_READY" or not item.deal_id:
+            continue
+        safely_dispatch_mobile_push_event(
+            session,
+            event_type="REPORT_READY",
+            source_key=f"dtr:{run.run_id}:{item.id}:report-ready",
+            title="Новый отчёт Tender Agent",
+            body=item.title,
+            deal_id=item.deal_id,
+        )
+        if item.changed_since_previous:
+            safely_dispatch_mobile_push_event(
+                session,
+                event_type="PROCUREMENT_CHANGED",
+                source_key=f"dtr:{run.run_id}:{item.id}:changed",
+                title="Закупка изменилась",
+                body=item.title,
+                deal_id=item.deal_id,
+            )
+        deadline_at = _as_utc(item.deadline_at)
+        if (
+            deadline_at is not None
+            and notification_now < deadline_at <= notification_now + timedelta(hours=24)
+        ):
+            safely_dispatch_mobile_push_event(
+                session,
+                event_type="DEADLINE_RISK",
+                source_key=f"dtr:{run.run_id}:{item.id}:deadline:{deadline_at.isoformat()}",
+                title="Срок подачи менее 24 часов",
+                body=item.title,
+                deal_id=item.deal_id,
+            )
+    try:
+        dispatch_due_deferred_notifications(session, now=notification_now)
+    except Exception:  # noqa: BLE001 - notifications must not change DTR outcome
+        session.rollback()
+
     return run
 
 

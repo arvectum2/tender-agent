@@ -2,7 +2,11 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.modules.event_log.service import append_event_record
-from src.modules.outcome_intake.models import OutcomeIntakeBinding, OutcomeIntakeRecord, OutcomeIntakeSet
+from src.modules.outcome_intake.models import (
+    OutcomeIntakeBinding,
+    OutcomeIntakeRecord,
+    OutcomeIntakeSet,
+)
 from src.modules.outcome_intake.schemas import RegisterOutcomeIntakeRequest
 from src.modules.post_submission.service import get_post_submission_tracker_set
 from src.shared.db.base import utcnow
@@ -123,6 +127,20 @@ def register_outcome_intake(session: Session, payload: RegisterOutcomeIntakeRequ
         )
         session.commit()
         raise
+
+    # Push is a non-authoritative notification side effect. It runs only after
+    # the canonical outcome commit and cannot turn a recorded outcome into a
+    # failed one.
+    from src.modules.mobile_api.push import safely_dispatch_mobile_push_event
+
+    safely_dispatch_mobile_push_event(
+        session,
+        event_type="OUTCOME_AVAILABLE",
+        source_key=f"outcome:{outcome_record.outcome_intake_id}",
+        title="Опубликован результат закупки",
+        body=f"Статус: {payload.outcome_code}",
+        deal_id=payload.deal_id,
+    )
     session.refresh(outcome_set)
     return outcome_set
 

@@ -216,6 +216,17 @@ def check_watch(session: Any, watch_id: str) -> AlertEvent | None:
     from src.modules.integration_outbox.service import enqueue_event
     enqueue_event(session, event_type="monitoring_alert", aggregate_type="procurement_watch", aggregate_id=watch.id, source_key=event.event_key, data={"outcome": event.outcome, "source": watch.source, "external_id": watch.external_id, "source_url": event.source_url})
     session.commit()
+
+    # APNs notification is deliberately downstream of the committed monitoring
+    # event and cannot change the procurement-watch outcome.
+    from src.modules.mobile_api.push import safely_dispatch_procurement_changed
+
+    safely_dispatch_procurement_changed(
+        session,
+        procurement_number=watch.external_id,
+        source_key=f"monitor:{event.event_key}",
+        body=tender.title,
+    )
     return event
 
 

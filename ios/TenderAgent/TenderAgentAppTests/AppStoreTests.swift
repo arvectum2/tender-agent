@@ -97,6 +97,67 @@ final class AppStoreTests: XCTestCase {
         XCTAssertNil(store.decisionMessage)
     }
 
+    func testDeepLinkParsesProcurementAndDigest() throws {
+        let procurementURL = try XCTUnwrap(
+            URL(string: "tenderagent://procurement/DL-MOB-123")
+        )
+        XCTAssertEqual(
+            TenderAgentDeepLink(url: procurementURL),
+            .procurement("DL-MOB-123")
+        )
+
+        let digestURL = try XCTUnwrap(URL(string: "tenderagent://digest"))
+        XCTAssertEqual(TenderAgentDeepLink(url: digestURL), .digest)
+
+        XCTAssertNil(
+            TenderAgentDeepLink(
+                url: try XCTUnwrap(URL(string: "https://example.com/procurement/DL-MOB-123"))
+            )
+        )
+    }
+
+    func testPushPayloadUserInfoRoutesToProcurement() {
+        let parsed = TenderAgentDeepLink(
+            userInfo: [
+                "event_type": "REPORT_READY",
+                "deep_link": "tenderagent://procurement/DL-MOB-PUSH",
+                "deal_id": "DL-MOB-PUSH"
+            ]
+        )
+        XCTAssertEqual(parsed, .procurement("DL-MOB-PUSH"))
+    }
+
+    func testPushRegistrationPayloadEncodesBackendFieldNames() throws {
+        let payload = MobileDeviceRegistrationRequest(
+            apnsToken: "ab" + String(repeating: "12", count: 31),
+            environment: .sandbox,
+            deviceName: "iPhone Test",
+            appVersion: "0.7.0"
+        )
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let data = try encoder.encode(payload)
+        let json = try XCTUnwrap(
+            JSONSerialization.jsonObject(with: data) as? [String: Any]
+        )
+
+        XCTAssertEqual(json["environment"] as? String, "sandbox")
+        XCTAssertEqual(json["device_name"] as? String, "iPhone Test")
+        XCTAssertEqual(json["app_version"] as? String, "0.7.0")
+        XCTAssertNotNil(json["apns_token"])
+    }
+
+    func testOfflinePushTokenDoesNotMutateProcurementState() async {
+        let original = makeProcurement()
+        let store = AppStore(procurements: [original], apiClient: nil)
+
+        await store.receiveAPNSToken(String(repeating: "ab", count: 32))
+
+        XCTAssertEqual(store.procurement(id: original.id)?.decision, .pending)
+        XCTAssertEqual(store.pushStatusLabel, "APNs готов — подключите backend")
+        XCTAssertNil(store.pushRegistrationError)
+    }
+
     private func makeProcurement() -> Procurement {
         Procurement(
             id: "TEST-1",

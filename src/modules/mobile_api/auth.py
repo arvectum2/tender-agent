@@ -8,7 +8,9 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request, status
+from sqlalchemy import select
 
+from src.shared.api.dependencies import DBSession
 from src.shared.config.settings import Settings, get_settings
 
 PAIRING_DIGITS = 6
@@ -142,6 +144,7 @@ def verify_mobile_token(
 def require_mobile_bearer(
     request: Request,
     secret: Annotated[str, Depends(get_mobile_auth_secret)],
+    session: DBSession,
 ) -> str:
     auth_header = request.headers.get("Authorization") or ""
     scheme, _, token = auth_header.partition(" ")
@@ -156,6 +159,18 @@ def require_mobile_bearer(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired mobile bearer token.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    from .models import MobileDeviceAccess
+
+    access = session.scalar(
+        select(MobileDeviceAccess).where(MobileDeviceAccess.device_id == device_id)
+    )
+    if access is not None and access.is_revoked:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Mobile device access was revoked.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     return device_id

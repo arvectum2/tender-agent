@@ -62,6 +62,8 @@ enum TenderAgentAPIError: LocalizedError {
             switch code {
             case 401:
                 return "Сессия iPhone не авторизована. Переподключите Tender Agent в настройках."
+            case 403:
+                return "Мобильное действие запрещено для этого устройства."
             case 404:
                 return "Закупка не найдена в Tender Agent."
             case 422:
@@ -147,6 +149,39 @@ struct TenderAgentAPIClient {
         try await request(path: "mobile/v1/inbox")
     }
 
+    func fetchProcurement(dealID: String) async throws -> MobileAPIProcurement {
+        try await request(path: "mobile/v1/procurements/\(dealID)")
+    }
+
+    func registerDevice(
+        apnsToken: String,
+        environment: MobileAPNsEnvironment = .current,
+        deviceName: String,
+        appVersion: String?
+    ) async throws -> MobileDeviceRegistrationResponse {
+        let payload = MobileDeviceRegistrationRequest(
+            apnsToken: apnsToken,
+            environment: environment,
+            deviceName: deviceName,
+            appVersion: appVersion
+        )
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+
+        var request = authorizedRequest(path: "mobile/v1/devices", method: "POST")
+        request.httpBody = try encoder.encode(payload)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        return try await perform(request)
+    }
+
+    func revokeDevice(deviceID: String) async throws {
+        let request = authorizedRequest(
+            path: "mobile/v1/devices/\(deviceID)",
+            method: "DELETE"
+        )
+        try await performNoContent(request)
+    }
+
     func recordDecision(
         dealID: String,
         action: MobileDecisionAction,
@@ -202,12 +237,53 @@ struct TenderAgentAPIClient {
         }
         return try TenderAgentJSON.makeDecoder().decode(Response.self, from: data)
     }
+
+    private func performNoContent(_ request: URLRequest) async throws {
+        let (data, response) = try await session.data(for: request)
+        guard let http = response as? HTTPURLResponse else {
+            throw TenderAgentAPIError.invalidResponse
+        }
+        guard 200..<300 ~= http.statusCode else {
+            let body = String(data: data, encoding: .utf8) ?? ""
+            throw TenderAgentAPIError.httpStatus(http.statusCode, body)
+        }
+    }
 }
 
 private struct MobilePairRequest: Encodable {
     let pairingCode: String
     let deviceId: String
     let deviceName: String
+}
+
+enum MobileAPNsEnvironment: String, Codable {
+    case sandbox
+    case production
+
+    static var current: MobileAPNsEnvironment {
+#if DEBUG
+        .sandbox
+#else
+        .production
+#endif
+    }
+}
+
+struct MobileDeviceRegistrationRequest: Encodable {
+    let apnsToken: String
+    let environment: MobileAPNsEnvironment
+    let deviceName: String
+    let appVersion: String?
+}
+
+struct MobileDeviceRegistrationResponse: Decodable {
+    let deviceId: String
+    let environment: MobileAPNsEnvironment
+    let deviceName: String?
+    let appVersion: String?
+    let enabled: Bool
+    let registeredAt: Date
+    let updatedAt: Date
 }
 
 struct MobileDecisionRequest: Encodable {

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Response, status
 
 from src.shared.api.dependencies import DBSession
 from src.shared.config.settings import get_settings
@@ -11,6 +11,8 @@ from .auth import (
 )
 from .schemas import (
     MobileDecisionRequest,
+    MobileDeviceRegistrationRequest,
+    MobileDeviceRegistrationResponse,
     MobileDigestResponse,
     MobileInboxResponse,
     MobilePairRequest,
@@ -19,11 +21,14 @@ from .schemas import (
     MobileProcurementItemResponse,
 )
 from .service import (
+    activate_mobile_device_access,
     build_mobile_digest,
     build_mobile_inbox,
     build_mobile_portfolio,
     get_mobile_procurement,
     record_mobile_decision,
+    register_mobile_device,
+    revoke_mobile_device,
 )
 
 router = APIRouter(prefix="/mobile/v1", tags=["mobile"])
@@ -33,6 +38,7 @@ router = APIRouter(prefix="/mobile/v1", tags=["mobile"])
 def mobile_pair(
     payload: MobilePairRequest,
     secret: MobileAuthSecret,
+    session: DBSession,
 ) -> MobilePairResponse:
     settings = get_settings()
     if not verify_pairing_code(
@@ -44,6 +50,11 @@ def mobile_pair(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired pairing code.",
         )
+    activate_mobile_device_access(
+        session,
+        device_id=payload.device_id,
+        device_name=payload.device_name,
+    )
     token, expires_at = issue_mobile_token(
         secret,
         device_id=payload.device_id,
@@ -109,3 +120,38 @@ def mobile_decision(
             actor_ref=f"ios:{device_id}",
         )
     )
+
+
+@router.post("/devices", response_model=MobileDeviceRegistrationResponse)
+def mobile_register_device(
+    payload: MobileDeviceRegistrationRequest,
+    session: DBSession,
+    device_id: MobileDeviceID,
+) -> MobileDeviceRegistrationResponse:
+    try:
+        result = register_mobile_device(
+            session,
+            device_id=device_id,
+            payload=payload,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(exc),
+        ) from exc
+    return MobileDeviceRegistrationResponse.model_validate(result)
+
+
+@router.delete("/devices/{device_id}", status_code=status.HTTP_204_NO_CONTENT)
+def mobile_revoke_device(
+    device_id: str,
+    session: DBSession,
+    authenticated_device_id: MobileDeviceID,
+) -> Response:
+    if device_id != authenticated_device_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="A mobile device may revoke only its own registration.",
+        )
+    revoke_mobile_device(session, device_id=device_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
