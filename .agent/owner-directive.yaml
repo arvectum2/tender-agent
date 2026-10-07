@@ -66,11 +66,22 @@ commercial_workflow_admission_2026_10_07:
     - No supplier/customer/regulator communication or other external commercial effect.
     - Private/company/customer data use remains limited to already-approved task boundaries.
   execution_rule: 'Work queue items in canonical branch order; skip blocked items when later independent admitted work can progress; do not invent scope beyond the roadmap next_result/residual scope.'
+  progress:
+    completed_items:
+      - ARV-015
+      - ARV-019
+    completed_queue_items:
+      - ARV-015-OPERATOR-PROFILE-PARSER-001
+      - COMMERCIAL-WORKFLOW-ARV-019-001
+    completed_count: 2
+    total_count: 12
+    next_queue_item: COMMERCIAL-WORKFLOW-ARV-022-001
+    next_item_note: 'Recover/rebase existing OCR adapter work where useful; do not duplicate Data Platform OCR work or build a custom OCR engine.'
 
 governance:
   material_executor_policy_change: true
   am4_effect: renewed_am4_active_after_attributable_owner_review_2026_10_07
   renewal_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   renewal_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
-  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms and reset the automatic-merge cycle to 0/10; all hard stops and review-cycle conditions remain in force.
+  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms. Three automatic merges are now counted in that renewed cycle (PRs #199, #198 and #201), so the current counter is 3/10; all hard stops and review-cycle conditions remain in force.
 revocation: Owner may revoke or supersede this directive at any time.
