@@ -273,7 +273,7 @@ accelerated_plan:
     objective: "Keep only baseline search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export; prefer proven components and patterns, no gold-plating."
     exit_gate: "Commodity shell is usable end-to-end and no commodity item has become a custom multi-sprint build without an approved gap."
     current_state: done
-    current_evidence: 'Stage 1 acceptance matrix docs/strategy/STAGE1_THIN_COMMODITY_SHELL_ACCEPTANCE.md proves the existing shell across search/filter, versioned saved profiles, tender card, source document download/parsing adapter, auth/visibility boundaries, monitoring alerts and export. Focused acceptance gate: 67 passed / 10 skipped. No new commodity subsystem was required; Docker-context hardening remains PR #58 / 8924a8576a96ccac490682be737f2b041c8a06e3.'
+    current_evidence: 'Stage 1 acceptance matrix docs/strategy/STAGE1_THIN_COMMODITY_SHELL_ACCEPTANCE.md proves the existing shell across search/filter, versioned saved profiles, tender card, source document download/parsing adapter, auth/visibility boundaries, monitoring alerts and export. Focused acceptance gate: 67 passed / 10 skipped. Exact-head CI 37612128040 SUCCESS 9/9; closure PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b. No new commodity subsystem was required; Docker-context hardening remains PR #58 / 8924a8576a96ccac490682be737f2b041c8a06e3.'
   - stage: 2
     name: decision_core_v1
     priority: P0
