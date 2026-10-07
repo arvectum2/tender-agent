@@ -1,50 +1,32 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: DP-QUALITY-CORE-3.2-003
+status: in_progress
+task_id: TENDER-AGENT-CHECKPOINT-RECONCILIATION-20261007
 authority: OWNER_DIRECTIVE
-goal: Close the human-reviewed OCR gold gate for arvectum2/data-platform without mutating frozen public_v1 benchmark truth.
+goal: Restore the Tender Agent canonical checkpoint after .agent/current-task.yaml was accidentally overwritten by a completed arvectum2/data-platform OCR quality task.
 definition_of_done:
-- Inventory every public_v1 OCR scan that used native-extraction silver reference text.
-- Preserve public_v1 unchanged and keep a hash-pinned pending human-review packet.
-- Record explicit human acceptance in a separate fail-closed attestation with reviewer/date and accepted truth.
-- Promote accepted OCR truth only through a new corpus revision.
-- Freeze truth before any live OCR rerun.
-- Validate attestation and corpus, run focused and evaluation tests, run live OCR acceptance, exact-head CI and post-merge CI.
-- Merge the completed change and record final commit/results.
+- .agent/current-task.yaml refers only to arvectum2/tender-agent state and sources.
+- The checkpoint points continuation to docs/roadmap/master-roadmap.yaml, .agent/execution-queue.yaml and .agent/owner-directive.yaml.
+- The completed Data Platform OCR task cannot be resumed from this Tender Agent checkpoint.
+- Current Tender Agent queue state and main commit are verified before completion.
 completed:
-- DP-QUALITY-CORE-3.2-001 real-source faithfulness merged in data-platform PR #80.
-- DP-QUALITY-CORE-3.2-002 ranking-gap diagnosis merged in data-platform PR #81; no default fusion change was justified.
-- DP-QUALITY-CORE-3.2-003 engineering review gate merged in PR #82.
-- AI visual audit merged in PR #83; control notice matched substantively and the technical-spec silver reference had one bullet/list-marker reading-order defect.
-- Explicit human acceptance was received in project chat on 2026-10-07.
-- Accepted attestation benchmarks/reviews/ocr_gold_public_v1_accepted_2026-10-07.json validates with 2/2 accepted and 0 pending.
-- benchmarks/corpora/public_v2 promotes both OCR references to human-reviewed truth while public_v1 remains unchanged.
-- Control-notice gold was accepted as-is; technical-spec gold applies the accepted bullet-placement correction.
-- Truth was frozen before the live OCR run in commit e4202d7873ff512fc42032efa782f1bd77119f81.
-- Live Tesseract rus+eng at 220 DPI passed 7/7 public_v2 artifacts.
-- Evaluation suite passed locally and PR #84 exact-head CI was green.
-- PR #84 merged; local Data Platform main was fast-forwarded and the feature worktree/branch was removed.
-current: Task complete.
-pending: []
-last_verified_commit: f21e9324e054560067a0286943282be55d93f1a1
+- Confirmed the previous checkpoint belonged to arvectum2/data-platform task DP-QUALITY-CORE-3.2-003 and was cross-repository contamination.
+- Confirmed docs/roadmap/master-roadmap.yaml remains the canonical Tender Agent scope/history source.
+current: Reconcile the Tender Agent execution queue and current main, then freeze a repository-local completed checkpoint with a safe resume instruction.
+pending:
+- Verify there is no non-done admitted Tender Agent execution item.
+- Record the verified Tender Agent main commit and final resume instruction.
+last_verified_commit: 9c51916a7911bceda04986b4a7e361076c594914
 test_results:
-- "Human attestation validation: 2 accepted, 0 pending."
-- "public_v2 manifest validation: PASS; public_v1 unchanged."
-- "Live Tesseract public_v2: 7/7 passed; ingestion_success_rate=1.0; benchmark_success_rate=1.0."
-- "Control-notice scan: CER 35.78%, WER 74.47%, confidence 86.89%."
-- "Technical-spec scan: CER 3.50%, WER 5.54%, confidence 94.41%."
-- "Local tests/evaluation: 61 passed, 4 skipped; Ruff PASS; git diff --check PASS."
-- "PR #84 exact-head data-platform-ci run 37632924746: SUCCESS; GitVerse Mirror Health SUCCESS."
-- "PR #84 merged as f21e9324e054560067a0286943282be55d93f1a1."
-- "Post-merge data-platform-ci run 37633152271: SUCCESS; Mirror to GitVerse run 37633152149: SUCCESS."
-updated_at: '2026-10-07T17:02:00+03:00'
-resume_instruction: Task is complete. Do not repeat OCR-gold promotion work. Start the next quality-core roadmap item from the current Data Platform main at f21e9324e054560067a0286943282be55d93f1a1.
+- "Checkpoint target repository: arvectum2/tender-agent."
+- "Canonical roadmap source: docs/roadmap/master-roadmap.yaml."
+updated_at: '2026-10-07T17:20:00+03:00'
+resume_instruction: Continue this checkpoint reconciliation only. Do not execute or resume any arvectum2/data-platform task from Tender Agent state.
 execution:
   claimed_by: ChatGPT
-  execution_id: dp-quality-core-3.2-003
-  branch: null
-  base_commit: ac2bbf00a0378322ef1778c2859f93c3652d1457
+  execution_id: tender-agent-checkpoint-reconciliation-20261007
+  branch: fix/tender-agent-current-task-checkpoint
+  base_commit: 9c51916a7911bceda04986b4a7e361076c594914
   issue: null
   manual_override: true
   lease_until: null
