@@ -414,5 +414,11 @@ def record_portfolio_decision(
             },
         ),
     )
+    try:
+        from src.modules.daily_tender_run.post_go import advance_post_decision_for_deal
+
+        advance_post_decision_for_deal(session, deal_id)
+    except Exception:  # noqa: BLE001 - human decision is already canonical
+        session.rollback()
     portfolio = build_procurement_portfolio(session)
     return next(item for item in portfolio["items"] if item["deal_id"] == deal_id)
