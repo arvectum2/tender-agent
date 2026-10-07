@@ -48,7 +48,7 @@ def _latest_daily_tender_items(
             .join(DailyTenderRun, DailyTenderRun.run_id == DailyTenderRunItem.run_id)
             .where(
                 DailyTenderRunItem.deal_id.in_(deal_ids),
-                DailyTenderRunItem.status == "MANAGER_READY",
+                DailyTenderRunItem.analysis_run_id.is_not(None),
             )
             .order_by(
                 DailyTenderRun.created_at.asc(),
@@ -315,6 +315,15 @@ def _existing_idempotent_decision(
     return None
 
 
+def _continue_daily_tender_run_after_decision(session: Session, deal_id: str) -> None:
+    try:
+        from src.modules.daily_tender_run.post_go import advance_post_decision_for_deal
+
+        advance_post_decision_for_deal(session, deal_id)
+    except Exception:  # noqa: BLE001 - human decision is already canonical
+        session.rollback()
+
+
 def record_mobile_decision(
     session: Session,
     deal_id: str,
@@ -327,6 +336,7 @@ def record_mobile_decision(
         deal_id=deal_id,
         idempotency_key=payload.idempotency_key,
     ):
+        _continue_daily_tender_run_after_decision(session, deal_id)
         return get_mobile_procurement(session, deal_id)
 
     reason_codes = [code.strip() for code in payload.reason_codes if code.strip()]
@@ -359,6 +369,7 @@ def record_mobile_decision(
             },
         ),
     )
+    _continue_daily_tender_run_after_decision(session, deal_id)
     return get_mobile_procurement(session, deal_id)
 
 def activate_mobile_device_access(
