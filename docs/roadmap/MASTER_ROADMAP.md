@@ -64,7 +64,9 @@ The executor must reconcile issue/PR/done-gate state before continuing a stale c
 
 This changes utilization/cadence only. It does **not** expand AM-4 authority, queue admission, external-action rights, or `REVIEW` / `OWNER` / `HUMAN` gates.
 
-**Current execution status (2026-09-18):** every explicitly admitted execution-queue item through order 80 is completed. The final REVIEW item, `223FZ-DECISION-V1-001` / PR #81, was merged after explicit Product Owner approval and successful exact-head CI. The canonical queue is now exhausted: there is **no admitted executable item**. The single `Tender Agent Watchdog` remains enabled exact-hourly and audit-logged in issue #57, but it must report/reconcile only and must not invent or promote roadmap work until the Product Owner admits a new bounded item.
+**Historical execution snapshot (2026-09-18):** at that point every explicitly admitted queue item through order 80 was completed and the queue was temporarily exhausted. This paragraph is retained only as history; it is **not** the current executor state.
+
+**Current execution status (2026-10-07):** the bounded iPhone/Daily Tender sequence **MOB-1 → MOB-2 → MOB-3 → DTR-3 → MOB-4 is complete and merged**. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate on preserved frozen evidence: **12/12** core 44-FZ procurements have completed reports and **3/3** exploratory 223-FZ cases are separately scored source-bound blockers. Human usefulness/commercial acceptance remains HUMAN/REVIEW. There is now **no non-done admitted queue item**. The single `Tender Agent Watchdog` remains enabled hourly; any next bounded item must be admitted under the active Owner continuation rule. Company AM-4 remains at the **10/10 mandatory review ceiling**, so automatic merge fails closed absent attributable Owner review/renewal.
 
 ## Owner product directive — 2026-10-06: Daily Tender Run + iPhone Tender Agent
 
@@ -142,6 +144,7 @@ Roadmap status is now reconciled to execution: MOB-1, MOB-2, MOB-3, DTR-3 and MO
 
 ## Current reconciliation highlights
 
+- **Current queue — 2026-10-07:** `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has satisfied its technical done gate; there are no non-done admitted items. The completed mobile/DTR sequence and ARV-005 pilot are historical execution evidence, not implicit admission of new work. Automatic merge remains review-due at the Company AM-4 10/10 ceiling.
 - **ARV-044 — mobile companion:** current Owner priority is P0; MOB-1 is complete in PR #171 (`01b4be72`), MOB-2 in PR #173 (`fe92b39`), MOB-3 in PR #176 (`3ab3872`), and MOB-4 in PR #183 (`bdcd868`). DTR-3 post-GO orchestration is also complete in PR #180 (`3b25e10`) and preserves the same HUMAN participation boundary. The currently defined native-iPhone MVP sequence is implemented; Android, public multi-tenant release and autonomous decision/submission remain deferred and are not implied complete. Historical 2026-07-30 P2/5% fields remain unchanged in the immutable snapshot.
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
 - **ARV-003 — production LLM analysis:** current docs refer to an accepted ARV-003 bundle, while an older R10.1 backlog status still says Gate 5 ready. This inconsistency is preserved as a status-revalidation item rather than silently resolved.
@@ -183,7 +186,7 @@ The accelerated admitted pipeline that was active on 2026-09-15 is now fully rec
 
 ### Execution queue after reconciliation
 
-The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, `DTR-3-POST-GO-AUTOMATION-001`, and `MOB-4-IOS-PORTFOLIO-METRICS-001` are **done and merged**, while `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` remains the only non-done admitted queue item. No additional mobile stage is admitted. This is intentional: the roadmap remains broader than the executor queue, and the watchdog is not allowed to convert roadmap presence into queue admission by itself.
+The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, `DTR-3-POST-GO-AUTOMATION-001`, and `MOB-4-IOS-PORTFOLIO-METRICS-001` are **done and merged**. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate: the frozen 12-case 44-FZ core produced 12 reports, the three exploratory 223-FZ cases are separately scored source-bound blockers, and the aggregate report is preserved under `docs/pilot/`. Human usefulness/commercial acceptance remains HUMAN/REVIEW. There are now no non-done admitted queue items; the next bounded item must be admitted under the active Owner continuation rule rather than inferred from roadmap presence.
 
 ### Available continuation branches — candidate matrix
 
@@ -200,7 +203,7 @@ These are **roadmap branches, not admitted work**. Selecting one means creating 
 | **MONITORING-DELIVERY** | ARV-021, 056, 025, 029, 045 | Extend completed internal monitoring/outbox foundation to approved email/CRM/webhook/scheduled-reporting adapters | Live external delivery remains disabled until separate REVIEW/HUMAN authority |
 | **COMPETITIVE-BENCHMARK** | ARV-072 | Use completed domain-regression infrastructure for identical-procurement competitor benchmark refresh | Corpus/method frozen before outputs; anti-circularity mandatory |
 | **GO-TO-MARKET** | ARV-038–041, 054 | Product-first site; metrics; indexing; tariffs/demo; legal SaaS/pilot package | ARV-041 remains director/counsel/regulatory HUMAN gate; pricing/public commitments need Owner approval |
-| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas; on-prem/air-gapped; mobile companion; later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
+| **SAAS-SCALE** | ARV-043–046, 068, 070 | Multi-tenant orgs/roles/isolation; quotas; on-prem/air-gapped; mobile expansion beyond the completed internal iPhone MVP (for example public/multi-tenant or Android); later finance/integration | Financing/guarantees/external enterprise commitments are HUMAN/commercial gates |
 | **DEVELOPMENT-GOVERNANCE** | ARV-051, 062 | Revalidate parallel-development protocol; mirror posture; reusable Project Watchdog binding | Must not alter Company/Product authority; open PR #78 is maintenance only |
 | **LATE-INFRA** | ARV-047–049 | OpenSearch, ClickHouse, Kubernetes/Helm when measured need appears | Deferred + reuse-first measured-gap gate |
 | **STATUS-REVALIDATION** | BASE-003, 007, 011, 012, 014; ARV-003, 051, 075 | Reconcile stale July progress/status values against current repository/runtime evidence | Status reconciliation only; no implementation authority |
@@ -253,7 +256,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `ARV-003` | 2 | В работе | P0 | 97% | R10.1: production LLM-анализ с evidence map и confidence | accepted_evidence_present_needs_status_revalidation |
 | `ARV-001` | 3 | Запланировано | P0 | 85% | R10.2: Quality & Product Readiness — golden report и release gates | completed_governed |
 | `ARV-004` | 4 | Запланировано | P0 | 66% | R10.3: production-loop Hermes и customer-scoped feedback | needs_revalidation |
-| `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | needs_revalidation |
+| `ARV-005` | 5 | Запланировано | P0 | 45% | R10.4: контролируемый пилот на 10–20 реальных закупках | confirmed_done |
 | `ARV-067` | 7 | На проверке | P1 | 90% | Вертикальные онтологии и настраиваемые схемы извлечения по категориям | review |
 | `ARV-061` | 12 | Запланировано | P1 | 5% | Commercial MVP v1: быстрый cited-преданализ | needs_revalidation |
 | `ARV-065` | 37 | Запланировано | P1 | 0% | Evidence-grounded copilot по закупке: Q&A, AI-юрист и сметчик | needs_revalidation |

@@ -234,6 +234,198 @@ def _clean_complete_document_model(
         contract["reason"] = "Проект контракта включён в комплект анализа."
 
 
+def _ground_customer_decision_claims(model: dict[str, Any]) -> None:
+    """Replace legacy blanket confirmations with evidence-bound statements."""
+
+    customer_decision = model.get("customer_decision")
+    if not isinstance(customer_decision, dict):
+        customer_decision = {}
+        model["customer_decision"] = customer_decision
+
+    core = model.get("decision_core")
+    facts = core.get("facts") if isinstance(core, dict) else {}
+    facts = facts if isinstance(facts, dict) else {}
+    confirmed: list[str] = []
+
+    labels = {
+        "procurement_title": "предмет закупки",
+        "application_deadline": "срок подачи заявок",
+        "nmck": "НМЦК",
+    }
+    for key, label in labels.items():
+        fact = facts.get(key)
+        if (
+            isinstance(fact, dict)
+            and fact.get("status") == "KNOWN"
+            and fact.get("evidence")
+        ):
+            confirmed.append(label)
+
+    field_evidence = model.get("field_evidence")
+    field_evidence = field_evidence if isinstance(field_evidence, dict) else {}
+    customer_name = str(model.get("customer_name") or "").strip()
+    if (
+        field_evidence.get("customer_name")
+        and customer_name
+        and customer_name != "Заказчик не извлечён"
+    ):
+        confirmed.append("заказчик")
+
+    line_items = [row for row in (model.get("line_items") or []) if isinstance(row, dict)]
+    bound_items = [
+        row
+        for row in line_items
+        if row.get("evidence_ids") and row.get("field_provenance", {}).get("name")
+    ]
+    if line_items and len(bound_items) == len(line_items):
+        confirmed.append("извлечённые позиции закупки")
+
+    fully_quantified = bool(line_items) and all(
+        row.get("quantity_status") == "specified"
+        and row.get("quantity") not in (None, "")
+        and row.get("field_provenance", {}).get("quantity")
+        and row.get("field_provenance", {}).get("unit")
+        for row in line_items
+    )
+    if fully_quantified:
+        confirmed.append("количество и единица измерения по всем извлечённым позициям")
+
+    existing_not_evaluated = [
+        str(item)
+        for item in (customer_decision.get("not_evaluated") or [])
+        if str(item).strip()
+    ]
+    if line_items and not fully_quantified:
+        existing_not_evaluated.append(
+            "количество и/или единица измерения не подтверждены для всех извлечённых позиций"
+        )
+    if not line_items:
+        existing_not_evaluated.append(
+            "позиции и количество не извлечены в source-bound виде"
+        )
+    contract_status = str(model.get("contract_draft_status") or "").strip().lower()
+    if contract_status == "absent":
+        existing_not_evaluated.append(
+            "договорные условия не оценены: проект контракта не подтверждён в комплекте"
+        )
+    elif contract_status == "parse_failed":
+        existing_not_evaluated.append(
+            "договорные условия не оценены: проект контракта присутствует, но его текст не извлечён полностью"
+        )
+
+    def dedupe(values: list[str]) -> list[str]:
+        seen: set[str] = set()
+        result: list[str] = []
+        for value in values:
+            if value not in seen:
+                seen.add(value)
+                result.append(value)
+        return result
+
+    customer_decision["confirmed"] = dedupe(confirmed)
+    customer_decision["not_evaluated"] = dedupe(existing_not_evaluated)
+
+    reasons: list[str] = []
+    if confirmed:
+        reasons.append("Source-bound подтверждение: " + ", ".join(confirmed) + ".")
+    else:
+        reasons.append(
+            "Нет набора source-bound фактов, достаточного для положительного утверждения о реквизитах или объёме."
+        )
+
+    if model.get("contract_draft_status") == "absent":
+        reasons.append("Проект контракта не найден в предоставленном комплекте.")
+    elif model.get("contract_draft_status") == "parse_failed":
+        reasons.append("Проект контракта присутствует, но его текст не извлечён полностью.")
+
+    customer_documents = model.get("customer_documents") or []
+    has_technical_document = any(
+        isinstance(item, dict) and item.get("type") == "технический документ"
+        for item in customer_documents
+    )
+    if not has_technical_document:
+        reasons.append("Отдельное ТЗ или описание объекта закупки не найдено.")
+    customer_decision["reasons"] = reasons
+
+
+def _reconcile_contract_presence_from_document_summary(
+    model: dict[str, Any], document_summary: dict[str, Any]
+) -> None:
+    """Distinguish a missing contract from a present-but-unparsed contract."""
+
+    logical_documents = [
+        item
+        for item in (document_summary.get("logical_documents") or [])
+        if isinstance(item, dict)
+    ]
+    contract_documents = [
+        item
+        for item in logical_documents
+        if item.get("kind") == "contract_draft"
+        or "проект контракта" in str(item.get("type") or "").lower()
+        or "проект контракта" in str(item.get("name") or "").lower()
+    ]
+    if not contract_documents:
+        return
+
+    names = [
+        str(item.get("name") or "Проект контракта")
+        for item in contract_documents
+    ]
+    evidence_ids = [
+        f"document_set:contract_draft:{index}"
+        for index, _item in enumerate(contract_documents, start=1)
+    ]
+    current_status = str(model.get("contract_draft_status") or "").strip().lower()
+
+    model["contract_draft_documents"] = names
+    model["contract_draft_evidence_ids"] = evidence_ids
+
+    if current_status != "present":
+        model["contract_draft_status"] = "parse_failed"
+        contract = model.get("contract_conditions")
+        if not isinstance(contract, dict):
+            contract = {}
+            model["contract_conditions"] = contract
+        contract["status"] = "parse_failed"
+        contract["reason"] = (
+            "Проект контракта присутствует в комплекте, но его текст не извлечён полностью."
+        )
+
+
+def _align_customer_decision_with_decision_core(model: dict[str, Any]) -> None:
+    """Prevent the legacy customer verdict from overstating Decision Core readiness."""
+
+    raw_core = model.get("decision_core")
+    if not isinstance(raw_core, dict):
+        return
+    core_decision = (
+        raw_core.get("decision")
+        if isinstance(raw_core.get("decision"), dict)
+        else {}
+    )
+    status = str(core_decision.get("status") or "").strip().upper()
+    customer_decision = model.get("customer_decision")
+    if not isinstance(customer_decision, dict):
+        customer_decision = {}
+        model["customer_decision"] = customer_decision
+
+    next_action = core_decision.get("next_action")
+    rationale = list(core_decision.get("rationale") or [])
+    if status == "NEEDS_REVIEW":
+        customer_decision["recommendation"] = "Требуется проверка"
+        customer_decision["reasons"] = rationale
+        if next_action:
+            customer_decision["next_action"] = next_action
+        model["decision"] = "Требуется ручная проверка перед коммерческим расчётом"
+    elif status == "NO_GO":
+        customer_decision["recommendation"] = "Не участвовать"
+        customer_decision["reasons"] = rationale
+        if next_action:
+            customer_decision["next_action"] = next_action
+        model["decision"] = "Не участвовать: подтверждён жёсткий блокер"
+
+
 def build_procurement_report_model(
     metadata: dict[str, Any],
     outputs: dict[str, dict[str, Any]],
@@ -279,6 +471,7 @@ def build_procurement_report_model(
         model["procurement_law"] = procurement_law
     model["metadata"] = model_metadata
     _clean_complete_document_model(model, document_summary)
+    _reconcile_contract_presence_from_document_summary(model, document_summary)
     analysis_context = (
         outputs.get("requirements", {}).get("analysis_context", {})
         if isinstance(outputs.get("requirements"), dict)
@@ -294,6 +487,8 @@ def build_procurement_report_model(
         supplier_profile=supplier_profile,
     )
     model["bid_decision"] = legacy_bid_decision(model["decision_core"])
+    _ground_customer_decision_claims(model)
+    _align_customer_decision_with_decision_core(model)
     return model
 
 

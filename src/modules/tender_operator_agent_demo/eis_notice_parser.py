@@ -422,16 +422,47 @@ def _extract_child_text(node: ET.Element, tag_names: tuple[str, ...]) -> str | N
 
 
 def _classify_notice_attachment_kind(name: str) -> str:
-    lowered = name.lower()
+    lowered = re.sub(r"_+", " ", name.lower())
     if any(token in lowered for token in ("обоснование нмцк", "обоснование начальной", "расчет нмцк", "расчёт нмцк")):
         return "estimate"
-    if any(token in lowered for token in ("техническое задание", "техзад", " тз", "тз ", "technical specification")):
+    if any(
+        token in lowered
+        for token in (
+            "техническое задание",
+            "техническая часть",
+            "техзад",
+            " тз",
+            "тз ",
+            "technical specification",
+        )
+    ):
         return "technical_specification"
-    if any(token in lowered for token in ("описание объекта закупки", "описание товара", "описание работ", "описание услуг", "ооз")):
+    if any(
+        token in lowered
+        for token in (
+            "описание объекта закупки",
+            "описание товара",
+            "описание работ",
+            "описание услуг",
+            "ооз",
+            "oоз",
+        )
+    ):
         return "procurement_object_description"
     if any(token in lowered for token in ("спецификац",)):
         return "specification"
-    if any(token in lowered for token in ("проект контракта", "проект договора", "контракт", "договор", "agreement", "contract")):
+    if any(
+        token in lowered
+        for token in (
+            "проект контракта",
+            "проект договора",
+            "проект гк",
+            "контракт",
+            "договор",
+            "agreement",
+            "contract",
+        )
+    ):
         return "contract_draft"
     if any(token in lowered for token in ("смет",)):
         return "estimate"

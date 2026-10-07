@@ -137,3 +137,46 @@ def test_retention_prioritizes_later_technical_and_contract_facts_over_early_nmc
     assert {row["type"] for row in first} >= {"product_item", "product_characteristic", "delivery_deadline", "warranty"}
     assert {row["evidence_candidate"]["file_id"] for row in first} >= {"N", "T", "C"}
     assert all(row["source_fact_id"] and row["locator"] and row["excerpt"] for row in first)
+
+
+def test_contract_generic_tables_do_not_become_goods_line_items_but_terms_remain():
+    document = _doc(
+        "Проект контракта\n"
+        "1\tНедоступность Системы ПИК ЕАСУЗ\t240 мин.\n"
+        "2\tФКУ СИЗО-1 УФСИН России по Волгоградской области, 400066, г. Волгоград, ул. Голубинская, 3\tОдной партией\n"
+        "Срок поставки: 10 рабочих дней.\n"
+        "Место поставки: г. Волгоград, ул. Голубинская, 3.\n",
+        name="Проект контракта.docx",
+        role="contract_draft",
+    )
+
+    facts = extract_goods_source_facts([document])
+
+    assert not [fact for fact in facts if fact.fact_type == "PRODUCT_ITEM"]
+    assert {fact.fact_type for fact in facts} >= {
+        "DELIVERY_DEADLINE",
+        "DELIVERY_PLACE",
+    }
+
+
+def test_application_instruction_boilerplate_does_not_become_goods_requirements():
+    document = _doc(
+        "Требования к содержанию, составу заявки на участие в закупке.\n"
+        "ЛЕКАРСТВЕННЫЕ ПРЕПАРАТЫ: участник предоставляет сертификат.\n"
+        "Участник вправе предложить лекарственный препарат в эквивалентных дозировках "
+        "для одинакового терапевтического эффекта.\n"
+        "Каждая лекарственная форма должна быть утверждена в перечне ЖНВЛП.\n",
+        name="Требования к содержанию_ составу заявки и инструкция.docx",
+        role="notice",
+    )
+
+    facts = extract_goods_source_facts([document])
+
+    assert not {
+        "PRODUCT_ITEM",
+        "PRODUCT_CHARACTERISTIC",
+        "STANDARD",
+        "CERTIFICATE",
+        "SAFETY",
+        "EQUIVALENT_RULE",
+    } & {fact.fact_type for fact in facts}

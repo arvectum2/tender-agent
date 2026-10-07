@@ -48,8 +48,36 @@ class ProcurementSourceFact:
     source_row_number: int | None = None
 
 
+def _normalized_document_name(document: Any) -> str:
+    name = str(getattr(document, "display_name", "") or "").lower()
+    return re.sub(r"[_]+", " ", name)
+
+
+def _is_application_instruction_document(document: Any) -> bool:
+    name = _normalized_document_name(document)
+    return any(
+        marker in name
+        for marker in (
+            "требования к содержанию",
+            "требования к составу",
+            "составу заявки",
+            "состав заявки",
+            "инструкция по ее заполнению",
+            "инструкция по её заполнению",
+        )
+    )
+
+
 def semantic_procurement_role(document: Any) -> str:
-    name = str(getattr(document, "display_name", "")).lower()
+    name = _normalized_document_name(document)
+    explicit_role = str(getattr(document, "role", "") or "").strip().lower()
+    if explicit_role == "technical_spec":
+        return "TECHNICAL_SPEC"
+    if explicit_role == "contract_draft":
+        return "CONTRACT_DRAFT"
+    if explicit_role == "notice":
+        return "SUPPORTING" if _is_application_instruction_document(document) else "NOTICE"
+
     text = str(getattr(document, "text", "") or "").lower()
     sample = f"{name}\n{text[:12000]}"
     if any(marker in sample for marker in ("обоснование нмцк", "начальн", "расчет средней цены", "обоснование цены")):
@@ -117,37 +145,45 @@ def extract_goods_source_facts(documents: list[Any]) -> list[ProcurementSourceFa
         if not text:
             continue
         role = semantic_procurement_role(document)
+        application_instruction = _is_application_instruction_document(document)
         for row, raw_line in enumerate(text.replace("\f", "\n").splitlines(), start=1):
             line = " ".join(raw_line.split())
             if len(line) < 4:
                 continue
             candidates: list[ProcurementSourceFact] = []
-            item = _table_item(document, role, row, raw_line)
-            if item:
-                candidates.append(item)
-            table_quantity = _table_quantity(document, role, row, raw_line)
-            if table_quantity:
-                candidates.append(table_quantity)
-            for match in _PRODUCT.finditer(line):
-                candidates.append(_fact(document, role, row, "PRODUCT_ITEM", match.group(1).strip(" .;"), line))
-            for match in _QUANTITY.finditer(line):
-                candidates.append(_fact(document, role, row, "QUANTITY", match.group(1), line, unit=match.group(2)))
-            for match in _CHARACTERISTIC.finditer(line):
-                candidates.append(_fact(document, role, row, "PRODUCT_CHARACTERISTIC", f"{match.group(1)} {match.group(2)}", line))
-            for match in _STANDARD.finditer(line):
-                candidates.append(_fact(document, role, row, "STANDARD", match.group(0), line))
+            # Generic numbered tables in contract drafts frequently describe
+            # SLA states, delivery addresses or other contract mechanics rather
+            # than the purchase object. Product rows are sourced from the
+            # technical specification / NMCK paths instead.
+            if role != "CONTRACT_DRAFT":
+                item = _table_item(document, role, row, raw_line)
+                if item:
+                    candidates.append(item)
+                table_quantity = _table_quantity(document, role, row, raw_line)
+                if table_quantity:
+                    candidates.append(table_quantity)
+            if not application_instruction:
+                for match in _PRODUCT.finditer(line):
+                    candidates.append(_fact(document, role, row, "PRODUCT_ITEM", match.group(1).strip(" .;"), line))
+                for match in _QUANTITY.finditer(line):
+                    candidates.append(_fact(document, role, row, "QUANTITY", match.group(1), line, unit=match.group(2)))
+                for match in _CHARACTERISTIC.finditer(line):
+                    candidates.append(_fact(document, role, row, "PRODUCT_CHARACTERISTIC", f"{match.group(1)} {match.group(2)}", line))
+                for match in _STANDARD.finditer(line):
+                    candidates.append(_fact(document, role, row, "STANDARD", match.group(0), line))
             if _has_delivery_deadline(line):
                 candidates.append(_fact(document, role, row, "DELIVERY_DEADLINE", line, line))
             for pattern, kind in ((_PLACE, "DELIVERY_PLACE"), (_WARRANTY, "WARRANTY")):
                 for match in pattern.finditer(line):
                     candidates.append(_fact(document, role, row, kind, match.group(0), line))
             lowered = line.lower()
-            if any(word in lowered for word in ("сертификат", "декларац", "паспорт качества")):
-                candidates.append(_fact(document, role, row, "CERTIFICATE", line, line))
-            if "безопасност" in lowered and any(word in lowered for word in ("соответств", "должен", "должна", "обеспеч")):
-                candidates.append(_fact(document, role, row, "SAFETY", line, line))
-            if "эквивалент" in lowered:
-                candidates.append(_fact(document, role, row, "EQUIVALENT_RULE", line, line))
+            if not application_instruction:
+                if any(word in lowered for word in ("сертификат", "декларац", "паспорт качества")):
+                    candidates.append(_fact(document, role, row, "CERTIFICATE", line, line))
+                if "безопасност" in lowered and any(word in lowered for word in ("соответств", "должен", "должна", "обеспеч")):
+                    candidates.append(_fact(document, role, row, "SAFETY", line, line))
+                if "эквивалент" in lowered:
+                    candidates.append(_fact(document, role, row, "EQUIVALENT_RULE", line, line))
             for candidate in candidates:
                 key = (candidate.file_id, candidate.fact_type, candidate.normalized_key, candidate.locator)
                 if key not in seen:

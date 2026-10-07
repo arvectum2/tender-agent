@@ -253,7 +253,43 @@ def _enrich_procurement_metadata_from_documents(
     fill only fields that remain absent after the legacy enrichment.
     """
 
+    source_procurement = (
+        dict(metadata.get("procurement"))
+        if isinstance(metadata.get("procurement"), dict)
+        else {}
+    )
+    public_card_authoritative = (
+        metadata.get("mode") == "procurement_search_intake"
+        and metadata.get("procurement_source") == "public_eis_html_44fz"
+    )
+    card_customer = source_procurement.get("customer_name")
+    card_title = source_procurement.get("title") or source_procurement.get("procurement_subject")
+
     enriched = _ORIGINAL_ENRICH_PROCUREMENT_METADATA_FROM_DOCUMENTS(metadata, **kwargs)
+
+    # Public 44-FZ common-info provides explicit customer/title surfaces.
+    # Attachments may add missing facts, but must not overwrite those card facts
+    # with signature blocks or contract-template fragments.
+    if public_card_authoritative:
+        procurement = (
+            dict(enriched.get("procurement"))
+            if isinstance(enriched.get("procurement"), dict)
+            else {}
+        )
+        evidence = dict(enriched.get("_field_evidence") or {})
+        if card_customer not in (None, "", [], {}):
+            procurement["customer_name"] = card_customer
+            enriched["customer_name"] = card_customer
+            evidence["customer_name"] = "card:customer_name"
+        if card_title not in (None, "", [], {}):
+            procurement["title"] = card_title
+            procurement["procurement_subject"] = card_title
+            enriched["procurement_title"] = card_title
+            enriched["tender_title"] = card_title
+            evidence["procurement_title"] = "card:procurement_subject"
+        enriched["procurement"] = procurement
+        enriched["_field_evidence"] = evidence
+
     documents = list(kwargs.get("documents") or [])
     if not documents:
         return enriched
