@@ -1,5 +1,5 @@
 task_id: ROADMAP-SYNC-FULL-20261007
-status: in_progress
+status: completed
 goal: Refresh canonical roadmap status to current 2026-10-07 main without new product admission.
 definition_of_done:
   - Historical registry preserved byte-for-byte.
@@ -10,17 +10,17 @@ definition_of_done:
   - Validation/CI green and roadmap-only PR merged.
 completed:
   - Current main/queue/BASE reconciliation verified.
-current: Validation passed; PR/CI pending.
-remaining:
-  - Open roadmap-only PR.
-  - Obtain exact-head CI.
-  - Merge under explicit Owner request.
-last_verified_commit: 617a6410dfe8864912411339fc169cce1e9d56b5
+current: Completed; roadmap refresh merged to main.
+remaining: []
+last_verified_commit: 53ea9e6c5e105e8f06171de766937795fd4547cc
 test_results:
   - "Historical registry: 93/93 unique, byte-identical."
   - "Human recovered-roadmap section: byte-identical."
   - "Queue open items: 0."
   - "BASE confirmed_done: 18/18."
   - "YAML parse PASS; git diff --check PASS."
-resume_instruction: Open roadmap PR, obtain exact-head CI, merge if green; no new product work.
-updated_at: '2026-10-07T13:36:00+03:00'
+  - "Local uv run make check: PASS after dev dependency sync."
+  - "PR #191 exact-head CI run 37609345502: SUCCESS 9/9."
+  - "PR #191 merged as b5b070d691a33648c2c2f804d84d1391a5d53ebb; completion metadata commit 53ea9e6c5e105e8f06171de766937795fd4547cc."
+resume_instruction: Completed. Resume from main after the completion metadata commit; no new product task is admitted by this checkpoint.
+updated_at: '2026-10-07T13:53:00+03:00'
