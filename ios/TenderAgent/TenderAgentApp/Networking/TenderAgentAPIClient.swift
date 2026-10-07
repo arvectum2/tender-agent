@@ -361,6 +361,10 @@ struct MobileAPIProcurement: Decodable {
     let deferredUntil: Date?
     let needsAttention: Bool
 
+    let portfolioDecision: String
+    let portfolioDecisionSource: String?
+    let portfolioDecisionAt: Date?
+
     let submitted: Bool
     let submittedAt: Date?
     let outcome: String?

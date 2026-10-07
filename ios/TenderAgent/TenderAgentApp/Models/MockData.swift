@@ -21,7 +21,11 @@ enum MockData {
                 summary: "Модернизация действующей диагностической подсистемы. Критических блокеров для участия не выявлено.",
                 lifecycle: .analysisReady,
                 needsAttention: true,
-                decision: .pending
+                decision: .pending,
+                portfolioDecision: .go,
+                portfolioDecisionSource: "AGENT_SCREENING",
+                portfolioDecisionAt: .now.addingTimeInterval(-60 * 45),
+                updatedAt: .now.addingTimeInterval(-60 * 45)
             ),
             Procurement(
                 id: "DL-MOCK-002",
@@ -41,7 +45,11 @@ enum MockData {
                 summary: "Подходит по профилю, но перед GO нужно подтвердить законный доступ к программному обеспечению.",
                 lifecycle: .analysisReady,
                 needsAttention: true,
-                decision: .pending
+                decision: .pending,
+                portfolioDecision: .needsReview,
+                portfolioDecisionSource: "AGENT_SCREENING",
+                portfolioDecisionAt: .now.addingTimeInterval(-60 * 90),
+                updatedAt: .now.addingTimeInterval(-60 * 90)
             ),
             Procurement(
                 id: "DL-MOCK-003",
@@ -59,10 +67,19 @@ enum MockData {
                 unknowns: [],
                 risks: ["Короткий срок исполнения"],
                 summary: "Типовая разработка сайта без критических технических или квалификационных блокеров.",
-                lifecycle: .submitted,
+                lifecycle: .outcome,
                 needsAttention: false,
                 decision: .go,
-                decisionComment: "Заявка уже подана."
+                decisionComment: "Заявка уже подана.",
+                portfolioDecision: .go,
+                portfolioDecisionSource: "HUMAN",
+                portfolioDecisionAt: .now.addingTimeInterval(-60 * 60 * 24 * 3),
+                submitted: true,
+                submittedAt: .now.addingTimeInterval(-60 * 60 * 24 * 2),
+                outcomeCode: "WON",
+                outcomeRationale: "Демо: протокол показывает победу.",
+                outcomeAt: .now.addingTimeInterval(-60 * 60 * 6),
+                updatedAt: .now.addingTimeInterval(-60 * 60 * 6)
             ),
             Procurement(
                 id: "DL-MOCK-004",
@@ -83,7 +100,13 @@ enum MockData {
                 lifecycle: .submitted,
                 needsAttention: false,
                 decision: .go,
-                decisionComment: "Подано через Росэлторг."
+                decisionComment: "Подано через Росэлторг.",
+                portfolioDecision: .go,
+                portfolioDecisionSource: "HUMAN",
+                portfolioDecisionAt: .now.addingTimeInterval(-60 * 60 * 36),
+                submitted: true,
+                submittedAt: .now.addingTimeInterval(-60 * 60 * 18),
+                updatedAt: .now.addingTimeInterval(-60 * 60 * 18)
             )
         ]
     }

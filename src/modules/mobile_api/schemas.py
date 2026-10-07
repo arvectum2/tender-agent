@@ -4,6 +4,7 @@ from typing import Literal
 from pydantic import Field, model_validator
 
 from src.modules.procurement_portfolio.schemas import (
+    PortfolioDecision,
     ProcurementPortfolioSummaryResponse,
 )
 from src.shared.types.common import APIModel
@@ -86,6 +87,10 @@ class MobileProcurementItemResponse(APIModel):
     human_reason_codes: list[str] = Field(default_factory=list)
     deferred_until: datetime | None = None
     needs_attention: bool
+
+    portfolio_decision: PortfolioDecision
+    portfolio_decision_source: str | None = None
+    portfolio_decision_at: datetime | None = None
 
     submitted: bool
     submitted_at: datetime | None

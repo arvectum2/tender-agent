@@ -86,7 +86,7 @@ struct RootView: View {
         case let .procurement(dealID):
             selectedTab = .inbox
             Task {
-                if await store.ensureProcurementLoaded(id: dealID) {
+                if await store.refreshAndEnsureProcurementLoaded(id: dealID) {
                     inboxPath = [dealID]
                 }
             }
