@@ -21,12 +21,16 @@ completed:
 - 'Local make check passed; historical BASE legacy_snapshot deep equality is 18/18 unchanged.'
 - 'Focused green batch excluding the known environment-sensitive R9 backup/restore matrix: 542 passed, 12 skipped.'
 - 'Opened PR #188 from chore/base-001-018-revalidation-20261007 to main.'
-current: 'Implementation/evidence work is complete. Await exact-head CI and the required final Owner/review merge gate for PR #188.'
+- 'Owner explicitly authorized merge of PR #188; merged by squash as 4107045a6a8bc109392939a2b83d33de866b6767.'
+- 'Exact-head CI run 37597511204 for 4f6559fde5f86624dba242c031e7f430b65ce36d completed SUCCESS with all 9 jobs green before merge.'
+- 'Post-merge BASE-007 production-smoke preparation: current TLS trust verification PASS for zakupki.gov.ru and int.zakupki.gov.ru using macOS system trust, TLSv1.2, Russian Trusted Sub CA issuer, direct proxy-bypassed route.'
+- 'Post-merge BASE-007 authenticated getDocsIP smoke attempted against known procurement 0352300080626000109; application correctly failed closed because no current SOAP token is configured. Protected token file /Users/master/.config/arvectum/r3-soap-token.env exists but is zero bytes; launchctl token is absent.'
+current: 'PR #188 is merged and canonical revalidation artifacts are on main. Fresh EIS TLS/certificate smoke passes, but the authenticated getDocsIP production smoke is blocked by missing current SOAP token material.'
 pending:
-- 'Require final exact-head GitHub CI success for the latest branch head.'
-- 'Authorized Owner must explicitly pass the final merge/review gate for PR #188; Company AM-4 automatic merge is review_due_at_10_of_10 and fails closed.'
-- 'After authorized merge, verify merge commit and set the canonical checkpoint to completed.'
-last_verified_commit: a433adf44acbbee964eb863feaa5f6d3ff804c1d
+- 'Restore or provide the current EIS SOAP token through the protected local secret source (preferred: /Users/master/.config/arvectum/r3-soap-token.env, mode 0600) without committing or printing the token.'
+- 'Rerun the read-only authenticated getDocsIP production smoke against a known procurement and record sanitized PASS/FAIL evidence.'
+- 'If the authenticated smoke passes, reconcile BASE-007 from revalidated_residual_gap to confirmed_done in a reviewed follow-up change; BASE-011 remains independently residual.'
+last_verified_commit: 4107045a6a8bc109392939a2b83d33de866b6767
 test_results:
 - 'make check: PASS.'
 - 'Historical BASE snapshot equality against ffc698ef: 18/18 unchanged.'
@@ -34,9 +38,12 @@ test_results:
 - 'Only failure: tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed; local Homebrew pg_restore 18.6 failed in the disposable pgvector/pgvector:pg16 acceptance contour. This known environment class is reproduced elsewhere in repository checkpoints and exact-head Linux CI is authoritative.'
 - 'Focused batch excluding that environment-sensitive file: 542 passed, 12 skipped, 39 warnings in 38.35s.'
 - 'master-roadmap.yaml parses; 18 BASE entries = 16 confirmed_done + 2 revalidated_residual_gap.'
-blocked_reason: 'PR #188 merge is behind the final Owner/review gate. Company AM-4 automatic merge governance is review_due_at_10_of_10; automatic merge must fail closed.'
-updated_at: '2026-10-07T12:45:00+0300'
-resume_instruction: 'Check exact-head CI for PR #188. If CI is green, do not merge automatically while AM-4 remains review_due_at_10_of_10. Await an explicit authorized Owner instruction to merge PR #188. On that instruction, re-read current checkpoint and PR head, update status for closure if needed, merge with expected-head protection, verify canonical main/merge commit, then set status completed. Do not alter the immutable 2026-07-30 snapshot.'
+- 'GitHub exact-head CI run 37597511204: SUCCESS, 9/9 jobs green on PR head 4f6559fde5f86624dba242c031e7f430b65ce36d.'
+- 'EIS TLS trust smoke: PASS for zakupki.gov.ru and int.zakupki.gov.ru; TLSv1.2, Russian Trusted Sub CA, proxy_bypassed=True.'
+- 'Authenticated getDocsIP smoke: BLOCKED_EIS_CREDENTIAL_MISSING. ZakupkiSoapSettings configured=false/token_present=false; protected token source exists but is empty (0 bytes).'
+blocked_reason: 'Fresh authenticated BASE-007 production smoke cannot proceed because the current EIS SOAP token is not configured on the authorized Mac mini. TLS/certificate trust is healthy; only credential material is missing.'
+updated_at: '2026-10-07T12:16:04+0300'
+resume_instruction: 'On continuation, first verify the current SOAP token is present in the protected local secret source without printing it. If present, rerun TLS host verification and the read-only getDocsByReestrNumber smoke for 0352300080626000109. If the smoke passes, update BASE-007 overlay evidence/status via a reviewed follow-up change and then complete this checkpoint. Do not alter the immutable 2026-07-30 snapshot or expose token material.'
 execution:
   claimed_by: ChatGPT interactive
   execution_id: interactive-20261007-base-revalidation
