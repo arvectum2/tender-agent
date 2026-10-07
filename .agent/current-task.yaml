@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: in_progress
 task_id: DP-QUALITY-CORE-3.2-003
 authority: OWNER_DIRECTIVE
 goal: Prepare the remaining human-reviewed OCR gold gate for arvectum2/data-platform without falsely promoting silver references or mutating frozen public_v1 benchmark truth.
@@ -18,11 +18,12 @@ completed:
 - DP-QUALITY-CORE-3.2-003 engineering gate preparation merged in data-platform PR #82 as 1bda6b2e67f210ba193723e6d4bbd6151ea13722.
 - AI visual audit performed through RDC against both pinned scan PDFs. Control-notice scan: no substantive text/number mismatch found. Technical-spec scan: one definite reading-order/list-marker mismatch found; the bullet is at the start of the silver text but visibly belongs before the section 1.7 “Приложение 1…” line.
 - AI audit and proposed corrected candidate merged in data-platform PR #83 as 4ee9eed5ad23c81200d23334bd0c01e59915dc50; public_v1 remains unchanged.
-current: Engineering preparation plus an independent AI visual audit are complete and merged. The remaining gate is still HUMAN because the benchmark policy explicitly forbids model/AI output from being treated as human-reviewed gold.
+current: HUMAN acceptance received explicitly in chat on 2026-10-07. Promote the accepted conclusions through a separate attestation and a new corpus revision; preserve public_v1 unchanged.
 pending:
-- HUMAN: review procurement-control-notice-scan against its pinned candidate text and record reviewer/date/notes.
-- HUMAN: review procurement-technical-spec-scan against its pinned candidate text and record reviewer/date/notes.
-- After both human reviews are accepted, create a separate accepted attestation and promote through a new corpus revision; do not mutate public_v1.
+- Create a separate accepted human attestation recording the Product Owner chat confirmation and the reviewed conclusions.
+- Create a new corpus revision with human-reviewed OCR gold: control-notice unchanged; technical-spec uses the accepted bullet-placement correction.
+- Freeze hashes before any SUT/OCR rerun.
+- Validate attestation/corpus, run focused tests and OCR benchmark, PR/CI/merge, then mark completed.
 last_verified_commit: 4ee9eed5ad23c81200d23334bd0c01e59915dc50
 test_results:
 - "PR #81 exact-head CI run 37620125711: SUCCESS."
@@ -34,8 +35,8 @@ test_results:
 - "Post-merge data-platform-ci run 37621160669: SUCCESS; Mirror to GitVerse SUCCESS."
 - "RDC visual audit: control-notice scan matched substantively; technical-spec scan has one list-marker/reading-order defect in the silver reference."
 - "PR #83 merged as 4ee9eed5ad23c81200d23334bd0c01e59915dc50; post-merge data-platform-ci run 37630689405 SUCCESS; Mirror to GitVerse SUCCESS."
-updated_at: '2026-10-07T16:44:00+03:00'
-resume_instruction: Blocked on HUMAN review. Do not claim human-reviewed OCR gold or alter public_v1. When a human supplies acceptance/corrections for both pinned scan/text pairs, create a separate accepted attestation, validate it, then create a new corpus revision carrying the reviewed gold.
+updated_at: '2026-10-07T16:47:00+03:00'
+resume_instruction: HUMAN acceptance is now explicit. Create a separate accepted attestation, preserve public_v1, promote corrected/accepted gold via a new corpus revision, freeze hashes before OCR reruns, validate, benchmark, merge, and complete the task.
 execution:
   claimed_by: ChatGPT
   execution_id: dp-quality-core-3.2-003
