@@ -35,7 +35,11 @@ completed:
   proving it is not introduced by ARV-022.'
 - '2026-10-07: Data Platform PR #85 exact-head CI passed and PR merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7;
   the additive process_document metadata bridge is now on Data Platform main.'
-current_stage: tender_agent_pr_ci
+- '2026-10-07: PR #205 exact-head CI run 37673321734 stalled in GitHub-hosted apt
+  installation while all other jobs reached success; cancellation was requested after
+  the same apt-runner symptom was observed on unrelated main CI. A fresh exact-head
+  verification run will be triggered from this checkpoint commit.'
+current_stage: retry_exact_head_ci
 remaining:
 - Tender Agent PR exact-head CI/guarded merge
 - completion bookkeeping and superseded OCR PR reconciliation
@@ -44,6 +48,6 @@ test_results:
 - focused 38 passed; make check passed
 - full pytest 3107 passed / 236 skipped; queue-policy failure fixed; only R9 pg_restore
   failure reproduces unchanged on origin/main
-resume_instruction: Open/verify/merge the Tender Agent ARV-022 PR, then finalize checkpoint
-  and old OCR PR reconciliation.
-updated_at: '2026-10-07T22:31:00+03:00'
+resume_instruction: 'Verify the fresh exact-head CI run for PR #205; merge only when
+  green, then finalize completion bookkeeping.'
+updated_at: '2026-10-07T22:30:00+03:00'
