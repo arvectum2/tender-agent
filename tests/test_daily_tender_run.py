@@ -362,6 +362,42 @@ def test_daily_tender_run_builds_manager_ready_case_and_mobile_projection(
     assert digest_after_decision.json()["actionable"] == []
     assert digest_after_decision.json()["counts"]["needs_manager"] == 0
 
+    run_after_decision = client.get(f"/api/daily-tender-runs/{body['run_id']}")
+    assert run_after_decision.status_code == 200
+    post_go_body = run_after_decision.json()
+    assert post_go_body["status"] == "WAITING_EVIDENCE"
+    assert post_go_body["current_stage"] == "POST_DECISION"
+    assert post_go_body["counts"]["deep_analyzed"] == 1
+    assert post_go_body["counts"]["needs_manager"] == 0
+    assert post_go_body["counts"]["readiness_blocked"] == 1
+    post_go_item = post_go_body["items"][0]
+    assert post_go_item["stage"] == "POST_DECISION"
+    assert post_go_item["status"] == "READINESS_BLOCKED"
+    assert post_go_item["post_go"]["human_decision"]["action"] == "GO"
+    assert post_go_item["post_go"]["submission"]["state"] == "NOT_STARTED"
+    assert post_go_item["post_go"]["submission"]["grounded"] is False
+
+    from src.modules.submission_control.models import SubmissionExecutionSet
+
+    assert session.query(SubmissionExecutionSet).count() == 0
+
+    portfolio = client.get("/api/procurement-portfolio")
+    assert portfolio.status_code == 200
+    portfolio_item = next(
+        row for row in portfolio.json()["items"] if row["deal_id"] == item["deal_id"]
+    )
+    assert portfolio_item["submitted"] is False
+
+    resumed = client.post(f"/api/daily-tender-runs/{body['run_id']}/resume")
+    assert resumed.status_code == 200
+    resumed_item = resumed.json()["items"][0]
+    assert resumed.json()["status"] == "WAITING_EVIDENCE"
+    assert resumed_item["status"] == "READINESS_BLOCKED"
+    assert resumed_item["post_go"]["human_decision"]["decision_id"] == (
+        post_go_item["post_go"]["human_decision"]["decision_id"]
+    )
+    assert session.query(SubmissionExecutionSet).count() == 0
+
 
 def test_daily_tender_run_deduplicates_unchanged_procurement_across_runs(
     client,
@@ -538,3 +574,43 @@ def test_daily_tender_run_all_failures_complete_with_errors_and_retry(
     assert resumed_body["counts"]["failed"] == 0
     assert resumed_body["counts"]["needs_manager"] == 1
     assert resumed_body["items"][0]["status"] == "MANAGER_READY"
+
+def test_daily_tender_run_defers_without_starting_submission(
+    client,
+    session,
+    monkeypatch,
+):
+    _install_happy_path(monkeypatch, registry_number="0123456789012345681")
+    created = client.post(
+        "/api/daily-tender-runs",
+        json={"profile_id": "arvectum-it", "run_now": True},
+    )
+    assert created.status_code == 201
+    item = created.json()["items"][0]
+
+    app.dependency_overrides[require_mobile_bearer] = lambda: "device-dtr-defer"
+    decision = client.post(
+        f"/mobile/v1/procurements/{item['deal_id']}/decision",
+        json={
+            "action": "DEFER",
+            "rationale": "Вернуться к закупке позже",
+            "reason_codes": ["OWNER_DEFER"],
+            "deferred_until": "2099-10-08T12:00:00Z",
+            "idempotency_key": "dtr-owner-defer-0001",
+        },
+    )
+    assert decision.status_code == 200
+
+    run = client.get(f"/api/daily-tender-runs/{created.json()['run_id']}")
+    assert run.status_code == 200
+    body = run.json()
+    assert body["status"] == "WAITING_HUMAN"
+    assert body["counts"]["needs_manager"] == 0
+    assert body["counts"]["deferred"] == 1
+    assert body["items"][0]["status"] == "DEFERRED"
+    assert body["items"][0]["post_go"]["state"] == "DEFERRED"
+
+    from src.modules.submission_control.models import SubmissionExecutionSet
+
+    assert session.query(SubmissionExecutionSet).count() == 0
+
