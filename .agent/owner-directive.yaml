@@ -38,10 +38,39 @@ continuation:
     - Never resolve ARV-ID conflicts by inference.
     - Never cross executor-policy hard stops or Company/Product/Arvectum OS authority boundaries.
     - Never treat this directive as approval for procurement submission, external communication, production mutation, spend, signing, legal/commercial acceptance or benchmark-truth mutation.
+commercial_workflow_admission_2026_10_07:
+  status: active
+  source: 'Explicit Owner directive in Tender Agent project conversation on 2026-10-07: reset AM-4 and queue the full Commercial Core branch.'
+  canonical_branch_id: COMMERCIAL-WORKFLOW
+  interpretation: 'Commercial Core v1 accelerated Stage 3 is already done; the requested remaining branch maps to canonical COMMERCIAL-WORKFLOW.'
+  queue_admission: explicit_full_branch
+  historical_items:
+    - ARV-015
+    - ARV-019
+    - ARV-022
+    - ARV-053
+    - ARV-055
+    - ARV-057
+    - ARV-059
+    - ARV-060
+    - ARV-063
+    - ARV-064
+    - ARV-066
+    - ARV-069
+  authority: AUTO
+  auto_merge_allowed_under_am4: true
+  hard_boundaries:
+    - No participation decision may be automated.
+    - No legal conclusion may be treated as authoritative human/legal approval.
+    - No bid/application submission, EIS/ETP mutation, signing or use of ЭП/УКЭП.
+    - No supplier/customer/regulator communication or other external commercial effect.
+    - Private/company/customer data use remains limited to already-approved task boundaries.
+  execution_rule: 'Work queue items in canonical branch order; skip blocked items when later independent admitted work can progress; do not invent scope beyond the roadmap next_result/residual scope.'
+
 governance:
   material_executor_policy_change: true
-  am4_effect: renewed_am4_active_after_attributable_owner_review_2026_09_22
-  renewal_decision: docs/governance/decisions/DECISION-2026-09-22-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
-  renewal_merge_commit: 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4
-  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-09-22 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms after the prior cycle reached 10/10; all hard stops and review-cycle conditions remain in force.
+  am4_effect: renewed_am4_active_after_attributable_owner_review_2026_10_07
+  renewal_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  renewal_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
+  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms and reset the automatic-merge cycle to 0/10; all hard stops and review-cycle conditions remain in force.
 revocation: Owner may revoke or supersede this directive at any time.
