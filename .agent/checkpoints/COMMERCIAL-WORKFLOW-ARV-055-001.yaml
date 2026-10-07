@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-055-001
@@ -28,7 +28,7 @@ completed:
 current: Inventory canonical tender subject/position/customer/requirements representations
   and existing search adapters, then define the smallest explainable candidate-ranking
   layer over Data Platform retrieval.
-pending:
+pending: &id001
 - Map available canonical subject, position, customer and requirements signals to
   evidence sources.
 - Implement explainable similar-procurement retrieval over the existing Data Platform
@@ -43,11 +43,5 @@ resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv055-c
   Inventory canonical tender/position/requirement fields and existing DataPlatformRagRetriever/public
   procurement search paths first; then implement a bounded explanation/ranking adapter
   without a new vector backend.
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv055
-  branch: agent/commercial-workflow-arv-055-001
-  base_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: inventory
+remaining: *id001
