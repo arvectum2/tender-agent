@@ -233,7 +233,7 @@ The table below is a compact view grouped by product block. The machine-readable
 | `BASE-004` | 0 | Готово | P0 | 100% | Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI | confirmed_done |
 | `BASE-005` | 0 | Готово | P0 | 100% | PostgreSQL + pgvector + RAG-контур | confirmed_done |
 | `BASE-006` | 0 | Готово | P0 | 100% | Публичный поиск 44-ФЗ и точный поиск по номеру | confirmed_done |
-| `BASE-007` | 0 | Базовый контур готов | P0 | 85% | Рабочий SOAP-контур ЕИС для машиночитаемых данных | revalidated_residual_gap |
+| `BASE-007` | 0 | Базовый контур готов | P0 | 85% | Рабочий SOAP-контур ЕИС для машиночитаемых данных | confirmed_done |
 | `BASE-008` | 0 | Готово | P0 | 100% | Загрузка закупки и формирование отчётов | confirmed_done |
 | `BASE-009` | 0 | Готово | P0 | 100% | Извлечение товарных позиций и характеристик | confirmed_done |
 | `BASE-010` | 0 | Готово | P0 | 100% | Разделение demo/live и отказ от тихих синтетических fallback | confirmed_done |

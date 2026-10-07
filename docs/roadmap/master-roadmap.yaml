@@ -742,12 +742,12 @@ legacy_registry:
     comment: Legacy int44 не считается рабочим основным маршрутом.
     dependencies_raw: ARV-010, ARV-014
   reconciliation:
-    state: revalidated_residual_gap
+    state: confirmed_done
     verified_at: '2026-10-07'
     evidence:
     - path: docs/roadmap/BASE_001_018_REVALIDATION_2026-10-07.md
-      detail: Current BASE revalidation evidence matrix and verification run.
-    notes: 'Repository SOAP/getDocs implementation and deterministic tests are current; fresh authenticated token/certificate/host production smoke is external runtime evidence and is not inferred.'
+      detail: Current BASE revalidation evidence matrix, verification run, and sanitized post-merge EIS production smoke.
+    notes: 'Fresh authenticated read-only getDocsByReestrNumber production smoke completed successfully on 2026-10-07 with one archive URL and zero warnings; TLS/hostname/direct-route checks passed. Token material remained local and uncommitted.'
 - id: BASE-008
   legacy_snapshot:
     queue_order: 0
