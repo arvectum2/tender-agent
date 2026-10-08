@@ -1,0 +1,31 @@
+schema_version: 1
+task_id: ROADMAP-REFRESH-20261008
+status: in_progress
+goal: Refresh the canonical Tender Agent roadmap against current main and present the complete roadmap as a checkbox checklist without rewriting the immutable 2026-07-30 legacy snapshot.
+definition_of_done:
+  - Current status summary matches main after ARV-064 merge and the active ARV-066 branch.
+  - Completed Commercial Workflow legacy reconciliation overlays are updated from durable merged evidence.
+  - MASTER_ROADMAP.md contains a complete current checkbox view for BASE-001..BASE-018 and ARV-001..ARV-075.
+  - Stale execution-queue prose is corrected to the current 10/12 Commercial Workflow state.
+  - Historical snapshot fields remain untouched.
+  - YAML parses and focused roadmap/governance checks pass.
+completed:
+  - Reconciled main at 75beab91a2fcc46fb885d864cd39f229603fe080 and active ARV-066 branch at 2c597ae581d1d00b7e43c38e6567d7068b4a3254.
+  - Updated current status: Commercial Workflow 10/12 complete, ARV-066 active, ARV-069 ready, ARV-064 merged in PR #217, AM-4 6/10.
+  - Reconciled ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063 and ARV-064 to completed from merged evidence.
+  - Marked ARV-066 admitted_in_progress and ARV-069 admitted_ready in the current reconciliation overlay.
+  - Added a full 93-item checkbox view covering BASE-001..BASE-018 and ARV-001..ARV-075 plus the current 10/12 Commercial Workflow execution slice.
+  - Replaced stale queue prose that incorrectly said the admitted queue was empty.
+  - Mac mini validation passed: watchdog/governance tests 4 passed; YAML parse PASS; checklist contains 93 unique canonical IDs.
+current: Open roadmap refresh PR and require exact-head CI before merge.
+remaining:
+  - Open PR.
+  - Verify exact-head CI.
+  - Merge and mark this checkpoint completed.
+last_verified_commit: 64f95fa88726f8ee5a2016bafc165b6ec3292daf
+test_results:
+  - 'tests/test_watchdog_continuation_policy.py: 4 passed, 1 warning.'
+  - 'YAML parse: PASS.'
+  - 'Checklist canonical IDs: 93/93 unique PASS.'
+updated_at: '2026-10-08T11:08:00+03:00'
+resume_instruction: Open the PR for docs/roadmap-checklist-refresh-20261008, require exact-head CI green, merge, then mark ROADMAP-REFRESH-20261008 completed. Do not disturb active COMMERCIAL-WORKFLOW-ARV-066-001 execution.
