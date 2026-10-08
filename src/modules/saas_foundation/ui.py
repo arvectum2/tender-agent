@@ -64,6 +64,16 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <button id="packages">Показать пакеты</button>
 <button id="usage">Остатки лимитов</button>
 <p>Все цены — на согласовании. Списание средств в этом пилоте не производится.</p></section>
+<section><h2>6. Участники компании</h2>
+<p>Владелец и администратор могут выдавать одноразовые приглашения другим
+сотрудникам в пределах лимита рабочих мест. При отзыве доступа токены участника блокируются.</p>
+<label>Роль приглашённого сотрудника<select id="invite-role">
+<option value="analyst">Аналитик</option><option value="viewer">Наблюдатель</option>
+<option value="admin">Администратор</option></select></label>
+<button id="invite-member">Одноразовое приглашение сотрудника</button>
+<button id="members-list">Показать участников</button>
+<label>ID участника для отзыва<input id="revoke-member-id" placeholder="ID из списка участников"></label>
+<button id="revoke-member">Отозвать доступ</button></section>
 <section><h2>Результаты</h2><span class="pill" id="state">Ожидание авторизации</span>
 <pre id="result" aria-live="polite">Здесь появятся ответы сервера.</pre></section></main>
 <script>
@@ -140,4 +150,9 @@ bind("screen-run",()=>call("/api/saas/runs/"+encodeURIComponent(val("run-id"))+"
 bind("me",()=>call("/api/saas/me"));
 bind("packages",()=>call("/api/saas/packages",{auth:false}));
 bind("usage",()=>call("/api/saas/usage"));
+bind("invite-member",()=>call("/api/saas/invitations",{method:"POST",body:{
+ role:val("invite-role"),acquisition_channel:"referral"
+}}));
+bind("members-list",()=>call("/api/saas/members"));
+bind("revoke-member",()=>call("/api/saas/members/"+encodeURIComponent(val("revoke-member-id"))+"/revoke",{method:"POST"}));
 </script></body></html>"""

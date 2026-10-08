@@ -420,3 +420,20 @@ def test_supplier_legal_name_never_becomes_procurement_customer(client, monkeypa
     assert observed["customer_name"] == "Не установлен (требует проверки)"
     assert observed["customer_name"] != "ООО Поставщик не Заказчик"
     assert "unverified" in observed["notes"]
+
+
+
+def test_operator_and_tenant_ui_cover_invite_workflows_without_public_auth(client):
+    from src.modules.customer_onboarding.ui import render_onboarding_html
+    from src.modules.saas_foundation.ui import render_saas_html
+
+    operator = render_onboarding_html()
+    customer = render_saas_html()
+    assert 'id="saas-bootstrap"' in operator
+    assert '/api/operator/saas/tenants' in operator
+    assert 'id="saas-selected-plan"' in operator
+    assert 'id="invite-member"' in customer
+    assert 'id="members-list"' in customer
+    assert 'id="revoke-member"' in customer
+    assert 'localStorage' not in customer
+    assert 'sessionStorage' not in customer

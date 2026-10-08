@@ -59,6 +59,12 @@ a{color:var(--mint)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#
 <form id="screen"><label>Номер / HTTPS-ссылка закупки <input name="reference" minlength="19" placeholder="0123456789026000001"></label>
 <label>Либо ID уже проанализированного локального прогона <input name="run_id" placeholder="Из мастера Tender Agent"></label>
 <button id="screen-btn" disabled>Проверить по профилю</button></form></section>
+<section><h2>4. Доступ клиента к SaaS-пилоту</h2>
+<p class="hint">Оператор создаёт отдельный tenant и одноразовое приглашение владельца.
+Клиенту передаётся только invitation_code по согласованному приватному каналу,
+никогда внутренний пароль Basic Auth. Платежи и публичная оферта отключены.</p>
+<label>Черновой пакет <select id="saas-selected-plan"><option value="pilot">Pilot</option><option value="team">Team</option></select></label>
+<button type="button" id="saas-bootstrap" disabled>Создать tenant и одноразовое приглашение</button></section>
 <section><h2>Результаты и журнал</h2><span class="pill" id="state">Ожидание заполнения</span>
 <pre id="result" aria-live="polite">Здесь появится результат шагов.</pre></section>
 <script>
@@ -75,6 +81,13 @@ async function api(path,body,upload=false){
  if(!response.ok)throw new Error(JSON.stringify(content));return content;
 }
 async function execute(fn){$("#state").textContent="Обработка…";try{await fn();$("#state").textContent="Шаг выполнен";}catch(e){$("#state").textContent="Требуется исправление";output({error:e.message});}}
+$("#saas-bootstrap").addEventListener("click",()=>execute(async()=>{
+ if(!customerId)throw Error("Сначала создайте или откройте компанию");
+ const result=await api("/api/operator/saas/tenants",{
+  customer_id:customerId,plan_code:$("#saas-selected-plan").value
+ });
+ output(result);
+}));
 $("#load-customer").addEventListener("click",()=>execute(async()=>{
  const id=String($("#existing-customer").value||"").trim();
  if(!id)throw Error("Укажите ID компании");
@@ -93,7 +106,7 @@ $("#load-customer").addEventListener("click",()=>execute(async()=>{
  f.namedItem("tolerance").value=r.tolerance||"medium";
  f.namedItem("licenses").value=(q.licenses||[]).join(", ");
  f.namedItem("sro").value=(q.sro_approvals||[]).join(", ");
- $("#upload-btn").disabled=false;$("#screen-btn").disabled=false;output(data);
+ $("#upload-btn").disabled=false;$("#screen-btn").disabled=false;$("#saas-bootstrap").disabled=false;output(data);
 }));
 $("#onboard").addEventListener("submit",e=>{e.preventDefault();execute(async()=>{
  const d=new FormData(e.target);const v=k=>String(d.get(k)||"").trim();
@@ -110,7 +123,7 @@ $("#onboard").addEventListener("submit",e=>{e.preventDefault();execute(async()=>
  if(!resp.ok)throw Error(JSON.stringify(result));
  customerId=result.customer_id;$("#company").textContent="Профиль компании: "+customerId;
  for(const key of ["legal_name","inn","kpp"])$("#onboard").elements.namedItem(key).readOnly=true;
- $("#upload-btn").disabled=false;$("#screen-btn").disabled=false;output(result);
+ $("#upload-btn").disabled=false;$("#screen-btn").disabled=false;$("#saas-bootstrap").disabled=false;output(result);
 });});
 $("#document").addEventListener("submit",e=>{e.preventDefault();execute(async()=>{
  if(!customerId)throw Error("Сначала создать профиль");
