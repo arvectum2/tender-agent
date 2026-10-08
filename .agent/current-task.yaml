@@ -3,59 +3,53 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-066-001
 authority: AUTO
-goal: Add a safe one-click procurement import boundary for registry numbers and supported
-  procurement URLs that resolves idempotently into the existing tenant/project ProcurementCase
-  path with explicit provenance, without DOM scraping or a parallel procurement model.
+goal: Add a safe one-click procurement import boundary for registry numbers and supported procurement
+  URLs that resolves idempotently into the existing tenant/project ProcurementCase path with explicit
+  provenance, without DOM scraping or a parallel procurement model.
 definition_of_done:
-- Direct registry-number inputs and supported zakupki.gov.ru card URLs normalize deterministically
-  to one canonical procurement number; ambiguous, malformed and unsupported URL inputs
-  fail closed.
-- Browser/share/manual handoff surfaces remain bounded provenance labels only and
-  do not become trusted procurement facts.
-- Import resolves to the existing customer/project ProcurementCase path, reusing an
-  existing case for the same procurement number and handling concurrent duplicate
-  creation safely.
-- Every create/reuse handoff appends tenant/project/case-scoped PilotAuditEvent provenance
-  containing raw input kind, source URL when present, normalization method and handoff
-  surface; no DOM-derived data is treated as source truth.
-- No new generic tender/import persistence model, scraper, submission path, signing
-  path or external communication effect is introduced.
-- Focused normalization/ambiguity/tenant/idempotency/concurrency/provenance regressions
-  and relevant customer-pilot tests pass.
+- Direct registry-number inputs and supported zakupki.gov.ru card URLs normalize deterministically to
+  one canonical procurement number; ambiguous, malformed and unsupported URL inputs fail closed.
+- Browser/share/manual handoff surfaces remain bounded provenance labels only and do not become trusted
+  procurement facts.
+- Import resolves to the existing customer/project ProcurementCase path, reusing an existing case for
+  the same procurement number and handling concurrent duplicate creation safely.
+- Every create/reuse handoff appends tenant/project/case-scoped PilotAuditEvent provenance containing
+  raw input kind, source URL when present, normalization method and handoff surface; no DOM-derived data
+  is treated as source truth.
+- No new generic tender/import persistence model, scraper, submission path, signing path or external communication
+  effect is introduced.
+- Focused normalization/ambiguity/tenant/idempotency/concurrency/provenance regressions and relevant customer-pilot
+  tests pass.
 - Exact-head GitHub CI passes before merge.
 completed:
-- '2026-10-08: Reconciled canonical main at 75beab91a2fcc46fb885d864cd39f229603fe080;
-  ARV-064 merged in PR #217 as 75beab91a2fcc46fb885d864cd39f229603fe080 after final
-  exact-head CI run 37743216231 passed all 9 jobs, consuming renewed AM-4 merge 6/10.'
-- '2026-10-08: Inventory confirmed existing ProcurementCase is the customer/project
-  canonical intake object, PilotAuditEvent is the tenant/case provenance journal,
-  tender_research already handles exact registry-number retrieval, and existing tender_import/tender_intake
-  generic models need not be duplicated or forked.'
-- '2026-10-08: Bounded design selected: normalize direct numeric identifiers or explicit
-  registry query parameters on allowlisted EIS hosts; never scrape DOM as truth; create/reuse
-  ProcurementCase and append import provenance audit evidence. Unsupported ETP layouts
-  fail closed rather than guess a number.'
-current: Implement the bounded registry-number/EIS-URL normalizer and tenant/project
-  ProcurementCase handoff with race-safe idempotency and audit provenance.
+- '2026-10-08: Reconciled canonical main at 75beab91a2fcc46fb885d864cd39f229603fe080; ARV-064 merged in
+  PR #217 as 75beab91a2fcc46fb885d864cd39f229603fe080 after final exact-head CI run 37743216231 passed
+  all 9 jobs, consuming renewed AM-4 merge 6/10.'
+- '2026-10-08: Inventory confirmed existing ProcurementCase is the customer/project canonical intake object,
+  PilotAuditEvent is the tenant/case provenance journal, tender_research already handles exact registry-number
+  retrieval, and existing tender_import/tender_intake generic models need not be duplicated or forked.'
+- '2026-10-08: Bounded design selected: normalize direct numeric identifiers or explicit registry query
+  parameters on allowlisted EIS hosts; never scrape DOM as truth; create/reuse ProcurementCase and append
+  import provenance audit evidence. Unsupported ETP layouts fail closed rather than guess a number.'
+- '2026-10-08: Implemented bounded EIS registry URL/direct number normalization; project-scoped ProcurementCase
+  get-or-create with nested unique-race retry and PilotAuditEvent provenance; manual/browser/share API.
+  Focused 11/11 and combined customer-pilot 17/17 tests pass, ruff check and git diff --check pass.'
+current: Implementation and focused regression checks complete; prepare exact-head PR/CI, assess race/API
+  coverage, then guarded merge.
 pending:
-- Implement normalization contract for direct number and allowlisted EIS URL query
-  parameters with ambiguity rejection.
-- Implement create-or-reuse ProcurementCase service with project tenant validation,
-  race-safe idempotency and PilotAuditEvent provenance.
-- Expose internal browser/share/manual handoff API without external side effects.
-- Add focused normalization, unsupported/ambiguous input, tenant isolation, idempotency/concurrency
-  and provenance tests.
-- Run focused/full verification, combine completion bookkeeping into one PR, require
-  exact-head CI, and merge only under valid renewed AM-4.
+- Run additional appropriate checks and review API/concurrency guardrails.
+- Push implementation PR and verify exact-head CI.
+- Merge only with independently verified Company AM-4 gate; mark completed after success.
 last_verified_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
 test_results:
 - 'PR #217 final exact-head CI run 37743216231: SUCCESS (9/9 jobs)'
 - 'PR #217 merged as 75beab91a2fcc46fb885d864cd39f229603fe080'
-updated_at: '2026-10-08T10:35:49+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv066-commercial-20261008.
-  Implement a bounded EIS registry-number/URL handoff that reuses ProcurementCase
-  + PilotAuditEvent, fails closed on ambiguous/unsupported URLs, and performs no DOM
-  scraping or external consequential action.
+- 'ARV-066 focused: 11 passed'
+- 'ARV-066 plus R8 pilot: 17 passed; ruff check PASS; git diff --check PASS'
+updated_at: '2026-10-08T11:48:46.736620+03:00'
+resume_instruction: Review current implementation and test coverage on branch agent/commercial-workflow-arv-066-001,
+  run final verification, open PR, require exact-head CI and current AM-4 authority before merge; never
+  modify external procurement.
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv066

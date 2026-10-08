@@ -89,6 +89,11 @@ class CaseIn(BaseModel):
     procurement_number: str | None = None
 
 
+class ProcurementImportIn(BaseModel):
+    value: str = Field(min_length=1, max_length=2048)
+    surface: str = "manual"
+
+
 class StartIn(BaseModel):
     registry_number: str | None = None
 
@@ -175,6 +180,7 @@ def _lookup_idem_result(settings, idempotency_key: str) -> dict | None:
         return None
     try:
         from src.shared.redis.client import require_client
+
         rc = require_client()
         cached = rc.get(f"idem_result:{idempotency_key}")
         if cached:
@@ -189,6 +195,7 @@ def _store_idem_result(settings, idempotency_key: str, data: dict) -> None:
         return
     try:
         from src.shared.redis.client import require_client
+
         rc = require_client()
         rc.setex(f"idem_result:{idempotency_key}", _IDEM_RESULT_TTL, json.dumps(data))
     except Exception:  # noqa: BLE001, S110
@@ -255,15 +262,30 @@ def create_case(customer_id: str, project_id: str, payload: CaseIn, session: DBS
     }
 
 
+@router.post("/customers/{customer_id}/projects/{project_id}/procurement-import")
+def import_procurement(
+    customer_id: str, project_id: str, payload: ProcurementImportIn, session: DBSession
+):
+    from src.modules.customer_pilot.procurement_import import import_procurement_case
+
+    return import_procurement_case(
+        session,
+        customer_id=customer_id,
+        project_id=project_id,
+        raw_input=payload.value,
+        surface=payload.surface,
+    )
+
+
 @router.post("/customers/{customer_id}/cases/{case_id}/runs")
 def start_run(
-        customer_id: str,
-        case_id: str,
-        payload: StartIn,
-        session: DBSession,
-        idempotency_key: str = Header(..., alias="Idempotency-Key"),
-        response: Response = None,
-    ):
+    customer_id: str,
+    case_id: str,
+    payload: StartIn,
+    session: DBSession,
+    idempotency_key: str = Header(..., alias="Idempotency-Key"),
+    response: Response = None,
+):
     case = _case(session, customer_id, case_id)
 
     existing = session.scalar(
@@ -297,7 +319,10 @@ def start_run(
         except (RedisDisabledError, RedisUnavailableError):
             raise HTTPException(
                 status_code=503,
-                detail={"code": "redis_unavailable", "message": "Run coordination unavailable"},
+                detail={
+                    "code": "redis_unavailable",
+                    "message": "Run coordination unavailable",
+                },
             )
         except (RedisAlreadyLockedError, RedisLockTimeoutError):
             idem_result = _lookup_idem_result(settings, idempotency_key)
@@ -319,7 +344,10 @@ def start_run(
                 }
             raise HTTPException(
                 status_code=503,
-                detail={"code": "run_coordination_timeout", "message": "Run coordination timed out"},
+                detail={
+                    "code": "run_coordination_timeout",
+                    "message": "Run coordination timed out",
+                },
             )
 
     try:
@@ -378,7 +406,9 @@ def start_run(
                     "idempotent": True,
                     "artifact_key": existing.artifact_key,
                 }
-            raise HTTPException(409, "A run is already active or case cannot be started")
+            raise HTTPException(
+                409, "A run is already active or case cannot be started"
+            )
 
         run = TenderAnalysisRun(
             registry_number=payload.registry_number
@@ -429,11 +459,21 @@ def start_run(
         _store_idem_result(
             settings,
             idempotency_key,
-            {"id": run.id, "status": run.status, "idempotent": False, "artifact_key": run.artifact_key},
+            {
+                "id": run.id,
+                "status": run.status,
+                "idempotent": False,
+                "artifact_key": run.artifact_key,
+            },
         )
         if response is not None:
             response.status_code = 201
-        return {"id": run.id, "status": run.status, "idempotent": False, "artifact_key": run.artifact_key}
+        return {
+            "id": run.id,
+            "status": run.status,
+            "idempotent": False,
+            "artifact_key": run.artifact_key,
+        }
     finally:
         if lock_token is not None:
             try:
@@ -505,8 +545,29 @@ def complete_run(
         run_id=run_id,
     )
     from src.modules.integration_outbox.service import enqueue_event
-    enqueue_event(session, event_type="analysis_completed", tenant_id=customer_id, aggregate_type="analysis_run", aggregate_id=run_id, source_key=run_id, data={"project_id": case.project_id, "case_id": case_id, "status": run.status})
-    enqueue_event(session, event_type="review_required", tenant_id=customer_id, aggregate_type="procurement_case", aggregate_id=case_id, source_key=run_id, data={"project_id": case.project_id, "run_id": run_id, "reason": "analysis_completed_operator_review"})
+
+    enqueue_event(
+        session,
+        event_type="analysis_completed",
+        tenant_id=customer_id,
+        aggregate_type="analysis_run",
+        aggregate_id=run_id,
+        source_key=run_id,
+        data={"project_id": case.project_id, "case_id": case_id, "status": run.status},
+    )
+    enqueue_event(
+        session,
+        event_type="review_required",
+        tenant_id=customer_id,
+        aggregate_type="procurement_case",
+        aggregate_id=case_id,
+        source_key=run_id,
+        data={
+            "project_id": case.project_id,
+            "run_id": run_id,
+            "reason": "analysis_completed_operator_review",
+        },
+    )
     session.commit()
     return {
         "id": run.id,
