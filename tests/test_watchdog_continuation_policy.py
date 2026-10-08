@@ -66,7 +66,7 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert reporting["exactly_one_comment_per_invocation"] is True
 
 
-def test_full_commercial_workflow_branch_is_explicitly_admitted_in_order():
+def test_full_commercial_workflow_history_is_preserved_but_forecast_is_deferred():
     directive = _yaml(".agent/owner-directive.yaml")
     roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
     queue = _yaml(".agent/execution-queue.yaml")
@@ -85,7 +85,18 @@ def test_full_commercial_workflow_branch_is_explicitly_admitted_in_order():
         "ARV-066",
         "ARV-069",
     ]
-    expected_tasks = [
+    admission = directive["commercial_workflow_admission_2026_10_07"]
+    assert admission["historical_items"] == expected_scope
+
+    branch = next(
+        item
+        for item in roadmap["continuation_branches"]["branches"]
+        if item["branch_id"] == "COMMERCIAL-WORKFLOW"
+    )
+    assert branch["historical_items"] == expected_scope
+
+    queue_items = {item["task_id"]: item for item in queue["items"]}
+    for task_id in [
         "ARV-015-OPERATOR-PROFILE-PARSER-001",
         "COMMERCIAL-WORKFLOW-ARV-019-001",
         "COMMERCIAL-WORKFLOW-ARV-022-001",
@@ -97,58 +108,71 @@ def test_full_commercial_workflow_branch_is_explicitly_admitted_in_order():
         "COMMERCIAL-WORKFLOW-ARV-063-001",
         "COMMERCIAL-WORKFLOW-ARV-064-001",
         "COMMERCIAL-WORKFLOW-ARV-066-001",
-        "COMMERCIAL-WORKFLOW-ARV-069-001",
-    ]
+    ]:
+        assert queue_items[task_id]["status"] == "done"
 
-    admission = directive["commercial_workflow_admission_2026_10_07"]
-    assert admission["status"] == "active"
-    assert admission["historical_items"] == expected_scope
-
-    branch = next(
-        item
-        for item in roadmap["continuation_branches"]["branches"]
-        if item["branch_id"] == "COMMERCIAL-WORKFLOW"
-    )
-    assert branch["historical_items"] == expected_scope
-
-    queue_items = {item["task_id"]: item for item in queue["items"]}
-    actual_tasks = [
-        item["task_id"]
-        for item in sorted(queue["items"], key=lambda item: item["order"])
-        if item["task_id"] in expected_tasks
-    ]
-    assert actual_tasks == expected_tasks
-    admitted_runtime_statuses = {"ready", "in_progress", "blocked", "done"}
-    for task_id in expected_tasks:
-        item = queue_items[task_id]
-        # Admission is durable while executor lifecycle status advances.
-        assert item["status"] in admitted_runtime_statuses
-        assert item["authority"] == "AUTO"
-        assert item["auto_merge"] is True
+    forecast = queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]
+    assert forecast["status"] == "blocked"
+    assert forecast["authority"] == "REVIEW"
+    assert forecast["auto_merge"] is False
 
 
-def test_commercial_workflow_progress_points_to_arv066_after_ten_completions():
+def test_commercial_workflow_essential_v1_is_closed_and_active_roadmap_moves_to_arv061():
     roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
     queue = _yaml(".agent/execution-queue.yaml")
 
     progress = roadmap["current_status_summary"]["commercial_workflow"]
-    assert progress["completed"] == 10
-    assert progress["total"] == 12
-    assert progress["completed_items"] == [
-        "ARV-015",
-        "ARV-019",
-        "ARV-022",
-        "ARV-053",
-        "ARV-055",
-        "ARV-057",
-        "ARV-059",
-        "ARV-060",
-        "ARV-063",
-        "ARV-064",
-    ]
-    assert progress["next_queue_item"] == "COMMERCIAL-WORKFLOW-ARV-066-001"
+    assert progress["essential_v1_completed"] == 11
+    assert progress["historical_total"] == 12
+    assert progress["completed_items"][-1] == "ARV-066"
+    assert progress["deferred_experiment"] == "ARV-069"
+    assert progress["state"] == "essential_v1_complete_forecast_deferred"
+
+    active = roadmap["current_status_summary"]["active_product_roadmap"]
+    assert active["next_outcome"] == "APR-01-FAST-CITED-PREANALYSIS"
+    assert active["next_queue_item"] == "ACTIVE-ROADMAP-ARV-061-001"
 
     items = {item["task_id"]: item for item in queue["items"]}
-    assert items["COMMERCIAL-WORKFLOW-ARV-063-001"]["status"] == "done"
-    assert items["COMMERCIAL-WORKFLOW-ARV-064-001"]["status"] == "done"
-    assert items["COMMERCIAL-WORKFLOW-ARV-066-001"]["status"] == "ready"
+    assert items["COMMERCIAL-WORKFLOW-ARV-066-001"]["status"] == "done"
+    assert items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "ready"
+
+
+def test_owner_optimized_active_product_roadmap_controls_continuation():
+    roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
+    directive = _yaml(".agent/owner-directive.yaml")
+    queue = _yaml(".agent/execution-queue.yaml")
+
+    active = roadmap["active_product_roadmap_2026_10_08"]
+    assert len(active["outcomes"]) <= 15
+    assert [item["id"] for item in active["outcomes"][:3]] == [
+        "APR-01-FAST-CITED-PREANALYSIS",
+        "APR-02-223FZ-BREADTH",
+        "APR-03-PRODUCTION-RUNTIME",
+    ]
+    assert directive["active_product_roadmap_optimization_2026_10_08"]["status"] == "active"
+
+    queue_items = {item["task_id"]: item for item in queue["items"]}
+    assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "ready"
+    assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["authority"] == "AUTO"
+    assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["status"] == "blocked"
+    assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["authority"] == "REVIEW"
+    assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["auto_merge"] is False
+
+
+def test_trigger_backlog_keeps_technology_choices_out_of_active_commitments():
+    roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
+    trigger_items = roadmap["trigger_backlog_2026_10_08"]["items"]
+    mapped = {legacy for item in trigger_items for legacy in item["legacy_mapping"]}
+
+    for legacy_id in ["ARV-028", "ARV-029", "ARV-047", "ARV-048", "ARV-049", "ARV-062", "ARV-075", "ARV-046", "ARV-045", "ARV-070", "ARV-069"]:
+        assert legacy_id in mapped
+
+    active_mapped = {
+        legacy
+        for outcome in roadmap["active_product_roadmap_2026_10_08"]["outcomes"]
+        for legacy in outcome.get("legacy_mapping", [])
+    }
+    assert "ARV-047" not in active_mapped
+    assert "ARV-048" not in active_mapped
+    assert "ARV-049" not in active_mapped
+    assert "ARV-069" not in active_mapped
