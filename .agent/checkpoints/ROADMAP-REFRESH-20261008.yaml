@@ -1,0 +1,22 @@
+schema_version: 1
+task_id: ROADMAP-REFRESH-20261008
+status: in_progress
+goal: Refresh the canonical Tender Agent roadmap against current main and present the complete roadmap as a checkbox checklist without rewriting the immutable 2026-07-30 legacy snapshot.
+definition_of_done:
+  - Current status summary matches main after ARV-064 merge and the active ARV-066 branch.
+  - Completed Commercial Workflow legacy reconciliation overlays are updated from durable merged evidence.
+  - MASTER_ROADMAP.md contains a complete current checkbox view for BASE-001..BASE-018 and ARV-001..ARV-075.
+  - Stale execution-queue prose is corrected to the current 10/12 Commercial Workflow state.
+  - Historical snapshot fields remain untouched.
+  - YAML parses and focused roadmap/governance checks pass.
+completed:
+  - Reconciled main at 75beab91a2fcc46fb885d864cd39f229603fe080 and active ARV-066 branch at 2c597ae581d1d00b7e43c38e6567d7068b4a3254.
+current: Update canonical YAML overlays and human-readable checklist.
+remaining:
+  - Update current status and completed Commercial Workflow reconciliation overlays.
+  - Add full checkbox checklist to MASTER_ROADMAP.md.
+  - Run focused validation and merge.
+last_verified_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
+test_results: []
+updated_at: '2026-10-08T11:02:00+03:00'
+resume_instruction: Continue only ROADMAP-REFRESH-20261008 on docs/roadmap-checklist-refresh-20261008. Preserve the immutable legacy_snapshot fields; update reconciliation overlays/current status/checklist only.
