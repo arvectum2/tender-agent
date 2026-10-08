@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-066-001
@@ -45,14 +45,17 @@ test_results:
 - 'PR #217 merged as 75beab91a2fcc46fb885d864cd39f229603fe080'
 - 'ARV-066 focused: 11 passed'
 - 'ARV-066 plus R8 pilot: 17 passed; ruff check PASS; git diff --check PASS'
-updated_at: '2026-10-08T11:57:24.420567+03:00'
+updated_at: '2026-10-08T11:57:24.423987+03:00'
 resume_instruction: 'Verify exact-head CI on combined completion head; check active Company AM-4 and repo
   rules; merge PR #220 if green, then admit ARV-069.'
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv066
-  branch: agent/commercial-workflow-arv-066-001
-  base_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: implementation
+remaining:
+- Implement normalization contract for direct number and allowlisted EIS URL query parameters with ambiguity
+  rejection.
+- Implement create-or-reuse ProcurementCase service with project tenant validation, race-safe idempotency
+  and PilotAuditEvent provenance.
+- Expose internal browser/share/manual handoff API without external side effects.
+- Add focused normalization, unsupported/ambiguous input, tenant isolation, idempotency/concurrency and
+  provenance tests.
+- Run focused/full verification, combine completion bookkeeping into one PR, require exact-head CI, and
+  merge only under valid renewed AM-4.
