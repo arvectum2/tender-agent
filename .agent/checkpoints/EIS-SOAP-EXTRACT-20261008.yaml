@@ -1,0 +1,21 @@
+task_id: EIS-SOAP-EXTRACT-20261008
+status: blocked
+goal: Restore reliable authenticated EIS SOAP procurement document retrieval.
+definition_of_done:
+  - Secure token file auto-loaded without disclosing secret.
+  - Tests for permissions and configuration pass.
+  - Real SOAP request and archive delivery checked for procurement 0372200172326000015.
+completed:
+  - Isolated worktree created to preserve active DTR-3 task.
+  - Root cause identified: secured token file not sourced and enabled defaults false.
+  - Authenticated getDocsByReestrNumber returned completed and XML archive (17041 bytes).
+  - XML validated and exposes five attachmentInfo entries with URLs, sizes and names.
+  - Direct filestore HEAD returned HTTP 404; five binary attachments remain inaccessible.
+  - Six focused tests passed.
+current: Resolve filestore binary attachment access separately; avoid treating XML archive as complete evidence.
+pending:
+  - Find supported authenticated delivery mechanism for five referenced attachment files.
+  - Fix further failures if found; finalize checkpoint and commit.
+last_verified_commit: 9c51916a7911bceda04986b4a7e361076c594914
+test_results: ["6 passed; XML ZIP CRC OK; filestore 404"]
+resume_instruction: Continue isolated EIS SOAP worktree testing and real retrieval; do not overwrite main DTR-3 checkpoint.

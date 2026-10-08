@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import stat
 import sys
 from pathlib import Path
 from dataclasses import dataclass, field
@@ -59,7 +60,19 @@ def _seed_env_from_local_files() -> None:
     root = _settings_root()
     _seed_env_from_file(root / ".env")
     _seed_env_from_file(root / ".env.local")
+    _seed_secure_soap_file()
     _ENV_FILES_SEEDED = True
+
+
+def _seed_secure_soap_file() -> None:
+    secure_path = Path.home() / ".config/arvectum/r3-soap-token.env"
+    if secure_path.is_file():
+        mode = secure_path.stat().st_mode
+        if not stat.S_ISREG(mode) or mode & (stat.S_IRWXG | stat.S_IRWXO):
+            raise ValueError("SOAP token configuration must be a private regular file (chmod 600)")
+        _seed_env_from_file(secure_path)
+        if os.environ.get("ZAKUPKI_GOV_RU_SOAP_TOKEN") and "ZAKUPKI_GOV_RU_SOAP_ENABLED" not in os.environ:
+            os.environ["ZAKUPKI_GOV_RU_SOAP_ENABLED"] = "1"
 
 
 def _read_bool(name: str, default: bool = False) -> bool:
