@@ -35,28 +35,42 @@ completed:
 - '2026-10-08: No existing application-template generator or working_kp.xlsx implementation
   exists, so the bounded gap is template-preserving field application plus provenance/version
   lineage, not a new generic document engine.'
-current: Design and implement a bounded template-preserving DOCX/XLSX draft generator
-  that adapts existing openpyxl/python-docx and DocumentArtifact versioning instead
-  of creating a separate document platform.
+- '2026-10-08: Implemented bounded application_package_generator over existing python-docx/openpyxl
+  and DocumentArtifact versioning; supported roles are FORM_2, COMMERCIAL_PROPOSAL,
+  DECLARATION, SPECIFICATION and INVENTORY.'
+- '2026-10-08: DOCX generation performs unique in-run token replacement only; XLSX
+  generation targets explicit sheet/cell locators and rejects missing sheets, invalid
+  coordinates and non-anchor merged cells. Unsupported formats and locator/format
+  mismatches fail closed.'
+- '2026-10-08: Persisted ApplicationDraftGeneration plus field-level provenance with
+  source type/ref, target locator, original/generated values, template hash/version
+  and output hash/version. All outputs are DRAFT_REVIEW_ONLY with signature/submission/external_delivery
+  flags false.'
+- '2026-10-08: Commercial-proposal XLSX generations preserve one working_kp.xlsx artifact
+  lineage and append DocumentArtifact versions instead of overwriting prior bytes;
+  generation records preserve version-specific storage URIs.'
+- '2026-10-08: Focused ARV-063 layout/provenance/fail-closed tests pass 4/4; ARV-063
+  plus bid/document/daily-run compatibility set passes 15/15 with 29 expected skips;
+  alembic head is 104_add_application_drafts; make check and git diff --check pass.'
+current: Run full repository verification for ARV-063; if only the already-proven
+  macOS R9 pg_restore baseline remains, prepare a single implementation/completion
+  PR with exact-head CI.
 pending: &id001
-- Implement template fill primitives for DOCX and XLSX with explicit target locators
-  and fail-closed mapping semantics.
-- Persist generation/template lineage and field provenance; preserve canonical working_kp.xlsx
-  lineage for commercial proposal drafts.
-- Expose review-only internal API/service and integrate generated files with DocumentArtifact/ArtifactVersion/ArtifactLink
-  without submission/signing.
-- Add representative layout/provenance/version/review-only tests plus bid-document/package
-  compatibility tests.
-- Run full verification, combine completion bookkeeping into one PR where practical,
-  require exact-head CI, and merge only under valid renewed AM-4.
+- Run full make test and classify any baseline-only failure.
+- Push implementation/checkpoint and open one ARV-063 PR.
+- Require exact-head implementation CI.
+- If green, fold queue/roadmap/AM-4 completion bookkeeping into the same PR, rerun
+  exact-head CI, and merge once under valid renewed AM-4.
 last_verified_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
 test_results:
-- 'PR #215 final exact-head CI run 37733611306: SUCCESS (9/9 jobs)'
-- 'PR #215 merged as 53c9d72a9d881ba776af770e86d3d947e3708273'
-updated_at: '2026-10-08T08:50:32+03:00'
+- 'ARV-063 focused tests: 4 passed'
+- 'ARV-063 + bid/document/daily-run compatibility: 15 passed, 29 skipped'
+- 'alembic heads: 104_add_application_drafts (head)'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+updated_at: '2026-10-08T09:05:50+03:00'
 resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv063-commercial-20261008.
-  Build template-preserving DOCX/XLSX draft generation around existing python-docx/openpyxl
-  and DocumentArtifact versioning; keep all outputs DRAFT_REVIEW_ONLY and never sign/submit/deliver
-  externally.
-current_stage: implementation
+  Run full make test; if no ARV-063 regression is present, push and open the combined
+  ARV-063 PR for exact-head CI.
+current_stage: full_verification
 remaining: *id001
