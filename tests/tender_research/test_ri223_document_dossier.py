@@ -195,8 +195,17 @@ def test_duplicate_chunks_capped_quotes_and_multilot_scope_unknown():
     assert len(dossier[0]["source_excerpts"]) == 3
     assert all(len(x["source_excerpt"]) <= 420 for x in dossier[0]["source_excerpts"])
     assert all(x["lot_scope"] == "UNRESOLVED_MULTI_LOT" for x in dossier)
+    assert all(
+        x["revision_scope"] == "DOCUMENT_REVISION_NOT_CONFIRMED" for x in dossier
+    )
+    for reference in dossier[0]["source_excerpts"]:
+        assert reference["lot_number"] == "UNKNOWN"
+        assert reference["lot_binding"] == "UNVERIFIED"
+        assert reference["notice_revision"] == "UNKNOWN"
+        assert reference["revision_binding"] == "UNVERIFIED"
     report = "\n".join(render_ri223_document_dossier(dossier))
     assert "требуется раздельная проверка" in report
+    assert "Привязка цитат к лоту и редакции извещения: НЕ ПОДТВЕРЖДЕНА" in report
 
 
 def test_no_sections_never_implies_absent_requirements():
