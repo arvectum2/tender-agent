@@ -31,6 +31,13 @@ After separate production authorization ONLY:
 
     docker compose -p arvectum-production --env-file "$PROD_SECRET_ENV" -f deploy/production/compose.yaml --profile public up -d --build
 
+For a read-only, machine-readable container health check, run:
+
+    python3 deploy/production/runtime_ops.py doctor --project arvectum-production --env-file "$PROD_SECRET_ENV" --trust-dir "$PROD_ETP_TRUST_DIR" --revision "$ARVECTUM_IMAGE_REVISION" --version "$ARVECTUM_IMAGE_VERSION"
+
+This only checks container health / running state. It does not prove Redis queue
+consumption or EIS egress; monitor queue lag and synthetic tasks separately.
+
 Check exact image commit, migration, Redis/worker, authentication, HTTPS, 404
 deny-list, port visibility, authorized EIS/ETP egress and DNS rollback readiness.
 
@@ -39,6 +46,13 @@ deny-list, port visibility, authorized EIS/ETP egress and DNS rollback readiness
 For an approved encrypted independent destination only, run:
 
     python3 deploy/production/runtime_ops.py backup --project arvectum-production --env-file "$PROD_SECRET_ENV" --trust-dir "$PROD_ETP_TRUST_DIR" --revision "$ARVECTUM_IMAGE_REVISION" --version "$ARVECTUM_IMAGE_VERSION" --output /approved-encrypted-store/apr03-YYYYMMDD --encrypted-destination-confirmed
+
+The backup/recovery CLI refuses when PostgreSQL contains queued or running
+Tender Research jobs, because the archive currently omits coordinated Redis
+transport state. The operator must restrict new job submissions during backup;
+two drain checks reduce risk but do not prove atomic consistency under writes.
+If a source is lost mid-flight, manually reconcile durable job state before any
+cutover; do not silently consider in-progress jobs recovered.
 
 Verify an off-host retrieved copy:
 

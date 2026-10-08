@@ -106,6 +106,7 @@ def test_production_network_and_human_gate_are_bounded():
     caddy = (ROOT / "deploy/production/Caddyfile").read_text()
     assert "AI_CORP_TENDER_RESEARCH_JOB_BACKEND: redis" in compose
     assert "src.tender_research.rag.worker" in compose
+    assert "healthcheck: {disable: true}" in compose  # The worker exposes no API port.
     assert "profiles: [public]" in compose
     assert 'ports: ["80:80", "443:443"]' in compose
     assert "private: {internal: true}" in compose
@@ -127,3 +128,35 @@ def test_restore_target_rejects_live_or_non_isolated_project_before_docker(tmp_p
     args.revision = "b" * 40
     with pytest.raises(ValueError, match="exact application commit"):
         ops.restore(args)
+
+
+def test_doctor_fails_closed_when_runtime_services_missing(monkeypatch, capsys):
+    from argparse import Namespace
+    from types import SimpleNamespace
+
+    monkeypatch.setattr(ops, "common", lambda args: {})
+    monkeypatch.setattr(
+        ops, "compose",
+        lambda args, *command, **kwargs: SimpleNamespace(stdout=b""),
+    )
+    with pytest.raises(ValueError, match="not healthy"):
+        ops.doctor(Namespace())
+    result = json.loads(capsys.readouterr().out)
+    assert result["healthy"] is False
+    assert set(result["services"]) == {"db", "redis", "api", "worker"}
+    assert all(not item["running"] for item in result["services"].values())
+
+
+@pytest.mark.parametrize("count,allowed", [(b"0\n", True), (b"1\n", False), (b"unknown\n", False)])
+def test_recovery_gate_rejects_inflight_or_unknown_job_count(monkeypatch, count, allowed):
+    from types import SimpleNamespace
+
+    monkeypatch.setattr(
+        ops, "compose",
+        lambda *args, **kwargs: SimpleNamespace(stdout=count),
+    )
+    if allowed:
+        ops.assert_no_inflight_tender_jobs(None, {})
+    else:
+        with pytest.raises(ValueError):
+            ops.assert_no_inflight_tender_jobs(None, {})

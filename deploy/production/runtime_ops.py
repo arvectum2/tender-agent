@@ -156,6 +156,23 @@ def verify(folder: Path):
     return manifest
 
 
+def assert_no_inflight_tender_jobs(args, env):
+    """Never silently omit queued/running PostgreSQL jobs from Redis-less DR."""
+    result = compose(
+        args, "exec", "-T", "db", "sh", "-ec",
+        'exec psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atqc "'
+        "SELECT count(*) FROM tender_analysis_jobs "
+        "WHERE status IN (\'queued\',\'running\')"
+        '"\n',
+        env=env, capture=True,
+    )
+    raw = result.stdout.decode().strip()
+    if not raw.isdecimal():
+        raise ValueError("could not verify durable active-job count")
+    if int(raw):
+        raise ValueError("queued/running tender jobs require separate recovery; backup/restore refused")
+
+
 def backup(args):
     env = common(args)
     if not args.output.is_absolute() or args.output.exists() or args.output.resolve().is_relative_to(ROOT):
@@ -165,6 +182,7 @@ def backup(args):
     compose(args, "exec", "-T", "db", "sh", "-ec",
             'pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"', env=env,
             output_file=subprocess.DEVNULL)
+    assert_no_inflight_tender_jobs(args, env)
     api_id = compose(args, "ps", "-q", "api", env=env, capture=True).stdout.decode().strip()
     if not api_id:
         raise ValueError("source API is not running")
@@ -181,6 +199,7 @@ def backup(args):
             run(["docker", "run", "--rm", "--volumes-from", api_id + ":ro",
                  "alpine:3.20", "tar", "-C", "/app", "-czf", "-",
                  "data", "artifacts", "eis-archives"], output_file=out)
+        assert_no_inflight_tender_jobs(args, env)
         commit = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
         manifest = {
             "format": "arvectum-apr03-backup-v1",
@@ -211,11 +230,13 @@ def restore(args):
                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
         if probe.returncode == 0:
             raise ValueError("restore target volumes already exist: refusing overwrite")
-    compose(args, "up", "-d", "db", "redis", env=env)
+    # pg_restore must not race PostgreSQL initialisation on a fresh volume.
+    compose(args, "up", "-d", "--wait", "--wait-timeout", "120", "db", "redis", env=env)
     with (args.backup / "database.dump").open("rb") as source:
         compose(args, "exec", "-T", "db", "sh", "-ec",
                 'exec pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --no-owner --no-privileges',
                 env=env, input_file=source)
+    assert_no_inflight_tender_jobs(args, env)
     volumes = ("app-data", "app-artifacts", "app-eis")
     for name in volumes:
         run(["docker", "volume", "create", f"{args.project}_{name}"],
@@ -227,11 +248,41 @@ def restore(args):
          "-v", f"{args.project}_app-eis:/restore/eis-archives",
          "-v", f"{args.backup.resolve()}:/backup:ro",
          "alpine:3.20", "tar", "-C", "/restore", "-xzf", "/backup/files.tar.gz"])
-    compose(args, "up", "-d", "--build", "api", "worker", env=env)
+    # Wait for the API image healthcheck; a merely started Uvicorn process
+    # is not yet ready for the post-restore smoke request.
+    compose(args, "up", "-d", "--wait", "--wait-timeout", "150", "--no-build",
+            "api", "worker", env=env)
     compose(args, "exec", "-T", "api", "python", "-c",
             "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=10).status == 200",
             env=env)
     print("APR-03 isolated restore smoke passed; no public ingress was started")
+
+
+def doctor(args):
+    """Read-only container health inventory; no secrets and no production changes."""
+    env = common(args)
+    services = {}
+    healthy = True
+    for name in ("db", "redis", "api", "worker"):
+        result = compose(args, "ps", "-q", name, env=env, capture=True)
+        container_id = result.stdout.decode().strip()
+        if not container_id:
+            services[name] = {"running": False, "health": "missing"}
+            healthy = False
+            continue
+        result = subprocess.check_output([
+            "docker", "inspect", "--format", "{{json .State}}", container_id
+        ], text=True)
+        state = json.loads(result)
+        condition = state.get("Health", {}).get("Status", "not_configured")
+        running = state.get("Status") == "running"
+        passed = running and (condition == "healthy" if name != "worker" else True)
+        services[name] = {"running": running, "health": condition, "passed": passed}
+        healthy = healthy and passed
+    print(json.dumps({"schema": "apr03-doctor-v1", "healthy": healthy,
+                      "services": services}, sort_keys=True))
+    if not healthy:
+        raise ValueError("runtime is not healthy")
 
 
 def main():
@@ -239,7 +290,7 @@ def main():
     subs = parser.add_subparsers(dest="action", required=True)
     verify_p = subs.add_parser("verify")
     verify_p.add_argument("--backup", type=Path, required=True)
-    for kind in ("preflight", "backup", "restore"):
+    for kind in ("preflight", "backup", "restore", "doctor"):
         p = subs.add_parser(kind)
         p.add_argument("--project", required=True)
         p.add_argument("--env-file", type=Path, required=True)
@@ -256,7 +307,8 @@ def main():
         {"verify": lambda: verify(args.backup),
          "preflight": lambda: preflight(args),
          "backup": lambda: backup(args),
-         "restore": lambda: restore(args)}[args.action]()
+         "restore": lambda: restore(args),
+         "doctor": lambda: doctor(args)}[args.action]()
     except (ValueError, OSError, subprocess.CalledProcessError, KeyError,
             json.JSONDecodeError, tarfile.TarError) as error:
         print(f"APR-03 {args.action} FAILED: {type(error).__name__}", file=sys.stderr)

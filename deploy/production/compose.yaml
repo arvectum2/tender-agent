@@ -89,6 +89,9 @@ services:
   worker:
     <<: *app
     command: ["python", "-m", "src.tender_research.rag.worker"]
+    # The API image's healthcheck probes HTTP, which this worker does not serve.
+    # Docker treats an exited worker as failed; monitor queue lag externally.
+    healthcheck: {disable: true}
     volumes: *app-volumes
     networks: [private, egress]
     depends_on:
