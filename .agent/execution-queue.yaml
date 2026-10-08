@@ -1040,7 +1040,7 @@ items:
 - order: 1120
   task_id: APR-02-TEN-SECTION-LLM-EVAL-001
   title: Real local LLM comparative ten-section original corpus evaluation
-  status: in_progress
+  status: blocked
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false

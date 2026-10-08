@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-TEN-SECTION-LLM-EVAL-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Measure local Qwen2.5-14B generative answer completeness, factual support and
   citation integrity over ten Tender Research sections for genuine original 223/44
@@ -18,23 +18,37 @@ completed:
 - 'Source guard #243 merged 976065ead16a5ba3dbef01dbaa1cb4644789fa1f after exact-head
   GitHub CI 9/9.'
 - 'Two-case real original Qwen smoke and source identity check #242 complete.'
-current: Design source-grounded ten-section prompt harness, run local model and evaluate
-  citation integrity and response completeness.
+- Completed 20 genuine Qwen2.5-14B original-source local model requests, 10 aligned
+  topics per 223-FZ and 44-FZ; original responses and source trace retained outside
+  Git.
+- 'Measured citation/finish gate: 223-FZ 2/10 accepted, 6 uncited, 3 truncated; 44-FZ
+  5/10 accepted, 3 uncited, 2 truncated; 0 mutated UUID, 0 requests failed. Counts
+  overlap, NOT semantic accuracy.'
+- Confirmed 44-FZ generated scope false unknown-quantity statement despite original
+  supplied 140 metric tonnes; 223-FZ recognized media monitoring subject but did not
+  provide exact chunk ID.
+- Added generic summary/test and sanitized evidence report; 527 Tender Research tests
+  pass, 1 skipped; make check passes.
+current: Open PR for twenty-case benchmark evidence; exact-head CI and Owner review
+  pending.
 pending:
-- Build and run twenty source-fragment Qwen prompts; retain exact model metadata,
-  timings and citations.
-- Evaluate factual errors and unanswered sections against real source snippets; generate
-  comparative report.
-- Tests, make check, PR, CI Owner gate.
+- Publish PR, verify final-head CI/Owner review and merge guarded.
+- 'Next separate task: semantic entailment/omission validation for numeric requirements
+  and broader model benchmark, no autonomous GO/NO-GO.'
 last_verified_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f
 test_results:
-- 'PR #243 exact-head CI 9/9 pass'
-- Prior 526 tender research passed 1 skipped
-resume_instruction: Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ten-section-eval;
-  task APR-02-TEN-SECTION-LLM-EVAL-001. Original 223/44 SQLite read-only, model Qwen2.5-14B
-  GGUF local via llama-server 8088 (currently offline). Run ten comparable questions
-  on original source extracts per law; calculate supportedness and errors, never judge
-  eligibility.
+- 'Local Qwen original-source: 20/20 requests completed; 244.50 seconds aggregate
+  inference time.'
+- 223-FZ citations+stop 2/10, uncited 6, truncated 3; 44-FZ citations+stop 5/10, uncited
+  3, truncated 2.
+- One original-source 44-FZ 140 metric tonnes omission confirmed; no automatically
+  assigned semantic accuracy.
+- 527 Tender Research passed, 1 skipped, 42 warnings; make check PASS; new Ruff PASS.
+resume_instruction: APR-02-TEN-SECTION-LLM-EVAL-001 results completed locally. Verify
+  PR feature/apr02-ten-section-eval final-head GitHub CI and Owner review, merge;
+  do not rerun full model benchmark. 20 raw prompts/answers under /Users/master/arvectum-runtime/llm-benchmark-20261008/ten-section/results.json;
+  next task is semantic/numeric entailment checks and model quality remediation, no
+  synthetic claims.
 execution:
   branch: feature/apr02-ten-section-eval
   base_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f
