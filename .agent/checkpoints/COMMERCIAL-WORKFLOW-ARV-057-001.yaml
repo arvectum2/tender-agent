@@ -26,10 +26,32 @@ completed:
 - '2026-10-08: Renewed AM-4 automatic merge capacity is exhausted at 10/10 after PR
   #211. Canonical policy explicitly permits preparation/implementation/testing but
   requires REVIEW for every later merge.'
+- '2026-10-08: Inventory confirmed reusable ProcurementTender NMCK/currency/publication/source
+  evidence, source-bound structured position quantity/unit/OKPD payloads, ARV-055
+  Data Platform-backed analogue retrieval, and existing price/title normalization;
+  no generic price engine or new persistence layer is required.'
+- '2026-10-08: Implemented read-only /api/tender-research/historical-prices/{registry_number}.
+  Historical candidates reuse ARV-055 similarity/false-analogue guards and are then
+  fail-closed by chronology, exact currency, structured position comparability and
+  quantity/unit basis.'
+- '2026-10-08: Single-position history is normalized as NMCK per source quantity only
+  when units match. Multi-position total NMCK is admitted only for exact normalized
+  item-name + quantity + unit baskets. Mixed bases, currencies, future/equal dates
+  and incomparable baskets are rejected explicitly.'
+- '2026-10-08: A historical range requires at least two comparable observations and
+  exposes min/median/max plus seed orientation. Each observation carries procurement
+  NMCK/publication source refs and EIS/platform URL when available. Output hard-codes
+  is_forecast=false and commercial_commitment=false.'
+- '2026-10-08: Focused/relevant ARV-057, ARV-055/Data Platform and quote normalization
+  regressions passed (57 passed); Ruff check/format, make check and git diff --check
+  passed.'
+- '2026-10-08: Full local make test reached 3123 passed / 236 skipped with only the
+  previously proven macOS main-baseline R9 pg_restore acceptance failure; no ARV-057
+  regression was observed.'
 current: Inventory canonical historical price observations, line-item/quantity/unit
   semantics, and reusable normalization/comparability primitives before choosing the
   smallest evidence-backed ARV-057 slice.
-pending: &id001
+pending:
 - Inventory procurement NMCK/line-item price evidence plus quote/NMCK normalization
   primitives.
 - Implement reproducible historical price/NMCK range projection with explicit comparability
@@ -38,11 +60,21 @@ pending: &id001
   verification.
 - Open PR and require exact-head CI; leave merge blocked for Owner renewal/review.
 last_verified_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
-test_results: []
-updated_at: '2026-10-08T03:55:19+03:00'
-resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv057-commercial-20261008.
-  Inventory source-bound procurement price/quantity/unit fields and existing normalization
-  first; implement the smallest reproducible historical-range adapter. Do not automatically
-  merge: AM-4 is exhausted at 10/10.'
-current_stage: inventory
-remaining: *id001
+test_results:
+- 'ARV-057 + similar-procurement/Data Platform/quote normalization regressions: 57
+  passed'
+- 'ARV-057 focused tests: 5 passed'
+- 'Ruff check/format on ARV-057 slice: PASS'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+- 'full local make test: 3123 passed, 236 skipped, 1 failed (known macOS main-baseline
+  R9 pg_restore acceptance failure)'
+updated_at: '2026-10-08T04:04:18+03:00'
+resume_instruction: Take ARV-057 through exact-head PR CI, then block at merge review.
+  Do not automatically merge under exhausted AM-4.
+current_stage: verified_pre_pr
+remaining:
+- commit/push implementation
+- open PR and exact-head CI
+- record green CI and block at merge review
+- Owner renewal/review required before merge
