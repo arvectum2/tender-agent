@@ -57,15 +57,18 @@ completed:
   and the seed now expose source-bound subject, NMCK, publication and structured position-basis
   evidence (including quantity/unit values) so the displayed range can be reproduced
   from cited inputs.'
+- '2026-10-08: PR #212 exact-head CI run 37711832185 passed successfully on head 926f0226d3bba987ce3cf37c24b3bc5577824910;
+  implementation is fully verified and the only remaining blocker is exhausted AM-4
+  merge authority.'
 current: 'PR #212 is implementation-complete and under exact-head CI. Merge is blocked
   until attributable Owner renewal/review or explicit superseding merge authority.'
-pending: &id001
+pending:
 - Verify exact-head GitHub CI on this final checkpoint head and fix any implementation/test
   failure if present.
 - 'After CI is green, retain PR #212 open and merge-blocked.'
 - Merge only after attributable Owner renewal/review or explicit authority supersedes
   EXHAUSTED_10_OF_10_REVIEW_REQUIRED.
-last_verified_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
+last_verified_commit: 926f0226d3bba987ce3cf37c24b3bc5577824910
 test_results:
 - 'ARV-057 + similar-procurement/Data Platform/quote normalization regressions: 57
   passed'
@@ -75,14 +78,13 @@ test_results:
 - 'git diff --check: PASS'
 - 'full local make test: 3123 passed, 236 skipped, 1 failed (known macOS main-baseline
   R9 pg_restore acceptance failure)'
-- 'PR #212 exact-head CI: required on final blocked-checkpoint head before merge;
-  do not infer merge authority from CI success'
 - 'Post-provenance-hardening relevant regression suite: 57 passed; Ruff/format, make
   check, git diff --check PASS'
-updated_at: '2026-10-08T04:13:19+03:00'
-resume_instruction: 'Verify exact-head GitHub CI for PR #212 at the current branch
-  head. If CI fails, fix and rerun. If CI is green, leave PR #212 open: canonical
-  AM-4 is exhausted 10/10 and merge requires attributable Owner renewal/review or
-  explicit superseding authority.'
-current_stage: merge_review_blocked_exact_ci_required
-remaining: *id001
+- 'PR #212 exact-head CI run 37711832185: SUCCESS (9/9 jobs)'
+updated_at: '2026-10-08T07:10:27+03:00'
+resume_instruction: 'PR #212 is fully verified. Keep it open and merge-blocked until
+  Owner renewal/review restores authority; then revalidate and merge if permitted.'
+current_stage: blocked_waiting_am4_review
+remaining:
+- Owner renewal/review or explicit superseding merge authority
+- post-authority head/base revalidation and merge
