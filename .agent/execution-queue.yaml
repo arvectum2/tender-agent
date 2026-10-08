@@ -991,6 +991,21 @@ items:
   executor_scope: "Render source-cited document excerpts for technical scope, qualifications, applications, evaluation, agreement, restrictions, deadlines from existing 10 sections. All supplier fit and risk judgments remain UNKNOWN."
   done_gate: "Authentic DP 32616445795 read-only dossier, distinct citations and missing-evidence status, multilot unknown binding, 44-FZ unchanged; regression, CI and Owner review."
 
+- order: 1090
+  task_id: APR-02-DP-AUTH-READINESS-001
+  title: Fail-visible Data Platform auth versus missing index in Tender Research
+  status: in_progress
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Measured original RI223 32616445795 live DP stats HTTP 401 without runtime credential, analyzer falsely returns no_context; with authorized key 10/10 sections and 25 source citations."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-DOCUMENT-REVIEW-001]
+  executor_scope: "Use existing DP client and analyzer; distinguish auth/connection failures from absent or incomplete collection, never leak credentials or downgrade to mock RAG."
+  done_gate: "Source-reproduced HTTP 401/403 failed, true 404 and incomplete index no_context, normal authorized case unchanged, tests/CI/Owner review."
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
