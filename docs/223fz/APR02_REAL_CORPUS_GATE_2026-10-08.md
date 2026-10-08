@@ -26,4 +26,4 @@ Date: 2026-10-08. Scope: **public, read-only 223-FZ evidence only**.
 
 ## Current outcome
 
-**Blocked for implementation by lack of verified real EIS fixtures.** This is a source/access blocker, not evidence that 223-FZ procurement information does not exist. Next safe action: obtain a verified public 223-FZ notice/document bundle through an authorized EIS access path and freeze the evidence matrix above.
+**Public source-corpus acquisition completed for the bounded transport gate.** Four authentic RI223 SOAP notice archives with explicit OKPD2 group 62, source-bound lots/positions, public EIS document HTML and 10/10 attachments have been retrieved and checksummed on Mac mini. See `APR02_RI223_SOAP_VERIFIED_2026-10-08.md` and its local original manifest. The 404 candidate above remains a historical failed probe, not a blocker. Multi-lot positions, revision ordering, clarifications, protocols, lifecycle transitions, RAR and nationwide completeness are **not verified** and need a separate frozen corpus and bounded admission before further parser implementation. APR-02 overall remains open; this acquisition slice alone is complete.

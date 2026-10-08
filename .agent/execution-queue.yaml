@@ -844,17 +844,10 @@ items:
   done_gate: 'Supported 44-FZ inputs produce a deterministic bounded cited pre-analysis with source/page/fragment evidence where available, explicit UNKNOWN for unsupported/missing facts, latency measured against a documented target, focused regressions pass and exact-head CI is green.'
 
 
-completed_dependencies:
-- task_id: BENCHMARK-PIPELINE-001
-  source: 'issue #1'
-  status: done
-- task_id: DOCUMENT-QA-004
-  source: 'issue #11 and completed held-out acceptance sequence'
-  status: done
 - order: 1000
   task_id: APR-02-223FZ-CORPUS-001
   title: Freeze real public 223-FZ corpus before breadth implementation
-  status: blocked
+  status: done
   authority: AUTO
   independent: true
   auto_merge: false
@@ -865,4 +858,12 @@ completed_dependencies:
   strategy: ADAPT
   executor_scope: 'Read-only authenticated-as-public EIS evidence collection, provenance freeze and gap measurement using existing 223-FZ parser. Do not invent source fixtures, 223-FZ legal semantics, perform EIS/ETP mutation or handle private credentials.'
   done_gate: 'Authentic publicly available 223-FZ source bundle with timestamps/checksums; field-level source truth and measured adapter gaps; focus regression checks. Implementation beyond corpus is a separately bounded successor.'
-  blocker: 'Candidate 32616226131 returned HTTP 404 from both tested public EIS routes on 2026-10-08; no verified real fixture yet.'
+  completion_evidence: 'PR #227; four real RI223 SOAP procurement XML archives with 10/10 public EIS attachments and SHA-256 manifest on Mac mini; docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; 14 focused regressions passed; no broader lifecycle coverage claimed.'
+
+completed_dependencies:
+- task_id: BENCHMARK-PIPELINE-001
+  source: 'issue #1'
+  status: done
+- task_id: DOCUMENT-QA-004
+  source: 'issue #11 and completed held-out acceptance sequence'
+  status: done

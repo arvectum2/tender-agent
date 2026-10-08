@@ -20,20 +20,22 @@ completed:
   - 'Reproduced misleading SUCCESS on unsupported external HTML layout and fixed fail-closed UNSUPPORTED_LAYOUT semantics.'
   - 'Reran all four archived real secondary cards: four correctly returned unsupported_layout with requires_review.'
   - '2026-10-08 Mac mini RDC terminal recovered: ping and echo command successful; remote tool policy rejected credential-loading diagnostic command.'
+  - 'Reconciled executable queue: APR-02 corpus task belonged in items rather than completed_dependencies; status corrected from stale blocked to done.'
   - 'Located protected local SOAP token file with mode 0600; no credential copied or disclosed.'
   - 'Public 223-FZ provider focused tests: 4 passed in 0.16s via existing venv; isolated pipeline test needs complete SQLAlchemy metadata dependency loading.'
-current: 'RI223 SOAP verified in canonical repository for four real 223-FZ notices with exact OKPD2 62 and price <= 5m; complete 10/10 binaries and archived evidence.'
+current: 'APR-02 source-corpus acquisition complete, 4 RI223 verified notices, 10/10 attachments. PR #227 is review-ready, not merged. Broader APR-02 implementation remains open and separately gated.'
 pending:
   - 'Future, separately scoped follow-up: revise ambiguity and multi-lot evidence, protocols/clarifications, RAR policy, and all-Russia current-date breadth.'
-  - 'No remaining steps for bounded APR-02 RI223 acquisition proof; see verified source truth report.'
+  - 'No remaining steps for bounded APR-02 RI223 acquisition proof; PR #227 requires Owner REVIEW before merge.'
   - 'Additional product breadth belongs to separately admitted implementation increment.'
-last_verified_commit: 979353d
+last_verified_commit: af13261530e323de9d4cedbe0603c10d4ff03554
 test_results:
   - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
-  - '14 focused SOAP and 223-FZ tests passed, 1 Starlette deprecation warning; four RI223 SOAP archive and attachment retrievals complete 10/10. All four filtered source codes verified in original XML.'
+  - '14 focused SOAP and 223-FZ tests passed at initial transport verification, 1 Starlette deprecation warning; four RI223 SOAP archive and attachment retrievals complete 10/10. All four filtered source codes verified in original XML.'
+  - 'Queue reconciliation YAML placement/status assertions passed; 12 focused provider/SOAP tests passed, 1 unrelated warning; make check and git diff --check passed.'
   - 'Read-only archived-card smoke probe: 4/4 fail closed; verified commit 94318b9, no external EIS attachments acquired.'
   - 'Isolated full pipeline test still needs SQLAlchemy customer_profiles metadata registration. Official EIS documents all HTTP 404.'
-resume_instruction: 'Task completed. Source of truth: docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; frozen source artifacts stored outside git on Mac mini. Do not repeat. Any subsequent scope (protocols, amendment semantics, multi-lots, RAR, geographic completeness) requires a new bounded admission after owner review.'
+resume_instruction: 'Source-corpus task completed; PR #227 pending Owner REVIEW / merge; do not auto-merge (queue auto_merge false). Corpus source of truth docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; originals on Mac mini. After approval/merge, advance APR-02 only via separately scoped and admitted measured-gap implementation (multi-lots/positions, revisions, protocols, clarifications, statuses, RAR), preserving fail-closed semantics.'
 execution:
   branch: feature/apr02-223fz-evidence-gate
   base_commit: 958e94c740e73a052f275d46fea713f01ab4d117
