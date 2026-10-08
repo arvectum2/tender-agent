@@ -27,7 +27,7 @@ pending:
   - 'Future, separately scoped follow-up: revise ambiguity and multi-lot evidence, protocols/clarifications, RAR policy, and all-Russia current-date breadth.'
   - 'No remaining steps for bounded APR-02 RI223 acquisition proof; see verified source truth report.'
   - 'Additional product breadth belongs to separately admitted implementation increment.'
-last_verified_commit: pending_final_commit
+last_verified_commit: 979353d
 test_results:
   - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
   - '14 focused SOAP and 223-FZ tests passed, 1 Starlette deprecation warning; four RI223 SOAP archive and attachment retrievals complete 10/10. All four filtered source codes verified in original XML.'
