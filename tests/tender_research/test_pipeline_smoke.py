@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from src.shared.db.base import Base
 from src.tender_research.config import TenderResearchConfig
 from src.tender_research.eis_loader import EisTenderLoader
+from src.tender_research.errors import EisLoaderError
 from src.tender_research.pipeline import TenderResearchPipeline
 from src.tender_research.repository import TenderRepository
 
@@ -53,7 +54,7 @@ def test_pipeline_real_registry_list_mode_fails_before_ingest():
     loader = EisTenderLoader(mode="real", discovery_mode="registry_numbers", real_loader=real_loader)
     pipeline = TenderResearchPipeline(session, config=config, eis_loader=loader)
 
-    with pytest.raises(Exception, match="registry-number mode"):
+    with pytest.raises(EisLoaderError, match="registry-number mode"):
         pipeline.ingest_eis_tenders(limit=2)
 
     repo = TenderRepository(session)
