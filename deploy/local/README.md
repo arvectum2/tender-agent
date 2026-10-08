@@ -89,3 +89,21 @@ env (0600); no new token, database, container or public port is created.
 The Data Platform service remains separate and is not restarted by this
 Compose project. A configured local model backend is not a substitute for
 review of extraction completeness or human procurement decisions.
+
+
+## APR-05 internal SaaS foundation
+
+The local Compose override explicitly enables
+`AI_CORP_SAAS_FOUNDATION_ENABLED=true` for the API only.
+The source default is fail-closed. Operator uses the existing Basic
+credentials and onboarding; tenant receives a separate Bearer token
+through one-time invitation. Self-service UI:
+`http://127.0.0.1:18082/saas`. Do NOT give out operator Basic
+credentials, expose port 18082 on a public interface, or connect
+a real payment provider without separate approval. See
+`docs/operations/APR05_MACMINI_SAAS_ACCEPTANCE_2026-10-09.md`.
+
+Run the developer-only synthetic HTTP scenario after local Compose
+migration and health checks:
+
+    uv run python deploy/local/saas_e2e_smoke.py       --env-file ~/.config/arvectum/apr04-local.env --real-eis

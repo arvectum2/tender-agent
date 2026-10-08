@@ -19,15 +19,20 @@ completed:
   - Confirmed APR-04 canonical checkpoint completed and CI success.
   - Confirmed APR-03 external RU VPS remains paused until development complete.
   - Inspected reusable company store, pilot Basic boundary, Alembic and local services.
-current: Implement SaaS tenancy/auth/migration and operator bootstrap.
+  - Built separate SaaS data model and Alembic 106 migration (tenant, roles, hashed invite/token, legal, quota, usage, payment evidence, tenant-owned runs, audit).
+  - Integrated opt-in SaaS Bearer API and kept Basic operator routes separate; fail-closed source default.
+  - Added one-time invite redemption, role and seat enforcement, token revocation/rotation, draft legal acknowledgement and manual payment attestation.
+  - Implemented tenant-owned onboarding/evidence and exact read-only 44-FZ EIS/document-analysis routes, metered quota, product metrics and self-service UI.
+  - Local unit/regressions 48 passed, Node.js UI syntax PASS; Mac mini deployment and PostgreSQL acceptance pending.
+current: Deploy Alembic 106 to isolated Mac mini and run real HTTP multi-tenant E2E including EIS read-only.
 pending:
-  - Build SaaS models/migration/service/routes/operator UI.
   - Validate cross-tenant/role/legal/quota, secrets handling and regression.
   - Deploy only isolated Mac mini Compose project and run real HTTP E2E.
   - Record final evidence, CI, checkpoint and PR.
-last_verified_commit: 67998e275198d3c04e35f2a809e546f554f9d0ee
+last_verified_commit: 9a94d8ab
 test_results:
   - APR-04 CI 9/9 success; Mac mini stack healthy and real SOAP 6/6 extraction.
+  - APR-05 targeted regressions 48 passed, 29 known warnings; JS syntax PASS.
 resume_instruction: >-
   Continue APR-05 from this checkpoint and first remaining step.
   Do not expose real VPS or public DNS, collect real payments, fake legal
