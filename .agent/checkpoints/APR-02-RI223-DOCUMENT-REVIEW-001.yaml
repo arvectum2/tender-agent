@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-DOCUMENT-REVIEW-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Combine real Data Platform document excerpts with RI223 source facts into a
   traceable, per-domain, non-decisional procurement evidence review dossier.
@@ -37,12 +37,10 @@ completed:
   (never output): live 32616445795 analysis completed with 10 sections, 25 source
   citations, 7 dossier categories x 3 excerpts, 0 errors. Earlier 401 was missing
   key, not missing index.'
-current: 'PR #239 open, exact-head GitHub CI and Owner REVIEW required before merging.'
-pending:
-- 'Update PR #239 and verify final-head CI/Owner review; guarded merge.'
-- On merge mark completed; next product milestone source-grounded LLM review/fit with
-  explicit company profile gate (no automatic GO/NO_GO).
-last_verified_commit: 77fe438b07ae0948216317762845b85a20a6497b
+- 'PR #239 final-head CI 37812365387 SUCCESS 9/9, Owner-directed squash merge b430c8ce190efadec07faf25bb45f9df32247722.'
+current: Completed and merged; DP auth/readiness successor active.
+pending: []
+last_verified_commit: b430c8ce190efadec07faf25bb45f9df32247722
 test_results:
 - 511 Tender Research passed, 1 skipped, 42 warnings
 - 6 focused document dossier tests PASS (includes existing DP mock dispatch)
@@ -53,11 +51,7 @@ test_results:
 - 'Read-only original DP exact 32616445795: completed, 10 sections, 25 unique cited
   chunks, 7 dossier rows with 3 source excerpts each; no LLM, no writes; 401 without
   runtime secret correctly identified.'
-resume_instruction: 'PR #239 feature/apr02-ri223-document-dossier: live original Data
-  Platform acceptance now successful 10 sections/25 citations/7 dossier categories
-  using authorized in-memory runtime credential. Check final SHA CI + Owner review,
-  merge guarded, mark completed. Do not infer legal/fit/GO; continue approved source-backed
-  LLM analysis if documented gated.'
+resume_instruction: 'PR #239 completed; continue APR-02-DP-AUTH-READINESS-001.'
 execution:
   branch: feature/apr02-ri223-document-dossier
   base_commit: 77fe438b07ae0948216317762845b85a20a6497b

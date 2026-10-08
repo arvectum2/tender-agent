@@ -870,8 +870,10 @@ def test_analysis_service_fails_closed_when_platform_index_is_unavailable(
         record_history=False,
     )
 
-    assert result.status == "no_context"
-    assert any("Data Platform" in error for error in result.errors)
+    # A transport outage is not a missing index or absent document context.
+    assert result.status == "failed"
+    assert any("Data Platform collection status unavailable" in error for error in result.errors)
+    assert not any("Run tender preparation first" in error for error in result.errors)
     platform_client.close.assert_called_once()
 
 
