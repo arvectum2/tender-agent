@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Turn genuine RI223 source-bound RAR contents into safely acquired child documents
   processed by existing Data Platform for tender analysis.
@@ -20,17 +20,25 @@ completed:
 - 'PR #232 owner-authorized merge a33aa81e1373f6abf7560a1929ee4d95bd076d06; CI 37792147443
   SUCCESS.'
 - Verified authentic RAR5 archive contains 19 PDF, DOCX, DOC and XLSX files.
-current: Implement bounded RAR member stream extraction and reuse canonical repository/Data
-  Platform.
+- Implemented bounded RAR4/5 libarchive streaming and source-bound persistent child
+  documents with Data Platform OCR/text/chunk reuse.
+- 'Real original 32616445795: 19/19 documents (8 PDF, 8 DOCX, 1 DOC, 2 XLSX) and 300
+  Data Platform chunks; 0 failures.'
+- 'Focused relevant tests: 36 passed, 1 existing warning; make check and relevant
+  Ruff passed.'
+- Documented source-grounded sample observations without authoritative legal/GO assumptions.
+current: Implementation locally verified; awaiting exact-head CI and governed merge.
 pending:
-- Implement & test parser
-- Wire source-bound child docs into document acquisition / Data Platform projection
-- Run authentic corpus and test validations
-- Open PR and exact-head CI
-last_verified_commit: a33aa81e1373f6abf7560a1929ee4d95bd076d06
+- Publish guarded PR, obtain exact-head CI, recheck Owner directive/merge gate, merge,
+  then reconcile completed checkpoint.
+last_verified_commit: d5312687c7226cd64e1841e3c98f78ab2a775f2b
 test_results:
-- 'PR #232 merged; 61 previous related tests passed'
-resume_instruction: 'Resume feature/apr02-rar-document-analysis from checkpoint. Do
-  not remerge PR #232. Finish safe RAR member streaming, child document persistence/Data
-  Platform processing with exact provenance, run authentic 32616445795 sample and
-  focused tests, open guarded PR.'
+- 36 focused/integration-adjacent tests passed; 1 unrelated warning.
+- make check PASS, changed-file Ruff PASS, git diff --check PASS.
+- Real RI223 RAR archive 19/19 files; Data Platform 19/19 extracted; 300 chunks; no
+  original RAR misclassified.
+- Source-grounded observations in docs/223fz/APR02_RI223_RAR_CONTENT_ANALYSIS_2026-10-08.md.
+resume_instruction: 'For PR feature/apr02-rar-document-analysis: verify exact-head
+  CI and mergeability, use explicit Owner 2026-10-08 approval to merge after all checks;
+  reconcile queue/current-task completed in main, then proceed to next independently
+  measured APR-02 breadth gap. No automatic legal/participation conclusions.'

@@ -32,30 +32,32 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Owner directive 2026-09-14; docs/roadmap reuse-first strategy overlay; completed PR #56'
+  source: 'Owner directive 2026-09-14; docs/roadmap reuse-first strategy overlay;
+    completed PR #56'
   strategy: COPY_PATTERN
   dependencies: []
-  executor_scope: Completed. Preserve the merged reverse-spec/reuse registry; do not reopen without a concrete regression
-    or Owner-directed refresh.
-  done_gate: 'Satisfied by merged strategy packet in PR #56: competitor-pattern matrix and reuse registry exist; active P0/P1
-    work is classified; INVENT boundaries are justified; duplicate commodity builds are de-scoped.'
+  executor_scope: Completed. Preserve the merged reverse-spec/reuse registry; do not
+    reopen without a concrete regression or Owner-directed refresh.
+  done_gate: 'Satisfied by merged strategy packet in PR #56: competitor-pattern matrix
+    and reuse registry exist; active P0/P1 work is classified; INVENT boundaries are
+    justified; duplicate commodity builds are de-scoped.'
 - order: 10
   task_id: DOCUMENT-QA-005
   strategy: INVENT
-  invent_justification: Procurement-specific source-bound identity/role resolution directly protects evidence integrity and
-    decision quality.
+  invent_justification: Procurement-specific source-bound identity/role resolution
+    directly protects evidence integrity and decision quality.
   title: Source-bound customer role and identity extraction
   status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16 closed completed; post-acceptance #52/#53 fixed by PR
-    #54'
+  source: 'master roadmap current_program DOCUMENT-QA-005; issue #16 closed completed;
+    post-acceptance #52/#53 fixed by PR #54'
   dependencies: []
-  executor_scope: Completed. Preserve exposed blind/regression artifacts; do not reopen or start another acceptance loop without
-    an explicit new queue item or Owner directive.
-  done_gate: 'Satisfied: issue #16 closed completed after unbiased strict customer_name acceptance; post-acceptance #52/#53
-    regression hardening merged in PR #54.'
+  executor_scope: Completed. Preserve exposed blind/regression artifacts; do not reopen
+    or start another acceptance loop without an explicit new queue item or Owner directive.
+  done_gate: 'Satisfied: issue #16 closed completed after unbiased strict customer_name
+    acceptance; post-acceptance #52/#53 regression hardening merged in PR #54.'
 - order: 20
   task_id: BUILD-DOCKER-CONTEXT-001
   strategy: ADAPT
@@ -66,15 +68,15 @@ items:
   auto_merge: true
   source: 'issue #19 closed completed; PR #58 merged as 8924a8576a96ccac490682be737f2b041c8a06e3'
   dependencies: []
-  executor_scope: Completed. Preserve the clean-checkout docker-build regression gate and explicit optional ARVECTUM_LANDING_PUBLIC_DIR
-    boundary.
-  done_gate: 'Satisfied: issue #19 closed; exact-head CI run 34953003147 passed; clean temporary checkout docker build and
-    compose boundary acceptance passed.'
+  executor_scope: Completed. Preserve the clean-checkout docker-build regression gate
+    and explicit optional ARVECTUM_LANDING_PUBLIC_DIR boundary.
+  done_gate: 'Satisfied: issue #19 closed; exact-head CI run 34953003147 passed; clean
+    temporary checkout docker build and compose boundary acceptance passed.'
 - order: 30
   task_id: DISCOVERY-QA-001
   strategy: ADAPT
-  custom_boundary: Reuse standard retrieval/index components; custom tuning only after benchmark evidence identifies procurement-specific
-    ranking gaps.
+  custom_boundary: Reuse standard retrieval/index components; custom tuning only after
+    benchmark evidence identifies procurement-specific ranking gaps.
   title: Procurement search quality benchmark and relevance hardening
   status: done
   authority: REVIEW
@@ -83,18 +85,20 @@ items:
   source: 'issue #2 completed; Product Owner approved PR #59 merge 2026-09-15'
   dependencies:
   - BENCHMARK-PIPELINE-001
-  owner_gate_evidence: 'READY promotion recorded in issue #2 comment 5678641869; merge explicitly approved by Product Owner
-    on 2026-09-15.'
-  done_gate: 'Satisfied: frozen 45-case benchmark, evidence-backed hardening, exact-head CI run 34964993833 SUCCESS 9/9, PR
-    #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8, issue #2 closed completed.'
-  executor_scope: Completed. Preserve frozen benchmark artifacts as regression evidence; no further tuning without a concrete
-    measured regression or Owner directive.
+  owner_gate_evidence: 'READY promotion recorded in issue #2 comment 5678641869; merge
+    explicitly approved by Product Owner on 2026-09-15.'
+  done_gate: 'Satisfied: frozen 45-case benchmark, evidence-backed hardening, exact-head
+    CI run 34964993833 SUCCESS 9/9, PR #59 guarded squash-merged as 762a392207a73ed77b04af69a378746920960ba8,
+    issue #2 closed completed.'
+  executor_scope: Completed. Preserve frozen benchmark artifacts as regression evidence;
+    no further tuning without a concrete measured regression or Owner directive.
 - order: 35
   task_id: DECISION-CORE-V1-001
   strategy: INVENT
-  invent_justification: 'The narrow procurement-specific decision semantics are the documented product moat: evidence-bound
-    canonical facts, hard blockers, GO/NO-GO/NEEDS REVIEW and readiness. Commodity retrieval/parsing/UI/rules infrastructure
-    must be reused or adapted.'
+  invent_justification: 'The narrow procurement-specific decision semantics are the
+    documented product moat: evidence-bound canonical facts, hard blockers, GO/NO-GO/NEEDS
+    REVIEW and readiness. Commodity retrieval/parsing/UI/rules infrastructure must
+    be reused or adapted.'
   title: Evidence-bound Decision Core v1 and application readiness
   status: done
   authority: REVIEW
@@ -107,60 +111,81 @@ items:
   roadmap_scope:
   - ARV-018
   - ARV-020
-  owner_gate_evidence: 'Satisfied: Product Owner approved start on 2026-09-15 and explicitly approved merge of PR #61 on 2026-09-15.'
-  custom_boundary: Reuse existing search, document extraction, provenance/source graph, supplier profile, roles/UI and deterministic
-    primitives. Invent only procurement-specific decision/readiness semantics and source-bound rules.
-  executor_scope: Completed. Preserve source-bound fail-closed Decision Core semantics; do not widen external-action authority.
-    No bid submission, RFQ/invitation, winner selection, signing, spend or other external commercial effect without explicit
+  owner_gate_evidence: 'Satisfied: Product Owner approved start on 2026-09-15 and
+    explicitly approved merge of PR #61 on 2026-09-15.'
+  custom_boundary: Reuse existing search, document extraction, provenance/source graph,
+    supplier profile, roles/UI and deterministic primitives. Invent only procurement-specific
+    decision/readiness semantics and source-bound rules.
+  executor_scope: Completed. Preserve source-bound fail-closed Decision Core semantics;
+    do not widen external-action authority. No bid submission, RFQ/invitation, winner
+    selection, signing, spend or other external commercial effect without explicit
     HUMAN control.
-  done_gate: 'Satisfied: versioned Decision Core contract; evidence-bound canonical facts/blockers/readiness; deterministic
-    fail-closed GO/NO_GO/NEEDS_REVIEW; supplier-profile integration; existing product/API exposure; source-grounded regressions;
-    local validation; exact-head CI run 34972199342 SUCCESS 9/9; PR #61 guarded squash-merged as 3bf397f24c997f2465af38b8c51c329309b1f8d1;
-    issue #60 closed completed.'
+  done_gate: 'Satisfied: versioned Decision Core contract; evidence-bound canonical
+    facts/blockers/readiness; deterministic fail-closed GO/NO_GO/NEEDS_REVIEW; supplier-profile
+    integration; existing product/API exposure; source-grounded regressions; local
+    validation; exact-head CI run 34972199342 SUCCESS 9/9; PR #61 guarded squash-merged
+    as 3bf397f24c997f2465af38b8c51c329309b1f8d1; issue #60 closed completed.'
 - order: 37
   task_id: COMMERCIAL-CORE-V1-001
   strategy: INVENT
-  invent_justification: Procurement-specific nomenclature compatibility, tender-to-catalog matching classes and auditable
-    commercial feasibility are Commercial Core moat; commodity XLSX/CSV parsing and generic economics infrastructure must
-    be reused/adapted.
+  invent_justification: Procurement-specific nomenclature compatibility, tender-to-catalog
+    matching classes and auditable commercial feasibility are Commercial Core moat;
+    commodity XLSX/CSV parsing and generic economics infrastructure must be reused/adapted.
   title: Price-list ingest, tender-to-catalog matching and auditable bid economics
   status: done
   authority: REVIEW
   independent: true
   auto_merge: false
-  source: 'issue #62; explicit Product Owner directive in project conversation 2026-09-15: делай'
+  source: 'issue #62; explicit Product Owner directive in project conversation 2026-09-15:
+    делай'
   dependencies:
   - DECISION-CORE-V1-001
   roadmap_scope:
   - ARV-016
   - ARV-017
-  owner_gate_evidence: 'Satisfied: Product Owner approved start and explicitly approved PR #63 merge on 2026-09-15.'
-  custom_boundary: ARV-016 import plumbing is ADAPT/REUSE using openpyxl/CSV and existing import patterns. INVENT only nomenclature
-    normalization, compatibility/match semantics, coverage and auditable commercial feasibility. Do not implicitly wire offline
+  owner_gate_evidence: 'Satisfied: Product Owner approved start and explicitly approved
+    PR #63 merge on 2026-09-15.'
+  custom_boundary: ARV-016 import plumbing is ADAPT/REUSE using openpyxl/CSV and existing
+    import patterns. INVENT only nomenclature normalization, compatibility/match semantics,
+    coverage and auditable commercial feasibility. Do not implicitly wire offline
     ARV-067 product catalog into production runtime.
   review_gate: 'Satisfied: PR #63 guarded-merged after post-sync exact-head CI success.'
-  review_gate_evidence: 'PR #63 synced head eeb08ad1bc0b8a0b4d462294bc2c0838a4a67564; CI run 34990327143 SUCCESS 9/9; guarded
-    squash merge 4257cd23d68d4ad69ebbedf075195f34969bace1; issue #62 closed completed.'
-  executor_scope: Completed. Preserve Commercial Core v1 source-provenanced fail-closed matching/economics and HUMAN control
-    boundaries; do not reopen without a concrete regression or explicit Product Owner directive.
-  done_gate: 'Satisfied: versioned Commercial Core contract; source-provenanced XLSX/CSV import; explicit match statuses;
-    supported coverage/cost/headroom or Unknown; product/API/report exposure; regression coverage; post-sync exact-head CI
-    run 34990327143 SUCCESS 9/9; PR #63 merged as 4257cd23d68d4ad69ebbedf075195f34969bace1; issue #62 closed completed.'
+  review_gate_evidence: 'PR #63 synced head eeb08ad1bc0b8a0b4d462294bc2c0838a4a67564;
+    CI run 34990327143 SUCCESS 9/9; guarded squash merge 4257cd23d68d4ad69ebbedf075195f34969bace1;
+    issue #62 closed completed.'
+  executor_scope: Completed. Preserve Commercial Core v1 source-provenanced fail-closed
+    matching/economics and HUMAN control boundaries; do not reopen without a concrete
+    regression or explicit Product Owner directive.
+  done_gate: 'Satisfied: versioned Commercial Core contract; source-provenanced XLSX/CSV
+    import; explicit match statuses; supported coverage/cost/headroom or Unknown;
+    product/API/report exposure; regression coverage; post-sync exact-head CI run
+    34990327143 SUCCESS 9/9; PR #63 merged as 4257cd23d68d4ad69ebbedf075195f34969bace1;
+    issue #62 closed completed.'
 - order: 40
   task_id: DOCUMENT-QA-NEXT-INCREMENT
   strategy: INVENT
-  invent_justification: Procurement-specific notice-revision binding directly protects source/evidence integrity; generic parsing and dedupe primitives must be reused.
+  invent_justification: Procurement-specific notice-revision binding directly protects
+    source/evidence integrity; generic parsing and dedupe primitives must be reused.
   title: Active EIS notice revision binding
   status: done
   authority: AUTO
   independent: true
   auto_merge: false
-  source: 'issue #51; Product Owner promotion comments 5683950542 and 5684049184 on 2026-09-15'
+  source: 'issue #51; Product Owner promotion comments 5683950542 and 5684049184 on
+    2026-09-15'
   dependencies:
   - DOCUMENT-QA-005
-  owner_gate_evidence: 'Implementation start gate satisfied: issue #51 is a concrete reusable failure family with explicit acceptance criteria and exposed case-14 regression evidence. Implementation/testing is AUTO; merge remains Product Owner REVIEW because auto_merge=false.'
-  executor_scope: Parse EIS notice revision blocks, bind analysis attachments only to the active/current revision, preserve revision provenance, fail closed on ambiguity, and add synthetic/exposed regression coverage without changing frozen benchmark truth.
-  done_gate: 'Issue #51 acceptance criteria satisfied; focused/relevant tests and exact-head CI pass; review-ready PR merged only after explicit Product Owner approval; issue #51 closed completed.'
+  owner_gate_evidence: 'Implementation start gate satisfied: issue #51 is a concrete
+    reusable failure family with explicit acceptance criteria and exposed case-14
+    regression evidence. Implementation/testing is AUTO; merge remains Product Owner
+    REVIEW because auto_merge=false.'
+  executor_scope: Parse EIS notice revision blocks, bind analysis attachments only
+    to the active/current revision, preserve revision provenance, fail closed on ambiguity,
+    and add synthetic/exposed regression coverage without changing frozen benchmark
+    truth.
+  done_gate: 'Issue #51 acceptance criteria satisfied; focused/relevant tests and
+    exact-head CI pass; review-ready PR merged only after explicit Product Owner approval;
+    issue #51 closed completed.'
 - order: 50
   task_id: CHANGE-MONITORING-V1-001
   strategy: ADAPT
@@ -175,8 +200,12 @@ items:
   - ARV-056
   dependencies:
   - COMMERCIAL-CORE-V1-001
-  executor_scope: Implement source-bound watch definitions, procurement-change snapshots/diffs and an internal alert/feed using existing event/alert primitives. External notification transports remain disabled and out of scope.
-  done_gate: 'Issue #65 Definition of Done satisfied; focused/relevant tests and exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #65 closed completed.'
+  executor_scope: Implement source-bound watch definitions, procurement-change snapshots/diffs
+    and an internal alert/feed using existing event/alert primitives. External notification
+    transports remain disabled and out of scope.
+  done_gate: 'Issue #65 Definition of Done satisfied; focused/relevant tests and exact-head
+    CI green; merge only if Company AM-4 and repository auto-merge gates remain valid;
+    issue #65 closed completed.'
 - order: 55
   task_id: INGEST-RESILIENCE-V1-001
   strategy: ADAPT
@@ -191,8 +220,12 @@ items:
   - ARV-058
   dependencies:
   - DOCUMENT-QA-NEXT-INCREMENT
-  executor_scope: Reuse current repository/dedupe/cache primitives to make public-source ingest resumable, idempotent and provenance/revision aware; no source mutation and no silent ambiguity resolution.
-  done_gate: 'Issue #66 Definition of Done satisfied; focused/relevant tests and exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #66 closed completed.'
+  executor_scope: Reuse current repository/dedupe/cache primitives to make public-source
+    ingest resumable, idempotent and provenance/revision aware; no source mutation
+    and no silent ambiguity resolution.
+  done_gate: 'Issue #66 Definition of Done satisfied; focused/relevant tests and exact-head
+    CI green; merge only if Company AM-4 and repository auto-merge gates remain valid;
+    issue #66 closed completed.'
 - order: 60
   task_id: INTEGRATION-OUTBOX-V1-001
   strategy: ADAPT
@@ -208,8 +241,12 @@ items:
   - ARV-045
   dependencies:
   - CHANGE-MONITORING-V1-001
-  executor_scope: Add versioned internal integration events, idempotent outbox/audit records and read-only export/API surfaces. Any real email/webhook/CRM delivery remains disabled and requires a separate REVIEW/HUMAN gate.
-  done_gate: 'Issue #67 Definition of Done satisfied; focused/relevant tests and exact-head CI green; no external delivery enabled; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #67 closed completed.'
+  executor_scope: Add versioned internal integration events, idempotent outbox/audit
+    records and read-only export/API surfaces. Any real email/webhook/CRM delivery
+    remains disabled and requires a separate REVIEW/HUMAN gate.
+  done_gate: 'Issue #67 Definition of Done satisfied; focused/relevant tests and exact-head
+    CI green; no external delivery enabled; merge only if Company AM-4 and repository
+    auto-merge gates remain valid; issue #67 closed completed.'
 - order: 65
   task_id: OPS-OBSERVABILITY-V1-001
   strategy: REUSE
@@ -222,8 +259,12 @@ items:
   roadmap_scope:
   - ARV-010
   dependencies: []
-  executor_scope: Reuse existing health/storage/queue/backup state to expose machine-readable operational metrics and non-destructive recovery guidance; do not deploy third-party telemetry or perform production/network changes.
-  done_gate: 'Issue #68 Definition of Done satisfied; focused/relevant tests and exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #68 closed completed.'
+  executor_scope: Reuse existing health/storage/queue/backup state to expose machine-readable
+    operational metrics and non-destructive recovery guidance; do not deploy third-party
+    telemetry or perform production/network changes.
+  done_gate: 'Issue #68 Definition of Done satisfied; focused/relevant tests and exact-head
+    CI green; merge only if Company AM-4 and repository auto-merge gates remain valid;
+    issue #68 closed completed.'
 - order: 70
   task_id: 223FZ-INGEST-V1-001
   strategy: ADAPT
@@ -237,12 +278,18 @@ items:
   - ARV-006
   dependencies:
   - INGEST-RESILIENCE-V1-001
-  executor_scope: Implement a separate audited public 223-FZ search/card/document ingestion path using reusable acquisition/provenance infrastructure; do not add legal/decision semantics and never silently reuse 44-FZ-only assumptions.
-  done_gate: 'Issue #69 Definition of Done satisfied; existing 44-FZ regressions remain green; exact-head CI green; merge only if Company AM-4 and repository auto-merge gates remain valid; issue #69 closed completed.'
+  executor_scope: Implement a separate audited public 223-FZ search/card/document
+    ingestion path using reusable acquisition/provenance infrastructure; do not add
+    legal/decision semantics and never silently reuse 44-FZ-only assumptions.
+  done_gate: 'Issue #69 Definition of Done satisfied; existing 44-FZ regressions remain
+    green; exact-head CI green; merge only if Company AM-4 and repository auto-merge
+    gates remain valid; issue #69 closed completed.'
 - order: 75
   task_id: 223FZ-DECISION-V1-001
   strategy: INVENT
-  invent_justification: Regime-specific source-bound 223-FZ readiness/blocker semantics are procurement-domain moat; the existing Decision Core/evidence framework is reused.
+  invent_justification: Regime-specific source-bound 223-FZ readiness/blocker semantics
+    are procurement-domain moat; the existing Decision Core/evidence framework is
+    reused.
   title: Source-bound 223-FZ decision/readiness semantics
   status: done
   authority: REVIEW
@@ -253,12 +300,18 @@ items:
   - ARV-006
   dependencies:
   - 223FZ-INGEST-V1-001
-  executor_scope: Extend Decision Core only with independently frozen, source-supported 223-FZ semantics. Unsupported legal/procedural assumptions remain UNKNOWN/NEEDS_REVIEW; no external procurement action is authorized.
-  done_gate: 'Issue #70 Definition of Done satisfied; frozen 223-FZ regression evidence and exact-head CI green; merge only after explicit Product Owner REVIEW approval; issue #70 closed completed.'
+  executor_scope: Extend Decision Core only with independently frozen, source-supported
+    223-FZ semantics. Unsupported legal/procedural assumptions remain UNKNOWN/NEEDS_REVIEW;
+    no external procurement action is authorized.
+  done_gate: 'Issue #70 Definition of Done satisfied; frozen 223-FZ regression evidence
+    and exact-head CI green; merge only after explicit Product Owner REVIEW approval;
+    issue #70 closed completed.'
 - order: 80
   task_id: DOMAIN-REGRESSION-V1-001
   strategy: INVENT
-  invent_justification: Procurement-specific regression lifecycle and edge-case invariants are part of the evidence moat; generic pytest/CI/reporting infrastructure must be reused.
+  invent_justification: Procurement-specific regression lifecycle and edge-case invariants
+    are part of the evidence moat; generic pytest/CI/reporting infrastructure must
+    be reused.
   title: Procurement edge-case corpus and outcome telemetry
   status: done
   authority: REVIEW
@@ -270,8 +323,12 @@ items:
   dependencies:
   - DECISION-CORE-V1-001
   - COMMERCIAL-CORE-V1-001
-  executor_scope: Build a versioned registry/lifecycle for confirmed real procurement regressions and machine-readable CI results, preserving strict blind/acceptance/regression separation and anti-circularity.
-  done_gate: 'Issue #71 Definition of Done satisfied; manifest integrity/anti-circularity tests and exact-head CI green; any material benchmark-method change merged only after Product Owner REVIEW approval; issue #71 closed completed.'
+  executor_scope: Build a versioned registry/lifecycle for confirmed real procurement
+    regressions and machine-readable CI results, preserving strict blind/acceptance/regression
+    separation and anti-circularity.
+  done_gate: 'Issue #71 Definition of Done satisfied; manifest integrity/anti-circularity
+    tests and exact-head CI green; any material benchmark-method change merged only
+    after Product Owner REVIEW approval; issue #71 closed completed.'
 - order: 90
   task_id: PROCUREMENT-KANBAN-V1-001
   strategy: COPY_PATTERN
@@ -280,15 +337,26 @@ items:
   authority: AUTO
   independent: true
   auto_merge: false
-  source: 'issue #83; Owner admission comment #5726117047 from 2026-09-18 directive: continue work according to roadmap'
-  owner_gate_evidence: 'Product Owner explicitly approved merge of PR #85 on 2026-09-18 after актуальный exact-head green CI; PR was then rebased onto merged PR #84/main and must re-earn exact-head green before merge.'
+  source: 'issue #83; Owner admission comment #5726117047 from 2026-09-18 directive:
+    continue work according to roadmap'
+  owner_gate_evidence: 'Product Owner explicitly approved merge of PR #85 on 2026-09-18
+    after актуальный exact-head green CI; PR was then rebased onto merged PR #84/main
+    and must re-earn exact-head green before merge.'
   roadmap_scope:
   - ARV-019
   dependencies:
   - COMMERCIAL-CORE-V1-001
-  custom_boundary: Reuse canonical Deal/DealStatus, transition validation/history, Commercial Operator Console routes/styles and server-rendered patterns. Do not create a parallel workflow engine, stage enum, CRM subsystem or new frontend framework.
-  executor_scope: Implement a thin internal kanban board over existing persisted deal/status state; deterministic grouping and bounded filters/search; any status change must be explicitly human-initiated and use the existing canonical status service. No automatic transitions, procurement submission, external communication or other external effect.
-  done_gate: 'Satisfied: issue #83 closed completed; PR #85 exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10 passed CI run 35353562825 SUCCESS 9/9 and was squash-merged under explicit Product Owner approval as 24d515d1a16fdc7906bcc5801ad700afb2206589.'
+  custom_boundary: Reuse canonical Deal/DealStatus, transition validation/history,
+    Commercial Operator Console routes/styles and server-rendered patterns. Do not
+    create a parallel workflow engine, stage enum, CRM subsystem or new frontend framework.
+  executor_scope: Implement a thin internal kanban board over existing persisted deal/status
+    state; deterministic grouping and bounded filters/search; any status change must
+    be explicitly human-initiated and use the existing canonical status service. No
+    automatic transitions, procurement submission, external communication or other
+    external effect.
+  done_gate: 'Satisfied: issue #83 closed completed; PR #85 exact head 6b6deb78e907fdffa1c860acdbfd6aa04a0d2b10
+    passed CI run 35353562825 SUCCESS 9/9 and was squash-merged under explicit Product
+    Owner approval as 24d515d1a16fdc7906bcc5801ad700afb2206589.'
 - order: 95
   task_id: WATCHDOG-CONTINUATION-V2-001
   strategy: ADAPT
@@ -297,10 +365,22 @@ items:
   authority: OWNER
   independent: true
   auto_merge: false
-  source: 'Explicit Product Owner directive 2026-09-18: after merging PR #84/#85, repair watchdog so an active Owner directive continues the next canonically determined bounded increment within existing hard stops.'
-  owner_gate_evidence: '2026-09-18 user follow-up «Делай. Watchdog работает, но ничего нового не пишет. Должен писать.» explicitly directed completion of the repair; PR #86 may be merged only after current exact-head green CI and ordinary merge safety checks.'
-  executor_scope: Repair repository-owned selection/admission/reporting semantics and the existing singleton Scheduled Task only. Do not change product priority, Company/Product/OS authority, benchmark truth, external-effect permissions, production state or protected-repository governance.
-  done_gate: 'Durable active directive + deterministic bounded continuation rule + fail-visible one-comment run reporting + immediate next bounded item admitted; existing hourly watchdog updated/verified; policy validation and exact-head CI green. Because this is a material executor-policy change, future AM-4 automatic merges fail closed pending attributable Owner renewal.'
+  source: 'Explicit Product Owner directive 2026-09-18: after merging PR #84/#85,
+    repair watchdog so an active Owner directive continues the next canonically determined
+    bounded increment within existing hard stops.'
+  owner_gate_evidence: '2026-09-18 user follow-up «Делай. Watchdog работает, но ничего
+    нового не пишет. Должен писать.» explicitly directed completion of the repair;
+    PR #86 may be merged only after current exact-head green CI and ordinary merge
+    safety checks.'
+  executor_scope: Repair repository-owned selection/admission/reporting semantics
+    and the existing singleton Scheduled Task only. Do not change product priority,
+    Company/Product/OS authority, benchmark truth, external-effect permissions, production
+    state or protected-repository governance.
+  done_gate: Durable active directive + deterministic bounded continuation rule +
+    fail-visible one-comment run reporting + immediate next bounded item admitted;
+    existing hourly watchdog updated/verified; policy validation and exact-head CI
+    green. Because this is a material executor-policy change, future AM-4 automatic
+    merges fail closed pending attributable Owner renewal.
 - order: 100
   task_id: ARV-002-REVALIDATION-001
   strategy: REUSE
@@ -310,12 +390,24 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first continuation branch CORE-QUALITY-PILOT; first historical item ARV-002; legacy reconciliation=needs_revalidation.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first continuation branch CORE-QUALITY-PILOT;
+    first historical item ARV-002; legacy reconciliation=needs_revalidation.
   roadmap_scope:
   - ARV-002
   dependencies: []
-  executor_scope: Reconcile ARV-002 against current main/merged evidence and deterministic tests. Verify the existing live end-to-end pipeline and hidden-fallback boundaries without production mutation or consequential external action. Update reconciliation evidence; if a concrete repository-only residual gap is proven and already traceable to the canonical ARV-002 next_result/residual_scope, record at most one bounded successor candidate. Do not invent a new product priority, architecture or acceptance criterion.
-  done_gate: 'Satisfied for repository work: ARV-002 reconciled as revalidated_residual_gap; 75 focused tests plus 32 persistence/recovery tests passed (12 environment/profile skips); read-only exact-number EIS check succeeded; one source-traceable non-admitted customer-parser successor candidate recorded; PR #99 evidence head eb280a6bc78a3eade69e494a2c7f3439c2b1a960 passed CI run 35469522448 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and renewed AM-4 gates.'
+  executor_scope: Reconcile ARV-002 against current main/merged evidence and deterministic
+    tests. Verify the existing live end-to-end pipeline and hidden-fallback boundaries
+    without production mutation or consequential external action. Update reconciliation
+    evidence; if a concrete repository-only residual gap is proven and already traceable
+    to the canonical ARV-002 next_result/residual_scope, record at most one bounded
+    successor candidate. Do not invent a new product priority, architecture or acceptance
+    criterion.
+  done_gate: 'Satisfied for repository work: ARV-002 reconciled as revalidated_residual_gap;
+    75 focused tests plus 32 persistence/recovery tests passed (12 environment/profile
+    skips); read-only exact-number EIS check succeeded; one source-traceable non-admitted
+    customer-parser successor candidate recorded; PR #99 evidence head eb280a6bc78a3eade69e494a2c7f3439c2b1a960
+    passed CI run 35469522448 SUCCESS 9/9. Guarded merge of the final bookkeeping
+    head remains conditional on fresh exact-head green CI and renewed AM-4 gates.'
 - order: 110
   task_id: ARV-008-WORKER-TRANSPORT-V1-001
   strategy: ADAPT
@@ -324,15 +416,27 @@ items:
   authority: OWNER
   independent: true
   auto_merge: false
-  source: 'Canonical ARV-008 residual plus explicit Product Owner continuation instruction 2026-09-19: «Продолжай».'
-  owner_gate_evidence: 'Owner review renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms in docs/governance/decisions/DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md (Company merge 57ef73e468122ac714d28d49bfd176ed83588cab) and explicitly approved PR #97 after current exact-head green CI.'
+  source: 'Canonical ARV-008 residual plus explicit Product Owner continuation instruction
+    2026-09-19: «Продолжай».'
+  owner_gate_evidence: 'Owner review renewed POS-004 / AI-ENG-001 AM-4 on unchanged
+    terms in docs/governance/decisions/DECISION-2026-09-19-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+    (Company merge 57ef73e468122ac714d28d49bfd176ed83588cab) and explicitly approved
+    PR #97 after current exact-head green CI.'
   roadmap_scope:
   - ARV-008
   dependencies:
   - ARV-007
   - OPS-OBSERVABILITY-V1-001
-  executor_scope: Adapt the frozen ARV-007 Redis QueueEnvelope/visibility-lease foundation into a Redis Streams consumer-group transport for existing tender-research prepare/analyze jobs, with separate worker process, explicit thread|redis backend, fail-closed Redis mode, bounded retry/backoff and stale pending reclaim. PostgreSQL remains source of truth. Do not claim full ARV-008 completion; pause/resume, per-tenant concurrency and cost budgets remain later bounded slices.
-  done_gate: 'Satisfied: PR #97 exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34 passed CI run 35463316244 SUCCESS 9/9 including redis-integration and was squash-merged under explicit Owner approval as daa3d2de580ff4098781ad46720626dec31576de. No production/external/procurement effect.'
+  executor_scope: Adapt the frozen ARV-007 Redis QueueEnvelope/visibility-lease foundation
+    into a Redis Streams consumer-group transport for existing tender-research prepare/analyze
+    jobs, with separate worker process, explicit thread|redis backend, fail-closed
+    Redis mode, bounded retry/backoff and stale pending reclaim. PostgreSQL remains
+    source of truth. Do not claim full ARV-008 completion; pause/resume, per-tenant
+    concurrency and cost budgets remain later bounded slices.
+  done_gate: 'Satisfied: PR #97 exact head 2fefd1854a3aea87f19dc91394b8a599c1e0bb34
+    passed CI run 35463316244 SUCCESS 9/9 including redis-integration and was squash-merged
+    under explicit Owner approval as daa3d2de580ff4098781ad46720626dec31576de. No
+    production/external/procurement effect.'
 - order: 115
   task_id: AM4-RENEWAL-RECONCILE-001
   strategy: REUSE
@@ -341,11 +445,17 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Attributable Owner review 2026-09-19 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms; Company decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.'
+  source: Attributable Owner review 2026-09-19 renewed POS-004 / AI-ENG-001 AM-4 on
+    unchanged terms; Company decision merged as 57ef73e468122ac714d28d49bfd176ed83588cab.
   roadmap_scope: []
   dependencies: []
-  executor_scope: Reconcile only Company renewal source/deadline/counter state and PR #97 merge evidence into repository-owned executor policy/checkpoints. Preserve authority scope, hard stops, Product/Company/OS boundaries and all external-effect prohibitions.
-  done_gate: 'Satisfied for repository work: renewal/evidence state reconciled; focused policy test 2 passed; make check/diff check PASS; PR #98 head 62e2c09b7b17ee8453472c652dbed130a914f3e4 passed CI run 35465114094 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and all ordinary gates; when merged it counts as automatic merge 1/10 of the 2026-09-19 review cycle.'
+  executor_scope: Reconcile only Company renewal source/deadline/counter state and
+    PR
+  done_gate: 'Satisfied for repository work: renewal/evidence state reconciled; focused
+    policy test 2 passed; make check/diff check PASS; PR #98 head 62e2c09b7b17ee8453472c652dbed130a914f3e4
+    passed CI run 35465114094 SUCCESS 9/9. Guarded merge of the final bookkeeping
+    head remains conditional on fresh exact-head green CI and all ordinary gates;
+    when merged it counts as automatic merge 1/10 of the 2026-09-19 review cycle.'
 - order: 120
   task_id: ARV-010-REVALIDATION-001
   strategy: REUSE
@@ -355,15 +465,22 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first eligible unresolved PRODUCTION-RUNTIME historical item after ARV-008.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first eligible unresolved PRODUCTION-RUNTIME
+    historical item after ARV-008.
   roadmap_scope:
   - ARV-010
   dependencies:
   - BASE-018
   - ARV-008-WORKER-TRANSPORT-V1-001
-  executor_scope: Reconcile ARV-010 against current main and repository-owned evidence for storage guardrails, observability, backup/recovery freshness and incident guidance. No production/network/provider mutation, third-party telemetry activation or external notification delivery. Record at most one bounded source-traceable successor candidate if a concrete residual remains.
-  done_gate: 'ARV-010 reconciliation overlay is evidence-backed; relevant deterministic tests/checks and exact-head CI are green; any residual is explicit/source-traceable; no production/external effect; guarded merge only if renewed AM-4 and repository auto-merge gates remain valid.'
-
+  executor_scope: Reconcile ARV-010 against current main and repository-owned evidence
+    for storage guardrails, observability, backup/recovery freshness and incident
+    guidance. No production/network/provider mutation, third-party telemetry activation
+    or external notification delivery. Record at most one bounded source-traceable
+    successor candidate if a concrete residual remains.
+  done_gate: ARV-010 reconciliation overlay is evidence-backed; relevant deterministic
+    tests/checks and exact-head CI are green; any residual is explicit/source-traceable;
+    no production/external effect; guarded merge only if renewed AM-4 and repository
+    auto-merge gates remain valid.
 - order: 125
   task_id: ARV-003-REVALIDATION-001
   strategy: REUSE
@@ -373,14 +490,23 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; CORE-QUALITY-PILOT historical item ARV-003; legacy reconciliation requires status revalidation.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; CORE-QUALITY-PILOT historical
+    item ARV-003; legacy reconciliation requires status revalidation.
   roadmap_scope:
   - ARV-003
   dependencies:
   - BASE-018
-  executor_scope: Reconcile ARV-003 status against current main, merged repository evidence and the repository-owned accepted Gate 5 references. Do not invoke provider/runtime, access credentials, mutate the accepted evidence bundle, or alter frozen benchmark truth. Update only reconciliation evidence/status and stale documentation needed to remove contradiction while preserving historical facts.
-  done_gate: 'Satisfied: ARV-003 Gate 5 acceptance reconciled from repository-owned evidence without provider/runtime execution; 399 relevant tests passed; PR #101 exact head 04df77264326c259662e192abb9a46943eee0b05 passed CI run 35509513159 SUCCESS 9/9 and merged as f1e843d4ad9978fcf91da89510476b3703fd63e6. Immutable historical snapshot and accepted evidence bundle remain preserved; no production/external effect.'
-
+  executor_scope: Reconcile ARV-003 status against current main, merged repository
+    evidence and the repository-owned accepted Gate 5 references. Do not invoke provider/runtime,
+    access credentials, mutate the accepted evidence bundle, or alter frozen benchmark
+    truth. Update only reconciliation evidence/status and stale documentation needed
+    to remove contradiction while preserving historical facts.
+  done_gate: 'Satisfied: ARV-003 Gate 5 acceptance reconciled from repository-owned
+    evidence without provider/runtime execution; 399 relevant tests passed; PR #101
+    exact head 04df77264326c259662e192abb9a46943eee0b05 passed CI run 35509513159
+    SUCCESS 9/9 and merged as f1e843d4ad9978fcf91da89510476b3703fd63e6. Immutable
+    historical snapshot and accepted evidence bundle remain preserved; no production/external
+    effect.'
 - order: 130
   task_id: ARV-038-REVALIDATION-001
   strategy: REUSE
@@ -390,15 +516,23 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; existing bounded ARV-038 revalidation branch/PR #94; actual site repository verified read-only as arvectum2/arvectum-landing.'
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; existing bounded ARV-038 revalidation
+    branch/PR #94; actual site repository verified read-only as arvectum2/arvectum-landing.'
   roadmap_scope:
   - ARV-038
   dependencies:
   - ARV-018
   - ARV-042
-  executor_scope: Reconcile historical ARV-038 against current public-site repository evidence only. Do not edit/deploy the website, invent prices/pay-per-analysis, publish claims, or make commercial commitments. Preserve Owner/commercial publication gates.
-  done_gate: 'Satisfied for revalidation: actual arvectum.com site repository identified; existing Tender Agent page already covers product-first positioning, demo report, work-format/package cards, pilot, closed-contour and human-decision limitations. Concrete residual is explicit pricing/pay-per-analysis and material public-claim/publication approval, which remains REVIEW/Owner-commercial gated. No site mutation or external effect.'
-
+  executor_scope: Reconcile historical ARV-038 against current public-site repository
+    evidence only. Do not edit/deploy the website, invent prices/pay-per-analysis,
+    publish claims, or make commercial commitments. Preserve Owner/commercial publication
+    gates.
+  done_gate: 'Satisfied for revalidation: actual arvectum.com site repository identified;
+    existing Tender Agent page already covers product-first positioning, demo report,
+    work-format/package cards, pilot, closed-contour and human-decision limitations.
+    Concrete residual is explicit pricing/pay-per-analysis and material public-claim/publication
+    approval, which remains REVIEW/Owner-commercial gated. No site mutation or external
+    effect.'
 - order: 140
   task_id: ARV-015-REVALIDATION-001
   strategy: REUSE
@@ -408,31 +542,48 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible COMMERCIAL-WORKFLOW historical item after blocked/gated earlier branches.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible COMMERCIAL-WORKFLOW
+    historical item after blocked/gated earlier branches.
   roadmap_scope:
   - ARV-015
   dependencies:
   - ARV-003
-  executor_scope: Reconcile ARV-015 against current supplier registry, Decision Core supplier-profile binding, category/profile artifacts and tests. Record only existing capabilities and one concrete source-traceable residual. Do not invent a parallel profile system, external supplier action, commercial commitment or new product priority.
-  done_gate: 'Satisfied for repository revalidation: reusable M-006 supplier identity and existing RFQ-first operator-profile contract/Decision Core binding were verified; structured runtime ingestion is the explicit residual; one bounded candidate_not_admitted successor recorded; exact-head CI required before guarded merge; no external/procurement/commercial effect.'
-
+  executor_scope: Reconcile ARV-015 against current supplier registry, Decision Core
+    supplier-profile binding, category/profile artifacts and tests. Record only existing
+    capabilities and one concrete source-traceable residual. Do not invent a parallel
+    profile system, external supplier action, commercial commitment or new product
+    priority.
+  done_gate: 'Satisfied for repository revalidation: reusable M-006 supplier identity
+    and existing RFQ-first operator-profile contract/Decision Core binding were verified;
+    structured runtime ingestion is the explicit residual; one bounded candidate_not_admitted
+    successor recorded; exact-head CI required before guarded merge; no external/procurement/commercial
+    effect.'
 - order: 150
   task_id: ARV-030-REVALIDATION-001
   strategy: REUSE
   continuation_mode: REVALIDATION
-  title: Revalidate unified marketplace connector layer against current 44-FZ/223-FZ source dispatch
+  title: Revalidate unified marketplace connector layer against current 44-FZ/223-FZ
+    source dispatch
   status: done
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible ETP-CONNECTORS historical item after COMMERCIAL-WORKFLOW successors were dependency-blocked.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible ETP-CONNECTORS
+    historical item after COMMERCIAL-WORKFLOW successors were dependency-blocked.
   roadmap_scope:
   - ARV-030
   dependencies:
   - ARV-002-REVALIDATION-001
-  executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ public providers, pipeline dispatch, source provenance and existing deterministic tests. Record existing reusable seams and one concrete source-traceable residual only. Do not connect authenticated/private ETPs, contact platforms, mutate external systems, or invent provider priority/API contracts.
-  done_gate: 'Satisfied: repository-only revalidation records the existing 44-FZ/223-FZ source seams and the standard marketplace-adapter residual; PR #105 exact head a8f5b2e69719f2799af04b2a00fe6e9cfe5b9559 passed CI run 35616481833 SUCCESS 9/9 and merged as b3cf30241b7ca4acdb7be88a4891f0d163155e1a; successor remains candidate_not_admitted; no authenticated/private ETP or external/procurement/production effect.'
-
+  executor_scope: Reconcile ARV-030 against current registry discovery, 44-FZ/223-FZ
+    public providers, pipeline dispatch, source provenance and existing deterministic
+    tests. Record existing reusable seams and one concrete source-traceable residual
+    only. Do not connect authenticated/private ETPs, contact platforms, mutate external
+    systems, or invent provider priority/API contracts.
+  done_gate: 'Satisfied: repository-only revalidation records the existing 44-FZ/223-FZ
+    source seams and the standard marketplace-adapter residual; PR #105 exact head
+    a8f5b2e69719f2799af04b2a00fe6e9cfe5b9559 passed CI run 35616481833 SUCCESS 9/9
+    and merged as b3cf30241b7ca4acdb7be88a4891f0d163155e1a; successor remains candidate_not_admitted;
+    no authenticated/private ETP or external/procurement/production effect.'
 - order: 160
   task_id: AM4-RENEWAL-RECONCILE-002
   strategy: REUSE
@@ -441,11 +592,19 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Attributable Owner review 2026-09-22 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms with hard stops unchanged; Company decision merged as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.'
+  source: Attributable Owner review 2026-09-22 renewed POS-004 / AI-ENG-001 AM-4 on
+    unchanged terms with hard stops unchanged; Company decision merged as 46f425ec8de9dcc3b5ee85156d09a066cc0c55d4.
   roadmap_scope: []
   dependencies: []
-  executor_scope: Reconcile only the latest Company renewal source/deadline/counter state into repository-owned executor policy/directive/watchdog/checkpoints. Preserve authority scope, hard stops, Product/Company/OS boundaries and every prohibited external effect.
-  done_gate: 'Satisfied for repository work: latest renewal/evidence state reconciled; focused policy/YAML checks and local make check passed; PR #115 head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151 passed GitHub CI run 35777279190 SUCCESS 9/9. Guarded merge of the final bookkeeping head remains conditional on fresh exact-head green CI and all ordinary gates; when merged it counts as automatic merge 1/10 of the 2026-09-22 review cycle.'
+  executor_scope: Reconcile only the latest Company renewal source/deadline/counter
+    state into repository-owned executor policy/directive/watchdog/checkpoints. Preserve
+    authority scope, hard stops, Product/Company/OS boundaries and every prohibited
+    external effect.
+  done_gate: 'Satisfied for repository work: latest renewal/evidence state reconciled;
+    focused policy/YAML checks and local make check passed; PR #115 head dec2aca9c942bf4edff21c0dc2a5c9a7a692a151
+    passed GitHub CI run 35777279190 SUCCESS 9/9. Guarded merge of the final bookkeeping
+    head remains conditional on fresh exact-head green CI and all ordinary gates;
+    when merged it counts as automatic merge 1/10 of the 2026-09-22 review cycle.'
 - order: 170
   task_id: ARV-006-REVALIDATION-001
   strategy: REUSE
@@ -455,15 +614,26 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible 223FZ-BREADTH historical item after ETP-CONNECTORS ARV-030 revalidation; resumed after 2026-09-22 AM-4 renewal.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; first independent eligible 223FZ-BREADTH
+    historical item after ETP-CONNECTORS ARV-030 revalidation; resumed after 2026-09-22
+    AM-4 renewal.
   roadmap_scope:
   - ARV-006
   dependencies:
   - ARV-002-REVALIDATION-001
   - AM4-RENEWAL-RECONCILE-002
-  executor_scope: Reconcile ARV-006 against current dedicated 223-FZ public search/intake, documents/revision signals and regime-aware Decision Core. Record existing capabilities and one concrete source-traceable residual only. Do not invent legal/procedural semantics, connect authenticated/private platforms or perform external procurement actions.
-  done_gate: 'Satisfied for repository work: 223-FZ implemented breadth and concrete residual are reconciled; successor remains candidate_not_admitted; prior exact-head CI was green on both review and renewed-stack heads; renewal reconciliation PR #115 merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774 (1/10); PR #108 is retargeted to main. Guarded AUTO merge of PR #108 requires fresh final exact-head CI and ordinary renewed AM-4 gates; if merged automatically, this is 2/10 of the 2026-09-22 cycle.'
-
+  executor_scope: Reconcile ARV-006 against current dedicated 223-FZ public search/intake,
+    documents/revision signals and regime-aware Decision Core. Record existing capabilities
+    and one concrete source-traceable residual only. Do not invent legal/procedural
+    semantics, connect authenticated/private platforms or perform external procurement
+    actions.
+  done_gate: 'Satisfied for repository work: 223-FZ implemented breadth and concrete
+    residual are reconciled; successor remains candidate_not_admitted; prior exact-head
+    CI was green on both review and renewed-stack heads; renewal reconciliation PR
+    #115 merged as 0a2e0055a3ce30cdcc108a097a09d5a2adb24774 (1/10); PR #108 is retargeted
+    to main. Guarded AUTO merge of PR #108 requires fresh final exact-head CI and
+    ordinary renewed AM-4 gates; if merged automatically, this is 2/10 of the 2026-09-22
+    cycle.'
 - order: 180
   task_id: ARV-067-REVALIDATION-001
   strategy: REUSE
@@ -473,13 +643,18 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; completed repository-only revalidation PR #116.'
+  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; completed repository-only revalidation
+    PR #116.'
   roadmap_scope:
   - ARV-067
   dependencies: []
-  executor_scope: Reconcile repository-owned ontology/taxonomy/profile/truth-pack evidence and preserve expert acceptance as REVIEW/HUMAN; no runtime enablement, fabricated expert approval or external effect.
-  done_gate: 'Satisfied for repository revalidation: PR #116 exact head 77db77aa3430a21190b202f7a111f879759e69b4 passed exact-head checks and guarded-auto-merged as 7f69a81bdbcadb714163f38b3dfd3a320bac72ea; audit issue #57 records this as automatic merge 3/10. Historical expert acceptance remains unproven and REVIEW/HUMAN-gated.'
-
+  executor_scope: Reconcile repository-owned ontology/taxonomy/profile/truth-pack
+    evidence and preserve expert acceptance as REVIEW/HUMAN; no runtime enablement,
+    fabricated expert approval or external effect.
+  done_gate: 'Satisfied for repository revalidation: PR #116 exact head 77db77aa3430a21190b202f7a111f879759e69b4
+    passed exact-head checks and guarded-auto-merged as 7f69a81bdbcadb714163f38b3dfd3a320bac72ea;
+    audit issue #57 records this as automatic merge 3/10. Historical expert acceptance
+    remains unproven and REVIEW/HUMAN-gated.'
 - order: 190
   task_id: ARV-008-REVALIDATION-001
   strategy: REUSE
@@ -493,9 +668,12 @@ items:
   roadmap_scope:
   - ARV-008
   dependencies: []
-  executor_scope: Reconcile historical worker/retry/progress evidence only; preserve ARV-008-WORKER-CONTRACT-001 as candidate_not_admitted and do not choose a worker framework or mutate production runtime.
-  done_gate: 'Satisfied for repository revalidation: PR #113 exact head 3bbca3dc615baedefe645c0ed0036d6534d12998 passed CI run 35812741251 SUCCESS and guarded-auto-merged as e96b3b8d12943dd1e7e63b2c94cf19c81df921bc; audit issue #57 records this as automatic merge 4/10.'
-
+  executor_scope: Reconcile historical worker/retry/progress evidence only; preserve
+    ARV-008-WORKER-CONTRACT-001 as candidate_not_admitted and do not choose a worker
+    framework or mutate production runtime.
+  done_gate: 'Satisfied for repository revalidation: PR #113 exact head 3bbca3dc615baedefe645c0ed0036d6534d12998
+    passed CI run 35812741251 SUCCESS and guarded-auto-merged as e96b3b8d12943dd1e7e63b2c94cf19c81df921bc;
+    audit issue #57 records this as automatic merge 4/10.'
 - order: 200
   task_id: ARV-011-REVALIDATION-001
   strategy: REUSE
@@ -505,13 +683,18 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; repository-only PRODUCTION-RUNTIME continuation.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; repository-only PRODUCTION-RUNTIME
+    continuation.
   roadmap_scope:
   - ARV-011
   dependencies: []
-  executor_scope: Reconcile repository-owned production/VPS/migration/allowlist evidence without production/network/provider/credential mutation or invented architecture/acceptance criteria.
-  done_gate: 'Satisfied for repository revalidation: PR #117 exact head 0abb3abbd1a762960e0169def6cdc4a5619aaf9e passed CI run 35820818048 SUCCESS and guarded-auto-merged as d9d5e921512c1f635818eac316dc7c1dff0b93f8; audit issue #57 records this as automatic merge 5/10. Historical external infrastructure completion remains unproven.'
-
+  executor_scope: Reconcile repository-owned production/VPS/migration/allowlist evidence
+    without production/network/provider/credential mutation or invented architecture/acceptance
+    criteria.
+  done_gate: 'Satisfied for repository revalidation: PR #117 exact head 0abb3abbd1a762960e0169def6cdc4a5619aaf9e
+    passed CI run 35820818048 SUCCESS and guarded-auto-merged as d9d5e921512c1f635818eac316dc7c1dff0b93f8;
+    audit issue #57 records this as automatic merge 5/10. Historical external infrastructure
+    completion remains unproven.'
 - order: 210
   task_id: ARV-012-REVALIDATION-001
   strategy: REUSE
@@ -521,14 +704,20 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; deterministic PRODUCTION-RUNTIME continuation after ARV-011.'
+  source: Active OWNER-CONTINUOUS-ROADMAP-2026-09-18; deterministic PRODUCTION-RUNTIME
+    continuation after ARV-011.
   roadmap_scope:
   - ARV-012
   dependencies:
   - ARV-011-REVALIDATION-001
-  executor_scope: Reconcile repository-owned ARV-012 production/runtime evidence only. Do not infer external infrastructure state, access credentials, mutate provider/network/production systems, or invent production architecture/migration/acceptance criteria.
-  done_gate: 'Satisfied for repository revalidation: PR #118 exact head da92796cb7799d9c6698f6b9a7aa31ff2909bdb1 passed CI run 35830742779 SUCCESS and guarded-auto-merged as ab82ec266dc5a58f254d6dfbae7ce51177031806, automatic merge 6/10. Historical VPS migration remains unproven. This closure is automatic merge 7/10 only if its exact-head CI and ordinary AM-4 gates are green.'
-
+  executor_scope: Reconcile repository-owned ARV-012 production/runtime evidence only.
+    Do not infer external infrastructure state, access credentials, mutate provider/network/production
+    systems, or invent production architecture/migration/acceptance criteria.
+  done_gate: 'Satisfied for repository revalidation: PR #118 exact head da92796cb7799d9c6698f6b9a7aa31ff2909bdb1
+    passed CI run 35830742779 SUCCESS and guarded-auto-merged as ab82ec266dc5a58f254d6dfbae7ce51177031806,
+    automatic merge 6/10. Historical VPS migration remains unproven. This closure
+    is automatic merge 7/10 only if its exact-head CI and ordinary AM-4 gates are
+    green.'
 - order: 220
   task_id: ARV-005-CONTROLLED-PILOT-EVIDENCE-001
   strategy: REUSE
@@ -538,14 +727,25 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Explicit Owner direction 2026-09-23: move to real-procurement runs, keep Mac mini as pilot server, defer VPS.'
+  source: 'Explicit Owner direction 2026-09-23: move to real-procurement runs, keep
+    Mac mini as pilot server, defer VPS.'
   roadmap_scope:
   - ARV-005
   dependencies:
   - ARV-012-REVALIDATION-001
-  executor_scope: 'Read-only public procurement acquisition plus local analysis/inference/reporting on Mac mini. No procurement submission/modification, signing, supplier/customer outreach, payments/commitments, authenticated consequential ETP actions or inferred human acceptance.'
-  done_gate: 'Satisfied: the frozen pilot exercised 12 unique 44-FZ procurements in 3+5+4 waves with 12/12 completed technical reports, plus three separately scored exploratory 223-FZ cases that failed closed as source-bound blockers. Local-LLM/fallback provenance is explicit, confirmed defects have regression capture, and docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md records the aggregate result. Frozen pilot code head 7653c070 passed 105 focused/relevant tests and GitHub Actions CI 37132350065; the 2026-10-07 current-main port passed 142 focused tests, 25 compatibility tests, and make check without rerunning frozen cases. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not inferred.'
-
+  executor_scope: Read-only public procurement acquisition plus local analysis/inference/reporting
+    on Mac mini. No procurement submission/modification, signing, supplier/customer
+    outreach, payments/commitments, authenticated consequential ETP actions or inferred
+    human acceptance.
+  done_gate: 'Satisfied: the frozen pilot exercised 12 unique 44-FZ procurements in
+    3+5+4 waves with 12/12 completed technical reports, plus three separately scored
+    exploratory 223-FZ cases that failed closed as source-bound blockers. Local-LLM/fallback
+    provenance is explicit, confirmed defects have regression capture, and docs/pilot/ARV-005_TECHNICAL_PILOT_REPORT_2026-10-03.md
+    records the aggregate result. Frozen pilot code head 7653c070 passed 105 focused/relevant
+    tests and GitHub Actions CI 37132350065; the 2026-10-07 current-main port passed
+    142 focused tests, 25 compatibility tests, and make check without rerunning frozen
+    cases. Human usefulness/commercial acceptance remains HUMAN/REVIEW and is not
+    inferred.'
 - order: 230
   task_id: MOB-1-IOS-INBOX-001
   strategy: COPY_PATTERN
@@ -555,14 +755,21 @@ items:
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
-  source: 'Owner product directive 2026-10-06 promotes ARV-044 mobile companion to P0; explicit continuation instruction in project chat authorizes implementation.'
+  source: Owner product directive 2026-10-06 promotes ARV-044 mobile companion to
+    P0; explicit continuation instruction in project chat authorizes implementation.
   roadmap_scope:
   - ARV-044
   dependencies:
   - DTR-V2-RULES-FAILURE-001
-  executor_scope: 'Completed bounded MOB-1 slice: native read-only manager inbox/detail over the current Mac mini mobile API with dedicated Bearer pairing and Keychain token storage. Preserve human decision/external-action hard stops; MOB-2 is a separate future admission.'
-  done_gate: 'Satisfied for implementation/review readiness: implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300 passed Xcode 27 build-for-testing, focused iPhone AppStoreTests 2/2, backend mobile contract tests 9/9, runtime bearer-boundary check, git diff check, and exact-head GitHub CI run 37517210451 SUCCESS 9/9. PR #171 is review-ready and remains unmerged while Company AM-4 is review-due at 10/10.'
-
+  executor_scope: 'Completed bounded MOB-1 slice: native read-only manager inbox/detail
+    over the current Mac mini mobile API with dedicated Bearer pairing and Keychain
+    token storage. Preserve human decision/external-action hard stops; MOB-2 is a
+    separate future admission.'
+  done_gate: 'Satisfied for implementation/review readiness: implementation head da9a7f0dd1df7d957856a0405c525ad6c74f5300
+    passed Xcode 27 build-for-testing, focused iPhone AppStoreTests 2/2, backend mobile
+    contract tests 9/9, runtime bearer-boundary check, git diff check, and exact-head
+    GitHub CI run 37517210451 SUCCESS 9/9. PR #171 is review-ready and remains unmerged
+    while Company AM-4 is review-due at 10/10.'
 - order: 240
   task_id: MOB-2-IOS-DECISIONS-001
   strategy: COPY_PATTERN
@@ -572,14 +779,19 @@ items:
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
-  source: 'Explicit Owner admission 2026-10-06; implementation PR #173 and roadmap PR #174 merged.'
+  source: 'Explicit Owner admission 2026-10-06; implementation PR #173 and roadmap
+    PR #174 merged.'
   roadmap_scope:
   - ARV-044
   dependencies:
   - MOB-1-IOS-INBOX-001
-  executor_scope: 'Completed bounded MOB-2 slice: explicit two-step human GO / NO GO / DEFER writes through the existing mobile Bearer boundary into the canonical decision log and Procurement Portfolio. No automatic participation decision or ETP/signature/payment/external action.'
-  done_gate: 'Satisfied: implementation PR #173 exact-head CI 37524387682 SUCCESS 9/9 and merged as fe92b39e7a5944ccb519ee1f7579a811d91153f3; roadmap reconciliation PR #174 merged as be214b9c83c96129a90d1afae41d34c43dc4cc07.'
-
+  executor_scope: 'Completed bounded MOB-2 slice: explicit two-step human GO / NO
+    GO / DEFER writes through the existing mobile Bearer boundary into the canonical
+    decision log and Procurement Portfolio. No automatic participation decision or
+    ETP/signature/payment/external action.'
+  done_gate: 'Satisfied: implementation PR #173 exact-head CI 37524387682 SUCCESS
+    9/9 and merged as fe92b39e7a5944ccb519ee1f7579a811d91153f3; roadmap reconciliation
+    PR #174 merged as be214b9c83c96129a90d1afae41d34c43dc4cc07.'
 - order: 250
   task_id: MOB-3-IOS-PUSH-DEEPLINKS-001
   strategy: ADAPT
@@ -589,14 +801,20 @@ items:
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
-  source: 'Explicit Owner admission 2026-10-06; implementation PR #176 and roadmap PR #177 merged.'
+  source: 'Explicit Owner admission 2026-10-06; implementation PR #176 and roadmap
+    PR #177 merged.'
   roadmap_scope:
   - ARV-044
   dependencies:
   - MOB-2-IOS-DECISIONS-001
-  executor_scope: 'Completed bounded MOB-3 slice: revocable APNs registration, audited delivery ledger, disabled-by-default provider sender pending Apple credentials, and safe procurement/digest deep links. No procurement decision or consequential external action is automated.'
-  done_gate: 'Satisfied: corrected exact-head CI 37533637202 SUCCESS; implementation PR #176 merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4; roadmap PR #177 merged as 8a6a6bea994226422cc54c36156f16a6c2b44aa9. Physical-device APNs delivery remains separately blocked by provisioning entitlement.'
-
+  executor_scope: 'Completed bounded MOB-3 slice: revocable APNs registration, audited
+    delivery ledger, disabled-by-default provider sender pending Apple credentials,
+    and safe procurement/digest deep links. No procurement decision or consequential
+    external action is automated.'
+  done_gate: 'Satisfied: corrected exact-head CI 37533637202 SUCCESS; implementation
+    PR #176 merged as 3ab3872f95c9d8934403533f4411fcddd7569ba4; roadmap PR #177 merged
+    as 8a6a6bea994226422cc54c36156f16a6c2b44aa9. Physical-device APNs delivery remains
+    separately blocked by provisioning entitlement.'
 - order: 260
   task_id: DTR-3-POST-GO-AUTOMATION-001
   strategy: ADAPT
@@ -606,13 +824,18 @@ items:
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
-  source: 'Explicit Owner admission 2026-10-07; canonical implementation PR #180 and roadmap PR #181 merged.'
+  source: 'Explicit Owner admission 2026-10-07; canonical implementation PR #180 and
+    roadmap PR #181 merged.'
   roadmap_scope: []
   dependencies:
   - MOB-3-IOS-PUSH-DEEPLINKS-001
-  executor_scope: 'Completed bounded DTR-3 slice: after attributable HUMAN GO, reuse canonical readiness, prepare local submission-control artifacts, and advance submission/outcome only from attributable or source-bound evidence. Never submit, sign, pay, use private keys or infer success.'
-  done_gate: 'Satisfied: implementation PR #180 exact-head CI 37575956723 SUCCESS 9/9 and merged as 3b25e10bab2930f954d39a444b8258ad597010c9; roadmap PR #181 merged as 205455ae3e87719792928015258481cc39e27102.'
-
+  executor_scope: 'Completed bounded DTR-3 slice: after attributable HUMAN GO, reuse
+    canonical readiness, prepare local submission-control artifacts, and advance submission/outcome
+    only from attributable or source-bound evidence. Never submit, sign, pay, use
+    private keys or infer success.'
+  done_gate: 'Satisfied: implementation PR #180 exact-head CI 37575956723 SUCCESS
+    9/9 and merged as 3b25e10bab2930f954d39a444b8258ad597010c9; roadmap PR #181 merged
+    as 205455ae3e87719792928015258481cc39e27102.'
 - order: 270
   task_id: MOB-4-IOS-PORTFOLIO-METRICS-001
   strategy: COPY_PATTERN
@@ -622,14 +845,19 @@ items:
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
-  source: 'Explicit Owner admission 2026-10-07; implementation PR #183 and roadmap PR #184 merged.'
+  source: 'Explicit Owner admission 2026-10-07; implementation PR #183 and roadmap
+    PR #184 merged.'
   roadmap_scope:
   - ARV-044
   dependencies:
   - DTR-3-POST-GO-AUTOMATION-001
-  executor_scope: 'Completed bounded MOB-4 slice: canonical Procurement Portfolio totals/rates, deterministic pipeline/outcome filters, grounded submission/outcome detail and coherent deep-link refresh. Existing human-decision and consequential-action boundaries remain unchanged.'
-  done_gate: 'Satisfied: implementation PR #183 exact-head CI 37584606448 SUCCESS 9/9 and merged as bdcd868f1c42f3d3165cc8cad2c83b63b682521b; roadmap PR #184 exact-head CI 37586513047 SUCCESS 9/9 and merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
-
+  executor_scope: 'Completed bounded MOB-4 slice: canonical Procurement Portfolio
+    totals/rates, deterministic pipeline/outcome filters, grounded submission/outcome
+    detail and coherent deep-link refresh. Existing human-decision and consequential-action
+    boundaries remain unchanged.'
+  done_gate: 'Satisfied: implementation PR #183 exact-head CI 37584606448 SUCCESS
+    9/9 and merged as bdcd868f1c42f3d3165cc8cad2c83b63b682521b; roadmap PR #184 exact-head
+    CI 37586513047 SUCCESS 9/9 and merged as 66c0839d400c076388e93b212e1adb0b59b21fd7.'
 - order: 280
   task_id: STAGE1-THIN-COMMODITY-SHELL-001
   strategy: REUSE
@@ -639,12 +867,16 @@ items:
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
-  source: 'Explicit Owner directive 2026-10-07 to finish Strategic Program Stage 1.'
+  source: Explicit Owner directive 2026-10-07 to finish Strategic Program Stage 1.
   roadmap_scope: []
   dependencies: []
-  executor_scope: 'Audit and close the existing commodity shell across search/filter/saved views, tender card, document viewing/parsing adapters, auth/roles, alerts and export. Reuse existing components; fix only demonstrated bounded gaps. No custom commodity subsystem and no authority expansion.'
-  done_gate: 'SATISFIED: acceptance matrix and focused gate prove the shell usable end-to-end; focused gate 67 passed / 10 skipped; exact-head CI 37612128040 SUCCESS 9/9; PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b. Hard stops unchanged.'
-
+  executor_scope: Audit and close the existing commodity shell across search/filter/saved
+    views, tender card, document viewing/parsing adapters, auth/roles, alerts and
+    export. Reuse existing components; fix only demonstrated bounded gaps. No custom
+    commodity subsystem and no authority expansion.
+  done_gate: 'SATISFIED: acceptance matrix and focused gate prove the shell usable
+    end-to-end; focused gate 67 passed / 10 skipped; exact-head CI 37612128040 SUCCESS
+    9/9; PR #192 merged as a58ec11ef4324f80fe516a68b1441e3db4208e6b. Hard stops unchanged.'
 - order: 290
   task_id: ARV-015-OPERATOR-PROFILE-PARSER-001
   strategy: ADAPT
@@ -653,13 +885,20 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Existing canonical successor candidate under ARV-015; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Existing canonical successor candidate under ARV-015; explicitly admitted
+    by Owner Commercial Workflow directive 2026-10-07.
   roadmap_scope:
   - ARV-015
   dependencies: []
-  executor_scope: 'Parse the existing Tender_Operator_Profile_Template contract into validated analysis_context.supplier_profile values and feed the existing Decision Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog semantics and fail closed on unknowns.'
-  done_gate: 'SATISFIED: structured RFQ-first profile ingestion implemented and fail-closed; implementation head 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95 passed exact-head CI 37654505822 with 9/9 jobs green, quality make check PASS and 3104 passed / 236 skipped; Decision Core external-action safety unchanged. PR #199 remains guarded by fresh exact-head CI after final bookkeeping.'
-
+  executor_scope: Parse the existing Tender_Operator_Profile_Template contract into
+    validated analysis_context.supplier_profile values and feed the existing Decision
+    Core without a parallel registry/decision engine; preserve RFQ-first/no-fixed-catalog
+    semantics and fail closed on unknowns.
+  done_gate: 'SATISFIED: structured RFQ-first profile ingestion implemented and fail-closed;
+    implementation head 6b0f29ce9d662f7a11bc2cfee0b8c13dc83afc95 passed exact-head
+    CI 37654505822 with 9/9 jobs green, quality make check PASS and 3104 passed /
+    236 skipped; Decision Core external-action safety unchanged. PR #199 remains guarded
+    by fresh exact-head CI after final bookkeeping.'
 - order: 300
   task_id: COMMERCIAL-WORKFLOW-ARV-019-001
   strategy: COPY_PATTERN
@@ -668,13 +907,19 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-019 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-019 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-019
   dependencies: []
-  executor_scope: 'Extend the existing Procurement Kanban/status engine into the roadmap-defined automatic funnel, readiness/blockers, submission/execution/outcome visibility and team KPI projection without creating a second workflow state model.'
-  done_gate: 'Satisfied: canonical DealStatus powers the expanded operator workflow; readiness/blocker, submission/outcome and team KPI projections reuse existing services; focused tests passed; PR #198 exact-head CI runs 37660214910/37660223117 were green and the PR squash-merged as 8f13060bdef0a1db81e0d29fb8f21f883de62284; no autonomous participation/submission or external effect was introduced.'
-
+  executor_scope: Extend the existing Procurement Kanban/status engine into the roadmap-defined
+    automatic funnel, readiness/blockers, submission/execution/outcome visibility
+    and team KPI projection without creating a second workflow state model.
+  done_gate: 'Satisfied: canonical DealStatus powers the expanded operator workflow;
+    readiness/blocker, submission/outcome and team KPI projections reuse existing
+    services; focused tests passed; PR #198 exact-head CI runs 37660214910/37660223117
+    were green and the PR squash-merged as 8f13060bdef0a1db81e0d29fb8f21f883de62284;
+    no autonomous participation/submission or external effect was introduced.'
 - order: 310
   task_id: COMMERCIAL-WORKFLOW-ARV-022-001
   strategy: REUSE
@@ -683,13 +928,22 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-022 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-022 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-022
   dependencies: []
-  executor_scope: 'Integrate an existing OCR/CV engine or the existing Data Platform OCR contract as a fallback for scanned pages/tables, preserving coordinates/confidence and routing low-confidence output to human review. Do not build a custom OCR engine or duplicate Data Platform roadmap work.'
-  done_gate: 'Satisfied: Tender Agent reuses Data Platform DP-OCR-001 rather than owning a duplicate OCR engine; Data Platform PR #85 exposed existing OCR metadata additively and merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7; Tender Agent preserves OCR provider/page/word confidence and bounding boxes, routes low/missing confidence to human review, and leaves native-text paths unchanged. Focused tests passed, exact-head CI run 37674689621 was green, and PR #205 squash-merged as b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc.'
-
+  executor_scope: Integrate an existing OCR/CV engine or the existing Data Platform
+    OCR contract as a fallback for scanned pages/tables, preserving coordinates/confidence
+    and routing low-confidence output to human review. Do not build a custom OCR engine
+    or duplicate Data Platform roadmap work.
+  done_gate: 'Satisfied: Tender Agent reuses Data Platform DP-OCR-001 rather than
+    owning a duplicate OCR engine; Data Platform PR #85 exposed existing OCR metadata
+    additively and merged as 29fb506625061b51839a89c68bf55c8cf9b1efa7; Tender Agent
+    preserves OCR provider/page/word confidence and bounding boxes, routes low/missing
+    confidence to human review, and leaves native-text paths unchanged. Focused tests
+    passed, exact-head CI run 37674689621 was green, and PR #205 squash-merged as
+    b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc.'
 - order: 320
   task_id: COMMERCIAL-WORKFLOW-ARV-053-001
   strategy: ADAPT
@@ -698,13 +952,26 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-053 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-053 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-053
   dependencies: []
-  executor_scope: 'Build customer/supplier counterparty cards and transparent factor-level risk signals from source-bound procurement/contract evidence, reusing current data adapters and scoring primitives. Never collapse uncertainty into an opaque legal/reliability conclusion.'
-  done_gate: 'Satisfied: customer/supplier cards are read-only projections over canonical M-005/M-006 identity plus existing M-020 verification, M-035 supplier-contract, M-047 rating and EIS procurement evidence; every observed factor carries evidence and unavailable signals remain explicitly UNKNOWN/INSUFFICIENT_EVIDENCE. Supplier aggregate risk reuses canonical M-020 confidence_score and verification_result, does not invent per-flag numeric deductions, and excludes neutral history from the aggregate; customer history uses exact INN only and never ambiguous name matching. authoritative_reliability_conclusion and participation_decision remain false. PR #207 exact-head CI run 37684732897 and corrective PR #209 exact-head CI run 37689743505 were green before merges 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e and 82bf13c691fdbff1922ac4bb2e03ec0f33c10406.'
-
+  executor_scope: Build customer/supplier counterparty cards and transparent factor-level
+    risk signals from source-bound procurement/contract evidence, reusing current
+    data adapters and scoring primitives. Never collapse uncertainty into an opaque
+    legal/reliability conclusion.
+  done_gate: 'Satisfied: customer/supplier cards are read-only projections over canonical
+    M-005/M-006 identity plus existing M-020 verification, M-035 supplier-contract,
+    M-047 rating and EIS procurement evidence; every observed factor carries evidence
+    and unavailable signals remain explicitly UNKNOWN/INSUFFICIENT_EVIDENCE. Supplier
+    aggregate risk reuses canonical M-020 confidence_score and verification_result,
+    does not invent per-flag numeric deductions, and excludes neutral history from
+    the aggregate; customer history uses exact INN only and never ambiguous name matching.
+    authoritative_reliability_conclusion and participation_decision remain false.
+    PR #207 exact-head CI run 37684732897 and corrective PR #209 exact-head CI run
+    37689743505 were green before merges 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
+    and 82bf13c691fdbff1922ac4bb2e03ec0f33c10406.'
 - order: 330
   task_id: COMMERCIAL-WORKFLOW-ARV-055-001
   strategy: ADAPT
@@ -713,13 +980,25 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-055 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-055 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-055
   dependencies: []
-  executor_scope: 'Add explainable similar-procurement retrieval over existing search/vector infrastructure using subject, positions, customer and requirements signals; expose why results are similar and deterministic guards against obvious false analogues.'
-  done_gate: 'Satisfied: the read-only /api/tender-research/similar/{registry_number} adapter reuses DataPlatformRagRetriever.search_all_documents for candidate generation/evidence and introduces no parallel vector/embedding backend; displayed similarity is the explainable arithmetic mean of available deterministic subject, structured-position, customer and structured-requirement signals. Guards reject self/same-registry, identical-content, disjoint available OKPD major classes and vector-only candidates with zero subject plus zero/unknown position overlap; unavailable signals remain explicit. Relevant regressions passed (96 tests), full local suite had only the known main-baseline R9 pg_restore failure, and PR #211 implementation-head exact CI run 37693335144 passed 9/9 jobs. This combined completion bookkeeping lands only after PR #211 final exact-head CI also passes.'
-
+  executor_scope: Add explainable similar-procurement retrieval over existing search/vector
+    infrastructure using subject, positions, customer and requirements signals; expose
+    why results are similar and deterministic guards against obvious false analogues.
+  done_gate: 'Satisfied: the read-only /api/tender-research/similar/{registry_number}
+    adapter reuses DataPlatformRagRetriever.search_all_documents for candidate generation/evidence
+    and introduces no parallel vector/embedding backend; displayed similarity is the
+    explainable arithmetic mean of available deterministic subject, structured-position,
+    customer and structured-requirement signals. Guards reject self/same-registry,
+    identical-content, disjoint available OKPD major classes and vector-only candidates
+    with zero subject plus zero/unknown position overlap; unavailable signals remain
+    explicit. Relevant regressions passed (96 tests), full local suite had only the
+    known main-baseline R9 pg_restore failure, and PR #211 implementation-head exact
+    CI run 37693335144 passed 9/9 jobs. This combined completion bookkeeping lands
+    only after PR #211 final exact-head CI also passes.'
 - order: 340
   task_id: COMMERCIAL-WORKFLOW-ARV-057-001
   strategy: ADAPT
@@ -728,13 +1007,23 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-057 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-057 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-057
   dependencies: []
-  executor_scope: 'Normalize source-bound historical price observations and expose comparable ranges/NMCK orientation with evidence for every comparison. Keep forecasts separate from observed facts and fail closed on incomparable or insufficient samples.'
-  done_gate: 'Satisfied: /api/tender-research/historical-prices/{registry_number} reuses ARV-055/Data Platform analogue retrieval plus canonical procurement/price evidence; comparability fails closed on chronology, currency, position quantity/unit basis and exact multi-position baskets. Every included observation exposes source-bound subject/NMCK/publication/position evidence; insufficient or incomparable samples remain explicit, is_forecast=false and commercial_commitment=false. Focused/relevant regressions passed, full local suite had only the proven macOS main-baseline R9 pg_restore failure, PR #212 final exact-head CI run 37726210313 passed 9/9 jobs, and implementation merged as ebcead468610a88e298b55881d4287cdaed444c3.'
-
+  executor_scope: Normalize source-bound historical price observations and expose
+    comparable ranges/NMCK orientation with evidence for every comparison. Keep forecasts
+    separate from observed facts and fail closed on incomparable or insufficient samples.
+  done_gate: 'Satisfied: /api/tender-research/historical-prices/{registry_number}
+    reuses ARV-055/Data Platform analogue retrieval plus canonical procurement/price
+    evidence; comparability fails closed on chronology, currency, position quantity/unit
+    basis and exact multi-position baskets. Every included observation exposes source-bound
+    subject/NMCK/publication/position evidence; insufficient or incomparable samples
+    remain explicit, is_forecast=false and commercial_commitment=false. Focused/relevant
+    regressions passed, full local suite had only the proven macOS main-baseline R9
+    pg_restore failure, PR #212 final exact-head CI run 37726210313 passed 9/9 jobs,
+    and implementation merged as ebcead468610a88e298b55881d4287cdaed444c3.'
 - order: 350
   task_id: COMMERCIAL-WORKFLOW-ARV-059-001
   strategy: ADAPT
@@ -743,13 +1032,27 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-059 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-059 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-059
   dependencies: []
-  executor_scope: 'Create the source-bound procurement -> contract -> execution stages -> payments -> timing -> penalties -> actual price -> outcome projection using existing canonical lifecycle/evidence primitives; feed factual outcomes back into analytics without autonomous learning promotion.'
-  done_gate: 'Satisfied in PR #214: /contract-execution-analytics/deals/{deal_id} projects existing canonical Deal/procurement, supplier contract, execution command/stages, payment collection/tracking, timing, claim/incident signals, outcome, closure/report and postmortem facts without a competing persistence layer. Known facts carry canonical refs/evidence; missing facts stay UNKNOWN; procurement matching is exact-number only; collected payments are not relabeled as actual contract price; claim/incident signals are not converted into invented monetary penalties; learning_promotion_performed=false and read-only regression tests prove no event/KPI/postmortem writes. Deal dashboards consume the same projection via lifecycle_* metrics. Focused tests/make check passed; full local suite had only the already-proven macOS R9 pg_restore baseline failure; implementation-head exact-head CI run 37729243087 passed 9/9 jobs. Final exact-head CI on the combined completion head is required before merge.'
-
+  executor_scope: Create the source-bound procurement -> contract -> execution stages
+    -> payments -> timing -> penalties -> actual price -> outcome projection using
+    existing canonical lifecycle/evidence primitives; feed factual outcomes back into
+    analytics without autonomous learning promotion.
+  done_gate: 'Satisfied in PR #214: /contract-execution-analytics/deals/{deal_id}
+    projects existing canonical Deal/procurement, supplier contract, execution command/stages,
+    payment collection/tracking, timing, claim/incident signals, outcome, closure/report
+    and postmortem facts without a competing persistence layer. Known facts carry
+    canonical refs/evidence; missing facts stay UNKNOWN; procurement matching is exact-number
+    only; collected payments are not relabeled as actual contract price; claim/incident
+    signals are not converted into invented monetary penalties; learning_promotion_performed=false
+    and read-only regression tests prove no event/KPI/postmortem writes. Deal dashboards
+    consume the same projection via lifecycle_* metrics. Focused tests/make check
+    passed; full local suite had only the already-proven macOS R9 pg_restore baseline
+    failure; implementation-head exact-head CI run 37729243087 passed 9/9 jobs. Final
+    exact-head CI on the combined completion head is required before merge.'
 - order: 360
   task_id: COMMERCIAL-WORKFLOW-ARV-060-001
   strategy: COPY_PATTERN
@@ -758,13 +1061,26 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-060 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-060 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-060
   dependencies: []
-  executor_scope: 'Add internal ProcurementCase discussion, @mentions, evidence links and immutable decision/comment history by reusing current audit/event primitives. Notifications stay internal unless a separately admitted external delivery adapter exists.'
-  done_gate: 'Satisfied in PR #215: append-only ProcurementCase COMMENT/DECISION journal is customer/project/case scoped; cross-tenant reads fail closed; every entry carries explicit actor attribution; @mentions persist as INTERNAL_UNREAD internal references only; typed evidence links are preserved; superseding decisions append rather than mutate; ORM update/delete guards and absent PATCH/DELETE routes preserve immutable history; PilotAuditEvent records attribution and notification_channel=internal_only; no email/push/outbox/supplier/customer/regulator delivery is invoked. Focused ARV-060/customer-pilot/expert-review tests pass, migration head is 103_add_case_collaboration, make check passes, full local suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head exact-head CI run 37732584551 passed 9/9 jobs. Final exact-head CI on the combined completion head is required before merge.'
-
+  executor_scope: Add internal ProcurementCase discussion, @mentions, evidence links
+    and immutable decision/comment history by reusing current audit/event primitives.
+    Notifications stay internal unless a separately admitted external delivery adapter
+    exists.
+  done_gate: 'Satisfied in PR #215: append-only ProcurementCase COMMENT/DECISION journal
+    is customer/project/case scoped; cross-tenant reads fail closed; every entry carries
+    explicit actor attribution; @mentions persist as INTERNAL_UNREAD internal references
+    only; typed evidence links are preserved; superseding decisions append rather
+    than mutate; ORM update/delete guards and absent PATCH/DELETE routes preserve
+    immutable history; PilotAuditEvent records attribution and notification_channel=internal_only;
+    no email/push/outbox/supplier/customer/regulator delivery is invoked. Focused
+    ARV-060/customer-pilot/expert-review tests pass, migration head is 103_add_case_collaboration,
+    make check passes, full local suite has only the proven macOS R9 pg_restore baseline
+    failure, and implementation-head exact-head CI run 37732584551 passed 9/9 jobs.
+    Final exact-head CI on the combined completion head is required before merge.'
 - order: 370
   task_id: COMMERCIAL-WORKFLOW-ARV-063-001
   strategy: ADAPT
@@ -773,13 +1089,27 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-063 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-063 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-063
   dependencies: []
-  executor_scope: 'Generate reviewable Form 2, commercial proposal, declarations, specifications and inventories using reusable document/template tooling while preserving layout, working_kp.xlsx/version lineage and field provenance. Output remains draft/review-only.'
-  done_gate: 'Satisfied in PR #216: bounded DOCX/XLSX generation adapts pinned python-docx/openpyxl and existing DocumentArtifact/ArtifactVersion lineage instead of adding a generic document platform. Explicit DOCX token and XLSX sheet/cell targets preserve unrelated representative layout and fail closed on unsupported formats, missing/ambiguous targets or cross-deal provenance. FORM_2, COMMERCIAL_PROPOSAL, DECLARATION, SPECIFICATION and INVENTORY are supported as DRAFT_REVIEW_ONLY; each generated field persists source/ref, target, original/generated value and template/output hash/version evidence. Commercial-proposal XLSX preserves one working_kp.xlsx artifact lineage and prior version bytes. Signing, submission and external delivery flags remain false and no consequential external adapter is invoked. Focused/relevant tests pass, full local suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head exact-head CI run 37736023869 passed 9/9 jobs. Final exact-head CI on the combined completion head is required before merge.'
-
+  executor_scope: Generate reviewable Form 2, commercial proposal, declarations, specifications
+    and inventories using reusable document/template tooling while preserving layout,
+    working_kp.xlsx/version lineage and field provenance. Output remains draft/review-only.
+  done_gate: 'Satisfied in PR #216: bounded DOCX/XLSX generation adapts pinned python-docx/openpyxl
+    and existing DocumentArtifact/ArtifactVersion lineage instead of adding a generic
+    document platform. Explicit DOCX token and XLSX sheet/cell targets preserve unrelated
+    representative layout and fail closed on unsupported formats, missing/ambiguous
+    targets or cross-deal provenance. FORM_2, COMMERCIAL_PROPOSAL, DECLARATION, SPECIFICATION
+    and INVENTORY are supported as DRAFT_REVIEW_ONLY; each generated field persists
+    source/ref, target, original/generated value and template/output hash/version
+    evidence. Commercial-proposal XLSX preserves one working_kp.xlsx artifact lineage
+    and prior version bytes. Signing, submission and external delivery flags remain
+    false and no consequential external adapter is invoked. Focused/relevant tests
+    pass, full local suite has only the proven macOS R9 pg_restore baseline failure,
+    and implementation-head exact-head CI run 37736023869 passed 9/9 jobs. Final exact-head
+    CI on the combined completion head is required before merge.'
 - order: 380
   task_id: COMMERCIAL-WORKFLOW-ARV-064-001
   strategy: ADAPT
@@ -788,13 +1118,28 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-064 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-064 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-064
   dependencies: []
-  executor_scope: 'Implement tenant-isolated reusable company-document/profile primitives for statutory documents, licenses, certificates, experience, requisites and templates with versions/expiry and safe autofill hooks. Use synthetic fixtures; do not import unrelated real private documents automatically.'
-  done_gate: 'Satisfied in PR #217: customer-scoped append-only profile facts and reusable company documents bind exact existing DocumentArtifact/ArtifactVersion lineage with source refs and explicit expiry. Cross-tenant reuse, deal-bound artifacts and duplicate reuse of one artifact lineage fail closed; expired evidence remains visible but autofill returns only explicitly requested latest non-expired stored facts, with inference_performed=false and private_document_import_performed=false. Statutory/license/certificate/experience/requisites/template categories are supported; superseded versions remain auditable under immutable update/delete guards. Synthetic fixtures only are used. Focused ARV-064 tests pass, compatibility tests pass, migration head is 105_add_company_profile_store, make check passes, full local suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head exact-head CI run 37742015589 passed all 9 jobs. Final exact-head CI on the combined completion head is required before merge.'
-
+  executor_scope: Implement tenant-isolated reusable company-document/profile primitives
+    for statutory documents, licenses, certificates, experience, requisites and templates
+    with versions/expiry and safe autofill hooks. Use synthetic fixtures; do not import
+    unrelated real private documents automatically.
+  done_gate: 'Satisfied in PR #217: customer-scoped append-only profile facts and
+    reusable company documents bind exact existing DocumentArtifact/ArtifactVersion
+    lineage with source refs and explicit expiry. Cross-tenant reuse, deal-bound artifacts
+    and duplicate reuse of one artifact lineage fail closed; expired evidence remains
+    visible but autofill returns only explicitly requested latest non-expired stored
+    facts, with inference_performed=false and private_document_import_performed=false.
+    Statutory/license/certificate/experience/requisites/template categories are supported;
+    superseded versions remain auditable under immutable update/delete guards. Synthetic
+    fixtures only are used. Focused ARV-064 tests pass, compatibility tests pass,
+    migration head is 105_add_company_profile_store, make check passes, full local
+    suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head
+    exact-head CI run 37742015589 passed all 9 jobs. Final exact-head CI on the combined
+    completion head is required before merge.'
 - order: 390
   task_id: COMMERCIAL-WORKFLOW-ARV-066-001
   strategy: ADAPT
@@ -803,13 +1148,19 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-066 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: Canonical ARV-066 next_result; explicitly admitted by Owner Commercial Workflow
+    directive 2026-10-07.
   roadmap_scope:
   - ARV-066
   dependencies: []
-  executor_scope: 'Add a safe canonical import contract for procurement URL/registry number and bounded browser/share-action handoff surfaces that resolve into the existing customer case/intake path; DOM scraping must not be the sole source of truth.'
-  done_gate: 'Satisfied: direct registry-number and allowlisted EIS URL inputs normalize into canonical ProcurementCase intake with provenance, unsupported/ambiguous inputs fail closed, duplicate/concurrent handoff is idempotent, DOM scraping is not source truth, and PR #220 merged as 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f.'
-
+  executor_scope: Add a safe canonical import contract for procurement URL/registry
+    number and bounded browser/share-action handoff surfaces that resolve into the
+    existing customer case/intake path; DOM scraping must not be the sole source of
+    truth.
+  done_gate: 'Satisfied: direct registry-number and allowlisted EIS URL inputs normalize
+    into canonical ProcurementCase intake with provenance, unsupported/ambiguous inputs
+    fail closed, duplicate/concurrent handoff is idempotent, DOM scraping is not source
+    truth, and PR #220 merged as 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f.'
 - order: 400
   task_id: COMMERCIAL-WORKFLOW-ARV-069-001
   strategy: ADAPT
@@ -818,14 +1169,20 @@ items:
   authority: REVIEW
   independent: true
   auto_merge: false
-  source: 'Originally admitted by Owner Commercial Workflow directive 2026-10-07; immediate admission superseded by Owner roadmap optimization 2026-10-08.'
+  source: Originally admitted by Owner Commercial Workflow directive 2026-10-07; immediate
+    admission superseded by Owner roadmap optimization 2026-10-08.
   roadmap_scope:
   - ARV-069
   dependencies: []
-  blocked_on: 'Experiment trigger: sufficient source-bound comparable completed procurement/outcome corpus plus a frozen benchmark showing measurable value over the historical-price baseline.'
-  executor_scope: 'Do not implement until trigger evidence is recorded. When reopened, forecast context must separate observed facts from estimates, expose sample/evaluation quality and uncertainty, and remain advisory under HUMAN decision control.'
-  done_gate: 'Trigger evidence is satisfied and frozen before implementation; evaluated forecast provides measurable benefit over deterministic historical-price context without autonomous participation claims.'
-
+  blocked_on: 'Experiment trigger: sufficient source-bound comparable completed procurement/outcome
+    corpus plus a frozen benchmark showing measurable value over the historical-price
+    baseline.'
+  executor_scope: Do not implement until trigger evidence is recorded. When reopened,
+    forecast context must separate observed facts from estimates, expose sample/evaluation
+    quality and uncertainty, and remain advisory under HUMAN decision control.
+  done_gate: Trigger evidence is satisfied and frozen before implementation; evaluated
+    forecast provides measurable benefit over deterministic historical-price context
+    without autonomous participation claims.
 - order: 410
   task_id: ACTIVE-ROADMAP-ARV-061-001
   strategy: ADAPT
@@ -835,15 +1192,24 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'APR-01 in Owner-optimized Active Product Roadmap 2026-10-08. Reuse/rebase verified ARV-061 revalidation evidence from open PR #111 where useful; do not duplicate already-proven analysis.'
+  source: 'APR-01 in Owner-optimized Active Product Roadmap 2026-10-08. Reuse/rebase
+    verified ARV-061 revalidation evidence from open PR #111 where useful; do not
+    duplicate already-proven analysis.'
   roadmap_scope:
   - ARV-061
   dependencies: []
-  executor_scope: 'From a supported procurement registry number/URL and existing canonical intake, produce a fast evidence-grounded pre-analysis: subject, deadline, essential requirements, blockers/unknowns, fit signals and citations. Reuse current facts/evidence/Decision Core paths; do not build a second analysis engine or make an autonomous participation decision.'
-  completion_evidence: "PR #225 merged 59c477eb; exact-head CI run 37764420661 SUCCESS 9/9; local 30 focused tests passed; live EIS 0372200172326000015 0.368s; limited card claims are explicitly UNKNOWN for attachment-only facts."
-  done_gate: 'Supported 44-FZ inputs produce a deterministic bounded cited pre-analysis with source/page/fragment evidence where available, explicit UNKNOWN for unsupported/missing facts, latency measured against a documented target, focused regressions pass and exact-head CI is green.'
-
-
+  executor_scope: 'From a supported procurement registry number/URL and existing canonical
+    intake, produce a fast evidence-grounded pre-analysis: subject, deadline, essential
+    requirements, blockers/unknowns, fit signals and citations. Reuse current facts/evidence/Decision
+    Core paths; do not build a second analysis engine or make an autonomous participation
+    decision.'
+  completion_evidence: 'PR #225 merged 59c477eb; exact-head CI run 37764420661 SUCCESS
+    9/9; local 30 focused tests passed; live EIS 0372200172326000015 0.368s; limited
+    card claims are explicitly UNKNOWN for attachment-only facts.'
+  done_gate: Supported 44-FZ inputs produce a deterministic bounded cited pre-analysis
+    with source/page/fragment evidence where available, explicit UNKNOWN for unsupported/missing
+    facts, latency measured against a documented target, focused regressions pass
+    and exact-head CI is green.
 - order: 1000
   task_id: APR-02-223FZ-CORPUS-001
   title: Freeze real public 223-FZ corpus before breadth implementation
@@ -851,16 +1217,21 @@ items:
   authority: AUTO
   independent: true
   auto_merge: false
-  source: 'Product Owner 2026-10-08: execute next active roadmap step APR-02; explicit real-source prerequisite from optimized roadmap and ARV-006 revalidation.'
+  source: 'Product Owner 2026-10-08: execute next active roadmap step APR-02; explicit
+    real-source prerequisite from optimized roadmap and ARV-006 revalidation.'
   roadmap_scope:
   - ARV-006
   dependencies: []
   strategy: ADAPT
-  executor_scope: 'Read-only authenticated-as-public EIS evidence collection, provenance freeze and gap measurement using existing 223-FZ parser. Do not invent source fixtures, 223-FZ legal semantics, perform EIS/ETP mutation or handle private credentials.'
-  done_gate: 'Authentic publicly available 223-FZ source bundle with timestamps/checksums; field-level source truth and measured adapter gaps; focus regression checks. Implementation beyond corpus is a separately bounded successor.'
-  completion_evidence: 'PR #227; four real RI223 SOAP procurement XML archives with 10/10 public EIS attachments and SHA-256 manifest on Mac mini; docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; 14 focused regressions passed; no broader lifecycle coverage claimed.'
-
-
+  executor_scope: Read-only authenticated-as-public EIS evidence collection, provenance
+    freeze and gap measurement using existing 223-FZ parser. Do not invent source
+    fixtures, 223-FZ legal semantics, perform EIS/ETP mutation or handle private credentials.
+  done_gate: Authentic publicly available 223-FZ source bundle with timestamps/checksums;
+    field-level source truth and measured adapter gaps; focus regression checks. Implementation
+    beyond corpus is a separately bounded successor.
+  completion_evidence: 'PR #227; four real RI223 SOAP procurement XML archives with
+    10/10 public EIS attachments and SHA-256 manifest on Mac mini; docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md;
+    14 focused regressions passed; no broader lifecycle coverage claimed.'
 - order: 1010
   task_id: APR-02-RI223-STRUCTURED-001
   title: Source-bound RI223 lots positions and protocol evidence
@@ -868,14 +1239,25 @@ items:
   authority: AUTO
   independent: true
   auto_merge: false
-  source: 'Owner 2026-10-08: merge PR #227 and continue APR-02; measured four-notice RI223 corpus with two observed purchaseProtocol XML members.'
-  completion_evidence: 'Owner explicitly approved PR #230; exact-head CI 37786981315 SUCCESS 9/9; merged as 44cc5d93ac18260bca5998eaa2d040daabf86891; 58 focused tests passed; four original RI223 archives and 10 attachment references verified.'
-  roadmap_scope: [ARV-006]
+  source: 'Owner 2026-10-08: merge PR #227 and continue APR-02; measured four-notice
+    RI223 corpus with two observed purchaseProtocol XML members.'
+  completion_evidence: 'Owner explicitly approved PR #230; exact-head CI 37786981315
+    SUCCESS 9/9; merged as 44cc5d93ac18260bca5998eaa2d040daabf86891; 58 focused tests
+    passed; four original RI223 archives and 10 attachment references verified.'
+  roadmap_scope:
+  - ARV-006
   strategy: ADAPT
-  dependencies: [APR-02-223FZ-CORPUS-001]
-  executor_scope: 'Extend existing read-only getDocsIP RI223 path with bounded XML-source projection: exact notice-bound lots/positions, source-level protocol record observation, citations to ZIP XML member/hash, explicit UNKNOWN for unsupported statuses, versions, absent artifacts. Preserve 44-FZ mode unchanged. Do not perform external actions or infer legal/procedural decisions.'
-  done_gate: 'Four original RI223 archives and frozen sanitized fixture tests validate exact lots/positions/protocol markers, hash/provenance, no 44-FZ fallback and fail-closed mismatch/revision/schema/archive guards. Existing focused tests and exact-head CI pass; Owner REVIEW required before merge.'
-
+  dependencies:
+  - APR-02-223FZ-CORPUS-001
+  executor_scope: 'Extend existing read-only getDocsIP RI223 path with bounded XML-source
+    projection: exact notice-bound lots/positions, source-level protocol record observation,
+    citations to ZIP XML member/hash, explicit UNKNOWN for unsupported statuses, versions,
+    absent artifacts. Preserve 44-FZ mode unchanged. Do not perform external actions
+    or infer legal/procedural decisions.'
+  done_gate: Four original RI223 archives and frozen sanitized fixture tests validate
+    exact lots/positions/protocol markers, hash/provenance, no 44-FZ fallback and
+    fail-closed mismatch/revision/schema/archive guards. Existing focused tests and
+    exact-head CI pass; Owner REVIEW required before merge.
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
@@ -883,25 +1265,30 @@ completed_dependencies:
 - task_id: DOCUMENT-QA-004
   source: 'issue #11 and completed held-out acceptance sequence'
   status: done
-
 - order: 1020
   task_id: APR-02-RI223-RAR-OPAQUE-001
   title: Preserve authentic RI223 RAR attachments as safe opaque evidence
   status: blocked
-  blocked_on: 'Exact-head CI and attributable Owner REVIEW before merge.'
+  blocked_on: Exact-head CI and attributable Owner REVIEW before merge.
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
   strategy: ADAPT
   continuation_mode: OWNER_DIRECTIVE
-  source: "APR-02 active Owner roadmap; measured real RAR omission on 223-FZ registry 32616445795 in docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md."
-  roadmap_scope: [ARV-006]
-  dependencies: [APR-02-RI223-STRUCTURED-001]
-  executor_scope: "Acquire and preserve bounded original RAR attachment as opaque read-only file with provenance and explicit manual-review/unsupported-parsing flags. Reuse existing attachment downloader. No archive extraction, unsafe format execution, automatic interpretation or external procurement action."
-  done_gate: "Real original RI223 evidence for 32616445795 verified; RAR download source bound, size/URL guards retained, review-only status explicit, targeted regressions and exact-head CI pass; human review before merge."
-
+  source: APR-02 active Owner roadmap; measured real RAR omission on 223-FZ registry
+    32616445795 in docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md.
+  roadmap_scope:
+  - ARV-006
+  dependencies:
+  - APR-02-RI223-STRUCTURED-001
+  executor_scope: Acquire and preserve bounded original RAR attachment as opaque read-only
+    file with provenance and explicit manual-review/unsupported-parsing flags. Reuse
+    existing attachment downloader. No archive extraction, unsafe format execution,
+    automatic interpretation or external procurement action.
+  done_gate: Real original RI223 evidence for 32616445795 verified; RAR download source
+    bound, size/URL guards retained, review-only status explicit, targeted regressions
+    and exact-head CI pass; human review before merge.
   local_verified_code_commit: 75c791784a33cadf9a67760e7894dd54ff6f2342
-
 - order: 1030
   task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
   title: Real 223-FZ RAR inner-document extraction and analysis
@@ -911,8 +1298,16 @@ completed_dependencies:
   auto_merge: false
   strategy: ADAPT
   continuation_mode: OWNER_DIRECTIVE
-  source: "Explicit Owner direction 2026-10-08 to merge PR #232, continue and analyze contents, after authentic RI223 32616445795 RAR evidence."
-  roadmap_scope: [ARV-006]
-  dependencies: [APR-02-RI223-RAR-OPAQUE-001]
-  executor_scope: "Safely stream and bound real RI223 RAR member bytes to canonical child document store and existing Data Platform analysis pipeline, retaining parent SHA-256/XML source binding, unsupported/unknown and manual-review gates. No external EIS/ETP action or bespoke document parsing engine."
-  done_gate: "Verified real 32616445795 RAR contents produce traceable parsed source documents through Data Platform, constrained extraction regression passes, exact-head CI green, Owner REVIEW before merge."
+  source: 'Explicit Owner direction 2026-10-08 to merge PR #232, continue and analyze
+    contents, after authentic RI223 32616445795 RAR evidence.'
+  roadmap_scope:
+  - ARV-006
+  dependencies:
+  - APR-02-RI223-RAR-OPAQUE-001
+  executor_scope: Safely stream and bound real RI223 RAR member bytes to canonical
+    child document store and existing Data Platform analysis pipeline, retaining parent
+    SHA-256/XML source binding, unsupported/unknown and manual-review gates. No external
+    EIS/ETP action or bespoke document parsing engine.
+  done_gate: Verified real 32616445795 RAR contents produce traceable parsed source
+    documents through Data Platform, constrained extraction regression passes, exact-head
+    CI green, Owner REVIEW before merge.
