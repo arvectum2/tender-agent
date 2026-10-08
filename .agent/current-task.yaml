@@ -1,40 +1,25 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-02-RI223-STRUCTURED-001
-status: completed
+task_id: APR-02-RI223-RAR-OPAQUE-001
+status: in_progress
 authority: OWNER_DIRECTIVE
-goal: Extract real RI223 public notice lot/position facts and protocol observations as evidence, without inventing status or 44-FZ legal semantics.
+goal: "Preserve genuine 223-FZ RAR attachments as safely bounded, non-executable, source-bound opaque evidence without claiming their contents were parsed."
 definition_of_done:
-- Extract exact source-labelled lots/positions/protocol records from verified RI223 XML and expose through existing read-only EIS ingest path.
-- Reject cross-number XML, ambiguous notice versions, unknown schema, oversized ZIP and unsupported payloads without optimistic facts.
-- Anchor extracted values to original XML member, SHA-256 and explicit paths; sanitized tests plus live original-corpus regression pass.
-- Focused checks, make check and exact-head CI green; PR ready for Owner REVIEW.
+  - "Reproduce and freeze a real 223-FZ RAR evidence record for 32616445795, excluding secrets and sensitive payloads from Git."
+  - "Reuse canonical guarded attachment download path; RAR must remain unextracted, flagged manual review, and source-bound."
+  - "Keep unsupported extensions and URL/size protections intact; no unsupported claims about attachment text, legal status or analysis completeness."
+  - "Add focused positive/negative tests, run local checks, prepare exact-head CI and reviewable PR."
 completed:
-- PR
-- Four original RI223 SOAP ZIP source archives (10/10 attachments) available on Mac mini.
-- Discovered two purchaseProtocol XML members (32616445866 and 32616447910), while all four have one lot and one position in purchaseNotice XML;
-  previous NOT_OBSERVED protocol claim was incomplete.
-- Added pure bounded RI223 ZIP/XML parser for exact notice-bound lots/positions, per-member/archive source SHA-256, and protocol/attachment source
-  records.
-- Wired explicit law_type=223fz into RealEisLoader, EisTenderLoader, and pipeline; default 44-FZ PRIZ route unchanged, no legacy listAttachments
-  fallback for 223-FZ.
-- Reconciled authentic protocol observation in docs/223fz and froze sanitized structural positive/negative tests.
-- Verified four original SHA-256 ZIPs and all 4 notice projections (four lots, four positions, two protocol records, ten source-bound attachments).
-- Focused regressions: 58 passed, 1 existing Starlette deprecation warning; make check, changed-file Ruff and git diff --check passed.
-- 'PR #230 owner-approved merge 44cc5d93ac18260bca5998eaa2d040daabf86891; exact-head CI 37786981315 SUCCESS all 9/9 jobs.'
-current: Bounded RI223 lots/positions/protocol evidence increment merged and verified; APR-02 larger roadmap outcome still open for separately
-  evidence-admitted changes.
-pending: []
-last_verified_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
+  - "Reconciled main f139da89, real APR-02 four-case SOAP corpus and documented 32616445795 RAR ingestion gap."
+current: "Acquire real RAR evidence, implement opaque review-only transport and guardrails."
+pending:
+  - "Verify original 32616445795 RI223 SOAP XML and RAR source."
+  - "Implement guarded opaque acquisition + attribution/unknown semantics."
+  - "Regression tests and reviewable PR."
+last_verified_commit: f139da89318d48b8dccfc1ed6c930007d1408ea6
 test_results:
-- PR
-- 58 targeted tests passed, 1 unrelated Starlette deprecation warning.
-- Four original RI223 SOAP archives, hashes and 10 source-bound documents validated 4/4 PASS.
-- Changed-file Ruff, make check, git diff --check PASS.
-- 'Final exact-head CI 37786981315: SUCCESS 9/9 on 998af5dc; Owner-approved merge PR #230.'
-resume_instruction: Task completed; do not repeat. Source truth docs/223fz/APR02_RI223_STRUCTURED_EVIDENCE_2026-10-08.md and frozen Mac mini originals.
-  Future APR-02 revisions/clarifications/status/real multi-lot require separate measured-gap admission. AM-4 R2 Company approval is active for
-  eligible AUTO PRs, but no HUMAN/REVIEW bypass.
+  - "Not run for this successor yet."
+resume_instruction: "Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-rar-opaque: verify genuine RAR sample from 32616445795, implement narrow opaque/manual-review path and regression tests; don't extract or infer parsed content, then run targeted checks and prepare guarded PR."
 execution:
-  branch: feature/apr02-ri223-structured-evidence
-  base_commit: 4805b5e546d635ae4c5ca4e9a6b60d35f6236885
+  branch: feature/apr02-ri223-rar-opaque
+  base_commit: f139da89318d48b8dccfc1ed6c930007d1408ea6
