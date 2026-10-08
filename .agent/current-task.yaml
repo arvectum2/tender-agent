@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: ACTIVE-PRODUCT-ROADMAP-OPTIMIZATION-20261008
 authority: OWNER_DIRECTIVE
 goal: Optimize the Tender Agent roadmap into a short outcome-driven active product plan while preserving the historical ARV registry, moving technology/customer-triggered ideas out of the active backlog, and preventing the watchdog from treating every historical open item as mandatory work.
@@ -19,20 +19,21 @@ definition_of_done:
 completed:
 - '2026-10-08: Owner explicitly directed optimization and roadmap update after reviewing which open items are actually necessary.'
 - '2026-10-08: Reconciled current main at 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f; ARV-066 is merged/completed.'
-current: Optimized roadmap, trigger backlog, queue and owner directive are reconciled; open PR and require exact-head CI before merge.
-pending:
-- Open PR, require exact-head CI, merge.
-last_verified_commit: 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f
+current: Optimized Active Product Roadmap is merged and canonical; APR-01 / ARV-061 is the next ready product task.
+pending: []
+last_verified_commit: 26d24ccbbd28808b1add87aec4eedee16d8f02b9
 test_results:
 - 'Mac mini focused governance/roadmap tests: 6 passed, 1 warning.'
 - 'YAML parse for executor policy, owner directive, current task, execution queue and master roadmap: PASS.'
-updated_at: '2026-10-08T12:12:00+03:00'
-resume_instruction: Open the roadmap optimization PR, require exact-head CI green, merge, then leave ACTIVE-ROADMAP-ARV-061-001 as the next ready product task. Reuse/rebase PR #111 evidence where useful; do not execute ARV-069 until its experiment trigger is evidenced.
+- 'PR #221 exact-head CI run 37755963895: SUCCESS (9/9 jobs).'
+- 'PR #221 squash-merged as 26d24ccbbd28808b1add87aec4eedee16d8f02b9.'
+updated_at: '2026-10-08T12:31:00+03:00'
+resume_instruction: Start ACTIVE-ROADMAP-ARV-061-001 from the optimized Active Product Roadmap. Reuse/rebase verified ARV-061 evidence from PR #111 where useful. Do not execute ARV-069 or any trigger-backlog item until its trigger is evidenced.
 execution:
-  claimed_by: ChatGPT
-  execution_id: active-product-roadmap-optimization-20261008
-  branch: roadmap/active-product-roadmap-optimization-20261008
-  base_commit: 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f
+  claimed_by: null
+  execution_id: null
+  branch: null
+  base_commit: 26d24ccbbd28808b1add87aec4eedee16d8f02b9
   issue: null
-  manual_override: true
+  manual_override: false
   lease_until: null
