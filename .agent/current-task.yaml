@@ -21,6 +21,7 @@ completed:
   - Installed permanent Node-backed LaunchAgent and automatic rollback to original plist after direct bash TCC denial; final retry succeeded.
   - Confirmed backend PID CWD on SSD and health 200; forced launchctl restart passed 13/13 GitHub=disk=active SHA checks.
   - Preserved open PR #227/#228/#229 in independent verified SSD worktrees and removed superseded clean /tmp clone.
+  - Protected 17-, 72- and 1-commit unmerged internal histories under local SSD archival Git refs; separately bundled independent test snapshot and privately backed up untracked legacy environment file.
   - Installed hourly read-only drift guard (launchd exit 0, 13/13 checks) with local notification on drift transition.
   - Versioned launcher, guard, verifier and 3 fail-closed tests on SSD worktree; tests all passed, Ruff/Node syntax passed.
   - Verified three open PRs #227, #228, #229; never merge unverified PRs into main.

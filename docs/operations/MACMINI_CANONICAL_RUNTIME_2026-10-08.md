@@ -51,3 +51,13 @@ A separate macOS health task «com.arvectum.tender-agent-drift-guard» runs ever
 First real launchd run: **13/13 checks PASS**, GitHub=disk=active «958e94c», exit 0. Its launch configuration points to «/Users/master/.local/bin/tender-agent-backend-drift-guard.cjs» and installed verifier «/Users/master/.local/bin/tender-agent-backend-verify.py», copied from this repo's versioned scripts. An unmerged or missing next GitHub deployment will be detected, not silently presented as current. Production auto-deploy is intentionally not enabled without separate CI/staging/rollback automation.
 
 The obsolete original temporary clone «/tmp/tender-agent-roadmap-20261008» was removed after proving it had no dirty files and its SHA exactly matched the SSD APR-02 worktree «af132615». Active runtime and original private configuration backups remain available.
+
+## Additional local history recovered without merging it
+
+An audit of former internal-disk Tender Agent clones found object history on the SSD that was not reachable from current GitHub «main». To preserve it against Git garbage collection and later folder cleanup, the following **local-only SSD archive refs** were created, without changing main or executing experimental code:
+
+* «refs/archive/macmini-20261008/local-ai-corporation-main» = «f7a01d34» (17 additional commits relative to main)
+* «refs/archive/macmini-20261008/pilot-analysis» = «1d51b0aa» (72 additional commits relative to main)
+* «refs/archive/macmini-20261008/arv075-revalidation» = «b07b8841» (1 additional commit relative to main)
+
+A separate standalone Git test snapshot («tender-agent-dp-default-test», commit «20a163d2», not in canonical object store) was saved as a verified Git bundle at «/Volumes/ArvectumSSD/Arvectum/archive/tender-agent-local-recovery-20261008/tender-agent-dp-default-test.bundle». The old local untracked configuration backup was separately copied into SSD «private/tender-agent/recovery-20261008/», permission 0600, never in Git. A SHA-256 manifest is in the archive folder. These are **recoverable historical changes, not reviewed product deliverables** and must not be automatically merged into main.
