@@ -20,6 +20,10 @@ from src.modules.acceptance_control.models import (
     AcceptanceRemark,
     AcceptanceResolutionItem,
 )
+from src.modules.application_package_generator.models import (  # noqa: F401
+    ApplicationDraftFieldProvenance,
+    ApplicationDraftGeneration,
+)
 from src.modules.bid_completeness.models import (
     BidCompletenessFlag,
     BidCompletenessRecord,

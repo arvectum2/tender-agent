@@ -43,7 +43,7 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert directive["governance"]["material_executor_policy_change"] is True
     assert (
         directive["governance"]["am4_effect"]
-        == "renewed_am4_active_pr_215_is_4_of_10_if_merged"
+        == "renewed_am4_active_pr_216_is_5_of_10_if_merged"
     )
     assert directive["governance"]["renewal_decision"].endswith(
         "DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
@@ -52,8 +52,8 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert company_gate["material_policy_change_recorded_2026_09_18"] is True
     assert company_gate["mandatory_review_deadline"] == "2026-11-08"
     assert company_gate["automatic_merge_after_material_policy_change"] == "ALLOWED_UNDER_RENEWED_AM4"
-    assert company_gate["automatic_merge_cycle_state"] == "ACTIVE_RENEWED_2026_10_08_4_OF_10_IF_PR_215_MERGES"
-    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 4
+    assert company_gate["automatic_merge_cycle_state"] == "ACTIVE_RENEWED_2026_10_08_5_OF_10_IF_PR_216_MERGES"
+    assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 5
     assert company_gate["next_automatic_merge"] == "ALLOWED_IF_ALL_AM4_GATES_PASS"
     assert policy["sources"]["company_authority"]["latest_renewal"].endswith(
         "DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"
@@ -127,12 +127,12 @@ def test_full_commercial_workflow_branch_is_explicitly_admitted_in_order():
         assert item["auto_merge"] is True
 
 
-def test_commercial_workflow_progress_points_to_arv063_after_eight_completions():
+def test_commercial_workflow_progress_points_to_arv064_after_nine_completions():
     roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
     queue = _yaml(".agent/execution-queue.yaml")
 
     progress = roadmap["current_status_summary"]["commercial_workflow"]
-    assert progress["completed"] == 8
+    assert progress["completed"] == 9
     assert progress["total"] == 12
     assert progress["completed_items"] == [
         "ARV-015",
@@ -143,10 +143,11 @@ def test_commercial_workflow_progress_points_to_arv063_after_eight_completions()
         "ARV-057",
         "ARV-059",
         "ARV-060",
+        "ARV-063",
     ]
-    assert progress["next_queue_item"] == "COMMERCIAL-WORKFLOW-ARV-063-001"
+    assert progress["next_queue_item"] == "COMMERCIAL-WORKFLOW-ARV-064-001"
 
     items = {item["task_id"]: item for item in queue["items"]}
-    assert items["COMMERCIAL-WORKFLOW-ARV-059-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-060-001"]["status"] == "done"
-    assert items["COMMERCIAL-WORKFLOW-ARV-063-001"]["status"] == "ready"
+    assert items["COMMERCIAL-WORKFLOW-ARV-063-001"]["status"] == "done"
+    assert items["COMMERCIAL-WORKFLOW-ARV-064-001"]["status"] == "ready"

@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-063-001
@@ -80,11 +80,7 @@ updated_at: '2026-10-08T09:19:59+03:00'
 resume_instruction: 'Verify final exact-head CI for PR #216 on the combined completion
   head. If all required jobs are green and head/base/renewed AM-4 remain valid, merge
   #216 as automatic merge 5/10, then start COMMERCIAL-WORKFLOW-ARV-064-001.'
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv063
-  branch: agent/commercial-workflow-arv-063-001
-  base_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: completion_exact_head_ci
+remaining:
+- 'final exact-head PR #216 CI'
+- guarded merge as renewed AM-4 merge 5/10
