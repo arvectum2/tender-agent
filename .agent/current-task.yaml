@@ -24,10 +24,11 @@ pending:
   - 'Retrieve at least one authentic, accessible public 223-FZ notice and supporting document evidence.'
   - 'Freeze provenance/checksums/field truth and run measured parser comparison.'
   - 'Implement only evidenced parser gaps and regression tests in a successor increment.'
-last_verified_commit: 958e94c740e73a052f275d46fea713f01ab4d117
+last_verified_commit: 94318b9
 test_results:
   - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
   - '5 focused public 223-FZ provider tests passed in 0.16s; four archived external cards correctly return unsupported_layout/requires_review.'
+  - 'Read-only archived-card smoke probe: 4/4 fail closed; verified commit 94318b9, no external EIS attachments acquired.'
   - 'Isolated full pipeline test still needs SQLAlchemy customer_profiles metadata registration. Official EIS documents all HTTP 404.'
 resume_instruction: 'Resolve SOAP credential-loading tool policy blocker without exposing credentials. First obtain authentic public 223-FZ source material via authorized access. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
 execution:
