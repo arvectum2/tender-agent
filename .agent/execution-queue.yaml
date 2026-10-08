@@ -978,8 +978,8 @@ items:
 - order: 1080
   task_id: APR-02-RI223-DOCUMENT-REVIEW-001
   title: Traceable content evidence dossier for RI223 procurement review
-  status: blocked
-  blocked_on: 'PR #239 exact-head CI and attributable Owner REVIEW prior to merge.'
+  status: done
+  completion_evidence: 'PR #239 CI run 37812365387 SUCCESS 9/9, merged b430c8ce190efadec07faf25bb45f9df32247722; real 10/25/7 original DP acceptance.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
