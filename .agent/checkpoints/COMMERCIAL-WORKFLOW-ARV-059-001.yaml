@@ -45,16 +45,17 @@ completed:
 - '2026-10-08: Focused ARV-059 tests passed (4 passed) and relevant recovery/dashboard
   suite remained compatible (32 environment-gated skips); Ruff on the new slice, make
   check and git diff --check passed.'
-current: Run full repository verification on the implemented ARV-059 projection, then
-  open a bounded implementation PR and require exact-head CI.
+- '2026-10-08: Full make test completed with 3127 passed / 236 skipped; the sole failure
+  is tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed
+  (pg_restore exit 1), matching the already-proven macOS main-baseline R9 restore-environment
+  failure and outside the ARV-059 diff.'
+current: Open ARV-059 implementation PR and obtain exact-head CI before adding final
+  completion bookkeeping to the same PR.
 pending:
-- Run full make test and distinguish any proven main-baseline failure from ARV-059
-  regressions.
-- Commit/push implementation and verification checkpoint.
-- Open ARV-059 implementation PR against current main and require exact-head CI.
-- If implementation-head CI is green, fold completion bookkeeping into the same PR,
-  rerun exact-head CI and merge once under renewed AM-4 to conserve the automatic-merge
-  budget.
+- Open ARV-059 implementation PR against current main.
+- Require implementation-head exact-head CI.
+- If green, fold queue/roadmap/completion bookkeeping into the same PR, rerun exact-head
+  CI, and merge once under renewed AM-4.
 last_verified_commit: 7abd9640a76303708c839d91e56302aeb325df32
 test_results:
 - 'ARV-059 focused projection/API/dashboard tests: 4 passed'
@@ -62,14 +63,16 @@ test_results:
 - 'Ruff on ARV-059 slice: PASS'
 - 'make check: PASS'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T07:44:36+03:00'
-resume_instruction: Run full make test, then take the bounded ARV-059 projection through
-  exact-head CI; combine completion bookkeeping into the same PR before the final
-  merge if the implementation head is green.
-current_stage: full_verification
+- 'full make test: 3127 passed, 236 skipped; 1 known main-baseline macOS R9 pg_restore
+  failure'
+updated_at: '2026-10-08T07:48:10+03:00'
+resume_instruction: Open the ARV-059 PR from agent/commercial-workflow-arv-059-001.
+  Wait for exact-head CI; if green, add final completion/governance bookkeeping to
+  the same PR, rerun exact-head CI, then merge under renewed AM-4.
+current_stage: implementation_exact_head_ci
 remaining:
-- full repository make test
-- implementation/checkpoint commit and push
-- exact-head implementation CI
-- combined completion bookkeeping and final exact-head CI
+- implementation PR
+- implementation-head exact-head CI
+- combined completion bookkeeping
+- final exact-head CI
 - guarded merge under renewed AM-4
