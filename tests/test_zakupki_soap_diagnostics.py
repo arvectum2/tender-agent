@@ -51,7 +51,9 @@ def test_diagnostics_sanitizes_token_and_reports_no_archive(monkeypatch, tmp_pat
 
 def test_diagnostics_reports_downloaded_archive(monkeypatch, tmp_path):
     from scripts import diagnose_zakupki_soap as module
-    from src.modules.tender_operator_agent_demo.procurement_schemas import DownloadedAttachment
+    from src.modules.tender_operator_agent_demo.procurement_schemas import (
+        DownloadedAttachment,
+    )
 
     monkeypatch.chdir(tmp_path)
 
@@ -174,6 +176,7 @@ def test_223fz_org_region_routes_ri223_and_date(monkeypatch):
 
 def test_download_ri223_documents_xml_and_dedupe(monkeypatch, tmp_path):
     import zipfile
+
     from scripts import diagnose_zakupki_soap as module
     archive = tmp_path / "ri223.zip"
     xml = (
@@ -197,3 +200,48 @@ def test_download_ri223_documents_xml_and_dedupe(monkeypatch, tmp_path):
     assert result["complete"] is True
     assert captured[0].attachment_id == "aaa"
     assert captured[0].name == "project.docx"
+
+
+def test_real_namespace_ri223_rar_is_source_bound_and_uninspected(monkeypatch, tmp_path):
+    import hashlib
+    import zipfile
+
+    from scripts import diagnose_zakupki_soap as module
+    from src.modules.tender_operator_agent_demo.attachment_downloader import (
+        download_procurement_attachments as real_download,
+    )
+
+    archive = tmp_path / "ri223.zip"
+    xml = (
+        '<purchaseNotice xmlns="http://zakupki.gov.ru/223fz/purchase/1">'
+        "<body><item><purchaseNoticeData><attachments><document>"
+        "<contentUid>rar-001</contentUid><fileName>3727_МИ.rar</fileName>"
+        "<url>https://zakupki.gov.ru/docs/3727.rar</url>"
+        "</document></attachments></purchaseNoticeData></item></body>"
+        "</purchaseNotice>"
+    )
+    with zipfile.ZipFile(archive, "w") as output:
+        output.writestr("purchaseNotice_1.xml", xml)
+    rar = b"Rar!\x1a\x07\x01\x00" + b"opaque-content"
+    observed = []
+
+    def bounded_fake_download(attachments, **kwargs):
+        observed.extend(attachments)
+        return real_download(
+            attachments,
+            **kwargs,
+            transport=lambda _url, _size_limit: (rar, "application/vnd.rar"),
+        )
+
+    monkeypatch.setattr(module, "download_procurement_attachments", bounded_fake_download)
+    folder = tmp_path / "downloads"
+    result = module.download_xml_referenced_attachments(archive, folder)
+
+    assert result["downloaded"] == result["expected"] == 1
+    assert result["complete"] is True  # Retrieval, not document text analysis.
+    assert result["requires_manual_review"] is True
+    assert result["opaque_unparsed_count"] == 1
+    assert result["content_analysis_complete"] is False
+    assert observed[0].provenance["source_regime"] == "223fz"
+    assert observed[0].provenance["archive_sha256"] == hashlib.sha256(archive.read_bytes()).hexdigest()
+    assert list(folder.iterdir())[0].read_bytes() == rar

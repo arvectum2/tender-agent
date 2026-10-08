@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import re
 import ssl
 from collections.abc import Callable
@@ -53,6 +54,9 @@ class AttachmentDownloadManifestItem:
     content_type: str | None = None
     error: str | None = None
     provenance: dict[str, object] | None = None
+    sha256: str | None = None
+    requires_manual_review: bool = False
+    content_inspection_status: str | None = None
 
 
 @dataclass
@@ -83,7 +87,18 @@ def download_procurement_attachments(
     for index, attachment in enumerate(attachments[:max_attachments], start=1):
         extension = _extension_for_attachment(attachment)
         display_name = Path(attachment.name or f"attachment-{index}").name
-        if extension not in ALLOWED_ATTACHMENT_EXTENSIONS:
+        # Real RI223 procurements can publish RAR. Preserve it as opaque evidence
+        # only when the canonical source projection identifies its 223-FZ origin.
+        # Never unpack, index or claim to have read files inside the archive.
+        source_provenance = getattr(attachment, "provenance", None)
+        opaque_ri223_rar = (
+            extension == ".rar"
+            and isinstance(source_provenance, dict)
+            and source_provenance.get("source_regime") == "223fz"
+            and bool(source_provenance.get("xml_sha256"))
+            and bool(source_provenance.get("archive_sha256"))
+        )
+        if extension not in ALLOWED_ATTACHMENT_EXTENSIONS and not opaque_ri223_rar:
             result.skipped.append(
                 AttachmentDownloadManifestItem(
                     name=display_name,
@@ -214,6 +229,19 @@ def download_procurement_attachments(
             )
             continue
 
+        if opaque_ri223_rar and not (
+            payload.startswith((b"Rar!\x1a\x07\x00", b"Rar!\x1a\x07\x01\x00"))
+        ):
+            result.skipped.append(
+                AttachmentDownloadManifestItem(
+                    name=display_name, stored_name=None, extension=extension,
+                    status="skipped", note="Неверная сигнатура RAR; требуется ручная проверка.",
+                    size_bytes=size, source_url=attachment.url,
+                    provenance=source_provenance, error="invalid_rar_signature",
+                    requires_manual_review=True,
+                )
+            )
+            continue
         stored_name = _safe_stored_name(attachment.name, index, extension)
         (target_dir / stored_name).write_bytes(payload)
         total_size += size
@@ -233,6 +261,9 @@ def download_procurement_attachments(
                 document_kind=getattr(attachment, "document_kind", None),
                 provenance=getattr(attachment, "provenance", None),
                 content_type=content_type,
+                sha256=hashlib.sha256(payload).hexdigest(),
+                requires_manual_review=opaque_ri223_rar,
+                content_inspection_status="UNINSPECTED_OPAQUE" if opaque_ri223_rar else None,
             )
         )
 
