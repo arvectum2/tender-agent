@@ -74,7 +74,167 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 
 **Historical execution snapshot (2026-09-18):** at that point every explicitly admitted queue item through order 80 was completed and the queue was temporarily exhausted. This paragraph is retained only as history; it is **not** the current executor state.
 
-**Current execution status (2026-10-08):** the full canonical **COMMERCIAL-WORKFLOW** branch remains admitted and is **10/12 complete**. ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060 and ARV-063 remain complete; **ARV-064 reusable company document/profile store** is implemented in combined PR #217. Company facts and reusable documents are tenant-isolated, append-versioned, source-bound and expiry-aware; safe autofill uses only explicitly stored current non-expired facts, while deal-bound/cross-tenant/duplicate artifact reuse fails closed. No unrelated private document import or inference is performed. The next admitted item is **ARV-066** (COMMERCIAL-WORKFLOW-ARV-066-001); two branch items remain. Owner AM-4 remains renewed: PR #212 consumed 1/10, PR #213 2/10, PR #214 3/10, PR #215 4/10, PR #216 5/10, and PR #217 is prospective **6/10** pending final exact-head CI. All procurement submission, EDS/signature, external communication, legal/commercial acceptance and other hard stops remain unchanged.
+**Current execution status (2026-10-08, 11:02 MSK):** the full canonical **COMMERCIAL-WORKFLOW** branch is **10/12 complete**. ARV-064 merged in PR #217 as `75beab91` after exact-head CI passed; renewed AM-4 is therefore at **6/10**. **ARV-066** is now actively executing on branch `agent/commercial-workflow-arv-066-001` (head `2c597ae5`) with a bounded registry-number/EIS URL → canonical `ProcurementCase` handoff; DOM scraping is not source truth and unsupported/ambiguous inputs fail closed. **ARV-069** remains the final admitted Commercial Workflow item. All procurement submission, EDS/signature, external communication, legal/commercial acceptance and other hard stops remain unchanged.
+
+<!-- CURRENT-CHECKLIST-START -->
+## Полная текущая дорожная карта — checklist
+
+> Актуально на **2026-10-08 11:02 MSK**. Чекбокс отражает **current reconciliation overlay**, а не исторический статус из snapshot 2026-07-30. Исторические поля ниже остаются неизменяемыми. `[x]` = текущий scope подтверждён/завершён; незакрытые пункты помечены фактическим gate/status.
+
+### Верхнеуровневые продуктовые стадии
+
+- [x] **Stage 0 — Competitive reverse-spec + reuse registry**
+- [x] **Stage 1 — Thin commodity shell**
+- [x] **Stage 2 — Decision Core v1**
+- [x] **Stage 3 — Commercial Core v1**
+- [x] **Stage 4 — Automation + integrations (admitted v1 boundary)**
+- [x] **Stage 5 — Reliability + moat (admitted v1 boundary)**
+- [x] **Daily Tender Run DTR-1 → DTR-3**
+- [x] **iPhone Tender Agent MOB-1 → MOB-4**
+- [ ] **Commercial Workflow** — **10/12**; ARV-066 активно выполняется, ARV-069 остаётся последним admitted item.
+
+### Commercial Workflow — текущая исполняемая ветка
+
+- [x] ARV-015 slice — Structured RFQ-first operator profile ingestion
+- [x] ARV-019 — Procurement kanban / operator workflow
+- [x] ARV-022 — OCR fallback via Data Platform reuse
+- [x] ARV-053 — Evidence-backed counterparty cards / risk signals
+- [x] ARV-055 — Explainable similar-procurement search
+- [x] ARV-057 — Historical price evidence / NMCK range
+- [x] ARV-059 — Contract execution / outcome analytics
+- [x] ARV-060 — Case discussion / immutable decision journal
+- [x] ARV-063 — Review-only application package generator
+- [x] ARV-064 — Reusable company document/profile store
+- [ ] 🔄 **ARV-066 — One-click procurement import boundary — in progress** (`agent/commercial-workflow-arv-066-001`)
+- [ ] ⏳ **ARV-069 — Competition / bid-price forecast context — ready**
+
+### Полный canonical legacy registry
+
+#### 0. База проекта
+
+- [x] **BASE-001** — ООО «Арвектум» зарегистрировано, реквизиты и корпоративный контур оформлены — готово · P0
+- [x] **BASE-002** — Фирменный стиль, логотип и брендбук — готово · P1
+- [x] **BASE-003** — Сайт arvectum.com и базовые digital-каналы — готово · P1
+- [x] **BASE-004** — Backend-фундамент: FastAPI, SQLAlchemy, Alembic, Docker, роли и UI — готово · P0
+- [x] **BASE-005** — PostgreSQL + pgvector + RAG-контур — готово · P0
+- [x] **BASE-006** — Публичный поиск 44-ФЗ и точный поиск по номеру — готово · P0
+- [x] **BASE-007** — Рабочий SOAP-контур ЕИС для машиночитаемых данных — готово · P0
+- [x] **BASE-008** — Загрузка закупки и формирование отчётов — готово · P0
+- [x] **BASE-009** — Извлечение товарных позиций и характеристик — готово · P0
+- [x] **BASE-010** — Разделение demo/live и отказ от тихих синтетических fallback — готово · P0
+- [x] **BASE-011** — Hermes H1–H4: базовая память, quality gates и feedback — готово · P0
+- [x] **BASE-012** — Quality R1–R5: golden loop, provenance и source graph — готово · P0
+- [x] **BASE-013** — Демо- и пилотный пакет документов — готово · P1
+- [x] **BASE-014** — Базовый личный кабинет: клиенты, проекты и мастер поиска — готово · P1
+- [x] **BASE-015** — Стабильный рендер PDF на Linux — готово · P1
+- [x] **BASE-016** — R7 controlled pilot baseline: deployment, artifacts, backup/restore и recovery — готово · P0
+- [x] **BASE-017** — R8 Customer Pilot Workspace: изолированный клиентский жизненный цикл — готово · P0
+- [x] **BASE-018** — R9 Operational Hardening: fail-closed recovery, concurrency и backup/restore — готово · P0
+
+#### 1. Качество ядра
+
+- [x] **ARV-050** — R8: изолированное рабочее пространство клиентского пилота — готово · P0
+- [ ] **ARV-073** — R9 Operational Hardening: завершить инженерную отладку и заморозить ядро — ⛔ ID conflict · P0
+- [x] **ARV-002** — Стабильный live end-to-end pipeline без скрытых fallback — готово · P0
+- [x] **ARV-003** — R10.1: production LLM-анализ с evidence map и confidence — готово · P0
+- [x] **ARV-001** — R10.2: Quality & Product Readiness — golden report и release gates — готово · P0
+- [ ] **ARV-004** — R10.3: production-loop Hermes и customer-scoped feedback — 🟨 требует revalidation · P0
+- [x] **ARV-005** — R10.4: контролируемый пилот на 10–20 реальных закупках — готово · P0
+- [ ] **ARV-067** — Вертикальные онтологии и настраиваемые схемы извлечения по категориям — 🟧 REVIEW · P1
+- [ ] **ARV-061** — Commercial MVP v1: быстрый cited-преданализ — 🟨 требует revalidation · P1
+- [ ] **ARV-065** — Evidence-grounded copilot по закупке: Q&A, AI-юрист и сметчик — 🟨 требует revalidation · P1
+
+#### 2. Источники и production
+
+- [x] **ARV-009** — Оценить объём данных, pgvector и требования к диску — готово · P0
+- [x] **ARV-007** — Redis как очередь, lock, cache и rate-limit слой — готово · P0
+- [ ] **ARV-075** — Аудит и разгрузка системного диска Mac mini: удалить мусор и перенести данные Арвектум на внешний SSD — 🟨 требует revalidation · P0
+- [ ] **ARV-008** — Фоновые задания и workers с прогрессом и повторным запуском — 🟨 требует revalidation · P0
+- [x] **ARV-010** — Production-наблюдаемость, безопасность и восстановление — готово · P0
+- [ ] **ARV-006** — Добавить полноценную работу с 223-ФЗ — 🟨 остаточный scope · P0
+- [ ] **ARV-074** — ODS/Hermes-инфраструктура Mac mini и устранение дублирующихся локальных сервисов — ⛔ ID conflict · P1
+- [ ] **ARV-058** — Возобновляемая синхронизация, локальный кэш и идемпотентный импорт — 🟨 требует revalidation · P1
+- [ ] **ARV-011** — Выбрать и арендовать VPS для backend — 🔄 в работе · P1
+- [ ] **ARV-012** — Переезд с Mac mini на VPS — 🟨 требует revalidation · P1
+- [ ] **ARV-013** — Заменить временный CloudPub на нормальный production-доступ — 🟨 требует revalidation · P0
+- [ ] **ARV-014** — Белые списки площадок и Anti-DDoS после появления IP VPS — 🟨 требует revalidation · P0
+
+#### 3. Коммерческий MVP
+
+- [x] **ARV-042** — Пилотная программа и критерии успешности — готово · P1
+- [x] **ARV-052** — Human-in-the-loop: экспертная проверка и эскалация сложного отчёта — готово · P2
+- [ ] **ARV-018** — Commercial MVP v1: карточка GO / NO-GO / NEEDS REVIEW — 🟨 требует revalidation · P1
+- [ ] **ARV-020** — Commercial MVP v1: чек-лист готовности заявки — 🟨 требует revalidation · P1
+- [ ] **ARV-015** — Профиль поставщика для персонального анализа закупок — 🟨 остаточный scope · P1
+- [x] **ARV-064** — Корпоративное хранилище документов и переиспользуемый профиль компании — готово · P1
+- [ ] **ARV-016** — Обработка прайс-листов XLSX/CSV/PDF — 🟨 требует revalidation · P1
+- [ ] **ARV-017** — Подбор тендеров по прайс-листу и каталогу — 🟨 требует revalidation · P1
+- [x] **ARV-053** — Проверка и скоринг контрагентов — готово · P1
+- [x] **ARV-019** — Канбан закупок в личном кабинете — готово · P1
+- [x] **ARV-063** — Генератор пакета заявки и заполнение клиентских шаблонов — готово · P1
+- [ ] **ARV-056** — Тендерный календарь, контроль изменений и наблюдение за заказчиками/конкурентами — 🟨 требует revalidation · P1
+- [ ] **ARV-021** — Мониторинг закупок и уведомления — 🟨 требует revalidation · P1
+- [x] **ARV-022** — OCR fallback для сканированных документов — готово · P1
+- [x] **ARV-060** — Командное обсуждение закупки: чат, упоминания и журнал решений — готово · P2
+- [ ] **ARV-066** — Импорт закупки одним кликом: URL, browser extension и share action — 🔄 в работе · P2
+- [x] **ARV-055** — Похожие закупки и поиск аналогичных тендеров — готово · P2
+- [x] **ARV-057** — Исторические цены, база цен и ориентир НМЦК — готово · P2
+- [x] **ARV-059** — Аналитика фактического исполнения контрактов — готово · P2
+- [ ] **ARV-069** — Прогноз конкуренции, участников и цены подачи — ⏳ в очереди · P2
+
+#### 9. Управление разработкой
+
+- [ ] **ARV-072** — Регрессионный competitive benchmark на одинаковых реальных закупках — 🔄 в работе · P1
+- [ ] **ARV-051** — Протокол параллельной разработки Codex / OpenCode — 🟨 требует revalidation · P0
+- [ ] **ARV-062** — Настроить полное зеркало репозитория ai-corporation в GitVerse — 🟨 требует revalidation · P1
+
+#### 4. Go-to-market
+
+- [ ] **ARV-041** — Добить юридическую обвязку SaaS и пилота — 🟧 HUMAN gate · P1
+- [ ] **ARV-054** — Прозрачные тарифы, pay-per-analysis и мгновенная демоверсия — 🟨 требует revalidation · P1
+- [ ] **ARV-038** — Обновить сайт: продукт вместо общей IT-компании — 🟧 REVIEW · P1
+- [ ] **ARV-039** — Метрики сайта и продукта — 🟨 требует revalidation · P1
+- [ ] **ARV-040** — Обновить индексацию в Яндексе и Google — 🟨 требует revalidation · P1
+
+#### 7. Масштабирование
+
+- [ ] **ARV-068** — Учёт потребления, квоты, токены и применение тарифных лимитов — 🟨 требует revalidation · P1
+- [ ] **ARV-043** — Multi-tenant SaaS: организации, роли и изоляция данных — 🟨 требует revalidation · P2
+- [ ] **ARV-046** — Enterprise/on-premise и air-gapped deployment — 🟨 требует revalidation · P2
+- [ ] **ARV-045** — Интеграции 1С, CRM, ERP и корпоративных систем — 🟨 требует revalidation · P2
+- [ ] **ARV-044** — Web-first + mobile companion «тендерный радар» — 🟨 требует revalidation · P2
+- [ ] **ARV-070** — Интеграции банковских гарантий и тендерного финансирования после GO — 🟨 требует revalidation · P3
+
+#### 5. Поставщики и RFQ
+
+- [ ] **ARV-023** — Поиск поставщиков — 🟨 требует revalidation · P1
+- [ ] **ARV-024** — База поставщиков и история взаимодействия — 🟨 требует revalidation · P1
+- [ ] **ARV-025** — Интеграция почты пользователя: OAuth/SMTP + IMAP/API — 🟨 требует revalidation · P1
+- [ ] **ARV-026** — Автоматическая подготовка и рассылка запросов ТКП — 🟨 требует revalidation · P1
+- [ ] **ARV-027** — Сравнение ТКП и выбор поставщика — 🟨 требует revalidation · P1
+- [ ] **ARV-028** — Развернуть self-hosted n8n как внешний оркестратор — 🟨 требует revalidation · P1
+- [ ] **ARV-029** — Первые n8n-пайплайны — 🟨 требует revalidation · P1
+
+#### 6. Коннекторы ЭТП
+
+- [ ] **ARV-030** — Единый слой marketplace connectors — 🟨 остаточный scope · P1
+- [ ] **ARV-031** — Дедупликация ЕИС и ЭТП — 🟨 требует revalidation · P1
+- [ ] **ARV-032** — Исследовать уникальность данных восьми федеральных ЭТП — 🟨 требует revalidation · P1
+- [ ] **ARV-033** — ТЭК-Торг SOAP proof of concept — 🟨 требует revalidation · P1
+- [ ] **ARV-036** — Интеграция B2B-Center — 🟨 требует revalidation · P2
+- [ ] **ARV-035** — Интеграция Фабрикант — 🟨 требует revalidation · P2
+- [ ] **ARV-037** — Интеграция Tender-Pro — 🟨 требует revalidation · P2
+- [ ] **ARV-034** — Подключить остальные федеральные ЭТП — 🟨 требует revalidation · P2
+- [ ] **ARV-071** — Buyer-side SRM и структурированные ТКП — 🟨 требует revalidation · P2
+
+#### 8. Поздняя оптимизация
+
+- [ ] **ARV-047** — OpenSearch / Elasticsearch для расширенного поиска — 🟨 требует revalidation · P3
+- [ ] **ARV-048** — ClickHouse для событий и аналитики — 🟨 требует revalidation · P3
+- [ ] **ARV-049** — Kubernetes / Helm — 🟨 требует revalidation · P3
+
+<!-- CURRENT-CHECKLIST-END -->
+
 
 ## Owner product directive — 2026-10-06: Daily Tender Run + iPhone Tender Agent
 
@@ -153,7 +313,7 @@ Roadmap status is now reconciled to execution: MOB-1, MOB-2, MOB-3, DTR-3 and MO
 ## Current reconciliation highlights
 
 - **BASE-001..BASE-018:** current reconciliation is **18/18 confirmed_done**. This is a current evidence overlay only; the historical 2026-07-30 percentages and statuses remain unchanged. BASE-011 is closed as the Hermes infrastructure foundation, while real-user self-improvement is retained under ARV-004 as a post-MVP, not-admitted Feedback & Learning Loop.
-- **Current queue — 2026-10-08:** COMMERCIAL-WORKFLOW is **10/12 complete**. Done: ARV-015 structured operator profile ingestion, ARV-019 procurement kanban/operator workflow, ARV-022 OCR fallback, ARV-053 evidence-backed counterparty cards/risk signals, ARV-055 explainable similar-procurement search, ARV-057 evidence-backed historical price/NMCK range, ARV-059 source-bound contract execution/outcome analytics, ARV-060 internal case collaboration/immutable decision journal, ARV-063 review-only application package/client-template generation, and ARV-064 tenant-isolated reusable company document/profile storage. Next: ARV-066 one-click procurement import boundary. Final admitted after ARV-066: ARV-069. Owner review on 2026-10-08 renewed AM-4 for another ten automatic merges; PR #216 consumed 5/10 and PR #217 is prospective 6/10. Consequential external actions and Product/HUMAN/REVIEW gates remain fail-closed.
+- **Current queue — 2026-10-08:** COMMERCIAL-WORKFLOW is **10/12 complete**. ARV-064 is merged in PR #217 (`75beab91`); ARV-066 is the active item on `agent/commercial-workflow-arv-066-001`; ARV-069 remains ready behind it. AM-4 is at **6/10** after PR #217. Consequential external actions and Product/HUMAN/REVIEW gates remain fail-closed.
 - **ARV-044 — mobile companion:** current Owner priority is P0; MOB-1 is complete in PR #171 (`01b4be72`), MOB-2 in PR #173 (`fe92b39`), MOB-3 in PR #176 (`3ab3872`), and MOB-4 in PR #183 (`bdcd868`). DTR-3 post-GO orchestration is also complete in PR #180 (`3b25e10`) and preserves the same HUMAN participation boundary. The currently defined native-iPhone MVP sequence is implemented; Android, public multi-tenant release and autonomous decision/submission remain deferred and are not implied complete. Historical 2026-07-30 P2/5% fields remain unchanged in the immutable snapshot.
 - **ARV-001 — quality/product readiness:** current git history records the later governed closure; the July snapshot remains preserved underneath the overlay.
 - **ARV-003 — production LLM analysis:** current docs refer to an accepted ARV-003 bundle, while an older R10.1 backlog status still says Gate 5 ready. This inconsistency is preserved as a status-revalidation item rather than silently resolved.
@@ -195,7 +355,8 @@ The accelerated admitted pipeline that was active on 2026-09-15 is now fully rec
 
 ### Execution queue after reconciliation
 
-The earlier order-80 execution snapshot has been superseded by later Owner-directed work. As of **2026-10-07**, `MOB-1-IOS-INBOX-001`, `MOB-2-IOS-DECISIONS-001`, `MOB-3-IOS-PUSH-DEEPLINKS-001`, `DTR-3-POST-GO-AUTOMATION-001`, and `MOB-4-IOS-PORTFOLIO-METRICS-001` are **done and merged**. `ARV-005-CONTROLLED-PILOT-EVIDENCE-001` has also satisfied its technical done gate: the frozen 12-case 44-FZ core produced 12 reports, the three exploratory 223-FZ cases are separately scored source-bound blockers, and the aggregate report is preserved under `docs/pilot/`. BASE-001..BASE-018 are now **18/18 confirmed_done** in the current reconciliation overlay. Human usefulness/commercial acceptance remains HUMAN/REVIEW. There are now **no non-done admitted queue items**; the next bounded item must be admitted under the active Owner continuation rule rather than inferred from roadmap presence.
+As of **2026-10-08 11:02 MSK**, the Owner-admitted Commercial Workflow is **10/12 complete**. The merged completion chain now includes ARV-022 through ARV-064; **COMMERCIAL-WORKFLOW-ARV-066-001** is actively executing on its isolated branch and **COMMERCIAL-WORKFLOW-ARV-069-001** remains the final ready item. The queue is therefore **not empty**. BASE-001..BASE-018 remain 18/18 confirmed_done, and the separate ARV-004 Feedback & Learning Loop remains post-MVP/not admitted. Human usefulness/commercial acceptance and all consequential-action gates remain HUMAN/REVIEW where defined.
+
 
 ### Available continuation branches — candidate matrix
 
