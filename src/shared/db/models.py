@@ -64,6 +64,7 @@ from src.modules.contract_negotiation.models import (
 )
 from src.modules.cost_model.models import CostModelLine, CostModelRecord, CostModelSet
 from src.modules.cash_gap.models import CashGapRecord, CashGapScenario, CashGapSet
+from src.modules.case_collaboration.models import CaseJournalEntry, CaseJournalEvidenceLink, CaseJournalMention  # noqa: F401
 from src.modules.deal_closure.models import DealArchiveSnapshot, DealClosureRecord, DealClosureSet
 from src.modules.deal_registry.models import Deal, DealExternalRef, DealTag
 from src.modules.daily_tender_run.models import DailyTenderRun, DailyTenderRunItem

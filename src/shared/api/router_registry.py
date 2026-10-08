@@ -13,6 +13,7 @@ from src.modules.archive_export.router import router as archive_export_router
 from src.modules.bid_completeness.router import router as bid_completeness_router
 from src.modules.bid_documents.router import router as bid_documents_router
 from src.modules.bid_packages.router import router as bid_packages_router
+from src.modules.case_collaboration.router import router as case_collaboration_router
 from src.modules.cash_gap.router import router as cash_gap_router
 from src.modules.ceo_approval.router import router as ceo_approval_router
 from src.modules.claim_triggers.router import router as claim_triggers_router
@@ -215,6 +216,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     quote_comparison_router,
     cost_model_router,
     cash_gap_router,
+    case_collaboration_router,
     closing_docs_router,
     claim_triggers_router,
     deal_closure_reports_router,
