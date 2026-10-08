@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-EVIDENCE-SCOPE-001
-status: in_progress
+status: blocked
 goal: Represent lot and notice-revision binding as explicit unknown on each RI223
   source excerpt, never infer from global notice lots or file titles.
 definition_of_done:
@@ -13,15 +13,23 @@ definition_of_done:
 completed:
 - 'PR #245 merged; PR #247 pending CI.'
 - Source RI223 dossier already safely marks UNRESOLVED_MULTI_LOT globally.
-current: Add per-excerpt lot/revision evidence status and regression tests.
+- Added per-excerpt source-backed UNKNOWN/UNVERIFIED lot and revision fields, dossier-level
+  revision_scope, rendered warning; did not invent scope linkage.
+- RI223 dossier 6 focused tests passed; Tender Research 533 passed, 1 skipped; make
+  check passed.
+current: Implementation complete; PR exact-head GitHub CI and Owner gate pending.
 pending:
-- Tests, push PR, CI and Owner gate.
+- Open PR, pass exact-head CI and Owner-reviewed merge.
+- 'Future phase: authoritative lot/revision bindings where provided by exact original
+  EIS source, not filename.'
 last_verified_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
 test_results:
-- Previous 542 tender research passed 1 skipped.
-resume_instruction: Continue /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-source-scope;
-  do not infer lot/revision from document name or global XML observations; explicit
-  unknown review binding, tests PR. Defer LLM benchmarks.
+- 533 passed, 1 skipped, 42 warnings
+- make check PASS
+- 6 RI223 dossier tests PASS
+resume_instruction: 'Branch feature/apr02-source-scope at /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-source-scope:
+  code/6 tests+533 full tests pass. Verify new PR exact-head CI and Owner review,
+  merge. Do not pretend lot or notice revision is proven or compare LLM models.'
 execution:
   branch: feature/apr02-source-scope
   base_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
