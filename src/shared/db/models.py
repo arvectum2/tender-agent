@@ -59,6 +59,11 @@ from src.modules.bid_packages.models import BidPackageItem, BidPackageRecord, Bi
 from src.modules.ceo_approval.models import CEOApprovalCondition, CEOApprovalRecord, CEOApprovalSet
 from src.modules.closing_docs.models import ClosingDocsFlag, ClosingDocsItem, ClosingDocsRecord, ClosingDocsSet
 from src.modules.compliance_matrix.models import ComplianceMatrix, ComplianceMatrixRow
+from src.modules.company_profile_store.models import (  # noqa: F401
+    CompanyDocument,
+    CompanyDocumentVersion,
+    CompanyProfileFactVersion,
+)
 from src.modules.contract_risks.models import ContractRiskFlag, ContractRiskRecord, ContractRiskSet
 from src.modules.contract_negotiation.models import (
     ContractNegotiationComment,
