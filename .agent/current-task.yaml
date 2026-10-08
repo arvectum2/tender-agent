@@ -13,15 +13,18 @@ completed:
   - 'Revalidated existing 223-FZ intake and decision foundations and residual target.'
   - 'Located independent public reference to notice 32616226131; two EIS routes returned HTTP 404 instead of a fixture.'
   - 'Documented real-corpus acceptance gate and fail-closed collection protocol.'
+  - 'Discovered live direct Mac mini access to official EIS 223-FZ search/notice223 documents and filestore endpoints.'
+  - 'Downloaded 14 official EIS files from four procurement notice document pages with SHA-256 provenance in local manifest.'
+  - 'Verified 223-FZ parser on four official EIS document HTML pages, identifying overly permissive attachment-link collection.'
   - 'Archived four real secondary-source 223-FZ HTML cards with SHA-256 locally; prices and dates parsed, only one strict numeric OKPD2 62 confirmed.'
   - 'Reproduced misleading SUCCESS on unsupported external HTML layout and fixed fail-closed UNSUPPORTED_LAYOUT semantics.'
   - 'Reran all four archived real secondary cards: four correctly returned unsupported_layout with requires_review.'
   - '2026-10-08 Mac mini RDC terminal recovered: ping and echo command successful; remote tool policy rejected credential-loading diagnostic command.'
   - 'Located protected local SOAP token file with mode 0600; no credential copied or disclosed.'
   - 'Public 223-FZ provider focused tests: 4 passed in 0.16s via existing venv; isolated pipeline test needs complete SQLAlchemy metadata dependency loading.'
-current: 'Secondary-card smoke pass and fail-closed parser regression complete; official 223-FZ document corpus and SOAP-native retrieval remain unverified.'
+current: 'Official EIS public 223-FZ search, notice documents and 14 attachments acquired across four candidate numbers; strict numeric OKPD2 62 still incomplete, SOAP-specific schema unverified.'
 pending:
-  - 'Retrieve at least one authentic, accessible public 223-FZ notice and supporting document evidence.'
+  - 'Tighten document-link extraction for actual /223/filestore endpoints and freeze sanitized official EIS fixture.'
   - 'Freeze provenance/checksums/field truth and run measured parser comparison.'
   - 'Implement only evidenced parser gaps and regression tests in a successor increment.'
 last_verified_commit: 94318b9
@@ -30,7 +33,7 @@ test_results:
   - '5 focused public 223-FZ provider tests passed in 0.16s; four archived external cards correctly return unsupported_layout/requires_review.'
   - 'Read-only archived-card smoke probe: 4/4 fail closed; verified commit 94318b9, no external EIS attachments acquired.'
   - 'Isolated full pipeline test still needs SQLAlchemy customer_profiles metadata registration. Official EIS documents all HTTP 404.'
-resume_instruction: 'Resolve SOAP credential-loading tool policy blocker without exposing credentials. First obtain authentic public 223-FZ source material via authorized access. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
+resume_instruction: 'Use working official 223-FZ EIS search -> notice223 documents -> 223 filestore via direct Mac mini transport, not broken /223/purchase routes. Validate numeric OKPD2 62 per procurement, replace the 63.11 case, restrict attachment links to actual filestore sources, freeze sanitized HTML and rerun regression. Independently consult official 223-FZ SOAP schema before creating 223-FZ SOAP client. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
 execution:
   branch: feature/apr02-223fz-evidence-gate
   base_commit: 958e94c740e73a052f275d46fea713f01ab4d117
