@@ -29,6 +29,9 @@ def _fake_archive(tmp_path: Path) -> Path:
 
 
 def _mock_listing(monkeypatch, filenames, verbose):
+    # Pure archive-metadata unit tests must not require libarchive installed
+    # on the GitHub quality runner. The runtime absence remains fail-closed.
+    monkeypatch.setattr(rar.shutil, "which", lambda _: "/mocked/bsdtar")
     results = iter([filenames, verbose])
     monkeypatch.setattr(rar, "_run_listing", lambda _args: next(results))
 
