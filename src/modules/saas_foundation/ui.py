@@ -55,6 +55,7 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <button id="import-eis">Скачать документацию ЕИС в мой контур</button>
 <h3>Анализ файлов закупки</h3>
 <label>Предмет закупки<input id="tender-title" placeholder="Разработка сайта"></label>
+<label>Заказчик по документации (необязательно)<input id="procurement-customer" placeholder="Не установлен"></label>
 <label>Тендерные документы (.pdf, .docx, .txt и др.)<input id="tender-files" type="file" multiple></label>
 <button id="create-run">Загрузить в контур</button><button id="append-files">Дополнить текущий прогон</button><label>ID своего прогона<input id="run-id" placeholder="toa-run-…"></label>
 <button id="analyze-run">Анализировать</button><button id="report-run">Посмотреть отчёт</button>
@@ -128,6 +129,7 @@ bind("append-files",()=>{
 bind("create-run",async()=>{
  const fs=document.getElementById("tender-files").files; if(!fs.length)throw Error("Добавьте документацию");
  const body=new FormData();body.set("tender_title",val("tender-title"));body.set("tender_category","Не определена");
+ if(val("procurement-customer"))body.set("procurement_customer_name",val("procurement-customer"));
  for(const file of fs)body.append("files",file);
  const r=await call("/api/saas/runs",{method:"POST",body,upload:true});
  document.getElementById("run-id").value=r.run_id;return r;

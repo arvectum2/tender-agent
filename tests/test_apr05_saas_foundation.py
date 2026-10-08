@@ -396,3 +396,27 @@ def test_paid_pilot_no_live_checkout_and_tenant_metrics_scoped(client):
     assert metr_a["product_metrics"]["owned_tender_runs"] == 0
     assert metr_b["product_metrics"]["owned_tender_runs"] == 0
     assert metr_a["external_action_allowed"] is False
+
+
+def test_supplier_legal_name_never_becomes_procurement_customer(client, monkeypatch):
+    from types import SimpleNamespace
+
+    _tenant, owner = _seed(client, "ООО Поставщик не Заказчик")
+    _legal(client, owner)
+    observed = {}
+
+    def synthetic_run(**kwargs):
+        observed.update(kwargs)
+        return SimpleNamespace(run_id="toa-run-apr05-correct-customer-role",
+                               status="ready_to_analyze")
+
+    monkeypatch.setattr(saas, "create_uploaded_demo_run", synthetic_run)
+    response = client.post(
+        "/api/saas/runs", headers=_auth(owner),
+        data={"tender_title": "Синтетическая разработка сайта"},
+        files={"files": ("notice.txt", b"notice", "text/plain")},
+    )
+    assert response.status_code == 201, response.text
+    assert observed["customer_name"] == "Не установлен (требует проверки)"
+    assert observed["customer_name"] != "ООО Поставщик не Заказчик"
+    assert "unverified" in observed["notes"]

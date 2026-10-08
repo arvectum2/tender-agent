@@ -382,12 +382,14 @@ async def create_run(
     principal: Member, session: DBSession,
     files: Annotated[list[UploadFile], File()],
     tender_title: str = Form(...), tender_category: str = Form("Не определена"),
+    procurement_customer_name: str = Form("Не установлен (требует проверки)"),
 ) -> dict:
     role_required(principal, "owner", "admin", "analyst")
     legal_required(session, principal)
+    if not procurement_customer_name.strip() or len(procurement_customer_name) > 256:
+        raise HTTPException(422, "Procurement contracting authority name invalid")
+    # The tenant's company is the supplier, not the purchasing authority.
     charge(session, principal, "runs")
-    from src.modules.customer_registry.service import get_customer
-    customer = get_customer(session, principal.customer_id)[0]
     try:
         if not files or len(files) > 16:
             raise HTTPException(413, "Tender document count limit exceeded")
@@ -404,7 +406,8 @@ async def create_run(
             ))
         result = create_uploaded_demo_run(
             tender_title=tender_title, tender_category=tender_category,
-            customer_name=customer.legal_name, notes="APR-05 tenant-bound local pilot",
+            customer_name=procurement_customer_name.strip(),
+            notes="APR-05 tenant-bound pilot; procurement customer unverified until cited",
             target_margin_percent=15, logistics_reserve_percent=3,
             risk_reserve_percent=5, payment_delay_days=45, uploads=uploads,
         )
