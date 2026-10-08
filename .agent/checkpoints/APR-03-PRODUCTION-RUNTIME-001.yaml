@@ -50,3 +50,13 @@ resume_instruction: >-
 execution:
   branch: feature/apr03-production-runtime
   base_commit: ced71977
+
+
+owner_vps_deferral_2026_10_08:
+  decision: paused_until_development_complete
+  interim_runtime: Mac mini local loopback Docker Compose project arvectum-local-e2e
+  bounded_acceptance: docs/operations/APR04_MACMINI_E2E_2026-10-08.md
+  status: blocked
+  resume_instruction: >-
+    Do not provision or expose a real Russian VPS before new Owner approval
+    after development completion. Continue product roadmap on Mac mini.
