@@ -32,26 +32,32 @@ application composition, evaluation, terms, participation, and schedule.
   same matrix. No misleading source counts are added to Data Platform citation
   totals and no external EIS/ETP actions are performed.
 
-## Original source acceptance — read-only offline projection
+## Original source acceptance — live Data Platform and offline audit
 
 - Original RI223 SOAP archive 32616445795 SHA-256:
   65004d53a4d198857a192ad21052c95cfa7d812208c3ac6702324e42d7487de3
 - Preserved isolated original database (outside Git):
   /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/analysis/real-archive-analysis-smoke.sqlite3
-- SQLite contains 20 document records (RAR container + 19 children),
-  300 canonical extracted text chunks.
-- A read-only offline checker selected original document chunks by relevant
-  filename and literal keyword (not by simulated semantic similarity): seven
-  distinct domains, seven original-document excerpt bindings, 0 supplier fit
-  or risk conclusions. Source files included technical specification, tender
-  documentation, evaluation methodology, draft agreement, notice.
-- A new live analyze_tender call against the old isolated SQLite did NOT pass
-  the Data Platform index-readiness gate. It correctly returned no_context
-  because the former Data Platform index is not currently confirmed ready.
-  This is a real operational limitation: offline source projection does NOT
-  constitute successful fresh end-to-end RAG retrieval.
-- Next operational step: restore/recreate and actually verify indexed
-  collection readiness, without mock retrieval or fabricated conclusions.
+- The original SQLite has 20 registered records (RAR container + 19 child
+  documents) and **300 canonical extracted document text chunks**.
+- **Real authenticated Data Platform acceptance (read-only, no mock retriever):**
+  after passing the existing internal API credential via the authorized
+  Mac mini production runtime environment (never printed/stored in Git),
+  analyze_tender('32616445795', use_llm=False, record_history=False,
+  analysis_mode='fast', save_report=False) returned **completed**,
+  **10/10 source-retrieval sections, 25 distinct source chunk citations,
+  7/7 dossier categories, 3 original-chunk excerpts per category**,
+  **0 errors**, no LLM synthesis and no procurement decision.
+- An initial same-machine call without the production internal key returned
+  no_context. Direct collection stats revealed **HTTP 401 invalid internal
+  API key** (NOT a missing index); reusing the authorized runtime credential
+  verified that the original collection and embeddings were ready.
+  Never interpret a failed authentication check as missing/expired index.
+- Separate read-only offline SQLite source audit matched seven domain
+  excerpts to actual filename/document/chunk rows by literal keyword. This
+  is independent support for source provenance, not simulated vector search.
+- All dossier rows remain review-only and unverified for legal status,
+  company fit, lot applicability and contractual/commercial risk.
 
 ## Test and safety boundary
 

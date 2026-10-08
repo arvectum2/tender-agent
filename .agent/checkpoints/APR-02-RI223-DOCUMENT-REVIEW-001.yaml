@@ -33,12 +33,15 @@ completed:
   analyzer dispatch 6 passed; make check, Ruff new-file checks, git diff --check passed.'
 - 'Opened Owner-gated PR #239 on verified source dossier implementation; code head
   4b08dbc5630df402a655b32e397f5b9baafefae9.'
+- 'Read-only original Data Platform production key injected from authorized Mac runtime
+  (never output): live 32616445795 analysis completed with 10 sections, 25 source
+  citations, 7 dossier categories x 3 excerpts, 0 errors. Earlier 401 was missing
+  key, not missing index.'
 current: 'PR #239 open, exact-head GitHub CI and Owner REVIEW required before merging.'
 pending:
-- 'Check PR #239 exact-head GitHub Actions CI, mergeability and Owner directive/review;
-  merge guarded by unchanged SHA.'
-- After merge mark completed and independently address actual Data Platform missing
-  index on original local corpus.
+- 'Update PR #239 and verify final-head CI/Owner review; guarded merge.'
+- On merge mark completed; next product milestone source-grounded LLM review/fit with
+  explicit company profile gate (no automatic GO/NO_GO).
 last_verified_commit: 77fe438b07ae0948216317762845b85a20a6497b
 test_results:
 - 511 Tender Research passed, 1 skipped, 42 warnings
@@ -47,11 +50,14 @@ test_results:
 - Ruff new-code/test PASS
 - Original SQLite 300 chunks and 7 real source-excerpt bindings in offline read-only
   check
-- 'Live old DP collection: no_context, index not confirmed ready.'
-resume_instruction: 'PR #239 on feature/apr02-ri223-document-dossier in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-document-dossier.
-  Check exact-head CI and Owner review before guarded merge. Mark checkpoint completed
-  on merge and continue measured original SQLite Data Platform index readiness restore;
-  do not treat offline source excerpts as successful live RAG.'
+- 'Read-only original DP exact 32616445795: completed, 10 sections, 25 unique cited
+  chunks, 7 dossier rows with 3 source excerpts each; no LLM, no writes; 401 without
+  runtime secret correctly identified.'
+resume_instruction: 'PR #239 feature/apr02-ri223-document-dossier: live original Data
+  Platform acceptance now successful 10 sections/25 citations/7 dossier categories
+  using authorized in-memory runtime credential. Check final SHA CI + Owner review,
+  merge guarded, mark completed. Do not infer legal/fit/GO; continue approved source-backed
+  LLM analysis if documented gated.'
 execution:
   branch: feature/apr02-ri223-document-dossier
   base_commit: 77fe438b07ae0948216317762845b85a20a6497b
