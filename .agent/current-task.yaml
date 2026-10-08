@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-LOCAL-LLM-BENCHMARK-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Run genuine Mac mini local generative model on original 223-FZ and 44-FZ document
   evidence; preserve distinction between RAG retrieval, model answers and GPT-6 engineering.
@@ -18,21 +18,36 @@ completed:
   b80ccccd9403e788037de411c8df174fde933c99.'
 - Ollama /api/tags empty but Qwen2.5-14B-Instruct-Q4_K_M.gguf found on SSD (8.4 GiB);
   local generative server 8088 offline, embedding server 8090 active.
-current: Start installed local Qwen2.5-14B Instruct via llama-server and validate
-  endpoint, then source-grounded case benchmarks.
+- Started genuine Qwen2.5-14B-Instruct Q4_K_M from existing SSD via local llama-server
+  localhost 8088, /health ok; separate Ollama registry remains empty.
+- 'Ran two real-generation source-fragment benchmark prompts locally, temperature
+  0: 223-FZ 32616445795 4 original chunks, 19.95 s, 206 tokens, subject/2027/40%-60%
+  broadly correct but one fake/mutated UUID; 44-FZ 0388100001826000047 4 original
+  chunks, 19.34 s, 250 tokens truncated, missed 140 tonnes and supplied no citations.'
+- Saved complete local responses and model metadata outside Git at /Users/master/arvectum-runtime/llm-benchmark-20261008/results.json
+  and source findings in docs/223fz/APR02_LOCAL_LLM_COMPARISON_2026-10-08.md.
+- 'Implemented deterministic chunk UUID citation audit and negative fixtures: 2 targeted
+  passed; full Tender Research 521 passed, 1 skipped, make check and Ruff PASS.'
+current: Real local two-case smoke benchmark completed, but model citation/omission
+  quality gate failed; source audit code/documentation pending PR exact-head CI/Owner
+  review.
 pending:
-- Launch local LLM server, probe Russian grounded answer.
-- Find original 44-FZ source corpus and execute comparable runs, with failure limitations.
-- Persist benchmark facts, validation results and gated PR.
+- Open benchmark audit PR and pass exact-head GitHub CI and Owner review before merge.
+- 'Next separate admitted engineering task: strict per-claim cited-evidence validation
+  and answer truncation/omission handling; broader ten-section LLM benchmark, no automatic
+  participation decision.'
 last_verified_commit: b80ccccd9403e788037de411c8df174fde933c99
 test_results:
-- 'Checkpoint PR #241 exact-head CI 9/9 pass.'
-- Current Ollama tags empty, local model GGUF present, LLM port 8088 absent at task
-  start.
-resume_instruction: Mac mini worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-local-llm-benchmark.
-  Start llama-server Qwen2.5-14B Instruct model at /Volumes/ArvectumSSD/Models/embeddings/Qwen2.5-14B-Instruct-Q4_K_M.gguf
-  on 127.0.0.1:8088 if no conflict; run genuine sourced 223-FZ and 44-FZ benchmarks;
-  do not overclaim model evaluation.
+- Qwen2.5-14B Instruct Q4 on Mac mini true generation 223-FZ 19.95 s 206 tokens; 44-FZ
+  19.34 s 250 token cap.
+- 223-FZ 1 fabricated chunk UUID; 44-FZ no cited UUID and wrong claim 140 tonnes absent.
+- Full Tender Research 521 passed, 1 skipped, 42 warnings; make check PASS, script/test
+  Ruff PASS.
+resume_instruction: 'Check PR from feature/apr02-local-llm-benchmark: genuine local
+  Qwen2.5 14B on Mac mini has two source-case evidence integrity failures. Audit/checker
+  and honest report are done, originals/results under /Users/master/arvectum-runtime/llm-benchmark-20261008.
+  After exact-head CI/Owner merge, implement strict LLM claim-to-chunk validation
+  and truncation/omission safety; do not pretend model is production-qualified.'
 execution:
   branch: feature/apr02-local-llm-benchmark
   base_commit: b80ccccd9403e788037de411c8df174fde933c99
