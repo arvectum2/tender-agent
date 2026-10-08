@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from src.shared.data_platform import DataPlatformError, DataPlatformHttpClient
+from src.tender_research.providers.ri223_rar_members import is_ri223_rar_document
 from src.tender_research.rag.presets import (
     TENDER_SEARCH_PROFILE,
     legacy_tender_collection_id,
@@ -270,6 +271,11 @@ class DataPlatformDocumentProjector:
     ) -> DataPlatformProjectionSummary:
         seen = processed = skipped = failed = extracted = projected = pruned = 0
         for document in list(tender.documents):
+            # Source-bound RAR is an opaque container; only verified inner documents
+            # are eligible for Data Platform text/OCR/chunk extraction.
+            if is_ri223_rar_document(document):
+                skipped += 1
+                continue
             if document.download_status != "downloaded":
                 continue
             seen += 1
@@ -297,18 +303,35 @@ class DataPlatformDocumentProjector:
                 failed += 1
                 continue
 
-            payload = self._client.process_document(
-                collection_id=_processing_collection_id(str(tender.id)),
-                canonical_uri=_document_uri(str(document.id)),
-                title=document.file_name or str(document.id),
-                content=local_path.read_bytes(),
-                filename=document.file_name or local_path.name,
-                content_type=document.content_type or "application/octet-stream",
-                chunk_size_chars=self._config.rag_chunk_size_chars,
-                overlap_chars=self._config.rag_chunk_overlap_chars,
-                min_chunk_chars=self._config.rag_min_chunk_chars,
-                max_chars=self._config.document_extract_max_chars,
-            )
+            try:
+                payload = self._client.process_document(
+                    collection_id=_processing_collection_id(str(tender.id)),
+                    canonical_uri=_document_uri(str(document.id)),
+                    title=document.file_name or str(document.id),
+                    content=local_path.read_bytes(),
+                    filename=document.file_name or local_path.name,
+                    content_type=document.content_type or "application/octet-stream",
+                    chunk_size_chars=self._config.rag_chunk_size_chars,
+                    overlap_chars=self._config.rag_chunk_overlap_chars,
+                    min_chunk_chars=self._config.rag_min_chunk_chars,
+                    max_chars=self._config.document_extract_max_chars,
+                )
+            except (DataPlatformError, OSError, ValueError):
+                meta = document.raw_meta if isinstance(document.raw_meta, dict) else {}
+                if meta.get("source") != "RI223_RAR_MEMBER":
+                    raise
+                document.text_extraction_status = "failed"
+                document.extracted_text_path = None
+                document.extracted_text_chars = 0
+                document.raw_meta = {
+                    **meta,
+                    "text_projection": {
+                        "status": "NEEDS_REVIEW",
+                        "reason": "Data Platform processing failed",
+                    },
+                }
+                failed += 1
+                continue
             processed += 1
             _project_processing_evidence(document, payload)
             status = str(payload.get("extraction_status") or "failed")
@@ -367,6 +390,42 @@ class DataPlatformDocumentProjector:
                 document.id,
                 keep_chunk_ids=keep_ids,
             )
+        for parent in list(tender.documents):
+            if not is_ri223_rar_document(parent):
+                continue
+            meta = parent.raw_meta if isinstance(parent.raw_meta, dict) else {}
+            state = meta.get("rar_analysis")
+            if not isinstance(state, dict) or state.get("status") not in {
+                "CHILDREN_REGISTERED", "TEXT_READY_FOR_ANALYSIS", "NEEDS_REVIEW",
+            }:
+                continue
+            children = [
+                doc for doc in tender.documents
+                if isinstance(doc.raw_meta, dict)
+                and doc.raw_meta.get("source") == "RI223_RAR_MEMBER"
+                and doc.raw_meta.get("parent_document_id") == parent.id
+            ]
+            expected = int(state.get("member_count") or 0)
+            if expected <= 0 or not children:
+                continue
+            extracted_children = sum(
+                doc.text_extraction_status == "extracted"
+                and bool(doc.extracted_text_path)
+                for doc in children
+            )
+            complete = len(children) == expected and extracted_children == expected
+            parent.raw_meta = {
+                **meta,
+                "rar_analysis": {
+                    **state,
+                    "status": "TEXT_READY_FOR_ANALYSIS" if complete else "NEEDS_REVIEW",
+                    "text_projection_complete": complete,
+                    "members_registered": len(children),
+                    "members_text_extracted": extracted_children,
+                    # Domain-specific GO / NO_GO analysis is separate from text extraction.
+                    "content_analysis_complete": False,
+                },
+            }
         self._repo._session.commit()
         return DataPlatformProjectionSummary(
             documents_seen=seen,
