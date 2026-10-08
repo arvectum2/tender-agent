@@ -754,7 +754,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-060-001
   strategy: COPY_PATTERN
   title: Case discussion, mentions and immutable decision journal
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -763,7 +763,7 @@ items:
   - ARV-060
   dependencies: []
   executor_scope: 'Add internal ProcurementCase discussion, @mentions, evidence links and immutable decision/comment history by reusing current audit/event primitives. Notifications stay internal unless a separately admitted external delivery adapter exists.'
-  done_gate: 'Discussion records are tenant/case scoped, attributable and evidence-linkable; immutable decision history is preserved; no external communication is sent; focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied in PR #215: append-only ProcurementCase COMMENT/DECISION journal is customer/project/case scoped; cross-tenant reads fail closed; every entry carries explicit actor attribution; @mentions persist as INTERNAL_UNREAD internal references only; typed evidence links are preserved; superseding decisions append rather than mutate; ORM update/delete guards and absent PATCH/DELETE routes preserve immutable history; PilotAuditEvent records attribution and notification_channel=internal_only; no email/push/outbox/supplier/customer/regulator delivery is invoked. Focused ARV-060/customer-pilot/expert-review tests pass, migration head is 103_add_case_collaboration, make check passes, full local suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head exact-head CI run 37732584551 passed 9/9 jobs. Final exact-head CI on the combined completion head is required before merge.'
 
 - order: 370
   task_id: COMMERCIAL-WORKFLOW-ARV-063-001

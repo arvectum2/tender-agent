@@ -1,6 +1,6 @@
 version: 1
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-060-001
 authority: AUTO
 goal: Add internal ProcurementCase discussion, @mentions, evidence links, immutable
@@ -50,17 +50,16 @@ completed:
   is tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed
   (pg_restore exit 1), matching the previously proven macOS main-baseline R9 restore-environment
   failure and outside the ARV-060 diff.'
-current: Open the ARV-060 implementation PR and require exact-head CI. If green, fold
-  queue/roadmap/AM-4 completion bookkeeping into the same PR before one final exact-head
-  CI.
-pending: &id001
-- Open ARV-060 implementation PR against current main.
-- Require exact-head implementation CI.
-- If green, fold completion bookkeeping into the same PR to conserve renewed AM-4
-  merge budget.
-- Require final exact-head CI on combined completion head and merge once under valid
-  AM-4.
-last_verified_commit: 2e900d6cc301867346bad3c5348cb42df3147e6b
+- '2026-10-08: PR #215 implementation-head exact-head CI run 37732584551 passed all
+  9 jobs on head 45f2c15e4acda8e2e03f5f9a901d5c839c979686.'
+- '2026-10-08: Completion/governance bookkeeping is folded into the same PR #215 so
+  ARV-060 consumes only one renewed-cycle automatic merge; PR #215 is counted prospectively
+  as merge 4/10.'
+current: 'ARV-060 implementation and completion bookkeeping are complete in PR #215;
+  canonical queue advances to COMMERCIAL-WORKFLOW-ARV-063-001 once final combined-head
+  exact-head CI passes and #215 merges.'
+pending: []
+last_verified_commit: 45f2c15e4acda8e2e03f5f9a901d5c839c979686
 test_results:
 - 'ARV-060 focused tests: 4 passed'
 - 'ARV-060 + R8 customer-pilot + ARV-052 expert-review: 15 passed'
@@ -69,9 +68,13 @@ test_results:
 - 'git diff --check: PASS'
 - 'full make test: 3131 passed, 236 skipped; 1 known main-baseline macOS R9 pg_restore
   failure'
-updated_at: '2026-10-08T08:28:43+03:00'
-resume_instruction: Open the ARV-060 implementation PR from agent/commercial-workflow-arv-060-001.
-  Require exact-head CI; if green, add completion/governance bookkeeping to the same
-  PR, rerun exact-head CI, then merge once under renewed AM-4.
-current_stage: implementation_pr
-remaining: *id001
+- 'PR #215 implementation-head exact-head CI run 37732584551: SUCCESS (9/9 jobs)'
+- 'PR #215 final combined-head exact-head CI required before merge'
+updated_at: '2026-10-08T08:40:34+03:00'
+resume_instruction: 'Verify final exact-head CI for PR #215 on the combined completion
+  head. If all required jobs are green and head/base/renewed AM-4 remain valid, merge
+  #215 as automatic merge 4/10, then start COMMERCIAL-WORKFLOW-ARV-063-001.'
+current_stage: completion_exact_head_ci
+remaining:
+- 'final exact-head PR #215 CI'
+- guarded merge as renewed AM-4 merge 4/10
