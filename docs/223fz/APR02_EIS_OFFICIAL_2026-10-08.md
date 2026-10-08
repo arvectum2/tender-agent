@@ -6,7 +6,7 @@ Use Mac mini for EIS; `zakupki.gov.ru` must be fetched **directly, bypassing HTT
 
 ## Open-data versus SOAP
 
-`/epz/opendata/search/results.html` is **open datasets search** with a 223-FZ dataset selector `/epz/opendata/dataset/modal.html?inputId=dataset223...`, not itself a SOAP WSDL or method specification. Existing `scripts/diagnose_eis_soap_matrix.py` `getDocsIP` uses **44-FZ** namespace `http://zakupki.gov.ru/fz44/get-docs-ip/ws` and subsystem `PRIZ`; do not pretend that envelope is valid for 223-FZ. The specific 223-FZ SOAP service, namespace, operations and authentication must be confirmed from official 223-FZ service instructions and schemas before implementing its client. SOAP credential remains only in local protected Mac mini file, not in git.
+`/epz/opendata/search/results.html` is **open datasets search** with a 223-FZ dataset selector `/epz/opendata/dataset/modal.html?inputId=dataset223...`, not itself a SOAP WSDL or method specification. Existing `scripts/diagnose_eis_soap_matrix.py` sends a 44-FZ `PRIZ` envelope under namespace `http://zakupki.gov.ru/fz44/get-docs-ip/ws`. **The namespace and getDocsIP service may also be used for 223-FZ with `subsystemType=RI223`**: public integration user reports describe a successful `getDocsByOrgRegionRequest` for `RI223`, `documentType44=purchaseNotice`, `orgRegion=77`, `periodInfo/exactDate` (https://qna.habr.com/q/1375896?from=questions_similar). This is third-party reported working behavior, not yet verified on our Mac mini against the current WSDL/XSD. Read-only schema probes: `int44` TCP reset, `int` HTTP 403. Do **not** assert that separate SOAP namespace is mandatory; confirm current official schema before production integration. SOAP credential remains only in local protected Mac mini file, not in git.
 
 ## Working read-only official 223-FZ paths
 
@@ -30,3 +30,32 @@ All files downloaded on Mac mini into `/tmp/apr02-223fz-official/<number>/`; loc
 Existing `parse_223fz_detail` against all four **official documents HTML pages** returned `SUCCESS`, extracted explicit titles, and yielded 22/14/18/14 candidate links. These candidate-link counts are too high: they include navigation links such as `/documents.html`; the true independently extracted `/223/filestore/.../file.html?uid=` attachment counts are 6/2/4/2. Next focused improvement is filter attachment links to concrete file endpoints and preserve exact source provenance; do not infer every URL containing `document` is an attachment.
 
 This resolves the original inaccessible-EIS blocker **for public official 223-FZ HTML and document downloads**, but not by establishing the 223-FZ SOAP protocol. Before claiming 3–4 filtered OKPD2-62 cases, replace the misclassified 63.11 case and verify numeric OKPD2 for every inclusion.
+
+## Candidate 223-FZ SOAP request (community-validated, awaiting live XSD verification)
+
+The key difference from the currently implemented 44-FZ `PRIZ` request is **`RI223`**. The following is a *dated region query*, not a registry-number query, and is not claimed successfully run locally:
+
+```xml
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://zakupki.gov.ru/fz44/get-docs-ip/ws">
+  <soapenv:Header>
+    <individualPerson_token>${EIS_TOKEN}</individualPerson_token>
+  </soapenv:Header>
+  <soapenv:Body>
+    <ws:getDocsByOrgRegionRequest>
+      <index>
+        <id>${REQUEST_UUID}</id>
+        <createDateTime>${TIMESTAMP_ISO}</createDateTime>
+        <mode>PROD</mode>
+      </index>
+      <selectionParams>
+        <orgRegion>77</orgRegion>
+        <subsystemType>RI223</subsystemType>
+        <documentType44>purchaseNotice</documentType44>
+        <periodInfo><exactDate>2026-10-08</exactDate></periodInfo>
+      </selectionParams>
+    </ws:getDocsByOrgRegionRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+```
+
+The literal field name `documentType44` in a 223-FZ query is present in the reported working sample; do not rename it on intuition. Authentication uses the existing `individualPerson_token` header. On success `getDocsIP` returns archive information (`archiveUrl`), then the archive is fetched in a separate authenticated request. Validate XSD ordering and supported `RI223` document types against the current EIS integration album before enabling a scheduled production job.
