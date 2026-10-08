@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Turn genuine RI223 source-bound RAR contents into safely acquired child documents
   processed by existing Data Platform for tender analysis.
@@ -27,18 +27,28 @@ completed:
 - 'Focused relevant tests: 36 passed, 1 existing warning; make check and relevant
   Ruff passed.'
 - Documented source-grounded sample observations without authoritative legal/GO assumptions.
-current: Implementation locally verified; awaiting exact-head CI and governed merge.
-pending:
-- Publish guarded PR, obtain exact-head CI, recheck Owner directive/merge gate, merge,
-  then reconcile completed checkpoint.
-last_verified_commit: d5312687c7226cd64e1841e3c98f78ab2a775f2b
+- 'PR #233 exact-head CI workflow 37797214204 SUCCESS 9/9 at head 88acbf7a5aad8a57caf296048d5b7382c2d08c3a.'
+- 'Product Owner expressly authorized continuation and merger 2026-10-08; PR #233
+  squash-merged as 936621909ac56f1dbef238b13f4d3b8dda6ab556.'
+- Data Platform RAG read-only source retrieval confirmed original requirements/methodology
+  with attributable document names.
+- Full Tender Research regression 490 passed, 1 skipped; 14 focused after CI runner
+  repair, make check/ruff passed.
+current: Completed and merged; APR-02 broader procedure/version/status/real multi-lot
+  breadth remains open for separate measured successors.
+pending: []
+last_verified_commit: 936621909ac56f1dbef238b13f4d3b8dda6ab556
 test_results:
 - 36 focused/integration-adjacent tests passed; 1 unrelated warning.
 - make check PASS, changed-file Ruff PASS, git diff --check PASS.
 - Real RI223 RAR archive 19/19 files; Data Platform 19/19 extracted; 300 chunks; no
   original RAR misclassified.
 - Source-grounded observations in docs/223fz/APR02_RI223_RAR_CONTENT_ANALYSIS_2026-10-08.md.
-resume_instruction: 'For PR feature/apr02-rar-document-analysis: verify exact-head
-  CI and mergeability, use explicit Owner 2026-10-08 approval to merge after all checks;
-  reconcile queue/current-task completed in main, then proceed to next independently
-  measured APR-02 breadth gap. No automatic legal/participation conclusions.'
+- Exact-head CI 37797214204 SUCCESS all 9/9 jobs.
+- Full Tender Research suite 490 passed / 1 skipped.
+- Read-only semantic queries hit actual source PDF/DOCX/DOC after Data Platform 300
+  embeddings.
+resume_instruction: 'Do not repeat APR-02-RAR-DOCUMENT-ANALYSIS-001; completed in
+  PR #233. Continue APR-02-223FZ-BREADTH using first independently measured authentic
+  gap (notice revisions/clarifications/real multi-lot or content-based fit evidence),
+  maintain source hashes and REVIEW/HUMAN gates. Do not assume legal conclusions.'
