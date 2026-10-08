@@ -14,15 +14,15 @@ definition_of_done:
 completed:
 - '2026-10-08: Reconciled current main head 75beab91a2fcc46fb885d864cd39f229603fe080.'
 - '2026-10-08: Verified queue state: first ten Commercial Workflow items done; ARV-066 and ARV-069 ready.'
-current: Update policy, canonical roadmap, human roadmap and tests from prospective PR #217 wording to merged 10/12 state.
+current: Canonical status surfaces are reconciled; open PR and require exact-head CI before merge.
 pending:
-- Update canonical status surfaces.
-- Run focused verification.
 - Open PR, require exact-head CI, merge.
 last_verified_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
-test_results: []
+test_results:
+- 'Mac mini focused governance tests: 4 passed, 1 warning.'
+- 'YAML parse for executor policy, owner directive, current task, execution queue and canonical roadmap: PASS.'
 updated_at: '2026-10-08T11:04:00+03:00'
-resume_instruction: Continue only ROADMAP-FULL-CHECKLIST-REFRESH-20261008. Reconcile status only; do not change product/runtime behavior or queue scope.
+resume_instruction: Open the roadmap refresh PR, require exact-head CI green, merge, then mark this checkpoint completed. Do not change product/runtime behavior or queue scope.
 execution:
   claimed_by: ChatGPT
   execution_id: roadmap-full-checklist-refresh-20261008
