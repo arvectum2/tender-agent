@@ -16,7 +16,7 @@ COPY migrations ./migrations
 # wvHtml converts legacy OLE Word (.doc) tables into structure-preserving HTML
 # for the document text extractor. No LibreOffice or other converters needed.
 RUN apt-get update \
-    && apt-get install --yes --no-install-recommends wv \
+    && apt-get install --yes --no-install-recommends wv libarchive-tools \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade pip \
