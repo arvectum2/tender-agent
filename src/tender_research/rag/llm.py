@@ -7,6 +7,8 @@ import urllib.request
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
+from src.tender_research.rag.numeric_absence_guard import contradicted_absence
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
@@ -86,6 +88,12 @@ def _validate_source_bound_completion(
         return "Local LLM answer has no verifiable source chunk citations."
     if any(item not in available for item in references):
         return "Local LLM answer cites unknown or modified source chunk identifiers."
+    contradicted_field = contradicted_absence(answer, contexts)
+    if contradicted_field:
+        return (
+            "Local LLM answer incorrectly claims missing numeric evidence "
+            f"for {contradicted_field}; review original cited source chunks."
+        )
     return None
 
 

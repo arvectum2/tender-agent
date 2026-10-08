@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-NUMERIC-CONTRADICTION-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Fail closed on explicit numerical absence claims contradicted by directly observed
   units and amounts in original cited source snippets, common to 223/44 law.
@@ -14,18 +14,29 @@ definition_of_done:
   PR exact-head CI and Owner review.
 completed:
 - 'Source guard PR #243 merged; ten-section source-only evaluation PR #244 CI pending.'
-current: Implement conservative absence-versus-explicit-number contradiction detector
-  for shared local LLM answers.
+- Implemented conservative numeric absence guard in shared LocalChatLlmClient (quantity,
+  price, date, percentages), returns error and original retrieval fallback instead
+  of unsupported LLM facts.
+- Original 44-FZ source 140 metric tonnes contradicting model missing-volume claim
+  detected; six new positive/negative numeric tests passed.
+- Full 532 Tender Research passed, 1 skipped, make check PASS; source/number caution
+  report saved.
+current: Numeric guard implemented/tested, publish PR and verify exact-head CI before
+  merge.
 pending:
-- Tests and numeric guard implementation.
-- Run tests, publish PR, verify CI and Owner gates.
+- Push feature PR and exact-head CI/Owner gated merge.
+- Broader real multi-lot revision-aware source numeric mapping and claim entailment
+  remain separate future work.
 last_verified_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f
 test_results:
-- 'Previous full 527 passed, one skipped; PR #244 quality pending.'
-resume_instruction: Feature branch feature/apr02-numeric-reconcile, worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-numeric-reconcile.
-  Add conservative numeric denial/source contradiction check to LLM guard and tests;
-  no invented numeric conclusions. Source 44-FZ 140 metric tonnes in original supplied
-  chunks.
+- 532 passed, 1 skipped, 42 warnings
+- make check PASS
+- 6 new numeric guard and 5 existing evidence gate tests pass
+resume_instruction: 'Branch feature/apr02-numeric-reconcile in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-numeric-reconcile.
+  Numeric guard source 140 tonne omission fixed by fail-closed fallback, local 532
+  tests pass. Verify PR exact head CI and owner gate before merge. PR #244 model 20-case
+  benchmark still pending quality CI; do not claim it merged. No semantic source entailment
+  proved.'
 execution:
   branch: feature/apr02-numeric-reconcile
   base_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f
