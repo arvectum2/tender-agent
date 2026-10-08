@@ -13,7 +13,10 @@ completed:
   - 'Revalidated existing 223-FZ intake and decision foundations and residual target.'
   - 'Located independent public reference to notice 32616226131; two EIS routes returned HTTP 404 instead of a fixture.'
   - 'Documented real-corpus acceptance gate and fail-closed collection protocol.'
-current: 'Real EIS source retrieval unavailable through tested public routes; no verified fixture to freeze.'
+  - '2026-10-08 Mac mini RDC terminal recovered: ping and echo command successful; remote tool policy rejected credential-loading diagnostic command.'
+  - 'Located protected local SOAP token file with mode 0600; no credential copied or disclosed.'
+  - 'Public 223-FZ provider focused tests: 4 passed in 0.16s via existing venv; isolated pipeline test needs complete SQLAlchemy metadata dependency loading.'
+current: 'Mac mini terminal operational; SOAP credential-loading command blocked by tool safety layer; no verified 223-FZ fixture to freeze.'
 pending:
   - 'Retrieve at least one authentic, accessible public 223-FZ notice and supporting document evidence.'
   - 'Freeze provenance/checksums/field truth and run measured parser comparison.'
@@ -21,8 +24,8 @@ pending:
 last_verified_commit: 958e94c740e73a052f275d46fea713f01ab4d117
 test_results:
   - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
-  - 'No product code changed; parser regression tests not claimed.'
-resume_instruction: 'First obtain authentic public 223-FZ source material via authorized access. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
+  - '4 focused public 223-FZ parser tests passed in 0.16s; isolated full pipeline test failed on SQLAlchemy missing customer_profiles metadata (incomplete isolated test context). No production regression claimed.'
+resume_instruction: 'Resolve SOAP credential-loading tool policy blocker without exposing credentials. First obtain authentic public 223-FZ source material via authorized access. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
 execution:
   branch: feature/apr02-223fz-evidence-gate
   base_commit: 958e94c740e73a052f275d46fea713f01ab4d117
