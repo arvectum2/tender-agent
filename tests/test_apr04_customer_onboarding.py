@@ -195,4 +195,5 @@ def test_macmini_override_is_loopback_and_has_verified_storage_mount():
     compose = (repo / "deploy/local/compose.macmini.yaml").read_text()
     assert '127.0.0.1:18082:8000' in compose
     assert compose.count('ARVECTUM_STORAGE_ROOT: /app/data') == 2
+    assert compose.count('AI_CORP_RAG_DATA_PLATFORM_BASE_URL: http://host.docker.internal:8094') == 2
     assert '0.0.0.0:18082' not in compose

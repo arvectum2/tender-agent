@@ -76,3 +76,16 @@ recovery for in-flight jobs is still gated. APR-05 must implement per-tenant
 auth before anyone other than an authorized internal pilot operator is granted
 access. Local Docker images build from reviewed Git SHA, but external image
 digest/signature supply-chain release gate remains pending.
+
+
+## Shared Mac mini Data Platform
+
+The local stack reuses the already running Mac mini Data Platform at port
+8094 via `http://host.docker.internal:8094`. Its documented
+`POST /v1/process/document` pipeline processes temporary file content
+without creating a durable document ingestion record. The existing internal
+`AI_CORP_RAG_DATA_PLATFORM_API_KEY` is placed only in the external operator
+env (0600); no new token, database, container or public port is created.
+The Data Platform service remains separate and is not restarted by this
+Compose project. A configured local model backend is not a substitute for
+review of extraction completeness or human procurement decisions.

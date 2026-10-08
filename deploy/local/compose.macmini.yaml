@@ -6,8 +6,10 @@ services:
     environment:
       AI_CORP_ARVECTUM_DATA_DIR: /app/data
       ARVECTUM_STORAGE_ROOT: /app/data
+      AI_CORP_RAG_DATA_PLATFORM_BASE_URL: http://host.docker.internal:8094
       AI_CORP_ALLOWED_HOSTS: localhost,127.0.0.1
   worker:
     environment:
       AI_CORP_ARVECTUM_DATA_DIR: /app/data
       ARVECTUM_STORAGE_ROOT: /app/data
+      AI_CORP_RAG_DATA_PLATFORM_BASE_URL: http://host.docker.internal:8094
