@@ -9,6 +9,9 @@ from src.modules.agent_registry.internal_router import (
     router as internal_company_agents_router,
 )
 from src.modules.agent_registry.router import router as agent_registry_router
+from src.modules.application_package_generator.router import (
+    router as application_package_generator_router,
+)
 from src.modules.archive_export.router import router as archive_export_router
 from src.modules.bid_completeness.router import router as bid_completeness_router
 from src.modules.bid_documents.router import router as bid_documents_router
@@ -165,6 +168,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     dashboard_snapshots_router,
     daily_tender_run_router,
     archive_export_router,
+    application_package_generator_router,
     workflow_runs_router,
     optimization_router,
     copilot_feed_router,
