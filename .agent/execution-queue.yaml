@@ -835,7 +835,7 @@ items:
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'APR-01 in Owner-optimized Active Product Roadmap 2026-10-08.'
+  source: 'APR-01 in Owner-optimized Active Product Roadmap 2026-10-08. Reuse/rebase verified ARV-061 revalidation evidence from open PR #111 where useful; do not duplicate already-proven analysis.'
   roadmap_scope:
   - ARV-061
   dependencies: []
