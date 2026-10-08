@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REAL-MULTILOT-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Handle authentic RI223 223-FZ multi-lot notices with multiple source revisions
   and explanation documents without inventing legal status or conflating lots.
@@ -30,12 +30,15 @@ completed:
   references; global NMCK UNKNOWN.
 - 37 focused acceptance tests passed; full Tender Research suite 498 passed, 1 skipped
   (42 known warnings); make check, Ruff and git diff --check PASS.
-current: Code and authentic-source parser check complete; preparing PR, exact-head
-  CI and Owner REVIEW.
+- 'Reviewable implementation PR #236 opened against main at code head 263a50f2; original
+  RI223 archive and 498/1 Tender Research results documented.'
+current: 'PR #236 published; exact-head CI and attributable Owner REVIEW are required
+  before merging.'
 pending:
-- Commit source/test/evidence and open PR.
-- Verify exact-head CI and attribution/Owner REVIEW before merge.
-last_verified_commit: 4b93709383866121de65647fc340b8add0ab0510
+- Check exact-head CI for final branch head, confirm mergeability/current base and
+  no review gate violations.
+- Obtain attributable Owner REVIEW prior to merge; afterward update checkpoint completed.
+last_verified_commit: 263a50f22b99d63958fbb1afe6858e27a87d3dae
 test_results:
 - 498 Tender Research tests PASS, 1 skipped, 42 warnings.
 - 37 focused tests PASS after adapting previous single-version-only fail-closed test.
@@ -44,10 +47,10 @@ test_results:
   lots.
 - Optional standalone isolated-DB harness requires complete app model imports; existing
   canonical DB-backed tests pass.
-resume_instruction: 'Branch feature/apr02-real-multilot-20261008: check PR exact-head
-  CI, review source-bound revision/explanation guards, obtain attributable Owner REVIEW
-  before merge, then reconcile checkpoint completed and continue APR-02 from the next
-  evidence-backed gap.'
+resume_instruction: 'Open PR #236 on feature/apr02-real-multilot-20261008. Verify
+  exact-head CI on latest bookkeeping head (not earlier code head), check current
+  main/reviews/AM-4 gates, merge only after attributable Owner REVIEW; then mark APR-02-RI223-REAL-MULTILOT-001
+  completed and continue the next measured APR-02 gap.'
 execution:
   branch: feature/apr02-real-multilot-20261008
   base_commit: 4b93709383866121de65647fc340b8add0ab0510

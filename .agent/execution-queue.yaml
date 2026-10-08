@@ -929,7 +929,8 @@ items:
 - order: 1050
   task_id: APR-02-RI223-REAL-MULTILOT-001
   title: Real RI223 multi-lot notice revisions and explanation projection
-  status: in_progress
+  status: blocked
+  blocked_on: 'Exact-head CI and attributable Owner REVIEW on PR #236 before merge.'
   authority: OWNER_DIRECTIVE
   continuation_mode: OWNER_DIRECTIVE
   independent: true
