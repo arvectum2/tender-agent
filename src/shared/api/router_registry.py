@@ -30,6 +30,9 @@ from src.modules.commercial_operator_console.router import (
 from src.modules.commercial_prebid_demo.router import (
     router as commercial_prebid_demo_router,
 )
+from src.modules.company_profile_store.router import (
+    router as company_profile_store_router,
+)
 from src.modules.compliance_matrix.router import router as compliance_matrix_router
 from src.modules.connector_registry.router import router as connector_registry_router
 from src.modules.contract_execution_analytics.router import (
@@ -225,6 +228,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     claim_triggers_router,
     deal_closure_reports_router,
     commercial_prebid_demo_router,
+    company_profile_store_router,
     commercial_operator_console_router,
     commercial_bid_readiness_router,
     postmortems_router,
