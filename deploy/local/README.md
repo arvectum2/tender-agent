@@ -107,3 +107,19 @@ Run the developer-only synthetic HTTP scenario after local Compose
 migration and health checks:
 
     uv run python deploy/local/saas_e2e_smoke.py       --env-file ~/.config/arvectum/apr04-local.env --real-eis
+
+
+## Local image overlay (offline-first development)
+
+To avoid repeatedly downloading Debian and Python packages, the **local
+Compose override alone** uses `deploy/local/Dockerfile` as a thin layer
+over the previously verified local ARM64 image
+`arvectum/tender-agent:00df43958674a9eebee2bbd54e7f4116bb87173f`.
+It copies the latest `src` and `migrations` from the reviewed commit,
+sets exact revision/version OCI labels, and does not touch dependencies.
+
+Use it only while `pyproject.toml` and runtime dependency requirements are
+unchanged. For a new dependency or for production, rebuild using the canonical
+`deploy/pilot/Dockerfile`. The local overlay has no effect on the APR-03
+production Compose package or public release Docker builds. It is not a
+signature/attestation substitute.

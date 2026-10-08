@@ -1,7 +1,16 @@
 # Mac mini APR-04 local-only override. Always combine with ../production/compose.yaml.
 # Only an authenticated operator API is published on Mac loopback.
+x-local-build: &local-build
+  context: ../..
+  dockerfile: deploy/local/Dockerfile
+  args:
+    REVISION: "${ARVECTUM_IMAGE_REVISION:?}"
+    VERSION: "${ARVECTUM_IMAGE_VERSION:?}"
 services:
+  migrate:
+    build: *local-build
   api:
+    build: *local-build
     ports: ["127.0.0.1:18082:8000"]
     environment:
       AI_CORP_ARVECTUM_DATA_DIR: /app/data
@@ -10,6 +19,7 @@ services:
       AI_CORP_ALLOWED_HOSTS: localhost,127.0.0.1
       AI_CORP_SAAS_FOUNDATION_ENABLED: "true"
   worker:
+    build: *local-build
     environment:
       AI_CORP_ARVECTUM_DATA_DIR: /app/data
       ARVECTUM_STORAGE_ROOT: /app/data
