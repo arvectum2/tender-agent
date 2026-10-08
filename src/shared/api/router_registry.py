@@ -65,6 +65,7 @@ from src.modules.external_execution.router import router as external_execution_r
 from src.modules.finance_memo.router import router as finance_memo_router
 from src.modules.financing_strategy.router import router as financing_strategy_router
 from src.modules.hermes_agent.internal_router import router as hermes_agent_router
+from src.modules.historical_prices.router import router as historical_prices_router
 from src.modules.incident_register.router import router as incident_register_router
 from src.modules.incidents.router import router as incidents_router
 from src.modules.initial_tech_risks.router import router as initial_tech_risks_router
@@ -251,6 +252,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     payment_collection_router,
     payment_tracking_router,
     shipping_acceptance_router,
+    historical_prices_router,
     incident_register_router,
     supplier_fulfillment_router,
     supplier_progress_router,
