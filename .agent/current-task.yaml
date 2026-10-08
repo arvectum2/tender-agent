@@ -3,7 +3,7 @@ repository: arvectum2/tender-agent
 status: in_progress
 task_id: PR-TREE-CLEANUP-20261008
 authority: OWNER_DIRECTIVE
-goal: Leave Tender Agent with a clean pull-request tree: merge any still-valid unique fix that remains necessary on current main, close stale/superseded/duplicate/deferred PRs with traceable reasons, and finish with zero unintended open PRs.
+goal: 'Leave Tender Agent with a clean pull-request tree: merge any still-valid unique fix that remains necessary on current main, close stale/superseded/duplicate/deferred PRs with traceable reasons, and finish with zero unintended open PRs.'
 definition_of_done:
 - Every currently open PR is classified against current main as merge/reimplement, absorbed/superseded, deferred-by-active-roadmap, or obsolete duplicate.
 - The confirmed hidden real->demo fallback from old PR #89 is not discarded if still present on current main; it is fixed and tested on a clean current-main branch rather than merging the stale stacked PR.
