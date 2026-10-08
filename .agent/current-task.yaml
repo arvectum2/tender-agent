@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-NUMERIC-CLAIM-GUARD-001
-status: in_progress
+status: blocked
 goal: Catch explicitly sourced wrong quantity numbers in local LLM prose only when
   exact chunk and unique comparable source amount are unambiguous.
 definition_of_done:
@@ -14,16 +14,27 @@ completed:
 - 'PR #245 merged e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0, 9/9 CI successful.'
 - Existing source-ID, truncated-output and explicit numeric-absence guards shared
   for 44/223.
-current: Develop exact per-cited-chunk unit-value verification for quantity assertions.
+- Added narrow exact source-chunk quantity claim comparison (metric tonnes only) to
+  shared LLM guard; mismatch triggers existing retrieval-only fallback, no value substitution.
+- Nine new focused tests include 150 versus 140 metric tonnes, matching quantity,
+  ambiguous multiple lot-style values, unrelated units/references, and full integration.
+- Full Tender Research 542 passed, one skipped, 42 warnings; make check PASS; report
+  documents precise scope and unknowns.
+current: Implementation and local tests complete, PR and exact-head CI/Owner merge
+  pending.
 pending:
-- Implement and test.
-- Open PR, verify CI/Owner gate, merge.
+- Publish PR and verify exact-head CI/Owner-gated merge.
+- 'Future separate tasks: explicit source lot/revision identity before more ambitious
+  per-claim entailment; defer model comparison until architecture complete.'
 last_verified_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
 test_results:
-- 'Previous 533 passed one skipped after #245 rebase.'
-resume_instruction: Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-numeric-claim-check;
-  implement conservative explicit 150-tonne-vs-140-tonne cited source rejection; no
-  model benchmark or modification to Gemma/Qwen.
+- 542 passed, 1 skipped, 42 warnings
+- make check PASS
+- 9 new numeric-claim guard tests passed
+resume_instruction: 'Feature branch feature/apr02-numeric-claim-check: source-anchored
+  150-tonnes-versus-140-tonnes guard and 9 tests completed, 542 full suite pass. Check
+  PR exact-head CI/Owner review and merge; then add evidence-bound lot/revision resolution
+  as separate task. Do not benchmark Qwen versus Gemma until architecture is complete.'
 execution:
   branch: feature/apr02-numeric-claim-check
   base_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
