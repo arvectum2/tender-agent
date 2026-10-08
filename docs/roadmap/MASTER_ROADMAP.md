@@ -8,8 +8,8 @@
 
 ### P0 — довести продукт до коммерчески сильного состояния
 
-- [ ] **APR-01 / ARV-061 — Fast cited pre-analysis — NEXT.** Номер/URL закупки → быстрый предмет, сроки, ключевые требования, blockers/unknowns, fit и цитаты. Reuse существующих facts/evidence/Decision Core; без второго analysis engine.
-- [ ] **APR-02 / ARV-006 — 223-ФЗ breadth.** Расширять только по замороженному корпусу реальных пробелов процедур/документов; неподдержанное остаётся UNKNOWN/NEEDS_REVIEW.
+- [x] **APR-01 / ARV-061 — Fast cited pre-analysis — DONE (PR #225, CI 9/9).** Номер/URL закупки → быстрый предмет, сроки, ключевые требования, blockers/unknowns, fit и цитаты. Reuse существующих facts/evidence/Decision Core; без второго analysis engine.
+- [ ] **APR-02 / ARV-006 — 223-ФЗ breadth — NEXT (not yet admitted).** Расширять только по замороженному корпусу реальных пробелов процедур/документов; неподдержанное остаётся UNKNOWN/NEEDS_REVIEW.
 - [ ] **APR-03 — Production Runtime Epic.** Объединяет ARV-008/011/012/013/014/058 + ARV-076: российский VPS, стабильный ingress, workers/resume, backup/restore, observability. Не дробить на отдельные продуктовые проекты.
 - [ ] **APR-04 — Customer Onboarding.** На базе ARV-015 + ARV-064: реквизиты, документы, лицензии/SRO, регионы, категории, НМЦК, маржа/риски и reusable evidence в одном onboarding flow.
 - [ ] **APR-05 — Paid Pilot & SaaS Foundation.** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
