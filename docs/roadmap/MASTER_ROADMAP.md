@@ -2,6 +2,38 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
+## Оптимизированная Active Product Roadmap — 2026-10-08
+
+Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
+
+### P0 — довести продукт до коммерчески сильного состояния
+
+- [ ] **APR-01 / ARV-061 — Fast cited pre-analysis — NEXT.** Номер/URL закупки → быстрый предмет, сроки, ключевые требования, blockers/unknowns, fit и цитаты. Reuse существующих facts/evidence/Decision Core; без второго analysis engine.
+- [ ] **APR-02 / ARV-006 — 223-ФЗ breadth.** Расширять только по замороженному корпусу реальных пробелов процедур/документов; неподдержанное остаётся UNKNOWN/NEEDS_REVIEW.
+- [ ] **APR-03 — Production Runtime Epic.** Объединяет ARV-008/011/012/013/014/058 + ARV-076: российский VPS, стабильный ingress, workers/resume, backup/restore, observability. Не дробить на отдельные продуктовые проекты.
+- [ ] **APR-04 — Customer Onboarding.** На базе ARV-015 + ARV-064: реквизиты, документы, лицензии/SRO, регионы, категории, НМЦК, маржа/риски и reusable evidence в одном onboarding flow.
+- [ ] **APR-05 — Paid Pilot & SaaS Foundation.** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
+- [ ] **APR-06 — Commercial Acceptance Gate.** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.
+- [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation.** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
+
+### P1/P2 — после P0 или при подтверждённом спросе
+
+- [ ] **APR-08 / ARV-065 — Evidence Copilot (P1).** Только procurement-scoped Q&A/расчёты/объяснения с цитатами; не generic chatbot и не authoritative legal approval.
+- [ ] **APR-09 / ARV-023/024/025/026/027 — Supplier → RFQ → TKP (P1, trigger).** Запускать после >=2 платных кейсов, где sourcing/TKP реально является bottleneck; внешняя отправка остаётся HUMAN/REVIEW.
+- [ ] **APR-10 / ARV-004 — Feedback Learning Loop (P2, trigger).** Human correction → regression → reviewed candidate → controlled promotion. Не раньше достаточного корпуса (ориентир >=30 useful corrections в >=3 customer/pilot contexts).
+
+### Что сознательно снято с активной продуктовой очереди
+
+- [x] **ARV-066 — One-click procurement import** — завершён в main (9a5a693f).
+- [ ] **ARV-069 forecast** — **DEFERRED EXPERIMENT**, а не следующий шаг. Возвращается при >=100 сопоставимых source-bound outcomes и frozen benchmark, показывающем пользу сверх исторического price context.
+- [ ] **ARV-028/029 n8n** — только если реально возникнет multi-system orchestration bottleneck.
+- [ ] **ARV-047 OpenSearch, ARV-048 ClickHouse, ARV-049 Kubernetes** — только по измеренному capacity/SLO trigger.
+- [ ] **ARV-030..037/071 broad ETP connectors** — только при повторяемом платном customer demand или заметной недоступности целевых закупок через текущие источники.
+- [ ] **ARV-046 on-prem, ARV-045 1C/ERP, ARV-070 financing, broader ARV-044 mobile** — customer/contract-triggered.
+- [ ] **ARV-062 GitVerse mirror, ARV-075 Mac mini cleanup, ARV-051 dev protocol** — engineering/ops/governance, не product backlog.
+- [ ] **ARV-073/074 ID conflicts** — owner/governance reconciliation only.
+- [ ] **ARV-067 new vertical ontologies** — только если frozen benchmark показывает устойчивый vertical gap.
+
 ## Provenance and restoration rule
 
 This roadmap restores the latest canonical Owner backlog snapshot available for recovery: `Arvectum_Backlog_Roadmap_2026-07-30_v9_storage_cleanup.xlsx`, sheet `Полный бэклог`, rows 5–97. The recovered registry is complete for `BASE-001..BASE-018` and `ARV-001..ARV-075` and preserves every historical ID, title, status, priority, dependency, progress value, source and comment without renumbering.
@@ -74,7 +106,7 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 
 **Historical execution snapshot (2026-09-18):** at that point every explicitly admitted queue item through order 80 was completed and the queue was temporarily exhausted. This paragraph is retained only as history; it is **not** the current executor state.
 
-**Current execution status (2026-10-08, 11:02 MSK):** the full canonical **COMMERCIAL-WORKFLOW** branch is **10/12 complete**. ARV-064 merged in PR #217 as `75beab91` after exact-head CI passed; renewed AM-4 is therefore at **6/10**. **ARV-066** is now actively executing on branch `agent/commercial-workflow-arv-066-001` (head `2c597ae5`) with a bounded registry-number/EIS URL → canonical `ProcurementCase` handoff; DOM scraping is not source truth and unsupported/ambiguous inputs fail closed. **ARV-069** remains the final admitted Commercial Workflow item. All procurement submission, EDS/signature, external communication, legal/commercial acceptance and other hard stops remain unchanged.
+**Current execution status (2026-10-08, 12:12 MSK):** ARV-066 is merged in main as 9a5a693f, so the essential Commercial Workflow v1 path is complete. ARV-069 is intentionally deferred from immediate execution by the Owner roadmap optimization. The next product task is **APR-01 / ARV-061 — fast cited pre-analysis**. Historical open ARV items are no longer automatic implementation obligations; trigger-backlog items require evidenced triggers.
 
 <!-- CURRENT-CHECKLIST-START -->
 ## Полная текущая дорожная карта — checklist
