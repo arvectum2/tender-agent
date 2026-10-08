@@ -30,3 +30,7 @@ Original two source ZIP SHA-256 were checked again on Mac mini in this run. Raw 
 ## Final closure gate
 
 Do not close bounded APR-02 until PR #248 is merged after exact-head CI, all final Tender Research regressions and make check pass, canonical roadmap and executor queue agree, and closure PR is merged with final exact-head successful CI and Owner authority. Document the completion merge hash and mark canonical checkpoint completed.
+
+## Accepted closure evidence
+
+Bounded APR-02 source corpus closure approved through PR #249 (exact-head CI run 37829827778: 9/9 successful, merged to main as 1e056ecc09f1478af80cbe11b3f96e57c15b49b1). Canonical task APR-02-BOUNDED-CLOSURE-001 completed. The explicitly excluded broad ARV-006 / later APR outcomes remain excluded.
