@@ -43,7 +43,7 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert directive["governance"]["material_executor_policy_change"] is True
     assert (
         directive["governance"]["am4_effect"]
-        == "renewed_am4_active_after_attributable_owner_review_2026_10_07"
+        == "renewed_am4_exhausted_after_pr_211_10_of_10"
     )
     assert directive["governance"]["renewal_decision"].endswith(
         "DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md"

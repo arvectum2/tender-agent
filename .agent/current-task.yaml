@@ -66,11 +66,15 @@ completed:
 - '2026-10-08: Completion bookkeeping is folded into PR #211 itself so that its merge
   is the tenth and final automatic merge in the renewed AM-4 cycle; this checkpoint
   lands only after a second final exact-head CI run on the bookkeeping head succeeds.'
+- '2026-10-08: PR #211 final bookkeeping-head CI run 37694734220 exposed one stale
+  watchdog assertion that still expected the active AM-4 label after the branch intentionally
+  moved to exhausted 10/10; implementation/runtime jobs were otherwise green. Updated
+  the governance regression to assert the exhausted state.'
 current: 'ARV-055 completed in the combined PR #211 implementation/completion package;
   canonical queue advances to COMMERCIAL-WORKFLOW-ARV-057-001. PR #211 consumes AM-4
   merge 10/10, so subsequent automatic merges require Owner renewal/review.'
 pending: []
-last_verified_commit: 2e438b2d6c6228f78064e3a1d41c292d023571d5
+last_verified_commit: 8a9a3d5bf98f64697a2ee253be3bb3515aa29a87
 test_results:
 - 'ARV-055 + Data Platform/retrieval/discovery/relevance regressions after current-main
   reconciliation: 96 passed'
@@ -81,13 +85,13 @@ test_results:
 - 'full local make test: 3118 passed, 236 skipped, 1 failed (known main-baseline R9
   pg_restore acceptance failure)'
 - 'PR #211 implementation-head exact CI run 37693335144: SUCCESS (9/9 jobs)'
-- 'PR #211 final bookkeeping-head exact CI: mandatory merge gate; this checkpoint
-  cannot land unless it succeeds'
-updated_at: '2026-10-08T01:12:04+03:00'
-resume_instruction: 'After PR #211 lands, start COMMERCIAL-WORKFLOW-ARV-057-001 only
-  for preparation/implementation/testing. Do not automatically merge ARV-057 or any
-  later PR: the renewed AM-4 cycle is exhausted at 10/10 and must fail closed to REVIEW
-  until the Owner renews/reviews merge authority.'
+- 'PR #211 bookkeeping-head CI run 37694734220: FAIL only on stale AM-4 state assertion;
+  fixed in follow-up head'
+- 'watchdog continuation policy after fix: PASS'
+updated_at: '2026-10-08T03:45:10+03:00'
+resume_instruction: 'Require fresh exact-head CI for PR #211 after the watchdog governance
+  assertion fix. If all 9 jobs pass and PR head/base remain unchanged, merge #211
+  as AM-4 merge 10/10. Do not automatically merge any later PR until Owner renewal/review.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv055
