@@ -148,3 +148,52 @@ def test_diagnostics_includes_route_check(monkeypatch, tmp_path):
 
     assert payload["route_check"]["dns_status"] == "ok"
     assert payload["route_check"]["tls_status"] == "ok"
+
+
+def test_223fz_org_region_routes_ri223_and_date(monkeypatch):
+    from scripts import diagnose_zakupki_soap as module
+    seen = {}
+
+    class FakeClient:
+        def __init__(self, _settings):
+            pass
+
+        def get_docs_by_org_region(self, region, exact_date, document_type, *, subsystem_type):
+            seen.update(region=region, exact_date=exact_date, document_type=document_type, subsystem_type=subsystem_type)
+            return DocsArchiveResult(request_id="ri223-test", ref_id="ok", archive_url=None, status="no_data")
+
+    monkeypatch.setattr(module, "ZakupkiSoapClient", FakeClient)
+    result = run_diagnostics(
+        settings=_settings(), reestr_number="32616445866",
+        method="getDocsByOrgRegion", subsystem_type="RI223",
+        org_region="77", exact_date="2026-10-07", document_type="purchaseNotice",
+    )
+    assert seen == dict(region="77", exact_date="2026-10-07", document_type="purchaseNotice", subsystem_type="RI223")
+    assert result["selection"]["subsystem_type"] == "RI223"
+
+
+def test_download_ri223_documents_xml_and_dedupe(monkeypatch, tmp_path):
+    import zipfile
+    from scripts import diagnose_zakupki_soap as module
+    archive = tmp_path / "ri223.zip"
+    xml = (
+        '<purchaseNotice><attachments><document><contentUid>aaa</contentUid>'
+        '<fileName>project.docx</fileName><url>https://zakupki.gov.ru/223/filestore/public/file.html?uid=aaa</url>'
+        '</document></attachments></purchaseNotice>'
+    )
+    with zipfile.ZipFile(archive, "w") as output:
+        output.writestr("purchaseNotice_1.xml", xml)
+        output.writestr("purchaseNotice_2.xml", xml)
+    from types import SimpleNamespace
+    captured = []
+
+    def fake_download(attachments, **kwargs):
+        captured.extend(attachments)
+        return SimpleNamespace(saved=[SimpleNamespace(name=a.name, size_bytes=0) for a in attachments], skipped=[])
+
+    monkeypatch.setattr(module, "download_procurement_attachments", fake_download)
+    result = module.download_xml_referenced_attachments(archive, tmp_path / "downloaded")
+    assert result["expected"] == result["downloaded"] == 1
+    assert result["complete"] is True
+    assert captured[0].attachment_id == "aaa"
+    assert captured[0].name == "project.docx"

@@ -75,11 +75,11 @@ def _base_payload(settings: ZakupkiSoapSettings, owner: str, method: str, reestr
     }
 
 
-def _run_method(client: ZakupkiSoapClient, method: str, reestr_number: str) -> dict[str, Any]:
+def _run_method(client: ZakupkiSoapClient, method: str, reestr_number: str, *, subsystem_type: str = "PRIZ", org_region: str = "72", exact_date: str = "2024-12-24", document_type: str = "epNotificationEF2020") -> dict[str, Any]:
     if method == "getDocsByReestrNumber":
-        result = client.get_docs_by_reestr_number(reestr_number)
+        result = (client.get_docs_by_reestr_number(reestr_number) if subsystem_type == "PRIZ" else client.get_docs_by_reestr_number(reestr_number, subsystem_type=subsystem_type))
     elif method == "getDocsByOrgRegion":
-        result = client.get_docs_by_org_region("72", "2024-12-24", "epNotificationEF2020")
+        result = client.get_docs_by_org_region(org_region, exact_date, document_type, subsystem_type=subsystem_type)
     elif method == "getNsi":
         result = client.get_nsi()
     else:
@@ -167,8 +167,13 @@ def run_diagnostics(
     check_xsd: bool = False,
     download_archive: bool = False,
     route_check: bool = False,
+    subsystem_type: str = "PRIZ",
+    org_region: str = "72",
+    exact_date: str = "2024-12-24",
+    document_type: str = "epNotificationEF2020",
 ) -> dict[str, Any]:
     payload = _base_payload(settings, owner, method, reestr_number)
+    payload["selection"] = {"subsystem_type": subsystem_type, "org_region": org_region, "exact_date": exact_date, "document_type": document_type}
     if not settings.configured:
         payload["soap_post_status"] = "not_configured"
         return payload
@@ -186,7 +191,7 @@ def run_diagnostics(
     payload["methods"] = {}
     for item in methods:
         try:
-            method_payload = _run_method(client, item, reestr_number)
+            method_payload = _run_method(client, item, reestr_number, subsystem_type=subsystem_type, org_region=org_region, exact_date=exact_date, document_type=document_type)
         except RuntimeError as exc:
             method_payload = {
                 "soap_post_status": "transport_error",
@@ -246,17 +251,23 @@ def download_xml_referenced_attachments(archive: Path, target_dir: Path) -> dict
                 raise RuntimeError("EIS notice XML exceeds safe size")
             root = ET.fromstring(bundle.read(member))
             for item in root.iter():
-                if item.tag.rsplit("}", 1)[-1] != "attachmentInfo":
+                local = item.tag.rsplit("}", 1)[-1]
+                if local not in {"attachmentInfo", "attachments"}:
                     continue
-                fields = {child.tag.rsplit("}", 1)[-1]: (child.text or "").strip() for child in item}
-                if not fields.get("fileName"):
-                    continue
-                attachments.append(ProcurementAttachment(
-                    attachment_id=fields.get("publishedContentId") or str(len(attachments) + 1),
-                    name=fields["fileName"], url=fields.get("url"),
-                    size_bytes=int(fields["fileSize"]) if fields.get("fileSize", "").isdigit() else None,
-                    can_download=bool(fields.get("url")),
-                ))
+                items = [item] if local == "attachmentInfo" else [x for x in item if x.tag.rsplit("}", 1)[-1] == "document"]
+                for entry in items:
+                    fields = {child.tag.rsplit("}", 1)[-1]: (child.text or "").strip() for child in entry}
+                    if not fields.get("fileName"):
+                        continue
+                    uid = fields.get("publishedContentId") or fields.get("contentUid") or fields.get("guid") or str(len(attachments) + 1)
+                    if any(existing.attachment_id == uid for existing in attachments):
+                        continue
+                    attachments.append(ProcurementAttachment(
+                        attachment_id=uid,
+                        name=fields["fileName"], url=fields.get("url"),
+                        size_bytes=int(fields["fileSize"]) if fields.get("fileSize", "").isdigit() else None,
+                        can_download=bool(fields.get("url")),
+                    ))
     if not attachments:
         return {"expected": 0, "downloaded": 0, "complete": False, "errors": ["no_attachment_info"]}
     result = download_procurement_attachments(
@@ -284,6 +295,10 @@ def save_diagnostics(payload: dict[str, Any]) -> Path:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Read-only диагностика getDocsIP для токена физлица")
     parser.add_argument("--owner", default="individual")
+    parser.add_argument("--subsystem-type", default="PRIZ", choices=["PRIZ", "RI223"])
+    parser.add_argument("--org-region", default="72")
+    parser.add_argument("--exact-date", default="2024-12-24")
+    parser.add_argument("--document-type", default="epNotificationEF2020")
     parser.add_argument("--method", default="getDocsByReestrNumber", choices=["xsd", "getNsi", "getDocsByReestrNumber", "getDocsByOrgRegion", "all"])
     parser.add_argument("--reestr-number", required=True)
     parser.add_argument("--check-xsd", action="store_true")
@@ -309,6 +324,10 @@ def main(argv: list[str] | None = None) -> int:
         check_xsd=args.check_xsd or method in {"xsd", "all"},
         download_archive=args.download_archive and not args.no_download,
         route_check=args.route_check,
+        subsystem_type=args.subsystem_type,
+        org_region=args.org_region,
+        exact_date=args.exact_date,
+        document_type=args.document_type,
     )
     if args.save_sanitized:
         save_diagnostics(payload)

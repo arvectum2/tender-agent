@@ -1,36 +1,41 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: ACTIVE-ROADMAP-ARV-061-001
+task_id: APR-02-223FZ-CORPUS-001
 status: completed
 authority: OWNER_DIRECTIVE
-goal: Fast evidence-grounded cited procurement pre-analysis for supported 44-FZ number/URL using existing facts/evidence/Decision Core.
+goal: 'Freeze verified real 223-FZ public notice/document corpus and measure residual parser gaps before APR-02 breadth implementation.'
 definition_of_done:
-  - Supported 44-FZ registry numbers/URLs yield bounded subject, deadlines, requirements, blockers, unknowns, fit signals and provenance citations.
-  - Unsupported or missing fields fail closed as UNKNOWN; no autonomous GO/NO_GO decision.
-  - Latency measured against documented target; focused regressions and exact-head CI pass.
-  - Changes merged; checkpoint completed with verified commit.
+  - 'At least one authentic public 223-FZ notice/document bundle preserved with retrieval provenance, SHA-256 and sanitized representative fields.'
+  - 'Source-bound truth matrix distinguishes observed lots, positions, revisions, clarifications, protocols and statuses from NOT_OBSERVED.'
+  - 'Existing 223-FZ provider exercised against frozen real evidence; bounded implementation successor admitted only for measured gaps.'
 completed:
-  - Synchronized canonical main and inspected APR-01 queue scope and done gate.
-  - Started isolated feature branch from current main.
-  - Implemented bounded read-only projection and existing-run API with fail-closed citations.
-  - Focused regressions: 30 passed, 1 upstream deprecation warning; Ruff and diff check pass.
-  - Added strict URL/registry-number path via the existing public EIS card parser; missing documentation remains UNKNOWN.
-  - Measured 1000-run mocked-card projection p95 0.009 ms, network excluded; make check passes.
-  - Live 44-FZ EIS check 0372200172326000015: exact source found, subject and deadline KNOWN with citation, 0.368 s.
-  - PR #225 merged into main as 59c477eb7421c1814e23fea574eeb8348a5e1322.
-  - Exact-head CI run 37764420661 finished successfully, 9/9 jobs.
-  - Queue and roadmap APR-01 closure recorded; APR-02 is the next planned outcome.
-current: Completed. PR #225 merged to main; exact-head CI 37764420661 SUCCESS 9/9; APR-01 closed and APR-02 next (requires queue admission).
-pending: []
-last_verified_commit: 59c477eb7421c1814e23fea574eeb8348a5e1322
+  - 'Verified APR-01 closure and current canonical APR-02 roadmap scope at main 958e94c.'
+  - 'Revalidated existing 223-FZ intake and decision foundations and residual target.'
+  - 'Located independent public reference to notice 32616226131; two EIS routes returned HTTP 404 instead of a fixture.'
+  - 'Documented real-corpus acceptance gate and fail-closed collection protocol.'
+  - 'Discovered live direct Mac mini access to official EIS 223-FZ search/notice223 documents and filestore endpoints.'
+  - 'Downloaded 14 official EIS files from four procurement notice document pages with SHA-256 provenance in local manifest.'
+  - 'Verified 223-FZ parser on four official EIS document HTML pages and fixed navigation misclassification; exact attachment matches 6/2/4/2.'
+  - 'Archived four real secondary-source 223-FZ HTML cards with SHA-256 locally; prices and dates parsed, only one strict numeric OKPD2 62 confirmed.'
+  - 'Reproduced misleading SUCCESS on unsupported external HTML layout and fixed fail-closed UNSUPPORTED_LAYOUT semantics.'
+  - 'Reran all four archived real secondary cards: four correctly returned unsupported_layout with requires_review.'
+  - '2026-10-08 Mac mini RDC terminal recovered: ping and echo command successful; remote tool policy rejected credential-loading diagnostic command.'
+  - 'Reconciled executable queue: APR-02 corpus task belonged in items rather than completed_dependencies; status corrected from stale blocked to done.'
+  - 'Located protected local SOAP token file with mode 0600; no credential copied or disclosed.'
+  - 'Public 223-FZ provider focused tests: 4 passed in 0.16s via existing venv; isolated pipeline test needs complete SQLAlchemy metadata dependency loading.'
+current: 'APR-02 source-corpus acquisition complete, 4 RI223 verified notices, 10/10 attachments. PR #227 is review-ready, not merged. Broader APR-02 implementation remains open and separately gated.'
+pending:
+  - 'Future, separately scoped follow-up: revise ambiguity and multi-lot evidence, protocols/clarifications, RAR policy, and all-Russia current-date breadth.'
+  - 'No remaining steps for bounded APR-02 RI223 acquisition proof; PR #227 requires Owner REVIEW before merge.'
+  - 'Additional product breadth belongs to separately admitted implementation increment.'
+last_verified_commit: af13261530e323de9d4cedbe0603c10d4ff03554
 test_results:
-  - Focused tests: 30 passed, 1 warning.
-  - Mocked public-card projection p95 0.009 ms (1000 calls); network excluded.
-  - make check: PASS.
-  - Live EIS 0372200172326000015: 0.368 s, cited subject and deadline.
-  - CI exact-head 3103dd9d run 37764420661: SUCCESS 9/9.
-  - Ruff lint and git diff --check: PASS.
-resume_instruction: ARV-061 fully closed. Next APR-02/ARV-006 223-FZ breadth only after explicit admission and frozen real-gap corpus. Do not repeat ARV-061 implementation. Public-card-only claims remain distinct from documented attachment-level citation.
+  - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
+  - '14 focused SOAP and 223-FZ tests passed at initial transport verification, 1 Starlette deprecation warning; four RI223 SOAP archive and attachment retrievals complete 10/10. All four filtered source codes verified in original XML.'
+  - 'Queue reconciliation YAML placement/status assertions passed; 12 focused provider/SOAP tests passed, 1 unrelated warning; make check and git diff --check passed.'
+  - 'Read-only archived-card smoke probe: 4/4 fail closed; verified commit 94318b9, no external EIS attachments acquired.'
+  - 'Isolated full pipeline test still needs SQLAlchemy customer_profiles metadata registration. Official EIS documents all HTTP 404.'
+resume_instruction: 'Source-corpus task completed; PR #227 pending Owner REVIEW / merge; do not auto-merge (queue auto_merge false). Corpus source of truth docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; originals on Mac mini. After approval/merge, advance APR-02 only via separately scoped and admitted measured-gap implementation (multi-lots/positions, revisions, protocols, clarifications, statuses, RAR), preserving fail-closed semantics.'
 execution:
-  branch: null
-  base_commit: f60d736d
+  branch: feature/apr02-223fz-evidence-gate
+  base_commit: 958e94c740e73a052f275d46fea713f01ab4d117
