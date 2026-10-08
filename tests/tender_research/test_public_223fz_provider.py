@@ -43,3 +43,11 @@ def test_223fz_provider_never_falls_back_without_detail_url():
     assert detail.network_status == PublicSearchStatus.UNSUPPORTED_LAYOUT
     assert detail.law_type == "223fz"
     assert "no 44-FZ fallback" in (detail.error_message or "")
+
+
+def test_unrecognized_223fz_html_must_not_be_reported_as_success():
+    body = "<html><body>Иная вёрстка без явно обозначенных полей ЕИС</body></html>"
+    detail = parse_223fz_detail(body, "https://example.org/unrecognized", "32616445866")
+    assert detail.network_status == PublicSearchStatus.UNSUPPORTED_LAYOUT
+    assert detail.raw["requires_review"] is True
+    assert "unrecognized_223fz_detail_layout" in detail.raw["review_reasons"]

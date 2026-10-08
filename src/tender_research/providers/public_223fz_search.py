@@ -143,6 +143,9 @@ def parse_223fz_detail(html_str: str, source_url: str, registry_number: str | No
         seen.add(url)
         links.append(PublicDocumentLink(title=label, file_name=label, url=url, raw={"source_regime": "223fz"}))
     review_reasons: list[str] = []
+    unsupported_layout = not any((title, customer, publication, deadline, links))
+    if unsupported_layout:
+        review_reasons.append("unrecognized_223fz_detail_layout")
     if not customer:
         review_reasons.append("customer_role_not_explicit")
     revision_markers = re.findall(r"(?:редакци[яи]|верси[яи])\s*№?\s*(\d+)", _clean_text(html_str) or "", re.IGNORECASE)
@@ -159,7 +162,7 @@ def parse_223fz_detail(html_str: str, source_url: str, registry_number: str | No
         source_url=source_url,
         document_links=links,
         common_info_html=html_str,
-        network_status=PublicSearchStatus.SUCCESS,
+        network_status=(PublicSearchStatus.UNSUPPORTED_LAYOUT if unsupported_layout else PublicSearchStatus.SUCCESS),
         raw={
             "source_regime": "223fz",
             "parser": "public_223fz_v1",

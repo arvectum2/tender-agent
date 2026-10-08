@@ -13,10 +13,13 @@ completed:
   - 'Revalidated existing 223-FZ intake and decision foundations and residual target.'
   - 'Located independent public reference to notice 32616226131; two EIS routes returned HTTP 404 instead of a fixture.'
   - 'Documented real-corpus acceptance gate and fail-closed collection protocol.'
+  - 'Archived four real secondary-source 223-FZ HTML cards with SHA-256 locally; prices and dates parsed, only one strict numeric OKPD2 62 confirmed.'
+  - 'Reproduced misleading SUCCESS on unsupported external HTML layout and fixed fail-closed UNSUPPORTED_LAYOUT semantics.'
+  - 'Reran all four archived real secondary cards: four correctly returned unsupported_layout with requires_review.'
   - '2026-10-08 Mac mini RDC terminal recovered: ping and echo command successful; remote tool policy rejected credential-loading diagnostic command.'
   - 'Located protected local SOAP token file with mode 0600; no credential copied or disclosed.'
   - 'Public 223-FZ provider focused tests: 4 passed in 0.16s via existing venv; isolated pipeline test needs complete SQLAlchemy metadata dependency loading.'
-current: 'Mac mini terminal operational; SOAP credential-loading command blocked by tool safety layer; no verified 223-FZ fixture to freeze.'
+current: 'Secondary-card smoke pass and fail-closed parser regression complete; official 223-FZ document corpus and SOAP-native retrieval remain unverified.'
 pending:
   - 'Retrieve at least one authentic, accessible public 223-FZ notice and supporting document evidence.'
   - 'Freeze provenance/checksums/field truth and run measured parser comparison.'
@@ -24,7 +27,8 @@ pending:
 last_verified_commit: 958e94c740e73a052f275d46fea713f01ab4d117
 test_results:
   - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
-  - '4 focused public 223-FZ parser tests passed in 0.16s; isolated full pipeline test failed on SQLAlchemy missing customer_profiles metadata (incomplete isolated test context). No production regression claimed.'
+  - '5 focused public 223-FZ provider tests passed in 0.16s; four archived external cards correctly return unsupported_layout/requires_review.'
+  - 'Isolated full pipeline test still needs SQLAlchemy customer_profiles metadata registration. Official EIS documents all HTTP 404.'
 resume_instruction: 'Resolve SOAP credential-loading tool policy blocker without exposing credentials. First obtain authentic public 223-FZ source material via authorized access. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
 execution:
   branch: feature/apr02-223fz-evidence-gate
