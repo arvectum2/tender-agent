@@ -1025,7 +1025,7 @@ items:
 - order: 1110
   task_id: APR-02-LLM-EVIDENCE-GATE-001
   title: Fail closed on mutated LLM citations and truncated completions
-  status: blocked
+  status: done
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
@@ -1036,6 +1036,21 @@ items:
   dependencies: [APR-02-LOCAL-LLM-BENCHMARK-001]
   executor_scope: Shared LLM output citation and finish reason checks
   done_gate: Full source integrity regressions and CI/Owner-reviewed merge
+
+- order: 1120
+  task_id: APR-02-TEN-SECTION-LLM-EVAL-001
+  title: Real local LLM comparative ten-section original corpus evaluation
+  status: in_progress
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: Source-citation guard merged and owner requested continuation
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-LLM-EVIDENCE-GATE-001]
+  executor_scope: Ten aligned real-source questions on 223-FZ and 44-FZ local Qwen; separate citation and factual quality judgments
+  done_gate: Reproducible 20-case real-doc model results, grounded report, regressions and owner gated CI merge
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
