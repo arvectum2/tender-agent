@@ -19,17 +19,15 @@ definition_of_done:
 completed:
 - '2026-10-08: Owner explicitly directed optimization and roadmap update after reviewing which open items are actually necessary.'
 - '2026-10-08: Reconciled current main at 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f; ARV-066 is merged/completed.'
-current: Define the optimized Active Product Roadmap and trigger backlog, then reconcile queue/owner directive/human roadmap.
+current: Optimized roadmap, trigger backlog, queue and owner directive are reconciled; open PR and require exact-head CI before merge.
 pending:
-- Update owner directive and execution queue to defer ARV-069 and prioritize outcome roadmap.
-- Add canonical Active Product Roadmap and trigger backlog to master-roadmap.yaml.
-- Update human MASTER_ROADMAP.md with optimized checklist.
-- Add/update governance tests.
-- Run focused verification, open PR, require exact-head CI, merge.
+- Open PR, require exact-head CI, merge.
 last_verified_commit: 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f
-test_results: []
+test_results:
+- 'Mac mini focused governance/roadmap tests: 6 passed, 1 warning.'
+- 'YAML parse for executor policy, owner directive, current task, execution queue and master roadmap: PASS.'
 updated_at: '2026-10-08T12:12:00+03:00'
-resume_instruction: Continue ACTIVE-PRODUCT-ROADMAP-OPTIMIZATION-20261008 only. Preserve the historical registry. Treat the optimized active roadmap as the working priority source; do not automatically execute deferred/trigger-based items.
+resume_instruction: Open the roadmap optimization PR, require exact-head CI green, merge, then leave ACTIVE-ROADMAP-ARV-061-001 as the next ready product task. Reuse/rebase PR #111 evidence where useful; do not execute ARV-069 until its experiment trigger is evidenced.
 execution:
   claimed_by: ChatGPT
   execution_id: active-product-roadmap-optimization-20261008
