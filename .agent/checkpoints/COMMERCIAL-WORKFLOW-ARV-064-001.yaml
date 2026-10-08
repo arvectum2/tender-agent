@@ -37,28 +37,39 @@ completed:
   plus customer-scoped document metadata/version bindings over existing ArtifactVersion
   rows; expose explicit autofill resolution only from stored current facts. No document
   OCR/extraction or private-data auto-import is admitted.'
-current: Implement tenant-scoped company profile fact and reusable-document version
-  primitives over CustomerProfile and DocumentArtifact/ArtifactVersion.
+- '2026-10-08: Implemented tenant-scoped append-only CompanyProfileFactVersion, CompanyDocument
+  and CompanyDocumentVersion primitives over CustomerProfile + DocumentArtifact/ArtifactVersion,
+  with migration 105_add_company_profile_store.'
+- '2026-10-08: Facts are explicit source-bound versions with expiry; autofill accepts
+  only explicit requested fact keys/locators, uses only latest non-expired stored
+  values, returns MISSING/EXPIRED otherwise, and records inference_performed=false/private_document_import_performed=false.'
+- '2026-10-08: Reusable company documents support STATUTORY/LICENSE/CERTIFICATE/EXPERIENCE/REQUISITES/TEMPLATE
+  and bind to exact ArtifactVersion rows. Deal-bound artifacts, cross-tenant reuse,
+  and duplicate same-tenant document reuse of one artifact lineage fail closed.'
+- '2026-10-08: Immutable ORM guards reject update/delete of profile/document history;
+  superseded and expired versions remain auditable while current-state responses identify
+  ACTIVE/EXPIRED/SUPERSEDED.'
+- '2026-10-08: Focused ARV-064 tests pass 5/5; ARV-064 + Sprint1/customer-pilot/ARV-063
+  compatibility set passes 15/15 with 13 expected skips; alembic head is 105_add_company_profile_store;
+  make check and git diff --check pass.'
+current: Run full repository verification, then prepare the combined implementation/completion
+  PR so ARV-064 consumes one renewed AM-4 merge if exact-head CI is green.
 pending: &id001
-- Add company profile fact and reusable company-document models/migration with immutable
-  version lineage and expiry.
-- Implement tenant-scoped create/list/get/version APIs and strict artifact ownership/binding
-  rules.
-- Implement safe autofill resolver that accepts explicit fact keys/target locators
-  and returns only current non-expired explicit fact values plus provenance/unresolved
-  reasons.
-- Add synthetic tenant-isolation, version, expiry, artifact-boundary and autofill
-  regressions plus relevant customer/document-store compatibility checks.
-- Run full verification; prepare one implementation/completion PR; require exact-head
-  CI; merge only under valid renewed AM-4.
+- Run full make test and classify any main-baseline-only failure.
+- Commit/push implementation and updated checkpoint.
+- Open ARV-064 PR and require exact-head implementation CI.
+- If green, fold queue/roadmap/AM-4 completion bookkeeping into the same PR, rerun
+  exact-head CI, and merge once under valid renewed AM-4.
 last_verified_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
 test_results:
-- 'PR #216 final exact-head CI run 37737060026: SUCCESS (9/9 jobs)'
-- 'PR #216 merged as 197bf1c54df51a5c644aa8ca2e92bae543840945'
-updated_at: '2026-10-08T09:29:43+03:00'
+- 'ARV-064 focused tests: 5 passed'
+- 'ARV-064 + Sprint1/customer-pilot/ARV-063 compatibility: 15 passed, 13 skipped'
+- 'alembic heads: 105_add_company_profile_store (head)'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+updated_at: '2026-10-08T10:09:27+03:00'
 resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv064-commercial-20261008.
-  Implement customer-scoped append-versioned company facts and reusable document bindings
-  over CustomerProfile + DocumentArtifact/ArtifactVersion, with explicit expiry and
-  fail-closed safe autofill; do not auto-import or inspect unrelated private documents.
-current_stage: implementation
+  Run full make test; if only the known macOS R9 pg_restore baseline remains, commit/push
+  and open the ARV-064 PR for exact-head CI.
+current_stage: full_verification
 remaining: *id001
