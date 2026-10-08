@@ -963,7 +963,7 @@ items:
   task_id: APR-02-RI223-REVIEW-FLAGS-001
   title: Source-bound 223-FZ revision and multi-lot expert review prompts
   status: blocked
-  blocked_on: 'Exact-head GitHub CI and Owner REVIEW of source review flags PR.'
+  blocked_on: 'PR #238 final exact-head GitHub CI and Owner REVIEW before merge.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false

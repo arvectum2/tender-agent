@@ -26,13 +26,15 @@ completed:
   XML citations. Real 32616445795 negative control: 3 source facts and 0 flags.'
 - 22 focused tests passed; 505 Tender Research passed, 1 skipped; make check, touched-file
   Ruff and diff --check passed.
-current: Code and authentic-source validation complete; blocked on PR publication,
-  exact-head CI and Owner REVIEW.
+- 'Published PR #238 with authentic review flags; code commit 97657637da7a1c68362985cae7b76e340ca0c96f.'
+current: 'PR #238 published; exact-head GitHub CI and attributable Owner REVIEW before
+  merge.'
 pending:
-- Publish guarded PR and verify exact-head 9/9 CI.
-- Merge under Owner directive only after CI/review, then close checkpoint and continue
-  document-grounded risk evaluation.
-last_verified_commit: abbf30a2c700584ffb553626301136a2c6719faf
+- 'Verify exact-head CI for final PR #238 branch head and current main; merge only
+  with Owner REVIEW.'
+- Reconcile final merged SHA, mark completed; resume next source-grounded suitability/risk
+  milestone.
+last_verified_commit: 97657637da7a1c68362985cae7b76e340ca0c96f
 test_results:
 - 505 Tender Research tests passed, 1 skipped, 42 warnings
 - 22 focused tests passed, 3 warnings
@@ -40,10 +42,9 @@ test_results:
 - changed-file Ruff PASS
 - Real source 32616376947 3 review flags (3/6/2 citations)
 - Negative control 32616445795 0 flags.
-resume_instruction: 'Feature branch feature/apr02-ri223-review-flags in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-review-flags:
-  source-bound review flags implemented and verified. Publish PR, pass exact-head
-  CI, merge only after Owner review, then mark completed and continue evidence-based
-  qualification/contract fit.'
+resume_instruction: 'PR #238 feature/apr02-ri223-review-flags, worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-review-flags:
+  check final exact-head GitHub CI and Owner REVIEW, merge only after gates and unchanged
+  head; mark checkpoint completed and proceed to content-grounded fit/risk analysis.'
 execution:
   branch: feature/apr02-ri223-review-flags
   base_commit: abbf30a2c700584ffb553626301136a2c6719faf
