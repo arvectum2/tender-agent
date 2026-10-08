@@ -129,12 +129,12 @@ def test_commercial_workflow_essential_v1_is_closed_and_active_roadmap_moves_to_
     assert progress["state"] == "essential_v1_complete_forecast_deferred"
 
     active = roadmap["current_status_summary"]["active_product_roadmap"]
-    assert active["next_outcome"] == "APR-01-FAST-CITED-PREANALYSIS"
-    assert active["next_queue_item"] == "ACTIVE-ROADMAP-ARV-061-001"
+    assert active["next_outcome"] == "APR-02-223FZ-BREADTH"
+    assert active["next_queue_item"] is None
 
     items = {item["task_id"]: item for item in queue["items"]}
     assert items["COMMERCIAL-WORKFLOW-ARV-066-001"]["status"] == "done"
-    assert items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "ready"
+    assert items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "done"
 
 
 def test_owner_optimized_active_product_roadmap_controls_continuation():
@@ -152,7 +152,7 @@ def test_owner_optimized_active_product_roadmap_controls_continuation():
     assert directive["active_product_roadmap_optimization_2026_10_08"]["status"] == "active"
 
     queue_items = {item["task_id"]: item for item in queue["items"]}
-    assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "ready"
+    assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "done"
     assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["authority"] == "AUTO"
     assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["status"] == "blocked"
     assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["authority"] == "REVIEW"

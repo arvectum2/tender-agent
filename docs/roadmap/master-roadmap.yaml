@@ -192,14 +192,14 @@ active_product_roadmap_2026_10_08:
   outcomes:
     - id: APR-01-FAST-CITED-PREANALYSIS
       priority: P0
-      state: ready
+      state: done
       legacy_mapping: [ARV-061]
       outcome: 'Registry number/URL -> fast cited procurement pre-analysis with deadlines, requirements, blockers/unknowns, fit and evidence.'
       why_now: 'High-frequency user value and a strong demo/sales entry point built mostly on existing canonical facts/evidence.'
       done_gate: 'Fast cited result is deterministic, evidence-bound, explicit about unknowns and benchmarked for latency/quality.'
     - id: APR-02-223FZ-BREADTH
       priority: P0
-      state: planned
+      state: ready
       legacy_mapping: [ARV-006]
       outcome: 'Broaden 223-FZ beyond the existing intake/decision v1 only from measured corpus/procedure gaps.'
       why_now: 'Material Russian-market coverage expansion.'
@@ -316,11 +316,11 @@ trigger_backlog_2026_10_08:
 current_status_summary:
   as_of: '2026-10-08T12:31:00+03:00'
   verified_main_commit: 26d24ccbbd28808b1add87aec4eedee16d8f02b9
-  active_execution_item: ACTIVE-ROADMAP-ARV-061-001
-  active_execution_state: ready
+  active_execution_item: null
+  active_execution_state: completed
   active_execution_branch: null
   active_execution_head: null
-  last_completed_task: COMMERCIAL-WORKFLOW-ARV-066-001
+  last_completed_task: ACTIVE-ROADMAP-ARV-061-001
   commercial_workflow:
     essential_v1_completed: 11
     historical_total: 12
@@ -330,8 +330,8 @@ current_status_summary:
   active_product_roadmap:
     state: active
     outcome_count: 10
-    next_outcome: APR-01-FAST-CITED-PREANALYSIS
-    next_queue_item: ACTIVE-ROADMAP-ARV-061-001
+    next_outcome: APR-02-223FZ-BREADTH
+    next_queue_item: null
     principle: 'Historical open items are not automatic obligations; trigger backlog requires evidence before admission.'
   base_foundation:
     confirmed_done: 18
@@ -348,7 +348,7 @@ current_status_summary:
     title: Tender Agent Watchdog
     enabled: true
     cadence: hourly
-  note: 'ARV-066 is merged and closes the essential Commercial Workflow v1 path. ARV-069 is intentionally deferred as an experiment. Work now follows the optimized Active Product Roadmap beginning with ARV-061 fast cited pre-analysis.'
+  note: 'ARV-066 is merged and closes the essential Commercial Workflow v1 path. ARV-069 is intentionally deferred as an experiment. Work now follows the optimized Active Product Roadmap beginning with ARV-061 fast cited pre-analysis merged and verified. APR-02 is the next outcome and requires explicit queue admission.'
 
 execution_snapshot:
   updated_at: '2026-10-08T09:31:00Z'
@@ -361,8 +361,8 @@ execution_snapshot:
     single_watchdog: true
     audit_issue: 57
   queue_state: optimized_active_product_roadmap
-  active_item: ACTIVE-ROADMAP-ARV-061-001
-  next_admitted_item: ACTIVE-ROADMAP-ARV-061-001
+  active_item: null
+  next_admitted_item: null
   deferred_from_previous_admission:
     - COMMERCIAL-WORKFLOW-ARV-069-001
   note: 'Owner optimization 2026-10-08 replaces legacy open-item continuation with a short outcome roadmap. ARV-061 is next. Trigger-backlog items are not auto-admitted.'

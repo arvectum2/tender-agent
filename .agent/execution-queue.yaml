@@ -831,7 +831,7 @@ items:
   strategy: ADAPT
   continuation_mode: OWNER_DIRECTIVE
   title: Fast cited procurement pre-analysis
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -840,6 +840,7 @@ items:
   - ARV-061
   dependencies: []
   executor_scope: 'From a supported procurement registry number/URL and existing canonical intake, produce a fast evidence-grounded pre-analysis: subject, deadline, essential requirements, blockers/unknowns, fit signals and citations. Reuse current facts/evidence/Decision Core paths; do not build a second analysis engine or make an autonomous participation decision.'
+  completion_evidence: "PR #225 merged 59c477eb; exact-head CI run 37764420661 SUCCESS 9/9; local 30 focused tests passed; live EIS 0372200172326000015 0.368s; limited card claims are explicitly UNKNOWN for attachment-only facts."
   done_gate: 'Supported 44-FZ inputs produce a deterministic bounded cited pre-analysis with source/page/fragment evidence where available, explicit UNKNOWN for unsupported/missing facts, latency measured against a documented target, focused regressions pass and exact-head CI is green.'
 
 
