@@ -152,3 +152,14 @@ def test_commercial_workflow_progress_points_to_arv066_after_ten_completions():
     assert items["COMMERCIAL-WORKFLOW-ARV-063-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-064-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-066-001"]["status"] == "ready"
+
+
+def test_completed_commercial_workflow_items_are_reconciled_in_master_roadmap():
+    roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
+    registry = {item["id"]: item for item in roadmap["legacy_registry"]}
+
+    for item_id in ["ARV-019", "ARV-022", "ARV-053", "ARV-055", "ARV-057", "ARV-059", "ARV-060", "ARV-063", "ARV-064"]:
+        assert registry[item_id]["reconciliation"]["state"] == "completed"
+
+    assert registry["ARV-066"]["reconciliation"]["state"] == "admitted_ready"
+    assert registry["ARV-069"]["reconciliation"]["state"] == "admitted_ready"
