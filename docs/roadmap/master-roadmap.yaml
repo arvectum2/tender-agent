@@ -178,11 +178,15 @@ owner_commercial_workflow_directive_2026_10_07:
   execution: 'Queue in canonical branch order. AUTO repository implementation/verification is allowed inside existing roadmap outcomes and hard stops; consequential external actions remain prohibited.'
   am4_review:
     renewed_on: '2026-10-08'
-    company_decision: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
-    company_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
-    automatic_merge_counter: 6
+    company_decision: docs/governance/decisions/DECISION-2026-10-08-R2-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+    company_merge_commit: 6eaf25183965cd6bafd210138076a54ca90a7b6d
+    automatic_merge_counter: 0
     automatic_merge_counter_limit: 10
     next_time_review_deadline: '2026-11-08'
+    previous_cycle:
+      decision: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+      last_recorded_automatic_merges: 6
+      note: 'Historical merge evidence preserved in executor policy; Owner-reviewed PR #230 does not consume this cycle.'
 
 active_product_roadmap_2026_10_08:
   canonical_role: working_product_priority
