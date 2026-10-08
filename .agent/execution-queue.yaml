@@ -1007,6 +1007,21 @@ items:
   executor_scope: "Use existing DP client and analyzer; distinguish auth/connection failures from absent or incomplete collection, never leak credentials or downgrade to mock RAG."
   done_gate: "Source-reproduced HTTP 401/403 failed, true 404 and incomplete index no_context, normal authorized case unchanged, tests/CI/Owner review."
 
+- order: 1100
+  task_id: APR-02-LOCAL-LLM-BENCHMARK-001
+  title: Genuine Mac mini local LLM benchmark on 223-FZ and 44-FZ source documents
+  status: blocked
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner requested local generative model experiments on genuine 223-FZ and 44-FZ corpora; initial Qwen2.5 14B source-ID and omission errors measured."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-DP-AUTH-READINESS-001]
+  executor_scope: "Benchmark genuine installed Mac mini Qwen local completion against exactly cited original procurement document excerpts; detect altered citations, truncation, missing source facts; no GO/NO-GO."
+  done_gate: "Evidence-backed original cases for both laws, actual timing/model ID/accuracy limitations, source ID audit regressions, local tests and CI/Owner-reviewed merge."
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'
