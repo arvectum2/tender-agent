@@ -921,7 +921,8 @@ completed_dependencies:
 - order: 1040
   task_id: APR-02-RI223-REGIME-ANALYSIS-001
   title: RI223 document question prompts exclude 44-FZ-only assumptions
-  status: in_progress
+  status: blocked
+  blocked_on: 'Predecessor checkpoint PR #234, then exact-head CI and guarded merge of analysis PR.'
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false

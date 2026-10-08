@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REGIME-ANALYSIS-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Remove 44-FZ-specific assumptions from real 223-FZ evidence analysis section
   questions without changing 44-FZ behavior or creating a second analyzer.
@@ -20,16 +20,30 @@ completed:
   current customer-requirements prompt incorrectly requests 44-FZ compliance.'
 - 'Standalone prior checkpoint closure prepared as PR #234; no competing checkpoint
   on main until merged.'
-current: Implement bounded per-regime existing analyzer question selection, preserve
-  44-FZ unchanged.
+- 223fz-only question overlay wired to existing ten-section tender analysis, source
+  retrieval and optional LLM prompt; no duplicate engine.
+- 'Source verification on actual public 32616445795: 10 sections, 25 source references,
+  no 44-FZ participation-compliance question, retrieval-only distinguished from LLM
+  synthesis.'
+- Tender Research 493 passed, 1 skipped, 42 warnings; make check, changed-file Ruff
+  and git diff --check PASS.
+- 'Code head 0454e6838cf94917370f19ca90eea831259a53db; previous completion PR #234
+  awaited as prerequisite.'
+current: 'Implementation complete locally; predecessor checkpoint completion PR #234
+  and successor exact-head CI/guarded merge outstanding.'
 pending:
-- Implement controlled 223fz question overlay and tests
-- Authentic source revalidation
-- Exact-head CI and Owner-authorized PR merge
-last_verified_commit: 2827bdb51e94f664fefb319505cace3361024401
+- 'Verify and merge predecessor PR #234 on exact-head CI.'
+- Publish RI223 regime analysis branch, verify exact-head CI and guarded merge after
+  predecessor.
+- Mark task completed in canonical checkpoint after merge.
+last_verified_commit: 0454e6838cf94917370f19ca90eea831259a53db
 test_results:
-- 'Initial baseline original 223-FZ analysis completed retrieval-only: 10 sections,
-  27 source hits; 44-FZ prompt confirmed misplaced.'
-resume_instruction: 'Resume feature/apr02-ri223-regime-analysis. First ensure APR-02-RAR-DOCUMENT-ANALYSIS-001
-  completion PR #234 merged/confirmed; then finish 223fz-only analysis question overlay
-  with source-bound tests and exact-head CI, no automatic GO/NO_GO.'
+- 493 tender-research tests PASS, 1 skipped, 42 existing warnings.
+- 44 targeted source/RI223/LLM-dispatch tests PASS.
+- make check PASS, Ruff touched files PASS, git diff --check PASS.
+- Real source analysis 10/10 sections with 25 citations, no unsupported 44-FZ eligibility
+  prompt.
+resume_instruction: 'Wait for exact-head CI and merge of completion PR #234. Rebase/update
+  feature/apr02-ri223-regime-analysis only if needed, open PR, verify exact-head CI
+  and Owner instruction gates, then merge, mark new checkpoint completed. APR-02 wider
+  status/revisions work remains independently gated.'
