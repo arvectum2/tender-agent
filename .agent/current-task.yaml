@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REVIEW-FLAGS-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Produce source-bound, non-decisional review prompts for authentic RI223 notice
   deadline changes, clarifications and multi-lot separation in the existing Tender
@@ -19,17 +19,31 @@ definition_of_done:
 completed:
 - 'PR #237 merged abbf30a2 after exact-head 9/9 CI; source XML projection 13+3 authentic
   observations already validated.'
-current: Implement bounded deterministic review flags from existing source facts without
-  legal inference.
+- Implemented deterministic RI223 NEEDS_REVIEW source prompts for observed changed
+  source deadlines, published explanations and multiple separate lots; existing analyzer/API/CLI/Markdown
+  reused.
+- 'Real 32616376947 original: 13 source facts and 3 review flags, with 3/6/2 independent
+  XML citations. Real 32616445795 negative control: 3 source facts and 0 flags.'
+- 22 focused tests passed; 505 Tender Research passed, 1 skipped; make check, touched-file
+  Ruff and diff --check passed.
+current: Code and authentic-source validation complete; blocked on PR publication,
+  exact-head CI and Owner REVIEW.
 pending:
-- Implementation, original-source checks and full relevant regression.
-- Publish guarded PR, exact-head CI and merge on Owner directive.
+- Publish guarded PR and verify exact-head 9/9 CI.
+- Merge under Owner directive only after CI/review, then close checkpoint and continue
+  document-grounded risk evaluation.
 last_verified_commit: abbf30a2c700584ffb553626301136a2c6719faf
 test_results:
-- 'Predecessor PR #237 CI 37807435239 9/9 SUCCESS.'
-resume_instruction: Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-review-flags;
-  add source-bound flags from RI223 observations in existing analyzer/report/API.
-  Keep no legal status inference; run tests, PR and exact-head CI.
+- 505 Tender Research tests passed, 1 skipped, 42 warnings
+- 22 focused tests passed, 3 warnings
+- make check PASS
+- changed-file Ruff PASS
+- Real source 32616376947 3 review flags (3/6/2 citations)
+- Negative control 32616445795 0 flags.
+resume_instruction: 'Feature branch feature/apr02-ri223-review-flags in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-review-flags:
+  source-bound review flags implemented and verified. Publish PR, pass exact-head
+  CI, merge only after Owner review, then mark completed and continue evidence-based
+  qualification/contract fit.'
 execution:
   branch: feature/apr02-ri223-review-flags
   base_commit: abbf30a2c700584ffb553626301136a2c6719faf

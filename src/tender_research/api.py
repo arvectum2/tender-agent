@@ -130,6 +130,7 @@ class PreparationStatusResponse(BaseModel):
 class AnalyzeResponse(BaseModel):
     status: str
     ri223_source_observations: list[dict] = Field(default_factory=list)
+    ri223_review_flags: list[dict] = Field(default_factory=list)
     registry_number: str
     sections_count: int
     sources_count: int
@@ -271,6 +272,7 @@ def _to_analyze_response(result: TenderAnalysisResult) -> AnalyzeResponse:
         sections_count=result.sections_count,
         sources_count=result.sources_count,
         ri223_source_observations=result.ri223_source_observations,
+        ri223_review_flags=result.ri223_review_flags,
         analysis_mode=result.analysis_mode,
         report_markdown=result.report_markdown,
         report_path=result.report_path,

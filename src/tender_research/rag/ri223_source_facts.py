@@ -266,3 +266,125 @@ def render_ri223_source_facts(facts: list[dict[str, Any]]) -> list[str]:
         )
         lines.append("")
     return lines
+
+
+def derive_ri223_review_flags(
+    source_facts: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Review prompts only; source observation never implies legal effect.
+
+    The facts are the bounded, archive-hash-checked output of
+    project_ri223_source_facts(), not free-text claims from an LLM.
+    """
+    source_facts = [
+        row
+        for row in source_facts
+        if isinstance(row, dict)
+        and row.get("interpretation") == "XML_SOURCE_OBSERVATION_ONLY"
+        and isinstance(row.get("fields"), dict)
+        and isinstance(row.get("evidence"), dict)
+        and row["evidence"].get("source") == "RI223_getDocsIP"
+    ]
+
+    def cited(items: list[dict[str, Any]]) -> list[dict[str, str]]:
+        return [row["evidence"].copy() for row in items]
+
+    output: list[dict[str, Any]] = []
+    revisions = [row for row in source_facts if row.get("kind") == "notice_revision"]
+    observed_deadlines = [
+        (
+            row["fields"].get("source_version"),
+            row["fields"].get("submission_close_datetime"),
+        )
+        for row in revisions
+        if row["fields"].get("submission_close_datetime")
+    ]
+    if (
+        len(observed_deadlines) >= 2
+        and len({value for _, value in observed_deadlines}) > 1
+    ):
+        output.append(
+            {
+                "code": "OBSERVED_SUBMISSION_DEADLINE_CHANGE",
+                "status": "NEEDS_REVIEW",
+                "legal_effect": "UNKNOWN",
+                "message": (
+                    "В XML разных редакций извещения наблюдаются отличающиеся сроки "
+                    "подачи. Проверить актуальную редакцию и юридически действующий срок."
+                ),
+                "observed_deadlines": [
+                    {"source_version": version, "submission_close_datetime": value}
+                    for version, value in observed_deadlines
+                ],
+                "evidence": cited(revisions),
+            }
+        )
+    explanations = [row for row in source_facts if row.get("kind") == "explanation"]
+    if explanations:
+        output.append(
+            {
+                "code": "EXPLANATIONS_REQUIRE_DOCUMENT_REVIEW",
+                "status": "NEEDS_REVIEW",
+                "legal_effect": "UNKNOWN",
+                "message": (
+                    "ЕИС содержит разъяснения. Проверить опубликованные ответы, "
+                    "приложения и применимость к конкретным лотам; текст вопроса не "
+                    "является подтверждённым ответом заказчика."
+                ),
+                "observed_explanation_count": len(explanations),
+                "evidence": cited(explanations),
+            }
+        )
+    lots = [row for row in source_facts if row.get("kind") == "lot"]
+    if len(lots) > 1:
+        output.append(
+            {
+                "code": "MULTI_LOT_REQUIRES_SEPARATE_REVIEW",
+                "status": "NEEDS_REVIEW",
+                "legal_effect": "UNKNOWN",
+                "message": (
+                    "Обнаружено несколько отдельных лотов: проверять предмет, "
+                    "начальные суммы, позиции и документацию по каждому лоту; "
+                    "не выводить единую начальную цену закупки из сумм лотов."
+                ),
+                "observed_lot_count": len(lots),
+                "evidence": cited(lots),
+            }
+        )
+    return output
+
+
+def render_ri223_review_flags(review_flags: list[dict[str, Any]]) -> list[str]:
+    """Append non-decisional prompts to the existing Markdown analysis."""
+    if not review_flags:
+        return []
+    lines = [
+        "## Пункты, требующие экспертной проверки (223-ФЗ)",
+        "",
+        (
+            "Статусы ниже означают только необходимость проверки. "
+            "Они не определяют юридическую силу редакции, допуск или GO/NO-GO."
+        ),
+        "",
+    ]
+    for item in review_flags:
+        lines.append("**" + item["code"] + " — NEEDS_REVIEW:** " + item["message"])
+        if item.get("observed_deadlines"):
+            for observation in item["observed_deadlines"]:
+                lines.append(
+                    "Наблюдаемый срок: редакция "
+                    + str(observation["source_version"])
+                    + ", "
+                    + observation["submission_close_datetime"]
+                )
+        for evidence in item["evidence"]:
+            lines.append(
+                "Источник XML: "
+                + evidence["xml_member"]
+                + "; SHA-256: "
+                + evidence["xml_sha256"]
+                + "; XPath: "
+                + evidence["xpath"]
+            )
+        lines.append("")
+    return lines
