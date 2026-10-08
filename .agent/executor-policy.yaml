@@ -75,7 +75,7 @@ company_authority_gate:
   assignment_id: ASG-POS004-ROADMAP-EXECUTOR-2026-09-14
   mandatory_review_deadline: "2026-11-08"
   automatic_merge_counter_limit: 10
-  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_2_OF_10_IF_PR_213_MERGES
+  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_3_OF_10_IF_PR_214_MERGES
   fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
   fail_closed_mode: REVIEW
   product_policy_cannot_expand_company_authority: true
@@ -83,16 +83,20 @@ company_authority_gate:
   material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   material_policy_change_review_satisfied_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 2
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 3
   automatic_merge_evidence:
     - pr: 212
       merge_commit: ebcead468610a88e298b55881d4287cdaed444c3
       task: COMMERCIAL-WORKFLOW-ARV-057-001
       note: ARV-057 implementation merged automatically after exact-head CI run 37726210313 passed under the 2026-10-08 renewed AM-4 cycle
     - pr: 213
-      merge_commit: self_merge_commit_not_precomputable
+      merge_commit: 7abd9640a76303708c839d91e56302aeb325df32
       task: COMMERCIAL-WORKFLOW-ARV-057-001
-      note: ARV-057 completion/governance bookkeeping; counted prospectively as automatic merge 2/10 and may merge only after final exact-head CI succeeds
+      note: ARV-057 completion/governance bookkeeping merged automatically after exact-head CI run 37727550258 passed; this consumed renewed-cycle merge 2/10
+    - pr: 214
+      merge_commit: self_merge_commit_not_precomputable
+      task: COMMERCIAL-WORKFLOW-ARV-059-001
+      note: combined ARV-059 implementation and completion/governance bookkeeping; counted prospectively as automatic merge 3/10 and may merge only after final exact-head CI succeeds
   next_automatic_merge: ALLOWED_IF_ALL_AM4_GATES_PASS
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 

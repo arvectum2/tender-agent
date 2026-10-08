@@ -739,7 +739,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-059-001
   strategy: ADAPT
   title: Contract execution and outcome analytics
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -748,7 +748,7 @@ items:
   - ARV-059
   dependencies: []
   executor_scope: 'Create the source-bound procurement -> contract -> execution stages -> payments -> timing -> penalties -> actual price -> outcome projection using existing canonical lifecycle/evidence primitives; feed factual outcomes back into analytics without autonomous learning promotion.'
-  done_gate: 'Execution/outcome facts remain artifact/source-bound with unknown states for missing evidence; portfolio/analytics consume the same canonical lifecycle; focused tests and exact-head CI pass.'
+  done_gate: 'Satisfied in PR #214: /contract-execution-analytics/deals/{deal_id} projects existing canonical Deal/procurement, supplier contract, execution command/stages, payment collection/tracking, timing, claim/incident signals, outcome, closure/report and postmortem facts without a competing persistence layer. Known facts carry canonical refs/evidence; missing facts stay UNKNOWN; procurement matching is exact-number only; collected payments are not relabeled as actual contract price; claim/incident signals are not converted into invented monetary penalties; learning_promotion_performed=false and read-only regression tests prove no event/KPI/postmortem writes. Deal dashboards consume the same projection via lifecycle_* metrics. Focused tests/make check passed; full local suite had only the already-proven macOS R9 pg_restore baseline failure; implementation-head exact-head CI run 37729243087 passed 9/9 jobs. Final exact-head CI on the combined completion head is required before merge.'
 
 - order: 360
   task_id: COMMERCIAL-WORKFLOW-ARV-060-001
