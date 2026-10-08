@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-066-001
@@ -37,7 +37,7 @@ completed:
   fail closed rather than guess a number.'
 current: Implement the bounded registry-number/EIS-URL normalizer and tenant/project
   ProcurementCase handoff with race-safe idempotency and audit provenance.
-pending:
+pending: &id001
 - Implement normalization contract for direct number and allowlisted EIS URL query
   parameters with ambiguity rejection.
 - Implement create-or-reuse ProcurementCase service with project tenant validation,
@@ -56,11 +56,5 @@ resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv066-c
   Implement a bounded EIS registry-number/URL handoff that reuses ProcurementCase
   + PilotAuditEvent, fails closed on ambiguous/unsupported URLs, and performs no DOM
   scraping or external consequential action.
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv066
-  branch: agent/commercial-workflow-arv-066-001
-  base_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: implementation
+remaining: *id001
