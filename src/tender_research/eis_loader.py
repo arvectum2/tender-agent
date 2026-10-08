@@ -56,12 +56,16 @@ class EisTenderLoader:
                 return []
         return _get_demo_documents(tender.external_id)
 
-    def fetch_by_registry_number(self, registry_number: str) -> EisTenderRaw | None:
+    def fetch_by_registry_number(self, registry_number: str, *, law_type: str | None = None) -> EisTenderRaw | None:
         if self._mode != "real":
             for t in _get_demo_tenders():
-                if t.registry_number == registry_number:
+                if t.registry_number == registry_number and (
+                    law_type is None or t.law_type == law_type
+                ):
                     return t
             return None
+        if law_type == "223fz":
+            return self._real_loader.fetch_by_registry_number(registry_number, law_type="223fz")
         return self._real_loader.fetch_by_registry_number(registry_number)
 
 
