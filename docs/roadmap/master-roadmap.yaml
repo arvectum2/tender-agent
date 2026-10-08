@@ -185,10 +185,12 @@ owner_commercial_workflow_directive_2026_10_07:
     next_time_review_deadline: '2026-11-08'
 
 current_status_summary:
-  as_of: '2026-10-08T10:23:51+03:00'
-  verified_main_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
-  active_execution_item: null
-  active_execution_state: admitted_queue_ready
+  as_of: '2026-10-08T11:02:00+03:00'
+  verified_main_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
+  active_execution_item: COMMERCIAL-WORKFLOW-ARV-066-001
+  active_execution_state: active_branch_in_progress
+  active_execution_branch: agent/commercial-workflow-arv-066-001
+  active_execution_head: 2c597ae581d1d00b7e43c38e6567d7068b4a3254
   last_completed_task: COMMERCIAL-WORKFLOW-ARV-064-001
   commercial_workflow:
     completed: 10
@@ -224,12 +226,12 @@ current_status_summary:
     enabled: true
     cadence: hourly
   automatic_merge_governance:
-    state: active_renewed_2026_10_08_6_of_10_if_pr_217_merges
-    note: 'Attributable Owner review on 2026-10-08 renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges and reset the cycle to 0/10. PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10 and PR #216 consumed merge 5/10 after final exact-head CI passed. PR #217 is counted prospectively as combined ARV-064 implementation/completion merge 6/10 and may merge only after final exact-head CI succeeds. Next time-based review deadline is 2026-11-08; existing hard stops remain unchanged.'
-  note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is 10/12 complete after ARV-064 reusable company document/profile store. Two items remain admitted and ARV-066 is next. The 2026-10-08 Owner review renewed AM-4; PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10, PR #216 consumed merge 5/10 and PR #217 is prospective merge 6/10. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
+    state: active_renewed_2026_10_08_6_of_10
+    note: 'Attributable Owner review on 2026-10-08 renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges and reset the cycle to 0/10. PR #212 consumed merge 1/10, #213 2/10, #214 3/10, #215 4/10, #216 5/10 and merged PR #217 consumed 6/10. Next time-based review deadline is 2026-11-08; existing hard stops remain unchanged.'
+  note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is 10/12 complete; ARV-066 is actively executing and ARV-069 is the final admitted item. The 2026-10-08 Owner review renewed AM-4 and merged PR #217 consumed merge 6/10. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
 
 execution_snapshot:
-  updated_at: '2026-10-08T07:23:51Z'
+  updated_at: '2026-10-08T08:02:00Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -238,7 +240,9 @@ execution_snapshot:
     timezone: Europe/Moscow
     single_watchdog: true
     audit_issue: 57
-  queue_state: commercial_workflow_in_progress
+  queue_state: commercial_workflow_active
+  active_item: COMMERCIAL-WORKFLOW-ARV-066-001
+  active_branch: agent/commercial-workflow-arv-066-001
   next_admitted_item: COMMERCIAL-WORKFLOW-ARV-066-001
   admitted_pipeline:
     - COMMERCIAL-WORKFLOW-ARV-066-001
@@ -2040,10 +2044,14 @@ legacy_registry:
     comment: Снижает повторный ручной ввод и повышает точность qualification.
     dependencies_raw: ARV-043, ARV-015, ARV-010
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 217
+      merge_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
+      detail: Tenant-isolated reusable company profile/document store with versions, expiry and safe explicit autofill.
+    notes: 'Completed at the admitted boundary; only explicitly stored tenant-scoped facts are eligible for autofill and unrelated private documents are not imported/inferred.'
+
 - id: ARV-016
   legacy_snapshot:
     queue_order: 24
@@ -2120,10 +2128,20 @@ legacy_registry:
     comment: Перенято у BIMLIB и Seldon; скоринг не должен быть непрозрачным единым баллом.
     dependencies_raw: ARV-015, ARV-024, ARV-059
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-07'
+    evidence:
+    - pull_request: 207
+      merge_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
+      detail: Evidence-backed counterparty cards and factor-level risk signals.
+    - pull_request: 209
+      merge_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
+      detail: Reused canonical supplier verification score; opaque duplicate scoring avoided.
+    - pull_request: 210
+      merge_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
+      detail: Final scoring correction bookkeeping.
+    notes: 'Completed with explainable source-bound factors; no legal approval or autonomous participation decision is inferred.'
+
 - id: ARV-019
   legacy_snapshot:
     queue_order: 27
@@ -2182,10 +2200,14 @@ legacy_registry:
     comment: 'Новая ключевая задача: конкуренты уже монетизируют готовый пакет заявки, а не только анализ.'
     dependencies_raw: ARV-001, ARV-020, ARV-050, ARV-064
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 216
+      merge_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
+      detail: Review-only application draft/package generator with provenance and version lineage.
+    notes: 'Completed at the admitted boundary; generated artifacts remain review-only and are never automatically submitted or signed.'
+
 - id: ARV-056
   legacy_snapshot:
     queue_order: 29
@@ -2413,10 +2435,17 @@ legacy_registry:
     comment: Tender Analyzer и TenderGuru показывают ценность CV, citations и распознанных датасетов.
     dependencies_raw: ARV-001, ARV-008
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-07'
+    evidence:
+    - pull_request: 205
+      merge_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
+      detail: Data Platform-backed OCR fallback with confidence/coordinates and fail-closed review projection.
+    - pull_request: 206
+      merge_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
+      detail: Canonical completion/queue reconciliation for COMMERCIAL-WORKFLOW-ARV-022-001.
+    notes: 'Completed at the admitted Commercial Workflow boundary by reusing Data Platform OCR rather than building a custom OCR engine; low-confidence evidence remains review-gated.'
+
 - id: ARV-065
   legacy_snapshot:
     queue_order: 37
@@ -2605,10 +2634,14 @@ legacy_registry:
     comment: Перенято у DigiTender; обсуждение должно быть связано с конкретным выводом/документом.
     dependencies_raw: ARV-050, ARV-019, ARV-021, ARV-043
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 215
+      merge_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
+      detail: Immutable case discussion journal with evidence links and attribution.
+    notes: 'Completed as internal collaboration only; no supplier/customer external communication is enabled.'
+
 - id: ARV-066
   legacy_snapshot:
     queue_order: 44
@@ -2637,10 +2670,14 @@ legacy_registry:
     comment: Уменьшает трение входа, но не должен зависеть от хрупкого DOM как единственного источника.
     dependencies_raw: ARV-002, ARV-050, ARV-030
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: admitted_in_progress
+    verified_at: '2026-10-08'
+    evidence:
+    - branch: agent/commercial-workflow-arv-066-001
+      head: 2c597ae581d1d00b7e43c38e6567d7068b4a3254
+      detail: Active bounded one-click procurement import task; registry-number/EIS URL normalization reuses ProcurementCase + PilotAuditEvent and forbids DOM-as-truth.
+    notes: 'Active implementation. Unsupported or ambiguous inputs fail closed; no scraper, submission path, signing path or external communication effect is admitted.'
+
 - id: ARV-055
   legacy_snapshot:
     queue_order: 45
@@ -2664,10 +2701,14 @@ legacy_registry:
     comment: Перенято у Контур.Закупки; similarity должна быть объяснимой, а не только векторной.
     dependencies_raw: ARV-005, ARV-009, ARV-057
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 211
+      merge_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
+      detail: Explainable similar-procurement search with deterministic false-analogue guards.
+    notes: 'Completed by adapting existing search/vector infrastructure; similarity remains explainable rather than a black-box vector score.'
+
 - id: ARV-057
   legacy_snapshot:
     queue_order: 46
@@ -2691,10 +2732,17 @@ legacy_registry:
     comment: Seldon, МАРКЕР и Закупки360 подтверждают decision-value ценовых и конкурентных прогнозов.
     dependencies_raw: ARV-006, ARV-009, ARV-058
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 212
+      merge_commit: ebcead468610a88e298b55881d4287cdaed444c3
+      detail: Evidence-backed historical price range and comparability provenance.
+    - pull_request: 213
+      merge_commit: 7abd9640a76303708c839d91e56302aeb325df32
+      detail: Canonical completion and Commercial Workflow advancement.
+    notes: 'Completed at the admitted boundary: observed price evidence, comparability and uncertainty are separated from forecast claims.'
+
 - id: ARV-059
   legacy_snapshot:
     queue_order: 47
@@ -2719,10 +2767,14 @@ legacy_registry:
     comment: ТЕНвизор и Закупки.AI поднимают ожидание цикла до исполнения.
     dependencies_raw: ARV-058, ARV-006, ARV-053, ARV-057
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 214
+      merge_commit: 2e900d6cc301867346bad3c5348cb42df3147e6b
+      detail: Source-bound contract execution and outcome analytics.
+    notes: 'Completed with procurement-to-contract execution facts remaining source/artifact-bound; missing outcome evidence remains unknown.'
+
 - id: ARV-069
   legacy_snapshot:
     queue_order: 48
@@ -2748,10 +2800,13 @@ legacy_registry:
     comment: Не использовать как обещание победы; только как evidence-backed decision context.
     dependencies_raw: ARV-053, ARV-057, ARV-059
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: admitted_ready
+    verified_at: '2026-10-08'
+    evidence:
+    - path: .agent/execution-queue.yaml
+      detail: COMMERCIAL-WORKFLOW-ARV-069-001 remains the final ready admitted Commercial Workflow item after ARV-066.
+    notes: 'Admitted but not yet started. Forecast output must separate observed facts from estimates and remain advisory under HUMAN decision control.'
+
 - id: ARV-028
   legacy_snapshot:
     queue_order: 49
