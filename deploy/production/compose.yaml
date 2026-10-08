@@ -1,0 +1,125 @@
+name: arvectum-production
+x-app: &app
+  build:
+    context: ../..
+    dockerfile: deploy/pilot/Dockerfile
+    args:
+      REVISION: "${ARVECTUM_IMAGE_REVISION:?exact reviewed SHA required}"
+      VERSION: "${ARVECTUM_IMAGE_VERSION:?release version required}"
+  image: "arvectum/tender-agent:${ARVECTUM_IMAGE_REVISION:?}"
+  env_file: "${PROD_SECRET_ENV:?external secret env path required}"
+  environment: &app-env
+    AI_CORP_DATABASE_URL: "postgresql+psycopg://${PROD_DB_USER:?}:${PROD_DB_PASSWORD:?}@db:5432/${PROD_DB_NAME:?}"
+    AI_CORP_REDIS_ENABLED: "true"
+    AI_CORP_REDIS_URL: "redis://:${PROD_REDIS_PASSWORD:?}@redis:6379/0"
+    AI_CORP_REDIS_NAMESPACE: arvectum
+    AI_CORP_REDIS_ENVIRONMENT: production
+    AI_CORP_TENDER_RESEARCH_JOB_BACKEND: redis
+    AI_CORP_DEBUG: "false"
+    AI_CORP_SOURCE_GRAPH_MODE: production
+    AI_CORP_ALLOW_DEMO_DISCOVERY: "false"
+    AI_CORP_ALLOWED_HOSTS: "${PROD_DOMAIN:?},localhost,127.0.0.1"
+    AI_CORP_CORS_ALLOW_ORIGINS: ""
+    AI_CORP_LLM_ALLOW_RAW_PARTNER_DATA: "false"
+    AI_CORP_LLM_STORE_RAW_RESPONSE: "false"
+    AI_CORP_PILOT_AUTH_ENABLED: "true"
+    AI_CORP_PILOT_AUTH_USERNAME: "${AI_CORP_PILOT_AUTH_USERNAME:?}"
+    AI_CORP_PILOT_AUTH_PASSWORD: "${AI_CORP_PILOT_AUTH_PASSWORD:?}"
+    ZAKUPKI_GOV_RU_SOAP_ENABLED: "true"
+    ARVECTUM_ETP_PROXY_BYPASS_ENABLED: "true"
+    ARVECTUM_ETP_TLS_ENABLED: "true"
+    ARVECTUM_ETP_TLS_FAIL_CLOSED: "true"
+    ARVECTUM_ETP_TLS_POLICY_PATH: /run/arvectum/etp-trust/policy.yaml
+    ARVECTUM_ETP_TRUST_DIR: /run/arvectum/etp-trust
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  restart: unless-stopped
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    env_file: "${PROD_SECRET_ENV:?}"
+    environment:
+      POSTGRES_DB: "${PROD_DB_NAME:?}"
+      POSTGRES_USER: "${PROD_DB_USER:?}"
+      POSTGRES_PASSWORD: "${PROD_DB_PASSWORD:?}"
+    volumes: [db:/var/lib/postgresql/data]
+    networks: [private]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+    security_opt: [no-new-privileges:true]
+  redis:
+    image: redis:7.4-alpine
+    env_file: "${PROD_SECRET_ENV:?}"
+    command: ["sh", "-ec", "exec redis-server --appendonly yes --requirepass \"$$PROD_REDIS_PASSWORD\""]
+    volumes: [redis:/data]
+    networks: [private]
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$$PROD_REDIS_PASSWORD\" redis-cli ping | grep -qx PONG"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+    security_opt: [no-new-privileges:true]
+  migrate:
+    <<: *app
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      db: {condition: service_healthy}
+    networks: [private]
+    restart: "no"
+  api:
+    <<: *app
+    volumes: &app-volumes
+      - app-data:/app/data
+      - app-artifacts:/app/artifacts
+      - app-artifacts:/app/company_agent_runs
+      - app-eis:/app/eis-archives
+      - "${PROD_ETP_TRUST_DIR:?}:/run/arvectum/etp-trust:ro"
+    networks: [private, egress]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    stop_grace_period: 90s
+  worker:
+    <<: *app
+    command: ["python", "-m", "src.tender_research.rag.worker"]
+    volumes: *app-volumes
+    networks: [private, egress]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    stop_grace_period: 90s
+  ingress:
+    image: caddy:2.8-alpine
+    profiles: [public]
+    ports: ["80:80", "443:443"]
+    environment:
+      PROD_DOMAIN: "${PROD_DOMAIN:?}"
+      PROD_ACME_EMAIL: "${PROD_ACME_EMAIL:?}"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks: [private, edge]
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+    security_opt: [no-new-privileges:true]
+networks:
+  private: {internal: true}
+  egress: {}
+  edge: {}
+volumes:
+  db: {}
+  redis: {}
+  app-data: {}
+  app-artifacts: {}
+  app-eis: {}
+  caddy-data: {}
+  caddy-config: {}

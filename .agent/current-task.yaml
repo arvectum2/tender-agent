@@ -18,19 +18,22 @@ definition_of_done:
 completed:
   - Identified APR-03 as next planned active-product outcome after completed APR-02.
   - Audited current pilot Docker package, Redis worker contract, backup/restore components, and Owner production hard-stops.
-current: Prepare reusable production deployment package and isolated evidence-driven verification.
+  - Implemented the APR-03 Linux Compose+TLS gated ingress+Redis worker+PostgreSQL package and fail-closed production CLI with isolated restore only.
+  - Production static checks and focused test suite 19 passed; Docker Compose config for both private/public profiles parsed.
+current: Isolated end-to-end Docker smoke and failure/restore drills (no public ingress).
 pending:
-  - Implement production Compose, ingress/TLS, runtime/worker configuration without duplicating product logic.
-  - Build fail-closed portable preflight, backup/restore and restart diagnostics.
   - Run targeted regression tests, Compose validation, isolated drills and final CI.
   - Obtain explicit separate provider/production authorization and confirmed VPS, domain, storage/allowlists before live rollout.
   - Perform documented external acceptance and close APR-03 only when all gates pass.
 last_verified_commit: ced71977
-test_results: []
+test_results:
+  - Ruff production CLI+tests PASS.
+  - Focused runtime and worker tests 19 passed, 1 existing warning.
+  - Docker Compose config --profile public --quiet PASS (synthetic env).
 resume_instruction: >-
-  Inspect deploy/pilot and docs/tender_research/durable_worker_runtime.md, implement
-  a separate production Linux VPS package reusing existing runtime components.
-  Never deploy externally or infer a paid VPS or external DNS without approval.
+  Run isolated synthetic Docker up/backup/verify/restore/restart drills using
+  deploy/production; fix observed defects and run targeted regressions.
+  Never start the public profile or provision a paid VPS without approval.
 execution:
   branch: feature/apr03-production-runtime
   base_commit: ced71977

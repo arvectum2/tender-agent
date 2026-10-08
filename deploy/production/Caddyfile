@@ -1,0 +1,24 @@
+{
+  email {$PROD_ACME_EMAIL}
+}
+{$PROD_DOMAIN} {
+  encode zstd gzip
+  header {
+    X-Content-Type-Options "nosniff"
+    Referrer-Policy "no-referrer"
+    X-Frame-Options "DENY"
+    -Server
+  }
+  @health path /health/tender-agent
+  handle @health {
+    rewrite * /health
+    reverse_proxy api:8000
+  }
+  @allowed path /pilot/tender-agent* /demo/tender-agent* /api/demo/tender-agent/* /api/operator/pilot/* /customers /customers/*
+  handle @allowed {
+    reverse_proxy api:8000
+  }
+  handle {
+    respond "Not Found" 404
+  }
+}
