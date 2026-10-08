@@ -73,21 +73,23 @@ commercial_workflow_admission_2026_10_07:
       - ARV-022
       - ARV-053
       - ARV-055
+      - ARV-057
     completed_queue_items:
       - ARV-015-OPERATOR-PROFILE-PARSER-001
       - COMMERCIAL-WORKFLOW-ARV-019-001
       - COMMERCIAL-WORKFLOW-ARV-022-001
       - COMMERCIAL-WORKFLOW-ARV-053-001
       - COMMERCIAL-WORKFLOW-ARV-055-001
-    completed_count: 5
+      - COMMERCIAL-WORKFLOW-ARV-057-001
+    completed_count: 6
     total_count: 12
-    next_queue_item: COMMERCIAL-WORKFLOW-ARV-057-001
-    next_item_note: 'Normalize source-bound historical price observations and expose evidence-backed comparable ranges/NMCK orientation while keeping forecasts separate from observed facts.'
+    next_queue_item: COMMERCIAL-WORKFLOW-ARV-059-001
+    next_item_note: 'Create a source-bound procurement -> contract -> execution stages -> payments -> timing -> penalties -> actual price -> outcome projection using existing lifecycle/evidence primitives; keep missing evidence unknown and do not autonomously promote learning.'
 
 governance:
   material_executor_policy_change: true
-  am4_effect: renewed_am4_exhausted_after_pr_211_10_of_10
-  renewal_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
-  renewal_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
-  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms. PR #211 is the tenth and final automatic merge in that renewed cycle after PRs #199, #198, #201, #205, #206, #207, #208, #209 and #210. The counter is 10/10 after PR #211; the cycle is exhausted and every later automatic merge must fail closed to REVIEW until attributable Owner renewal/review. Preparation, implementation and testing of independently admitted work may continue. All hard stops remain in force.
+  am4_effect: renewed_am4_active_pr_213_is_2_of_10_if_merged
+  renewal_decision: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  renewal_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
+  note: The attributable Owner review on 2026-10-08 explicitly renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges on unchanged terms. PR #212 consumed merge 1/10; ARV-057 completion/governance PR #213 is counted prospectively as merge 2/10 and may merge only after exact-head CI succeeds. All procurement submission, signing, external communication, legal/commercial acceptance, production/release and other hard stops remain unchanged.
 revocation: Owner may revoke or supersede this directive at any time.
