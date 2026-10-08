@@ -1,0 +1,11 @@
+# Mac mini APR-04 local-only override. Always combine with ../production/compose.yaml.
+# Only an authenticated operator API is published on Mac loopback.
+services:
+  api:
+    ports: ["127.0.0.1:18082:8000"]
+    environment:
+      AI_CORP_ARVECTUM_DATA_DIR: /app/data
+      AI_CORP_ALLOWED_HOSTS: localhost,127.0.0.1
+  worker:
+    environment:
+      AI_CORP_ARVECTUM_DATA_DIR: /app/data

@@ -15,15 +15,19 @@ definition_of_done:
   - First personalized tender screening from a new profile is end-to-end through actual running local API; unknowns remain human-review.
   - Targeted tests and safety negative cases pass, CI evidence recorded and changes submitted to GitHub.
 completed:
-  - Inspected current APR-03 checkpoint, approved local-only direction and next APR-04 roadmap gate.
-current: Implement integrated onboarding service/routes/UI and local Mac mini Compose runtime.
+  - Inspected APR-03 checkpoint and approved local-only direction for APR-04.
+  - Integrated onboarding company/criteria/commercial/qualification versioning with existing ARV-015 and ARV-064 stores.
+  - Added operator UI, PDF evidence upload/download, and cited personalized screening for EIS and existing analyzed run.
+  - Implemented loopback-only Mac mini Docker override and standalone real-HTTP synthetic acceptance script.
+  - Targeted tests 17 passed and make check PASS; no existing runtime mutation.
+current: Deploy and verify full live local Mac mini API/Redis/PostgreSQL onboarding-to-analysis flow.
 pending:
-  - Implement and test onboarding APIs and UI with existing data primitives.
   - Deploy isolated loopback local runtime and execute complete synthetic end-to-end flow.
   - Record checks and release branch/PR with exact checkpoint.
-last_verified_commit: 2f241a0acb2d1367914ac476d5729cc4fec94e7e
+last_verified_commit: af294b67
 test_results:
   - APR-03 predecessor GitHub CI success; 45 local regressions green.
+  - APR-04 onboarding and existing store tests 17 passed; Ruff and make check PASS.
 resume_instruction: >-
   Continue APR-04 integrated onboarding, local macmini Compose deployment,
   synthetic company->profile->evidence->tender-screen E2E and verification.
