@@ -1,6 +1,6 @@
 schema_version: 1
 task_id: ROADMAP-REFRESH-20261008
-status: in_progress
+status: completed
 goal: Refresh the canonical Tender Agent roadmap against current main and present the complete roadmap as a checkbox checklist without rewriting the immutable 2026-07-30 legacy snapshot.
 definition_of_done:
   - Current status summary matches main after ARV-064 merge and the active ARV-066 branch.
@@ -17,15 +17,15 @@ completed:
   - Added a full 93-item checkbox view covering BASE-001..BASE-018 and ARV-001..ARV-075 plus the current 10/12 Commercial Workflow execution slice.
   - Replaced stale queue prose that incorrectly said the admitted queue was empty.
   - Mac mini validation passed: watchdog/governance tests 4 passed; YAML parse PASS; checklist contains 93 unique canonical IDs.
-current: Open roadmap refresh PR and require exact-head CI before merge.
-remaining:
-  - Open PR.
-  - Verify exact-head CI.
-  - Merge and mark this checkpoint completed.
-last_verified_commit: 64f95fa88726f8ee5a2016bafc165b6ec3292daf
+  - PR #219 exact-head CI run 37747811062 passed all 9 jobs on b2f4281bec9158963a17cf5b87cdcdd8c5574d0d.
+  - PR #219 merged to main as c76fb76919a6fd91c783236b2dca830ae8d80ab0.
+current: Definition of Done satisfied; canonical roadmap and complete checkbox view are merged.
+remaining: []
+last_verified_commit: c76fb76919a6fd91c783236b2dca830ae8d80ab0
 test_results:
   - 'tests/test_watchdog_continuation_policy.py: 4 passed, 1 warning.'
   - 'YAML parse: PASS.'
   - 'Checklist canonical IDs: 93/93 unique PASS.'
-updated_at: '2026-10-08T11:08:00+03:00'
-resume_instruction: Open the PR for docs/roadmap-checklist-refresh-20261008, require exact-head CI green, merge, then mark ROADMAP-REFRESH-20261008 completed. Do not disturb active COMMERCIAL-WORKFLOW-ARV-066-001 execution.
+  - 'PR #219 exact-head CI run 37747811062: SUCCESS, 9/9 jobs.'
+updated_at: '2026-10-08T11:18:00+03:00'
+resume_instruction: Roadmap refresh completed. Preserve the merged checklist and reconciliation overlays. Continue the active COMMERCIAL-WORKFLOW-ARV-066-001 execution from its branch/checkpoint; do not reopen ROADMAP-REFRESH-20261008.
