@@ -994,8 +994,8 @@ items:
 - order: 1090
   task_id: APR-02-DP-AUTH-READINESS-001
   title: Fail-visible Data Platform auth versus missing index in Tender Research
-  status: blocked
-  blocked_on: 'Exact-head CI and Owner REVIEW of DP authorization readiness fix PR.'
+  status: done
+  completion_evidence: 'PR #240 exact-head CI 37813956582 SUCCESS 9/9; Owner-directed merge d8607c259a1b1075d067ca8da42512998457d4e7; original 223-FZ HTTP 401 no longer misreports missing index.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
