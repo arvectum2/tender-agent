@@ -1,6 +1,6 @@
 version: 2
 repository: arvectum2/tender-agent
-status: in_progress
+status: blocked
 task_id: COMMERCIAL-WORKFLOW-ARV-057-001
 authority: AUTO_PREP_ONLY_AM4_REVIEW_REQUIRED
 goal: Normalize source-bound historical price observations and expose evidence-backed
@@ -48,15 +48,19 @@ completed:
 - '2026-10-08: Full local make test reached 3123 passed / 236 skipped with only the
   previously proven macOS main-baseline R9 pg_restore acceptance failure; no ARV-057
   regression was observed.'
-current: Commit/push the verified ARV-057 implementation, open a PR and require exact-head
-  GitHub CI. Automatic merge remains prohibited because AM-4 is exhausted at 10/10.
+- '2026-10-08: Opened PR #212 from verified implementation head e9d5d2fed98e3c93171b798fa7ed9cd31a4c8728
+  against canonical main 17a27725fce02623f44ec7c5ac6aa04c2ea491ec.'
+- '2026-10-08: Merge is objectively blocked by canonical governance: PR #211 exhausted
+  renewed AM-4 at 10/10 and executor-policy requires REVIEW for every later automatic
+  merge. Preparation/testing/CI remain permitted.'
+current: 'PR #212 is implementation-complete and under exact-head CI. Merge is blocked
+  until attributable Owner renewal/review or explicit superseding merge authority.'
 pending:
-- Commit and push the verified ARV-057 implementation/checkpoint.
-- Open ARV-057 PR against current main and require exact-head GitHub CI.
-- If CI passes, mark the canonical task blocked at merge review and preserve the exact
-  head/run evidence.
-- Do not merge until attributable Owner renewal/review or explicit authority supersedes
-  the exhausted AM-4 cycle.
+- Verify exact-head GitHub CI on this final checkpoint head and fix any implementation/test
+  failure if present.
+- 'After CI is green, retain PR #212 open and merge-blocked.'
+- Merge only after attributable Owner renewal/review or explicit authority supersedes
+  EXHAUSTED_10_OF_10_REVIEW_REQUIRED.
 last_verified_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
 test_results:
 - 'ARV-057 + similar-procurement/Data Platform/quote normalization regressions: 57
@@ -67,10 +71,13 @@ test_results:
 - 'git diff --check: PASS'
 - 'full local make test: 3123 passed, 236 skipped, 1 failed (known macOS main-baseline
   R9 pg_restore acceptance failure)'
-updated_at: '2026-10-08T04:04:18+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv057-commercial-20261008.
-  Push/open the ARV-057 PR and require exact-head CI. If green, set status=blocked
-  with merge as the only remaining step; do not merge because AM-4 is exhausted 10/10.
+- 'PR #212 exact-head CI: required on final blocked-checkpoint head before merge;
+  do not infer merge authority from CI success'
+updated_at: '2026-10-08T04:07:36+03:00'
+resume_instruction: 'For PR #212, first verify exact-head CI for the current branch
+  head. If CI fails, fix and rerun. If CI is green, do not merge: canonical AM-4 is
+  exhausted 10/10. Wait for attributable Owner renewal/review or explicit superseding
+  merge authority, then re-verify head/base/CI before merge.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv057
