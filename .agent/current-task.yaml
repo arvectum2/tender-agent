@@ -13,15 +13,22 @@ completed:
   - PR #227 merged into main as 4805b5e546d635ae4c5ca4e9a6b60d35f6236885; CI SUCCESS 9/9.
   - Four original RI223 SOAP ZIP source archives (10/10 attachments) available on Mac mini.
   - Discovered two purchaseProtocol XML members (32616445866 and 32616447910), while all four have one lot and one position in purchaseNotice XML; previous NOT_OBSERVED protocol claim was incomplete.
-current: Implement bounded XML-source parser and explicit law_type=223fz real EIS path in isolated worktree.
+  - Added pure bounded RI223 ZIP/XML parser for exact notice-bound lots/positions, per-member/archive source SHA-256, and protocol/attachment source records.
+  - Wired explicit law_type=223fz into RealEisLoader, EisTenderLoader, and pipeline; default 44-FZ PRIZ route unchanged, no legacy listAttachments fallback for 223-FZ.
+  - Reconciled authentic protocol observation in docs/223fz and froze sanitized structural positive/negative tests.
+  - Verified four original SHA-256 ZIPs and all 4 notice projections (four lots, four positions, two protocol records, ten source-bound attachments).
+  - Focused regressions: 58 passed, 1 existing Starlette deprecation warning; make check, changed-file Ruff and git diff --check passed.
+current: 'Bounded implementation and local acceptance complete. Create review-ready PR, run exact-head CI and stop at explicit Owner merge gate.'
 pending:
-  - Implement and test parser against frozen evidence, including adversarial cases.
-  - Integrate opt-in RI223 SOAP retrieval without affecting default PRIZ.
-  - Run targeted tests and CI, push and prepare review-ready PR.
-last_verified_commit: 4805b5e546d635ae4c5ca4e9a6b60d35f6236885
+  - Push branch, create PR and inspect exact-head required CI.
+  - Owner review/merge required (queue auto_merge=false); broader APR-02 lifecycle/revisions remain separate.
+last_verified_commit: 5cd42c81c42b9c211b04be7befee7b06b8c03991
 test_results:
   - PR #227 CI: SUCCESS 9/9 on a6d741ac.
-resume_instruction: Continue in feature/apr02-ri223-structured-evidence; implement read-only RI223 XML evidence, test against frozen four original ZIPs and synthetic fail-closed cases, then exact-head CI and Owner REVIEW. No automatic merge.
+  - 58 targeted tests passed, 1 unrelated Starlette deprecation warning.
+  - Four original RI223 SOAP archives, hashes and 10 source-bound documents validated 4/4 PASS.
+  - Changed-file Ruff, make check, git diff --check PASS.
+resume_instruction: 'Implementation at 5cd42c81 passed local/source acceptance; confirm branch PR head and exact-head CI, repair any failures, then stop at Owner REVIEW for merge (auto_merge=false). Do not repeat source downloads or reopen completed parser work. Broader APR-02 revisions, clarifications, lifecycle and RAR require separate frozen corpus.'
 execution:
   branch: feature/apr02-ri223-structured-evidence
   base_commit: 4805b5e546d635ae4c5ca4e9a6b60d35f6236885
