@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-BOUNDED-CLOSURE-001
-status: in_progress
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Close official APR-02 bounded real-source 223-FZ breadth outcome only after
   frozen-corpus evidence audit, all relevant merged PRs, final test and exact-head
@@ -34,22 +34,28 @@ completed:
   comparisons expressly excluded.
 - 'Final post-#248 merged base c4e75ce9+7e3bf91: 543 Tender Research passed, 1 skipped,
   42 warnings; make check PASS and closure registry test PASS.'
-current: Closure report, roadmap, historical checkpoint and executor queue reconciled;
-  publishing closure PR pending final-head GitHub CI and merge.
-pending:
-- Publish closure PR, get successful exact-head GitHub CI and guarded Owner merge.
-- Post-merge canonical checkpoint status completed with last verified commit hash.
-last_verified_commit: 7e3bf91c3019f45e359608da6215a478ce21dd74
+- 'APR-02 bounded closure PR #249 head c7351a10cf08b07bd68605f3a5e32e5b96cbd257 exact-head
+  GitHub CI 37829827778 SUCCESS 9/9; Owner-directed squash merged into main as 1e056ecc09f1478af80cbe11b3f96e57c15b49b1.'
+- Master roadmap APR-02 bounded outcome marked done; queue all prior APR-02 tasks
+  done; unresolved broad historical ARV-006, production runtime and model comparisons
+  remain separate.
+- Source evidence ZIP and RAR SHA-256 unchanged; 19 original document sources/300
+  chunks, ten sections/25 citations; final local 543 Tender Research passed, 1 skipped,
+  make check passed.
+current: Completed — bounded APR-02 real-source 223-FZ breadth accepted in main.
+pending: []
+last_verified_commit: 1e056ecc09f1478af80cbe11b3f96e57c15b49b1
 test_results:
 - 'Previous #248 rebased local 542 tests passed one skipped, make check PASS.'
 - Source archive hashes both MATCH previously recorded originals.
 - Rebased closure premerge 543 Tender Research passed, one skipped; make check PASS.
 - Final post-#248 Tender Research 543 passed, 1 skipped, 42 warnings; make check PASS.
-resume_instruction: 'APR-02-BOUNDED-CLOSURE-001 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-bounded-closure
-  now based on merged #248 7e3bf91. Validate all roadmap/queue/history checkpoint
-  changes, run 543+ tests and make check; publish closure PR, exact-head CI and guarded
-  merge; mark canonical checkpoint completed with final verified merge SHA. No model
-  comparison.'
+- 'PR #249 exact-head CI 37829827778 completed SUCCESS 9/9.'
+- Final bounded closure main merge 1e056ecc09f1478af80cbe11b3f96e57c15b49b1.
+resume_instruction: APR-02-BOUNDED-CLOSURE-001 fully completed; do not repeat. Read
+  docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md. Next distinct outcome is APR-03
+  Production Runtime (requires separate canonical task admission). Gemma/Qwen model
+  benchmarking is explicitly deferred to APR-07.
 execution:
   branch: chore/apr02-bounded-closure
   base_commit: c4e75ce901cb6fce1de08a19f2d74b7f0831503b
