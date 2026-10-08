@@ -52,7 +52,7 @@ def test_material_policy_change_renewal_is_attributable_and_reporting_is_visible
     assert company_gate["material_policy_change_recorded_2026_09_18"] is True
     assert company_gate["mandatory_review_deadline"] == "2026-11-08"
     assert company_gate["automatic_merge_after_material_policy_change"] == "ALLOWED_UNDER_RENEWED_AM4"
-    assert company_gate["automatic_merge_cycle_state"] == "ACTIVE_RENEWED_2026_10_08_6_OF_10_IF_PR_217_MERGES"
+    assert company_gate["automatic_merge_cycle_state"] == "ACTIVE_RENEWED_2026_10_08_6_OF_10"
     assert company_gate["automatic_merges_since_review_including_this_reconciliation_when_merged"] == 6
     assert company_gate["next_automatic_merge"] == "ALLOWED_IF_ALL_AM4_GATES_PASS"
     assert policy["sources"]["company_authority"]["latest_renewal"].endswith(
