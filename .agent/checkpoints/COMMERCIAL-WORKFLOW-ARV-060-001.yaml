@@ -30,27 +30,40 @@ completed:
 - '2026-10-08: Initial inventory found ProcurementCase and PilotAuditEvent tenant/case
   scope patterns, append-only EventRecord/DecisionRecord patterns, and internal workspace/copilot
   feed primitives; no dedicated case discussion/mention module exists.'
-current: Inspect customer-pilot tenancy/evidence/auth primitives and migration conventions,
-  then implement the smallest append-only internal collaboration slice without external
-  delivery.
+- '2026-10-08: Implemented append-only case collaboration models for COMMENT/DECISION
+  journal entries, internal @mention records and typed evidence links; SQLAlchemy
+  guards reject update/delete mutation and superseding decisions append a new immutable
+  entry.'
+- '2026-10-08: Added tenant/case-scoped internal APIs under /api/operator/pilot/customers/{customer_id}/cases/{case_id}/discussion.
+  Cross-tenant access fails 404; current-case evidence validation fails closed for
+  typed PROCUREMENT_CASE/PILOT_ARTIFACT/ANALYSIS_RUN refs.'
+- '2026-10-08: @mentions are normalized from body plus explicit mention_refs into
+  INTERNAL_UNREAD records only. No email/push/supplier/customer/regulator delivery
+  adapter is called or exposed.'
+- '2026-10-08: Each created entry appends existing PilotAuditEvent evidence with actor,
+  type, mention/evidence counts and notification_channel=internal_only; unrelated
+  Deal DecisionRecord semantics are untouched.'
+- '2026-10-08: Added migration 103_add_case_collaboration and model/router registration.
+  Focused ARV-060 + customer-pilot/expert-review regressions passed 15/15; alembic
+  head is 103_add_case_collaboration; make check and git diff --check pass.'
+current: Run full repository verification, then prepare the combined implementation/completion
+  PR so ARV-060 consumes one renewed AM-4 merge if final exact-head CI is green.
 pending: &id001
-- Inspect ProcurementCase route scoping, artifact/evidence references, internal feed
-  primitives, DB migration conventions and immutability enforcement patterns.
-- Implement case collaboration models/migration/service/router for comments, decisions,
-  mentions, evidence links and internal notification state.
-- Append case-scoped audit evidence for created entries while keeping Deal DecisionRecord
-  semantics untouched.
-- Add deterministic list/read APIs and focused cross-tenant/immutability/no-external-delivery
-  tests.
-- Run relevant/full verification, open PR, require exact-head CI, fold completion
-  bookkeeping into the same PR, and merge only under valid renewed AM-4.
+- Run full make test and classify any main-baseline-only failure.
+- Commit/push implementation and updated checkpoint.
+- Open ARV-060 PR, run exact-head CI on implementation head.
+- If green, fold queue/roadmap/AM-4 completion bookkeeping into the same PR, rerun
+  exact-head CI, and merge once under renewed AM-4.
 last_verified_commit: 2e900d6cc301867346bad3c5348cb42df3147e6b
 test_results:
-- 'PR #214 final exact-head CI run 37729941474: SUCCESS (9/9 jobs)'
-updated_at: '2026-10-08T08:06:15+03:00'
+- 'ARV-060 focused tests: 4 passed'
+- 'ARV-060 + R8 customer-pilot + ARV-052 expert-review: 15 passed'
+- 'alembic heads: 103_add_case_collaboration (head)'
+- 'make check: PASS'
+- 'git diff --check: PASS'
+updated_at: '2026-10-08T08:25:13+03:00'
 resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv060-commercial-20261008.
-  Inspect customer_pilot evidence/auth and migration patterns, then implement an append-only
-  ProcurementCase collaboration slice with internal-only mentions and no external
-  delivery.
-current_stage: inventory
+  Run full make test; if only the known macOS R9 pg_restore baseline remains, commit/push
+  and open the ARV-060 PR for exact-head CI.
+current_stage: full_verification
 remaining: *id001
