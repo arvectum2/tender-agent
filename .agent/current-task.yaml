@@ -1,34 +1,40 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-STRUCTURED-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Extract real RI223 public notice lot/position facts and protocol observations as evidence, without inventing status or 44-FZ legal semantics.
 definition_of_done:
-  - Extract exact source-labelled lots/positions/protocol records from verified RI223 XML and expose through existing read-only EIS ingest path.
-  - Reject cross-number XML, ambiguous notice versions, unknown schema, oversized ZIP and unsupported payloads without optimistic facts.
-  - Anchor extracted values to original XML member, SHA-256 and explicit paths; sanitized tests plus live original-corpus regression pass.
-  - Focused checks, make check and exact-head CI green; PR ready for Owner REVIEW.
+- Extract exact source-labelled lots/positions/protocol records from verified RI223 XML and expose through existing read-only EIS ingest path.
+- Reject cross-number XML, ambiguous notice versions, unknown schema, oversized ZIP and unsupported payloads without optimistic facts.
+- Anchor extracted values to original XML member, SHA-256 and explicit paths; sanitized tests plus live original-corpus regression pass.
+- Focused checks, make check and exact-head CI green; PR ready for Owner REVIEW.
 completed:
-  - PR #227 merged into main as 4805b5e546d635ae4c5ca4e9a6b60d35f6236885; CI SUCCESS 9/9.
-  - Four original RI223 SOAP ZIP source archives (10/10 attachments) available on Mac mini.
-  - Discovered two purchaseProtocol XML members (32616445866 and 32616447910), while all four have one lot and one position in purchaseNotice XML; previous NOT_OBSERVED protocol claim was incomplete.
-  - Added pure bounded RI223 ZIP/XML parser for exact notice-bound lots/positions, per-member/archive source SHA-256, and protocol/attachment source records.
-  - Wired explicit law_type=223fz into RealEisLoader, EisTenderLoader, and pipeline; default 44-FZ PRIZ route unchanged, no legacy listAttachments fallback for 223-FZ.
-  - Reconciled authentic protocol observation in docs/223fz and froze sanitized structural positive/negative tests.
-  - Verified four original SHA-256 ZIPs and all 4 notice projections (four lots, four positions, two protocol records, ten source-bound attachments).
-  - Focused regressions: 58 passed, 1 existing Starlette deprecation warning; make check, changed-file Ruff and git diff --check passed.
-current: 'PR #230 opened at 5c272d11 with local verification PASS; exact-head CI run 37786814480 in_progress; Owner REVIEW required before merge.'
-pending:
-  - Exact-head CI for PR #230 must finish SUCCESS; repair if failing.
-  - Owner review/merge required (queue auto_merge=false); broader APR-02 lifecycle/revisions remain separate.
-last_verified_commit: 5cd42c81c42b9c211b04be7befee7b06b8c03991
+- PR
+- Four original RI223 SOAP ZIP source archives (10/10 attachments) available on Mac mini.
+- Discovered two purchaseProtocol XML members (32616445866 and 32616447910), while all four have one lot and one position in purchaseNotice XML;
+  previous NOT_OBSERVED protocol claim was incomplete.
+- Added pure bounded RI223 ZIP/XML parser for exact notice-bound lots/positions, per-member/archive source SHA-256, and protocol/attachment source
+  records.
+- Wired explicit law_type=223fz into RealEisLoader, EisTenderLoader, and pipeline; default 44-FZ PRIZ route unchanged, no legacy listAttachments
+  fallback for 223-FZ.
+- Reconciled authentic protocol observation in docs/223fz and froze sanitized structural positive/negative tests.
+- Verified four original SHA-256 ZIPs and all 4 notice projections (four lots, four positions, two protocol records, ten source-bound attachments).
+- Focused regressions: 58 passed, 1 existing Starlette deprecation warning; make check, changed-file Ruff and git diff --check passed.
+- 'PR #230 owner-approved merge 44cc5d93ac18260bca5998eaa2d040daabf86891; exact-head CI 37786981315 SUCCESS all 9/9 jobs.'
+current: Bounded RI223 lots/positions/protocol evidence increment merged and verified; APR-02 larger roadmap outcome still open for separately
+  evidence-admitted changes.
+pending: []
+last_verified_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
 test_results:
-  - PR #227 CI: SUCCESS 9/9 on a6d741ac.
-  - 58 targeted tests passed, 1 unrelated Starlette deprecation warning.
-  - Four original RI223 SOAP archives, hashes and 10 source-bound documents validated 4/4 PASS.
-  - Changed-file Ruff, make check, git diff --check PASS.
-resume_instruction: 'PR #230 exists. Check its current head and exact-head CI; repair failures if present. When green, await explicit Owner REVIEW for merge (auto_merge=false), then update checkpoint/queue to completed and roadmap. Do not repeat RI223 source downloads; further amendments/clarifications/lifecycle/RAR require separate corpus and admission.'
+- PR
+- 58 targeted tests passed, 1 unrelated Starlette deprecation warning.
+- Four original RI223 SOAP archives, hashes and 10 source-bound documents validated 4/4 PASS.
+- Changed-file Ruff, make check, git diff --check PASS.
+- 'Final exact-head CI 37786981315: SUCCESS 9/9 on 998af5dc; Owner-approved merge PR #230.'
+resume_instruction: Task completed; do not repeat. Source truth docs/223fz/APR02_RI223_STRUCTURED_EVIDENCE_2026-10-08.md and frozen Mac mini originals.
+  Future APR-02 revisions/clarifications/status/real multi-lot require separate measured-gap admission. AM-4 R2 Company approval is active for
+  eligible AUTO PRs, but no HUMAN/REVIEW bypass.
 execution:
   branch: feature/apr02-ri223-structured-evidence
   base_commit: 4805b5e546d635ae4c5ca4e9a6b60d35f6236885

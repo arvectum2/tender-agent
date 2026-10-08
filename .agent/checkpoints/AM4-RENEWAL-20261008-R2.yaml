@@ -1,0 +1,21 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: AM4-RENEWAL-20261008-R2
+status: completed
+goal: 'Record explicit Owner-approved ten automatic merges under unchanged POS-004 / AI-ENG-001 Company AM-4 envelope.'
+definition_of_done:
+  - Approved prospective Company decision merged into canonical company main.
+  - Previous AM-4 merge evidence preserved and new counter 0/10 synchronized across canonical Tender Agent policy and roadmap.
+  - Exact-head CI and review gates retained, and automated merges disabled for REVIEW/HUMAN/OWNER tasks.
+  - PR #230 separately Owner-approved, CI 9/9 and merged, excluded from new automatic counter.
+completed:
+  - 'Company PR #12 merged as 6eaf25183965cd6bafd210138076a54ca90a7b6d; decision DECISION-2026-10-08-R2.'
+  - 'Tender Agent PR #230 exact-head CI run 37786981315 SUCCESS 9/9, merged as 44cc5d93ac18260bca5998eaa2d040daabf86891.'
+  - 'Updated AM-4 Company decision pointers and active cycle 0/10; previous six merge evidence entries preserved.'
+  - 'Retained all Company AM-4 auto-merge hard stops and the canonical queue requirement auto_merge true.'
+current: 'AM-4 R2 decision approved; product-side sync pending PR completion for this checkpoint.'
+pending: []
+last_verified_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
+test_results:
+  - 'PR #230 head 998af5dc exact-head GitHub Actions: SUCCESS 9/9.'
+resume_instruction: 'Completed authority renewal. After product-side sync PR is merged, start counting actual future automatic merges from zero, one per eligible auto-merged PR with evidence; do not count explicit Owner-reviewed PR #230. Keep prior history. Never auto-merge through HUMAN/OWNER/REVIEW, fail closed on ten merges or 2026-11-08.'
