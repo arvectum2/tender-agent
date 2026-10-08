@@ -27,11 +27,11 @@ from src.tender_research.rag.llm import (
 )
 from src.tender_research.rag.schemas import (
     ANALYSIS_MODE_CHOICES,
-    ANALYSIS_SECTIONS,
     DEFAULT_ANALYSIS_MODE,
     SourceCitation,
     TenderAnalysisResult,
     TenderAnalysisSection,
+    analysis_sections_for_regime,
 )
 from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
@@ -425,6 +425,9 @@ def analyze_tender(
                 _record_history(result, session, duration_seconds=0.0, source=history_source)
             return result
 
+        # Only source-verified 223fz tenders change document questions.
+        # No new legal facts/assumptions are inferred by this selection.
+        sections_schema = analysis_sections_for_regime(tender.law_type)
         retrieval_backend_name(config)
         emit_progress(10, "retrieval", "Подготавливаем поиск по документам…")
 
@@ -491,7 +494,7 @@ def analyze_tender(
         section_states = [
             {
                 "name": f"section:{sec_def['id']}",
-                "title": f"{index}/{len(ANALYSIS_SECTIONS)} — {sec_def['title']}",
+                "title": f"{index}/{len(sections_schema)} — {sec_def['title']}",
                 "status": "pending",
                 "progress_percent": 0,
                 "message": "",
@@ -499,10 +502,10 @@ def analyze_tender(
                     "section_id": sec_def["id"],
                     "section_title": sec_def["title"],
                     "section_index": index,
-                    "total_sections": len(ANALYSIS_SECTIONS),
+                    "total_sections": len(sections_schema),
                 },
             }
-            for index, sec_def in enumerate(ANALYSIS_SECTIONS, start=1)
+            for index, sec_def in enumerate(sections_schema, start=1)
         ]
         retrieval_seconds_total = 0.0
         llm_calls_count = 0
@@ -510,14 +513,14 @@ def analyze_tender(
         max_section_context_chars_value = 0
         llm_durations: list[float] = []
 
-        total_sections = max(len(ANALYSIS_SECTIONS), 1)
+        total_sections = max(len(sections_schema), 1)
         emit_progress(
             20,
             "retrieval",
             "Поиск по документам готов. Начинаем анализ по разделам…",
             steps=section_states,
         )
-        for index, sec_def in enumerate(ANALYSIS_SECTIONS, start=1):
+        for index, sec_def in enumerate(sections_schema, start=1):
             section_started_at = time.perf_counter()
             section_progress = 20 + round((index - 1) * 70 / total_sections)
             section_states[index - 1]["status"] = "running"

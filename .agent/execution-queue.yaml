@@ -917,3 +917,19 @@ completed_dependencies:
   dependencies: [APR-02-RI223-RAR-OPAQUE-001]
   executor_scope: "Safely stream and bound real RI223 RAR member bytes to canonical child document store and existing Data Platform analysis pipeline, retaining parent SHA-256/XML source binding, unsupported/unknown and manual-review gates. No external EIS/ETP action or bespoke document parsing engine."
   done_gate: "Verified real 32616445795 RAR contents produce traceable parsed source documents through Data Platform, constrained extraction regression passes, exact-head CI green, Owner REVIEW before merge."
+
+- order: 1040
+  task_id: APR-02-RI223-REGIME-ANALYSIS-001
+  title: RI223 document question prompts exclude 44-FZ-only assumptions
+  status: blocked
+  blocked_on: 'Exact-head CI and guarded merge of 223-FZ regime analysis PR.'
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner 2026-10-08 continue APR-02 beyond RAR; measured original 32616445795 case reveals generic analyzer participant section asks 44-FZ compliance despite explicit 223fz source."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RAR-DOCUMENT-ANALYSIS-001]
+  executor_scope: "Reuse existing Tender Analysis 10-section Data Platform/RAG workflow, only substitute supported 223-FZ regime-specific questions; no 44-FZ fallback/legal inference or independent LLM/document platform."
+  done_gate: "223-FZ analyzer no longer asks 44-FZ-only compliance/benefit questions; original corpus source retrieval remains grounded; 44-FZ regression unchanged; CI and Owner REVIEW."
