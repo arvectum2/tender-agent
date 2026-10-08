@@ -25,6 +25,10 @@ from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
+from src.tender_research.rag.ri223_source_facts import (
+    project_ri223_source_facts,
+    render_ri223_source_facts,
+)
 from src.tender_research.rag.schemas import (
     ANALYSIS_MODE_CHOICES,
     DEFAULT_ANALYSIS_MODE,
@@ -214,6 +218,7 @@ def _build_report_markdown(
     retrieval_model: str | None,
     analysis_mode: str = DEFAULT_ANALYSIS_MODE,
     duration_seconds: float | None = None,
+    ri223_source_observations: list[dict] | None = None,
 ) -> str:
     lines = [
         f"# Анализ закупки {registry_number}",
@@ -229,6 +234,9 @@ def _build_report_markdown(
     if duration_seconds is not None:
         lines.append(f"**Длительность:** {duration_seconds:.2f} сек")
     lines.extend(["", "---", ""])
+    lines.extend(render_ri223_source_facts(ri223_source_observations or []))
+    if ri223_source_observations:
+        lines.extend(["---", ""])
     for section in sections:
         lines.append(f"## {section.id}. {section.title}")
         lines.append("")
@@ -428,6 +436,9 @@ def analyze_tender(
         # Only source-verified 223fz tenders change document questions.
         # No new legal facts/assumptions are inferred by this selection.
         sections_schema = analysis_sections_for_regime(tender.law_type)
+        ri223_source_observations = project_ri223_source_facts(
+            tender.law_type, tender.raw_payload
+        )
         retrieval_backend_name(config)
         emit_progress(10, "retrieval", "Подготавливаем поиск по документам…")
 
@@ -464,6 +475,7 @@ def analyze_tender(
                 retrieval_provider=retrieval_provider,
                 retrieval_model=retrieval_model,
                 retrieval_limit_used=mode_config.retrieval_limit,
+                ri223_source_observations=ri223_source_observations,
             )
             if record_history:
                 _record_history(
@@ -750,6 +762,7 @@ def analyze_tender(
             retrieval_model=retrieval_model,
             analysis_mode=analysis_mode,
             duration_seconds=duration,
+            ri223_source_observations=ri223_source_observations,
         )
 
         report_path = None
@@ -766,6 +779,7 @@ def analyze_tender(
             analysis_mode=analysis_mode,
             report_markdown=report_markdown,
             report_path=report_path,
+            ri223_source_observations=ri223_source_observations,
             used_llm=use_llm and llm_client is not None,
             llm_model=config.local_llm_model if use_llm else None,
             llm_endpoint=config.local_llm_base_url if use_llm else None,
