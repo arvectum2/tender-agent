@@ -226,8 +226,11 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
-      state: in_progress
+      state: done
+      completion_scope: bounded_local_macmini_operator_v1
       local_e2e_evidence: docs/operations/APR04_MACMINI_E2E_2026-10-08.md
+      real_eis_document_text: six_of_six_extracted_via_existing_dataplatform
+      limits: [human_review, no_tenant_self_service, no_public_vps, llm_stub]
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'

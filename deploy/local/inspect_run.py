@@ -28,6 +28,10 @@ def main():
                 names = ["status","analysis_mode","procurement_source","procurement_notice_number","procurement_law","archive_downloaded","archive_download_status","documents_extracted_count","downloaded_files_count","attachments_status"]
                 print({name:data.get(name) for name in names})
                 print("warning_count", len(data.get("warnings", [])))
+                print("file_count", len(data.get("files", [])))
+                for entry in data.get("files", [])[:20]:
+                    if isinstance(entry, dict):
+                        print("file", {key: entry.get(key) for key in ("extension", "status", "extracted_text_available", "size_bytes")})
                 for warning in data.get("warnings", [])[:5]:
                     print("warning", str(warning)[:200])
             elif label == "report":

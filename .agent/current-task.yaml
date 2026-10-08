@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-04-LOCAL-ONBOARDING-E2E-001
-status: in_progress
+status: completed
 authority: USER_REQUEST_2026_10_08
 goal: >-
   Defer real Russian VPS until after development, run all applicable Tender Agent
@@ -19,29 +19,41 @@ completed:
   - Integrated onboarding company/criteria/commercial/qualification versioning with existing ARV-015 and ARV-064 stores.
   - Added operator UI, PDF evidence upload/download, and cited personalized screening for EIS and existing analyzed run.
   - Implemented loopback-only Mac mini Docker override and standalone real-HTTP synthetic acceptance script.
-  - Targeted tests expanded to 50 passed, make check and Node JS syntax PASS.
+  - Targeted tests 50 passed, make check and Node JS syntax PASS.
   - Local Mac mini Compose started with isolated PG16/Redis/worker/API on loopback 18082.
   - Live HTTP E2E passed: auth, company/profile v2, PDF evidence, uploaded docs, analysis, report and human-gated personalization.
   - Real exact EIS public card 0372200172326000015 cited successfully; NMCK outside synthetic profile bounds.
   - Fixed Docker image omission of required demo supplier profile files.
   - Configured verified /app/data named-volume capacity gate after detecting readiness degraded by unset storage root.
   - Added re-open/edit existing customer from operator UI without fabricating identity changes.
-current: Rebuild final local image and prove readiness ok and real EIS SOAP document intake.
-pending:
-  - Record checks and release branch/PR with exact checkpoint.
-last_verified_commit: 57d6f3a3834884fa1ace2a7440dcc6f7700f9c60
+  - Verified /health/ready status ok, ingestion_allowed true after local named-volume mount correction.
+  - Integrated existing host Data Platform through authenticated host.docker.internal:8094, no new backend or persistent document store.
+  - Downloaded six authentic EIS documents via read-only getDocsIP; XML, XLS, DOC, DOCX, DOCX, PDF extraction available 6/6 and no extraction warnings.
+  - Real EIS analysis completed_with_warnings with cited HUMAN_REVIEW_REQUIRED and no external action.
+  - Restarted isolated worker/API, confirmed stored EIS report and readiness persisted.
+  - Final targeted tests 50 passed, make check/Ruff/JS checks PASS.
+current: Completed bounded APR-04 operator onboarding with persistent local Mac mini E2E runtime.
+pending: []
+deferred_outside_apr04:
+  - APR-03 real Russian VPS provision/cutover, independent backup, TLS/DNS/Anti-DDoS and full-node worker recovery stay paused by Owner until development complete.
+  - APR-05 multi-tenant access, entitlements, billing/legal paid pilot and role isolation is the next active product outcome.
+  - APR-07 production-quality local model evaluation and comprehensive source evidence benchmarks not claimed by deterministic fallback.
+last_verified_commit: 00df43958674a9eebee2bbd54e7f4116bb87173f
 test_results:
-  - APR-03 predecessor GitHub CI success; 45 local regressions green.
-  - APR-04 and related regressions 50 passed; Ruff, make check, JS syntax green.
-  - Live local synthetic real-HTTP E2E result PASS, analysis needs_review (safe).
-  - Real 44FZ EIS public card lookup PASS, exact procurement source.
-  - Readiness initially degraded due unset ARVECTUM_STORAGE_ROOT; fix coded, redeploy pending.
+  - pytest targeted 50 passed, 30 existing warnings; Ruff PASS; make check PASS; Node.js UI syntax PASS.
+  - Live Mac mini real HTTP synthetic onboarding-to-analysis E2E twice PASS, resulting HUMAN_REVIEW_REQUIRED.
+  - Local Docker PG16/Redis/api/worker healthy, /health/ready ok, storage ingestion allowed.
+  - Real EIS public card source confirmed, original getDocsIP archive downloaded, all six document text-extraction statuses available through existing Data Platform.
+  - Real document analysis completed_with_warnings; existing report after API/worker restart retrievable; no public ingress.
+  - GitHub PR #252 stacked on APR-03 PR #251; branch review and CI are tracked separately.
 resume_instruction: >-
-  Rebuild Mac mini Compose with new /app/data storage root and resumed
-  operator UI, check /health/ready==ok and re-run live e2e_smoke.py.
-  Execute bounded real read-only EIS getDocsIP probe and report sourced
-  result honestly. Publish APR-04 PR and final CI/checkpoint; no VPS.
-  Never re-enable disabled watchdog.
+  APR-04 bounded Mac mini operator onboarding v1 is completed. Start APR-05
+  Paid Pilot & SaaS Foundation from docs/roadmap/master-roadmap.yaml if user
+  requests further implementation; preserve actual /app/data and service
+  configuration and keep APR-03 real VPS paused until development ends.
+  Reuse the current Mac mini Data Platform and operator runtime; do not
+  expand public ingress, production, billing or procurement external actions
+  without separate approvals. Do not restart the disabled watchdog.
 execution:
   branch: feature/apr04-local-onboarding-e2e
   base_commit: 2f241a0acb2d1367914ac476d5729cc4fec94e7e
