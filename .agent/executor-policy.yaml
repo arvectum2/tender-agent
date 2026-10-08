@@ -75,7 +75,7 @@ company_authority_gate:
   assignment_id: ASG-POS004-ROADMAP-EXECUTOR-2026-09-14
   mandatory_review_deadline: "2026-11-07"
   automatic_merge_counter_limit: 10
-  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_07
+  automatic_merge_cycle_state: EXHAUSTED_10_OF_10_REVIEW_REQUIRED
   fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
   fail_closed_mode: REVIEW
   product_policy_cannot_expand_company_authority: true
@@ -83,7 +83,7 @@ company_authority_gate:
   material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   material_policy_change_review_satisfied_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 9
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 10
   automatic_merge_evidence:
     - pr: 199
       merge_commit: 94534c81afd786b9c8944817ffc49c12396c7d3b
@@ -116,9 +116,14 @@ company_authority_gate:
       task: COMMERCIAL-WORKFLOW-ARV-053-001
       note: corrective scoring-reuse slice merged automatically after exact-head CI run 37689743505 passed
     - pr: 210
-      merge_commit: pending_until_merge
+      merge_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
       task: COMMERCIAL-WORKFLOW-ARV-053-001
-      note: corrective completion bookkeeping counted prospectively by automatic_merges_since_review_including_this_reconciliation_when_merged
+      note: corrective completion bookkeeping merged automatically after exact-head CI run 37691393437 passed
+    - pr: 211
+      merge_commit: self_merge_commit_not_precomputable
+      task: COMMERCIAL-WORKFLOW-ARV-055-001
+      note: combined ARV-055 implementation and completion bookkeeping; counted prospectively as automatic merge 10/10 and may merge only after final exact-head CI on the bookkeeping head succeeds
+  next_automatic_merge: REVIEW_REQUIRED_PENDING_OWNER_RENEWAL
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 
 authority:

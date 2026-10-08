@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-055-001
@@ -70,10 +70,15 @@ completed:
   watchdog assertion that still expected the active AM-4 label after the branch intentionally
   moved to exhausted 10/10; implementation/runtime jobs were otherwise green. Updated
   the governance regression to assert the exhausted state.'
-current: 'ARV-055 completed in the combined PR #211 implementation/completion package;
-  canonical queue advances to COMMERCIAL-WORKFLOW-ARV-057-001. PR #211 consumes AM-4
-  merge 10/10, so subsequent automatic merges require Owner renewal/review.'
-pending: []
+current: Open/verify the reconciled ARV-055 implementation PR.
+pending:
+- Map available canonical subject, position, customer and requirements signals to
+  evidence sources.
+- Implement explainable similar-procurement retrieval over the existing Data Platform
+  search boundary.
+- Add deterministic false-analogue guards and focused explanation regressions.
+- Run relevant/full verification, open PR, require exact-head CI and merge only under
+  valid AM-4.
 last_verified_commit: 8a9a3d5bf98f64697a2ee253be3bb3515aa29a87
 test_results:
 - 'ARV-055 + Data Platform/retrieval/discovery/relevance regressions after current-main
@@ -92,11 +97,5 @@ updated_at: '2026-10-08T03:45:10+03:00'
 resume_instruction: 'Require fresh exact-head CI for PR #211 after the watchdog governance
   assertion fix. If all 9 jobs pass and PR head/base remain unchanged, merge #211
   as AM-4 merge 10/10. Do not automatically merge any later PR until Owner renewal/review.'
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv055
-  branch: agent/commercial-workflow-arv-055-001
-  base_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: completed
+remaining: []

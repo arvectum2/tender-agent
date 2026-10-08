@@ -72,20 +72,22 @@ commercial_workflow_admission_2026_10_07:
       - ARV-019
       - ARV-022
       - ARV-053
+      - ARV-055
     completed_queue_items:
       - ARV-015-OPERATOR-PROFILE-PARSER-001
       - COMMERCIAL-WORKFLOW-ARV-019-001
       - COMMERCIAL-WORKFLOW-ARV-022-001
       - COMMERCIAL-WORKFLOW-ARV-053-001
-    completed_count: 4
+      - COMMERCIAL-WORKFLOW-ARV-055-001
+    completed_count: 5
     total_count: 12
-    next_queue_item: COMMERCIAL-WORKFLOW-ARV-055-001
-    next_item_note: 'Add explainable similar-procurement retrieval over existing search/vector infrastructure, with evidence for similarity and deterministic false-analogue guards.'
+    next_queue_item: COMMERCIAL-WORKFLOW-ARV-057-001
+    next_item_note: 'Normalize source-bound historical price observations and expose evidence-backed comparable ranges/NMCK orientation while keeping forecasts separate from observed facts.'
 
 governance:
   material_executor_policy_change: true
-  am4_effect: renewed_am4_active_after_attributable_owner_review_2026_10_07
+  am4_effect: renewed_am4_exhausted_after_pr_211_10_of_10
   renewal_decision: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   renewal_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
-  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms. Nine automatic merges are conservatively counted in that renewed cycle after this corrective completion reconciliation (PRs #199, #198, #201, #205, #206, #207, #208, #209 and #210), so the current counter is 9/10; all hard stops and review-cycle conditions remain in force.
+  note: The 2026-09-18 directive did not itself renew Company AM-4. The latest attributable Owner review on 2026-10-07 renewed POS-004 / AI-ENG-001 AM-4 on unchanged terms. PR #211 is the tenth and final automatic merge in that renewed cycle after PRs #199, #198, #201, #205, #206, #207, #208, #209 and #210. The counter is 10/10 after PR #211; the cycle is exhausted and every later automatic merge must fail closed to REVIEW until attributable Owner renewal/review. Preparation, implementation and testing of independently admitted work may continue. All hard stops remain in force.
 revocation: Owner may revoke or supersede this directive at any time.

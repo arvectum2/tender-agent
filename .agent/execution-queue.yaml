@@ -709,7 +709,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-055-001
   strategy: ADAPT
   title: Explainable similar-procurement search
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -718,7 +718,7 @@ items:
   - ARV-055
   dependencies: []
   executor_scope: 'Add explainable similar-procurement retrieval over existing search/vector infrastructure using subject, positions, customer and requirements signals; expose why results are similar and deterministic guards against obvious false analogues.'
-  done_gate: 'Similarity results include evidence/explanations, false-analogue regressions are covered, no new generic search engine is introduced, and focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied: the read-only /api/tender-research/similar/{registry_number} adapter reuses DataPlatformRagRetriever.search_all_documents for candidate generation/evidence and introduces no parallel vector/embedding backend; displayed similarity is the explainable arithmetic mean of available deterministic subject, structured-position, customer and structured-requirement signals. Guards reject self/same-registry, identical-content, disjoint available OKPD major classes and vector-only candidates with zero subject plus zero/unknown position overlap; unavailable signals remain explicit. Relevant regressions passed (96 tests), full local suite had only the known main-baseline R9 pg_restore failure, and PR #211 implementation-head exact CI run 37693335144 passed 9/9 jobs. This combined completion bookkeeping lands only after PR #211 final exact-head CI also passes.'
 
 - order: 340
   task_id: COMMERCIAL-WORKFLOW-ARV-057-001
