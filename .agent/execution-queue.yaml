@@ -905,9 +905,8 @@ completed_dependencies:
 - order: 1030
   task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
   title: Real 223-FZ RAR inner-document extraction and analysis
-  status: blocked
-  blocked_on: 'Exact-head CI and guarded merge; Owner explicitly directed merge and continuation 2026-10-08.'
-  implementation_commit: d5312687c7226cd64e1841e3c98f78ab2a775f2b
+  status: done
+  completion_evidence: 'PR #233 head 88acbf7a exact-head CI 37797214204 SUCCESS 9/9 and Owner-authorized squash merge 936621909ac56f1dbef238b13f4d3b8dda6ab556; authentic RI223 RAR 19/19 documents, 300 chunks and 300 embeddings, semantic retrieval verified.'
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
