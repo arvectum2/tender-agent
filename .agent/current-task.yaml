@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-NUMERIC-CLAIM-EVIDENCE-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Fail closed on unsupported explicit numeric quantity/percent/price claims from
   local LLM against exact original supplied source chunks; never infer lot/revision
@@ -15,18 +15,27 @@ definition_of_done:
 completed:
 - 'PR #244 twenty-case benchmark merged; PR #245 numeric absent-claim guard rebased
   to main, 533 tests passed 1 skipped, exact-head CI pending.'
-current: Implement conservative positive numeric claim guard on top of numeric absence
-  guard branch.
+- 'Shared local LLM positive explicit-number+unit guard implemented after #245 numeric-absence
+  guard; source values required, no value substitution.'
+- Targeted six positive/negative tests for original 44-FZ 140 vs claimed 150 tonnes
+  and 223-FZ 40/60% vs 45%; full Tender Research 539 passed 1 skipped; make check
+  PASS.
+current: 'Open dependent PR, await predecessor #245 exact-head CI/Owner merge, then
+  rebase successor and test exact-head CI.'
 pending:
-- Implement guard/tests, full suite.
-- Publish dependent PR and verify CI/Owner merge following predecessor.
+- 'Publish dependent PR; predecessor #245 must merge after CI.'
+- Rebase on merged main, retest and exact-head CI/Owner review.
+- Per-claim source->lot/revision semantic checks remain UNKNOWN, no verified legal
+  status.
 last_verified_commit: 14ca4b1c2e09ba60ec2a5fca11281be02ee27a4b
 test_results:
-- Base previous 533 passed one skipped and make check passed
-resume_instruction: 'In /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-numeric-claim-evidence,
-  branch feature/apr02-numeric-claim-evidence stacked on PR #245. Complete positive
-  numeric claims check for local LLM, preserve UNKNOWN lot/revision, test/CI/PR. Merge
-  predecessor #245 after exact-head CI before rebase successor.'
+- 539 Tender Research passed, 1 skipped, 42 warnings
+- make check PASS
+- six new numeric value guard tests pass
+resume_instruction: 'Dependent branch feature/apr02-numeric-claim-evidence on #245
+  numeric-absence guard. Local code/test/report done, 539 passed 1 skipped. First
+  merge #245 only after exact-head CI, then rebase dependent PR on main; exact-head
+  CI/Owner gate before merging. No claim semantic/lot/revision validation.'
 execution:
   branch: feature/apr02-numeric-claim-evidence
   base_commit: 14ca4b1c2e09ba60ec2a5fca11281be02ee27a4b
