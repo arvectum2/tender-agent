@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-NUMERIC-CLAIM-GUARD-001
-status: blocked
+status: completed
 goal: Catch explicitly sourced wrong quantity numbers in local LLM prose only when
   exact chunk and unique comparable source amount are unambiguous.
 definition_of_done:
@@ -20,21 +20,17 @@ completed:
   ambiguous multiple lot-style values, unrelated units/references, and full integration.
 - Full Tender Research 542 passed, one skipped, 42 warnings; make check PASS; report
   documents precise scope and unknowns.
-current: Implementation and local tests complete, PR and exact-head CI/Owner merge
-  pending.
-pending:
-- Publish PR and verify exact-head CI/Owner-gated merge.
-- 'Future separate tasks: explicit source lot/revision identity before more ambitious
-  per-claim entailment; defer model comparison until architecture complete.'
-last_verified_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
+- '#247 exact-head CI successful, Owner-directed squash merged as c4e75ce901cb6fce1de08a19f2d74b7f0831503b;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: c4e75ce901cb6fce1de08a19f2d74b7f0831503b
 test_results:
 - 542 passed, 1 skipped, 42 warnings
 - make check PASS
 - 9 new numeric-claim guard tests passed
-resume_instruction: 'Feature branch feature/apr02-numeric-claim-check: source-anchored
-  150-tonnes-versus-140-tonnes guard and 9 tests completed, 542 full suite pass. Check
-  PR exact-head CI/Owner review and merge; then add evidence-bound lot/revision resolution
-  as separate task. Do not benchmark Qwen versus Gemma until architecture is complete.'
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
 execution:
   branch: feature/apr02-numeric-claim-check
   base_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0

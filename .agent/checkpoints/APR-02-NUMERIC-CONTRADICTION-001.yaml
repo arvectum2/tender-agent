@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-NUMERIC-CONTRADICTION-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Fail closed on explicit numerical absence claims contradicted by directly observed
   units and amounts in original cited source snippets, common to 223/44 law.
@@ -21,22 +21,17 @@ completed:
   detected; six new positive/negative numeric tests passed.
 - Full 532 Tender Research passed, 1 skipped, make check PASS; source/number caution
   report saved.
-current: Numeric guard implemented/tested, publish PR and verify exact-head CI before
-  merge.
-pending:
-- Push feature PR and exact-head CI/Owner gated merge.
-- Broader real multi-lot revision-aware source numeric mapping and claim entailment
-  remain separate future work.
-last_verified_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f
+- '#245 exact-head CI successful, Owner-directed squash merged as e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
 test_results:
 - 532 passed, 1 skipped, 42 warnings
 - make check PASS
 - 6 new numeric guard and 5 existing evidence gate tests pass
-resume_instruction: 'Branch feature/apr02-numeric-reconcile in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-numeric-reconcile.
-  Numeric guard source 140 tonne omission fixed by fail-closed fallback, local 532
-  tests pass. Verify PR exact head CI and owner gate before merge. PR #244 model 20-case
-  benchmark still pending quality CI; do not claim it merged. No semantic source entailment
-  proved.'
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
 execution:
   branch: feature/apr02-numeric-reconcile
   base_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f

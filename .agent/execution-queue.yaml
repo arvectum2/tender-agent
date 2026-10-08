@@ -913,7 +913,8 @@ items:
 - order: 1040
   task_id: APR-02-RI223-REGIME-ANALYSIS-001
   title: RI223 document question prompts exclude 44-FZ-only assumptions
-  status: blocked
+  status: done
+  completion_evidence: 'PR #235 merged 4b93709383866121de65647fc340b8add0ab0510, frozen original-source work and local acceptance confirmed.'
   blocked_on: 'Exact-head CI and guarded merge of 223-FZ regime analysis PR.'
   authority: OWNER_DIRECTIVE
   independent: true
@@ -1040,7 +1041,8 @@ items:
 - order: 1120
   task_id: APR-02-TEN-SECTION-LLM-EVAL-001
   title: Real local LLM comparative ten-section original corpus evaluation
-  status: blocked
+  status: done
+  completion_evidence: 'PR #244 merged d6d946bca1f8985c9c7fc36cf5d2c18d6cd09f23, frozen original-source work and local acceptance confirmed.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false

@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-RAR-OPAQUE-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Preserve genuine 223-FZ RAR attachments as safely bounded, non-executable, source-bound
   opaque evidence without claiming their contents were parsed.
@@ -22,21 +22,19 @@ completed:
 - Implemented source-bound opaque RAR4/RAR5 acquisition, manifest manual-review/UNKNOWN
   status and signature check without extraction.
 - 61 relevant tests passed, make check, focused Ruff and git diff --check passed.
-current: Implementation and real-source checks verified; waiting on exact-head CI
-  and attributable Owner REVIEW.
-pending:
-- Publish review PR, verify exact-head CI and obtain Owner REVIEW before merge.
-last_verified_commit: 75c791784a33cadf9a67760e7894dd54ff6f2342
+- '#232 exact-head CI successful, Owner-directed squash merged as a33aa81e1373f6abf7560a1929ee4d95bd076d06;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: a33aa81e1373f6abf7560a1929ee4d95bd076d06
 test_results:
 - 61 relevant tests passed (8 warnings)
 - make check PASS
 - changed-core Ruff PASS
 - git diff --check PASS
 - original public RI223 RAR 1/1 acquired unparsed
-resume_instruction: Check PR branch feature/apr02-ri223-rar-opaque; verify exact-head
-  CI on the final commit and obtain attributable Owner REVIEW (auto_merge=false) before
-  any merge; then close checkpoint and continue APR-02 only from independently measured
-  authentic-source gaps.
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
 execution:
   branch: feature/apr02-ri223-rar-opaque
   base_commit: f139da89318d48b8dccfc1ed6c930007d1408ea6

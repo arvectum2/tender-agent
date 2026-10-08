@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-LOCAL-LLM-BENCHMARK-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Run genuine Mac mini local generative model on original 223-FZ and 44-FZ document
   evidence; preserve distinction between RAG retrieval, model answers and GPT-6 engineering.
@@ -28,26 +28,19 @@ completed:
   and source findings in docs/223fz/APR02_LOCAL_LLM_COMPARISON_2026-10-08.md.
 - 'Implemented deterministic chunk UUID citation audit and negative fixtures: 2 targeted
   passed; full Tender Research 521 passed, 1 skipped, make check and Ruff PASS.'
-current: Real local two-case smoke benchmark completed, but model citation/omission
-  quality gate failed; source audit code/documentation pending PR exact-head CI/Owner
-  review.
-pending:
-- Open benchmark audit PR and pass exact-head GitHub CI and Owner review before merge.
-- 'Next separate admitted engineering task: strict per-claim cited-evidence validation
-  and answer truncation/omission handling; broader ten-section LLM benchmark, no automatic
-  participation decision.'
-last_verified_commit: b80ccccd9403e788037de411c8df174fde933c99
+- '#242 exact-head CI successful, Owner-directed squash merged as 91a20fa34ba98ac90ba590f27a668a6585c9cf0e;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: 91a20fa34ba98ac90ba590f27a668a6585c9cf0e
 test_results:
 - Qwen2.5-14B Instruct Q4 on Mac mini true generation 223-FZ 19.95 s 206 tokens; 44-FZ
   19.34 s 250 token cap.
 - 223-FZ 1 fabricated chunk UUID; 44-FZ no cited UUID and wrong claim 140 tonnes absent.
 - Full Tender Research 521 passed, 1 skipped, 42 warnings; make check PASS, script/test
   Ruff PASS.
-resume_instruction: 'Check PR from feature/apr02-local-llm-benchmark: genuine local
-  Qwen2.5 14B on Mac mini has two source-case evidence integrity failures. Audit/checker
-  and honest report are done, originals/results under /Users/master/arvectum-runtime/llm-benchmark-20261008.
-  After exact-head CI/Owner merge, implement strict LLM claim-to-chunk validation
-  and truncation/omission safety; do not pretend model is production-qualified.'
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
 execution:
   branch: feature/apr02-local-llm-benchmark
   base_commit: b80ccccd9403e788037de411c8df174fde933c99

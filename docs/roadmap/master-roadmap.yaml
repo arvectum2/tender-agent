@@ -203,7 +203,11 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Fast cited result is deterministic, evidence-bound, explicit about unknowns and benchmarked for latency/quality.'
     - id: APR-02-223FZ-BREADTH
       priority: P0
-      state: ready
+      state: done
+      completion_scope: bounded_frozen_real_source_223fz_2026_10_08
+      completion_evidence: docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md
+      universal_223fz_coverage: not_claimed
+      local_model_comparison: deferred_to_APR_07
       legacy_mapping: [ARV-006]
       outcome: 'Broaden 223-FZ beyond the existing intake/decision v1 only from measured corpus/procedure gaps.'
       why_now: 'Material Russian-market coverage expansion.'

@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-LLM-EVIDENCE-GATE-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Reject mutated source citations and truncated local LLM answers in the shared
   44/223 Tender Research client.
@@ -17,18 +17,17 @@ completed:
   140 tonnes.
 - Shared local LLM source IDs/finish_reason gate implemented; 5 adversarial tests;
   Tender Research 526 passed, 1 skipped, make check passed.
-current: Publish PR; exact-head CI and Owner review pending.
-pending:
-- Publish feature PR, verify exact-head CI and Owner review, merge guarded.
-- Later run source-grounded broader 44/223 LLM quality evaluation.
-last_verified_commit: 91a20fa34ba98ac90ba590f27a668a6585c9cf0e
+- '#243 exact-head CI successful, Owner-directed squash merged as 976065ead16a5ba3dbef01dbaa1cb4644789fa1f;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f
 test_results:
 - 526 passed 1 skipped 42 warnings
 - make check passed
 - 5 evidence guard tests passed
-resume_instruction: 'Feature branch feature/apr02-llm-evidence-gate in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-llm-evidence-gate:
-  source integrity guard implemented. Publish PR, exact-head CI and Owner gate; do
-  not claim semantic correctness from matched IDs.'
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
 execution:
   branch: feature/apr02-llm-evidence-gate
   base_commit: 91a20fa34ba98ac90ba590f27a668a6585c9cf0e
