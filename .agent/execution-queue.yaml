@@ -962,8 +962,8 @@ items:
 - order: 1070
   task_id: APR-02-RI223-REVIEW-FLAGS-001
   title: Source-bound 223-FZ revision and multi-lot expert review prompts
-  status: blocked
-  blocked_on: 'PR #238 final exact-head GitHub CI and Owner REVIEW before merge.'
+  status: done
+  completion_evidence: 'CI 37809508195 9/9 PASS, source PR #238 merged 77fe438b07ae0948216317762845b85a20a6497b.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
@@ -974,6 +974,21 @@ items:
   dependencies: [APR-02-RI223-SOURCE-ANALYSIS-001]
   executor_scope: "Derive bounded NEEDS_REVIEW prompts only from verified source XML observations, with original source citations, in existing Tender Research report/API. No legal conclusion or external procurement action."
   done_gate: "Real original 32616376947 evidence triggers correct independent flags, 32616445795 control unchanged, tests/CI and Owner REVIEW green."
+
+- order: 1080
+  task_id: APR-02-RI223-DOCUMENT-REVIEW-001
+  title: Traceable content evidence dossier for RI223 procurement review
+  status: in_progress
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner continue APR-02: original 32616445795 has 19 source documents/300 indexed chunks, but no separate evidence-backed domain review matrix."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-REVIEW-FLAGS-001]
+  executor_scope: "Render source-cited document excerpts for technical scope, qualifications, applications, evaluation, agreement, restrictions, deadlines from existing 10 sections. All supplier fit and risk judgments remain UNKNOWN."
+  done_gate: "Authentic DP 32616445795 read-only dossier, distinct citations and missing-evidence status, multilot unknown binding, 44-FZ unchanged; regression, CI and Owner review."
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001

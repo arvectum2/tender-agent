@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REVIEW-FLAGS-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Produce source-bound, non-decisional review prompts for authentic RI223 notice
   deadline changes, clarifications and multi-lot separation in the existing Tender
@@ -27,14 +27,11 @@ completed:
 - 22 focused tests passed; 505 Tender Research passed, 1 skipped; make check, touched-file
   Ruff and diff --check passed.
 - 'Published PR #238 with authentic review flags; code commit 97657637da7a1c68362985cae7b76e340ca0c96f.'
-current: 'PR #238 published; exact-head GitHub CI and attributable Owner REVIEW before
-  merge.'
-pending:
-- 'Verify exact-head CI for final PR #238 branch head and current main; merge only
-  with Owner REVIEW.'
-- Reconcile final merged SHA, mark completed; resume next source-grounded suitability/risk
-  milestone.
-last_verified_commit: 97657637da7a1c68362985cae7b76e340ca0c96f
+- 'PR #238 final SHA bd51bd8bd17b9deac4fbd2c0ea2764b841b58078 CI 37809508195 SUCCESS
+  9/9, squash-merged 77fe438b07ae0948216317762845b85a20a6497b.'
+current: 'Completed; PR #238 merged after exact-head CI.'
+pending: []
+last_verified_commit: 77fe438b07ae0948216317762845b85a20a6497b
 test_results:
 - 505 Tender Research tests passed, 1 skipped, 42 warnings
 - 22 focused tests passed, 3 warnings
@@ -42,9 +39,7 @@ test_results:
 - changed-file Ruff PASS
 - Real source 32616376947 3 review flags (3/6/2 citations)
 - Negative control 32616445795 0 flags.
-resume_instruction: 'PR #238 feature/apr02-ri223-review-flags, worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-review-flags:
-  check final exact-head GitHub CI and Owner REVIEW, merge only after gates and unchanged
-  head; mark checkpoint completed and proceed to content-grounded fit/risk analysis.'
+resume_instruction: 'Completed in PR #238; continue document-evidence dossier successor.'
 execution:
   branch: feature/apr02-ri223-review-flags
   base_commit: abbf30a2c700584ffb553626301136a2c6719faf
