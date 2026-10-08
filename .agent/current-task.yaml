@@ -18,20 +18,32 @@ completed:
   completed 10 sections /25 citations /7 dossiers.'
 - 'Measured failure: without authorized API key Data Platform GET collection stats
   returns HTTP 401; current analyzer masks as missing index / no_context.'
-current: Implement accurate index/readiness transport/auth status projection in existing
-  analyzer.
+- 'Existing analyzer modified: 401/403 authorization, provider/transport and malformed
+  stats fail visibly; 404/missing resources or incomplete embeddings remain no_context.
+  No raw upstream body leaked.'
+- Authentic original 32616445795 isolated SQLite without DP client key returns failed
+  /0 sources and truthful access-denied instead of prior no_context.
+- 25 focused Data Platform/index tests PASS (including updated pre-existing outage
+  expectation); full Tender Research 519 passed, 1 skipped/42 warnings; make check,
+  Ruff new test and diff --check PASS.
+current: 'Locally tested accurate DP readiness error projection; predecessor PR #239
+  must merge before publishing/rebasing successor.'
 pending:
-- Implement and test 401/403/404/unavailable, then full relevant regression.
-- 'Rebase after predecessor PR #239 merged, publish gated PR and exact-head CI.'
+- 'Wait for PR #239 final-head CI and guarded merge.'
+- Rebase successor onto latest main, publish PR, exact-head CI and Owner REVIEW, reconcile
+  completion.
 last_verified_commit: 635755416bb815c498b260628f640ac27ad8eee2
 test_results:
-- 'Predecessor PR #239 511 tests passed, 1 skipped; final exact-head CI pending.'
-- Verified original HTTP 401 missing key; in-memory authorized key yields completed
-  10 sections/25 citations.
+- 519 Tender Research passed, 1 skipped, 42 warnings
+- 25 focused DP auth and index tests passed
+- make check PASS
+- Ruff new test PASS
+- 'Real original no-auth: failed with truthful HTTP401/403 diagnostic and no RAG claims'
+- 'Previous same source authorized: 10/10 sections, 25 citations and 7 dossier categories.'
 resume_instruction: 'In worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-dp-auth-readiness
-  branch feature/apr02-dp-auth-readiness implement distinction Data Platform HTTP
-  401/403 vs 404/index incomplete; tests; when PR #239 merged rebase, publish and
-  CI. No secrets in repo.'
+  continue APR-02-DP-AUTH-READINESS-001: predecessor PR #239 CI and merge, then rebase
+  this branch on main, rerun tests and open gated PR. Existing no-key original failure
+  reproduced and fixed; full 519 passed.'
 execution:
   branch: feature/apr02-dp-auth-readiness
   depends_on_pr: 239
