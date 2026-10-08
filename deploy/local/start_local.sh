@@ -18,7 +18,7 @@ docker compose -p arvectum-local-e2e --env-file "$PROD_SECRET_ENV" \
 mkdir -p /Users/master/.config/arvectum/logs
 docker compose -p arvectum-local-e2e --env-file "$PROD_SECRET_ENV" \
   -f deploy/production/compose.yaml -f deploy/local/compose.macmini.yaml \
-  up -d --build api worker > /Users/master/.config/arvectum/logs/apr04-local-start.log 2>&1 || {
+  up -d --wait --wait-timeout 180 --build api worker > /Users/master/.config/arvectum/logs/apr04-local-start.log 2>&1 || {
   echo "Local Compose start failed; inspect restricted log under ~/.config/arvectum/logs" >&2
   exit 1
 }

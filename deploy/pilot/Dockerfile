@@ -8,6 +8,7 @@ COPY pyproject.toml README.md ./
 COPY src ./src
 COPY scripts ./scripts
 COPY docs/agents/company ./docs/agents/company
+COPY demo_data/tender_operator_agent ./demo_data/tender_operator_agent
 COPY migrations ./migrations
 COPY alembic.ini ./
 RUN pip install --no-cache-dir . && mkdir -p /app/data /app/artifacts /app/eis-archives && chown -R app:app /app
