@@ -16,18 +16,22 @@ completed:
   - Focused regressions: 30 passed, 1 upstream deprecation warning; Ruff and diff check pass.
   - Added strict URL/registry-number path via the existing public EIS card parser; missing documentation remains UNKNOWN.
   - Measured 1000-run mocked-card projection p95 0.009 ms, network excluded; make check passes.
-current: Both existing-run and direct public-EIS-card views implemented. Need exact-head CI, assess acceptance coverage and merge only if validated.
+  - Live 44-FZ EIS check 0372200172326000015: exact source found, subject and deadline KNOWN with citation, 0.368 s.
+  - PR #225 merged into main as 59c477eb7421c1814e23fea574eeb8348a5e1322.
+current: PR #225 merged to main. Await exact-head quality CI run 37764420661 (8/9 jobs passed); after success mark completed and advance APR queue.
 pending:
-  - Validate 44-FZ document-level citations through an already analyzed run; public card alone cannot provide attachment evidence.
-  - Focused tests and latency measurement.
-  - PR, exact-head CI and merge.
-last_verified_commit: f60d736d
+  - Verify exact-head CI quality step and recorded final workflow conclusion.
+  - Close roadmap and queue checkpoints only if CI passes.
+  - Follow-up product improvement: full document-level citations require canonical analyzed run; direct card is intentionally limited.
+last_verified_commit: 59c477eb7421c1814e23fea574eeb8348a5e1322
 test_results:
   - Focused tests: 30 passed, 1 warning.
   - Mocked public-card projection p95 0.009 ms (1000 calls); network excluded.
   - make check: PASS.
+  - Live EIS 0372200172326000015: 0.368 s, cited subject and deadline.
+  - CI exact-head 3103dd9d run 37764420661: 8/9 success; quality pending.
   - Ruff lint and git diff --check: PASS.
-resume_instruction: Resume feature/arv-061-fast-cited-preanalysis; direct number/URL and existing-run views plus focused tests are implemented. Validate canonical document citation visibility and exact-head CI, merge on success, then update checkpoint completed and roadmap. Do not mislabel public search card evidence as attachment-level citation.
+resume_instruction: PR #225 already merged as 59c477eb. Check exact-head CI run 37764420661 quality job. If success, close ACTIVE-ROADMAP-ARV-061-001 queue and APR-01 roadmap, update tests for new next outcome APR-02 and set checkpoint completed; do not repeat implementation. If CI fails fix promptly. Direct public card cannot claim attachment-level evidence.
 execution:
-  branch: feature/arv-061-fast-cited-preanalysis
+  branch: null
   base_commit: f60d736d
