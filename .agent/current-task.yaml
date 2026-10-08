@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-223FZ-CORPUS-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: 'Freeze verified real 223-FZ public notice/document corpus and measure residual parser gaps before APR-02 breadth implementation.'
 definition_of_done:
@@ -22,18 +22,18 @@ completed:
   - '2026-10-08 Mac mini RDC terminal recovered: ping and echo command successful; remote tool policy rejected credential-loading diagnostic command.'
   - 'Located protected local SOAP token file with mode 0600; no credential copied or disclosed.'
   - 'Public 223-FZ provider focused tests: 4 passed in 0.16s via existing venv; isolated pipeline test needs complete SQLAlchemy metadata dependency loading.'
-current: 'Official EIS public 223-FZ search and 14 attachments downloaded; 223-FZ parser now yields exact file links 6/2/4/2. RI223 SOAP live request blocked by tool security gate; strict OKPD2 62 remains incomplete.'
+current: 'RI223 SOAP verified in canonical repository for four real 223-FZ notices with exact OKPD2 62 and price <= 5m; complete 10/10 binaries and archived evidence.'
 pending:
-  - 'Freeze sanitized official EIS fixture and source-specific observed/NOT_OBSERVED field matrix.'
-  - 'Freeze provenance/checksums/field truth and run measured parser comparison.'
-  - 'Implement only evidenced parser gaps and regression tests in a successor increment.'
-last_verified_commit: d152a98
+  - 'Future, separately scoped follow-up: revise ambiguity and multi-lot evidence, protocols/clarifications, RAR policy, and all-Russia current-date breadth.'
+  - 'No remaining steps for bounded APR-02 RI223 acquisition proof; see verified source truth report.'
+  - 'Additional product breadth belongs to separately admitted implementation increment.'
+last_verified_commit: pending_final_commit
 test_results:
   - 'Read-only URL probe: HTTP 404 for direct card and public extended search routes; no fixture available.'
-  - '6 focused public 223-FZ provider tests passed in 0.16s; four official EIS pages return correct attachment counts.'
+  - '14 focused SOAP and 223-FZ tests passed, 1 Starlette deprecation warning; four RI223 SOAP archive and attachment retrievals complete 10/10. All four filtered source codes verified in original XML.'
   - 'Read-only archived-card smoke probe: 4/4 fail closed; verified commit 94318b9, no external EIS attachments acquired.'
   - 'Isolated full pipeline test still needs SQLAlchemy customer_profiles metadata registration. Official EIS documents all HTTP 404.'
-resume_instruction: 'Use working official 223-FZ EIS search -> notice223 documents -> 223 filestore via direct Mac mini transport, not broken /223/purchase routes. Validate numeric OKPD2 62 per procurement, replace the 63.11 case, restrict attachment links to actual filestore sources, freeze sanitized HTML and rerun regression. Independently consult official 223-FZ SOAP schema before creating 223-FZ SOAP client. Record URLs, UTC retrieval, SHA-256 and field-level source fragments; test existing adapter before changing code. Do not use synthetic fixtures as real acceptance. Resume APR-02 only after frozen evidence.'
+resume_instruction: 'Task completed. Source of truth: docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; frozen source artifacts stored outside git on Mac mini. Do not repeat. Any subsequent scope (protocols, amendment semantics, multi-lots, RAR, geographic completeness) requires a new bounded admission after owner review.'
 execution:
   branch: feature/apr02-223fz-evidence-gate
   base_commit: 958e94c740e73a052f275d46fea713f01ab4d117
