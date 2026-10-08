@@ -79,6 +79,7 @@ def test_diagnostics_reports_downloaded_archive(monkeypatch, tmp_path):
                 source_url_path="/archive/demo.zip",
             )
 
+    monkeypatch.setattr(module, "download_xml_referenced_attachments", lambda *_args: {"expected": 1, "downloaded": 1, "complete": True, "size_mismatches": [], "errors": []})
     monkeypatch.setattr(module, "ZakupkiSoapClient", FakeClient)
     payload = run_diagnostics(
         settings=_settings(),
