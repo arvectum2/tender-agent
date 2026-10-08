@@ -38,6 +38,14 @@ continuation:
     - Never resolve ARV-ID conflicts by inference.
     - Never cross executor-policy hard stops or Company/Product/Arvectum OS authority boundaries.
     - Never treat this directive as approval for procurement submission, external communication, production mutation, spend, signing, legal/commercial acceptance or benchmark-truth mutation.
+owner_operator_workspace_sequence_2026_10_08:
+  source: 'Explicit Owner preference: complete 223-FZ, then Production Runtime, then inspect and personally use request/results/database UI.'
+  ordered_outcomes: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME, APR-03B-OPERATOR-WORKSPACE, APR-04-CUSTOMER-ONBOARDING]
+  precedence: 'After APR-02 and APR-03 are complete, APR-03B is the next product UX acceptance before APR-04 onward.'
+  implementation_admission: 'Roadmap priority only; do not interrupt active APR-02 or admit independent consequential actions.'
+  human_acceptance: 'Owner personally checks browser request, cited result, database explorer and report.'
+  hard_stops: 'No autonomous GO/NO GO, submission, ETP mutation, signing, external communication or arbitrary database writes.'
+
 active_product_roadmap_optimization_2026_10_08:
   status: active
   source: 'Explicit Owner directive in Tender Agent project conversation on 2026-10-08: optimize and update the roadmap after reviewing which open items are actually necessary.'
