@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -47,6 +48,45 @@ def build_source_citations(contexts: Sequence[RagSearchHit]) -> list[SourceCitat
         )
         for context in contexts
     ]
+
+
+# Source identifiers are supplied to the LLM as opaque values; a UUID can
+# be silently mutated while the surrounding prose appears correct.
+_CITED_UUID = re.compile(
+    r"(?<![0-9a-f])[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-"
+    r"[0-9a-f]{12}(?![0-9a-f])",
+    re.IGNORECASE,
+)
+_EXPLICIT_CHUNK_ID = re.compile(r"chunk_id\s*[:=]\s*([^\s,;]+)", re.IGNORECASE)
+
+
+def _validate_source_bound_completion(
+    response_payload: dict[str, Any],
+    answer: str,
+    contexts: Sequence[RagSearchHit],
+) -> str | None:
+    """Fail closed on untraceable source IDs or incomplete model output.
+
+    This guard proves *identity of cited chunks only*. It does not claim that
+    the factual statements are entailed by those chunks.
+    """
+    choices = response_payload.get("choices")
+    first = choices[0] if isinstance(choices, list) and choices else {}
+    finish_reason = first.get("finish_reason") if isinstance(first, dict) else None
+    if finish_reason in {"length", "content_filter"}:
+        return "Local LLM answer was truncated or filtered; source claims unverified."
+    if finish_reason not in {None, "stop", "eos_token"}:
+        return "Local LLM completion finish reason is unverified."
+
+    available = {str(item.chunk_id).strip() for item in contexts if item.chunk_id}
+    references = _CITED_UUID.findall(answer)
+    references.extend(_EXPLICIT_CHUNK_ID.findall(answer))
+    references = [item.strip("[]()<>.\"'") for item in references]
+    if not references:
+        return "Local LLM answer has no verifiable source chunk citations."
+    if any(item not in available for item in references):
+        return "Local LLM answer cites unknown or modified source chunk identifiers."
+    return None
 
 
 class LocalChatLlmClient:
@@ -141,11 +181,17 @@ class LocalChatLlmClient:
         )
 
         try:
-            with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+            with urllib.request.urlopen(
+                request, timeout=self.timeout_seconds
+            ) as response:
                 raw_body = response.read().decode("utf-8")
         except urllib.error.HTTPError as exc:
             details = _read_http_error_body(exc)
-            if exc.code in (400, 500) and _is_context_limit_error(details) and len(selected_contexts) > 1:
+            if (
+                exc.code in (400, 500)
+                and _is_context_limit_error(details)
+                and len(selected_contexts) > 1
+            ):
                 return self._generate_with_retry(
                     question,
                     selected_contexts[:-1],
@@ -204,6 +250,18 @@ class LocalChatLlmClient:
                 error="Local LLM returned an empty response.",
             )
 
+        validation_error = _validate_source_bound_completion(
+            response_payload, answer, selected_contexts
+        )
+        if validation_error:
+            return RagAnswer(
+                answer="",
+                sources=sources,
+                used_chunks_count=len(selected_contexts),
+                model=self.model_name,
+                error=validation_error,
+            )
+
         return RagAnswer(
             answer=answer,
             sources=sources,
@@ -211,7 +269,9 @@ class LocalChatLlmClient:
             model=self.model_name,
         )
 
-    def _select_contexts_within_budget(self, contexts: Sequence[RagSearchHit]) -> list[RagSearchHit]:
+    def _select_contexts_within_budget(
+        self, contexts: Sequence[RagSearchHit]
+    ) -> list[RagSearchHit]:
         selected: list[RagSearchHit] = []
         for context in contexts:
             candidate = [*selected, context]
@@ -275,7 +335,9 @@ class LocalChatLlmClient:
         if analysis_mode == "fast":
             detail_rule = "Сделай короткий практический вывод в 3-5 предложениях."
         elif analysis_mode == "detailed":
-            detail_rule = "Дай развёрнутый ответ с фактами по каждому релевантному фрагменту."
+            detail_rule = (
+                "Дай развёрнутый ответ с фактами по каждому релевантному фрагменту."
+            )
         else:
             detail_rule = "Дай сбалансированный ответ: краткий вывод и ключевые детали."
         return (
@@ -299,7 +361,9 @@ class LocalChatLlmClient:
         registry_number: str | None,
         analysis_mode: str,
     ) -> str:
-        registry_line = f"registry_number_filter: {registry_number}\n" if registry_number else ""
+        registry_line = (
+            f"registry_number_filter: {registry_number}\n" if registry_number else ""
+        )
         detail_line = {
             "fast": "Сконцентрируйся только на самых важных условиях без длинных цитат.",
             "balanced": "Выдели ключевые условия и добавь короткие пояснения.",
@@ -334,7 +398,11 @@ def _extract_answer_text(payload: dict[str, Any]) -> str:
     if isinstance(content, list):
         parts: list[str] = []
         for item in content:
-            if isinstance(item, dict) and item.get("type") == "text" and isinstance(item.get("text"), str):
+            if (
+                isinstance(item, dict)
+                and item.get("type") == "text"
+                and isinstance(item.get("text"), str)
+            ):
                 parts.append(item["text"].strip())
         return "\n".join(part for part in parts if part).strip()
     return ""

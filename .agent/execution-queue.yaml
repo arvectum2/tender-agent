@@ -1025,7 +1025,7 @@ items:
 - order: 1110
   task_id: APR-02-LLM-EVIDENCE-GATE-001
   title: Fail closed on mutated LLM citations and truncated completions
-  status: in_progress
+  status: blocked
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
