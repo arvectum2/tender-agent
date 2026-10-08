@@ -1,58 +1,40 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: COMMERCIAL-WORKFLOW-ARV-066-001
-authority: AUTO
-goal: Add a safe one-click procurement import boundary for registry numbers and supported procurement
-  URLs that resolves idempotently into the existing tenant/project ProcurementCase path with explicit
-  provenance, without DOM scraping or a parallel procurement model.
+status: in_progress
+task_id: ACTIVE-PRODUCT-ROADMAP-OPTIMIZATION-20261008
+authority: OWNER_DIRECTIVE
+goal: Optimize the Tender Agent roadmap into a short outcome-driven active product plan while preserving the historical ARV registry, moving technology/customer-triggered ideas out of the active backlog, and preventing the watchdog from treating every historical open item as mandatory work.
 definition_of_done:
-- Direct registry-number inputs and supported zakupki.gov.ru card URLs normalize deterministically to
-  one canonical procurement number; ambiguous, malformed and unsupported URL inputs fail closed.
-- Browser/share/manual handoff surfaces remain bounded provenance labels only and do not become trusted
-  procurement facts.
-- Import resolves to the existing customer/project ProcurementCase path, reusing an existing case for
-  the same procurement number and handling concurrent duplicate creation safely.
-- Every create/reuse handoff appends tenant/project/case-scoped PilotAuditEvent provenance containing
-  raw input kind, source URL when present, normalization method and handoff surface; no DOM-derived data
-  is treated as source truth.
-- No new generic tender/import persistence model, scraper, submission path, signing path or external communication
-  effect is introduced.
-- Focused normalization/ambiguity/tenant/idempotency/concurrency/provenance regressions and relevant customer-pilot
-  tests pass.
-- Exact-head GitHub CI passes before merge.
+- Historical BASE/ARV registry remains preserved as history.
+- A canonical Active Product Roadmap with no more than 15 outcome-level items is added with explicit priority, rationale, mapped legacy items and measurable done/trigger conditions.
+- ARV-066 is recorded complete on current main 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f.
+- ARV-069 is removed from the immediate admitted execution path and becomes experiment/deferred until data/benchmark trigger is satisfied.
+- n8n, OpenSearch, ClickHouse, Kubernetes, GitVerse mirror, Mac mini cleanup, broad ETP connectors, enterprise/on-prem, 1C/ERP, financing and broader mobile are moved to trigger-based backlog rather than active product commitments.
+- Production hosting/runtime items are consolidated into one Production Runtime outcome.
+- Supplier discovery/RFQ/TKP items are consolidated into one customer-triggered Supplier→RFQ→TKP outcome.
+- Commercial SaaS items are consolidated into one Commercial SaaS Foundation outcome.
+- New outcome-level gaps are explicitly represented: commercial acceptance gate, customer onboarding, product quality/SLO dashboard, paid-pilot readiness and Russian procurement model evaluation.
+- Watchdog/owner directive is updated so automatic continuation follows the Active Product Roadmap, not every legacy open item.
+- Focused governance/roadmap tests and YAML parsing pass; exact-head CI passes before merge.
 completed:
-- '2026-10-08: Reconciled canonical main at 75beab91a2fcc46fb885d864cd39f229603fe080; ARV-064 merged in
-  PR #217 as 75beab91a2fcc46fb885d864cd39f229603fe080 after final exact-head CI run 37743216231 passed
-  all 9 jobs, consuming renewed AM-4 merge 6/10.'
-- '2026-10-08: Inventory confirmed existing ProcurementCase is the customer/project canonical intake object,
-  PilotAuditEvent is the tenant/case provenance journal, tender_research already handles exact registry-number
-  retrieval, and existing tender_import/tender_intake generic models need not be duplicated or forked.'
-- '2026-10-08: Bounded design selected: normalize direct numeric identifiers or explicit registry query
-  parameters on allowlisted EIS hosts; never scrape DOM as truth; create/reuse ProcurementCase and append
-  import provenance audit evidence. Unsupported ETP layouts fail closed rather than guess a number.'
-- '2026-10-08: Implemented bounded EIS registry URL/direct number normalization; project-scoped ProcurementCase
-  get-or-create with nested unique-race retry and PilotAuditEvent provenance; manual/browser/share API.
-  Focused 11/11 and combined customer-pilot 17/17 tests pass, ruff check and git diff --check pass.'
-- '2026-10-08: PR #220 implementation-head CI quality succeeded with all other jobs successful; completion
-  bookkeeping bundled before final exact-head CI.'
-current: ARV-066 implementation and compatibility verification complete; final exact-head CI and guarded
-  merge pending.
-pending: []
-last_verified_commit: ee3560315f3c88b906c3c149b9c81ed0d4e6d683
-test_results:
-- 'PR #217 final exact-head CI run 37743216231: SUCCESS (9/9 jobs)'
-- 'PR #217 merged as 75beab91a2fcc46fb885d864cd39f229603fe080'
-- 'ARV-066 focused: 11 passed'
-- 'ARV-066 plus R8 pilot: 17 passed; ruff check PASS; git diff --check PASS'
-updated_at: '2026-10-08T11:57:24.420567+03:00'
-resume_instruction: 'Verify exact-head CI on combined completion head; check active Company AM-4 and repo
-  rules; merge PR #220 if green, then admit ARV-069.'
+- '2026-10-08: Owner explicitly directed optimization and roadmap update after reviewing which open items are actually necessary.'
+- '2026-10-08: Reconciled current main at 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f; ARV-066 is merged/completed.'
+current: Define the optimized Active Product Roadmap and trigger backlog, then reconcile queue/owner directive/human roadmap.
+pending:
+- Update owner directive and execution queue to defer ARV-069 and prioritize outcome roadmap.
+- Add canonical Active Product Roadmap and trigger backlog to master-roadmap.yaml.
+- Update human MASTER_ROADMAP.md with optimized checklist.
+- Add/update governance tests.
+- Run focused verification, open PR, require exact-head CI, merge.
+last_verified_commit: 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f
+test_results: []
+updated_at: '2026-10-08T12:12:00+03:00'
+resume_instruction: Continue ACTIVE-PRODUCT-ROADMAP-OPTIMIZATION-20261008 only. Preserve the historical registry. Treat the optimized active roadmap as the working priority source; do not automatically execute deferred/trigger-based items.
 execution:
   claimed_by: ChatGPT
-  execution_id: chat-20261008-arv066
-  branch: agent/commercial-workflow-arv-066-001
-  base_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
+  execution_id: active-product-roadmap-optimization-20261008
+  branch: roadmap/active-product-roadmap-optimization-20261008
+  base_commit: 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
