@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-060-001
@@ -33,7 +33,7 @@ completed:
 current: Inspect customer-pilot tenancy/evidence/auth primitives and migration conventions,
   then implement the smallest append-only internal collaboration slice without external
   delivery.
-pending:
+pending: &id001
 - Inspect ProcurementCase route scoping, artifact/evidence references, internal feed
   primitives, DB migration conventions and immutability enforcement patterns.
 - Implement case collaboration models/migration/service/router for comments, decisions,
@@ -52,11 +52,5 @@ resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv060-c
   Inspect customer_pilot evidence/auth and migration patterns, then implement an append-only
   ProcurementCase collaboration slice with internal-only mentions and no external
   delivery.
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv060
-  branch: agent/commercial-workflow-arv-060-001
-  base_commit: 2e900d6cc301867346bad3c5348cb42df3147e6b
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: inventory
+remaining: *id001
