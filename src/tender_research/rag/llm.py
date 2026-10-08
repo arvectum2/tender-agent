@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from src.tender_research.rag.numeric_absence_guard import contradicted_absence
+from src.tender_research.rag.numeric_claim_guard import contradicted_cited_quantity
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -93,6 +94,12 @@ def _validate_source_bound_completion(
         return (
             "Local LLM answer incorrectly claims missing numeric evidence "
             f"for {contradicted_field}; review original cited source chunks."
+        )
+    contradicted_claim = contradicted_cited_quantity(answer, contexts)
+    if contradicted_claim:
+        return (
+            "Local LLM numeric claim conflicts with its explicitly cited "
+            "source chunk; review original document before use."
         )
     return None
 
