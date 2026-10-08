@@ -280,7 +280,7 @@ def _default_transport(
                 "Accept": "*/*",
                 "Accept-Encoding": "identity",
                 "Connection": "close",
-                "User-Agent": "ai-corporation-tender-demo/1.0",
+                "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15" if "/filestore/" in current_url.lower() and _is_public_eis_url(current_url) else "ai-corporation-tender-demo/1.0"),
             },
             method="GET",
         )

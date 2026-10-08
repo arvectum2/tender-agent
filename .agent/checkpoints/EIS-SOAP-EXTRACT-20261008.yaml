@@ -1,0 +1,22 @@
+task_id: EIS-SOAP-EXTRACT-20261008
+status: completed
+goal: Restore reliable authenticated EIS SOAP procurement document retrieval.
+definition_of_done:
+  - Secure token file auto-loaded without disclosing secret.
+  - Tests for permissions and configuration pass.
+  - Real SOAP request and archive delivery checked for procurement 0372200172326000015.
+completed:
+  - Isolated worktree created to preserve active DTR-3 task.
+  - Root cause identified: secured token file not sourced and enabled defaults false.
+  - Authenticated getDocsByReestrNumber returned completed and XML archive (17041 bytes).
+  - XML validated and exposes five attachmentInfo entries with URLs, sizes and names.
+  - Identified User-Agent behavior: default client yields HTTP 404, Safari browser User-Agent yields HTTP 200.
+  - Updated EIS filestore transport to send browser-like User-Agent with no_proxy direct connection.
+  - Downloaded all five binaries and verified exact expected sizes.
+  - Production create_run_from_eis_docs_archive succeeded with ready_to_analyze and six files (five binaries and XML).
+  - Six focused tests passed.
+current: Completed.
+pending: []
+last_verified_commit: 9c51916a7911bceda04986b4a7e361076c594914
+test_results: ["19 passed, 2 skipped", "Live SOAP completed and 5/5 binaries retrieved", "Production run ready_to_analyze"]
+resume_instruction: Complete; no further work required for this issue. Do not overwrite main DTR-3 checkpoint.

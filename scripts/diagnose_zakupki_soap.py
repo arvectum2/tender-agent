@@ -4,6 +4,8 @@ import argparse
 import json
 import os
 import socket
+import zipfile
+from xml.etree import ElementTree as ET
 import ssl
 import sys
 from dataclasses import replace
@@ -16,6 +18,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
+from src.modules.tender_operator_agent_demo.attachment_downloader import download_procurement_attachments
+from src.modules.tender_operator_agent_demo.procurement_schemas import ProcurementAttachment
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 
 
@@ -206,7 +210,11 @@ def run_diagnostics(
         try:
             target_dir = diagnostics_dir() / "downloads"
             downloaded = client.download_archive(archive_url, target_dir)
-            payload["download_status"] = "downloaded"
+            binary_result = download_xml_referenced_attachments(
+                target_dir / downloaded.stored_name, target_dir / "attachments"
+            )
+            payload["binary_attachments"] = binary_result
+            payload["download_status"] = "downloaded" if binary_result["complete"] else "incomplete_attachments"
             payload["downloaded_size_bytes"] = downloaded.size_bytes
             payload["archive_url_summary"] = {
                 "host": downloaded.source_url_host,
@@ -224,6 +232,45 @@ def run_diagnostics(
         method_payload.pop("_archive_url", None)
 
     return payload
+
+
+
+def download_xml_referenced_attachments(archive: Path, target_dir: Path) -> dict[str, Any]:
+    """Download EIS notice attachmentInfo binaries; an XML ZIP is not a document bundle."""
+    attachments: list[ProcurementAttachment] = []
+    with zipfile.ZipFile(archive) as bundle:
+        for member in bundle.infolist():
+            if not member.filename.lower().endswith(".xml"):
+                continue
+            if member.file_size > 20 * 1024 * 1024:
+                raise RuntimeError("EIS notice XML exceeds safe size")
+            root = ET.fromstring(bundle.read(member))
+            for item in root.iter():
+                if item.tag.rsplit("}", 1)[-1] != "attachmentInfo":
+                    continue
+                fields = {child.tag.rsplit("}", 1)[-1]: (child.text or "").strip() for child in item}
+                if not fields.get("fileName"):
+                    continue
+                attachments.append(ProcurementAttachment(
+                    attachment_id=fields.get("publishedContentId") or str(len(attachments) + 1),
+                    name=fields["fileName"], url=fields.get("url"),
+                    size_bytes=int(fields["fileSize"]) if fields.get("fileSize", "").isdigit() else None,
+                    can_download=bool(fields.get("url")),
+                ))
+    if not attachments:
+        return {"expected": 0, "downloaded": 0, "complete": False, "errors": ["no_attachment_info"]}
+    result = download_procurement_attachments(
+        attachments, target_dir=target_dir, max_attachments=100,
+        max_file_size_bytes=200 * 1024 * 1024, max_total_size_bytes=500 * 1024 * 1024,
+    )
+    size_mismatches = [
+        entry.name for entry in result.saved for source in attachments
+        if entry.name == source.name and source.size_bytes is not None and entry.size_bytes != source.size_bytes
+    ]
+    return {"expected": len(attachments), "downloaded": len(result.saved),
+            "complete": len(result.saved) == len(attachments) and not size_mismatches,
+            "size_mismatches": size_mismatches,
+            "errors": [{"file": x.name, "reason": x.error} for x in result.skipped]}
 
 
 def save_diagnostics(payload: dict[str, Any]) -> Path:
