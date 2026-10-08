@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-STRUCTURED-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Extract real RI223 public notice lot/position facts and protocol observations as evidence, without inventing status or 44-FZ legal semantics.
 definition_of_done:
@@ -18,9 +18,9 @@ completed:
   - Reconciled authentic protocol observation in docs/223fz and froze sanitized structural positive/negative tests.
   - Verified four original SHA-256 ZIPs and all 4 notice projections (four lots, four positions, two protocol records, ten source-bound attachments).
   - Focused regressions: 58 passed, 1 existing Starlette deprecation warning; make check, changed-file Ruff and git diff --check passed.
-current: 'Bounded implementation and local acceptance complete. Create review-ready PR, run exact-head CI and stop at explicit Owner merge gate.'
+current: 'PR #230 opened at 5c272d11 with local verification PASS; exact-head CI run 37786814480 in_progress; Owner REVIEW required before merge.'
 pending:
-  - Push branch, create PR and inspect exact-head required CI.
+  - Exact-head CI for PR #230 must finish SUCCESS; repair if failing.
   - Owner review/merge required (queue auto_merge=false); broader APR-02 lifecycle/revisions remain separate.
 last_verified_commit: 5cd42c81c42b9c211b04be7befee7b06b8c03991
 test_results:
@@ -28,7 +28,7 @@ test_results:
   - 58 targeted tests passed, 1 unrelated Starlette deprecation warning.
   - Four original RI223 SOAP archives, hashes and 10 source-bound documents validated 4/4 PASS.
   - Changed-file Ruff, make check, git diff --check PASS.
-resume_instruction: 'Implementation at 5cd42c81 passed local/source acceptance; confirm branch PR head and exact-head CI, repair any failures, then stop at Owner REVIEW for merge (auto_merge=false). Do not repeat source downloads or reopen completed parser work. Broader APR-02 revisions, clarifications, lifecycle and RAR require separate frozen corpus.'
+resume_instruction: 'PR #230 exists. Check its current head and exact-head CI; repair failures if present. When green, await explicit Owner REVIEW for merge (auto_merge=false), then update checkpoint/queue to completed and roadmap. Do not repeat RI223 source downloads; further amendments/clarifications/lifecycle/RAR require separate corpus and admission.'
 execution:
   branch: feature/apr02-ri223-structured-evidence
   base_commit: 4805b5e546d635ae4c5ca4e9a6b60d35f6236885
