@@ -1,6 +1,9 @@
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from src.modules.contract_execution_analytics.service import (
+    contract_execution_dashboard_metrics,
+)
 from src.modules.dashboard_snapshots.models import (
     DashboardMetricRecord,
     DashboardSnapshotRecord,
@@ -10,12 +13,21 @@ from src.modules.dashboard_snapshots.schemas import BuildDashboardSnapshotReques
 from src.modules.deal_closure.models import DealClosureSet
 from src.modules.deal_registry.models import Deal
 from src.modules.event_log.service import append_event_record
-from src.modules.execution_command.models import ExecutionCommandRecord, ExecutionCommandSet
+from src.modules.execution_command.models import (
+    ExecutionCommandRecord,
+    ExecutionCommandSet,
+)
 from src.modules.incidents.models import IncidentRecord, IncidentSet
 from src.modules.kpi_learning.models import KPILearningRecord, KPILearningSet
 from src.modules.outcome_intake.models import OutcomeIntakeRecord, OutcomeIntakeSet
-from src.modules.payment_collection.models import PaymentCollectionRecord, PaymentCollectionSet
-from src.modules.shipping_acceptance.models import ShippingAcceptanceRecord, ShippingAcceptanceSet
+from src.modules.payment_collection.models import (
+    PaymentCollectionRecord,
+    PaymentCollectionSet,
+)
+from src.modules.shipping_acceptance.models import (
+    ShippingAcceptanceRecord,
+    ShippingAcceptanceSet,
+)
 from src.shared.db.base import utcnow
 from src.shared.enums import DashboardScopeType, DashboardSnapshotStatus, EventSeverity
 from src.shared.errors import NotFoundError
@@ -121,6 +133,11 @@ def _deal_metrics(session: Session, deal_id: str) -> tuple[str, list[dict]]:
         _metric("outcome_code", text=str(latest_outcome.outcome_code) if latest_outcome else None),
         _metric("margin_estimate", latest_kpi_record.margin_estimate if latest_kpi_record else None),
     ]
+    lifecycle = contract_execution_dashboard_metrics(session, deal_id)
+    metrics.extend(
+        _metric(code, value if isinstance(value, (int, float)) else None, None if isinstance(value, (int, float)) else value)
+        for code, value in lifecycle.items()
+    )
     summary = f"Deal snapshot for {deal_id}: status={deal.current_status}, incidents={incident_count}."
     return summary, metrics
 

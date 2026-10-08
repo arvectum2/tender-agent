@@ -74,6 +74,7 @@ commercial_workflow_admission_2026_10_07:
       - ARV-053
       - ARV-055
       - ARV-057
+      - ARV-059
     completed_queue_items:
       - ARV-015-OPERATOR-PROFILE-PARSER-001
       - COMMERCIAL-WORKFLOW-ARV-019-001
@@ -81,15 +82,16 @@ commercial_workflow_admission_2026_10_07:
       - COMMERCIAL-WORKFLOW-ARV-053-001
       - COMMERCIAL-WORKFLOW-ARV-055-001
       - COMMERCIAL-WORKFLOW-ARV-057-001
-    completed_count: 6
+      - COMMERCIAL-WORKFLOW-ARV-059-001
+    completed_count: 7
     total_count: 12
-    next_queue_item: COMMERCIAL-WORKFLOW-ARV-059-001
-    next_item_note: 'Create a source-bound procurement -> contract -> execution stages -> payments -> timing -> penalties -> actual price -> outcome projection using existing lifecycle/evidence primitives; keep missing evidence unknown and do not autonomously promote learning.'
+    next_queue_item: COMMERCIAL-WORKFLOW-ARV-060-001
+    next_item_note: 'Add internal ProcurementCase discussion, @mentions, evidence links and immutable decision/comment history by reusing current audit/event primitives. Notifications stay internal unless a separately admitted external delivery adapter exists.'
 
 governance:
   material_executor_policy_change: true
-  am4_effect: renewed_am4_active_pr_213_is_2_of_10_if_merged
+  am4_effect: renewed_am4_active_pr_214_is_3_of_10_if_merged
   renewal_decision: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   renewal_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
-  note: The attributable Owner review on 2026-10-08 explicitly renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges on unchanged terms. PR #212 consumed merge 1/10; ARV-057 completion/governance PR #213 is counted prospectively as merge 2/10 and may merge only after exact-head CI succeeds. All procurement submission, signing, external communication, legal/commercial acceptance, production/release and other hard stops remain unchanged.
+  note: The attributable Owner review on 2026-10-08 explicitly renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges on unchanged terms. PR #212 consumed merge 1/10 and PR #213 consumed merge 2/10. Combined ARV-059 implementation/completion PR #214 is counted prospectively as merge 3/10 and may merge only after final exact-head CI succeeds. All procurement submission, signing, external communication, legal/commercial acceptance, production/release and other hard stops remain unchanged.
 revocation: Owner may revoke or supersede this directive at any time.
