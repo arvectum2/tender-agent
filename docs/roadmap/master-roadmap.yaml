@@ -180,22 +180,22 @@ owner_commercial_workflow_directive_2026_10_07:
     renewed_on: '2026-10-08'
     company_decision: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
     company_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
-    automatic_merge_counter: 5
+    automatic_merge_counter: 6
     automatic_merge_counter_limit: 10
     next_time_review_deadline: '2026-11-08'
 
 current_status_summary:
-  as_of: '2026-10-08T09:19:59+03:00'
-  verified_main_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
+  as_of: '2026-10-08T10:23:51+03:00'
+  verified_main_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
   active_execution_item: null
   active_execution_state: admitted_queue_ready
-  last_completed_task: COMMERCIAL-WORKFLOW-ARV-063-001
+  last_completed_task: COMMERCIAL-WORKFLOW-ARV-064-001
   commercial_workflow:
-    completed: 9
+    completed: 10
     total: 12
-    completed_items: [ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063]
-    next_queue_item: COMMERCIAL-WORKFLOW-ARV-064-001
-    next_historical_item: ARV-064
+    completed_items: [ARV-015, ARV-019, ARV-022, ARV-053, ARV-055, ARV-057, ARV-059, ARV-060, ARV-063, ARV-064]
+    next_queue_item: COMMERCIAL-WORKFLOW-ARV-066-001
+    next_historical_item: ARV-066
     state: in_progress
   base_foundation:
     historical_ids: [BASE-001, BASE-002, BASE-003, BASE-004, BASE-005, BASE-006, BASE-007, BASE-008, BASE-009, BASE-010, BASE-011, BASE-012, BASE-013, BASE-014, BASE-015, BASE-016, BASE-017, BASE-018]
@@ -224,12 +224,12 @@ current_status_summary:
     enabled: true
     cadence: hourly
   automatic_merge_governance:
-    state: active_renewed_2026_10_08_5_of_10_if_pr_216_merges
-    note: 'Attributable Owner review on 2026-10-08 renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges and reset the cycle to 0/10. PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10 and PR #215 consumed merge 4/10 after final exact-head CI passed. PR #216 is counted prospectively as combined ARV-063 implementation/completion merge 5/10 and may merge only after final exact-head CI succeeds. Next time-based review deadline is 2026-11-08; existing hard stops remain unchanged.'
-  note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is 9/12 complete after ARV-063 review-only application package/client-template generation. Three items remain admitted and ARV-064 is next. The 2026-10-08 Owner review renewed AM-4; PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10 and PR #216 is prospective merge 5/10. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
+    state: active_renewed_2026_10_08_6_of_10_if_pr_217_merges
+    note: 'Attributable Owner review on 2026-10-08 renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges and reset the cycle to 0/10. PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10 and PR #216 consumed merge 5/10 after final exact-head CI passed. PR #217 is counted prospectively as combined ARV-064 implementation/completion merge 6/10 and may merge only after final exact-head CI succeeds. Next time-based review deadline is 2026-11-08; existing hard stops remain unchanged.'
+  note: 'ARV-005 technical pilot remains complete. COMMERCIAL-WORKFLOW is 10/12 complete after ARV-064 reusable company document/profile store. Two items remain admitted and ARV-066 is next. The 2026-10-08 Owner review renewed AM-4; PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10, PR #216 consumed merge 5/10 and PR #217 is prospective merge 6/10. Historical 2026-07-30 progress/status fields remain immutable and are not current execution percentages.'
 
 execution_snapshot:
-  updated_at: '2026-10-08T06:19:59Z'
+  updated_at: '2026-10-08T07:23:51Z'
   watchdog:
     title: Tender Agent Watchdog
     enabled: true
@@ -239,9 +239,8 @@ execution_snapshot:
     single_watchdog: true
     audit_issue: 57
   queue_state: commercial_workflow_in_progress
-  next_admitted_item: COMMERCIAL-WORKFLOW-ARV-064-001
+  next_admitted_item: COMMERCIAL-WORKFLOW-ARV-066-001
   admitted_pipeline:
-    - COMMERCIAL-WORKFLOW-ARV-064-001
     - COMMERCIAL-WORKFLOW-ARV-066-001
     - COMMERCIAL-WORKFLOW-ARV-069-001
   completed_pipeline:
@@ -270,7 +269,8 @@ execution_snapshot:
     - COMMERCIAL-WORKFLOW-ARV-059-001
     - COMMERCIAL-WORKFLOW-ARV-060-001
     - COMMERCIAL-WORKFLOW-ARV-063-001
-  note: 'As of 2026-10-08, COMMERCIAL-WORKFLOW is 9/12 complete. ARV-063 review-only application package/client-template generation is complete in combined implementation/completion PR #216, contingent on final exact-head CI before merge. ARV-064 is next; ARV-064, ARV-066 and ARV-069 remain admitted. Owner review on 2026-10-08 renewed AM-4 for another ten automatic merges; PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10 and PR #216 is prospective merge 5/10. ARV-004 learning-loop work remains post-MVP and is not part of this admission.'
+    - COMMERCIAL-WORKFLOW-ARV-064-001
+  note: 'As of 2026-10-08, COMMERCIAL-WORKFLOW is 10/12 complete. ARV-064 tenant-isolated reusable company document/profile storage is complete in combined implementation/completion PR #217, contingent on final exact-head CI before merge. ARV-066 is next; ARV-066 and ARV-069 remain admitted. Owner review on 2026-10-08 renewed AM-4 for another ten automatic merges; PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, PR #214 consumed merge 3/10, PR #215 consumed merge 4/10, PR #216 consumed merge 5/10 and PR #217 is prospective merge 6/10. ARV-004 learning-loop work remains post-MVP and is not part of this admission.'
 
 development_strategy:
   principle: copy_commodity_invent_moat

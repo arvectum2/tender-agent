@@ -784,7 +784,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-064-001
   strategy: ADAPT
   title: Reusable company document store and profile
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -793,7 +793,7 @@ items:
   - ARV-064
   dependencies: []
   executor_scope: 'Implement tenant-isolated reusable company-document/profile primitives for statutory documents, licenses, certificates, experience, requisites and templates with versions/expiry and safe autofill hooks. Use synthetic fixtures; do not import unrelated real private documents automatically.'
-  done_gate: 'Version/expiry/tenant-isolation rules are enforced, safe autofill consumes only explicitly stored profile facts, private-data boundaries remain unchanged, and focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied in PR #217: customer-scoped append-only profile facts and reusable company documents bind exact existing DocumentArtifact/ArtifactVersion lineage with source refs and explicit expiry. Cross-tenant reuse, deal-bound artifacts and duplicate reuse of one artifact lineage fail closed; expired evidence remains visible but autofill returns only explicitly requested latest non-expired stored facts, with inference_performed=false and private_document_import_performed=false. Statutory/license/certificate/experience/requisites/template categories are supported; superseded versions remain auditable under immutable update/delete guards. Synthetic fixtures only are used. Focused ARV-064 tests pass, compatibility tests pass, migration head is 105_add_company_profile_store, make check passes, full local suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head exact-head CI run 37742015589 passed all 9 jobs. Final exact-head CI on the combined completion head is required before merge.'
 
 - order: 390
   task_id: COMMERCIAL-WORKFLOW-ARV-066-001
