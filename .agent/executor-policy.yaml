@@ -75,7 +75,7 @@ company_authority_gate:
   assignment_id: ASG-POS004-ROADMAP-EXECUTOR-2026-09-14
   mandatory_review_deadline: "2026-11-08"
   automatic_merge_counter_limit: 10
-  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_6_OF_10_IF_PR_217_MERGES
+  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_6_OF_10
   fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
   fail_closed_mode: REVIEW
   product_policy_cannot_expand_company_authority: true
@@ -106,9 +106,9 @@ company_authority_gate:
       task: COMMERCIAL-WORKFLOW-ARV-063-001
       note: combined ARV-063 implementation and completion/governance bookkeeping merged after final exact-head CI run 37737060026 passed; this consumed renewed-cycle merge 5/10
     - pr: 217
-      merge_commit: self_merge_commit_not_precomputable
+      merge_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
       task: COMMERCIAL-WORKFLOW-ARV-064-001
-      note: combined ARV-064 implementation and completion/governance bookkeeping; counted prospectively as automatic merge 6/10 and may merge only after final exact-head CI succeeds
+      note: combined ARV-064 implementation and completion/governance bookkeeping merged after final exact-head CI passed; this consumed renewed-cycle merge 6/10
   next_automatic_merge: ALLOWED_IF_ALL_AM4_GATES_PASS
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 
