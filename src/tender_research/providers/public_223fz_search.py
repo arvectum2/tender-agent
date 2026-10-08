@@ -135,7 +135,9 @@ def parse_223fz_detail(html_str: str, source_url: str, registry_number: str | No
         href = html.unescape(match.group(1))
         label = _clean_text(match.group(2))
         lowered = href.lower()
-        if not any(marker in lowered for marker in ("download", "file", "document", "attachment")):
+        if not any(marker in lowered for marker in ("download", "file", "attachment")):
+            continue
+        if "/epz/order/notice/notice223/documents.html" in lowered:
             continue
         url = urljoin(source_url, href)
         if url in seen:
