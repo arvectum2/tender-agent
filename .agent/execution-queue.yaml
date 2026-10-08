@@ -946,8 +946,8 @@ items:
 - order: 1060
   task_id: APR-02-RI223-SOURCE-ANALYSIS-001
   title: Source-bound RI223 XML facts in existing Tender Research analysis
-  status: blocked
-  blocked_on: 'PR #237 exact-head GitHub CI and attributable Owner REVIEW before merge.'
+  status: done
+  completion_evidence: 'PR #237 final-head CI 37807435239 SUCCESS 9/9; Owner-directed squash merge abbf30a2c700584ffb553626301136a2c6719faf; 13+3 original XML facts.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
@@ -958,6 +958,21 @@ items:
   dependencies: [APR-02-RI223-REAL-MULTILOT-001]
   executor_scope: "Read-only source-bound XML observation projection in existing Tender Research report/API, separate from document chunk citations and LLM synthesis, no fabricated legal statuses."
   done_gate: "Real XML source facts and per-fact citations visible in report/API; no 44-FZ regressions, tests/CI and Owner REVIEW pass."
+
+- order: 1070
+  task_id: APR-02-RI223-REVIEW-FLAGS-001
+  title: Source-bound 223-FZ revision and multi-lot expert review prompts
+  status: in_progress
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Continue APR-02 after merged #237; original RI223 32616376947 has 3 deadlines, 6 explanations and 2 separately priced lots."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-SOURCE-ANALYSIS-001]
+  executor_scope: "Derive bounded NEEDS_REVIEW prompts only from verified source XML observations, with original source citations, in existing Tender Research report/API. No legal conclusion or external procurement action."
+  done_gate: "Real original 32616376947 evidence triggers correct independent flags, 32616445795 control unchanged, tests/CI and Owner REVIEW green."
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001

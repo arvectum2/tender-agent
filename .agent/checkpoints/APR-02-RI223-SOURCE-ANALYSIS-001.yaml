@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-SOURCE-ANALYSIS-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Expose original RI223 revision, lot, position and explanation source facts to
   the existing Tender Research report/API with exact XML evidence and explicit unknown
@@ -28,13 +28,10 @@ completed:
   3; every fact preserves archive hash, XML hash/member and XPath.
 - 39 focused tests and 502 full Tender Research tests passed, 1 skipped; make check,
   new-code Ruff and git diff --check passed.
-current: 'PR #237 published with source observation bridge; exact-head CI and Owner
-  REVIEW still required for merge.'
-pending:
-- 'Verify GitHub PR #237 exact-head 9/9 CI and base/head/mergeability; obtain Owner
-  REVIEW before merge.'
-- After merge record completion and continue content-grounded RI223 risk/fit assessment.
-last_verified_commit: 0266debdc29042903c619ca39720b8ab059686b0
+- 'PR #237 CI 37807435239 success 9/9, Owner-directed squash merge abbf30a2c700584ffb553626301136a2c6719faf.'
+current: Completed in main; successor review-flags implementation follows.
+pending: []
+last_verified_commit: abbf30a2c700584ffb553626301136a2c6719faf
 test_results:
 - 502 Tender Research passed, 1 skipped, 42 warnings
 - 39 focused tests passed, 3 warnings
@@ -42,11 +39,7 @@ test_results:
 - new file Ruff PASS
 - git diff --check PASS
 - 'Two real source corpus checks: 13 facts and 3 facts.'
-resume_instruction: 'PR #237 feature/apr02-ri223-analysis-facts: check exact-head
-  CI for final SHA and mergeability; merge only after attributable Owner review/approval
-  (user directed continued delivery and merging in this project). Then update checkpoint
-  completed with merge SHA, verify main and advance bounded APR-02 content-based fit/risk
-  analysis.'
+resume_instruction: 'Completed PR #237; do not repeat. Continue successor APR-02-RI223-REVIEW-FLAGS-001.'
 execution:
   branch: feature/apr02-ri223-analysis-facts
   depends_on_pr: 236
