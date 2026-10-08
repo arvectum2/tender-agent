@@ -1,90 +1,33 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: COMMERCIAL-WORKFLOW-ARV-064-001
-authority: AUTO
-goal: Add tenant-isolated reusable company profile facts and company-document version
-  bindings for statutory documents, licenses, certificates, experience, requisites
-  and templates, with explicit expiry and safe provenance-preserving autofill that
-  never imports unrelated private data.
+status: in_progress
+task_id: ROADMAP-FULL-CHECKLIST-REFRESH-20261008
+authority: OWNER_DIRECTIVE
+goal: Reconcile the canonical Tender Agent roadmap to current main and publish an up-to-date full checklist view for the Owner.
 definition_of_done:
-- Every company profile fact and reusable document is scoped by customer_id; cross-tenant
-  reads/writes and cross-tenant artifact reuse fail closed.
-- Profile facts are append-versioned, source-bound and explicit; safe autofill returns
-  only requested, explicitly stored, non-expired current facts and never infers values
-  from unrelated documents.
-- Reusable company documents support statutory, license, certificate, experience,
-  requisites and template categories with immutable version bindings to exact DocumentArtifact
-  versions and explicit expiry status.
-- Expired documents/facts are visible as expired evidence but are excluded from active/autofill
-  selection by default; superseded versions remain auditable.
-- Company-document artifacts used for reusable profile storage are tenant-bound through
-  company-document metadata and cannot be silently reused across tenants or from unrelated
-  deal-bound artifacts.
-- Only synthetic fixtures are used in tests; no unrelated real private documents are
-  imported or scanned.
-- Focused tenant/version/expiry/autofill/private-boundary regressions and relevant
-  customer/document-store tests pass, followed by exact-head GitHub CI.
+- Current roadmap status matches merged main at 75beab91a2fcc46fb885d864cd39f229603fe080.
+- COMMERCIAL-WORKFLOW is recorded as 10/12 complete with ARV-066 next and ARV-069 final admitted item.
+- PR #217 is recorded as actually merged, not prospective, and AM-4 state is reconciled to 6/10.
+- Human-readable roadmap current status/queue text matches canonical YAML.
+- Governance tests and YAML parsing pass.
+- Exact-head CI passes and the refresh is merged.
 completed:
-- '2026-10-08: Reconciled canonical main at 197bf1c54df51a5c644aa8ca2e92bae543840945;
-  ARV-063 merged in PR #216 as 197bf1c54df51a5c644aa8ca2e92bae543840945 after final
-  exact-head CI run 37737060026 passed all 9 jobs, consuming renewed AM-4 merge 5/10.'
-- '2026-10-08: Inventory confirmed CustomerProfile/CustomerExternalRef provide existing
-  tenant identity, DocumentArtifact/ArtifactVersion/ArtifactLink provide exact artifact
-  version lineage, and no dedicated tenant-isolated reusable company document/profile
-  store exists.'
-- '2026-10-08: Bounded reuse plan: add customer-scoped append-versioned profile facts
-  plus customer-scoped document metadata/version bindings over existing ArtifactVersion
-  rows; expose explicit autofill resolution only from stored current facts. No document
-  OCR/extraction or private-data auto-import is admitted.'
-- '2026-10-08: Implemented tenant-scoped append-only CompanyProfileFactVersion, CompanyDocument
-  and CompanyDocumentVersion primitives over CustomerProfile + DocumentArtifact/ArtifactVersion,
-  with migration 105_add_company_profile_store.'
-- '2026-10-08: Facts are explicit source-bound versions with expiry; autofill accepts
-  only explicit requested fact keys/locators, uses only latest non-expired stored
-  values, returns MISSING/EXPIRED otherwise, and records inference_performed=false/private_document_import_performed=false.'
-- '2026-10-08: Reusable company documents support STATUTORY/LICENSE/CERTIFICATE/EXPERIENCE/REQUISITES/TEMPLATE
-  and bind to exact ArtifactVersion rows. Deal-bound artifacts, cross-tenant reuse,
-  and duplicate same-tenant document reuse of one artifact lineage fail closed.'
-- '2026-10-08: Immutable ORM guards reject update/delete of profile/document history;
-  superseded and expired versions remain auditable while current-state responses identify
-  ACTIVE/EXPIRED/SUPERSEDED.'
-- '2026-10-08: Focused ARV-064 tests pass 5/5; ARV-064 + Sprint1/customer-pilot/ARV-063
-  compatibility set passes 15/15 with 13 expected skips; alembic head is 105_add_company_profile_store;
-  make check and git diff --check pass.'
-- '2026-10-08: Full make test completed with 3140 passed / 236 skipped; the sole failure
-  is tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed
-  (pg_restore exit 1), matching the previously proven macOS main-baseline R9 restore-environment
-  failure and outside the ARV-064 diff.'
-- '2026-10-08: PR #217 implementation-head exact-head CI run 37742015589 passed all
-  9 jobs on head b632b9c9bbea308f1efa4c3fed13cdc0acde9ff9.'
-- '2026-10-08: Completion/governance bookkeeping is folded into the same PR #217 so
-  ARV-064 consumes only one renewed-cycle automatic merge; PR #217 is counted prospectively
-  as merge 6/10.'
-current: 'ARV-064 implementation and completion bookkeeping are complete in PR #217;
-  canonical queue advances to COMMERCIAL-WORKFLOW-ARV-066-001 once final combined-head
-  exact-head CI passes and #217 merges.'
-pending: []
-last_verified_commit: b632b9c9bbea308f1efa4c3fed13cdc0acde9ff9
-test_results:
-- 'ARV-064 focused tests: 5 passed'
-- 'ARV-064 + Sprint1/customer-pilot/ARV-063 compatibility: 15 passed, 13 skipped'
-- 'alembic heads: 105_add_company_profile_store (head)'
-- 'make check: PASS'
-- 'git diff --check: PASS'
-- 'full make test: 3140 passed, 236 skipped; 1 known main-baseline macOS R9 pg_restore
-  failure'
-- 'PR #217 implementation-head exact-head CI run 37742015589: SUCCESS (9/9 jobs)'
-- 'PR #217 final combined-head exact-head CI required before merge'
-updated_at: '2026-10-08T10:23:51+03:00'
-resume_instruction: 'Verify final exact-head CI for PR #217 on the combined completion
-  head. If all required jobs are green and head/base/renewed AM-4 remain valid, merge
-  #217 as automatic merge 6/10, then start COMMERCIAL-WORKFLOW-ARV-066-001.'
+- '2026-10-08: Reconciled current main head 75beab91a2fcc46fb885d864cd39f229603fe080.'
+- '2026-10-08: Verified queue state: first ten Commercial Workflow items done; ARV-066 and ARV-069 ready.'
+current: Update policy, canonical roadmap, human roadmap and tests from prospective PR #217 wording to merged 10/12 state.
+pending:
+- Update canonical status surfaces.
+- Run focused verification.
+- Open PR, require exact-head CI, merge.
+last_verified_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
+test_results: []
+updated_at: '2026-10-08T11:04:00+03:00'
+resume_instruction: Continue only ROADMAP-FULL-CHECKLIST-REFRESH-20261008. Reconcile status only; do not change product/runtime behavior or queue scope.
 execution:
   claimed_by: ChatGPT
-  execution_id: chat-20261008-arv064
-  branch: agent/commercial-workflow-arv-064-001
-  base_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
+  execution_id: roadmap-full-checklist-refresh-20261008
+  branch: roadmap/full-checklist-refresh-20261008
+  base_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
