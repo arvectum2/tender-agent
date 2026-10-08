@@ -212,6 +212,19 @@ active_product_roadmap_2026_10_08:
       outcome: 'One production runtime epic: Russian VPS, stable ingress, workers/resumability, backup/restore and operational access.'
       why_now: 'Converts a strong development system into a dependable commercial service.'
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
+    - id: APR-03B-OPERATOR-WORKSPACE
+      priority: P0
+      state: planned
+      legacy_mapping: [ARV-019, ARV-061, ARV-064, ARV-066]
+      depends_on: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME]
+      outcome: 'Authenticated usable web UI with procurement URL/number request, real analysis progress and evidence-bound results, plus read-only browsable canonical procurement/document/run database.'
+      why_now: 'Owner wants to personally use and inspect the real Tender Agent immediately after 223-FZ and Production Runtime, before SaaS/GTM expansion.'
+      scope:
+        - 'Request panel: registry number or EIS URL, regime 44-FZ/223-FZ, start analysis, progress/error/unsupported state.'
+        - 'Results panel: procurement summary, deadlines, documents, cited requirements, blockers/unknowns, economics, human decision boundary and report export.'
+        - 'Data explorer: search/filter canonical procurement cases, analysis runs, source documents/artifacts and status/history; no direct arbitrary SQL or tenant leakage.'
+        - 'Reuse existing backend API, canonical data and UI primitives; no standalone parallel database, no mock-only demo.'
+      done_gate: 'Owner can sign in via browser on the accepted runtime, paste a live supported EIS number/URL, run analysis, view cited source-bound results, inspect the corresponding saved case/documents/runs in read-only DB explorer, and open/export report without terminal or Swagger; unsupported/error states fail closed; automated UI/API tests pass.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
       state: planned
@@ -329,7 +342,7 @@ current_status_summary:
     state: essential_v1_complete_forecast_deferred
   active_product_roadmap:
     state: active
-    outcome_count: 10
+    outcome_count: 11
     next_outcome: APR-02-223FZ-BREADTH
     next_queue_item: null
     principle: 'Historical open items are not automatic obligations; trigger backlog requires evidence before admission.'
