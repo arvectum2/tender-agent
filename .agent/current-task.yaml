@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-DP-AUTH-READINESS-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Fix evidence-backed false Data Platform no_context status on HTTP 401/403 and
   transport/check errors without changing true missing collection semantics.
@@ -30,14 +30,11 @@ completed:
   Current auth branch rebased cleanly on merge.'
 - 'After rebasing onto main b430c8ce: all 519 Tender Research tests PASSED, 1 skipped,
   42 warnings; make check/Ruff/diff PASS.'
-current: Exact-head GitHub CI and attributable Owner review of standalone DP auth/readiness
-  PR required.
-pending:
-- Create PR against main b430c8ce and pass exact-head CI and Owner review; guarded
-  merge.
-- After merge mark checkpoint completed and continue source-grounded 223-FZ domain
-  fit/requirements review.
-last_verified_commit: 4f85ea00
+- 'PR #240 final head bfbf0443649b7669befd747e342e3a6aa29d1dd1, GitHub Actions 37813956582
+  SUCCESS 9/9; merged d8607c259a1b1075d067ca8da42512998457d4e7.'
+current: 'Completed PR #240, verified and merged.'
+pending: []
+last_verified_commit: d8607c259a1b1075d067ca8da42512998457d4e7
 test_results:
 - 519 Tender Research passed, 1 skipped, 42 warnings
 - 25 focused DP auth and index tests passed
@@ -46,10 +43,12 @@ test_results:
 - 'Real original no-auth: failed with truthful HTTP401/403 diagnostic and no RAG claims'
 - 'Previous same source authorized: 10/10 sections, 25 citations and 7 dossier categories.'
 - Post-rebase exact-parent 519 passed, 1 skipped, 42 warnings; make check PASS.
-resume_instruction: Standalone feature/apr02-dp-auth-readiness branch based on b430c8ce
-  is pushed with review checkpoint. Verify PR exact-head CI 9/9 and Owner approval
-  before merge. On merge set checkpoint completed with merge SHA and evidence. No
-  assumptions about index loss on HTTP 401.
+- 'GitHub exact-head run 37813956582: 9/9 jobs SUCCESS.'
+resume_instruction: 'APR-02-DP-AUTH-READINESS-001 completed in #240; do not repeat.
+  Next APR-02 task: verify available local generative LLM runtime on Mac mini, run
+  source-cited quality benchmark against actual 223-FZ 32616445795 and real 44-FZ
+  case; local LLM currently unavailable on port 8088 and Ollama list empty. No pretend
+  LLM results or GO/NO-GO.'
 execution:
   branch: feature/apr02-dp-auth-readiness
   depends_on_pr: 239
