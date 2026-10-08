@@ -29,13 +29,13 @@ completed:
   and git diff --check PASS.
 - 'Code head 0454e6838cf94917370f19ca90eea831259a53db; previous completion PR #234
   awaited as prerequisite.'
-current: 'Implementation complete locally; predecessor checkpoint completion PR #234
-  and successor exact-head CI/guarded merge outstanding.'
+- 'Predecessor completion PR #234 exact-head CI 37798621668 9/9 SUCCESS and squash-merged
+  8064a1a016f05445d0151974f69d5c5387f7f64f; successor rebased on latest main.'
+current: Ready for exact-head PR CI; locally verified regime question overlay; after
+  CI merge under Owner directive.
 pending:
-- 'Verify and merge predecessor PR #234 on exact-head CI.'
-- Publish RI223 regime analysis branch, verify exact-head CI and guarded merge after
-  predecessor.
-- Mark task completed in canonical checkpoint after merge.
+- Open PR on current main, verify exact-head CI and Owner-guarded merge.
+- Close checkpoint after merge; broader APR-02 remains open.
 last_verified_commit: 0454e6838cf94917370f19ca90eea831259a53db
 test_results:
 - 493 tender-research tests PASS, 1 skipped, 42 existing warnings.
@@ -43,7 +43,6 @@ test_results:
 - make check PASS, Ruff touched files PASS, git diff --check PASS.
 - Real source analysis 10/10 sections with 25 citations, no unsupported 44-FZ eligibility
   prompt.
-resume_instruction: 'Wait for exact-head CI and merge of completion PR #234. Rebase/update
-  feature/apr02-ri223-regime-analysis only if needed, open PR, verify exact-head CI
-  and Owner instruction gates, then merge, mark new checkpoint completed. APR-02 wider
-  status/revisions work remains independently gated.'
+resume_instruction: 'PR feature/apr02-ri223-regime-analysis branch on main 8064a1a:
+  verify exact-head CI and mergeability, then Owner-authorized guarded merge. After
+  merge reconcile completed task and continue from next real APR-02 gap.'
