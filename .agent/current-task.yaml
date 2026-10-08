@@ -16,17 +16,22 @@ completed:
 - '2026-10-08: Reconciled current main c9d5059996c23db0eee2de3d13da2b44bde2af1a and enumerated all open PRs.'
 - '2026-10-08: Confirmed old PR #89 still contains a valid unique fail-closed fix: current main still returns demo tenders from real registry-number list mode.'
 - '2026-10-08: Confirmed key PR #145 runtime hardening changes (_write_evidence_summary and delivery_price_inclusion grounding guard) are already present on current main.'
-current: Reimplement the valid PR #89 fail-closed fix cleanly on current main, validate it, then close the stale PR set with explicit supersession/defer reasons.
+- '2026-10-08: Closed all stale/superseded/deferred open PRs with traceable reasons; active open PR inventory reached zero before final cleanup PR.'
+- '2026-10-08: Reimplemented the valid old PR #89 fail-closed behavior on current main: real registry-number list mode now raises EisLoaderError and explicit demo discovery uses a separate demo loader.'
+- '2026-10-08: Added regressions proving exact registry-number delegation remains real and pipeline list ingestion cannot silently ingest demo data.'
+current: PR tree is clean and the valid PR #89 fail-closed fix has been reimplemented and locally verified on current main; open one final cleanup PR, require exact-head CI, merge, then verify zero open PRs.
 pending:
-- Apply current-main fail-closed real registry-number list fix and regressions.
-- Run focused tests/checks.
-- Close stale/superseded/deferred PRs.
 - Open one clean cleanup/fix PR, require exact-head CI, merge.
 - Verify final open PR inventory is clean.
 last_verified_commit: c9d5059996c23db0eee2de3d13da2b44bde2af1a
-test_results: []
+test_results:
+- 'Focused EIS/discovery/pipeline regressions: 61 passed, 1 warning.'
+- 'uv run make check: PASS.'
+- 'git diff --check against cleanup base: PASS.'
+- 'YAML parse for canonical agent/roadmap surfaces: PASS.'
+- 'Open PR inventory after stale/deferred closure: 0.'
 updated_at: '2026-10-08T13:10:00+03:00'
-resume_instruction: Continue PR-TREE-CLEANUP-20261008. Do not reopen deferred product scope. Preserve useful old PR evidence in closure notes, but leave no stale open PRs. Fix the still-live real registry-number demo fallback before closing #89.
+resume_instruction: Open the single final cleanup PR from repo-hygiene/pr-cleanup-20261008, require exact-head CI green, merge it, then verify zero open PRs and mark this checkpoint completed. Do not reopen deferred scope.
 execution:
   claimed_by: ChatGPT
   execution_id: pr-tree-cleanup-20261008
