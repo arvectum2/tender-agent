@@ -1,0 +1,38 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: OPS-MACMINI-CLEANUP-20261008
+status: blocked
+authority: OWNER_DIRECTIVE
+goal: Audit Mac mini SSD canonical repos, remove verifiably obsolete clones and caches, and preserve running Arvectum services.
+definition_of_done:
+  - Confirm canonical SSD tender-agent against GitHub and recover remote access.
+  - Inventory runtime references, Git worktrees, cache/storage, and uncommitted changes.
+  - Remove only verified redundant worktrees and regenerable caches, with manifests.
+  - Verify disk capacity and key services; hand off unsafe production migrations separately.
+completed:
+  - Mac mini SSD verified mounted as /Volumes/ArvectumSSD/Arvectum/repos; canonical tender-agent main clean at 958e94c.
+  - Corrected Desktop Commander stale node 26.10.0_2 runtime by restarting its KeepAlive launch agent; now node 26.11.0 and SSD read successful.
+  - Audited 62 Tender Agent worktrees, four dirty and one referenced by active backend; archived JSON audit.
+  - Removed four August-era clean worktrees fully contained in GitHub main without force; branches and commit history retained.
+  - Removed 77 old Homebrew downloads older than 45 days; 2.648 GiB measured.
+  - Removed six old, regenerable Xcode DerivedData duplicates while keeping latest two per affected app; 6.026 GiB measured.
+  - Saved last 16 MiB and truncated oversized Desktop Commander and backend log files; 1.620 GiB measured.
+  - Verified backend, Desktop Commander and reranker running; data-platform service still has existing exit status -15 and has not been changed.
+  - Validated 302 GiB used, 120 GiB free on Data volume after cleanup, previously 311 GiB / 110 GiB.
+current: Safe cleanup milestone complete; unsafe backend migration and non-merged worktrees deliberately preserved for separate reviewed execution.
+pending:
+  - Do not delete active AI-Corporation-next runtime worktree or other service directories without tested migration/rollback.
+  - Review four dirty Tender Agent worktrees and outstanding branch deltas and ensure source is secured before retiring more clones.
+  - Decide retention and lifecycle of recent clean worktrees, simulators and uv runtime cache; avoid forced eviction.
+  - For full DoD, schedule explicit zero-downtime backend migration to canonical SSD with launchd rollback.
+last_verified_commit: 958e94c740e73a052f275d46fea713f01ab4d117
+test_results:
+  - GitHub main and SSD canonical tender-agent commit 958e94c verified; working tree clean.
+  - 62 to 58 registered worktrees; all four removed through non-force git worktree remove.
+  - Source tree, simulator runtimes, watchOS 27 and production services not removed.
+  - Free capacity 120 GiB Data; ArvectumSSD 3.4 TiB free.
+resume_instruction: Begin with /Volumes/ArvectumSSD/Arvectum/repos/tender-agent, not /Users/master/arvectum-runtime/AI-Corporation or a temporary clone. Recheck git main and PRs. Inspect /Users/master/arvectum-ops/maintenance/tender-worktrees-audit-20261008.json and prune manifests, then examine live launch agents and dirty/unmerged worktrees before any further removal. Treat backend migration as a separate approved deploy with rollback; preserve previous APR-02 branch checkpoint.
+execution:
+  canonical_repo: /Volumes/ArvectumSSD/Arvectum/repos/tender-agent
+  maintenance_dir: /Users/master/arvectum-ops/maintenance
+  rollout: safe_cleanup_complete_production_migration_pending
