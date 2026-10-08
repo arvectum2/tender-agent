@@ -12,10 +12,10 @@ sources:
   company_authority:
     repository: arvectum2/arvectum-company
     decision: docs/governance/decisions/DECISION-2026-09-14-POS-004-ROADMAP-EXECUTOR-AM4.md
-    latest_renewal: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+    latest_renewal: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
     assignment: docs/organization/POS-004-ROADMAP-EXECUTOR-AM4-AUTHORIZATION-v1.0.0.md
     decision_merge_commit: 7a4a1f57344380b01f960f8a137bba590a736278
-    latest_renewal_merge_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
+    latest_renewal_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
 
 selection:
   resume_active_current_task_first: true
@@ -71,59 +71,29 @@ company_authority_gate:
   authority_mode: AM-4
   position: POS-004
   principal: AI-ENG-001
-  latest_owner_review_date: "2026-10-07"
+  latest_owner_review_date: "2026-10-08"
   assignment_id: ASG-POS004-ROADMAP-EXECUTOR-2026-09-14
-  mandatory_review_deadline: "2026-11-07"
+  mandatory_review_deadline: "2026-11-08"
   automatic_merge_counter_limit: 10
-  automatic_merge_cycle_state: EXHAUSTED_10_OF_10_REVIEW_REQUIRED
+  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_2_OF_10_IF_PR_213_MERGES
   fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
   fail_closed_mode: REVIEW
   product_policy_cannot_expand_company_authority: true
   material_policy_change_recorded_2026_09_18: true
-  material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-07-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
-  material_policy_change_review_satisfied_commit: 59a64579ce31bf006e15d5d5f0507fdcb1eb7388
+  material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  material_policy_change_review_satisfied_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 10
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 2
   automatic_merge_evidence:
-    - pr: 199
-      merge_commit: 94534c81afd786b9c8944817ffc49c12396c7d3b
-      task: ARV-015-OPERATOR-PROFILE-PARSER-001
-    - pr: 198
-      merge_commit: 8f13060bdef0a1db81e0d29fb8f21f883de62284
-      task: COMMERCIAL-WORKFLOW-ARV-019-001
-    - pr: 201
-      merge_commit: 0948f5f438fbe3b25a8251684dd4eebc36775e05
-      task: COMMERCIAL-WORKFLOW-ARV-019-001
-      note: completion bookkeeping merged automatically under the same AUTO task
-    - pr: 205
-      merge_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
-      task: COMMERCIAL-WORKFLOW-ARV-022-001
-      note: OCR fallback implementation merged automatically after exact-head CI run 37674689621 passed
-    - pr: 206
-      merge_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
-      task: COMMERCIAL-WORKFLOW-ARV-022-001
-      note: completion bookkeeping merged automatically under the same AUTO task
-    - pr: 207
-      merge_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
-      task: COMMERCIAL-WORKFLOW-ARV-053-001
-      note: evidence-backed counterparty cards merged automatically after exact-head CI run 37684732897 passed
-    - pr: 208
-      merge_commit: 2ea2277cdadca9d6d68e83fa5af18dd4f3cbdd07
-      task: COMMERCIAL-WORKFLOW-ARV-053-001
-      note: initial ARV-053 completion bookkeeping merged automatically under the same AUTO task
-    - pr: 209
-      merge_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
-      task: COMMERCIAL-WORKFLOW-ARV-053-001
-      note: corrective scoring-reuse slice merged automatically after exact-head CI run 37689743505 passed
-    - pr: 210
-      merge_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
-      task: COMMERCIAL-WORKFLOW-ARV-053-001
-      note: corrective completion bookkeeping merged automatically after exact-head CI run 37691393437 passed
-    - pr: 211
+    - pr: 212
+      merge_commit: ebcead468610a88e298b55881d4287cdaed444c3
+      task: COMMERCIAL-WORKFLOW-ARV-057-001
+      note: ARV-057 implementation merged automatically after exact-head CI run 37726210313 passed under the 2026-10-08 renewed AM-4 cycle
+    - pr: 213
       merge_commit: self_merge_commit_not_precomputable
-      task: COMMERCIAL-WORKFLOW-ARV-055-001
-      note: combined ARV-055 implementation and completion bookkeeping; counted prospectively as automatic merge 10/10 and may merge only after final exact-head CI on the bookkeeping head succeeds
-  next_automatic_merge: REVIEW_REQUIRED_PENDING_OWNER_RENEWAL
+      task: COMMERCIAL-WORKFLOW-ARV-057-001
+      note: ARV-057 completion/governance bookkeeping; counted prospectively as automatic merge 2/10 and may merge only after final exact-head CI succeeds
+  next_automatic_merge: ALLOWED_IF_ALL_AM4_GATES_PASS
   preparation_implementation_testing_may_continue_when_independently_authorized: true
 
 authority:

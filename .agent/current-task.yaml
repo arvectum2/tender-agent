@@ -1,8 +1,8 @@
 version: 2
 repository: arvectum2/tender-agent
-status: blocked
+status: completed
 task_id: COMMERCIAL-WORKFLOW-ARV-057-001
-authority: AUTO_PREP_ONLY_AM4_REVIEW_REQUIRED
+authority: AUTO
 goal: Normalize source-bound historical price observations and expose evidence-backed
   comparable price/NMCK ranges without converting sparse or incomparable history into
   a forecast or commercial commitment.
@@ -60,13 +60,22 @@ completed:
 - '2026-10-08: PR #212 exact-head CI run 37711832185 passed successfully on head 926f0226d3bba987ce3cf37c24b3bc5577824910;
   implementation is fully verified and the only remaining blocker is exhausted AM-4
   merge authority.'
-current: 'PR #212 is implementation-complete and exact-head CI-green, but merge is
-  blocked because renewed AM-4 is exhausted at 10/10.'
-pending:
-- Obtain attributable Owner renewal/review or explicit superseding merge authority.
-- 'After authority is restored, revalidate PR #212 head/base and merge only if the
-  governance gate permits it.'
-last_verified_commit: 926f0226d3bba987ce3cf37c24b3bc5577824910
+- '2026-10-08: Owner renewed AM-4 for another ten automatic merges; Company governance
+  PR #11 merged as 92a76a6394eff50f9da50a8edca73454aa163c13. ARV-057 implementation
+  PR #212 then merged as ebcead468610a88e298b55881d4287cdaed444c3, consuming merge
+  1/10 of the renewed cycle.'
+- '2026-10-08: Owner AM-4 renewal was durably recorded in Company PR #11 / merge 92a76a6394eff50f9da50a8edca73454aa163c13,
+  resetting the cycle to 0/10.'
+- '2026-10-08: ARV-057 PR #212 final exact-head CI run 37726210313 passed all 9 jobs
+  and PR #212 merged as ebcead468610a88e298b55881d4287cdaed444c3, consuming renewed-cycle
+  merge 1/10.'
+- '2026-10-08: Completion/governance reconciliation PR #213 advances canonical Commercial
+  Workflow to ARV-059 and is counted prospectively as renewed-cycle automatic merge
+  2/10.'
+current: 'ARV-057 is complete; completion/governance PR #213 advances the canonical
+  queue to COMMERCIAL-WORKFLOW-ARV-059-001.'
+pending: []
+last_verified_commit: ebcead468610a88e298b55881d4287cdaed444c3
 test_results:
 - 'ARV-057 + similar-procurement/Data Platform/quote normalization regressions: 57
   passed'
@@ -78,17 +87,18 @@ test_results:
   R9 pg_restore acceptance failure)'
 - 'Post-provenance-hardening relevant regression suite: 57 passed; Ruff/format, make
   check, git diff --check PASS'
-- 'PR #212 exact-head CI run 37711832185: SUCCESS (9/9 jobs)'
-updated_at: '2026-10-08T07:10:27+03:00'
-resume_instruction: 'Do not modify the verified ARV-057 implementation unless new
-  review feedback appears. PR #212 is exact-head CI-green. Wait for attributable Owner
-  renewal/review or explicit superseding merge authority; then revalidate head/base
-  and merge if permitted.'
+- 'PR #212 final exact-head CI run 37726210313: SUCCESS (9/9 jobs)'
+- 'PR #212 merged as ebcead468610a88e298b55881d4287cdaed444c3'
+- 'PR #213 exact-head CI required before bookkeeping merge'
+updated_at: '2026-10-08T07:26:54+03:00'
+resume_instruction: 'Verify exact-head CI for PR #213. If all required jobs are green
+  and head/base/renewed AM-4 remain valid, merge #213 as automatic merge 2/10, then
+  start COMMERCIAL-WORKFLOW-ARV-059-001.'
 execution:
   claimed_by: ChatGPT
   execution_id: chat-20261008-arv057
-  branch: agent/commercial-workflow-arv-057-001
-  base_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
+  branch: agent/arv-057-completion-001
+  base_commit: ebcead468610a88e298b55881d4287cdaed444c3
   issue: null
   manual_override: false
   lease_until: null

@@ -724,7 +724,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-057-001
   strategy: ADAPT
   title: Historical price evidence and NMCK range
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -733,7 +733,7 @@ items:
   - ARV-057
   dependencies: []
   executor_scope: 'Normalize source-bound historical price observations and expose comparable ranges/NMCK orientation with evidence for every comparison. Keep forecasts separate from observed facts and fail closed on incomparable or insufficient samples.'
-  done_gate: 'Historical-price ranges are reproducible from cited observations with explicit comparability/uncertainty, no commercial commitment is made, and focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied: /api/tender-research/historical-prices/{registry_number} reuses ARV-055/Data Platform analogue retrieval plus canonical procurement/price evidence; comparability fails closed on chronology, currency, position quantity/unit basis and exact multi-position baskets. Every included observation exposes source-bound subject/NMCK/publication/position evidence; insufficient or incomparable samples remain explicit, is_forecast=false and commercial_commitment=false. Focused/relevant regressions passed, full local suite had only the proven macOS main-baseline R9 pg_restore failure, PR #212 final exact-head CI run 37726210313 passed 9/9 jobs, and implementation merged as ebcead468610a88e298b55881d4287cdaed444c3.'
 
 - order: 350
   task_id: COMMERCIAL-WORKFLOW-ARV-059-001
