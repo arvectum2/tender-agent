@@ -946,7 +946,8 @@ items:
 - order: 1060
   task_id: APR-02-RI223-SOURCE-ANALYSIS-001
   title: Source-bound RI223 XML facts in existing Tender Research analysis
-  status: in_progress
+  status: blocked
+  blocked_on: 'PR #237 exact-head GitHub CI and attributable Owner REVIEW before merge.'
   authority: OWNER_DIRECTIVE
   independent: false
   auto_merge: false
