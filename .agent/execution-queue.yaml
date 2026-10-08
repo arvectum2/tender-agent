@@ -887,7 +887,8 @@ completed_dependencies:
 - order: 1020
   task_id: APR-02-RI223-RAR-OPAQUE-001
   title: Preserve authentic RI223 RAR attachments as safe opaque evidence
-  status: in_progress
+  status: blocked
+  blocked_on: 'Exact-head CI and attributable Owner REVIEW before merge.'
   authority: OWNER_DIRECTIVE
   independent: true
   auto_merge: false
@@ -898,3 +899,5 @@ completed_dependencies:
   dependencies: [APR-02-RI223-STRUCTURED-001]
   executor_scope: "Acquire and preserve bounded original RAR attachment as opaque read-only file with provenance and explicit manual-review/unsupported-parsing flags. Reuse existing attachment downloader. No archive extraction, unsafe format execution, automatic interpretation or external procurement action."
   done_gate: "Real original RI223 evidence for 32616445795 verified; RAR download source bound, size/URL guards retained, review-only status explicit, targeted regressions and exact-head CI pass; human review before merge."
+
+  local_verified_code_commit: 75c791784a33cadf9a67760e7894dd54ff6f2342
