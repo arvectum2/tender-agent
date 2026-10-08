@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REAL-MULTILOT-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Handle authentic RI223 223-FZ multi-lot notices with multiple source revisions
   and explanation documents without inventing legal status or conflating lots.
@@ -32,13 +32,10 @@ completed:
   (42 known warnings); make check, Ruff and git diff --check PASS.
 - 'Reviewable implementation PR #236 opened against main at code head 263a50f2; original
   RI223 archive and 498/1 Tender Research results documented.'
-current: 'PR #236 published; exact-head CI and attributable Owner REVIEW are required
-  before merging.'
-pending:
-- Check exact-head CI for final branch head, confirm mergeability/current base and
-  no review gate violations.
-- Obtain attributable Owner REVIEW prior to merge; afterward update checkpoint completed.
-last_verified_commit: 263a50f22b99d63958fbb1afe6858e27a87d3dae
+- 'PR #236 final-head CI 37805490740 SUCCESS 9/9 and Owner-directed squash merge 0266debdc29042903c619ca39720b8ab059686b0.'
+current: Completed and merged; successor APR-02-RI223-SOURCE-ANALYSIS-001 admitted.
+pending: []
+last_verified_commit: 0266debdc29042903c619ca39720b8ab059686b0
 test_results:
 - 498 Tender Research tests PASS, 1 skipped, 42 warnings.
 - 37 focused tests PASS after adapting previous single-version-only fail-closed test.
@@ -47,10 +44,7 @@ test_results:
   lots.
 - Optional standalone isolated-DB harness requires complete app model imports; existing
   canonical DB-backed tests pass.
-resume_instruction: 'Open PR #236 on feature/apr02-real-multilot-20261008. Verify
-  exact-head CI on latest bookkeeping head (not earlier code head), check current
-  main/reviews/AM-4 gates, merge only after attributable Owner REVIEW; then mark APR-02-RI223-REAL-MULTILOT-001
-  completed and continue the next measured APR-02 gap.'
+resume_instruction: 'Complete PR #236, no repeat; continue source evidence analysis.'
 execution:
   branch: feature/apr02-real-multilot-20261008
   base_commit: 4b93709383866121de65647fc340b8add0ab0510

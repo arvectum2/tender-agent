@@ -929,8 +929,8 @@ items:
 - order: 1050
   task_id: APR-02-RI223-REAL-MULTILOT-001
   title: Real RI223 multi-lot notice revisions and explanation projection
-  status: blocked
-  blocked_on: 'Exact-head CI and attributable Owner REVIEW on PR #236 before merge.'
+  status: done
+  completion_evidence: 'PR #236 CI 37805490740 SUCCESS 9/9; squash merge 0266debdc29042903c619ca39720b8ab059686b0; original RI223 32616376947 verified.'
   authority: OWNER_DIRECTIVE
   continuation_mode: OWNER_DIRECTIVE
   independent: true
@@ -941,6 +941,23 @@ items:
   dependencies: [APR-02-RI223-REGIME-ANALYSIS-001]
   executor_scope: "Verify exact original RI223 real multi-lot notice layouts, select clearly ordered observed notice revisions, project exact-number source-bound explanation questions/documents, preserve separate lots and unknown notice-wide NMCK and legal status. Keep 44-FZ, existing RAG/DP pipeline and external-action controls unchanged."
   done_gate: "Authentic XML source hashes and per-lot traceability, bounded deterministic projection with explicit unknown aggregate and no cross-lot conflation; focused and existing tests/checks, exact-head CI, Owner REVIEW before merge."
+
+
+- order: 1060
+  task_id: APR-02-RI223-SOURCE-ANALYSIS-001
+  title: Source-bound RI223 XML facts in existing Tender Research analysis
+  status: blocked
+  blocked_on: 'PR #237 exact-head GitHub CI and attributable Owner REVIEW before merge.'
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner continue APR-02; real RI223 32616376947 3 revisions/6 explanations/2 lots, but RAG report lacks structured XML facts."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-REAL-MULTILOT-001]
+  executor_scope: "Read-only source-bound XML observation projection in existing Tender Research report/API, separate from document chunk citations and LLM synthesis, no fabricated legal statuses."
+  done_gate: "Real XML source facts and per-fact citations visible in report/API; no 44-FZ regressions, tests/CI and Owner REVIEW pass."
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
