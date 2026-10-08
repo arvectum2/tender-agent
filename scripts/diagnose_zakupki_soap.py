@@ -1,25 +1,30 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import socket
-import zipfile
-from xml.etree import ElementTree as ET
 import ssl
 import sys
+import zipfile
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
+from xml.etree import ElementTree as ET
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.modules.tender_operator_agent_demo.attachment_downloader import (
+    download_procurement_attachments,
+)
+from src.modules.tender_operator_agent_demo.procurement_schemas import (
+    ProcurementAttachment,
+)
 from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
-from src.modules.tender_operator_agent_demo.attachment_downloader import download_procurement_attachments
-from src.modules.tender_operator_agent_demo.procurement_schemas import ProcurementAttachment
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 
 
@@ -219,7 +224,11 @@ def run_diagnostics(
                 target_dir / downloaded.stored_name, target_dir / "attachments"
             )
             payload["binary_attachments"] = binary_result
-            payload["download_status"] = "downloaded" if binary_result["complete"] else "incomplete_attachments"
+            payload["download_status"] = (
+                "downloaded_review_required"
+                if binary_result["complete"] and binary_result.get("requires_manual_review")
+                else "downloaded" if binary_result["complete"] else "incomplete_attachments"
+            )
             payload["downloaded_size_bytes"] = downloaded.size_bytes
             payload["archive_url_summary"] = {
                 "host": downloaded.source_url_host,
@@ -243,13 +252,20 @@ def run_diagnostics(
 def download_xml_referenced_attachments(archive: Path, target_dir: Path) -> dict[str, Any]:
     """Download EIS notice attachmentInfo binaries; an XML ZIP is not a document bundle."""
     attachments: list[ProcurementAttachment] = []
+    archive_sha256 = hashlib.sha256(archive.read_bytes()).hexdigest()
     with zipfile.ZipFile(archive) as bundle:
         for member in bundle.infolist():
             if not member.filename.lower().endswith(".xml"):
                 continue
             if member.file_size > 20 * 1024 * 1024:
                 raise RuntimeError("EIS notice XML exceeds safe size")
-            root = ET.fromstring(bundle.read(member))
+            xml_bytes = bundle.read(member)
+            root = ET.fromstring(xml_bytes)
+            is_ri223 = root.tag in {
+                "{http://zakupki.gov.ru/223fz/purchase/1}purchaseNotice",
+                "{http://zakupki.gov.ru/223fz/purchase/1}purchaseProtocol",
+            }
+            xml_sha256 = hashlib.sha256(xml_bytes).hexdigest()
             for item in root.iter():
                 local = item.tag.rsplit("}", 1)[-1]
                 if local not in {"attachmentInfo", "attachments"}:
@@ -267,6 +283,13 @@ def download_xml_referenced_attachments(archive: Path, target_dir: Path) -> dict
                         name=fields["fileName"], url=fields.get("url"),
                         size_bytes=int(fields["fileSize"]) if fields.get("fileSize", "").isdigit() else None,
                         can_download=bool(fields.get("url")),
+                        provenance={
+                            "source_regime": "223fz",
+                            "archive_sha256": archive_sha256,
+                            "xml_member": member.filename,
+                            "xml_sha256": xml_sha256,
+                            "source_attachment_uid": uid,
+                        } if is_ri223 else None,
                     ))
     if not attachments:
         return {"expected": 0, "downloaded": 0, "complete": False, "errors": ["no_attachment_info"]}
@@ -278,8 +301,12 @@ def download_xml_referenced_attachments(archive: Path, target_dir: Path) -> dict
         entry.name for entry in result.saved for source in attachments
         if entry.name == source.name and source.size_bytes is not None and entry.size_bytes != source.size_bytes
     ]
+    opaque = [entry for entry in result.saved if getattr(entry, "content_inspection_status", None) == "UNINSPECTED_OPAQUE"]
     return {"expected": len(attachments), "downloaded": len(result.saved),
             "complete": len(result.saved) == len(attachments) and not size_mismatches,
+            "requires_manual_review": bool(opaque),
+            "opaque_unparsed_count": len(opaque),
+            "content_analysis_complete": False if opaque else None,
             "size_mismatches": size_mismatches,
             "errors": [{"file": x.name, "reason": x.error} for x in result.skipped]}
 
