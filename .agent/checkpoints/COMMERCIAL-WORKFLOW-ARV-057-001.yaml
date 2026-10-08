@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: blocked
 task_id: COMMERCIAL-WORKFLOW-ARV-057-001
@@ -60,12 +60,14 @@ completed:
 - '2026-10-08: PR #212 exact-head CI run 37711832185 passed successfully on head 926f0226d3bba987ce3cf37c24b3bc5577824910;
   implementation is fully verified and the only remaining blocker is exhausted AM-4
   merge authority.'
-current: 'PR #212 is implementation-complete and exact-head CI-green, but merge is
-  blocked because renewed AM-4 is exhausted at 10/10.'
+current: 'PR #212 is implementation-complete and under exact-head CI. Merge is blocked
+  until attributable Owner renewal/review or explicit superseding merge authority.'
 pending:
-- Obtain attributable Owner renewal/review or explicit superseding merge authority.
-- 'After authority is restored, revalidate PR #212 head/base and merge only if the
-  governance gate permits it.'
+- Verify exact-head GitHub CI on this final checkpoint head and fix any implementation/test
+  failure if present.
+- 'After CI is green, retain PR #212 open and merge-blocked.'
+- Merge only after attributable Owner renewal/review or explicit authority supersedes
+  EXHAUSTED_10_OF_10_REVIEW_REQUIRED.
 last_verified_commit: 926f0226d3bba987ce3cf37c24b3bc5577824910
 test_results:
 - 'ARV-057 + similar-procurement/Data Platform/quote normalization regressions: 57
@@ -80,15 +82,9 @@ test_results:
   check, git diff --check PASS'
 - 'PR #212 exact-head CI run 37711832185: SUCCESS (9/9 jobs)'
 updated_at: '2026-10-08T07:10:27+03:00'
-resume_instruction: 'Do not modify the verified ARV-057 implementation unless new
-  review feedback appears. PR #212 is exact-head CI-green. Wait for attributable Owner
-  renewal/review or explicit superseding merge authority; then revalidate head/base
-  and merge if permitted.'
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv057
-  branch: agent/commercial-workflow-arv-057-001
-  base_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
-  issue: null
-  manual_override: false
-  lease_until: null
+resume_instruction: 'PR #212 is fully verified. Keep it open and merge-blocked until
+  Owner renewal/review restores authority; then revalidate and merge if permitted.'
+current_stage: blocked_waiting_am4_review
+remaining:
+- Owner renewal/review or explicit superseding merge authority
+- post-authority head/base revalidation and merge
