@@ -19,6 +19,18 @@ uses the existing local ETP trust directory; no changes to system cert store.
 
 ## Start (after review)
 
+Canonical Mac mini launcher (preflight, bounded build and health wait):
+
+    bash deploy/local/start_local.sh
+
+Operational read-only/EIS card probe:
+
+    uv run python deploy/local/readiness_probe.py --env-file ~/.config/arvectum/apr04-local.env --customer CUS-2026-000002
+
+The named app data volume is the local capacity-gate mount `/app/data`.
+It is **not** an independent physical/offsite backup.
+
+
 Set local shell \`PROD_SECRET_ENV\` and \`PROD_ETP_TRUST_DIR\` to absolute paths.
 Export all names in that secret environment using \`set -a; source
 "$PROD_SECRET_ENV"; set +a\` **without echoing them**.

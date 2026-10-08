@@ -27,6 +27,9 @@ a{color:var(--mint)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#
 <p>Сначала заполни профиль поставщика, затем приложи подтверждающие документы и проверь подходящую закупку. Оценка не является решением об участии.</p>
 <a href="/pilot/tender-agent">Перейти к анализу документации →</a></header>
 <section><h2>1. Профиль поставщика</h2>
+<div class="grid"><label>Продолжить существующий профиль по ID
+<input id="existing-customer" placeholder="CUS-2026-000001"></label>
+<div><button id="load-customer" type="button">Открыть профиль</button></div></div>
 <form id="onboard"><div class="grid">
 <label>Юридическое наименование <input name="legal_name" required minlength="2" placeholder="ООО «Пример»"></label>
 <label>ИНН <input name="inn" inputmode="numeric" pattern="([0-9]{10}|[0-9]{12})" placeholder="Необязательно"></label>
@@ -72,6 +75,26 @@ async function api(path,body,upload=false){
  if(!response.ok)throw new Error(JSON.stringify(content));return content;
 }
 async function execute(fn){$("#state").textContent="Обработка…";try{await fn();$("#state").textContent="Шаг выполнен";}catch(e){$("#state").textContent="Требуется исправление";output({error:e.message});}}
+$("#load-customer").addEventListener("click",()=>execute(async()=>{
+ const id=String($("#existing-customer").value||"").trim();
+ if(!id)throw Error("Укажите ID компании");
+ const response=await fetch("/api/onboarding/customers/"+encodeURIComponent(id),{credentials:"same-origin"});
+ const data=await response.json();if(!response.ok)throw Error(JSON.stringify(data));
+ customerId=data.customer_id;$("#company").textContent="Редактирование компании: "+customerId;
+ const f=$("#onboard").elements;
+ f.namedItem("legal_name").value=data.legal_name||"";
+ f.namedItem("inn").value=data.inn||"";
+ f.namedItem("kpp").value=data.kpp||"";
+ for(const key of ["legal_name","inn","kpp"])f.namedItem(key).readOnly=true;
+ const p=data.profile||{},c=p.criteria||{},m=p.commercial||{},q=p.qualification||{},r=p.risk_preferences||{};
+ for(const key of ["categories","regions","keywords"])f.namedItem(key).value=(c[key]||[]).join(", ");
+ for(const key of ["price_min","price_max"])f.namedItem(key).value=c[key]??"";
+ f.namedItem("margin").value=m.target_margin_percent??"";
+ f.namedItem("tolerance").value=r.tolerance||"medium";
+ f.namedItem("licenses").value=(q.licenses||[]).join(", ");
+ f.namedItem("sro").value=(q.sro_approvals||[]).join(", ");
+ $("#upload-btn").disabled=false;$("#screen-btn").disabled=false;output(data);
+}));
 $("#onboard").addEventListener("submit",e=>{e.preventDefault();execute(async()=>{
  const d=new FormData(e.target);const v=k=>String(d.get(k)||"").trim();
  const payload={legal_name:v("legal_name"),inn:v("inn")||null,kpp:v("kpp")||null,
@@ -80,8 +103,13 @@ $("#onboard").addEventListener("submit",e=>{e.preventDefault();execute(async()=>
  commercial:{target_margin_percent:number(v("margin"))},
  qualification:{licenses:split(v("licenses")),sro_approvals:split(v("sro"))},
  risk_preferences:{tolerance:v("tolerance")}};
- const result=await api("/api/onboarding/customers",payload);
- customerId=result.customer_id;$("#company").textContent="Создана компания: "+customerId;
+ const updating=Boolean(customerId);
+ const endpoint=updating?"/api/onboarding/customers/"+encodeURIComponent(customerId)+"/profile":"/api/onboarding/customers";
+ const opts={method:updating?"PUT":"POST",headers:{"Content-Type":"application/json"},credentials:"same-origin",body:JSON.stringify(payload)};
+ const resp=await fetch(endpoint,opts),result=await resp.json();
+ if(!resp.ok)throw Error(JSON.stringify(result));
+ customerId=result.customer_id;$("#company").textContent="Профиль компании: "+customerId;
+ for(const key of ["legal_name","inn","kpp"])$("#onboard").elements.namedItem(key).readOnly=true;
  $("#upload-btn").disabled=false;$("#screen-btn").disabled=false;output(result);
 });});
 $("#document").addEventListener("submit",e=>{e.preventDefault();execute(async()=>{

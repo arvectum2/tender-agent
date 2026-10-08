@@ -154,6 +154,7 @@ def test_onboarding_ui_is_local_operator_flow(client):
     assert html.status_code == 200
     for word in ("Сохранить профиль", "Добавить документ", "Проверить по профилю"):
         assert word in html.text
+    assert "Открыть профиль" in html.text
     assert "https://cdn" not in html.text
 
 
@@ -184,3 +185,14 @@ def test_existing_analyzed_run_projection_is_profile_bound(client, monkeypatch):
     assert body["profile_version"] == 1
     assert body["external_action_allowed"] is False
     assert body["decision"] == "HUMAN_REVIEW_REQUIRED"
+
+
+
+def test_macmini_override_is_loopback_and_has_verified_storage_mount():
+    from pathlib import Path
+
+    repo = Path(__file__).resolve().parents[1]
+    compose = (repo / "deploy/local/compose.macmini.yaml").read_text()
+    assert '127.0.0.1:18082:8000' in compose
+    assert compose.count('ARVECTUM_STORAGE_ROOT: /app/data') == 2
+    assert '0.0.0.0:18082' not in compose

@@ -215,6 +215,8 @@ active_product_roadmap_2026_10_08:
     - id: APR-03-PRODUCTION-RUNTIME
       priority: P0
       state: in_progress
+      real_vps: paused_by_owner_until_development_complete_2026_10_08
+      interim_runtime: isolated_macmini_loopback_compose
       local_rehearsal_evidence: docs/operations/APR03_LOCAL_REHEARSAL_2026-10-08.md
       production_activation: pending_explicit_external_approval
       legacy_mapping: [ARV-008, ARV-011, ARV-012, ARV-013, ARV-014, ARV-058]
@@ -224,7 +226,8 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
-      state: planned
+      state: in_progress
+      local_e2e_evidence: docs/operations/APR04_MACMINI_E2E_2026-10-08.md
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'

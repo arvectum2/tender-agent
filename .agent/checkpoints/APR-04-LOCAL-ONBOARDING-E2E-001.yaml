@@ -19,20 +19,29 @@ completed:
   - Integrated onboarding company/criteria/commercial/qualification versioning with existing ARV-015 and ARV-064 stores.
   - Added operator UI, PDF evidence upload/download, and cited personalized screening for EIS and existing analyzed run.
   - Implemented loopback-only Mac mini Docker override and standalone real-HTTP synthetic acceptance script.
-  - Targeted tests 17 passed and make check PASS; no existing runtime mutation.
-current: Deploy and verify full live local Mac mini API/Redis/PostgreSQL onboarding-to-analysis flow.
+  - Targeted tests expanded to 50 passed, make check and Node JS syntax PASS.
+  - Local Mac mini Compose started with isolated PG16/Redis/worker/API on loopback 18082.
+  - Live HTTP E2E passed: auth, company/profile v2, PDF evidence, uploaded docs, analysis, report and human-gated personalization.
+  - Real exact EIS public card 0372200172326000015 cited successfully; NMCK outside synthetic profile bounds.
+  - Fixed Docker image omission of required demo supplier profile files.
+  - Configured verified /app/data named-volume capacity gate after detecting readiness degraded by unset storage root.
+  - Added re-open/edit existing customer from operator UI without fabricating identity changes.
+current: Rebuild final local image and prove readiness ok and real EIS SOAP document intake.
 pending:
-  - Deploy isolated loopback local runtime and execute complete synthetic end-to-end flow.
   - Record checks and release branch/PR with exact checkpoint.
-last_verified_commit: af294b67
+last_verified_commit: 57d6f3a3834884fa1ace2a7440dcc6f7700f9c60
 test_results:
   - APR-03 predecessor GitHub CI success; 45 local regressions green.
-  - APR-04 onboarding and existing store tests 17 passed; Ruff and make check PASS.
+  - APR-04 and related regressions 50 passed; Ruff, make check, JS syntax green.
+  - Live local synthetic real-HTTP E2E result PASS, analysis needs_review (safe).
+  - Real 44FZ EIS public card lookup PASS, exact procurement source.
+  - Readiness initially degraded due unset ARVECTUM_STORAGE_ROOT; fix coded, redeploy pending.
 resume_instruction: >-
-  Continue APR-04 integrated onboarding, local macmini Compose deployment,
-  synthetic company->profile->evidence->tender-screen E2E and verification.
-  Never attempt VPS provisioning. Keep existing Mac-mini runtime untouched.
-  Do not re-enable disabled watchdog.
+  Rebuild Mac mini Compose with new /app/data storage root and resumed
+  operator UI, check /health/ready==ok and re-run live e2e_smoke.py.
+  Execute bounded real read-only EIS getDocsIP probe and report sourced
+  result honestly. Publish APR-04 PR and final CI/checkpoint; no VPS.
+  Never re-enable disabled watchdog.
 execution:
   branch: feature/apr04-local-onboarding-e2e
   base_commit: 2f241a0acb2d1367914ac476d5729cc4fec94e7e
