@@ -28,6 +28,9 @@ from src.modules.commercial_prebid_demo.router import (
 )
 from src.modules.compliance_matrix.router import router as compliance_matrix_router
 from src.modules.connector_registry.router import router as connector_registry_router
+from src.modules.contract_execution_analytics.router import (
+    router as contract_execution_analytics_router,
+)
 from src.modules.contract_negotiation.router import (
     router as contract_negotiation_router,
 )
@@ -225,6 +228,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     financing_strategy_router,
     finance_memo_router,
     contract_risks_router,
+    contract_execution_analytics_router,
     contract_negotiation_router,
     integrated_risk_memo_router,
     kpi_learning_router,
