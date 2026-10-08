@@ -13,18 +13,21 @@ completed:
   - Synchronized canonical main and inspected APR-01 queue scope and done gate.
   - Started isolated feature branch from current main.
   - Implemented bounded read-only projection and existing-run API with fail-closed citations.
-  - Focused regressions: 28 passed, 1 upstream deprecation warning; Ruff and diff check pass.
-current: Bounded existing-run projection implemented. Next integrate registry-number/URL direct intake, validate 44-FZ document-backed cited requirements, measure latency and run exact-head CI.
+  - Focused regressions: 30 passed, 1 upstream deprecation warning; Ruff and diff check pass.
+  - Added strict URL/registry-number path via the existing public EIS card parser; missing documentation remains UNKNOWN.
+  - Measured 1000-run mocked-card projection p95 0.009 ms, network excluded; make check passes.
+current: Both existing-run and direct public-EIS-card views implemented. Need exact-head CI, assess acceptance coverage and merge only if validated.
 pending:
-  - Connect direct 44-FZ registry-number/URL intake to canonical pipeline without second engine.
-  - Surface cited document-backed essential requirements in a quick response.
+  - Validate 44-FZ document-level citations through an already analyzed run; public card alone cannot provide attachment evidence.
   - Focused tests and latency measurement.
   - PR, exact-head CI and merge.
 last_verified_commit: f60d736d
 test_results:
-  - Focused tests: 28 passed, 1 warning.
+  - Focused tests: 30 passed, 1 warning.
+  - Mocked public-card projection p95 0.009 ms (1000 calls); network excluded.
+  - make check: PASS.
   - Ruff lint and git diff --check: PASS.
-resume_instruction: Resume feature/arv-061-fast-cited-preanalysis; existing-run pre-analysis projection is ready and tested. Implement direct procurement number/URL intake reusing canonical 44-FZ loader and evidence, measure latency, add E2E regressions, exact-head CI and merge. Do not declare completed until queue done_gate is satisfied.
+resume_instruction: Resume feature/arv-061-fast-cited-preanalysis; direct number/URL and existing-run views plus focused tests are implemented. Validate canonical document citation visibility and exact-head CI, merge on success, then update checkpoint completed and roadmap. Do not mislabel public search card evidence as attachment-level citation.
 execution:
   branch: feature/arv-061-fast-cited-preanalysis
   base_commit: f60d736d
