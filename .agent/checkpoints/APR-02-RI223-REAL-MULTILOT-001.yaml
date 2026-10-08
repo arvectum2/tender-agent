@@ -3,33 +3,51 @@ repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REAL-MULTILOT-001
 status: in_progress
 authority: OWNER_DIRECTIVE
-goal: Prove and safely expose distinct lots on authentic multi-lot RI223 223-FZ notices
-  in existing analysis flow.
+goal: Handle authentic RI223 223-FZ multi-lot notices with multiple source revisions
+  and explanation documents without inventing legal status or conflating lots.
 definition_of_done:
-- Freeze authentic EIS 223-FZ two-lot source XML and SHA-256 per original without
-  exposing tokens.
-- Reuse RI223 parser, canonical tender raw payload and evidence to expose lot-specific
-  source facts in existing Tender Research analysis without conflating price, quantities,
-  or coverage.
-- Regression test missing/ambiguous/unsupported lot paths and preserve 44-FZ behavior.
-- Run targeted tests, make check, exact-head CI, create guarded PR with Owner REVIEW.
+- Freeze authentic EIS exact-registry RI223 source ZIP and SHA-256; prove multiple
+  notice versions, separate lots/positions and six explanation XML records.
+- Implement source-bound unambiguous observed version selection with explicit chronology,
+  history, attachment binding and fail-closed unsupported/ambiguous cases.
+- Preserve lot-specific prices and terms; never silently produce global NMCK, legally
+  effective version or explanation lot linkage.
+- Pass focused/full Tender Research tests, make check, relevant Ruff and exact-head
+  CI, and prepare reviewable PR for Owner gate.
 completed:
 - 'Reconciled merged APR-02 RAR content analysis PR #233 and regime-specific question
   PR #235 exact-head CI 9/9 merge 4b937093.'
 - Found authentic RI223 region-77 2026-10-08 public XML with three distinct two-lot
   procurements in frozen bulk SOAP archives.
-current: Validate original exact-register multi-lot transport; implement smallest
-  proven analysis gap.
+- Authenticated-as-public RI223 exact 32616376947 SOAP completed and original ZIP
+  frozen SHA-256 840927b8dddba00cc682e78192ffb263cbd89d3fec1acbaba3fa60af63fd3575.
+- Reproduced original unsupported RI223 explanation root in authentic 9-member ZIP
+  with 3 source notice versions, 6 explanations and 2 lots.
+- Extended existing guarded RI223 parser to source-bound explanation records and strictly
+  ordered observed notice versions; selected source version 3 only as a data projection,
+  legal effective state UNKNOWN.
+- Verified original parser result 2 lots, 2 positions, 6 explanation records, 7 source-document
+  references; global NMCK UNKNOWN.
+- 37 focused acceptance tests passed; full Tender Research suite 498 passed, 1 skipped
+  (42 known warnings); make check, Ruff and git diff --check PASS.
+current: Code and authentic-source parser check complete; preparing PR, exact-head
+  CI and Owner REVIEW.
 pending:
-- Original exact RI223 source freeze and structural parser check.
-- Analysis projection/guard and regression tests.
-- Reviewable PR and CI.
+- Commit source/test/evidence and open PR.
+- Verify exact-head CI and attribution/Owner REVIEW before merge.
 last_verified_commit: 4b93709383866121de65647fc340b8add0ab0510
 test_results:
-- 'Predecessor PR #235 CI 37799853447 success 9/9.'
-resume_instruction: In worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-real-multilot-20261008
-  continue real 223-FZ per-lot source verification, implement verified guard, add
-  regressions, test and PR; preserve human/owner gates.
+- 498 Tender Research tests PASS, 1 skipped, 42 warnings.
+- 37 focused tests PASS after adapting previous single-version-only fail-closed test.
+- make check PASS, Ruff touched-file PASS, git diff --check PASS.
+- Real RI223 exact source 32616376947 parsed 3 revisions, 6 explanations and two separate
+  lots.
+- Optional standalone isolated-DB harness requires complete app model imports; existing
+  canonical DB-backed tests pass.
+resume_instruction: 'Branch feature/apr02-real-multilot-20261008: check PR exact-head
+  CI, review source-bound revision/explanation guards, obtain attributable Owner REVIEW
+  before merge, then reconcile checkpoint completed and continue APR-02 from the next
+  evidence-backed gap.'
 execution:
   branch: feature/apr02-real-multilot-20261008
   base_commit: 4b93709383866121de65647fc340b8add0ab0510

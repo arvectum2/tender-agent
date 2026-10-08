@@ -928,7 +928,7 @@ items:
 
 - order: 1050
   task_id: APR-02-RI223-REAL-MULTILOT-001
-  title: Real RI223 multi-lot source-bound analysis guard
+  title: Real RI223 multi-lot notice revisions and explanation projection
   status: in_progress
   authority: OWNER_DIRECTIVE
   continuation_mode: OWNER_DIRECTIVE
@@ -938,7 +938,7 @@ items:
   source: "Owner continue 2026-10-08; public RI223 region-77 originals 32616376947, 32616343061, 32616347092 with two lots and distinct subjects."
   roadmap_scope: [ARV-006]
   dependencies: [APR-02-RI223-REGIME-ANALYSIS-001]
-  executor_scope: "Verify exact source-bound real multi-lot layouts and ensure existing Tender Research read-only analysis distinguishes lot-specific subjects, quantities and prices without inventing notice-wide NMCK or legal meanings. Preserve 44-FZ and source provenance; use existing RAG/DP components."
+  executor_scope: "Verify exact original RI223 real multi-lot notice layouts, select clearly ordered observed notice revisions, project exact-number source-bound explanation questions/documents, preserve separate lots and unknown notice-wide NMCK and legal status. Keep 44-FZ, existing RAG/DP pipeline and external-action controls unchanged."
   done_gate: "Authentic XML source hashes and per-lot traceability, bounded deterministic projection with explicit unknown aggregate and no cross-lot conflation; focused and existing tests/checks, exact-head CI, Owner REVIEW before merge."
 
 completed_dependencies:
