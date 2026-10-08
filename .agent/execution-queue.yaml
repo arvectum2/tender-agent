@@ -799,7 +799,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-066-001
   strategy: ADAPT
   title: One-click procurement import boundary
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -808,7 +808,7 @@ items:
   - ARV-066
   dependencies: []
   executor_scope: 'Add a safe canonical import contract for procurement URL/registry number and bounded browser/share-action handoff surfaces that resolve into the existing customer case/intake path; DOM scraping must not be the sole source of truth.'
-  done_gate: 'Supported URL/number inputs resolve idempotently into canonical intake with provenance, unsupported/ambiguous inputs fail closed, handoff surfaces do not create a parallel data model, and focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied: direct registry-number and allowlisted EIS URL inputs normalize into canonical ProcurementCase intake with provenance, unsupported/ambiguous inputs fail closed, duplicate/concurrent handoff is idempotent, DOM scraping is not source truth, and PR #220 merged as 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f.'
 
 - order: 400
   task_id: COMMERCIAL-WORKFLOW-ARV-069-001
