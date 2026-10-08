@@ -814,16 +814,34 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-069-001
   strategy: ADAPT
   title: Competition and bid-price forecast context
+  status: blocked
+  authority: REVIEW
+  independent: true
+  auto_merge: false
+  source: 'Originally admitted by Owner Commercial Workflow directive 2026-10-07; immediate admission superseded by Owner roadmap optimization 2026-10-08.'
+  roadmap_scope:
+  - ARV-069
+  dependencies: []
+  blocked_on: 'Experiment trigger: sufficient source-bound comparable completed procurement/outcome corpus plus a frozen benchmark showing measurable value over the historical-price baseline.'
+  executor_scope: 'Do not implement until trigger evidence is recorded. When reopened, forecast context must separate observed facts from estimates, expose sample/evaluation quality and uncertainty, and remain advisory under HUMAN decision control.'
+  done_gate: 'Trigger evidence is satisfied and frozen before implementation; evaluated forecast provides measurable benefit over deterministic historical-price context without autonomous participation claims.'
+
+- order: 410
+  task_id: ACTIVE-ROADMAP-ARV-061-001
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  title: Fast cited procurement pre-analysis
   status: ready
   authority: AUTO
   independent: true
   auto_merge: true
-  source: 'Canonical ARV-069 next_result; explicitly admitted by Owner Commercial Workflow directive 2026-10-07.'
+  source: 'APR-01 in Owner-optimized Active Product Roadmap 2026-10-08.'
   roadmap_scope:
-  - ARV-069
+  - ARV-061
   dependencies: []
-  executor_scope: 'Build evidence-backed forecast context for likely participants, price range and win factors using only validated historical/source features; surface sample size, model/evaluation quality and uncertainty. Never present forecast output as a promise of winning or an autonomous participation decision.'
-  done_gate: 'Forecast output clearly separates observed facts from model estimates, reports uncertainty/sample/evaluation evidence, stays advisory under HUMAN decision control, and focused tests/exact-head CI pass.'
+  executor_scope: 'From a supported procurement registry number/URL and existing canonical intake, produce a fast evidence-grounded pre-analysis: subject, deadline, essential requirements, blockers/unknowns, fit signals and citations. Reuse current facts/evidence/Decision Core paths; do not build a second analysis engine or make an autonomous participation decision.'
+  done_gate: 'Supported 44-FZ inputs produce a deterministic bounded cited pre-analysis with source/page/fragment evidence where available, explicit UNKNOWN for unsupported/missing facts, latency measured against a documented target, focused regressions pass and exact-head CI is green.'
+
 
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
