@@ -1,43 +1,30 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: PR-TREE-CLEANUP-20261008
+task_id: ACTIVE-ROADMAP-ARV-061-001
+status: in_progress
 authority: OWNER_DIRECTIVE
-goal: 'Leave Tender Agent with a clean pull-request tree: merge any still-valid unique fix that remains necessary on current main, close stale/superseded/duplicate/deferred PRs with traceable reasons, and finish with zero unintended open PRs.'
+goal: Fast evidence-grounded cited procurement pre-analysis for supported 44-FZ number/URL using existing facts/evidence/Decision Core.
 definition_of_done:
-- Every currently open PR is classified against current main as merge/reimplement, absorbed/superseded, deferred-by-active-roadmap, or obsolete duplicate.
-- The confirmed hidden real->demo fallback from old PR #89 is not discarded if still present on current main; it is fixed and tested on a clean current-main branch rather than merging the stale stacked PR.
-- Deferred APR-08/APR-09/APR-10 and trigger-backlog work is preserved as history/evidence but has no stale open PR.
-- Runtime fixes from PR #145 are verified as already absorbed or otherwise reconciled before closure.
-- Old roadmap/revalidation PRs superseded by the optimized Active Product Roadmap are closed.
-- Cleanup/fix PR passes focused tests and exact-head CI before merge.
-- Final open PR inventory contains no stale tails or duplicates; ideally zero open PRs before the next-chat development step.
+  - Supported 44-FZ registry numbers/URLs yield bounded subject, deadlines, requirements, blockers, unknowns, fit signals and provenance citations.
+  - Unsupported or missing fields fail closed as UNKNOWN; no autonomous GO/NO_GO decision.
+  - Latency measured against documented target; focused regressions and exact-head CI pass.
+  - Changes merged; checkpoint completed with verified commit.
 completed:
-- '2026-10-08: Reconciled current main c9d5059996c23db0eee2de3d13da2b44bde2af1a and enumerated all open PRs.'
-- '2026-10-08: Confirmed old PR #89 still contains a valid unique fail-closed fix: current main still returns demo tenders from real registry-number list mode.'
-- '2026-10-08: Confirmed key PR #145 runtime hardening changes (_write_evidence_summary and delivery_price_inclusion grounding guard) are already present on current main.'
-- '2026-10-08: Closed all stale/superseded/deferred open PRs with traceable reasons; active open PR inventory reached zero before final cleanup PR.'
-- '2026-10-08: Reimplemented the valid old PR #89 fail-closed behavior on current main: real registry-number list mode now raises EisLoaderError and explicit demo discovery uses a separate demo loader.'
-- '2026-10-08: Added regressions proving exact registry-number delegation remains real and pipeline list ingestion cannot silently ingest demo data.'
-current: PR tree cleanup is complete; no open PRs remain and the valid fail-closed EIS fix is merged on current main.
-pending: []
-last_verified_commit: 3101c048746b2a96b48401da684ef96e7d5389d4
+  - Synchronized canonical main and inspected APR-01 queue scope and done gate.
+  - Started isolated feature branch from current main.
+  - Implemented bounded read-only projection and existing-run API with fail-closed citations.
+  - Focused regressions: 28 passed, 1 upstream deprecation warning; Ruff and diff check pass.
+current: Bounded existing-run projection implemented. Next integrate registry-number/URL direct intake, validate 44-FZ document-backed cited requirements, measure latency and run exact-head CI.
+pending:
+  - Connect direct 44-FZ registry-number/URL intake to canonical pipeline without second engine.
+  - Surface cited document-backed essential requirements in a quick response.
+  - Focused tests and latency measurement.
+  - PR, exact-head CI and merge.
+last_verified_commit: f60d736d
 test_results:
-- 'Focused EIS/discovery/pipeline regressions: 61 passed, 1 warning.'
-- 'uv run make check: PASS.'
-- 'git diff --check against cleanup base: PASS.'
-- 'YAML parse for canonical agent/roadmap surfaces: PASS.'
-- 'Open PR inventory after stale/deferred closure: 0.'
-- 'PR #224 exact-head CI run 37762311939: SUCCESS (9/9 jobs).'
-- 'PR #224 squash-merged as 3101c048746b2a96b48401da684ef96e7d5389d4.'
-- 'Final open PR inventory after merge: 0.'
-updated_at: '2026-10-08T13:25:00+03:00'
-resume_instruction: Cleanup complete. In the next chat, start from main and resume ACTIVE-ROADMAP-ARV-061-001 from the optimized Active Product Roadmap; do not reopen closed stale PRs or trigger-gated work without new evidence.
+  - Focused tests: 28 passed, 1 warning.
+  - Ruff lint and git diff --check: PASS.
+resume_instruction: Resume feature/arv-061-fast-cited-preanalysis; existing-run pre-analysis projection is ready and tested. Implement direct procurement number/URL intake reusing canonical 44-FZ loader and evidence, measure latency, add E2E regressions, exact-head CI and merge. Do not declare completed until queue done_gate is satisfied.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: 3101c048746b2a96b48401da684ef96e7d5389d4
-  issue: null
-  manual_override: false
-  lease_until: null
+  branch: feature/arv-061-fast-cited-preanalysis
+  base_commit: f60d736d

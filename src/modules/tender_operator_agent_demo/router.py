@@ -8,6 +8,9 @@ from src.modules.commercial_core.run_service import (
     get_run_commercial_core,
 )
 from src.modules.commercial_core.schemas import CommercialCoreResponse
+from src.modules.tender_operator_agent_demo.fast_preanalysis import (
+    fast_cited_preanalysis,
+)
 from src.modules.tender_operator_agent_demo.pilot_wizard_ui import (
     render_tender_operator_pilot_wizard_html,
 )
@@ -433,6 +436,13 @@ def get_tender_operator_commercial_core(run_id: str) -> CommercialCoreResponse:
 @router.get("/api/demo/tender-agent/runs/{run_id}/steps", response_model=TenderOperatorUploadedRunStepsResponse)
 def get_tender_operator_uploaded_run_steps(run_id: str) -> TenderOperatorUploadedRunStepsResponse:
     return get_uploaded_demo_run_steps(run_id)
+
+
+@router.get("/api/demo/tender-agent/runs/{run_id}/pre-analysis")
+def get_tender_operator_fast_preanalysis(run_id: str) -> dict:
+    """Fast bounded view of existing analyzed run, without re-running analysis."""
+    report = get_uploaded_demo_report(run_id)
+    return fast_cited_preanalysis(report.decision_core)
 
 
 @router.get("/api/demo/tender-agent/runs/{run_id}/report", response_model=TenderOperatorDemoReportResponse)
