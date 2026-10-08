@@ -152,3 +152,44 @@ def test_commercial_workflow_progress_points_to_arv066_after_ten_completions():
     assert items["COMMERCIAL-WORKFLOW-ARV-063-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-064-001"]["status"] == "done"
     assert items["COMMERCIAL-WORKFLOW-ARV-066-001"]["status"] == "ready"
+
+
+def test_owner_optimized_active_product_roadmap_controls_continuation():
+    roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
+    directive = _yaml(".agent/owner-directive.yaml")
+    queue = _yaml(".agent/execution-queue.yaml")
+
+    active = roadmap["active_product_roadmap_2026_10_08"]
+    assert len(active["outcomes"]) <= 15
+    assert [item["id"] for item in active["outcomes"][:3]] == [
+        "APR-01-FAST-CITED-PREANALYSIS",
+        "APR-02-223FZ-BREADTH",
+        "APR-03-PRODUCTION-RUNTIME",
+    ]
+    assert directive["active_product_roadmap_optimization_2026_10_08"]["status"] == "active"
+
+    queue_items = {item["task_id"]: item for item in queue["items"]}
+    assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["status"] == "ready"
+    assert queue_items["ACTIVE-ROADMAP-ARV-061-001"]["authority"] == "AUTO"
+    assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["status"] == "blocked"
+    assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["authority"] == "REVIEW"
+    assert queue_items["COMMERCIAL-WORKFLOW-ARV-069-001"]["auto_merge"] is False
+
+
+def test_trigger_backlog_keeps_technology_choices_out_of_active_commitments():
+    roadmap = _yaml("docs/roadmap/master-roadmap.yaml")
+    trigger_items = roadmap["trigger_backlog_2026_10_08"]["items"]
+    mapped = {legacy for item in trigger_items for legacy in item["legacy_mapping"]}
+
+    for legacy_id in ["ARV-028", "ARV-029", "ARV-047", "ARV-048", "ARV-049", "ARV-062", "ARV-075", "ARV-046", "ARV-045", "ARV-070", "ARV-069"]:
+        assert legacy_id in mapped
+
+    active_mapped = {
+        legacy
+        for outcome in roadmap["active_product_roadmap_2026_10_08"]["outcomes"]
+        for legacy in outcome.get("legacy_mapping", [])
+    }
+    assert "ARV-047" not in active_mapped
+    assert "ARV-048" not in active_mapped
+    assert "ARV-049" not in active_mapped
+    assert "ARV-069" not in active_mapped
