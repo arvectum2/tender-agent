@@ -31,11 +31,14 @@ completed:
   a documented successor.
 - 'Full Tender Research: 511 passed, 1 skipped, 42 warnings. New targeted unit + existing
   analyzer dispatch 6 passed; make check, Ruff new-file checks, git diff --check passed.'
-current: PR publication, exact-head CI and Owner review required before merge.
+- 'Opened Owner-gated PR #239 on verified source dossier implementation; code head
+  4b08dbc5630df402a655b32e397f5b9baafefae9.'
+current: 'PR #239 open, exact-head GitHub CI and Owner REVIEW required before merging.'
 pending:
-- Publish PR and exact-head CI; Owner-gated merge.
-- After merge reconcile checkpoint then address measured Data Platform index readiness
-  before substantive end-to-end analysis.
+- 'Check PR #239 exact-head GitHub Actions CI, mergeability and Owner directive/review;
+  merge guarded by unchanged SHA.'
+- After merge mark completed and independently address actual Data Platform missing
+  index on original local corpus.
 last_verified_commit: 77fe438b07ae0948216317762845b85a20a6497b
 test_results:
 - 511 Tender Research passed, 1 skipped, 42 warnings
@@ -45,11 +48,10 @@ test_results:
 - Original SQLite 300 chunks and 7 real source-excerpt bindings in offline read-only
   check
 - 'Live old DP collection: no_context, index not confirmed ready.'
-resume_instruction: In feature/apr02-ri223-document-dossier, publish PR from current
-  head with 511/1 tests and original source offline evidence. Check exact-head CI
-  and Owner review before merge. Afterwards close checkpoint and initiate measured
-  Data Platform collection readiness/reindex successor using original local files;
-  never misrepresent offline binding as successful live RAG.
+resume_instruction: 'PR #239 on feature/apr02-ri223-document-dossier in /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-document-dossier.
+  Check exact-head CI and Owner review before guarded merge. Mark checkpoint completed
+  on merge and continue measured original SQLite Data Platform index readiness restore;
+  do not treat offline source excerpts as successful live RAG.'
 execution:
   branch: feature/apr02-ri223-document-dossier
   base_commit: 77fe438b07ae0948216317762845b85a20a6497b
