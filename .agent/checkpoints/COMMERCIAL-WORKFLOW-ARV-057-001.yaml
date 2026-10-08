@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-057-001
@@ -29,7 +29,7 @@ completed:
 current: Inventory canonical historical price observations, line-item/quantity/unit
   semantics, and reusable normalization/comparability primitives before choosing the
   smallest evidence-backed ARV-057 slice.
-pending:
+pending: &id001
 - Inventory procurement NMCK/line-item price evidence plus quote/NMCK normalization
   primitives.
 - Implement reproducible historical price/NMCK range projection with explicit comparability
@@ -44,11 +44,5 @@ resume_instruction: 'Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv057-
   Inventory source-bound procurement price/quantity/unit fields and existing normalization
   first; implement the smallest reproducible historical-range adapter. Do not automatically
   merge: AM-4 is exhausted at 10/10.'
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv057
-  branch: agent/commercial-workflow-arv-057-001
-  base_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: inventory
+remaining: *id001
