@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-064-001
@@ -39,7 +39,7 @@ completed:
   OCR/extraction or private-data auto-import is admitted.'
 current: Implement tenant-scoped company profile fact and reusable-document version
   primitives over CustomerProfile and DocumentArtifact/ArtifactVersion.
-pending:
+pending: &id001
 - Add company profile fact and reusable company-document models/migration with immutable
   version lineage and expiry.
 - Implement tenant-scoped create/list/get/version APIs and strict artifact ownership/binding
@@ -60,11 +60,5 @@ resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv064-c
   Implement customer-scoped append-versioned company facts and reusable document bindings
   over CustomerProfile + DocumentArtifact/ArtifactVersion, with explicit expiry and
   fail-closed safe autofill; do not auto-import or inspect unrelated private documents.
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv064
-  branch: agent/commercial-workflow-arv-064-001
-  base_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: implementation
+remaining: *id001
