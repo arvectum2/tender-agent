@@ -1,4 +1,4 @@
-version: 2
+version: 1
 repository: arvectum2/tender-agent
 status: in_progress
 task_id: COMMERCIAL-WORKFLOW-ARV-063-001
@@ -38,7 +38,7 @@ completed:
 current: Design and implement a bounded template-preserving DOCX/XLSX draft generator
   that adapts existing openpyxl/python-docx and DocumentArtifact versioning instead
   of creating a separate document platform.
-pending:
+pending: &id001
 - Implement template fill primitives for DOCX and XLSX with explicit target locators
   and fail-closed mapping semantics.
 - Persist generation/template lineage and field provenance; preserve canonical working_kp.xlsx
@@ -58,11 +58,5 @@ resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv063-c
   Build template-preserving DOCX/XLSX draft generation around existing python-docx/openpyxl
   and DocumentArtifact versioning; keep all outputs DRAFT_REVIEW_ONLY and never sign/submit/deliver
   externally.
-execution:
-  claimed_by: ChatGPT
-  execution_id: chat-20261008-arv063
-  branch: agent/commercial-workflow-arv-063-001
-  base_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
-  issue: null
-  manual_override: false
-  lease_until: null
+current_stage: implementation
+remaining: *id001
