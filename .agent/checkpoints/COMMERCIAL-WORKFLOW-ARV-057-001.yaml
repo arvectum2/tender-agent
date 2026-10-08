@@ -53,6 +53,10 @@ completed:
 - '2026-10-08: Merge is objectively blocked by canonical governance: PR #211 exhausted
   renewed AM-4 at 10/10 and executor-policy requires REVIEW for every later automatic
   merge. Preparation/testing/CI remain permitted.'
+- '2026-10-08: Final self-review hardened provenance: every comparable observation
+  and the seed now expose source-bound subject, NMCK, publication and structured position-basis
+  evidence (including quantity/unit values) so the displayed range can be reproduced
+  from cited inputs.'
 current: 'PR #212 is implementation-complete and under exact-head CI. Merge is blocked
   until attributable Owner renewal/review or explicit superseding merge authority.'
 pending: &id001
@@ -73,10 +77,12 @@ test_results:
   R9 pg_restore acceptance failure)'
 - 'PR #212 exact-head CI: required on final blocked-checkpoint head before merge;
   do not infer merge authority from CI success'
-updated_at: '2026-10-08T04:07:36+03:00'
-resume_instruction: 'For PR #212, first verify exact-head CI for the current branch
-  head. If CI fails, fix and rerun. If CI is green, do not merge: canonical AM-4 is
-  exhausted 10/10. Wait for attributable Owner renewal/review or explicit superseding
-  merge authority, then re-verify head/base/CI before merge.'
+- 'Post-provenance-hardening relevant regression suite: 57 passed; Ruff/format, make
+  check, git diff --check PASS'
+updated_at: '2026-10-08T04:13:19+03:00'
+resume_instruction: 'Verify exact-head GitHub CI for PR #212 at the current branch
+  head. If CI fails, fix and rerun. If CI is green, leave PR #212 open: canonical
+  AM-4 is exhausted 10/10 and merge requires attributable Owner renewal/review or
+  explicit superseding authority.'
 current_stage: merge_review_blocked_exact_ci_required
 remaining: *id001

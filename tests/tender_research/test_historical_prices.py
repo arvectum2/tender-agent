@@ -154,10 +154,30 @@ def test_historical_price_range_normalizes_single_position_nmck_per_quantity(ses
     assert result.seed_orientation == "ABOVE_RANGE"
     assert result.is_forecast is False
     assert result.commercial_commitment is False
+    assert result.seed_evidence
+    assert {item.source_type for item in result.seed_evidence} >= {
+        "PROCUREMENT_TENDER_SUBJECT",
+        "PROCUREMENT_TENDER_NMCK",
+        "PROCUREMENT_TENDER_PUBLICATION",
+        "PROCUREMENT_TENDER_POSITION_BASIS",
+    }
     assert all(item.evidence for item in result.observations)
     assert all(
-        item.evidence[0].source_url
-        and item.evidence[0].source_ref.endswith(":nmck_amount")
+        {evidence.source_type for evidence in item.evidence}
+        >= {
+            "PROCUREMENT_TENDER_SUBJECT",
+            "PROCUREMENT_TENDER_NMCK",
+            "PROCUREMENT_TENDER_PUBLICATION",
+            "PROCUREMENT_TENDER_POSITION_BASIS",
+        }
+        for item in result.observations
+    )
+    assert all(
+        next(
+            evidence
+            for evidence in item.evidence
+            if evidence.source_type == "PROCUREMENT_TENDER_NMCK"
+        ).source_url
         for item in result.observations
     )
 

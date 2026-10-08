@@ -86,6 +86,7 @@ class HistoricalPriceResponse(BaseModel):
     seed_orientation: Orientation = "UNKNOWN"
     seed_comparable_amount: float | None = None
     observations: list[HistoricalPriceObservation] = Field(default_factory=list)
+    seed_evidence: list[HistoricalPriceEvidence] = Field(default_factory=list)
     rejected_counts: dict[str, int] = Field(default_factory=dict)
     comparability_policy: list[str] = Field(
         default_factory=lambda: [
@@ -245,12 +246,21 @@ def _source_evidence(tender: ProcurementTender) -> list[HistoricalPriceEvidence]
     url = tender.eis_url or tender.platform_url
     evidence = [
         HistoricalPriceEvidence(
-            source_type="PROCUREMENT_TENDER_NMCK",
-            source_ref=f"{tender.source}:{source_ref}:nmck_amount",
+            source_type="PROCUREMENT_TENDER_SUBJECT",
+            source_ref=f"{tender.source}:{source_ref}:title",
             source_url=url,
-            quote=f"NMCK={tender.nmck_amount} {tender.currency or ''}".strip(),
+            quote=tender.title,
         )
     ]
+    if tender.nmck_amount is not None:
+        evidence.append(
+            HistoricalPriceEvidence(
+                source_type="PROCUREMENT_TENDER_NMCK",
+                source_ref=f"{tender.source}:{source_ref}:nmck_amount",
+                source_url=url,
+                quote=f"NMCK={tender.nmck_amount} {tender.currency or ''}".strip(),
+            )
+        )
     if tender.publication_date is not None:
         evidence.append(
             HistoricalPriceEvidence(
@@ -258,6 +268,19 @@ def _source_evidence(tender: ProcurementTender) -> list[HistoricalPriceEvidence]
                 source_ref=f"{tender.source}:{source_ref}:publication_date",
                 source_url=url,
                 quote=tender.publication_date.isoformat(),
+            )
+        )
+    positions = _position_signature(tender)
+    if positions:
+        evidence.append(
+            HistoricalPriceEvidence(
+                source_type="PROCUREMENT_TENDER_POSITION_BASIS",
+                source_ref=f"{tender.source}:{source_ref}:structured_position_basis",
+                source_url=url,
+                quote="; ".join(
+                    f"{name or '<unnamed>'} | quantity={quantity} | unit={unit}"
+                    for name, quantity, unit in positions
+                )[:1200],
             )
         )
     return evidence
@@ -281,6 +304,7 @@ def build_historical_price_range(
             seed_tender_id=str(seed.id),
             seed_registry_number=seed.registry_number,
             seed_title=seed.title,
+            seed_evidence=_source_evidence(seed),
             state="INSUFFICIENT_EVIDENCE",
             rejected_counts=dict(rejected),
         )
@@ -291,6 +315,7 @@ def build_historical_price_range(
             seed_tender_id=str(seed.id),
             seed_registry_number=seed.registry_number,
             seed_title=seed.title,
+            seed_evidence=_source_evidence(seed),
             state="INSUFFICIENT_EVIDENCE",
             rejected_counts=dict(rejected),
         )
@@ -300,6 +325,7 @@ def build_historical_price_range(
             seed_tender_id=str(seed.id),
             seed_registry_number=seed.registry_number,
             seed_title=seed.title,
+            seed_evidence=_source_evidence(seed),
             state="INSUFFICIENT_EVIDENCE",
             rejected_counts=dict(rejected),
         )
@@ -407,6 +433,7 @@ def build_historical_price_range(
             seed_tender_id=str(seed.id),
             seed_registry_number=seed.registry_number,
             seed_title=seed.title,
+            seed_evidence=_source_evidence(seed),
             state="INSUFFICIENT_EVIDENCE",
             seed_comparable_amount=float(seed_comparable_amount)
             if seed_comparable_amount is not None
@@ -432,6 +459,7 @@ def build_historical_price_range(
         seed_tender_id=str(seed.id),
         seed_registry_number=seed.registry_number,
         seed_title=seed.title,
+        seed_evidence=_source_evidence(seed),
         state="AVAILABLE",
         range=HistoricalPriceRange(
             minimum=float(min_value),
