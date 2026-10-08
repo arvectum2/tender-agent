@@ -1,39 +1,42 @@
 version: 2
 repository: arvectum2/tender-agent
-status: completed
-task_id: ACTIVE-PRODUCT-ROADMAP-OPTIMIZATION-20261008
+status: in_progress
+task_id: PR-TREE-CLEANUP-20261008
 authority: OWNER_DIRECTIVE
-goal: Optimize the Tender Agent roadmap into a short outcome-driven active product plan while preserving the historical ARV registry, moving technology/customer-triggered ideas out of the active backlog, and preventing the watchdog from treating every historical open item as mandatory work.
+goal: 'Leave Tender Agent with a clean pull-request tree: merge any still-valid unique fix that remains necessary on current main, close stale/superseded/duplicate/deferred PRs with traceable reasons, and finish with zero unintended open PRs.'
 definition_of_done:
-- Historical BASE/ARV registry remains preserved as history.
-- A canonical Active Product Roadmap with no more than 15 outcome-level items is added with explicit priority, rationale, mapped legacy items and measurable done/trigger conditions.
-- ARV-066 is recorded complete on current main 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f.
-- ARV-069 is removed from the immediate admitted execution path and becomes experiment/deferred until data/benchmark trigger is satisfied.
-- n8n, OpenSearch, ClickHouse, Kubernetes, GitVerse mirror, Mac mini cleanup, broad ETP connectors, enterprise/on-prem, 1C/ERP, financing and broader mobile are moved to trigger-based backlog rather than active product commitments.
-- Production hosting/runtime items are consolidated into one Production Runtime outcome.
-- Supplier discovery/RFQ/TKP items are consolidated into one customer-triggered Supplier→RFQ→TKP outcome.
-- Commercial SaaS items are consolidated into one Commercial SaaS Foundation outcome.
-- New outcome-level gaps are explicitly represented: commercial acceptance gate, customer onboarding, product quality/SLO dashboard, paid-pilot readiness and Russian procurement model evaluation.
-- Watchdog/owner directive is updated so automatic continuation follows the Active Product Roadmap, not every legacy open item.
-- Focused governance/roadmap tests and YAML parsing pass; exact-head CI passes before merge.
+- Every currently open PR is classified against current main as merge/reimplement, absorbed/superseded, deferred-by-active-roadmap, or obsolete duplicate.
+- The confirmed hidden real->demo fallback from old PR #89 is not discarded if still present on current main; it is fixed and tested on a clean current-main branch rather than merging the stale stacked PR.
+- Deferred APR-08/APR-09/APR-10 and trigger-backlog work is preserved as history/evidence but has no stale open PR.
+- Runtime fixes from PR #145 are verified as already absorbed or otherwise reconciled before closure.
+- Old roadmap/revalidation PRs superseded by the optimized Active Product Roadmap are closed.
+- Cleanup/fix PR passes focused tests and exact-head CI before merge.
+- Final open PR inventory contains no stale tails or duplicates; ideally zero open PRs before the next-chat development step.
 completed:
-- '2026-10-08: Owner explicitly directed optimization and roadmap update after reviewing which open items are actually necessary.'
-- '2026-10-08: Reconciled current main at 9a5a693f394f15afe8d4a285d1e2921eea6e9e9f; ARV-066 is merged/completed.'
-current: Optimized Active Product Roadmap is merged and canonical; APR-01 / ARV-061 is the next ready product task.
-pending: []
-last_verified_commit: 26d24ccbbd28808b1add87aec4eedee16d8f02b9
+- '2026-10-08: Reconciled current main c9d5059996c23db0eee2de3d13da2b44bde2af1a and enumerated all open PRs.'
+- '2026-10-08: Confirmed old PR #89 still contains a valid unique fail-closed fix: current main still returns demo tenders from real registry-number list mode.'
+- '2026-10-08: Confirmed key PR #145 runtime hardening changes (_write_evidence_summary and delivery_price_inclusion grounding guard) are already present on current main.'
+- '2026-10-08: Closed all stale/superseded/deferred open PRs with traceable reasons; active open PR inventory reached zero before final cleanup PR.'
+- '2026-10-08: Reimplemented the valid old PR #89 fail-closed behavior on current main: real registry-number list mode now raises EisLoaderError and explicit demo discovery uses a separate demo loader.'
+- '2026-10-08: Added regressions proving exact registry-number delegation remains real and pipeline list ingestion cannot silently ingest demo data.'
+current: PR tree is clean and the valid PR #89 fail-closed fix has been reimplemented and locally verified on current main; open one final cleanup PR, require exact-head CI, merge, then verify zero open PRs.
+pending:
+- Open one clean cleanup/fix PR, require exact-head CI, merge.
+- Verify final open PR inventory is clean.
+last_verified_commit: c9d5059996c23db0eee2de3d13da2b44bde2af1a
 test_results:
-- 'Mac mini focused governance/roadmap tests: 6 passed, 1 warning.'
-- 'YAML parse for executor policy, owner directive, current task, execution queue and master roadmap: PASS.'
-- 'PR #221 exact-head CI run 37755963895: SUCCESS (9/9 jobs).'
-- 'PR #221 squash-merged as 26d24ccbbd28808b1add87aec4eedee16d8f02b9.'
-updated_at: '2026-10-08T12:31:00+03:00'
-resume_instruction: Start ACTIVE-ROADMAP-ARV-061-001 from the optimized Active Product Roadmap. Reuse/rebase verified ARV-061 evidence from PR #111 where useful. Do not execute ARV-069 or any trigger-backlog item until its trigger is evidenced.
+- 'Focused EIS/discovery/pipeline regressions: 61 passed, 1 warning.'
+- 'uv run make check: PASS.'
+- 'git diff --check against cleanup base: PASS.'
+- 'YAML parse for canonical agent/roadmap surfaces: PASS.'
+- 'Open PR inventory after stale/deferred closure: 0.'
+updated_at: '2026-10-08T13:10:00+03:00'
+resume_instruction: Open the single final cleanup PR from repo-hygiene/pr-cleanup-20261008, require exact-head CI green, merge it, then verify zero open PRs and mark this checkpoint completed. Do not reopen deferred scope.
 execution:
-  claimed_by: null
-  execution_id: null
-  branch: null
-  base_commit: 26d24ccbbd28808b1add87aec4eedee16d8f02b9
+  claimed_by: ChatGPT
+  execution_id: pr-tree-cleanup-20261008
+  branch: repo-hygiene/pr-cleanup-20261008
+  base_commit: c9d5059996c23db0eee2de3d13da2b44bde2af1a
   issue: null
-  manual_override: false
+  manual_override: true
   lease_until: null
