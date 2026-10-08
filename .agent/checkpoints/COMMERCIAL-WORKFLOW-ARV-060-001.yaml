@@ -46,14 +46,20 @@ completed:
 - '2026-10-08: Added migration 103_add_case_collaboration and model/router registration.
   Focused ARV-060 + customer-pilot/expert-review regressions passed 15/15; alembic
   head is 103_add_case_collaboration; make check and git diff --check pass.'
-current: Run full repository verification, then prepare the combined implementation/completion
-  PR so ARV-060 consumes one renewed AM-4 merge if final exact-head CI is green.
+- '2026-10-08: Full make test completed with 3131 passed / 236 skipped; the sole failure
+  is tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed
+  (pg_restore exit 1), matching the previously proven macOS main-baseline R9 restore-environment
+  failure and outside the ARV-060 diff.'
+current: Open the ARV-060 implementation PR and require exact-head CI. If green, fold
+  queue/roadmap/AM-4 completion bookkeeping into the same PR before one final exact-head
+  CI.
 pending: &id001
-- Run full make test and classify any main-baseline-only failure.
-- Commit/push implementation and updated checkpoint.
-- Open ARV-060 PR, run exact-head CI on implementation head.
-- If green, fold queue/roadmap/AM-4 completion bookkeeping into the same PR, rerun
-  exact-head CI, and merge once under renewed AM-4.
+- Open ARV-060 implementation PR against current main.
+- Require exact-head implementation CI.
+- If green, fold completion bookkeeping into the same PR to conserve renewed AM-4
+  merge budget.
+- Require final exact-head CI on combined completion head and merge once under valid
+  AM-4.
 last_verified_commit: 2e900d6cc301867346bad3c5348cb42df3147e6b
 test_results:
 - 'ARV-060 focused tests: 4 passed'
@@ -61,9 +67,11 @@ test_results:
 - 'alembic heads: 103_add_case_collaboration (head)'
 - 'make check: PASS'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T08:25:13+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv060-commercial-20261008.
-  Run full make test; if only the known macOS R9 pg_restore baseline remains, commit/push
-  and open the ARV-060 PR for exact-head CI.
-current_stage: full_verification
+- 'full make test: 3131 passed, 236 skipped; 1 known main-baseline macOS R9 pg_restore
+  failure'
+updated_at: '2026-10-08T08:28:43+03:00'
+resume_instruction: Open the ARV-060 implementation PR from agent/commercial-workflow-arv-060-001.
+  Require exact-head CI; if green, add completion/governance bookkeeping to the same
+  PR, rerun exact-head CI, then merge once under renewed AM-4.
+current_stage: implementation_pr
 remaining: *id001
