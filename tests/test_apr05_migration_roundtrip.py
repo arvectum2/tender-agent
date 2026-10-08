@@ -54,3 +54,27 @@ def test_apr05_migration_forward_rollback_and_reupgrade(tmp_path: Path, monkeypa
         engine.dispose()
     finally:
         invalidate_settings_cache()
+
+
+
+
+def test_standalone_cli_db_registry_covers_legacy_and_saas_fk_targets():
+    """Regression: an import auto-fix must not strip ORM table registration."""
+    import subprocess
+    import sys
+
+    script = """
+from src.shared.db import models as registry
+from src.shared.db.base import Base
+from sqlalchemy import create_engine
+need = {'customer_profiles', 'pilot_projects', 'procurement_cases',
+        'tender_analysis_runs', 'saas_tenants', 'saas_members', 'saas_runs'}
+assert need <= set(Base.metadata.tables), need - set(Base.metadata.tables)
+engine = create_engine('sqlite:///:memory:')
+Base.metadata.create_all(engine)
+engine.dispose()
+"""
+    subprocess.run(
+        [sys.executable, "-c", script],
+        check=True, capture_output=True, text=True, timeout=20,
+    )
