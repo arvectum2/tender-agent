@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-DOCUMENT-REVIEW-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: Combine real Data Platform document excerpts with RI223 source facts into a
   traceable, per-domain, non-decisional procurement evidence review dossier.
@@ -20,18 +20,36 @@ completed:
 - Verified original 32616445795 has 19/19 source documents and 300 Data Platform chunks;
   current existing analyzer yields 10 evidence-search sections, but no dedicated decision-prep
   review dossier.
-current: Implement bounded source-quote dossier projection reusing current analysis
-  sections, not a new legal or AI decision engine.
+- Added RI223-only source-cited seven-domain human document review dossier to existing
+  Tender Research report/API/CLI, each source exact registry/doc/chunk and bounded
+  excerpt. 44-FZ untouched and legal/fit/GO remain UNKNOWN.
+- Original 32616445795 SQLite contains 20 registered document records and 300 text
+  chunks; offline read-only source excerpt binding produced 7 of 7 domains with exact
+  document/chunk IDs. This is not a successful live Data Platform retrieval.
+- Live analyzer on preserved isolated SQLite correctly returns no_context while previous
+  Data Platform collection readiness cannot be confirmed. Operational reindexing remains
+  a documented successor.
+- 'Full Tender Research: 511 passed, 1 skipped, 42 warnings. New targeted unit + existing
+  analyzer dispatch 6 passed; make check, Ruff new-file checks, git diff --check passed.'
+current: PR publication, exact-head CI and Owner review required before merge.
 pending:
-- Implement/test sourced document excerpt matrix.
-- Run original Data Platform indexed corpus read-only acceptance.
-- Publish PR, exact-head CI and Owner review before merge.
+- Publish PR and exact-head CI; Owner-gated merge.
+- After merge reconcile checkpoint then address measured Data Platform index readiness
+  before substantive end-to-end analysis.
 last_verified_commit: 77fe438b07ae0948216317762845b85a20a6497b
 test_results:
-- Predecessor CI 9/9 green; previous Tender Research 505 passed, 1 skipped.
-resume_instruction: Continue feature/apr02-ri223-document-dossier from /Volumes/ArvectumSSD/Arvectum/worktrees/apr02-ri223-document-dossier.
-  Implement review evidence matrix based on existing document sections, source citations,
-  no fake risk/GO, run tests, PR, exact-head CI and Owner review.
+- 511 Tender Research passed, 1 skipped, 42 warnings
+- 6 focused document dossier tests PASS (includes existing DP mock dispatch)
+- make check PASS
+- Ruff new-code/test PASS
+- Original SQLite 300 chunks and 7 real source-excerpt bindings in offline read-only
+  check
+- 'Live old DP collection: no_context, index not confirmed ready.'
+resume_instruction: In feature/apr02-ri223-document-dossier, publish PR from current
+  head with 511/1 tests and original source offline evidence. Check exact-head CI
+  and Owner review before merge. Afterwards close checkpoint and initiate measured
+  Data Platform collection readiness/reindex successor using original local files;
+  never misrepresent offline binding as successful live RAG.
 execution:
   branch: feature/apr02-ri223-document-dossier
   base_commit: 77fe438b07ae0948216317762845b85a20a6497b

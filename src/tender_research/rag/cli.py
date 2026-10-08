@@ -231,6 +231,7 @@ def cmd_analyze_tender(args: argparse.Namespace) -> None:
             "sources_count": result.sources_count,
             "ri223_source_observations": result.ri223_source_observations,
             "ri223_review_flags": result.ri223_review_flags,
+            "ri223_document_dossier": result.ri223_document_dossier,
             "analysis_mode": result.analysis_mode,
             "used_llm": result.used_llm,
             "llm_model": result.llm_model,

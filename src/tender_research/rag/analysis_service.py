@@ -21,6 +21,10 @@ from src.tender_research.rag.data_platform import (
     retrieval_backend_name,
 )
 from src.tender_research.rag.history_service import record_analysis_run
+from src.tender_research.rag.ri223_document_dossier import (
+    build_ri223_document_dossier,
+    render_ri223_document_dossier,
+)
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
@@ -222,6 +226,7 @@ def _build_report_markdown(
     duration_seconds: float | None = None,
     ri223_source_observations: list[dict] | None = None,
     ri223_review_flags: list[dict] | None = None,
+    ri223_document_dossier: list[dict] | None = None,
 ) -> str:
     lines = [
         f"# Анализ закупки {registry_number}",
@@ -239,7 +244,8 @@ def _build_report_markdown(
     lines.extend(["", "---", ""])
     lines.extend(render_ri223_source_facts(ri223_source_observations or []))
     lines.extend(render_ri223_review_flags(ri223_review_flags or []))
-    if ri223_source_observations or ri223_review_flags:
+    lines.extend(render_ri223_document_dossier(ri223_document_dossier or []))
+    if ri223_source_observations or ri223_review_flags or ri223_document_dossier:
         lines.extend(["---", ""])
     for section in sections:
         lines.append(f"## {section.id}. {section.title}")
@@ -759,6 +765,12 @@ def analyze_tender(
             "llm_timeout_seconds": mode_config.llm_timeout_seconds,
         }
 
+        ri223_document_dossier = build_ri223_document_dossier(
+            law_type=tender.law_type,
+            registry_number=registry_number,
+            sections=sections,
+            source_facts=ri223_source_observations,
+        )
         report_markdown = _build_report_markdown(
             registry_number=registry_number,
             sections=sections,
@@ -770,6 +782,7 @@ def analyze_tender(
             duration_seconds=duration,
             ri223_source_observations=ri223_source_observations,
             ri223_review_flags=ri223_review_flags,
+            ri223_document_dossier=ri223_document_dossier,
         )
 
         report_path = None
@@ -788,6 +801,7 @@ def analyze_tender(
             report_path=report_path,
             ri223_source_observations=ri223_source_observations,
             ri223_review_flags=ri223_review_flags,
+            ri223_document_dossier=ri223_document_dossier,
             used_llm=use_llm and llm_client is not None,
             llm_model=config.local_llm_model if use_llm else None,
             llm_endpoint=config.local_llm_base_url if use_llm else None,

@@ -56,6 +56,7 @@ class TenderAnalysisResult:
     errors: list[str] = field(default_factory=list)
     ri223_source_observations: list[dict] = field(default_factory=list)
     ri223_review_flags: list[dict] = field(default_factory=list)
+    ri223_document_dossier: list[dict] = field(default_factory=list)
 
 
 ANALYSIS_SECTIONS: list[dict[str, str]] = [
