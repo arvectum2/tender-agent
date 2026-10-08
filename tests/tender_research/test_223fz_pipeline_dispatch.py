@@ -105,7 +105,7 @@ def test_223fz_pipeline_dispatch_and_repeated_ingest_are_idempotent(
     )
     monkeypatch.setattr(
         pipeline, "_fetch_eis_by_registry_number_safe",
-        lambda *_: (None, "unavailable"),
+        lambda *_, **kwargs: (None, "unavailable"),
     )
 
     tender1, _ = pipeline._ingest_discovered_tender(discovered)

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Any
 
 from src.modules.tender_operator_agent_demo.procurement_schemas import (
@@ -131,6 +133,8 @@ class RealEisLoader:
             return None
 
     def fetch_tender_documents(self, tender: EisTenderRaw) -> list[EisDocumentRaw]:
+        if tender.law_type == "223fz":
+            return tender.documents or []  # Never use 44-FZ legacy listAttachments.
         if not self._client.is_configured():
             return []
         try:
@@ -145,7 +149,11 @@ class RealEisLoader:
 
     # ── Registry number based fetch (getDocsIP path) ──
 
-    def fetch_by_registry_number(self, registry_number: str) -> EisTenderRaw | None:
+    def fetch_by_registry_number(self, registry_number: str, *, law_type: str | None = None) -> EisTenderRaw | None:
+        if law_type not in (None, "44fz", "223fz"):
+            raise EisLoaderError("unsupported procurement regime")
+        if law_type == "223fz":
+            return self._fetch_ri223_by_registry_number(registry_number)
         if not self._client.is_configured():
             raise EisMissingTokenError("EIS SOAP not configured")
         try:
@@ -185,6 +193,38 @@ class RealEisLoader:
                 "warnings": result.warnings,
             },
         )
+
+    def _fetch_ri223_by_registry_number(self, registry_number: str) -> EisTenderRaw:
+        """Explicit opt-in only; never infer 223-FZ regime from registry number."""
+        from src.tender_research.providers.ri223_soap_evidence import (
+            Ri223EvidenceError,
+            parse_ri223_archive,
+        )
+
+        if not self._client.is_configured():
+            raise EisMissingTokenError("EIS SOAP not configured")
+        try:
+            result = self._client.get_docs_by_reestr_number(
+                registry_number, subsystem_type="RI223",
+            )
+        except Exception as exc:
+            raise classify_eis_error(exc) from exc
+        if result.status == "no_data":
+            raise EisNoDataError(f"No RI223 documents for {registry_number}")
+        if result.status != "completed":
+            raise EisLoaderError(f"RI223 transport not complete: {result.status}")
+        urls = list(dict.fromkeys(
+            url for url in [result.archive_url, *result.archive_urls] if url
+        ))
+        if len(urls) != 1:
+            raise EisLoaderError("RI223 archive URL is missing or ambiguous")
+        try:
+            with TemporaryDirectory(prefix="ri223-getdocs-") as temporary:
+                target = Path(temporary)
+                download = self._client.download_archive(urls[0], target)
+                return parse_ri223_archive(target / download.stored_name, registry_number)
+        except Ri223EvidenceError as exc:
+            raise EisLoaderError(f"RI223 source evidence unsupported: {exc}") from exc
 
     # ── Internal helpers ──
 

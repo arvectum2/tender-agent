@@ -43,7 +43,7 @@ All facts in the table are extracted from the actual EIS `RI223` SOAP XML, not i
 | Lot / position | `lots/lot` and `lotItems/lotItem`, one of each in the inspected XML for each record | Multi-lot/multi-position procurement not in this sample |
 | Notice documents | `attachments/document` (2, 2, 2, 4 downloaded), public `notice223/documents.html` matches | Signatures, document legal sufficiency and business suitability not assessed |
 | Notice versions | SOAP archives for 32616447910 and 32616445866 have two XML members | The semantics and ordering of revisions require comparison before claiming amendment support |
-| Clarifications / protocols | Not present as explicit elements in these notice XML samples | NOT_OBSERVED, **not** a claim of absence in EIS or later lifecycle |
+| Clarifications / protocols | Clarifications NOT_OBSERVED in notice XML; two separately archived `purchaseProtocol` XML members (32616445866 and 32616447910), verified on the same 2026-10-08 frozen ZIP originals | No legal effect, award result or complete lifecycle inferred; see `APR02_RI223_STRUCTURED_EVIDENCE_2026-10-08.md` |
 | Lifecycle/status | SOAP response `completed`; four public HTML layouts recognized, parser returns SUCCESS with title/customer and 2/2/2/4 links | Contract award and protocol status not covered by purchaseNotice-only corpus |
 | Attachment extraction | Verified original 223-FZ `attachments/document` vs 44-FZ `attachmentInfo` divergence; fixed downloader; navigation links no longer counted as files | RAR `.rar` safety policy for excluded 32616445795 remains unsupported_extension, separately measured |
 
