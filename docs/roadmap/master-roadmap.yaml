@@ -2040,10 +2040,14 @@ legacy_registry:
     comment: Снижает повторный ручной ввод и повышает точность qualification.
     dependencies_raw: ARV-043, ARV-015, ARV-010
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 217
+      merge_commit: 75beab91a2fcc46fb885d864cd39f229603fe080
+      detail: Tenant-isolated reusable company profile facts and document-version store.
+    notes: Explicit facts/documents are versioned, source-bound and expiry-aware; cross-tenant/deal-bound reuse fails closed and no unrelated private-data import occurs.
+
 - id: ARV-016
   legacy_snapshot:
     queue_order: 24
@@ -2120,10 +2124,20 @@ legacy_registry:
     comment: Перенято у BIMLIB и Seldon; скоринг не должен быть непрозрачным единым баллом.
     dependencies_raw: ARV-015, ARV-024, ARV-059
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-07'
+    evidence:
+    - pull_request: 207
+      merge_commit: 9253b90d3d3c3cc4a2db6388e10d17f0e4af198e
+      detail: Evidence-backed counterparty cards and transparent risk signals.
+    - pull_request: 209
+      merge_commit: 82bf13c691fdbff1922ac4bb2e03ec0f33c10406
+      detail: Reuse of canonical supplier verification score.
+    - pull_request: 210
+      merge_commit: 4bf29865ee41878fcdfe0be7979c9d7d455ec3cf
+      detail: Final scoring correction/bookkeeping.
+    notes: Counterparty factors remain evidence-linked/unknown and do not become legal or participation approval.
+
 - id: ARV-019
   legacy_snapshot:
     queue_order: 27
@@ -2182,10 +2196,14 @@ legacy_registry:
     comment: 'Новая ключевая задача: конкуренты уже монетизируют готовый пакет заявки, а не только анализ.'
     dependencies_raw: ARV-001, ARV-020, ARV-050, ARV-064
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 216
+      merge_commit: 197bf1c54df51a5c644aa8ca2e92bae543840945
+      detail: Review-only application package and client-template generator.
+    notes: Generated DOCX/XLSX artifacts preserve lineage/provenance and remain review-only; no submission/signing is automated.
+
 - id: ARV-056
   legacy_snapshot:
     queue_order: 29
@@ -2413,10 +2431,17 @@ legacy_registry:
     comment: Tender Analyzer и TenderGuru показывают ценность CV, citations и распознанных датасетов.
     dependencies_raw: ARV-001, ARV-008
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-07'
+    evidence:
+    - pull_request: 205
+      merge_commit: b4839c9d0e4e4996b66cf58f6deb80d7e95cc8fc
+      detail: Tender Agent reuses the Data Platform OCR boundary with provenance/confidence and fail-closed review behavior.
+    - pull_request: 206
+      merge_commit: 4e4e4b82eb3a9e9e2eb094ed215e2fde801c2e5c
+      detail: Completion bookkeeping and Commercial Workflow advancement.
+    notes: OCR fallback requirement is satisfied by reuse/adaptation; no custom OCR engine was introduced.
+
 - id: ARV-065
   legacy_snapshot:
     queue_order: 37
@@ -2605,10 +2630,14 @@ legacy_registry:
     comment: Перенято у DigiTender; обсуждение должно быть связано с конкретным выводом/документом.
     dependencies_raw: ARV-050, ARV-019, ARV-021, ARV-043
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 215
+      merge_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
+      detail: Internal case discussion, mentions and immutable decision journal.
+    notes: Collaboration is attributable and internal-only; no external communication transport was enabled.
+
 - id: ARV-066
   legacy_snapshot:
     queue_order: 44
@@ -2637,10 +2666,14 @@ legacy_registry:
     comment: Уменьшает трение входа, но не должен зависеть от хрупкого DOM как единственного источника.
     dependencies_raw: ARV-002, ARV-050, ARV-030
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: admitted_ready
+    verified_at: '2026-10-08'
+    evidence:
+    - path: .agent/execution-queue.yaml
+      task_id: COMMERCIAL-WORKFLOW-ARV-066-001
+      status: ready
+    notes: Explicitly admitted by the 2026-10-07 Owner Commercial Workflow directive; one-click URL/registry-number import is next.
+
 - id: ARV-055
   legacy_snapshot:
     queue_order: 45
@@ -2664,10 +2697,14 @@ legacy_registry:
     comment: Перенято у Контур.Закупки; similarity должна быть объяснимой, а не только векторной.
     dependencies_raw: ARV-005, ARV-009, ARV-057
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 211
+      merge_commit: 17a27725fce02623f44ec7c5ac6aa04c2ea491ec
+      detail: Explainable similar-procurement search over reused Data Platform retrieval.
+    notes: Similarity is explainable and evidence-bound; no parallel vector/search stack was introduced.
+
 - id: ARV-057
   legacy_snapshot:
     queue_order: 46
@@ -2691,10 +2728,17 @@ legacy_registry:
     comment: Seldon, МАРКЕР и Закупки360 подтверждают decision-value ценовых и конкурентных прогнозов.
     dependencies_raw: ARV-006, ARV-009, ARV-058
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 212
+      merge_commit: ebcead468610a88e298b55881d4287cdaed444c3
+      detail: Evidence-backed historical price/NMCK range.
+    - pull_request: 213
+      merge_commit: 7abd9640a76303708c839d91e56302aeb325df32
+      detail: Completion bookkeeping and Commercial Workflow advancement.
+    notes: Observed historical prices are separated from estimates and comparability fails closed.
+
 - id: ARV-059
   legacy_snapshot:
     queue_order: 47
@@ -2719,10 +2763,14 @@ legacy_registry:
     comment: ТЕНвизор и Закупки.AI поднимают ожидание цикла до исполнения.
     dependencies_raw: ARV-058, ARV-006, ARV-053, ARV-057
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: completed
+    verified_at: '2026-10-08'
+    evidence:
+    - pull_request: 214
+      merge_commit: 2e900d6cc301867346bad3c5348cb42df3147e6b
+      detail: Source-bound contract execution and outcome analytics.
+    notes: Execution/payment/outcome facts remain canonical and evidence-bound; missing evidence stays unknown.
+
 - id: ARV-069
   legacy_snapshot:
     queue_order: 48
@@ -2748,10 +2796,14 @@ legacy_registry:
     comment: Не использовать как обещание победы; только как evidence-backed decision context.
     dependencies_raw: ARV-053, ARV-057, ARV-059
   reconciliation:
-    state: needs_revalidation
-    verified_at: null
-    evidence: []
-    notes: null
+    state: admitted_ready
+    verified_at: '2026-10-08'
+    evidence:
+    - path: .agent/execution-queue.yaml
+      task_id: COMMERCIAL-WORKFLOW-ARV-069-001
+      status: ready
+    notes: Explicitly admitted by the 2026-10-07 Owner Commercial Workflow directive; forecast context remains advisory under HUMAN decision control.
+
 - id: ARV-028
   legacy_snapshot:
     queue_order: 49
