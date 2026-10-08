@@ -876,14 +876,6 @@ items:
   executor_scope: 'Extend existing read-only getDocsIP RI223 path with bounded XML-source projection: exact notice-bound lots/positions, source-level protocol record observation, citations to ZIP XML member/hash, explicit UNKNOWN for unsupported statuses, versions, absent artifacts. Preserve 44-FZ mode unchanged. Do not perform external actions or infer legal/procedural decisions.'
   done_gate: 'Four original RI223 archives and frozen sanitized fixture tests validate exact lots/positions/protocol markers, hash/provenance, no 44-FZ fallback and fail-closed mismatch/revision/schema/archive guards. Existing focused tests and exact-head CI pass; Owner REVIEW required before merge.'
 
-completed_dependencies:
-- task_id: BENCHMARK-PIPELINE-001
-  source: 'issue #1'
-  status: done
-- task_id: DOCUMENT-QA-004
-  source: 'issue #11 and completed held-out acceptance sequence'
-  status: done
-
 - order: 1020
   task_id: APR-02-RI223-RAR-OPAQUE-001
   title: Preserve authentic RI223 RAR attachments as safe opaque evidence
@@ -933,3 +925,27 @@ completed_dependencies:
   dependencies: [APR-02-RAR-DOCUMENT-ANALYSIS-001]
   executor_scope: "Reuse existing Tender Analysis 10-section Data Platform/RAG workflow, only substitute supported 223-FZ regime-specific questions; no 44-FZ fallback/legal inference or independent LLM/document platform."
   done_gate: "223-FZ analyzer no longer asks 44-FZ-only compliance/benefit questions; original corpus source retrieval remains grounded; 44-FZ regression unchanged; CI and Owner REVIEW."
+
+- order: 1050
+  task_id: APR-02-RI223-REAL-MULTILOT-001
+  title: Real RI223 multi-lot notice revisions and explanation projection
+  status: blocked
+  blocked_on: 'Exact-head CI and attributable Owner REVIEW on PR #236 before merge.'
+  authority: OWNER_DIRECTIVE
+  continuation_mode: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  source: "Owner continue 2026-10-08; public RI223 region-77 originals 32616376947, 32616343061, 32616347092 with two lots and distinct subjects."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-REGIME-ANALYSIS-001]
+  executor_scope: "Verify exact original RI223 real multi-lot notice layouts, select clearly ordered observed notice revisions, project exact-number source-bound explanation questions/documents, preserve separate lots and unknown notice-wide NMCK and legal status. Keep 44-FZ, existing RAG/DP pipeline and external-action controls unchanged."
+  done_gate: "Authentic XML source hashes and per-lot traceability, bounded deterministic projection with explicit unknown aggregate and no cross-lot conflation; focused and existing tests/checks, exact-head CI, Owner REVIEW before merge."
+
+completed_dependencies:
+- task_id: BENCHMARK-PIPELINE-001
+  source: 'issue #1'
+  status: done
+- task_id: DOCUMENT-QA-004
+  source: 'issue #11 and completed held-out acceptance sequence'
+  status: done

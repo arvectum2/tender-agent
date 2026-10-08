@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-02-RI223-REGIME-ANALYSIS-001
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: Remove 44-FZ-specific assumptions from real 223-FZ evidence analysis section
   questions without changing 44-FZ behavior or creating a second analyzer.
@@ -31,18 +31,14 @@ completed:
   awaited as prerequisite.'
 - 'Predecessor completion PR #234 exact-head CI 37798621668 9/9 SUCCESS and squash-merged
   8064a1a016f05445d0151974f69d5c5387f7f64f; successor rebased on latest main.'
-current: Ready for exact-head PR CI; locally verified regime question overlay; after
-  CI merge under Owner directive.
-pending:
-- Open PR on current main, verify exact-head CI and Owner-guarded merge.
-- Close checkpoint after merge; broader APR-02 remains open.
-last_verified_commit: 0454e6838cf94917370f19ca90eea831259a53db
+- 'PR #235 exact-head CI 37799853447 SUCCESS 9/9; Owner-authorized merge 4b93709383866121de65647fc340b8add0ab0510.'
+current: Completed; no repeat.
+pending: []
+last_verified_commit: 4b93709383866121de65647fc340b8add0ab0510
 test_results:
 - 493 tender-research tests PASS, 1 skipped, 42 existing warnings.
 - 44 targeted source/RI223/LLM-dispatch tests PASS.
 - make check PASS, Ruff touched files PASS, git diff --check PASS.
 - Real source analysis 10/10 sections with 25 citations, no unsupported 44-FZ eligibility
   prompt.
-resume_instruction: 'PR feature/apr02-ri223-regime-analysis branch on main 8064a1a:
-  verify exact-head CI and mergeability, then Owner-authorized guarded merge. After
-  merge reconcile completed task and continue from next real APR-02 gap.'
+resume_instruction: 'Completed in PR #235; continue APR-02 real multi-lot successor.'
