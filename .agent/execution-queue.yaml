@@ -769,7 +769,7 @@ items:
   task_id: COMMERCIAL-WORKFLOW-ARV-063-001
   strategy: ADAPT
   title: Application package and client-template generator
-  status: ready
+  status: done
   authority: AUTO
   independent: true
   auto_merge: true
@@ -778,7 +778,7 @@ items:
   - ARV-063
   dependencies: []
   executor_scope: 'Generate reviewable Form 2, commercial proposal, declarations, specifications and inventories using reusable document/template tooling while preserving layout, working_kp.xlsx/version lineage and field provenance. Output remains draft/review-only.'
-  done_gate: 'Representative templates round-trip without destructive layout loss, generated fields have provenance/version evidence, artifacts remain review-only and are never submitted/signed, and focused tests/exact-head CI pass.'
+  done_gate: 'Satisfied in PR #216: bounded DOCX/XLSX generation adapts pinned python-docx/openpyxl and existing DocumentArtifact/ArtifactVersion lineage instead of adding a generic document platform. Explicit DOCX token and XLSX sheet/cell targets preserve unrelated representative layout and fail closed on unsupported formats, missing/ambiguous targets or cross-deal provenance. FORM_2, COMMERCIAL_PROPOSAL, DECLARATION, SPECIFICATION and INVENTORY are supported as DRAFT_REVIEW_ONLY; each generated field persists source/ref, target, original/generated value and template/output hash/version evidence. Commercial-proposal XLSX preserves one working_kp.xlsx artifact lineage and prior version bytes. Signing, submission and external delivery flags remain false and no consequential external adapter is invoked. Focused/relevant tests pass, full local suite has only the proven macOS R9 pg_restore baseline failure, and implementation-head exact-head CI run 37736023869 passed 9/9 jobs. Final exact-head CI on the combined completion head is required before merge.'
 
 - order: 380
   task_id: COMMERCIAL-WORKFLOW-ARV-064-001
