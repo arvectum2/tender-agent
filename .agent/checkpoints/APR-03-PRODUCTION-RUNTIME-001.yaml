@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-03-PRODUCTION-RUNTIME-001
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: >-
   Deliver the APR-03 Production Runtime epic by reusing existing Tender Agent API,
@@ -16,24 +16,37 @@ definition_of_done:
   - Real Russian VPS deployment, independent storage, restore drills and ingress connectivity are validated using approved resources and explicit production authority.
   - Canonical roadmap and execution queue reconciled only after actual external acceptance, final CI green and owner-gated merge.
 completed:
-  - Identified APR-03 as next planned active-product outcome after completed APR-02.
-  - Audited current pilot Docker package, Redis worker contract, backup/restore components, and Owner production hard-stops.
-  - Implemented the APR-03 Linux Compose+TLS gated ingress+Redis worker+PostgreSQL package and fail-closed production CLI with isolated restore only.
-  - Production static checks and focused test suite 19 passed; Docker Compose config for both private/public profiles parsed.
-current: Isolated end-to-end Docker smoke and failure/restore drills (no public ingress).
+  - APR-03 selected after fully completed APR-02; existing bounded Redis worker and pilot image reused.
+  - Created Docker Compose production topology with private PG16/Redis, separate worker, gated Caddy TLS ingress.
+  - Added guarded CLI preflight, doctor, backup/verify and never-overwrite isolated restore.
+  - Corrected worker HTTP-health inheritance and API readiness race found in real local smoke.
+  - Performed synthetic private Docker deployment, backup/verify and isolated restore to fresh project.
+  - Verified worker stop, queued synthetic delivery and restart (Redis stream length 1 to 0).
+  - Added fail-closed nonterminal PostgreSQL job check when no coordinated Redis backup exists.
+  - Reconciled APR-03 roadmap state as in_progress; evidence in docs/operations/APR03_LOCAL_REHEARSAL_2026-10-08.md.
 pending:
-  - Run targeted regression tests, Compose validation, isolated drills and final CI.
-  - Obtain explicit separate provider/production authorization and confirmed VPS, domain, storage/allowlists before live rollout.
-  - Perform documented external acceptance and close APR-03 only when all gates pass.
-last_verified_commit: ced71977
+  - Obtain approved Russia-hosted VPS account/server and permission for provider, domain, network and production side effects.
+  - Select external approved DNS, ingress domain, TLS contact, firewall/Anti-DDoS and EIS/ETP allowlists.
+  - Validate real release image supply-chain lock and fully coordinated Redis-disaster recovery for nonterminal jobs.
+  - Validate independent encrypted off-host backup, measured real RPO/RTO, monitoring alerts and controlled failure drills.
+  - Perform real production acceptance, pass CI/owner review and only then mark APR-03 completed.
+last_verified_commit: 2d58bef553c561a6066ba6384f6b90ad1deae24a
 test_results:
-  - Ruff production CLI+tests PASS.
-  - Focused runtime and worker tests 19 passed, 1 existing warning.
-  - Docker Compose config --profile public --quiet PASS (synthetic env).
+  - Ruff production scripts/tests PASS.
+  - Targeted runtime/worker/backup/restore tests 45 passed, 1 pre-existing Starlette/httpx warning.
+  - make check PASS and roadmap YAML syntax PASS.
+  - Synthetic Docker Compose private/public profile config PASS; API, DB, Redis, worker running.
+  - Local backup integrity PASS; fresh isolated restore API HTTP 200; doctor PASS.
+  - Worker restart delivery PASS; PostgreSQL active-job gate PASS.
+  - R9 acceptance PASS with host PG16 tooling; PG18 default fails against PG16 test server.
 resume_instruction: >-
-  Run isolated synthetic Docker up/backup/verify/restore/restart drills using
-  deploy/production; fix observed defects and run targeted regressions.
-  Never start the public profile or provision a paid VPS without approval.
+  Resume from APR-03 external acceptance gate. Inspect this checkpoint and
+  docs/operations/APR03_LOCAL_REHEARSAL_2026-10-08.md, verify current branch/PR
+  CI. Request explicit Owner permission plus actual Russia-based VPS, DNS and
+  encrypted offsite backup details before any public deployment, paid action or
+  DNS/network change. Validate Redis full-node disaster recovery and real
+  monitoring/offsite restore drills before closing APR-03. Do not re-enable
+  the previously disabled Tender Agent Watchdog without explicit user request.
 execution:
   branch: feature/apr03-production-runtime
   base_commit: ced71977
