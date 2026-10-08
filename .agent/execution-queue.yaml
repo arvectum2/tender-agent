@@ -901,3 +901,18 @@ completed_dependencies:
   done_gate: "Real original RI223 evidence for 32616445795 verified; RAR download source bound, size/URL guards retained, review-only status explicit, targeted regressions and exact-head CI pass; human review before merge."
 
   local_verified_code_commit: 75c791784a33cadf9a67760e7894dd54ff6f2342
+
+- order: 1030
+  task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
+  title: Real 223-FZ RAR inner-document extraction and analysis
+  status: in_progress
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Explicit Owner direction 2026-10-08 to merge PR #232, continue and analyze contents, after authentic RI223 32616445795 RAR evidence."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-RAR-OPAQUE-001]
+  executor_scope: "Safely stream and bound real RI223 RAR member bytes to canonical child document store and existing Data Platform analysis pipeline, retaining parent SHA-256/XML source binding, unsupported/unknown and manual-review gates. No external EIS/ETP action or bespoke document parsing engine."
+  done_gate: "Verified real 32616445795 RAR contents produce traceable parsed source documents through Data Platform, constrained extraction regression passes, exact-head CI green, Owner REVIEW before merge."
