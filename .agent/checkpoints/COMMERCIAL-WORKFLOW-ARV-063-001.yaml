@@ -52,15 +52,20 @@ completed:
 - '2026-10-08: Focused ARV-063 layout/provenance/fail-closed tests pass 4/4; ARV-063
   plus bid/document/daily-run compatibility set passes 15/15 with 29 expected skips;
   alembic head is 104_add_application_drafts; make check and git diff --check pass.'
-current: Run full repository verification for ARV-063; if only the already-proven
-  macOS R9 pg_restore baseline remains, prepare a single implementation/completion
-  PR with exact-head CI.
+- '2026-10-08: Full make test completed with 3135 passed / 236 skipped; the sole failure
+  is tests/test_r9_backup_restore.py::test_backup_restore_matrix_is_consistent_and_fail_closed
+  (pg_restore exit 1), matching the previously proven macOS main-baseline R9 restore-environment
+  failure and outside the ARV-063 diff.'
+current: Open the ARV-063 implementation PR against current main and require exact-head
+  CI. If green, fold queue/roadmap/AM-4 completion bookkeeping into the same PR before
+  one final exact-head CI.
 pending: &id001
-- Run full make test and classify any baseline-only failure.
-- Push implementation/checkpoint and open one ARV-063 PR.
+- Open ARV-063 implementation PR against current main.
 - Require exact-head implementation CI.
-- If green, fold queue/roadmap/AM-4 completion bookkeeping into the same PR, rerun
-  exact-head CI, and merge once under valid renewed AM-4.
+- If green, fold completion/governance bookkeeping into the same PR to conserve renewed
+  AM-4 merge budget.
+- Require final exact-head CI on combined completion head and merge once under valid
+  renewed AM-4.
 last_verified_commit: 53c9d72a9d881ba776af770e86d3d947e3708273
 test_results:
 - 'ARV-063 focused tests: 4 passed'
@@ -68,9 +73,11 @@ test_results:
 - 'alembic heads: 104_add_application_drafts (head)'
 - 'make check: PASS'
 - 'git diff --check: PASS'
-updated_at: '2026-10-08T09:05:50+03:00'
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/arv063-commercial-20261008.
-  Run full make test; if no ARV-063 regression is present, push and open the combined
-  ARV-063 PR for exact-head CI.
-current_stage: full_verification
+- 'full make test: 3135 passed, 236 skipped; 1 known main-baseline macOS R9 pg_restore
+  failure'
+updated_at: '2026-10-08T09:08:30+03:00'
+resume_instruction: Open the ARV-063 implementation PR from agent/commercial-workflow-arv-063-001.
+  Require exact-head CI; if green, add completion/governance bookkeeping to the same
+  PR, rerun exact-head CI, then merge once under renewed AM-4.
+current_stage: implementation_pr
 remaining: *id001
