@@ -89,3 +89,37 @@ env (0600); no new token, database, container or public port is created.
 The Data Platform service remains separate and is not restarted by this
 Compose project. A configured local model backend is not a substitute for
 review of extraction completeness or human procurement decisions.
+
+
+## APR-05 internal SaaS foundation
+
+The local Compose override explicitly enables
+`AI_CORP_SAAS_FOUNDATION_ENABLED=true` for the API only.
+The source default is fail-closed. Operator uses the existing Basic
+credentials and onboarding; tenant receives a separate Bearer token
+through one-time invitation. Self-service UI:
+`http://127.0.0.1:18082/saas`. Do NOT give out operator Basic
+credentials, expose port 18082 on a public interface, or connect
+a real payment provider without separate approval. See
+`docs/operations/APR05_MACMINI_SAAS_ACCEPTANCE_2026-10-09.md`.
+
+Run the developer-only synthetic HTTP scenario after local Compose
+migration and health checks:
+
+    uv run python deploy/local/saas_e2e_smoke.py       --env-file ~/.config/arvectum/apr04-local.env --real-eis
+
+
+## Local image overlay (offline-first development)
+
+To avoid repeatedly downloading Debian and Python packages, the **local
+Compose override alone** uses `deploy/local/Dockerfile` as a thin layer
+over the previously verified local ARM64 image
+`arvectum/tender-agent:00df43958674a9eebee2bbd54e7f4116bb87173f`.
+It copies the latest `src` and `migrations` from the reviewed commit,
+sets exact revision/version OCI labels, and does not touch dependencies.
+
+Use it only while `pyproject.toml` and runtime dependency requirements are
+unchanged. For a new dependency or for production, rebuild using the canonical
+`deploy/pilot/Dockerfile`. The local overlay has no effect on the APR-03
+production Compose package or public release Docker builds. It is not a
+signature/attestation substitute.

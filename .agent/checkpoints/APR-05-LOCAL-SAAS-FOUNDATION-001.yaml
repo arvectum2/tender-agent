@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-05-LOCAL-SAAS-FOUNDATION-001
-status: completed
+status: in_progress
 goal: >-
   Deliver APR-05 multi-tenant SaaS and paid-pilot foundation on the existing
   Mac mini. Preserve operator-only Basic auth, implement separate customer
@@ -23,22 +23,21 @@ completed:
   - Integrated opt-in SaaS Bearer API and kept Basic operator routes separate; fail-closed source default.
   - Added one-time invite redemption, role and seat enforcement, token revocation/rotation, draft legal acknowledgement and manual payment attestation.
   - Implemented tenant-owned onboarding/evidence and exact read-only 44-FZ EIS/document-analysis routes, metered quota, product metrics and self-service UI.
-  - Deployed isolated Mac mini PostgreSQL 16/Redis Alembic 106; three real HTTP E2E runs with two synthetic tenants each plus read-only live EIS getDocsIP; 6/6 source text extracted.
-  - Corrected supplier vs contracting authority attribution; created operator bootstrap and client member UI.
-  - Corrected ORM registry import regression from CI quality; exact head CI 37851685586 passed all 9 jobs.
-  - Full local pytest with PostgreSQL 16 client: 3297 passed, 238 skipped; quality and runtime health passed.
-current: All bounded APR-05 local acceptance gates completed; APR-06 is next.
-pending: []
-last_verified_commit: ac0de309e44f97f3d8a6df3e2fdaf3ab714cfb74
+  - Local unit/regressions 48 passed, Node.js UI syntax PASS; Mac mini deployment and PostgreSQL acceptance pending.
+current: Deploy Alembic 106 to isolated Mac mini and run real HTTP multi-tenant E2E including EIS read-only.
+pending:
+  - Validate cross-tenant/role/legal/quota, secrets handling and regression.
+  - Deploy only isolated Mac mini Compose project and run real HTTP E2E.
+  - Record final evidence, CI, checkpoint and PR.
+last_verified_commit: 9a94d8ab
 test_results:
   - APR-04 CI 9/9 success; Mac mini stack healthy and real SOAP 6/6 extraction.
-  - APR-05 full local pytest: 3297 passed, 238 skipped, 329 warnings, PostgreSQL 16 client.
-  - APR-05 CI run 37851685586: success all 9 jobs on ac0de309.
-  - Alembic 105->106->105->106 verified and two-tenant HTTP E2E passed three times.
+  - APR-05 targeted regressions 48 passed, 29 known warnings; JS syntax PASS.
 resume_instruction: >-
-  APR-05 is complete within bounded local scope. Next stage APR-06 COMMERCIAL-ACCEPTANCE;
-  preserve all external payment/public deployment/human action gates. Mac mini repo access
-  is currently blocked by macOS permissions (Operation not permitted); use GitHub.
+  Continue APR-05 from this checkpoint and first remaining step.
+  Do not expose real VPS or public DNS, collect real payments, fake legal
+  approval, share operator Basic credentials with tenants or change unrelated
+  Mac mini services. Keep watchdog disabled.
 execution:
   branch: feature/apr05-saas-foundation
   base_commit: 67998e275198d3c04e35f2a809e546f554f9d0ee

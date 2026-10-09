@@ -1,3 +1,8 @@
+# ORM registry imports are intentional side effects required for Alembic and
+# standalone CLI Base.metadata.create_all. Do not remove "unused" model imports:
+# pilot_projects and other FK targets must be registered even without routers.
+# ruff: noqa: I001, F401, RUF100, RUF022
+
 from src.modules.action_queue.models import ActionQueueApproval, ActionQueueRecord, ActionQueueSet
 from src.modules.agent_registry.models import AgentRegistryRecord, AgentRegistrySet
 from src.tender_research.models import (
@@ -59,6 +64,17 @@ from src.modules.bid_packages.models import BidPackageItem, BidPackageRecord, Bi
 from src.modules.ceo_approval.models import CEOApprovalCondition, CEOApprovalRecord, CEOApprovalSet
 from src.modules.closing_docs.models import ClosingDocsFlag, ClosingDocsItem, ClosingDocsRecord, ClosingDocsSet
 from src.modules.compliance_matrix.models import ComplianceMatrix, ComplianceMatrixRow
+from src.modules.saas_foundation.models import (  # noqa: F401
+    SaasAccessToken,
+    SaasAuditEvent,
+    SaasInvitation,
+    SaasLegalAcceptance,
+    SaasMember,
+    SaasPaymentEvidence,
+    SaasRun,
+    SaasTenant,
+    SaasUsageCounter,
+)
 from src.modules.company_profile_store.models import (  # noqa: F401
     CompanyDocument,
     CompanyDocumentVersion,
