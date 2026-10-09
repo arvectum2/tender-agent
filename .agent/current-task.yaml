@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-03B-UNIFIED-FLOW-20261009
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: 'Fix owner-reported operator workspace regression: one canonical browser UI with existing EIS keyword search and real EIS-to-documents-to-analysis outcome.'
 definition_of_done:
@@ -22,16 +22,18 @@ completed:
   - 'Real 223-FZ public search and two downloaded files, partial analysis conservatively needs_review.'
   - 'PR #259 exact-head 1e81a5f49350e4f9a8afb487688e556f548c81c1 passed full GitHub CI and was merged as e330418bf430c6b87f65bdbf285d0377c1f8a620.'
   - 'Private original workspace port 18083 promoted to unified implementation, authenticated HTTP 200 and protected 401, old /pilot/tender-agent also same HTML; original port 18082 healthy.'
+  - 'Root-caused actual Safari 10:13 UTC failed runs: six original files saved in both; stale preview upload_service_legacy.py called int(None) on missing optional EIS revision, despite green repository tests.'
+  - 'Introduced full operator module source-locked preview Dockerfile and 54-file exact-byte integrity checker with source commit label; replaced stale image on 18083 and preserved basic auth and 18082 pilot.'
+  - 'Re-analyzed BOTH Safari failed runs toa-run-20261009101316-306d54 and toa-run-20261009101331-bfdddd to completed_with_warnings with 6/6 original files, 6/6 text extractions and 10 sections each; removed obsolete internal error warning but kept history in event log.'
+  - 'Authenticated 18083 report and 3 XML-cited facts, PDFs and DOCX returned HTTP200; anonymous access 401, container healthy.'
+  - 'PR #260 exact-head a9f3bce914afc33347c9af0e6098849531011591 passed all GitHub CI checks and merged as 63c02c4c525ac2f29c37f7067a831b54c7e57d2b.'
 
-current: 'Owner reproduction: two Safari initiated 44-FZ runs failed after six files were downloaded; Docker preview code differs from exact tested main in two server files. Fix image parity, retry both saved runs, validate end-to-end and update owner preview.'
+current: 'Reproduction fixed: both actual Safari failed runs re-analyzed with original six documents and working reports; PR #260 merged, verified source-locked preview on Mac mini 18083. Owner visual/browser sign-off and broader evidence-quality assessment still pending.'
 pending:
-  - 'Fix private preview Docker image provenance: ensure entire tender_operator_agent_demo Python/UI source from exact verified commit, not stale intermediate code.'
-  - 'Verify no differences between deployed preview source and release source; re-run the two actual Safari failed procurement analyses and verify file downloads, report, citations and exports.'
-  - 'Pass focused tests and exact-head CI, merge deployment fix and update preview on loopback 18083; keep pilot 18082 and user credentials unchanged.'
   - 'OWNER: reload http://127.0.0.1:18083/pilot/tender-agent/workspace in Mac mini browser; test keyword search, official 44/223-FZ card selection, original file links, one-click analyze and PDF/DOCX; provide acceptance or actionable UX defects.'
   - 'QUALITY: verified XML citations exist for subject, deadline and NMCK, but other risks/economic/legal interpretation remains human-reviewed; do not claim autonomous bid readiness.'
   - 'After owner browser sign-off, set APR-03B completed and continue APR-04 customer onboarding using existing PR #252; VPS remains deferred.'
-last_verified_commit: 'e330418bf430c6b87f65bdbf285d0377c1f8a620'
+last_verified_commit: '63c02c4c525ac2f29c37f7067a831b54c7e57d2b'
 test_results:
   - '109 focused tests PASS, 10 SKIP; fixed missing parser import responsible for 16 earlier failures.'
   - 'JS fake-browser E2E PASS: keyword card, real persisted files auto analysis/report, missing files fail closed.'
@@ -40,8 +42,11 @@ test_results:
   - '223-FZ 32616450723 two original files and needs_review partial analysis.'
   - 'PR #259 full exact-head GitHub Actions CI all green, merge e330418bf430c6b87f65bdbf285d0377c1f8a620.'
   - 'Authenticated private preview 18083 healthy; matching HTML for old and new routes, report+3 verified XML source facts returned HTTP 200; no auth HTTP 401.'
+  - 'PR #260 all exact-head GitHub CI PASS and merge commit 63c02c4c525ac2f29c37f7067a831b54c7e57d2b.'
+  - '115 focused tests PASS, 10 SKIP; make check PASS, targeted Ruff PASS; source-lock parity 54 files at commit a9f3bce914af.'
+  - 'Both owner Safari failures recovered: 6 real documents and 10 sections each, 3 source-backed XML facts each, PDF 32029 bytes and DOCX 38373 bytes returned HTTP 200; warnings empty.'
 
-resume_instruction: 'Owner Safari failed runs toa-run-20261009101316-306d54 and toa-run-20261009101331-bfdddd show analysis failed with int(None), all 6 documents present. Runtime Docker image differs from canonical main in upload_service_legacy.py and procurement_intake_service.py. Build preview image by COPYing exact full src/modules/tender_operator_agent_demo from verified origin/main, verify parity, re-analyze failed runs, check PDF/DOCX/3 XML citations, run CI, merge fix PR and update private 18083. Do not disturb pilot 18082 or change credentials.'
+resume_instruction: 'PR #260 already merged; Mac mini preview 18083 is healthy and matches source commit a9f3bce914af (54 files). Both owner Safari failed runs toa-run-20261009101316-306d54 and toa-run-20261009101331-bfdddd were reanalyzed successfully with 6 files, 10 report sections, 3 attributed XML facts, PDF/DOCX exports. Owner should refresh http://127.0.0.1:18083/pilot/tender-agent/workspace?run=toa-run-20261009101331-bfdddd in Safari and confirm it works. Preserve protected private access and human approval. If accepted, close APR-03B and resume APR-04 PR #252; do not provision VPS.'
 execution:
   branch: null
   manual_override: false
