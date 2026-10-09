@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: ROADMAP-REFRESH-OPERATOR-SEQUENCE-20261009
-status: in_progress
+status: completed
 authority: OWNER_DIRECTIVE
 goal: 'Update canonical roadmap after bounded APR-02 acceptance, preserve owner sequence APR-03 Production Runtime then APR-03B Operator Workspace then APR-04, and distinguish open implementation PRs from merged capabilities.'
 definition_of_done:
@@ -14,12 +14,16 @@ completed:
   - 'Confirmed APR-02 bounded 223-FZ accepted via merged PR #250; no universal 223-FZ claim.'
   - 'Confirmed APR-03 through APR-07 PR #251..255 open, and previous UI PR #228 open but not merged.'
   - 'Updated master roadmap, human roadmap and owner directive to prioritize APR-03B after APR-03.'
-current: 'Validate and land roadmap refresh with green CI; close superseded stale UI PR #228 only after this replacement lands.'
-pending: [validate_yaml, pull_request, ci_green_merge, close_superseded_228, final_checkpoint]
-last_verified_commit: ced7197770b8317b4b896cec5e5f913982397452
-test_results: []
-resume_instruction: 'Finish ROADMAP-REFRESH-OPERATOR-SEQUENCE-20261009. Do not execute APR-04+ before owner browser acceptance gate APR-03B. Do not mark PR #251..255 done until merged and verified.'
+current: 'Owner roadmap refresh merged into main; PR #228 closed as superseded. APR-03 remains next not-yet-merged implementation outcome.'
+pending: []
+last_verified_commit: 509578a7b3caafc0c394ebbfb4d6672497af5c56
+test_results:
+  - 'YAML/OWNER_SEQUENCE/APR-02 status assertions PASS.'
+  - 'PR #256 exact-head CI run 37898111915: SUCCESS 9/9.'
+  - 'PR #256 squash merged 509578a7b3caafc0c394ebbfb4d6672497af5c56.'
+  - 'Overlapping old operator-workspace PR #228 closed as superseded.'
+resume_instruction: 'This roadmap refresh is complete. Resume APR-03 Production Runtime from exact canonical main and reconcile PR #251; then APR-03B Operator Workspace for owner browser acceptance, then APR-04 onwards. PR #252..255 remain open, not accepted completion.'
 execution:
-  branch: roadmap/refresh-operator-sequence-20261009
-  manual_override: true
+  branch: null
+  manual_override: false
   lease_until: null
