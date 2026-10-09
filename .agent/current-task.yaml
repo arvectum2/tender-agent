@@ -1,120 +1,77 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
-status: blocked
-goal: Deliver a frozen, source-verified corpus of 20-30 distinct real Russian procurements,
-  full data-to-report workflow and seven measurements of operator usefulness, with
-  human-attributed decisions, calibrated thresholds, persistent regression defects
-  and auditable acceptance. Never claim technical probe results are human acceptance.
+task_id: APR-07-QUALITY-SLO-EVIDENCE-001
+status: completed
+goal: Provide a reproducible read-only quality/SLO evidence bridge using existing
+  APR-06 Russian EIS case receipts and Data Platform benchmark outputs, with explicit
+  denominators and evidence gaps, no model acquisition/serving changes.
 definition_of_done:
-- Freeze 20-30 distinct genuine EIS cases with law/procedure/revision evidence and
-  source document hashes.
-- Run extraction, full analysis, citation audit, HUMAN review and application package
-  review for every case.
-- Measure seven agreed KPIs and independent comparisons to attributable human reference.
-- Record each human-confirmed false decision/missed blocker/correction as source-backed
-  regression.
-- Pass negative security and regression tests, local runbook and complete GitHub CI.
-- Issue immutable accepted/failed report only after operator reviews and owner-approved
-  limits.
+- Reuse existing observability metrics and build offline source-hash-bound APR-07
+  quality snapshot.
+- Measure document acquisition, analysis/readiness and citation-presence without falsely
+  claiming verified citations, OCR or human quality.
+- Ingest existing Data Platform benchmark JSON evidence with SHA256 and strict provenance;
+  no downloads, model promotion or API provider calls.
+- Publish versioned machine-readable reproducible snapshot and human-readable operator
+  runbook.
+- Test corrupt input, missing denominators, no human labels, no automatic GO or promotion,
+  and compare actual local evidence.
+- Run targeted and broad tests, commit changes and checkpoint.
 completed:
-- APR-05 predecessor completed; full pytest 3297 passed, 238 skipped on PostgreSQL
-  16, GitHub CI 9/9.
-- Initialized APR-06 feature branch and draft PR 254 with canonical checkpoint.
-- Created 28 candidate numbered references (20 44-FZ, 8 223-FZ); candidate status
-  explicitly unverified.
-- Implemented fail-closed immutable-manifest freeze, seven-metric scoring, human evidence/decision
-  and attributable defect gates.
-- Implemented bounded, resumable read-only 44-FZ EIS probe; 223-FZ wrong SOAP handoff
-  is prohibited.
-- Added test suite for corpus/law/owner approvals, tampering, duplicate runs, missed
-  blockers, false GO/NO_GO, crash recovery.
-- Targeted Mac mini tests 24 passed and Ruff clean on code commit 972554f20d57480f05fa18aaf75c20be64833204.
-- Recovered authorized Mac mini SSH via already connected MacBook; no macOS TCC bypass.
-- Executed 20 distinct actual read-only 44-FZ EIS getDocsIP intakes: 168 downloaded
-    source files and SHA256 receipts; 17 had notice content hashes, three had no files.
-- 9 machine reports analyzed from complete-enough case sources (118 total files, 109
-  extracted text flags, 10 report sections per case); 11 cases remain docs_required.
-- Probed 8 separate 223-FZ public HTML document pages through native adapter, all
-  docs_required with 0 attachments.
-- Preserved audit logs on Mac mini and publishable SHA-only summary, operator review
-  queue for nine machine reports; no customer data or secrets in Git.
-- Corrected 223-FZ public document routing: 223-specific parser instead of 44, official
-    common-info to noticeGuid navigation, multi-revision fail-closed validation.
-- Verified all eight 223-FZ candidates against correct official navigation: 4 had
-    document links and 4 require ambiguous-revision human review.
-- Downloaded five bounded read-only 223-FZ files across four cases to local-only /tmp
-  (four PDF/DOCX magic matches and one HTML-extension/ZIP-content mismatch), published
-  hash/size receipts only.
-- Added safe filename recovery for malformed EIS 223-FZ HTML attributes, strict official
-  host/GUID validation, extra security/regression tests, and nine-case machine-only
-  pre-review queue.
-- Full local APR-06 regression suite 3328 passed, 238 skipped, 329 warnings; make
-  check clean. After final GUID hardening 51 targeted tests passed.
-- Deployed exact GitHub revision 6c869543 to existing isolated Mac mini API/worker;
-  loopback /health HTTP 200, both processes running.
-- In updated running API, attached 1+3+1 public 223-FZ files to three previously created
-  runs, all fail-closed as docs_required; left content-format-mismatched case unattached.
-- 'Independent GPT-6 model review 9/9 historical runs complete: six expired NO_GO
-  supported, Aksay false hard NO_GO, CZN stale deadline, three model DEFER; NOT attributed
-  human review.'
-- Review documents and source SHA256 committed to docs/acceptance/APR06_GPT6_INDEPENDENT_REVIEW_2026-10-09.md
-  and apr06_independent_gpt6_audit_2026-10-09.json.
-- Version-aware structured EIS source selection corrected and verified using original
-  archived Aksay v5 and CZN v3; new regression tests.
-- Full local pytest 3336 pass, 238 skipped; make check pass.
-current: Model cross-check and source-revision fix done; awaiting human decisions
-  for 20-30 verified procurements, attachment revision binding and thresholds.
+- Confirmed APR-06 blocked pending human acceptance, baseline branch clean c6c5fe9f.
+- Found existing 28-case EIS candidate corpus, 20 real 44-FZ receipts and nine machine
+  reports, plus existing ops_observability subsystem.
+- Located Data Platform comparison JSON; leave downloads and candidate model lifecycle
+  to Data Platform.
+- 'Added 44-FZ historical quality aggregator: strict run/evidence/source hash checks
+  and NOT_MEASURED semantics for unknown human/OCR denominators.'
+- Measured actual 20 procurements, 17 with documents, 9 analyzable, 109/118 file text
+  availability flags, 9 machine reports with citation presence.
+- Computed analysis-only nearest-rank latency p50 1.23s and p95 11.96s from nine exact-matched
+  local run IDs; not end-to-end.
+- Imported seven pre-existing Data Platform benchmark result JSONs by SHA256 with
+  matching site/reasoning suite checks. No models downloaded or run.
+- Generated deterministic SHA256 quality snapshot docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json.
+- Created source-bound nine-case candidate procurement roster; every label AI_CURATED_SILVER_NOT_HUMAN_GOLD,
+  none promoted to frozen truth.
+- Created Russian operator runbook, proposed unapproved SLO, exact evidence boundaries,
+  and owner-reported Aksay submitted/awaiting-results note.
+- Ruff clean, 17 targeted tests pass, full local pytest 3351 pass 238 skipped, make
+  check pass; regenerated both checked-in manifests byte-identically.
+- Committed implementation 627ae480cc87b882d096585b472955ac7c7d720e.
+current: Bounded APR-07 offline quality and existing Data Platform evidence bridge
+  completed; broader continuous SLO/gold benchmarks gated.
 pending:
-- Reconcile all 28 candidate numbers/subjects/procedures with official EIS and verify
-  specific notice revisions and all file hashes.
-- Repair/document gaps for 11 incomplete 44-FZ cases and four 223-FZ ambiguous revisions;
-  check coverage for four 223-FZ source-link cases and format mismatch, or select
-  20-30 complete cases.
-- Freeze qualifying 20-30 case corpus by digest; do not mark unverified candidates
-  frozen.
-- Obtain actual attributed HUMAN GO/NO_GO/DEFER, citation corrections, timestamps
-  and application package assessments per case (0/28 so far).
-- Get owner sign-off on seven score thresholds; score all reviewed observations and
-  persist regressions for confirmed defects.
-- Merge upstream PR only under current governance and after final acceptance; keep
-  RU VPS and payment gates deferred.
-last_verified_commit: a51a9f5c9aca5121ae422f97cdf5f698fd5b2079
+- 'APR-07 continuous: obtain independently human-labelled frozen Russian procurement
+  truth and run comparable model benchmark after Data Platform finishes its own downloads.'
+- 'APR-07 continuous: observe rolling live operator and page-level OCR metrics with
+  sufficient denominators before declaring SLO achieved.'
+- APR-06 parent remains blocked pending 20-30 verified human-reviewed acceptance,
+  commercial thresholds and EIS attachment revision checks.
+last_verified_commit: 627ae480cc87b882d096585b472955ac7c7d720e
 test_results:
-- APR-06 targeted Mac mini pytest 24 passed; Ruff clean.
-- Real 44-FZ SOAP cases 20 unique; 168 files SHA256; 9 analyzed, 11 docs_required.
-- Read-only 223-FZ HTML cases 8; 0 downloaded docs; all docs_required.
-- Human reference decisions 0/28; operator measured time/corrections/citation accuracy/missed
-  blockers and package rework NOT MEASURED.
-- APR-05 full local pytest 3297 passed 238 skipped; predecessor CI 37851685586 success.
-- APR-06 GitHub CI pending latest head; do not claim final pass before actual result.
-- APR-06 223-FZ 4 official navigation results with document links, 4 ambiguous revision
-  stops; 5 bounded source files (4 format-matching, 1 content/extension mismatch),
-  no submitted bids.
-- Full Mac mini pytest 3328 passed / 238 skipped, 329 warnings, PostgreSQL 16 CLI;
-  make check passed; final targeted 51 passed.
-- Mac mini real runtime image 6c869543 deployed; API HTTP 200, worker running, 3/3
-  attempted public 223-FZ run supplements stay docs_required.
-- 'GPT-6 AI-only audit: nine case reviews, six supported NO_GO and three conditional
-  DEFER. Two stale dates, one false hard NO_GO.'
-- 'Post-fix local pytest: 3336 passed 238 skipped, 329 warnings; make check PASS.'
-- Full GitHub CI to verify final code/commit before sign-off.
-resume_instruction: 'APR-06 overall remains BLOCKED, but AI GPT-6 model review subtask
-  completed. Read the independent audit/evidence and do NOT repeat source checks or
-  re-run old 9 reports. Next: independently bind active notice revision to technical
-  attachments; get real company supplier profile, collect actual human reviews and
-  approve thresholds; do not invent them. The historical AI conclusion is 6 deadline
-  NO_GO and 3 DEFER; Aksay originally false NO_GO from v1 and CZN used old deadline.
-  Public VPS/payment/ETP remain paused; watchdog disabled.'
+- 17 focused APR-07 pytest passed (1 inherited warning); strict Ruff checks passed.
+- Full suite 3351 passed, 238 skipped, 329 warnings before the two added roster tests;
+  subsequent focused 17 passed.
+- make check success after final source changes; both generated snapshot and source
+  roster reproduce exactly.
+- Real historical sample denominators 17/20 downloaded, 9/20 analyzed, 109/118 text
+  flagged, 9/9 cited presence; no human truth.
+- Data Platform 7 pre-existing quality output hashes imported; model downloads/inference
+  by Tender Agent zero.
+- Snapshot digest e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38.
+resume_instruction: APR-07 bounded offline baseline completed. Do not re-download
+  Russian models; separate Data Platform is performing that work. Check docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
+  and measured snapshot. Next continue independent human procurement truth/provenance
+  and live rolling SLO only when evidence is available; APR-06 acceptance remains
+  blocked, do not invent human reviews or overwrite Aksay bid. APR-03 public Russian
+  VPS, ETP, payments and model promotion remain gated; watchdog disabled.
 execution:
-  branch: feature/apr06-commercial-acceptance
-  base_commit: c8384b2983e63a9d02cf31d3e3bec573013bd38b
-  pull_request: 254
-  operator_queue: docs/acceptance/APR06_OPERATOR_REVIEW_QUEUE_2026-10-09.md
-  source_receipts: docs/acceptance/apr06_real_probe_receipts_2026-10-09.json
-  public_223_receipts: docs/acceptance/apr06_223fz_public_probe_2026-10-09.json
-  public_223_download_receipts: docs/acceptance/apr06_223fz_download_receipts_2026-10-09.json
-  machine_pre_review: docs/acceptance/apr06_machine_prefill_2026-10-09.json
-  local_runtime_smoke: docs/acceptance/APR06_MACMINI_223FZ_RUNTIME_SMOKE_2026-10-09.md
-  independent_model_audit: docs/acceptance/APR06_GPT6_INDEPENDENT_REVIEW_2026-10-09.md
-  independent_model_evidence: docs/acceptance/apr06_independent_gpt6_audit_2026-10-09.json
+  branch: feature/apr07-quality-slo-evidence
+  predecessor: feature/apr06-commercial-acceptance
+  data_platform_repo: /Volumes/ArvectumSSD/Arvectum/repos/data-platform
+  local_runtime: http://127.0.0.1:18082
+  snapshot: docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json
+  source_roster: docs/quality/APR07_PROCUREMENT_SOURCE_ROSTER_2026-10-09.json
+  operator_runbook: docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
+  model_downloads_performed: false
