@@ -42,14 +42,14 @@ completed:
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'Tender Agent PR #261-272 and DP #86-87 merged. R5 real six-original-document LLM analysis succeeds (17 unverified requirements, 5 risks, 9 questions, 20 RFQ lines). PDF/DOCX review-only appendix implemented; CI and source-locked preview validation pending. End-to-end truth review and owner acceptance remain.'
+current: 'TA PR #261-273 and DP #86-87 merged. R3 exact duplicates 9->0; R5 Gemma 6-document report and separate review-only PDF/DOCX passed full CI and actual source test. Pending per-claim source truth and owner acceptance.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '306fe2874aa77f3ab301727562e91d9749505bbd'
+last_verified_commit: '54c86eb608b2f508f4da0f5d06f1578f8c5b6e70'
 test_results:
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
@@ -70,7 +70,7 @@ test_results:
   - 'R3 exact AST clone count 9->0, 71 relevant tests PASS, make check PASS, new module Ruff PASS.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #261-272 and DP #86/#87 merged; 18089 source-locked preview passed auth, 18090 isolated 6-original EIS LLM pipeline yielded 17 review requirements, 5 review risks, 9 questions, 20 RFQ lines, 3 XML facts in 129 seconds. Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-pdf-docx-review-r5-20261009 contains review-only appendix for DOCX/PDF and immutable PDF identity when appendix changes. 29 export tests PASS; run CI, merge, verify against real EIS export. Keep old 18083 untouched until owner preview acceptance. Remaining work: real source-backed claim attribution and >=20 human-reviewed EIS quality cases. Disabled watchdog remains off.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress, TA PRs #261-273 and DP #86-87 merged; latest merge 54c86eb608b2f508f4da0f5d06f1578f8c5b6e70. R3 AST duplicates 9->0, R4 LLM pipeline, R5 real six EIS files and review-only PDF/DOCX export with 57 tests, complete CI and four-page PDF inspected. NEXT implement authorized exact chunk text retrieval and per-claim source evidence, evaluate 20+ human-reviewed procurement cases from 29-case inventory, then owner acceptance. Do not touch existing private ports 18082/18083 or disabled watchdog.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
