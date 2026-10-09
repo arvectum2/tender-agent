@@ -5399,6 +5399,30 @@ def _ensure_procurement_blocked_report_html(run_id: str) -> Path | None:
 
 def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeResponse:
     metadata = _load_metadata(run_id)
+    # A successful manual retry must not present errors from an earlier attempt
+    # as if they described the current document analysis. Historical failure
+    # events stay in the immutable run event feed for operator audit.
+    was_failed = metadata.get("status") == TenderOperatorUploadedRunStatus.FAILED.value
+    has_stale_error = any(
+        str(item).startswith("Analysis failed safely: ")
+        for item in metadata.get("warnings", [])
+    )
+    if was_failed or has_stale_error:
+        previous_status = str(metadata.get("status") or "unknown")
+        metadata["warnings"] = [
+            item for item in metadata.get("warnings", [])
+            if not str(item).startswith("Analysis failed safely: ")
+        ]
+        metadata["limitations"] = [
+            item for item in metadata.get("limitations", [])
+            if item != "Fallback report generation failed. Manual operator review required."
+        ]
+        append_demo_run_event(
+            run_id,
+            "analysis_retry_started",
+            "Повторная обработка сохранённых оригиналов после предыдущей ошибки.",
+            {"previous_status": previous_status},
+        )
     if not metadata.get("files") and metadata.get("status") == TenderOperatorUploadedRunStatus.DOCS_REQUIRED.value:
         metadata["analysis_status"] = "blocked"
         _save_metadata(run_id, metadata)
