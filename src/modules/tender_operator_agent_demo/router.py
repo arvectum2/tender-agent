@@ -102,6 +102,9 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     list_uploaded_demo_runs,
     load_demo_run_events,
 )
+from src.modules.tender_operator_agent_demo.verified_original_quote import (
+    verify_operator_run_quote,
+)
 from src.shared.api.middleware import _is_protected_path
 from src.shared.config.settings import get_settings
 
@@ -110,6 +113,11 @@ router = APIRouter(tags=["tender-operator-agent-demo"])
 
 class OperatorWorkspaceImportRequest(BaseModel):
     reference: str = Field(min_length=11, max_length=500)
+
+
+class OperatorWorkspaceQuoteVerifyRequest(BaseModel):
+    file_id: str = Field(pattern=r"^FILE-[0-9]{2,4}$")
+    exact_quote: str = Field(min_length=20, max_length=800)
 
 
 _WORKSPACE_ASSETS = Path(__file__).parent / "assets"
@@ -162,6 +170,19 @@ def operator_workspace_import(request: OperatorWorkspaceImportRequest) -> Search
 @router.get("/api/demo/tender-agent/workspace/runs/{run_id}/evidence", dependencies=[Depends(require_private_workspace)])
 def operator_workspace_source_evidence(run_id: str) -> dict:
     return get_operator_source_evidence(run_id)
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/runs/{run_id}/verify-quote",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_verify_quote(
+    run_id: str, request: OperatorWorkspaceQuoteVerifyRequest,
+) -> dict:
+    """No text is stored; only a literal occurrence in a hashed original is checked."""
+    return verify_operator_run_quote(
+        run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
+    )
 
 
 @router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
