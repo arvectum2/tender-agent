@@ -1,0 +1,7 @@
+# Operator Workspace R5: literal source quote verification
+
+The authenticated operator workspace now has a collapsed source-quote check in the report screen. It appears only if an original file with a canonical FILE-xx ID is present. Operator chooses one original and pastes a literal 20–800 character quote. The request is POSTed only to the same-origin private Tender Agent endpoint, which performs source attestations via non-persisting Data Platform processing, re-checking the original bytes and genuine saved resource/document/chunk IDs and hashes.
+
+The screen deliberately reports only a textual match in an extracted original and exact chunk-local offsets. It NEVER marks model claims or legal interpretations as KNOWN, never issues RFQs or submits tenders, never generates a source citation from paraphrase, never stores the input quote, and never falls back to a fake success when the DP service is unavailable.
+
+No original document: the verification UI stays hidden; manual document recovery remains the correct path. Browser uses textContent for all user-facing quote verification strings (not raw HTML). Controls are disabled during concurrent analysis. E2E fake-browser regression covers a loaded document, real authenticated POST, matched chunk text, and a file-less EIS manifest with no verification form. Further owner visual acceptance is still required. Active owner preview on 18083 is unchanged until reviewed source-locked staging promotion.

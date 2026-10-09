@@ -39,12 +39,13 @@ completed:
   - 'PRs #264-266 merged. Isolated full original EIS document LLM pipeline passed with 3 verified XML facts, no stale subject, 10 report sections (327 sec). New data platform per-file provenance and unverified LLM report candidates preserve operator value without fake claims.'
   - 'R3 AST exact-body >=12 line clone inventory reduced from nine initial groups to zero, via compatibility shims for portal nested fields/date parsing, Hermes generic-subject classification and shared check-db CLI. No source-specific procurement law/parsers removed.'
   - 'R5 manual read-only original quote verification built: private authenticated POST route, original file safe direct path, content SHA256, same non-persisting DP process endpoint, exact source/chunk ID/hash/substring, rejects hallucinations and symlinks.'
+  - 'R5 Operator Workspace now includes collapsed per-original exact quotation check with safe DOM textContent, protected same-origin route, explicit match-only semantics and no-files hidden state.'
   - 'R5 real EIS stored FILE-04 DOCX reprocessed on Mac mini: all 31 chunk hashes and source IDs exactly matched; exact original quote accepted; fake quote denied; no original text emitted.'
   - 'R5 provenance gate first slice: only an explicit literal model quote whose exact text occurs in one real Data Platform chunk with matching file/resource/document/chunk IDs and hashed DP chunk-local offsets can acquire a candidate locator. Absence, fuzzy paraphrases, ambiguous duplicates and invalid offsets fail closed. No implication of verified legal interpretation.'
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA PR #261-274 and DP #86-87 merged. R5 read-only exact original quote attestation with private authenticated route and real DOCX proof 31/31 chunk hash match; test/CI and owner source-locked acceptance still pending.'
+current: 'TA #261-274 and DP #86-87 merged. R5 original source attestation PR #276 under full CI, new stacked Operator Workspace UI for per-original exact quote check with fake-browser and Python regressions; owner acceptance and >=20 truth-reviewed real procurements pending.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -71,9 +72,10 @@ test_results:
   - 'R5 exact quote binding: 8 new happy/fail-closed unit cases PASS, Ruff PASS.'
   - 'R3 exact AST clone count 9->0, 71 relevant tests PASS, make check PASS, new module Ruff PASS.'
   - 'R5 original source quote attestation private route + real original DOCX 31/31 stable chunks; 77 relevant tests PASS, no false legal verification.'
+  - 'R5 quote UI fake-browser real POST with original passed, missing-original state hidden; 38 Python tests PASS.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 remains in_progress. TA PR #261-274 and DP #86-87 merged. New branch/worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-export-real-validation-20261009 implements source-proof capability: private authenticated POST /api/demo/tender-agent/workspace/runs/{run_id}/verify-quote verifies stored original sha256, DP non-persisting original reprocessing and true chunk identity/hash before emitting literal quote locator. 77 tests PASS, real EIS DOCX matched 31/31 hashes and exact quote, false quote rejected. Finish make check, GitHub exact-head CI and merge. Then design R5 per-LLM-claim exact source quote request/validation, evaluate >=20 human-reviewed 44/223-FZ real procurements and owner Safari acceptance. Never promote automatic legal fact, publish VPS, change current owner private 18083 without gate or activate previously disabled watchdog.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA PR #276 exact original quote attestation API is under full CI, DP #86-87 and TA #261-274 merged. Stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-quote-ui-20261009 adds a collapsed private Operator Workspace form for literal 20-800-character quote verification per original, safe DOM output and no-document guards. Node fake-browser E2E + 38 Python tests PASS. Finish exact-head CI on #276, merge it, rebase UI PR to main, full CI and private source-locked preview plus owner browser acceptance. Continue R5 typed model quote attribution and truth-verified >=20 44/223-FZ procurements. Keep owner private 18083 untouched and owner-disabled watchdog off.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true

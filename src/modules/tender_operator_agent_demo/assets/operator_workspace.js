@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const api = '/api/demo/tender-agent';
-  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [] };
+  const state = { runId: null, poll: null, busy: false, registryOffset: 0, registryTotal: 0, registryQuery: '', runReady: false, searchParams: null, searchCursor: null, seenNumbers: [], quoteFileKey: null };
   const $ = id => document.getElementById(id);
   const node = (tag, cls = '', content = null) => {
     const el = document.createElement(tag);
@@ -51,6 +51,7 @@
     $('search-submit').disabled = value;
     $('search-next').disabled = value;
     $('append-files-button').disabled = value;
+    $('quote-verify-button').disabled = value;
   }
   function tab(name) {
     const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок'};
@@ -266,6 +267,22 @@
     wipe(root);
     const files = run.files || [];
     $('document-count').textContent = String(files.length);
+    const validFiles = files.filter(f => /^FILE-[0-9]{2,4}$/.test(f.file_id || ''));
+    const key = state.runId + '|' + validFiles.map(f => f.file_id).join(',');
+    show('quote-check',validFiles.length > 0);
+    if (state.quoteFileKey !== key) {
+      state.quoteFileKey=key;
+      const fileSelect=$('quote-file');
+      wipe(fileSelect);
+      for(const f of validFiles){
+        const option=node('option','',f.display_name || f.original_name || f.file_id);
+        option.value=f.file_id;
+        fileSelect.append(option);
+      }
+      fileSelect.value=validFiles[0]?.file_id || '';
+      $('quote-text').value='';
+      $('quote-check-result').textContent='';
+    }
     if (!files.length) return paragraph(root, 'ЕИС не предоставила скачиваемых файлов. Наличие списка вложений не подтверждает загрузку. Добавьте оригинальные документы вручную ниже.', 'empty-state');
     for (const file of files) {
       const item = node('div','file-item');
@@ -277,6 +294,34 @@
       root.append(item);
     }
   }
+  async function verifyQuote(event) {
+    event.preventDefault();
+    if (!state.runId || state.busy) return;
+    const fileId=$('quote-file').value;
+    const quote=$('quote-text').value.trim();
+    if (!/^FILE-[0-9]{2,4}$/.test(fileId) || quote.length < 20 || quote.length > 800) {
+      $('quote-check-result').textContent='Выберите оригинальный документ и вставьте точную цитату длиной от 20 до 800 символов.';
+      return;
+    }
+    setBusy(true);
+    $('quote-check-result').textContent='Проверяем оригинал через Data Platform…';
+    try {
+      const result=await json(
+        api+'/workspace/runs/'+encodeURIComponent(state.runId)+'/verify-quote',
+        {method:'POST', headers:{'Content-Type':'application/json'},
+         body:JSON.stringify({file_id:fileId,exact_quote:quote})}
+      );
+      const evidence=result?.evidence;
+      $('quote-check-result').textContent = result?.status === 'literal_quote_found_in_extracted_original_only' && evidence?.chunk_id
+        ? 'Буквальное совпадение с извлечённым оригиналом: '+fileId+' · чанк '+evidence.chunk_id+
+          ' · символы '+evidence.quote_char_start_in_chunk+'–'+evidence.quote_char_end_in_chunk+
+          '. Юридический и коммерческий смысл не подтверждён автоматически.'
+        : 'UNKNOWN · Буквальное совпадение с подтверждённым оригиналом не установлено. Проверьте текст цитаты, исходник и доступность Data Platform.';
+    } catch(error) {
+      $('quote-check-result').textContent='Не удалось проверить цитату: '+error.message+'. Подтверждение не получено.';
+    } finally {setBusy(false);}
+  }
+
   async function loadEvents() {
     if (!state.runId) return;
     const root = $('event-list');
@@ -503,6 +548,7 @@
   });
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
+  $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
   $('analyze-btn').addEventListener('click',()=>void analyze());
   $('refresh-run').addEventListener('click',()=>void loadRun().catch(e=>msg(e.message)));
   $('refresh-history').addEventListener('click',()=>void loadHistory());

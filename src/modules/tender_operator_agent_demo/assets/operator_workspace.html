@@ -93,6 +93,20 @@
             <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
             <h3 id="report-recommendation"></h3><div id="executive-summary"></div>
             <div id="evidence-facts"></div>
+            <details class="quote-review" id="quote-check" hidden>
+              <summary>Проверить точную цитату из оригинального документа</summary>
+              <p class="help-text">Проверка выполняется в приватном контуре. Совпадение буквальной цитаты подтверждает только её наличие в извлечённом тексте, но не правильность вывода модели.</p>
+              <form id="quote-verify-form" class="quote-form">
+                <label for="quote-file">Оригинал документа
+                  <select id="quote-file" required></select>
+                </label>
+                <label for="quote-text">Цитата без изменений (20–800 символов)
+                  <textarea id="quote-text" required minlength="20" maxlength="800" rows="3" placeholder="Вставьте точную выдержку из документа"></textarea>
+                </label>
+                <button type="submit" class="button button-secondary" id="quote-verify-button">Проверить по оригиналу</button>
+              </form>
+              <p id="quote-check-result" role="status" aria-live="polite"></p>
+            </details>
             <div id="report-sections"></div>
             <details class="raw-report"><summary>Полный исходный текст отчёта</summary><pre id="report-text"></pre></details>
           </section>
