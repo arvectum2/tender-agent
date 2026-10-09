@@ -21,17 +21,27 @@ from src.tender_research.rag.data_platform import (
     retrieval_backend_name,
 )
 from src.tender_research.rag.history_service import record_analysis_run
+from src.tender_research.rag.ri223_document_dossier import (
+    build_ri223_document_dossier,
+    render_ri223_document_dossier,
+)
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
+from src.tender_research.rag.ri223_source_facts import (
+    derive_ri223_review_flags,
+    project_ri223_source_facts,
+    render_ri223_review_flags,
+    render_ri223_source_facts,
+)
 from src.tender_research.rag.schemas import (
     ANALYSIS_MODE_CHOICES,
-    ANALYSIS_SECTIONS,
     DEFAULT_ANALYSIS_MODE,
     SourceCitation,
     TenderAnalysisResult,
     TenderAnalysisSection,
+    analysis_sections_for_regime,
 )
 from src.tender_research.rag.search_types import RagSearchHit
 from src.tender_research.repository import TenderRepository
@@ -92,9 +102,9 @@ _ANALYSIS_MODE_PRESETS: dict[str, AnalysisModeConfig] = {
 
 def _slugify(value: str) -> str:
     import re
+
     slug = re.sub(r"[^a-zA-Z0-9]+", "_", value).strip("_").lower()
     return slug or "default"
-
 
 
 def _normalize_analysis_mode(analysis_mode: str | None) -> str:
@@ -117,11 +127,18 @@ def _resolve_analysis_mode_config(
     return AnalysisModeConfig(
         name=normalized_mode,
         retrieval_limit=max(1, int(limit or preset.retrieval_limit)),
-        max_chunks_per_section=max(1, int(max_chunks_per_section or preset.max_chunks_per_section)),
-        max_context_chars_per_section=max(500, int(max_context_chars_per_section or preset.max_context_chars_per_section)),
+        max_chunks_per_section=max(
+            1, int(max_chunks_per_section or preset.max_chunks_per_section)
+        ),
+        max_context_chars_per_section=max(
+            500,
+            int(max_context_chars_per_section or preset.max_context_chars_per_section),
+        ),
         max_chunk_chars=preset.max_chunk_chars,
         max_preview_chars_per_source=preset.max_preview_chars_per_source,
-        llm_timeout_seconds=max(1, int(llm_timeout_seconds or preset.llm_timeout_seconds)),
+        llm_timeout_seconds=max(
+            1, int(llm_timeout_seconds or preset.llm_timeout_seconds)
+        ),
     )
 
 
@@ -202,6 +219,7 @@ def _get_session() -> Session:
     engine = create_engine(settings.database_url)
     Base.metadata.create_all(engine)
     from sqlalchemy.orm import sessionmaker
+
     return sessionmaker(bind=engine)()
 
 
@@ -214,6 +232,9 @@ def _build_report_markdown(
     retrieval_model: str | None,
     analysis_mode: str = DEFAULT_ANALYSIS_MODE,
     duration_seconds: float | None = None,
+    ri223_source_observations: list[dict] | None = None,
+    ri223_review_flags: list[dict] | None = None,
+    ri223_document_dossier: list[dict] | None = None,
 ) -> str:
     lines = [
         f"# Анализ закупки {registry_number}",
@@ -229,6 +250,11 @@ def _build_report_markdown(
     if duration_seconds is not None:
         lines.append(f"**Длительность:** {duration_seconds:.2f} сек")
     lines.extend(["", "---", ""])
+    lines.extend(render_ri223_source_facts(ri223_source_observations or []))
+    lines.extend(render_ri223_review_flags(ri223_review_flags or []))
+    lines.extend(render_ri223_document_dossier(ri223_document_dossier or []))
+    if ri223_source_observations or ri223_review_flags or ri223_document_dossier:
+        lines.extend(["---", ""])
     for section in sections:
         lines.append(f"## {section.id}. {section.title}")
         lines.append("")
@@ -257,7 +283,13 @@ def _build_report_markdown(
     return "\n".join(lines)
 
 
-def _save_report(report_markdown: str, registry_number: str, data_dir: str, *, run_token: str | None = None) -> str:
+def _save_report(
+    report_markdown: str,
+    registry_number: str,
+    data_dir: str,
+    *,
+    run_token: str | None = None,
+) -> str:
     reports_dir = Path(data_dir) / "rag" / "reports"
     reports_dir.mkdir(parents=True, exist_ok=True)
     if run_token is None:
@@ -325,7 +357,11 @@ def _finalize_analysis_status(
         return "completed_with_warnings", normalized_warnings
     if normalized_warnings:
         return "completed_with_warnings", normalized_warnings
-    if any(section.status in ("insufficient_context", "no_context", "retrieval_only_fallback") for section in sections):
+    if any(
+        section.status
+        in ("insufficient_context", "no_context", "retrieval_only_fallback")
+        for section in sections
+    ):
         return "completed_with_warnings", normalized_warnings
     return "completed", normalized_warnings
 
@@ -403,14 +439,18 @@ def analyze_tender(
             object.__setattr__(config, "local_llm_base_url", llm_base_url)
         if llm_model:
             object.__setattr__(config, "local_llm_model", llm_model)
-        object.__setattr__(config, "local_llm_timeout_seconds", mode_config.llm_timeout_seconds)
+        object.__setattr__(
+            config, "local_llm_timeout_seconds", mode_config.llm_timeout_seconds
+        )
 
         repo = TenderRepository(session)
         tender = repo.get_tender_by_registry_number(registry_number)
         if not tender:
             tender = repo.get_tender_by_external("eis", registry_number)
         if not tender:
-            tender = repo.get_tender_by_external("external_public_44fz", registry_number)
+            tender = repo.get_tender_by_external(
+                "external_public_44fz", registry_number
+            )
         if not tender:
             result = TenderAnalysisResult(
                 status="no_context",
@@ -422,9 +462,18 @@ def analyze_tender(
                 errors=[f"Tender {registry_number} not found in database"],
             )
             if record_history:
-                _record_history(result, session, duration_seconds=0.0, source=history_source)
+                _record_history(
+                    result, session, duration_seconds=0.0, source=history_source
+                )
             return result
 
+        # Only source-verified 223fz tenders change document questions.
+        # No new legal facts/assumptions are inferred by this selection.
+        sections_schema = analysis_sections_for_regime(tender.law_type)
+        ri223_source_observations = project_ri223_source_facts(
+            tender.law_type, tender.raw_payload
+        )
+        ri223_review_flags = derive_ri223_review_flags(ri223_source_observations)
         retrieval_backend_name(config)
         emit_progress(10, "retrieval", "Подготавливаем поиск по документам…")
 
@@ -433,6 +482,7 @@ def analyze_tender(
         platform_client = build_data_platform_client(config)
         collection_id = build_tender_collection_id(repo, tender.id)
         platform_index_ready = False
+        platform_index_check_error: str | None = None
         if collection_id is not None:
             try:
                 stats = platform_client.collection_stats(collection_id)
@@ -442,18 +492,38 @@ def analyze_tender(
                     and int(stats.get("resources", 0)) == expected_resources
                     and int(stats.get("embeddings", 0)) >= expected_resources
                 )
-            except (DataPlatformError, ValueError):
-                platform_index_ready = False
+            except DataPlatformError as exc:
+                # HTTP 404 is a genuinely absent index. All other provider
+                # failures (especially 401/403 auth and 5xx outages) must not
+                # masquerade as a missing source or trigger needless reindex.
+                detail = str(exc)
+                if "returned HTTP 404" not in detail:
+                    if "returned HTTP 401" in detail or "returned HTTP 403" in detail:
+                        platform_index_check_error = (
+                            "Data Platform access denied (HTTP 401/403). "
+                            "Check configured service credentials; index readiness is UNKNOWN."
+                        )
+                    else:
+                        platform_index_check_error = (
+                            "Data Platform collection status unavailable. "
+                            "Check service access/connectivity; index readiness is UNKNOWN."
+                        )
+            except (ValueError, TypeError):
+                platform_index_check_error = (
+                    "Data Platform returned invalid collection statistics. "
+                    "Index readiness is UNKNOWN."
+                )
         if collection_id is None or not platform_index_ready:
             result = TenderAnalysisResult(
-                status="no_context",
+                status="failed" if platform_index_check_error else "no_context",
                 registry_number=registry_number,
                 sections=[],
                 sections_count=0,
                 sources_count=0,
                 analysis_mode=analysis_mode,
                 errors=[
-                    (
+                    platform_index_check_error
+                    or (
                         "Data Platform index is not prepared for this tender. "
                         "Run tender preparation first."
                     )
@@ -461,6 +531,8 @@ def analyze_tender(
                 retrieval_provider=retrieval_provider,
                 retrieval_model=retrieval_model,
                 retrieval_limit_used=mode_config.retrieval_limit,
+                ri223_source_observations=ri223_source_observations,
+                ri223_review_flags=ri223_review_flags,
             )
             if record_history:
                 _record_history(
@@ -491,7 +563,7 @@ def analyze_tender(
         section_states = [
             {
                 "name": f"section:{sec_def['id']}",
-                "title": f"{index}/{len(ANALYSIS_SECTIONS)} — {sec_def['title']}",
+                "title": f"{index}/{len(sections_schema)} — {sec_def['title']}",
                 "status": "pending",
                 "progress_percent": 0,
                 "message": "",
@@ -499,10 +571,10 @@ def analyze_tender(
                     "section_id": sec_def["id"],
                     "section_title": sec_def["title"],
                     "section_index": index,
-                    "total_sections": len(ANALYSIS_SECTIONS),
+                    "total_sections": len(sections_schema),
                 },
             }
-            for index, sec_def in enumerate(ANALYSIS_SECTIONS, start=1)
+            for index, sec_def in enumerate(sections_schema, start=1)
         ]
         retrieval_seconds_total = 0.0
         llm_calls_count = 0
@@ -510,14 +582,14 @@ def analyze_tender(
         max_section_context_chars_value = 0
         llm_durations: list[float] = []
 
-        total_sections = max(len(ANALYSIS_SECTIONS), 1)
+        total_sections = max(len(sections_schema), 1)
         emit_progress(
             20,
             "retrieval",
             "Поиск по документам готов. Начинаем анализ по разделам…",
             steps=section_states,
         )
-        for index, sec_def in enumerate(ANALYSIS_SECTIONS, start=1):
+        for index, sec_def in enumerate(sections_schema, start=1):
             section_started_at = time.perf_counter()
             section_progress = 20 + round((index - 1) * 70 / total_sections)
             section_states[index - 1]["status"] = "running"
@@ -550,10 +622,14 @@ def analyze_tender(
                 max_preview_chars=mode_config.max_preview_chars_per_source,
             )
             total_context_chars += section_context.context_chars
-            max_section_context_chars_value = max(max_section_context_chars_value, section_context.context_chars)
+            max_section_context_chars_value = max(
+                max_section_context_chars_value, section_context.context_chars
+            )
             prompt_metrics = {
                 "context_chars": section_context.context_chars,
-                "context_tokens_estimate": _estimate_tokens(section_context.context_chars),
+                "context_tokens_estimate": _estimate_tokens(
+                    section_context.context_chars
+                ),
                 "prompt_chars": 0,
                 "system_prompt_chars": 0,
                 "user_prompt_chars": 0,
@@ -564,17 +640,23 @@ def analyze_tender(
             answer_warning: str | None = None
 
             if not hits:
-                section_states[index - 1]["status"] = "warning" if llm_client else "completed"
+                section_states[index - 1]["status"] = (
+                    "warning" if llm_client else "completed"
+                )
                 section_states[index - 1]["progress_percent"] = 100
-                section_states[index - 1]["message"] = "Недостаточно контекста в документах."
-                sections.append(TenderAnalysisSection(
-                    id=sec_def["id"],
-                    title=sec_def["title"],
-                    question=sec_def["question"],
-                    answer="",
-                    sources=[],
-                    status="insufficient_context" if llm_client else "no_context",
-                ))
+                section_states[index - 1]["message"] = (
+                    "Недостаточно контекста в документах."
+                )
+                sections.append(
+                    TenderAnalysisSection(
+                        id=sec_def["id"],
+                        title=sec_def["title"],
+                        question=sec_def["question"],
+                        answer="",
+                        sources=[],
+                        status="insufficient_context" if llm_client else "no_context",
+                    )
+                )
                 per_section_timings.append(
                     {
                         "section_id": sec_def["id"],
@@ -583,7 +665,9 @@ def analyze_tender(
                         "status": sections[-1].status,
                         "retrieval_seconds": round(retrieval_seconds, 4),
                         "llm_seconds": 0.0,
-                        "duration_seconds": round(time.perf_counter() - section_started_at, 4),
+                        "duration_seconds": round(
+                            time.perf_counter() - section_started_at, 4
+                        ),
                         "chunks_retrieved": len(hits),
                         "chunks_used": 0,
                         "context_chars": 0,
@@ -604,8 +688,12 @@ def analyze_tender(
                     registry_number=registry_number,
                     analysis_mode=analysis_mode,
                 )
-                prompt_metrics["context_tokens_estimate"] = _estimate_tokens(section_context.context_chars)
-                section_states[index - 1]["message"] = "Выполняем запрос к локальной LLM."
+                prompt_metrics["context_tokens_estimate"] = _estimate_tokens(
+                    section_context.context_chars
+                )
+                section_states[index - 1]["message"] = (
+                    "Выполняем запрос к локальной LLM."
+                )
                 emit_progress(
                     section_progress,
                     "section_analysis",
@@ -630,7 +718,9 @@ def analyze_tender(
                     status = "retrieval_only_fallback"
                     llm_status = "fallback"
                     fallback_reason = answer.error
-                    answer_warning = f"LLM fallback for section {sec_def['id']}: {answer.error}"
+                    answer_warning = (
+                        f"LLM fallback for section {sec_def['id']}: {answer.error}"
+                    )
                     warnings.append(answer_warning)
                 else:
                     answer_text = answer.answer
@@ -641,7 +731,9 @@ def analyze_tender(
                 status = "retrieval_only"
 
             section_duration = time.perf_counter() - section_started_at
-            section_states[index - 1]["status"] = "warning" if status == "retrieval_only_fallback" else "completed"
+            section_states[index - 1]["status"] = (
+                "warning" if status == "retrieval_only_fallback" else "completed"
+            )
             section_states[index - 1]["progress_percent"] = 100
             section_states[index - 1]["message"] = (
                 "Готово с retrieval fallback."
@@ -656,17 +748,21 @@ def analyze_tender(
                 "chunks_retrieved": len(hits),
                 "chunks_used": section_context.chunks_used,
                 "context_chars": section_context.context_chars,
-                "context_tokens_estimate": _estimate_tokens(section_context.context_chars),
+                "context_tokens_estimate": _estimate_tokens(
+                    section_context.context_chars
+                ),
                 "fallback_reason": fallback_reason,
             }
-            sections.append(TenderAnalysisSection(
-                id=sec_def["id"],
-                title=sec_def["title"],
-                question=sec_def["question"],
-                answer=answer_text,
-                sources=sources,
-                status=status,
-            ))
+            sections.append(
+                TenderAnalysisSection(
+                    id=sec_def["id"],
+                    title=sec_def["title"],
+                    question=sec_def["question"],
+                    answer=answer_text,
+                    sources=sources,
+                    status=status,
+                )
+            )
             per_section_timings.append(
                 {
                     "section_id": sec_def["id"],
@@ -681,7 +777,9 @@ def analyze_tender(
                     "chunks_considered": section_context.chunks_considered,
                     "truncated_chunks": section_context.truncated_chunks,
                     "context_chars": section_context.context_chars,
-                    "context_tokens_estimate": _estimate_tokens(section_context.context_chars),
+                    "context_tokens_estimate": _estimate_tokens(
+                        section_context.context_chars
+                    ),
                     "prompt_chars": prompt_metrics.get("prompt_chars", 0),
                     "system_prompt_chars": prompt_metrics.get("system_prompt_chars", 0),
                     "user_prompt_chars": prompt_metrics.get("user_prompt_chars", 0),
@@ -701,7 +799,9 @@ def analyze_tender(
                 current_section_index=index,
                 total_sections=total_sections,
             )
-        emit_progress(90, "section_analysis", "Анализ разделов завершён.", steps=section_states)
+        emit_progress(
+            90, "section_analysis", "Анализ разделов завершён.", steps=section_states
+        )
 
         sources_count = len({source.chunk_id for source in all_sources})
         overall_status, warnings = _finalize_analysis_status(
@@ -712,7 +812,9 @@ def analyze_tender(
             use_llm=use_llm,
         )
         duration = time.perf_counter() - started_at
-        avg_section_llm_seconds = round(sum(llm_durations) / len(llm_durations), 4) if llm_durations else None
+        avg_section_llm_seconds = (
+            round(sum(llm_durations) / len(llm_durations), 4) if llm_durations else None
+        )
         slowest_sections = sorted(
             per_section_timings,
             key=lambda item: float(item.get("duration_seconds") or 0.0),
@@ -738,6 +840,12 @@ def analyze_tender(
             "llm_timeout_seconds": mode_config.llm_timeout_seconds,
         }
 
+        ri223_document_dossier = build_ri223_document_dossier(
+            law_type=tender.law_type,
+            registry_number=registry_number,
+            sections=sections,
+            source_facts=ri223_source_observations,
+        )
         report_markdown = _build_report_markdown(
             registry_number=registry_number,
             sections=sections,
@@ -747,12 +855,17 @@ def analyze_tender(
             retrieval_model=retrieval_model,
             analysis_mode=analysis_mode,
             duration_seconds=duration,
+            ri223_source_observations=ri223_source_observations,
+            ri223_review_flags=ri223_review_flags,
+            ri223_document_dossier=ri223_document_dossier,
         )
 
         report_path = None
         if save_report:
             emit_progress(95, "save_report", "Сохраняем отчёт…")
-            report_path = _save_report(report_markdown, registry_number, config.data_dir)
+            report_path = _save_report(
+                report_markdown, registry_number, config.data_dir
+            )
 
         result = TenderAnalysisResult(
             status=overall_status,
@@ -763,6 +876,9 @@ def analyze_tender(
             analysis_mode=analysis_mode,
             report_markdown=report_markdown,
             report_path=report_path,
+            ri223_source_observations=ri223_source_observations,
+            ri223_review_flags=ri223_review_flags,
+            ri223_document_dossier=ri223_document_dossier,
             used_llm=use_llm and llm_client is not None,
             llm_model=config.local_llm_model if use_llm else None,
             llm_endpoint=config.local_llm_base_url if use_llm else None,
@@ -781,7 +897,9 @@ def analyze_tender(
         )
         if record_history:
             emit_progress(98, "record_history", "Сохраняем run в history…")
-            run_id = _record_history(result, session, duration_seconds=duration, source=history_source)
+            run_id = _record_history(
+                result, session, duration_seconds=duration, source=history_source
+            )
             result = replace(result, run_id=run_id)
         emit_progress(100, "completed", "Анализ завершён.")
         return result

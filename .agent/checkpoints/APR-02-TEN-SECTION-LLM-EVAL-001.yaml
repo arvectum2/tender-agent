@@ -1,0 +1,49 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-TEN-SECTION-LLM-EVAL-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Measure local Qwen2.5-14B generative answer completeness, factual support and
+  citation integrity over ten Tender Research sections for genuine original 223/44
+  law corpora.
+definition_of_done:
+- Both original EIS 223-FZ 32616445795 and 44-FZ 0388100001826000047 each evaluated
+  on ten aligned section questions with exact original document chunks.
+- Actual model runtime and citations scored separately from content precision; known
+  omissions and truncation detectable and admitted, never infer legal GO/NO-GO.
+- Store raw source and completions outside Git, sanitized comparison and reproducible
+  harness in repository.
+- Run local regressions and make check; guarded PR exact-head CI review.
+completed:
+- 'Source guard #243 merged 976065ead16a5ba3dbef01dbaa1cb4644789fa1f after exact-head
+  GitHub CI 9/9.'
+- 'Two-case real original Qwen smoke and source identity check #242 complete.'
+- Completed 20 genuine Qwen2.5-14B original-source local model requests, 10 aligned
+  topics per 223-FZ and 44-FZ; original responses and source trace retained outside
+  Git.
+- 'Measured citation/finish gate: 223-FZ 2/10 accepted, 6 uncited, 3 truncated; 44-FZ
+  5/10 accepted, 3 uncited, 2 truncated; 0 mutated UUID, 0 requests failed. Counts
+  overlap, NOT semantic accuracy.'
+- Confirmed 44-FZ generated scope false unknown-quantity statement despite original
+  supplied 140 metric tonnes; 223-FZ recognized media monitoring subject but did not
+  provide exact chunk ID.
+- Added generic summary/test and sanitized evidence report; 527 Tender Research tests
+  pass, 1 skipped; make check passes.
+- '#244 exact-head CI successful, Owner-directed squash merged as d6d946bca1f8985c9c7fc36cf5d2c18d6cd09f23;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: d6d946bca1f8985c9c7fc36cf5d2c18d6cd09f23
+test_results:
+- 'Local Qwen original-source: 20/20 requests completed; 244.50 seconds aggregate
+  inference time.'
+- 223-FZ citations+stop 2/10, uncited 6, truncated 3; 44-FZ citations+stop 5/10, uncited
+  3, truncated 2.
+- One original-source 44-FZ 140 metric tonnes omission confirmed; no automatically
+  assigned semantic accuracy.
+- 527 Tender Research passed, 1 skipped, 42 warnings; make check PASS; new Ruff PASS.
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
+execution:
+  branch: feature/apr02-ten-section-eval
+  base_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f

@@ -844,6 +844,216 @@ items:
   done_gate: 'Supported 44-FZ inputs produce a deterministic bounded cited pre-analysis with source/page/fragment evidence where available, explicit UNKNOWN for unsupported/missing facts, latency measured against a documented target, focused regressions pass and exact-head CI is green.'
 
 
+- order: 1000
+  task_id: APR-02-223FZ-CORPUS-001
+  title: Freeze real public 223-FZ corpus before breadth implementation
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  source: 'Product Owner 2026-10-08: execute next active roadmap step APR-02; explicit real-source prerequisite from optimized roadmap and ARV-006 revalidation.'
+  roadmap_scope:
+  - ARV-006
+  dependencies: []
+  strategy: ADAPT
+  executor_scope: 'Read-only authenticated-as-public EIS evidence collection, provenance freeze and gap measurement using existing 223-FZ parser. Do not invent source fixtures, 223-FZ legal semantics, perform EIS/ETP mutation or handle private credentials.'
+  done_gate: 'Authentic publicly available 223-FZ source bundle with timestamps/checksums; field-level source truth and measured adapter gaps; focus regression checks. Implementation beyond corpus is a separately bounded successor.'
+  completion_evidence: 'PR #227; four real RI223 SOAP procurement XML archives with 10/10 public EIS attachments and SHA-256 manifest on Mac mini; docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md; 14 focused regressions passed; no broader lifecycle coverage claimed.'
+
+
+- order: 1010
+  task_id: APR-02-RI223-STRUCTURED-001
+  title: Source-bound RI223 lots positions and protocol evidence
+  status: done
+  authority: AUTO
+  independent: true
+  auto_merge: false
+  source: 'Owner 2026-10-08: merge PR #227 and continue APR-02; measured four-notice RI223 corpus with two observed purchaseProtocol XML members.'
+  completion_evidence: 'Owner explicitly approved PR #230; exact-head CI 37786981315 SUCCESS 9/9; merged as 44cc5d93ac18260bca5998eaa2d040daabf86891; 58 focused tests passed; four original RI223 archives and 10 attachment references verified.'
+  roadmap_scope: [ARV-006]
+  strategy: ADAPT
+  dependencies: [APR-02-223FZ-CORPUS-001]
+  executor_scope: 'Extend existing read-only getDocsIP RI223 path with bounded XML-source projection: exact notice-bound lots/positions, source-level protocol record observation, citations to ZIP XML member/hash, explicit UNKNOWN for unsupported statuses, versions, absent artifacts. Preserve 44-FZ mode unchanged. Do not perform external actions or infer legal/procedural decisions.'
+  done_gate: 'Four original RI223 archives and frozen sanitized fixture tests validate exact lots/positions/protocol markers, hash/provenance, no 44-FZ fallback and fail-closed mismatch/revision/schema/archive guards. Existing focused tests and exact-head CI pass; Owner REVIEW required before merge.'
+
+- order: 1020
+  task_id: APR-02-RI223-RAR-OPAQUE-001
+  title: Preserve authentic RI223 RAR attachments as safe opaque evidence
+  status: done
+  completion_evidence: 'PR #232 exact-head CI 37792147443 SUCCESS; Owner-authorized merge a33aa81e1373f6abf7560a1929ee4d95bd076d06.'
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "APR-02 active Owner roadmap; measured real RAR omission on 223-FZ registry 32616445795 in docs/223fz/APR02_RI223_SOAP_VERIFIED_2026-10-08.md."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-STRUCTURED-001]
+  executor_scope: "Acquire and preserve bounded original RAR attachment as opaque read-only file with provenance and explicit manual-review/unsupported-parsing flags. Reuse existing attachment downloader. No archive extraction, unsafe format execution, automatic interpretation or external procurement action."
+  done_gate: "Real original RI223 evidence for 32616445795 verified; RAR download source bound, size/URL guards retained, review-only status explicit, targeted regressions and exact-head CI pass; human review before merge."
+
+  local_verified_code_commit: 75c791784a33cadf9a67760e7894dd54ff6f2342
+
+- order: 1030
+  task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
+  title: Real 223-FZ RAR inner-document extraction and analysis
+  status: done
+  completion_evidence: 'PR #233 head 88acbf7a exact-head CI 37797214204 SUCCESS 9/9 and Owner-authorized squash merge 936621909ac56f1dbef238b13f4d3b8dda6ab556; authentic RI223 RAR 19/19 documents, 300 chunks and 300 embeddings, semantic retrieval verified.'
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Explicit Owner direction 2026-10-08 to merge PR #232, continue and analyze contents, after authentic RI223 32616445795 RAR evidence."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-RAR-OPAQUE-001]
+  executor_scope: "Safely stream and bound real RI223 RAR member bytes to canonical child document store and existing Data Platform analysis pipeline, retaining parent SHA-256/XML source binding, unsupported/unknown and manual-review gates. No external EIS/ETP action or bespoke document parsing engine."
+  done_gate: "Verified real 32616445795 RAR contents produce traceable parsed source documents through Data Platform, constrained extraction regression passes, exact-head CI green, Owner REVIEW before merge."
+
+- order: 1040
+  task_id: APR-02-RI223-REGIME-ANALYSIS-001
+  title: RI223 document question prompts exclude 44-FZ-only assumptions
+  status: done
+  completion_evidence: 'PR #235 merged 4b93709383866121de65647fc340b8add0ab0510, frozen original-source work and local acceptance confirmed.'
+  blocked_on: 'Exact-head CI and guarded merge of 223-FZ regime analysis PR.'
+  authority: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner 2026-10-08 continue APR-02 beyond RAR; measured original 32616445795 case reveals generic analyzer participant section asks 44-FZ compliance despite explicit 223fz source."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RAR-DOCUMENT-ANALYSIS-001]
+  executor_scope: "Reuse existing Tender Analysis 10-section Data Platform/RAG workflow, only substitute supported 223-FZ regime-specific questions; no 44-FZ fallback/legal inference or independent LLM/document platform."
+  done_gate: "223-FZ analyzer no longer asks 44-FZ-only compliance/benefit questions; original corpus source retrieval remains grounded; 44-FZ regression unchanged; CI and Owner REVIEW."
+
+- order: 1050
+  task_id: APR-02-RI223-REAL-MULTILOT-001
+  title: Real RI223 multi-lot notice revisions and explanation projection
+  status: done
+  completion_evidence: 'PR #236 CI 37805490740 SUCCESS 9/9; squash merge 0266debdc29042903c619ca39720b8ab059686b0; original RI223 32616376947 verified.'
+  authority: OWNER_DIRECTIVE
+  continuation_mode: OWNER_DIRECTIVE
+  independent: true
+  auto_merge: false
+  strategy: ADAPT
+  source: "Owner continue 2026-10-08; public RI223 region-77 originals 32616376947, 32616343061, 32616347092 with two lots and distinct subjects."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-REGIME-ANALYSIS-001]
+  executor_scope: "Verify exact original RI223 real multi-lot notice layouts, select clearly ordered observed notice revisions, project exact-number source-bound explanation questions/documents, preserve separate lots and unknown notice-wide NMCK and legal status. Keep 44-FZ, existing RAG/DP pipeline and external-action controls unchanged."
+  done_gate: "Authentic XML source hashes and per-lot traceability, bounded deterministic projection with explicit unknown aggregate and no cross-lot conflation; focused and existing tests/checks, exact-head CI, Owner REVIEW before merge."
+
+
+- order: 1060
+  task_id: APR-02-RI223-SOURCE-ANALYSIS-001
+  title: Source-bound RI223 XML facts in existing Tender Research analysis
+  status: done
+  completion_evidence: 'PR #237 final-head CI 37807435239 SUCCESS 9/9; Owner-directed squash merge abbf30a2c700584ffb553626301136a2c6719faf; 13+3 original XML facts.'
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner continue APR-02; real RI223 32616376947 3 revisions/6 explanations/2 lots, but RAG report lacks structured XML facts."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-REAL-MULTILOT-001]
+  executor_scope: "Read-only source-bound XML observation projection in existing Tender Research report/API, separate from document chunk citations and LLM synthesis, no fabricated legal statuses."
+  done_gate: "Real XML source facts and per-fact citations visible in report/API; no 44-FZ regressions, tests/CI and Owner REVIEW pass."
+
+- order: 1070
+  task_id: APR-02-RI223-REVIEW-FLAGS-001
+  title: Source-bound 223-FZ revision and multi-lot expert review prompts
+  status: done
+  completion_evidence: 'CI 37809508195 9/9 PASS, source PR #238 merged 77fe438b07ae0948216317762845b85a20a6497b.'
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Continue APR-02 after merged #237; original RI223 32616376947 has 3 deadlines, 6 explanations and 2 separately priced lots."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-SOURCE-ANALYSIS-001]
+  executor_scope: "Derive bounded NEEDS_REVIEW prompts only from verified source XML observations, with original source citations, in existing Tender Research report/API. No legal conclusion or external procurement action."
+  done_gate: "Real original 32616376947 evidence triggers correct independent flags, 32616445795 control unchanged, tests/CI and Owner REVIEW green."
+
+- order: 1080
+  task_id: APR-02-RI223-DOCUMENT-REVIEW-001
+  title: Traceable content evidence dossier for RI223 procurement review
+  status: done
+  completion_evidence: 'PR #239 CI run 37812365387 SUCCESS 9/9, merged b430c8ce190efadec07faf25bb45f9df32247722; real 10/25/7 original DP acceptance.'
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner continue APR-02: original 32616445795 has 19 source documents/300 indexed chunks, but no separate evidence-backed domain review matrix."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-REVIEW-FLAGS-001]
+  executor_scope: "Render source-cited document excerpts for technical scope, qualifications, applications, evaluation, agreement, restrictions, deadlines from existing 10 sections. All supplier fit and risk judgments remain UNKNOWN."
+  done_gate: "Authentic DP 32616445795 read-only dossier, distinct citations and missing-evidence status, multilot unknown binding, 44-FZ unchanged; regression, CI and Owner review."
+
+- order: 1090
+  task_id: APR-02-DP-AUTH-READINESS-001
+  title: Fail-visible Data Platform auth versus missing index in Tender Research
+  status: done
+  completion_evidence: 'PR #240 exact-head CI 37813956582 SUCCESS 9/9; Owner-directed merge d8607c259a1b1075d067ca8da42512998457d4e7; original 223-FZ HTTP 401 no longer misreports missing index.'
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Measured original RI223 32616445795 live DP stats HTTP 401 without runtime credential, analyzer falsely returns no_context; with authorized key 10/10 sections and 25 source citations."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-RI223-DOCUMENT-REVIEW-001]
+  executor_scope: "Use existing DP client and analyzer; distinguish auth/connection failures from absent or incomplete collection, never leak credentials or downgrade to mock RAG."
+  done_gate: "Source-reproduced HTTP 401/403 failed, true 404 and incomplete index no_context, normal authorized case unchanged, tests/CI/Owner review."
+
+- order: 1100
+  task_id: APR-02-LOCAL-LLM-BENCHMARK-001
+  title: Genuine Mac mini local LLM benchmark on 223-FZ and 44-FZ source documents
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: "Owner requested local generative model experiments on genuine 223-FZ and 44-FZ corpora; initial Qwen2.5 14B source-ID and omission errors measured."
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-DP-AUTH-READINESS-001]
+  executor_scope: "Benchmark genuine installed Mac mini Qwen local completion against exactly cited original procurement document excerpts; detect altered citations, truncation, missing source facts; no GO/NO-GO."
+  done_gate: "Evidence-backed original cases for both laws, actual timing/model ID/accuracy limitations, source ID audit regressions, local tests and CI/Owner-reviewed merge."
+
+- order: 1110
+  task_id: APR-02-LLM-EVIDENCE-GATE-001
+  title: Fail closed on mutated LLM citations and truncated completions
+  status: done
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: Original Qwen 223/44 source citation benchmark
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-LOCAL-LLM-BENCHMARK-001]
+  executor_scope: Shared LLM output citation and finish reason checks
+  done_gate: Full source integrity regressions and CI/Owner-reviewed merge
+
+- order: 1120
+  task_id: APR-02-TEN-SECTION-LLM-EVAL-001
+  title: Real local LLM comparative ten-section original corpus evaluation
+  status: done
+  completion_evidence: 'PR #244 merged d6d946bca1f8985c9c7fc36cf5d2c18d6cd09f23, frozen original-source work and local acceptance confirmed.'
+  authority: OWNER_DIRECTIVE
+  independent: false
+  auto_merge: false
+  strategy: ADAPT
+  continuation_mode: OWNER_DIRECTIVE
+  source: Source-citation guard merged and owner requested continuation
+  roadmap_scope: [ARV-006]
+  dependencies: [APR-02-LLM-EVIDENCE-GATE-001]
+  executor_scope: Ten aligned real-source questions on 223-FZ and 44-FZ local Qwen; separate citation and factual quality judgments
+  done_gate: Reproducible 20-case real-doc model results, grounded report, regressions and owner gated CI merge
+
 completed_dependencies:
 - task_id: BENCHMARK-PIPELINE-001
   source: 'issue #1'

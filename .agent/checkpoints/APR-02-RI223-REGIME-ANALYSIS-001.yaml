@@ -1,0 +1,44 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-RI223-REGIME-ANALYSIS-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Remove 44-FZ-specific assumptions from real 223-FZ evidence analysis section
+  questions without changing 44-FZ behavior or creating a second analyzer.
+definition_of_done:
+- For confirmed tender.law_type=223fz, use source-grounded procurement-regime-specific
+  question wording for participants, price, contract and SME limitations.
+- Keep existing 44-FZ and unknown-regime analysis templates unchanged; no legal/participation
+  outcome automatically inferred.
+- Authentic 32616445795 source sample analysis asks no 44-FZ questions and retains
+  document-grounded citations.
+- Focused unit and integration regressions, make check, exact-head CI and Owner-reviewed
+  merge pass.
+completed:
+- 'PR #233 source RAR text analysis merged 936621909ac56f1dbef238b13f4d3b8dda6ab556.'
+- 'Reproduction: original RI223 32616445795 yields 10 section analysis questions;
+  current customer-requirements prompt incorrectly requests 44-FZ compliance.'
+- 'Standalone prior checkpoint closure prepared as PR #234; no competing checkpoint
+  on main until merged.'
+- 223fz-only question overlay wired to existing ten-section tender analysis, source
+  retrieval and optional LLM prompt; no duplicate engine.
+- 'Source verification on actual public 32616445795: 10 sections, 25 source references,
+  no 44-FZ participation-compliance question, retrieval-only distinguished from LLM
+  synthesis.'
+- Tender Research 493 passed, 1 skipped, 42 warnings; make check, changed-file Ruff
+  and git diff --check PASS.
+- 'Code head 0454e6838cf94917370f19ca90eea831259a53db; previous completion PR #234
+  awaited as prerequisite.'
+- 'Predecessor completion PR #234 exact-head CI 37798621668 9/9 SUCCESS and squash-merged
+  8064a1a016f05445d0151974f69d5c5387f7f64f; successor rebased on latest main.'
+- 'PR #235 exact-head CI 37799853447 SUCCESS 9/9; Owner-authorized merge 4b93709383866121de65647fc340b8add0ab0510.'
+current: Completed; no repeat.
+pending: []
+last_verified_commit: 4b93709383866121de65647fc340b8add0ab0510
+test_results:
+- 493 tender-research tests PASS, 1 skipped, 42 existing warnings.
+- 44 targeted source/RI223/LLM-dispatch tests PASS.
+- make check PASS, Ruff touched files PASS, git diff --check PASS.
+- Real source analysis 10/10 sections with 25 citations, no unsupported 44-FZ eligibility
+  prompt.
+resume_instruction: 'Completed in PR #235; continue APR-02 real multi-lot successor.'

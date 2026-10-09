@@ -1,44 +1,29 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: OPS-MACMINI-CANONICAL-RUNTIME-20261008
+task_id: ROADMAP-REFRESH-OPERATOR-SEQUENCE-20261009
 status: completed
 authority: OWNER_DIRECTIVE
-goal: Ensure Mac mini backend runs from canonical ArvectumSSD Tender Agent GitHub main, with stable credentials outside repository, deterministic drift guard and rollback; preserve unmerged recent PRs on SSD.
+goal: 'Update canonical roadmap after bounded APR-02 acceptance, preserve owner sequence APR-03 Production Runtime then APR-03B Operator Workspace then APR-04, and distinguish open implementation PRs from merged capabilities.'
 definition_of_done:
-  - Canonical SSD main verified exactly matches successful GitHub main, with no uncommitted changes.
-  - Private runtime environment safely available outside legacy source folders.
-  - SSD backend stages and passes smoke/health tests using canonical checkout and venv without altering running service.
-  - LaunchAgent backend points to SSD canonical script/working tree; restart succeeds; HTTP health and identity match expected current SHA.
-  - Safe rollback package exists and validation passes; launch/commit drift verification documented and executable.
-  - PR branch for outstanding recent work preserved on SSD, with no unreviewed merges to main.
-  - Final checkpoint with commits, smoke tests, runtime path and rollback instructions.
+  - Preserve historical registry and APR-02 frozen corpus acceptance.
+  - Add APR-03B to canonical active outcomes and human roadmap with browser-only real-data acceptance.
+  - Reflect PR #251 through #255 as open/not merged.
+  - Reconcile owner directive ordering without interrupting running engineering tasks.
+  - Validate YAML, open status-only PR, merge only after required CI.
 completed:
-  - Verified SSD canonical main at GitHub main 958e94c, CI SUCCESS; working tree clean.
-  - Confirmed old backend PID 20787 launched Oct 6 from runtime-deploy f130703e, 81 commits behind main, working tree clean.
-  - Verified existing SSD venv import of src.main and existing backend /health HTTP 200.
-  - Copied existing private env to SSD private/tender-agent/runtime/backend.env, byte-identical, chmod 600.
-  - Started SSD canary on port 18081 and launchd-Node canary 18082; both returned health 200 from SSD.
-  - Installed permanent Node-backed LaunchAgent and automatic rollback to original plist after direct bash TCC denial; final retry succeeded.
-  - Confirmed backend PID CWD on SSD and health 200; forced launchctl restart passed 13/13 GitHub=disk=active SHA checks.
-  - Preserved open PR #227/#228/#229 in independent verified SSD worktrees and removed superseded clean /tmp clone.
-  - Protected 17-, 72- and 1-commit unmerged internal histories under local SSD archival Git refs; separately bundled independent test snapshot and privately backed up untracked legacy environment file.
-  - Installed hourly read-only drift guard (launchd exit 0, 13/13 checks) with local notification on drift transition.
-  - Versioned launcher, guard, verifier and 3 fail-closed tests on SSD worktree; tests all passed, Ruff/Node syntax passed.
-  - Verified three open PRs #227, #228, #229; never merge unverified PRs into main.
-  - Created SSD worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ops-macmini-runtime-20261008 from cleanup PR #229.
-current: 'Completed: production backend runs on canonical SSD main with active SHA marker and hourly read-only drift guard; PR #229 contains reviewable source and operational record.'
+  - 'Confirmed APR-02 bounded 223-FZ accepted via merged PR #250; no universal 223-FZ claim.'
+  - 'Confirmed APR-03 through APR-07 PR #251..255 open, and previous UI PR #228 open but not merged.'
+  - 'Updated master roadmap, human roadmap and owner directive to prioritize APR-03B after APR-03.'
+current: 'Owner roadmap refresh merged into main; PR #228 closed as superseded. APR-03 remains next not-yet-merged implementation outcome.'
 pending: []
-last_verified_commit: 958e94c740e73a052f275d46fea713f01ab4d117
+last_verified_commit: 509578a7b3caafc0c394ebbfb4d6672497af5c56
 test_results:
-  - Canonical SSD .venv imports src.main successfully.
-  - Existing production /health HTTP 200; /docs HTTP 401 as expected.
-  - GitHub main CI successful for 958e94c.
-  - Live launchd cutover and repeat cold restart, HTTP /health 200 and protected /docs 401.
-  - 13/13 source/launch/PID/GitHub/health checks PASS; hourly drift guard first run exit 0.
-  - Focused tests 3 passed; Ruff all checks passed; both Node scripts syntax checked.
-resume_instruction: Completed. For future GitHub main merges use documented exact-head CI, fast-forward-only, staging, restart and 13/13 verification procedure; inspect backend-drift.json on any deviation. Review PR #229 separately; do not force merge or redeploy from unmerged branches.
+  - 'YAML/OWNER_SEQUENCE/APR-02 status assertions PASS.'
+  - 'PR #256 exact-head CI run 37898111915: SUCCESS 9/9.'
+  - 'PR #256 squash merged 509578a7b3caafc0c394ebbfb4d6672497af5c56.'
+  - 'Overlapping old operator-workspace PR #228 closed as superseded.'
+resume_instruction: 'This roadmap refresh is complete. Resume APR-03 Production Runtime from exact canonical main and reconcile PR #251; then APR-03B Operator Workspace for owner browser acceptance, then APR-04 onwards. PR #252..255 remain open, not accepted completion.'
 execution:
-  branch: ops/macmini-runtime-ssd-20261008
-  base_commit: 2874c2b9d83ea7e236ef99282b7d5fb7196aa1df
-  canonical_repo: /Volumes/ArvectumSSD/Arvectum/repos/tender-agent
-  checkpoint_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/ops-macmini-runtime-20261008
+  branch: null
+  manual_override: false
+  lease_until: null

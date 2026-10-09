@@ -380,3 +380,58 @@ def test_attachment_downloader_preserves_revision_provenance_in_manifest(tmp_pat
     )
 
     assert result.saved[0].provenance == attachment.provenance
+
+
+def test_ri223_rar_download_preserves_opaque_source_bound_evidence(tmp_path: Path):
+    import hashlib
+
+    attachment = _attachment("Документы.rar", "https://zakupki.gov.ru/docs/notice.rar")
+    attachment.provenance = {
+        "source_regime": "223fz",
+        "archive_sha256": "a" * 64,
+        "xml_sha256": "b" * 64,
+        "xml_member": "notice.xml",
+    }
+    raw = b"Rar!\x1a\x07\x01\x00" + b"opaque-only-no-extraction"
+    result = download_procurement_attachments(
+        [attachment], target_dir=tmp_path, max_attachments=1,
+        max_file_size_bytes=1024, max_total_size_bytes=1024,
+        transport=lambda _url, _limit: (raw, "application/vnd.rar"),
+    )
+    assert len(result.saved) == 1
+    item = result.saved[0]
+    assert item.requires_manual_review is True
+    assert item.content_inspection_status == "UNINSPECTED_OPAQUE"
+    assert item.sha256 == hashlib.sha256(raw).hexdigest()
+    assert item.provenance == attachment.provenance
+    assert (tmp_path / item.stored_name).read_bytes() == raw
+    assert list(tmp_path.iterdir()) == [tmp_path / item.stored_name]
+
+
+@pytest.mark.parametrize("provenance", [None, {"source_regime": "223fz"}, {"source_regime": "44fz", "archive_sha256": "a", "xml_sha256": "b"}])
+def test_rar_without_verified_ri223_source_is_still_rejected(tmp_path: Path, provenance):
+    attachment = _attachment("unknown.rar", "https://zakupki.gov.ru/docs/unknown.rar")
+    attachment.provenance = provenance
+    result = download_procurement_attachments(
+        [attachment], target_dir=tmp_path, max_attachments=1,
+        max_file_size_bytes=1024, max_total_size_bytes=1024,
+        transport=lambda *_args: pytest.fail("unsupported file must not be fetched"),
+    )
+    assert not result.saved
+    assert result.skipped[0].error == "unsupported_extension"
+
+
+def test_ri223_rar_wrong_signature_is_rejected(tmp_path: Path):
+    attachment = _attachment("unknown.rar", "https://zakupki.gov.ru/docs/unknown.rar")
+    attachment.provenance = {
+        "source_regime": "223fz", "archive_sha256": "a" * 64,
+        "xml_sha256": "b" * 64,
+    }
+    result = download_procurement_attachments(
+        [attachment], target_dir=tmp_path, max_attachments=1,
+        max_file_size_bytes=1024, max_total_size_bytes=1024,
+        transport=lambda *_args: (b"fake rar", "application/vnd.rar"),
+    )
+    assert not result.saved
+    assert result.skipped[0].error == "invalid_rar_signature"
+    assert not list(tmp_path.iterdir())

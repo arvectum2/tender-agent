@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-
 ANALYSIS_MODE_CHOICES = ("fast", "balanced", "detailed")
 DEFAULT_ANALYSIS_MODE = "balanced"
 
@@ -55,6 +54,9 @@ class TenderAnalysisResult:
     avg_section_llm_seconds: float | None = None
     warnings: list[str] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
+    ri223_source_observations: list[dict] = field(default_factory=list)
+    ri223_review_flags: list[dict] = field(default_factory=list)
+    ri223_document_dossier: list[dict] = field(default_factory=list)
 
 
 ANALYSIS_SECTIONS: list[dict[str, str]] = [
@@ -109,3 +111,46 @@ ANALYSIS_SECTIONS: list[dict[str, str]] = [
         "question": "Какие документы входят в состав документации о закупке, их наименования, объём, наличие разъяснений?",
     },
 ]
+
+
+# Source-bound procurement regime is already stored on ProcurementTender.
+# 223-FZ never inherits special 44-FZ participant/SME or contract semantics
+# merely because its documents are analyzed by the same search/LLM pipeline.
+_RI223_QUESTION_OVERRIDES: dict[str, tuple[str, str]] = {
+    "notice_info": (
+        "Информация об извещении",
+        "Какие номер, дата, заказчик, организатор и вид процедуры прямо указаны в документации этой закупки по 223-ФЗ? Какие значения не подтверждены источниками?",
+    ),
+    "subject": (
+        "Предмет закупки",
+        "Каков фактический предмет услуг/работ/поставки, объём и начальная максимальная цена договора именно по тексту извещения и технического задания? Есть ли различие между кодом ОКПД2 и фактическими работами?",
+    ),
+    "customer_requirements": (
+        "Требования к участникам",
+        "Какие именно требования к участникам, квалификации, персоналу, опыту, СМСП, лицензиям или допускам прямо установлены в документах конкретной закупки по 223-ФЗ? Какие требования остаются неподтверждёнными? Не переносить правила 44-ФЗ.",
+    ),
+    "contract_terms": (
+        "Условия договора",
+        "Какие условия проекта договора этой закупки по 223-ФЗ подтверждены источниками: сроки исполнения, цена с НДС или без НДС, оплата, обеспечение и ответственность? Если не найдено, указать неизвестность.",
+    ),
+    "restrictions_benefits": (
+        "Ограничения и особенности участия",
+        "Какие ограничения участия и особенности для СМСП либо других категорий прямо установлены в извещении, документации и применимом Положении о закупке заказчика? Не предполагать преимущества и ограничения из 44-ФЗ.",
+    ),
+}
+
+
+def analysis_sections_for_regime(law_type: str | None) -> list[dict[str, str]]:
+    """Reuse ten established sections, tailoring only genuine RI223 questions.
+
+    This chooses questions for evidence retrieval; it does not decide the
+    legal applicability or infer procurement participant eligibility.
+    """
+    if str(law_type or "").strip().lower() != "223fz":
+        return ANALYSIS_SECTIONS
+    return [
+        {"id": section["id"], "title": _RI223_QUESTION_OVERRIDES[section["id"]][0],
+         "question": _RI223_QUESTION_OVERRIDES[section["id"]][1]}
+        if section["id"] in _RI223_QUESTION_OVERRIDES else dict(section)
+        for section in ANALYSIS_SECTIONS
+    ]

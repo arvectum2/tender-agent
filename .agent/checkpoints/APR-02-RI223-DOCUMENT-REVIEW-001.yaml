@@ -1,0 +1,57 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-RI223-DOCUMENT-REVIEW-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Combine real Data Platform document excerpts with RI223 source facts into a
+  traceable, per-domain, non-decisional procurement evidence review dossier.
+definition_of_done:
+- Only for confirmed source-bound RI223 223-FZ, summarize actual found Data Platform
+  citations across technical scope, qualification, application composition, evaluation,
+  contract terms, restrictions, deadlines.
+- Each category must include exact source chunk/document/registry, bounded source
+  excerpt and explicit verification/unknown state. Missing evidence must not be guessed.
+- Do not infer legal status, multi-lot applicability, supplier eligibility, contract
+  risk grades or GO/NO-GO. Preserve existing 44-FZ and ten-section analyzer behavior.
+- Real original 32616445795 DP-indexed corpus acceptance, 32616376947 multilot metadata
+  guard, focused/full regressions, make check and exact-head CI/Owner gates.
+completed:
+- 'PR #238 merged 77fe438b after exact-head GitHub CI 37809508195 9/9.'
+- Verified original 32616445795 has 19/19 source documents and 300 Data Platform chunks;
+  current existing analyzer yields 10 evidence-search sections, but no dedicated decision-prep
+  review dossier.
+- Added RI223-only source-cited seven-domain human document review dossier to existing
+  Tender Research report/API/CLI, each source exact registry/doc/chunk and bounded
+  excerpt. 44-FZ untouched and legal/fit/GO remain UNKNOWN.
+- Original 32616445795 SQLite contains 20 registered document records and 300 text
+  chunks; offline read-only source excerpt binding produced 7 of 7 domains with exact
+  document/chunk IDs. This is not a successful live Data Platform retrieval.
+- Live analyzer on preserved isolated SQLite correctly returns no_context while previous
+  Data Platform collection readiness cannot be confirmed. Operational reindexing remains
+  a documented successor.
+- 'Full Tender Research: 511 passed, 1 skipped, 42 warnings. New targeted unit + existing
+  analyzer dispatch 6 passed; make check, Ruff new-file checks, git diff --check passed.'
+- 'Opened Owner-gated PR #239 on verified source dossier implementation; code head
+  4b08dbc5630df402a655b32e397f5b9baafefae9.'
+- 'Read-only original Data Platform production key injected from authorized Mac runtime
+  (never output): live 32616445795 analysis completed with 10 sections, 25 source
+  citations, 7 dossier categories x 3 excerpts, 0 errors. Earlier 401 was missing
+  key, not missing index.'
+- 'PR #239 final-head CI 37812365387 SUCCESS 9/9, Owner-directed squash merge b430c8ce190efadec07faf25bb45f9df32247722.'
+current: Completed and merged; DP auth/readiness successor active.
+pending: []
+last_verified_commit: b430c8ce190efadec07faf25bb45f9df32247722
+test_results:
+- 511 Tender Research passed, 1 skipped, 42 warnings
+- 6 focused document dossier tests PASS (includes existing DP mock dispatch)
+- make check PASS
+- Ruff new-code/test PASS
+- Original SQLite 300 chunks and 7 real source-excerpt bindings in offline read-only
+  check
+- 'Read-only original DP exact 32616445795: completed, 10 sections, 25 unique cited
+  chunks, 7 dossier rows with 3 source excerpts each; no LLM, no writes; 401 without
+  runtime secret correctly identified.'
+resume_instruction: 'PR #239 completed; continue APR-02-DP-AUTH-READINESS-001.'
+execution:
+  branch: feature/apr02-ri223-document-dossier
+  base_commit: 77fe438b07ae0948216317762845b85a20a6497b

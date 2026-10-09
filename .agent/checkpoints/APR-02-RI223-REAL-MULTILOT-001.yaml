@@ -1,0 +1,50 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-RI223-REAL-MULTILOT-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Handle authentic RI223 223-FZ multi-lot notices with multiple source revisions
+  and explanation documents without inventing legal status or conflating lots.
+definition_of_done:
+- Freeze authentic EIS exact-registry RI223 source ZIP and SHA-256; prove multiple
+  notice versions, separate lots/positions and six explanation XML records.
+- Implement source-bound unambiguous observed version selection with explicit chronology,
+  history, attachment binding and fail-closed unsupported/ambiguous cases.
+- Preserve lot-specific prices and terms; never silently produce global NMCK, legally
+  effective version or explanation lot linkage.
+- Pass focused/full Tender Research tests, make check, relevant Ruff and exact-head
+  CI, and prepare reviewable PR for Owner gate.
+completed:
+- 'Reconciled merged APR-02 RAR content analysis PR #233 and regime-specific question
+  PR #235 exact-head CI 9/9 merge 4b937093.'
+- Found authentic RI223 region-77 2026-10-08 public XML with three distinct two-lot
+  procurements in frozen bulk SOAP archives.
+- Authenticated-as-public RI223 exact 32616376947 SOAP completed and original ZIP
+  frozen SHA-256 840927b8dddba00cc682e78192ffb263cbd89d3fec1acbaba3fa60af63fd3575.
+- Reproduced original unsupported RI223 explanation root in authentic 9-member ZIP
+  with 3 source notice versions, 6 explanations and 2 lots.
+- Extended existing guarded RI223 parser to source-bound explanation records and strictly
+  ordered observed notice versions; selected source version 3 only as a data projection,
+  legal effective state UNKNOWN.
+- Verified original parser result 2 lots, 2 positions, 6 explanation records, 7 source-document
+  references; global NMCK UNKNOWN.
+- 37 focused acceptance tests passed; full Tender Research suite 498 passed, 1 skipped
+  (42 known warnings); make check, Ruff and git diff --check PASS.
+- 'Reviewable implementation PR #236 opened against main at code head 263a50f2; original
+  RI223 archive and 498/1 Tender Research results documented.'
+- 'PR #236 final-head CI 37805490740 SUCCESS 9/9 and Owner-directed squash merge 0266debdc29042903c619ca39720b8ab059686b0.'
+current: Completed and merged; successor APR-02-RI223-SOURCE-ANALYSIS-001 admitted.
+pending: []
+last_verified_commit: 0266debdc29042903c619ca39720b8ab059686b0
+test_results:
+- 498 Tender Research tests PASS, 1 skipped, 42 warnings.
+- 37 focused tests PASS after adapting previous single-version-only fail-closed test.
+- make check PASS, Ruff touched-file PASS, git diff --check PASS.
+- Real RI223 exact source 32616376947 parsed 3 revisions, 6 explanations and two separate
+  lots.
+- Optional standalone isolated-DB harness requires complete app model imports; existing
+  canonical DB-backed tests pass.
+resume_instruction: 'Complete PR #236, no repeat; continue source evidence analysis.'
+execution:
+  branch: feature/apr02-real-multilot-20261008
+  base_commit: 4b93709383866121de65647fc340b8add0ab0510

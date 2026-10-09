@@ -1,0 +1,55 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-DP-AUTH-READINESS-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Fix evidence-backed false Data Platform no_context status on HTTP 401/403 and
+  transport/check errors without changing true missing collection semantics.
+definition_of_done:
+- Authenticated successful original RI223 Data Platform index remains accepted; 401/403
+  and transport failures return status failed and truthful non-secret diagnostics.
+- True missing collection (404), zero resources, or genuinely incomplete embeddings
+  remain no_context.
+- No fallback RAG, secret disclosure, legal/GO decisions or EIS/ETP actions.
+- Focused and existing tests, make check, changed-file Ruff and exact-head CI green;
+  Owner-reviewed guarded merge.
+completed:
+- 'Predecessor dossier PR #239 open, original read-only authenticated Data Platform
+  completed 10 sections /25 citations /7 dossiers.'
+- 'Measured failure: without authorized API key Data Platform GET collection stats
+  returns HTTP 401; current analyzer masks as missing index / no_context.'
+- 'Existing analyzer modified: 401/403 authorization, provider/transport and malformed
+  stats fail visibly; 404/missing resources or incomplete embeddings remain no_context.
+  No raw upstream body leaked.'
+- Authentic original 32616445795 isolated SQLite without DP client key returns failed
+  /0 sources and truthful access-denied instead of prior no_context.
+- 25 focused Data Platform/index tests PASS (including updated pre-existing outage
+  expectation); full Tender Research 519 passed, 1 skipped/42 warnings; make check,
+  Ruff new test and diff --check PASS.
+- 'Predecessor dossier PR #239 exact-head CI 37812365387 9/9 SUCCESS and merged b430c8ce190efadec07faf25bb45f9df32247722.
+  Current auth branch rebased cleanly on merge.'
+- 'After rebasing onto main b430c8ce: all 519 Tender Research tests PASSED, 1 skipped,
+  42 warnings; make check/Ruff/diff PASS.'
+- 'PR #240 final head bfbf0443649b7669befd747e342e3a6aa29d1dd1, GitHub Actions 37813956582
+  SUCCESS 9/9; merged d8607c259a1b1075d067ca8da42512998457d4e7.'
+current: 'Completed PR #240, verified and merged.'
+pending: []
+last_verified_commit: d8607c259a1b1075d067ca8da42512998457d4e7
+test_results:
+- 519 Tender Research passed, 1 skipped, 42 warnings
+- 25 focused DP auth and index tests passed
+- make check PASS
+- Ruff new test PASS
+- 'Real original no-auth: failed with truthful HTTP401/403 diagnostic and no RAG claims'
+- 'Previous same source authorized: 10/10 sections, 25 citations and 7 dossier categories.'
+- Post-rebase exact-parent 519 passed, 1 skipped, 42 warnings; make check PASS.
+- 'GitHub exact-head run 37813956582: 9/9 jobs SUCCESS.'
+resume_instruction: 'APR-02-DP-AUTH-READINESS-001 completed in #240; do not repeat.
+  Next APR-02 task: verify available local generative LLM runtime on Mac mini, run
+  source-cited quality benchmark against actual 223-FZ 32616445795 and real 44-FZ
+  case; local LLM currently unavailable on port 8088 and Ollama list empty. No pretend
+  LLM results or GO/NO-GO.'
+execution:
+  branch: feature/apr02-dp-auth-readiness
+  depends_on_pr: 239
+  base_commit: b430c8ce190efadec07faf25bb45f9df32247722

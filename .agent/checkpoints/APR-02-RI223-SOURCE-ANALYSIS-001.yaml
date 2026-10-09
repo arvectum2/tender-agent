@@ -1,0 +1,46 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-RI223-SOURCE-ANALYSIS-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Expose original RI223 revision, lot, position and explanation source facts to
+  the existing Tender Research report/API with exact XML evidence and explicit unknown
+  legal meaning.
+definition_of_done:
+- Only authentic source-bound RI223 raw payload is projected; 44-FZ and unknown regimes
+  unchanged.
+- Preserve individual revision deadlines, lot-specific price and positions, explanation
+  question/date with original XML SHA/XPath references; never sum multi-lot NMCK or
+  infer status.
+- Reuse existing RAG report and API, with structured source facts distinguishable
+  from Data Platform text citations and LLM synthesis.
+- Real 32616376947 archive acceptance and positive/negative unit/regression checks
+  pass; make check, exact-head CI and Owner review gates respected.
+completed:
+- 'Resumed from frozen PR #236 head ae13810e; identified that RAG report currently
+  surfaces document chunks but not RI223 structured XML history, lots or explanation
+  questions.'
+- 'Predecessor PR #236 CI SUCCESS 9/9 and merged 0266debdc29042903c619ca39720b8ab059686b0;
+  feature branch reset cleanly onto updated main.'
+- Integrated source-grounded XML history, lots, positions, explanations into existing
+  Tender Research report, API and CLI.
+- Original 32616376947 yields 13 distinct source XML facts and 32616445795 yields
+  3; every fact preserves archive hash, XML hash/member and XPath.
+- 39 focused tests and 502 full Tender Research tests passed, 1 skipped; make check,
+  new-code Ruff and git diff --check passed.
+- 'PR #237 CI 37807435239 success 9/9, Owner-directed squash merge abbf30a2c700584ffb553626301136a2c6719faf.'
+current: Completed in main; successor review-flags implementation follows.
+pending: []
+last_verified_commit: abbf30a2c700584ffb553626301136a2c6719faf
+test_results:
+- 502 Tender Research passed, 1 skipped, 42 warnings
+- 39 focused tests passed, 3 warnings
+- make check PASS
+- new file Ruff PASS
+- git diff --check PASS
+- 'Two real source corpus checks: 13 facts and 3 facts.'
+resume_instruction: 'Completed PR #237; do not repeat. Continue successor APR-02-RI223-REVIEW-FLAGS-001.'
+execution:
+  branch: feature/apr02-ri223-analysis-facts
+  depends_on_pr: 236
+  base_commit: 0266debdc29042903c619ca39720b8ab059686b0

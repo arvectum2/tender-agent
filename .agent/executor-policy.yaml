@@ -12,10 +12,10 @@ sources:
   company_authority:
     repository: arvectum2/arvectum-company
     decision: docs/governance/decisions/DECISION-2026-09-14-POS-004-ROADMAP-EXECUTOR-AM4.md
-    latest_renewal: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+    latest_renewal: docs/governance/decisions/DECISION-2026-10-08-R2-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
     assignment: docs/organization/POS-004-ROADMAP-EXECUTOR-AM4-AUTHORIZATION-v1.0.0.md
     decision_merge_commit: 7a4a1f57344380b01f960f8a137bba590a736278
-    latest_renewal_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
+    latest_renewal_merge_commit: 6eaf25183965cd6bafd210138076a54ca90a7b6d
 
 selection:
   resume_active_current_task_first: true
@@ -75,16 +75,24 @@ company_authority_gate:
   assignment_id: ASG-POS004-ROADMAP-EXECUTOR-2026-09-14
   mandatory_review_deadline: "2026-11-08"
   automatic_merge_counter_limit: 10
-  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_6_OF_10_IF_PR_217_MERGES
+  automatic_merge_cycle_state: ACTIVE_RENEWED_2026_10_08_R2_0_OF_10
   fail_closed_if_authority_missing_unavailable_revoked_superseded_or_review_due: true
   fail_closed_mode: REVIEW
   product_policy_cannot_expand_company_authority: true
   material_policy_change_recorded_2026_09_18: true
-  material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
-  material_policy_change_review_satisfied_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
+  material_policy_change_review_satisfied_by: docs/governance/decisions/DECISION-2026-10-08-R2-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  material_policy_change_review_satisfied_commit: 6eaf25183965cd6bafd210138076a54ca90a7b6d
   automatic_merge_after_material_policy_change: ALLOWED_UNDER_RENEWED_AM4
-  automatic_merges_since_review_including_this_reconciliation_when_merged: 6
-  automatic_merge_evidence:
+  automatic_merges_since_review_including_this_reconciliation_when_merged: 0
+  previous_cycle_ref: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  previous_cycle_count_preserved: 6
+  current_cycle_start_event: company_decision_R2_6eaf2518_after_owner_approved_pr230
+  current_cycle_owner_approved_merge_excluded:
+    tender_agent_pr: 230
+    merge_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
+    approval: 'Owner explicitly approved PR #230 conditional on green CI; not an AM-4 automatic merge'
+  automatic_merge_evidence: []
+  previous_cycle_automatic_merge_evidence:
     - pr: 212
       merge_commit: ebcead468610a88e298b55881d4287cdaed444c3
       task: COMMERCIAL-WORKFLOW-ARV-057-001

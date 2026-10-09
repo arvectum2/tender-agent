@@ -1,0 +1,45 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-RI223-REVIEW-FLAGS-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Produce source-bound, non-decisional review prompts for authentic RI223 notice
+  deadline changes, clarifications and multi-lot separation in the existing Tender
+  Research report/API.
+definition_of_done:
+- Use verified source XML observations only; a changed source deadline, source explanation
+  count and multi-lot must create distinct NEEDS_REVIEW prompts with original XML
+  hashes and XPath.
+- Never infer legal effectiveness, new deadlines from now, missing answers, compliance,
+  supplier eligibility or GO/NO-GO; preserve 44-FZ/unknown behavior.
+- Reuse existing structured observations/analysis service and report, no new RAG,
+  status or Decision Core engine.
+- Real 32616376947 acceptance, 32616445795 negative control, regressions, make check,
+  exact-head GitHub CI and Owner gate.
+completed:
+- 'PR #237 merged abbf30a2 after exact-head 9/9 CI; source XML projection 13+3 authentic
+  observations already validated.'
+- Implemented deterministic RI223 NEEDS_REVIEW source prompts for observed changed
+  source deadlines, published explanations and multiple separate lots; existing analyzer/API/CLI/Markdown
+  reused.
+- 'Real 32616376947 original: 13 source facts and 3 review flags, with 3/6/2 independent
+  XML citations. Real 32616445795 negative control: 3 source facts and 0 flags.'
+- 22 focused tests passed; 505 Tender Research passed, 1 skipped; make check, touched-file
+  Ruff and diff --check passed.
+- 'Published PR #238 with authentic review flags; code commit 97657637da7a1c68362985cae7b76e340ca0c96f.'
+- 'PR #238 final SHA bd51bd8bd17b9deac4fbd2c0ea2764b841b58078 CI 37809508195 SUCCESS
+  9/9, squash-merged 77fe438b07ae0948216317762845b85a20a6497b.'
+current: 'Completed; PR #238 merged after exact-head CI.'
+pending: []
+last_verified_commit: 77fe438b07ae0948216317762845b85a20a6497b
+test_results:
+- 505 Tender Research tests passed, 1 skipped, 42 warnings
+- 22 focused tests passed, 3 warnings
+- make check PASS
+- changed-file Ruff PASS
+- Real source 32616376947 3 review flags (3/6/2 citations)
+- Negative control 32616445795 0 flags.
+resume_instruction: 'Completed in PR #238; continue document-evidence dossier successor.'
+execution:
+  branch: feature/apr02-ri223-review-flags
+  base_commit: abbf30a2c700584ffb553626301136a2c6719faf

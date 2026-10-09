@@ -1,0 +1,37 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-NUMERIC-CONTRADICTION-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Fail closed on explicit numerical absence claims contradicted by directly observed
+  units and amounts in original cited source snippets, common to 223/44 law.
+definition_of_done:
+- Conservative source-pattern check for quantity, term, percentages, price with well-bounded
+  numeric context, no broad arithmetic inference or automatic legal decision.
+- Regression on original 44-FZ 140 tonne omission and non-contradiction negatives;
+  full Tender Research tests and make check.
+- Explicit UNKNOWN for unbound, ambiguous or noncomparable amounts, no EIS write,
+  PR exact-head CI and Owner review.
+completed:
+- 'Source guard PR #243 merged; ten-section source-only evaluation PR #244 CI pending.'
+- Implemented conservative numeric absence guard in shared LocalChatLlmClient (quantity,
+  price, date, percentages), returns error and original retrieval fallback instead
+  of unsupported LLM facts.
+- Original 44-FZ source 140 metric tonnes contradicting model missing-volume claim
+  detected; six new positive/negative numeric tests passed.
+- Full 532 Tender Research passed, 1 skipped, make check PASS; source/number caution
+  report saved.
+- '#245 exact-head CI successful, Owner-directed squash merged as e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0
+test_results:
+- 532 passed, 1 skipped, 42 warnings
+- make check PASS
+- 6 new numeric guard and 5 existing evidence gate tests pass
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
+execution:
+  branch: feature/apr02-numeric-reconcile
+  base_commit: 976065ead16a5ba3dbef01dbaa1cb4644789fa1f

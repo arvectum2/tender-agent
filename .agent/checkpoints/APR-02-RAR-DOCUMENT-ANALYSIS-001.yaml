@@ -1,0 +1,54 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-RAR-DOCUMENT-ANALYSIS-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Turn genuine RI223 source-bound RAR contents into safely acquired child documents
+  processed by existing Data Platform for tender analysis.
+definition_of_done:
+- Inspect original 32616445795 RAR; ingest its members under hard file/path/size/time/resource
+  limits with no code execution.
+- Persist immutable source-bound child document objects, deterministic identity and
+  exact original-parent provenance, without erasing unsupported/unknowns.
+- Pass supported child document bytes through existing Data Platform document extraction,
+  chunking, OCR fallback and tender analysis path.
+- Real-source sample demonstrates extracted text, evidence trace and truthful per-member
+  coverage; focused tests, make check and GitHub CI pass.
+- Preserve REVIEW/HUMAN controls; no EIS/ETP write, submission, signature or external
+  commercial action.
+completed:
+- 'PR #232 owner-authorized merge a33aa81e1373f6abf7560a1929ee4d95bd076d06; CI 37792147443
+  SUCCESS.'
+- Verified authentic RAR5 archive contains 19 PDF, DOCX, DOC and XLSX files.
+- Implemented bounded RAR4/5 libarchive streaming and source-bound persistent child
+  documents with Data Platform OCR/text/chunk reuse.
+- 'Real original 32616445795: 19/19 documents (8 PDF, 8 DOCX, 1 DOC, 2 XLSX) and 300
+  Data Platform chunks; 0 failures.'
+- 'Focused relevant tests: 36 passed, 1 existing warning; make check and relevant
+  Ruff passed.'
+- Documented source-grounded sample observations without authoritative legal/GO assumptions.
+- 'PR #233 exact-head CI workflow 37797214204 SUCCESS 9/9 at head 88acbf7a5aad8a57caf296048d5b7382c2d08c3a.'
+- 'Product Owner expressly authorized continuation and merger 2026-10-08; PR #233
+  squash-merged as 936621909ac56f1dbef238b13f4d3b8dda6ab556.'
+- Data Platform RAG read-only source retrieval confirmed original requirements/methodology
+  with attributable document names.
+- Full Tender Research regression 490 passed, 1 skipped; 14 focused after CI runner
+  repair, make check/ruff passed.
+current: Completed and merged; APR-02 broader procedure/version/status/real multi-lot
+  breadth remains open for separate measured successors.
+pending: []
+last_verified_commit: 936621909ac56f1dbef238b13f4d3b8dda6ab556
+test_results:
+- 36 focused/integration-adjacent tests passed; 1 unrelated warning.
+- make check PASS, changed-file Ruff PASS, git diff --check PASS.
+- Real RI223 RAR archive 19/19 files; Data Platform 19/19 extracted; 300 chunks; no
+  original RAR misclassified.
+- Source-grounded observations in docs/223fz/APR02_RI223_RAR_CONTENT_ANALYSIS_2026-10-08.md.
+- Exact-head CI 37797214204 SUCCESS all 9/9 jobs.
+- Full Tender Research suite 490 passed / 1 skipped.
+- Read-only semantic queries hit actual source PDF/DOCX/DOC after Data Platform 300
+  embeddings.
+resume_instruction: 'Do not repeat APR-02-RAR-DOCUMENT-ANALYSIS-001; completed in
+  PR #233. Continue APR-02-223FZ-BREADTH using first independently measured authentic
+  gap (notice revisions/clarifications/real multi-lot or content-based fit evidence),
+  maintain source hashes and REVIEW/HUMAN gates. Do not assume legal conclusions.'

@@ -112,7 +112,10 @@ class TenderResearchPipeline:
         *,
         checkpoint_key: str | None = None,
         resume: bool = True,
+        law_type: str | None = None,
     ) -> dict[str, Any]:
+        if law_type not in (None, "44fz", "223fz"):
+            raise ValueError("unsupported procurement regime")
         numbers = registry_numbers[:limit] if limit else registry_numbers
         result: dict[str, Any] = {
             "total": len(numbers),
@@ -142,7 +145,7 @@ class TenderResearchPipeline:
         for index in range(start_index, len(numbers)):
             rn = numbers[index]
             try:
-                raw = self._eis.fetch_by_registry_number(rn)
+                raw = (self._eis.fetch_by_registry_number(rn, law_type="223fz") if law_type == "223fz" else self._eis.fetch_by_registry_number(rn))
                 if raw is None:
                     result["skipped"] += 1
                     if checkpoint_store and checkpoint:
@@ -379,7 +382,10 @@ class TenderResearchPipeline:
         else:
             summary["public_detail_failed"] += 1
 
-        soap_raw, soap_status = self._fetch_eis_by_registry_number_safe(discovered.registry_number)
+        soap_raw, soap_status = self._fetch_eis_by_registry_number_safe(
+            discovered.registry_number,
+            law_type="223fz" if discovered.law_type == "223fz" else None,
+        )
         if detail.document_links:
             summary["public_document_links_found"] += len(detail.document_links)
 
@@ -509,9 +515,12 @@ class TenderResearchPipeline:
     def _fetch_eis_by_registry_number_safe(
         self,
         registry_number: str,
+        *,
+        law_type: str | None = None,
     ) -> tuple[EisTenderRaw | None, str]:
         try:
-            raw = self._eis.fetch_by_registry_number(registry_number)
+            raw = (self._eis.fetch_by_registry_number(registry_number, law_type="223fz")
+                   if law_type == "223fz" else self._eis.fetch_by_registry_number(registry_number))
             if raw is None:
                 return None, "not_found"
             return raw, "success"
@@ -704,7 +713,8 @@ class TenderResearchPipeline:
         if soap_raw is None:
             return []
         documents = []
-        for doc in soap_raw.documents or self._eis.fetch_tender_documents(soap_raw):
+        for doc in (soap_raw.documents if soap_raw.law_type == "223fz"
+                    else soap_raw.documents or self._eis.fetch_tender_documents(soap_raw)) or []:
             documents.append({
                 "source_document_id": doc.source_document_id,
                 "file_name": doc.file_name,
@@ -1013,7 +1023,8 @@ class TenderResearchPipeline:
             }
 
         documents = []
-        for doc in raw.documents or self._eis.fetch_tender_documents(raw):
+        for doc in (raw.documents if raw.law_type == "223fz"
+                    else raw.documents or self._eis.fetch_tender_documents(raw)) or []:
             documents.append({
                 "source_document_id": doc.source_document_id,
                 "file_name": doc.file_name,

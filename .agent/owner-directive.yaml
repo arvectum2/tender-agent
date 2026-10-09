@@ -38,6 +38,13 @@ continuation:
     - Never resolve ARV-ID conflicts by inference.
     - Never cross executor-policy hard stops or Company/Product/Arvectum OS authority boundaries.
     - Never treat this directive as approval for procurement submission, external communication, production mutation, spend, signing, legal/commercial acceptance or benchmark-truth mutation.
+owner_operator_workspace_sequence_2026_10_09:
+  source: 'Owner explicitly set order: bounded 223-FZ, Production Runtime, personally usable request/results/database UI, then onboarding/SaaS.'
+  ordered_outcomes: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME, APR-03B-OPERATOR-WORKSPACE, APR-04-CUSTOMER-ONBOARDING, APR-05-PAID-PILOT-SAAS]
+  precedence: 'Owner sequence supersedes legacy immediate APR-04 continuation after APR-03; open implementation PRs are not accepted completion.'
+  owner_acceptance: 'Browser-only real request, cited result, document and read-only canonical database walkthrough.'
+  hard_stops: 'No tenant leak, arbitrary SQL, autonomous GO/NO_GO, ETP mutation, signature, money transfer or external message.'
+
 active_product_roadmap_optimization_2026_10_08:
   status: active
   source: 'Explicit Owner directive in Tender Agent project conversation on 2026-10-08: optimize and update the roadmap after reviewing which open items are actually necessary.'
@@ -48,6 +55,7 @@ active_product_roadmap_optimization_2026_10_08:
     - APR-01-FAST-CITED-PREANALYSIS
     - APR-02-223FZ-BREADTH
     - APR-03-PRODUCTION-RUNTIME
+    - APR-03B-OPERATOR-WORKSPACE
     - APR-04-CUSTOMER-ONBOARDING
     - APR-05-PAID-PILOT-SAAS
     - APR-06-COMMERCIAL-ACCEPTANCE
@@ -122,4 +130,17 @@ governance:
   renewal_decision: docs/governance/decisions/DECISION-2026-10-08-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
   renewal_merge_commit: 92a76a6394eff50f9da50a8edca73454aa163c13
   note: The attributable Owner review on 2026-10-08 explicitly renewed POS-004 / AI-ENG-001 AM-4 for another ten automatic merges on unchanged terms. PR #212 consumed merge 1/10, PR #213 consumed merge 2/10, ARV-059 PR #214 consumed merge 3/10, ARV-060 PR #215 consumed merge 4/10 and ARV-063 PR #216 consumed merge 5/10 after final exact-head CI passed. Combined ARV-064 implementation/completion PR #217 is counted prospectively as merge 6/10 and may merge only after final exact-head CI succeeds. All procurement submission, signing, external communication, legal/commercial acceptance, production/release and other hard stops remain unchanged.
+am4_owner_renewal_2026_10_08_r2:
+  status: approved_company_main
+  owner_instruction: 'подтверждаю. и очисти очередь АМ-4, чтобы мог без спроса сливать следующие 10 PR'
+  company_decision: docs/governance/decisions/DECISION-2026-10-08-R2-POS-004-ROADMAP-EXECUTOR-AM4-RENEWAL.md
+  company_merge_commit: 6eaf25183965cd6bafd210138076a54ca90a7b6d
+  cycle: '0/10'
+  preserves_prior_evidence: true
+  eligible_only_with_canonical_queue_auto_merge_true_and_full_ci: true
+  review_required_for_non_auto_tasks: true
+  previous_owner_approval:
+    pr: 230
+    merge_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
+
 revocation: Owner may revoke or supersede this directive at any time.

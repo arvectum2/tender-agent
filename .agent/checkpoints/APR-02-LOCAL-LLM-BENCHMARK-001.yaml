@@ -1,0 +1,46 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-LOCAL-LLM-BENCHMARK-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Run genuine Mac mini local generative model on original 223-FZ and 44-FZ document
+  evidence; preserve distinction between RAG retrieval, model answers and GPT-6 engineering.
+definition_of_done:
+- Re-use installed local GGUF and existing Tender Research LLM interface; run explicit
+  223-FZ real documented case and seek documented 44-FZ case.
+- Capture source-bound responses, model ID, times, question coverage, factual accuracy/no
+  hallucination, no GO/NO-GO.
+- Truthfully flag unavailable counterpart or service, do not invent model runs.
+- Save reproducible test artifacts off Git and sanitized summaries in repo; verify
+  tests/CI and Owner gates for any code changes.
+completed:
+- 'PR #240 merged; PR #241 checkpoint closure CI 37815124179 9/9 SUCCESS, squash merge
+  b80ccccd9403e788037de411c8df174fde933c99.'
+- Ollama /api/tags empty but Qwen2.5-14B-Instruct-Q4_K_M.gguf found on SSD (8.4 GiB);
+  local generative server 8088 offline, embedding server 8090 active.
+- Started genuine Qwen2.5-14B-Instruct Q4_K_M from existing SSD via local llama-server
+  localhost 8088, /health ok; separate Ollama registry remains empty.
+- 'Ran two real-generation source-fragment benchmark prompts locally, temperature
+  0: 223-FZ 32616445795 4 original chunks, 19.95 s, 206 tokens, subject/2027/40%-60%
+  broadly correct but one fake/mutated UUID; 44-FZ 0388100001826000047 4 original
+  chunks, 19.34 s, 250 tokens truncated, missed 140 tonnes and supplied no citations.'
+- Saved complete local responses and model metadata outside Git at /Users/master/arvectum-runtime/llm-benchmark-20261008/results.json
+  and source findings in docs/223fz/APR02_LOCAL_LLM_COMPARISON_2026-10-08.md.
+- 'Implemented deterministic chunk UUID citation audit and negative fixtures: 2 targeted
+  passed; full Tender Research 521 passed, 1 skipped, make check and Ruff PASS.'
+- '#242 exact-head CI successful, Owner-directed squash merged as 91a20fa34ba98ac90ba590f27a668a6585c9cf0e;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: 91a20fa34ba98ac90ba590f27a668a6585c9cf0e
+test_results:
+- Qwen2.5-14B Instruct Q4 on Mac mini true generation 223-FZ 19.95 s 206 tokens; 44-FZ
+  19.34 s 250 token cap.
+- 223-FZ 1 fabricated chunk UUID; 44-FZ no cited UUID and wrong claim 140 tonnes absent.
+- Full Tender Research 521 passed, 1 skipped, 42 warnings; make check PASS, script/test
+  Ruff PASS.
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
+execution:
+  branch: feature/apr02-local-llm-benchmark
+  base_commit: b80ccccd9403e788037de411c8df174fde933c99
