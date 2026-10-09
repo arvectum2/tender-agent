@@ -30,9 +30,12 @@ completed:
   - 'R4 safe controlled LLM failure event now records only exception class and provider mode.'
   - 'R4 legacy decomposition: isolated controlled operator model+SQL execution into operator_llm_workflow.py, retained exact old _try_run_llm_workflow entrypoint as a thin compatibility shim; 67 relevant tests pass.'
   - 'Checked real OpenAI-compatible app provider pointed at local llama.cpp Gemma 4 12B: JSON subject and 1000000 RUB parsed successfully in 6.89 seconds; multi-stage model validation still pending.'
+  - 'Discovered uncontrolled ORM bootstrap regression: controlled LLM failed with NoReferencedTableError before running model; extracted workflow now explicitly imports shared ORM registry before Base.metadata.create_all.'
+  - 'Confirmed full controlled local Gemma 4 12B on isolated SQLite with synthetic 44-FZ web-site tender: four of four provider sections validated PASSED in 80.3 seconds, zero runtime failure events.'
+  - 'Added clean-process ORM bootstrap regression to prevent broken foreign key registry during LLM startup.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261 #262 and DP #86 merged; R4 diagnostics PR #263 under CI. Next R4 compatibility extraction into standalone operator_llm_workflow.py tested on 67 cases; controlled model E2E still pending.'
+current: 'TA #261/#262 DP #86 merged; PR #263 and stacked #264 under CI. Controlled Gemma 4 12B full four-section synthetic E2E PASSED 80.3 sec in disposable SQLite after ORM bootstrap repair; next original EIS documents, benchmark and deployment gates.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -48,9 +51,11 @@ test_results:
   - 'R3 duplicate SQL context queries use shared implementation, 2 direct fake session tests PASS, AST groups reduced 9->5.'
   - 'PR #262 exact-head all CI PASS. Local all-tests: 3346 passed, 238 skipped, one local R9 pg_restore failure also reproduced in prior code; no R9 fix claim.'
   - 'R4 targeted LLM diagnostic tests 3 passed.'
-  - 'R4 controlled LLM compatibility extraction 67 relevant tests PASS; real local Gemma structured-output via product provider 6.89s, not yet full tender run.'
+  - 'R4 controlled LLM compatibility extraction 67 relevant tests PASS; real local Gemma structured-output via product provider 6.89s.'
+  - 'R4 actual four-section synthetic local Gemma tender workflow E2E: requirements/supplier_questions/rfq_draft/contract_risk_memo PASSED 80.3 sec; isolated SQLite, no production mutations.'
+  - 'R4 isolated subprocess ORM metadata bootstrap regression PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA PR #261/#262 and DP #86 merged; PR #263 safe LLM failure event is under GitHub CI. Next stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-llm-extract-r4-20261009 separates controlled operator LLM workflow into standalone module, 67 regression tests passed; raise PR after R4 parent. Exact source main preview 18083 still old and must not be changed without gate. Full E2E with local Gemma and representative procurement corpus R5 remain. Mac mini R9 pg_restore fails locally but latest GitHub CI all green. Do not enable previously disabled watchdog.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #261/#262 and DP #86 merged. PR #263 diagnostics and stacked #264 controlled workflow extraction under CI. In worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-llm-extract-r4-20261009, isolated controlled Gemma 4 12B passed all 4 validated sections on synthetic tender with temporary SQLite (80.3 sec) after ORM model registry bootstrap fix. Update PR #264, wait exact-head CI, rebase after #263 merge. Next reuse six original EIS files in source-locked private staged build to produce source-backed reports and evaluate unknowns; keep 18082/18083 stable until owner quality gate. R3 remaining legacy and R5 corpus outstanding. Watchdog owner-disabled.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true

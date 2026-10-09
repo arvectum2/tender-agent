@@ -30,6 +30,10 @@ def run_controlled_operator_llm(
         from src.modules.controlled_llm_prebid.service import (
             run_controlled_tender_operator_workflow,
         )
+
+        # Register all ORM tables before create_all: controlled trace models
+        # have foreign keys to product tables that partial imports omit.
+        from src.shared.db import models as _registered_models  # noqa: F401
         from src.shared.db.base import Base
 
         settings = settings_getter()
