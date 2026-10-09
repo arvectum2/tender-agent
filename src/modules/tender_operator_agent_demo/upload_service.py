@@ -360,6 +360,23 @@ def _enrich_procurement_metadata_from_documents(
             refs = dict(enriched.get("_field_evidence") or {})
             refs["procurement_title"] = "eis_notice:procurement_subject"
             enriched["_field_evidence"] = refs
+            notice_files = [
+                f for f in enriched.get("files", [])
+                if isinstance(f, dict) and str(f.get("extension") or "").lower() == ".xml"
+            ]
+            if len(notice_files) == 1 and notice_files[0].get("file_id"):
+                from pathlib import Path
+                source_file = notice_files[0]
+                enriched["_verified_notice_facts"] = {
+                    "registry_number": expected_number,
+                    "file_id": str(source_file["file_id"]),
+                    "document": Path(str(source_file.get("display_name") or source_file.get("original_name") or "")).name,
+                    "values": {
+                        "procurement_title": notice_meta.get("procurement_subject"),
+                        "application_deadline": notice_meta.get("submission_deadline"),
+                        "nmck": notice_meta.get("nmck"),
+                    },
+                }
     enriched["procurement"] = existing_procurement
 
     root_map = {
