@@ -22,3 +22,12 @@ label{font-size:13px;font-weight:700;display:block;margin-bottom:10px;color:#415
 
 .search-panel{margin-bottom:18px}.search-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.search-filters label{font-size:12px}.search-filters select,.search-filters input{display:block;width:100%;margin-top:8px;border:1px solid #d9e3ec;border-radius:10px;padding:10px;background:#fff;color:#203243;min-height:39px}.more-search{margin-top:15px;font-size:13px;color:#3f5266}.more-search summary{cursor:pointer;font-weight:650}.search-result-list{display:grid;gap:12px;margin-top:18px}.eis-search-item{padding:17px;border:1px solid #e0eaed;background:#f8fbfc;border-radius:12px;display:flex;gap:18px;justify-content:space-between;align-items:center}.eis-search-item h3{margin:6px 0;font-size:16px;line-height:1.4}.eis-search-item p{font-size:12px;color:#667c8c;margin:6px 0}.eis-search-item a{font-size:12px;color:#0b957d}.search-page-actions{display:flex;justify-content:space-between;align-items:center;margin-top:16px;color:#668091;font-size:12px}.recovery-form{margin-top:19px;padding:17px;background:#fff7e9;border:1px solid #eed6af;border-radius:12px}.sidebar-version{display:block;font-size:11px;color:#58dac0}
 @media(max-width:1000px){.search-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:680px){.search-filters{grid-template-columns:1fr}.eis-search-item{flex-direction:column;align-items:stretch}.search-page-actions{gap:10px}}
+
+
+.quote-review{border:1px solid #d7e9e3;border-radius:12px;background:#f9fcfb;padding:16px;margin:22px 0}
+.quote-review summary{font-size:14px;font-weight:700;cursor:pointer;color:#185c50}
+.quote-form{display:grid;gap:12px;margin-top:12px;max-width:760px}
+.quote-form label{margin:0}
+.quote-form select,.quote-form textarea{display:block;width:100%;margin-top:8px;padding:11px 13px;border:1px solid #c8dcd8;border-radius:9px;background:#fff;color:#19352e;font:inherit;resize:vertical}
+.quote-form select:focus,.quote-form textarea:focus{outline:2px solid #28b99c;outline-offset:1px}
+#quote-check-result{font-size:13px;line-height:1.6;color:#345467;overflow-wrap:anywhere}

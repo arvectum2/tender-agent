@@ -44,7 +44,7 @@ async function scenario({withFiles}) {
   let analyzed = false;
   const calls = [];
   const file = {
-    file_id:'file-01', original_name:'real.docx', display_name:'real.docx',
+    file_id:'FILE-01', original_name:'real.docx', display_name:'real.docx',
     extension:'.docx', extracted_text_available:analyzed, size_bytes:100,
   };
   const run = () => ({
@@ -79,6 +79,15 @@ async function scenario({withFiles}) {
       sections:[{title:'Требования',items:['Перепроверить документы']}],executive_summary:['Только оценка'],decision_core:{facts:{}}
     };
     else if(route.endsWith('/workspace/runs/run-1/evidence')) value={facts:{},warnings:[]};
+    else if(route.endsWith('/workspace/runs/run-1/verify-quote') && method==='POST') {
+      const body=JSON.parse(opts.body);
+      assert.equal(body.file_id,'FILE-01');
+      assert.equal(body.exact_quote,'Оплата производится в течение семи рабочих дней.');
+      value={
+        status:'literal_quote_found_in_extracted_original_only',
+        evidence:{chunk_id:'dp-real-chunk-01',quote_char_start_in_chunk:16,quote_char_end_in_chunk:64}
+      };
+    }
     else throw new Error('Unexpected route: '+route);
     return {ok:true,status:200,json:async () => value};
   };
@@ -118,10 +127,23 @@ async function scenario({withFiles}) {
     assert(calls.includes('GET /api/demo/tender-agent/runs/run-1/report'));
     assert.equal(get('report-panel').hidden,false);
     assert.equal(get('document-count').textContent,'1');
+    assert.equal(get('quote-check').hidden,false,'Proof-check UI visible only for saved original files');
+    get('quote-file').value='FILE-01';
+    get('quote-text').value='Оплата производится в течение семи рабочих дней.';
+    await get('quote-verify-form').events.submit({preventDefault() {}});
+    for(let i=0;i<50;i++){
+      if(calls.includes('POST /api/demo/tender-agent/workspace/runs/run-1/verify-quote')){
+        await new Promise(resolve=>setTimeout(resolve,2));break;
+      }
+      await new Promise(resolve=>setTimeout(resolve,2));
+    }
+    assert(calls.includes('POST /api/demo/tender-agent/workspace/runs/run-1/verify-quote'));
+    assert(get('quote-check-result').textContent.includes('dp-real-chunk-01'));
   }else{
     assert(!calls.some(c=>c.includes('/runs/run-1/analyze')),'Never analyze a file-less EIS manifest');
     assert.equal(get('append-files-form').hidden,false,'Show manual document recovery');
     assert.equal(get('document-count').textContent,'0');
+    assert.equal(get('quote-check').hidden,true,'Proof-check UI must be hidden when no original file exists');
     assert.equal(get('analyze-btn').disabled,true,'Never enable invalid analyze button');
   }
   return calls.length;
