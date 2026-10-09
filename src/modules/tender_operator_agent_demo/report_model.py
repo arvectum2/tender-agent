@@ -451,6 +451,9 @@ def build_procurement_report_model(
             refs = dict(model.get("field_evidence") or {})
             refs["procurement_title"] = "eis_notice:procurement_subject"
             model["field_evidence"] = refs
+            proof = metadata.get("_verified_notice_facts")
+            if isinstance(proof, dict):
+                model["_verified_notice_facts"] = dict(proof)
     analysis_as_of = (
         metadata.get("analysis_completed_at")
         or metadata.get("prepared_at")
