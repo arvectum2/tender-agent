@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """APR-07: consume existing evidence only; do not load/download models."""
 from __future__ import annotations
 
