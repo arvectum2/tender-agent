@@ -24,6 +24,8 @@ completed:
   - 'Made controlled-LLM fallback provenance and limitations explicit; no model inference from DP or llama.cpp health status.'
   - 'Added strict EIS XML number/date checks, and architecture master roadmap for phases R0..R5.'
   - 'R3 first decomposition: new one domain eis_fact_values.py supplies strict source tag/validation contract to source XML evidence endpoint, report model projection and upload enrichment, eliminating divergent name/date/NMCK validators.'
+  - 'Added reproducible exact AST function duplicate audit: baseline nine >=12-line identical-body groups (all within TA, zero between TA and DP).'
+  - 'Consolidated four duplicate SQL query bodies (workflow, optimization, workspace feed, integration task contexts) into src/shared/control_package.py, retaining compatibility wrappers in existing callers; identical groups now five.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
 current: 'R0/R1/R2 first tranche TA PR #261 waiting full CI; DP PR #86 merged. R3 first one-fact-core compatibility extraction passed 96 tests and awaits subsequent integration/CI.'
@@ -39,6 +41,7 @@ test_results:
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
   - 'Read-only AST architecture strict audit PASS: 804/158 modules, no forbidden direct imports.'
   - 'R3 fact value/domain validator extraction 96 relevant tests PASS; no production runtime mutation.'
+  - 'R3 duplicate SQL context queries use shared implementation, 2 direct fake session tests PASS, AST groups reduced 9->5.'
 
 resume_instruction: 'TDP-REFACTOR-20261009: first TA PR #261 exact head d8472d5b0b48ba0458a36d3c35b293d04fe6c2b4 waiting quality CI, DP PR #86 merged 0da0e945e40ac943bb2e3b9a88fb8f9b5a6d4a51. R3 stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-source-fact-unification-20261009 extracts shared eis_fact_values.py, 96 tests pass; rebase onto merged first PR, run CI and merge. Then continue staged decomposition of 5924-line legacy upload, actual LLM runtime diagnostics and benchmarks, and frozen 20-30 procurements. Do not change private 18082/18083 without exact-source/owner checks; watchdog disabled, full task remains in progress.'
 execution:

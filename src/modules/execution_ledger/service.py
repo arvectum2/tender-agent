@@ -4,10 +4,25 @@ from sqlalchemy.orm import Session
 from src.modules.action_queue.models import ActionQueueRecord
 from src.modules.connector_registry.models import ConnectorRegistryRecord
 from src.modules.event_log.service import append_event_record
-from src.modules.execution_ledger.models import ExecutionLedgerRecord, ExecutionLedgerSet, ExecutionResultRecord
-from src.modules.execution_ledger.schemas import BuildExecutionLedgerRequest, StartExecutionLedgerRequest
-from src.modules.integration_tasks.models import IntegrationTaskRecord, IntegrationTaskSet
-from src.shared.control_package import ensure_scope_exists, latest_action_queue_context, resolve_scope_deal_id
+from src.modules.execution_ledger.models import (
+    ExecutionLedgerRecord,
+    ExecutionLedgerSet,
+    ExecutionResultRecord,
+)
+from src.modules.execution_ledger.schemas import (
+    BuildExecutionLedgerRequest,
+    StartExecutionLedgerRequest,
+)
+from src.modules.integration_tasks.models import (
+    IntegrationTaskRecord,
+    IntegrationTaskSet,
+)
+from src.shared.control_package import (
+    ensure_scope_exists,
+    latest_action_queue_context,
+    latest_integration_task_set,
+    resolve_scope_deal_id,
+)
 from src.shared.db.base import utcnow
 from src.shared.enums import (
     ActionExecutionStatus,
@@ -64,23 +79,8 @@ def _latest_integration_task_set(
     scope_type: str,
     scope_ref: str,
 ) -> tuple[IntegrationTaskSet | None, list[IntegrationTaskRecord]]:
-    task_set = session.scalar(
-        select(IntegrationTaskSet)
-        .where(IntegrationTaskSet.scope_type == scope_type, IntegrationTaskSet.scope_ref == scope_ref)
-        .order_by(IntegrationTaskSet.created_at.desc(), IntegrationTaskSet.id.desc())
-        .limit(1)
-    )
-    if not task_set:
-        return None, []
-    records = list(
-        session.scalars(
-            select(IntegrationTaskRecord)
-            .where(IntegrationTaskRecord.integration_task_set_id == task_set.integration_task_set_id)
-            .order_by(IntegrationTaskRecord.created_at.asc(), IntegrationTaskRecord.id.asc())
-        )
-    )
-    return task_set, records
-
+    # Historical private name kept for call sites and monkeypatchable tests.
+    return latest_integration_task_set(session, scope_type, scope_ref)
 
 def _latest_approval_is_approved(session: Session, action_queue_id: str) -> bool:
     from src.modules.action_queue.models import ActionQueueApproval

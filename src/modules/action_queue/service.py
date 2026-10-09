@@ -1,11 +1,26 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from src.modules.action_queue.models import ActionQueueApproval, ActionQueueRecord, ActionQueueSet
-from src.modules.action_queue.schemas import ApproveActionQueueItemRequest, BuildActionQueueRequest
+from src.modules.action_queue.models import (
+    ActionQueueApproval,
+    ActionQueueRecord,
+    ActionQueueSet,
+)
+from src.modules.action_queue.schemas import (
+    ApproveActionQueueItemRequest,
+    BuildActionQueueRequest,
+)
 from src.modules.event_log.service import append_event_record
-from src.modules.workspace_feed.models import WorkspaceFeedItem, WorkspaceFeedRecord, WorkspaceFeedSet
-from src.shared.control_package import ensure_scope_exists, resolve_scope_deal_id
+from src.modules.workspace_feed.models import (
+    WorkspaceFeedItem,
+    WorkspaceFeedRecord,
+    WorkspaceFeedSet,
+)
+from src.shared.control_package import (
+    ensure_scope_exists,
+    latest_workspace_feed_context,
+    resolve_scope_deal_id,
+)
 from src.shared.db.base import utcnow
 from src.shared.enums import (
     ActionExecutionStatus,
@@ -56,34 +71,10 @@ def _get_approvals(session: Session, action_queue_id: str) -> list[ActionQueueAp
 
 
 def _latest_workspace_feed(
-    session: Session,
-    scope_type: str,
-    scope_ref: str,
+    session: Session, scope_type: str, scope_ref: str
 ) -> tuple[WorkspaceFeedSet | None, WorkspaceFeedRecord | None, list[WorkspaceFeedItem]]:
-    feed_set = session.scalar(
-        select(WorkspaceFeedSet)
-        .where(WorkspaceFeedSet.scope_type == scope_type, WorkspaceFeedSet.scope_ref == scope_ref)
-        .order_by(WorkspaceFeedSet.created_at.desc(), WorkspaceFeedSet.id.desc())
-        .limit(1)
-    )
-    if not feed_set:
-        return None, None, []
-    feed_record = session.scalar(
-        select(WorkspaceFeedRecord)
-        .where(WorkspaceFeedRecord.workspace_feed_set_id == feed_set.workspace_feed_set_id)
-        .order_by(WorkspaceFeedRecord.created_at.desc(), WorkspaceFeedRecord.id.desc())
-        .limit(1)
-    )
-    if not feed_record:
-        return feed_set, None, []
-    items = list(
-        session.scalars(
-            select(WorkspaceFeedItem)
-            .where(WorkspaceFeedItem.workspace_feed_id == feed_record.workspace_feed_id)
-            .order_by(WorkspaceFeedItem.created_at.asc(), WorkspaceFeedItem.id.asc())
-        )
-    )
-    return feed_set, feed_record, items
+    # Compatibility name; one canonical source of query semantics.
+    return latest_workspace_feed_context(session, scope_type, scope_ref)
 
 
 def _action_type_from_workspace_item(item: WorkspaceFeedItem) -> ActionType:

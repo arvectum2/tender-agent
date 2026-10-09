@@ -1,12 +1,27 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from src.modules.copilot_feed.models import CopilotFeedItem, CopilotFeedRecord, CopilotFeedSet
+from src.modules.copilot_feed.models import (
+    CopilotFeedItem,
+    CopilotFeedRecord,
+    CopilotFeedSet,
+)
 from src.modules.copilot_feed.schemas import BuildCopilotFeedRequest
 from src.modules.event_log.service import append_event_record
 from src.modules.execution_command.models import ExecutionCommandSet
-from src.modules.optimization.models import OptimizationRecommendationRecord, OptimizationRecommendationSet
-from src.modules.workflow_runs.models import WorkflowRunRecord, WorkflowRunSet, WorkflowStepRecord
+from src.modules.optimization.models import (
+    OptimizationRecommendationRecord,
+    OptimizationRecommendationSet,
+)
+from src.modules.workflow_runs.models import (
+    WorkflowRunRecord,
+    WorkflowRunSet,
+    WorkflowStepRecord,
+)
+from src.shared.control_package import (
+    latest_optimization_context,
+    latest_workflow_context,
+)
 from src.shared.db.base import utcnow
 from src.shared.enums import (
     CopilotFeedItemType,
@@ -14,7 +29,6 @@ from src.shared.enums import (
     CopilotPriority,
     EventSeverity,
     OptimizationRecommendationType,
-    OptimizationScopeType,
     WorkflowScopeType,
     WorkflowStepStatus,
     WorkflowStepType,
@@ -60,81 +74,15 @@ def _get_items(session: Session, copilot_feed_id: str) -> list[CopilotFeedItem]:
 def _latest_workflow_context(
     session: Session, scope_type: WorkflowScopeType, scope_ref: str
 ) -> tuple[WorkflowRunSet | None, WorkflowRunRecord | None, list[WorkflowStepRecord]]:
-    workflow_set = session.scalar(
-        select(WorkflowRunSet)
-        .where(WorkflowRunSet.scope_type == scope_type, WorkflowRunSet.scope_ref == scope_ref)
-        .order_by(WorkflowRunSet.created_at.desc(), WorkflowRunSet.id.desc())
-        .limit(1)
-    )
-    if not workflow_set:
-        return None, None, []
-    workflow_record = session.scalar(
-        select(WorkflowRunRecord)
-        .where(WorkflowRunRecord.workflow_run_set_id == workflow_set.workflow_run_set_id)
-        .order_by(WorkflowRunRecord.created_at.desc(), WorkflowRunRecord.id.desc())
-        .limit(1)
-    )
-    if not workflow_record:
-        return workflow_set, None, []
-    steps = list(
-        session.scalars(
-            select(WorkflowStepRecord)
-            .where(WorkflowStepRecord.workflow_run_id == workflow_record.workflow_run_id)
-            .order_by(WorkflowStepRecord.created_at.asc(), WorkflowStepRecord.id.asc())
-        )
-    )
-    return workflow_set, workflow_record, steps
+    # Compatibility name; canonical SQL query lives in shared.control_package.
+    return latest_workflow_context(session, scope_type, scope_ref)
 
 
 def _latest_optimization_context(
     session: Session, scope_type: WorkflowScopeType, scope_ref: str
 ) -> tuple[OptimizationRecommendationSet | None, list[OptimizationRecommendationRecord], str | None]:
-    candidates: list[tuple[OptimizationScopeType, str]] = []
-    if scope_type == WorkflowScopeType.DEAL:
-        candidates.append((OptimizationScopeType.DEAL, scope_ref))
-    elif scope_type == WorkflowScopeType.PORTFOLIO:
-        candidates.append((OptimizationScopeType.PORTFOLIO, scope_ref))
-        candidates.append((OptimizationScopeType.PROCESS, scope_ref))
-    elif scope_type == WorkflowScopeType.PIPELINE:
-        candidates.append((OptimizationScopeType.PROCESS, scope_ref))
-        candidates.append((OptimizationScopeType.PORTFOLIO, "GLOBAL"))
-    else:
-        candidates.append((OptimizationScopeType.PROCESS, scope_ref))
-        execution_set = session.scalar(
-            select(ExecutionCommandSet).where(ExecutionCommandSet.execution_command_set_id == scope_ref)
-        )
-        if execution_set:
-            candidates.append((OptimizationScopeType.DEAL, execution_set.deal_id))
-
-    for optimization_scope, candidate_ref in candidates:
-        optimization_set = session.scalar(
-            select(OptimizationRecommendationSet)
-            .where(
-                OptimizationRecommendationSet.scope_type == optimization_scope,
-                OptimizationRecommendationSet.scope_ref == candidate_ref,
-            )
-            .order_by(
-                OptimizationRecommendationSet.created_at.desc(),
-                OptimizationRecommendationSet.id.desc(),
-            )
-            .limit(1)
-        )
-        if optimization_set:
-            records = list(
-                session.scalars(
-                    select(OptimizationRecommendationRecord)
-                    .where(
-                        OptimizationRecommendationRecord.optimization_recommendation_set_id
-                        == optimization_set.optimization_recommendation_set_id
-                    )
-                    .order_by(
-                        OptimizationRecommendationRecord.created_at.asc(),
-                        OptimizationRecommendationRecord.id.asc(),
-                    )
-                )
-            )
-            return optimization_set, records, candidate_ref
-    return None, [], None
+    # Preserve existing callers without maintaining a second query implementation.
+    return latest_optimization_context(session, scope_type, scope_ref)
 
 
 def _feed_item_from_step(step: WorkflowStepRecord) -> tuple[CopilotFeedItemType, CopilotPriority, str]:
