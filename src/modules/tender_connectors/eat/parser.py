@@ -5,6 +5,10 @@ from decimal import Decimal
 from typing import Any
 
 from src.modules.tender_connectors.base import ParsedPurchase, ParsedPurchaseItem
+from src.modules.tender_connectors.shared_fields import (
+    parse_portal_datetime,
+    pick_nested,
+)
 
 
 def parse_purchase_payload(raw: dict[str, Any], source: str = "eat") -> ParsedPurchase:
@@ -47,7 +51,7 @@ def parse_item_payload(raw: dict[str, Any]) -> ParsedPurchaseItem:
     if not name:
         raise ValueError("item name required")
 
-    quantity = _parse_decimal(_pick(raw, ["quantity", "qty", "count", "amount"])) or Decimal("1")
+    quantity = _parse_decimal(_pick(raw, ["quantity", "qty", "count", "amount"])) or Decimal(1)
 
     return ParsedPurchaseItem(
         position_external_id=_pick(raw, ["positionExternalId", "positionId", "id", "itemId"]),
@@ -78,33 +82,7 @@ def _pick(raw: dict[str, Any], keys: list[str]) -> str | None:
 
 
 def _pick_nested(raw: dict[str, Any], paths: list[str]) -> str | None:
-    for path in paths:
-        current: Any = raw
-        ok = True
-        for chunk in path.split("."):
-            if isinstance(current, list):
-                if not chunk.isdigit():
-                    ok = False
-                    break
-                idx = int(chunk)
-                if idx >= len(current):
-                    ok = False
-                    break
-                current = current[idx]
-                continue
-            if not isinstance(current, dict):
-                ok = False
-                break
-            current = current.get(chunk)
-            if current is None:
-                ok = False
-                break
-        if not ok or current is None:
-            continue
-        text = str(current).strip()
-        if text:
-            return text
-    return None
+    return pick_nested(raw, paths)
 
 
 def _parse_decimal(value: str | None) -> Decimal | None:
@@ -121,21 +99,7 @@ def _parse_decimal(value: str | None) -> Decimal | None:
 
 
 def _parse_datetime(value: str | None) -> datetime | None:
-    if not value:
-        return None
-    text = value.strip().replace("Z", "+00:00")
-    try:
-        return datetime.fromisoformat(text)
-    except ValueError:
-        pass
-
-    for fmt in ("%d.%m.%Y %H:%M", "%d.%m.%Y", "%Y-%m-%d %H:%M:%S"):
-        try:
-            return datetime.strptime(text, fmt)
-        except ValueError:
-            continue
-
-    return None
+    return parse_portal_datetime(value)
 
 
 def _build_purchase_url(external_id: str) -> str | None:

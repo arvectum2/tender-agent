@@ -34,7 +34,6 @@ from src.tender_research.repository import TenderRepository
 from src.tender_research.models import ProcurementTenderDocument
 from src.shared.config.settings import get_settings
 from src.shared.db.base import Base
-from src.shared.db.diagnostics import get_database_diagnostics
 
 logging.basicConfig(
     level=logging.INFO,
@@ -203,21 +202,10 @@ def cmd_check_network_config(args: argparse.Namespace) -> None:
 
 
 def cmd_check_db(args: argparse.Namespace) -> None:
-    settings = get_settings()
-    engine = create_engine(settings.database_url, future=True)
-    info = get_database_diagnostics(engine)
-    for key in (
-        "database_dialect",
-        "database_url_masked",
-        "can_connect",
-        "current_migration",
-        "migration_head",
-        "pgvector_extension_available",
-        "tables_count",
-    ):
-        print(f"{key}: {info.get(key)}")
-    if info.get("error"):
-        print(f"error: {info['error']}")
+    """Preserve old CLI command while using one shared diagnostic formatter."""
+    from src.shared.db.cli import cmd_check_db as shared_check_db
+
+    shared_check_db()
 
 
 def _mask_proxy_url(url: str) -> str:

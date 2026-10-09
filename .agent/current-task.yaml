@@ -37,6 +37,7 @@ completed:
   - 'Introduced deterministic bounded context selection across long normalized documents, prioritizes procurement terms and retains first/middle/last with accurate normalized char ranges, no invented original PDF or XML citations.'
   - 'Eliminated remaining Docker preview overlay drift: source-locked private Dockerfile now recreates /app/src and /app/scripts from one exact commit, verifies every source byte, runs as non-root app.'
   - 'PRs #264-266 merged. Isolated full original EIS document LLM pipeline passed with 3 verified XML facts, no stale subject, 10 report sections (327 sec). New data platform per-file provenance and unverified LLM report candidates preserve operator value without fake claims.'
+  - 'R3 AST exact-body >=12 line clone inventory reduced from nine initial groups to zero, via compatibility shims for portal nested fields/date parsing, Hermes generic-subject classification and shared check-db CLI. No source-specific procurement law/parsers removed.'
   - 'R5 provenance gate first slice: only an explicit literal model quote whose exact text occurs in one real Data Platform chunk with matching file/resource/document/chunk IDs and hashed DP chunk-local offsets can acquire a candidate locator. Absence, fuzzy paraphrases, ambiguous duplicates and invalid offsets fail closed. No implication of verified legal interpretation.'
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
@@ -48,7 +49,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'd23c4c00e889694cc3e4368b30a8155802741339'
+last_verified_commit: 'b7fe8c549017828355b65a91d9e782f1f270e08b'
 test_results:
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
@@ -66,9 +67,10 @@ test_results:
   - 'R4 six original EIS files analyzed with local Gemma: 327s, 10 sections, three official XML facts.'
   - 'R4 per-file source IDs and unverified LLM projection: 69 profile tests PASS before PR #267.'
   - 'R5 exact quote binding: 8 new happy/fail-closed unit cases PASS, Ruff PASS.'
+  - 'R3 exact AST clone count 9->0, 71 relevant tests PASS, make check PASS, new module Ruff PASS.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 is in_progress; TA #261-269 and DP #86 merged, TA #270 corpus audit under CI. Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-chunk-offset-contract-r5-20261009 fixes a real offset-space bug: DP normalizes whitespace before chunking, so metadata is labeled data_platform_normalized_text and quote-binding requires per-chunk text with true SHA256 and chunk-local coordinates. Run 35 focused tests and full CI via stacked PR, then continue real chunk retrieval, 20-30 truth-reviewed EIS cases and owner preview acceptance. Do not change old 18082/private 18083 without owner gate; owner-disabled watchdog remains off.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #261-270 and DP #86/#87 merged, PR #271 DP normalized source offsets pending CI. Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-portal-parser-dedup-r3-20261009 removes remaining 3 identical AST clone groups (portal pick/date, Hermes subject, DB command) without changing old call API; total exact groups nine->zero, 71 tests PASS and make check PASS. Open PR, wait exact head CI and merge after #271. Continue semantic legacy adapter cleanup, 20-30 truth-reviewed EIS cases and owner private Safari acceptance. Keep ports 18082/18083 unchanged and disabled watchdog off.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
