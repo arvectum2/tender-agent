@@ -90,6 +90,12 @@ def build_ri223_document_dossier(
                         "chunk_id": chunk_id[:_MAX_CHUNK_ID_CHARS],
                         "source_excerpt": excerpt[:_MAX_EXCERPT_CHARS],
                         "evidence_type": "DATA_PLATFORM_DOCUMENT_CHUNK",
+                        # Registry/document/chunk provenance alone does not prove
+                        # which lot or notice revision governs this excerpt.
+                        "lot_number": "UNKNOWN",
+                        "lot_binding": "UNVERIFIED",
+                        "notice_revision": "UNKNOWN",
+                        "revision_binding": "UNVERIFIED",
                     }
                 )
                 if len(references) >= _MAX_SOURCES_PER_DOMAIN:
@@ -108,6 +114,7 @@ def build_ri223_document_dossier(
                 "contract_risk": "NOT_ASSESSED",
                 "decision": "NOT_DECIDED",
                 "lot_scope": lot_scope,
+                "revision_scope": "DOCUMENT_REVISION_NOT_CONFIRMED",
                 "source_excerpts": references,
             }
         )
@@ -138,6 +145,12 @@ def render_ri223_document_dossier(dossier: list[dict[str, Any]]) -> list[str]:
             lines.append(
                 "Лот: применимость найденных фрагментов к отдельным лотам "
                 "не подтверждена, требуется раздельная проверка."
+            )
+        if item["source_excerpts"]:
+            lines.append(
+                "Привязка цитат к лоту и редакции извещения: НЕ ПОДТВЕРЖДЕНА. "
+                "Номер реестра, имя файла и chunk_id не устанавливают применимость "
+                "конкретного условия к лоту либо редакции."
             )
         if not item["source_excerpts"]:
             lines.append(

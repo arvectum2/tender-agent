@@ -1,0 +1,61 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-BOUNDED-CLOSURE-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Close official APR-02 bounded real-source 223-FZ breadth outcome only after
+  frozen-corpus evidence audit, all relevant merged PRs, final test and exact-head
+  CI.
+definition_of_done:
+- Original frozen RI223 source archives and source-bound real RAR/DP evidence confirmed,
+  multi-lot/revisions/explanations handled without legal effect inference.
+- Evidence-bound questions and dossier analysis cover frozen priority document set;
+  unknown applicability preserved.
+- 'PR #247 and PR #248 merged with final CI; no pending APR-02 admitted task except
+  superseded/historical records.'
+- Master roadmap and executor queue reconciled; broad ARV-006 claim and APR-07 model
+  comparison explicitly not claimed done.
+- Full Tender Research tests/make check pass, exact-head CI and Owner-gated closure
+  PR merged, completed checkpoint records merge SHA.
+completed:
+- 'PR #247 9/9 CI merged as c4e75ce901cb6fce1de08a19f2d74b7f0831503b.'
+- Real original frozen 32616376947 and 32616445795 ZIP SHA256 verified unchanged on
+  Mac mini.
+- 'PR #235 RI223 question overlay merged 4b93709383866121de65647fc340b8add0ab0510
+  and PR #244 20 original local inference cases merged d6d946bca1f8985c9c7fc36cf5d2c18d6cd09f23;
+  execution queue stale status identified.'
+- 'PR #248 final-head GitHub CI 37828340119 SUCCESS 9/9, Owner-directed squash merge
+  7e3bf91c3019f45e359608da6215a478ce21dd74.'
+- APR-02 bounded roadmap+queue and seven historical merged-but-blocked checkpoints
+  reconciled.
+- Original two RI223 ZIPs and original RAR SHA-256 match; corpus includes 19 source
+  documents and 300 exact source chunks.
+- Bounded closure roadmap consistency test passed; broad historical ARV-006 and model
+  comparisons expressly excluded.
+- 'Final post-#248 merged base c4e75ce9+7e3bf91: 543 Tender Research passed, 1 skipped,
+  42 warnings; make check PASS and closure registry test PASS.'
+- 'APR-02 bounded closure PR #249 head c7351a10cf08b07bd68605f3a5e32e5b96cbd257 exact-head
+  GitHub CI 37829827778 SUCCESS 9/9; Owner-directed squash merged into main as 1e056ecc09f1478af80cbe11b3f96e57c15b49b1.'
+- Master roadmap APR-02 bounded outcome marked done; queue all prior APR-02 tasks
+  done; unresolved broad historical ARV-006, production runtime and model comparisons
+  remain separate.
+- Source evidence ZIP and RAR SHA-256 unchanged; 19 original document sources/300
+  chunks, ten sections/25 citations; final local 543 Tender Research passed, 1 skipped,
+  make check passed.
+current: Completed — bounded APR-02 real-source 223-FZ breadth accepted in main.
+pending: []
+last_verified_commit: 1e056ecc09f1478af80cbe11b3f96e57c15b49b1
+test_results:
+- 'Previous #248 rebased local 542 tests passed one skipped, make check PASS.'
+- Source archive hashes both MATCH previously recorded originals.
+- Rebased closure premerge 543 Tender Research passed, one skipped; make check PASS.
+- Final post-#248 Tender Research 543 passed, 1 skipped, 42 warnings; make check PASS.
+- 'PR #249 exact-head CI 37829827778 completed SUCCESS 9/9.'
+- Final bounded closure main merge 1e056ecc09f1478af80cbe11b3f96e57c15b49b1.
+resume_instruction: APR-02-BOUNDED-CLOSURE-001 fully completed; do not repeat. Read
+  docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md. Next distinct outcome is APR-03
+  Production Runtime (requires separate canonical task admission). Gemma/Qwen model
+  benchmarking is explicitly deferred to APR-07.
+execution:
+  branch: chore/apr02-bounded-closure
+  base_commit: c4e75ce901cb6fce1de08a19f2d74b7f0831503b

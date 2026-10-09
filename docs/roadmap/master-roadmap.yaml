@@ -203,36 +203,49 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Fast cited result is deterministic, evidence-bound, explicit about unknowns and benchmarked for latency/quality.'
     - id: APR-02-223FZ-BREADTH
       priority: P0
-      state: ready
+      state: done
+      completion_scope: bounded_frozen_real_source_223fz_2026_10_08
+      completion_evidence: docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md
+      universal_223fz_coverage: not_claimed
+      local_model_comparison: deferred_to_APR_07
       legacy_mapping: [ARV-006]
       outcome: 'Broaden 223-FZ beyond the existing intake/decision v1 only from measured corpus/procedure gaps.'
       why_now: 'Material Russian-market coverage expansion.'
       done_gate: 'Priority 223-FZ procedures/document sets in the frozen corpus ingest and analyze with regime-specific evidence and fail-closed unsupported semantics.'
     - id: APR-03-PRODUCTION-RUNTIME
       priority: P0
-      state: planned
+      state: implementation_pr_open
       legacy_mapping: [ARV-008, ARV-011, ARV-012, ARV-013, ARV-014, ARV-058]
       post_snapshot_mapping: [ARV-076]
       outcome: 'One production runtime epic: Russian VPS, stable ingress, workers/resumability, backup/restore and operational access.'
       why_now: 'Converts a strong development system into a dependable commercial service.'
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
-    - id: APR-04-CUSTOMER-ONBOARDING
+    - id: APR-03B-OPERATOR-WORKSPACE
       priority: P0
       state: planned
+      depends_on: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME]
+      legacy_mapping: [ARV-019, ARV-061, ARV-064, ARV-066]
+      outcome: 'Authenticated browser workspace for live EIS number/URL request, status, cited results, report and read-only canonical procurement database.'
+      why_now: 'Owner wants to personally use the product immediately after production runtime, before SaaS expansion.'
+      scope: [request_panel_44fz_223fz, analysis_status, cited_results_and_unknowns, documents_and_report_export, read_only_canonical_database_explorer]
+      done_gate: 'Owner signs in by browser, submits supported live procurement, observes progress, inspects evidence-bound requirements/risks/economics, source documents and report, finds saved procurement/history without terminal/Swagger; no arbitrary SQL, mock-only UI or external consequential actions.'
+    - id: APR-04-CUSTOMER-ONBOARDING
+      priority: P0
+      state: implementation_pr_open_not_merged
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'
       done_gate: 'A new tenant can configure the minimum supplier/company profile and run its first personalized analysis without developer intervention.'
     - id: APR-05-PAID-PILOT-SAAS
       priority: P0
-      state: planned
+      state: implementation_pr_open_not_merged
       legacy_mapping: [ARV-041, ARV-043, ARV-054, ARV-068, ARV-038, ARV-039, ARV-040]
       outcome: 'Paid-pilot readiness: tenant/roles/isolation, entitlement/usage limits, pricing/package surface, legal gate, product-first acquisition/metrics.'
       why_now: 'Direct path from working product to paid customer.'
       done_gate: 'A controlled paid pilot can be onboarded, metered, packaged and supported with legal/HUMAN gates explicit and no bespoke operator intervention for routine setup.'
     - id: APR-06-COMMERCIAL-ACCEPTANCE
       priority: P0
-      state: planned
+      state: implementation_pr_open_not_merged
       legacy_mapping: [ARV-005, ARV-072]
       outcome: '20-30 real procurements through the full workflow with measured operator usefulness, not just technical completion.'
       why_now: 'Validates that the system saves time and improves decisions before broad feature expansion.'
@@ -240,7 +253,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Frozen acceptance report demonstrates agreed thresholds and records every confirmed failure as a regression.'
     - id: APR-07-QUALITY-MODEL-EVAL
       priority: P0
-      state: continuous
+      state: continuous_pr_open_not_merged
       legacy_mapping: [ARV-010, ARV-039, ARV-067, ARV-072]
       outcome: 'Product SLO/quality dashboard plus Russian procurement benchmark for LLM/VLM/OCR/embeddings and vertical extraction.'
       why_now: 'Prevents cosmetic model churn and makes quality decisions evidence-based.'
@@ -333,7 +346,7 @@ current_status_summary:
     state: essential_v1_complete_forecast_deferred
   active_product_roadmap:
     state: active
-    outcome_count: 10
+    outcome_count: 11
     next_outcome: APR-02-223FZ-BREADTH
     next_queue_item: null
     principle: 'Historical open items are not automatic obligations; trigger backlog requires evidence before admission.'

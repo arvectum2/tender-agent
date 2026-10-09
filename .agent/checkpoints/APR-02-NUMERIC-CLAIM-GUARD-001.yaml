@@ -1,0 +1,36 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-02-NUMERIC-CLAIM-GUARD-001
+status: completed
+goal: Catch explicitly sourced wrong quantity numbers in local LLM prose only when
+  exact chunk and unique comparable source amount are unambiguous.
+definition_of_done:
+- No cross-lot or cross-revision numeric comparisons without evidence; safe unknown
+  on ambiguities.
+- Guard rejects 150 tonnes cited to chunk containing only 140 tonnes, accepts 140,
+  and does not reject ambiguous/uncited unrelated facts.
+- Tests and make check; exact-head GitHub CI and Owner-gated PR.
+completed:
+- 'PR #245 merged e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0, 9/9 CI successful.'
+- Existing source-ID, truncated-output and explicit numeric-absence guards shared
+  for 44/223.
+- Added narrow exact source-chunk quantity claim comparison (metric tonnes only) to
+  shared LLM guard; mismatch triggers existing retrieval-only fallback, no value substitution.
+- Nine new focused tests include 150 versus 140 metric tonnes, matching quantity,
+  ambiguous multiple lot-style values, unrelated units/references, and full integration.
+- Full Tender Research 542 passed, one skipped, 42 warnings; make check PASS; report
+  documents precise scope and unknowns.
+- '#247 exact-head CI successful, Owner-directed squash merged as c4e75ce901cb6fce1de08a19f2d74b7f0831503b;
+  checkpoint reconciled by APR-02 bounded closure.'
+current: Completed and merged into main
+pending: []
+last_verified_commit: c4e75ce901cb6fce1de08a19f2d74b7f0831503b
+test_results:
+- 542 passed, 1 skipped, 42 warnings
+- make check PASS
+- 9 new numeric-claim guard tests passed
+resume_instruction: This bounded task is completed; no replay. See docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md;
+  broad ARV-006 and APR-07 model evaluation remain separate.
+execution:
+  branch: feature/apr02-numeric-claim-check
+  base_commit: e4476471dc3dd7d33367a91ddf8f5f2ef5c301b0

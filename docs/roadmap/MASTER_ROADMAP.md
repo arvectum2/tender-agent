@@ -2,19 +2,20 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
-## Оптимизированная Active Product Roadmap — 2026-10-08
+## Оптимизированная Active Product Roadmap — обновлено 2026-10-09
 
 Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
 
 ### P0 — довести продукт до коммерчески сильного состояния
 
 - [x] **APR-01 / ARV-061 — Fast cited pre-analysis — DONE (PR #225, CI 9/9).** Номер/URL закупки → быстрый предмет, сроки, ключевые требования, blockers/unknowns, fit и цитаты. Reuse существующих facts/evidence/Decision Core; без второго analysis engine.
-- [ ] **APR-02 / ARV-006 — 223-ФЗ breadth — NEXT (not yet admitted).** Расширять только по замороженному корпусу реальных пробелов процедур/документов; неподдержанное остаётся UNKNOWN/NEEDS_REVIEW.
-- [ ] **APR-03 — Production Runtime Epic.** Объединяет ARV-008/011/012/013/014/058 + ARV-076: российский VPS, стабильный ingress, workers/resume, backup/restore, observability. Не дробить на отдельные продуктовые проекты.
-- [ ] **APR-04 — Customer Onboarding.** На базе ARV-015 + ARV-064: реквизиты, документы, лицензии/SRO, регионы, категории, НМЦК, маржа/риски и reusable evidence в одном onboarding flow.
-- [ ] **APR-05 — Paid Pilot & SaaS Foundation.** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
-- [ ] **APR-06 — Commercial Acceptance Gate.** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.
-- [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation.** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
+- [x] **APR-02 / ARV-006 — 223-ФЗ breadth — DONE (bounded frozen corpus, 2026-10-08).** Реальный RI223 SOAP/архивы, многолотовость, редакции, разъяснения, документы и цитируемый анализ с защитой UNKNOWN/NEEDS_REVIEW. Документ приёмки: docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md. НЕ означает универсальной поддержки 223-ФЗ или завершения всего исторического ARV-006; сравнение моделей отложено до APR-07.
+- [ ] **APR-03 — Production Runtime Epic (PR #251 открыт, не слит).** Объединяет ARV-008/011/012/013/014/058 + ARV-076: российский VPS, стабильный ingress, workers/resume, backup/restore, observability. Не дробить на отдельные продуктовые проекты.
+- [ ] **APR-03B — Operator Workspace — после APR-03, перед APR-04.** Реальный веб-кабинет: ввод номера/URL ЕИС (44-ФЗ/223-ФЗ), прогресс анализа, результат с доказательствами и документами, риски/экономика, экспорт отчёта; просмотр сохранённых закупок, запусков и файлов (read-only). Приёмка: владелец работает без терминала/Swagger, mock-only UI недостаточно.
+- [ ] **APR-04 — Customer Onboarding (PR #252 открыт, не слит).** На базе ARV-015 + ARV-064: реквизиты, документы, лицензии/SRO, регионы, категории, НМЦК, маржа/риски и reusable evidence в одном onboarding flow.
+- [ ] **APR-05 — Paid Pilot & SaaS Foundation (PR #253 открыт, не слит).** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
+- [ ] **APR-06 — Commercial Acceptance Gate (PR #254 открыт, не слит).** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.
+- [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation (PR #255 открыт, не слит).** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
 
 ### P1/P2 — после P0 или при подтверждённом спросе
 
