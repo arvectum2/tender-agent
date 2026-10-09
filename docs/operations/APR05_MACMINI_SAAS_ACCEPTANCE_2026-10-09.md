@@ -80,5 +80,11 @@ this local pilot before any real tenant is marked verified.
 
 ## Validation
 
-Evidence for tests, Alembic migration, live local HTTP smoke, real read-only
-EIS SOAP, restart and CI is appended when those stages complete.
+- Local Mac mini isolated PostgreSQL 16 migrated to 106_add_saas_foundation; nine SaaS tables present. Independent test schema 105 -> 106 -> 105 -> 106 passed.
+- Three full real HTTP synthetic two-tenant E2E rounds passed (last companies CUS-2026-000008 and CUS-2026-000009), including role-based separate Bearer access, legal gates, cross-tenant PDF/tender denial, metering, revocation and product metrics.
+- Live read-only EIS SOAP procurement 0372200172326000015: six documents downloaded, 6/6 text extraction flags true, zero extraction warnings. The report is completed_with_warnings/deterministic fallback, not an autonomous bid decision.
+- Final locally deployed SaaS UI image dcc530d01a509ac9703b190db7b83c86f43f5191 served only 127.0.0.1:18082. PostgreSQL/Redis/API healthy.
+- First CI quality failed from ORM registry import auto-fix; repaired by ac0de309. Latest GitHub Actions run 37851685586 succeeded in all nine jobs.
+- Full local pytest with PostgreSQL 16 client: **3297 passed, 238 skipped, 329 warnings**, ~133s. With default Homebrew PostgreSQL 18 client one R9 recovery test failed due to pg_restore version mismatch; the exact test was rerun successfully with PG16 toolchain. Both operator and SaaS JS syntax tests passed.
+- Not validated/authorized: real payments, public customer contracts/prices, full externally backed-up production VPS, public Internet tenant launch.
+
