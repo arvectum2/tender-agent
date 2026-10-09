@@ -280,6 +280,13 @@ active_product_roadmap_2026_10_08:
     - id: APR-07-QUALITY-MODEL-EVAL
       priority: P0
       state: continuous
+      bounded_apr07_quality_snapshot: done_2026_10_09
+      quality_snapshot: docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json
+      operator_runbook: docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
+      human_gold_label_corpus: blocked_pending_independent_review
+      procurement_model_promotion: forbidden_until_frozen_benchmark
+      data_platform_model_downloads: owned_by_separate_data_platform_workflow_not_tender_agent
+      prospective_production_slo_gate: not_yet_measured
       legacy_mapping: [ARV-010, ARV-039, ARV-067, ARV-072]
       outcome: 'Product SLO/quality dashboard plus Russian procurement benchmark for LLM/VLM/OCR/embeddings and vertical extraction.'
       why_now: 'Prevents cosmetic model churn and makes quality decisions evidence-based.'
