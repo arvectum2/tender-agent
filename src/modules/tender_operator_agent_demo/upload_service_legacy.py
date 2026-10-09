@@ -24,6 +24,15 @@ from src.modules.supplier_search.internet_supplier_search import SupplierSearchO
 from src.modules.tender_operator_agent_demo.contract_term_facts import (
     extract_contract_term_facts,
 )
+from src.modules.tender_operator_agent_demo.document_source_projection import (
+    project_document_source,
+)
+from src.modules.tender_operator_agent_demo.operator_llm_report_projection import (
+    candidate_requirement_rows,
+    candidate_rfq_sections,
+    candidate_risks,
+    candidate_supplier_questions,
+)
 from src.modules.tender_operator_agent_demo.event_log import (
     append_tender_demo_event,
     load_tender_demo_events,
@@ -72,6 +81,7 @@ from src.shared.document_processing import (
     UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
 )
 from src.shared.document_processing import (
+    ProcessedDocument,
     process_document_bytes,
 )
 from src.tender_research.rag.presets import tender_processing_collection_id
@@ -632,12 +642,13 @@ def _derive_role_hint(filename: str) -> str | None:
     return detected if detected != "supporting" else None
 
 
-def _extract_document_text(
+def _extract_document_text_with_provenance(
     file_name: str,
     content: bytes,
-) -> tuple[str | None, list[str], str]:
+) -> tuple[str | None, list[str], str, ProcessedDocument | None]:
     ext = Path(file_name).suffix.lower()
     warnings: list[str] = []
+    processed: ProcessedDocument | None = None
     try:
         processed = process_document_bytes(
             content=content,
@@ -656,7 +667,16 @@ def _extract_document_text(
         warnings.append(f"Извлечение текста для {ext} пока не поддерживается.")
     elif status != DOC_EXTRACTED_STATUS and not normalized_text:
         warnings.append(f"Не удалось извлечь текст из {Path(file_name).name}.")
-    return normalized_text, warnings, status
+    return normalized_text, warnings, status, processed
+
+
+def _extract_document_text(
+    file_name: str,
+    content: bytes,
+) -> tuple[str | None, list[str], str]:
+    """Preserve original legacy 3-value result for ZIP and external callers."""
+    text, warnings, status, _processed = _extract_document_text_with_provenance(file_name, content)
+    return text, warnings, status
 
 
 def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocument]:
@@ -763,7 +783,16 @@ def _collect_documents(run_id: str, metadata: dict[str, Any]) -> list[AnalyzedDo
             continue
 
         raw = stored_path.read_bytes()
-        text, warnings, extraction_status = _extract_document_text(item["stored_name"], raw)
+        text, warnings, extraction_status, processed = _extract_document_text_with_provenance(
+            item["stored_name"], raw
+        )
+        evidence_chunks: list[dict[str, Any]] | None = None
+        if processed is not None:
+            platform_source, evidence_chunks = project_document_source(
+                processed, file_id=item["file_id"]
+            )
+            item["data_platform_source"] = platform_source
+            item["evidence_chunks"] = evidence_chunks
         document_kind = str(item.get("document_kind") or "").lower()
         role_from_kind = {
             "contract_draft": "contract_draft",
@@ -788,6 +817,7 @@ def _collect_documents(run_id: str, metadata: dict[str, Any]) -> list[AnalyzedDo
                 source="upload",
                 file_id=item["file_id"],
                 raw_content=raw,
+                evidence_chunks=evidence_chunks,
             )
         )
     return documents
@@ -3571,6 +3601,7 @@ def _build_output_payloads(
     core_complete: bool,
     quote_inputs_present: bool,
 ) -> dict[str, dict[str, Any]]:
+    rfq_draft = requirements.get("_unverified_llm_rfq_draft")
     technical_spec_text = _collect_role_text(documents, "technical_spec")
     contract_draft_text = _collect_role_text(documents, "contract_draft")
     contract_documents = [doc for doc in documents if doc.role == "contract_draft"]
@@ -3589,7 +3620,9 @@ def _build_output_payloads(
         procurement_kind = "goods"
     grounded_requirement_rows = _build_document_grounded_requirements(documents, procurement_kind)
     requirement_rows = (
-        []
+        candidate_requirement_rows(requirements)
+        if analysis_mode == "llm_tender_operator_provider"
+        else []
         if procurement_kind in {"services", "rental", "works", "unresolved"}
         else grounded_requirement_rows
         if procurement_kind == "goods"
@@ -3773,6 +3806,8 @@ def _build_output_payloads(
         "questions": (
             _normalize_supplier_questions(supplier_questions, procurement_kind)
             if claim_bound_mode
+            else candidate_supplier_questions(supplier_questions)
+            if analysis_mode == "llm_tender_operator_provider" and supplier_questions
             else grounded_questions if grounded_questions else _normalize_supplier_questions(supplier_questions, procurement_kind)
         ),
         "manual_checks": [
@@ -3789,6 +3824,13 @@ def _build_output_payloads(
             "sections": _build_document_grounded_rfq_sections(procurement_kind),
         }
     )
+    if analysis_mode == "llm_tender_operator_provider" and rfq_draft:
+        draft_sections = candidate_rfq_sections(rfq_draft)
+        if draft_sections:
+            rfq_payload["sections"] = draft_sections
+            subject = rfq_draft.get("email_subject")
+            if isinstance(subject, str) and subject.strip():
+                rfq_payload["rfq_title"] = "[Черновик LLM — проверить] " + subject.strip()[:200]
     rfq_payload["supplier_targets"] = [item.get("supplier_label", "Поставщик") for item in (tkp_comparison or {}).get("suppliers", [])] or [
         "Поставщик 1",
         "Поставщик 2",
@@ -3938,7 +3980,11 @@ def _build_output_payloads(
         }
 
     grounded_risks = _build_document_grounded_risks(procurement_kind, documents, contract_draft_text)
-    risk_candidates = calibrated_risks if claim_bound_mode else (grounded_risks or calibrated_risks)
+    risk_candidates = (
+        candidate_risks(calibrated_risks)
+        if analysis_mode == "llm_tender_operator_provider" and calibrated_risks
+        else calibrated_risks if claim_bound_mode else (grounded_risks or calibrated_risks)
+    )
 
     def normalized_risk_evidence_locators(value: Any) -> list[dict[str, str]]:
         """Pass only safe, customer-readable report locators downstream."""
@@ -3969,14 +4015,24 @@ def _build_output_payloads(
         "risks": [
             {
                 "risk": _translate_user_text(risk.get("clause", "Ограничение")),
-                "severity": "needs_review" if risk.get("classification") == "deal_breaker_candidate" else "warning",
+                "severity": (
+                    "needs_review"
+                    if risk.get("source_status") == "unverified_llm"
+                    or risk.get("classification") == "deal_breaker_candidate"
+                    else "warning"
+                ),
                 "impact": _translate_user_text(risk.get("impact", "")),
                 "mitigation": _translate_user_text(risk.get("mitigation", "")),
                 "risk_id": risk.get("risk_id"),
                 "category": risk.get("category", "unknown"),
                 "evidence_ids": [value for value in str(risk.get("evidence_ids") or "").split(", ") if value],
                 "evidence_locators": normalized_risk_evidence_locators(risk.get("evidence_locators")),
-                "status": "blocker" if risk.get("classification") == "deal_breaker_candidate" else "requires_review",
+                "status": (
+                    "requires_review" if risk.get("source_status") == "unverified_llm"
+                    else "blocker" if risk.get("classification") == "deal_breaker_candidate"
+                    else "requires_review"
+                ),
+                "source_status": risk.get("source_status", "legacy_unverified"),
             }
             for risk in risk_candidates
         ]
@@ -5608,6 +5664,11 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
         metadata["analysis_mode"] = analysis_mode
         metadata["analysis_status"] = "completed"
 
+        # Preserve the established public/patch-wrapper function signature.
+        # Validated-schema LLM RFQ remains a review-only candidate, never an
+        # authenticated factual source or an external communication.
+        if analysis_mode == "llm_tender_operator_provider" and isinstance(rfq_draft, dict):
+            requirements = {**requirements, "_unverified_llm_rfq_draft": rfq_draft}
         outputs = _build_output_payloads(
             metadata=metadata,
             documents=documents,
