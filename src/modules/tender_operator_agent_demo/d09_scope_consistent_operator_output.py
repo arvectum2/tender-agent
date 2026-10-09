@@ -85,7 +85,16 @@ def _bind_operator_scope(outputs: dict[str, Any], *, metadata: dict[str, Any], d
     # applicable procurement facts. Keep the payload shape, but fail closed
     # with neutral scope-aware section headings.
     rfq_draft = outputs.get("rfq_draft")
-    if isinstance(rfq_draft, dict):
+    if isinstance(rfq_draft, dict) and not (
+        outputs.get("trace", {}).get("analysis_mode") == "llm_tender_operator_provider"
+        or (
+            isinstance(rfq_draft.get("sections"), list)
+            and any(
+                isinstance(section, str) and section.startswith("[Черновик LLM — согласовать]")
+                for section in rfq_draft["sections"]
+            )
+        )
+    ):
         rfq_draft["sections"] = _neutral_rfq_sections(primary)
 
     trace = outputs.get("trace")
