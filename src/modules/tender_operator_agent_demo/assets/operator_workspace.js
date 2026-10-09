@@ -184,9 +184,13 @@
     for (const value of values) list.append(node('li','',typeof value === 'string' ? value : JSON.stringify(value)));
     container.append(list);
   };
+  const validCitations = values => Array.isArray(values)
+    ? values.filter(c => c && c.source_ref && c.document && c.locator)
+    : [];
   function renderCitations(container, citations) {
-    if (!Array.isArray(citations) || !citations.length) return paragraph(container, 'UNKNOWN · Нет подтверждённой цитаты', 'unknown');
-    for (const c of citations.slice(0,8)) {
+    const trusted = validCitations(citations);
+    if (!trusted.length) return paragraph(container, 'UNKNOWN · Нет подтверждённой цитаты', 'unknown');
+    for (const c of trusted.slice(0,8)) {
       const text = [c.document,c.locator,c.excerpt].filter(Boolean).join(' · ');
       paragraph(container, 'Источник: ' + text, 'citation');
     }
@@ -204,7 +208,7 @@
       const f = facts[field];
       if (!f || typeof f !== 'object') continue;
       const block = node('div','evidence-item');
-      const verified = f.status === 'KNOWN' && Array.isArray(f.evidence) && f.evidence.length;
+      const verified = f.status === 'KNOWN' && validCitations(f.evidence).length > 0;
       block.append(node('strong','',field + ' · ' + (verified ? String(f.value) : 'UNKNOWN')));
       renderCitations(block, verified ? f.evidence : []);
       section.append(block);
