@@ -1,12 +1,13 @@
 """Source-identity projection from Data Platform to Tender Agent file records.
 
 Stores no extracted raw content and never invents OCR/PDF page numbers. Chunk
-offsets are in UNTRIMMED Data Platform extracted-text coordinate space; the
-separate normalized text saved by the legacy operator may trim whitespace.
+offsets are in Data Platform NORMALIZED text coordinates (not the original
+extracted text or byte/page coordinates). No raw chunk texts are persisted.
 """
 
 from __future__ import annotations
 
+import hashlib
 from typing import Any
 
 from src.shared.document_processing import ProcessedDocument
@@ -29,6 +30,8 @@ def project_document_source(
             or chunk.char_start < 0
             or chunk.char_end < chunk.char_start
             or chunk.char_end > len(original)
+            or chunk.char_end - chunk.char_start < len(chunk.text)
+            or chunk.text_hash != hashlib.sha256(chunk.text.encode("utf-8")).hexdigest()
         ):
             continue
         chunks.append({
@@ -50,7 +53,7 @@ def project_document_source(
         "extraction_status": processed.extraction_status,
         "source_chunk_count": len(processed.chunks),
         "attributable_chunk_count": len(chunks),
-        "offset_space": "data_platform_extracted_text_untrimmed",
+        "offset_space": "data_platform_normalized_text",
         "normalized_text_leading_trim_chars": leading_trim,
         "normalized_text_trailing_trim_chars": trailing_trim,
     }

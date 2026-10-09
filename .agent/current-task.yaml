@@ -37,7 +37,7 @@ completed:
   - 'Introduced deterministic bounded context selection across long normalized documents, prioritizes procurement terms and retains first/middle/last with accurate normalized char ranges, no invented original PDF or XML citations.'
   - 'Eliminated remaining Docker preview overlay drift: source-locked private Dockerfile now recreates /app/src and /app/scripts from one exact commit, verifies every source byte, runs as non-root app.'
   - 'PRs #264-266 merged. Isolated full original EIS document LLM pipeline passed with 3 verified XML facts, no stale subject, 10 report sections (327 sec). New data platform per-file provenance and unverified LLM report candidates preserve operator value without fake claims.'
-  - 'R5 provenance gate first slice: only an explicit literal model quote whose exact text occurs in one real Data Platform chunk with matching file/resource/document/chunk IDs and untrimmed offsets can acquire candidate locator. Absence, fuzzy paraphrases, ambiguous duplicates and invalid offsets fail closed. No implication of verified legal interpretation.'
+  - 'R5 provenance gate first slice: only an explicit literal model quote whose exact text occurs in one real Data Platform chunk with matching file/resource/document/chunk IDs and hashed DP chunk-local offsets can acquire a candidate locator. Absence, fuzzy paraphrases, ambiguous duplicates and invalid offsets fail closed. No implication of verified legal interpretation.'
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
@@ -48,7 +48,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '8fcda091ded8540b159f0efcac453fb581de53b0'
+last_verified_commit: 'd23c4c00e889694cc3e4368b30a8155802741339'
 test_results:
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
@@ -68,7 +68,7 @@ test_results:
   - 'R5 exact quote binding: 8 new happy/fail-closed unit cases PASS, Ruff PASS.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in progress. TA PR #267 merged, #268 and #269 are pending CI. The R5 worktree tdp-eis-corpus-r5-20261009 contains a read-only baseline of 29 unique EIS procurements from 46 saved runs: only 10 best runs have originals, extracted text and report together; 11 have reports. Publish this script and tests, then evidence-bind real model claims and obtain owner acceptance across 20 or more true golden cases. Do not alter the 18082 or 18083 pilots. Disabled watchdog stays disabled.'
+resume_instruction: 'TDP-REFACTOR-20261009 is in_progress; TA #261-269 and DP #86 merged, TA #270 corpus audit under CI. Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-chunk-offset-contract-r5-20261009 fixes a real offset-space bug: DP normalizes whitespace before chunking, so metadata is labeled data_platform_normalized_text and quote-binding requires per-chunk text with true SHA256 and chunk-local coordinates. Run 35 focused tests and full CI via stacked PR, then continue real chunk retrieval, 20-30 truth-reviewed EIS cases and owner preview acceptance. Do not change old 18082/private 18083 without owner gate; owner-disabled watchdog remains off.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
