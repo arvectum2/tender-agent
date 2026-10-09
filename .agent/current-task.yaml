@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-03B-UNIFIED-FLOW-20261009
-status: in_progress
+status: blocked
 authority: OWNER_DIRECTIVE
 goal: 'Fix owner-reported operator workspace regression: one canonical browser UI with existing EIS keyword search and real EIS-to-documents-to-analysis outcome.'
 definition_of_done:
@@ -20,23 +20,26 @@ completed:
   - '109 relevant tests passed with 10 known skips; JavaScript browser simulation passed for full and no-files workflows.'
   - 'Real 44-FZ six physically stored original documents, extracted 6/6, ten report sections and 3 XML-cited factual fields.'
   - 'Real 223-FZ public search and two downloaded files, partial analysis conservatively needs_review.'
+  - 'PR #259 exact-head 1e81a5f49350e4f9a8afb487688e556f548c81c1 passed full GitHub CI and was merged as e330418bf430c6b87f65bdbf285d0377c1f8a620.'
+  - 'Private original workspace port 18083 promoted to unified implementation, authenticated HTTP 200 and protected 401, old /pilot/tender-agent also same HTML; original port 18082 healthy.'
 
-current: 'Rebuild final private preview, verify exact new code, open PR and pass CI; owner must then retest single browser workflow.'
+current: 'Implementation merged in main as PR #259; private Mac mini preview updated and healthy; owner browser acceptance and evaluation of broader analytical quality remain open.'
 pending:
-  - 'Rebuild isolated private preview and validate final UI plus strict parser.'
-  - 'Open combined PR based on main (supersedes broken PR #258), obtain exact-head CI, merge when permitted.'
-  - 'After code merge, update private operator preview and ask owner to confirm browser journey.'
-  - 'Exact-head CI, integrate compatible with PR #258, update roadmap/acceptance evidence.'
-last_verified_commit: '1f8482412c89ad57155c019626c946b49a0a19cc'
+  - 'OWNER: reload http://127.0.0.1:18083/pilot/tender-agent/workspace in Mac mini browser; test keyword search, official 44/223-FZ card selection, original file links, one-click analyze and PDF/DOCX; provide acceptance or actionable UX defects.'
+  - 'QUALITY: verified XML citations exist for subject, deadline and NMCK, but other risks/economic/legal interpretation remains human-reviewed; do not claim autonomous bid readiness.'
+  - 'After owner browser sign-off, set APR-03B completed and continue APR-04 customer onboarding using existing PR #252; VPS remains deferred.'
+last_verified_commit: 'e330418bf430c6b87f65bdbf285d0377c1f8a620'
 test_results:
   - '109 focused tests PASS, 10 SKIP; fixed missing parser import responsible for 16 earlier failures.'
   - 'JS fake-browser E2E PASS: keyword card, real persisted files auto analysis/report, missing files fail closed.'
   - 'Live read-only EIS search PASS: 44-FZ and 223-FZ both returned real cards.'
   - '44-FZ 0372200172326000015 six real persisted source files, 6/6 extracted, ten report sections, 3 source-verified XML facts.'
   - '223-FZ 32616450723 two original files and needs_review partial analysis.'
+  - 'PR #259 full exact-head GitHub Actions CI all green, merge e330418bf430c6b87f65bdbf285d0377c1f8a620.'
+  - 'Authenticated private preview 18083 healthy; matching HTML for old and new routes, report+3 verified XML source facts returned HTTP 200; no auth HTTP 401.'
 
-resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr03b-unified-workspace-20261009. User wants original keyword search restored in ONE operator UI and real EIS files analyzed automatically, not a bare manifest. Base stacked on PR #258 source-grounded evidence. Implement UI+tests, validate real EIS with preview isolated from live 18082/18083, and merge when CI and authority permit.'
+resume_instruction: 'PR #259 is merged, and private Mac mini preview port 18083 already runs the unified UI. Owner should refresh that page and test real keyword search -> select a 44/223-FZ EIS result -> automatic document download and analysis -> original file links and PDF/DOCX. Record feedback and only mark APR-03B completed after browser approval and source integrity review. Next APR-04 PR #252; no VPS.'
 execution:
-  branch: fix/apr03b-unified-workspace-e2e-20261009
+  branch: null
   manual_override: false
   lease_until: null
