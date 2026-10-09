@@ -1,0 +1,288 @@
+{
+  "schema_version": "apr06-corpus-v1",
+  "created_at": "2026-10-09T08:05:00+03:00",
+  "purpose": "Evidence-first APR-06 intake candidate pool, NOT a verified/frozen acceptance corpus.",
+  "selection_bias_note": "Purposefully IT/web-heavy 44/223-FZ cross-regional candidate pool; operator must assess broader representativeness, near-duplicate notices and unsupported procedures before freeze.",
+  "cases": [
+    {
+      "reg_number": "0372200172326000015",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "Создание сайта Музея хлеба",
+      "listing_source_url": "https://zakupki.kontur.ru/category/sozdanie-internet-sajtov-portalov-web-dizajn",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0137200001226007700",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "Доработка туристического сайта «Калужское гостеприимство»",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0158300034526000388",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "Разработка веб-сайта для МБУ Аксайского района",
+      "listing_source_url": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0377100005726000128",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Веб-сайт на базе 1С-Битрикс, санаторий «Чемал»",
+      "listing_source_url": "https://www.b2b-center.ru/search/respublika-altay/razrabotka-sajtov/",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0376300000126000193",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "Разработка и сопровождение туристического сайта Майкопа",
+      "listing_source_url": "https://www.b2b-center.ru/search/respublika-adygeya/razrabotka-sajtov/",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0169300008226000225",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "AR-экскурсия с интеграцией в сайт Троицка",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/chelyabinskaya-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0169300008226000223",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "Мультимедийный контент для туристического портала Троицка",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/chelyabinskaya-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0169300003326000181",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Сопровождение официального сайта Златоуста",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/chelyabinskaya-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0162300005826000156",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Личный кабинет и ЕСИА на сайте Верхней Пышмы",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/verhnjaja-pyshma",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0348100024426000039",
+      "law": "44fz",
+      "procedure": "Открытый конкурс",
+      "subject": "Развитие платформы типовых сайтов ЦЗН Московской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0348100024426000052",
+      "law": "44fz",
+      "procedure": "Запрос цен",
+      "subject": "Модернизация платформы сайтов ЦЗН Московской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0148300050426000047",
+      "law": "44fz",
+      "procedure": "Запрос цен",
+      "subject": "Поддержка и модернизация сайта Лосино-Петровского",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0148200000526000028",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Техническая поддержка сайта Московской областной Думы",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0149200002326001555",
+      "law": "44fz",
+      "procedure": "Запрос котировок",
+      "subject": "Инвестиционный портал и интерактивная карта Мурманской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0349500000226000003",
+      "law": "44fz",
+      "procedure": "Запрос цен",
+      "subject": "Сервисы инвестиционного портала Мурманской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0349100009326000005",
+      "law": "44fz",
+      "procedure": "Открытый конкурс",
+      "subject": "Поддержка и размещение сайта Роспотребнадзора по Мурманской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0127100008626000013",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Поддержка сайта Роспотребнадзора по Брянской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/briansk",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0318200087026000163",
+      "law": "44fz",
+      "procedure": "Запрос цен",
+      "subject": "Модернизация сайта городского спорта Краснодарского края",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/saratovskaya-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0360600005326000018",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "VR-контент для экспозиции краеведческого музея",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/saratovskaya-oblast",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "0895100000126000897",
+      "law": "44fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Развитие системы «Ведомственный портал Федерального казначейства»",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/razrabotka-programmnogo-obespecheniya/dubna",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616197376",
+      "law": "223fz",
+      "procedure": "Запрос предложений",
+      "subject": "Разработка и модернизация сайта заказчика",
+      "listing_source_url": "https://www.b2b-center.ru/search/pskovskaya-oblast/razrabotka-sajtov/",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616263956",
+      "law": "223fz",
+      "procedure": "Электронный аукцион",
+      "subject": "Разработка сайта АО «Инвест Проект»",
+      "listing_source_url": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616416057",
+      "law": "223fz",
+      "procedure": "Единственный поставщик",
+      "subject": "Разработка интернет-проекта сайта Плёсского музея",
+      "listing_source_url": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616412768",
+      "law": "223fz",
+      "procedure": "Единственный поставщик",
+      "subject": "Сайт Бурятского государственного драматического театра",
+      "listing_source_url": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616401070",
+      "law": "223fz",
+      "procedure": "Запрос предложений",
+      "subject": "Официальный сайт яхтенного порта",
+      "listing_source_url": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616369437",
+      "law": "223fz",
+      "procedure": "Закупка",
+      "subject": "Официальный сайт молодёжного центра Черняховска",
+      "listing_source_url": "https://synapsenet.ru/search/populyarnie-zaprosi/sozdanie-sajta",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32616045143",
+      "law": "223fz",
+      "procedure": "Закупка иного способа",
+      "subject": "Информационный сайт о колледжах Мурманской области",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "verification": {
+        "state": "candidate"
+      }
+    },
+    {
+      "reg_number": "32615850735",
+      "law": "223fz",
+      "procedure": "Закупка иного способа",
+      "subject": "Сайт АО «Мурманский морской рыбный порт»",
+      "listing_source_url": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "verification": {
+        "state": "candidate"
+      }
+    }
+  ]
+}
