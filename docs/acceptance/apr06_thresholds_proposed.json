@@ -1,0 +1,20 @@
+{
+  "schema_version": "apr06-thresholds-v1",
+  "selection_note": "Engineering-only provisional targets. NOT owner-approved. No scored dataset may attain ACCEPTED until attributed owner approval is recorded.",
+  "scope": "28 candidate Russian 44/223-FZ tenders; frozen only after direct EIS verification, operator reviews required",
+  "limits": {
+    "time_to_decision_minutes_p90": 45,
+    "manual_correction_rate": 0.15,
+    "citation_coverage": 0.9,
+    "unknown_rate": 0.35,
+    "missed_blockers": 0,
+    "false_go_no_go": 0,
+    "application_package_rework": 0.25
+  },
+  "approval": {
+    "state": "proposed",
+    "approver": null,
+    "approved_at": null,
+    "decision_reference": null
+  }
+}
