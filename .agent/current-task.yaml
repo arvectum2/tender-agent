@@ -33,9 +33,11 @@ completed:
   - 'Discovered uncontrolled ORM bootstrap regression: controlled LLM failed with NoReferencedTableError before running model; extracted workflow now explicitly imports shared ORM registry before Base.metadata.create_all.'
   - 'Confirmed full controlled local Gemma 4 12B on isolated SQLite with synthetic 44-FZ web-site tender: four of four provider sections validated PASSED in 80.3 seconds, zero runtime failure events.'
   - 'Added clean-process ORM bootstrap regression to prevent broken foreign key registry during LLM startup.'
+  - 'Isolated 44-FZ museum-of-bread real EIS normalized source (limited beginning excerpts) full controlled Gemma LLM: 4/4 sections PASSED, 7 requirements/10 supplier questions/5 risks, 286 seconds, zero error events; factual source coverage still unverified.'
+  - 'Introduced deterministic bounded context selection across long normalized documents, prioritizes procurement terms and retains first/middle/last with accurate normalized char ranges, no invented original PDF or XML citations.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261/#262 DP #86 merged; PR #263 and stacked #264 under CI. Controlled Gemma 4 12B full four-section synthetic E2E PASSED 80.3 sec in disposable SQLite after ORM bootstrap repair; next original EIS documents, benchmark and deployment gates.'
+current: 'TA #261/#262/#263 and DP #86 merged, #264 under CI; R4 real-source limited excerpt Gemma four-section E2E PASS, bounded distributed source context refactor and regression tests in progress; R5 full evidence recall and preview acceptance outstanding.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -54,8 +56,10 @@ test_results:
   - 'R4 controlled LLM compatibility extraction 67 relevant tests PASS; real local Gemma structured-output via product provider 6.89s.'
   - 'R4 actual four-section synthetic local Gemma tender workflow E2E: requirements/supplier_questions/rfq_draft/contract_risk_memo PASSED 80.3 sec; isolated SQLite, no production mutations.'
   - 'R4 isolated subprocess ORM metadata bootstrap regression PASS.'
+  - 'R4 real EIS beginning-only excerpts: 4/4 Gemma output sections PASSED after 286 seconds; 7 requirements, 10 questions, 5 risks; not independently source-validated.'
+  - 'R4 distributed long-document bounded excerpt + actual operator workflow contract tests 12 PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #261/#262 and DP #86 merged. PR #263 diagnostics and stacked #264 controlled workflow extraction under CI. In worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-llm-extract-r4-20261009, isolated controlled Gemma 4 12B passed all 4 validated sections on synthetic tender with temporary SQLite (80.3 sec) after ORM model registry bootstrap fix. Update PR #264, wait exact-head CI, rebase after #263 merge. Next reuse six original EIS files in source-locked private staged build to produce source-backed reports and evaluate unknowns; keep 18082/18083 stable until owner quality gate. R3 remaining legacy and R5 corpus outstanding. Watchdog owner-disabled.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #261/#262/#263 and DP #86 merged, TA #264 under exact-head CI. Branch refactor/tdp-evidence-context-r4-20261009 extracts cross-document bounded snippet selector (first/middle/end, role-specific scores, truthful normalized char offsets), tests 12 passed. Real four-section Gemma test on beginning slices of normalized EIS museum of bread docs produced 7 requirements, 10 questions, 5 risks, 4/4 schema PASS in 286 sec, still unverified facts. Complete CI/merge then source-locked private pilot 18083 staging and persisted report acceptance, retain old pilot 18082. Next R3 legacy breakup, R4 actual LLM provider, R5 20-30 procurement coverage. Keep disabled watchdog untouched.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
