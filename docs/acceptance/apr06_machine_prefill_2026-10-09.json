@@ -1,0 +1,114 @@
+{
+  "cases": [
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0158300034526000388",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009051803-7193b2",
+      "source_files": 14,
+      "source_text_available": 14,
+      "unknowns_count": 3
+    },
+    {
+      "blockers_count": 0,
+      "decision_evidence_refs": 2,
+      "human_reviewed": false,
+      "machine_decision": "NEEDS_REVIEW",
+      "notice": "0372200172326000015",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052409-9c4515",
+      "source_files": 6,
+      "source_text_available": 6,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0377100005726000128",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052412-d5b9df",
+      "source_files": 13,
+      "source_text_available": 13,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0376300000126000193",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052414-56bbe6",
+      "source_files": 8,
+      "source_text_available": 8,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0169300008226000225",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052416-d4b7e8",
+      "source_files": 12,
+      "source_text_available": 12,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0169300008226000223",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052417-622fa8",
+      "source_files": 12,
+      "source_text_available": 12,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0169300003326000181",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052419-3f3f00",
+      "source_files": 16,
+      "source_text_available": 16,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 1,
+      "decision_evidence_refs": 1,
+      "human_reviewed": false,
+      "machine_decision": "NO_GO",
+      "notice": "0162300005826000156",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052421-b81ea5",
+      "source_files": 18,
+      "source_text_available": 18,
+      "unknowns_count": 1
+    },
+    {
+      "blockers_count": 0,
+      "decision_evidence_refs": 2,
+      "human_reviewed": false,
+      "machine_decision": "NEEDS_REVIEW",
+      "notice": "0348100024426000039",
+      "report_sections": 10,
+      "run_id": "toa-run-20261009052425-d20f58",
+      "source_files": 19,
+      "source_text_available": 10,
+      "unknowns_count": 1
+    }
+  ],
+  "important": "Only machine outputs; never judge citation correctness or human GO.",
+  "schema_version": "apr06-machine-prefill-v1"
+}

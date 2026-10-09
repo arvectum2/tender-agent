@@ -1,0 +1,1462 @@
+{
+  "captured_at": "2026-10-09T05:28:02.142263+00:00",
+  "cases": [
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 68768,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "b04c30d70f94f4ac62d201c09d3fbce55da444c5f84f15176d8c546f7ca3ba87"
+        },
+        {
+          "bytes": 69704,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": "notice",
+          "sha256": "55760bde5e848df04d94d6420fee9265774bb01b28a8e3173d8901f1c855d3da"
+        },
+        {
+          "bytes": 77967,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": "notice",
+          "sha256": "6f9bf502c5091b8a7ed1ab878bf4b7cf2dadf24721303ea9571df9269f974d78"
+        },
+        {
+          "bytes": 77850,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": "notice",
+          "sha256": "bedd438de25854b0a4c5c54aaf356f2604591228d86a2616535fb945d3e5b425"
+        },
+        {
+          "bytes": 77850,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": "notice",
+          "sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b"
+        },
+        {
+          "bytes": 18617,
+          "extension": ".docx",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "4c58d851e93bf1fd046904e2253a8c4e31cebf9731bf5cc707d89f5cd17978c1"
+        },
+        {
+          "bytes": 68043,
+          "extension": ".docx",
+          "file_id": "FILE-07",
+          "role_hint": null,
+          "sha256": "b3e80603c1faef3b8b7e8b7042c49d0ad44d29eb56c5c62adaeacf0d5eae8157"
+        },
+        {
+          "bytes": 30108,
+          "extension": ".docx",
+          "file_id": "FILE-08",
+          "role_hint": "technical_spec",
+          "sha256": "cb33334a6d519924c82e26e1f1c404f4161496909aa67a49cc54375327d78e6d"
+        },
+        {
+          "bytes": 20634,
+          "extension": ".docx",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "d174ba9d41dc4dc21732e406fa09e360f6ed9035fcd6eef968ead3ab8a0b3457"
+        },
+        {
+          "bytes": 31535,
+          "extension": ".docx",
+          "file_id": "FILE-10",
+          "role_hint": "technical_spec",
+          "sha256": "7b18abc086bf4ba0c3f1c4f22fd3f04f674e52e3c25ff14346d978a103a5123c"
+        },
+        {
+          "bytes": 24374,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": null,
+          "sha256": "d247616f3a05b0fbf0d23d32a9f79ddabf248983f82625ee58e137fa4b881a0f"
+        },
+        {
+          "bytes": 1411307,
+          "extension": ".docx",
+          "file_id": "FILE-12",
+          "role_hint": null,
+          "sha256": "4b4a93740285af66390711c8e224b83dd0732f6c449e71cc97c4cddbbb654dc0"
+        },
+        {
+          "bytes": 77167,
+          "extension": ".docx",
+          "file_id": "FILE-13",
+          "role_hint": null,
+          "sha256": "8ca942f6a5860a99824fc57a0b017bc251b8e13e85521d187824d2c49a013403"
+        },
+        {
+          "bytes": 37543,
+          "extension": ".docx",
+          "file_id": "FILE-14",
+          "role_hint": "technical_spec",
+          "sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "c57bc87e-6b2a-4e44-98cc-29dfc6e10128",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "b04c30d70f94f4ac62d201c09d3fbce55da444c5f84f15176d8c546f7ca3ba87",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0158300034526000388",
+      "run_id": "toa-run-20261009051803-7193b2",
+      "status": "needs_review"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 102910,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba"
+        },
+        {
+          "bytes": 126976,
+          "extension": ".xls",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "b91ed27947df6065f5ca22697343dda76837758015c77874a03f4e8a121a71c8"
+        },
+        {
+          "bytes": 317440,
+          "extension": ".doc",
+          "file_id": "FILE-03",
+          "role_hint": "contract_draft",
+          "sha256": "9294908cc3aec0bda85c84d41cd19b80fe1e5ddebd1b386b4830466d64eca091"
+        },
+        {
+          "bytes": 53606,
+          "extension": ".docx",
+          "file_id": "FILE-04",
+          "role_hint": "technical_spec",
+          "sha256": "3e029344d179742632d519d4e425e6f8e9f757ce4df23e0419aa4302d4068536"
+        },
+        {
+          "bytes": 27424,
+          "extension": ".docx",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "69f5c122eef4ebb2d4130a9950cc1ba269f2a72b01a049268b014b0d77fd2bed"
+        },
+        {
+          "bytes": 30479,
+          "extension": ".pdf",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "31d97c4fb2aba0827aa09c3302e157464ce1dd946992363043623a04c54fda79"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "4d8dc03d-cdce-4630-8d73-f66197fe4670",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0372200172326000015",
+      "run_id": "toa-run-20261009052409-9c4515",
+      "status": "completed_with_warnings"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 67753,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "ae2ff6b5a68999ffb7c70cc8c762f101ffb70363b0b913e0e5c5475bea2ac26d"
+        },
+        {
+          "bytes": 202082,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "109d434c739f512e777461389481b6ae5bca3920fc36be36336e284e061fa65c"
+        },
+        {
+          "bytes": 2045,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "ff456b7c32cf4a6b6418e1b465e778aa007b8c288ef0d9896b0abc4b1cb614e0"
+        },
+        {
+          "bytes": 64870,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "ff3d1ea7c33b42d0f3b7c7ab79da7f58593fd5ca4635beed872be237efc5eac6"
+        },
+        {
+          "bytes": 11234,
+          "extension": ".docx",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "979a64878f0b026ed6ead69f1bd42ef7591741234cd1a5ae02acdf2d9c863dd8"
+        },
+        {
+          "bytes": 209920,
+          "extension": ".doc",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "a30954f2ba0cfce49c13af94e887174329e6591bb046764de8a4be5e4d693791"
+        },
+        {
+          "bytes": 55873,
+          "extension": ".docx",
+          "file_id": "FILE-07",
+          "role_hint": "technical_spec",
+          "sha256": "816b8f182ce6d99aad80ca2b5af1d16179cd4b9c41248625aa194c399cdfaac6"
+        },
+        {
+          "bytes": 21911,
+          "extension": ".docx",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "14ba7e24a167e756204975a4ac540457f05139ce45bdd7258585211ae674febd"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "479b0b7e-f8a5-4713-9c08-e8688f65d8e6",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "ae2ff6b5a68999ffb7c70cc8c762f101ffb70363b0b913e0e5c5475bea2ac26d",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0137200001226007700",
+      "run_id": "toa-run-20261009052411-91c154",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 66593,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777"
+        },
+        {
+          "bytes": 25788,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "e125844709c309764def9be2f7a57edfe1fccd8d50a798d54b44956b0cf77d51"
+        },
+        {
+          "bytes": 25100,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "772370e90bb44a313c5c8afc6e77089f8938479746188ad17c992f045d137d21"
+        },
+        {
+          "bytes": 29821,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "5f4cc6b21c8eb90c69e5aa1144815cf6cbb21f13a8334177f59d31da41a269e6"
+        },
+        {
+          "bytes": 163923,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "99ae33db4fd603fcd440a4de9a4a7d3aeffbcda7d41112dd286ea10ce9e5c5ed"
+        },
+        {
+          "bytes": 2185,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "1427ed773d1c39462d9733252ac495729b94d486738a65a541fcf3e721483078"
+        },
+        {
+          "bytes": 36409,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": null,
+          "sha256": "e8b777952a7d8ce294b1acd6a5e835fa986d60c1b369334110242714d1118356"
+        },
+        {
+          "bytes": 19271,
+          "extension": ".xlsx",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "d9a8eca5dc1de44d0a42b553a69b41dc51f0b7bedcaee258b4b8d08782a462e0"
+        },
+        {
+          "bytes": 61293,
+          "extension": ".docx",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "b9a8468f35a5d1108463dd500875256f969ae161b937d54943cb748985d7cbb0"
+        },
+        {
+          "bytes": 22352,
+          "extension": ".docx",
+          "file_id": "FILE-10",
+          "role_hint": "technical_spec",
+          "sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd"
+        },
+        {
+          "bytes": 17327,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": null,
+          "sha256": "52ebd5a917425ffa0a76a9394bb621cf6c5426c1bb40a18eb37d47e2ec719407"
+        },
+        {
+          "bytes": 36164,
+          "extension": ".docx",
+          "file_id": "FILE-12",
+          "role_hint": null,
+          "sha256": "9af3552ea7f48a6840bc0d359d9c27a27fc6ac39dc813b2d9982f85127d5b33e"
+        },
+        {
+          "bytes": 48520,
+          "extension": ".docx",
+          "file_id": "FILE-13",
+          "role_hint": null,
+          "sha256": "168693f9a48488879fa41eb346d0a1213934040f18f8f9c9e0234f6ce4250075"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "8a60cc09-3d93-44a3-b358-cf3298677c68",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0377100005726000128",
+      "run_id": "toa-run-20261009052412-d5b9df",
+      "status": "completed_with_warnings"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 72963,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d"
+        },
+        {
+          "bytes": 137898,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "172c145350ea67674bd4ff47dd94c0458d2e297ca9e0b98267e325f3c3344f4a"
+        },
+        {
+          "bytes": 2042,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "333e16dc01d8bbe2b14e9623dfa814616c1dba0d278c21242db517c82de0127a"
+        },
+        {
+          "bytes": 80409,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "223cc91bc458c51e2cdbaa07471cdedb4357fa711957890cdaa2ac0a485aca4b"
+        },
+        {
+          "bytes": 32796,
+          "extension": ".docx",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "e9f53e1feb1560610e7ea3ebf8c4c8e0090376d11a9f0e59fae94f286e8fd495"
+        },
+        {
+          "bytes": 47989,
+          "extension": ".docx",
+          "file_id": "FILE-06",
+          "role_hint": "contract_draft",
+          "sha256": "01710aa6addbea66d1bdff43891fc2f98cfb503dc29b2247455c5338ee6209c8"
+        },
+        {
+          "bytes": 51521,
+          "extension": ".docx",
+          "file_id": "FILE-07",
+          "role_hint": "technical_spec",
+          "sha256": "6a408d91d6148e2c6a88c1b087ed7ad1601910d0ca99d921a73acdbd49e77edc"
+        },
+        {
+          "bytes": 27606,
+          "extension": ".docx",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "d003fc57d678745ac7c17adfdc5a9eab4ba69a4ab21d37ed1433bd030af1df8e"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "6fabc160-52c0-4513-b30c-159cb656e051",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0376300000126000193",
+      "run_id": "toa-run-20261009052414-56bbe6",
+      "status": "needs_review"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 71611,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12"
+        },
+        {
+          "bytes": 112353,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "6463c9879137d7ede71494bf1a8b2b9ef54dad13620514521067b3f01b29b3b8"
+        },
+        {
+          "bytes": 2061,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "a3297ccd895bacb5dcb1780e2c9ca36cf8c06a5815ae32c0772d91e9cba6b0ab"
+        },
+        {
+          "bytes": 17079,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "c8f772fad7dccf134b1565be3a384c730b6c057137ccd96f402092343a88e767"
+        },
+        {
+          "bytes": 20643,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": "notice",
+          "sha256": "f80eaf9d981ba95480f5efc2100d0396c4575f1ac914437b48f05abcb1423f9b"
+        },
+        {
+          "bytes": 2288,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "e58a2356ca3c577ed05d237723621f943c834c0378d99173836f6ba6cbb99529"
+        },
+        {
+          "bytes": 20643,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": "notice",
+          "sha256": "97a1a3bc9fc0a0e1ba257a22519e9efadb80c6f650e7bd72d83553436f2ba0b4"
+        },
+        {
+          "bytes": 2517,
+          "extension": ".xml",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "c29b993317a35467bfcf5cfe8358023a8acd60a8e4e499e1308f16d3c9480f8c"
+        },
+        {
+          "bytes": 20535,
+          "extension": ".xlsx",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "c806a7b82ad10b6acc99b1addbf3925e59fb9db51e626e4752e74b20bedbc19a"
+        },
+        {
+          "bytes": 48010,
+          "extension": ".docx",
+          "file_id": "FILE-10",
+          "role_hint": "contract_draft",
+          "sha256": "704a9fc8ba767767060267795795a3a1960e5a6843c68a50127d538005a0c4e4"
+        },
+        {
+          "bytes": 29587,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": "technical_spec",
+          "sha256": "762a0ea182ac4ae7a7f7ec922c089fe1d44bad096348517b4abf995bce409935"
+        },
+        {
+          "bytes": 71168,
+          "extension": ".doc",
+          "file_id": "FILE-12",
+          "role_hint": null,
+          "sha256": "b57afdb1d1f2a62961ed8880aba7f539356398c3710b7ffb6a06ba41722e68a1"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "3b604457-0c7b-4c97-82d4-2cf766f09183",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0169300008226000225",
+      "run_id": "toa-run-20261009052416-d4b7e8",
+      "status": "completed_with_warnings"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 70815,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6"
+        },
+        {
+          "bytes": 100490,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "e4f9a57cfd10a0db7a0e320b1ce1d3b6304d0dafe4eb6ecf32845aefc0ab72f3"
+        },
+        {
+          "bytes": 2062,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "aabc6ee4f2a398d2df6d654228ffd58cd02cc7b60e0b23873fb3f3385cb074af"
+        },
+        {
+          "bytes": 13679,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "9833412641ac540fee1ef205860db1cdfd4d3b1199391034ff57306785b38234"
+        },
+        {
+          "bytes": 20644,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": "notice",
+          "sha256": "a06c7f93767d022ab991b8b80fc5305ffc6b007096984b1d40408acf17fe3305"
+        },
+        {
+          "bytes": 2288,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "95bf26d1027f6b6fd01eef2fc9037947fc23e4115a9683e337e13d1ce70aeca1"
+        },
+        {
+          "bytes": 20642,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": "notice",
+          "sha256": "30436258f8dcfb6b654b7bc7961272f41922e7e8a6624e4bf835cc678e9248fc"
+        },
+        {
+          "bytes": 2514,
+          "extension": ".xml",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "f829342b79c445c1a8208b710765c85ac1b305055805a71aff1f3aea7f9694c0"
+        },
+        {
+          "bytes": 20553,
+          "extension": ".xlsx",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "eb9fde84ce751787c5f8bd643b1b935c17576a48f26dafe82169ce233fa80ff9"
+        },
+        {
+          "bytes": 45637,
+          "extension": ".docx",
+          "file_id": "FILE-10",
+          "role_hint": "contract_draft",
+          "sha256": "d4793e94b272b1f06a79e75600c2f01481a219799b211ac5ca0b692d14107b02"
+        },
+        {
+          "bytes": 29543,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": "technical_spec",
+          "sha256": "b2af61e3c9ea8bbea3e0cf72f3b7e8f4fb23d1c3e9c2f4bef4c9e9ad955b8f9d"
+        },
+        {
+          "bytes": 71168,
+          "extension": ".doc",
+          "file_id": "FILE-12",
+          "role_hint": null,
+          "sha256": "d63ad34a60c4e5f2599999ea4d60b648c5a3b0a26663eacf7b685f2699b98eba"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "0176bb82-3eae-4968-9650-6f0289765fc1",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0169300008226000223",
+      "run_id": "toa-run-20261009052417-622fa8",
+      "status": "completed_with_warnings"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 85210,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298"
+        },
+        {
+          "bytes": 20564,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "e6c2b2bbad4c0e3127a2a8f6e3bffe009c95df1396ef3583c1f415a4fda280c8"
+        },
+        {
+          "bytes": 19326,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "89febf10e275c6032fa194206b5c0d421694e9795aba32a206eb8adc4056d987"
+        },
+        {
+          "bytes": 20622,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "42a65d1e031703406f5361f7e1776282a325ec6345beb511c5df8e00f352ab95"
+        },
+        {
+          "bytes": 14388,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "992cbc640aa1669093dc42a323a08c4b1ed44a412c3d73a2c24e90039660b865"
+        },
+        {
+          "bytes": 76173,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "1fc7794dcf657ce73d9a0bc09a9e57b037be792fd9bb413fd6da32e12a270824"
+        },
+        {
+          "bytes": 2030,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": null,
+          "sha256": "053d7ad2a8273fd85027ca1eaef4cc4568a4e560b5007c3dcea144335a8aaf9d"
+        },
+        {
+          "bytes": 17901,
+          "extension": ".xml",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "cd9db9d80605142d60bb9d50c2941a2e3571a6aa9b05f30746c58a734a409b82"
+        },
+        {
+          "bytes": 46080,
+          "extension": ".xls",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "95eb6bc59e910e0f159cb4eacf543d2ee40106bcbf3c3a8c3612e1f53a07dc56"
+        },
+        {
+          "bytes": 108045,
+          "extension": ".docx",
+          "file_id": "FILE-10",
+          "role_hint": "contract_draft",
+          "sha256": "27fe6bfa83e6bf497a6678218b32a7ba984de8b9b5f260e5526f92774f6d3ed5"
+        },
+        {
+          "bytes": 60975,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": "technical_spec",
+          "sha256": "2aaf7f8d4377d941c94fdbcca329b3cc7f90639fed23697940f7811f91dc0c7c"
+        },
+        {
+          "bytes": 25654,
+          "extension": ".docx",
+          "file_id": "FILE-12",
+          "role_hint": null,
+          "sha256": "bbdcb3ff39ce4ba1a559658b8e4897cad0f7397e4e29af804b8e7817fefb2580"
+        },
+        {
+          "bytes": 191488,
+          "extension": ".doc",
+          "file_id": "FILE-13",
+          "role_hint": "notice",
+          "sha256": "df3c84ad4281b21b697d74648fe2870ae5266e8ebaf14cb47f9d15e2416fbd61"
+        },
+        {
+          "bytes": 15468,
+          "extension": ".docx",
+          "file_id": "FILE-14",
+          "role_hint": null,
+          "sha256": "9dad791fc30b4268fcadda46a06d9ed85045b2e2529e21b22cce91a626ba3b3d"
+        },
+        {
+          "bytes": 14189,
+          "extension": ".docx",
+          "file_id": "FILE-15",
+          "role_hint": null,
+          "sha256": "a5ab950c545b9c3949b7133fee82e6de8656b56021bcd30e16d406a4e68c2b9f"
+        },
+        {
+          "bytes": 14287,
+          "extension": ".docx",
+          "file_id": "FILE-16",
+          "role_hint": null,
+          "sha256": "f4dc1b0dcda8cc19db80f47ae591228aa4beb29474dcc9dfa667e7fe186418ae"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "a0c3a164-2001-4e21-b1fa-ea7c69f0c2d3",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0169300003326000181",
+      "run_id": "toa-run-20261009052419-3f3f00",
+      "status": "completed_with_warnings"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 72520,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614"
+        },
+        {
+          "bytes": 19642,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "04cb79f1aa365cdb71e3abf199350ece8c961e4b8ed53aab73190bdb960ae0e8"
+        },
+        {
+          "bytes": 19637,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "fcae3d78a21058e8634ae858e65b1ac263583a1124ef087710a864abb35a98cd"
+        },
+        {
+          "bytes": 19887,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "8f719ca2c71739609ba326abc2e7cd938b6f31d122fb5c8bb9dbbd468f1e1d6f"
+        },
+        {
+          "bytes": 19582,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "19215bd333e351a496a38e22ea65ae20d118e87f75509f1b9027dc369ff3090b"
+        },
+        {
+          "bytes": 21379,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "23a472501980c4a8091f1720d5f353a26a2b17e0c128106e75ac0433fe9352f7"
+        },
+        {
+          "bytes": 69694,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": null,
+          "sha256": "4c9d01cc6ed2c151985f1ebd072b8c6bb61cad075360d29b011835a38ac3e28c"
+        },
+        {
+          "bytes": 2082,
+          "extension": ".xml",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "e5574f10b275156d1d456694e689267298961ba8d5d692cabef5df9dc23fa7b2"
+        },
+        {
+          "bytes": 10447,
+          "extension": ".xml",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "f0f28a6c5dd1c29af4d93776145bc014254c4b75766edaa1002b8ac936336631"
+        },
+        {
+          "bytes": 15604,
+          "extension": ".xlsx",
+          "file_id": "FILE-10",
+          "role_hint": null,
+          "sha256": "94ba8936295863a48a6fe665e31fd70678dc7dfae4b9fa0b80984e12a7aec263"
+        },
+        {
+          "bytes": 78903,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": "contract_draft",
+          "sha256": "64f1dd988630665dbca3f28ca8516408fccfe4cd6e40b76536b1175300783ce8"
+        },
+        {
+          "bytes": 137728,
+          "extension": ".doc",
+          "file_id": "FILE-12",
+          "role_hint": "technical_spec",
+          "sha256": "84752ad82bec1c16106f04ec398584f81f1fc05ae314d34fa280d00a0525f78a"
+        },
+        {
+          "bytes": 28106,
+          "extension": ".docx",
+          "file_id": "FILE-13",
+          "role_hint": null,
+          "sha256": "d56b94802e3a5879ae1901e0f8424d2014d0c924a95a7451dbadfcf9c79a7559"
+        },
+        {
+          "bytes": 32106,
+          "extension": ".docx",
+          "file_id": "FILE-14",
+          "role_hint": null,
+          "sha256": "0f5530d01fda6dc0c3a6939b097cb404d5a85a55e968d20a865a8fe358c16410"
+        },
+        {
+          "bytes": 1665676,
+          "extension": ".pdf",
+          "file_id": "FILE-15",
+          "role_hint": null,
+          "sha256": "7f5403b385742bd75f905edb35b38197bb3cc617428649740a28c70e4a613147"
+        },
+        {
+          "bytes": 8365489,
+          "extension": ".pdf",
+          "file_id": "FILE-16",
+          "role_hint": null,
+          "sha256": "2c0152da2867ee5dc7c2df9afebee3117f990228213328ead0490c54901d080b"
+        },
+        {
+          "bytes": 2022643,
+          "extension": ".pdf",
+          "file_id": "FILE-17",
+          "role_hint": null,
+          "sha256": "a9678f96cd74fe08eaebc567cbafdadae6d93df4f5dc8d45ec76fb83868415aa"
+        },
+        {
+          "bytes": 2323020,
+          "extension": ".pdf",
+          "file_id": "FILE-18",
+          "role_hint": null,
+          "sha256": "0915bd4203e141498b6acea7eda407010d2392fb8e4bc90dadb4c5ba874e8d24"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "bc90961c-e38a-407a-89f0-eb1c4be9de14",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0162300005826000156",
+      "run_id": "toa-run-20261009052421-b81ea5",
+      "status": "completed"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 105197,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "6b14ae86540b5021ed3c716c00551d99344d1065743b77fe242147c3d0f79c2e"
+        },
+        {
+          "bytes": 105670,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": "notice",
+          "sha256": "53a2cc997333d1502b550f4c81d3e1b5190033ad7f06bf4217c635a8ca9a2a5a"
+        },
+        {
+          "bytes": 20063,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "3debb1ae745fbd9a51f5b721727a765312911c0d04ab05f0b1d4ca277a70fecc"
+        },
+        {
+          "bytes": 106515,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": "notice",
+          "sha256": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d"
+        },
+        {
+          "bytes": 135528,
+          "extension": ".zip",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "fb3be0c95f7f9cd48cb41188cfe5da6336dd0f382a8834bd47710b8ae5fb7d8d"
+        },
+        {
+          "bytes": 51272,
+          "extension": ".zip",
+          "file_id": "FILE-06",
+          "role_hint": "contract_draft",
+          "sha256": "f7f93fe9d93d95e4138e03c4e891563e7e23f4b64cfb86062d4838068a4fb9d2"
+        },
+        {
+          "bytes": 1203863,
+          "extension": ".pdf",
+          "file_id": "FILE-07",
+          "role_hint": "technical_spec",
+          "sha256": "830a4517c8a6b27b4c0759e20b4e80aed398c5ba6514d7cdeda0f10ea2320169"
+        },
+        {
+          "bytes": 35558,
+          "extension": ".docx",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "6c0d6fd49a8698a72ef9c6fd654cbcbc9671b23948699dad58004210bf9aec40"
+        },
+        {
+          "bytes": 951826,
+          "extension": ".zip",
+          "file_id": "FILE-09",
+          "role_hint": null,
+          "sha256": "b060add0dc04b1b5710a1e38d9b0631efac9f054a63b233f19d6c8dfcc95067e"
+        },
+        {
+          "bytes": 499200,
+          "extension": ".zip",
+          "file_id": "FILE-10",
+          "role_hint": null,
+          "sha256": "423aa1e461cfaa73e36f2eaaee535b15efc5dc776352b9505ac56d54f4401905"
+        },
+        {
+          "bytes": 22427,
+          "extension": ".docx",
+          "file_id": "FILE-11",
+          "role_hint": null,
+          "sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8"
+        },
+        {
+          "bytes": 51277,
+          "extension": ".zip",
+          "file_id": "FILE-12",
+          "role_hint": "contract_draft",
+          "sha256": "3953b56d87d97e4d9ee20e853392c317346ee255450b016a7ce86e4ee827dee2"
+        },
+        {
+          "bytes": 1396543,
+          "extension": ".pdf",
+          "file_id": "FILE-13",
+          "role_hint": "technical_spec",
+          "sha256": "321a0e939ec4a8b61f617f9650a6c93a17a4b3de4cd8a6f0298bcb48b541c0e7"
+        },
+        {
+          "bytes": 499194,
+          "extension": ".zip",
+          "file_id": "FILE-14",
+          "role_hint": null,
+          "sha256": "aee3988f73430e901df4f4a7bf33e92e422e96568390e2a85d9dfe1a81e20a9a"
+        },
+        {
+          "bytes": 1051893,
+          "extension": ".zip",
+          "file_id": "FILE-15",
+          "role_hint": null,
+          "sha256": "90f918dca7bbedc1aa6a8724d265f44df59a6438e415bcf357a8a3f3f55bea76"
+        },
+        {
+          "bytes": 30228,
+          "extension": ".docx",
+          "file_id": "FILE-16",
+          "role_hint": null,
+          "sha256": "fdb2fa41c04036e32abfdbe6d1da45ecdb7859e568903ba71cddcb208eed4ba9"
+        },
+        {
+          "bytes": 52073,
+          "extension": ".zip",
+          "file_id": "FILE-17",
+          "role_hint": "contract_draft",
+          "sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185"
+        },
+        {
+          "bytes": 1778149,
+          "extension": ".pdf",
+          "file_id": "FILE-18",
+          "role_hint": "technical_spec",
+          "sha256": "901c0b7607c71673f592df8f2e4a40d3a0d1a4b26521765652017240d7dc93f4"
+        },
+        {
+          "bytes": 1348706,
+          "extension": ".zip",
+          "file_id": "FILE-19",
+          "role_hint": null,
+          "sha256": "4d67941f0a8acdc9922e005f157f41937d4f0fef7a59fbe77065577d14f18143"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "f7231373-df49-47a2-88d2-460213189f1b",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "6b14ae86540b5021ed3c716c00551d99344d1065743b77fe242147c3d0f79c2e",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0348100024426000039",
+      "run_id": "toa-run-20261009052425-d20f58",
+      "status": "needs_review"
+    },
+    {
+      "archive_download_status": "not_requested",
+      "document_files": [],
+      "eis_host": null,
+      "eis_ref_id": "14db3ef8-ce20-43a6-a6bb-844cf710e597",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": null,
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0348100024426000052",
+      "run_id": "toa-run-20261009052430-83c37e",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "not_requested",
+      "document_files": [],
+      "eis_host": null,
+      "eis_ref_id": "70131bec-0fb1-4d6f-950b-3ad36da06724",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": null,
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0148300050426000047",
+      "run_id": "toa-run-20261009052430-13d543",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 90298,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "d78c77d484130e004c6678b0e41608c847487f462da873fd226d8a5b3b20a3ce"
+        },
+        {
+          "bytes": 17955,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "b3cdc6ebcc08435b65a4e48be9920a5a9e9cd38b8736af3ae60fd3b5b67c9f5f"
+        },
+        {
+          "bytes": 68735,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "c827f677ee17dd864eeec2007f32539c9234138e9a7f646bd80295d515b021cc"
+        },
+        {
+          "bytes": 2447,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "d8f295dfb6ec4b2e8f1603eacd7a90746b91d6d1272fd4250875057c2fcde203"
+        },
+        {
+          "bytes": 2283,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "1194c709112b4ab54c8990a62d96272724f00a70fd8d27aafa3ef799d4917a8a"
+        },
+        {
+          "bytes": 26075,
+          "extension": ".docx",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "f000205e0c0bb7c1166fdc0272fabfd592d4060a5c32f8d7e52f8e1490c39f05"
+        },
+        {
+          "bytes": 53190,
+          "extension": ".docx",
+          "file_id": "FILE-07",
+          "role_hint": "technical_spec",
+          "sha256": "8142d03a12475aa5ab382286d654ad694f0408ea69c7c4c5aa59f1a81dc5c455"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "14e0e7e7-2e9a-4646-9e79-04459addce9e",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "d78c77d484130e004c6678b0e41608c847487f462da873fd226d8a5b3b20a3ce",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0148200000526000028",
+      "run_id": "toa-run-20261009052431-628ea8",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 76005,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "4d204d076a2386adc1c94db8299b1ffa7a6dcff9b4163126c3097d2594af1d1a"
+        },
+        {
+          "bytes": 49588,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "c1ed40e92a435f503e42e97cbb033cf1ee991829e804cc08da12d7a3f7b5b190"
+        },
+        {
+          "bytes": 1919,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "424654bed018629adf51296ae1ca6b727a353b188d832a237cde8938b1645de5"
+        },
+        {
+          "bytes": 3592,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "540c6b986c40418522eec60d357b96dd2af5782d8c7228f8305558fdea3ee139"
+        },
+        {
+          "bytes": 855530,
+          "extension": ".docx",
+          "file_id": "FILE-05",
+          "role_hint": "technical_spec",
+          "sha256": "5018d0b6313546ae0ee58a60d2fe9503d061d65c5bbba69ad0bbb58a30376041"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "532c1994-5f1f-4561-991d-5176a21efc01",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "4d204d076a2386adc1c94db8299b1ffa7a6dcff9b4163126c3097d2594af1d1a",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0149200002326001555",
+      "run_id": "toa-run-20261009052432-75763d",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 133249,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "b780f02c0d7de7b8e5041ca477543d1a9e39cfee809d84ef4118f44f27e4080c"
+        },
+        {
+          "bytes": 17133,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": "notice",
+          "sha256": "074fdc29026319a11a5fbfdcccd0bdaa0ea2539b1f428a765bf4a3c7854e2fd7"
+        },
+        {
+          "bytes": 2333,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "57752dd863145871ffd7db78823b5e2ceb35803fb03b7e6b3ac08d6d634a2832"
+        },
+        {
+          "bytes": 1126,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "239caa35373aa93543cf24fab187f7af47ccd0cb6188c129026cc6be1564adbe"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "fc80a618-3707-4986-aedd-80ac8ff512f0",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "b780f02c0d7de7b8e5041ca477543d1a9e39cfee809d84ef4118f44f27e4080c",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0349500000226000003",
+      "run_id": "toa-run-20261009052435-cbdb89",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 84644,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "02fb7a3e0bb7297417f715e2cae144d8a96dddfcfc5a4ec512a0fdd042213adf"
+        },
+        {
+          "bytes": 79350,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "fa8ed9b7ec74194fc100da973196b2662e98a4d609b8029ae8cbe65fd5350731"
+        },
+        {
+          "bytes": 1916,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "d5f4079a462751e33d4514587aea8417b591edfa23296243d6130cec673ec8f2"
+        },
+        {
+          "bytes": 2387,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "c33db72feb1b23186affb7633b79a498ab243c4f92ca3fdc2fc8dc2c6b89bec1"
+        },
+        {
+          "bytes": 56625,
+          "extension": ".docx",
+          "file_id": "FILE-05",
+          "role_hint": "contract_draft",
+          "sha256": "aa2a235185682736cf3b04fa7a6149ca1e13f3a97995ed75b6be739d5ef3e9f7"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "1214ff67-4c3d-4ac9-a76a-0acae2c4f0f4",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "02fb7a3e0bb7297417f715e2cae144d8a96dddfcfc5a4ec512a0fdd042213adf",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0349100009326000005",
+      "run_id": "toa-run-20261009052436-bf425a",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 65864,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "4a046442328e9917a49dbafdad9712600ecd51f0b709b5224fad28f947f6d6a6"
+        },
+        {
+          "bytes": 20190,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "e3c11cee2420756886eab0a2718a9a5591077d49731599d192c14abaf2f413b7"
+        },
+        {
+          "bytes": 15773,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "72fe902bac62c02cf8a5033ade5a3f6f248caafd1f12dbd8d74f09df7b13e8d6"
+        },
+        {
+          "bytes": 84200,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "1e66218150781580826c4c8ec4b59ffc07bd348741557bf86d2bb66c48e4e7c9"
+        },
+        {
+          "bytes": 2151,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "8db650566d6239614989b47b194a4cabb00cc7e2b5eafa75a5eb2d8b464f21bb"
+        },
+        {
+          "bytes": 8539,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "1fcda8be9bd0a37212915e6b388a3c5100ea57872060003aa71768476d1c9eb3"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "62c1caa3-e9e3-413d-ba9e-2e0c86af1a4f",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "4a046442328e9917a49dbafdad9712600ecd51f0b709b5224fad28f947f6d6a6",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0127100008626000013",
+      "run_id": "toa-run-20261009052438-25d890",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "not_requested",
+      "document_files": [],
+      "eis_host": null,
+      "eis_ref_id": "176d1bdf-44a2-4756-8d62-84d99d4d7848",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": null,
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0318200087026000163",
+      "run_id": "toa-run-20261009052439-a02010",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 67669,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "f52451451417f3b0124883dc154db67d7e6146c59de3f61fd40467a4cedcca8e"
+        },
+        {
+          "bytes": 21792,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "768f51c65c9fa61e6f72e322e02fdd9b1baaa4f67a01ddf88b2fb8d5c6691dbc"
+        },
+        {
+          "bytes": 67486,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": "notice",
+          "sha256": "0e4b65ba36fad901856783aa2c1903ed9a70eae98966c663bc67e16565826db8"
+        },
+        {
+          "bytes": 21749,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "7daf67e39b3c6e7419c79824f87ea6666994d2f9fe8a070f1c0e56d0b4d016ed"
+        },
+        {
+          "bytes": 13463,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "f78b0f732aa6d785907e05cdcf0af2448324a43db4a66676d56f912e8672a729"
+        },
+        {
+          "bytes": 85474,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "99207aab439944c18119c63709bda55b6e50bfb4e346e8558f94a9791908dbae"
+        },
+        {
+          "bytes": 1452,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": null,
+          "sha256": "c8a5bce61a485dbf4aa2504a878c16787020a957181bc35828a65db0344a95d4"
+        },
+        {
+          "bytes": 11372,
+          "extension": ".xml",
+          "file_id": "FILE-08",
+          "role_hint": null,
+          "sha256": "b828dc4aebf7a318e2cecbfbe2dd3fbbc7665cd8eb1852a4943127b86cc99aa7"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "de5eaeb2-8f94-461f-82be-c1432509c26a",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "f52451451417f3b0124883dc154db67d7e6146c59de3f61fd40467a4cedcca8e",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0360600005326000018",
+      "run_id": "toa-run-20261009052440-f104ec",
+      "status": "docs_required"
+    },
+    {
+      "archive_download_status": "downloaded",
+      "document_files": [
+        {
+          "bytes": 112286,
+          "extension": ".xml",
+          "file_id": "FILE-01",
+          "role_hint": "notice",
+          "sha256": "d0a17037e52e9ae7a0ef374241bf865a0efaf2a9db7cdfc278f36b720a7b0f04"
+        },
+        {
+          "bytes": 20988,
+          "extension": ".xml",
+          "file_id": "FILE-02",
+          "role_hint": null,
+          "sha256": "15750c3cfc11f11a3e0132d1f6b77ea17af32b126722d70f6056c2390bf61594"
+        },
+        {
+          "bytes": 13233,
+          "extension": ".xml",
+          "file_id": "FILE-03",
+          "role_hint": null,
+          "sha256": "a2c43a1f65067e12fb6b12d0ef6653b8be6b1d457ace0b46c39db411440bc4b9"
+        },
+        {
+          "bytes": 13557,
+          "extension": ".xml",
+          "file_id": "FILE-04",
+          "role_hint": null,
+          "sha256": "c0946c44dd0bc4dcdf87388e7eafa814a739981ba2a34294d78d6e2ae3a14bf7"
+        },
+        {
+          "bytes": 79389,
+          "extension": ".xml",
+          "file_id": "FILE-05",
+          "role_hint": null,
+          "sha256": "e01047f18e8bf8dc53bd83e1f4f274a1dd2810b3042084715a4c095a63c81a88"
+        },
+        {
+          "bytes": 2104,
+          "extension": ".xml",
+          "file_id": "FILE-06",
+          "role_hint": null,
+          "sha256": "d3481afb2a01ecb6253f2958c426094603169a0ed502eec280e2bbe0f4fe1abe"
+        },
+        {
+          "bytes": 3569,
+          "extension": ".xml",
+          "file_id": "FILE-07",
+          "role_hint": null,
+          "sha256": "81d7130035000eebd4c3df113d1f165d4017ae1847a8a401c5d757a56a761b90"
+        }
+      ],
+      "eis_host": "int.zakupki.gov.ru",
+      "eis_ref_id": "6241651d-a81d-4a9f-9ede-07bd91c7a8c4",
+      "method": "getDocsByReestrNumber",
+      "notice_sha256": "d0a17037e52e9ae7a0ef374241bf865a0efaf2a9db7cdfc278f36b720a7b0f04",
+      "official_notice_revision_verified_by_human": false,
+      "operator_reviewed": false,
+      "reg_number": "0895100000126000897",
+      "run_id": "toa-run-20261009052442-bd0c0b",
+      "status": "docs_required"
+    }
+  ],
+  "no_bids_signed_submitted": true,
+  "schema_version": "apr06-readonly-receipts-v1",
+  "source": "actual Mac mini local EIS getDocsIP read-only document bytes",
+  "status": "PRELIMINARY_NO_COMMERCIAL_ACCEPTANCE"
+}

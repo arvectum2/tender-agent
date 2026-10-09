@@ -1,0 +1,64 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-06-INDEPENDENT-AI-OPERATOR-REVIEW-001
+status: completed
+parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+goal: Independently review nine existing real 44-FZ procurement runs using GPT-6,
+  primary EIS notice revisions and original attachments accessible by authorized RDC,
+  compare against Tender Agent decision, record verified discrepancies and independent
+  model recommendations without fabricating a human decision or consent.
+definition_of_done:
+- Verify official notice numbers, latest revision and application deadline for all
+  nine source-backed runs.
+- Independently inspect technical specifications, contract drafts and participation
+  constraints from original files where readable.
+- Record per-case model recommendation, uncertainty, grounded source references and
+  differences from prior report.
+- Preserve hard fail-closed gates for out-of-date, canceled, ambiguous or missing
+  source.
+- Add reproducible regression for actual model defects, run quality tests and update
+  downstream APR-06.
+- Commit audit and history, restore parent task checkpoint marked blocked for actual
+  human/owner acceptance.
+completed:
+- Confirmed previous APR-06 head d275dd6d and clean local repository.
+- Read exact nine previously analyzed runs and original document inventories without
+  rerunning source intake.
+- Found deadline mismatch in Aksay case: notice revisions v1 09 Oct, v5 12 Oct; current
+    machine NO_GO cites expired v1.
+- Independently verified 9 previously saved EIS notice histories and compared against
+  9 machine decisions; 6 expired NO_GO confirmed, 3 model DEFER.
+- 'Found high-severity Aksay source bug: hard NO_GO from notice v1 due 09 Oct despite
+  valid archived v5 due 12 Oct.'
+- Found CZN notice v3 due 19 Oct while prior report used v1 due 16 Oct; flagged CZN/Museum
+  technical risks directly from latest specification.
+- Published full 9-case independent AI audit JSON, source hashes and Russian operator-oriented
+  Markdown; model is NOT human reviewer and not commercial KPI acceptance.
+- Fixed two EIS normalization branches to select latest valid same-number epNotification
+  source, retaining provenance and excluding protocol/cancel events.
+- Four new notice-regression tests; additional audit invariants; 23 focused tests
+  and actual archived five/two primary cases verified after bug fix.
+- Full Mac mini pytest 3336 passed 238 skipped 329 warnings with PG16 client; make
+  check passed; strict targeted Ruff passed.
+- Pushed audited fix via authorized MacBook GitHub git to branch feature/apr06-commercial-acceptance,
+  preserving local original evidence.
+current: Completed independent GPT-6 model audit; APR-06 human commercial acceptance
+  remains pending.
+pending: []
+last_verified_commit: a51a9f5c9aca5121ae422f97cdf5f698fd5b2079
+test_results:
+- Full local pytest 3336 passed / 238 skipped / 329 warnings.
+- make check PASS; targeted ruff PASS.
+- Real source regression Aksay v5 due 12 Oct, CZN v3 due 19 Oct PASS on original EIS
+  XML bytes.
+- 'AI-only audit: nine cases, six NO_GO and three DEFER; two stale dates, one wrong
+  hard NO_GO.'
+- GitHub latest CI 37892783597 pending verification before asserting success.
+resume_instruction: This AI-only review is COMPLETE. Return to APR-06 parent .agent/current-task.yaml.
+  Do not overwrite original nine reports. Require actual human independent confirmation,
+  source revision-binding for attachments, corporate supplier evidence and owner-approved
+  seven metric thresholds before commercial acceptance. No external bids, payments
+  or public RU VPS.
+execution:
+  branch: feature/apr06-commercial-acceptance
+  cases: 9
