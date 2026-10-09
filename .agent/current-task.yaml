@@ -1,32 +1,28 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: PR-CLOSURE-NO-VPS-20261009
-status: completed
+task_id: APR-03B-OPERATOR-WORKSPACE-20261009
+status: in_progress
 authority: OWNER_DIRECTIVE
-goal: 'Close safe Tender Agent pull requests without purchasing a VPS, preserving production and human acceptance gates.'
+goal: 'Deliver authenticated browser-only local Tender Agent workspace for real 44-FZ/223-FZ EIS requests, cited results, documents, report export, and read-only history.'
 definition_of_done:
-  - 'Inventory current open PRs and canonical APR roadmaps.'
-  - 'Reconcile dependencies and merge safe completed repository-only work after exact-head CI.'
-  - 'Distinguish local implementation completion from real VPS and HUMAN acceptance.'
-  - 'Verify remaining PR count, merged commits, targeted checks and canonical checkpoint.'
+  - 'Reuse existing services and authenticated private pilot perimeter; no mock-only product path.'
+  - 'Operator submits real EIS identifier or URL and sees progress, cited requirements/risks/economics, documents, report export.'
+  - 'Operator browses saved procurement records, past analysis runs and original files without arbitrary SQL or terminal/Swagger.'
+  - 'Enforce company scope, safe input validation and HUMAN review boundary with tests.'
+  - 'Run focused tests and private Mac mini HTTP E2E with real EIS procurement; fix issues and obtain successful CI.'
+  - 'Update roadmap and merge verified PR if existing approval gates allow; otherwise report exact blocker.'
 completed:
-  - 'Reviewed seven PRs and stacked dependencies APR-03..APR-07.'
-  - 'PR #229 merged as 4028489aa5a8c97353ef09c561886f127d1014dd.'
-  - 'PR #246 merged as d041629c5db20c3e32e0107ed371ae8ac6e5214b.'
-  - 'PR #251 merged as ead941288f7eb2d5d8e08eb800e7b61c0daa4168, repository-only APR-03 package.'
-  - 'Kept real VPS infrastructure, public TLS, offsite backups and restore drills outside merged implementation acceptance.'
-  - 'Preserved owner sequence APR-03B workspace before APR-04; PR #252..255 remain open as stacked drafts.'
-  - 'Verified Mac mini isolated API, worker, PostgreSQL and Redis running with authenticated pilot endpoints.'
-current: 'Completed: three PRs merged, four PRs intentionally open under owner sequencing and independent acceptance gates.'
-pending: []
-last_verified_commit: ead941288f7eb2d5d8e08eb800e7b61c0daa4168
-test_results:
-  - 'PR #229: exact-head CI run 37900383792 SUCCESS; local 3 tests PASS, Node syntax PASS.'
-  - 'PR #246: exact-head CI run 37900664494 SUCCESS; local 21 tests PASS, targeted Ruff PASS.'
-  - 'PR #251: exact-head CI run 37901304850 SUCCESS; local 13 runtime tests and 6 roadmap tests PASS, Ruff PASS, YAML parse PASS.'
-  - 'Mac mini: isolated local Docker API/worker/PostgreSQL/Redis running; protected endpoints returned expected 401 without credentials.'
-resume_instruction: 'PR closure task completed. Next: build and accept APR-03B private browser Operator Workspace using existing Mac mini services before retargeting/reviewing APR-04. APR-05..APR-07 remain draft and gated. Do not purchase/activate a public Russian VPS, charge money or perform ETP operations without owner authorization.'
+  - 'APR-03 repo runtime package merged into main; production VPS acceptance remains blocked.'
+  - 'Identified existing running authenticated private Mac mini pilot stack and reused backend APIs.'
+current: 'Inspect API shapes and existing pilot pages, implement operator workspace.'
+pending:
+  - 'Build workspace UI/API with source evidence and history views.'
+  - 'Test authenticated real-data browser workflow locally.'
+  - 'Update roadmap; exact-head CI; merge when eligible.'
+last_verified_commit: '829b81dcea2f22ffa0ade42e2d7dcd6429d517fb'
+test_results: []
+resume_instruction: 'Use worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr03b-operator-workspace, inspect current src/modules/tender_operator_agent_demo and customer_pilot routers. Implement browser workspace, add focused tests, run E2E on private Mac mini, and merge only with exact-head green CI. No VPS purchase or production exposure.'
 execution:
-  branch: null
+  branch: feature/apr03b-operator-workspace
   manual_override: false
   lease_until: null
