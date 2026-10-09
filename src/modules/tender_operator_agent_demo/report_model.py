@@ -8,8 +8,6 @@ for the R10.1 customer renderer without mutating provider output.
 from __future__ import annotations
 
 import re
-from datetime import datetime
-from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +18,10 @@ from src.modules.tender_operator_agent_demo.decision_core import (
 )
 from src.modules.tender_operator_agent_demo.document_set_completeness import (
     build_document_set_summary,
+)
+from src.modules.tender_operator_agent_demo.eis_fact_values import (
+    EIS_NOTICE_FACT_TAGS,
+    verified_eis_fact_value,
 )
 
 for _name, _value in vars(_legacy).items():
@@ -568,26 +570,10 @@ def _verified_notice_fact_projection(model: dict[str, Any]) -> dict[str, Any]:
     originals = proof.get("values")
     originals = originals if isinstance(originals, dict) else {}
     facts: dict[str, Any] = {}
-    for field, tag in (
-        ("procurement_title", "purchaseObjectInfo"),
-        ("application_deadline", "endDT"),
-        ("nmck", "maxPrice"),
-    ):
+    for field, tag in EIS_NOTICE_FACT_TAGS:
         excerpt = originals.get(field) if valid else None
-        bounded = isinstance(excerpt, str) and 0 < len(excerpt.strip()) <= 4096
-        if bounded and field == "nmck":
-            try:
-                amount = Decimal(excerpt)
-                bounded = amount.is_finite() and amount >= 0
-            except InvalidOperation:
-                bounded = False
-        if bounded and field == "application_deadline":
-            try:
-                deadline = datetime.fromisoformat(excerpt)
-                bounded = deadline.tzinfo is not None
-            except ValueError:
-                bounded = False
-        if bounded:
+        value = verified_eis_fact_value(field, excerpt)
+        if value is not None:
             facts[field] = {
                 "status": "KNOWN",
                 "value": excerpt,

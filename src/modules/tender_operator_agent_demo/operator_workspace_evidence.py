@@ -7,22 +7,19 @@ from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
-from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
-from fastapi import HTTPException
-
+from src.modules.tender_operator_agent_demo.eis_fact_values import (
+    EIS_NOTICE_FACT_TAGS,
+    verified_eis_fact_value,
+)
 from src.modules.tender_operator_agent_demo.upload_service import (
     get_demo_run_input_dir,
     load_demo_run_metadata,
 )
 
-_FIELDS = {
-    "procurement_title": ("purchaseObjectInfo", "Предмет закупки"),
-    "application_deadline": ("endDT", "Окончание подачи заявок"),
-    "nmck": ("maxPrice", "НМЦК"),
-}
+_FIELDS = dict(EIS_NOTICE_FACT_TAGS)
 _MAX_XML_BYTES = 5 * 1024 * 1024
 _NUMBER = re.compile(r"\d{19}\Z")
 
@@ -82,21 +79,14 @@ def _notice_xml(run_id: str, metadata: dict[str, Any]) -> tuple[ET.Element, dict
 
 
 def _verified_fact(root: ET.Element, item: dict[str, Any], key: str) -> dict[str, Any]:
-    tag, _label = _FIELDS[key]
+    tag = _FIELDS[key]
     values = _values(root, tag)
     if len(values) != 1:
         return _unknown()
     excerpt = values[0]
-    if key == "nmck":
-        try:
-            price = Decimal(excerpt)
-        except InvalidOperation:
-            return _unknown()
-        if not price.is_finite() or price < 0:
-            return _unknown()
-        value: str | float = float(price)
-    else:
-        value = excerpt
+    value = verified_eis_fact_value(key, excerpt)
+    if value is None:
+        return _unknown()
     filename = Path(str(item.get("display_name") or item.get("original_name") or "")).name
     file_id = str(item.get("file_id") or "").strip()
     if not filename or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", file_id):
