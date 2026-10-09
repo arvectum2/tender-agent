@@ -437,6 +437,20 @@ def build_procurement_report_model(
         outputs,
         repository_sha=repository_sha,
     )
+    # The legacy report builder may prefer an arbitrary document heading to the
+    # genuine EIS subject. Restore only a registry-verified getDocsIP XML fact.
+    source_refs = metadata.get("_field_evidence")
+    source_refs = source_refs if isinstance(source_refs, dict) else {}
+    if (
+        metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip"
+        and source_refs.get("procurement_title") == "eis_notice:procurement_subject"
+    ):
+        xml_subject = str(metadata.get("procurement_title") or "").strip()
+        if xml_subject:
+            model["procurement_title"] = xml_subject
+            refs = dict(model.get("field_evidence") or {})
+            refs["procurement_title"] = "eis_notice:procurement_subject"
+            model["field_evidence"] = refs
     analysis_as_of = (
         metadata.get("analysis_completed_at")
         or metadata.get("prepared_at")
