@@ -187,11 +187,28 @@ class TestPublic44FzProvider:
         numbers = Public44FzSearchProvider.extract_registry_numbers([page])
         assert numbers == ["0373200008225000004"]
 
-    def test_search_pages_empty_args(self):
+    def test_search_pages_empty_args(self, monkeypatch):
+        # Unit tests must not depend on live zakupki.gov.ru. The provider can
+        # legitimately receive HTTP 500, timeouts and proxy failures in CI.
         provider = Public44FzSearchProvider(timeout_seconds=5, delay_seconds=0)
-        pages = provider.search_pages(max_pages=1, page_size=10)
-        assert len(pages) >= 1
-        assert pages[0].status in (PublicSearchStatus.SUCCESS, PublicSearchStatus.TIMEOUT, PublicSearchStatus.BLOCKED, PublicSearchStatus.BAD_GATEWAY)
+        requests = []
+
+        def unavailable_source(url):
+            requests.append(url)
+            return {
+                "status": PublicSearchStatus.BAD_GATEWAY,
+                "html": None,
+                "error": "Upstream HTTP 502",
+            }
+
+        monkeypatch.setattr(provider, "_fetch_page", unavailable_source)
+        pages = provider.search_pages(max_pages=3, page_size=10)
+        assert len(pages) == 1
+        assert pages[0].status == PublicSearchStatus.BAD_GATEWAY
+        assert pages[0].error == "Upstream HTTP 502"
+        assert "pageNumber=1" in pages[0].source_url
+        assert "recordsPerPage=10" in pages[0].source_url
+        assert requests == [pages[0].source_url]
 
     def test_card_to_item(self):
         card = {
