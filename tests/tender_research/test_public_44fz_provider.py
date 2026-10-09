@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
-
 from src.tender_research.providers.public_44fz_search import (
     MAX_PAGE_SIZE,
     Public44FzSearchProvider,
