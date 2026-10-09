@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 
 from src.modules.tender_operator_agent_demo.document_source_projection import (
@@ -10,7 +11,7 @@ from src.modules.tender_operator_agent_demo.document_source_projection import (
 from src.shared.document_processing import ProcessedChunk, ProcessedDocument
 
 
-def test_source_ids_chunks_and_untrimmed_offset_coordinate_are_preserved():
+def test_source_ids_chunks_and_normalized_offset_coordinate_are_preserved():
     original = "  оплата в срок  "
     doc = ProcessedDocument(
         extraction_status="extracted",
@@ -18,7 +19,7 @@ def test_source_ids_chunks_and_untrimmed_offset_coordinate_are_preserved():
         chunks=(ProcessedChunk(
             index=0,
             text="оплата в срок",
-            text_hash="actual-platform-hash",
+            text_hash=hashlib.sha256("оплата в срок".encode()).hexdigest(),
             char_start=2,
             char_end=len(original) - 2,
             token_estimate=3,
@@ -36,7 +37,7 @@ def test_source_ids_chunks_and_untrimmed_offset_coordinate_are_preserved():
     assert provenance["attributable_chunk_count"] == 1
     assert provenance["normalized_text_leading_trim_chars"] == 2
     assert provenance["normalized_text_trailing_trim_chars"] == 2
-    assert provenance["offset_space"] == "data_platform_extracted_text_untrimmed"
+    assert provenance["offset_space"] == "data_platform_normalized_text"
     assert chunks[0]["chunk_id"] == "platform-chunk-01"
     assert chunks[0]["file_id"] == "FILE-04"
     assert original[chunks[0]["char_start"]:chunks[0]["char_end"]] == "оплата в срок"
@@ -120,7 +121,7 @@ def test_persisted_operator_file_metadata_keeps_platform_source_chunks(
         assert provenance["resource_id"].startswith("platform-resource-")
         assert provenance["document_id"].startswith("platform-document-")
         assert provenance["attributable_chunk_count"] == 1
-        assert provenance["offset_space"] == "data_platform_extracted_text_untrimmed"
+        assert provenance["offset_space"] == "data_platform_normalized_text"
         assert file["evidence_chunks"][0]["chunk_id"].startswith("platform-chunk-")
         assert file["evidence_chunks"][0]["file_id"] == file["file_id"]
         assert "NEVER_PERSIST_RAW_OCR" not in json.dumps(provenance)
