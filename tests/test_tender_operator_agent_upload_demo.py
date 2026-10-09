@@ -3,6 +3,7 @@ import zipfile
 from io import BytesIO
 from pathlib import Path
 
+import pytest
 from openpyxl import Workbook
 
 from src.modules.tender_operator_agent_demo import upload_service_legacy
@@ -773,7 +774,10 @@ def test_zip_path_traversal_is_rejected_safely(client, monkeypatch, tmp_path):
     assert any("unsafe path" in warning for warning in run_payload["warnings"])
 
 
-def test_successful_retry_clears_old_failure_without_erasing_audit(client, monkeypatch, tmp_path):
+@pytest.mark.parametrize("previous_status", ["failed", "completed_with_warnings"])
+def test_successful_retry_clears_old_failure_without_erasing_audit(
+    client, monkeypatch, tmp_path, previous_status
+):
     """Real Safari retry must not display last attempt's int(None) as a current risk."""
     runs_root = _set_runs_root(monkeypatch, tmp_path)
     data, files = _sample_upload_payload(include_quote=False)
@@ -782,7 +786,7 @@ def test_successful_retry_clears_old_failure_without_erasing_audit(client, monke
     run_id = created.json()["run_id"]
     metadata_path = runs_root / run_id / "metadata.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    metadata["status"] = "failed"
+    metadata["status"] = previous_status
     metadata["warnings"] = [
         "Original source note: preserve during retry",
         "Analysis failed safely: int() argument must be a string, not NoneType",
