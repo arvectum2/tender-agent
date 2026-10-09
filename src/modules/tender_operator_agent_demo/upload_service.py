@@ -297,10 +297,14 @@ def _enrich_procurement_metadata_from_documents(
     from src.modules.tender_operator_agent_demo.eis_notice_parser import (
         apply_structured_metadata_to_procurement,
         extract_notice_metadata,
+        extract_notice_revision_info,
         merge_structured_metadata,
     )
 
-    candidates: list[tuple[int, dict[str, Any]]] = []
+    candidates: list[tuple[int, str, int, dict[str, Any]]] = []
+    expected_number = str(
+        metadata.get("procurement_id") or source_procurement.get("procurement_number") or ""
+    ).strip()
     for document in documents:
         if str(getattr(document, "extension", "")).lower() != ".xml":
             continue
@@ -309,6 +313,10 @@ def _enrich_procurement_metadata_from_documents(
             continue
         parsed = extract_notice_metadata(text)
         if not parsed:
+            continue
+        revision = extract_notice_revision_info(text)
+        if revision and expected_number and revision["purchase_number"] != expected_number:
+            enriched["notice_revision_requires_review"] = True
             continue
         score = sum(
             1
@@ -324,11 +332,16 @@ def _enrich_procurement_metadata_from_documents(
         )
         if getattr(document, "role", "") == "notice":
             score += 10
-        candidates.append((score, parsed))
+        candidates.append((
+            int(revision["version"]) if revision else 0,
+            str(revision["published_at"]) if revision else "",
+            score,
+            parsed,
+        ))
     if not candidates:
         return enriched
 
-    _, notice_meta = max(candidates, key=lambda item: item[0])
+    _, _, _, notice_meta = max(candidates, key=lambda item: item[:3])
     structured = merge_structured_metadata(notice_meta, {}, {})
     existing_procurement = (
         dict(enriched.get("procurement"))

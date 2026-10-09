@@ -1995,7 +1995,7 @@ def _extract_supply_items_from_spec_text(text: str, source_document: str) -> lis
             source_documents=[source_document],
             quantity_status="specified" if quantity is not None and unit else "not_specified",
             source_row_number=len(items) + 1,
-            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|spec|{item_no}|{name}|{quantity}|{unit}'.encode('utf-8')).hexdigest()[:16]}",
+            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|spec|{item_no}|{name}|{quantity}|{unit}'.encode()).hexdigest()[:16]}",
         )
         if item.name:
             items.append(item)
@@ -2067,7 +2067,7 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
                 source_kind="nmck_xlsx", confidence="high", raw_fragment=line,
                 total_price=_format_decimal_price(total_value), source_documents=[source_document],
                 quantity_status="specified", source_row_number=len(items) + 1,
-                evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items)+1}|{raw_name}|{quantity}|{unit_raw}'.encode('utf-8')).hexdigest()[:16]}",
+                evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items)+1}|{raw_name}|{quantity}|{unit_raw}'.encode()).hexdigest()[:16]}",
                 ktru=ktru,
                 okpd2=okpd2,
             )
@@ -2122,7 +2122,7 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
             source_documents=[source_document],
             quantity_status="specified" if quantity is not None and unit else "not_specified",
             source_row_number=len(items) + 1,
-            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items) + 1}|{name}|{quantity}|{unit}'.encode('utf-8')).hexdigest()[:16]}",
+            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items) + 1}|{name}|{quantity}|{unit}'.encode()).hexdigest()[:16]}",
             ktru=ktru,
             okpd2=okpd2,
         )
@@ -2174,7 +2174,7 @@ def _extract_service_items_from_nmck_text(text: str, source_document: str) -> li
         if not key[0] or key in seen:
             continue
         seen.add(key)
-        evidence_seed = f"{source_document}|service-table|{row_number}|{name}".encode("utf-8")
+        evidence_seed = f"{source_document}|service-table|{row_number}|{name}".encode()
         evidence_id = f"ev-{hashlib.sha256(evidence_seed).hexdigest()[:16]}"
         rows.append(SupplyItem(
             item_no=None,
@@ -2277,7 +2277,7 @@ def _extract_supply_items_from_notification_xml(text: str, source_document: str)
         if not name or price is None and total is None:
             continue
         item_type = "service" if raw_type in {"SERVICE", "WORK"} else "goods"
-        evidence_seed = f"{source_document}|notification-xml|{row_number}|{name}".encode("utf-8")
+        evidence_seed = f"{source_document}|notification-xml|{row_number}|{name}".encode()
         rows.append(SupplyItem(
             item_no=None,
             name=name,
@@ -3280,7 +3280,7 @@ def _build_preliminary_procurement_analysis(
             f"НМЦК: {initial_price} руб." if initial_price else "",
             f"Тип закупки: {procurement_kind}.",
             f"Срок исполнения / подачи: {deadline}." if deadline else "",
-            f"Результат для заказчика: модифицированный модуль, интеграции и лицензионный пакет." if work_rows else "",
+            "Результат для заказчика: модифицированный модуль, интеграции и лицензионный пакет." if work_rows else "",
         ]
         compliance = [
             "Нужно проверить полноту функциональных требований по каждому блоку доработки.",
@@ -4341,7 +4341,7 @@ def _build_steps_from_outputs(metadata: dict[str, Any], outputs: dict[str, dict[
                 if metadata.get("supplier_search", {}).get("suppliers")
                 else DemoDetailSection(title="Статус поиска", kind="bullets", items=[
                     metadata.get("supplier_search", {}).get("query", "Поиск не выполнялся"),
-                    f"Поставщиков не найдено или API не настроено.",
+                    "Поставщиков не найдено или API не настроено.",
                 ]),
             ],
         ),
@@ -5141,6 +5141,7 @@ def _enrich_procurement_metadata_from_documents(
     from src.modules.tender_operator_agent_demo.eis_notice_parser import (
         apply_structured_metadata_to_procurement,
         extract_notice_metadata,
+        extract_notice_revision_info,
         merge_structured_metadata,
     )
 
@@ -5148,14 +5149,37 @@ def _enrich_procurement_metadata_from_documents(
 
     eis_notice_meta: dict[str, Any] = {}
     if documents:
-        for doc in documents:
-            if doc.role == "notice" and doc.extension == ".xml" and doc.raw_content:
-                raw_text = doc.raw_content.decode("utf-8", errors="replace")
-                parsed = extract_notice_metadata(raw_text)
-                if parsed.get("_has_notice_data"):
-                    eis_notice_meta = parsed
-                    metadata["notice_source_label"] = parsed.get("source_label", "электронное извещение ЕИС")
-                    break
+        expected_number = str(
+            metadata.get("procurement_id") or procurement.get("procurement_number") or ""
+        ).strip()
+        candidates = []
+        for index, doc in enumerate(documents):
+            if doc.role != "notice" or doc.extension != ".xml" or not doc.raw_content:
+                continue
+            raw_text = doc.raw_content.decode("utf-8", errors="replace")
+            parsed = extract_notice_metadata(raw_text)
+            if not parsed.get("_has_notice_data"):
+                continue
+            revision = extract_notice_revision_info(raw_text)
+            if revision and expected_number and revision["purchase_number"] != expected_number:
+                metadata["notice_revision_requires_review"] = True
+                continue
+            sort_key = (
+                int(revision["version"]) if revision else 0,
+                str(revision["published_at"]) if revision else "",
+                -index,
+            )
+            candidates.append((sort_key, parsed, revision, doc))
+        if candidates:
+            _, eis_notice_meta, revision, source = max(candidates, key=lambda item: item[0])
+            metadata["notice_source_label"] = eis_notice_meta.get("source_label", "электронное извещение ЕИС")
+            if revision:
+                metadata["notice_revision_selected"] = {
+                    "version": revision["version"],
+                    "purchase_number": revision["purchase_number"],
+                    "published_at": revision["published_at"],
+                    "file_id": source.file_id,
+                }
 
     card_meta = {
         "nmck": procurement.get("initial_price"),

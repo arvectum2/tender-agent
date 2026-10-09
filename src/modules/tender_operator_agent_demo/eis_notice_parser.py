@@ -7,6 +7,52 @@ from typing import Any
 from urllib.parse import urlparse
 
 
+def extract_notice_revision_info(xml_text: str) -> dict[str, Any] | None:
+    """Identify an actual EIS notification revision, never a protocol/cancel event.
+
+    The ordering information comes from the notification's commonInfo node,
+    not arbitrary endDate/contract-period fields elsewhere in the XML.
+    A matching source notice is still not a substitute for a fresh live EIS
+    revision/status check when preparing a real bid.
+    """
+    if not isinstance(xml_text, str) or not xml_text.lstrip().startswith("<"):
+        return None
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return None
+    events = [node for node in root.iter()
+              if _local_name(node.tag).startswith("epNotification")]
+    if len(events) != 1:
+        return None
+    common = next((x for x in events[0] if _local_name(x.tag) == "commonInfo"), None)
+    if common is None:
+        return None
+    values = {
+        _local_name(x.tag): (x.text or "").strip()
+        for x in common if not list(x) and (x.text or "").strip()
+    }
+    # In real EIS epNotificationEZK2020/EOK2020 XML, versionNumber is
+    # a direct child of epNotification, while purchaseNumber/publishDTInEIS
+    # are inside commonInfo. Synthetic payloads may place it in commonInfo.
+    raw_version = next(
+        (x.text.strip() for x in events[0]
+         if _local_name(x.tag) == "versionNumber" and x.text and x.text.strip()),
+        values.get("versionNumber", ""),
+    )
+    raw_number = values.get("purchaseNumber", "")
+    if not re.fullmatch(r"\d{1,4}", raw_version) or not re.fullmatch(r"\d{11}|\d{19}", raw_number):
+        return None
+    version = int(raw_version)
+    if version < 1:
+        return None
+    return {
+        "version": version,
+        "purchase_number": raw_number,
+        "published_at": values.get("publishDTInEIS") or "",
+    }
+
+
 def extract_notice_metadata(xml_text: str) -> dict[str, Any]:
     if not xml_text or not xml_text.strip():
         return {}
