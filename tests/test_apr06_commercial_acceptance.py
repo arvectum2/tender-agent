@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import copy
 import json
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -11,11 +10,9 @@ import pytest
 from src.modules.commercial_acceptance.acceptance import (
     AcceptanceError,
     _new_file,
-    evaluate_observation,
     freeze_manifest,
     main,
     score,
-    sha256,
     thresholds_valid,
     validate_manifest,
 )
@@ -97,7 +94,7 @@ def test_candidates_are_real_registry_shaped_diverse_but_not_frozen():
     assert "freeze" not in manifest
     with pytest.raises(AcceptanceError, match="not verified"):
         freeze_manifest(manifest, frozen_at="2026-10-09T09:00:00+03:00")
-    with pytest.raises(AcceptanceError, match="frozen corpus required"):
+    with pytest.raises(AcceptanceError, match="not verified"):
         validate_manifest(manifest, require_frozen=True)
 
 
@@ -262,3 +259,24 @@ def test_manifest_missing_case_fails_20_threshold():
     manifest["cases"] = manifest["cases"][:19]
     with pytest.raises(AcceptanceError, match="20-30"):
         validate_manifest(manifest)
+
+def test_false_go_no_go_and_corrections_must_be_regressions():
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["suggested_decision"] = "GO"
+    obs[reg]["operator_review"]["decision"] = "NO_GO"
+    assert score(manifest, obs, approved(policy()))["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    obs[reg]["confirmed_defects"] = [{
+        "defect_id": "false_decision",
+        "source_ref": "test-only:counterevidence",
+        "summary": "Dangerous false-positive GO",
+    }]
+    report = score(manifest, obs, approved(policy()))
+    assert report["status"] == "FAILED_ACCEPTANCE"
+    assert report["metrics"]["false_go_no_go"] > 0
+    obs[reg]["suggested_decision"] = "NO_GO"
+    obs[reg]["operator_review"]["decision"] = "NO_GO"
+    obs[reg]["corrected_fields"] = 1
+    obs[reg]["confirmed_defects"] = []
+    assert score(manifest, obs, approved(policy()))["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
