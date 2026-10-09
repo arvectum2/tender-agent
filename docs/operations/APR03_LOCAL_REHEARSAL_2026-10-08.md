@@ -62,4 +62,3 @@ delivery after worker restart, NOT mid-execution resume of a real document job.
   pending production release review.
 - APR-03 remains gated until Owner authorizes and the external provider/device
   requirements are satisfied with measured evidence.
-
