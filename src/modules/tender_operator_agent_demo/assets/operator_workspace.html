@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Operator Workspace · Arvectum Tender Agent</title>
+  <link rel="stylesheet" href="/pilot/tender-agent/workspace/assets/workspace.css">
+  <script src="/pilot/tender-agent/workspace/assets/workspace.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Основная навигация">
+    <div class="brand"><div class="brand-icon">AV</div><div><strong>Arvectum</strong><span>TENDER AGENT</span></div></div>
+    <p class="side-label">РАБОЧЕЕ ПРОСТРАНСТВО</p>
+    <nav class="menu" aria-label="Разделы">
+      <button class="nav-btn active" data-tab="new" type="button"><span class="nav-icon">⊞</span> Новый анализ</button>
+      <button class="nav-btn" data-tab="history" type="button"><span class="nav-icon">◷</span> История анализов</button>
+      <button class="nav-btn" data-tab="registry" type="button"><span class="nav-icon">▤</span> База закупок</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <span class="privacy-dot"></span> Приватный контур · Mac mini
+      <p>Нет автоподачи заявок, подписания, отправки сообщений и денежных операций.</p>
+      <a href="/pilot/tender-agent">Пошаговый мастер ↗</a>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><div class="crumbs">Tender Agent <span>/</span> <strong id="current-tab">Новый анализ</strong></div><div class="operator-indicator"><span class="privacy-dot"></span> Режим оператора</div></header>
+    <div class="page-content">
+      <section class="pane" id="pane-new">
+        <div class="intro"><div class="eyebrow">APR-03B · OPERATOR WORKSPACE</div><h1>Анализ закупки</h1><p>Оригинальные данные ЕИС → документы → проверяемый анализ с источниками. Решение об участии остаётся за человеком.</p></div>
+        <div class="panel primary-panel">
+          <div class="panel-title"><h2>Новая закупка</h2><span class="tag">44-ФЗ / 223-ФЗ</span></div>
+          <form id="import-form" novalidate>
+            <label for="reference">Реестровый номер или ссылка на извещение ЕИС</label>
+            <div class="input-row">
+              <input id="reference" name="reference" type="text" inputmode="url" maxlength="500" placeholder="0372200172326000015 или https://zakupki.gov.ru/…" required autocomplete="off" spellcheck="false" />
+              <button class="button button-primary" id="import-btn" type="submit">Получить документы <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+          <div class="help-text">Принимаются только официальные HTTPS-ссылки zakupki.gov.ru или реестровые номера. Никаких фиктивных данных.</div>
+          <div class="progress-area" id="progress" hidden role="status" aria-live="polite">
+            <div class="loader"></div><div><strong id="progress-title">Обработка запроса</strong><p id="progress-description">Ожидаем ответ ЕИС…</p></div>
+          </div>
+        </div>
+        <div id="run-empty" class="empty-panel"><div class="empty-mark">⌕</div><h2>Здесь появится ваш анализ</h2><p>Введите номер закупки или выберите сохранённый запуск в разделе «История анализов».</p></div>
+        <section id="run-section" hidden>
+          <div class="panel run-panel">
+            <div class="panel-title"><h2>Текущий запуск</h2><span id="run-status" class="tag">—</span></div>
+            <p class="run-id" id="run-id"></p><h3 id="run-title"></h3>
+            <div class="facts" id="run-facts"></div>
+            <div class="actions"><button id="analyze-btn" class="button button-primary" type="button">Запустить глубокий анализ</button><button id="refresh-run" class="button button-secondary" type="button">Обновить</button><a id="source-link" class="button button-ghost" target="_blank" rel="noopener noreferrer" hidden>Извещение ЕИС ↗</a></div>
+            <div id="run-warnings" class="warning-list"></div>
+          </div>
+          <div class="two-columns">
+            <section class="panel"><div class="panel-title"><h2>Исходные документы</h2><span class="counter" id="document-count">0</span></div><div id="file-list" class="file-list"></div></section>
+            <section class="panel"><div class="panel-title"><h2>Ход обработки</h2><span class="counter" id="event-count">0</span></div><ol id="event-list" class="event-list"></ol></section>
+          </div>
+          <section class="panel report-panel" id="report-panel" hidden>
+            <div class="panel-title"><div><div class="eyebrow">ПОДТВЕРЖДЁННЫЕ ДАННЫЕ</div><h2>Результаты и доказательства</h2></div><div class="report-actions"><a id="download-pdf" class="button button-secondary" download>PDF ↓</a><a id="download-docx" class="button button-secondary" download>DOCX ↓</a></div></div>
+            <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
+            <h3 id="report-recommendation"></h3><div id="executive-summary"></div>
+            <div id="evidence-facts"></div>
+            <div id="report-sections"></div>
+            <details class="raw-report"><summary>Полный исходный текст отчёта</summary><pre id="report-text"></pre></details>
+          </section>
+        </section>
+      </section>
+      <section class="pane" id="pane-history" hidden>
+        <div class="intro"><div class="eyebrow">ИСТОРИЯ · РЕАЛЬНЫЕ ЗАПУСКИ</div><h1>История анализов</h1><p>Сохранённые запуски и отчёты. Локальные анализы документов и история канонического Tender Research показаны отдельно.</p></div>
+        <div class="panel"><div class="panel-title"><h2>Запуски оператора</h2><button class="button button-secondary" id="refresh-history">Обновить</button></div><div id="operator-history" class="history-list"></div></div>
+        <div class="panel"><div class="panel-title"><h2>История Tender Research</h2><span class="tag">Read only · БД</span></div><div id="rag-history" class="history-list"></div><div id="rag-preview" class="preview-box" hidden><div class="panel-title"><h3 id="rag-preview-title"></h3><a id="rag-export-pdf" class="button button-secondary">PDF ↓</a></div><pre id="rag-preview-text"></pre></div></div>
+      </section>
+      <section class="pane" id="pane-registry" hidden>
+        <div class="intro"><div class="eyebrow">CANONICAL DATABASE · READ ONLY</div><h1>База закупок</h1><p>Только чтение: сохранённые закупки, основные поля, зарегистрированные документы. Запросы SQL и изменение записей через интерфейс недоступны.</p></div>
+        <div class="panel">
+          <form id="registry-form" class="registry-form"><label for="registry-search">Поиск по номеру, заказчику или названию</label><div class="input-row"><input id="registry-search" maxlength="128" placeholder="Номер или часть названия"/><button class="button button-primary" type="submit">Найти</button></div></form>
+          <div class="registry-topline"><span id="registry-counter"></span><div><button class="button button-secondary button-small" id="prev-registry" type="button">← Назад</button><button class="button button-secondary button-small" id="next-registry" type="button">Далее →</button></div></div>
+          <div id="registry-list" class="registry-list"></div>
+        </div>
+        <section id="registry-detail-panel" class="panel" hidden><div class="panel-title"><h2>Карточка из базы</h2><span class="tag">Только чтение</span></div><div id="registry-detail"></div></section>
+      </section>
+    </div>
+  </main>
+</div>
+<div id="toast" role="alert" aria-live="assertive" hidden></div>
+</body>
+</html>

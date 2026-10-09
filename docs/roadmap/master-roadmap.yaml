@@ -225,7 +225,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
     - id: APR-03B-OPERATOR-WORKSPACE
       priority: P0
-      state: planned
+      state: implementation_in_progress_owner_browser_acceptance_pending
       depends_on: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME]
       legacy_mapping: [ARV-019, ARV-061, ARV-064, ARV-066]
       outcome: 'Authenticated browser workspace for live EIS number/URL request, status, cited results, report and read-only canonical procurement database.'
