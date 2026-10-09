@@ -624,6 +624,7 @@ def _customer_decision_core_projection(model: dict[str, Any]) -> dict[str, Any] 
     return {
         "contract_version": raw.get("contract_version"),
         "procurement_regime": raw.get("procurement_regime"),
+        "facts": _verified_notice_fact_projection(model),
         "decision": {
             "status": decision.get("status"),
             "confidence": decision.get("confidence"),
