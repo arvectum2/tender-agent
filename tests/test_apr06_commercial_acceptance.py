@@ -58,10 +58,10 @@ def observation(case: dict) -> dict:
         "operator_review": {
             "reviewer_id": "synthetic-test-reviewer",
             "evidence_ref": "test-only:human-review-" + case["reg_number"],
-            "decision": "DEFER",
+            "decision": "NO_GO",
             "decided_at": "2026-10-09T10:20:00+03:00",
         },
-        "suggested_decision": "DEFER",
+        "suggested_decision": "NO_GO",
         "analysis_evidence_ref": "test-only:analysis-" + case["reg_number"],
         "claims": [{"claim_id": "claim-1", "citation_verified": True, "source_ref": "test-only:doc"}],
         "reviewed_fields": 10, "corrected_fields": 0,
