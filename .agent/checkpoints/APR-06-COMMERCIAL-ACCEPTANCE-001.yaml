@@ -32,6 +32,8 @@ completed:
   - Downloaded five bounded read-only 223-FZ files across four cases to local-only /tmp (four PDF/DOCX magic matches and one HTML-extension/ZIP-content mismatch), published hash/size receipts only.
   - Added safe filename recovery for malformed EIS 223-FZ HTML attributes, strict official host/GUID validation, extra security/regression tests, and nine-case machine-only pre-review queue.
   - Full local APR-06 regression suite 3328 passed, 238 skipped, 329 warnings; make check clean. After final GUID hardening 51 targeted tests passed.
+  - Deployed exact GitHub revision 6c869543 to existing isolated Mac mini API/worker; loopback /health HTTP 200, both processes running.
+  - In updated running API, attached 1+3+1 public 223-FZ files to three previously created runs, all fail-closed as docs_required; left content-format-mismatched case unattached.
 current: >-
   Source/document completeness and source-version validation plus real
   operator judgments are mandatory before final commercial acceptance.
@@ -42,7 +44,7 @@ pending:
   - Obtain actual attributed HUMAN GO/NO_GO/DEFER, citation corrections, timestamps and application package assessments per case (0/28 so far).
   - Get owner sign-off on seven score thresholds; score all reviewed observations and persist regressions for confirmed defects.
   - Merge upstream PR only under current governance and after final acceptance; keep RU VPS and payment gates deferred.
-last_verified_commit: f65a97e54d4328a4bf4f39ff5be5ef560a650f81
+last_verified_commit: 6c869543dbcd508e1b2f379e4494ad158b3b76b9
 test_results:
   - APR-06 targeted Mac mini pytest 24 passed; Ruff clean.
   - Real 44-FZ SOAP cases 20 unique; 168 files SHA256; 9 analyzed, 11 docs_required.
@@ -52,6 +54,8 @@ test_results:
   - APR-06 GitHub CI pending latest head; do not claim final pass before actual result.
   - APR-06 223-FZ 4 official navigation results with document links, 4 ambiguous revision stops; 5 bounded source files (4 format-matching, 1 content/extension mismatch), no submitted bids.
   - Full Mac mini pytest 3328 passed / 238 skipped, 329 warnings, PostgreSQL 16 CLI; make check passed; final targeted 51 passed.
+  - Mac mini real runtime image 6c869543 deployed; API HTTP 200, worker running, 3/3 attempted public 223-FZ run supplements stay docs_required.
+
 resume_instruction: >-
   Read this checkpoint and the APR06_LIVE_READONLY_EIS_2026-10-09 and
   APR06_OPERATOR_REVIEW_QUEUE_2026-10-09 documents first. Do not repeat 20
@@ -70,3 +74,4 @@ execution:
   public_223_receipts: docs/acceptance/apr06_223fz_public_probe_2026-10-09.json
   public_223_download_receipts: docs/acceptance/apr06_223fz_download_receipts_2026-10-09.json
   machine_pre_review: docs/acceptance/apr06_machine_prefill_2026-10-09.json
+  local_runtime_smoke: docs/acceptance/APR06_MACMINI_223FZ_RUNTIME_SMOKE_2026-10-09.md
