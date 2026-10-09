@@ -14,7 +14,10 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
-from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (\n    get_operator_source_evidence,\n)\nfrom src.modules.tender_operator_agent_demo.operator_workspace_service import (
+from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
+    get_operator_source_evidence,
+)
+from src.modules.tender_operator_agent_demo.operator_workspace_service import (
     import_eis_reference,
     original_document,
     parse_eis_reference,
