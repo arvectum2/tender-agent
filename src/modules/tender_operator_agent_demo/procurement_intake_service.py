@@ -74,6 +74,7 @@ from src.tender_research.providers.public_44fz_search import (
     _parse_detail_metadata,
     _select_current_revision_document_links,
 )
+from src.tender_research.providers.public_223fz_search import Public223FzSearchProvider
 
 ARCHIVE_DOWNLOAD_RETRY_ATTEMPTS = 5
 ARCHIVE_DOWNLOAD_RETRY_DELAY_SECONDS = 10
@@ -521,9 +522,105 @@ def _parse_public_notice_attachments(page_html: str, *, page_url: str) -> list[P
     return attachments
 
 
+def _extract_223fz_documents_navigation_url(
+    common_info_html: str,
+    *,
+    notice_number: str,
+) -> str | None:
+    """Resolve only same-number EIS documents links with official notice GUID.
+
+    EIS 223-FZ documents endpoints require a notice GUID in addition to the
+    public procurement number. Never guess it or use 44-FZ document routes.
+    """
+    if not re.fullmatch(r"\d{11}", notice_number):
+        return None
+    paths = {
+        "/epz/order/notice/notice223/documents.html",
+        "/223/purchase/public/purchase/info/documents.html",
+    }
+    choices: set[str] = set()
+    for match in re.finditer(r"""href\s*=\s*["']([^"']+)["']""", common_info_html, re.IGNORECASE):
+        # Decode only ampersands to preserve literal &noticeGuid, which
+        # html.unescape incorrectly turns into a named HTML entity prefix.
+        href = re.sub(r"&(?:amp;|#38;|#x26;)", "&", match.group(1), flags=re.IGNORECASE)
+        link = urljoin("https://zakupki.gov.ru", href)
+        parsed = urlparse(link)
+        if parsed.scheme != "https" or parsed.hostname != "zakupki.gov.ru" or parsed.path not in paths:
+            continue
+        query = parse_qs(parsed.query)
+        guid = (query.get("noticeGuid") or query.get("purchaseNoticeGuid") or [""])[0]
+        number = (query.get("purchaseNoticeNumber") or query.get("regNumber") or [""])[0]
+        if number == notice_number and re.fullmatch(r"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}", guid):
+            choices.add(link)
+    if len(choices) > 1:
+        raise PublicRevisionBindingError({
+            "source_regime": "223fz", "requires_review": True,
+            "reason": "multiple official 223-FZ document navigation targets",
+        })
+    return next(iter(choices)) if choices else None
+
+
+def _resolve_223fz_documents_url(source_url: str) -> str:
+    """Navigate read-only via EIS common-info; fail closed if GUID unavailable."""
+    parsed = urlparse(source_url)
+    query = parse_qs(parsed.query)
+    notice_number = (query.get("purchaseNoticeNumber") or query.get("regNumber") or [""])[0]
+    if parsed.scheme != "https" or parsed.hostname != "zakupki.gov.ru":
+        raise PublicRevisionBindingError({"requires_review": True, "reason": "invalid EIS host"})
+    direct_guid = (query.get("noticeGuid") or query.get("purchaseNoticeGuid") or [""])[0]
+    allowed_document_paths = {
+        "/223/purchase/public/purchase/info/documents.html",
+        "/epz/order/notice/notice223/documents.html",
+    }
+    if direct_guid:
+        if (
+            parsed.path not in allowed_document_paths
+            or not re.fullmatch(r"\d{11}", notice_number)
+            or not re.fullmatch(
+                r"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}",
+                direct_guid,
+            )
+        ):
+            raise PublicRevisionBindingError({
+                "requires_review": True, "reason": "invalid 223-FZ official notice GUID or path",
+            })
+        return source_url
+    if parsed.path.startswith("/223/purchase/public/purchase/info/"):
+        common_path = "/223/purchase/public/purchase/info/common-info.html"
+    else:
+        common_path = "/epz/order/notice/notice223/common-info.html"
+    if not re.fullmatch(r"\d{11}", notice_number):
+        raise PublicRevisionBindingError({"requires_review": True, "reason": "invalid 223-FZ registry number"})
+    common_url = f"https://zakupki.gov.ru{common_path}?regNumber={notice_number}"
+    result = Public223FzSearchProvider(bypass_proxy=True).fetch_detail(card_url=common_url)
+    url = _extract_223fz_documents_navigation_url(
+        result.common_info_html or "", notice_number=notice_number
+    )
+    if not url:
+        raise PublicRevisionBindingError({
+            "source_regime": "223fz", "requires_review": True,
+            "reason": "223-FZ official document link with noticeGuid not found",
+        })
+    return url
+
+
 def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachment]:
-    detail = Public44FzSearchProvider(bypass_proxy=True).fetch_detail(card_url=source_url)
-    selection = (getattr(detail, "raw", {}) or {}).get("document_revision_selection") or {}
+    # 223-FZ public HTML must never be parsed by the 44-FZ provider.
+    # Source-specific document revision/customer trust gates also stay separate.
+    path = urlparse(source_url).path.lower()
+    is_223fz = path.startswith("/223/") or "/notice223/" in path
+    provider = Public223FzSearchProvider if is_223fz else Public44FzSearchProvider
+    detail_url = _resolve_223fz_documents_url(source_url) if is_223fz else source_url
+    detail = provider(bypass_proxy=True).fetch_detail(card_url=detail_url)
+    raw = getattr(detail, "raw", {}) or {}
+    if is_223fz:
+        selection = {
+            "source_regime": "223fz",
+            "reason": "; ".join(raw.get("review_reasons", [])) or "223-FZ provenance requires review",
+            "requires_review": bool(raw.get("requires_review")),
+        }
+    else:
+        selection = raw.get("document_revision_selection") or {}
     if selection.get("requires_review"):
         raise PublicRevisionBindingError(selection)
     if not detail.document_links:
@@ -534,6 +631,17 @@ def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachm
         name = item.file_name or item.title
         if not name or not item.url:
             continue
+        if is_223fz:
+            # Some EIS 223-FZ anchors expose an unquoted title attribute as
+            # "...pdf ' > <link label>". Keep only the extension-terminated
+            # official filename; the attachment downloader still enforces its
+            # file-format allowlist and content/URL safety checks.
+            recovered = re.match(
+                r"""^(.+?\.(?:pdf|docx?|xlsx?|xml|txt|zip|csv|html?))\s*["\x27]\s*>""",
+                name, re.IGNORECASE,
+            )
+            if recovered:
+                name = recovered.group(1)
         parsed_url = urlparse(item.url)
         attachment_id = item.raw.get("uid") or parse_qs(parsed_url.query).get(
             "uid", [Path(parsed_url.path).name or name]
