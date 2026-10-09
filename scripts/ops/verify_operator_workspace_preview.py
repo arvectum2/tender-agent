@@ -18,16 +18,25 @@ PACKAGE = Path("src/modules/tender_operator_agent_demo")
 IGNORED = {"__pycache__", ".DS_Store"}
 
 
-def source_manifest(root: Path) -> dict[str, str]:
-    package_dir = root / PACKAGE
-    if not package_dir.is_dir():
-        raise RuntimeError(f"Missing operator source: {package_dir}")
+def tree_manifest(root: Path, relative: Path) -> dict[str, str]:
+    """Return canonical source bytes from any tracked sub-tree."""
+    source = root / relative
+    if not source.is_dir():
+        raise RuntimeError(f"Missing operator source: {source}")
     return {
-        str(path.relative_to(package_dir)): hashlib.sha256(path.read_bytes()).hexdigest()
-        for path in sorted(package_dir.rglob("*"))
+        str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sorted(source.rglob("*"))
         if path.is_file()
-        and not any(part in IGNORED for part in path.relative_to(package_dir).parts)
+        and not any(part in IGNORED for part in path.relative_to(source).parts)
         and path.suffix != ".pyc"
+    }
+
+
+def source_manifest(root: Path) -> dict[str, str]:
+    """Backwards-compatible operator-only manifest for old unit tests."""
+    return {
+        str(Path(key).relative_to(PACKAGE)): value
+        for key, value in tree_manifest(root, PACKAGE).items()
     }
 
 
@@ -38,20 +47,26 @@ def manifest_differences(expected: dict[str, str], actual: dict[str, str]) -> li
 _RUNTIME_CODE = """
 import hashlib, json
 from pathlib import Path
-base = Path('/app/src/modules/tender_operator_agent_demo')
+base = Path('/app')
 ignored = {'__pycache__', '.DS_Store'}
-files = {
-    str(p.relative_to(base)): hashlib.sha256(p.read_bytes()).hexdigest()
-    for p in sorted(base.rglob('*'))
-    if p.is_file() and not any(part in ignored for part in p.relative_to(base).parts)
-    and p.suffix != '.pyc'
-}
+files = {}
+for sub in ('src', 'scripts'):
+    path = base / sub
+    if not path.is_dir():
+        raise RuntimeError(f'Missing source snapshot: {sub}')
+    files.update({
+        str(p.relative_to(base)): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in sorted(path.rglob('*'))
+        if p.is_file() and not any(part in ignored for part in p.relative_to(path).parts)
+        and p.suffix != '.pyc'
+    })
 print(json.dumps(files, sort_keys=True))
 """
 
 
+
 def verify_runtime(*, repo: Path, container: str, expected_commit: str) -> None:
-    expected = source_manifest(repo)
+    expected = {**tree_manifest(repo, Path("src")), **tree_manifest(repo, Path("scripts"))}
     response = subprocess.run(
         ["docker", "exec", container, "python", "-c", _RUNTIME_CODE],
         capture_output=True, text=True, check=True, timeout=30,
@@ -61,7 +76,7 @@ def verify_runtime(*, repo: Path, container: str, expected_commit: str) -> None:
         raise TypeError("Invalid Docker source manifest")
     mismatch = manifest_differences(expected, actual)
     if mismatch:
-        raise RuntimeError("Operator Docker source drift: " + ", ".join(mismatch[:25]))
+        raise RuntimeError("Whole-source Docker snapshot drift: " + ", ".join(mismatch[:25]))
     label = subprocess.run(
         ["docker", "inspect", container,
          "--format", "{{index .Config.Labels \"org.opencontainers.image.revision\"}}"],
@@ -69,7 +84,7 @@ def verify_runtime(*, repo: Path, container: str, expected_commit: str) -> None:
     ).stdout.strip()
     if label != expected_commit:
         raise RuntimeError("Operator source commit mismatch: " + label)
-    print(f"OPERATOR_IMAGE_PARITY_PASS: {len(expected)} files; commit {expected_commit[:12]}")
+    print(f"OPERATOR_IMAGE_FULL_SOURCE_PARITY_PASS: {len(expected)} files; commit {expected_commit[:12]}")
 
 
 def main() -> None:

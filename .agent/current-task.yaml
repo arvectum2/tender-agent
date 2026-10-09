@@ -35,9 +35,10 @@ completed:
   - 'Added clean-process ORM bootstrap regression to prevent broken foreign key registry during LLM startup.'
   - 'Isolated 44-FZ museum-of-bread real EIS normalized source (limited beginning excerpts) full controlled Gemma LLM: 4/4 sections PASSED, 7 requirements/10 supplier questions/5 risks, 286 seconds, zero error events; factual source coverage still unverified.'
   - 'Introduced deterministic bounded context selection across long normalized documents, prioritizes procurement terms and retains first/middle/last with accurate normalized char ranges, no invented original PDF or XML citations.'
+  - 'Eliminated remaining Docker preview overlay drift: source-locked private Dockerfile now recreates /app/src and /app/scripts from one exact commit, verifies every source byte, runs as non-root app.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261/#262/#263 and DP #86 merged, #264 under CI; R4 real-source limited excerpt Gemma four-section E2E PASS, bounded distributed source context refactor and regression tests in progress; R5 full evidence recall and preview acceptance outstanding.'
+current: 'TA #261/#262/#263 and DP #86 merged; stacked #264/#265 under CI, R4 fully source-locked operator Docker preview parity refactor completed in separate branch, private staged preview acceptance and R5 owner document quality still pending.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -58,8 +59,9 @@ test_results:
   - 'R4 isolated subprocess ORM metadata bootstrap regression PASS.'
   - 'R4 real EIS beginning-only excerpts: 4/4 Gemma output sections PASSED after 286 seconds; 7 requirements, 10 questions, 5 risks; not independently source-validated.'
   - 'R4 distributed long-document bounded excerpt + actual operator workflow contract tests 12 PASS.'
+  - 'R4 Docker full src/scripts snapshot with strict byte integrity tests 34 PASS; not yet deployed.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #261/#262/#263 and DP #86 merged, TA #264 under exact-head CI. Branch refactor/tdp-evidence-context-r4-20261009 extracts cross-document bounded snippet selector (first/middle/end, role-specific scores, truthful normalized char offsets), tests 12 passed. Real four-section Gemma test on beginning slices of normalized EIS museum of bread docs produced 7 requirements, 10 questions, 5 risks, 4/4 schema PASS in 286 sec, still unverified facts. Complete CI/merge then source-locked private pilot 18083 staging and persisted report acceptance, retain old pilot 18082. Next R3 legacy breakup, R4 actual LLM provider, R5 20-30 procurement coverage. Keep disabled watchdog untouched.'
+resume_instruction: 'Task TDP-REFACTOR-20261009 in_progress. TA #261/#262/#263 and DP #86 merged; #264 (isolated Gemma ORM bootstrap), #265 (bounded source selection) CI under review. Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-full-source-image-r4-20261009 builds full src/scripts Docker image and strict runtime byte parity, 34 focused tests passed; stage container on loopback 18087, verify parity/auth/read-only prior to promotion. Actual owner Safari preview 18083 still older source; back up original saved run outputs then rerun with new source only after CI and rollback plan, do not disturb old 18082. R5 >=20 frozen procurement cases and owner evidence quality pending. Watchdog disabled.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
