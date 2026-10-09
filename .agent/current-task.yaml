@@ -12,6 +12,9 @@ definition_of_done:
 completed:
   - "Identified seven open PRs; APR-03..APR-07 are a stacked chain, APR-02 numeric and ops are separate."
   - "Read canonical owner sequencing: APR-03 -> APR-03B browser workspace -> APR-04 -> APR-05."
+  - "PR #229 conflict resolved against current main; focused 3/3 Mac mini verifier tests and Node syntax passed; updated head 16d79ac pushed, exact-head CI in progress."
+  - "PR #246 preserved both numeric evidence guards; 21/21 tests and targeted Ruff passed; head be56aafd pushed, PR retargeted main, exact-head CI queued."
+  - "PR #251 local merge conflict resolved preserving canonical roadmap; 13/13 focused tests and targeted Ruff passed; branch held pending preceding merges."
 current: "Review PR #246 and #251 merge readiness, conflicts and exact CI, then merge only tested bounded increments."
 pending:
   - "PR #246: dependent predecessor #245 already merged; reconcile and verify."
@@ -21,7 +24,7 @@ pending:
   - "Summarize no-VPS capability vs deployment-gated work."
 last_verified_commit: "748967f11d91dd3f458c689859b72f36b309f2ff"
 test_results: []
-resume_instruction: "Fetch latest origin/main and open PRs. Continue from PR #246 evidence review and tests; then PR #251 conflicts and exact-head CI; do not treat public VPS or operator-human acceptance as done."
+resume_instruction: "Await exact-head CI #229 then merge on green; continue #246 CI/merge, update APR-03 branch from new main and push for exact-head CI. VPS and operator human acceptance remain blocked."
 execution:
   branch: agent/pr-closure-20261009
   manual_override: false
