@@ -28,9 +28,11 @@ completed:
   - 'Consolidated four duplicate SQL query bodies (workflow, optimization, workspace feed, integration task contexts) into src/shared/control_package.py, retaining compatibility wrappers in existing callers; identical groups now five.'
   - 'PR #262 exact-head GitHub CI PASS; merged as 0eea8e7eedb3a8c2bfd0167925df9c1930b84cfd.'
   - 'R4 safe controlled LLM failure event now records only exception class and provider mode.'
+  - 'R4 legacy decomposition: isolated controlled operator model+SQL execution into operator_llm_workflow.py, retained exact old _try_run_llm_workflow entrypoint as a thin compatibility shim; 67 relevant tests pass.'
+  - 'Checked real OpenAI-compatible app provider pointed at local llama.cpp Gemma 4 12B: JSON subject and 1000000 RUB parsed successfully in 6.89 seconds; multi-stage model validation still pending.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA PR #261 #262 and DP PR #86 merged; R4 explicit controlled LLM failure diagnostics in progress, legacy decomposition and model E2E outstanding.'
+current: 'TA #261 #262 and DP #86 merged; R4 diagnostics PR #263 under CI. Next R4 compatibility extraction into standalone operator_llm_workflow.py tested on 67 cases; controlled model E2E still pending.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -46,8 +48,9 @@ test_results:
   - 'R3 duplicate SQL context queries use shared implementation, 2 direct fake session tests PASS, AST groups reduced 9->5.'
   - 'PR #262 exact-head all CI PASS. Local all-tests: 3346 passed, 238 skipped, one local R9 pg_restore failure also reproduced in prior code; no R9 fix claim.'
   - 'R4 targeted LLM diagnostic tests 3 passed.'
+  - 'R4 controlled LLM compatibility extraction 67 relevant tests PASS; real local Gemma structured-output via product provider 6.89s, not yet full tender run.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress, TA #261 #262 and DP #86 merged. R4 branch refactor/tdp-runtime-r4-20261009 adds safe LLM failure diagnostic. Finish exact-head CI/merge, isolate model provider in non-production run, analyze R9 local pg_restore environment separately; then continue staged legacy breakup R3, genuine LLM E2E R4, representative procurement quality R5. Preserve both private previews 18082/18083 and disabled watchdog.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA PR #261/#262 and DP #86 merged; PR #263 safe LLM failure event is under GitHub CI. Next stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-llm-extract-r4-20261009 separates controlled operator LLM workflow into standalone module, 67 regression tests passed; raise PR after R4 parent. Exact source main preview 18083 still old and must not be changed without gate. Full E2E with local Gemma and representative procurement corpus R5 remain. Mac mini R9 pg_restore fails locally but latest GitHub CI all green. Do not enable previously disabled watchdog.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true

@@ -938,71 +938,21 @@ def _try_run_llm_workflow(
     quote_paths: list[Path],
     provider_mode: str = "llm",
 ) -> dict[str, Any] | None:
-    try:
-        from sqlalchemy import create_engine
-        from sqlalchemy.orm import Session
+    """Legacy compatibility shim; no other source of controlled workflow logic."""
+    from src.modules.tender_operator_agent_demo.operator_llm_workflow import (
+        run_controlled_operator_llm,
+    )
 
-        from src.modules.controlled_llm_prebid.service import (
-            run_controlled_tender_operator_workflow,
-        )
-        from src.shared.db.base import Base
-
-        settings = get_settings()
-        if not settings.database_url:
-            return None
-
-        engine = create_engine(settings.database_url)
-        Base.metadata.create_all(engine)
-
-        context = {
-            "deal_id": f"DEMO-{run_id}",
-            "operator_id": "tender_operator_demo",
-            "operator_profile": {},
-            "documents": {
-                "notice_text": notice_text or "",
-                "technical_spec_text": technical_spec_text or "",
-                "contract_draft_text": contract_draft_text or "",
-            },
-            "workflow_guardrails": {
-                "manual_only": True,
-                "no_email_send": True,
-                "no_platform_submission": True,
-                "human_review_required": True,
-            },
-            "tkp_inputs": [],
-        }
-        with Session(engine) as session:
-            result = run_controlled_tender_operator_workflow(
-                session,
-                provider_mode=provider_mode,
-                context=context,
-                include_quote_normalization=False,
-                include_bid_decision=False,
-                simulate_invalid_output=False,
-                provider_name_override=None,
-            )
-            return {
-                "analysis_mode": result.analysis_mode,
-                "resolved_provider": result.resolved_provider,
-                "sections": result.sections,
-                "trace_ids": result.trace_ids,
-                "requirements": result.requirements,
-                "supplier_questions": result.supplier_questions,
-                "rfq_draft": result.rfq_draft,
-                "contract_risks": result.contract_risks,
-                "bid_decision": result.bid_decision,
-            }
-    except Exception as exc:
-        # The previous catch-all silently turned every LLM/DB/provider error
-        # into a "successful" deterministic run. Log only the exception class:
-        # provider exception text can include credentials or document content.
-        append_demo_run_event(
-            run_id,
-            "controlled_llm_runtime_failed",
-            "Контролируемый LLM-анализ не запустился; результаты модели не использованы.",
-            {"error_type": type(exc).__name__, "provider_mode": provider_mode},
-        )
-        return None
+    return run_controlled_operator_llm(
+        run_id=run_id,
+        notice_text=notice_text,
+        technical_spec_text=technical_spec_text,
+        contract_draft_text=contract_draft_text,
+        quote_paths=quote_paths,
+        provider_mode=provider_mode,
+        emit_event=append_demo_run_event,
+        settings_getter=get_settings,
+    )
 
 
 def _classify_controlled_llm_result(llm_result: dict[str, Any]) -> dict[str, Any]:
