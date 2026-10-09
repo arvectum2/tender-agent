@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-03B-UNIFIED-FLOW-20261009
-status: blocked
+status: in_progress
 authority: OWNER_DIRECTIVE
 goal: 'Fix owner-reported operator workspace regression: one canonical browser UI with existing EIS keyword search and real EIS-to-documents-to-analysis outcome.'
 definition_of_done:
@@ -23,8 +23,11 @@ completed:
   - 'PR #259 exact-head 1e81a5f49350e4f9a8afb487688e556f548c81c1 passed full GitHub CI and was merged as e330418bf430c6b87f65bdbf285d0377c1f8a620.'
   - 'Private original workspace port 18083 promoted to unified implementation, authenticated HTTP 200 and protected 401, old /pilot/tender-agent also same HTML; original port 18082 healthy.'
 
-current: 'Implementation merged in main as PR #259; private Mac mini preview updated and healthy; owner browser acceptance and evaluation of broader analytical quality remain open.'
+current: 'Owner reproduction: two Safari initiated 44-FZ runs failed after six files were downloaded; Docker preview code differs from exact tested main in two server files. Fix image parity, retry both saved runs, validate end-to-end and update owner preview.'
 pending:
+  - 'Fix private preview Docker image provenance: ensure entire tender_operator_agent_demo Python/UI source from exact verified commit, not stale intermediate code.'
+  - 'Verify no differences between deployed preview source and release source; re-run the two actual Safari failed procurement analyses and verify file downloads, report, citations and exports.'
+  - 'Pass focused tests and exact-head CI, merge deployment fix and update preview on loopback 18083; keep pilot 18082 and user credentials unchanged.'
   - 'OWNER: reload http://127.0.0.1:18083/pilot/tender-agent/workspace in Mac mini browser; test keyword search, official 44/223-FZ card selection, original file links, one-click analyze and PDF/DOCX; provide acceptance or actionable UX defects.'
   - 'QUALITY: verified XML citations exist for subject, deadline and NMCK, but other risks/economic/legal interpretation remains human-reviewed; do not claim autonomous bid readiness.'
   - 'After owner browser sign-off, set APR-03B completed and continue APR-04 customer onboarding using existing PR #252; VPS remains deferred.'
@@ -38,7 +41,7 @@ test_results:
   - 'PR #259 full exact-head GitHub Actions CI all green, merge e330418bf430c6b87f65bdbf285d0377c1f8a620.'
   - 'Authenticated private preview 18083 healthy; matching HTML for old and new routes, report+3 verified XML source facts returned HTTP 200; no auth HTTP 401.'
 
-resume_instruction: 'PR #259 is merged, and private Mac mini preview port 18083 already runs the unified UI. Owner should refresh that page and test real keyword search -> select a 44/223-FZ EIS result -> automatic document download and analysis -> original file links and PDF/DOCX. Record feedback and only mark APR-03B completed after browser approval and source integrity review. Next APR-04 PR #252; no VPS.'
+resume_instruction: 'Owner Safari failed runs toa-run-20261009101316-306d54 and toa-run-20261009101331-bfdddd show analysis failed with int(None), all 6 documents present. Runtime Docker image differs from canonical main in upload_service_legacy.py and procurement_intake_service.py. Build preview image by COPYing exact full src/modules/tender_operator_agent_demo from verified origin/main, verify parity, re-analyze failed runs, check PDF/DOCX/3 XML citations, run CI, merge fix PR and update private 18083. Do not disturb pilot 18082 or change credentials.'
 execution:
   branch: null
   manual_override: false

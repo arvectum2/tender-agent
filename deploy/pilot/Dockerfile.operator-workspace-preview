@@ -1,0 +1,13 @@
+# PRIVATE MAC MINI E2E ONLY. Never publish this preview image as an APR-03 VPS release.
+# The prior preview copied selected changed files on top of a stale intermediary
+# image. That let tested source and the running code silently drift apart.
+ARG BASE_IMAGE=arvectum/tender-agent:apr03b-unified-final
+FROM ${BASE_IMAGE}
+
+ARG SOURCE_COMMIT=unknown
+LABEL org.opencontainers.image.revision="${SOURCE_COMMIT}"
+LABEL com.arvectum.component="apr03b-operator-workspace-preview"
+
+# Always overlay the WHOLE operator module, including legacy document parsing
+# and EIS intake adapters. COPY individual UI files is not a safe deployment.
+COPY src/modules/tender_operator_agent_demo/ /app/src/modules/tender_operator_agent_demo/
