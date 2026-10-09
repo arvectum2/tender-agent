@@ -23,11 +23,16 @@ completed:
   - 'Retained generic DP SDK document/resource/chunk IDs and metadata in Tender Agent compatibility processing wrapper without breaking positional legacy dataclasses.'
   - 'Made controlled-LLM fallback provenance and limitations explicit; no model inference from DP or llama.cpp health status.'
   - 'Added strict EIS XML number/date checks, and architecture master roadmap for phases R0..R5.'
-current: 'R0/R1/R2 bounded first slices implemented in both repos, golden persisted report regression green; finish local/CI checks, PRs and follow-on compatibility-strangler phases R3..R5.'
+  - 'R3 first decomposition: new one domain eis_fact_values.py supplies strict source tag/validation contract to source XML evidence endpoint, report model projection and upload enrichment, eliminating divergent name/date/NMCK validators.'
+  - 'Added reproducible exact AST function duplicate audit: baseline nine >=12-line identical-body groups (all within TA, zero between TA and DP).'
+  - 'Consolidated four duplicate SQL query bodies (workflow, optimization, workspace feed, integration task contexts) into src/shared/control_package.py, retaining compatibility wrappers in existing callers; identical groups now five.'
+  - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
+
+current: 'R0/R1/R2 first tranche TA PR #261 waiting full CI; DP PR #86 merged. R3 first one-fact-core compatibility extraction passed 96 tests and awaits subsequent integration/CI.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
-  - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP.'
+  - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
 last_verified_commit: '98c9e38add50426f3bbc26498b40946fa28467ae'
@@ -35,8 +40,10 @@ test_results:
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
   - 'Read-only AST architecture strict audit PASS: 804/158 modules, no forbidden direct imports.'
+  - 'R3 fact value/domain validator extraction 96 relevant tests PASS; no production runtime mutation.'
+  - 'R3 duplicate SQL context queries use shared implementation, 2 direct fake session tests PASS, AST groups reduced 9->5.'
 
-resume_instruction: 'Resume canonical task TDP-REFACTOR-20261009. Two worktrees /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-crossplatform-refactor-20261009 and /Volumes/ArvectumSSD/Arvectum/worktrees/data-platform-crossplatform-refactor-20261009 implement bounded R0-R2; finish exact-head CI/merge if gates, preserve all source-locked Mac mini pilot. Next R3: refactor upload_service_legacy.py (5924 lines) by tested compatibility-strangler slices, then R4 genuine controlled LLM routing + runtime model benchmark and R5 20-30 frozen procurement acceptance. Do not mark full task completed until R0-R5 and owner approval. Tender Agent Watchdog remains owner-disabled.'
+resume_instruction: 'TDP-REFACTOR-20261009: first TA PR #261 exact head d8472d5b0b48ba0458a36d3c35b293d04fe6c2b4 waiting quality CI, DP PR #86 merged 0da0e945e40ac943bb2e3b9a88fb8f9b5a6d4a51. R3 stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-source-fact-unification-20261009 extracts shared eis_fact_values.py, 96 tests pass; rebase onto merged first PR, run CI and merge. Then continue staged decomposition of 5924-line legacy upload, actual LLM runtime diagnostics and benchmarks, and frozen 20-30 procurements. Do not change private 18082/18083 without exact-source/owner checks; watchdog disabled, full task remains in progress.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true

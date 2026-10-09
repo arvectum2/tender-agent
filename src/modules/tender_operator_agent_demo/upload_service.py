@@ -335,11 +335,11 @@ def _enrich_procurement_metadata_from_documents(
         if verified and "<!DOCTYPE" not in text.upper() and "<!ENTITY" not in text.upper():
             try:
                 root = ET.fromstring(text)
-                for field, tag in (
-                    ("procurement_title", "purchaseObjectInfo"),
-                    ("application_deadline", "endDT"),
-                    ("nmck", "maxPrice"),
-                ):
+                from src.modules.tender_operator_agent_demo.eis_fact_values import (
+                    EIS_NOTICE_FACT_TAGS,
+                )
+
+                for field, tag in EIS_NOTICE_FACT_TAGS:
                     values = list(dict.fromkeys(
                         str(node.text).strip() for node in root.iter()
                         if _local_xml_name(node.tag) == tag and node.text and str(node.text).strip()
