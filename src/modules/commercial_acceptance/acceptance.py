@@ -161,7 +161,7 @@ def freeze_manifest(manifest: dict, *, frozen_at: str) -> dict:
         _error("Cannot re-freeze an existing manifest; preserve history")
     for case in manifest["cases"]:
         if case["verification"]["state"] != "eis_verified":
-            _error("Cannot freeze candidate-only procurement cases")
+            _error("Cannot freeze: candidate is not verified against EIS")
     _time(frozen_at, "frozen_at")
     locked = dict(manifest)
     locked["freeze"] = {
@@ -291,6 +291,10 @@ def evaluate_observation(case: dict, obj: dict) -> dict:
         (report_decision == "GO" and decision == "NO_GO")
         or (report_decision == "NO_GO" and decision == "GO")
     )
+    if false_decision and "false_decision" not in {item["defect_id"] for item in found}:
+        _error(f"{reg}: false GO/NO-GO must create a confirmed regression")
+    if corrections and not found:
+        _error(f"{reg}: operator corrections require attributed regression detail")
     return {
         "reg_number": reg, "run_id": obj["run_id"],
         "time_minutes": (decided - started).total_seconds() / 60,
