@@ -301,7 +301,7 @@ def _enrich_procurement_metadata_from_documents(
         merge_structured_metadata,
     )
 
-    candidates: list[tuple[int, dict[str, Any], bool]] = []
+    candidates: list[tuple[int, dict[str, Any], bool, dict[str, str]]] = []
     expected_number = str(metadata.get("procurement_id") or source_procurement.get("procurement_number") or "").strip()
     from_getdocs = metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip"
     for document in documents:
@@ -331,11 +331,28 @@ def _enrich_procurement_metadata_from_documents(
         )
         if getattr(document, "role", "") == "notice":
             score += 10
-        candidates.append((score, parsed, verified))
+        direct_xml: dict[str, str] = {}
+        if verified and "<!DOCTYPE" not in text.upper() and "<!ENTITY" not in text.upper():
+            try:
+                root = ET.fromstring(text)
+                for field, tag in (
+                    ("procurement_title", "purchaseObjectInfo"),
+                    ("application_deadline", "endDT"),
+                    ("nmck", "maxPrice"),
+                ):
+                    values = list(dict.fromkeys(
+                        str(node.text).strip() for node in root.iter()
+                        if _local_xml_name(node.tag) == tag and node.text and str(node.text).strip()
+                    ))
+                    if len(values) == 1:
+                        direct_xml[field] = values[0]
+            except ET.ParseError:
+                pass
+        candidates.append((score, parsed, verified, direct_xml))
     if not candidates:
         return enriched
 
-    _, notice_meta, verified_revision = max(candidates, key=lambda item: item[0])
+    _, notice_meta, verified_revision, direct_xml = max(candidates, key=lambda item: item[0])
     structured = merge_structured_metadata(notice_meta, {}, {})
     existing_procurement = (
         dict(enriched.get("procurement"))
@@ -371,11 +388,7 @@ def _enrich_procurement_metadata_from_documents(
                     "registry_number": expected_number,
                     "file_id": str(source_file["file_id"]),
                     "document": Path(str(source_file.get("display_name") or source_file.get("original_name") or "")).name,
-                    "values": {
-                        "procurement_title": notice_meta.get("procurement_subject"),
-                        "application_deadline": notice_meta.get("submission_deadline"),
-                        "nmck": notice_meta.get("nmck"),
-                    },
+                    "values": direct_xml,
                 }
     enriched["procurement"] = existing_procurement
 
