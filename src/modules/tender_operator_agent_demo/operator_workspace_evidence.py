@@ -75,7 +75,7 @@ def _notice_xml(run_id: str, metadata: dict[str, Any]) -> tuple[ET.Element, dict
         return None
     valid = [
         (xml, item) for xml, item in matches
-        if _values(xml, "purchaseNumber") == [number]
+        if [n for n in _values(xml, "purchaseNumber") if _NUMBER.fullmatch(n)] == [number]
     ]
     # Multiple matching notice revisions need explicit revision selection elsewhere.
     return valid[0] if len(valid) == 1 else None
