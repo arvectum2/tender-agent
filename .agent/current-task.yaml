@@ -14,10 +14,17 @@ definition_of_done:
 completed:
   - 'APR-03 repo runtime package merged into main; production VPS acceptance remains blocked.'
   - 'Identified existing running authenticated private Mac mini pilot stack and reused backend APIs.'
-current: 'Inspect API shapes and existing pilot pages, implement operator workspace.'
+  - 'Created first-party operator dashboard, strict EIS wrapper, canonical read-only registry and protected file downloads.'
+  - 'Focused tests: 18 new tests pass; 100 affected pilot tests pass, 10 skipped.'
+  - 'Built isolated preview image and started loopback port 18083 alongside unchanged live port 18082.'
+  - 'Authenticated HTTP frontend/assets and history/registry endpoints respond, with no invented canonical DB rows.'
+  - 'Real 44-FZ import: 6 files, text extraction 6/6, 10 report sections, HTTP200 report and PDF/DOCX.'
+  - 'Real 223-FZ source returned conservative docs_required (no fabricated analysis). Human citation quality blocked on 0 fact-level citations.'
+  - 'Added fail-closed guard: APR-03B endpoints refuse service when pilot auth is disabled or mis-scoped; new test verifies.'
+current: 'Open APR-03B PR, obtain exact-head CI and merge implementation while keeping owner browser/citation acceptance OPEN.'
 pending:
-  - 'Build workspace UI/API with source evidence and history views.'
-  - 'Test authenticated real-data browser workflow locally.'
+  - 'Obtain exact-head CI and merge implementation package.'
+  - 'Await owner browser acceptance and source-grounded citation coverage after implementation merge.'
   - 'Update roadmap; exact-head CI; merge when eligible.'
 last_verified_commit: '829b81dcea2f22ffa0ade42e2d7dcd6429d517fb'
 test_results: []

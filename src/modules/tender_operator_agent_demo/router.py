@@ -1,7 +1,9 @@
+from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, Response
+from pydantic import BaseModel, Field
 
 from src.modules.commercial_core.run_service import (
     evaluate_run_commercial_core,
@@ -11,6 +13,13 @@ from src.modules.commercial_core.schemas import CommercialCoreResponse
 from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
+)
+from src.modules.tender_operator_agent_demo.operator_workspace_service import (
+    import_eis_reference,
+    original_document,
+    parse_eis_reference,
+    registry_detail,
+    registry_records,
 )
 from src.modules.tender_operator_agent_demo.pilot_wizard_ui import (
     render_tender_operator_pilot_wizard_html,
@@ -90,8 +99,80 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     list_uploaded_demo_runs,
     load_demo_run_events,
 )
+from src.shared.api.middleware import _is_protected_path
+from src.shared.config.settings import get_settings
 
 router = APIRouter(tags=["tender-operator-agent-demo"])
+
+
+class OperatorWorkspaceImportRequest(BaseModel):
+    reference: str = Field(min_length=11, max_length=500)
+
+
+_WORKSPACE_ASSETS = Path(__file__).parent / "assets"
+
+
+def require_private_workspace() -> None:
+    settings = get_settings()
+    protected = tuple(settings.pilot_auth_protected_prefixes.split(","))
+    public = tuple(settings.pilot_auth_public_paths.split(","))
+    paths = ("/pilot/tender-agent/workspace", "/api/demo/tender-agent/workspace/registry")
+    if not (
+        settings.pilot_auth_is_enabled()
+        and settings.pilot_auth_password_safe()
+        and all(_is_protected_path(path, protected, public) for path in paths)
+    ):
+        raise HTTPException(status_code=503, detail="Private operator authentication must be configured")
+
+
+
+@router.get("/pilot/tender-agent/workspace", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_page() -> FileResponse:
+    return FileResponse(
+        _WORKSPACE_ASSETS / "operator_workspace.html",
+        media_type="text/html; charset=utf-8",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@router.get("/pilot/tender-agent/workspace/assets/{asset_name}", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_asset(asset_name: str) -> FileResponse:
+    allowed = {"workspace.css": "text/css", "workspace.js": "text/javascript"}
+    if asset_name not in allowed:
+        raise HTTPException(status_code=404, detail="Ресурс не найден")
+    return FileResponse(
+        _WORKSPACE_ASSETS / ("operator_" + asset_name),
+        media_type=allowed[asset_name],
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@router.post("/api/demo/tender-agent/workspace/import", response_model=SearchResultHandoffResponse, dependencies=[Depends(require_private_workspace)])
+def operator_workspace_import(request: OperatorWorkspaceImportRequest) -> SearchResultHandoffResponse:
+    try:
+        parse_eis_reference(request.reference)
+        return import_eis_reference(request.reference)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_registry(
+    query: str = Query(default="", max_length=128),
+    limit: int = Query(default=25, ge=1, le=50),
+    offset: int = Query(default=0, ge=0),
+) -> dict:
+    return registry_records(query=query, limit=limit, offset=offset)
+
+
+@router.get("/api/demo/tender-agent/workspace/registry/{tender_id}", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_registry_detail(tender_id: str) -> dict:
+    return registry_detail(tender_id)
+
+
+@router.get("/api/demo/tender-agent/workspace/registry/{tender_id}/documents/{document_id}/download", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_registry_document(tender_id: str, document_id: str) -> FileResponse:
+    return original_document(tender_id, document_id)
 
 
 @router.get("/demo/tender-agent", response_class=HTMLResponse)
