@@ -14,6 +14,9 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
+from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
+    get_operator_source_evidence,
+)
 from src.modules.tender_operator_agent_demo.operator_workspace_service import (
     import_eis_reference,
     original_document,
@@ -156,6 +159,11 @@ def operator_workspace_import(request: OperatorWorkspaceImportRequest) -> Search
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
+@router.get("/api/demo/tender-agent/workspace/runs/{run_id}/evidence", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_source_evidence(run_id: str) -> dict:
+    return get_operator_source_evidence(run_id)
+
+
 @router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
 def operator_workspace_registry(
     query: str = Query(default="", max_length=128),
@@ -180,9 +188,10 @@ def tender_operator_demo_page() -> str:
     return render_tender_operator_console_html()
 
 
-@router.get("/pilot/tender-agent", response_class=HTMLResponse)
-def tender_operator_pilot_wizard_page() -> str:
-    return render_tender_operator_pilot_wizard_html()
+@router.get("/pilot/tender-agent", dependencies=[Depends(require_private_workspace)])
+def tender_operator_pilot_wizard_page() -> FileResponse:
+    """Canonical operator entrypoint: preserve old search API, not a second wizard UI."""
+    return operator_workspace_page()
 
 
 @router.get("/demo/tender-agent/wizard", response_class=HTMLResponse)

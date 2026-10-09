@@ -7,6 +7,49 @@ from typing import Any
 from urllib.parse import urlparse
 
 
+def extract_notice_revision_info(xml_text: str) -> dict[str, Any]:
+    """Extract an unambiguous exact EIS registry identity, never infer a missing revision.
+
+    Treat notice versions conservatively: unmatched, conflicting, unsafe or broken
+    XML cannot authorize overriding customer-facing data with documentary text.
+    """
+    if not xml_text or len(xml_text) > 12_000_000:
+        return {}
+    if "<!DOCTYPE" in xml_text.upper() or "<!ENTITY" in xml_text.upper():
+        return {}
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return {}
+    registry_tags = {"purchasenumber", "regnumber", "registrynumber", "notificationnumber"}
+    registry_numbers = {
+        (element.text or "").strip()
+        for element in root.iter()
+        if _local_name(element.tag).lower() in registry_tags
+        and element.text and re.fullmatch(r"(?:\d{11}|\d{19})", element.text.strip())
+    }
+    if len(registry_numbers) != 1:
+        return {}
+    version_text = next(
+        ((element.text or "").strip()
+         for element in root.iter()
+         if _local_name(element.tag).lower() in {"version", "docversion", "revision"}
+         and element.text and re.fullmatch(r"\d{1,6}", element.text.strip())),
+        None,
+    )
+    publication = next(
+        ((element.text or "").strip()
+         for element in root.iter()
+         if _local_name(element.tag).lower() in {"publishdtineis", "publishdate"}
+         and element.text),
+        None,
+    )
+    return {
+        "purchase_number": next(iter(registry_numbers)),
+        "version": int(version_text) if version_text else None,
+        "published_at": publication,
+    }
+
 def extract_notice_metadata(xml_text: str) -> dict[str, Any]:
     if not xml_text or not xml_text.strip():
         return {}

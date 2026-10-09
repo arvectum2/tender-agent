@@ -29,6 +29,7 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     get_uploaded_demo_report_html,
     get_demo_run_output_dir,
 )
+from src.modules.tender_operator_agent_demo.report_model import _verified_notice_fact_projection
 from src.tender_research.rag.export_service import (
     DOCX_CONTENT_TYPE,
     PDF_CONTENT_TYPE,
@@ -59,7 +60,7 @@ class ExportedDemoReport:
 
 _DEMO_EXPORT_SUBDIR = ("demo", "exports")
 _SAFE_RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$")
-_PDF_RENDERER_VERSION = "r7-persisted-pdf-v2"
+_PDF_RENDERER_VERSION = "r7-persisted-pdf-v3-eis-citations"
 
 
 def _analysis_title(registry_number: str) -> str:
@@ -362,12 +363,42 @@ def _pdf_quantity(value: object) -> str:
     return "Не указано в проверенных документах" if value in {"Не указан документацией", "Не указано в проверенных документах"} else str(value)
 
 
+def _verified_source_lines(model: dict) -> list[str]:
+    """Human-readable, original-XML-bound source lines; never trust generic labels."""
+    facts = _verified_notice_fact_projection(model)
+    lines: list[str] = []
+    for field, label in (
+        ("procurement_title", "Предмет закупки"),
+        ("application_deadline", "Срок подачи заявок"),
+        ("nmck", "НМЦК"),
+    ):
+        item = facts.get(field) or {}
+        citations = item.get("evidence") or []
+        if item.get("status") != "KNOWN" or len(citations) != 1:
+            continue
+        citation = citations[0]
+        lines.append(
+            f"{label}: {item['value']}. "
+            f"Источник: {citation['document']}; {citation['locator']}; "
+            f"ID: {citation['source_ref']}; "
+            f"Фрагмент: {citation['excerpt']}"
+        )
+    return lines
+
+
 def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> None:
     document = Document(); document.add_heading(title, 0)
     summary, passport = model["executive_summary"], model["procurement_passport"]
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     for line in (f"Официальное название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}", f"Причина статуса объёма: {model.get('volume_status_reason')}"):
         document.add_paragraph(line)
+    source_lines = _verified_source_lines(model)
+    document.add_heading("Факты с подтверждёнными первоисточниками", 1)
+    if source_lines:
+        for source_line in source_lines:
+            document.add_paragraph(source_line)
+    else:
+        document.add_paragraph("UNKNOWN: атрибутированные цитаты отсутствуют; требуется ручная проверка.")
     if model["line_items"]:
         document.add_paragraph(f"Первая извлечённая позиция: {model['line_items'][0].get('display_name') or model['line_items'][0]['original_name']}")
     document.add_heading("Состав и объём закупки", 1)
@@ -393,6 +424,13 @@ def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> Non
     story = [Paragraph(html_escape(title), styles["title"])]
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     story += [Paragraph(_pdf_inline_markup(str(line)), styles["body"]) for line in (f"Название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}")]
+    story.append(Paragraph("Факты с подтверждёнными первоисточниками", styles["h1"]))
+    source_lines = _verified_source_lines(model)
+    if source_lines:
+        for source_line in source_lines:
+            story.append(Paragraph(_pdf_inline_markup(source_line), styles["body"]))
+    else:
+        story.append(Paragraph("UNKNOWN: атрибутированные цитаты отсутствуют.", styles["body"]))
     story.append(Paragraph("Состав и объём закупки", styles["h1"]))
     source_issues = [issue for row in model.get("line_items", []) for issue in row.get("field_issues", [])]
     if source_issues:

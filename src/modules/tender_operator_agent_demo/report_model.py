@@ -437,6 +437,23 @@ def build_procurement_report_model(
         outputs,
         repository_sha=repository_sha,
     )
+    # The legacy report builder may prefer an arbitrary document heading to the
+    # genuine EIS subject. Restore only a registry-verified getDocsIP XML fact.
+    source_refs = metadata.get("_field_evidence")
+    source_refs = source_refs if isinstance(source_refs, dict) else {}
+    if (
+        metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip"
+        and source_refs.get("procurement_title") == "eis_notice:procurement_subject"
+    ):
+        xml_subject = str(metadata.get("procurement_title") or "").strip()
+        if xml_subject:
+            model["procurement_title"] = xml_subject
+            refs = dict(model.get("field_evidence") or {})
+            refs["procurement_title"] = "eis_notice:procurement_subject"
+            model["field_evidence"] = refs
+            proof = metadata.get("_verified_notice_facts")
+            if isinstance(proof, dict):
+                model["_verified_notice_facts"] = dict(proof)
     analysis_as_of = (
         metadata.get("analysis_completed_at")
         or metadata.get("prepared_at")
@@ -531,6 +548,47 @@ def _customer_decision_evidence(values: Any) -> list[dict[str, str]]:
     return result
 
 
+def _verified_notice_fact_projection(model: dict[str, Any]) -> dict[str, Any]:
+    """Only registry-matched original XML values become customer-visible KNOWN."""
+    proof = model.get("_verified_notice_facts")
+    proof = proof if isinstance(proof, dict) else {}
+    file_id = str(proof.get("file_id") or "")
+    document = str(proof.get("document") or "")
+    registry = str(proof.get("registry_number") or "")
+    valid = (
+        bool(re.fullmatch(r"[A-Za-z0-9_-]{1,64}", file_id))
+        and bool(document)
+        and Path(document).name == document
+        and "\\" not in document
+        and bool(re.fullmatch(r"[0-9]{19}", registry))
+        and registry == str(model.get("procurement_number") or "")
+    )
+    originals = proof.get("values")
+    originals = originals if isinstance(originals, dict) else {}
+    facts: dict[str, Any] = {}
+    for field, tag in (
+        ("procurement_title", "purchaseObjectInfo"),
+        ("application_deadline", "endDT"),
+        ("nmck", "maxPrice"),
+    ):
+        excerpt = originals.get(field) if valid else None
+        if isinstance(excerpt, str) and 0 < len(excerpt.strip()) <= 4096:
+            facts[field] = {
+                "status": "KNOWN",
+                "value": excerpt,
+                "evidence": [{
+                    "source_ref": f"eis-xml:{file_id}:{tag}",
+                    "document": document,
+                    "locator": f"XML:{tag}",
+                    "excerpt": excerpt,
+                    "file_id": file_id,
+                }],
+            }
+        else:
+            facts[field] = {"status": "UNKNOWN", "value": None, "evidence": []}
+    return facts
+
+
 def _customer_decision_core_projection(model: dict[str, Any]) -> dict[str, Any] | None:
     raw = model.get("decision_core")
     if not isinstance(raw, dict):
@@ -566,6 +624,7 @@ def _customer_decision_core_projection(model: dict[str, Any]) -> dict[str, Any] 
     return {
         "contract_version": raw.get("contract_version"),
         "procurement_regime": raw.get("procurement_regime"),
+        "facts": _verified_notice_fact_projection(model),
         "decision": {
             "status": decision.get("status"),
             "confidence": decision.get("confidence"),
