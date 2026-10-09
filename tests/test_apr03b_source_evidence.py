@@ -166,3 +166,30 @@ def test_endpoint_is_auth_protected(source, monkeypatch):
     result = client.get(route, headers={"Authorization": "Basic " + authorization})
     assert result.status_code == 200
     assert result.json()["facts"]["procurement_title"]["value"] == TITLE
+
+
+def test_customer_projection_contains_only_attested_xml_facts():
+    from src.modules.tender_operator_agent_demo.report_model import _customer_decision_core_projection
+
+    proof = {
+        "registry_number": NUMBER, "file_id": "FILE-01",
+        "document": "notice.xml",
+        "values": {
+            "procurement_title": TITLE,
+            "application_deadline": "2026-10-16T10:00:00+03:00",
+            "nmck": "1000000.00",
+        },
+    }
+    model = {
+        "procurement_number": NUMBER,
+        "_verified_notice_facts": proof,
+        "decision_core": {"decision": {}, "contract_version": "decision-core-v1"},
+    }
+    facts = _customer_decision_core_projection(model)["facts"]
+    assert all(v["status"] == "KNOWN" for v in facts.values())
+    assert facts["nmck"]["evidence"][0]["source_ref"] == "eis-xml:FILE-01:maxPrice"
+    assert facts["nmck"]["evidence"][0]["excerpt"] == "1000000.00"
+
+    proof["registry_number"] = "1111111111111111111"
+    facts = _customer_decision_core_projection(model)["facts"]
+    assert all(v["status"] == "UNKNOWN" and not v["evidence"] for v in facts.values())
