@@ -14,7 +14,7 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
-from src.modules.tender_operator_agent_demo.operator_workspace_service import (
+from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (\n    get_operator_source_evidence,\n)\nfrom src.modules.tender_operator_agent_demo.operator_workspace_service import (
     import_eis_reference,
     original_document,
     parse_eis_reference,
@@ -154,6 +154,11 @@ def operator_workspace_import(request: OperatorWorkspaceImportRequest) -> Search
         return import_eis_reference(request.reference)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/demo/tender-agent/workspace/runs/{run_id}/evidence", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_source_evidence(run_id: str) -> dict:
+    return get_operator_source_evidence(run_id)
 
 
 @router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
