@@ -27,6 +27,9 @@ from src.modules.tender_operator_agent_demo.contract_term_facts import (
 from src.modules.tender_operator_agent_demo.document_source_projection import (
     project_document_source,
 )
+from src.modules.tender_operator_agent_demo.operator_document_extraction import (
+    extract_operator_document,
+)
 from src.modules.tender_operator_agent_demo.operator_llm_report_projection import (
     candidate_requirement_rows,
     candidate_rfq_sections,
@@ -646,28 +649,13 @@ def _extract_document_text_with_provenance(
     file_name: str,
     content: bytes,
 ) -> tuple[str | None, list[str], str, ProcessedDocument | None]:
-    ext = Path(file_name).suffix.lower()
-    warnings: list[str] = []
-    processed: ProcessedDocument | None = None
-    try:
-        processed = process_document_bytes(
-            content=content,
-            filename=file_name,
-            collection_id=tender_processing_collection_id("upload"),
-            canonical_uri=f"tender-upload://{hashlib.sha256(content).hexdigest()}",
-            min_chunk_chars=1,
-        )
-        status = processed.extraction_status
-        normalized_text = processed.text.strip() or None
-    except (DataPlatformError, ValueError, OSError):
-        status = "failed"
-        normalized_text = None
-
-    if status == DOC_UNSUPPORTED_STATUS:
-        warnings.append(f"Извлечение текста для {ext} пока не поддерживается.")
-    elif status != DOC_EXTRACTED_STATUS and not normalized_text:
-        warnings.append(f"Не удалось извлечь текст из {Path(file_name).name}.")
-    return normalized_text, warnings, status, processed
+    """Compatibility shim over the generic Data Platform processor."""
+    return extract_operator_document(
+        file_name=file_name,
+        content=content,
+        collection_id=tender_processing_collection_id("upload"),
+        processor=process_document_bytes,
+    )
 
 
 def _extract_document_text(

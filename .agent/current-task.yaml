@@ -38,9 +38,10 @@ completed:
   - 'Eliminated remaining Docker preview overlay drift: source-locked private Dockerfile now recreates /app/src and /app/scripts from one exact commit, verifies every source byte, runs as non-root app.'
   - 'PRs #264-266 merged. Isolated full original EIS document LLM pipeline passed with 3 verified XML facts, no stale subject, 10 report sections (327 sec). New data platform per-file provenance and unverified LLM report candidates preserve operator value without fake claims.'
   - 'R5 provenance gate first slice: only an explicit literal model quote whose exact text occurs in one real Data Platform chunk with matching file/resource/document/chunk IDs and untrimmed offsets can acquire candidate locator. Absence, fuzzy paraphrases, ambiguous duplicates and invalid offsets fail closed. No implication of verified legal interpretation.'
+  - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261-266 and DP #86 merged; R4 per-file DP provenance/review-only model report PR #267 under CI; R5 strict literal quote-to-real-DP-chunk binder implemented in isolated module, cross-document claimant attribution still outstanding.'
+current: 'TA #261-266 and DP #86 merged; TA PR #267/#268 under exact-head CI. Legacy DP processor intake bridge split safely into product adapter (28 tests); R5 original-source per-claim attribution and owner browser acceptance outstanding.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -65,8 +66,9 @@ test_results:
   - 'R4 six original EIS files analyzed with local Gemma: 327s, 10 sections, three official XML facts.'
   - 'R4 per-file source IDs and unverified LLM projection: 69 profile tests PASS before PR #267.'
   - 'R5 exact quote binding: 8 new happy/fail-closed unit cases PASS, Ruff PASS.'
+  - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 remains in_progress. TA PR #267 source IDs and review-only LLM output is under exact-head CI. New R5 branch/worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-evidence-binding-r5-20261009 adds conservative exact literal source quote to real DP chunk proof (8 tests). Its future integration with model claim schema and cross-file parent original locator is not done. After PR #267 merges update R5 stacked base to main, run full CI, merge and continue 20-30 golden real procurements and owner preview quality. Never auto-promote legal/business certainty or change owner private preview 18083 before source parity/auth/rollback. Do not restart disabled watchdog.'
+resume_instruction: 'Canonical TDP-REFACTOR-20261009 in_progress. TA #267/#268 currently under exact-head CI, TA #261-266 and DP #86 merged. R3 stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-intake-split-r3-20261009 extracted injected generic DP processor bridge from old upload monolith, 28 affected tests passed. Open stacked PR then continue CI/merges in order: #267, #268, next R3. R5 requires exact-quote request integrated with model and real chunk provenance, >=20 tender golden cases and owner browser evidence gate. Preserve 18082/18083; only private 18087/18088 staged; disabled watchdog must remain disabled.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
