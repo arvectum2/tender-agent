@@ -5558,11 +5558,26 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             supplier_questions = []
             rfq_draft = {}
             analysis_mode = "fallback_deterministic_adapter"
+            # Availability of the Data Platform and a local model socket does
+            # not mean this particular controlled workflow invoked a model.
+            # Expose the effective mode honestly instead of silently hiding
+            # a broad validation/runtime exception as a successful AI run.
+            provider_config = str(get_settings().llm_provider or "").lower()
+            fallback_reason = (
+                "configured_stub_provider"
+                if provider_config == "stub"
+                else "controlled_llm_workflow_unavailable"
+            )
+            ai_provenance["analysis_engine"] = "deterministic"
+            ai_provenance["llm_invoked"] = False
+            ai_provenance["llm_calls_count"] = 0
+            ai_provenance["fallback_reason"] = fallback_reason
             append_demo_run_event(
                 run_id,
                 "stub_analysis_fallback",
-                "LLM-анализ недоступен, используется документ-зависимый детерминированный fallback.",
-                {"core_complete": core_complete},
+                "Полный LLM-анализ не выполнялся; итог включает только ограниченное "
+                "детерминированное извлечение и требует проверки специалистом.",
+                {"core_complete": core_complete, "fallback_reason": fallback_reason},
             )
         metadata["ai_runtime_provenance"] = ai_provenance
 
@@ -5605,6 +5620,14 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             )
 
         limitations = list(dict.fromkeys(metadata.get("limitations", [])))
+        if analysis_mode == "fallback_deterministic_adapter":
+            limitations.append(
+                "Полный LLM-анализ документов не выполнялся "
+                f"({ai_provenance['fallback_reason']}). "
+                "Доступность локальной модели или Data Platform не является "
+                "подтверждением анализа закупки; детальные риски и экономика "
+                "требуют отдельной проверки."
+            )
         if not core_complete:
             limitations.append("Full runner integration was partially applied because the uploaded package did not produce all core extracted texts.")
         quote_inputs_present = bool(quote_paths or spreadsheet_sources)

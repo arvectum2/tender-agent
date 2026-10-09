@@ -760,12 +760,17 @@ def _persist_outputs(
         if metadata.get("analysis_mode") == "production_llm_r10_1"
         else _render_canonical_report_html
     )
+    from src.modules.tender_operator_agent_demo.operator_report_assembly import (
+        add_verified_notice_to_report_steps,
+    )
+
+    verified_steps = add_verified_notice_to_report_steps(metadata, steps)
     persist_frozen_r7_outputs(
         output_dir=_legacy._output_dir(run_id),
         run_id=run_id,
         metadata=metadata,
         outputs=outputs,
-        steps=steps,
+        steps=verified_steps,
         render_html=renderer,
         now_factory=_legacy._safe_datetime,
     )
