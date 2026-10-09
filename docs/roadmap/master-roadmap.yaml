@@ -214,7 +214,10 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Priority 223-FZ procedures/document sets in the frozen corpus ingest and analyze with regime-specific evidence and fail-closed unsupported semantics.'
     - id: APR-03-PRODUCTION-RUNTIME
       priority: P0
-      state: implementation_pr_open
+      state: repository_package_ready_external_deployment_blocked
+      implementation_pr: 251
+      external_deployment_gate: OWNER_APPROVAL_RUSSIAN_VPS
+      acceptance_note: 'PR #251 code/local rehearsals may merge without purchasing or deploying VPS. Production acceptance requires separate real-host ingress, backup, observability and recovery evidence.'
       legacy_mapping: [ARV-008, ARV-011, ARV-012, ARV-013, ARV-014, ARV-058]
       post_snapshot_mapping: [ARV-076]
       outcome: 'One production runtime epic: Russian VPS, stable ingress, workers/resumability, backup/restore and operational access.'
