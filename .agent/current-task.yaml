@@ -1,52 +1,29 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-03-PRODUCTION-RUNTIME-001
-status: blocked
+task_id: ROADMAP-REFRESH-OPERATOR-SEQUENCE-20261009
+status: completed
 authority: OWNER_DIRECTIVE
-goal: >-
-  Deliver the APR-03 Production Runtime epic by reusing existing Tender Agent API,
-  Redis Streams worker, PostgreSQL, safe ingress, backup/restore and observability.
-  Exercise local isolated failure/restore drills before a separately authorized
-  real Russian VPS deployment.
+goal: 'Update canonical roadmap after bounded APR-02 acceptance, preserve owner sequence APR-03 Production Runtime then APR-03B Operator Workspace then APR-04, and distinguish open implementation PRs from merged capabilities.'
 definition_of_done:
-  - Secure, revision-pinned Linux VPS deployment is documented and validated with stable TLS ingress and bounded API exposure.
-  - API + separate Redis Streams workers, PostgreSQL source of truth, restart and stale-message resume are verified without implicit thread fallback.
-  - Backups, integrity verification and isolated restore plus restart/failure drills succeed with recorded evidence.
-  - Monitoring, incident operations, access boundaries and recovery procedures are documented and tested.
-  - Real Russian VPS deployment, independent storage, restore drills and ingress connectivity are validated using approved resources and explicit production authority.
-  - Canonical roadmap and execution queue reconciled only after actual external acceptance, final CI green and owner-gated merge.
+  - Preserve historical registry and APR-02 frozen corpus acceptance.
+  - Add APR-03B to canonical active outcomes and human roadmap with browser-only real-data acceptance.
+  - Reflect PR #251 through #255 as open/not merged.
+  - Reconcile owner directive ordering without interrupting running engineering tasks.
+  - Validate YAML, open status-only PR, merge only after required CI.
 completed:
-  - APR-03 selected after fully completed APR-02; existing bounded Redis worker and pilot image reused.
-  - Created Docker Compose production topology with private PG16/Redis, separate worker, gated Caddy TLS ingress.
-  - Added guarded CLI preflight, doctor, backup/verify and never-overwrite isolated restore.
-  - Corrected worker HTTP-health inheritance and API readiness race found in real local smoke.
-  - Performed synthetic private Docker deployment, backup/verify and isolated restore to fresh project.
-  - Verified worker stop, queued synthetic delivery and restart (Redis stream length 1 to 0).
-  - Added fail-closed nonterminal PostgreSQL job check when no coordinated Redis backup exists.
-  - Reconciled APR-03 roadmap state as in_progress; evidence in docs/operations/APR03_LOCAL_REHEARSAL_2026-10-08.md.
-pending:
-  - Obtain approved Russia-hosted VPS account/server and permission for provider, domain, network and production side effects.
-  - Select external approved DNS, ingress domain, TLS contact, firewall/Anti-DDoS and EIS/ETP allowlists.
-  - Validate real release image supply-chain lock and fully coordinated Redis-disaster recovery for nonterminal jobs.
-  - Validate independent encrypted off-host backup, measured real RPO/RTO, monitoring alerts and controlled failure drills.
-  - Perform real production acceptance, pass CI/owner review and only then mark APR-03 completed.
-last_verified_commit: 2d58bef553c561a6066ba6384f6b90ad1deae24a
+  - 'Confirmed APR-02 bounded 223-FZ accepted via merged PR #250; no universal 223-FZ claim.'
+  - 'Confirmed APR-03 through APR-07 PR #251..255 open, and previous UI PR #228 open but not merged.'
+  - 'Updated master roadmap, human roadmap and owner directive to prioritize APR-03B after APR-03.'
+current: 'Owner roadmap refresh merged into main; PR #228 closed as superseded. APR-03 remains next not-yet-merged implementation outcome.'
+pending: []
+last_verified_commit: 509578a7b3caafc0c394ebbfb4d6672497af5c56
 test_results:
-  - Ruff production scripts/tests PASS.
-  - Targeted runtime/worker/backup/restore tests 45 passed, 1 pre-existing Starlette/httpx warning.
-  - make check PASS and roadmap YAML syntax PASS.
-  - Synthetic Docker Compose private/public profile config PASS; API, DB, Redis, worker running.
-  - Local backup integrity PASS; fresh isolated restore API HTTP 200; doctor PASS.
-  - Worker restart delivery PASS; PostgreSQL active-job gate PASS.
-  - R9 acceptance PASS with host PG16 tooling; PG18 default fails against PG16 test server.
-resume_instruction: >-
-  Resume from APR-03 external acceptance gate. Inspect this checkpoint and
-  docs/operations/APR03_LOCAL_REHEARSAL_2026-10-08.md, verify current branch/PR
-  CI. Request explicit Owner permission plus actual Russia-based VPS, DNS and
-  encrypted offsite backup details before any public deployment, paid action or
-  DNS/network change. Validate Redis full-node disaster recovery and real
-  monitoring/offsite restore drills before closing APR-03. Do not re-enable
-  the previously disabled Tender Agent Watchdog without explicit user request.
+  - 'YAML/OWNER_SEQUENCE/APR-02 status assertions PASS.'
+  - 'PR #256 exact-head CI run 37898111915: SUCCESS 9/9.'
+  - 'PR #256 squash merged 509578a7b3caafc0c394ebbfb4d6672497af5c56.'
+  - 'Overlapping old operator-workspace PR #228 closed as superseded.'
+resume_instruction: 'This roadmap refresh is complete. Resume APR-03 Production Runtime from exact canonical main and reconcile PR #251; then APR-03B Operator Workspace for owner browser acceptance, then APR-04 onwards. PR #252..255 remain open, not accepted completion.'
 execution:
-  branch: feature/apr03-production-runtime
-  base_commit: ced71977
+  branch: null
+  manual_override: false
+  lease_until: null
