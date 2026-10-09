@@ -21,7 +21,7 @@ python scripts/ops/verify_operator_workspace_preview.py \
   --repo . --container arvectum-apr03b-preview-api --commit "$SOURCE_SHA"
 ```
 
-**Do not** use the former UI-only Dockerfile: every release must `COPY` the entire `src/modules/tender_operator_agent_demo/` source and run byte-for-byte source integrity verification on the **running** container before claiming browser acceptance.
+**Do not** use the former UI-only Dockerfile: every release must copy the **entire src/** and **scripts/** trees from one exact commit, clearing stale source folders first and run byte-for-byte source integrity verification of **all src/ and scripts/** files on the **running** container before claiming browser acceptance.
 
 Use a separate `127.0.0.1:18086` staging container for pre-promotion checks; inherit the private pilot's existing, access-controlled volumes and private network. Preserve Basic Auth, no public ports, `--read-only`, `--tmpfs /tmp`, `--security-opt no-new-privileges:true`, `--cap-drop ALL`, and do not change original live pilot on `18082`. Test the original stored files, exact 44-FZ notice source identity, EIS XML citations, reports and PDF/DOCX. Promote the verified image to loopback `18083` only after staging succeeds; check HTTP 401 anonymous and 200 authorized, source parity and container health.
 
