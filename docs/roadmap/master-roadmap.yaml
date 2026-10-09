@@ -262,6 +262,12 @@ active_product_roadmap_2026_10_08:
       eis_223fz_analysis_gate_fail_closed: true
       eis_223fz_format_consistency_flags: 1
       machine_review_reports: 9
+      independent_gpt6_model_review: completed_9_cases_not_human
+      independent_gpt6_model_no_go: 6
+      independent_gpt6_model_defer: 3
+      verified_stale_deadline_errors: 2
+      verified_false_hard_no_go: 1
+      independent_ai_evidence: docs/acceptance/APR06_GPT6_INDEPENDENT_REVIEW_2026-10-09.md
       analyzed_with_machine_report: 9
       operator_reviewed: 0
       commercial_acceptance: pending_verification_operator_review_and_approval
