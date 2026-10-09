@@ -392,6 +392,13 @@ def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> No
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     for line in (f"Официальное название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}", f"Причина статуса объёма: {model.get('volume_status_reason')}"):
         document.add_paragraph(line)
+    source_lines = _verified_source_lines(model)
+    document.add_heading("Факты с подтверждёнными первоисточниками", 1)
+    if source_lines:
+        for source_line in source_lines:
+            document.add_paragraph(source_line)
+    else:
+        document.add_paragraph("UNKNOWN: атрибутированные цитаты отсутствуют; требуется ручная проверка.")
     if model["line_items"]:
         document.add_paragraph(f"Первая извлечённая позиция: {model['line_items'][0].get('display_name') or model['line_items'][0]['original_name']}")
     document.add_heading("Состав и объём закупки", 1)
@@ -417,6 +424,13 @@ def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> Non
     story = [Paragraph(html_escape(title), styles["title"])]
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     story += [Paragraph(_pdf_inline_markup(str(line)), styles["body"]) for line in (f"Название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}")]
+    story.append(Paragraph("Факты с подтверждёнными первоисточниками", styles["h1"]))
+    source_lines = _verified_source_lines(model)
+    if source_lines:
+        for source_line in source_lines:
+            story.append(Paragraph(_pdf_inline_markup(source_line), styles["body"]))
+    else:
+        story.append(Paragraph("UNKNOWN: атрибутированные цитаты отсутствуют.", styles["body"]))
     story.append(Paragraph("Состав и объём закупки", styles["h1"]))
     source_issues = [issue for row in model.get("line_items", []) for issue in row.get("field_issues", [])]
     if source_issues:
