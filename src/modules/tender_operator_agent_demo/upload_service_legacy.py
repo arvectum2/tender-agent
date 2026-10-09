@@ -992,7 +992,16 @@ def _try_run_llm_workflow(
                 "contract_risks": result.contract_risks,
                 "bid_decision": result.bid_decision,
             }
-    except Exception:
+    except Exception as exc:
+        # The previous catch-all silently turned every LLM/DB/provider error
+        # into a "successful" deterministic run. Log only the exception class:
+        # provider exception text can include credentials or document content.
+        append_demo_run_event(
+            run_id,
+            "controlled_llm_runtime_failed",
+            "Контролируемый LLM-анализ не запустился; результаты модели не использованы.",
+            {"error_type": type(exc).__name__, "provider_mode": provider_mode},
+        )
         return None
 
 
