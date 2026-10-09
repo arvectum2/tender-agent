@@ -29,6 +29,7 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     get_uploaded_demo_report_html,
     get_demo_run_output_dir,
 )
+from src.modules.tender_operator_agent_demo.report_model import _verified_notice_fact_projection
 from src.tender_research.rag.export_service import (
     DOCX_CONTENT_TYPE,
     PDF_CONTENT_TYPE,
@@ -59,7 +60,7 @@ class ExportedDemoReport:
 
 _DEMO_EXPORT_SUBDIR = ("demo", "exports")
 _SAFE_RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$")
-_PDF_RENDERER_VERSION = "r7-persisted-pdf-v2"
+_PDF_RENDERER_VERSION = "r7-persisted-pdf-v3-eis-citations"
 
 
 def _analysis_title(registry_number: str) -> str:
@@ -360,6 +361,29 @@ def _user_evidence(row: dict) -> str:
 
 def _pdf_quantity(value: object) -> str:
     return "Не указано в проверенных документах" if value in {"Не указан документацией", "Не указано в проверенных документах"} else str(value)
+
+
+def _verified_source_lines(model: dict) -> list[str]:
+    """Human-readable, original-XML-bound source lines; never trust generic labels."""
+    facts = _verified_notice_fact_projection(model)
+    lines: list[str] = []
+    for field, label in (
+        ("procurement_title", "Предмет закупки"),
+        ("application_deadline", "Срок подачи заявок"),
+        ("nmck", "НМЦК"),
+    ):
+        item = facts.get(field) or {}
+        citations = item.get("evidence") or []
+        if item.get("status") != "KNOWN" or len(citations) != 1:
+            continue
+        citation = citations[0]
+        lines.append(
+            f"{label}: {item['value']}. "
+            f"Источник: {citation['document']}; {citation['locator']}; "
+            f"ID: {citation['source_ref']}; "
+            f"Фрагмент: {citation['excerpt']}"
+        )
+    return lines
 
 
 def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> None:
