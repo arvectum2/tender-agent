@@ -41,14 +41,14 @@ completed:
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261-266 and DP #86 merged; TA PR #267/#268 under exact-head CI. Legacy DP processor intake bridge split safely into product adapter (28 tests); R5 original-source per-claim attribution and owner browser acceptance outstanding.'
+current: 'TA #261-267 and DP #86 merged. PR #268/#269 pending; R5 read-only inventory of 29 real EIS procurements documented; truth evaluation and owner acceptance pending.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '09db6e794670658312143f0c4e6160b403c773dd'
+last_verified_commit: '8fcda091ded8540b159f0efcac453fb581de53b0'
 test_results:
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
@@ -68,7 +68,7 @@ test_results:
   - 'R5 exact quote binding: 8 new happy/fail-closed unit cases PASS, Ruff PASS.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'Canonical TDP-REFACTOR-20261009 in_progress. TA #267/#268 currently under exact-head CI, TA #261-266 and DP #86 merged. R3 stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-intake-split-r3-20261009 extracted injected generic DP processor bridge from old upload monolith, 28 affected tests passed. Open stacked PR then continue CI/merges in order: #267, #268, next R3. R5 requires exact-quote request integrated with model and real chunk provenance, >=20 tender golden cases and owner browser evidence gate. Preserve 18082/18083; only private 18087/18088 staged; disabled watchdog must remain disabled.'
+resume_instruction: 'TDP-REFACTOR-20261009 in progress. TA PR #267 merged, #268 and #269 are pending CI. The R5 worktree tdp-eis-corpus-r5-20261009 contains a read-only baseline of 29 unique EIS procurements from 46 saved runs: only 10 best runs have originals, extracted text and report together; 11 have reports. Publish this script and tests, then evidence-bind real model claims and obtain owner acceptance across 20 or more true golden cases. Do not alter the 18082 or 18083 pilots. Disabled watchdog stays disabled.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
