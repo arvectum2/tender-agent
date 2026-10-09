@@ -258,6 +258,8 @@ active_product_roadmap_2026_10_08:
       eis_223fz_document_links_discovered: 4
       eis_223fz_ambiguous_revision_hard_stops: 4
       eis_223fz_downloaded_unreviewed_source_files: 5
+      eis_223fz_existing_runs_supplemented: 3
+      eis_223fz_analysis_gate_fail_closed: true
       eis_223fz_format_consistency_flags: 1
       machine_review_reports: 9
       analyzed_with_machine_report: 9
