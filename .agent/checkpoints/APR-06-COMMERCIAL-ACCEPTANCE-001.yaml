@@ -1,44 +1,63 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
-status: in_progress
+status: blocked
 goal: >-
-  Deliver evidence-based commercial acceptance on a frozen, diverse corpus
-  of 20-30 verifiable real Russian procurements end to end, with objective
-  operator-usefulness, quality metrics, decision-error regressions and an
-  auditable pass/fail report. Reuse the APR-01..05 existing runtime.
+  Deliver a frozen, source-verified corpus of 20-30 distinct real Russian procurements,
+  full data-to-report workflow and seven measurements of operator usefulness, with
+  human-attributed decisions, calibrated thresholds, persistent regression defects
+  and auditable acceptance. Never claim technical probe results are human acceptance.
 definition_of_done:
-  - Frozen 20-30 distinct, verifiably real EIS procurement identifiers with source provenance, law/procedure diversity, immutable manifest and explicit dedupe.
-  - Bounded read-only intake, document/extraction/analysis/report/evidence pipeline with crash-safe resumability; never sign/submit/pay.
-  - Per-case measured time-to-decision, manual correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, package rework; statuses distinguish not-reviewed from measured.
-  - Precommitted, explicitly provisional thresholds; failing or missing human references cannot become passing evidence.
-  - Every human-confirmed product defect is recorded as a reproducible regression, with source evidence and owner gate.
-  - Local tests, CI, and frozen report; no unsupported claim that unreviewed cases passed.
-  - Keep existing isolated Mac mini runtime intact; no changes to RU VPS/public billing.
+  - Freeze 20-30 distinct genuine EIS cases with law/procedure/revision evidence and source document hashes.
+  - Run extraction, full analysis, citation audit, HUMAN review and application package review for every case.
+  - Measure seven agreed KPIs and independent comparisons to attributable human reference.
+  - Record each human-confirmed false decision/missed blocker/correction as source-backed regression.
+  - Pass negative security and regression tests, local runbook and complete GitHub CI.
+  - Issue immutable accepted/failed report only after operator reviews and owner-approved limits.
 completed:
-  - APR-05 full local suite with PG16 client passed: 3297 passed, 238 skipped; latest APR-05 CI on ac0de309 all 9 jobs success.
-  - APR-05 bounded internal SaaS completion and report persisted to upstream branch.
-  - Investigated APR-06 roadmap outcome and its seven metrics.
-  - GitHub feature/apr06-commercial-acceptance created from completed APR-05 branch c8384b2983e63a9d02cf31d3e3bec573013bd38b.
-current: Implement fail-closed acceptance corpus/evaluator and capture reliable source cases.
+  - APR-05 predecessor completed; full pytest 3297 passed, 238 skipped on PostgreSQL 16, GitHub CI 9/9.
+  - Initialized APR-06 feature branch and draft PR 254 with canonical checkpoint.
+  - Created 28 candidate numbered references (20 44-FZ, 8 223-FZ); candidate status explicitly unverified.
+  - Implemented fail-closed immutable-manifest freeze, seven-metric scoring, human evidence/decision and attributable defect gates.
+  - Implemented bounded, resumable read-only 44-FZ EIS probe; 223-FZ wrong SOAP handoff is prohibited.
+  - Added test suite for corpus/law/owner approvals, tampering, duplicate runs, missed blockers, false GO/NO_GO, crash recovery.
+  - Targeted Mac mini tests 24 passed and Ruff clean on code commit 972554f20d57480f05fa18aaf75c20be64833204.
+  - Recovered authorized Mac mini SSH via already connected MacBook; no macOS TCC bypass.
+  - Executed 20 distinct actual read-only 44-FZ EIS getDocsIP intakes: 168 downloaded source files and SHA256 receipts; 17 had notice content hashes, three had no files.
+  - 9 machine reports analyzed from complete-enough case sources (118 total files, 109 extracted text flags, 10 report sections per case); 11 cases remain docs_required.
+  - Probed 8 separate 223-FZ public HTML document pages through native adapter, all docs_required with 0 attachments.
+  - Preserved audit logs on Mac mini and publishable SHA-only summary, operator review queue for nine machine reports; no customer data or secrets in Git.
+current: >-
+  Source/document completeness and source-version validation plus real
+  operator judgments are mandatory before final commercial acceptance.
 pending:
-  - Implement corpus manifest and scoring/checkpoint/report scripts/tests.
-  - Seed verifiable real registry numbers from cited sources; no synthetic cases in acceptance.
-  - Run on 20-30 distinct real EIS records through full workflow once authorized Mac mini repo access returns.
-  - Obtain measured human operator reference decisions, review benchmark failures and thresholds.
-  - Publish complete artifact and add future APR-06 regression tests, passing full CI.
-last_verified_commit: c8384b2983e63a9d02cf31d3e3bec573013bd38b
+  - Reconcile all 28 candidate numbers/subjects/procedures with official EIS and verify specific notice revisions and all file hashes.
+  - Repair/document gaps for 11 incomplete 44-FZ cases and 8 223-FZ public attachment failures, or select a defensible 20-30 complete-case corpus.
+  - Freeze qualifying 20-30 case corpus by digest; do not mark unverified candidates frozen.
+  - Obtain actual attributed HUMAN GO/NO_GO/DEFER, citation corrections, timestamps and application package assessments per case.
+  - Get owner sign-off on seven score thresholds; score all reviewed observations and persist regressions for confirmed defects.
+  - Merge upstream PR only under current governance and after final acceptance; keep RU VPS and payment gates deferred.
+last_verified_commit: 972554f20d57480f05fa18aaf75c20be64833204
 test_results:
-  - APR-05 full local 3297 passed, 238 skipped, 329 warnings with PostgreSQL 16 client.
-  - APR-05 CI run 37851685586 success all 9 jobs on ac0de309.
-  - Mac mini repo access currently denied to RDC tool: Operation not permitted on ArvectumSSD and /Users/master/Documents/tender-agent despite containers healthy at last check.
+  - APR-06 targeted Mac mini pytest 24 passed; Ruff clean.
+  - Real 44-FZ SOAP cases 20 unique; 168 files SHA256; 9 analyzed, 11 docs_required.
+  - Read-only 223-FZ HTML cases 8; 0 downloaded docs; all docs_required.
+  - Human reference decisions 0/28; operator measured time/corrections/citation accuracy/missed blockers and package rework NOT MEASURED.
+  - APR-05 full local pytest 3297 passed 238 skipped; predecessor CI 37851685586 success.
+  - APR-06 GitHub CI pending latest head; do not claim final pass before actual result.
 resume_instruction: >-
-  Continue APR-06 from this checkpoint. Work in feature/apr06-commercial-acceptance;
-  use GitHub connector until authorized Mac mini filesystem access is restored.
-  Do not bypass macOS filesystem permissions; avoid creating fictitious human
-  judgments or accepting sample results as operator-measured. No public VPS,
-  online payments, signatures, automatic bidding or external submission.
-  Keep watchdog disabled.
+  Read this checkpoint and the APR06_LIVE_READONLY_EIS_2026-10-09 and
+  APR06_OPERATOR_REVIEW_QUEUE_2026-10-09 documents first. Do not repeat 20
+  saved 44-FZ EIS intakes or nine analyzed runs. Preserve /tmp/apr06_real_eis_probe_20261009.jsonl,
+  /tmp/apr06_real_analysis_20261009.jsonl and /tmp/apr06_223fz_public_20261009.jsonl.
+  Local Mac mini can be reached via pre-authorized MacBook SSH to Mac-mini-master.local;
+  do not bypass Desktop Commander macOS TCC. Obtain missing source files or
+  human reviews then freeze/evaluate with owner-approved thresholds.
+  No signatures, ETP submission, real payments or public RU VPS. Keep watchdog disabled.
 execution:
   branch: feature/apr06-commercial-acceptance
   base_commit: c8384b2983e63a9d02cf31d3e3bec573013bd38b
+  pull_request: 254
+  operator_queue: docs/acceptance/APR06_OPERATOR_REVIEW_QUEUE_2026-10-09.md
+  source_receipts: docs/acceptance/apr06_real_probe_receipts_2026-10-09.json
+  public_223_receipts: docs/acceptance/apr06_223fz_public_probe_2026-10-09.json

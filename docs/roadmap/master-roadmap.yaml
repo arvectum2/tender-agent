@@ -250,7 +250,15 @@ active_product_roadmap_2026_10_08:
       done_gate: 'A controlled paid pilot can be onboarded, metered, packaged and supported with legal/HUMAN gates explicit and no bespoke operator intervention for routine setup.'
     - id: APR-06-COMMERCIAL-ACCEPTANCE
       priority: P0
-      state: planned
+      state: in_progress
+      interim_runtime: macmini_local_readonly_eis
+      candidates: 28
+      eis_44fz_readonly_probed: 20
+      eis_223fz_public_html_probed: 8
+      analyzed_with_machine_report: 9
+      operator_reviewed: 0
+      commercial_acceptance: pending_verification_operator_review_and_approval
+      technical_evidence: docs/acceptance/APR06_LIVE_READONLY_EIS_2026-10-09.md
       legacy_mapping: [ARV-005, ARV-072]
       outcome: '20-30 real procurements through the full workflow with measured operator usefulness, not just technical completion.'
       why_now: 'Validates that the system saves time and improves decisions before broad feature expansion.'
