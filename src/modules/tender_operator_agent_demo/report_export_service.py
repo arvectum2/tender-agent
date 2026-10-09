@@ -30,6 +30,9 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     get_demo_run_output_dir,
 )
 from src.modules.tender_operator_agent_demo.report_model import _verified_notice_fact_projection
+from src.modules.tender_operator_agent_demo.operator_review_export import (
+    review_only_export_sections,
+)
 from src.tender_research.rag.export_service import (
     DOCX_CONTENT_TYPE,
     PDF_CONTENT_TYPE,
@@ -386,7 +389,7 @@ def _verified_source_lines(model: dict) -> list[str]:
     return lines
 
 
-def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> None:
+def _build_docx_from_canonical(model: dict, title: str, output_path: Path, review_sections: list[tuple[str, list[str]]] | None = None) -> None:
     document = Document(); document.add_heading(title, 0)
     summary, passport = model["executive_summary"], model["procurement_passport"]
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
@@ -413,11 +416,21 @@ def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> No
     document.add_heading("Ограничения анализа", 1)
     for item in model["missing_data"]: document.add_paragraph(item["description"], style="List Bullet")
     for item in model["limitations"]: document.add_paragraph(item, style="List Bullet")
+    if review_sections:
+        document.add_heading("Неподтверждённые предложения LLM — требуется проверка", 1)
+        document.add_paragraph(
+            "Ни один пункт ниже не подтверждён первоисточником. "
+            "Это предложения для проверки оператором, не решение об участии."
+        )
+        for heading, lines in review_sections:
+            document.add_heading(heading, 2)
+            for line in lines:
+                document.add_paragraph(line, style="List Bullet")
     document.add_paragraph("Техническая карта доказательств сохранена в JSON-версии отчёта.")
     document.save(output_path)
 
 
-def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> None:
+def _build_pdf_from_canonical(model: dict, title: str, output_path: Path, review_sections: list[tuple[str, list[str]]] | None = None) -> None:
     font_name = _ensure_pdf_font_registered(); styles = _pdf_styles(font_name)
     table_style = ParagraphStyle("focused_table", parent=styles["body"], fontSize=6.7, leading=7.5)
     summary, passport = model["executive_summary"], model["procurement_passport"]
@@ -464,6 +477,17 @@ def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> Non
         table = Table(data, colWidths=[8*mm, 58*mm, 25*mm, 22*mm, 30*mm, 27*mm], repeatRows=1)
         table.setStyle(TableStyle([("GRID", (0,0), (-1,-1), .25, HexColor("#b9c8d0")), ("BACKGROUND", (0,0), (-1,0), HexColor("#e9f7f5")), ("VALIGN", (0,0), (-1,-1), "TOP")]))
         story.append(table)
+    if review_sections:
+        story.append(Paragraph("Неподтверждённые предложения LLM — требуется проверка", styles["h1"]))
+        story.append(Paragraph(
+            "Каждый пункт далее является только гипотезой для проверки по оригиналам; "
+            "автоматическое юридическое или коммерческое решение не принимается.",
+            styles["body"],
+        ))
+        for heading, lines in review_sections:
+            story.append(Paragraph(_pdf_inline_markup(heading), styles["h1"]))
+            for line in lines:
+                story.append(Paragraph(_pdf_inline_markup(line), styles["body"]))
     model_hash = ((model.get("provenance") or {}).get("production_model_hash") or model.get("production_model_hash") or "unknown")
     doc = SimpleDocTemplate(str(output_path), pagesize=A4, leftMargin=12*mm, rightMargin=12*mm, topMargin=14*mm, bottomMargin=14*mm, title=title, author=f"production_model_hash={model_hash}"); doc.build(story)
 
@@ -482,8 +506,12 @@ def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
     file_name = _build_export_file_name(registry_number, run_id, "docx")
     output_path = _safe_output_path(root, file_name)
     canonical = _load_canonical_report(run_id)
+    review_sections = review_only_export_sections(get_demo_run_output_dir(run_id))
     if canonical:
-        _build_docx_from_canonical(canonical, title, output_path)
+        if review_sections:
+            _build_docx_from_canonical(canonical, title, output_path, review_sections)
+        else:
+            _build_docx_from_canonical(canonical, title, output_path)
     else:
         _build_docx_from_parts(title, metadata_lines, report_markdown, output_path)
 
@@ -511,7 +539,14 @@ def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
     metadata_lines = _demo_metadata_lines(metadata)
 
     canonical = _load_canonical_report(run_id)
-    report_model_hash = hashlib.sha256(json.dumps(canonical, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest() if canonical else hashlib.sha256(report_markdown.encode("utf-8")).hexdigest()
+    review_sections = review_only_export_sections(get_demo_run_output_dir(run_id))
+    # Immutable PDF artifacts need a fresh identity when the review-only
+    # appendix changes; existing canonical-only PDFs keep their old hashes.
+    if review_sections and canonical:
+        model_material = {"canonical": canonical, "unverified_llm_review": review_sections, "renderer": "review-v1"}
+        report_model_hash = hashlib.sha256(json.dumps(model_material, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    else:
+        report_model_hash = hashlib.sha256(json.dumps(canonical, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest() if canonical else hashlib.sha256(report_markdown.encode("utf-8")).hexdigest()
     root = _safe_output_dir()
     artifact_key, output_path, manifest_path = _pdf_artifact_paths(root, registry_number, run_id, report_model_hash)
     file_name = output_path.name
@@ -537,7 +572,10 @@ def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
             temporary_path = Path(temporary_name)
             try:
                 if canonical:
-                    _build_pdf_from_canonical(canonical, title, temporary_path)
+                    if review_sections:
+                        _build_pdf_from_canonical(canonical, title, temporary_path, review_sections)
+                    else:
+                        _build_pdf_from_canonical(canonical, title, temporary_path)
                 else:
                     _build_pdf_from_parts(title, metadata_lines, report_markdown, temporary_path)
                 with temporary_path.open("rb") as created:
