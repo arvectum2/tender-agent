@@ -1,0 +1,44 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+status: in_progress
+goal: >-
+  Deliver evidence-based commercial acceptance on a frozen, diverse corpus
+  of 20-30 verifiable real Russian procurements end to end, with objective
+  operator-usefulness, quality metrics, decision-error regressions and an
+  auditable pass/fail report. Reuse the APR-01..05 existing runtime.
+definition_of_done:
+  - Frozen 20-30 distinct, verifiably real EIS procurement identifiers with source provenance, law/procedure diversity, immutable manifest and explicit dedupe.
+  - Bounded read-only intake, document/extraction/analysis/report/evidence pipeline with crash-safe resumability; never sign/submit/pay.
+  - Per-case measured time-to-decision, manual correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, package rework; statuses distinguish not-reviewed from measured.
+  - Precommitted, explicitly provisional thresholds; failing or missing human references cannot become passing evidence.
+  - Every human-confirmed product defect is recorded as a reproducible regression, with source evidence and owner gate.
+  - Local tests, CI, and frozen report; no unsupported claim that unreviewed cases passed.
+  - Keep existing isolated Mac mini runtime intact; no changes to RU VPS/public billing.
+completed:
+  - APR-05 full local suite with PG16 client passed: 3297 passed, 238 skipped; latest APR-05 CI on ac0de309 all 9 jobs success.
+  - APR-05 bounded internal SaaS completion and report persisted to upstream branch.
+  - Investigated APR-06 roadmap outcome and its seven metrics.
+  - GitHub feature/apr06-commercial-acceptance created from completed APR-05 branch c8384b2983e63a9d02cf31d3e3bec573013bd38b.
+current: Implement fail-closed acceptance corpus/evaluator and capture reliable source cases.
+pending:
+  - Implement corpus manifest and scoring/checkpoint/report scripts/tests.
+  - Seed verifiable real registry numbers from cited sources; no synthetic cases in acceptance.
+  - Run on 20-30 distinct real EIS records through full workflow once authorized Mac mini repo access returns.
+  - Obtain measured human operator reference decisions, review benchmark failures and thresholds.
+  - Publish complete artifact and add future APR-06 regression tests, passing full CI.
+last_verified_commit: c8384b2983e63a9d02cf31d3e3bec573013bd38b
+test_results:
+  - APR-05 full local 3297 passed, 238 skipped, 329 warnings with PostgreSQL 16 client.
+  - APR-05 CI run 37851685586 success all 9 jobs on ac0de309.
+  - Mac mini repo access currently denied to RDC tool: Operation not permitted on ArvectumSSD and /Users/master/Documents/tender-agent despite containers healthy at last check.
+resume_instruction: >-
+  Continue APR-06 from this checkpoint. Work in feature/apr06-commercial-acceptance;
+  use GitHub connector until authorized Mac mini filesystem access is restored.
+  Do not bypass macOS filesystem permissions; avoid creating fictitious human
+  judgments or accepting sample results as operator-measured. No public VPS,
+  online payments, signatures, automatic bidding or external submission.
+  Keep watchdog disabled.
+execution:
+  branch: feature/apr06-commercial-acceptance
+  base_commit: c8384b2983e63a9d02cf31d3e3bec573013bd38b
