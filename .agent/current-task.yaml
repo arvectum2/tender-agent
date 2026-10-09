@@ -1,53 +1,43 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-03B-UNIFIED-FLOW-20261009
-status: blocked
+task_id: TDP-REFACTOR-20261009
+status: in_progress
 authority: OWNER_DIRECTIVE
-goal: 'Fix owner-reported operator workspace regression: one canonical browser UI with existing EIS keyword search and real EIS-to-documents-to-analysis outcome.'
+goal: 'Full staged refactoring of Tender Agent + standalone Arvectum Data Platform: eliminate duplicate implementations, enforce platform boundaries, and make real-source facts survive EIS to final reports without invented claims.'
 definition_of_done:
-  - 'One canonical operator UI; old wizard functional affordances retained and search using same existing service/API.'
-  - 'One-click run from official EIS card or number with automatic document intake and evidence-grounded analysis, or explicit truthful download failure.'
-  - 'Actual files downloadable, analysis status and source provenance visible; avoid misleading claims of completed analysis.'
-  - 'Real 44-FZ and 223-FZ validation and regression tests; original pilot untouched.'
-  - 'CI exact-head verified and merged only if applicable governance gates permit; owner browser acceptance still required.'
+  - 'Audit and inventory both repositories; map code owners, duplications, imports, cross-repo SDK and runtime routes with an executable architecture baseline.'
+  - 'Reproducible real-source contract test for EIS 44/223-FZ: original file -> extracted fact with source locator -> persisted metadata -> report/API/PDF/DOCX; absent facts UNKNOWN, known evidence must not be overwritten.'
+  - 'Separate business-specific procurement orchestration, decision/commercial logic and presentation (Tender Agent) from generic ingestion/extraction/indexing/search/OCR/LLM contracts (Data Platform), without breaking consumer SDK.'
+  - 'Consolidate duplicate facades/legacy adapters via compatibility-strangler slices and delete only proven dead code after coverage, rollback and CI.'
+  - 'Verify Data Platform service/SDK version and local Mac mini model routing; report model unavailability explicitly, never pretend deterministic fallback is full AI analysis.'
+  - 'Regression tests, static check, security/tenant isolation, CI for each repo, real Mac mini end-to-end owner acceptance and roadmap/checkpoint synchronization.'
+  - 'No public deploy, procurement submission, private data leakage, auth bypass, broad API break or automatic legal/commercial conclusion.'
 completed:
-  - 'Owner confirmed existing separate workspace duplicate and that importer did not perform document processing automatically.'
-  - 'Located canonical prior wizard search endpoint and saw existing PR #258 fixing XML-source evidence, selected it as stack base.'
-  - 'Unified old /pilot/tender-agent and new /pilot/tender-agent/workspace as one canonical operator HTML page.'
-  - 'Restored old EIS keyword search API, law/region/status/method/price/date/deadline filters, real search cards and pagination.'
-  - 'One-click import -> persisted files check -> automatic analysis -> report; manual document fallback for missing files.'
-  - 'Root-caused and fixed PR #258 missing extract_notice_revision_info in EIS XML parser; 16 historical regressions eliminated.'
-  - '109 relevant tests passed with 10 known skips; JavaScript browser simulation passed for full and no-files workflows.'
-  - 'Real 44-FZ six physically stored original documents, extracted 6/6, ten report sections and 3 XML-cited factual fields.'
-  - 'Real 223-FZ public search and two downloaded files, partial analysis conservatively needs_review.'
-  - 'PR #259 exact-head 1e81a5f49350e4f9a8afb487688e556f548c81c1 passed full GitHub CI and was merged as e330418bf430c6b87f65bdbf285d0377c1f8a620.'
-  - 'Private original workspace port 18083 promoted to unified implementation, authenticated HTTP 200 and protected 401, old /pilot/tender-agent also same HTML; original port 18082 healthy.'
-  - 'Root-caused actual Safari 10:13 UTC failed runs: six original files saved in both; stale preview upload_service_legacy.py called int(None) on missing optional EIS revision, despite green repository tests.'
-  - 'Introduced full operator module source-locked preview Dockerfile and 54-file exact-byte integrity checker with source commit label; replaced stale image on 18083 and preserved basic auth and 18082 pilot.'
-  - 'Re-analyzed BOTH Safari failed runs toa-run-20261009101316-306d54 and toa-run-20261009101331-bfdddd to completed_with_warnings with 6/6 original files, 6/6 text extractions and 10 sections each; removed obsolete internal error warning but kept history in event log.'
-  - 'Authenticated 18083 report and 3 XML-cited facts, PDFs and DOCX returned HTTP200; anonymous access 401, container healthy.'
-  - 'PR #260 exact-head a9f3bce914afc33347c9af0e6098849531011591 passed all GitHub CI checks and merged as 63c02c4c525ac2f29c37f7067a831b54c7e57d2b.'
-
-current: 'Reproduction fixed: both actual Safari failed runs re-analyzed with original six documents and working reports; PR #260 merged, verified source-locked preview on Mac mini 18083. Owner visual/browser sign-off and broader evidence-quality assessment still pending.'
+  - 'Reconciled previous APR-03B checkpoint, owner visual report feedback and latest main of both repositories.'
+  - 'Confirmed true DP source separate at arvectum2/data-platform, v0.6.0, and TA SDK client pinned to consumer-sdk-v0.3.0.'
+  - 'Found real EIS sample run 0372200172326000015 six files: metadata has registry-matched official title, but rendered requirements use wrong document heading; mode fallback_deterministic_adapter, no LLM.'
+  - 'Checked existing Tender Agent Watchdog remains disabled by prior owner command; do not enable or duplicate it.'
+  - 'Published executable read-only AST architecture audit of 804 Tender Agent and 158 Data Platform Python modules; no prohibited direct implementation imports.'
+  - 'Added product-owned EIS report assembler: official notice title/deadline/NMCK citation from matched source XML dominates wrong document heading in persisted report.json.'
+  - 'Golden actual FastAPI upload->analysis->metadata->persisted report.json scenario passed using matched 44-FZ fixture, plus wrong-registry and missing-source fail-closed tests.'
+  - 'Retained generic DP SDK document/resource/chunk IDs and metadata in Tender Agent compatibility processing wrapper without breaking positional legacy dataclasses.'
+  - 'Made controlled-LLM fallback provenance and limitations explicit; no model inference from DP or llama.cpp health status.'
+  - 'Added strict EIS XML number/date checks, and architecture master roadmap for phases R0..R5.'
+current: 'R0/R1/R2 bounded first slices implemented in both repos, golden persisted report regression green; finish local/CI checks, PRs and follow-on compatibility-strangler phases R3..R5.'
 pending:
-  - 'OWNER: reload http://127.0.0.1:18083/pilot/tender-agent/workspace in Mac mini browser; test keyword search, official 44/223-FZ card selection, original file links, one-click analyze and PDF/DOCX; provide acceptance or actionable UX defects.'
-  - 'QUALITY: verified XML citations exist for subject, deadline and NMCK, but other risks/economic/legal interpretation remains human-reviewed; do not claim autonomous bid readiness.'
-  - 'After owner browser sign-off, set APR-03B completed and continue APR-04 customer onboarding using existing PR #252; VPS remains deferred.'
-last_verified_commit: '63c02c4c525ac2f29c37f7067a831b54c7e57d2b'
+  - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
+  - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
+  - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP.'
+  - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
+  - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
+last_verified_commit: '98c9e38add50426f3bbc26498b40946fa28467ae'
 test_results:
-  - '109 focused tests PASS, 10 SKIP; fixed missing parser import responsible for 16 earlier failures.'
-  - 'JS fake-browser E2E PASS: keyword card, real persisted files auto analysis/report, missing files fail closed.'
-  - 'Live read-only EIS search PASS: 44-FZ and 223-FZ both returned real cards.'
-  - '44-FZ 0372200172326000015 six real persisted source files, 6/6 extracted, ten report sections, 3 source-verified XML facts.'
-  - '223-FZ 32616450723 two original files and needs_review partial analysis.'
-  - 'PR #259 full exact-head GitHub Actions CI all green, merge e330418bf430c6b87f65bdbf285d0377c1f8a620.'
-  - 'Authenticated private preview 18083 healthy; matching HTML for old and new routes, report+3 verified XML source facts returned HTTP 200; no auth HTTP 401.'
-  - 'PR #260 all exact-head GitHub CI PASS and merge commit 63c02c4c525ac2f29c37f7067a831b54c7e57d2b.'
-  - '115 focused tests PASS, 10 SKIP; make check PASS, targeted Ruff PASS; source-lock parity 54 files at commit a9f3bce914af.'
-  - 'Both owner Safari failures recovered: 6 real documents and 10 sections each, 3 source-backed XML facts each, PDF 32029 bytes and DOCX 38373 bytes returned HTTP 200; warnings empty.'
+  - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
+  - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
+  - 'Read-only AST architecture strict audit PASS: 804/158 modules, no forbidden direct imports.'
 
-resume_instruction: 'PR #260 already merged; Mac mini preview 18083 is healthy and matches source commit a9f3bce914af (54 files). Both owner Safari failed runs toa-run-20261009101316-306d54 and toa-run-20261009101331-bfdddd were reanalyzed successfully with 6 files, 10 report sections, 3 attributed XML facts, PDF/DOCX exports. Owner should refresh http://127.0.0.1:18083/pilot/tender-agent/workspace?run=toa-run-20261009101331-bfdddd in Safari and confirm it works. Preserve protected private access and human approval. If accepted, close APR-03B and resume APR-04 PR #252; do not provision VPS.'
+resume_instruction: 'Resume canonical task TDP-REFACTOR-20261009. Two worktrees /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-crossplatform-refactor-20261009 and /Volumes/ArvectumSSD/Arvectum/worktrees/data-platform-crossplatform-refactor-20261009 implement bounded R0-R2; finish exact-head CI/merge if gates, preserve all source-locked Mac mini pilot. Next R3: refactor upload_service_legacy.py (5924 lines) by tested compatibility-strangler slices, then R4 genuine controlled LLM routing + runtime model benchmark and R5 20-30 frozen procurement acceptance. Do not mark full task completed until R0-R5 and owner approval. Tender Agent Watchdog remains owner-disabled.'
 execution:
-  branch: null
-  manual_override: false
+  branch: refactor/tender-data-platform-audit-20261009
+  manual_override: true
   lease_until: null

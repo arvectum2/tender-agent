@@ -8,6 +8,8 @@ for the R10.1 customer renderer without mutating provider output.
 from __future__ import annotations
 
 import re
+from datetime import datetime
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 
@@ -572,7 +574,20 @@ def _verified_notice_fact_projection(model: dict[str, Any]) -> dict[str, Any]:
         ("nmck", "maxPrice"),
     ):
         excerpt = originals.get(field) if valid else None
-        if isinstance(excerpt, str) and 0 < len(excerpt.strip()) <= 4096:
+        bounded = isinstance(excerpt, str) and 0 < len(excerpt.strip()) <= 4096
+        if bounded and field == "nmck":
+            try:
+                amount = Decimal(excerpt)
+                bounded = amount.is_finite() and amount >= 0
+            except InvalidOperation:
+                bounded = False
+        if bounded and field == "application_deadline":
+            try:
+                deadline = datetime.fromisoformat(excerpt)
+                bounded = deadline.tzinfo is not None
+            except ValueError:
+                bounded = False
+        if bounded:
             facts[field] = {
                 "status": "KNOWN",
                 "value": excerpt,

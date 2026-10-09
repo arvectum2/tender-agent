@@ -2,17 +2,18 @@
 from __future__ import annotations
 
 import base64
-from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from src.modules.tender_operator_agent_demo import operator_workspace_evidence as evidence
+from src.modules.tender_operator_agent_demo import eis_notice_parser as parser
+from src.modules.tender_operator_agent_demo import (
+    operator_workspace_evidence as evidence,
+)
 from src.modules.tender_operator_agent_demo import router as operator_router
 from src.modules.tender_operator_agent_demo import upload_service as upload
-from src.modules.tender_operator_agent_demo import eis_notice_parser as parser
 from src.shared.api.middleware import TenderPilotBasicAuthMiddleware
 from src.shared.config.settings import Settings
 
@@ -95,7 +96,7 @@ def test_conflicting_prices_degrade_only_nmck(source):
 
 
 def test_xml_entity_and_symlink_escape_are_rejected(source, tmp_path):
-    directory, metadata = source
+    directory, _metadata = source
     (directory / "notice.xml").write_text(
         '<!DOCTYPE foo [<!ENTITY sneaky "payload">]>' + GOOD_XML
     )
@@ -169,7 +170,9 @@ def test_endpoint_is_auth_protected(source, monkeypatch):
 
 
 def test_customer_projection_contains_only_attested_xml_facts():
-    from src.modules.tender_operator_agent_demo.report_model import _customer_decision_core_projection
+    from src.modules.tender_operator_agent_demo.report_model import (
+        _customer_decision_core_projection,
+    )
 
     proof = {
         "registry_number": NUMBER, "file_id": "FILE-01",
@@ -193,3 +196,36 @@ def test_customer_projection_contains_only_attested_xml_facts():
     proof["registry_number"] = "1111111111111111111"
     facts = _customer_decision_core_projection(model)["facts"]
     assert all(v["status"] == "UNKNOWN" and not v["evidence"] for v in facts.values())
+
+
+@pytest.mark.parametrize(
+    ("field", "malformed"),
+    [
+        ("nmck", "-3.2"),
+        ("nmck", "NaN"),
+        ("nmck", "Infinity"),
+        ("nmck", "not-a-number"),
+        ("application_deadline", "not-a-date"),
+        ("application_deadline", "2026-10-16"),
+    ],
+)
+def test_customer_fact_projection_never_promotes_invalid_eis_values(field, malformed):
+    from src.modules.tender_operator_agent_demo.report_model import (
+        _verified_notice_fact_projection,
+    )
+
+    proof = {
+        "registry_number": NUMBER, "file_id": "FILE-01",
+        "document": "notice.xml",
+        "values": {
+            "procurement_title": TITLE,
+            "application_deadline": "2026-10-16T10:00:00+03:00",
+            "nmck": "1000000.00",
+        },
+    }
+    proof["values"][field] = malformed
+    result = _verified_notice_fact_projection({
+        "procurement_number": NUMBER, "_verified_notice_facts": proof,
+    })
+    assert result[field] == {"status": "UNKNOWN", "value": None, "evidence": []}
+    assert result["procurement_title"]["status"] == "KNOWN"
