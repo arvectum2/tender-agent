@@ -1,0 +1,45 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-03B-UNIFIED-FLOW-20261009
+status: blocked
+authority: OWNER_DIRECTIVE
+goal: 'Fix owner-reported operator workspace regression: one canonical browser UI with existing EIS keyword search and real EIS-to-documents-to-analysis outcome.'
+definition_of_done:
+  - 'One canonical operator UI; old wizard functional affordances retained and search using same existing service/API.'
+  - 'One-click run from official EIS card or number with automatic document intake and evidence-grounded analysis, or explicit truthful download failure.'
+  - 'Actual files downloadable, analysis status and source provenance visible; avoid misleading claims of completed analysis.'
+  - 'Real 44-FZ and 223-FZ validation and regression tests; original pilot untouched.'
+  - 'CI exact-head verified and merged only if applicable governance gates permit; owner browser acceptance still required.'
+completed:
+  - 'Owner confirmed existing separate workspace duplicate and that importer did not perform document processing automatically.'
+  - 'Located canonical prior wizard search endpoint and saw existing PR #258 fixing XML-source evidence, selected it as stack base.'
+  - 'Unified old /pilot/tender-agent and new /pilot/tender-agent/workspace as one canonical operator HTML page.'
+  - 'Restored old EIS keyword search API, law/region/status/method/price/date/deadline filters, real search cards and pagination.'
+  - 'One-click import -> persisted files check -> automatic analysis -> report; manual document fallback for missing files.'
+  - 'Root-caused and fixed PR #258 missing extract_notice_revision_info in EIS XML parser; 16 historical regressions eliminated.'
+  - '109 relevant tests passed with 10 known skips; JavaScript browser simulation passed for full and no-files workflows.'
+  - 'Real 44-FZ six physically stored original documents, extracted 6/6, ten report sections and 3 XML-cited factual fields.'
+  - 'Real 223-FZ public search and two downloaded files, partial analysis conservatively needs_review.'
+  - 'PR #259 exact-head 1e81a5f49350e4f9a8afb487688e556f548c81c1 passed full GitHub CI and was merged as e330418bf430c6b87f65bdbf285d0377c1f8a620.'
+  - 'Private original workspace port 18083 promoted to unified implementation, authenticated HTTP 200 and protected 401, old /pilot/tender-agent also same HTML; original port 18082 healthy.'
+
+current: 'Implementation merged in main as PR #259; private Mac mini preview updated and healthy; owner browser acceptance and evaluation of broader analytical quality remain open.'
+pending:
+  - 'OWNER: reload http://127.0.0.1:18083/pilot/tender-agent/workspace in Mac mini browser; test keyword search, official 44/223-FZ card selection, original file links, one-click analyze and PDF/DOCX; provide acceptance or actionable UX defects.'
+  - 'QUALITY: verified XML citations exist for subject, deadline and NMCK, but other risks/economic/legal interpretation remains human-reviewed; do not claim autonomous bid readiness.'
+  - 'After owner browser sign-off, set APR-03B completed and continue APR-04 customer onboarding using existing PR #252; VPS remains deferred.'
+last_verified_commit: 'e330418bf430c6b87f65bdbf285d0377c1f8a620'
+test_results:
+  - '109 focused tests PASS, 10 SKIP; fixed missing parser import responsible for 16 earlier failures.'
+  - 'JS fake-browser E2E PASS: keyword card, real persisted files auto analysis/report, missing files fail closed.'
+  - 'Live read-only EIS search PASS: 44-FZ and 223-FZ both returned real cards.'
+  - '44-FZ 0372200172326000015 six real persisted source files, 6/6 extracted, ten report sections, 3 source-verified XML facts.'
+  - '223-FZ 32616450723 two original files and needs_review partial analysis.'
+  - 'PR #259 full exact-head GitHub Actions CI all green, merge e330418bf430c6b87f65bdbf285d0377c1f8a620.'
+  - 'Authenticated private preview 18083 healthy; matching HTML for old and new routes, report+3 verified XML source facts returned HTTP 200; no auth HTTP 401.'
+
+resume_instruction: 'PR #259 is merged, and private Mac mini preview port 18083 already runs the unified UI. Owner should refresh that page and test real keyword search -> select a 44/223-FZ EIS result -> automatic document download and analysis -> original file links and PDF/DOCX. Record feedback and only mark APR-03B completed after browser approval and source integrity review. Next APR-04 PR #252; no VPS.'
+execution:
+  branch: null
+  manual_override: false
+  lease_until: null
