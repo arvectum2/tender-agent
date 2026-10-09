@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
-import pytest
 
 from src.tender_research.providers.public_44fz_search import (
     MAX_PAGE_SIZE,
@@ -95,7 +94,6 @@ class TestParse44FzSearchResults:
         """
         cards = parse_44fz_search_results(html)
         assert len(cards) >= 1
-        numbers = [c.get("reestr_number") for c in cards if c.get("reestr_number")]
         assert "0373200008225000004" in cards[0].get("reestr_number", "")
 
 
@@ -112,7 +110,7 @@ class TestPublic44FzProvider:
 
     def test_build_url_empty_query(self):
         provider = Public44FzSearchProvider()
-        today = date.today()
+        today = date.today()  # noqa: DTZ011 - mirror portal's local-date URL behavior
         three_days_ago = today - timedelta(days=3)
         url = provider._build_url(
             query=None,
@@ -129,7 +127,7 @@ class TestPublic44FzProvider:
 
     def test_build_url_with_query(self):
         provider = Public44FzSearchProvider()
-        today = date.today()
+        today = date.today()  # noqa: DTZ011 - mirror portal's local-date URL behavior
         three_days_ago = today - timedelta(days=3)
         url = provider._build_url(
             query="серверное оборудование",
