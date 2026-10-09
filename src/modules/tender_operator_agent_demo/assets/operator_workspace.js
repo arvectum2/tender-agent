@@ -195,15 +195,15 @@
       paragraph(container, 'Источник: ' + text, 'citation');
     }
   }
-  function renderEvidence(report) {
+  function renderEvidence(report, verifiedEvidence) {
     const root = $('evidence-facts');
     wipe(root);
     const core = report.decision_core || {};
-    const facts = core.facts || {};
+    const facts = verifiedEvidence?.facts || {};
     const fields = Object.keys(facts);
-    if (!fields.length) return paragraph(root, 'Структурированные факты отсутствуют; см. основной отчёт и предупреждения.', 'empty-state');
+    if (!fields.length) paragraph(root, 'Факты из исходного XML недоступны; требуется проверка.', 'empty-state');
     const section = node('section','report-section');
-    section.append(node('h3','','Факты с доказательствами'));
+    section.append(node('h3','','Факты из оригинального XML ЕИС'));
     for (const field of fields.slice(0,28)) {
       const f = facts[field];
       if (!f || typeof f !== 'object') continue;
@@ -214,13 +214,15 @@
       section.append(block);
     }
     root.append(section);
+    for (const warning of verifiedEvidence?.warnings || []) paragraph(root, '⚠ ' + warning, 'unknown');
     for (const key of ['blockers','unknowns','readiness']) {
       if (!Array.isArray(core[key]) || !core[key].length) continue;
       const sub = node('section','report-section');
       sub.append(node('h3','',({blockers:'Блокирующие риски',unknowns:'Неизвестные сведения',readiness:'Проверка готовности'})[key]));
       for (const item of core[key].slice(0,25)) {
         const block = node('div','evidence-item');
-        paragraph(block, (item.summary || item.label || item.code || 'Риск') + ' · ' + (item.status || 'UNKNOWN'));
+        const grounded = validCitations(item.evidence).length > 0;
+        paragraph(block, (item.summary || item.label || item.code || 'Риск') + ' · ' + (grounded ? item.status : 'UNKNOWN · требуется подтверждение'));
         renderCitations(block, item.evidence);
         sub.append(block);
       }
@@ -259,12 +261,15 @@
     show('report-panel',false);
     if (!['completed','completed_with_warnings','needs_review'].includes(run.status)) return;
     try {
-      const report = await json(api + '/runs/' + encodeURIComponent(state.runId) + '/report');
+      const [report, verifiedEvidence] = await Promise.all([
+        json(api + '/runs/' + encodeURIComponent(state.runId) + '/report'),
+        json(api + '/workspace/runs/' + encodeURIComponent(state.runId) + '/evidence')
+      ]);
       show('report-panel');
       $('report-recommendation').textContent = report.recommendation_label || 'Требуется проверка человеком';
       wipe($('executive-summary'));
       summaryList($('executive-summary'), report.executive_summary);
-      renderEvidence(report);
+      renderEvidence(report, verifiedEvidence);
       renderSections(report);
       $('report-text').textContent = report.report_markdown || 'Исходный отчёт не сформирован';
       $('download-pdf').href = api + '/runs/' + encodeURIComponent(state.runId) + '/export/pdf';
