@@ -188,9 +188,10 @@ def tender_operator_demo_page() -> str:
     return render_tender_operator_console_html()
 
 
-@router.get("/pilot/tender-agent", response_class=HTMLResponse)
-def tender_operator_pilot_wizard_page() -> str:
-    return render_tender_operator_pilot_wizard_html()
+@router.get("/pilot/tender-agent", dependencies=[Depends(require_private_workspace)])
+def tender_operator_pilot_wizard_page() -> FileResponse:
+    """Canonical operator entrypoint: preserve old search API, not a second wizard UI."""
+    return operator_workspace_page()
 
 
 @router.get("/demo/tender-agent/wizard", response_class=HTMLResponse)

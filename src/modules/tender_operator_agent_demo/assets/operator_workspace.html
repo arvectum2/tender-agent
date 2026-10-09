@@ -21,7 +21,7 @@
     <div class="sidebar-bottom">
       <span class="privacy-dot"></span> Приватный контур · Mac mini
       <p>Нет автоподачи заявок, подписания, отправки сообщений и денежных операций.</p>
-      <a href="/pilot/tender-agent">Пошаговый мастер ↗</a>
+      <span class="sidebar-version">Единый кабинет: поиск, загрузка и анализ</span>
     </div>
   </aside>
   <main class="main-area">
@@ -29,13 +29,40 @@
     <div class="page-content">
       <section class="pane" id="pane-new">
         <div class="intro"><div class="eyebrow">APR-03B · OPERATOR WORKSPACE</div><h1>Анализ закупки</h1><p>Оригинальные данные ЕИС → документы → проверяемый анализ с источниками. Решение об участии остаётся за человеком.</p></div>
+        <section class="panel search-panel" aria-labelledby="eis-search-title">
+          <div class="panel-title"><h2 id="eis-search-title">Поиск закупок в ЕИС</h2><span class="tag">Реальные карточки · 44-ФЗ / 223-ФЗ</span></div>
+          <form id="eis-search-form">
+            <label for="search-query">Ключевые слова или предмет закупки</label>
+            <div class="input-row"><input id="search-query" type="search" maxlength="250" placeholder="Например, разработка сайта" required><button type="submit" id="search-submit" class="button button-primary">Найти закупки</button></div>
+            <div class="search-filters">
+              <label>Закон <select id="search-law"><option value="44fz">44-ФЗ</option><option value="223fz">223-ФЗ</option><option value="capital_repair">Капремонт (поиск)</option></select></label>
+              <label>Регион <input id="search-region" placeholder="Регион или код" maxlength="120"></label>
+              <label>Статус <select id="search-status"><option value="">Любой</option><option value="Подача заявок">Подача заявок</option><option value="Работа комиссии">Работа комиссии</option><option value="Закупка завершена">Закупка завершена</option></select></label>
+              <label>Способ закупки <select id="search-procedure"><option value="">Любой</option><option value="Электронный аукцион">Электронный аукцион</option><option value="Запрос котировок">Запрос котировок</option><option value="Открытый конкурс">Открытый конкурс</option><option value="Электронный конкурс">Электронный конкурс</option><option value="Запрос предложений">Запрос предложений</option></select></label>
+            </div>
+            <details class="more-search"><summary>Фильтры по цене и датам</summary>
+              <div class="search-filters">
+                <label>НМЦК от, ₽ <input id="search-price-from" inputmode="decimal" type="number" min="0" step="1"></label>
+                <label>НМЦК до, ₽ <input id="search-price-to" inputmode="decimal" type="number" min="0" step="1"></label>
+                <label>Опубликована с <input id="search-date-from" type="date"></label>
+                <label>Опубликована по <input id="search-date-to" type="date"></label>
+                <label>Приём заявок с <input id="search-deadline-from" type="date"></label>
+                <label>Приём заявок по <input id="search-deadline-to" type="date"></label>
+              </div>
+            </details>
+          </form>
+          <button type="button" id="search-reset" class="button button-ghost button-small">Сбросить фильтры</button>
+          <div id="search-status-message" class="help-text" role="status" aria-live="polite">Используется существующий поиск Tender Agent по публичному источнику ЕИС.</div>
+          <div id="search-results" class="search-result-list"></div>
+          <div id="search-pagination" class="search-page-actions" hidden><span id="search-count"></span><button type="button" id="search-next" class="button button-secondary">Следующая страница →</button></div>
+        </section>
         <div class="panel primary-panel">
-          <div class="panel-title"><h2>Новая закупка</h2><span class="tag">44-ФЗ / 223-ФЗ</span></div>
+          <div class="panel-title"><h2>Или открыть извещение по номеру</h2><span class="tag">44-ФЗ / 223-ФЗ</span></div>
           <form id="import-form" novalidate>
             <label for="reference">Реестровый номер или ссылка на извещение ЕИС</label>
             <div class="input-row">
               <input id="reference" name="reference" type="text" inputmode="url" maxlength="500" placeholder="0372200172326000015 или https://zakupki.gov.ru/…" required autocomplete="off" spellcheck="false" />
-              <button class="button button-primary" id="import-btn" type="submit">Получить документы <span aria-hidden="true">→</span></button>
+              <button class="button button-primary" id="import-btn" type="submit">Скачать и проанализировать <span aria-hidden="true">→</span></button>
             </div>
           </form>
           <div class="help-text">Принимаются только официальные HTTPS-ссылки zakupki.gov.ru или реестровые номера. Никаких фиктивных данных.</div>
@@ -43,21 +70,26 @@
             <div class="loader"></div><div><strong id="progress-title">Обработка запроса</strong><p id="progress-description">Ожидаем ответ ЕИС…</p></div>
           </div>
         </div>
-        <div id="run-empty" class="empty-panel"><div class="empty-mark">⌕</div><h2>Здесь появится ваш анализ</h2><p>Введите номер закупки или выберите сохранённый запуск в разделе «История анализов».</p></div>
+        <div id="run-empty" class="empty-panel"><div class="empty-mark">⌕</div><h2>Здесь появится ваш анализ</h2><p>Найдите закупку по ключевым словам либо введите реестровый номер. Затем система скачает документы и запустит анализ, если файлы доступны.</p></div>
         <section id="run-section" hidden>
           <div class="panel run-panel">
             <div class="panel-title"><h2>Текущий запуск</h2><span id="run-status" class="tag">—</span></div>
             <p class="run-id" id="run-id"></p><h3 id="run-title"></h3>
             <div class="facts" id="run-facts"></div>
-            <div class="actions"><button id="analyze-btn" class="button button-primary" type="button">Запустить глубокий анализ</button><button id="refresh-run" class="button button-secondary" type="button">Обновить</button><a id="source-link" class="button button-ghost" target="_blank" rel="noopener noreferrer" hidden>Извещение ЕИС ↗</a></div>
+            <div class="actions"><button id="analyze-btn" class="button button-primary" type="button">Повторить анализ</button><button id="refresh-run" class="button button-secondary" type="button">Обновить</button><a id="source-link" class="button button-ghost" target="_blank" rel="noopener noreferrer" hidden>Извещение ЕИС ↗</a></div>
             <div id="run-warnings" class="warning-list"></div>
+            <form id="append-files-form" class="recovery-form" hidden>
+              <label for="append-files">Если ЕИС не отдала файлы: добавьте оригиналы вручную</label>
+              <div class="input-row"><input id="append-files" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.xml,.txt,.zip"><button class="button button-secondary" type="submit" id="append-files-button">Загрузить и проанализировать</button></div>
+              <p class="help-text">Файлы попадут только в приватный контур этого запуска. Загружать нужно подлинные документы, не выдуманные сведения.</p>
+            </form>
           </div>
           <div class="two-columns">
-            <section class="panel"><div class="panel-title"><h2>Исходные документы</h2><span class="counter" id="document-count">0</span></div><div id="file-list" class="file-list"></div></section>
+            <section class="panel"><div class="panel-title"><h2>Фактически скачанные документы</h2><span class="counter" id="document-count">0</span></div><div id="file-list" class="file-list"></div></section>
             <section class="panel"><div class="panel-title"><h2>Ход обработки</h2><span class="counter" id="event-count">0</span></div><ol id="event-list" class="event-list"></ol></section>
           </div>
           <section class="panel report-panel" id="report-panel" hidden>
-            <div class="panel-title"><div><div class="eyebrow">ПОДТВЕРЖДЁННЫЕ ДАННЫЕ</div><h2>Результаты и доказательства</h2></div><div class="report-actions"><a id="download-pdf" class="button button-secondary" download>PDF ↓</a><a id="download-docx" class="button button-secondary" download>DOCX ↓</a></div></div>
+            <div class="panel-title"><div><div class="eyebrow">РЕЗУЛЬТАТ АВТОМАТИЧЕСКОГО АНАЛИЗА · ПРОВЕРЬТЕ ИСТОЧНИКИ</div><h2>Результаты и доказательства</h2></div><div class="report-actions"><a id="download-pdf" class="button button-secondary" download>PDF ↓</a><a id="download-docx" class="button button-secondary" download>DOCX ↓</a></div></div>
             <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
             <h3 id="report-recommendation"></h3><div id="executive-summary"></div>
             <div id="evidence-facts"></div>

@@ -13,14 +13,28 @@ definition_of_done:
 completed:
   - 'Owner confirmed existing separate workspace duplicate and that importer did not perform document processing automatically.'
   - 'Located canonical prior wizard search endpoint and saw existing PR #258 fixing XML-source evidence, selected it as stack base.'
-current: 'Unify EIS search, download and automatic analysis in one operator workspace; preserve PR #258 provenance fix.'
+  - 'Unified old /pilot/tender-agent and new /pilot/tender-agent/workspace as one canonical operator HTML page.'
+  - 'Restored old EIS keyword search API, law/region/status/method/price/date/deadline filters, real search cards and pagination.'
+  - 'One-click import -> persisted files check -> automatic analysis -> report; manual document fallback for missing files.'
+  - 'Root-caused and fixed PR #258 missing extract_notice_revision_info in EIS XML parser; 16 historical regressions eliminated.'
+  - '109 relevant tests passed with 10 known skips; JavaScript browser simulation passed for full and no-files workflows.'
+  - 'Real 44-FZ six physically stored original documents, extracted 6/6, ten report sections and 3 XML-cited factual fields.'
+  - 'Real 223-FZ public search and two downloaded files, partial analysis conservatively needs_review.'
+
+current: 'Rebuild final private preview, verify exact new code, open PR and pass CI; owner must then retest single browser workflow.'
 pending:
-  - 'Restore keyword search, filtering, paging and card selection from existing pilot API.'
-  - 'Add one-click real download/analyze and honest unsupported/failed state, plus manual file recovery path.'
-  - 'Remove duplicate primary navigation, add regression tests and real Mac mini E2E.'
+  - 'Rebuild isolated private preview and validate final UI plus strict parser.'
+  - 'Open combined PR based on main (supersedes broken PR #258), obtain exact-head CI, merge when permitted.'
+  - 'After code merge, update private operator preview and ask owner to confirm browser journey.'
   - 'Exact-head CI, integrate compatible with PR #258, update roadmap/acceptance evidence.'
 last_verified_commit: '1f8482412c89ad57155c019626c946b49a0a19cc'
-test_results: []
+test_results:
+  - '109 focused tests PASS, 10 SKIP; fixed missing parser import responsible for 16 earlier failures.'
+  - 'JS fake-browser E2E PASS: keyword card, real persisted files auto analysis/report, missing files fail closed.'
+  - 'Live read-only EIS search PASS: 44-FZ and 223-FZ both returned real cards.'
+  - '44-FZ 0372200172326000015 six real persisted source files, 6/6 extracted, ten report sections, 3 source-verified XML facts.'
+  - '223-FZ 32616450723 two original files and needs_review partial analysis.'
+
 resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/apr03b-unified-workspace-20261009. User wants original keyword search restored in ONE operator UI and real EIS files analyzed automatically, not a bare manifest. Base stacked on PR #258 source-grounded evidence. Implement UI+tests, validate real EIS with preview isolated from live 18082/18083, and merge when CI and authority permit.'
 execution:
   branch: fix/apr03b-unified-workspace-e2e-20261009
