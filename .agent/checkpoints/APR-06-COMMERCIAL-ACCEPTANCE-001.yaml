@@ -27,17 +27,22 @@ completed:
   - 9 machine reports analyzed from complete-enough case sources (118 total files, 109 extracted text flags, 10 report sections per case); 11 cases remain docs_required.
   - Probed 8 separate 223-FZ public HTML document pages through native adapter, all docs_required with 0 attachments.
   - Preserved audit logs on Mac mini and publishable SHA-only summary, operator review queue for nine machine reports; no customer data or secrets in Git.
+  - Corrected 223-FZ public document routing: 223-specific parser instead of 44, official common-info to noticeGuid navigation, multi-revision fail-closed validation.
+  - Verified all eight 223-FZ candidates against correct official navigation: 4 had document links and 4 require ambiguous-revision human review.
+  - Downloaded five bounded read-only 223-FZ files across four cases to local-only /tmp (four PDF/DOCX magic matches and one HTML-extension/ZIP-content mismatch), published hash/size receipts only.
+  - Added safe filename recovery for malformed EIS 223-FZ HTML attributes, strict official host/GUID validation, extra security/regression tests, and nine-case machine-only pre-review queue.
+  - Full local APR-06 regression suite 3328 passed, 238 skipped, 329 warnings; make check clean. After final GUID hardening 51 targeted tests passed.
 current: >-
   Source/document completeness and source-version validation plus real
   operator judgments are mandatory before final commercial acceptance.
 pending:
   - Reconcile all 28 candidate numbers/subjects/procedures with official EIS and verify specific notice revisions and all file hashes.
-  - Repair/document gaps for 11 incomplete 44-FZ cases and 8 223-FZ public attachment failures, or select a defensible 20-30 complete-case corpus.
+  - Repair/document gaps for 11 incomplete 44-FZ cases and four 223-FZ ambiguous revisions; check coverage for four 223-FZ source-link cases and format mismatch, or select 20-30 complete cases.
   - Freeze qualifying 20-30 case corpus by digest; do not mark unverified candidates frozen.
-  - Obtain actual attributed HUMAN GO/NO_GO/DEFER, citation corrections, timestamps and application package assessments per case.
+  - Obtain actual attributed HUMAN GO/NO_GO/DEFER, citation corrections, timestamps and application package assessments per case (0/28 so far).
   - Get owner sign-off on seven score thresholds; score all reviewed observations and persist regressions for confirmed defects.
   - Merge upstream PR only under current governance and after final acceptance; keep RU VPS and payment gates deferred.
-last_verified_commit: 972554f20d57480f05fa18aaf75c20be64833204
+last_verified_commit: f65a97e54d4328a4bf4f39ff5be5ef560a650f81
 test_results:
   - APR-06 targeted Mac mini pytest 24 passed; Ruff clean.
   - Real 44-FZ SOAP cases 20 unique; 168 files SHA256; 9 analyzed, 11 docs_required.
@@ -45,13 +50,15 @@ test_results:
   - Human reference decisions 0/28; operator measured time/corrections/citation accuracy/missed blockers and package rework NOT MEASURED.
   - APR-05 full local pytest 3297 passed 238 skipped; predecessor CI 37851685586 success.
   - APR-06 GitHub CI pending latest head; do not claim final pass before actual result.
+  - APR-06 223-FZ 4 official navigation results with document links, 4 ambiguous revision stops; 5 bounded source files (4 format-matching, 1 content/extension mismatch), no submitted bids.
+  - Full Mac mini pytest 3328 passed / 238 skipped, 329 warnings, PostgreSQL 16 CLI; make check passed; final targeted 51 passed.
 resume_instruction: >-
   Read this checkpoint and the APR06_LIVE_READONLY_EIS_2026-10-09 and
   APR06_OPERATOR_REVIEW_QUEUE_2026-10-09 documents first. Do not repeat 20
   saved 44-FZ EIS intakes or nine analyzed runs. Preserve /tmp/apr06_real_eis_probe_20261009.jsonl,
   /tmp/apr06_real_analysis_20261009.jsonl and /tmp/apr06_223fz_public_20261009.jsonl.
   Local Mac mini can be reached via pre-authorized MacBook SSH to Mac-mini-master.local;
-  do not bypass Desktop Commander macOS TCC. Obtain missing source files or
+  do not bypass Desktop Commander macOS TCC. Four 223-FZ cases expose official links, four require revision checks; one HTML extension has ZIP magic. Obtain missing source files or
   human reviews then freeze/evaluate with owner-approved thresholds.
   No signatures, ETP submission, real payments or public RU VPS. Keep watchdog disabled.
 execution:
@@ -61,3 +68,5 @@ execution:
   operator_queue: docs/acceptance/APR06_OPERATOR_REVIEW_QUEUE_2026-10-09.md
   source_receipts: docs/acceptance/apr06_real_probe_receipts_2026-10-09.json
   public_223_receipts: docs/acceptance/apr06_223fz_public_probe_2026-10-09.json
+  public_223_download_receipts: docs/acceptance/apr06_223fz_download_receipts_2026-10-09.json
+  machine_pre_review: docs/acceptance/apr06_machine_prefill_2026-10-09.json

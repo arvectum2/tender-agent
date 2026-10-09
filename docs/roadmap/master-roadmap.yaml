@@ -255,6 +255,11 @@ active_product_roadmap_2026_10_08:
       candidates: 28
       eis_44fz_readonly_probed: 20
       eis_223fz_public_html_probed: 8
+      eis_223fz_document_links_discovered: 4
+      eis_223fz_ambiguous_revision_hard_stops: 4
+      eis_223fz_downloaded_unreviewed_source_files: 5
+      eis_223fz_format_consistency_flags: 1
+      machine_review_reports: 9
       analyzed_with_machine_report: 9
       operator_reviewed: 0
       commercial_acceptance: pending_verification_operator_review_and_approval
