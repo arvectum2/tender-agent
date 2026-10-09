@@ -1,29 +1,28 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: ROADMAP-REFRESH-OPERATOR-SEQUENCE-20261009
-status: completed
+task_id: PR-CLOSURE-NO-VPS-20261009
+status: in_progress
 authority: OWNER_DIRECTIVE
-goal: 'Update canonical roadmap after bounded APR-02 acceptance, preserve owner sequence APR-03 Production Runtime then APR-03B Operator Workspace then APR-04, and distinguish open implementation PRs from merged capabilities.'
+goal: "Finish merge-ready Tender Agent work without purchasing a VPS, preserving production and human gates."
 definition_of_done:
-  - Preserve historical registry and APR-02 frozen corpus acceptance.
-  - Add APR-03B to canonical active outcomes and human roadmap with browser-only real-data acceptance.
-  - Reflect PR #251 through #255 as open/not merged.
-  - Reconcile owner directive ordering without interrupting running engineering tasks.
-  - Validate YAML, open status-only PR, merge only after required CI.
+  - Reconcile all currently open PRs with canonical roadmap and dependency order.
+  - Finish and merge safe, verified repository-only PRs where possible.
+  - Record blocked PRs, remaining real-VPS and operator-acceptance gates without false completion.
+  - Run affected checks, record exact merged SHAs, and update canonical roadmap/checkpoint.
 completed:
-  - 'Confirmed APR-02 bounded 223-FZ accepted via merged PR #250; no universal 223-FZ claim.'
-  - 'Confirmed APR-03 through APR-07 PR #251..255 open, and previous UI PR #228 open but not merged.'
-  - 'Updated master roadmap, human roadmap and owner directive to prioritize APR-03B after APR-03.'
-current: 'Owner roadmap refresh merged into main; PR #228 closed as superseded. APR-03 remains next not-yet-merged implementation outcome.'
-pending: []
-last_verified_commit: 509578a7b3caafc0c394ebbfb4d6672497af5c56
-test_results:
-  - 'YAML/OWNER_SEQUENCE/APR-02 status assertions PASS.'
-  - 'PR #256 exact-head CI run 37898111915: SUCCESS 9/9.'
-  - 'PR #256 squash merged 509578a7b3caafc0c394ebbfb4d6672497af5c56.'
-  - 'Overlapping old operator-workspace PR #228 closed as superseded.'
-resume_instruction: 'This roadmap refresh is complete. Resume APR-03 Production Runtime from exact canonical main and reconcile PR #251; then APR-03B Operator Workspace for owner browser acceptance, then APR-04 onwards. PR #252..255 remain open, not accepted completion.'
+  - "Identified seven open PRs; APR-03..APR-07 are a stacked chain, APR-02 numeric and ops are separate."
+  - "Read canonical owner sequencing: APR-03 -> APR-03B browser workspace -> APR-04 -> APR-05."
+current: "Review PR #246 and #251 merge readiness, conflicts and exact CI, then merge only tested bounded increments."
+pending:
+  - "PR #246: dependent predecessor #245 already merged; reconcile and verify."
+  - "PR #251: resolve merge conflict with main, verify and retain VPS acceptance as blocked."
+  - "PR #229: assess ops conflict and whether still relevant."
+  - "Retarget and verify stacked APR-04..APR-07 in owner order; APR-03B must be accepted before later product closure."
+  - "Summarize no-VPS capability vs deployment-gated work."
+last_verified_commit: "748967f11d91dd3f458c689859b72f36b309f2ff"
+test_results: []
+resume_instruction: "Fetch latest origin/main and open PRs. Continue from PR #246 evidence review and tests; then PR #251 conflicts and exact-head CI; do not treat public VPS or operator-human acceptance as done."
 execution:
-  branch: null
+  branch: agent/pr-closure-20261009
   manual_override: false
   lease_until: null
