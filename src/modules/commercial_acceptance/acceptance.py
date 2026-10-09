@@ -11,9 +11,8 @@ import json
 import math
 import re
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from statistics import mean
 from urllib.parse import urlsplit
 
 NOTICES = {"44fz": re.compile(r"\d{19}\Z"), "223fz": re.compile(r"\d{11}\Z")}
@@ -54,12 +53,12 @@ def _time(raw: object, label: str) -> datetime:
     if not TIMESTAMP_PATTERN.fullmatch(value):
         _error(f"{label}: offset-aware ISO timestamp required")
     try:
-        result = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        result = datetime.fromisoformat(value)
     except ValueError as exc:
         raise AcceptanceError(f"{label}: invalid timestamp") from exc
     if result.tzinfo is None:
         _error(f"{label}: timezone required")
-    return result.astimezone(timezone.utc)
+    return result.astimezone(UTC)
 
 
 def _hash(raw: object, label: str) -> str:

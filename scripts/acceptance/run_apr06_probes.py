@@ -9,16 +9,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
-import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.modules.commercial_acceptance.acceptance import (
-    AcceptanceError, _new_file, load_json, validate_manifest,
+    AcceptanceError,
+    _new_file,
+    load_json,
+    validate_manifest,
 )
 
 
@@ -82,7 +85,7 @@ def probe_one(case: dict, output_root: Path, *, execute: bool) -> dict:
                 "verified_eis_document_hashes": False,
             })
             _new_file(source_path, payload)
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - boundary must fail closed
             return {"reg_number": reg, "stage": "INTAKE_FAILED",
                     "error_type": type(exc).__name__,
                     "eis_verified": False}
@@ -102,7 +105,7 @@ def probe_one(case: dict, output_root: Path, *, execute: bool) -> dict:
             "created_at": _now(), "needs_human_review": True,
         })
         _new_file(analysis_path, result)
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - boundary must fail closed
         return {"reg_number": reg, "stage": "ANALYSIS_FAILED",
                 "run_id": saved["run_id"], "error_type": type(exc).__name__}
     return {"reg_number": reg, "stage": "HUMAN_REVIEW_PENDING",
