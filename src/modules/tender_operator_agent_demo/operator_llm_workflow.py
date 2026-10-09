@@ -10,6 +10,9 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from src.modules.tender_operator_agent_demo.document_context_selection import (
+    select_document_context,
+)
 from src.shared.config.settings import get_settings
 
 
@@ -43,14 +46,17 @@ def run_controlled_operator_llm(
         engine = create_engine(settings.database_url)
         Base.metadata.create_all(engine)
 
+        selected_notice = select_document_context(notice_text or "", role="notice")
+        selected_spec = select_document_context(technical_spec_text or "", role="technical_spec")
+        selected_contract = select_document_context(contract_draft_text or "", role="contract_draft")
         context = {
             "deal_id": f"DEMO-{run_id}",
             "operator_id": "tender_operator_demo",
             "operator_profile": {},
             "documents": {
-                "notice_text": notice_text or "",
-                "technical_spec_text": technical_spec_text or "",
-                "contract_draft_text": contract_draft_text or "",
+                "notice_text": selected_notice.text,
+                "technical_spec_text": selected_spec.text,
+                "contract_draft_text": selected_contract.text,
             },
             "workflow_guardrails": {
                 "manual_only": True,
