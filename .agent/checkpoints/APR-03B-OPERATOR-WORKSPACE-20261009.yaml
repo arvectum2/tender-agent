@@ -1,0 +1,42 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-03B-OPERATOR-WORKSPACE-20261009
+status: blocked
+authority: OWNER_DIRECTIVE
+goal: 'Deliver authenticated browser-only local Tender Agent workspace for real 44-FZ/223-FZ EIS requests, cited results, documents, report export, and read-only history.'
+definition_of_done:
+  - 'Reuse existing services and authenticated private pilot perimeter; no mock-only product path.'
+  - 'Operator submits real EIS identifier or URL and sees progress, cited requirements/risks/economics, documents, report export.'
+  - 'Operator browses saved procurement records, past analysis runs and original files without arbitrary SQL or terminal/Swagger.'
+  - 'Enforce company scope, safe input validation and HUMAN review boundary with tests.'
+  - 'Run focused tests and private Mac mini HTTP E2E with real EIS procurement; fix issues and obtain successful CI.'
+  - 'Update roadmap and merge verified PR if existing approval gates allow; otherwise report exact blocker.'
+completed:
+  - 'APR-03 repo runtime package merged into main; production VPS acceptance remains blocked.'
+  - 'Identified existing running authenticated private Mac mini pilot stack and reused backend APIs.'
+  - 'Created first-party operator dashboard, strict EIS wrapper, canonical read-only registry and protected file downloads.'
+  - 'Focused tests: 19 new tests pass; 100 affected pilot tests pass, 10 skipped.'
+  - 'Built isolated preview image and started loopback port 18083 alongside unchanged live port 18082.'
+  - 'Authenticated HTTP frontend/assets and history/registry endpoints respond, with no invented canonical DB rows.'
+  - 'Real 44-FZ import: 6 files, text extraction 6/6, 10 report sections, HTTP200 report and PDF/DOCX.'
+  - 'Real 223-FZ source returned conservative docs_required (no fabricated analysis). Human citation quality blocked on 0 fact-level citations.'
+  - 'Added fail-closed guard: APR-03B endpoints refuse service when pilot auth is disabled or mis-scoped; new test verifies.'
+  - 'PR #257 merged af16802e34cfa2e3d15ab484e90ec3a0a806bbe3 after full exact-head CI on final citation-safe JavaScript.'
+  - 'Final private preview image v3 updated and verified on localhost:18083; existing pilot on 18082 preserved.'
+current: 'Implementation merged and private preview available; overall APR-03B blocked on Owner browser acceptance and missing verified fact-level citations in sampled real 44-FZ report.'
+pending:
+  - 'OWNER HUMAN: inspect authenticated Mac mini browser real 44-FZ/223-FZ flow, documents, report, PDF/DOCX and persisted history; confirm no autonomous participation actions.'
+  - 'QUALITY: real 44-FZ 0372200172326000015 produced zero verified fact-level citations; fix or explicitly resolve evidence coverage before considering cited-result acceptance complete.'
+  - 'After these acceptance gates, close APR-03B and resume APR-04 onboarding PR #252.'
+last_verified_commit: 'af16802e34cfa2e3d15ab484e90ec3a0a806bbe3'
+test_results:
+  - 'PR #257 final head f609831f709661110a8ca727362dd2889d89ec7b: exact-head CI success and merge af16802e34cfa2e3d15ab484e90ec3a0a806bbe3.'
+  - '19 APR-03B tests PASS, 100 affected operator tests PASS with 10 skipped, 6 roadmap tests PASS; Ruff, make check, Node syntax and YAML PASS.'
+  - 'Real 44-FZ: 6/6 documents extracted, 10 report sections; report, events, PDF and DOCX returned HTTP 200; verified fact citations 0 (open quality blocker).'
+  - 'Real 223-FZ: docs_required, 0 extracted documents, one warning; no fabricated analysis.'
+  - 'Private preview image v3 on Mac mini loopback port 18083: authenticated HTML/JS/registry/saved report HTTP 200, unauthenticated HTTP 401; existing live pilot 18082 unchanged.'
+resume_instruction: 'PR #257 is merged. Ask Owner to open http://127.0.0.1:18083/pilot/tender-agent/workspace in Mac mini browser, test actual EIS workflows and HUMAN controls, and resolve missing fact-level source citations without inventing evidence. Only then complete APR-03B and resume APR-04 PR #252. No VPS.'
+execution:
+  branch: null
+  manual_override: false
+  lease_until: null
