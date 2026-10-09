@@ -12,19 +12,19 @@ definition_of_done:
 completed:
   - "Identified seven open PRs; APR-03..APR-07 are a stacked chain, APR-02 numeric and ops are separate."
   - "Read canonical owner sequencing: APR-03 -> APR-03B browser workspace -> APR-04 -> APR-05."
-  - "PR #229 conflict resolved against current main; focused 3/3 Mac mini verifier tests and Node syntax passed; updated head 16d79ac pushed, exact-head CI in progress."
-  - "PR #246 preserved both numeric evidence guards; 21/21 tests and targeted Ruff passed; head be56aafd pushed, PR retargeted main, exact-head CI queued."
-  - "PR #251 local merge conflict resolved preserving canonical roadmap; 13/13 focused tests and targeted Ruff passed; branch held pending preceding merges."
-current: "Review PR #246 and #251 merge readiness, conflicts and exact CI, then merge only tested bounded increments."
+  - "PR #229 MERGED as 4028489aa5a8c97353ef09c561886f127d1014dd; exact-head CI all required checks pass; 3/3 Mac mini verifier tests + Node syntax pass."
+  - "PR #246 MERGED as d041629c5db20c3e32e0107ed371ae8ac6e5214b; both source-numeric guards preserved; exact-head CI pass, 21/21 targeted tests + targeted Ruff pass."
+  - "PR #251 ready-for-review at 26b74cb44275c58067918e9b1ae34e250fcb6110; 13/13 focused tests + Ruff and 6/6 roadmap tests pass; exact-head CI in progress; package-only vs VPS blocked explicitly documented."
+current: "Await exact-head CI PR #251 and merge repository-only package; APR-03 external production acceptance remains blocked."
 pending:
   - "PR #246: dependent predecessor #245 already merged; reconcile and verify."
   - "PR #251: resolve merge conflict with main, verify and retain VPS acceptance as blocked."
   - "PR #229: assess ops conflict and whether still relevant."
   - "Retarget and verify stacked APR-04..APR-07 in owner order; APR-03B must be accepted before later product closure."
   - "Summarize no-VPS capability vs deployment-gated work."
-last_verified_commit: "748967f11d91dd3f458c689859b72f36b309f2ff"
+last_verified_commit: "d041629c5db20c3e32e0107ed371ae8ac6e5214b"
 test_results: []
-resume_instruction: "Await exact-head CI #229 then merge on green; continue #246 CI/merge, update APR-03 branch from new main and push for exact-head CI. VPS and operator human acceptance remain blocked."
+resume_instruction: "PR229 and PR246 merged; wait PR251 head 26b74cb CI 9/9 and automatically merge on exact SHA if clean (watch process 28061 on Mac mini); then update current-task to completed on canonical main. APR-03B browser workspace and external VPS remain open."
 execution:
   branch: agent/pr-closure-20261009
   manual_override: false
