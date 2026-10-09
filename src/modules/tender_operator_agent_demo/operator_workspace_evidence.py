@@ -119,10 +119,9 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
     # The operator source layer is never permitted to present demo/manual files
     # as official EIS evidence, or to silently promote 223-FZ as supported.
     source = str(metadata.get("procurement_source") or "")
-    regime = str(metadata.get("procurement_law") or "").lower()
     facts = {field: _unknown() for field in _FIELDS}
     warnings: list[str] = []
-    if source != "zakupki_gov_ru_getdocs_ip" or "44" not in regime:
+    if source != "zakupki_gov_ru_getdocs_ip":
         warnings.append("Нет подтверждённого исходного извещения XML ЕИС 44-ФЗ для этого запуска.")
     else:
         matched = _notice_xml(run_id, metadata)
