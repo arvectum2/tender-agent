@@ -84,17 +84,21 @@ completed:
   - '2026-10-10 TA PR #308 evidence-preserving report document inventory extracted into operator_report_inventory.py, unknown document type and failed/pending text extraction truth retained, old facade preserved; local 3551 PASS/238 skipped, all exact-head two quality plus Docker/Postgres/Redis/security CI green, merged TA 879b68c45da7e5b6c2a7835345907d6fdfc1ceea.'
   - '2026-10-10 cross-repo live Mac mini DP0.6 read-only SDKv0.3 auth preflight: health OK, GET /v1/contract without credentials rejects HTTP401, no source proof or authenticated R2 claim; no production mutations. DP checkpoint updated separately.'
   - '2026-10-10 TA PR #312 product-owned goods economics projection extracted behind unchanged legacy facade with injected source helpers; verified UNKNOWN vendor prices/margin, NMCK informational metric, AST body parity. 65 focused PASS, full local 3556 PASS/238 skipped, both exact-head GitHub quality jobs + all integrations green. Merged main 73a0565da80b94234aac1f18c6892912dfe58460.'
-current: 'TA PR #312 goods-economics R3 slice completed; full main R3 monolith decomposition, DP authorized source proof R2, genuine LLM benchmark R4 and >=20 human-reviewed EIS procurement R5 remain open. Task in_progress.'
+  - '2026-10-10 PR #314 59-line software/integration report projection extracted with source-helper injection and legacy callable parity, public INSUFFICIENT_EVIDENCE guard unchanged; 44 focused tests, 3559 full passed/238 skipped and all exact-head CI green; merged main 3808e0020c5709b99750a0434bb8a85edc689e78.'
+  - '2026-10-10 R2 live DP0.6 authenticated SDK0.3 consumer contract v1.0 HTTP200 confirmed via configured secret without disclosure; standard upload/connector/recovery collections absent; actual original source IDs and hash/offset unverified (DP #110).'
+current: 'R3 goods economics #312 and software preliminary #314 merged CI green. Authenticated DP0.6 SDK0.3 consumer contract v1.0 proven read-only (DP #110), but stored original file/chunk source proof absent. Remaining R3 education/report decomposition, R4 real non-stub model quality, R5 >=20 independently reviewed EIS originals and owner signoff. Task in_progress.'
 pending:
-  - 'R3 software/integration preliminary analyzer extraction TDP-R3-SOFTWARE-PRELIM-20261010: preserve facade and sourced facts; exact-head CI before merge.'
+  - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '73a0565da80b94234aac1f18c6892912dfe58460'
+last_verified_commit: '3808e0020c5709b99750a0434bb8a85edc689e78'
 test_results:
+  - 'R3 #314: 44 focused, 3559 full passed / 238 skipped, AST branch-body parity PASS, both exact-head quality and all integration/security CI green.'
+  - 'R2: DP 0.6.0 live SDK 0.3.0 authenticated require_contract(1) HTTP200/contract v1.0; live upload/connector/recovery collections absent.'
   - 'TA R3 PR #312: 65 focused, 3556 full tests passed / 238 skipped, AST parity PASS, all exact-head GitHub quality/integration CI green.'
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -124,7 +128,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Resume overarching TDP-REFACTOR-20261009 from latest main. R3 goods economics PR #312 complete; do not redo. Next bounded slice: untangle source-bound procurement preliminary analysis/report payload, while independently resolving R2 authorized DP0.6 SDK0.3 source/resource/document/chunk proof, R4 actual non-stub model evaluation, and R5 >=20 independently reviewed original EIS procurements. Do not change live Mac mini pilot, expose credentials or enable owner-disabled watchdog.'
+resume_instruction: 'Continue TDP-REFACTOR-20261009 from main after TA #314 green merged 3808e0020c5709b99750a0434bb8a85edc689e78. Do not repeat R3 goods economics or software projection. Next bounded R3 isolate training-service source-fact extraction, preserve public evidence guard and legacy contracts. Parallel R2 use authorized source IDs/nonprod to prove original SHA256/offset, R4 real model benchmark, R5 >=20 independent EIS original reviews after 2026-10-11 maintenance and owner signoff. Do not mutate live Mac mini pilot, disclose secrets, or enable disabled watchdog.'
 execution:
   branch: main
   manual_override: true
