@@ -69,7 +69,7 @@ completed:
   - '2026-10-10 cross-repository DP PR #102 API key/connector response payload and metadata validator extracted with original facades, full CI green, merged main 01e90bac3b3c5365f0a914d87fd0636e6cc7c6ae.'
   - '2026-10-10 cross-repository DP PR #103 pure canonical/federated search result policy extracted with retrieval facade compatibility, Python/JS/PostgreSQL exact-head CI green; merged 9f1f132f2512413b39b5554b9114e30ab1ebd880.'
   - '2026-10-10 TA PR #298 uploaded document descriptor projection extracted, local full pytest 3489 pass 238 skip with correct Python PATH and focused regression green; exact-head CI quality jobs still running, NOT merged yet, branch refactor/tdp-ta-upload-descriptors-20261010, code commit cc1142fdd14b0ce474d4413d6bc5a777b768bd80.'
-current: 'TA R3 upload descriptor pure product module isolated in PR #298, full local regression 3489 pass 238 skip, targeted 1 pass, exact-head GitHub quality jobs running, not merged. Prior TA #297 and DP #99-103 verified main. R5 source-original EIS, independent 20+ reviews and owner gate pending.'
+current: TA PR #298 descriptor projection pending exact-head CI; separate R3 operator_upload_filenames pure allowlist/storage naming module finished locally, 3493 full TA tests PASS with 238 skipped, Ruff new code PASS; next PR/CI pending. R5 real original EIS and owner gate still outstanding.
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -77,7 +77,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'f5f3f1a8c42575b7d492750cb025edef3efd123e'
+last_verified_commit: 9a69669000e8a7726010bbd8a212e44e23f896f7
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -107,8 +107,8 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'FIRST review TA PR #298 https://github.com/arvectum2/tender-agent/pull/298 exact-head CI; two quality jobs running make test while other checks passed. Do not merge until all required checks green. Source worktree /private/tmp/tdp-ta-upload-descriptors-20261010, code commit cc1142fd, branch has checkpoint. Full local pytest with PATH=/private/tmp/tdp-refactor-venv/bin first gives 3489 PASS, 238 skipped; old failure was missing bare python PATH and targeted retry passes. Once green merge PR, synchronize TA/DP checkpoint. Then continue next bounded R3 monolith module and R1/R2/R4/R5 validations. RU direct no proxy for EIS after planned downtime, pilot/production/watchdog unchanged.'
+resume_instruction: First wait for TA PR #298 exact-head quality CI and merge. Then rebase branch refactor/tdp-ta-upload-filename-policy-20261010 from worktree /private/tmp/tdp-ta-upload-filename-policy-20261010 against main, resolve checkpoint/legacy imports only without changing behavior; full TA pytest 3493 PASS 238 skipped, add PR and exact-head CI then merge. Do not repeat proven tests unless code changes. EIS maintenance through 2026-10-11 20:00 MSK, only Russian direct no proxy afterward. Preserve production/pilot/watchdog.
 execution:
-  branch: main
+  branch: refactor/tdp-ta-upload-filename-policy-20261010
   manual_override: true
   lease_until: null
