@@ -15,6 +15,7 @@ def test_explicit_location_produces_source_referenced_action_not_hardcoded_city(
     action = build_training_location_action(location, "Очно-заочная")
     assert "по месту оказания услуг" in action
     assert "указанному в ТЗ" in action
+    assert location in action
     assert "Хабаровск" not in action
 
 

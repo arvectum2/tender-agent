@@ -6,10 +6,13 @@ from __future__ import annotations
 
 
 def build_training_location_action(location: str | None, training_format: str | None) -> str:
-    if location:
+    if location and location.strip():
+        # Echo only bounded wording from the original source, never a default city.
+        source_location = " ".join(location.split()).strip(" .;,")[:180].rstrip(" .;,")
         return (
             "Проверить возможность очной части по месту оказания услуг, "
-            "указанному в ТЗ, и дистанционной части в требуемом формате."
+            f"указанному в ТЗ ({source_location}), и дистанционной части "
+            "в требуемом формате."
         )
     if training_format:
         return (
