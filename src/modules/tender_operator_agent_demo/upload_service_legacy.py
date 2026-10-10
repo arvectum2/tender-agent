@@ -40,6 +40,12 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
 from src.modules.tender_operator_agent_demo.operator_archive_intake import (
     read_operator_zip_documents,
 )
+from src.modules.tender_operator_agent_demo.operator_document_collection import (
+    collect_operator_documents,
+    collect_operator_quote_paths,
+    collect_operator_role_text,
+    collect_operator_spreadsheet_sources,
+)
 from src.modules.tender_operator_agent_demo.operator_document_extraction import (
     extract_operator_document,
 )
@@ -624,88 +630,34 @@ def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocu
 
 
 def _collect_documents(run_id: str, metadata: dict[str, Any]) -> list[AnalyzedDocument]:
-    documents: list[AnalyzedDocument] = []
-    normalized_dir = _normalized_dir(run_id)
-    normalized_dir.mkdir(parents=True, exist_ok=True)
-
-    for item in metadata.get("files", []):
-        stored_path = checked_original_input_path(_input_dir(run_id), item["stored_name"])
-        ext = Path(item["stored_name"]).suffix.lower()
-        if ext == ".zip":
-            extracted_docs = _extract_zip_documents(stored_path, item["file_id"])
-            documents.extend(extracted_docs)
-            if extracted_docs:
-                item["warnings"] = list(dict.fromkeys(item.get("warnings", []) + ["ZIP archive inspected in safe local mode."]))
-            continue
-
-        raw = stored_path.read_bytes()
-        text, warnings, extraction_status, processed = _extract_document_text_with_provenance(
-            item["stored_name"], raw
-        )
-        evidence_chunks: list[dict[str, Any]] | None = None
-        if processed is not None:
-            platform_source, evidence_chunks = project_document_source(
-                processed, file_id=item["file_id"]
-            )
-            item["data_platform_source"] = platform_source
-            item["evidence_chunks"] = evidence_chunks
-        document_kind = str(item.get("document_kind") or "").lower()
-        role_from_kind = {
-            "contract_draft": "contract_draft",
-            "technical_specification": "technical_spec",
-            "eis_notice": "notice",
-        }.get(document_kind)
-        role = role_from_kind or item.get("role_hint") or _detect_role(item.get("display_name") or item["stored_name"])
-        if text:
-            normalized_name = f"{item['file_id'].lower()}-{role}.txt"
-            (normalized_dir / normalized_name).write_text(text, encoding="utf-8")
-        item["warnings"] = list(dict.fromkeys(item.get("warnings", []) + warnings))
-        item["extracted_text_available"] = bool(text)
-        item["text_extraction_status"] = extraction_status
-        documents.append(
-            AnalyzedDocument(
-                display_name=item["display_name"],
-                extension=ext,
-                role=role,
-                text=text,
-                extracted_text_available=bool(text),
-                warnings=warnings,
-                source="upload",
-                file_id=item["file_id"],
-                raw_content=raw,
-                evidence_chunks=evidence_chunks,
-            )
-        )
-    return documents
+    """Preserve legacy extension points while delegating document assembly."""
+    return collect_operator_documents(
+        metadata=metadata,
+        input_dir=_input_dir(run_id),
+        normalized_dir=_normalized_dir(run_id),
+        checked_path=checked_original_input_path,
+        extract_archive=_extract_zip_documents,
+        extract_with_provenance=_extract_document_text_with_provenance,
+        project_source=project_document_source,
+        detect_role=_detect_role,
+    )
 
 
 def _collect_role_text(documents: list[AnalyzedDocument], role: str) -> str:
-    texts = [doc.text for doc in documents if doc.role == role and doc.text]
-    return "\n\n".join(texts).strip()
+    return collect_operator_role_text(documents, role)
 
 
 def _collect_quote_paths(run_id: str, metadata: dict[str, Any]) -> list[Path]:
-    paths: list[Path] = []
-    for item in metadata.get("files", []):
-        if _detect_role(item["stored_name"]) == "tkp":
-            paths.append(checked_original_input_path(_input_dir(run_id), item["stored_name"]))
-    return paths
+    return collect_operator_quote_paths(
+        metadata=metadata,
+        input_dir=_input_dir(run_id),
+        checked_path=checked_original_input_path,
+        detect_role=_detect_role,
+    )
 
 
 def _collect_spreadsheet_sources(documents: list[AnalyzedDocument]) -> list[SpreadsheetSource]:
-    return [
-        SpreadsheetSource(
-            file_id=doc.file_id,
-            display_name=doc.display_name,
-            source_file=doc.display_name,
-            extension=doc.extension,
-            raw_content=doc.raw_content or b"",
-            source=doc.source,
-            role_hint=doc.role,
-        )
-        for doc in documents
-        if doc.extension in {".xlsx", ".xls"} and doc.raw_content
-    ]
+    return collect_operator_spreadsheet_sources(documents)
 
 
 def _serialize_quote_comparison(quote_comparison) -> dict[str, Any]:
