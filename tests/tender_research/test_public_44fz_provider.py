@@ -191,7 +191,16 @@ class TestPublic44FzProvider:
         provider = Public44FzSearchProvider(timeout_seconds=5, delay_seconds=0)
         pages = provider.search_pages(max_pages=1, page_size=10)
         assert len(pages) >= 1
-        assert pages[0].status in (PublicSearchStatus.SUCCESS, PublicSearchStatus.TIMEOUT, PublicSearchStatus.BLOCKED, PublicSearchStatus.BAD_GATEWAY)
+        assert pages[0].status in (
+            PublicSearchStatus.SUCCESS,
+            PublicSearchStatus.TIMEOUT,
+            PublicSearchStatus.BLOCKED,
+            PublicSearchStatus.BAD_GATEWAY,
+            PublicSearchStatus.NETWORK_ERROR,
+        )
+        if pages[0].status == PublicSearchStatus.NETWORK_ERROR:
+            assert pages[0].items == []
+            assert pages[0].error  # Network outages must not become fabricated results.
 
     def test_card_to_item(self):
         card = {
