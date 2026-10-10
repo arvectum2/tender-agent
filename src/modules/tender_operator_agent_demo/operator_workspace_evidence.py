@@ -40,7 +40,7 @@ def _unknown() -> dict[str, Any]:
     return {"status": "UNKNOWN", "value": None, "evidence": []}
 
 
-def _notice_xml(run_id: str, metadata: dict[str, Any]) -> tuple[ET.Element, dict[str, Any]] | None:
+def _matching_notice_xml_candidates(run_id: str, metadata: dict[str, Any]) -> list[tuple[ET.Element, dict[str, Any]]]:
     # All paths are obtained from the existing run directory; never from an HTTP parameter.
     directory = get_demo_run_input_dir(run_id).resolve()
     matches: list[tuple[ET.Element, dict[str, Any]]] = []
@@ -69,13 +69,17 @@ def _notice_xml(run_id: str, metadata: dict[str, Any]) -> tuple[ET.Element, dict
         or ""
     ).strip()
     if not _NUMBER.fullmatch(number):
-        return None
+        return []
     valid = [
         (xml, item) for xml, item in matches
         if [n for n in _values(xml, "purchaseNumber") if _NUMBER.fullmatch(n)] == [number]
     ]
-    # Multiple matching notice revisions need explicit revision selection elsewhere.
-    return valid[0] if len(valid) == 1 else None
+    return valid
+
+def _notice_xml(run_id: str, metadata: dict[str, Any]) -> tuple[ET.Element, dict[str, Any]] | None:
+    """Compatibility entrypoint: never guess which competing XML is current."""
+    candidates = _matching_notice_xml_candidates(run_id, metadata)
+    return candidates[0] if len(candidates) == 1 else None
 
 
 def _verified_fact(root: ET.Element, item: dict[str, Any], key: str) -> dict[str, Any]:
@@ -111,14 +115,28 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
     source = str(metadata.get("procurement_source") or "")
     facts = {field: _unknown() for field in _FIELDS}
     warnings: list[str] = []
+    source_selection = "unsupported_source"
+    source_candidate_count = 0
     if source != "zakupki_gov_ru_getdocs_ip":
         warnings.append("Нет подтверждённого исходного извещения XML ЕИС 44-ФЗ для этого запуска.")
     else:
-        matched = _notice_xml(run_id, metadata)
-        if not matched:
-            warnings.append("XML не найден или реестровый номер/редакция извещения не подтверждены.")
+        candidates = _matching_notice_xml_candidates(run_id, metadata)
+        source_candidate_count = len(candidates)
+        if len(candidates) > 1:
+            source_selection = "ambiguous_notice_revisions"
+            warnings.append(
+                "Найдено несколько оригинальных XML для одного номера ЕИС; "
+                "актуальная редакция не подтверждена. Поля остаются UNKNOWN."
+            )
+        elif not candidates:
+            source_selection = "no_unique_registry_matched_xml"
+            warnings.append(
+                "Нет единственного исходного XML с подтверждённым номером ЕИС; "
+                "проверьте наличие и редакцию извещения."
+            )
         else:
-            xml, item = matched
+            source_selection = "single_registry_matched_xml"
+            xml, item = candidates[0]
             for field in facts:
                 facts[field] = _verified_fact(xml, item, field)
             if any(value["status"] != "KNOWN" for value in facts.values()):
@@ -130,6 +148,8 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
         "run_id": run_id,
         "registry_number": metadata.get("procurement_notice_number") or metadata.get("procurement_id"),
         "source": source,
+        "source_selection": source_selection,
+        "source_candidate_count": source_candidate_count,
         "facts": facts,
         "warnings": warnings,
         "human_control_required": True,
