@@ -50,7 +50,7 @@ def test_getdocs_extracted_original_is_allowed_without_arbitrary_nested_paths(tm
     nested.mkdir(parents=True)
     stored = nested / "01-notice.txt"
     stored.write_bytes(b"EIS original")
-    assert checked_original_input_path(directory, "extracted/01-notice.txt") == stored
+    assert checked_original_input_path(directory, "extracted/01-notice.txt") == stored.resolve()
     for unsafe in ("extracted/../outside.txt", "../extracted/01-notice.txt", "extracted/nested/file.txt", "extracted\\01-notice.txt", "extracted//01-notice.txt"):
         with pytest.raises(ValueError):
             checked_original_input_path(directory, unsafe)
