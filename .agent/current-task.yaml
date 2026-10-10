@@ -54,8 +54,11 @@ completed:
   - '2026-10-10 TA PR #292 R5 human-attested truth-gate and #293 procurement metadata/XML quantity refactor merged into main with green exact-head CI.'
   - '2026-10-10 TA #294 extracted HTML/step projection into product-owned modules, but its base was #293 feature branch; integration onto main is being completed in separate PR.'
   - '2026-10-10 R3 HTML + step presentation integrated on latest TA main as a distinct transplant: 730 source lines moved out of legacy uploader, compatibility signatures retained and lint findings on touched imports fixed.'
+  - '2026-10-10 TA #295 HTML/steps correctly merged main as 4a0a6d3 with exact-head quality CI PASS.'
+  - '2026-10-10 DP #96 and #97 merged main, standalone bounded Word table projection and unified durable profile JSON snapshots, full DP suite/CI PASS.'
+  - '2026-10-10 R0 fail-closed architecture audit now maps 823 Tender Agent and 179 Data Platform Python files, catches root/literal dynamic imports and consumer SDK facade bypass; manually strict AST boundary audit found zero illegal edges.'
 
-current: 'TA 730-line R3 HTML/step extraction integration locally verified atop #293; new main-base PR pending exact-head CI/merge. DP #96 merged, further R5 20 verified original cases and owner gate outstanding.'
+current: 'TA #295 and DP #96/#97 now main; executable R0 fail-closed ownership audit verified locally and PR pending exact-head CI. R5 official EIS SOAP recovery, >=20 independent evidence reviews and owner acceptance remain blockers.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -63,7 +66,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '699621a000c53de15c0f4b7d3e2789f22c7c55cb'
+last_verified_commit: '8dbee1e9a74d5c790d605775e01ef8f41eedf10b'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -90,9 +93,10 @@ test_results:
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
   - '2026-10-10 integrated TA full pytest 3469 PASS, 238 expected SKIP, make check PASS; targeted new module Ruff PASS, touched legacy imports Ruff F401/I001 PASS.'
   - '2026-10-10 Data Platform PR #96 Word table extraction merged to main with successful Python 3.11/3.12/3.13, JavaScript SDK, PostgreSQL and mirror checks.'
+  - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
 
-resume_instruction: 'TA new independent R3 HTML/step integration PR from branch refactor/tdp-r3-html-final-main-20261010 has locally verified 3469 passed/238 skipped, Ruff and make check PASS; check exact-head GitHub CI then merge if green. DP PR #96 merged. Next R0 cross-repository audit hardening and R5 verified EIS source chain. Keep private pilot 18083, disable watchdog and no unsafe storage ops.'
+resume_instruction: 'Verify exact-head CI and merge R0 cross-repository ownership gate branch refactor/tdp-r0-audit-guard-20261010, internal Mac path /private/tmp/tdp-r0-boundary-audit-20261010. Its 5 tests, strict live dual-repo AST scan, Ruff, make check PASS; TA #295 and DP #96/#97 merged. Then align DP and TA checkpoints and continue R1/R5 EIS original evidence and model/SDK runtime. Do not alter private pilot 18083, restart watchdog, bypass TLS, manipulate production data or external SSD.'
 execution:
-  branch: refactor/tdp-r3-html-final-main-20261010
+  branch: refactor/tdp-r0-audit-guard-20261010
   manual_override: true
   lease_until: null
