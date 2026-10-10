@@ -26,4 +26,3 @@ def sanitize_demo_filename(name: str, index: int) -> tuple[str, str]:
     stem = stem[:60]
     stored_name = f"{index:02d}-{stem}{ext}"
     return original, stored_name
-
