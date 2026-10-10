@@ -65,6 +65,9 @@ from src.modules.tender_operator_agent_demo.operator_upload_filenames import (
     ALLOWED_EXTENSIONS,
     sanitize_demo_filename,
 )
+from src.modules.tender_operator_agent_demo.operator_upload_preflight import (
+    validate_operator_upload_batch,
+)
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_supplier_profile,
 )
@@ -340,14 +343,15 @@ def create_uploaded_demo_run(
 ) -> TenderOperatorUploadedRunCreateResponse:
     if not tender_title.strip():
         raise HTTPException(status_code=400, detail="tender_title is required")
-    if not uploads:
-        raise HTTPException(status_code=400, detail="At least one file must be uploaded")
-    if len(uploads) > MAX_FILE_COUNT:
-        raise HTTPException(status_code=400, detail=f"Too many files. Limit: {MAX_FILE_COUNT}")
-
-    total_size = sum(len(content) for _name, _ctype, content in uploads)
-    if total_size > MAX_TOTAL_UPLOAD_BYTES:
-        raise HTTPException(status_code=400, detail="Total upload size exceeds the allowed limit")
+    validate_operator_upload_batch(
+        uploads,
+        existing_file_count=0,
+        existing_total_bytes=0,
+        max_file_count=MAX_FILE_COUNT,
+        max_file_size_bytes=MAX_FILE_SIZE_BYTES,
+        max_total_upload_bytes=MAX_TOTAL_UPLOAD_BYTES,
+        sanitize_name=sanitize_demo_filename,
+    )
 
     target_margin_percent = _sanitize_percent(
         target_margin_percent,
@@ -374,9 +378,6 @@ def create_uploaded_demo_run(
     files: list[dict[str, Any]] = []
 
     for index, (filename, content_type, content) in enumerate(uploads, start=1):
-        if len(content) > MAX_FILE_SIZE_BYTES:
-            raise HTTPException(status_code=400, detail=f"File exceeds the allowed size limit: {filename}")
-
         original_name, stored_name = sanitize_demo_filename(filename, index)
         file_id = f"FILE-{index:02d}"
         target = input_dir / stored_name
@@ -445,17 +446,16 @@ def append_files_to_demo_run(
     uploads: list[tuple[str, str, bytes]],
 ) -> TenderOperatorUploadedRunCreateResponse:
     metadata = _load_metadata(run_id)
-    if not uploads:
-        raise HTTPException(status_code=400, detail="At least one file must be uploaded")
-
     existing_files = metadata.get("files", [])
-    if len(existing_files) + len(uploads) > MAX_FILE_COUNT:
-        raise HTTPException(status_code=400, detail=f"Too many files. Limit: {MAX_FILE_COUNT}")
-
-    existing_total = sum(int(item.get("size_bytes", 0)) for item in existing_files)
-    new_total = sum(len(content) for _filename, _ctype, content in uploads)
-    if existing_total + new_total > MAX_TOTAL_UPLOAD_BYTES:
-        raise HTTPException(status_code=400, detail="Total upload size exceeds the allowed limit")
+    validate_operator_upload_batch(
+        uploads,
+        existing_file_count=len(existing_files),
+        existing_total_bytes=sum(int(item.get("size_bytes", 0)) for item in existing_files),
+        max_file_count=MAX_FILE_COUNT,
+        max_file_size_bytes=MAX_FILE_SIZE_BYTES,
+        max_total_upload_bytes=MAX_TOTAL_UPLOAD_BYTES,
+        sanitize_name=sanitize_demo_filename,
+    )
 
     input_dir = _input_dir(run_id)
     warnings = list(metadata.get("warnings", []))
@@ -463,8 +463,6 @@ def append_files_to_demo_run(
     added_files = 0
 
     for index, (filename, content_type, content) in enumerate(uploads, start=start_index):
-        if len(content) > MAX_FILE_SIZE_BYTES:
-            raise HTTPException(status_code=400, detail=f"File exceeds the allowed size limit: {filename}")
         original_name, stored_name = sanitize_demo_filename(filename, index)
         file_id = f"FILE-{index:02d}"
         (input_dir / stored_name).write_bytes(content)

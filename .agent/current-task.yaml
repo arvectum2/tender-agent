@@ -72,7 +72,7 @@ completed:
   - '2026-10-10 TA PR #298 operator_upload_descriptors pure projection merged green exact-head quality/DB/Redis CI after checkpoint-only conflict resolution; final code commit 332fe1b70354d071a3063d18f3adcf95f64788b1. Additional filename policy in refactor/tdp-ta-upload-filename-policy-20261010 worktree, 3493 full local tests green before rebasing with #298 and 6 focused tests green after reconciliation; new full suite running.'
   - '2026-10-10 TA PR #298 pure uploaded document descriptor module merged with all exact-head CI green, main code merge 332fe1b70354d071a3063d18f3adcf95f64788b1; PR #299 isolated filename allowlist/storage naming with facade regressions opened, CI pending.'
   - '2026-10-10 Tender Agent PR #299 pure filename extension allowlist and storage naming module with frozen old facades merged all exact-head CI green 5a752ed50423d6951f0a8b732ac0b180c8da301d; combined local targeted six tests and premerge full 3493 pytest pass, 238 skipped. DP R2 SDK-ASGI contract PR #105 also merged c50c0aecd0b00d285923d0e042ce7e998025c3b3.'
-current: 'TA #298/#299 upload metadata and extension/filename policy extracted from legacy, both merged all-green exact-head CI; latest code #299 5a752ed. DP #99-105 merged including synthetic real-SDK-to-ASGI-v1 R2 contract/auth/evidence offsets validation. Remaining TA R3 core legacy intake, normalization, context, risk/economics and report pipeline modularization; R1 original EIS XML source truth/UNKNOWN persisted reports; R4 non-stub LLM; R5 >=20 independently human-verified real original procurement cases and owner signoff. status in_progress.'
+current: 'TA #298/#299 upload descriptor and filename policy merged green; next TA R3 upload batch preflight extracted to operator_upload_preflight for create/append with no partial file writes on size/extension failure. 11 focused tests and make check green; full local TA pytest running, exact-head PR/CI pending. DP #99-105 merged. R5 genuine EIS original source reviews and owner signoff outstanding.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -80,7 +80,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '5a752ed50423d6951f0a8b732ac0b180c8da301d'
+last_verified_commit: 'af3b5c22a0b440e21556a2b595527e966d92f978'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -110,8 +110,8 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Restore from main after TA #298/#299 merged and exact-head all-green CI, latest TA code 5a752ed; DP #99-105 merged, latest DP code c50c0ae. Do NOT redo upload descriptor/filename policy or SDK-ASGI synthetic contract work. Next meaningful bounded TA legacy ingestion/stored reporting refactor, preserve API and all source provenance and UNKNOWN. R2 follow through secure authorized deployed DP 0.6/APIv1 using SDK0.3 and real Russian originals, R4 non-stub LLM model latency/quality, R5 >=20 independently reviewed 44/223-FZ EIS procurements and source-locked reports JSON/HTML/PDF/DOCX/owner acceptance. Live SOAP only AFTER EIS scheduled maintenance ends 2026-10-11 20:00 MSK, verified TLS and RU direct no proxy. Preserve private pilot, ArvectumSSD, production data, disabled Tender Agent Watchdog.'
+resume_instruction: 'Finish TA PR from /private/tmp/tdp-ta-upload-preflight-20261010 branch refactor/tdp-ta-upload-preflight-20261010: pure preflight of filename/extensions and all size/count limits BEFORE any new run storage or append event; 11 focused tests and make check green; full TA pytest and CI pending. Merge only after exact-head full green CI. TA #298/#299 and DP #99-105 merged, do not redo. Then continue genuine original EIS -> DP provenance -> Tender Agent JSON/HTML/PDF/DOCX R5 >=20 independent manually reviewed cases and R4 non-stub model runtime. EIS official maintenance until 2026-10-11 20:00 MSK, only RU direct verified TLS/no proxy after. Preserve production, pilot, SSD, disabled watchdog.'
 execution:
-  branch: main
+  branch: refactor/tdp-ta-upload-preflight-20261010
   manual_override: true
   lease_until: null
