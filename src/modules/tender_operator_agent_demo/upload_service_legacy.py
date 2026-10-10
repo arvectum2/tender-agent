@@ -57,12 +57,13 @@ from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
 )
 from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
     _build_file_descriptor as _build_file_descriptor,  # noqa: PLC0414 - legacy import facade
+)
+from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
     build_demo_file_descriptor as build_demo_file_descriptor,  # noqa: PLC0414 - legacy import facade
 )
 from src.modules.tender_operator_agent_demo.operator_upload_filenames import (
     ALLOWED_EXTENSIONS,
     sanitize_demo_filename,
-)
 )
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_supplier_profile,
