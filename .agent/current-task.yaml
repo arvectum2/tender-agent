@@ -86,6 +86,7 @@ completed:
   - '2026-10-10 TA PR #312 product-owned goods economics projection extracted behind unchanged legacy facade with injected source helpers; verified UNKNOWN vendor prices/margin, NMCK informational metric, AST body parity. 65 focused PASS, full local 3556 PASS/238 skipped, both exact-head GitHub quality jobs + all integrations green. Merged main 73a0565da80b94234aac1f18c6892912dfe58460.'
 current: 'TA PR #312 goods-economics R3 slice completed; full main R3 monolith decomposition, DP authorized source proof R2, genuine LLM benchmark R4 and >=20 human-reviewed EIS procurement R5 remain open. Task in_progress.'
 pending:
+  - 'R3 software/integration preliminary analyzer extraction TDP-R3-SOFTWARE-PRELIM-20261010: preserve facade and sourced facts; exact-head CI before merge.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
