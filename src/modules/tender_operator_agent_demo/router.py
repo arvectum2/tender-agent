@@ -447,6 +447,7 @@ def create_tender_operator_run_from_search_result(payload: SearchResultHandoffRe
 
 @router.post("/api/demo/tender-agent/runs", response_model=TenderOperatorUploadedRunCreateResponse)
 async def create_tender_operator_uploaded_run(
+    files: Annotated[list[UploadFile], File()],
     tender_title: str = Form(...),
     tender_category: str = Form(default="Электротехническое оборудование"),
     customer_name: str = Form(default="Промышленный заказчик"),
@@ -455,7 +456,6 @@ async def create_tender_operator_uploaded_run(
     logistics_reserve_percent: float = Form(default=3),
     risk_reserve_percent: float = Form(default=5),
     payment_delay_days: int = Form(default=45),
-    files: Annotated[list[UploadFile], File()] = ...,
 ) -> TenderOperatorUploadedRunCreateResponse:
     uploads: list[tuple[str, str, bytes]] = []
     for item in files:
@@ -476,7 +476,7 @@ async def create_tender_operator_uploaded_run(
 @router.post("/api/demo/tender-agent/runs/{run_id}/files", response_model=TenderOperatorUploadedRunCreateResponse)
 async def append_tender_operator_uploaded_files(
     run_id: str,
-    files: Annotated[list[UploadFile], File()] = ...,
+    files: Annotated[list[UploadFile], File()],
 ) -> TenderOperatorUploadedRunCreateResponse:
     uploads: list[tuple[str, str, bytes]] = []
     for item in files:
@@ -524,7 +524,7 @@ def analyze_tender_operator_uploaded_run(run_id: str) -> TenderOperatorUploadedR
 )
 async def evaluate_tender_operator_commercial_core(
     run_id: str,
-    catalog_file: Annotated[UploadFile, File()] = ...,
+    catalog_file: Annotated[UploadFile, File()],
     default_currency: str | None = Form(default=None),
     target_bid_amount: float | None = Form(default=None),
 ) -> CommercialCoreResponse:
