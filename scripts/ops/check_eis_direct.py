@@ -32,10 +32,15 @@ def main() -> int:
     url = settings.individual_base_url or DEFAULT_INDIVIDUAL_BASE_URL
     route_required = settings.require_direct_ru_route and settings.disable_proxy_for_eis
     public_probe = probe_eis_tls(_PUBLIC_URL, timeout_seconds=args.timeout).to_dict()
-    try:
-        integration_probe = probe_eis_tls(url, timeout_seconds=args.timeout).to_dict()
-    except ValueError:
+    # A working HTTPS handshake to the public portal must never be mistaken
+    # for a working getDocsIP integration endpoint.
+    if url.rstrip("/") != DEFAULT_INDIVIDUAL_BASE_URL:
         integration_probe = {"status": "invalid_official_endpoint", "route": "not_attempted"}
+    else:
+        try:
+            integration_probe = probe_eis_tls(url, timeout_seconds=args.timeout).to_dict()
+        except ValueError:
+            integration_probe = {"status": "invalid_official_endpoint", "route": "not_attempted"}
     results = {
         "contract": "eis-direct-transport-preflight-v1",
         "soap_configured": settings.configured,

@@ -213,3 +213,23 @@ def test_soap_client_direct_route_rejects_proxy_mode_or_official_host_bypass(mon
             ZakupkiSoapSettings(disable_proxy_for_eis=True, require_direct_ru_route=True),
             "https://unrelated.example.org/",
         )
+
+
+def test_public_site_tls_never_counts_as_successful_integration(monkeypatch, capsys):
+    import json
+    import sys
+
+    from scripts.ops import check_eis_direct as cli
+    from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
+
+    monkeypatch.setattr(cli, "get_zakupki_soap_settings", lambda: ZakupkiSoapSettings(
+        enabled=True, token="secret", individual_base_url="https://zakupki.gov.ru/"
+    ))
+    monkeypatch.setattr(cli, "probe_eis_tls", lambda _url, **_kw: MagicMock(
+        to_dict=lambda: {"status": "verified_tls"}
+    ))
+    monkeypatch.setattr(sys, "argv", ["check_eis_direct.py"])
+    assert cli.main() == 2
+    assert json.loads(capsys.readouterr().out)["integration"]["status"] == (
+        "invalid_official_endpoint"
+    )
