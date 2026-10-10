@@ -90,7 +90,7 @@ completed:
   - '2026-10-11 R4 isolated local Ollama qwen3:4b genuine generation smoke: 7.19 s/38 tokens, synthetic NMCK 500000 extracted and unknown deadline null, not product E2E or comparative model benchmark.'
 current: 'R3 #316 training source extractor and previous #312/#314 slices merged green; next R3 fix source location newline/city, no invented geography. DP0.6 SDK0.3 authenticated contract 1.0 confirmed, but original chunk hash/offset still unverified. R4 Ollama qwen3:4b synthetic smoke passed, integrated model quality and R5 >=20 independent EIS originals/owner gate pending. Task in_progress.'
 pending:
-  - 'R3 training location provenance bug: source city followed by unnumbered paragraph is not parsed; remove fixed Habarovsk fallback while preserving explicitly sourced locations. Separate fix checkpoint in progress.'
+  - 'R3 location fix TDP-R3-TRAINING-LOCATION-20261011: remove unsourced Habarovsk from generic action and fix source city parsing before unnumbered continuation; preserve city when present, then exact-head CI before merge.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'

@@ -80,3 +80,24 @@ def test_training_fact_extractor_keeps_original_named_tuple_field_order():
     assert len(facts) == 13
     assert facts._fields[0] == "service_subject"
     assert facts._fields[-1] == "unilateral_termination"
+
+def test_source_location_before_unnumbered_paragraph_is_preserved():
+    spec = (
+        "3. Место оказания услуг: очное обучение в городе Хабаровске; "
+        "дистанционная часть на территории Заказчика.\n"
+        "Услуги должны быть согласованы с ФСТЭК.\n"
+    )
+    facts = extract(spec=spec)
+    assert facts.location is not None
+    assert "городе Хабаровске" in facts.location
+    assert "Услуги должны" not in facts.location
+
+
+def test_source_city_on_next_line_and_unrelated_paragraph_not_conflated():
+    spec = (
+        "Место оказания Услуг:\n"
+        "г. Казань, ул. Центральная, 7\n"
+        "Дополнительно проводится аттестация.\n"
+    )
+    facts = extract(spec=spec)
+    assert facts.location == "г. Казань, ул. Центральная, 7"

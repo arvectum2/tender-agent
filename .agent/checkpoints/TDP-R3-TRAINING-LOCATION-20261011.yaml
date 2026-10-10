@@ -1,0 +1,51 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-TRAINING-LOCATION-20261011
+status: in_progress
+goal: Remove an invented fixed city from training-service next-action recommendations
+  while preserving source-based city reporting and public evidence guard.
+definition_of_done:
+- Recommendations never claim a particular city unless explicitly supplied by source.
+- Source-present, format-only and unknown-location behavior covered by tests.
+- Previous service reports remain contract-compatible.
+- Full pytest/make check and exact-head GitHub CI pass; merge and checkpoint completed.
+completed:
+- Identified unsafe generic hardcoded Habarovsk action in education-service preliminary
+  report.
+- Confirmed a separate Habarovsk delivery label is conditional on actual source text
+  and must not be conflated.
+- Added product-owned training location question helper; removed unconditional Habarovsk
+  from generic next-actions.
+- Preserved location-specific Habarovsk delivery statement only when original source
+  mentions Habarovsk.
+- Added seven tests including Kazan/Moscow/other location, format-only, unknown, source-conditional
+  wording and report integration.
+- 48 focused tests and make check passed.
+- Confirmed missing source location under unnumbered paragraph caused previously masked
+  full-suite failure; fixed source regex in canonical operator_training_source_facts.py.
+- Grounded first-line location is retained in a bounded source-referenced next action;
+  unsourced cities remain unmentioned.
+- 54 focused tests passed including previously failing report HTML golden and two
+  new city extraction cases.
+- 'Merged latest main after TA #316 training-source extraction and #317 completion
+  checkpoint without losing either import or parent state.'
+- make check passed with latest main.
+current: Complete full Python 3.12 regression running on reconciled latest main, then
+  PR exact-head CI.
+pending:
+- Implement helper and focused regression.
+- Full local checks and exact-head CI.
+- Merge and complete checkpoint; parent TDP-REFACTOR stays in_progress.
+last_verified_commit: a72f75cb96269f5c5e36e137e45f4ce8fd2e79e7
+test_results:
+- 48 focused passed
+- Ruff targeted passed
+- make check passed
+- 54 focused pytest passed / 2 warnings
+- make check passed
+- Ruff targeted clean
+resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-training-location-20261011.
+  Read /tmp/tdp-location-final-full.log from process 46544, fix any issue, commit
+  merged code and push PR. Exact-head CI all-green required before merge. Mark slice
+  completed and retain overall parent in_progress. Preserve production and disabled
+  watchdog.

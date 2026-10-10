@@ -82,8 +82,10 @@ def extract_training_candidate_facts(
     location = _match_first(
         tz_text,
         (
-            r"3\.\s*Место оказания услуг:\s*(.+?)(?:\n\d+\.|\Z)",
-            r"Место оказания Услуг:\s*(.+?)(?:\n\d+\.|\Z)",
+            # Capture one original source line, even when the next paragraph
+            # is unnumbered. Do not absorb unrelated subsequent statements.
+            r"3\.\s*Место оказания услуг:[ \t]*(?:\n[ \t]*)?([^\n]+)",
+            r"Место оказания Услуг:[ \t]*(?:\n[ \t]*)?([^\n]+)",
         ),
     )
     initial_price = _extract_notice_price(metadata, notice, contract_text)
