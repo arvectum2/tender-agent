@@ -172,3 +172,44 @@ def test_direct_cli_rejects_nonofficial_config_without_network(monkeypatch, caps
     assert json.loads(capsys.readouterr().out)["integration"]["status"] == (
         "invalid_official_endpoint"
     )
+
+
+def test_soap_client_direct_route_always_overrides_env_proxy_policy(monkeypatch):
+    from urllib.request import ProxyHandler
+
+    from src.modules.tender_operator_agent_demo import zakupki_soap_client as soap
+    from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
+
+    monkeypatch.setenv("HTTPS_PROXY", "http://proxy.example:8080")
+    monkeypatch.setattr(soap, "create_urllib_context", lambda *_args, **_kwargs: (
+        MagicMock(), False
+    ))
+    monkeypatch.setattr(soap, "build_opener", lambda *handlers: handlers)
+    settings = ZakupkiSoapSettings(
+        enabled=True, token="fake", trust_env_proxy=True,
+        disable_proxy_for_eis=True, require_direct_ru_route=True
+    )
+    handlers, mode = soap._build_http_opener(
+        settings, DEFAULT_INDIVIDUAL_BASE_URL
+    )
+    assert mode == "direct_for_eis"
+    assert any(isinstance(h, ProxyHandler) and h.proxies == {} for h in handlers)
+
+
+def test_soap_client_direct_route_rejects_proxy_mode_or_official_host_bypass(monkeypatch):
+    from src.modules.tender_operator_agent_demo import zakupki_soap_client as soap
+    from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
+
+    monkeypatch.setattr(soap, "create_urllib_context", lambda *_args, **_kwargs: (
+        MagicMock(), False
+    ))
+    with pytest.raises(RuntimeError, match="cannot enable a proxy"):
+        soap._build_http_opener(
+            ZakupkiSoapSettings(disable_proxy_for_eis=False, require_direct_ru_route=True),
+            DEFAULT_INDIVIDUAL_BASE_URL,
+        )
+    with pytest.raises(RuntimeError, match="permitted official host"):
+        soap._build_http_opener(
+            ZakupkiSoapSettings(disable_proxy_for_eis=True, require_direct_ru_route=True),
+            "https://unrelated.example.org/",
+        )

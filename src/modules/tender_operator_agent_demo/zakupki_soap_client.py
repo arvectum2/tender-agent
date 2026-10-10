@@ -727,10 +727,17 @@ def _build_http_opener(
 ):
     if policy is not None:
         _validate_injected_policy(settings, target_url, policy)
-    ssl_ctx, policy_bypass = create_urllib_context(target_url, policy=policy)
+    ssl_ctx, _policy_bypass = create_urllib_context(target_url, policy=policy)
     hostname = (urlparse(target_url).hostname or "").lower()
     target_allowed = _is_allowed_eis_host(hostname, settings.allowed_hosts)
-    if settings.disable_proxy_for_eis and target_allowed and policy_bypass:
+    if not target_allowed:
+        raise RuntimeError("Direct EIS route requires a permitted official host")
+    if settings.require_direct_ru_route and not settings.disable_proxy_for_eis:
+        raise RuntimeError("Direct EIS route cannot enable a proxy")
+    # EIS explicit proxy suppression has higher priority than environment or
+    # generic TLS policy hints. A direct-only EIS request must never fall back
+    # to an environment proxy when the policy has no bypass flag.
+    if settings.disable_proxy_for_eis and target_allowed:
         return build_opener(
             HTTPSHandler(context=ssl_ctx), ProxyHandler({})
         ), "direct_for_eis"
