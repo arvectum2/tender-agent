@@ -112,6 +112,9 @@ from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
 from src.modules.tender_operator_agent_demo.operator_training_location_action import (
     build_training_location_action,
 )
+from src.modules.tender_operator_agent_demo.operator_training_source_facts import (
+    extract_training_candidate_facts,
+)
 from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
     _build_file_descriptor as _build_file_descriptor,  # noqa: PLC0414 - legacy import facade
 )
@@ -2580,99 +2583,27 @@ def _build_preliminary_procurement_analysis(
             _dedupe_text_items=_dedupe_text_items,
         )
 
-    service_subject = _match_first(
-        tz_text,
-        (
-            r"1\.\s*Наименование и описание услуг:\s*(.+?)(?:\n\d+\.|\Z)",
-            r"Объект закупки\s*[:\-]?\s*(.+?)(?:\n|$)",
-            r"Описание объекта закупки\s*[:\-]?\s*(.+?)(?:\n|$)",
-        ),
-    ) or metadata.get("tender_title")
-    training_format = _match_first(
-        tz_text,
-        (
-            r"\b(Очно-заочная(?:\s*\([^)]+\))?)\b",
-            r"\b(Очная(?:\s*\([^)]+\))?)\b",
-            r"\b(Заочная(?:\s*\([^)]+\))?)\b",
-            r"Форма обучения\s*\n\s*([^\n]+)",
-            r"Форма обучения\s*[:\-]?\s*([^\n]+)",
-        ),
-    )
-    hours = _match_first(
-        tz_text,
-        (
-            r"(\d+\s*час(?:ов|а)?)",
-        ),
-    )
-    listeners = _match_first(
-        tz_text,
-        (
-            r"\b\d+\s*час(?:ов|а)?\s*\n\s*(\d+)\b",
-            r"Кол-во слушателей.*?\n.*?\n.*?\n.*?\n.*?\n\s*(\d+)",
-            r"(\d+)\s*\(?[а-я]*\)?\s*человек",
-            r"слушател[^\n]*?(\d+)",
-        ),
-    )
-    service_deadline = _match_first(
-        tz_text,
-        (
-            r"не позднее\s+(\d{1,2}\s+[А-Яа-яЁё]+\s+\d{4}\s+года)",
-            r"не позднее\s+([^.\\n]+)",
-            r"Сроки оказания Услуг\s*[–-]\s*([^.\\n]+)",
-        ),
-    ) or _extract_notice_service_deadline(notice)
-    service_deadline = _cleanup_tabular_value(service_deadline) or service_deadline
-    location = _match_first(
-        tz_text,
-        (
-            r"3\.\s*Место оказания услуг:\s*(.+?)(?:\n\d+\.|\Z)",
-            r"Место оказания Услуг:\s*(.+?)(?:\n\d+\.|\Z)",
-        ),
-    )
-    initial_price = _extract_notice_price(metadata, notice, contract_text)
-    payment_terms = _match_first(
-        contract_text,
-        (
-            r"в течение\s+(\d+\s*\([^)]+\)\s*рабочих дней[^.]+документа о приемке)",
-            r"в течение\s+(\d+\s*рабочих дней[^.]+документа о приемке)",
-            r"Оплата[^.]*?в течение\s+([^.]+)",
-        ),
-    )
-    execution_security = _match_first(
-        contract_text + "\n" + notice,
-        (
-            r"обеспечени[ея]\s+исполнения\s+контракта[^.]{0,120}",
-        ),
-    )
-    if not execution_security and "исполнения контракта" in contract_text.lower() and "обеспеч" in contract_text.lower():
-        execution_security = "обеспечение исполнения контракта"
-    execution_security_percent = _match_first_dotall(
-        notice + "\n" + contract_text,
-        (
-            r"contractGuarantee[\s\S]{0,600}?<(?:\w+:)?part>(\d+(?:[.,]\d+)?)</(?:\w+:)?part>",
-            r"обеспечени[ея]\s+исполнения\s+контракта[^%\n]{0,200}?(\d+(?:[.,]\d+)?)\s*%",
-        ),
-    )
-    execution_security_amount = _match_first_dotall(
-        notice + "\n" + contract_text,
-        (
-            r"contractGuarantee[\s\S]{0,600}?<(?:\w+:)?amount>(\d+(?:[.,]\d+)?)</(?:\w+:)?amount>",
-            r"обеспечени[ея]\s+исполнения\s+контракта[^\\d]{0,200}?([\d\s]+(?:[.,]\d+)?)\s*руб",
-        ),
-    )
-    acceptance_window = _match_first(
-        contract_text,
-        (
-            r"Не позднее\s+(\d+\s*\([^)]+\)\s*рабочих дней[^.]+документа о приемке)",
-            r"Не позднее\s+(\d+\s*рабочих дней[^.]+документа о приемке)",
-        ),
-    )
-    unilateral_termination = _match_first(
-        contract_text,
-        (
-            r"(Заказчик вправе принять решение об одностороннем отказе[^.]+)",
-            r"(одностороннем отказе от исполнения Контракта[^.]+)",
-        ),
+    (
+        service_subject,
+        training_format,
+        hours,
+        listeners,
+        service_deadline,
+        location,
+        initial_price,
+        payment_terms,
+        execution_security,
+        execution_security_percent,
+        execution_security_amount,
+        acceptance_window,
+        unilateral_termination,
+    ) = extract_training_candidate_facts(
+        metadata, tz_text, contract_text, notice,
+        _match_first=_match_first,
+        _extract_notice_service_deadline=_extract_notice_service_deadline,
+        _cleanup_tabular_value=_cleanup_tabular_value,
+        _extract_notice_price=_extract_notice_price,
+        _match_first_dotall=_match_first_dotall,
     )
 
     compliance_highlights = _collect_matches(
