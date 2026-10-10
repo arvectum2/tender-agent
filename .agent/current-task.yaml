@@ -75,7 +75,7 @@ completed:
   - '2026-10-10 TA PR #300 shared upload batch preflight extracted into product-owned module with all-limit/extension checks before filesystem creation/write for new and appended runs, 5 new atomicity-focused tests, 3499 local pytest pass 238 skipped, strict architecture AST audit zero forbidden imports and zero exact clone groups, all exact-head CI green; merged main code 9498c40a291386d55cdd17a9a889cdbd1dcf0eee.'
   - '2026-10-10 TA PR #301 product-owned economics upload bounds extracted into operator_upload_economics_input preserving original facade and HTTP 400/rounding semantics; 12 targeted PASS and full local 3506 PASS /238 skipped, make check PASS; rebased over TA #300 without overriding its checkpoint; exact-head all GitHub CI PASS and merged main 7f3e664ce7620507074a6532fd23d2d0ee9a6f99.'
   - '2026-10-10 TA PR #302 extracted product-owned 135-line weighted source-backed procurement scope classifier and 19-line signal catalogue with original legacy evidence facades preserved; 55 focused tests and full local 3514 passed/238 skipped, make check + Ruff green, both exact-head quality CI jobs and all integrations green, merged main da7907c72ef4a869674526799e33077d85a4bf63.'
-current: 'TA upload R3 #298/#299/#300/#301/#302 all merged exact-head all-green CI: descriptor/provenance, filename security, atomic upload preflight, economics input bounds and independent source-backed procurement scope classifier; latest code #302 da7907c72ef4a869674526799e33077d85a4bf63. DP #99-105 merged incl SDK0.3-to-ASGI-v1 synthetic contract. R3 core intake/storage/context/report monolith separation, R1 verified original EIS XML -> stored JSON/HTML/PDF/DOCX and UNKNOWN, R2 deployed authenticated DP provenance, R4 model quality/latency, R5 20+ independently human-reviewed original procurements and owner signoff remain in_progress.'
+current: 'Tender Agent R3 original-file assembly and evidence projection moved out of legacy monolith to operator_document_collection.py with injected safe paths, ZIP and DP extraction/projectors, preserving old facades; 35 targeted tests and make check pass, full suite and exact-head CI pending. R1/R5 EIS genuine source and owner review not done.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -83,7 +83,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'da7907c72ef4a869674526799e33077d85a4bf63'
+last_verified_commit: '102b2ae2adf6b8bbcc434d7c8d90114bdb1cec7b'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -113,8 +113,8 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Restore TA main after PR #302 merged with all-green exact-head quality/integration CI at code da7907c7, do not repeat upload PR #298-302 or DP #99-105. Next substantively isolate product R3 legacy intake/storage/context/risk/report from remaining monolith with preserved source proof, original facade and full regression/CI. Validate deployed authenticated DP0.6 SDK0.3 source/resource/document/chunk locators and real Russian document quality, R4 true non-stub model execution. After EIS official maintenance through 2026-10-11 20:00 MSK, RU Mac mini direct/no-proxy TLS probe and one genuine getDocsIP if healthy, then source XML/doc original -> DP provenance -> persisted TA JSON HTML PDF DOCX, >=20 independent human-reviewed cases + owner gate. Never touch production/pilot 18083, ArvectumSSD, proxy/TLS or disabled watchdog.'
+resume_instruction: 'Check TA worktree /private/tmp/tdp-ta-operator-document-collection-20261010 and PR for refactor/tdp-ta-operator-document-collection-20261010. Source commit 102b2ae2: full pytest log /private/tmp/tdp-ta-doc-collection-pytest.log in progress, 35 focused source/provenance tests pass, make check/Ruff pass. Do not merge until exact-head CI all green. Once merged update TA and DP checkpoints, then continue real deployed authenticated SDK original document/source gate R2, meaningful R3 architecture and R4 actual model. EIS integration maintenance until 2026-10-11 20:00 MSK, RU direct no proxy only; preserve private pilot/production/SSD/disabled watchdog.'
 execution:
-  branch: main
+  branch: refactor/tdp-ta-operator-document-collection-20261010
   manual_override: true
   lease_until: null
