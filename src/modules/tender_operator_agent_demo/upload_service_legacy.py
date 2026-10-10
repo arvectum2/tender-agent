@@ -55,6 +55,10 @@ from src.modules.tender_operator_agent_demo.operator_recommendation import (
 from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
     checked_original_input_path,
 )
+from src.modules.tender_operator_agent_demo.operator_upload_filenames import (
+    ALLOWED_EXTENSIONS,
+    sanitize_demo_filename,
+)
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_supplier_profile,
 )
@@ -89,7 +93,6 @@ from src.shared.document_processing import (
 )
 from src.tender_research.rag.presets import tender_processing_collection_id
 
-ALLOWED_EXTENSIONS = {".pdf", ".doc", ".docx", ".xlsx", ".xls", ".txt", ".csv", ".zip", ".xml", ".html", ".htm"}
 MAX_FILE_COUNT = 16
 MAX_FILE_SIZE_BYTES = 12 * 1024 * 1024
 MAX_TOTAL_UPLOAD_BYTES = 40 * 1024 * 1024
@@ -251,19 +254,6 @@ def make_demo_run_id() -> str:
     return f"toa-run-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}-{token_hex(3)}"
 
 
-def sanitize_demo_filename(name: str, index: int) -> tuple[str, str]:
-    original = Path(name or f"file-{index}").name
-    ext = Path(original).suffix.lower()
-    if ext not in ALLOWED_EXTENSIONS:
-        raise HTTPException(status_code=400, detail=f"Unsupported file type: {ext or 'unknown'}")
-
-    stem = Path(original).stem.lower()
-    stem = re.sub(r"[^a-z0-9._-]+", "-", stem).strip("._-")
-    if not stem:
-        stem = f"file-{index}"
-    stem = stem[:60]
-    stored_name = f"{index:02d}-{stem}{ext}"
-    return original, stored_name
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
