@@ -7,7 +7,6 @@ import os
 import re
 import time
 import xml.etree.ElementTree as ET
-import zipfile
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -50,6 +49,18 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
     extract_goods_source_facts,
     semantic_procurement_role,
 )
+from src.modules.tender_operator_agent_demo.operator_archive_intake import (
+    read_operator_zip_documents,
+)
+from src.modules.tender_operator_agent_demo.operator_document_extraction import (
+    extract_operator_document,
+)
+from src.modules.tender_operator_agent_demo.operator_llm_report_projection import (
+    candidate_requirement_rows,
+    candidate_rfq_sections,
+    candidate_risks,
+    candidate_supplier_questions,
+)
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_supplier_profile,
 )
@@ -79,13 +90,6 @@ from src.modules.tender_operator_agent_demo.schemas import (
     TenderOperatorUploadedRunSummary,
 )
 from src.shared.config.settings import get_settings
-from src.shared.data_platform import DataPlatformError
-from src.shared.document_processing import (
-    EXTRACTED_STATUS as DOC_EXTRACTED_STATUS,
-)
-from src.shared.document_processing import (
-    UNSUPPORTED_STATUS as DOC_UNSUPPORTED_STATUS,
-)
 from src.shared.document_processing import (
     ProcessedDocument,
     process_document_bytes,
@@ -671,91 +675,16 @@ def _extract_document_text(
 
 
 def _extract_zip_documents(path: Path, parent_file_id: str) -> list[AnalyzedDocument]:
-    documents: list[AnalyzedDocument] = []
-    try:
-        with zipfile.ZipFile(path) as archive:
-            members = [info for info in archive.infolist() if not info.is_dir()]
-            if len(members) > MAX_ZIP_ENTRY_COUNT:
-                return [
-                    AnalyzedDocument(
-                        display_name=path.name,
-                        extension=".zip",
-                        role="supporting",
-                        text=None,
-                        extracted_text_available=False,
-                        warnings=[f"ZIP archive contains too many entries. Limit: {MAX_ZIP_ENTRY_COUNT}."],
-                        source="zip",
-                        file_id=parent_file_id,
-                        raw_content=None,
-                    )
-                ]
-            total_unpacked = sum(info.file_size for info in members)
-            if total_unpacked > MAX_ZIP_TOTAL_BYTES:
-                return [
-                    AnalyzedDocument(
-                        display_name=path.name,
-                        extension=".zip",
-                        role="supporting",
-                        text=None,
-                        extracted_text_available=False,
-                        warnings=["ZIP archive exceeds the safe unpacked size limit."],
-                        source="zip",
-                        file_id=parent_file_id,
-                        raw_content=None,
-                    )
-                ]
-
-            for idx, info in enumerate(members, start=1):
-                entry_path = Path(info.filename)
-                if entry_path.is_absolute() or ".." in entry_path.parts:
-                    documents.append(
-                        AnalyzedDocument(
-                            display_name=f"{path.name} :: {info.filename}",
-                            extension=entry_path.suffix.lower(),
-                            role="supporting",
-                            text=None,
-                            extracted_text_available=False,
-                            warnings=["ZIP entry was rejected because it contains an unsafe path."],
-                            source="zip",
-                            file_id=f"{parent_file_id}-ZIP-{idx:02d}",
-                            raw_content=None,
-                        )
-                    )
-                    continue
-                entry_name = entry_path.name
-                ext = Path(entry_name).suffix.lower()
-                if ext not in ALLOWED_EXTENSIONS or ext == ".zip":
-                    continue
-                raw = archive.read(info)
-                text, warnings, _extraction_status = _extract_document_text(entry_name, raw)
-                documents.append(
-                    AnalyzedDocument(
-                        display_name=f"{path.name} :: {entry_name}",
-                        extension=ext,
-                        role=_detect_role(entry_name),
-                        text=text,
-                        extracted_text_available=bool(text),
-                        warnings=warnings,
-                        source="zip",
-                        file_id=f"{parent_file_id}-ZIP-{idx:02d}",
-                        raw_content=raw,
-                    )
-                )
-    except zipfile.BadZipFile:
-        return [
-            AnalyzedDocument(
-                display_name=path.name,
-                extension=".zip",
-                role="supporting",
-                text=None,
-                extracted_text_available=False,
-                warnings=["ZIP archive could not be read safely."],
-                source="zip",
-                file_id=parent_file_id,
-                raw_content=None,
-            )
-        ]
-    return documents
+    """Compatibility shim over the isolated, bounded ZIP decoder."""
+    return read_operator_zip_documents(
+        path,
+        parent_file_id,
+        allowed_extensions=ALLOWED_EXTENSIONS,
+        max_entries=MAX_ZIP_ENTRY_COUNT,
+        max_total_bytes=MAX_ZIP_TOTAL_BYTES,
+        extract_text=_extract_document_text,
+        detect_role=_detect_role,
+    )
 
 
 def _collect_documents(run_id: str, metadata: dict[str, Any]) -> list[AnalyzedDocument]:
@@ -1975,7 +1904,7 @@ def _extract_supply_items_from_spec_text(text: str, source_document: str) -> lis
             source_documents=[source_document],
             quantity_status="specified" if quantity is not None and unit else "not_specified",
             source_row_number=len(items) + 1,
-            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|spec|{item_no}|{name}|{quantity}|{unit}'.encode('utf-8')).hexdigest()[:16]}",
+            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|spec|{item_no}|{name}|{quantity}|{unit}'.encode()).hexdigest()[:16]}",
         )
         if item.name:
             items.append(item)
@@ -2047,7 +1976,7 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
                 source_kind="nmck_xlsx", confidence="high", raw_fragment=line,
                 total_price=_format_decimal_price(total_value), source_documents=[source_document],
                 quantity_status="specified", source_row_number=len(items) + 1,
-                evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items)+1}|{raw_name}|{quantity}|{unit_raw}'.encode('utf-8')).hexdigest()[:16]}",
+                evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items)+1}|{raw_name}|{quantity}|{unit_raw}'.encode()).hexdigest()[:16]}",
                 ktru=ktru,
                 okpd2=okpd2,
             )
@@ -2102,7 +2031,7 @@ def _extract_supply_items_from_xlsx_text(text: str, source_document: str) -> lis
             source_documents=[source_document],
             quantity_status="specified" if quantity is not None and unit else "not_specified",
             source_row_number=len(items) + 1,
-            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items) + 1}|{name}|{quantity}|{unit}'.encode('utf-8')).hexdigest()[:16]}",
+            evidence_id=f"ev-{hashlib.sha256(f'{source_document}|xlsx|{len(items) + 1}|{name}|{quantity}|{unit}'.encode()).hexdigest()[:16]}",
             ktru=ktru,
             okpd2=okpd2,
         )
@@ -2154,7 +2083,7 @@ def _extract_service_items_from_nmck_text(text: str, source_document: str) -> li
         if not key[0] or key in seen:
             continue
         seen.add(key)
-        evidence_seed = f"{source_document}|service-table|{row_number}|{name}".encode("utf-8")
+        evidence_seed = f"{source_document}|service-table|{row_number}|{name}".encode()
         evidence_id = f"ev-{hashlib.sha256(evidence_seed).hexdigest()[:16]}"
         rows.append(SupplyItem(
             item_no=None,
@@ -2257,7 +2186,7 @@ def _extract_supply_items_from_notification_xml(text: str, source_document: str)
         if not name or price is None and total is None:
             continue
         item_type = "service" if raw_type in {"SERVICE", "WORK"} else "goods"
-        evidence_seed = f"{source_document}|notification-xml|{row_number}|{name}".encode("utf-8")
+        evidence_seed = f"{source_document}|notification-xml|{row_number}|{name}".encode()
         rows.append(SupplyItem(
             item_no=None,
             name=name,
@@ -3260,7 +3189,7 @@ def _build_preliminary_procurement_analysis(
             f"НМЦК: {initial_price} руб." if initial_price else "",
             f"Тип закупки: {procurement_kind}.",
             f"Срок исполнения / подачи: {deadline}." if deadline else "",
-            f"Результат для заказчика: модифицированный модуль, интеграции и лицензионный пакет." if work_rows else "",
+            "Результат для заказчика: модифицированный модуль, интеграции и лицензионный пакет." if work_rows else "",
         ]
         compliance = [
             "Нужно проверить полноту функциональных требований по каждому блоку доработки.",
@@ -4313,7 +4242,7 @@ def _build_steps_from_outputs(metadata: dict[str, Any], outputs: dict[str, dict[
                 if metadata.get("supplier_search", {}).get("suppliers")
                 else DemoDetailSection(title="Статус поиска", kind="bullets", items=[
                     metadata.get("supplier_search", {}).get("query", "Поиск не выполнялся"),
-                    f"Поставщиков не найдено или API не настроено.",
+                    "Поставщиков не найдено или API не настроено.",
                 ]),
             ],
         ),
