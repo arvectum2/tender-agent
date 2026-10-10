@@ -83,6 +83,17 @@ def _one_run(folder: Path) -> dict[str, Any] | None:
     extracted = sum(bool(file.get("extracted_text_available")) for file in files)
     outputs = folder / "output"
     report = _read_json(outputs / "report.json")
+    canonical = _read_json(outputs / "canonical_report.json")
+    decision_core = report.get("decision_core") if isinstance(report, dict) else None
+    unknown_rows = decision_core.get("unknowns") if isinstance(decision_core, dict) else None
+    structured_unknown_count = len(unknown_rows) if isinstance(unknown_rows, list) else 0
+    passport = canonical.get("procurement_passport") if isinstance(canonical, dict) else None
+    passport = passport if isinstance(passport, dict) else {}
+    exact_unknowns = {"unknown", "не извлечено", "неизвестно", "не установлено"}
+    passport_unknowns = sum(
+        isinstance(value, str) and value.strip().casefold() in exact_unknowns
+        for value in passport.values()
+    )
     verified = metadata.get("_verified_notice_facts")
     provenance = metadata.get("ai_runtime_provenance")
     model_invoked = bool(provenance.get("llm_invoked")) if isinstance(provenance, dict) else False
@@ -97,6 +108,8 @@ def _one_run(folder: Path) -> dict[str, Any] | None:
         "original_files_present": present,
         "files_marked_extracted": extracted,
         "report_available": report is not None,
+        "decision_core_unknown_rows": structured_unknown_count,
+        "canonical_passport_exact_unknown_fields": passport_unknowns,
         "eis_xml_evidence_record": isinstance(verified, dict) and bool(verified),
         "model_invoked_recorded": model_invoked,
         "analysis_mode": str(metadata.get("analysis_mode") or "unknown"),
@@ -147,6 +160,10 @@ def audit_corpus(root: Path) -> dict[str, Any]:
         "best_report_sections_total": sum(x["report_sections"] for x in chosen),
         "best_report_items_total": sum(x["report_items"] for x in chosen),
         "best_report_unknown_markers": sum(x["report_unknown_markers"] for x in chosen),
+        "best_decision_core_unknown_rows": sum(x["decision_core_unknown_rows"] for x in chosen),
+        "best_canonical_passport_exact_unknown_fields": sum(
+            x["canonical_passport_exact_unknown_fields"] for x in chosen
+        ),
         "best_report_eis_xml_references": sum(x["report_eis_xml_references"] for x in chosen),
         "best_report_unverified_llm_markers": sum(x["report_unverified_llm_markers"] for x in chosen),
         "best_reports_without_eis_xml_references": sum(
