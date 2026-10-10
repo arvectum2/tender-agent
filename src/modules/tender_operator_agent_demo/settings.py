@@ -17,7 +17,8 @@ PLACEHOLDER_TOKENS = {
     "вставить_токен_сюда",
 }
 
-DEFAULT_LEGACY_BASE_URL = "https://int44.zakupki.gov.ru/eis-integration/services-vbs"
+# int44 was retired in October 2025: use the current official integration host.
+DEFAULT_LEGACY_BASE_URL = "https://int.zakupki.gov.ru/eis-integration/services-vbs"
 DEFAULT_INDIVIDUAL_BASE_URL = "https://int.zakupki.gov.ru/eis-integration/services/getDocsIP"
 DEFAULT_INDIVIDUAL_XSD_URL = f"{DEFAULT_INDIVIDUAL_BASE_URL}?xsd=getDocsIP-ws-api.xsd"
 DEFAULT_INDIVIDUAL_NAMESPACE = "http://zakupki.gov.ru/fz44/get-docs-ip/ws"
