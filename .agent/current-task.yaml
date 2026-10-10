@@ -52,7 +52,7 @@ completed:
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA PR #261 through #291 and DP #86/#87 merged. R5 human-attested independent 20-case quality gate implemented and 6 isolated tests pass; 20 actually reviewed cases, EIS SOAP recovery, and owner acceptance remain outstanding. External ArvectumSSD I/O unstable; worktree is on internal Mac disk.'
+current: 'TA #261-292 and DP #86/#87 merged; R3 119-line metadata authority extraction + safe XML quantity node fix pass 3467 local tests and make check; PR and exact-head CI pending. R5 source truth >=20 human cases and owner acceptance remain blocked.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -60,7 +60,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '4716563c355b5877d081a30849da3b8d950f0473'
+last_verified_commit: 'd16285f8315ec15e1a7ff29ac3540889d8fd5c68'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -86,7 +86,7 @@ test_results:
   - 'R3 pure recommendation extracted with 5 branch-specific unit tests and 25 regression tests PASS; isolated report assembly unchanged.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'Continue TDP-REFACTOR-20261009 on internal Mac disk checkout /private/tmp/tdp-refactor-20261010, external ArvectumSSD intermittently gives Operation not permitted/I/O hangs. TA #291 is merged, main at 4716563; new scripts/ops/verify_tdp_truth_gate.py and tests/test_tdp_truth_gate.py provide independent >=20 source-linked human-reviewed corpus acceptance: six standalone tests and Ruff pass. Open PR, run exact-head CI and merge. Do not claim gate passes on real corpus until 20 separate reviewed procurements exist, fix EIS SOAP resets without disabling TLS, preserve owner 18083 and disabled watchdog. Full task remains in_progress.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress, TA PR #292 merged as d16285, DP #86/#87 merged. Worktree /private/tmp/tdp-metadata-enrichment-20261010 on internal Mac disk extracted 119 lines to operator_metadata_enrichment.py with compatibility function, fixed structured XML leaf value selection. Full pytest 3467 passed /238 skipped, make check pass with PATH=/opt/homebrew/opt/postgresql@16/bin:/private/tmp/tdp-refactor-venv/bin:$PATH. Commit and raise PR to main, exact-head CI then merge if green. Remaining R5 >=20 independent human reviewed EIS original cases and SOAP network reset, preserve existing pilot 18083 and disabled watchdog.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
