@@ -1118,13 +1118,12 @@ def _infer_procurement_kind(*texts: str | None) -> str:
             for marker in (
                 "интеграц",
                 "смэв",
-                "ерн",
                 "api",
                 "витрин",
                 "межведомствен",
                 "обмен данн",
             )
-        ),
+        ) + len(re.findall(r"(?<!\w)ерн(?!\w)", combined)),
         "license": sum(
             combined.count(marker)
             for marker in (
