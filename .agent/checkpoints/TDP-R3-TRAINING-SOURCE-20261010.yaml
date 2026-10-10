@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-TRAINING-SOURCE-20261010
-status: in_progress
+status: completed
 goal: Isolate training-services candidate fact extraction from Tender Agent monolithic
   preliminary report, without changing evidence semantics or report outputs.
 definition_of_done:
@@ -18,18 +18,22 @@ completed:
 - Added 5 focused tests for unknown fields, source-driven training values, contract
   security, supplied NMCK and positional compatibility.
 - 59 targeted tests and make check passed.
-current: Full Python 3.12 pytest running; exact-head GitHub CI and merge pending.
-pending:
-- Extract candidate facts.
-- Focused/full regression and exact-head CI.
-- Merge and update canonical task checkpoint.
-last_verified_commit: 4d608e0e
+- Full Python 3.12 3564 passed, 238 skipped, 294 warnings, zero failures.
+- Both exact-head quality jobs and all integration, Docker, migration, security and
+  lock CI green.
+- 'PR #316 merged main as d7774ed7ee526800f417bbcdb04d30979666f37c.'
+current: Completed and merged as d7774ed7ee526800f417bbcdb04d30979666f37c
+pending: []
+last_verified_commit: d7774ed7ee526800f417bbcdb04d30979666f37c
 test_results:
 - 59 focused passed
 - Ruff targeted passed
 - make check passed
 - AST candidate extraction parity passed
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-training-facts-20261010.
-  Inspect /tmp/tdp-r3-training-full.log from process PID 43492. Open PR after changes
-  committed and wait for exact-head all-green GitHub CI before merging. Parent TDP-REFACTOR
-  in_progress, no production mutations, watchdog disabled.
+- Full 3564 passed / 238 skipped
+- All GitHub exact-head CI passed
+- Merged d7774ed7ee526800f417bbcdb04d30979666f37c
+resume_instruction: 'Training source-field isolation completed. Continue R3 source-location
+  parser edge case: multiline unnumbered paragraph after source city; legacy hardcoded
+  Habarovsk masked missing capture. Keep real source city, do not invent geography.
+  Parent TDP-REFACTOR remains in_progress.'

@@ -86,9 +86,11 @@ completed:
   - '2026-10-10 TA PR #312 product-owned goods economics projection extracted behind unchanged legacy facade with injected source helpers; verified UNKNOWN vendor prices/margin, NMCK informational metric, AST body parity. 65 focused PASS, full local 3556 PASS/238 skipped, both exact-head GitHub quality jobs + all integrations green. Merged main 73a0565da80b94234aac1f18c6892912dfe58460.'
   - '2026-10-10 PR #314 59-line software/integration report projection extracted with source-helper injection and legacy callable parity, public INSUFFICIENT_EVIDENCE guard unchanged; 44 focused tests, 3559 full passed/238 skipped and all exact-head CI green; merged main 3808e0020c5709b99750a0434bb8a85edc689e78.'
   - '2026-10-10 R2 live DP0.6 authenticated SDK0.3 consumer contract v1.0 HTTP200 confirmed via configured secret without disclosure; standard upload/connector/recovery collections absent; actual original source IDs and hash/offset unverified (DP #110).'
-current: 'R3 goods economics #312 and software preliminary #314 merged CI green. Authenticated DP0.6 SDK0.3 consumer contract v1.0 proven read-only (DP #110), but stored original file/chunk source proof absent. Remaining R3 education/report decomposition, R4 real non-stub model quality, R5 >=20 independently reviewed EIS originals and owner signoff. Task in_progress.'
+  - '2026-10-11 TA PR #316 94-line training service candidate fact extraction moved into operator_training_source_facts.py with 13-field response, dependency injection and AST parity. 59 focused, 3564 full passed/238 skipped and all exact-head CI green; merged d7774ed7ee526800f417bbcdb04d30979666f37c.'
+  - '2026-10-11 R4 isolated local Ollama qwen3:4b genuine generation smoke: 7.19 s/38 tokens, synthetic NMCK 500000 extracted and unknown deadline null, not product E2E or comparative model benchmark.'
+current: 'R3 #316 training source extractor and previous #312/#314 slices merged green; next R3 fix source location newline/city, no invented geography. DP0.6 SDK0.3 authenticated contract 1.0 confirmed, but original chunk hash/offset still unverified. R4 Ollama qwen3:4b synthetic smoke passed, integrated model quality and R5 >=20 independent EIS originals/owner gate pending. Task in_progress.'
 pending:
-  - 'R3 training-services candidate source facts extraction TDP-R3-TRAINING-SOURCE-20261010: isolate from monolithic report; preserve compatibility/evidence, green CI before merge.'
+  - 'R3 training location provenance bug: source city followed by unnumbered paragraph is not parsed; remove fixed Habarovsk fallback while preserving explicitly sourced locations. Separate fix checkpoint in progress.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -96,8 +98,10 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '3808e0020c5709b99750a0434bb8a85edc689e78'
+last_verified_commit: 'd7774ed7ee526800f417bbcdb04d30979666f37c'
 test_results:
+  - 'R3 PR #316: 59 focused / 3564 full passed, 238 skipped; exact-head both quality and all integration CI passed.'
+  - 'R4 synthetic Ollama qwen3:4b smoke: 7.19s, 38 tokens, parsed JSON, supplied NMCK and null missing deadline; full E2E benchmark pending.'
   - 'R3 #314: 44 focused, 3559 full passed / 238 skipped, AST branch-body parity PASS, both exact-head quality and all integration/security CI green.'
   - 'R2: DP 0.6.0 live SDK 0.3.0 authenticated require_contract(1) HTTP200/contract v1.0; live upload/connector/recovery collections absent.'
   - 'TA R3 PR #312: 65 focused, 3556 full tests passed / 238 skipped, AST parity PASS, all exact-head GitHub quality/integration CI green.'
@@ -129,7 +133,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Continue TDP-REFACTOR-20261009 from main after TA #314 green merged 3808e0020c5709b99750a0434bb8a85edc689e78. Do not repeat R3 goods economics or software projection. Next bounded R3 isolate training-service source-fact extraction, preserve public evidence guard and legacy contracts. Parallel R2 use authorized source IDs/nonprod to prove original SHA256/offset, R4 real model benchmark, R5 >=20 independent EIS original reviews after 2026-10-11 maintenance and owner signoff. Do not mutate live Mac mini pilot, disclose secrets, or enable disabled watchdog.'
+resume_instruction: 'Continue latest main after TA PR #316 merged d7774ed7ee526800f417bbcdb04d30979666f37c. First resolve source-backed training location edge case (unnumbered line after place) and remove fixed-city next action from separate in-progress worktree tdp-training-location-20261011. Preserve sourced cities. R2 authorized original resource/document/chunk SHA256/offset still blocked by absent live TA collections, R4 actual product LLM benchmark and R5 >=20 owner-reviewed EIS originals pending. No production mutation, secrets or disabled-watchdog changes.'
 execution:
   branch: main
   manual_override: true
