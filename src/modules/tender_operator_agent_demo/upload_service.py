@@ -150,7 +150,7 @@ def _structured_quantity(node: ET.Element) -> str | None:
     if quantity is None:
         return None
     value_node = _first_xml_descendant(quantity, {"value", "concreteValue"})
-    raw = _xml_text(value_node or quantity)
+    raw = _xml_text(value_node if value_node is not None else quantity)
     return _legacy._normalize_quantity_value(raw) if re.search(r"\d", raw) else None
 
 
