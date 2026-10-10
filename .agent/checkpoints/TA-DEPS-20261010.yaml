@@ -1,0 +1,27 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TA-DEPENDENCIES-20261010
+status: in_progress
+goal: Refresh Tender Agent Python dependency resolution on current main and preserve compatibility across updates.
+definition_of_done:
+  - Regenerate hashed Python 3.11 universal requirements.lock with --upgrade.
+  - Preserve SDK compatibility; bound only Pydantic 2.14 pending OpenAPI Ellipsis fix.
+  - Verify fresh Python 3.12 installation, uv pip check, make check, complete pytest with PostgreSQL 16 client for PostgreSQL 16 fixture.
+  - Exact-head GitHub quality, lock, migration, Docker and integration CI green, then merge.
+completed:
+  - Rebased scope onto latest Tender Agent main without transplanting stale R3 changes.
+  - Refreshed all compatible direct and transitive Python dependencies with uv pip compile --upgrade and hashes.
+  - Added compatibility ceiling pydantic>=2.13.5,<2.14 due reproduced Pydantic 2.14 OpenAPI Ellipsis serializer regression.
+  - Documented dependency policy, intentionally pinned lock and PostgreSQL major-matching test client.
+  - Fresh Python 3.12 install and make check passed.
+current: Fresh Python 3.12 full pytest 3551 passed / 238 skipped / 294 warnings, uv pip install and make check green; open isolated PR and verify exact-head CI.
+pending:
+  - Record full unsuppressed pytest result.
+  - Open PR, wait for exact-head CI and resolve regressions.
+  - Merge if fully green, then mark this scoped checkpoint completed.
+last_verified_commit: b70b315a
+test_results:
+  - Fresh Python 3.12 package resolution/install passed.
+  - make check passed.
+  - Complete fresh-main pytest: 3551 passed, 238 skipped, 294 warnings, 0 failures, PostgreSQL 16 client on PATH.
+resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/ta-dependency-refresh-20261010. Read /tmp/ta-latest-full.log, check PID 19706 if still running. Commit dependency-only files and this checkpoint; open PR from build/ta-dependency-refresh-20261010. Run exact-head CI. Do not merge stale conflicting PR #309. Preserve current main refactor R3-R5 checkpoint and owner-disabled watchdog.
