@@ -58,7 +58,9 @@ completed:
   - '2026-10-10 DP #96 and #97 merged main, standalone bounded Word table projection and unified durable profile JSON snapshots, full DP suite/CI PASS.'
   - '2026-10-10 R0 fail-closed architecture audit now maps 823 Tender Agent and 179 Data Platform Python files, catches root/literal dynamic imports and consumer SDK facade bypass; manually strict AST boundary audit found zero illegal edges.'
 
-current: 'TA #295 and DP #96/#97 now main; executable R0 fail-closed ownership audit verified locally and PR pending exact-head CI. R5 official EIS SOAP recovery, >=20 independent evidence reviews and owner acceptance remain blockers.'
+  - '2026-10-10 R0 PR #296 merged into Tender Agent main as 35cff33994641de345157749840e0fd5c7ac2a73; exact-head GitHub CI green, fail-closed architecture and SDK facade scan now enforced.'
+
+current: 'TA #295/#296, DP #96-98 merged with exact-head CI green; staged R0 ownership/SDK audit enforced, R3 HTML/steps and DP Word/profile extractions complete. R5 independent >=20 real EIS source reviews, SOAP recovery, Mac mini authenticated E2E and owner acceptance remain outstanding.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -66,7 +68,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '8dbee1e9a74d5c790d605775e01ef8f41eedf10b'
+last_verified_commit: '35cff33994641de345157749840e0fd5c7ac2a73'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -95,8 +97,8 @@ test_results:
   - '2026-10-10 Data Platform PR #96 Word table extraction merged to main with successful Python 3.11/3.12/3.13, JavaScript SDK, PostgreSQL and mirror checks.'
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
 
-resume_instruction: 'Verify exact-head CI and merge R0 cross-repository ownership gate branch refactor/tdp-r0-audit-guard-20261010, internal Mac path /private/tmp/tdp-r0-boundary-audit-20261010. Its 5 tests, strict live dual-repo AST scan, Ruff, make check PASS; TA #295 and DP #96/#97 merged. Then align DP and TA checkpoints and continue R1/R5 EIS original evidence and model/SDK runtime. Do not alter private pilot 18083, restart watchdog, bypass TLS, manipulate production data or external SSD.'
+resume_instruction: 'Continue TDP-REFACTOR-20261009 from Tender Agent main at 35cff339 and Data Platform main after #98; R0 cross-repo scan and safe R3 extractions landed. Next prioritize lawful EIS SOAP getDocsIP network reset investigation without TLS bypass, build >=20 independently original-file-reviewed 44/223-FZ source-truth corpus, validate persisted known XML/UNKNOWN -> report JSON/HTML/PDF/DOCX, then SDK v0.3.0 consumer and Data Platform v0.6.0 real private E2E and owner sign-off. Preserve Mac mini private pilot 18083, disabled watchdog, external ArvectumSSD and production data.'
 execution:
-  branch: refactor/tdp-r0-audit-guard-20261010
+  branch: main
   manual_override: true
   lease_until: null
