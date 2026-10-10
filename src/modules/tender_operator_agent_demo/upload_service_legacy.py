@@ -55,6 +55,12 @@ from src.modules.tender_operator_agent_demo.operator_recommendation import (
 from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
     checked_original_input_path,
 )
+from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
+    _build_file_descriptor as _build_file_descriptor,  # noqa: PLC0414 - legacy import facade
+)
+from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
+    build_demo_file_descriptor as build_demo_file_descriptor,  # noqa: PLC0414 - legacy import facade
+)
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_supplier_profile,
 )
@@ -274,67 +280,8 @@ def _read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _build_file_descriptor(
-    *,
-    file_id: str,
-    original_name: str,
-    stored_name: str,
-    role_hint: str | None,
-    size_bytes: int,
-    content_type: str,
-    source_type: str | None = None,
-    source_url: str | None = None,
-    document_kind: str | None = None,
-    parent_archive: str | None = None,
-) -> dict[str, Any]:
-    return {
-        "file_id": file_id,
-        "original_name": original_name,
-        "display_name": original_name,
-        "stored_name": stored_name,
-        "role_hint": role_hint,
-        "extension": Path(stored_name).suffix.lower(),
-        "size_bytes": size_bytes,
-        "content_type": content_type or "application/octet-stream",
-        "source": "upload",
-        "source_type": source_type or "upload",
-        "source_url": source_url,
-        "document_kind": document_kind,
-        "parent_archive": parent_archive,
-        "extracted_text_available": False,
-        "text_extraction_status": "pending",
-        "warnings": [],
-    }
 
 
-def build_demo_file_descriptor(
-    *,
-    file_id: str,
-    original_name: str,
-    stored_name: str,
-    role_hint: str | None = None,
-    size_bytes: int,
-    content_type: str,
-    source: str = "upload",
-    source_type: str | None = None,
-    source_url: str | None = None,
-    document_kind: str | None = None,
-    parent_archive: str | None = None,
-) -> dict[str, Any]:
-    descriptor = _build_file_descriptor(
-        file_id=file_id,
-        original_name=original_name,
-        stored_name=stored_name,
-        role_hint=role_hint,
-        size_bytes=size_bytes,
-        content_type=content_type,
-        source_type=source_type,
-        source_url=source_url,
-        document_kind=document_kind,
-        parent_archive=parent_archive,
-    )
-    descriptor["source"] = source
-    return descriptor
 
 
 def ensure_demo_run_structure(run_id: str, *, exist_ok: bool) -> dict[str, Path]:
