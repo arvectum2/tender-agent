@@ -63,7 +63,8 @@ completed:
   - '2026-10-10 RU direct EIS SOAP diagnosed on Mac mini and separate RU hosting: valid settings and token, working public EIS TLS, integration TLS reset in ~20ms; official EIS 16.3 maintenance 09.10 22:00 to 11.10 20:00 MSK likely explains interruption.'
   - 'New bounded direct no-proxy TLS preflight, corrected retired legacy integration host, safe opt-in getDocsIP check and strict runtime no-proxy precedence even with conflicting environment/policy settings; no TLS bypass, insecure fallback or production changes.'
 
-current: 'EIS 16.3 maintenance through 11.10.2026 20:00 MSK strongly aligns with two Russian direct TLS reset failures; fail-closed direct TLS probe and runtime no-proxy guard verified. Exact-head CI/PR merge pending. R5 new original source validation >=20 and owner acceptance remain outstanding.'
+  - '2026-10-10 PR #297 direct RU EIS TLS diagnostics and strict no-proxy SOAP invariant merged to main as f5f3f1a8c42575b7d492750cb025edef3efd123e; exact-head GitHub CI all green including quality, PostgreSQL, security, Docker and bridges.'
+current: 'TA PR #297 safely merged to main with exact-head all-green CI: official current SOAP endpoint, strict Russian direct no-proxy route, bounded secure TLS preflight and opt-in read-only getDocsIP. EIS 16.3 scheduled maintenance 2026-10-09 22:00 through 2026-10-11 20:00 MSK coincides with TLS reset in two RU networks; actual SOAP recovery not yet verified. R5 >=20 independently reviewed original procurements, DP E2E and owner gate outstanding.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -71,7 +72,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '9d9e2c1bb03279877c9fe6fd42c269e192dc486f'
+last_verified_commit: 'f5f3f1a8c42575b7d492750cb025edef3efd123e'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -101,8 +102,8 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Merge PR #297 only after exact-head CI is all green; last local full TA suite 3487 PASS/238 SKIP, 28 focused canonical SOAP endpoint tests PASS (1 SKIP), make check PASS. Official EIS 16.3 maintenance 09.10 22:00 through 11.10 20:00 MSK; preserve Russian direct IP, no proxies/TLS bypass or token rotation. After maintenance run direct check_eis_direct.py --timeout 3 then a single --soap 0352300080626000109 only when TLS verified; then original-source DP->TA E2E, >=20 independent human reviews and owner gate. Production data, preview and disabled watchdog untouched.'
+resume_instruction: 'TA PR #297 already merged and exact-head CI passed; do not redo transport work. EIS 16.3 maintenance lasts until 2026-10-11 20:00 MSK. AFTER that window, from RU Mac mini run python scripts/ops/check_eis_direct.py --timeout 3 with direct no-proxy route and verified TLS, then only if integration verified run python scripts/ops/check_eis_direct.py --timeout 3 --soap 0352300080626000109 (one read-only getDocsIP). If still reset, escalate to official EIS support with sanitized preflight and two RU egress evidence; no proxies, TLS disable, DNS pinning or secret leaks. On recovery validate original archives -> DP provenance -> persisted TA report JSON/HTML/PDF/DOCX, >=20 independent human-reviewed EIS cases, SDK v1 consumer and owner gate. Preserve private pilot 18083, external SSD, production data and disabled watchdog.'
 execution:
-  branch: fix/tdp-eis-direct-soap-diagnostics-20261010
+  branch: main
   manual_override: true
   lease_until: null
