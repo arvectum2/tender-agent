@@ -76,6 +76,10 @@ from src.modules.tender_operator_agent_demo.operator_llm_report_projection impor
 from src.modules.tender_operator_agent_demo.operator_recommendation import (
     build_provisional_operator_recommendation,
 )
+from src.modules.tender_operator_agent_demo.operator_requirement_rows import (
+    extract_requirement_rows,
+    normalize_requirement_title,
+)
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
     _SCOPE_SIGNALS as _SCOPE_SIGNALS,  # noqa: PLC0414 - legacy facade
 )
@@ -786,46 +790,20 @@ def _infer_procurement_kind(*texts: str | None) -> str:
 
 
 
+
+
+
+
 def _normalize_requirement_title(title: str, procurement_kind: str) -> str | None:
-    translated = _translate_user_text(title)
-    if procurement_kind != "services":
-        return translated
-    service_specific = {
-        "Требуется соответствие указанным техническим стандартам.": "Услуги должны соответствовать требованиям технического задания и обязательным нормативам.",
-        "Оборудование и товары должны соответствовать заявленной спецификации.": "Услуги должны быть оказаны в полном объеме и в соответствии с техническим заданием.",
-        "Нужно пройти приёмочные испытания по условиям договора.": "Приемка услуг проводится по условиям контракта.",
-        "Требуются гарантия и поддержка после поставки.": "Исполнитель должен обеспечить качественное оказание услуг и выдать предусмотренные итоговые документы.",
-        "Техническое предложение со спецификацией.": "Описание программы, графика и состава оказываемых услуг.",
-        "Декларация о соответствии.": "Документы, подтверждающие соответствие обязательным требованиям закупки.",
-    }
-    return service_specific.get(translated, translated)
+    return normalize_requirement_title(title, procurement_kind, translate=_translate_user_text)
 
 
-def _extract_requirement_rows(requirements: dict[str, Any], core_complete: bool, procurement_kind: str) -> list[dict[str, str]]:
-    rows: list[dict[str, str]] = []
-    for title in requirements.get("technical_requirements", []):
-        normalized_title = _normalize_requirement_title(title, procurement_kind)
-        if not normalized_title:
-            continue
-        rows.append(
-            {
-                "title": normalized_title,
-                "detail": "Извлечено детерминированным адаптером из доступных документов.",
-                "source": "адаптер раннера" if core_complete else "fallback-адаптер",
-            }
-        )
-    for title in requirements.get("document_requirements", []):
-        normalized_title = _normalize_requirement_title(title, procurement_kind)
-        if not normalized_title:
-            continue
-        rows.append(
-            {
-                "title": normalized_title,
-                "detail": "Требование к комплекту документов или подтверждению квалификации.",
-                "source": "адаптер раннера" if core_complete else "fallback-адаптер",
-            }
-        )
-    return rows[:10]
+def _extract_requirement_rows(
+    requirements: dict[str, Any], core_complete: bool, procurement_kind: str
+) -> list[dict[str, str]]:
+    return extract_requirement_rows(
+        requirements, core_complete, procurement_kind, translate=_translate_user_text
+    )
 
 
 def _match_first(text: str, patterns: tuple[str, ...]) -> str | None:
