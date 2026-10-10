@@ -4,8 +4,8 @@ Task: TDP-REFACTOR-20261009. Baseline date: 2026-10-10. Read-only AST inventory 
 
 ## Measured module inventory
 
-- Tender Agent: **821** Python files. Largest areas: shared=80, modules/tender_operator_agent_demo=66, tender_research=52, modules/production_llm_analysis=23, modules/customer_pilot=14, modules/hermes_agent=13, modules/supplier_search=9, modules/daily_tender_run=8.
-- Data Platform: **177** Python files. Largest areas: api=42, evaluation=36, connectors=11, engine=10, search=8, acquisition=7, documents=6, results=6.
+- Tender Agent: **823** Python files. Largest areas: shared=80, modules/tender_operator_agent_demo=68, tender_research=52, modules/production_llm_analysis=23, modules/customer_pilot=14, modules/hermes_agent=13, modules/supplier_search=9, modules/daily_tender_run=8.
+- Data Platform: **179** Python files. Largest areas: api=42, evaluation=36, connectors=11, engine=10, search=8, acquisition=7, documents=7, storage=7.
 - Direct Tender Agent imports of Data Platform implementation: **0**.
 - Tender Agent imports of consumer SDK outside src/shared/data_platform.py: **0**.
 - Reverse Data Platform imports of Tender Agent business modules: **0**.
