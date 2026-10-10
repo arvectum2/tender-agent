@@ -14,6 +14,40 @@ from pathlib import Path
 from typing import Any
 
 _NUMBER = re.compile(r"(?:\d{11}|\d{19})\Z")
+_UNKNOWN = re.compile(r"(?<!\w)UNKNOWN(?!\w)|не извлечено|не установлен[аоы]?|неизвестно", re.IGNORECASE)
+_LLM_REVIEW = ("[LLM", "[Черновик LLM", "[Гипотеза LLM")
+
+
+def report_source_marker_counts(report: dict[str, Any] | None) -> dict[str, int]:
+    """Count markers without exporting stored document/customer content."""
+    totals = {
+        "report_sections": 0,
+        "report_items": 0,
+        "report_unknown_markers": 0,
+        "report_eis_xml_references": 0,
+        "report_unverified_llm_markers": 0,
+    }
+    if not isinstance(report, dict):
+        return totals
+    sections = report.get("sections")
+    if not isinstance(sections, list):
+        return totals
+    for section in sections:
+        if not isinstance(section, dict) or not isinstance(section.get("items"), list):
+            continue
+        totals["report_sections"] += 1
+        for item in section["items"]:
+            if not isinstance(item, str):
+                continue
+            totals["report_items"] += 1
+            totals["report_unknown_markers"] += int(bool(_UNKNOWN.search(item)))
+            totals["report_eis_xml_references"] += int("eis-xml:" in item)
+            totals["report_unverified_llm_markers"] += int(
+                any(marker in item for marker in _LLM_REVIEW)
+            )
+    return totals
+
+
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
@@ -67,6 +101,7 @@ def _one_run(folder: Path) -> dict[str, Any] | None:
         "model_invoked_recorded": model_invoked,
         "analysis_mode": str(metadata.get("analysis_mode") or "unknown"),
         "has_unavailable_originals": present < len(files),
+        **report_source_marker_counts(report),
     }
 
 
@@ -109,6 +144,14 @@ def audit_corpus(root: Path) -> dict[str, Any]:
         "best_run_with_report": sum(x["report_available"] for x in chosen),
         "best_run_with_eis_xml_fact_record": sum(x["eis_xml_evidence_record"] for x in chosen),
         "best_run_with_recorded_llm_invocation": sum(x["model_invoked_recorded"] for x in chosen),
+        "best_report_sections_total": sum(x["report_sections"] for x in chosen),
+        "best_report_items_total": sum(x["report_items"] for x in chosen),
+        "best_report_unknown_markers": sum(x["report_unknown_markers"] for x in chosen),
+        "best_report_eis_xml_references": sum(x["report_eis_xml_references"] for x in chosen),
+        "best_report_unverified_llm_markers": sum(x["report_unverified_llm_markers"] for x in chosen),
+        "best_reports_without_eis_xml_references": sum(
+            bool(x["report_available"]) and x["report_eis_xml_references"] == 0 for x in chosen
+        ),
         "procurements": chosen,
     }
 
