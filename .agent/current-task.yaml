@@ -60,7 +60,7 @@ completed:
 
   - '2026-10-10 R0 PR #296 merged into Tender Agent main as 35cff33994641de345157749840e0fd5c7ac2a73; exact-head GitHub CI green, fail-closed architecture and SDK facade scan now enforced.'
 
-current: 'TA #295/#296, DP #96-98 merged with exact-head CI green; staged R0 ownership/SDK audit enforced, R3 HTML/steps and DP Word/profile extractions complete. R5 independent >=20 real EIS source reviews, SOAP recovery, Mac mini authenticated E2E and owner acceptance remain outstanding.'
+current: '2026-10-10 R1/R4 EIS SOAP direct RU connectivity root-cause investigation in_progress. Mac mini and independent RU hosting both TLS-reset int.zakupki.gov.ru before HTTP; current host valid, int44 retired. Implement fail-closed direct-path diagnostics and regression tests; real source R5 acceptance still blocked.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -99,6 +99,6 @@ test_results:
 
 resume_instruction: 'Continue TDP-REFACTOR-20261009 from Tender Agent main at 35cff339 and Data Platform main after #98; R0 cross-repo scan and safe R3 extractions landed. Next prioritize lawful EIS SOAP getDocsIP network reset investigation without TLS bypass, build >=20 independently original-file-reviewed 44/223-FZ source-truth corpus, validate persisted known XML/UNKNOWN -> report JSON/HTML/PDF/DOCX, then SDK v0.3.0 consumer and Data Platform v0.6.0 real private E2E and owner sign-off. Preserve Mac mini private pilot 18083, disabled watchdog, external ArvectumSSD and production data.'
 execution:
-  branch: main
+  branch: fix/tdp-eis-direct-soap-diagnostics-20261010
   manual_override: true
   lease_until: null
