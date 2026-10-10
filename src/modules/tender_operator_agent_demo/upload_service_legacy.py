@@ -61,6 +61,12 @@ from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
 from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
     build_demo_file_descriptor as build_demo_file_descriptor,  # noqa: PLC0414 - legacy import facade
 )
+from src.modules.tender_operator_agent_demo.operator_upload_economics_input import (
+    _sanitize_delay_days as _sanitize_delay_days,  # noqa: PLC0414 - compatibility facade
+)
+from src.modules.tender_operator_agent_demo.operator_upload_economics_input import (
+    _sanitize_percent as _sanitize_percent,  # noqa: PLC0414 - compatibility facade
+)
 from src.modules.tender_operator_agent_demo.operator_upload_filenames import (
     ALLOWED_EXTENSIONS,
     sanitize_demo_filename,
@@ -315,18 +321,8 @@ def load_demo_run_events(run_id: str) -> list[TenderOperatorRunEvent]:
     return [TenderOperatorRunEvent.model_validate(item) for item in load_tender_demo_events(run_id)]
 
 
-def _sanitize_percent(value: float | None, *, default: float, field_name: str) -> float:
-    numeric = default if value is None else float(value)
-    if numeric < 0 or numeric > 95:
-        raise HTTPException(status_code=400, detail=f"{field_name} must be between 0 and 95")
-    return round(numeric, 2)
 
 
-def _sanitize_delay_days(value: int | None, *, default: int) -> int:
-    numeric = default if value is None else int(value)
-    if numeric < 0 or numeric > 365:
-        raise HTTPException(status_code=400, detail="payment_delay_days must be between 0 and 365")
-    return numeric
 
 
 def create_uploaded_demo_run(
