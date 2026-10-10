@@ -1,0 +1,27 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R4-OLLAMA-SMOKE-20261011
+status: completed
+goal: Verify an actual non-stub local model transport with a synthetic known-vs-unknown
+  fact fixture; not a quality benchmark.
+definition_of_done:
+- Invoke local Ollama qwen3:4b model for real generation
+- Demand JSON containing the given NMCK and null absent application deadline
+- Record observed latency/tokens without production data
+completed:
+- Local Ollama qwen3:4b generated 38 tokens in 7.19 seconds on a synthetic Russian
+  procurement snippet.
+- JSON parsed; NMCK 500000 extracted; absent deadline explicitly null.
+- No customer data, real EIS files or production writes used.
+current: Smoke-test complete; full Tender Agent model routing, quality, speed, OCR
+  corpus benchmark remains pending R4.
+pending: []
+last_verified_commit: d7774ed7ee526800f417bbcdb04d30979666f37c
+test_results:
+- Ollama API response valid JSON
+- Known NMCK 500000 true; unknown deadline null
+- 7.19s, 38 generated tokens
+resume_instruction: Do not mistake isolated Ollama smoke-test for integrated product
+  LLM. Continue with full Tender Agent non-stub source-locked E2E and comparative
+  quality/latency benchmark on independently labelled cases. Do not enable owner-disabled
+  watchdog.
