@@ -1,0 +1,35 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-TRAINING-SOURCE-20261010
+status: in_progress
+goal: Isolate training-services candidate fact extraction from Tender Agent monolithic
+  preliminary report, without changing evidence semantics or report outputs.
+definition_of_done:
+- Extract source-dependent fields into product-owned testable module.
+- Keep unchanged legacy/public facade, source wording and fallbacks.
+- Test missing fields, source-specific fields and output parity; make check and full
+  pytest green.
+- Merge after all exact-head CI green; mark slice completed while parent remains in_progress.
+completed:
+- Verified main 4d608e0e and identified 94-line training fact extraction segment.
+- Moved 94 lines of education-services source-candidate extraction into operator_training_source_facts.py
+  with typed named-tuple response and explicit helper injection.
+- AST calculation-body parity verified after extraction; no new evidence claims.
+- Added 5 focused tests for unknown fields, source-driven training values, contract
+  security, supplied NMCK and positional compatibility.
+- 59 targeted tests and make check passed.
+current: Full Python 3.12 pytest running; exact-head GitHub CI and merge pending.
+pending:
+- Extract candidate facts.
+- Focused/full regression and exact-head CI.
+- Merge and update canonical task checkpoint.
+last_verified_commit: 4d608e0e
+test_results:
+- 59 focused passed
+- Ruff targeted passed
+- make check passed
+- AST candidate extraction parity passed
+resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-training-facts-20261010.
+  Inspect /tmp/tdp-r3-training-full.log from process PID 43492. Open PR after changes
+  committed and wait for exact-head all-green GitHub CI before merging. Parent TDP-REFACTOR
+  in_progress, no production mutations, watchdog disabled.
