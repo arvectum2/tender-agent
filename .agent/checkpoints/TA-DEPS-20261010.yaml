@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TA-DEPENDENCIES-20261010
-status: in_progress
+status: completed
 goal: Refresh Tender Agent Python dependency resolution on current main and preserve compatibility across updates.
 definition_of_done:
   - Regenerate hashed Python 3.11 universal requirements.lock with --upgrade.
@@ -14,14 +14,11 @@ completed:
   - Added compatibility ceiling pydantic>=2.13.5,<2.14 due reproduced Pydantic 2.14 OpenAPI Ellipsis serializer regression.
   - Documented dependency policy, intentionally pinned lock and PostgreSQL major-matching test client.
   - Fresh Python 3.12 install and make check passed.
-current: Fresh Python 3.12 full pytest 3551 passed / 238 skipped / 294 warnings, uv pip install and make check green; open isolated PR and verify exact-head CI.
-pending:
-  - Record full unsuppressed pytest result.
-  - Open PR, wait for exact-head CI and resolve regressions.
-  - Merge if fully green, then mark this scoped checkpoint completed.
-last_verified_commit: b70b315a
+current: Completed: PR #310 merged as 84c474023dae98fde1aaa2eb36b7919b389fab4c after all quality and integration CI jobs passed.
+pending: []
+last_verified_commit: 84c474023dae98fde1aaa2eb36b7919b389fab4c
 test_results:
   - Fresh Python 3.12 package resolution/install passed.
   - make check passed.
   - Complete fresh-main pytest: 3551 passed, 238 skipped, 294 warnings, 0 failures, PostgreSQL 16 client on PATH.
-resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/ta-dependency-refresh-20261010. Read /tmp/ta-latest-full.log, check PID 19706 if still running. Commit dependency-only files and this checkpoint; open PR from build/ta-dependency-refresh-20261010. Run exact-head CI. Do not merge stale conflicting PR #309. Preserve current main refactor R3-R5 checkpoint and owner-disabled watchdog.
+resume_instruction: Dependency update completed. Continue overall TDP-REFACTOR-20261009 from canonical .agent/current-task.yaml without changing the owner-disabled watchdog.
