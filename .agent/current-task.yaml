@@ -52,7 +52,7 @@ completed:
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261-292 and DP #86/#87 merged; R3 119-line metadata authority extraction + safe XML quantity node fix pass 3467 local tests and make check; PR and exact-head CI pending. R5 source truth >=20 human cases and owner acceptance remain blocked.'
+current: 'TA PRs #261-292 merged and #293 metadata extraction under CI. R3 extracted another 730 lines of HTML/step presentation into separate modules, full 3469 tests and make check passed; new PR pending. Data Platform main through #95 full tests/Ruff green. R5 20 authentic reviewed EIS cases/owner acceptance outstanding.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -86,7 +86,7 @@ test_results:
   - 'R3 pure recommendation extracted with 5 branch-specific unit tests and 25 regression tests PASS; isolated report assembly unchanged.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress, TA PR #292 merged as d16285, DP #86/#87 merged. Worktree /private/tmp/tdp-metadata-enrichment-20261010 on internal Mac disk extracted 119 lines to operator_metadata_enrichment.py with compatibility function, fixed structured XML leaf value selection. Full pytest 3467 passed /238 skipped, make check pass with PATH=/opt/homebrew/opt/postgresql@16/bin:/private/tmp/tdp-refactor-venv/bin:$PATH. Commit and raise PR to main, exact-head CI then merge if green. Remaining R5 >=20 independent human reviewed EIS original cases and SOAP network reset, preserve existing pilot 18083 and disabled watchdog.'
+resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA #293 R3 metadata+XML node bugfix awaits exact-head CI. Next branch refactor/tdp-legacy-html-extract-20261010 at internal Mac mini /private/tmp/tdp-legacy-html-extract-20261010 isolated 394 legacy HTML renderer and 336 typed step projector lines with preserved facades, 3469 full TA pytest passed, 238 skipped, make check/Ruff PASS. Create stacked PR against #293, rebase/merge after exact-head all green. DP main through #95 full test and Ruff green; update DP checkpoint. Keep 18083 untouched and disabled watchdog off. Unresolved: EIS SOAP resets and >=20 independently truth-reviewed source cases.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
