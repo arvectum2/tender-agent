@@ -60,7 +60,10 @@ completed:
 
   - '2026-10-10 R0 PR #296 merged into Tender Agent main as 35cff33994641de345157749840e0fd5c7ac2a73; exact-head GitHub CI green, fail-closed architecture and SDK facade scan now enforced.'
 
-current: 'TA #295/#296, DP #96-98 merged with exact-head CI green; staged R0 ownership/SDK audit enforced, R3 HTML/steps and DP Word/profile extractions complete. R5 independent >=20 real EIS source reviews, SOAP recovery, Mac mini authenticated E2E and owner acceptance remain outstanding.'
+  - '2026-10-10 RU direct EIS SOAP diagnosed on Mac mini and separate RU hosting: valid settings and token, working public EIS TLS, integration TLS reset in ~20ms; official EIS 16.3 maintenance 09.10 22:00 to 11.10 20:00 MSK likely explains interruption.'
+  - 'New bounded direct no-proxy TLS preflight, corrected retired legacy integration host, safe opt-in getDocsIP check and strict runtime no-proxy precedence even with conflicting environment/policy settings; no TLS bypass, insecure fallback or production changes.'
+
+current: 'EIS 16.3 maintenance through 11.10.2026 20:00 MSK strongly aligns with two Russian direct TLS reset failures; fail-closed direct TLS probe and runtime no-proxy guard verified. Exact-head CI/PR merge pending. R5 new original source validation >=20 and owner acceptance remain outstanding.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -68,7 +71,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '35cff33994641de345157749840e0fd5c7ac2a73'
+last_verified_commit: '9d9e2c1bb03279877c9fe6fd42c269e192dc486f'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
   - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
@@ -96,9 +99,10 @@ test_results:
   - '2026-10-10 integrated TA full pytest 3469 PASS, 238 expected SKIP, make check PASS; targeted new module Ruff PASS, touched legacy imports Ruff F401/I001 PASS.'
   - '2026-10-10 Data Platform PR #96 Word table extraction merged to main with successful Python 3.11/3.12/3.13, JavaScript SDK, PostgreSQL and mirror checks.'
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
+  - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Continue TDP-REFACTOR-20261009 from Tender Agent main at 35cff339 and Data Platform main after #98; R0 cross-repo scan and safe R3 extractions landed. Next prioritize lawful EIS SOAP getDocsIP network reset investigation without TLS bypass, build >=20 independently original-file-reviewed 44/223-FZ source-truth corpus, validate persisted known XML/UNKNOWN -> report JSON/HTML/PDF/DOCX, then SDK v0.3.0 consumer and Data Platform v0.6.0 real private E2E and owner sign-off. Preserve Mac mini private pilot 18083, disabled watchdog, external ArvectumSSD and production data.'
+resume_instruction: 'Merge PR #297 only after exact-head CI is all green; last local full TA suite 3487 PASS/238 SKIP, 28 focused canonical SOAP endpoint tests PASS (1 SKIP), make check PASS. Official EIS 16.3 maintenance 09.10 22:00 through 11.10 20:00 MSK; preserve Russian direct IP, no proxies/TLS bypass or token rotation. After maintenance run direct check_eis_direct.py --timeout 3 then a single --soap 0352300080626000109 only when TLS verified; then original-source DP->TA E2E, >=20 independent human reviews and owner gate. Production data, preview and disabled watchdog untouched.'
 execution:
-  branch: main
+  branch: fix/tdp-eis-direct-soap-diagnostics-20261010
   manual_override: true
   lease_until: null
