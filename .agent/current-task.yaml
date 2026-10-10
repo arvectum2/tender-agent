@@ -41,19 +41,21 @@ completed:
   - 'R3 AST exact-body >=12 line clone inventory reduced from nine initial groups to zero, via compatibility shims for portal nested fields/date parsing, Hermes generic-subject classification and shared check-db CLI. No source-specific procurement law/parsers removed.'
   - 'R5 manual read-only original quote verification built: private authenticated POST route, original file safe direct path, content SHA256, same non-persisting DP process endpoint, exact source/chunk ID/hash/substring, rejects hallucinations and symlinks.'
   - 'R5 Operator Workspace now includes collapsed per-original exact quotation check with safe DOM textContent, protected same-origin route, explicit match-only semantics and no-files hidden state.'
+  - 'PR #276 original-file quote verification merged main at 3116291bf44ffbf8623d7d148a78e9412ddfebb7, all exact-head CI green.'
+  - 'R3 45-line preliminary GO/manual-review decision branch extracted from 568-line legacy report assembler into pure product-owned operator_recommendation.py; original function signature maintained and explicit human approval retained.'
   - 'R5 real EIS stored FILE-04 DOCX reprocessed on Mac mini: all 31 chunk hashes and source IDs exactly matched; exact original quote accepted; fake quote denied; no original text emitted.'
   - 'R5 provenance gate first slice: only an explicit literal model quote whose exact text occurs in one real Data Platform chunk with matching file/resource/document/chunk IDs and hashed DP chunk-local offsets can acquire a candidate locator. Absence, fuzzy paraphrases, ambiguous duplicates and invalid offsets fail closed. No implication of verified legal interpretation.'
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'Tender Agent/Data Platform staged refactor active. Source locked PDF/DOCX export PR #273, source quote API/UI PRs #275-277 merged; PR #278/#279 review in flight. Mac mini external ArvectumSSD file reads are hanging; local engineering operations temporarily blocked pending safe volume diagnosis. R5 >=20 evidence truth-reviewed cases and owner acceptance remain.'
+current: 'TA PR #261-282 and DP #86/#87 merged. R3 isolated human-approved recommendation assembled in independent product helper; local full suite 3418 PASS / 238 skipped with PostgreSQL16 profile, R5 29 procurement source truth evaluation and owner acceptance outstanding; #283 source revision diagnostics CI pending. External ArvectumSSD reads remain unstable, internal checkout usable.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '6825c31773b0f45ce15066757c25c96c51d54a5a'
+last_verified_commit: '3116291bf44ffbf8623d7d148a78e9412ddfebb7'
 test_results:
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
@@ -74,9 +76,10 @@ test_results:
   - 'R3 exact AST clone count 9->0, 71 relevant tests PASS, make check PASS, new module Ruff PASS.'
   - 'R5 original source quote attestation private route + real original DOCX 31/31 stable chunks; 77 relevant tests PASS, no false legal verification.'
   - 'R5 quote UI fake-browser real POST with original passed, missing-original state hidden; 38 Python tests PASS.'
+  - 'R3 pure recommendation extracted with 5 branch-specific unit tests and 25 regression tests PASS; isolated report assembly unchanged.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'Resume TDP-REFACTOR-20261009. First safely diagnose Mac mini /Volumes/ArvectumSSD APFS reads hanging even on README.md, without unmounting active services, rebooting, forced filesystem repair or deleting data; Git and file reads on this volume are affected. Read main and PR #278/#279 first, do not duplicate already merged #273-277, assess EIS original quote UI end-to-end after I/O recovery, and complete >=20 true golden procurements with owner acceptance. Existing 18082/18083 remain unchanged; user-disabled watchdog remains disabled.'
+resume_instruction: 'Continue TDP-REFACTOR-20261009 in_progress. PR #278 extracted human-gated recommendation rebased as separate branch refactor/tdp-recommendation-integrate-20261010 against merged #282; run focused and full CI then merge and supersede original PR. TA #261-282 and DP #86/#87 merged, PR #283 XML revision reasons under CI. Clean internal checkout /private/tmp/tdp-recovery-20261010 works; ArvectumSSD I/O remains unstable, do not force fsck/reboot or alter 18082/18083. Need verified original-file claims across >=20 EIS cases and owner Safari quality acceptance; disabled watchdog remains off.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
