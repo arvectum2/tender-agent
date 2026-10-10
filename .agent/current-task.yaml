@@ -13,6 +13,7 @@ definition_of_done:
   - 'Regression tests, static check, security/tenant isolation, CI for each repo, real Mac mini end-to-end owner acceptance and roadmap/checkpoint synchronization.'
   - 'No public deploy, procurement submission, private data leakage, auth bypass, broad API break or automatic legal/commercial conclusion.'
 completed:
+  - '2026-10-10 Mac mini ArvectumSSD incident: ordinary reads of README.md and .git/HEAD hang, while /etc/hosts reads normally; Git operations pile up. No fsck/reboot, data deletion, or production changes attempted. PR #273 PDF/DOCX exports merged and green; PR #275-277 also merged. Diagnose external APFS/USB I/O safely before local source operations.'
   - 'Reconciled previous APR-03B checkpoint, owner visual report feedback and latest main of both repositories.'
   - 'Confirmed true DP source separate at arvectum2/data-platform, v0.6.0, and TA SDK client pinned to consumer-sdk-v0.3.0.'
   - 'Found real EIS sample run 0372200172326000015 six files: metadata has registry-matched official title, but rendered requirements use wrong document heading; mode fallback_deterministic_adapter, no LLM.'
@@ -45,7 +46,7 @@ completed:
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA #261-274 and DP #86-87 merged. R5 original source attestation PR #276 under full CI, new stacked Operator Workspace UI for per-original exact quote check with fake-browser and Python regressions; owner acceptance and >=20 truth-reviewed real procurements pending.'
+current: 'Tender Agent/Data Platform staged refactor active. Source locked PDF/DOCX export PR #273, source quote API/UI PRs #275-277 merged; PR #278/#279 review in flight. Mac mini external ArvectumSSD file reads are hanging; local engineering operations temporarily blocked pending safe volume diagnosis. R5 >=20 evidence truth-reviewed cases and owner acceptance remain.'
 pending:
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
@@ -75,7 +76,7 @@ test_results:
   - 'R5 quote UI fake-browser real POST with original passed, missing-original state hidden; 38 Python tests PASS.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'TDP-REFACTOR-20261009 in_progress. TA PR #276 exact original quote attestation API is under full CI, DP #86-87 and TA #261-274 merged. Stacked worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-quote-ui-20261009 adds a collapsed private Operator Workspace form for literal 20-800-character quote verification per original, safe DOM output and no-document guards. Node fake-browser E2E + 38 Python tests PASS. Finish exact-head CI on #276, merge it, rebase UI PR to main, full CI and private source-locked preview plus owner browser acceptance. Continue R5 typed model quote attribution and truth-verified >=20 44/223-FZ procurements. Keep owner private 18083 untouched and owner-disabled watchdog off.'
+resume_instruction: 'Resume TDP-REFACTOR-20261009. First safely diagnose Mac mini /Volumes/ArvectumSSD APFS reads hanging even on README.md, without unmounting active services, rebooting, forced filesystem repair or deleting data; Git and file reads on this volume are affected. Read main and PR #278/#279 first, do not duplicate already merged #273-277, assess EIS original quote UI end-to-end after I/O recovery, and complete >=20 true golden procurements with owner acceptance. Existing 18082/18083 remain unchanged; user-disabled watchdog remains disabled.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
