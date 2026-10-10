@@ -1,0 +1,35 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-SOFTWARE-PRELIM-20261010
+status: in_progress
+goal: Extract product-owned preliminary software/integration analysis from upload
+  monolith while retaining source evidence and existing behavior.
+definition_of_done:
+- Isolate business projection behind legacy facade with helper injection and unchanged
+  outputs.
+- Add parity/source-preserving tests.
+- Run focused/full pytest, Ruff/make check and exact-head CI.
+- Merge green PR and synchronize main checkpoint.
+completed:
+- Confirmed current main 3a24d458; preceding goods economics slice completed.
+- Isolated 59-line software/integration projection behind existing source classification,
+  with helper injection.
+- AST parity of extracted calculation body verified against previous inline code.
+- Three new contract tests cover missing source rows, supplied evidence/NMCK, and
+  unchanged public evidence guard.
+- Focused pytest 44 passed and make check passed.
+current: Full local pytest running; CI/merge pending.
+pending:
+- Extract logic and add tests.
+- Run local regression and exact-head CI.
+- Merge green PR and mark slice completed; overall task stays in_progress.
+last_verified_commit: 3a24d458
+test_results:
+- 44 focused passed
+- Ruff targeted passed
+- make check passed
+- AST body parity passed
+resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-software-preliminary-20261010.
+  Inspect /tmp/tdp-r3-soft-full.log (process 40534). Push PR and await exact-head
+  all green CI before merge. Keep overarching TDP-REFACTOR in_progress; leave owner-disabled
+  watchdog disabled.

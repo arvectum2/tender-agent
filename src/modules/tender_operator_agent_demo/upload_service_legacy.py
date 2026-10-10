@@ -103,6 +103,9 @@ from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
     _scope_signal_evidence as _scope_signal_evidence,  # noqa: PLC0414 - legacy facade
 )
+from src.modules.tender_operator_agent_demo.operator_software_preliminary import (
+    build_software_preliminary_analysis,
+)
 from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
     checked_original_input_path,
 )
@@ -2562,65 +2565,17 @@ def _build_preliminary_procurement_analysis(
             "spec_table": {"columns": [], "rows": []},
         }
     if procurement_kind in {"mixed", "software_modification", "integration", "license"}:
-        work_rows = _build_software_work_rows(documents)
-        initial_price = _extract_notice_price(metadata, notice, contract_text)
-        deadline = metadata.get("deadline") or _extract_notice_service_deadline(notice) or _extract_notice_delivery_deadline(notice)
-        delivery_term = metadata.get("procurement", {}).get("delivery_term") if isinstance(metadata.get("procurement"), dict) else None
-        tender_title = metadata.get("tender_title") or _cleanup_tabular_value(
-            _match_first(combined, (r"Наименование работ:\s*(.+?)(?:\n|$)",))
-        ) or "не указан"
-        overview = [
-            f"Предмет закупки: {tender_title}",
-            f"НМЦК: {initial_price} руб." if initial_price else "",
-            f"Тип закупки: {procurement_kind}.",
-            f"Срок исполнения / подачи: {deadline}." if deadline else "",
-            "Результат для заказчика: модифицированный модуль, интеграции и лицензионный пакет." if work_rows else "",
-        ]
-        compliance = [
-            "Нужно проверить полноту функциональных требований по каждому блоку доработки.",
-            "Требования к интеграциям, доступам и форматам обмена должны быть подтверждены документами и перепиской с заказчиком.",
-            "Нужно отдельно проверить требования к передаче лицензии, прав и итоговой документации.",
-        ]
-        contract_terms = []
-        if delivery_term:
-            contract_terms.append(f"Срок исполнения по документам: {delivery_term}.")
-        if "акт" in contract_text.lower() or "приемк" in contract_text.lower():
-            contract_terms.append("В проекте контракта есть условия приемки и закрывающих документов.")
-        if "лиценз" in (tz_text + "\n" + contract_text).lower():
-            contract_terms.append("В составе результата работ фигурирует передача лицензии или прав использования.")
-        return {
-            "overview": [item for item in overview if item][:6],
-            "compliance_highlights": compliance[:6],
-            "delivery_model": [
-                "Работы зависят от внешних систем, доступов и интеграционного контура заказчика.",
-                "Часть требований относится к программной доработке, а не к поставке товара.",
-            ],
-            "contract_highlights": contract_terms[:6],
-            "next_actions": [
-                "Разбить объем работ по функциональным блокам и запросить оценку трудозатрат по каждому блоку.",
-                "Уточнить порядок предоставления доступов к СМЭВ, ЕРН и витрине Минобороны.",
-                "Проверить критерии приемки, тестирования и пакет лицензионных документов.",
-            ],
-            "extracted_fields": _dedupe_text_items(
-                [
-                    "НМЦК" if initial_price else "",
-                    "функциональные блоки" if work_rows else "",
-                    "интеграции" if any("Интеграция" in row.get("Блок работ / результат", "") for row in work_rows) else "",
-                    "лицензия" if "лиценз" in (tz_text + contract_text).lower() else "",
-                ]
-            ),
-            "procurement_kind": procurement_kind,
-            "scope": scope,
-            "supply_section_note": (
-                "Состав работ собран по техническим документам и проекту контракта."
-                if work_rows
-                else "Полный смысловой разбор состава работ не выполнен автоматически. Нужна ручная проверка ТЗ."
-            ),
-            "spec_table": {
-                "columns": ["№", "Блок работ / результат", "Что нужно сделать", "Входные/внешние системы", "Результат для заказчика", "Критерии приёмки", "Источник"],
-                "rows": work_rows,
-            },
-        }
+        return build_software_preliminary_analysis(
+            metadata, documents, combined, tz_text, contract_text, notice,
+            scope, procurement_kind,
+            _build_software_work_rows=_build_software_work_rows,
+            _extract_notice_price=_extract_notice_price,
+            _extract_notice_service_deadline=_extract_notice_service_deadline,
+            _extract_notice_delivery_deadline=_extract_notice_delivery_deadline,
+            _cleanup_tabular_value=_cleanup_tabular_value,
+            _match_first=_match_first,
+            _dedupe_text_items=_dedupe_text_items,
+        )
 
     service_subject = _match_first(
         tz_text,
