@@ -76,6 +76,10 @@ from src.modules.tender_operator_agent_demo.operator_llm_report_projection impor
 from src.modules.tender_operator_agent_demo.operator_recommendation import (
     build_provisional_operator_recommendation,
 )
+from src.modules.tender_operator_agent_demo.operator_report_inventory import (
+    build_downloaded_documents_inventory,
+    document_type_label,
+)
 from src.modules.tender_operator_agent_demo.operator_requirement_rows import (
     extract_requirement_rows,
     normalize_requirement_title,
@@ -3472,37 +3476,16 @@ def _build_output_payloads(
     }
 
 
+
+
+
+
 def _document_type_label(item: dict[str, Any]) -> str:
-    role = str(item.get("role_hint") or item.get("document_kind") or "").strip().lower()
-    labels = {
-        "notice": "электронное извещение ЕИС",
-        "eis_notice": "электронное извещение ЕИС",
-        "technical_spec": "техническое задание / техническая часть",
-        "technical_specification": "техническое задание / техническая часть",
-        "procurement_object_description": "описание объекта закупки",
-        "contract_draft": "проект контракта",
-        "specification": "спецификация",
-        "estimate": "смета",
-        "form": "форма",
-        "attachment": "приложение",
-        "supporting": "вспомогательный документ",
-    }
-    return labels.get(role, "документ закупки")
+    return document_type_label(item)
 
 
 def _build_downloaded_documents_inventory(metadata: dict[str, Any]) -> list[dict[str, str]]:
-    inventory: list[dict[str, str]] = []
-    for item in metadata.get("files", []):
-        inventory.append(
-            {
-                "name": str(item.get("display_name") or item.get("original_name") or "Документ"),
-                "type": _document_type_label(item),
-                "download_status": "downloaded",
-                "text_status": "extracted" if item.get("extracted_text_available") else str(item.get("text_extraction_status") or "pending"),
-                "source": str(item.get("source_type") or item.get("source") or "runtime"),
-            }
-        )
-    return inventory
+    return build_downloaded_documents_inventory(metadata)
 
 
 def _build_steps_from_outputs(metadata: dict[str, Any], outputs: dict[str, dict[str, Any]]) -> list[DemoStep]:
