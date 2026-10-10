@@ -16,6 +16,8 @@ dependencies = [
   "openpyxl>=3.1,<4.0",
   "python-docx>=1.1,<2.0",
   "python-multipart>=0.0.9,<1.0",
+  # Pydantic 2.14 breaks FastAPI OpenAPI serialization of legacy Ellipsis defaults.
+  "pydantic>=2.13.5,<2.14",
   "pydantic-settings>=2.3,<3.0",
   "PyYAML>=6.0,<7.0",
   "psycopg[binary]>=3.1,<4.0",
