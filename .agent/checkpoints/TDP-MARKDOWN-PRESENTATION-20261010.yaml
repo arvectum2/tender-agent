@@ -1,0 +1,19 @@
+task_id: TDP-MARKDOWN-PRESENTATION-20261010
+parent_task_id: TDP-REFACTOR-20261009
+status: in_progress
+goal: 'Remove legacy markdown report formatting and supply-section presentation from the 5.9K-line upload service with full facade compatibility.'
+definition_of_done:
+  - 'Report markdown and supply presentation reside in a pure product-owned module.'
+  - 'Old entrypoints and monkeypatchable dependencies retain compatible behavior.'
+  - 'Regression/report-export tests pass and exact-head CI merges.'
+completed:
+  - 'Extracted 148 lines of pure markdown/report section rendering.'
+  - 'Kept backwards-compatible wrappers with existing helper injection.'
+  - '48 related upload/export/pure renderer tests PASS, targeted Ruff PASS.'
+current: 'Await PR CI and merge.'
+pending:
+  - 'Complete exact-head CI and merge.'
+last_verified_commit: '372c895042ff6004a67b8da93154e5386844c0f2'
+test_results:
+  - '48 tests passed; 25 existing warnings (Starlette and SQLAlchemy cyclic FK).'
+resume_instruction: 'Finish stacked markdown presentation PR after #290, exact-head CI/merge; parent TDP-REFACTOR-20261009 remains in_progress until source-backed real procurement quality and owner Safari acceptance.'
