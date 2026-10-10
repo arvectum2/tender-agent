@@ -85,6 +85,7 @@ completed:
   - '2026-10-10 cross-repo live Mac mini DP0.6 read-only SDKv0.3 auth preflight: health OK, GET /v1/contract without credentials rejects HTTP401, no source proof or authenticated R2 claim; no production mutations. DP checkpoint updated separately.'
 current: 'TA #298-308 all merged all-green latest 879b68c4. DP0.6 live SDK read-only health OK and unauthenticated contract HTTP401 expected, authenticated DP source proof still pending. R3 remaining business context/report, R2 real authorized original files resource/document/chunk IDs offsets hash, R4 actual non-stub model quality latency and R5 >=20 independently human-reviewed EIS originals/owner signoff. Task in_progress.'
 pending:
+  - 'R3 goods economics slice TDP-R3-GOODS-ECONOMICS-20261010: extract product-owned fallback with injected source helpers, preserve missing supplier price/margin UNKNOWN and legacy facade, complete exact-head CI before merging.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
