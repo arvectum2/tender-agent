@@ -88,9 +88,9 @@ completed:
   - '2026-10-10 R2 live DP0.6 authenticated SDK0.3 consumer contract v1.0 HTTP200 confirmed via configured secret without disclosure; standard upload/connector/recovery collections absent; actual original source IDs and hash/offset unverified (DP #110).'
   - '2026-10-11 TA PR #316 94-line training service candidate fact extraction moved into operator_training_source_facts.py with 13-field response, dependency injection and AST parity. 59 focused, 3564 full passed/238 skipped and all exact-head CI green; merged d7774ed7ee526800f417bbcdb04d30979666f37c.'
   - '2026-10-11 R4 isolated local Ollama qwen3:4b genuine generation smoke: 7.19 s/38 tokens, synthetic NMCK 500000 extracted and unknown deadline null, not product E2E or comparative model benchmark.'
-current: 'R3 #316 training source extractor and previous #312/#314 slices merged green; next R3 fix source location newline/city, no invented geography. DP0.6 SDK0.3 authenticated contract 1.0 confirmed, but original chunk hash/offset still unverified. R4 Ollama qwen3:4b synthetic smoke passed, integrated model quality and R5 >=20 independent EIS originals/owner gate pending. Task in_progress.'
+  - '2026-10-11 PR #318 removed hardcoded unsourced Habarovsk and fixed one-line original service location extraction before unnumbered continuation; 54 focused and 3573 full local tests PASS/238 skipped; two exact-head quality plus full CI green, merged main df63b093246179d344b2030789e2ffda40415f07.'
+current: 'R3 goods economics #312, software preliminary #314, education facts #316 and training-location #318 all CI green merged main; R2 normalized source chunk coordinates/raw EIS binary proof, R4 integrated non-stub model quality, R5 >=20 source-locked independent EIS reviews and owner sign-off remain. Task in_progress.'
 pending:
-  - 'R3 location fix TDP-R3-TRAINING-LOCATION-20261011: remove unsourced Habarovsk from generic action and fix source city parsing before unnumbered continuation; preserve city when present, then exact-head CI before merge.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -98,8 +98,9 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'd7774ed7ee526800f417bbcdb04d30979666f37c'
+last_verified_commit: 'df63b093246179d344b2030789e2ffda40415f07'
 test_results:
+  - 'R3 PR #318: 54 focused and 3573 full Python 3.12 tests passed / 238 skipped, both exact-head quality and all other GitHub checks green.'
   - 'R3 PR #316: 59 focused / 3564 full passed, 238 skipped; exact-head both quality and all integration CI passed.'
   - 'R4 synthetic Ollama qwen3:4b smoke: 7.19s, 38 tokens, parsed JSON, supplied NMCK and null missing deadline; full E2E benchmark pending.'
   - 'R3 #314: 44 focused, 3559 full passed / 238 skipped, AST branch-body parity PASS, both exact-head quality and all integration/security CI green.'
@@ -133,7 +134,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Continue latest main after TA PR #316 merged d7774ed7ee526800f417bbcdb04d30979666f37c. First resolve source-backed training location edge case (unnumbered line after place) and remove fixed-city next action from separate in-progress worktree tdp-training-location-20261011. Preserve sourced cities. R2 authorized original resource/document/chunk SHA256/offset still blocked by absent live TA collections, R4 actual product LLM benchmark and R5 >=20 owner-reviewed EIS originals pending. No production mutation, secrets or disabled-watchdog changes.'
+resume_instruction: 'Resume overarching TDP-REFACTOR-20261009 from main df63b093246179d344b2030789e2ffda40415f07. R3 #318 location fix completed; do not redo. R2 DP0.6 SDK0.3 read-only authenticated metadata audit found 17 tender collections and one EIS-backed sample 41/41 chunk SHA matches; next validate normalized coordinates and actual original EIS attachment bytes. R4 integrated non-stub model benchmark, R5 >=20 independently verified source EIS cases and owner review still open. Preserve pilot, secrets, and disabled watchdog.'
 execution:
   branch: main
   manual_override: true
