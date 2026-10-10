@@ -52,6 +52,7 @@ from src.modules.tender_operator_agent_demo.operator_llm_report_projection impor
 from src.modules.tender_operator_agent_demo.operator_recommendation import (
     build_provisional_operator_recommendation,
 )
+from src.modules.tender_operator_agent_demo.operator_stored_file_paths import checked_original_input_path
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_supplier_profile,
 )
@@ -684,7 +685,7 @@ def _collect_documents(run_id: str, metadata: dict[str, Any]) -> list[AnalyzedDo
     normalized_dir.mkdir(parents=True, exist_ok=True)
 
     for item in metadata.get("files", []):
-        stored_path = _input_dir(run_id) / item["stored_name"]
+        stored_path = checked_original_input_path(_input_dir(run_id), item["stored_name"])
         ext = Path(item["stored_name"]).suffix.lower()
         if ext == ".zip":
             extracted_docs = _extract_zip_documents(stored_path, item["file_id"])
@@ -743,7 +744,7 @@ def _collect_quote_paths(run_id: str, metadata: dict[str, Any]) -> list[Path]:
     paths: list[Path] = []
     for item in metadata.get("files", []):
         if _detect_role(item["stored_name"]) == "tkp":
-            paths.append(_input_dir(run_id) / item["stored_name"])
+            paths.append(checked_original_input_path(_input_dir(run_id), item["stored_name"]))
     return paths
 
 
