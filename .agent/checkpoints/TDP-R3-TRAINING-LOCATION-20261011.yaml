@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-TRAINING-LOCATION-20261011
-status: in_progress
+status: completed
 goal: Remove an invented fixed city from training-service next-action recommendations
   while preserving source-based city reporting and public evidence guard.
 definition_of_done:
@@ -30,13 +30,14 @@ completed:
 - 'Merged latest main after TA #316 training-source extraction and #317 completion
   checkpoint without losing either import or parent state.'
 - make check passed with latest main.
-current: Complete full Python 3.12 regression running on reconciled latest main, then
-  PR exact-head CI.
-pending:
-- Implement helper and focused regression.
-- Full local checks and exact-head CI.
-- Merge and complete checkpoint; parent TDP-REFACTOR stays in_progress.
-last_verified_commit: a72f75cb96269f5c5e36e137e45f4ce8fd2e79e7
+- Full local Python 3.12 on rebased main passed 3573 tests / 238 skipped, zero failures.
+- 'Both exact-head quality GitHub jobs and other checks passed; PR #318 merged main
+  df63b093246179d344b2030789e2ffda40415f07.'
+- 'Original report test that initially failed now passed: source city before an unnumbered
+  paragraph is preserved, while absent location never causes Habarovsk to be inserted.'
+current: Completed on main df63b093246179d344b2030789e2ffda40415f07
+pending: []
+last_verified_commit: df63b093246179d344b2030789e2ffda40415f07
 test_results:
 - 48 focused passed
 - Ruff targeted passed
@@ -44,8 +45,10 @@ test_results:
 - 54 focused pytest passed / 2 warnings
 - make check passed
 - Ruff targeted clean
-resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-training-location-20261011.
-  Read /tmp/tdp-location-final-full.log from process 46544, fix any issue, commit
-  merged code and push PR. Exact-head CI all-green required before merge. Mark slice
-  completed and retain overall parent in_progress. Preserve production and disabled
-  watchdog.
+- full pytest 3573 passed / 238 skipped
+- exact-head all GitHub CI green
+- 'PR #318 merged df63b093246179d344b2030789e2ffda40415f07'
+resume_instruction: Completed R3 training location correctness gate; continue overarching
+  TDP-REFACTOR-20261009. Next R2 confirm normalize_text source-coordinate replay and
+  original source attachment hash; R4 real product LLM quality; R5 human original
+  EIS review. Owner-disabled watchdog stays disabled.
