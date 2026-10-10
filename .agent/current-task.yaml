@@ -65,7 +65,8 @@ completed:
 
   - '2026-10-10 PR #297 direct RU EIS TLS diagnostics and strict no-proxy SOAP invariant merged to main as f5f3f1a8c42575b7d492750cb025edef3efd123e; exact-head GitHub CI all green including quality, PostgreSQL, security, Docker and bridges.'
   - '2026-10-10 cross-repository Data Platform R3 PR #99 HTML page signals and #100 durable record identities merged/CI green, latest DP code commit 5a60b38bf07039ca2a92ba201a227767a82ce48d; TA SDK facade untouched.'
-current: 'TA EIS direct Russian no-proxy PR #297 merged/CI green. DP R3 #99/#100 independent HTML page signals and durable record identities merged/CI green. EIS 16.3 planned maintenance until 2026-10-11 20:00 MSK still prevents fresh real SOAP source gate; R5 >=20 independently human-reviewed originals, SDK E2E and owner acceptance outstanding.'
+  - '2026-10-10 cross-repository DP PR #101 extracted semantic HTML DOM tree from engine/html_records while preserving facade, fully green Python/JS/Postgres GitHub CI, merged bcca9a4fa826f7702e35bec4b4d11c5d4f9f1491.'
+current: 'TA EIS RU direct/no-proxy #297 merged green. DP R3 #99/#100/#101 all merged green (page signals, durable record identities, semantic HTML DOM tree), contract facades preserved. R5 real EIS original source acceptance and >=20 human reviews remain blocked until post-maintenance verification, SDK end-to-end and owner gate outstanding.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -103,7 +104,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Continue refactor autonomously with next bounded tested Tender Agent/Data Platform module; DP #99/#100 already merged (main code 5a60b38), TA #297 already merged. Keep SDK/API compatibility, full relevant regression and exact-head CI. Official EIS maintenance until 2026-10-11 20:00 MSK; after deadline run Russian-direct check_eis_direct.py preflight, then genuine single getDocsIP only if TLS healthy; never use proxy, disable TLS or invent evidence. Resume R5 original-file source proof through DP resource/chunks and TA reports, >=20 independent human-reviewed cases and owner signoff. Preserve disabled watchdog, private pilot, production data.'
+resume_instruction: 'Continue autonomous TDP-REFACTOR-20261009 after TA #297 and DP #99/#100/#101 merged; latest DP code bcca9a4. Do not redo completed HTML signal/tree or identity extraction. Pick next bounded DP/TA module with compatible API facade, focused+full tests and exact-head CI. Official EIS 16.3 planned maintenance through 2026-10-11 20:00 MSK; afterward on Mac mini RU direct no-proxy run EIS TLS preflight and one genuine getDocsIP, then verify original docs/DP chunks/TA saved JSON HTML PDF DOCX and >=20 independent human source reviews. No proxy, TLS bypass or fabricated verified facts. Preserve disabled watchdog, private pilot, production data.'
 execution:
   branch: main
   manual_override: true
