@@ -64,6 +64,9 @@ from src.modules.tender_operator_agent_demo.operator_economics_persistence impor
 from src.modules.tender_operator_agent_demo.operator_economics_persistence import (
     _serialize_quote_comparison as _serialize_quote_comparison,  # noqa: PLC0414 - old serialization facade
 )
+from src.modules.tender_operator_agent_demo.operator_goods_economics import (
+    build_goods_economics_payload,
+)
 from src.modules.tender_operator_agent_demo.operator_llm_outcome import (
     _classify_controlled_llm_result as _classify_controlled_llm_result,  # noqa: PLC0414 - legacy facade
 )
@@ -2214,69 +2217,18 @@ def _build_goods_economics_payload(
     analysis_mode: str,
     economics: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    if economics:
-        payload = dict(economics)
-        payload.setdefault("analysis_mode", analysis_mode)
-        payload.setdefault("economics_status", "needs_review")
-        payload.setdefault("result", "Экономика требует ручной проверки")
-        payload.setdefault("drivers", ["Сопоставление ТКП требует ручного подтверждения."])
-        payload["manual_checks"] = [
-            item.get("message", item.get("code", "Проверить расчёт по исходным ТКП вручную."))
-            if isinstance(item, dict)
-            else str(item)
-            for item in payload.get("manual_checks", [])
-        ] or ["Проверить расчёт по исходным ТКП вручную."]
-        payload.setdefault("metrics", [
-            {"label": "Минимальная закупочная стоимость", "value": payload.get("supplier_cost_min", "не определена")},
-            {"label": "Предварительная цена подачи", "value": payload.get("preliminary_bid_price", "не определена")},
-            {"label": "Целевая маржа", "value": payload.get("gross_margin_percent", "не определена")},
-        ])
-        return payload
-    items = _collect_goods_supply_items_from_documents(documents)
-    nmck = _extract_notice_price(metadata, _collect_role_text(documents, "technical_spec"), _collect_role_text(documents, "contract_draft"), _collect_role_text(documents, "notice"))
-    total_quantity = sum(_parse_float(item.quantity) or 0 for item in items if (item.unit or "") == "м")
-    nmck_value = _parse_float(nmck.replace(" ", "") if nmck else None)
-    avg_price = (nmck_value / total_quantity) if nmck_value is not None and total_quantity else None
-    metrics = [
-        {"label": "НМЦК", "value": f"{nmck} руб." if nmck else "не указана"},
-        {"label": "Цена закупки", "value": "не определена, требуется КП поставщика"},
-        {"label": "Что запросить", "value": "цену за единицу и сумму по каждой позиции"},
-        {"label": "Что запросить", "value": "включены ли доставка и разгрузка"},
-        {"label": "Что запросить", "value": "НДС, срок действия КП и наличие на складе"},
-        {"label": "Общий объём", "value": f"{int(total_quantity) if float(total_quantity).is_integer() else total_quantity} м" if total_quantity else "не рассчитан"},
-        {"label": "Ориентир по НМЦК на метр", "value": f"{_format_decimal_price(avg_price)} руб./м" if avg_price is not None else "не рассчитан"},
-    ]
-    return {
-        "analysis_mode": analysis_mode,
-        "currency": "RUB",
-        "economics_status": "insufficient_data",
-        "supplier_cost_min": None,
-        "supplier_cost_selected": None,
-        "expected_revenue": None,
-        "preliminary_bid_price": None,
-        "gross_margin_amount": None,
-        "gross_margin_percent": None,
-        "logistics_reserve": None,
-        "risk_reserve": None,
-        "payment_delay_days": None,
-        "cash_gap_estimate": None,
-        "selected_supplier_name": None,
-        "result": "Экономика требует запроса КП по товарным позициям",
-        "status": "blocked",
-        "metrics": metrics,
-        "drivers": [
-            "Экономика построена по НМЦК и извлечённым позициям поставки без подмены software/integration шаблонами.",
-            "Для решения нужны реальные КП по каждой позиции, включая доставку и документы качества.",
-        ],
-        "manual_checks": [
-            "Запросить цену за единицу и сумму по каждой позиции.",
-            "Проверить, включены ли доставка, разгрузка, НДС и упаковка.",
-            "Сверить наличие товара и срок поставки в течение 15 рабочих дней по заявке.",
-        ],
-        "warnings": [],
-        "limitations": [],
-        "assumptions": {"supply_items_count": len(items)},
-    }
+    """Compatibility facade for operator economics; preserve legacy inputs."""
+    return build_goods_economics_payload(
+        metadata,
+        documents,
+        analysis_mode,
+        economics,
+        collect_goods_items=_collect_goods_supply_items_from_documents,
+        extract_notice_price=_extract_notice_price,
+        collect_role_text=_collect_role_text,
+        parse_float=_parse_float,
+        format_decimal_price=_format_decimal_price,
+    )
 
 
 def _build_document_grounded_requirements(

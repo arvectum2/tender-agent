@@ -1,0 +1,26 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-GOODS-ECONOMICS-20261010
+status: in_progress
+goal: Extract pure product-owned goods economics projection from Tender Agent legacy upload monolith behind stable facade, without fabricating source evidence, costs or profitability.
+definition_of_done:
+  - Move product economics projection to standalone operator_goods_economics.py with explicit external helper injection and old callable path preserved.
+  - Verify supplied quote/manual checks, absent quote UNKNOWN/None, informational NMCK-per-unit and compatibility facade parity.
+  - Run focused and full pytest, make check, Ruff for new code, exact-head CI and merge.
+  - Update overall TDP-REFACTOR checkpoint, keep it in_progress for R2/R4/R5.
+completed:
+  - Reconciled exact main 22d8632b; found original kind classifier already extracted and deliberately did not duplicate.
+  - Isolated 63-line goods economics function; retained old argument order and output structure through compatibility facade.
+  - Added independent contract tests; 65 focused tests passed with 21 warnings.
+  - Targeted Ruff for new module/tests and make check passed.
+current: Full Python 3.12 test suite running; exact-head PR CI pending.
+pending:
+  - Confirm full local suite result and any failure fixes.
+  - Push, run GitHub exact-head CI and merge only if green.
+  - Record final source commit and tests; status completed for slice.
+last_verified_commit: 22d8632b
+test_results:
+  - Focused: 65 passed, 21 warnings, 0 failed.
+  - Targeted Ruff new module/tests: clean.
+  - make check: passed.
+resume_instruction: Continue in /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-procurement-kind-20261010; read /tmp/tdp-r3-full.log and running PID 32769. Do not repeat preexisting procurement-kind classifier refactor. Preserve Mac mini production, original EIS evidence, and owner-disabled Tender Agent Watchdog.
