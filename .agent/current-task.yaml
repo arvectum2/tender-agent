@@ -25,6 +25,7 @@ completed:
   - 'Added strict EIS XML number/date checks, and architecture master roadmap for phases R0..R5.'
 current: 'R0/R1/R2 bounded first slices implemented in both repos, golden persisted report regression green; finish local/CI checks, PRs and follow-on compatibility-strangler phases R3..R5.'
 pending:
+  - 'R3 started: commit 7549b0b7 extracted economic preference validation to upload_input_validation.py; 15 focused tests passed, Ruff clean; continue compatibility-strangler decomposition and full regression.'
   - 'Dependency sweep 2026-10-10: updated lock and Pydantic <2.14 compatibility ceiling; fresh Python 3.12 install, bounded Ruff PASS, 25 focused tests PASS, broad 3329 PASS / 238 skipped / 1 deselected with R9 backup test ignored. R9 pg_restore acceptance and EIS HTTP 434 remain failing; investigate separately. Exact-head CI and full unsuppressed acceptance pending.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
