@@ -52,7 +52,7 @@ completed:
   - 'R3 legacy intake compatibility extraction: Data Platform document processor invocation and fail-closed warnings moved from legacy upload monolith into operator_document_extraction.py with injected consumer callable; old 3- and 4-value facade signatures retained, 28 relevant tests PASS.'
   - '96 R3 affected operator/source/report tests PASS; 10 malformed/unsafe EIS values now share the same fail-closed validation.'
 
-current: 'TA PR #261 through #290 and DP #86/#87 merged; #291 Markdown presentation extraction awaiting full CI. Source-locked private candidate 18094 passes E2E routes, but old Safari preview 18083 unchanged. R5 >=20 ground-truth original EIS cases and owner acceptance still outstanding; SOAP connectivity currently resets.'
+current: 'TA PR #261 through #291 and DP #86/#87 merged. R5 human-attested independent 20-case quality gate implemented and 6 isolated tests pass; 20 actually reviewed cases, EIS SOAP recovery, and owner acceptance remain outstanding. External ArvectumSSD I/O unstable; worktree is on internal Mac disk.'
 pending:
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -60,10 +60,10 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'db3f6ecdf773344b6096b4943ffd0f09bb9f2b1b'
+last_verified_commit: '4716563c355b5877d081a30849da3b8d950f0473'
 test_results:
   - 'R5 staged live XML 3 citations and LLM 31 review markers with 975-file parity, PDF/DOCX/HTTP authentication PASS; old 29-corpus read-only audit best 11 reports with 16 structured unknown and 7 canonical passport unknown fields.'
-  - 'PR #287 #288 #289 #290 all exact-head GitHub CI PASSED before merge. #291 pending CI.'
+  - 'PR #287-291 merged with checks green. R5 human review gate 6 standalone tests PASS, targeted Ruff PASS (inner-disk checkout).'
   - 'Tender Agent: initial 125 passed, 10 skipped; later 44-FZ persisted report.json golden, source precedence and source metadata tests passed.'
   - 'Data Platform: v1 contract 27 passed, full suite reached 100% via PYTHONPATH=src:sdk/python/src (matching CI installed SDK); Ruff issues in an unused test import fixed.'
   - 'Read-only AST architecture strict audit PASS: 804/158 modules, no forbidden direct imports.'
@@ -86,7 +86,7 @@ test_results:
   - 'R3 pure recommendation extracted with 5 branch-specific unit tests and 25 regression tests PASS; isolated report assembly unchanged.'
   - 'R3 extracted operator Data Platform processor bridge: 28 affected tests PASS and targeted Ruff PASS.'
 
-resume_instruction: 'Continue TDP-REFACTOR-20261009 on GitHub main, use internal Mac mini APFS because external ArvectumSSD sometimes hangs. PR #291 from refactor/tdp-markdown-renderer-extract-20261010 is under CI, pure presentation 148 lines and 48 tests passed; retargeted main. Merge after exact-head all-green. Parent remains in_progress. Candidate private preview 127.0.0.1:18094 original six EIS files, 3 XML references, 31 LLM review markers and valid PDF/DOCX. Old owner 18083 unchanged. SOAP getDocsIP int.zakupki.gov.ru currently resets, so full 20+ original case quality gate and owner visual acceptance remain; no public deploy and owner-disabled watchdog stays off.'
+resume_instruction: 'Continue TDP-REFACTOR-20261009 on internal Mac disk checkout /private/tmp/tdp-refactor-20261010, external ArvectumSSD intermittently gives Operation not permitted/I/O hangs. TA #291 is merged, main at 4716563; new scripts/ops/verify_tdp_truth_gate.py and tests/test_tdp_truth_gate.py provide independent >=20 source-linked human-reviewed corpus acceptance: six standalone tests and Ruff pass. Open PR, run exact-head CI and merge. Do not claim gate passes on real corpus until 20 separate reviewed procurements exist, fix EIS SOAP resets without disabling TLS, preserve owner 18083 and disabled watchdog. Full task remains in_progress.'
 execution:
   branch: refactor/tender-data-platform-audit-20261009
   manual_override: true
