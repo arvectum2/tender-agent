@@ -88,6 +88,7 @@ completed:
   - '2026-10-10 R2 live DP0.6 authenticated SDK0.3 consumer contract v1.0 HTTP200 confirmed via configured secret without disclosure; standard upload/connector/recovery collections absent; actual original source IDs and hash/offset unverified (DP #110).'
 current: 'R3 goods economics #312 and software preliminary #314 merged CI green. Authenticated DP0.6 SDK0.3 consumer contract v1.0 proven read-only (DP #110), but stored original file/chunk source proof absent. Remaining R3 education/report decomposition, R4 real non-stub model quality, R5 >=20 independently reviewed EIS originals and owner signoff. Task in_progress.'
 pending:
+  - 'R3 training location bug TDP-R3-TRAINING-LOCATION-20261011: remove Habarovsk from generic action unless verified by source; preserve grounded city facts, CI before merge.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'

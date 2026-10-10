@@ -1,0 +1,38 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-TRAINING-LOCATION-20261011
+status: in_progress
+goal: Remove an invented fixed city from training-service next-action recommendations
+  while preserving source-based city reporting and public evidence guard.
+definition_of_done:
+- Recommendations never claim a particular city unless explicitly supplied by source.
+- Source-present, format-only and unknown-location behavior covered by tests.
+- Previous service reports remain contract-compatible.
+- Full pytest/make check and exact-head GitHub CI pass; merge and checkpoint completed.
+completed:
+- Identified unsafe generic hardcoded Habarovsk action in education-service preliminary
+  report.
+- Confirmed a separate Habarovsk delivery label is conditional on actual source text
+  and must not be conflated.
+- Added product-owned training location question helper; removed unconditional Habarovsk
+  from generic next-actions.
+- Preserved location-specific Habarovsk delivery statement only when original source
+  mentions Habarovsk.
+- Added seven tests including Kazan/Moscow/other location, format-only, unknown, source-conditional
+  wording and report integration.
+- 48 focused tests and make check passed.
+current: 'Full local regression running; await #316 source-fact merge before reconciling
+  feature onto latest main.'
+pending:
+- Implement helper and focused regression.
+- Full local checks and exact-head CI.
+- Merge and complete checkpoint; parent TDP-REFACTOR stays in_progress.
+last_verified_commit: 4d608e0e
+test_results:
+- 48 focused passed
+- Ruff targeted passed
+- make check passed
+resume_instruction: 'Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-training-location-20261011.
+  Inspect /tmp/tdp-training-location-full.log from PID 44882. Wait PR #316 merge,
+  reconcile latest main without overwriting other R3 checkpoint, then push isolated
+  location fix and merge only all-green CI. Preserve services and disabled watchdog.'

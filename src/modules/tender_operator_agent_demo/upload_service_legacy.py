@@ -109,6 +109,9 @@ from src.modules.tender_operator_agent_demo.operator_software_preliminary import
 from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
     checked_original_input_path,
 )
+from src.modules.tender_operator_agent_demo.operator_training_location_action import (
+    build_training_location_action,
+)
 from src.modules.tender_operator_agent_demo.operator_upload_descriptors import (
     _build_file_descriptor as _build_file_descriptor,  # noqa: PLC0414 - legacy import facade
 )
@@ -2756,9 +2759,7 @@ def _build_preliminary_procurement_analysis(
     delivery_model = _dedupe_text_items(delivery_model)
 
     next_actions = [
-        "Проверить, можем ли мы обеспечить очную часть в Хабаровске и дистанционную часть в требуемом формате."
-        if location or training_format
-        else "Подтвердить реальный формат оказания услуг и локацию исполнения.",
+        build_training_location_action(location, training_format),
         "Подтвердить наличие согласованной с ФСТЭК программы и право выдачи удостоверения о повышении квалификации."
         if any("Федеральной службой по техническому и экспортному контролю" in item for item in compliance_highlights)
         else "Проверить обязательные допуски, программу и итоговые документы по обучению.",
