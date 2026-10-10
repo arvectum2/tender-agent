@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-SOFTWARE-PRELIM-20261010
-status: in_progress
+status: completed
 goal: Extract product-owned preliminary software/integration analysis from upload
   monolith while retaining source evidence and existing behavior.
 definition_of_done:
@@ -18,18 +18,23 @@ completed:
 - Three new contract tests cover missing source rows, supplied evidence/NMCK, and
   unchanged public evidence guard.
 - Focused pytest 44 passed and make check passed.
-current: Full local pytest running; CI/merge pending.
-pending:
-- Extract logic and add tests.
-- Run local regression and exact-head CI.
-- Merge green PR and mark slice completed; overall task stays in_progress.
-last_verified_commit: 3a24d458
+- 'Full local Python 3.12 pytest: 3559 passed, 238 skipped, 294 warnings, zero failures.'
+- 'Exact-head GitHub PR #314: both quality jobs and all Docker, migrations, Redis,
+  PostgreSQL, security, lock checks passed.'
+- 'PR #314 merged to main as 3808e0020c5709b99750a0434bb8a85edc689e78.'
+current: Completed and merged as 3808e0020c5709b99750a0434bb8a85edc689e78
+pending: []
+last_verified_commit: 3808e0020c5709b99750a0434bb8a85edc689e78
 test_results:
 - 44 focused passed
 - Ruff targeted passed
 - make check passed
 - AST body parity passed
-resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-software-preliminary-20261010.
-  Inspect /tmp/tdp-r3-soft-full.log (process 40534). Push PR and await exact-head
-  all green CI before merge. Keep overarching TDP-REFACTOR in_progress; leave owner-disabled
-  watchdog disabled.
+- Full pytest 3559 passed / 238 skipped
+- GitHub all exact-head CI passed
+- Merged 3808e0020c5709b99750a0434bb8a85edc689e78
+resume_instruction: This R3 software preliminary slice is complete; resume overarching
+  TDP-REFACTOR-20261009. Do not redo this module. Next R3 split education-service
+  fact extraction from report projection; R2 original source evidence proof, R4 real
+  model benchmarks and R5 human original reviews remain pending. Keep production services
+  and disabled watchdog unchanged.
