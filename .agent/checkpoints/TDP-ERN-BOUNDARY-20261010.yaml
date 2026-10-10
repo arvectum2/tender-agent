@@ -1,0 +1,19 @@
+task_id: TDP-ERN-BOUNDARY-20261010
+parent_task_id: TDP-REFACTOR-20261009
+status: in_progress
+goal: 'Eliminate semantic false integration classification from substrings of Russian words, preserve legitimate EРН abbreviation.'
+definition_of_done:
+  - 'Classifier requires word-bounded ЕРН rather than matching arbitrary word fragments.'
+  - 'Regression tests for false, true, mixed classifications pass.'
+  - 'Relevant classifier and report tests pass with no changed procurement behavior beyond fix.'
+  - 'Exact-head CI green and PR merged into main.'
+completed:
+  - 'Added Russian word-boundary regexp for ЕРН score in old product-owned classifier.'
+  - '57 affected classifier/meaningful-report tests PASS.'
+current: 'Commit branch, run CI and merge.'
+pending:
+  - 'Run GitHub CI and merge exact head.'
+last_verified_commit: '64f7df3'
+test_results:
+  - '57 affected tests passed; one existing StarletteDeprecationWarning.'
+resume_instruction: 'On internal Mac mini worktree /private/tmp/tdp-kind-ern-20261010 verify branch/CI, merge exact head and update this checkpoint completed; parent remains in_progress for broader R5 owner quality gate.'
