@@ -478,102 +478,44 @@ def create_uploaded_demo_run(
     payment_delay_days: int | None,
     uploads: list[tuple[str, str, bytes]],
 ) -> TenderOperatorUploadedRunCreateResponse:
-    if not tender_title.strip():
-        raise HTTPException(status_code=400, detail="tender_title is required")
-    validate_operator_upload_batch(
-        uploads,
-        existing_file_count=0,
-        existing_total_bytes=0,
-        max_file_count=MAX_FILE_COUNT,
-        max_file_size_bytes=MAX_FILE_SIZE_BYTES,
-        max_total_upload_bytes=MAX_TOTAL_UPLOAD_BYTES,
-        sanitize_name=sanitize_demo_filename,
+    """Compatibility facade: retain runtime patches and public signature."""
+    from src.modules.tender_operator_agent_demo.operator_create_run import (
+        create_uploaded_demo_run as _create_run,
     )
 
-    target_margin_percent = _sanitize_percent(
-        target_margin_percent,
-        default=DEFAULT_TARGET_MARGIN_PERCENT,
-        field_name="target_margin_percent",
-    )
-    logistics_reserve_percent = _sanitize_percent(
-        logistics_reserve_percent,
-        default=DEFAULT_LOGISTICS_RESERVE_PERCENT,
-        field_name="logistics_reserve_percent",
-    )
-    risk_reserve_percent = _sanitize_percent(
-        risk_reserve_percent,
-        default=DEFAULT_RISK_RESERVE_PERCENT,
-        field_name="risk_reserve_percent",
-    )
-    payment_delay_days = _sanitize_delay_days(payment_delay_days, default=DEFAULT_PAYMENT_DELAY_DAYS)
-
-    run_id = make_demo_run_id()
-    structure = ensure_demo_run_structure(run_id, exist_ok=False)
-    input_dir = structure["input_dir"]
-
-    warnings: list[str] = []
-    files: list[dict[str, Any]] = []
-
-    for index, (filename, content_type, content) in enumerate(uploads, start=1):
-        original_name, stored_name = sanitize_demo_filename(filename, index)
-        file_id = f"FILE-{index:02d}"
-        target = input_dir / stored_name
-        target.write_bytes(content)
-        if Path(filename).name != filename or ".." in filename.replace("\\", "/"):
-            warnings.append(f"Filename '{filename}' was normalized for safe local storage.")
-        files.append(
-            build_demo_file_descriptor(
-                file_id=file_id,
-                original_name=original_name,
-                stored_name=stored_name,
-                role_hint=_derive_role_hint(stored_name),
-                size_bytes=len(content),
-                content_type=content_type,
-            )
-        )
-
-    metadata = {
-        "run_id": run_id,
-        "created_at": _safe_datetime(),
-        "mode": "uploaded_demo",
-        "tender_title": tender_title.strip(),
-        "tender_category": tender_category.strip() or "Электротехническое оборудование",
-        "customer_name": customer_name.strip() or "Промышленный заказчик",
-        "notes": notes.strip() if notes and notes.strip() else None,
-        "status": TenderOperatorUploadedRunStatus.READY_TO_ANALYZE.value,
-        "analysis_mode": "not_started",
-        "economics_inputs": {
-            "target_margin_percent": target_margin_percent,
-            "logistics_reserve_percent": logistics_reserve_percent,
-            "risk_reserve_percent": risk_reserve_percent,
-            "payment_delay_days": payment_delay_days,
-        },
-        "files": files,
-        "warnings": warnings,
-        "limitations": [
-            "Только демо- и пилотный режим.",
-            "Без внешних действий, без отправки писем, без подачи на площадку, без ЭЦП.",
-        ],
-        "human_in_the_loop": True,
-        "external_actions": False,
-        "no_platform_submission": True,
-        "no_email_sending": True,
-        "no_digital_signature": True,
-    }
-    save_demo_run_metadata(run_id, metadata)
-    append_demo_run_event(
-        run_id,
-        "run_created",
-        "Создан демонстрационный прогон с ручной загрузкой документов.",
-        {"mode": "uploaded_demo", "file_count": len(files)},
-    )
-    return TenderOperatorUploadedRunCreateResponse(
-        run_id=run_id,
-        status=TenderOperatorUploadedRunStatus.READY_TO_ANALYZE,
-        created_at=datetime.fromisoformat(metadata["created_at"]),
-        file_count=len(files),
-        warnings=warnings,
-        limitations=metadata["limitations"],
+    return _create_run(
+        tender_title=tender_title,
+        tender_category=tender_category,
+        customer_name=customer_name,
+        notes=notes,
+        target_margin_percent=target_margin_percent,
+        logistics_reserve_percent=logistics_reserve_percent,
+        risk_reserve_percent=risk_reserve_percent,
+        payment_delay_days=payment_delay_days,
+        uploads=uploads,
+        HTTPException=HTTPException,
+        validate_operator_upload_batch=validate_operator_upload_batch,
+        MAX_FILE_COUNT=MAX_FILE_COUNT,
+        MAX_FILE_SIZE_BYTES=MAX_FILE_SIZE_BYTES,
+        MAX_TOTAL_UPLOAD_BYTES=MAX_TOTAL_UPLOAD_BYTES,
+        sanitize_demo_filename=sanitize_demo_filename,
+        _sanitize_percent=_sanitize_percent,
+        DEFAULT_TARGET_MARGIN_PERCENT=DEFAULT_TARGET_MARGIN_PERCENT,
+        DEFAULT_LOGISTICS_RESERVE_PERCENT=DEFAULT_LOGISTICS_RESERVE_PERCENT,
+        DEFAULT_RISK_RESERVE_PERCENT=DEFAULT_RISK_RESERVE_PERCENT,
+        _sanitize_delay_days=_sanitize_delay_days,
+        DEFAULT_PAYMENT_DELAY_DAYS=DEFAULT_PAYMENT_DELAY_DAYS,
+        make_demo_run_id=make_demo_run_id,
+        ensure_demo_run_structure=ensure_demo_run_structure,
+        Path=Path,
+        build_demo_file_descriptor=build_demo_file_descriptor,
+        _derive_role_hint=_derive_role_hint,
+        _safe_datetime=_safe_datetime,
+        TenderOperatorUploadedRunStatus=TenderOperatorUploadedRunStatus,
+        save_demo_run_metadata=save_demo_run_metadata,
+        append_demo_run_event=append_demo_run_event,
+        TenderOperatorUploadedRunCreateResponse=TenderOperatorUploadedRunCreateResponse,
+        datetime=datetime,
     )
 
 
