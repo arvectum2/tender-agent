@@ -1,0 +1,66 @@
+{
+  "procurement_number": "0372200172326000015",
+  "page_url": "https://zakupki.gov.ru/epz/order/notice/zk20/view/documents.html?regNumber=0372200172326000015",
+  "page_sha256": "451690dc4f538e625ce045f81142138db32df873f1ba516fdc939f2e76d29db5",
+  "page_edition_ui_label": "Действующая",
+  "page_posted_ui_date": "08.10.2026",
+  "proof_scope": "PUBLIC_PAGE_AND_ATTACHMENT_BYTES_ONLY",
+  "independent_eis_revision_verified": false,
+  "data_platform_identity_verified": false,
+  "files": [
+    {
+      "uid": "01A10C59B0B8791B8D464C4C14D10A94",
+      "title": "Обоснование начальной (максимальной) цены контракта",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=01A10C59B0B8791B8D464C4C14D10A94",
+      "sha256": "b91ed27947df6065f5ca22697343dda76837758015c77874a03f4e8a121a71c8",
+      "size_bytes": 126976,
+      "persisted_dp_resource_id": null,
+      "persisted_dp_document_id": null
+    },
+    {
+      "uid": "01A10C59B32A7B71A66DDEF168FEEB00",
+      "title": "Проект контракта",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=01A10C59B32A7B71A66DDEF168FEEB00",
+      "sha256": "9294908cc3aec0bda85c84d41cd19b80fe1e5ddebd1b386b4830466d64eca091",
+      "size_bytes": 317440,
+      "persisted_dp_resource_id": null,
+      "persisted_dp_document_id": null
+    },
+    {
+      "uid": "01A10C59B62472399D708CCCEFFA4698",
+      "title": "Описание объекта закупки",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=01A10C59B62472399D708CCCEFFA4698",
+      "sha256": "3e029344d179742632d519d4e425e6f8e9f757ce4df23e0419aa4302d4068536",
+      "size_bytes": 53606,
+      "persisted_dp_resource_id": null,
+      "persisted_dp_document_id": null
+    },
+    {
+      "uid": "01A10C59B91F7EF4A1E994023C6A1122",
+      "title": "Требование к содержанию, составу заявки на участие в закупке",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=01A10C59B91F7EF4A1E994023C6A1122",
+      "sha256": "69f5c122eef4ebb2d4130a9950cc1ba269f2a72b01a049268b014b0d77fd2bed",
+      "size_bytes": 27424,
+      "persisted_dp_resource_id": null,
+      "persisted_dp_document_id": null
+    },
+    {
+      "uid": "01A10C6F49097203B408BAD8D9905143",
+      "title": "Уведомление о прохождении контроля",
+      "url": "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=01A10C6F49097203B408BAD8D9905143",
+      "sha256": "31d97c4fb2aba0827aa09c3302e157464ce1dd946992363043623a04c54fda79",
+      "size_bytes": 30479,
+      "persisted_dp_resource_id": null,
+      "persisted_dp_document_id": null
+    }
+  ],
+  "total_bytes": 555925,
+  "observed_at_utc": "2026-10-11T08:14:13+00:00",
+  "evidence_level": "public EIS webpage and direct download SHA256; not original-vs-Data-Platform verification",
+  "outstanding_verification": [
+    "authoritative current edition XML and lifecycle",
+    "original SHA256 against persisted TA and DP document metadata",
+    "Data Platform resource/document/chunk identifiers and normalized offset replay",
+    "human operator review and GO/NO_GO/DEFER acceptance"
+  ]
+}
