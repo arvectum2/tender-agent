@@ -1,0 +1,43 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-QUOTES-REPORT-20261011
+status: completed
+goal: Extract the pure supplier-quote comparison report payload from the Tender Agent
+  legacy upload monolith while preserving source-derived counts, manual review and
+  absence-of-input behavior.
+definition_of_done:
+- Move 42-line quotes projection into product-owned module with no direct I/O or fabricated
+  values
+- Retain old facade, original contract shape and exact AST of projection; no economic
+  optimism
+- Add quoted/unquoted/manual-source regression cases and run full Python3.12 local
+  pytest plus Ruff/make check
+- Require all exact-head GitHub CI green and merge, mark bounded checkpoint completed,
+  overarching TDP-REFACTOR remains in_progress
+completed:
+- Validated current main 4f111437 with risk and non-goods report slices already merged
+  green, identified quote payload block in _build_output_payloads.
+- Moved 42 source-identical lines from _build_output_payloads to pure product-owned
+  operator_quote_report.py; confirmed AST value identity and preserved call facade.
+- Six direct tests + 42 combined focused tests verify quote counts and rows from source
+  only, missing/unparsed quote fallback/manual review, and no autonomous outbound
+  action.
+- Targeted Ruff and make check passed.
+- 'PR #325 all exact-head GitHub CI including both quality jobs (9m23s/7m4s) passed,
+  full Python 3.12 pytest 3607 passed, 238 skipped, 0 failed, Ruff and make check
+  pass.'
+- 'PR #325 merged latest main 7c564070e3b830ca829b7ed48b7b39a153e8b170.'
+current: Completed merged 7c564070e3b830ca829b7ed48b7b39a153e8b170
+pending: []
+last_verified_commit: 7c564070e3b830ca829b7ed48b7b39a153e8b170
+test_results:
+- 42 focused tests passed, 21 warnings
+- AST quote value parity PASS
+- Ruff targeted clean
+- make check PASS
+- 3607 full local passed; 238 skipped; zero failures
+- Both exact-head quality and remaining GitHub integrations/security CI green
+- Merged 7c564070e3b830ca829b7ed48b7b39a153e8b170
+resume_instruction: 'R3 quote comparison report projection is completed and merged
+  PR #325. Do not repeat. Continue R3 source-only deadline fix #326 and R2 authoritative
+  EIS originals, R4 gold benchmark, R5 human corpus.'
