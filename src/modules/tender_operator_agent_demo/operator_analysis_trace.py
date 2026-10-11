@@ -70,4 +70,3 @@ def build_operator_analysis_trace(
         "human_control_note": "Демо- и пилотный режим. Нет подачи заявок, писем, ЭЦП или действий на площадках без человека.",
         "limitations": metadata.get("limitations", []) + output_warnings,
     }
-
