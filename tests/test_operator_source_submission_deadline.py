@@ -55,13 +55,13 @@ def test_enriched_notice_deadline_has_priority_over_card_fallback():
         }
     )
     assert result is not None
-    assert result.day == 11
+    assert datetime.fromisoformat(result).day == 11
 
 
 def test_structured_card_deadline_is_accepted_when_no_notice_override():
     assert submission_deadline_from_metadata(
         {"procurement": {"deadline": "15.07.2026 12:00:00 +10:00"}}
-    ) == datetime(2026, 7, 15, 12, 0, tzinfo=timezone(timedelta(hours=10)))
+    ) == datetime(2026, 7, 15, 12, 0, tzinfo=timezone(timedelta(hours=10))).isoformat()
 
 
 def test_card_schema_accepts_none_and_explicit_valid_datetime():

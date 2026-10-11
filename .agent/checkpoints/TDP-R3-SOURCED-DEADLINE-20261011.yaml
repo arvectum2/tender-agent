@@ -26,8 +26,15 @@ completed:
   "Не указано" fallback on missing date.
 - New date-format, invalid/unknown, precedence, schema, demo UI and persisted real
   demo upload tests; 37 focused tests passed; Ruff target clean.
-current: 'Reconcile latest main after #325; make check/full Python3.12 regression
-  and exact-head GitHub CI pending.'
+- 'Full local 3622 pass/238 skip initially exposed EIS notice E2E failure: actual
+  sourced datetime was not JSON serializable in Frozen R7 persist_canonical_outputs.'
+- Adapted final source-deadline projection to serialize valid datetime as ISO8601
+  string, preserving null unknown date, and added real persisted EIS notice XML assertion
+  of 2026-10-16T10:00:00+03:00.
+- All 38 focused tests, including previously failing EIS notice persisted report,
+  now pass; Ruff clean.
+current: 'Full local retest and PR #326 exact-head GitHub CI pending for JSON-compatible
+  ISO8601 fix.'
 pending:
 - Code and focused regression
 - Full pytest and CI
@@ -36,8 +43,14 @@ last_verified_commit: 4f1114378181f3b6c4962d0ecfc254ee4e4e40ac
 test_results:
 - 37 focused tests PASS, 22 warnings
 - Ruff focused PASS
-resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-source-deadline-20261011.
-  Commit, merge latest origin/main (#325), make check/full local pytest, push PR;
-  require exact-head GitHub CI all green then merge. Verify source deadline None remains
-  None and report prepared_at unaffected. Main TDP-REFACTOR stays in_progress and
-  disabled watchdog unchanged.
+- Initial full regression 3622 passed, 238 skipped, 1 FAILED due datetime JSON serialization;
+  fixed (never claimed clean).
+- Followup 38 focused tests PASSED (23 warnings) including EIS XML persisted notice
+  deadline and NULL unknown
+- Targeted Ruff PASS
+resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-source-deadline-20261011.
+  The confirmed persisted datetime JSON serialization failure was fixed by ISO8601
+  projection; rerun full Python3.12 regression and exact-head GitHub CI of updated
+  PR #326 before merging. PR #325 quote report already merged and checkpoint marked
+  completed. R3 trace PR #327 also concurrent; reconcile after #326. Main TDP-REFACTOR
+  remains in_progress; no production/secret/watchdog changes.'

@@ -38,7 +38,7 @@ def parse_submission_deadline(value: Any) -> datetime | None:
     return None
 
 
-def submission_deadline_from_metadata(metadata: Mapping[str, Any]) -> datetime | None:
+def submission_deadline_from_metadata(metadata: Mapping[str, Any]) -> str | None:
     procurement = metadata.get("procurement")
     if not isinstance(procurement, Mapping):
         procurement = {}
@@ -50,5 +50,5 @@ def submission_deadline_from_metadata(metadata: Mapping[str, Any]) -> datetime |
     ):
         parsed = parse_submission_deadline(value)
         if parsed is not None:
-            return parsed
+            return parsed.isoformat()
     return None
