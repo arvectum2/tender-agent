@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R5-REVIEW-QUEUE-20261011
-status: in_progress
+status: completed
 goal: Prepare source-identified, reproducible NO-HUMAN-ASSUMPTIONS reviewer queue
   for 20 real EIS procurement receipts recorded in unmerged APR-07; preserve archived
   revision and commercial signoff as explicitly unverified.
@@ -38,21 +38,25 @@ completed:
   source revision checker and 20-case review queue remain independently scoped.'
 - README now warns to import reg_number column as text in Excel, preserving leading
   zeros.
-current: 'Reconciled #331 into PR #332; focused queue 11 PASS, make check green before
-  reconciliation; exact-head CI pending.'
-pending:
-- Generator/fixtures/test
-- Review source identity and exact output 20 cases
-- CI green merge bounded checkpoint only
-last_verified_commit: 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+- 'Reconciled TA main #331 source revision fix and rechecked 11 focused tests, Ruff
+  and make check PASS.'
+- Full local Python3.12 test suite 3664 passed, 238 skipped, zero failed (143.14s);
+  dual exact-head GitHub quality 9m10s and 9m22s and all integration/security CI passed.
+- 'PR #332 source-labeled 20-case/168 file hash/2 machine flags/0 human signoffs merged
+  main 8588115a9b4f2ea4053fc2fb0e036075b0f11171.'
+current: Completed bounded review queue; human R5 acceptance explicitly unfulfilled.
+pending: []
+last_verified_commit: 8588115a9b4f2ea4053fc2fb0e036075b0f11171
 test_results:
 - 11 synthetic pytest PASSED, 1 warning
 - Ruff PASS
 - 20 rows, 168 files with hashes, 2 machine revision flags, 0 verified human decisions,
   0 private run IDs
 - 11 focused tests PASS /Ruff PASS/make check PASS before latest merge
-resume_instruction: 'Continue PR #332 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r5-review-queue-20261011,
-  reconciled main #331. Source queue 20 cases/168 hashes, 2 machine revision signals,
-  0 human decisions, no internal run IDs. Rerun make check/focused tests and require
-  exact-head dual quality/integration CI then merge docs-only, mark bounded checkpoint
-  completed. Parent real EIS/R4/R5 acceptance remains in_progress.'
+- 3664 full passed /238 skipped /0 failed
+- Both exact-head quality & all integrations CI pass
+- Merged main 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+resume_instruction: 'R5 review queue preparation completed #332, do not repeat. Independent
+  actual-current official EIS binary/revision, source proof and 20 human-signed cases
+  still missing; parent R5/TDP-REFACTOR remains in_progress. No production/watchdog
+  actions.'

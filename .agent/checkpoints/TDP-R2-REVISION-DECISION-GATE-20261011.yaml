@@ -1,0 +1,49 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R2-REVISION-DECISION-GATE-20261011
+status: in_progress
+goal: 'Fail-closed customer procurement GO/NO_GO when the latest archived EIS notice
+  cannot be verified current: an unresolved notice_revision_requires_review must make
+  Decision Core application-window UNKNOWN, not hard NO_GO or GO, until independent
+  current EIS source review.'
+definition_of_done:
+- Source metadata notice_revision_requires_review propagated to customer decision
+  model without changing source-visible archival date and provenance.
+- Decision Core treats application deadline currentness UNKNOWN instead of hard expired/open
+  when the official current edition is unverified; explicitly readable readiness/unknown
+  code and human review.
+- Focused tests demonstrate archived revision currentness blocks false hard NO_GO
+  and false GO, while grounded existing decisions and unrelated manual uploads preserve
+  semantics.
+- Ruff/make check/full Python3.12 pytest and GitHub exact-head CI green, merge, bounded
+  checkpoint completed, parent in_progress.
+completed:
+- 'Identified existing Decision Core hard expiry interpretation based on deadline_status
+  and source binding without checking notice_revision_requires_review (from #331).'
+- 'Verified #332 R5 review queue merged main 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+  and owner disabled watchdog unchanged.'
+- Plumbed metadata.notice_revision_requires_review true into report_model before Decision
+  Core; archived date still shown in customer report and source evidence remains.
+- Decision Core marks APPLICATION_WINDOW UNKNOWN, facts.application_deadline UNKNOWN/no
+  current value, appends EIS_CURRENT_NOTICE_REVISION_UNVERIFIED unknown with explicit
+  official-edition proof requirement; unverified archived expiry no longer hard NO_GO
+  and unverified open deadline no longer GO.
+- Four new tests exercise false NO_GO, false GO, unchanged confirmed GO/NO_GO and
+  full customer decision projection; 62 focused tests pass, Ruff clean.
+current: Local Python3.12 full regression and exact-head dual quality/integration
+  CI pending.
+pending:
+- Source metadata -> Decision Core review gate
+- Focused and full regression, exact-head CI
+- Merge and complete bounded checkpoint
+last_verified_commit: 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+test_results:
+- 62 focused PASS, 23 warnings
+- Target Ruff PASS
+resume_instruction: Continue isolated worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-revision-decision-gate-20261011
+  based main 8588115a. Decision Core flag notice_revision_requires_review=true makes
+  app deadline status UNKNOWN/NEEDS_REVIEW, never hard expiry blocker or GO, and preserves
+  archived displayed date. 62 focused PASS. Run full Python3.12 pytest, make check
+  and GitHub exact-head all CI. Then merge and mark bounded checkpoint complete; parent
+  R2/R4/R5 still in_progress (live-current EIS proof/human signoff absent). No live
+  changes or watchdog.
