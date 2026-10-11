@@ -130,6 +130,10 @@ from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
 from src.modules.tender_operator_agent_demo.operator_submission_deadline import (
     submission_deadline_from_metadata,
 )
+from src.modules.tender_operator_agent_demo.operator_notice_fields import extract_notice_price
+from src.modules.tender_operator_agent_demo.operator_notice_fields import extract_notice_delivery_deadline
+from src.modules.tender_operator_agent_demo.operator_goods_text_fields import split_trailing_classification
+from src.modules.tender_operator_agent_demo.operator_goods_text_fields import summarize_supply_characteristics
 from src.modules.tender_operator_agent_demo.operator_supplier_questions import (
     normalize_supplier_questions,
 )
@@ -952,27 +956,8 @@ def _format_money_value(value: float | str | None) -> str | None:
 
 
 def _extract_notice_price(metadata: dict[str, Any], *texts: str) -> str | None:
-    procurement = metadata.get("procurement") if isinstance(metadata.get("procurement"), dict) else {}
-    for candidate in (
-        procurement.get("initial_price"),
-        metadata.get("initial_price"),
-    ):
-        formatted = _format_money_value(candidate)
-        if formatted:
-            return formatted
-    combined = "\n".join(text for text in texts if text)
-    if not combined:
-        return None
-    raw_value = _match_first_dotall(
-        combined,
-        (
-            r"<(?:\w+:)?maxPrice>\s*([\d\s]+(?:[.,]\d+)?)\s*</(?:\w+:)?maxPrice>",
-            r"Начальная\s*\(максимальная\)\s*цена\s*(?:контракта|договора)?\D{0,80}([\d\s]+(?:[.,]\d+)?)\s*(?:руб|₽|RUB)",
-            r"\bНМЦК\b\D{0,40}([\d\s]+(?:[.,]\d+)?)\s*(?:руб|₽|RUB)",
-            r"Цена\s+контракта\D{0,40}([\d\s]+(?:[.,]\d+)?)\s*(?:руб|₽|RUB)",
-        ),
-    )
-    return _format_money_value(raw_value)
+    """Backward-compatible product-owned projection facade."""
+    return extract_notice_price(metadata, *texts, _format_money_value=_format_money_value, _match_first_dotall=_match_first_dotall)
 
 
 def _extract_notice_timeline(text: str, labels: tuple[str, ...], *, stop_markers: tuple[str, ...]) -> str | None:
@@ -989,26 +974,8 @@ def _extract_notice_timeline(text: str, labels: tuple[str, ...], *, stop_markers
 
 
 def _extract_notice_delivery_deadline(text: str) -> str | None:
-    return _extract_notice_timeline(
-        text,
-        ("Срок поставки", "Сроки поставки", "Срок поставки товара", "Сроки поставки товара", "Период поставки"),
-        stop_markers=(
-            "Место поставки",
-            "Адрес поставки",
-            "Условия оплаты",
-            "Порядок оплаты",
-            "Условия поставки",
-            "Порядок поставки",
-            "Обеспечение исполнения контракта",
-        ),
-    ) or _match_first_dotall(
-        text,
-        (
-            r"<(?:\w+:)?deliveryTerm>\s*(.+?)\s*</(?:\w+:)?deliveryTerm>",
-            r"поставка[^.\n]{0,80}(в течение[^.\n]+)",
-            r"поставка[^.\n]{0,80}(до\s+\d{1,2}\s+[А-Яа-яЁё]+\s+\d{4}\s+года)",
-        ),
-    )
+    """Backward-compatible product-owned projection facade."""
+    return extract_notice_delivery_deadline(text, _extract_notice_timeline=_extract_notice_timeline, _match_first_dotall=_match_first_dotall)
 
 
 def _extract_notice_service_deadline(text: str) -> str | None:
@@ -1214,27 +1181,8 @@ _TRAILING_CLASSIFICATION_RE = re.compile(
 
 
 def _split_trailing_classification(raw_name: str | None) -> tuple[str | None, str | None, str | None]:
-    """Split a labelled classification suffix off a product name cell.
-
-    Legacy NMCK layouts often place the identifier inside the name cell
-    (``<name> КТРУ <code>``, ``<name> КТРУ-<code>``, ``<name> ОКПД 2-<code>``).
-    Returns ``(clean_name, ktru, okpd2)``.  Only an explicit КТРУ/ОКПД label
-    qualifies; an unlabeled trailing number is never interpreted, and the
-    caller keeps the untouched original line in ``raw_fragment``.
-    """
-
-    cleaned = _cleanup_tabular_value(raw_name) or ""
-    match = _TRAILING_CLASSIFICATION_RE.match(cleaned)
-    if not match:
-        return raw_name, None, None
-    code = match.group("code")
-    if not _is_ktru_or_okpd(code):
-        return raw_name, None, None
-    label = re.sub(r"\s+", "", match.group("label")).upper()
-    name = (match.group("name") or "").strip(" -") or cleaned
-    if label == "КТРУ":
-        return name, code, None
-    return name, None, code
+    """Backward-compatible product-owned projection facade."""
+    return split_trailing_classification(raw_name, _cleanup_tabular_value=_cleanup_tabular_value, _TRAILING_CLASSIFICATION_RE=_TRAILING_CLASSIFICATION_RE, _is_ktru_or_okpd=_is_ktru_or_okpd)
 
 
 def _normalize_quantity_value(value: str | None) -> str | None:
@@ -1283,26 +1231,8 @@ def _extract_gost_tokens(text: str) -> list[str]:
 
 
 def _summarize_supply_characteristics(values: list[str], *, limit: int = 6) -> list[str]:
-    result: list[str] = []
-    seen: set[str] = set()
-    for value in values:
-        cleaned = _cleanup_tabular_value(value)
-        if not cleaned:
-            continue
-        if cleaned.lower().startswith(("требования к качеству", "требования к безопасности")):
-            continue
-        if "__" in cleaned:
-            continue
-        if any(marker in cleaned.lower() for marker in ("заказчик", "поставщик", "м.п.", "при учете требований")):
-            continue
-        normalized = cleaned.lower()
-        if normalized in seen:
-            continue
-        seen.add(normalized)
-        result.append(cleaned)
-        if len(result) >= limit:
-            break
-    return result
+    """Backward-compatible product-owned projection facade."""
+    return summarize_supply_characteristics(values, limit=limit, _cleanup_tabular_value=_cleanup_tabular_value)
 
 
 def _supply_item_to_row(item: SupplyItem) -> dict[str, Any]:
