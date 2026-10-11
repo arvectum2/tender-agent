@@ -1,0 +1,40 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-QUOTES-REPORT-20261011
+status: in_progress
+goal: Extract the pure supplier-quote comparison report payload from the Tender Agent
+  legacy upload monolith while preserving source-derived counts, manual review and
+  absence-of-input behavior.
+definition_of_done:
+- Move 42-line quotes projection into product-owned module with no direct I/O or fabricated
+  values
+- Retain old facade, original contract shape and exact AST of projection; no economic
+  optimism
+- Add quoted/unquoted/manual-source regression cases and run full Python3.12 local
+  pytest plus Ruff/make check
+- Require all exact-head GitHub CI green and merge, mark bounded checkpoint completed,
+  overarching TDP-REFACTOR remains in_progress
+completed:
+- Validated current main 4f111437 with risk and non-goods report slices already merged
+  green, identified quote payload block in _build_output_payloads.
+- Moved 42 source-identical lines from _build_output_payloads to pure product-owned
+  operator_quote_report.py; confirmed AST value identity and preserved call facade.
+- Six direct tests + 42 combined focused tests verify quote counts and rows from source
+  only, missing/unparsed quote fallback/manual review, and no autonomous outbound
+  action.
+- Targeted Ruff and make check passed.
+current: Full Python 3.12 pytest running; exact-head GitHub CI and merge pending.
+pending:
+- Implement pure quote report projection and tests
+- Ruff/focused/full pytest and exact-head CI
+- Merge all green and checkpoint completed
+last_verified_commit: 4f1114378181f3b6c4962d0ecfc254ee4e4e40ac
+test_results:
+- 42 focused tests passed, 21 warnings
+- AST quote value parity PASS
+- Ruff targeted clean
+- make check PASS
+resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-quote-report-20261011;
+  inspect /tmp/tdp-r3-quotes-full.log from process 78316. Push PR only exact-head
+  CI green. Complete slice and parent current-task state after merge. Leave live production/EIS/source
+  secrets and watchdog unchanged.
