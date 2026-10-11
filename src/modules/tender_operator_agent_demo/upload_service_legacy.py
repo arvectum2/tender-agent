@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 from urllib.request import urlopen
 
 from fastapi import HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 
 from src.modules.procurement_analysis.document_roles import detect_document_role
 from src.modules.supplier_search.internet_supplier_search import SupplierSearchOutcome
@@ -718,7 +718,7 @@ def _runtime_ai_provenance() -> dict[str, Any]:
         if models:
             model = str(models[0].get("id") or model)
         healthcheck = "ok"
-    except Exception:
+    except Exception:  # noqa: BLE001 - optional LLM health probe may fail for any client error
         healthcheck = "unreachable"
     return {
         "analysis_engine": "deterministic",
@@ -758,7 +758,7 @@ def _run_supplier_internet_search(
             technical_spec_text=technical_spec_text,
             max_results=10,
         )
-    except Exception:
+    except Exception:  # noqa: BLE001 - remote supplier search must fail closed
         return SupplierSearchOutcome(error="Не удалось выполнить поиск поставщиков через Yandex Search API.")
 
 
@@ -1635,7 +1635,7 @@ def get_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunResponse:
         project_uploaded_run,
     )
 
-    return project_uploaded_run(
+    response = project_uploaded_run(
         run_id,
         _load_metadata=_load_metadata,
         DemoStep=DemoStep,
@@ -1655,6 +1655,13 @@ def get_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunResponse:
         TenderOperatorUploadedFile=TenderOperatorUploadedFile,
         load_demo_run_events=load_demo_run_events,
     )
+
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        projected_historical_eis_run,
+    )
+
+    return projected_historical_eis_run(_load_metadata(run_id), response)
+
 
 
 def get_uploaded_demo_run_steps(run_id: str) -> TenderOperatorUploadedRunStepsResponse:
@@ -1679,22 +1686,47 @@ def save_uploaded_demo_steps(run_id: str, steps: list[DemoStep]) -> None:
 
 
 def get_uploaded_demo_report(run_id: str) -> TenderOperatorDemoReportResponse:
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        projected_historical_eis_report,
+    )
+
     payload = _load_report_json(run_id)
-    return TenderOperatorDemoReportResponse.model_validate(payload)
+    projected = projected_historical_eis_report(_load_metadata(run_id), payload)
+    return TenderOperatorDemoReportResponse.model_validate(projected)
 
 
-def get_uploaded_demo_report_download(run_id: str) -> FileResponse:
+def get_uploaded_demo_report_download(run_id: str) -> FileResponse | Response:
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        needs_live_eis_revision_review,
+        review_annotated_html,
+    )
+
     path = _ensure_procurement_blocked_report_html(run_id) or _report_html_path(run_id)
     if not path.is_file():
         raise HTTPException(status_code=404, detail="Report HTML is not available yet")
+    metadata = _load_metadata(run_id)
+    if needs_live_eis_revision_review(metadata):
+        # Do not mutate or replace the historical source report file.
+        return Response(
+            content=review_annotated_html(metadata, path.read_text(encoding="utf-8")),
+            media_type="text/html; charset=utf-8",
+            headers={
+                "Content-Disposition": 'attachment; filename="archived-eis-review-required.html"'
+            },
+        )
     return FileResponse(path, media_type="text/html; charset=utf-8", filename=f"{run_id}_report.html")
 
 
 def get_uploaded_demo_report_html(run_id: str) -> str:
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        review_annotated_html,
+    )
+
     path = _ensure_procurement_blocked_report_html(run_id) or _report_html_path(run_id)
     if not path.is_file():
         raise HTTPException(status_code=404, detail="Report HTML is not available yet")
-    return path.read_text(encoding="utf-8")
+    return review_annotated_html(_load_metadata(run_id), path.read_text(encoding="utf-8"))
+
 
 
 def get_uploaded_demo_source_file_download(run_id: str, file_id: str) -> FileResponse:
