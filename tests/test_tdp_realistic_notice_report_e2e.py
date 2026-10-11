@@ -53,6 +53,9 @@ def test_official_eis_notice_survives_persisted_operator_report(
     processed = client.post(f"/api/demo/tender-agent/runs/{rid}/analyze")
     assert processed.status_code == 200, processed.text
     assert processed.json()["status"] in ("completed_with_warnings", "needs_review", "completed")
+    # A sourced EIS deadline must be JSON-persistable and may never become the report generation time.
+    summary = json.loads((root / rid / "output" / "tender_summary.json").read_text())
+    assert summary["submission_deadline"] == "2026-10-16T10:00:00+03:00"
     enriched = json.loads(meta_path.read_text())
     assert enriched["_field_evidence"]["procurement_title"] == "eis_notice:procurement_subject"
     report = client.get(f"/api/demo/tender-agent/runs/{rid}/report")

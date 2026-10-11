@@ -116,6 +116,9 @@ from src.modules.tender_operator_agent_demo.operator_software_preliminary import
 from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
     checked_original_input_path,
 )
+from src.modules.tender_operator_agent_demo.operator_submission_deadline import (
+    submission_deadline_from_metadata,
+)
 from src.modules.tender_operator_agent_demo.operator_training_location_action import (
     build_training_location_action,
 )
@@ -2917,7 +2920,7 @@ def _build_output_payloads(
         "procedure_type": "Поиск закупки + intake" if metadata.get("mode") == "procurement_search_intake" else "Загруженный demo run",
         "customer": metadata["customer_name"],
         "category": metadata["tender_category"],
-        "submission_deadline": _safe_datetime(),
+        "submission_deadline": submission_deadline_from_metadata(metadata),
         "analysis_status": metadata["status"],
         "procurement_code": metadata.get("procurement_id") or metadata["run_id"].upper(),
         "documents": [

@@ -18,7 +18,6 @@ from src.modules.tender_operator_agent_demo.schemas import (
     TenderOperatorDemoStepsResponse,
 )
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEMO_DATA_DIR = REPO_ROOT / "demo_data" / "tender_operator_agent"
 ARVECTUM_ASSETS_DIR = REPO_ROOT / "arvectum-landing" / "public" / "assets"
@@ -970,7 +969,9 @@ def render_tender_operator_demo_html() -> str:
 
           function renderTenderCard(run) {{
             const tender = run.tender;
-            const deadline = new Date(tender.submission_deadline).toLocaleString('ru-RU');
+            const deadline = tender.submission_deadline
+              ? new Date(tender.submission_deadline).toLocaleString('ru-RU')
+              : 'Не указано';
             document.getElementById('tender-card').innerHTML = `
               <h2>Карточка закупки</h2>
               <div class="card-grid">
