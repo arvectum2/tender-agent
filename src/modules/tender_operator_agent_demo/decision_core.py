@@ -195,6 +195,22 @@ def build_decision_core(
     }
 
     deadline_status = _text(model.get("deadline_status")).lower()
+    revision_unverified = model.get("notice_revision_requires_review") is True
+    if revision_unverified:
+        # The date may be correctly extracted from the highest *archived* XML,
+        # yet EIS may have published a newer edition. Do not turn this snapshot
+        # into an authoritative GO or hard expired NO_GO.
+        facts["application_deadline"]["status"] = "UNKNOWN"
+        facts["application_deadline"]["value"] = None
+        unknowns.append(
+            {
+                "code": "EIS_CURRENT_NOTICE_REVISION_UNVERIFIED",
+                "summary": (
+                    "Актуальная редакция извещения ЕИС и действующий срок подачи "
+                    "не подтверждены независимо по официальному источнику."
+                ),
+            }
+        )
     if is_223fz:
         readiness.append(
             _readiness(
@@ -211,6 +227,17 @@ def build_decision_core(
                 "code": "223FZ_APPLICATION_WINDOW_SEMANTICS",
                 "summary": "Правовая интерпретация срока подачи для 223-ФЗ не утверждена в текущем Decision Core.",
             }
+        )
+    elif revision_unverified:
+        readiness.append(
+            _readiness(
+                "APPLICATION_WINDOW",
+                "Срок подачи заявок",
+                "UNKNOWN",
+                "Известен срок архивного извещения, но текущая редакция ЕИС не подтверждена.",
+                blocking=True,
+                evidence=deadline_evidence,
+            )
         )
     elif deadline_status == "expired" and deadline_evidence:
         blockers.append(
