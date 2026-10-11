@@ -6,6 +6,7 @@ clauses and must not be interpreted as sourced findings without EIS evidence.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -78,3 +79,76 @@ def build_document_grounded_rfq_sections(procurement_kind: str) -> list[str]:
         "Подтверждение сроков, сертификатов и гарантий",
         "Условия оплаты и срок действия КП",
     ]
+
+
+def normalized_risk_evidence_locators(value: Any) -> list[dict[str, str]]:
+    """Pass only safe, customer-readable report locators downstream."""
+    if not isinstance(value, list):
+        return []
+    normalized: list[dict[str, str]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            return []
+        document, locator = item.get("document"), item.get("locator")
+        if not isinstance(document, str) or not document.strip():
+            return []
+        if not isinstance(locator, str) or not locator.strip():
+            return []
+        if (
+            "/" in document
+            or "\\" in document
+            or locator.strip().startswith(("/", "file:"))
+            or "/Volumes/" in locator
+            or "/Users/" in locator
+            or re.fullmatch(r"[0-9a-f]{64}|[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", document.strip(), flags=re.IGNORECASE)
+        ):
+            return []
+        normalized.append({"document": document.strip(), "locator": locator.strip()})
+    return normalized
+
+
+def build_operator_risk_payload(
+    risk_candidates: list[dict[str, Any]],
+    claim_bound_mode: bool,
+    *,
+    _translate_user_text: Callable[..., str],
+) -> dict[str, Any]:
+    """Project candidate risks for review without inventing source locators."""
+    return {
+        "summary": "Найдены ограничения и риски, требующие ручной проверки.",
+        "risks": [
+            {
+                "risk": _translate_user_text(risk.get("clause", "Ограничение")),
+                "severity": (
+                    "needs_review"
+                    if risk.get("source_status") == "unverified_llm"
+                    or risk.get("classification") == "deal_breaker_candidate"
+                    else "warning"
+                ),
+                "impact": _translate_user_text(risk.get("impact", "")),
+                "mitigation": _translate_user_text(risk.get("mitigation", "")),
+                "risk_id": risk.get("risk_id"),
+                "category": risk.get("category", "unknown"),
+                "evidence_ids": [value for value in str(risk.get("evidence_ids") or "").split(", ") if value],
+                "evidence_locators": normalized_risk_evidence_locators(risk.get("evidence_locators")),
+                "status": (
+                    "requires_review" if risk.get("source_status") == "unverified_llm"
+                    else "blocker" if risk.get("classification") == "deal_breaker_candidate"
+                    else "requires_review"
+                ),
+                "source_status": risk.get("source_status", "legacy_unverified"),
+            }
+            for risk in risk_candidates
+        ]
+        or ([] if claim_bound_mode else [
+            {
+                "risk": "Недостаточно данных по договорным условиям",
+                "severity": "needs_review",
+                "impact": "Часть контрактных рисков не может быть оценена автоматически.",
+                "mitigation": "Проверить договор и комплектность вручную.",
+            }
+        ]),
+        "manual_checks": [
+            "Проверить договорные ограничения и совместимость аналогов вручную."
+        ],
+    }
