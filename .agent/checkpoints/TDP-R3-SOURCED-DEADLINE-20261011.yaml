@@ -1,0 +1,43 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-SOURCED-DEADLINE-20261011
+status: in_progress
+goal: Remove fabricated current-time submission deadline from tender demo cards; use
+  only verifiable structured input dates or UNKNOWN/None.
+definition_of_done:
+- Implement a source-locked ISO/Russian date parser with no fallback now(); missing/invalid
+  date must remain None
+- Expose optional datetime in API contract; render unknown deadline as Не указано
+  instead of Unix epoch/Invalid Date
+- Add regression tests for no-source, source-provided deadline, invalid date and display
+  behavior; no change to report prepared_at
+- Ruff/make check/full Python3.12 pytest and exact-head GitHub CI pass, merge and
+  completed bounded checkpoint
+completed:
+- Identified _safe_datetime() used for submission_deadline in upload_service_legacy.py
+  while DemoTenderCard requires datetime and UI formats it as a valid date even when
+  unknown.
+- Created operator_submission_deadline.py pure parser for explicit timezone-aware
+  ISO/Russian application deadlines, None otherwise.
+- Replaced fabricated _safe_datetime() submission_deadline in legacy report with parse
+  of explicit enriched/structured metadata; preserved prepared_at as independent clock
+  timestamp.
+- Updated DemoTenderCard optional datetime API contract and demo JS human-readable
+  "Не указано" fallback on missing date.
+- New date-format, invalid/unknown, precedence, schema, demo UI and persisted real
+  demo upload tests; 37 focused tests passed; Ruff target clean.
+current: 'Reconcile latest main after #325; make check/full Python3.12 regression
+  and exact-head GitHub CI pending.'
+pending:
+- Code and focused regression
+- Full pytest and CI
+- Merge green; close bounded task checkpoint; keep parent in_progress
+last_verified_commit: 4f1114378181f3b6c4962d0ecfc254ee4e4e40ac
+test_results:
+- 37 focused tests PASS, 22 warnings
+- Ruff focused PASS
+resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-source-deadline-20261011.
+  Commit, merge latest origin/main (#325), make check/full local pytest, push PR;
+  require exact-head GitHub CI all green then merge. Verify source deadline None remains
+  None and report prepared_at unaffected. Main TDP-REFACTOR stays in_progress and
+  disabled watchdog unchanged.

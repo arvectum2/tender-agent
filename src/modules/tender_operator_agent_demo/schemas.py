@@ -48,7 +48,7 @@ class DemoTenderCard(APIModel):
     customer: str
     category: str
     procurement_code: str
-    submission_deadline: datetime
+    submission_deadline: datetime | None = None
     analysis_status: str
     document_count: int = Field(ge=0)
     requirement_count: int = Field(ge=0)
