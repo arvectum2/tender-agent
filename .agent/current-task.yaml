@@ -102,18 +102,19 @@ completed:
   - '2026-10-11 R5 machine-only APR06 review queue #332 source-verified public 20-case, 168 SHA, 2 machine review flags, 0 human signoffs; 3664 full Python3.12 pass/238 skipped and dual exact-head GitHub quality 9m10s/9m22s/integrations passed; merged main 8588115a9b4f2ea4053fc2fb0e036075b0f11171.'
   - '2026-10-11 R2 Decision Core notice revision currentness gate: metadata.notice_revision_requires_review blocks false expired NO_GO and false open GO, returns UNKNOWN/NEEDS_REVIEW, four new regression tests, 62 focused PASS; full/CI pending.'
   - '2026-10-11 R2 source-currentness Decision Core #333 fail-closed for unknown live notice version, no false archival expired NO_GO/open GO, 62 focused and final 3668 full local tests/238 skipped passed; exact-head dual quality 9m34s/6m48s and all other CI green, merged main 6135bbda891acf6469feec96675c0f5ba28adca3.'
-  - '2026-10-11 R3 XLSX/NMCK product-owned parser: 126-line legacy body relocated with explicit injection, exact normalized AST parity; old facade preserved. 39 focused PASS, make check and touched Ruff PASS; full Python3.12 3669 PASS/238 skipped/1 known-local-R9 deselected. Confirmed R9 pg_restore failure reproduces unchanged origin/main 95b3c55c. GitHub PR/CI pending.'
-current: 'R3 XLSX/NMCK parser safely extracted with isolated product module, unchanged compatibility facade and focused/overall green local regression except independently reproduced pre-existing Mac mini R9 pg_restore acceptance failure; GitHub PR/CI pending. R2 independently current authoritative EIS original binaries and revision, R4 human gold, R5 20 human reviews/owner acceptance blocked. Parent task in_progress.'
+  - '2026-10-11 R3 XLSX/NMCK product-owned parser: 126-line legacy body relocated with explicit injection, exact normalized AST parity; old facade preserved. 39 focused PASS, make check and touched Ruff PASS; full Python3.12 3669 PASS/238 skipped/1 known-local-R9 deselected. Confirmed R9 pg_restore failure reproduces unchanged origin/main 95b3c55c. exact-head CI 9/9 green; PR #335 merged main c13063ed19cc4b46a29c1e37d46f7477eeb65bb7.'
+current: 'R3 NMCK XLSX parser PR #335 completed/merged after exact-head 9/9 green CI. Architecture boundary and legacy facade preserved. R2 independently current official EIS original binary SHA256 and notice revision not verified; R4 human-gold local-model quality not established; R5 >=20 human original-file reviews and owner GO/NO_GO/DEFER acceptance outstanding. Parent task in_progress.'
 pending:
-  - 'R5 preparation TDP-R5-REVIEW-QUEUE-20261011: 20-case, 168-file SHA source-identified APR06 machine review queue only; human signoff absent, exact-head CI pending.'
+  - 'R5 preparation TDP-R5-REVIEW-QUEUE-20261011: 20-case, 168-file SHA source-identified APR06 machine review queue merged #332; no independent original verification or human signoff.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '6135bbda891acf6469feec96675c0f5ba28adca3'
+last_verified_commit: 'c13063ed19cc4b46a29c1e37d46f7477eeb65bb7'
 test_results:
+  - '2026-10-11 TA PR #335 exact-head GitHub CI all nine jobs success: quality, PostgreSQL, Redis, security, Docker, migrations, dependency lock, R8 acceptance, Arvectum OS bridge. Squash-merged main c13063ed19cc4b46a29c1e37d46f7477eeb65bb7. Local 3669 green / 238 skip / one independently reproduced R9 pg_restore baseline test deselected.'
   - '2026-10-11 R3 XLSX parser 39 focused PASS, original-vs-new AST body exact under explicit dependency rename, touched Ruff F401/I001 and new module full Ruff PASS, make check PASS; full suite 3669 passed, 238 skipped, 1 deselected (R9 pg_restore failure reproduced unchanged origin/main). Initial full run with incorrect PATH produced extra exact-tokenizer failure, fixed by prepending repository Python venv.'
   - 'TA #333 full local 3668 passed/238 skipped Python3.12 and exact-head dual quality 9m34s/6m48s + all integration/security CI PASS, merged 6135bbda891acf6469feec96675c0f5ba28adca3.'
   - 'TA #331 original in-archive notice version precedence+LLM source alignment: 39 focused and 3653 full Python3.12 PASSED/238 skipped, dual exact-head quality/integration/security CI PASS; merged 5bd78d75e67a2aaa496c942f807931160a8ff228.'
@@ -159,8 +160,8 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Review pushed R3 XLSX/NMCK parser PR exact-head GitHub quality and integration CI; merge only after gates pass. Record merged commit/checkpoint. Then R2 recover independent current EIS binary SHA256 and notice revision once authorized SOAP access resumes; R4 gold/ R5 20 human reviews remain open. Watchdog disabled. No production/pilot mutations.'
+resume_instruction: 'Continue TDP-REFACTOR-20261009 from verified TA main c13063ed19cc4b46a29c1e37d46f7477eeb65bb7. R3 XLSX parser #335 and prior R3/R2 slices completed. Next R2 independently fetch current official EIS notice and attachment binaries legally after integration maintenance, verify source SHA256, DP resource/document/chunk normalized locators and current revision; UNKNOWN on missing proof. R4 compare local LLM to human-verified source-locked gold; R5 collect >=20 independent human decisions and owner signoff. No bids, payments, production/pilot or watchdog changes; disabled watchdog remains disabled.'
 execution:
-  branch: refactor/tdp-resume-source-assurance-20261011
+  branch: main
   manual_override: true
   lease_until: null
