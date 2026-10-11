@@ -29,3 +29,7 @@ R4 human-gold procurement model quality or R5 twenty owner approvals.
 Follow-on 2026-10-11: Eleven nested presentation helpers moved without changing
 AST bodies; renderer remains compatible, HTML escaping regression tests added.
 The remaining outer function is still long and requires section-based refactor.
+
+Additional 2026-10-11 extraction: 270-line original interpolated HTML layout moved
+into operator_html_layout.py without changing its AST, leaving the legacy
+renderer as the dependency-resolving facade. No source-fact inference added.
