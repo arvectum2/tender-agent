@@ -34,8 +34,12 @@ completed:
   and exact R5 independent reviewer workflow, warnings that this is not acceptance.
 - 11 focused synthetic tests PASS, target Ruff PASS, deterministic output counts 20/168/2
   and 0 human approvals verified.
-current: 'Code/queue and docs ready in isolated branch; GitHub CI and main reconciliation
-  (PR #331 concurrent) pending.'
+- 'Reconciled latest main after bounded EIS source revision #331 5bd78d75e67a2aaa496c942f807931160a8ff228;
+  source revision checker and 20-case review queue remain independently scoped.'
+- README now warns to import reg_number column as text in Excel, preserving leading
+  zeros.
+current: 'Reconciled #331 into PR #332; focused queue 11 PASS, make check green before
+  reconciliation; exact-head CI pending.'
 pending:
 - Generator/fixtures/test
 - Review source identity and exact output 20 cases
@@ -46,9 +50,9 @@ test_results:
 - Ruff PASS
 - 20 rows, 168 files with hashes, 2 machine revision flags, 0 verified human decisions,
   0 private run IDs
-resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r5-review-queue-20261011:
-  source-identified CSV/doc/script generated with 20 rows /168 hashes /2 machine revision
-  flags /0 human decisions; 11 focused PASS. Open PR, require CI, reconcile main after
-  PR331 revision precedence merges then exact-head CI before merging. This is *preparation
-  only*: parent R5 requires 20 human reviews and owner signoff, do not fabricate.
-  No live/secrets/watchdog changes.'
+- 11 focused tests PASS /Ruff PASS/make check PASS before latest merge
+resume_instruction: 'Continue PR #332 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r5-review-queue-20261011,
+  reconciled main #331. Source queue 20 cases/168 hashes, 2 machine revision signals,
+  0 human decisions, no internal run IDs. Rerun make check/focused tests and require
+  exact-head dual quality/integration CI then merge docs-only, mark bounded checkpoint
+  completed. Parent real EIS/R4/R5 acceptance remains in_progress.'
