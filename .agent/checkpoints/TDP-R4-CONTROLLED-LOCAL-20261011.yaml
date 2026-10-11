@@ -1,0 +1,46 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R4-CONTROLLED-LOCAL-20261011
+status: in_progress
+goal: Record actual local non-stub Tender Agent controlled-model workflows and a limited
+  synthetic same-prompt model smoke comparison, without claiming quality on true procurement
+  originals.
+definition_of_done:
+- One local controlled-provider transport with explicit synthetic known and unknown
+  facts and no production DB/credentials.
+- Four-section controlled TA workflow on isolated in-memory SQLite with schema/trace/guardrails
+  verified.
+- Same one-section synthetic context through all available selected locally installed
+  text models; report latency and schema pass/fail.
+- Never treat a single synthetic case as accuracy ranking or EIS/source-locked benchmark;
+  checkpoint bounded subset completed.
+completed:
+- Real TA OpenAI-compatible provider -> local Ollama qwen3:4b synthetic facts returned
+  valid JSON, NMCK500000 correct, unavailable deadline null, 17.28 sec.
+- Controlled _run_controlled_sections requirements on synthetic source and in-memory
+  SQLite qwen3:4b passed validation, 1 trace, needs_human_review, raw answer not retained,
+  26.21 sec.
+- Controlled run_controlled_tender_operator_workflow 4 sections requirements/supplier_questions/rfq_draft/contract_risk_memo
+  all validation PASSED on synthetic procurement and isolated in-memory SQLite, 4
+  traces, mandatory human review, no raw response retention, 252.43 sec.
+- 'Same one-section model comparison: qwen2.5:3b requirements PASSED 11.45sec, gemma4:12b
+  requirements PASSED 112.62sec. Source corpus/gold labels not exercised.'
+current: Waiting for third one-section synthetic model huihui-hermes result from running
+  remote PID 77136.
+pending:
+- Collect huihui-hermes comparison result and note timeout/failed validations if any.
+- Mark this bounded synthetic R4 smoke status completed. Keep overarching TDP-REFACTOR
+  R4 source-locked gold model benchmark pending.
+last_verified_commit: d551552b16503c8e36d3fa35b4b1234337cf1496
+test_results:
+- TA real qwen3:4b adapter JSON smoke 17.28sec
+- TA controlled qwen3:4b requirements PASSED 26.21sec
+- TA controlled qwen3:4b 4/4 sections PASSED 252.43sec, four trace IDs, needs_human_review,
+  raw responses not retained
+- qwen2.5:3b same-section synthetic PASSED 11.45sec
+- gemma4:12b same-section synthetic PASSED 112.62sec
+resume_instruction: Read pending remote Mac mini process 77136 for huihui-hermes response
+  (may time out); do not fabricate result. Finalize bounded synthetic-only model smoke
+  checkpoint. Do NOT mark overarching R4 complete until multiple real independently
+  labeled EIS original cases, accuracy/faithfulness/latency/cost evidence, source
+  locked inputs and owner acceptance; keep disabled watchdog and production unchanged.
