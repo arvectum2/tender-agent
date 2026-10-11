@@ -140,6 +140,12 @@ from src.modules.tender_operator_agent_demo.operator_rfq_document_projections im
     build_document_grounded_questions,
     project_document_grounded_risks,
 )
+from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import project_collect_matches
+from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import project_extract_notice_service_deadline
+from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import project_extract_inline_goods_field
+from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import project_rewrite_compliance_highlight
+from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import project_rewrite_delivery_model_item
+from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import project_is_goods_supply_table_present
 from src.modules.tender_operator_agent_demo.operator_supplier_questions import (
     normalize_supplier_questions,
 )
@@ -871,23 +877,9 @@ def _match_first(text: str, patterns: tuple[str, ...]) -> str | None:
     return None
 
 
-def _collect_matches(text: str, patterns: tuple[str, ...], *, limit: int = 6) -> list[str]:
-    found: list[str] = []
-    seen: set[str] = set()
-    for pattern in patterns:
-        for match in re.finditer(pattern, text, re.IGNORECASE | re.MULTILINE):
-            value = " ".join(group for group in match.groups() if group)
-            value = re.sub(r"\s+", " ", value).strip(" .;,\n\t")
-            if not value:
-                continue
-            key = value.lower()
-            if key in seen:
-                continue
-            seen.add(key)
-            found.append(value)
-            if len(found) >= limit:
-                return found
-    return found
+def _collect_matches(text: str, patterns: tuple[str, ...], *, limit: int=6) -> list[str]:
+    """Compatibility facade for product-owned text projector."""
+    return project_collect_matches(text, patterns, limit=limit)
 
 
 def _match_first_dotall(text: str, patterns: tuple[str, ...]) -> str | None:
@@ -985,57 +977,18 @@ def _extract_notice_delivery_deadline(text: str) -> str | None:
 
 
 def _extract_notice_service_deadline(text: str) -> str | None:
-    return _extract_notice_timeline(
-        text,
-        ("Срок оказания услуг", "Сроки оказания услуг", "Период оказания услуг", "Срок выполнения работ"),
-        stop_markers=(
-            "Место оказания услуг",
-            "Место выполнения работ",
-            "Условия оплаты",
-            "Порядок оплаты",
-            "Обеспечение исполнения контракта",
-        ),
-    ) or _match_first_dotall(
-        text,
-        (
-            r"<(?:\w+:)?deliveryTerm>\s*(.+?)\s*</(?:\w+:)?deliveryTerm>",
-            r"оказани[ея]\s+услуг[^.\n]{0,80}(в течение[^.\n]+)",
-            r"оказани[ея]\s+услуг[^.\n]{0,80}(до\s+\d{1,2}\s+[А-Яа-яЁё]+\s+\d{4}\s+года)",
-        ),
-    )
+    """Compatibility facade for product-owned text projector."""
+    return project_extract_notice_service_deadline(text, _extract_notice_timeline=_extract_notice_timeline, _match_first_dotall=_match_first_dotall)
 
 
 def _rewrite_compliance_highlight(value: str) -> str:
-    lowered = value.lower()
-    if "федеральной служ" in lowered and "техническому и экспортному контролю" in lowered:
-        return "Программа должна быть согласована с ФСТЭК России."
-    if "удостоверени" in lowered and "повышени" in lowered:
-        return "По итогам обучения нужно выдать удостоверение о повышении квалификации."
-    if "аттестаци" in lowered:
-        return "Нужно провести итоговую аттестацию слушателей."
-    if "учебный план должен содержать" in lowered:
-        return "Учебный план должен содержать перечень тем и распределение часов."
-    if "раздаточ" in lowered and "материал" in lowered:
-        return "Исполнитель должен обеспечить слушателей учебными и раздаточными материалами."
-    return _normalize_analysis_sentence(value) or value
+    """Compatibility facade for product-owned text projector."""
+    return project_rewrite_compliance_highlight(value, _normalize_analysis_sentence=_normalize_analysis_sentence)
 
 
 def _rewrite_delivery_model_item(value: str, procurement_kind: str) -> str:
-    lowered = value.lower()
-    if procurement_kind == "services":
-        if "очно-заочная" in lowered:
-            return "Формат обучения: очно-заочный, с применением дистанционных образовательных технологий."
-        if "дистанцион" in lowered:
-            return "Часть программы проводится дистанционно на стороне заказчика."
-        if "60" in lowered and "%" in lowered:
-            return "Около 60% программы проходит в очном формате."
-        if "40" in lowered and "%" in lowered:
-            return "Около 40% программы проходит дистанционно."
-        if "09.00" in value or "18.00" in value:
-            return "Режим занятий: с 09:00 до 18:00."
-        if "городе хабаровске" in lowered:
-            return "Очная часть должна проходить в городе Хабаровске."
-    return _normalize_analysis_sentence(value) or value
+    """Compatibility facade for product-owned text projector."""
+    return project_rewrite_delivery_model_item(value, procurement_kind, _normalize_analysis_sentence=_normalize_analysis_sentence)
 
 
 def _cleanup_tabular_value(value: str | None) -> str | None:
@@ -1049,18 +1002,8 @@ def _cleanup_tabular_value(value: str | None) -> str | None:
 
 
 def _extract_inline_goods_field(text: str, labels: tuple[str, ...], *, stop_markers: tuple[str, ...]) -> str | None:
-    if not text:
-        return None
-    label_pattern = "|".join(re.escape(label) for label in labels)
-    stop_pattern = "|".join(re.escape(marker) for marker in stop_markers)
-    match = re.search(
-        rf"(?:{label_pattern})[^:\n]*[:\-]?\s*(.+?)(?=\s*(?:{stop_pattern})|\Z)",
-        text,
-        re.IGNORECASE | re.DOTALL,
-    )
-    if not match:
-        return None
-    return _cleanup_tabular_value(match.group(1))
+    """Compatibility facade for product-owned text projector."""
+    return project_extract_inline_goods_field(text, labels, stop_markers=stop_markers, _cleanup_tabular_value=_cleanup_tabular_value)
 
 
 def _cleanup_delivery_address(value: str | None) -> str | None:
@@ -1101,19 +1044,8 @@ _SUPPLY_UNIT_PATTERN = re.compile(
 
 
 def _is_goods_supply_table_present(text: str) -> bool:
-    lowered = (text or "").lower()
-    return any(
-        marker in lowered
-        for marker in (
-            "перечень запасных частей",
-            "перечень товаров",
-            "перечень поставки",
-            "спецификация",
-            "№ п/п",
-            "ед.изм",
-            "кол-во",
-        )
-    )
+    """Compatibility facade for product-owned text projector."""
+    return project_is_goods_supply_table_present(text)
 
 
 def _normalize_supply_name(value: str | None) -> str:
