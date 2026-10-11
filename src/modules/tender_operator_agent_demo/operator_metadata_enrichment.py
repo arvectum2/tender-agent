@@ -90,6 +90,15 @@ def enrich_procurement_metadata(
             elif len(candidates) > 1:
                 metadata["notice_revision_requires_review"] = True
 
+    # Archived getDocsIP data cannot itself attest to the currently
+    # published EIS revision, even if there was only one archived XML.
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        needs_live_eis_revision_review,
+    )
+
+    if needs_live_eis_revision_review(metadata):
+        metadata["notice_revision_requires_review"] = True
+
     if metadata.get("notice_revision_requires_review"):
         manual_review_note = (
             "Редакция извещения ЕИС требует ручной проверки на официальном источнике: "

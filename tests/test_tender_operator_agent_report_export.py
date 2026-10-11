@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest
@@ -9,12 +9,12 @@ from fastapi import HTTPException
 
 from src.modules.tender_operator_agent_demo.report_export_service import (
     ExportedDemoReport,
-    _pdf_artifact_paths,
     export_demo_agent_report_docx,
     export_demo_agent_report_pdf,
 )
-from src.modules.tender_operator_agent_demo.schemas import TenderOperatorDemoReportResponse
-
+from src.modules.tender_operator_agent_demo.schemas import (
+    TenderOperatorDemoReportResponse,
+)
 
 SAMPLE_METADATA = {
     "run_id": "toa-run-test-00000000-abc123",
@@ -26,6 +26,9 @@ SAMPLE_METADATA = {
     "status": "needs_review",
     "analysis_mode": "fallback_deterministic_adapter",
     "procurement_source": "zakupki_gov_ru_getdocs_ip",
+    # Synthetic export-success fixture explicitly models a separately attested
+    # current EIS revision. Real archived snapshots without this proof fail 409.
+    "notice_revision_selected": {"version": 1, "current_live_eis_verified": True},
     "procurement_id": "0123456789012345",
     "procurement_url": "https://zakupki.gov.ru/example",
     "publication_date": "06.07.2026",

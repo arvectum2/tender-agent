@@ -444,7 +444,11 @@ def build_procurement_report_model(
     # An archived XML revision is not proof that its deadline is current on EIS.
     # Preserve the archival date for source traceability, but force Decision Core
     # to review its legal application-window status until current EIS is checked.
-    if metadata.get("notice_revision_requires_review") is True:
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        needs_live_eis_revision_review,
+    )
+
+    if metadata.get("notice_revision_requires_review") is True or needs_live_eis_revision_review(metadata):
         model["notice_revision_requires_review"] = True
     # The legacy report builder may prefer an arbitrary document heading to the
     # genuine EIS subject. Restore only a registry-verified getDocsIP XML fact.

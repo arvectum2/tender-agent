@@ -1,50 +1,59 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from datetime import datetime, timezone
-from html import escape as html_escape, unescape as html_unescape
-from pathlib import Path
 import hashlib
 import json
-import re
 import os
+import re
 import tempfile
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from html import escape as html_escape
+from html import unescape as html_unescape
+from pathlib import Path
 from typing import Literal
-from xml.sax.saxutils import escape as xml_escape
 
 from docx import Document
 from docx.shared import Pt
 from reportlab.lib.colors import HexColor
-from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import ListFlowable, ListItem, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
-
-from src.modules.tender_operator_agent_demo.upload_service import (
-    _load_metadata,
-    get_uploaded_demo_report,
-    get_uploaded_demo_report_html,
-    get_demo_run_output_dir,
+from reportlab.platypus import (
+    ListFlowable,
+    ListItem,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
 )
-from src.modules.tender_operator_agent_demo.report_model import _verified_notice_fact_projection
+
+from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+    reject_unsafe_historical_eis_binary_export,
+)
 from src.modules.tender_operator_agent_demo.operator_review_export import (
     review_only_export_sections,
+)
+from src.modules.tender_operator_agent_demo.report_model import (
+    _verified_notice_fact_projection,
+)
+from src.modules.tender_operator_agent_demo.upload_service import (
+    _load_metadata,
+    get_demo_run_output_dir,
+    get_uploaded_demo_report,
+    get_uploaded_demo_report_html,
 )
 from src.tender_research.rag.export_service import (
     DOCX_CONTENT_TYPE,
     PDF_CONTENT_TYPE,
-    _parse_markdown_blocks,
-    _iter_inline_parts,
     _docx_add_formatted_paragraph,
     _ensure_pdf_font_registered,
-    _pdf_styles,
+    _parse_markdown_blocks,
     _pdf_inline_markup,
+    _pdf_styles,
+    _safe_output_path,
     _safe_segment,
     _short_run_id,
-    _safe_output_path,
 )
 
 
@@ -126,7 +135,7 @@ def _build_export_file_name(registry_number: str, run_id: str, format_name: Lite
 
 
 def _pdf_artifact_key(registry_number: str, run_id: str, report_model_hash: str) -> str:
-    identity = f"{registry_number}\0{run_id}\0{report_model_hash}\0{_PDF_RENDERER_VERSION}".encode("utf-8")
+    identity = f"{registry_number}\0{run_id}\0{report_model_hash}\0{_PDF_RENDERER_VERSION}".encode()
     return hashlib.sha256(identity).hexdigest()[:24]
 
 
@@ -391,7 +400,7 @@ def _verified_source_lines(model: dict) -> list[str]:
 
 def _build_docx_from_canonical(model: dict, title: str, output_path: Path, review_sections: list[tuple[str, list[str]]] | None = None) -> None:
     document = Document(); document.add_heading(title, 0)
-    summary, passport = model["executive_summary"], model["procurement_passport"]
+    summary, passport = model["executive_summary"], model["procurement_passport"]  # noqa: F841 - preserve legacy report variable bindings
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     for line in (f"Официальное название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}", f"Причина статуса объёма: {model.get('volume_status_reason')}"):
         document.add_paragraph(line)
@@ -433,7 +442,7 @@ def _build_docx_from_canonical(model: dict, title: str, output_path: Path, revie
 def _build_pdf_from_canonical(model: dict, title: str, output_path: Path, review_sections: list[tuple[str, list[str]]] | None = None) -> None:
     font_name = _ensure_pdf_font_registered(); styles = _pdf_styles(font_name)
     table_style = ParagraphStyle("focused_table", parent=styles["body"], fontSize=6.7, leading=7.5)
-    summary, passport = model["executive_summary"], model["procurement_passport"]
+    summary, passport = model["executive_summary"], model["procurement_passport"]  # noqa: F841 - preserve legacy report variable bindings
     story = [Paragraph(html_escape(title), styles["title"])]
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     story += [Paragraph(_pdf_inline_markup(str(line)), styles["body"]) for line in (f"Название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}")]
@@ -495,6 +504,7 @@ def _build_pdf_from_canonical(model: dict, title: str, output_path: Path, review
 def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
     run_id = _validate_run_id(run_id)
     metadata = _load_metadata(run_id)
+    reject_unsafe_historical_eis_binary_export(metadata)
     report = get_uploaded_demo_report(run_id)
     report_markdown = _report_markdown_for_export(run_id, report.report_markdown)
 
@@ -523,7 +533,7 @@ def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
         file_path=str(output_path),
         content_type=DOCX_CONTENT_TYPE,
         size_bytes=output_path.stat().st_size,
-        created_at=datetime.now(timezone.utc).isoformat(),
+        created_at=datetime.now(UTC).isoformat(),
         source_report_path=str(metadata.get("_metadata_path", "")),
     )
 
@@ -531,6 +541,7 @@ def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
 def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
     run_id = _validate_run_id(run_id)
     metadata = _load_metadata(run_id)
+    reject_unsafe_historical_eis_binary_export(metadata)
     report = get_uploaded_demo_report(run_id)
     report_markdown = _report_markdown_for_export(run_id, report.report_markdown)
 
@@ -600,6 +611,6 @@ def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
         file_path=str(output_path),
         content_type=PDF_CONTENT_TYPE,
         size_bytes=output_path.stat().st_size,
-        created_at=datetime.now(timezone.utc).isoformat(),
+        created_at=datetime.now(UTC).isoformat(),
         source_report_path=str(metadata.get("_metadata_path", "")),
     )
