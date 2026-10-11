@@ -89,7 +89,8 @@ completed:
   - '2026-10-11 TA PR #316 94-line training service candidate fact extraction moved into operator_training_source_facts.py with 13-field response, dependency injection and AST parity. 59 focused, 3564 full passed/238 skipped and all exact-head CI green; merged d7774ed7ee526800f417bbcdb04d30979666f37c.'
   - '2026-10-11 R4 isolated local Ollama qwen3:4b genuine generation smoke: 7.19 s/38 tokens, synthetic NMCK 500000 extracted and unknown deadline null, not product E2E or comparative model benchmark.'
   - '2026-10-11 PR #318 removed hardcoded unsourced Habarovsk and fixed one-line original service location extraction before unnumbered continuation; 54 focused and 3573 full local tests PASS/238 skipped; two exact-head quality plus full CI green, merged main df63b093246179d344b2030789e2ffda40415f07.'
-current: 'R3 goods economics #312, software preliminary #314, education facts #316 and training-location #318 all CI green merged main; R2 normalized source chunk coordinates/raw EIS binary proof, R4 integrated non-stub model quality, R5 >=20 source-locked independent EIS reviews and owner sign-off remain. Task in_progress.'
+  - '2026-10-11 TA PR #320 24-line source-safe risk locator validator + 38-line risk projection extracted with AST parity, 69 focused and 3591 full/238 skipped local tests, both exact-head quality/integration GitHub CI passed; merged main 379f9ccb8387581c61dc3be256bd178819e055b4.'
+current: 'R3 risk projection #320 merged green; R3 non-goods economics extraction #321 open, must reconcile latest main. DP binary integrity checker #119 under CI, real original EIS independent retrieval and notice revision not yet verified. R4 controlled model adapter synthetic smoke succeeded, full E2E model and R5 >=20 human-approved EIS cases pending. Task in_progress.'
 pending:
   - 'R3 non-goods economics TDP-R3-NONGOODS-ECONOMICS-20261011: extract while retaining UNKNOWN cost and quote semantics; test/CI before merge.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
@@ -99,8 +100,9 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'df63b093246179d344b2030789e2ffda40415f07'
+last_verified_commit: '379f9ccb8387581c61dc3be256bd178819e055b4'
 test_results:
+  - 'R3 #320: 69 focused and 3591 full tests passed/238 skipped; Ruff/make check, both exact-head quality and all GitHub integration CI green.'
   - 'R3 PR #318: 54 focused and 3573 full Python 3.12 tests passed / 238 skipped, both exact-head quality and all other GitHub checks green.'
   - 'R3 PR #316: 59 focused / 3564 full passed, 238 skipped; exact-head both quality and all integration CI passed.'
   - 'R4 synthetic Ollama qwen3:4b smoke: 7.19s, 38 tokens, parsed JSON, supplied NMCK and null missing deadline; full E2E benchmark pending.'
@@ -135,7 +137,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Resume overarching TDP-REFACTOR-20261009 from main df63b093246179d344b2030789e2ffda40415f07. R3 #318 location fix completed; do not redo. R2 DP0.6 SDK0.3 read-only authenticated metadata audit found 17 tender collections and one EIS-backed sample 41/41 chunk SHA matches; next validate normalized coordinates and actual original EIS attachment bytes. R4 integrated non-stub model benchmark, R5 >=20 independently verified source EIS cases and owner review still open. Preserve pilot, secrets, and disabled watchdog.'
+resume_instruction: 'TA PR #320 R3 risk report complete at 379f9ccb8387581c61dc3be256bd178819e055b4. Next reconcile non-goods economics PR #321 with latest main and rerun targeted/full CI; do not drop risk locator safety or independent verification guards. DP #119 tests original binary hash vs stored values but actual EIS authoritative bytes/revision still pending; R4 controlled adapter synthetic success only; R5 human 20+ sources pending. Do not modify production or reenable owner-disabled watchdog.'
 execution:
   branch: main
   manual_override: true

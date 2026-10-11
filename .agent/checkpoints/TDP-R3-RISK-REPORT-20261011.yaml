@@ -1,0 +1,47 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-RISK-REPORT-20261011
+status: completed
+goal: Extract source-safe risk evidence locator validation and risk output projection
+  from 4152-line upload monolith to existing product-owned operator_risk_report, preserving
+  fail-closed behavior and output schema.
+definition_of_done:
+- Preserve existing risk candidate selection, severity, review gates and safe source
+  locator filtering
+- Use existing product-owned operator_risk_report module with explicit pure function
+  inputs and old report surface intact
+- Add tests covering valid and adversarial locator input, unverified LLM risk and
+  claim-bound omission, and AST calculation parity
+- Run focused/full Python3.12 pytest, Ruff/make check, exact-head GitHub CI and merge
+- Mark bounded checkpoint completed while overarching TDP-REFACTOR remains in_progress
+completed:
+- Verified current main 409bd15c, existing risk report helper module, identified nested
+  24-line locator safety filter and ~38-line risk report projection in legacy output
+  builder.
+- Moved 24-line safe locator validation + 38-line risk output projection into existing
+  operator_risk_report.py with explicit text translator dependency.
+- Preserved AST of nested locator function and entire risk dictionary value, including
+  claim_bound_mode behavior and unverified_llm review gating.
+- Added direct safe/adversarial path, opaque SHA/UUID, LLM source status and fallback
+  report tests; 69 focused tests passed.
+- Targeted Ruff and make check passed.
+- 'Full Python3.12 pytest: 3591 passed/238 skipped, 294 warnings and zero failures.'
+- 'PR #320 exact-head GitHub CI passed both quality and all integration/security/lock
+  checks.'
+- 'PR #320 merged main as 379f9ccb8387581c61dc3be256bd178819e055b4.'
+current: Completed and merged as 379f9ccb8387581c61dc3be256bd178819e055b4
+pending: []
+last_verified_commit: 379f9ccb8387581c61dc3be256bd178819e055b4
+test_results:
+- 69 focused tests passed, 1 warning
+- AST value/locator body equivalence PASS
+- Targeted Ruff PASS
+- make check PASS
+- 3591 full tests passed / 238 skipped
+- All exact-head GitHub CI green
+- Merged 379f9ccb8387581c61dc3be256bd178819e055b4
+resume_instruction: 'Risk report/locator extraction completed and merged; do not repeat.
+  Continue broader TDP-REFACTOR from latest main; next R3 non-goods economics #321
+  branch from older main needs reconciliation before merging. R2 original authoritative
+  EIS attachment proof/R4 whole-pipeline model/R5 human review remain. Watchdog stays
+  disabled.'
