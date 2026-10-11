@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import html
+import html  # noqa: F401 - retain legacy attribute for consumers
 import json
 import os
 import re
@@ -34,6 +34,11 @@ from src.modules.tender_operator_agent_demo.goods_source_facts import (
     detect_procurement_richness,
     extract_goods_source_facts,
     semantic_procurement_role,
+)
+from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import (
+    project_is_goods_supply_table_present,
+    project_rewrite_compliance_highlight,
+    project_rewrite_delivery_model_item,
 )
 from src.modules.tender_operator_agent_demo.operator_analysis_trace import (
     build_operator_analysis_trace,
@@ -72,6 +77,17 @@ from src.modules.tender_operator_agent_demo.operator_economics_persistence impor
 from src.modules.tender_operator_agent_demo.operator_goods_economics import (
     build_goods_economics_payload,
 )
+from src.modules.tender_operator_agent_demo.operator_goods_preliminary import (
+    project_build_goods_preliminary_analysis,
+)
+from src.modules.tender_operator_agent_demo.operator_goods_reconciliation import (
+    project_collect_unmerged_source_items,
+    project_merge_supply_items,
+)
+from src.modules.tender_operator_agent_demo.operator_goods_text_fields import (
+    split_trailing_classification,
+    summarize_supply_characteristics,
+)
 from src.modules.tender_operator_agent_demo.operator_llm_outcome import (
     _classify_controlled_llm_result as _classify_controlled_llm_result,  # noqa: PLC0414 - legacy facade
 )
@@ -84,6 +100,15 @@ from src.modules.tender_operator_agent_demo.operator_llm_report_projection impor
 from src.modules.tender_operator_agent_demo.operator_non_goods_economics import (
     build_non_goods_economics_payload,
 )
+from src.modules.tender_operator_agent_demo.operator_notice_fields import (
+    extract_notice_delivery_deadline,
+    extract_notice_price,
+)
+from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import (
+    project_collect_matches,
+    project_extract_inline_goods_field,
+    project_extract_notice_service_deadline,
+)
 from src.modules.tender_operator_agent_demo.operator_quote_report import (
     build_quote_comparison_report,
 )
@@ -94,6 +119,10 @@ from src.modules.tender_operator_agent_demo.operator_report_inventory import (
     build_downloaded_documents_inventory,
     document_type_label,
 )
+from src.modules.tender_operator_agent_demo.operator_report_renderers import (
+    project_render_procurement_blocked_report_html,
+    project_render_product_report_html,
+)
 from src.modules.tender_operator_agent_demo.operator_requirement_rows import (
     extract_requirement_rows,
     normalize_requirement_title,
@@ -101,9 +130,15 @@ from src.modules.tender_operator_agent_demo.operator_requirement_rows import (
 from src.modules.tender_operator_agent_demo.operator_requirements_context import (
     build_operator_requirements_context,
 )
+from src.modules.tender_operator_agent_demo.operator_rfq_document_projections import (
+    build_document_grounded_questions,
+    build_document_grounded_requirements,
+    build_goods_rfq_payload,
+    project_document_grounded_risks,
+)
 from src.modules.tender_operator_agent_demo.operator_risk_report import (
     build_document_grounded_rfq_sections,
-    build_document_grounded_risks,
+    build_document_grounded_risks,  # noqa: F401 - preserve legacy module re-export
     build_operator_risk_payload,
 )
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
@@ -118,6 +153,9 @@ from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
     _scope_signal_evidence as _scope_signal_evidence,  # noqa: PLC0414 - legacy facade
 )
+from src.modules.tender_operator_agent_demo.operator_services_analysis import (
+    project_build_services_preliminary_analysis,
+)
 from src.modules.tender_operator_agent_demo.operator_software_preliminary import (
     build_software_preliminary_analysis,
 )
@@ -130,25 +168,6 @@ from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
 from src.modules.tender_operator_agent_demo.operator_submission_deadline import (
     submission_deadline_from_metadata,
 )
-from src.modules.tender_operator_agent_demo.operator_notice_fields import extract_notice_price
-from src.modules.tender_operator_agent_demo.operator_notice_fields import extract_notice_delivery_deadline
-from src.modules.tender_operator_agent_demo.operator_goods_text_fields import split_trailing_classification
-from src.modules.tender_operator_agent_demo.operator_goods_text_fields import summarize_supply_characteristics
-from src.modules.tender_operator_agent_demo.operator_rfq_document_projections import (
-    build_goods_rfq_payload,
-    build_document_grounded_requirements,
-    build_document_grounded_questions,
-    project_document_grounded_risks,
-)
-from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import project_collect_matches
-from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import project_extract_notice_service_deadline
-from src.modules.tender_operator_agent_demo.operator_notice_text_helpers import project_extract_inline_goods_field
-from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import project_rewrite_compliance_highlight
-from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import project_rewrite_delivery_model_item
-from src.modules.tender_operator_agent_demo.operator_analysis_text_helpers import project_is_goods_supply_table_present
-from src.modules.tender_operator_agent_demo.operator_report_renderers import project_render_product_report_html
-from src.modules.tender_operator_agent_demo.operator_report_renderers import project_render_procurement_blocked_report_html
-from src.modules.tender_operator_agent_demo.operator_services_analysis import project_build_services_preliminary_analysis
 from src.modules.tender_operator_agent_demo.operator_supplier_questions import (
     normalize_supplier_questions,
 )
@@ -1307,99 +1326,8 @@ def _extract_legacy_goods_spec_rows(technical_spec_text: str) -> list[dict[str, 
 
 
 def _merge_supply_items(items: list[SupplyItem]) -> list[SupplyItem]:
-    """Create canonical procurement items while retaining every source as evidence.
-
-    A quantity can be absent in a DOCX representation of a purchase object and
-    present in XML/XLSX.  It must complement the same item rather than create a
-    second row merely because the less complete representation lacks a value.
-    """
-    merged: list[SupplyItem] = []
-    for item in items:
-        if item.record_type != "line_item" or not _is_line_item_name(item.name):
-            continue
-        # Service rows describe operations.  Similar vocabulary does not make
-        # diagnostics, repair, replacement and maintenance one canonical row.
-        # Preserve each source row; goods-only matching starts below.
-        if item.item_type == "service":
-            item.evidence_ids = list(dict.fromkeys(item.evidence_ids or ([item.evidence_id] if item.evidence_id else [])))
-            item.official_name = item.official_name or item.name
-            item.display_name = item.display_name or item.name
-            merged.append(item)
-            continue
-        name_key = _normalize_supply_name_key(item.name)
-        if not name_key:
-            continue
-        item.evidence_ids = list(dict.fromkeys(item.evidence_ids or ([item.evidence_id] if item.evidence_id else [])))
-        item.official_name = item.official_name or item.name
-        item.display_name = item.display_name or item.name
-        item_unit = _normalize_supply_unit(item.unit)
-        signature = tuple(sorted(_normalize_supply_name_key(value) for value in item.characteristics if value))
-        existing = next((candidate for candidate in merged if (
-            (_normalize_supply_name_key(candidate.name) == name_key or bool(
-                set(token for token in _normalize_supply_name_key(candidate.name).split() if len(token) >= 5)
-                & set(token for token in name_key.split() if len(token) >= 5)
-            ))
-            and (not _normalize_supply_unit(candidate.unit) or not item_unit or _normalize_supply_unit(candidate.unit) == item_unit)
-            and (not candidate.quantity or not item.quantity or candidate.quantity == item.quantity)
-            and (not candidate.okpd2 or not item.okpd2 or candidate.okpd2 == item.okpd2)
-            and (not candidate.ktru or not item.ktru or candidate.ktru == item.ktru)
-            # Characteristics commonly differ in completeness between a DOCX
-            # table and structured XML.  They complement an otherwise exact
-            # name/unit/quantity match; they must not create a duplicate.
-        )), None)
-        if existing is None:
-            merged.append(item)
-            continue
-        if not existing.quantity and item.quantity:
-            existing.quantity = item.quantity
-        if not existing.unit and item.unit:
-            existing.unit = item.unit
-        if not existing.unit_price and item.unit_price:
-            existing.unit_price = item.unit_price
-        if not existing.total_price and item.total_price:
-            existing.total_price = item.total_price
-        if item.gost:
-            existing.gost = _summarize_supply_characteristics(existing.gost + item.gost, limit=4)
-        if item.characteristics:
-            existing.characteristics = _summarize_supply_characteristics(existing.characteristics + item.characteristics, limit=6)
-        existing.equivalent_allowed = existing.equivalent_allowed or item.equivalent_allowed
-        existing.confidence = "high" if "high" in {existing.confidence, item.confidence} else existing.confidence
-        for source_document in item.source_documents or [item.source_document]:
-            if source_document not in existing.source_documents:
-                existing.source_documents.append(source_document)
-        existing.evidence_ids = list(dict.fromkeys(existing.evidence_ids + item.evidence_ids))
-        # Structured purchaseObject is preferred for the displayed official
-        # name, but its presence never discards quantities/evidence from a
-        # complementary specification or NMCK row.
-        if item.name_source_type == "structured_direct_name" and existing.name_source_type != "structured_direct_name":
-            existing.name = item.name
-            existing.official_name = item.name
-            existing.display_name = item.name
-            existing.name_source_type = item.name_source_type
-            existing.name_source_path = item.name_source_path
-        if existing.source_document != item.source_document and item.source_kind == "technical_spec":
-            existing.source_document = item.source_document
-            existing.source_kind = item.source_kind
-            existing.raw_fragment = item.raw_fragment or existing.raw_fragment
-    def sort_key(item: SupplyItem) -> tuple[int, str]:
-        try:
-            number = int(item.item_no or "999")
-        except ValueError:
-            number = 999
-        return number, item.name.lower()
-    name_counts: dict[str, int] = {}
-    for item in merged:
-        name_counts[_normalize_supply_name_key(item.official_name or item.name)] = name_counts.get(_normalize_supply_name_key(item.official_name or item.name), 0) + 1
-    for item in merged:
-        official_name = item.official_name or item.name
-        characteristics = _summarize_supply_characteristics(item.characteristics, limit=3)
-        # Keep the official wording intact.  Add only compact, source-backed
-        # characteristics when a repeated generic name would be ambiguous.
-        if name_counts[_normalize_supply_name_key(official_name)] > 1 and characteristics:
-            item.display_name = f"{official_name} — {', '.join(characteristics)}"
-        else:
-            item.display_name = official_name
-    return sorted(merged, key=sort_key)
+    """Compatibility facade preserving source-monolith runtime overrides."""
+    return project_merge_supply_items(items, _is_line_item_name=_is_line_item_name, _normalize_supply_name_key=_normalize_supply_name_key, _normalize_supply_unit=_normalize_supply_unit, _summarize_supply_characteristics=_summarize_supply_characteristics)
 
 
 def _collect_supply_items(documents: list[AnalyzedDocument]) -> list[SupplyItem]:
@@ -1407,59 +1335,8 @@ def _collect_supply_items(documents: list[AnalyzedDocument]) -> list[SupplyItem]
 
 
 def _collect_unmerged_source_items(documents: list[AnalyzedDocument]) -> list[SupplyItem]:
-    """Return per-document extractor rows before legacy reconciliation.
-
-    The production source graph consumes these rows.  `_collect_supply_items`
-    remains a compatibility presentation helper and is never its value source.
-    """
-    extracted: list[SupplyItem] = []
-    for doc in documents:
-        text = doc.text or ""
-        if not text:
-            continue
-        lowered_name = doc.display_name.lower()
-        if doc.role == "technical_spec" or any(
-            token in lowered_name
-            for token in ("техническ", "описание объекта", "спецификац", "перечень", "ведомост")
-        ):
-            extracted.extend(_extract_supply_items_from_spec_text(text, doc.display_name))
-        if doc.extension in {".xlsx", ".xls"} or "нмцк" in lowered_name or "обоснование" in lowered_name:
-            extracted.extend(_extract_supply_items_from_xlsx_text(text, doc.display_name))
-            extracted.extend(_extract_service_items_from_nmck_text(text, doc.display_name))
-        if doc.extension == ".xml" or "purchasenotice" in text.lower() or "epnotification" in text.lower() or "purchaseobject" in text.lower():
-            extracted.extend(_extract_supply_items_from_notification_xml(text, doc.display_name))
-    existing_names = {_normalize_supply_name_key(item.name) for item in extracted}
-    # Every text-bearing document is eligible. Specialized parsers above remain
-    # preferred; this bounded fallback only supplies missing, source-evidenced items.
-    for fact in extract_goods_source_facts(documents):
-        if fact.fact_type != "PRODUCT_ITEM":
-            continue
-        name = _normalize_supply_name(fact.value)
-        key = _normalize_supply_name_key(name)
-        if not _is_line_item_name(name) or key in existing_names:
-            continue
-        extracted.append(
-            SupplyItem(
-                item_no=None,
-                name=name,
-                quantity=None,
-                unit=None,
-                characteristics=[],
-                gost=[],
-                equivalent_allowed=None,
-                source_document=fact.source_document,
-                source_kind="source_fact",
-                confidence=fact.confidence,
-                raw_fragment=fact.excerpt,
-                source_documents=[fact.source_document],
-                quantity_status="not_specified",
-                source_row_number=fact.source_row_number,
-                evidence_id=fact.fact_id,
-                extraction_strategy=fact.extraction_strategy,
-            )
-        )
-        existing_names.add(key)
-    return extracted
+    """Compatibility facade preserving source-monolith runtime overrides."""
+    return project_collect_unmerged_source_items(documents, SupplyItem=SupplyItem, _extract_service_items_from_nmck_text=_extract_service_items_from_nmck_text, _extract_supply_items_from_notification_xml=_extract_supply_items_from_notification_xml, _extract_supply_items_from_spec_text=_extract_supply_items_from_spec_text, _extract_supply_items_from_xlsx_text=_extract_supply_items_from_xlsx_text, _is_line_item_name=_is_line_item_name, _normalize_supply_name=_normalize_supply_name, _normalize_supply_name_key=_normalize_supply_name_key, extract_goods_source_facts=extract_goods_source_facts)
 
 
 def _extract_goods_spec_table(technical_spec_text: str) -> list[dict[str, str]]:
@@ -1561,166 +1438,9 @@ def _build_document_grounded_rfq_sections(procurement_kind: str) -> list[str]:
     return build_document_grounded_rfq_sections(procurement_kind)
 
 
-def _build_goods_preliminary_analysis(
-    *,
-    metadata: dict[str, Any],
-    documents: list[AnalyzedDocument],
-    technical_spec_text: str,
-    contract_draft_text: str,
-    notice_text: str,
-) -> dict[str, Any]:
-    tz_text = technical_spec_text or ""
-    contract_text = contract_draft_text or ""
-    notice = notice_text or ""
-    initial_price = _extract_notice_price(metadata, notice, contract_text)
-    supply_items = _collect_goods_supply_items_from_documents(documents)
-    spec_rows = [_supply_item_to_row(item) for item in supply_items] or _extract_goods_spec_table(tz_text)
-    delivery_deadline = _extract_inline_goods_field(
-        tz_text,
-        ("Срок поставки", "Сроки поставки товара"),
-        stop_markers=(
-            "Требования к качеству",
-            "Требования к безопасности",
-            "Условия оплаты",
-            "Адрес поставки",
-            "Место поставки",
-            "Условия поставки",
-            "Порядок поставки",
-        ),
-    ) or _extract_notice_delivery_deadline(notice)
-    delivery_deadline = _cleanup_tabular_value(delivery_deadline) or delivery_deadline
-    delivery_address = _extract_inline_goods_field(
-        tz_text,
-        ("Место поставки", "Место поставки товаров", "Адрес поставки товара"),
-        stop_markers=(
-            "Расходы по доставке",
-            "Условия поставки",
-            "Срок поставки",
-            "Сроки поставки товара",
-            "Порядок поставки",
-            "Условия оплаты",
-        ),
-    )
-    delivery_address = _cleanup_delivery_address(delivery_address) or delivery_address
-    payment_terms = _match_first(
-        contract_text,
-        (
-            r"в течение\s+(\d+\s*\([^)]+\)\s*рабочих дней[^.]+документа о приемке)",
-            r"в течение\s+(\d+\s*рабочих дней[^.]+документа о приемке)",
-            r"Оплата[^.]*?в течение\s+([^.]+)",
-        ),
-    )
-    acceptance_window = _match_first(
-        contract_text,
-        (
-            r"Не позднее\s+(\d+\s*\([^)]+\)\s*рабочих дней[^.]+документа о приемке)",
-            r"Не позднее\s+(\d+\s*рабочих дней[^.]+документа о приемке)",
-        ),
-    )
-    execution_security = _match_first(
-        contract_text + "\n" + notice,
-        (
-            r"обеспечени[ея]\s+исполнения\s+контракта[^.]{0,120}",
-        ),
-    )
-    execution_security_percent = _match_first_dotall(
-        notice + "\n" + contract_text,
-        (
-            r"contractGuarantee[\s\S]{0,600}?<(?:\w+:)?part>(\d+(?:[.,]\d+)?)</(?:\w+:)?part>",
-            r"обеспечени[ея]\s+исполнения\s+контракта[^%\n]{0,200}?(\d+(?:[.,]\d+)?)\s*%",
-        ),
-    )
-
-    contract_terms = []
-    if payment_terms:
-        contract_terms.append(f"Условия оплаты: в течение {payment_terms}.")
-    if execution_security:
-        security_text = "Обеспечение исполнения контракта: да"
-        if execution_security_percent:
-            security_text += f", {execution_security_percent.replace('.', ',')}% от НМЦК"
-        contract_terms.append(security_text + ".")
-    if acceptance_window:
-        short_acceptance = _shorten_acceptance_terms(acceptance_window)
-        if short_acceptance:
-            contract_terms.append(f"Срок приемки: {short_acceptance.rstrip('.')}.")
-    if "цена контракта является твердой" in contract_text.lower():
-        contract_terms.append("Цена контракта: твердая, без индексации на период исполнения.")
-    contract_terms = _dedupe_text_items([_normalize_analysis_sentence(item) or item for item in contract_terms[:6]])
-
-    total_meter_quantity = sum(_parse_float(item.quantity) or 0 for item in supply_items if (item.unit or "") == "м")
-    total_positions = len(supply_items)
-    top_position = max(supply_items, key=lambda item: _parse_float(item.quantity) or 0, default=None)
-
-    overview = [f"Предмет закупки: {metadata.get('tender_title') or 'поставка товаров'}"]
-    if initial_price:
-        overview.append(f"НМЦК: {initial_price} руб.")
-    if spec_rows:
-        overview.append("В ТЗ выделена табличная спецификация по товарам.")
-    if total_positions:
-        overview.append(f"Количество позиций: {total_positions}.")
-    if total_meter_quantity:
-        quantity_text = int(total_meter_quantity) if float(total_meter_quantity).is_integer() else total_meter_quantity
-        overview.append(f"Общий объём кабеля/провода: {quantity_text} м.")
-    if delivery_address:
-        overview.append(f"Адрес поставки: {(_normalize_analysis_sentence(delivery_address) or delivery_address).rstrip('.')}.")
-    if delivery_deadline:
-        overview.append(f"Срок поставки: {(_normalize_analysis_sentence(delivery_deadline) or delivery_deadline).rstrip('.')}.")
-    if payment_terms:
-        short_payment_terms = _shorten_payment_terms(payment_terms)
-        if short_payment_terms:
-            overview.append(f"Оплата: {short_payment_terms.rstrip('.')}")
-    overview = _dedupe_text_items([_normalize_analysis_sentence(item) or item for item in overview[:7]])
-
-    compliance_highlights = _dedupe_text_items(
-        [
-            "Нужно подтвердить соответствие каждой позиции ГОСТ, ТУ и характеристикам ТЗ.",
-            "Для позиций с обязательной сертификацией нужно получить сертификаты, декларации и паспорта качества.",
-            "Аналоги допустимы только при полном соответствии характеристикам и требованиям заказчика.",
-            "До участия нужно проверить включение доставки и разгрузки в цену поставщика.",
-        ]
-    )
-    delivery_model = _dedupe_text_items(
-        [
-            _normalize_analysis_sentence(f"Поставка выполняется по адресу заказчика: {delivery_address}") if delivery_address else None,
-            _normalize_analysis_sentence(f"Срок поставки: {delivery_deadline}") if delivery_deadline else None,
-            "Поставка выполняется по заявке заказчика; важно подтвердить складской остаток и срок отгрузки.",
-            "Доставка и разгрузка должны быть подтверждены поставщиком отдельно.",
-        ]
-    )
-    next_actions = _dedupe_text_items(
-        [
-            "Сверить извлечённые позиции с ТЗ и НМЦК.xlsx по количеству, единицам и ГОСТ.",
-            "Запросить КП по каждой позиции с ценой за единицу, суммой, НДС и сроком поставки.",
-            "Подтвердить наличие товара, документы качества и логистику до адреса заказчика.",
-        ]
-    )
-    return {
-        "overview": overview,
-        "compliance_highlights": compliance_highlights,
-        "delivery_model": delivery_model,
-        "contract_highlights": contract_terms,
-        "next_actions": next_actions,
-        "supply_items": [item.__dict__ for item in supply_items],
-        "extracted_fields": _dedupe_text_items(
-            [
-                "НМЦК" if initial_price else "",
-                "позиции поставки" if spec_rows else "",
-                "срок поставки" if delivery_deadline else "",
-                "адрес поставки" if delivery_address else "",
-            ]
-        ),
-        "procurement_kind": "goods",
-        "supply_section_note": (
-            "Позиции поставки собраны из ТЗ, спецификаций и НМЦК.xlsx."
-            if spec_rows
-            else "Позиции поставки не извлечены автоматически. Нужна ручная сверка ТЗ и приложений."
-        ),
-        "spec_table": {
-            "columns": ["№", "Наименование", "Кол-во", "Ед. изм.", "Ключевые характеристики", "ГОСТ / норматив", "Эквивалент", "Цена за ед., руб.", "Сумма, руб.", "Источник"],
-            "rows": spec_rows,
-        },
-        "largest_position": top_position.name if top_position else None,
-    }
+def _build_goods_preliminary_analysis(*, metadata: dict[str, Any], documents: list[AnalyzedDocument], technical_spec_text: str, contract_draft_text: str, notice_text: str) -> dict[str, Any]:
+    """Compatibility facade preserving source-monolith runtime overrides."""
+    return project_build_goods_preliminary_analysis(metadata=metadata, documents=documents, technical_spec_text=technical_spec_text, contract_draft_text=contract_draft_text, notice_text=notice_text, _cleanup_delivery_address=_cleanup_delivery_address, _cleanup_tabular_value=_cleanup_tabular_value, _collect_goods_supply_items_from_documents=_collect_goods_supply_items_from_documents, _dedupe_text_items=_dedupe_text_items, _extract_goods_spec_table=_extract_goods_spec_table, _extract_inline_goods_field=_extract_inline_goods_field, _extract_notice_delivery_deadline=_extract_notice_delivery_deadline, _extract_notice_price=_extract_notice_price, _match_first=_match_first, _match_first_dotall=_match_first_dotall, _normalize_analysis_sentence=_normalize_analysis_sentence, _parse_float=_parse_float, _shorten_acceptance_terms=_shorten_acceptance_terms, _shorten_payment_terms=_shorten_payment_terms, _supply_item_to_row=_supply_item_to_row)
 
 
 def _build_preliminary_procurement_analysis(
