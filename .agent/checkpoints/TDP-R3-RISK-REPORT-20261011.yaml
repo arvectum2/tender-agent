@@ -1,0 +1,42 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-RISK-REPORT-20261011
+status: in_progress
+goal: Extract source-safe risk evidence locator validation and risk output projection
+  from 4152-line upload monolith to existing product-owned operator_risk_report, preserving
+  fail-closed behavior and output schema.
+definition_of_done:
+- Preserve existing risk candidate selection, severity, review gates and safe source
+  locator filtering
+- Use existing product-owned operator_risk_report module with explicit pure function
+  inputs and old report surface intact
+- Add tests covering valid and adversarial locator input, unverified LLM risk and
+  claim-bound omission, and AST calculation parity
+- Run focused/full Python3.12 pytest, Ruff/make check, exact-head GitHub CI and merge
+- Mark bounded checkpoint completed while overarching TDP-REFACTOR remains in_progress
+completed:
+- Verified current main 409bd15c, existing risk report helper module, identified nested
+  24-line locator safety filter and ~38-line risk report projection in legacy output
+  builder.
+- Moved 24-line safe locator validation + 38-line risk output projection into existing
+  operator_risk_report.py with explicit text translator dependency.
+- Preserved AST of nested locator function and entire risk dictionary value, including
+  claim_bound_mode behavior and unverified_llm review gating.
+- Added direct safe/adversarial path, opaque SHA/UUID, LLM source status and fallback
+  report tests; 69 focused tests passed.
+- Targeted Ruff and make check passed.
+current: Full Python 3.12 regression running; exact-head GitHub CI and merge pending.
+pending:
+- Implement function extraction and tests
+- Run local validation and exact-head GitHub CI
+- Merge only all green; complete bounded checkpoint
+last_verified_commit: 409bd15c46ffc1357e4f195b91064af8f18e23e9
+test_results:
+- 69 focused tests passed, 1 warning
+- AST value/locator body equivalence PASS
+- Targeted Ruff PASS
+- make check PASS
+resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-risk-report-20261011;
+  inspect /tmp/tdp-r3-risk-full.log (PID 69586). Commit and push PR. All exact-head
+  GitHub CI green required before merge; then mark bounded checkpoint completed on
+  main, overarching in_progress. Do not touch live services or owner-disabled watchdog.

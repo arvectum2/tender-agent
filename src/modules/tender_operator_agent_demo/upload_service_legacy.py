@@ -90,6 +90,7 @@ from src.modules.tender_operator_agent_demo.operator_requirement_rows import (
 from src.modules.tender_operator_agent_demo.operator_risk_report import (
     build_document_grounded_rfq_sections,
     build_document_grounded_risks,
+    build_operator_risk_payload,
 )
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
     _SCOPE_SIGNALS as _SCOPE_SIGNALS,  # noqa: PLC0414 - legacy facade
@@ -3178,68 +3179,9 @@ def _build_output_payloads(
         else calibrated_risks if claim_bound_mode else (grounded_risks or calibrated_risks)
     )
 
-    def normalized_risk_evidence_locators(value: Any) -> list[dict[str, str]]:
-        """Pass only safe, customer-readable report locators downstream."""
-        if not isinstance(value, list):
-            return []
-        normalized: list[dict[str, str]] = []
-        for item in value:
-            if not isinstance(item, dict):
-                return []
-            document, locator = item.get("document"), item.get("locator")
-            if not isinstance(document, str) or not document.strip():
-                return []
-            if not isinstance(locator, str) or not locator.strip():
-                return []
-            if (
-                "/" in document
-                or "\\" in document
-                or locator.strip().startswith(("/", "file:"))
-                or "/Volumes/" in locator
-                or "/Users/" in locator
-                or re.fullmatch(r"[0-9a-f]{64}|[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", document.strip(), flags=re.IGNORECASE)
-            ):
-                return []
-            normalized.append({"document": document.strip(), "locator": locator.strip()})
-        return normalized
-    risks_payload = {
-        "summary": "Найдены ограничения и риски, требующие ручной проверки.",
-        "risks": [
-            {
-                "risk": _translate_user_text(risk.get("clause", "Ограничение")),
-                "severity": (
-                    "needs_review"
-                    if risk.get("source_status") == "unverified_llm"
-                    or risk.get("classification") == "deal_breaker_candidate"
-                    else "warning"
-                ),
-                "impact": _translate_user_text(risk.get("impact", "")),
-                "mitigation": _translate_user_text(risk.get("mitigation", "")),
-                "risk_id": risk.get("risk_id"),
-                "category": risk.get("category", "unknown"),
-                "evidence_ids": [value for value in str(risk.get("evidence_ids") or "").split(", ") if value],
-                "evidence_locators": normalized_risk_evidence_locators(risk.get("evidence_locators")),
-                "status": (
-                    "requires_review" if risk.get("source_status") == "unverified_llm"
-                    else "blocker" if risk.get("classification") == "deal_breaker_candidate"
-                    else "requires_review"
-                ),
-                "source_status": risk.get("source_status", "legacy_unverified"),
-            }
-            for risk in risk_candidates
-        ]
-        or ([] if claim_bound_mode else [
-            {
-                "risk": "Недостаточно данных по договорным условиям",
-                "severity": "needs_review",
-                "impact": "Часть контрактных рисков не может быть оценена автоматически.",
-                "mitigation": "Проверить договор и комплектность вручную.",
-            }
-        ]),
-        "manual_checks": [
-            "Проверить договорные ограничения и совместимость аналогов вручную."
-        ],
-    }
+    risks_payload = build_operator_risk_payload(
+        risk_candidates, claim_bound_mode, _translate_user_text=_translate_user_text
+    )
 
     final_recommendation, rationale = build_provisional_operator_recommendation(
         procurement_kind=procurement_kind,
