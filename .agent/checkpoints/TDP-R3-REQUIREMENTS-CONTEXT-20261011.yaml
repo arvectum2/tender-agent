@@ -24,8 +24,12 @@ completed:
   fields, EIS evidence IDs, sourced NMCK, goods/service distinctions, original contract
   fact passthrough.
 - 39 related focused local tests passed; targeted Ruff clean and make check passed.
-current: Full local Python3.12 pytest running, exact-head CI and merge pending; current
-  base main 368da8c8.
+- 'Full local Python 3.12 pytest: 3634 passed, 238 skipped, 295 warnings, 0 failures
+  (142.93s); targeted Ruff and make check PASS.'
+- 'Before main reconciliation: PR #329 all exact-head GitHub quality 8m33s/9m27s and
+  all other CI passed.'
+current: 'Merged architecture audit #328 into PR #329 branch; rerun full pytest, exact-head
+  CI required to merge.'
 pending:
 - Extract and test AST-equivalent pure function
 - Full local regression, exact-head GitHub CI
@@ -35,8 +39,11 @@ test_results:
 - 39 focused tests passed / 22 warnings
 - AST exact requirements_payload parity passed
 - Target Ruff PASS; make check PASS
-resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-requirements-context-20261011.
-  Full local suite /tmp/tdp-r3-req-full.log running PID8674. Wait all exact-head GitHub
-  CI. Audit #328 docs concurrently may merge; reconcile latest main before merging.
-  Preserve all source-backed facts, missing UNKNOWN and manual-review status. Production,
-  EIS, disabled watchdog untouched.'
+- Full local pytest 3634 passed, 238 skipped, zero failed
+- make check PASS; Ruff PASS
+- 'PR #329 pre-main-reconciliation GitHub dual quality/integrations PASS (will rerun
+  after merge main).'
+resume_instruction: 'This worktree merges main #328 into PR #329; now rerun make check
+  and full pytest, await dual exact-head CI of new merged commit. Source requirements
+  must remain AST equivalent; once all green merge PR #329 then mark checkpoint completed.
+  Parent remains in_progress; do not touch production or watchdog.'
