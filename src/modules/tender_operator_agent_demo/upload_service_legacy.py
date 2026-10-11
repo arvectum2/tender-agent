@@ -326,8 +326,6 @@ def get_demo_run_output_dir(run_id: str) -> Path:
     return get_demo_run_dir(run_id) / "output"
 
 
-def _events_path(run_id: str) -> Path:
-    return get_demo_run_dir(run_id) / EVENTS_FILE
 
 
 def _metadata_path(run_id: str) -> Path:
@@ -631,15 +629,6 @@ def _save_metadata(run_id: str, metadata: dict[str, Any]) -> None:
     save_demo_run_metadata(run_id, metadata)
 
 
-def _decode_text(content: bytes) -> str | None:
-    for encoding in ("utf-8", "cp1251", "koi8-r", "latin-1"):
-        try:
-            text = content.decode(encoding).strip()
-            if text:
-                return text
-        except Exception:
-            continue
-    return None
 
 
 def _detect_role(name: str) -> str:
@@ -727,10 +716,6 @@ def _collect_spreadsheet_sources(documents: list[AnalyzedDocument]) -> list[Spre
     return collect_operator_spreadsheet_sources(documents)
 
 
-def _import_runner_module():
-    from scripts import run_tender_operator_pilot as pilot_runner
-
-    return pilot_runner
 
 
 def _try_run_llm_workflow(
@@ -1760,8 +1745,6 @@ def _extract_goods_spec_table(technical_spec_text: str) -> list[dict[str, str]]:
     return rows or _extract_legacy_goods_spec_rows(technical_spec_text)
 
 
-def _extract_goods_spec_table_from_tabular_text(text: str) -> list[dict[str, str]]:
-    return [_supply_item_to_row(item) for item in _extract_supply_items_from_xlsx_text(text, "Табличное приложение")]
 
 
 def _build_supply_rows(documents: list[AnalyzedDocument]) -> list[dict[str, str]]:
