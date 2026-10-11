@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-QUOTES-REPORT-20261011
-status: in_progress
+status: completed
 goal: Extract the pure supplier-quote comparison report payload from the Tender Agent
   legacy upload monolith while preserving source-derived counts, manual review and
   absence-of-input behavior.
@@ -23,18 +23,21 @@ completed:
   only, missing/unparsed quote fallback/manual review, and no autonomous outbound
   action.
 - Targeted Ruff and make check passed.
-current: Full Python 3.12 pytest running; exact-head GitHub CI and merge pending.
-pending:
-- Implement pure quote report projection and tests
-- Ruff/focused/full pytest and exact-head CI
-- Merge all green and checkpoint completed
-last_verified_commit: 4f1114378181f3b6c4962d0ecfc254ee4e4e40ac
+- 'PR #325 all exact-head GitHub CI including both quality jobs (9m23s/7m4s) passed,
+  full Python 3.12 pytest 3607 passed, 238 skipped, 0 failed, Ruff and make check
+  pass.'
+- 'PR #325 merged latest main 7c564070e3b830ca829b7ed48b7b39a153e8b170.'
+current: Completed merged 7c564070e3b830ca829b7ed48b7b39a153e8b170
+pending: []
+last_verified_commit: 7c564070e3b830ca829b7ed48b7b39a153e8b170
 test_results:
 - 42 focused tests passed, 21 warnings
 - AST quote value parity PASS
 - Ruff targeted clean
 - make check PASS
-resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-quote-report-20261011;
-  inspect /tmp/tdp-r3-quotes-full.log from process 78316. Push PR only exact-head
-  CI green. Complete slice and parent current-task state after merge. Leave live production/EIS/source
-  secrets and watchdog unchanged.
+- 3607 full local passed; 238 skipped; zero failures
+- Both exact-head quality and remaining GitHub integrations/security CI green
+- Merged 7c564070e3b830ca829b7ed48b7b39a153e8b170
+resume_instruction: 'R3 quote comparison report projection is completed and merged
+  PR #325. Do not repeat. Continue R3 source-only deadline fix #326 and R2 authoritative
+  EIS originals, R4 gold benchmark, R5 human corpus.'
