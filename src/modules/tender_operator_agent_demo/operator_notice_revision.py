@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
+from typing import Any
 
 
 def _local_name(tag: str) -> str:
@@ -82,3 +83,37 @@ def matched_archived_eis_notification(
         "version": version,
         "published_at": published,
     }
+
+
+def selected_archived_notice_text(
+    documents: list[Any], selected_revision: dict[str, Any] | None
+) -> str | None:
+    """Return text only from the exact registry/version-verified source document.
+
+    The returned notice is the highest *archived* version, not proof it is
+    presently authoritative on live EIS. Never borrow another document's text.
+    """
+    if not isinstance(selected_revision, dict):
+        return None
+    registry_number = str(selected_revision.get("purchase_number") or "")
+    file_id = str(selected_revision.get("file_id") or "")
+    version = selected_revision.get("version")
+    if not file_id or not isinstance(version, int):
+        return None
+
+    for document in documents:
+        if (
+            getattr(document, "role", None) != "notice"
+            or str(getattr(document, "file_id", "")) != file_id
+        ):
+            continue
+        raw_content = getattr(document, "raw_content", None)
+        if not isinstance(raw_content, bytes) or len(raw_content) > 12_000_000:
+            return None
+        original_xml = raw_content.decode("utf-8", errors="replace")
+        identity = matched_archived_eis_notification(original_xml, registry_number)
+        if identity is None or identity["version"] != version:
+            return None
+        extracted_text = str(getattr(document, "text", "") or "")
+        return extracted_text if extracted_text.strip() else original_xml
+    return None

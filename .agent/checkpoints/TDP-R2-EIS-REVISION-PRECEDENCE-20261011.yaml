@@ -46,8 +46,19 @@ completed:
   manual XML report binding.
 - 'Reconciled main PR #330 5b12fb99be499c98d3c7ecf747f07e65323ac09b and preserved
   source-only summary contract.'
-current: 'Full Python3.12 regression and fresh exact-head CI after main #330 merge
-  pending.'
+- After finding correct metadata v5 but stale first-file v1 notice_text could be supplied
+  to LLM, added selected_archived_notice_text() verifying exact raw content registry+version+file_id
+  before returning corresponding text; integrated in analyze_uploaded_demo_run before
+  controlled LLM/preliminary analysis.
+- Added two order-dependent source routing cases, one forged source selection rejection,
+  and a real uploaded v1+v5 FastAPI analyze run asserting LLM notice_text sees only
+  archived v5. 39 focused tests PASS, including manual XML R10.1 and EIS persisted
+  report.
+- Confirmed aggregate combined_text still contains original document inventory and
+  may include older archived XML; does not claim universal downstream corpus de-duplication
+  or live EIS authoritativeness.
+current: 'Updated PR #331 with matching LLM source text, awaiting full local Python3.12
+  regression and exact-head GitHub CI.'
 pending:
 - Implement safe parser and version-aware selection + tests
 - Full local regression, exact-head CI
@@ -61,8 +72,12 @@ test_results:
   binding, now resolved
 - 35 focused regression tests passed, including earlier failure
 - Ruff focused PASS
-resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-eis-revision-precedence-20261011
-  after PR #330 main merge. Manual XML sanitized-report regression fixed and 35 focused
-  PASS. Run full Python3.12 pytest/make check and exact-head PR #331 GitHub CI before
-  merge; only bounded revision precedence may complete. R2 original current live EIS
-  validity and R4/R5 human gold acceptance still in_progress.'
+- After LLM notice-text fix, 39 focused PASS, 23 warnings and target Ruff PASS.
+- Prior 3649 full local passed/238 skipped before notice-text change; fresh full still
+  required.
+resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-eis-revision-precedence-20261011,
+  PR #331. Source-safe raw file/version-matched archived notice now controls LLM notice_text.
+  39 focused PASS; run fresh make check and full Python3.12 pytest, require exact-head
+  GitHub CI all green. Prior 3649 full clean on earlier head is not fresh for this
+  patch. Overall actual-current EIS source revision proof and R4/R5 human validation
+  remain in_progress; no live deployment, secret or disabled watchdog changes.'

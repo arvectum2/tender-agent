@@ -5,11 +5,14 @@ The highest archived revision still needs independent live EIS confirmation.
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
 from src.modules.tender_operator_agent_demo.operator_notice_revision import (
     matched_archived_eis_notification,
+    selected_archived_notice_text,
 )
 from src.modules.tender_operator_agent_demo.upload_service import (
     _enrich_procurement_metadata_from_documents,
@@ -159,3 +162,99 @@ def test_version_from_common_info_if_direct_child_missing():
     )
     rev = matched_archived_eis_notification(raw, number)
     assert rev is not None and rev["version"] == 3
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_latest_archived_version_is_only_notice_text_sent_to_analysis(reverse):
+    number = "0158300034526000388"
+    v1 = _doc(number, 1, "2026-10-09T08:00:00+03:00")
+    v5 = _doc(number, 5, "2026-10-12T08:00:00+03:00")
+    docs = [v5, v1] if reverse else [v1, v5]
+    result = _enrich(number, docs, "09.10.2026 08:00:00 +03:00")
+    selected = selected_archived_notice_text(docs, result["notice_revision_selected"])
+    assert selected == v5.text
+    assert "2026-10-12T08:00:00+03:00" in selected
+    assert "2026-10-09T08:00:00+03:00" not in selected
+
+
+def test_forged_selection_does_not_route_older_text_as_current_revision():
+    number = "0158300034526000388"
+    v1 = _doc(number, 1, "2026-10-09T08:00:00+03:00")
+    assert selected_archived_notice_text(
+        [v1],
+        {
+            "purchase_number": number,
+            "version": 5,
+            "file_id": "FILE-01",
+        },
+    ) is None
+    assert selected_archived_notice_text(
+        [v1],
+        {
+            "purchase_number": "0372200172326000015",
+            "version": 1,
+            "file_id": "FILE-01",
+        },
+    ) is None
+
+
+def test_uploaded_archived_notices_route_latest_version_to_llm_prompt(
+    client, tmp_path, monkeypatch
+):
+    from src.modules.tender_operator_agent_demo import upload_service_legacy as legacy
+
+    number = "0158300034526000388"
+    root = tmp_path / "eis_revision_run"
+    monkeypatch.setenv("AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR", str(root))
+    seen_notices = []
+
+    def capture_notice(**kwargs):
+        seen_notices.append(kwargs.get("notice_text", ""))
+
+    monkeypatch.setattr(legacy, "_try_run_llm_workflow", capture_notice)
+
+    old_xml = _xml(number, 1, "2026-10-09T08:00:00+03:00").encode()
+    new_xml = _xml(number, 5, "2026-10-12T08:00:00+03:00").encode()
+    response = client.post(
+        "/api/demo/tender-agent/runs",
+        data={
+            "tender_title": "Закупка",
+            "tender_category": "Услуги",
+            "customer_name": "Заказчик",
+        },
+        files=[
+            ("files", ("notice_v1.xml", old_xml, "application/xml")),
+            ("files", ("notice_v5.xml", new_xml, "application/xml")),
+            (
+                "files",
+                ("technical_spec.txt", b"Requirements from customer.", "text/plain"),
+            ),
+            (
+                "files",
+                ("contract_draft.txt", b"Contract obligations.", "text/plain"),
+            ),
+        ],
+    )
+    assert response.status_code == 200
+    run_id = response.json()["run_id"]
+    metadata_path = root / run_id / "metadata.json"
+    metadata = json.loads(metadata_path.read_text())
+    metadata["procurement_id"] = number
+    metadata["mode"] = "procurement_search_intake"
+    metadata["procurement_source"] = "zakupki_gov_ru_getdocs_ip"
+    metadata["procurement"] = {
+        "procurement_number": number,
+        "deadline": "09.10.2026 08:00:00 +03:00",
+    }
+    metadata["deadline"] = "09.10.2026 08:00:00 +03:00"
+    metadata_path.write_text(json.dumps(metadata, ensure_ascii=False))
+
+    analyzed = client.post(f"/api/demo/tender-agent/runs/{run_id}/analyze")
+    assert analyzed.status_code == 200
+    assert analyzed.json()["status"] != "failed"
+    assert len(seen_notices) == 1
+    assert "2026-10-12T08:00:00+03:00" in seen_notices[0]
+    assert "2026-10-09T08:00:00+03:00" not in seen_notices[0]
+    metadata = json.loads(metadata_path.read_text())
+    assert metadata["notice_revision_selected"]["version"] == 5
+    assert metadata["notice_revision_requires_review"] is True
