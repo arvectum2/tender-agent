@@ -94,10 +94,10 @@ completed:
   - '2026-10-11 R4 bounded synthetic local controlled-model smoke: TA qwen3:4b real full 4/4 sections PASSED/252.43s with four human-review traces and no raw retention. Same section: qwen2.5:3b PASS/11.45s, qwen3:4b PASS/26.21s, gemma4:12b PASS/112.62s, huihui-hermes FAILED/115.03s. Not authoritative EIS gold quality or ranking.'
   - '2026-10-11 TA #325 quote comparison projection AST equivalent, source-only offers, 42 focused tests and full 3607 Python3.12 passed/238 skipped, both exact-head quality and other integrations green; merged main 7c564070e3b830ca829b7ed48b7b39a153e8b170.'
   - '2026-10-11 TA #326 source-locked submission deadline fix: missing date NULL, EIS XML exact ISO8601 serialized instead of fabricated run clock, prior full-test failure fixed, 38 focused + 3623 full local passes/238 skips, both exact-head quality/integrations green; merged main e5d069c5a1c4e5a89061dc0b047f6dac5a6975db.'
-current: 'R3 source-safe deadline #326 merged and all CI green, risk #320/quotes #325/non-goods #321 already merged. Analysis source trace PR #327 in exact-head reconciliation; ownership audit PR #328 open. R2 authoritative EIS original/notice edition not independently verified; R4 actual source-locked gold quality and R5 20 human-reviewed cases/owner signoff pending; overall in_progress.'
+  - '2026-10-11 TA #327 48-line source-trace projection extracted with exact AST parity, 42 focused and fully reconciled 3628 full local tests/238 skipped pass, both exact-head quality jobs 9m10s/8m36s plus all integrations passed, merged main 368da8c874b11edf185e29c6d874f9202f70df87.'
+current: 'R3 deadline #326 and source trace #327 code merged with dual quality/integration CI green. Cross-repo ownership audit #328 in CI. R2 independent authoritative EIS original byte hashes and notice edition still unverified; R4 genuine source-locked gold corpus/model benchmark and R5 >=20 human-reviewed original procurements and owner signoff still pending. Task remains in_progress.'
 pending:
   - 'R3 cross-repository architecture ownership audit TDP-CROSS-REPO-OWNERSHIP-20261011: reconcile prior Oct4 assumptions with current TA/DP implementations, publish boundary/gates.'
-  - 'R3 product-owned source-analysis trace TDP-R3-ANALYSIS-TRACE-20261011: preserve source counts, honest limitations, human only; tests and CI.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -105,8 +105,9 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: 'e5d069c5a1c4e5a89061dc0b047f6dac5a6975db'
+last_verified_commit: '368da8c874b11edf185e29c6d874f9202f70df87'
 test_results:
+  - 'TA #327 fully reconciled 3628 Python3.12 passed / 238 skipped, Ruff/make check and both exact-head quality + all integration/security CI passed.'
   - 'TA #326 38 focused + 3623 full Python3.12 pass/238 skip; local Ruff/make check and exact-head dual quality jobs all-green; real EIS XML date persists as ISO8601 and missing date NULL.'
   - 'R4 local real model synthetic: qwen3:4b four sections PASSED/252.43s; single-section qwen2.5:3b PASSED/11.45s, qwen3:4b PASSED/26.21s, gemma4:12b PASSED/112.62s, huihui-hermes FAILED/115.03s. No validated EIS gold source benchmark.'
   - 'TA #321: 75 focused tests and rebased 3601 full tests passed / 238 skipped / zero failed, both exact-head quality jobs + integration/security CI green.'
@@ -145,7 +146,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'R3 deadline #326 complete at e5d069c5a1c4e5a89061dc0b047f6dac5a6975db (full local 3623/238 and exact-head CI green). Continue R3 analysis trace #327: reconcile latest main, run full local/CI and merge; cross-repo ownership audit #328 after. R2 independent EIS original binary/revision proof, R4 real source-locked model gold benchmark and R5 20 human-reviewed original procurements/owner signoff still open. Do not touch production, secrets or reenable disabled watchdog.'
+resume_instruction: 'R3 product source trace #327 merged main 368da8c874b11edf185e29c6d874f9202f70df87 after full local 3628/238 + CI green, deadline #326 complete. Next cross-repo ownership audit #328 merge after exact-head CI and mark bounded checkpoints completed. Continuing R2 authoritative EIS originals/hash/revision, R4 source-locked gold-model benchmark and R5 >=20 independently human-reviewed original procurements/owner signoff remains required. Never modify live production or reenable owner-disabled watchdog.'
 execution:
   branch: main
   manual_override: true

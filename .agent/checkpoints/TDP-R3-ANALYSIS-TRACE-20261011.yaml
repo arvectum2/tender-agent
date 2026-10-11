@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-ANALYSIS-TRACE-20261011
-status: in_progress
+status: completed
 goal: Extract 48-line analyst-facing source-analysis trace summary from monolithic
   Tender Agent uploaded run builder, without changing risk provenance, document counts
   or human-review policy.
@@ -21,18 +21,20 @@ completed:
 - Five direct synthetic source-role/fact, goods vs services source requirement counts,
   empty text, human-review and limits tests added; 42 focused tests passed (21 warnings).
 - Targeted Ruff checked.
-current: 'Full local Python3.12 regression, latest main reconciliation (deadline PR
-  #326 concurrent) and exact-head GitHub CI outstanding.'
-pending:
-- Implementation and focused tests
-- Full regression and exact-head CI
-- Merge and complete bounded checkpoint
-last_verified_commit: 7c564070e3b830ca829b7ed48b7b39a153e8b170
+- 'PR #327 combined post-#326 local Python3.12 full regression: 3628 passed, 238 skipped,
+  zero failures; make check green.'
+- 'PR #327 all exact-head GitHub CI green: two quality jobs 9m10s and 8m36s plus integration/security/lock.'
+- Merged main 368da8c874b11edf185e29c6d874f9202f70df87
+current: Completed and merged as 368da8c874b11edf185e29c6d874f9202f70df87
+pending: []
+last_verified_commit: 368da8c874b11edf185e29c6d874f9202f70df87
 test_results:
 - 42 focused tests PASS (21 warnings)
 - AST trace payload identity PASS
 - Ruff targeted PASS
-resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-analysis-trace-20261011.
-  Run make check/full pytest, commit and open draft PR, then reconcile deadline PR
-  #326 after merge, revalidate exact-head CI; mark completed when merged. Parent TDP-REFACTOR
-  in_progress. No live production, secrets or disabled watchdog.'
+- 'Combined full local: 3628 passed/238 skipped, zero failures'
+- All exact-head GitHub quality and integration CI PASS
+- Merged 368da8c874b11edf185e29c6d874f9202f70df87
+resume_instruction: 'R3 source analysis trace extraction completed. Do not repeat.
+  Continue cross-repo ownership PR #328, and main open R2 original evidence, R4 gold
+  benchmark, R5 owner-reviewed acceptance. Watchdog remains disabled.'
