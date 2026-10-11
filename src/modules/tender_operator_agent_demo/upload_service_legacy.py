@@ -96,6 +96,9 @@ from src.modules.tender_operator_agent_demo.operator_requirement_rows import (
     extract_requirement_rows,
     normalize_requirement_title,
 )
+from src.modules.tender_operator_agent_demo.operator_requirements_context import (
+    build_operator_requirements_context,
+)
 from src.modules.tender_operator_agent_demo.operator_risk_report import (
     build_document_grounded_rfq_sections,
     build_document_grounded_risks,
@@ -2928,53 +2931,26 @@ def _build_output_payloads(
         submission_deadline_from_metadata=submission_deadline_from_metadata,
     )
 
-    requirements_payload = {
-        "requirements": requirement_rows,
-        "preliminary_analysis": preliminary_analysis,
-        "analysis_context": {
-            "procurement_number": metadata.get("procurement_id"),
-            "procurement_subject": (preliminary_analysis.get("overview") or [metadata.get("tender_title")])[0].removeprefix("Предмет закупки: "),
-            "customer_name": metadata.get("customer_name") or (metadata.get("procurement") or {}).get("customer_name"),
-            "customer_inn": metadata.get("customer_inn") or (metadata.get("procurement") or {}).get("customer_inn"),
-            "customer_kpp": metadata.get("customer_kpp") or (metadata.get("procurement") or {}).get("customer_kpp"),
-            "delivery_place": metadata.get("delivery_place") or delivery_address_from_preliminary(preliminary_analysis),
-            "delivery_address": metadata.get("delivery_address") or delivery_address_from_preliminary(preliminary_analysis),
-            "delivery_region": metadata.get("delivery_region"),
-            "delivery_status": metadata.get("delivery_status") or ("known" if delivery_address_from_preliminary(preliminary_analysis) else "unknown"),
-            "delivery_evidence_ids": [metadata.get("_field_evidence", {}).get("delivery_place")] if metadata.get("_field_evidence", {}).get("delivery_place") else [],
-            "contract_draft_status": contract_draft_status,
-            "contract_draft_documents": [doc.display_name for doc in contract_documents],
-            "contract_draft_evidence_ids": [f"contract:{doc.file_id}" for doc in contract_documents],
-            "procurement_scope": scope,
-            "goods_extraction_applicable": scope["goods_extraction_applicable"],
-            "scope_classification_conflict": scope["scope_classification_conflict"],
-            "procurement_category": procurement_kind,
-            "domain": preliminary_analysis.get("domain_profile", "unknown"),
-            "law": metadata.get("law"),
-            "okpd2": _service_okpd2_from_sources(notice_text, documents) if procurement_kind == "services" else None,
-            "okpd2_codes": metadata.get("okpd2_codes") or (metadata.get("procurement") or {}).get("okpd2_codes", []),
-            "nmck": _extract_notice_price(metadata, notice_text, contract_draft_text),
-            "positions": goods_positions,
-            "currency": "RUB",
-            "service_items": preliminary_analysis.get("service_items", []),
-            "document_inventory": [doc.display_name for doc in documents],
-            "document_coverage": "partial" if procurement_kind == "services" and not contract_draft_text else "available",
-            "missing_documents": [] if contract_draft_status in {"present", "parse_failed"} else preliminary_analysis.get("missing_documents", []),
-            "extraction_warnings": output_warnings,
-            "known_contract_terms": preliminary_analysis.get("contract_highlights", []) if contract_draft_text else [],
-            "unknown_contract_terms": (["payment", "acceptance", "penalties", "security", "liability"] if not contract_draft_text else []),
-            "contract_term_facts": [fact.as_dict() for fact in contract_term_facts.values()],
-            "contract_term_conflicts": contract_term_conflicts,
-            **{field: fact.value for field, fact in contract_term_facts.items()},
-            "supplier_profile": None,
-            "commercial_inputs": economics or {},
-            "evidence_map": [item.get("evidence_ids", []) for item in preliminary_analysis.get("service_items", [])],
-        },
-        "manual_review_points": [
-            "Проверить корректность распределения документов по ролям.",
-            "Подтвердить ключевые требования по исходным документам перед внешними действиями.",
-        ],
-    }
+    requirements_payload = build_operator_requirements_context(
+        requirement_rows=requirement_rows,
+        preliminary_analysis=preliminary_analysis,
+        metadata=metadata,
+        documents=documents,
+        contract_documents=contract_documents,
+        contract_draft_status=contract_draft_status,
+        contract_draft_text=contract_draft_text,
+        notice_text=notice_text,
+        scope=scope,
+        procurement_kind=procurement_kind,
+        goods_positions=goods_positions,
+        output_warnings=output_warnings,
+        contract_term_facts=contract_term_facts,
+        contract_term_conflicts=contract_term_conflicts,
+        economics=economics,
+        delivery_address_from_preliminary=delivery_address_from_preliminary,
+        _service_okpd2_from_sources=_service_okpd2_from_sources,
+        _extract_notice_price=_extract_notice_price,
+    )
 
     # R10.1 is a claim-bound pipeline.  Its report may only include questions
     # and risks that survived provider grounding; deterministic catalogue

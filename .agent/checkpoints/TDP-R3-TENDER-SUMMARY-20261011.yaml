@@ -18,8 +18,9 @@ completed:
   and no source acceptance claims.
 - Full local Python3.12 pytest 3635 passed, 238 skipped, 295 warnings, zero failures;
   make check/target Ruff PASS.
-current: 'Full local suite clean on PR #330 initial head c63a47a9. Waiting PR #329
-  main merge for branch reconciliation and exact-head full CI.'
+- 'Reconciled main requirements PR #329 adb6551e5c46b4e0e2a1751e5bc1c1a948a29666 with
+  summary pure module; preliminary AST/value parity confirmed earlier.'
+current: 'Merged main #329; full Python3.12 regression and fresh exact-head CI outstanding.'
 pending:
 - Implement and test
 - 'Reconcile PR #329 requirements context after its merge'
@@ -27,8 +28,6 @@ pending:
 last_verified_commit: 5becf69666583627d29420d41468b7daeb4e8b3f
 test_results:
 - Full local 3635 passed, 238 skipped, zero failed; make check PASS
-resume_instruction: 'PR #330 source summary: local full 3635/238 pass, CI of initial
-  head may be stale if PR #329 merges. Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-tender-summary-20261011,
-  reconcile latest origin/main after #329, rerun full pytest and exact-head dual quality/integration
-  CI, then merge and complete bounded checkpoint. Parent R2/R4/R5 incomplete, do not
-  touch production or enable disabled watchdog.'
+resume_instruction: 'Continue this PR #330 worktree after main #329 merged. Rerun
+  make check+full pytest, verify all GitHub dual exact-head CI green before merge
+  and complete checkpoint. Main R2/R4/R5 remain in_progress, disabled watchdog untouched.'

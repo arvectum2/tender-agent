@@ -95,19 +95,21 @@ completed:
   - '2026-10-11 TA #325 quote comparison projection AST equivalent, source-only offers, 42 focused tests and full 3607 Python3.12 passed/238 skipped, both exact-head quality and other integrations green; merged main 7c564070e3b830ca829b7ed48b7b39a153e8b170.'
   - '2026-10-11 TA #326 source-locked submission deadline fix: missing date NULL, EIS XML exact ISO8601 serialized instead of fabricated run clock, prior full-test failure fixed, 38 focused + 3623 full local passes/238 skips, both exact-head quality/integrations green; merged main e5d069c5a1c4e5a89061dc0b047f6dac5a6975db.'
   - '2026-10-11 TA #327 48-line source-trace projection extracted with exact AST parity, 42 focused and fully reconciled 3628 full local tests/238 skipped pass, both exact-head quality jobs 9m10s/8m36s plus all integrations passed, merged main 368da8c874b11edf185e29c6d874f9202f70df87.'
-current: 'R3 deadline #326 and source trace #327 code merged with dual quality/integration CI green. Cross-repo ownership audit #328 in CI. R2 independent authoritative EIS original byte hashes and notice edition still unverified; R4 genuine source-locked gold corpus/model benchmark and R5 >=20 human-reviewed original procurements and owner signoff still pending. Task remains in_progress.'
+  - '2026-10-11 R3 cross-repo ownership audit PR #328 merged exact-head green, 38/38 TA+DP source references verified. Docs-owned report approved as code audit only, not live EIS corpus acceptance; merged 5becf69666583627d29420d41468b7daeb4e8b3f.'
+  - '2026-10-11 TA #329 source-grounded requirements report context 47-line AST equivalent with 39 focused and 3634 full local tests/238 skipped; both exact-head GitHub quality/integration CI green. Merged main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666.'
+current: 'TA R3 #325-329 and architecture audit #328 merged exact-head green. R3 tender summary PR #330 in main reconciliation; initial 45 focused and 3635 full local tests passed/238 skipped, exact-head post-merge checks pending. R2 independent original EIS bytes/revisions, R4 actual source-locked model gold benchmark, R5 >=20 independently reviewed EIS originals and owner approval still open. Parent remains in_progress.'
 pending:
-  - 'R3 summary product projection TDP-R3-TENDER-SUMMARY-20261011: extract 26-line source-only tender summary with injected clock/verified deadline, tests + CI.'
-  - 'R3 cross-repository architecture ownership audit TDP-CROSS-REPO-OWNERSHIP-20261011: reconcile prior Oct4 assumptions with current TA/DP implementations, publish boundary/gates.'
+  - 'R3 tender summary product projection TDP-R3-TENDER-SUMMARY-20261011: source-only deadline and separate creation clock, AST parity/full tests, exact-head CI pending.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
-  - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '368da8c874b11edf185e29c6d874f9202f70df87'
+last_verified_commit: 'adb6551e5c46b4e0e2a1751e5bc1c1a948a29666'
 test_results:
+  - 'TA #329 source-grounded requirements context: 3634 full/238 skipped Python3.12 and both exact-head quality + all integration CI PASS, merged adb6551e5c46b4e0e2a1751e5bc1c1a948a29666.'
+  - 'TA #328 source-checked 38/38 TA/DP paths and dual exact-head quality/integration CI green, merged 5becf69666583627d29420d41468b7daeb4e8b3f.'
   - 'TA #327 fully reconciled 3628 Python3.12 passed / 238 skipped, Ruff/make check and both exact-head quality + all integration/security CI passed.'
   - 'TA #326 38 focused + 3623 full Python3.12 pass/238 skip; local Ruff/make check and exact-head dual quality jobs all-green; real EIS XML date persists as ISO8601 and missing date NULL.'
   - 'R4 local real model synthetic: qwen3:4b four sections PASSED/252.43s; single-section qwen2.5:3b PASSED/11.45s, qwen3:4b PASSED/26.21s, gemma4:12b PASSED/112.62s, huihui-hermes FAILED/115.03s. No validated EIS gold source benchmark.'
@@ -147,7 +149,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'R3 product source trace #327 merged main 368da8c874b11edf185e29c6d874f9202f70df87 after full local 3628/238 + CI green, deadline #326 complete. Next cross-repo ownership audit #328 merge after exact-head CI and mark bounded checkpoints completed. Continuing R2 authoritative EIS originals/hash/revision, R4 source-locked gold-model benchmark and R5 >=20 independently human-reviewed original procurements/owner signoff remains required. Never modify live production or reenable owner-disabled watchdog.'
+resume_instruction: 'Main TDP-REFACTOR remains in_progress. Requirements R3 #329 completed main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666; next R3 tender summary PR #330 reconcile latest main, rerun full local tests and dual exact-head GitHub quality/integration CI then merge and complete its checkpoint. R2 authoritative EIS original bytes/SHA/revisions, R4 human source-locked model gold benchmark, R5 20+ independently reviewed real EIS procurements and owner signoff remain; do not modify live pilot or reenable owner-disabled watchdog.'
 execution:
   branch: main
   manual_override: true
