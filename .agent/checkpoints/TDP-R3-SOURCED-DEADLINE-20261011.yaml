@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-SOURCED-DEADLINE-20261011
-status: in_progress
+status: completed
 goal: Remove fabricated current-time submission deadline from tender demo cards; use
   only verifiable structured input dates or UNKNOWN/None.
 definition_of_done:
@@ -33,13 +33,13 @@ completed:
   of 2026-10-16T10:00:00+03:00.
 - All 38 focused tests, including previously failing EIS notice persisted report,
   now pass; Ruff clean.
-current: 'Full local retest and PR #326 exact-head GitHub CI pending for JSON-compatible
-  ISO8601 fix.'
-pending:
-- Code and focused regression
-- Full pytest and CI
-- Merge green; close bounded task checkpoint; keep parent in_progress
-last_verified_commit: 4f1114378181f3b6c4962d0ecfc254ee4e4e40ac
+- 'Full fixed local Python3.12 regression: 3623 passed / 238 skipped / 295 warnings,
+  zero failures.'
+- 'PR #326 exact-head GitHub CI all-green, dual quality 9m20s and 7m18s plus Docker/Postgres/Redis/migrations/security/integration.'
+- Merged TA main e5d069c5a1c4e5a89061dc0b047f6dac5a6975db.
+current: Completed merged TA main e5d069c5a1c4e5a89061dc0b047f6dac5a6975db
+pending: []
+last_verified_commit: e5d069c5a1c4e5a89061dc0b047f6dac5a6975db
 test_results:
 - 37 focused tests PASS, 22 warnings
 - Ruff focused PASS
@@ -48,9 +48,9 @@ test_results:
 - Followup 38 focused tests PASSED (23 warnings) including EIS XML persisted notice
   deadline and NULL unknown
 - Targeted Ruff PASS
-resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-source-deadline-20261011.
-  The confirmed persisted datetime JSON serialization failure was fixed by ISO8601
-  projection; rerun full Python3.12 regression and exact-head GitHub CI of updated
-  PR #326 before merging. PR #325 quote report already merged and checkpoint marked
-  completed. R3 trace PR #327 also concurrent; reconcile after #326. Main TDP-REFACTOR
-  remains in_progress; no production/secret/watchdog changes.'
+- 3623 local full PASS/238 skipped, zero failures
+- Both exact-head quality/integration CI PASS
+- Merged e5d069c5a1c4e5a89061dc0b047f6dac5a6975db
+resume_instruction: 'R3 source-only deadline correction #326 completed. Do not repeat.
+  Proceed analysis trace #327 and cross-repo audit #328; independent real EIS source
+  proof and R4/R5 human acceptance pending. Watchdog disabled.'
