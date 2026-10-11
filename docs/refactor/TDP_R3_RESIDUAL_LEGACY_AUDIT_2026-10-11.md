@@ -7,7 +7,7 @@ a review candidate, not automatically an architectural defect.
 
 | Function | LOC | Responsibility | Next safe action |
 | --- | ---: | --- | --- |
-| operator_legacy_html_renderer.render_legacy_report_html | 401 | Presentation-only HTML | Extract HTML sections behind existing facade; preserve escaping and golden snapshots |
+| operator_legacy_html_renderer.render_legacy_report_html | 321 | Presentation HTML layout | 11 pure escaping/formatting helpers extracted into operator_html_primitives.py; next separate large template sections with golden snapshots |
 | upload_service_legacy.analyze_uploaded_demo_run | 365 | End-to-end processing orchestrator | High product risk: map state machine, transactions, failures and source metadata before extraction |
 | legacy_binding_backfill.backfill_legacy_run_binding | 266 | Historic customer binding migration | Idempotence, rollback and tenant isolation tests before decomposition |
 | upload_service_legacy.create_uploaded_demo_run | 109 | Upload creation and persistence | Preserve atomic transaction boundary; isolate independently testable pure logic only |
@@ -25,3 +25,7 @@ Remaining R3 exit gates:
 
 This audit does not prove R2 live Data Platform original source parity,
 R4 human-gold procurement model quality or R5 twenty owner approvals.
+
+Follow-on 2026-10-11: Eleven nested presentation helpers moved without changing
+AST bodies; renderer remains compatible, HTML escaping regression tests added.
+The remaining outer function is still long and requires section-based refactor.
