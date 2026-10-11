@@ -98,17 +98,19 @@ completed:
   - '2026-10-11 R3 cross-repo ownership audit PR #328 merged exact-head green, 38/38 TA+DP source references verified. Docs-owned report approved as code audit only, not live EIS corpus acceptance; merged 5becf69666583627d29420d41468b7daeb4e8b3f.'
   - '2026-10-11 TA #329 source-grounded requirements report context 47-line AST equivalent with 39 focused and 3634 full local tests/238 skipped; both exact-head GitHub quality/integration CI green. Merged main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666.'
   - '2026-10-11 TA #330 26-line source-only tender summary extraction AST identical, 45 focused and fully reconciled 3641 full local Python3.12/238 skipped, dual exact-head quality 9m07s/8m52s plus all integration CI green; merged main 5b12fb99be499c98d3c7ecf747f07e65323ac09b.'
-current: 'TA R3 #325-330 and cross-repo architecture audit #328 merged exact-head CI green. R2 original EIS in-archive version precedence PR #331 under reconciliation, 35 focused tests green after manual XML compatibility correction; full regression and exact-head CI pending. R2 independently current official EIS originals/revisions not attested, R4 source-locked model gold and R5 >=20 independently human-reviewed EIS cases/owner signoff pending; parent in_progress.'
+  - '2026-10-11 TA #331 in-archive EIS v1/v5/v3 precedence corrected, exact registry/version original selected also for LLM text, manual XML preserved; 39 focused and 3653 full Python3.12 PASS/238 skipped, dual exact-head quality jobs 9m05s/9m24s and all CI green; merged main 5bd78d75e67a2aaa496c942f807931160a8ff228. Latest LIVE EIS revision NOT attested.'
+current: 'R3 report modularization #325-330, R2 bounded archived EIS revision #331 and cross-repo architecture #328 merged CI green. R5 source-identified 20-case machine receipts review queue PR #332 undergoing exact-head tests; actual 20 human-approved cases still absent. Independent current official EIS original binary/revision/resource-chunk proof not complete, R4 real source-locked gold LLM quality/latency benchmark missing; overall TDP-REFACTOR in_progress.'
 pending:
-  - 'R2 EIS highest exact-registry notice revision TDP-R2-EIS-REVISION-PRECEDENCE-20261011: fix archived v1 vs v5/v3 stale deadline; source-version/UNKNOWN gates and full CI pending.'
+  - 'R5 preparation TDP-R5-REVIEW-QUEUE-20261011: 20-case, 168-file SHA source-identified APR06 machine review queue only; human signoff absent, exact-head CI pending.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Test and repair source-evidence precedence and report materialization for real saved EIS records; distinguish UNKNOWN from verified facts.'
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '5b12fb99be499c98d3c7ecf747f07e65323ac09b'
+last_verified_commit: '5bd78d75e67a2aaa496c942f807931160a8ff228'
 test_results:
+  - 'TA #331 original in-archive notice version precedence+LLM source alignment: 39 focused and 3653 full Python3.12 PASSED/238 skipped, dual exact-head quality/integration/security CI PASS; merged 5bd78d75e67a2aaa496c942f807931160a8ff228.'
   - 'TA #330 3641 local full tests PASSED/238 skipped, Ruff/make check green; dual exact-head CI quality 9m07s/8m52s plus all integrations green; merged 5b12fb99be499c98d3c7ecf747f07e65323ac09b.'
   - 'TA #329 source-grounded requirements context: 3634 full/238 skipped Python3.12 and both exact-head quality + all integration CI PASS, merged adb6551e5c46b4e0e2a1751e5bc1c1a948a29666.'
   - 'TA #328 source-checked 38/38 TA/DP paths and dual exact-head quality/integration CI green, merged 5becf69666583627d29420d41468b7daeb4e8b3f.'
@@ -151,7 +153,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Main task TDP-REFACTOR remains in_progress. R3 summary #330 completed main 5b12fb99be499c98d3c7ecf747f07e65323ac09b and 3641 full local passed/238 skipped plus all exact-head CI green. Continue R2 source revision selection PR #331: now reconciled with latest main, rerun full Python3.12, make check and exact-head GitHub CI; then merge and complete bounded checkpoint. Independently verify actual latest official EIS source bytes/notice revision and R4 human-source gold/R5 >=20 human-reviewed originals with owner signoff later. No production changes or disabled watchdog restart.'
+resume_instruction: 'Main TDP-REFACTOR remains in_progress. R2 bounded archived notice revision fix #331 completed 5bd78d75e67a2aaa496c942f807931160a8ff228 with full 3653/238 and CI green; its highest archived version is NOT independently proved live-current EIS. R5 source-identified APR06 20-case/168-SHA machine review queue #332 undergoing CI/merge, human review still zero. Further R2 independently attest original EIS SHA+resource/document/chunk IDs and active edition, R4 comparable source-locked gold actual models, R5 >=20 independently human-reviewed originals and owner GO/NO_GO signoff. Do not touch live production, secrets or restart disabled watchdog.'
 execution:
   branch: main
   manual_override: true

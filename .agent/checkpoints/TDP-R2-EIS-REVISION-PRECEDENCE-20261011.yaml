@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R2-EIS-REVISION-PRECEDENCE-20261011
-status: in_progress
+status: completed
 goal: Prevent outdated EIS notice v1 from winning over higher-version v3/v5 original
   XML in Tender Agent product reports, especially when a stale deadline exists on
   the card; no false claim that archived highest is current live EIS.
@@ -57,14 +57,15 @@ completed:
 - Confirmed aggregate combined_text still contains original document inventory and
   may include older archived XML; does not claim universal downstream corpus de-duplication
   or live EIS authoritativeness.
-current: 'Updated PR #331 with matching LLM source text, awaiting full local Python3.12
-  regression and exact-head GitHub CI.'
-pending:
-- Implement safe parser and version-aware selection + tests
-- Full local regression, exact-head CI
-- Merge, checkpoint completed; preserve parent real source proof and human signoff
-  pending
-last_verified_commit: adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+- Updated exact highest archived version also controls LLM notice_text, tested through
+  real FastAPI upload+analyze. 39 focused tests pass.
+- Full post-#330 local Python3.12 suite 3653 passed, 238 skipped, 0 failed, make check
+  + Ruff PASS.
+- 'PR #331 all exact-head GitHub CI green, including dual quality (9m05s/9m24s), Docker/migrations/Postgres/Redis/security.
+  Merged TA main 5bd78d75e67a2aaa496c942f807931160a8ff228.'
+current: Completed bounded archived revision fix, merged main 5bd78d75e67a2aaa496c942f807931160a8ff228
+pending: []
+last_verified_commit: 5bd78d75e67a2aaa496c942f807931160a8ff228
 test_results:
 - 30 focused tests PASS, 22 warnings
 - Target Ruff and make check PASS
@@ -75,9 +76,10 @@ test_results:
 - After LLM notice-text fix, 39 focused PASS, 23 warnings and target Ruff PASS.
 - Prior 3649 full local passed/238 skipped before notice-text change; fresh full still
   required.
-resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-eis-revision-precedence-20261011,
-  PR #331. Source-safe raw file/version-matched archived notice now controls LLM notice_text.
-  39 focused PASS; run fresh make check and full Python3.12 pytest, require exact-head
-  GitHub CI all green. Prior 3649 full clean on earlier head is not fresh for this
-  patch. Overall actual-current EIS source revision proof and R4/R5 human validation
-  remain in_progress; no live deployment, secret or disabled watchdog changes.'
+- Final 3653 passed, 238 skipped, 0 failed and make check PASS
+- Both exact-head quality + integration CI green
+- Merged 5bd78d75e67a2aaa496c942f807931160a8ff228
+resume_instruction: 'TDP-R2-EIS-REVISION-PRECEDENCE-20261011 completed PR #331. Do
+  not repeat. This does not establish highest archived notice is live current EIS;
+  parent R2 independent EIS binary/edition evidence still required, R4 model gold
+  and R5 20 human reviews/owner signoff. Owner-disabled watchdog untouched.'
