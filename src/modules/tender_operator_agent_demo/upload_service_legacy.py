@@ -50,6 +50,10 @@ from src.modules.tender_operator_agent_demo.operator_document_collection import 
 from src.modules.tender_operator_agent_demo.operator_document_extraction import (
     extract_operator_document,
 )
+from src.modules.tender_operator_agent_demo.operator_document_rows import (
+    build_software_work_rows,
+    extract_meaningful_snippets,
+)
 from src.modules.tender_operator_agent_demo.operator_economics_persistence import (
     _coerce_economics_summary_payload as _coerce_economics_summary_payload,  # noqa: PLC0414 - old serialization facade
 )
@@ -102,7 +106,6 @@ from src.modules.tender_operator_agent_demo.operator_risk_report import (
     build_document_grounded_risks,
     build_operator_risk_payload,
 )
-from src.modules.tender_operator_agent_demo.operator_supplier_questions import normalize_supplier_questions
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
     _SCOPE_SIGNALS as _SCOPE_SIGNALS,  # noqa: PLC0414 - legacy facade
 )
@@ -118,11 +121,21 @@ from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
 from src.modules.tender_operator_agent_demo.operator_software_preliminary import (
     build_software_preliminary_analysis,
 )
+from src.modules.tender_operator_agent_demo.operator_spec_rows import (
+    extract_legacy_goods_spec_rows,
+)
 from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
     checked_original_input_path,
 )
 from src.modules.tender_operator_agent_demo.operator_submission_deadline import (
     submission_deadline_from_metadata,
+)
+from src.modules.tender_operator_agent_demo.operator_supplier_questions import (
+    normalize_supplier_questions,
+)
+from src.modules.tender_operator_agent_demo.operator_supply_rows import (
+    service_item_analysis_rows,
+    supply_item_to_row,
 )
 from src.modules.tender_operator_agent_demo.operator_supply_source_parsers import (
     extract_service_items_from_nmck_text,
@@ -1293,33 +1306,8 @@ def _summarize_supply_characteristics(values: list[str], *, limit: int = 6) -> l
 
 
 def _supply_item_to_row(item: SupplyItem) -> dict[str, Any]:
-    characteristics = "; ".join(item.characteristics) if item.characteristics else "Требуется сверка характеристик по ТЗ."
-    return {
-        "№": item.item_no or "—",
-        "Наименование": item.display_name or item.name,
-        "official_name": item.official_name or item.name,
-        "display_name": item.display_name or item.name,
-        "Кол-во": item.quantity or "не указано",
-        "Ед. изм.": item.unit or "—",
-        "Ключевые характеристики": characteristics,
-        "ГОСТ / норматив": ", ".join(item.gost) if item.gost else "—",
-        "Эквивалент": "да" if item.equivalent_allowed else "нет",
-        "Цена за ед., руб.": item.unit_price or "—",
-        "Сумма, руб.": item.total_price or "—",
-        "Источник": ", ".join(item.source_documents or [item.source_document]),
-        "quantity_status": item.quantity_status,
-        "evidence_ids": item.evidence_ids or ([item.evidence_id] if item.evidence_id else []),
-        "key_characteristics": item.characteristics[:5],
-        "name_source_type": item.name_source_type,
-        "name_source_path": item.name_source_path,
-        "quantity_source_path": item.quantity_source_path,
-        "unit_source_path": item.unit_source_path,
-        "source_row_number": item.source_row_number,
-        "source_record_id": item.source_record_id,
-        "extraction_strategy": item.extraction_strategy,
-        "okpd2": item.okpd2,
-        "ktru": item.ktru,
-    }
+    """Backward-compatible facade."""
+    return supply_item_to_row(item)
 
 
 def _extract_supply_items_from_spec_text(text: str, source_document: str) -> list[SupplyItem]:
@@ -1433,24 +1421,8 @@ def _is_vehicle_maintenance_services(subject: str, okpd2: str | None, service_it
 
 
 def _service_item_analysis_rows(items: list[SupplyItem]) -> list[dict[str, Any]]:
-    """Serialize extracted rows without converting an unspecified volume to zero."""
-    return [
-        {
-            "stable_item_id": item.evidence_id or f"service-{index}",
-            "original_name": item.name,
-            "normalized_name": item.name,
-            "unit": item.unit_original or item.unit,
-            "unit_price": item.unit_price,
-            "pricing_basis": item.pricing_basis,
-            "quantity": item.quantity,
-            "quantity_status": item.quantity_status,
-            "technical_requirements": item.characteristics,
-            "evidence_ids": [item.evidence_id] if item.evidence_id else [],
-            "source_document": item.source_document,
-            "source_row_number": item.source_row_number,
-        }
-        for index, item in enumerate(items, start=1)
-    ]
+    """Backward-compatible facade."""
+    return service_item_analysis_rows(items)
 
 
 def _build_services_preliminary_analysis(
@@ -1526,63 +1498,8 @@ def _build_services_preliminary_analysis(
 
 
 def _extract_legacy_goods_spec_rows(technical_spec_text: str) -> list[dict[str, str]]:
-    if not technical_spec_text:
-        return []
-    unit_pattern = r"(шт|м|компл(?:ект)?|упак(?:овка)?|пара|кг|л|рул(?:он)?|набор|ед\.?|усл\.?\s*ед\.?|услуга)"
-    rows: list[dict[str, str]] = []
-    seen: set[tuple[str, str, str, str]] = set()
-    section_pattern = re.compile(
-        r"(?:(?P<section_no>\d(?:\s*\d)?)\.\s*)?Описание\s+объекта\s+закупки:",
-        re.IGNORECASE,
-    )
-    matches = list(section_pattern.finditer(technical_spec_text))
-    for index, match in enumerate(matches):
-        start = match.start()
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(technical_spec_text)
-        section = technical_spec_text[start:end]
-        section_number = re.sub(r"\s+", "", match.group("section_no") or "") or str(len(rows) + 1)
-        row_match = re.search(
-            r"1\s+2\s+3\s+4\s+5\s+6\s+7\s+(?P<row>.+?)(?=Характеристики\s+объекта\s+закупки:|$)",
-            section,
-            re.IGNORECASE | re.DOTALL,
-        )
-        if not row_match:
-            continue
-        row_text = _cleanup_tabular_value(row_match.group("row")) or ""
-        parsed_match = re.search(
-            rf"(?P<num>\d+)\s+(?P<name>.+?)\s+(?P<unit>{unit_pattern})\s+(?P<tail>.+)$",
-            row_text,
-            re.IGNORECASE,
-        )
-        if not parsed_match:
-            continue
-        tail = _cleanup_tabular_value(parsed_match.group("tail")) or ""
-        quantity_match = re.search(r"(\d+(?:[.,]\d+)?)\s*$", tail)
-        quantity = _normalize_quantity_value(quantity_match.group(1) if quantity_match else "не указано") or "не указано"
-        characteristics = _extract_goods_characteristics(section) or "Требуется сверка характеристик по ТЗ."
-        row = {
-            "№": section_number or parsed_match.group("num"),
-            "Наименование": _cleanup_tabular_value(parsed_match.group("name")) or "Позиция",
-            "Кол-во": quantity,
-            "Ед. изм.": _cleanup_tabular_value(parsed_match.group("unit")) or "—",
-            "Ключевые характеристики": characteristics,
-            "ГОСТ / норматив": ", ".join(_extract_gost_tokens(section)) or "—",
-            "Эквивалент": "нет",
-            "Цена за ед., руб.": "—",
-            "Сумма, руб.": "—",
-            "Источник": "Техническое задание",
-        }
-        key = (
-            row["Наименование"].lower(),
-            row["Ед. изм."].lower(),
-            row["Кол-во"].lower(),
-            row["Ключевые характеристики"].lower(),
-        )
-        if key in seen:
-            continue
-        seen.add(key)
-        rows.append(row)
-    return rows
+    """Backward-compatible facade."""
+    return extract_legacy_goods_spec_rows(technical_spec_text, _cleanup_tabular_value=_cleanup_tabular_value, _extract_goods_characteristics=_extract_goods_characteristics, _extract_gost_tokens=_extract_gost_tokens, _normalize_quantity_value=_normalize_quantity_value)
 
 
 def _merge_supply_items(items: list[SupplyItem]) -> list[SupplyItem]:
@@ -1757,104 +1674,13 @@ def _document_source_label(doc: AnalyzedDocument) -> str:
 
 
 def _extract_meaningful_snippets(text: str, keywords: tuple[str, ...], *, max_snippets: int = 8) -> list[str]:
-    if not text:
-        return []
-    snippets: list[str] = []
-    seen: set[str] = set()
-    normalized_text = re.sub(r"\s+", " ", text)
-    for keyword in keywords:
-        for match in re.finditer(re.escape(keyword), normalized_text, re.IGNORECASE):
-            start = max(0, match.start() - 120)
-            end = min(len(normalized_text), match.end() + 220)
-            snippet = normalized_text[start:end].strip(" .;,\n\t")
-            if len(snippet) < 40:
-                continue
-            key = snippet.lower()
-            if key in seen:
-                continue
-            seen.add(key)
-            snippets.append(snippet)
-            if len(snippets) >= max_snippets:
-                return snippets
-    return snippets
+    """Backward-compatible facade."""
+    return extract_meaningful_snippets(text, keywords, max_snippets=max_snippets)
 
 
 def _build_software_work_rows(documents: list[AnalyzedDocument]) -> list[dict[str, str]]:
-    rows: list[dict[str, str]] = []
-    candidate_docs = [
-        doc
-        for doc in documents
-        if doc.text and (
-            doc.role == "technical_spec"
-            or "описание объекта" in doc.display_name.lower()
-            or "техничес" in doc.display_name.lower()
-        )
-    ]
-    block_definitions = [
-        (
-            "Новые структурированные электронные медицинские документы",
-            ("структурированных электронных медицинских документ", "сэмд"),
-            "Разработать и внедрить новые структуры/формы электронных медицинских документов.",
-            "ПК «Здравоохранение», медицинская информационная система",
-            "Обновленный модуль с поддержкой новых СЭМД",
-            "Приемка по реализованным структурам документов и результатам тестирования",
-        ),
-        (
-            "Обработка информации об ИПРА",
-            ("ипра", "реабилитации и абилитации"),
-            "Реализовать обработку данных индивидуальных программ реабилитации и абилитации.",
-            "ПК «Здравоохранение», внешние данные ИПРА",
-            "Система обрабатывает и хранит сведения ИПРА в требуемом формате",
-            "Приемка по корректной обработке сценариев и данным ИПРА",
-        ),
-        (
-            "Интеграция с ЕРН через СМЭВ",
-            ("ерн", "смэв", "межведомственного электронного взаимодействия"),
-            "Настроить обмен данными и интеграционный контур с ЕРН через СМЭВ.",
-            "ЕРН, СМЭВ, ПК «Здравоохранение»",
-            "Рабочая интеграция и обмен данными с внешним регистром",
-            "Приемка по интеграционному тестированию и доступности обмена",
-        ),
-        (
-            "Получение данных об участниках СВО",
-            ("сво", "витрины данных министерства обороны", "статуса сво"),
-            "Реализовать получение и обработку данных об участниках СВО из внешней витрины.",
-            "Витрина данных Минобороны, ПК «Здравоохранение»",
-            "Обогащение записей пациентов данными по статусу СВО",
-            "Приемка по корректному получению, кэшированию и журналированию данных",
-        ),
-        (
-            "Передача лицензии на обновленный модуль",
-            ("лиценз", "передаче лицензии", "передача прав"),
-            "Передать заказчику лицензию и права использования обновленного модуля.",
-            "Документы на лицензирование, обновленный модуль",
-            "Заказчик получает правоомерное использование обновленного решения",
-            "Приемка по передаче лицензии и комплекту закрывающих документов",
-        ),
-    ]
-    for title, keywords, action, systems, result, acceptance in block_definitions:
-        matched_doc = None
-        matched_snippet = None
-        for doc in candidate_docs:
-            snippets = _extract_meaningful_snippets(doc.text or "", keywords, max_snippets=1)
-            if snippets:
-                matched_doc = doc
-                matched_snippet = snippets[0]
-                break
-        if not matched_doc:
-            continue
-        rows.append(
-            {
-                "№": str(len(rows) + 1),
-                "Блок работ / результат": title,
-                "Что нужно сделать": action,
-                "Входные/внешние системы": systems,
-                "Результат для заказчика": result,
-                "Критерии приёмки": acceptance if not matched_snippet else _cleanup_tabular_value(matched_snippet[:220]) or acceptance,
-                "Источник": _document_source_label(matched_doc),
-            }
-        )
-    return rows
+    """Backward-compatible facade."""
+    return build_software_work_rows(documents, _cleanup_tabular_value=_cleanup_tabular_value, _document_source_label=_document_source_label, _extract_meaningful_snippets=_extract_meaningful_snippets)
 
 
 def _collect_goods_supply_items_from_documents(documents: list[AnalyzedDocument]) -> list[SupplyItem]:
