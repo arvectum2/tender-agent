@@ -9,6 +9,9 @@ from collections.abc import Callable
 from typing import Any
 
 from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
+from src.modules.tender_operator_agent_demo.operator_notice_revision import (
+    matched_archived_eis_notification,
+)
 
 
 def enrich_procurement_metadata(
@@ -25,6 +28,7 @@ def enrich_procurement_metadata(
     from src.modules.tender_operator_agent_demo.eis_notice_parser import (
         apply_structured_metadata_to_procurement,
         extract_notice_metadata,
+        extract_notice_revision_info,
         merge_structured_metadata,
     )
 
@@ -32,14 +36,57 @@ def enrich_procurement_metadata(
 
     eis_notice_meta: dict[str, Any] = {}
     if documents:
-        for doc in documents:
-            if doc.role == "notice" and doc.extension == ".xml" and doc.raw_content:
-                raw_text = doc.raw_content.decode("utf-8", errors="replace")
-                parsed = extract_notice_metadata(raw_text)
-                if parsed.get("_has_notice_data"):
-                    eis_notice_meta = parsed
-                    metadata["notice_source_label"] = parsed.get("source_label", "электронное извещение ЕИС")
-                    break
+        expected_number = str(
+            metadata.get("procurement_id") or procurement.get("procurement_number") or ""
+        ).strip()
+        candidates: list[tuple[tuple[int, int, str, int], dict[str, Any], dict[str, Any] | None, AnalyzedDocument]] = []
+        for index, doc in enumerate(documents):
+            if doc.role != "notice" or doc.extension != ".xml" or not doc.raw_content:
+                continue
+            raw_text = doc.raw_content.decode("utf-8", errors="replace")
+            if (
+                len(raw_text) > 12_000_000
+                or "<!DOCTYPE" in raw_text.upper()
+                or "<!ENTITY" in raw_text.upper()
+            ):
+                metadata["notice_revision_requires_review"] = True
+                continue
+            parsed = extract_notice_metadata(raw_text)
+            if not parsed.get("_has_notice_data"):
+                continue
+            identity = extract_notice_revision_info(raw_text)
+            if expected_number and identity.get("purchase_number") != expected_number:
+                # A foreign/ambiguous XML cannot authorize a procurement fact.
+                metadata["notice_revision_requires_review"] = True
+                continue
+            revision = matched_archived_eis_notification(raw_text, expected_number)
+            if not revision and expected_number:
+                metadata["notice_revision_requires_review"] = True
+            sort_key = (
+                1 if revision else 0,
+                int(revision["version"]) if revision else 0,
+                str(revision["published_at"]) if revision else "",
+                -index,
+            )
+            candidates.append((sort_key, parsed, revision, doc))
+        if candidates:
+            _, eis_notice_meta, revision, selected_source = max(candidates, key=lambda item: item[0])
+            metadata["notice_source_label"] = eis_notice_meta.get(
+                "source_label", "электронное извещение ЕИС"
+            )
+            if revision:
+                metadata["notice_revision_selected"] = {
+                    "version": revision["version"],
+                    "purchase_number": revision["purchase_number"],
+                    "published_at": revision["published_at"],
+                    "file_id": selected_source.file_id,
+                    # Highest archived document is not verified current live EIS.
+                    "current_live_eis_verified": False,
+                }
+                if len(candidates) > 1:
+                    metadata["notice_revision_requires_review"] = True
+            elif len(candidates) > 1:
+                metadata["notice_revision_requires_review"] = True
 
     card_meta = {
         "nmck": procurement.get("initial_price"),

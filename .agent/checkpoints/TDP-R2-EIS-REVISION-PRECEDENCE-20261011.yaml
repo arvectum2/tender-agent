@@ -1,0 +1,52 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R2-EIS-REVISION-PRECEDENCE-20261011
+status: in_progress
+goal: Prevent outdated EIS notice v1 from winning over higher-version v3/v5 original
+  XML in Tender Agent product reports, especially when a stale deadline exists on
+  the card; no false claim that archived highest is current live EIS.
+definition_of_done:
+- Source-locked exact epNotification version+registry parser (no arbitrary XML, cancel/protocol,
+  DTD/ENTITY or mismatched number) with fail-closed ambiguous handling
+- Tender Agent metadata enrichment selects highest authenticated in-corpus notice
+  revision independent of order, replaces stale card deadline and records revision
+  provenance with human review status
+- Regression tests Aksay v1/v5, Moscow CZN v1/v3, reversed order, stale card and alien
+  revision; preserve existing other report behaviors
+- Ruff/make check/full Python3.12 local regression and all exact-head GitHub CI pass,
+  merge and mark bounded checkpoint completed; parent R2 independent live EIS source
+  validation/R5 still in_progress
+completed:
+- 'Investigated APR-06 independent model audit: 9 machine cases, two critical stale
+  revision errors (0158300034526000388 v1 instead of v5, 0348100024426000039 v1 instead
+  of v3).'
+- Verified prior APR-07 branch implements revision-aware tests, but canonical main
+  adb6551e does not contain its revision test or revision-aware candidate ordering.
+- Confirmed current main operator_metadata_enrichment.py selects first notice-role
+  XML regardless of version; initialized isolated worktree from main.
+- Added strict epNotification/commonInfo purchaseNumber/versionNumber matcher (XML
+  DTD/ENTITY, bad registry, protocol/cancel and conflicting events do not claim a
+  version).
+- Updated source-first metadata enrichment to prefer the highest exact registry-matched
+  version in archive, independent of filename/order, override stale card submission
+  deadline, preserve evidence mapping and explicitly mark current_live_eis_verified
+  false.
+- Source mismatches, unversioned documents and multiple archived revisions require
+  operator review.
+- Eight new regression cases protect APR-06 Aksay v1/v5 and Moscow CZN v1/v3 against
+  stale-card NO_GO; 30 focused tests and Ruff/make check passed.
+current: Full Python3.12 regression running; PR source revision fix and CI pending.
+pending:
+- Implement safe parser and version-aware selection + tests
+- Full local regression, exact-head CI
+- Merge, checkpoint completed; preserve parent real source proof and human signoff
+  pending
+last_verified_commit: adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+test_results:
+- 30 focused tests PASS, 22 warnings
+- Target Ruff and make check PASS
+resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-eis-revision-precedence-20261011.
+  Full Python3.12 pytest running /tmp/tdp-r2-revision-full.log. PR #330 summary may
+  merge first; reconcile main, re-run exact-head CI and full local. Correct archive
+  version is NOT verified currently live EIS. Do not call R2/R5 completed without
+  independent original source edition/human signoff; no live production or watchdog.'

@@ -98,6 +98,7 @@ completed:
   - '2026-10-11 R3 cross-repo ownership audit PR #328 merged exact-head green, 38/38 TA+DP source references verified. Docs-owned report approved as code audit only, not live EIS corpus acceptance; merged 5becf69666583627d29420d41468b7daeb4e8b3f.'
 current: 'TA R3 #325-327 and architecture audit #328 merged and tested. R3 source requirements context PR #329 in main reconciliation with full local 3634 tests passed/238 skipped; exact-head post-merge CI pending. R2 independent original EIS bytes/revision proof, R4 real-source gold model quality benchmark and R5 >=20 original procurements independently human-reviewed/owner signoff remain incomplete; parent in_progress.'
 pending:
+  - 'R2 EIS archived notice revision precedence TDP-R2-EIS-REVISION-PRECEDENCE-20261011: strict highest matched v5/v3 source selection; stale v1 must not drive a false deadline/NO_GO; preserve human approval.'
   - 'R3 requirements source analysis context TDP-R3-REQUIREMENTS-CONTEXT-20261011: preserve source and UNKNOWN/contract facts, full local and exact-head CI pending.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
