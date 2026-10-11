@@ -92,6 +92,7 @@ completed:
   - '2026-10-11 TA PR #320 24-line source-safe risk locator validator + 38-line risk projection extracted with AST parity, 69 focused and 3591 full/238 skipped local tests, both exact-head quality/integration GitHub CI passed; merged main 379f9ccb8387581c61dc3be256bd178819e055b4.'
 current: 'R3 risk projection #320 merged green; R3 non-goods economics extraction #321 open, must reconcile latest main. DP binary integrity checker #119 under CI, real original EIS independent retrieval and notice revision not yet verified. R4 controlled model adapter synthetic smoke succeeded, full E2E model and R5 >=20 human-approved EIS cases pending. Task in_progress.'
 pending:
+  - 'R3 non-goods economics TDP-R3-NONGOODS-ECONOMICS-20261011: extract while retaining UNKNOWN cost and quote semantics; test/CI before merge.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
