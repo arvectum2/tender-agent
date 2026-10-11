@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-REQUIREMENTS-CONTEXT-20261011
-status: in_progress
+status: completed
 goal: Extract the source-structured 47-line requirements analysis context projection
   from tender upload monolith without changing field provenance, missing contract
   terms, delivery UNKNOWN, pricing and manual review.
@@ -28,13 +28,14 @@ completed:
   (142.93s); targeted Ruff and make check PASS.'
 - 'Before main reconciliation: PR #329 all exact-head GitHub quality 8m33s/9m27s and
   all other CI passed.'
-current: 'Merged architecture audit #328 into PR #329 branch; rerun full pytest, exact-head
-  CI required to merge.'
-pending:
-- Extract and test AST-equivalent pure function
-- Full local regression, exact-head GitHub CI
-- Merge green and complete bounded checkpoint
-last_verified_commit: 368da8c874b11edf185e29c6d874f9202f70df87
+- 'After #328 main reconciliation: local full Python3.12 pytest 3634 PASS, 238 skipped,
+  zero failures; make check green.'
+- 'PR #329 all exact-head GitHub CI passed: quality 7m10s and 7m11s, Docker, migrations,
+  Postgres/Redis, security.'
+- Merged TA main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666.
+current: Completed and merged main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+pending: []
+last_verified_commit: adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
 test_results:
 - 39 focused tests passed / 22 warnings
 - AST exact requirements_payload parity passed
@@ -43,7 +44,9 @@ test_results:
 - make check PASS; Ruff PASS
 - 'PR #329 pre-main-reconciliation GitHub dual quality/integrations PASS (will rerun
   after merge main).'
-resume_instruction: 'This worktree merges main #328 into PR #329; now rerun make check
-  and full pytest, await dual exact-head CI of new merged commit. Source requirements
-  must remain AST equivalent; once all green merge PR #329 then mark checkpoint completed.
-  Parent remains in_progress; do not touch production or watchdog.'
+- Final post-merge full pytest 3634 passed, 238 skipped, zero failures
+- Exact head CI 2x quality + integration/security PASS
+- Merged adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+resume_instruction: 'R3 requirements context completed #329. Do not repeat. Continue
+  tender summary #330 and parent R2/EIS original evidence R4 gold/R5 human review.
+  Disabled watchdog unchanged.'
