@@ -16,15 +16,19 @@ definition_of_done:
 completed:
 - Inspected latest origin/main 5becf696, identified 26-line tender_summary projection
   and no source acceptance claims.
-current: Source-equivalent summary extractor and focused test
+- Full local Python3.12 pytest 3635 passed, 238 skipped, 295 warnings, zero failures;
+  make check/target Ruff PASS.
+current: 'Full local suite clean on PR #330 initial head c63a47a9. Waiting PR #329
+  main merge for branch reconciliation and exact-head full CI.'
 pending:
 - Implement and test
 - 'Reconcile PR #329 requirements context after its merge'
 - Full regression and CI merge; checkpoint complete
 last_verified_commit: 5becf69666583627d29420d41468b7daeb4e8b3f
-test_results: []
-resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-tender-summary-20261011.
-  Extract source-equal tender_summary assignment (26 lines) pure with timestamp and
-  deadline injected. Source-only deadline remains ISO8601/null from #326. PR #329
-  concurrent, merge after source-contract. Do not touch live pilot, secrets, owner-disabled
-  watchdog.'
+test_results:
+- Full local 3635 passed, 238 skipped, zero failed; make check PASS
+resume_instruction: 'PR #330 source summary: local full 3635/238 pass, CI of initial
+  head may be stale if PR #329 merges. Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-tender-summary-20261011,
+  reconcile latest origin/main after #329, rerun full pytest and exact-head dual quality/integration
+  CI, then merge and complete bounded checkpoint. Parent R2/R4/R5 incomplete, do not
+  touch production or enable disabled watchdog.'
