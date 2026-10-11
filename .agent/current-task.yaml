@@ -96,6 +96,7 @@ completed:
   - '2026-10-11 TA #326 source-locked submission deadline fix: missing date NULL, EIS XML exact ISO8601 serialized instead of fabricated run clock, prior full-test failure fixed, 38 focused + 3623 full local passes/238 skips, both exact-head quality/integrations green; merged main e5d069c5a1c4e5a89061dc0b047f6dac5a6975db.'
 current: 'R3 source-safe deadline #326 merged and all CI green, risk #320/quotes #325/non-goods #321 already merged. Analysis source trace PR #327 in exact-head reconciliation; ownership audit PR #328 open. R2 authoritative EIS original/notice edition not independently verified; R4 actual source-locked gold quality and R5 20 human-reviewed cases/owner signoff pending; overall in_progress.'
 pending:
+  - 'R3 requirements source analysis context TDP-R3-REQUIREMENTS-CONTEXT-20261011: isolate same 47-line source projection and test source/UNKNOWN, no fabricated contract or price.'
   - 'R3 product-owned source-analysis trace TDP-R3-ANALYSIS-TRACE-20261011: preserve source counts, honest limitations, human only; tests and CI.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'

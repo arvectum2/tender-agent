@@ -1,0 +1,42 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-REQUIREMENTS-CONTEXT-20261011
+status: in_progress
+goal: Extract the source-structured 47-line requirements analysis context projection
+  from tender upload monolith without changing field provenance, missing contract
+  terms, delivery UNKNOWN, pricing and manual review.
+definition_of_done:
+- One pure product-owned requirements report projector, explicit existing source helper
+  injection and AST equivalent calculation
+- Preserve source-bound NMCK and OKPD2, delivery unknown, contract drafts/claims,
+  evidence IDs and full API schema
+- Direct tests for service missing contract, goods scope and document roles, verified
+  source metadata/contract facts; full local Python3.12 tests and make check
+- Merge after exact-head dual quality/integration CI, checkpoint complete while TDP-REFACTOR
+  remains in_progress
+completed:
+- Verified current main 368da8c8 and identified 47-line requirements_payload block
+  with source fact/evidence and UNKNOWN semantics.
+- Extracted exactly 47-line requirements_payload into pure operator_requirements_context.py
+  with explicit injection of existing notice-price, source-OKPD2 and delivery helper
+  functions; AST projection value identity PASS.
+- Six direct regression tests protect missing/no evidence/UNKNOWN delivery and contract
+  fields, EIS evidence IDs, sourced NMCK, goods/service distinctions, original contract
+  fact passthrough.
+- 39 related focused local tests passed; targeted Ruff clean and make check passed.
+current: Full local Python3.12 pytest running, exact-head CI and merge pending; current
+  base main 368da8c8.
+pending:
+- Extract and test AST-equivalent pure function
+- Full local regression, exact-head GitHub CI
+- Merge green and complete bounded checkpoint
+last_verified_commit: 368da8c874b11edf185e29c6d874f9202f70df87
+test_results:
+- 39 focused tests passed / 22 warnings
+- AST exact requirements_payload parity passed
+- Target Ruff PASS; make check PASS
+resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-requirements-context-20261011.
+  Full local suite /tmp/tdp-r3-req-full.log running PID8674. Wait all exact-head GitHub
+  CI. Audit #328 docs concurrently may merge; reconcile latest main before merging.
+  Preserve all source-backed facts, missing UNKNOWN and manual-review status. Production,
+  EIS, disabled watchdog untouched.'
