@@ -1,0 +1,54 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R5-REVIEW-QUEUE-20261011
+status: in_progress
+goal: Prepare source-identified, reproducible NO-HUMAN-ASSUMPTIONS reviewer queue
+  for 20 real EIS procurement receipts recorded in unmerged APR-07; preserve archived
+  revision and commercial signoff as explicitly unverified.
+definition_of_done:
+- Reproducible offline standard library CSV generator from explicitly supplied APR06
+  JSON receipts + GPT machine review, validates registry IDs and SHA hex format and
+  never fills human fields from machine output
+- Document source branch/commit, 20 rows, 168 hash-bearing receipts, 0 human official
+  revision checks, key stale archive revision mismatches flagged, without printing
+  source or personal data
+- Pytest synthetic unit coverage incl malformed, duplicate, 0-filled human fields;
+  source generated CSV reviewed
+- PR exact-head GitHub CI green, merge as preparatory artifact only, mark bounded
+  checkpoint completed; leave R5 parent in_progress until 20 actual human reviews
+  and owner signoff
+completed:
+- Verified canonical TA main at 5b12fb99 does not include APR06 20-case JSON; source
+  exists only on unmerged feature/apr07-quality-slo-evidence repo HEAD fc41e652 and
+  tracked commit 891b6fe0.
+- Verified source receipts metadata 20 cases, 168 files hashes, 17 notice hashes and
+  all 20 operator_reviewed=false and official_notice_revision_verified_by_human=false;
+  independent GPT model audit is not human.
+- Created scripts/acceptance/build_apr06_human_review_queue.py, an explicit-input
+  local/offline CSV generator from source receipt and GPT machine-audit metadata;
+  validates registry numbers and hashes, fails closed on duplicates/non-bool human
+  fields, never fills signatures from model output.
+- Created source-labeled 20-row, 168-hash, 2 machine revision mismatch flag CSV. All
+  human fields empty; no internal run_id/source bytes/secret included.
+- Created README documenting original unmerged feature branch fc41e652/891b6fe0 provenance
+  and exact R5 independent reviewer workflow, warnings that this is not acceptance.
+- 11 focused synthetic tests PASS, target Ruff PASS, deterministic output counts 20/168/2
+  and 0 human approvals verified.
+current: 'Code/queue and docs ready in isolated branch; GitHub CI and main reconciliation
+  (PR #331 concurrent) pending.'
+pending:
+- Generator/fixtures/test
+- Review source identity and exact output 20 cases
+- CI green merge bounded checkpoint only
+last_verified_commit: 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+test_results:
+- 11 synthetic pytest PASSED, 1 warning
+- Ruff PASS
+- 20 rows, 168 files with hashes, 2 machine revision flags, 0 verified human decisions,
+  0 private run IDs
+resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r5-review-queue-20261011:
+  source-identified CSV/doc/script generated with 20 rows /168 hashes /2 machine revision
+  flags /0 human decisions; 11 focused PASS. Open PR, require CI, reconcile main after
+  PR331 revision precedence merges then exact-head CI before merging. This is *preparation
+  only*: parent R5 requires 20 human reviews and owner signoff, do not fabricate.
+  No live/secrets/watchdog changes.'
