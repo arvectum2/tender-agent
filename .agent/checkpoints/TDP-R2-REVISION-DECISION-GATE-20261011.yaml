@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R2-REVISION-DECISION-GATE-20261011
-status: in_progress
+status: completed
 goal: 'Fail-closed customer procurement GO/NO_GO when the latest archived EIS notice
   cannot be verified current: an unresolved notice_revision_requires_review must make
   Decision Core application-window UNKNOWN, not hard NO_GO or GO, until independent
@@ -30,20 +30,22 @@ completed:
   and unverified open deadline no longer GO.
 - Four new tests exercise false NO_GO, false GO, unchanged confirmed GO/NO_GO and
   full customer decision projection; 62 focused tests pass, Ruff clean.
-current: Local Python3.12 full regression and exact-head dual quality/integration
-  CI pending.
-pending:
-- Source metadata -> Decision Core review gate
-- Focused and full regression, exact-head CI
-- Merge and complete bounded checkpoint
-last_verified_commit: 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+- 'After #332 main reconciliation, final Python3.12 full pytest 3668 passed/238 skipped/296
+  warnings/zero failed (144.19s); make check and Ruff clean.'
+- 'PR #333 exact-head GitHub CI fully PASS: quality 9m34s and 6m48s, Docker/migrations/Postgres/Redis/integration/security/lock
+  all green.'
+- Merged main 6135bbda891acf6469feec96675c0f5ba28adca3.
+current: Completed, merged TA main 6135bbda891acf6469feec96675c0f5ba28adca3
+pending: []
+last_verified_commit: 6135bbda891acf6469feec96675c0f5ba28adca3
 test_results:
 - 62 focused PASS, 23 warnings
 - Target Ruff PASS
-resume_instruction: Continue isolated worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-revision-decision-gate-20261011
-  based main 8588115a. Decision Core flag notice_revision_requires_review=true makes
-  app deadline status UNKNOWN/NEEDS_REVIEW, never hard expiry blocker or GO, and preserves
-  archived displayed date. 62 focused PASS. Run full Python3.12 pytest, make check
-  and GitHub exact-head all CI. Then merge and mark bounded checkpoint complete; parent
-  R2/R4/R5 still in_progress (live-current EIS proof/human signoff absent). No live
-  changes or watchdog.
+- Final local 3668 passed /238 skipped /0 errors
+- Exact-head dual quality and all integration/security GitHub CI PASS
+- Merged 6135bbda891acf6469feec96675c0f5ba28adca3
+resume_instruction: 'R2 archive-revision Decision Core gate #333 completed, do not
+  repeat. This does not establish current live EIS version; continue parent independent
+  original file bytes/SHA, edition and resource/document/chunk source proof, real
+  R4 source gold comparative model benchmark and R5 >=20 independently human-reviewed
+  EIS procurements/owner signoff. Production and owner-disabled watchdog unchanged.'
