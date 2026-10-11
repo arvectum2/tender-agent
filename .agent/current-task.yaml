@@ -91,9 +91,9 @@ completed:
   - '2026-10-11 PR #318 removed hardcoded unsourced Habarovsk and fixed one-line original service location extraction before unnumbered continuation; 54 focused and 3573 full local tests PASS/238 skipped; two exact-head quality plus full CI green, merged main df63b093246179d344b2030789e2ffda40415f07.'
   - '2026-10-11 TA PR #320 24-line source-safe risk locator validator + 38-line risk projection extracted with AST parity, 69 focused and 3591 full/238 skipped local tests, both exact-head quality/integration GitHub CI passed; merged main 379f9ccb8387581c61dc3be256bd178819e055b4.'
   - '2026-10-11 TA #321 standalone product-owned non-goods economics extracted 92 source-identical lines with notice source helper; 75 focused and 3601 full local Python3.12 tests PASS/238 skipped after merge #320, both exact-head quality and all integration CI green. Merged d551552b16503c8e36d3fa35b4b1234337cf1496.'
-current: 'R3 risk-report #320 and non-goods economics #321 merged with all CI green. R2 pure Data Platform source-byte-to-store validator #119 merged, but independent authoritative EIS attachment bytes, notice revision and source-grade original provenance are still unverified. R3 remaining output orchestration, R4 real model synthetic 4-section smoke passed but corpus-quality benchmark pending, R5 >=20 source-locked human original reviews and owner approval pending; task in_progress.'
+  - '2026-10-11 R4 bounded synthetic local controlled-model smoke: TA qwen3:4b real full 4/4 sections PASSED/252.43s with four human-review traces and no raw retention. Same section: qwen2.5:3b PASS/11.45s, qwen3:4b PASS/26.21s, gemma4:12b PASS/112.62s, huihui-hermes FAILED/115.03s. Not authoritative EIS gold quality or ranking.'
+current: 'R3 risk #320 and non-goods economics #321 merged exact-head green; DP #119 binary-to-store checker complete but authoritative EIS original and revision proof open. R4 bounded synthetic non-stub controlled-model smoke for four local models complete with qwen3:4b four-section pass; real source-locked gold benchmark pending. R5 >=20 independently human-reviewed EIS cases and owner signoff pending. Task in_progress.'
 pending:
-  - 'R4 limited controlled synthetic model comparison TDP-R4-CONTROLLED-LOCAL-20261011: collect huihui-hermes result and record bounded smoke; full real EIS gold-source benchmark pending.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
@@ -103,6 +103,7 @@ pending:
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
 last_verified_commit: 'd551552b16503c8e36d3fa35b4b1234337cf1496'
 test_results:
+  - 'R4 local real model synthetic: qwen3:4b four sections PASSED/252.43s; single-section qwen2.5:3b PASSED/11.45s, qwen3:4b PASSED/26.21s, gemma4:12b PASSED/112.62s, huihui-hermes FAILED/115.03s. No validated EIS gold source benchmark.'
   - 'TA #321: 75 focused tests and rebased 3601 full tests passed / 238 skipped / zero failed, both exact-head quality jobs + integration/security CI green.'
   - 'R3 #320: 69 focused and 3591 full tests passed/238 skipped; Ruff/make check, both exact-head quality and all GitHub integration CI green.'
   - 'R3 PR #318: 54 focused and 3573 full Python 3.12 tests passed / 238 skipped, both exact-head quality and all other GitHub checks green.'
@@ -139,7 +140,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'Resume from latest TA main d551552b16503c8e36d3fa35b4b1234337cf1496 after merged R3 #320 and #321. Do not repeat risk/non-goods module extraction. Pending R2 independently sourced original EIS byte hashes and notice revisions (DP source checker #119 is only a helper), additional R3 output orchestration modularization, R4 controlled local qwen3:4b 4/4 synthetic sections PASSED in isolated SQLite (~252.43s; not corpus benchmark), R5 >=20 independent human-reviewed EIS procurements and owner signoff. Preserve production, secrets and owner-disabled watchdog.'
+resume_instruction: 'Resume TDP-REFACTOR from latest TA main. R3 #320/#321 and R4 synthetic controlled-model smoke TDP-R4-CONTROLLED-LOCAL-20261011 completed; do not redo. Pending R2 actual original EIS binary SHA and notice revision independently verified (DP #119 is only a binary-to-store checker), remaining R3 report orchestration, R4 comparative source-locked real EIS gold corpus model quality/latency and R5 >=20 independent human-reviewed cases with owner signoff. Preserve live services, credential safety and owner-disabled watchdog.'
 execution:
   branch: main
   manual_override: true
