@@ -152,42 +152,22 @@ def run_immutable_backfill(
     except (OSError, ValueError, json.JSONDecodeError):
         return _result("CONFLICT", "invalid_snapshot")
 
-    expected_base = str(
-        Path("customer-pilot")
-        / run.customer_id
-        / run.project_id
-        / case.id
-        / run.id
-        / "analysis"
+    from src.modules.customer_pilot.legacy_binding_manifest_projection import (
+        project_legacy_binding_identities,
     )
-    identities = {
-        "requirements_storage_key": f"{expected_base}/requirements.json",
-        "requirements_file_sha256": verified.requirements_file_sha256,
-        "canonical_report_file_sha256": verified.canonical_report_file_sha256,
-        "binding_manifest_storage_key": f"{expected_base}/canonical-binding.manifest.json",
-        "binding_manifest_file_sha256": _sha(manifest_bytes),
-        "source_graph_hash_algorithm": SOURCE_GRAPH_HASH_ALGORITHM,
-        "report_model_hash": verified.report_model_hash,
-        "verification_policy_version": VERIFICATION_POLICY_VERSION,
-    }
-    expected_manifest = {
-        "customer_id": run.customer_id,
-        "project_id": run.project_id,
-        "procurement_case_id": case.id,
-        "run_id": run.id,
-        "registry_number": run.registry_number,
-        "source_analysis_run_id": run_result.source_analysis_run_id,
-        "source_graph_hash": run_result.source_graph_hash,
-        "source_graph_hash_algorithm": SOURCE_GRAPH_HASH_ALGORITHM,
-        "production_model_hash": run_result.production_model_hash,
-        "report_model_hash": verified.report_model_hash,
-        "requirements_relative_path": identities["requirements_storage_key"],
-        "requirements_file_sha256": identities["requirements_file_sha256"],
-        "canonical_report_relative_path": run_result.canonical_report_storage_key,
-        "canonical_report_file_sha256": identities["canonical_report_file_sha256"],
-        "exact_file_set": EXACT_FILE_SET,
-        "verification_policy_version": VERIFICATION_POLICY_VERSION,
-    }
+
+    identities, expected_manifest = project_legacy_binding_identities(
+        run=run,
+        case=case,
+        run_result=run_result,
+        verified=verified,
+        manifest_bytes=manifest_bytes,
+        Path=Path,
+        _sha=_sha,
+        SOURCE_GRAPH_HASH_ALGORITHM=SOURCE_GRAPH_HASH_ALGORITHM,
+        VERIFICATION_POLICY_VERSION=VERIFICATION_POLICY_VERSION,
+        EXACT_FILE_SET=EXACT_FILE_SET,
+    )
     if any(manifest.get(key) != value for key, value in expected_manifest.items()):
         return _result("CONFLICT", "canonical_identity_conflict", identities)
     if run_result.canonical_report_hash != verified.report_model_hash:
