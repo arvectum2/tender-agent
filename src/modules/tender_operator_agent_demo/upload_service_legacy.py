@@ -102,6 +102,7 @@ from src.modules.tender_operator_agent_demo.operator_risk_report import (
     build_document_grounded_risks,
     build_operator_risk_payload,
 )
+from src.modules.tender_operator_agent_demo.operator_supplier_questions import normalize_supplier_questions
 from src.modules.tender_operator_agent_demo.operator_scope_classifier import (
     _SCOPE_SIGNALS as _SCOPE_SIGNALS,  # noqa: PLC0414 - legacy facade
 )
@@ -2433,34 +2434,8 @@ def _build_preliminary_procurement_analysis(
 
 
 def _normalize_supplier_questions(questions: list[dict[str, Any]], procurement_kind: str) -> list[str]:
-    if procurement_kind != "services":
-        return [_translate_user_text(item["question"]) for item in questions[:8]]
-    service_questions = {
-        "spec_match": "Подтверждаете ли вы оказание услуг в полном объеме по техническому заданию?",
-        "price": "Какова стоимость услуг с НДС и без НДС?",
-        "delivery": "Какие организационные расходы входят в стоимость услуг?",
-        "delivery_time": "Подтверждаете ли вы сроки оказания услуг по графику заказчика?",
-        "availability": "Есть ли у вас преподаватели, аудитории и ресурсы на требуемые даты?",
-        "certificates": "Есть ли документы и согласования, подтверждающие право на оказание этих услуг?",
-        "warranty": "Какие итоговые документы и результаты обучения вы обеспечиваете по завершении программы?",
-        "analog": "Есть ли отклонения от программы, формата или состава услуг, указанных в ТЗ?",
-        "payment": "Какие условия оплаты вы готовы подтвердить со своей стороны?",
-        "validity": "Какой срок действия вашего коммерческого предложения?",
-        "installation": "Что входит в организацию очной части обучения на вашей площадке?",
-        "logistics": "Входят ли в стоимость раздаточные материалы, дистанционная платформа и организационное сопровождение?",
-    }
-    normalized: list[str] = []
-    seen: set[str] = set()
-    for item in questions:
-        category = str(item.get("category") or "").strip()
-        question = service_questions.get(category) or _translate_user_text(item["question"])
-        if question in seen:
-            continue
-        seen.add(question)
-        normalized.append(question)
-        if len(normalized) >= 8:
-            break
-    return normalized
+    """Backward-compatible upload service facade."""
+    return normalize_supplier_questions(questions, procurement_kind, translate_user_text=_translate_user_text)
 
 
 def delivery_address_from_preliminary(preliminary_analysis: dict[str, Any]) -> str | None:
