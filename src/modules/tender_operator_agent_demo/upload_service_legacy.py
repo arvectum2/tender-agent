@@ -3442,6 +3442,17 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
             technical_spec_text=technical_spec_text,
             contract_draft_text=contract_draft_text,
         )
+        from src.modules.tender_operator_agent_demo.operator_notice_revision import (
+            selected_archived_notice_text,
+        )
+
+        # Avoid passing an obsolete first-file notice into LLM/preliminary analysis
+        # after a newer exact registry-matched archival revision was selected.
+        selected_notice_text = selected_archived_notice_text(
+            documents, metadata.get("notice_revision_selected")
+        )
+        if selected_notice_text:
+            notice_text = selected_notice_text
 
         profile = None if metadata.get("mode") == "procurement_search_intake" else get_supplier_profile()
         doc_relevance = score_procurement_document_text(text=combined_text or "", profile=profile)

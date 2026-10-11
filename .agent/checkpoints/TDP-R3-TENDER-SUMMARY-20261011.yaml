@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-TENDER-SUMMARY-20261011
-status: in_progress
+status: completed
 goal: Isolate original 26-line tender summary data projection without fabricated submission
   deadline or changed original documents/source metadata.
 definition_of_done:
@@ -20,14 +20,19 @@ completed:
   make check/target Ruff PASS.
 - 'Reconciled main requirements PR #329 adb6551e5c46b4e0e2a1751e5bc1c1a948a29666 with
   summary pure module; preliminary AST/value parity confirmed earlier.'
-current: 'Merged main #329; full Python3.12 regression and fresh exact-head CI outstanding.'
-pending:
-- Implement and test
-- 'Reconcile PR #329 requirements context after its merge'
-- Full regression and CI merge; checkpoint complete
-last_verified_commit: 5becf69666583627d29420d41468b7daeb4e8b3f
+- 'After #329 main merge: full Python3.12 pytest 3641 passed, 238 skipped, zero failures
+  and make check clean.'
+- All exact-head GitHub quality 9m07s/8m52s and Docker/Postgres/Redis/migrations/security
+  CI passed.
+- 'PR #330 merged main 5b12fb99be499c98d3c7ecf747f07e65323ac09b.'
+current: Completed and merged as 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+pending: []
+last_verified_commit: 5b12fb99be499c98d3c7ecf747f07e65323ac09b
 test_results:
 - Full local 3635 passed, 238 skipped, zero failed; make check PASS
-resume_instruction: 'Continue this PR #330 worktree after main #329 merged. Rerun
-  make check+full pytest, verify all GitHub dual exact-head CI green before merge
-  and complete checkpoint. Main R2/R4/R5 remain in_progress, disabled watchdog untouched.'
+- Combined full local 3641 passed / 238 skipped / zero failed
+- Two exact-head quality and all integration CI PASS
+- Merged main 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+resume_instruction: 'TDP-R3-TENDER-SUMMARY-20261011 completed #330, do not repeat.
+  Continue R2 EIS archived notice selection PR #331 and open R2 original EIS official
+  revision, R4/R5 source-reviewed acceptance. Owner-disabled watchdog remains disabled.'
