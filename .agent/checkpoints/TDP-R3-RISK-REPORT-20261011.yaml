@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-RISK-REPORT-20261011
-status: in_progress
+status: completed
 goal: Extract source-safe risk evidence locator validation and risk output projection
   from 4152-line upload monolith to existing product-owned operator_risk_report, preserving
   fail-closed behavior and output schema.
@@ -25,18 +25,23 @@ completed:
 - Added direct safe/adversarial path, opaque SHA/UUID, LLM source status and fallback
   report tests; 69 focused tests passed.
 - Targeted Ruff and make check passed.
-current: Full Python 3.12 regression running; exact-head GitHub CI and merge pending.
-pending:
-- Implement function extraction and tests
-- Run local validation and exact-head GitHub CI
-- Merge only all green; complete bounded checkpoint
-last_verified_commit: 409bd15c46ffc1357e4f195b91064af8f18e23e9
+- 'Full Python3.12 pytest: 3591 passed/238 skipped, 294 warnings and zero failures.'
+- 'PR #320 exact-head GitHub CI passed both quality and all integration/security/lock
+  checks.'
+- 'PR #320 merged main as 379f9ccb8387581c61dc3be256bd178819e055b4.'
+current: Completed and merged as 379f9ccb8387581c61dc3be256bd178819e055b4
+pending: []
+last_verified_commit: 379f9ccb8387581c61dc3be256bd178819e055b4
 test_results:
 - 69 focused tests passed, 1 warning
 - AST value/locator body equivalence PASS
 - Targeted Ruff PASS
 - make check PASS
-resume_instruction: Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-risk-report-20261011;
-  inspect /tmp/tdp-r3-risk-full.log (PID 69586). Commit and push PR. All exact-head
-  GitHub CI green required before merge; then mark bounded checkpoint completed on
-  main, overarching in_progress. Do not touch live services or owner-disabled watchdog.
+- 3591 full tests passed / 238 skipped
+- All exact-head GitHub CI green
+- Merged 379f9ccb8387581c61dc3be256bd178819e055b4
+resume_instruction: 'Risk report/locator extraction completed and merged; do not repeat.
+  Continue broader TDP-REFACTOR from latest main; next R3 non-goods economics #321
+  branch from older main needs reconciliation before merging. R2 original authoritative
+  EIS attachment proof/R4 whole-pipeline model/R5 human review remain. Watchdog stays
+  disabled.'
