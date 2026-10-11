@@ -9,11 +9,19 @@ URI = f"https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html
 B = b"genuine source bytes"
 H = hashlib.sha256(B).hexdigest()
 RECEIPT = {"files": [{"uid": UID, "url": URI, "sha256": H}]}
+COLLECTION = "collection-1"
+SOURCE_TYPE = "file"
+RID = hashlib.sha256(
+    f"resource\0{COLLECTION}\0{SOURCE_TYPE}\0{URI}".encode()
+).hexdigest()
+DID = hashlib.sha256(f"document\0{RID}\0{H}".encode()).hexdigest()
 DP = [
     {
         "canonical_uri": URI,
+        "resource_id": RID,
+        "source_type": SOURCE_TYPE,
         "content_hash": H,
-        "documents": [{"document_id": "doc1", "content_hash": H}],
+        "documents": [{"document_id": DID, "content_hash": H}],
         "metadata": {"notice_revision": "rev1"},
     }
 ]
@@ -25,7 +33,13 @@ def test_no_export_is_not_accepted():
 
 
 def test_missing_independent_revision_is_unknown_even_when_bytes_match():
-    result = reconcile_receipts(RECEIPT, {UID: B}, DP)
+    result = reconcile_receipts(
+        RECEIPT,
+        {UID: B},
+        DP,
+        expected_collection_id=COLLECTION,
+        expected_source_type=SOURCE_TYPE,
+    )
     assert (
         result.status == "UNKNOWN"
         and "NOTICE_REVISION_NOT_INDEPENDENTLY_VERIFIED" in result.error_codes
@@ -43,7 +57,12 @@ def test_falsified_source_bytes_are_rejected():
 
 def test_correct_revision_only_matches_source_bytes_not_chunks():
     result = reconcile_receipts(
-        RECEIPT, {UID: B}, DP, independently_verified_notice_revision="rev1"
+        RECEIPT,
+        {UID: B},
+        DP,
+        independently_verified_notice_revision="rev1",
+        expected_collection_id=COLLECTION,
+        expected_source_type=SOURCE_TYPE,
     )
     assert (
         result.status == "SOURCE_BYTES_MATCHED_CHUNKS_UNVERIFIED"
@@ -53,7 +72,12 @@ def test_correct_revision_only_matches_source_bytes_not_chunks():
 
 def test_wrong_revision_is_unknown():
     result = reconcile_receipts(
-        RECEIPT, {UID: B}, DP, independently_verified_notice_revision="rev2"
+        RECEIPT,
+        {UID: B},
+        DP,
+        independently_verified_notice_revision="rev2",
+        expected_collection_id=COLLECTION,
+        expected_source_type=SOURCE_TYPE,
     )
     assert (
         result.status == "UNKNOWN"
@@ -104,3 +128,39 @@ def test_noncanonical_filestore_path_rejected():
 
 def test_malformed_export_not_a_success():
     assert reconcile_receipts(RECEIPT, {UID: B}, None).status == "UNKNOWN"
+
+
+def test_source_id_missing_context_fails_closed():
+    result = reconcile_receipts(
+        RECEIPT, {UID: B}, DP, independently_verified_notice_revision="rev1"
+    )
+    assert (
+        result.status == "UNKNOWN"
+        and "INDEPENDENT_DP_IDENTITY_CONTEXT_MISSING" in result.error_codes
+    )
+
+
+def test_resource_id_mismatch_fails_closed():
+    bad = [{**DP[0], "resource_id": "f" * 64}]
+    result = reconcile_receipts(
+        RECEIPT,
+        {UID: B},
+        bad,
+        independently_verified_notice_revision="rev1",
+        expected_collection_id=COLLECTION,
+        expected_source_type=SOURCE_TYPE,
+    )
+    assert "DP_RESOURCE_ID_MISMATCH" in result.error_codes
+
+
+def test_document_id_mismatch_fails_closed():
+    bad = [{**DP[0], "documents": [{**DP[0]["documents"][0], "document_id": "f" * 64}]}]
+    result = reconcile_receipts(
+        RECEIPT,
+        {UID: B},
+        bad,
+        independently_verified_notice_revision="rev1",
+        expected_collection_id=COLLECTION,
+        expected_source_type=SOURCE_TYPE,
+    )
+    assert "DP_DOCUMENT_ID_MISMATCH" in result.error_codes

@@ -29,6 +29,8 @@ def reconcile_receipts(
     exported_resources: list[dict[str, Any]],
     *,
     independently_verified_notice_revision: str | None = None,
+    expected_collection_id: str | None = None,
+    expected_source_type: str | None = None,
 ) -> Reconciliation:
     """Hash public bytes against supplied DP exports; missing proof stays UNKNOWN.
 
@@ -106,6 +108,34 @@ def reconcile_receipts(
         ]
         if len(valid) != 1:
             errors.add("DP_BINARY_OR_DOCUMENT_MISMATCH")
+            continue
+        if not expected_collection_id or not expected_source_type:
+            errors.add("INDEPENDENT_DP_IDENTITY_CONTEXT_MISSING")
+            continue
+        expected_resource_id = hashlib.sha256(
+            f"resource\0{expected_collection_id}\0{expected_source_type}\0{uri}".encode()
+        ).hexdigest()
+        resource = valid[0]
+        if (
+            resource.get("source_type") != expected_source_type
+            or resource.get("resource_id") != expected_resource_id
+        ):
+            errors.add("DP_RESOURCE_ID_MISMATCH")
+            continue
+        expected_document_id = hashlib.sha256(
+            f"document\0{expected_resource_id}\0{digest}".encode()
+        ).hexdigest()
+        docs = resource.get("documents")
+        matching_documents = [
+            d
+            for d in (docs if isinstance(docs, list) else [])
+            if isinstance(d, dict)
+            and d.get("document_id") == expected_document_id
+            and isinstance(d.get("content_hash"), str)
+            and hmac.compare_digest(d["content_hash"].lower(), digest)
+        ]
+        if len(matching_documents) != 1:
+            errors.add("DP_DOCUMENT_ID_MISMATCH")
             continue
         if not independently_verified_notice_revision:
             errors.add("NOTICE_REVISION_NOT_INDEPENDENTLY_VERIFIED")
