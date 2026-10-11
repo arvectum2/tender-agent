@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-R3-NONGOODS-ECONOMICS-20261011
-status: in_progress
+status: completed
 goal: Extract economics-report projection for services and non-goods procurement from
   legacy monolith, with original None/UNKNOWN margins and no fabricated supplier quotes.
 definition_of_done:
@@ -24,19 +24,25 @@ completed:
   confirmed operator economics retained and manual review unchanged; 75 focused tests
   passed.
 - Targeted Ruff and make check passed.
-current: Full local Python 3.12 test run in progress; PR and GitHub exact-head CI
-  pending.
-pending:
-- Code + focused regression
-- Full pytest + CI
-- Merge green and close bounded checkpoint
-last_verified_commit: 409bd15c46ffc1357e4f195b91064af8f18e23e9
+- 'PR #321 full Python 3.12 local regression passed 3601 tests, 238 skipped and zero
+  failed after reconciling PR #320 risk-report merge.'
+- Both exact-head GitHub quality jobs (9m05s and 9m12s), dependency-lock, Docker,
+  Redis, Postgres, migrations, R8 acceptance, bridge and security passed.
+- 'PR #321 merged main d551552b16503c8e36d3fa35b4b1234337cf1496.'
+current: Completed and merged as d551552b16503c8e36d3fa35b4b1234337cf1496
+pending: []
+last_verified_commit: d551552b16503c8e36d3fa35b4b1234337cf1496
 test_results:
 - 75 focused tests passed, 21 warnings
 - AST both branches identity PASS
 - Targeted Ruff PASS
 - make check PASS
-resume_instruction: 'Continue worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r3-nongoods-economics-20261011.
-  Full local pytest /tmp/tdp-r3-nongoods-full.log PID70937. Commit/push PR and reconcile
-  latest main after PR #320 merges; require exact-head all CI green. Preserve production,
-  EIS, credentials, owner-disabled watchdog.'
+- 'Reconciled full local pytest: 3601 passed, 238 skipped, 294 warnings; 0 failed'
+- make check and Ruff passed
+- All exact-head GitHub CI passed
+- Merged d551552b16503c8e36d3fa35b4b1234337cf1496
+resume_instruction: This R3 non-goods economics extraction slice is complete. Continue
+  overarching TDP-REFACTOR-20261009. Do not repeat goods, non-goods or risk-report
+  projection extraction. R2 authoritative original EIS hash/notice revision, R3 remaining
+  report modularization, R4 source-locked real benchmark, R5 >=20 independently reviewed
+  EIS cases and owner signoff remain. Owner-disabled watchdog stays disabled.
