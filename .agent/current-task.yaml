@@ -97,6 +97,7 @@ completed:
   - '2026-10-11 TA #327 48-line source-trace projection extracted with exact AST parity, 42 focused and fully reconciled 3628 full local tests/238 skipped pass, both exact-head quality jobs 9m10s/8m36s plus all integrations passed, merged main 368da8c874b11edf185e29c6d874f9202f70df87.'
 current: 'R3 deadline #326 and source trace #327 code merged with dual quality/integration CI green. Cross-repo ownership audit #328 in CI. R2 independent authoritative EIS original byte hashes and notice edition still unverified; R4 genuine source-locked gold corpus/model benchmark and R5 >=20 human-reviewed original procurements and owner signoff still pending. Task remains in_progress.'
 pending:
+  - 'R3 summary product projection TDP-R3-TENDER-SUMMARY-20261011: extract 26-line source-only tender summary with injected clock/verified deadline, tests + CI.'
   - 'R3 cross-repository architecture ownership audit TDP-CROSS-REPO-OWNERSHIP-20261011: reconcile prior Oct4 assumptions with current TA/DP implementations, publish boundary/gates.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'

@@ -122,6 +122,9 @@ from src.modules.tender_operator_agent_demo.operator_stored_file_paths import (
 from src.modules.tender_operator_agent_demo.operator_submission_deadline import (
     submission_deadline_from_metadata,
 )
+from src.modules.tender_operator_agent_demo.operator_tender_summary import (
+    build_operator_tender_summary,
+)
 from src.modules.tender_operator_agent_demo.operator_training_location_action import (
     build_training_location_action,
 )
@@ -2916,32 +2919,14 @@ def _build_output_payloads(
     if procurement_kind == "goods" and rich_documents and not source_facts:
         output_warnings.append("SOURCE_EXTRACTION_LOW_RECALL: rich procurement documents produced no source facts.")
 
-    tender_summary = {
-        "run_id": metadata["run_id"],
-        "prepared_at": _safe_datetime(),
-        "title": metadata["tender_title"],
-        "procedure_type": "Поиск закупки + intake" if metadata.get("mode") == "procurement_search_intake" else "Загруженный demo run",
-        "customer": metadata["customer_name"],
-        "category": metadata["tender_category"],
-        "submission_deadline": submission_deadline_from_metadata(metadata),
-        "analysis_status": metadata["status"],
-        "procurement_code": metadata.get("procurement_id") or metadata["run_id"].upper(),
-        "documents": [
-            {
-                "name": doc.display_name,
-                "role": doc.role,
-                "pages": 1,
-            }
-            for doc in documents
-        ],
-        "document_signals": [
-            f"Режим создания run: {metadata.get('mode', 'uploaded_demo')}.",
-            f"Загружено файлов: {len(metadata.get('files', []))}.",
-            f"Файлов с извлечённым текстом: {len([doc for doc in documents if doc.text])}.",
-            f"Режим анализа: {analysis_mode}.",
-        ],
-        "preliminary_analysis": preliminary_analysis,
-    }
+    tender_summary = build_operator_tender_summary(
+        metadata=metadata,
+        documents=documents,
+        preliminary_analysis=preliminary_analysis,
+        analysis_mode=analysis_mode,
+        _safe_datetime=_safe_datetime,
+        submission_deadline_from_metadata=submission_deadline_from_metadata,
+    )
 
     requirements_payload = {
         "requirements": requirement_rows,
