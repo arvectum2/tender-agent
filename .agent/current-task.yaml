@@ -91,6 +91,7 @@ completed:
   - '2026-10-11 PR #318 removed hardcoded unsourced Habarovsk and fixed one-line original service location extraction before unnumbered continuation; 54 focused and 3573 full local tests PASS/238 skipped; two exact-head quality plus full CI green, merged main df63b093246179d344b2030789e2ffda40415f07.'
 current: 'R3 goods economics #312, software preliminary #314, education facts #316 and training-location #318 all CI green merged main; R2 normalized source chunk coordinates/raw EIS binary proof, R4 integrated non-stub model quality, R5 >=20 source-locked independent EIS reviews and owner sign-off remain. Task in_progress.'
 pending:
+  - 'R3 non-goods economics TDP-R3-NONGOODS-ECONOMICS-20261011: extract while retaining UNKNOWN cost and quote semantics; test/CI before merge.'
   - 'R2 source proof remains: locate already-persisted original EIS resource/document/chunk or isolated non-production fixture; validate SHA256, IDs and offsets using authorized read-only API. Three canonical TA collections absent on live DP.'
   - 'Resolve EIS SOAP connection reset for lawful original documentation acquisition and review >=20 source-locked EIS procurements; do not treat missing official evidence as KNOWN.'
   - 'Publish cross-repository ownership/dependency/duplicate audit with prioritized executable phases and acceptance gates.'
