@@ -35,7 +35,17 @@ completed:
   operator review.
 - Eight new regression cases protect APR-06 Aksay v1/v5 and Moscow CZN v1/v3 against
   stale-card NO_GO; 30 focused tests and Ruff/make check passed.
-current: Full Python3.12 regression running; PR source revision fix and CI pending.
+- 'Initial full regression after source revision selection exposed one real failure
+  in manual/XML report source binding: non-EIS sanitized identifiers were incorrectly
+  forced through official registry matching.'
+- 'Fixed boundary: enforce exact registry only when identifier is valid 11/19-digit
+  EIS number; preserve manual upload XML evidence and explicitly mark unknown revision
+  for review.'
+- Added visible limitations message when revision is ambiguous or multiple archived
+  versions conflict; 35 focused regression cases now pass, including previously failing
+  manual XML report binding.
+current: 'Reconcile PR #330 merged main and rerun full local regression after manual
+  XML boundary fix; prior 1-failure full run intentionally not accepted.'
 pending:
 - Implement safe parser and version-aware selection + tests
 - Full local regression, exact-head CI
@@ -45,8 +55,13 @@ last_verified_commit: adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
 test_results:
 - 30 focused tests PASS, 22 warnings
 - Target Ruff and make check PASS
-resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-eis-revision-precedence-20261011.
-  Full Python3.12 pytest running /tmp/tdp-r2-revision-full.log. PR #330 summary may
-  merge first; reconcile main, re-run exact-head CI and full local. Correct archive
-  version is NOT verified currently live EIS. Do not call R2/R5 completed without
-  independent original source edition/human signoff; no live production or watchdog.'
+- Initial full 3641 passed/238 skipped/1 failed; failure in manual XML sanitized registry
+  binding, now resolved
+- 35 focused regression tests passed, including earlier failure
+- Ruff focused PASS
+resume_instruction: 'Continue this worktree. R2 source revision selection now passes
+  35 focused tests; initial full had manual sanitized non-EIS registry failure fixed.
+  Reconcile latest TA main after PR #330, then make check/full local Python3.12 and
+  exact-head CI. Only after green merge #331 and status complete bounded task. Parent
+  R2 authoritative live-current EIS edition and R5 human signoff remain blocked; watchdog
+  disabled.'

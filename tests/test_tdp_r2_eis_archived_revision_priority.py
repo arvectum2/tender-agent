@@ -78,6 +78,7 @@ def test_aksay_v5_supersedes_expired_v1_and_stale_card(reverse):
     assert result["notice_revision_selected"]["file_id"] == "FILE-05"
     assert result["notice_revision_selected"]["current_live_eis_verified"] is False
     assert result["notice_revision_requires_review"] is True
+    assert any("не доказывает актуальность" in note for note in result["limitations"])
     assert result["_field_evidence"]["application_deadline"] == "eis_notice:submission_deadline"
 
 

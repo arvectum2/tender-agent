@@ -5,6 +5,7 @@ caller supplies its legacy placeholder/date functions for compatibility.
 """
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -39,6 +40,7 @@ def enrich_procurement_metadata(
         expected_number = str(
             metadata.get("procurement_id") or procurement.get("procurement_number") or ""
         ).strip()
+        expected_is_official_number = bool(re.fullmatch(r"(?:\d{11}|\d{19})", expected_number))
         candidates: list[tuple[tuple[int, int, str, int], dict[str, Any], dict[str, Any] | None, AnalyzedDocument]] = []
         for index, doc in enumerate(documents):
             if doc.role != "notice" or doc.extension != ".xml" or not doc.raw_content:
@@ -55,7 +57,7 @@ def enrich_procurement_metadata(
             if not parsed.get("_has_notice_data"):
                 continue
             identity = extract_notice_revision_info(raw_text)
-            if expected_number and identity.get("purchase_number") != expected_number:
+            if expected_is_official_number and identity.get("purchase_number") != expected_number:
                 # A foreign/ambiguous XML cannot authorize a procurement fact.
                 metadata["notice_revision_requires_review"] = True
                 continue
@@ -87,6 +89,17 @@ def enrich_procurement_metadata(
                     metadata["notice_revision_requires_review"] = True
             elif len(candidates) > 1:
                 metadata["notice_revision_requires_review"] = True
+
+    if metadata.get("notice_revision_requires_review"):
+        manual_review_note = (
+            "Редакция извещения ЕИС требует ручной проверки на официальном источнике: "
+            "максимальная версия из загруженного архива не доказывает актуальность "
+            "опубликованной редакции и срока подачи заявок."
+        )
+        limitations = list(metadata.get("limitations") or [])
+        if manual_review_note not in limitations:
+            limitations.append(manual_review_note)
+        metadata["limitations"] = limitations
 
     card_meta = {
         "nmck": procurement.get("initial_price"),
