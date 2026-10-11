@@ -37,6 +37,11 @@ exists. Missing marker is UNKNOWN, never a GO or hard expired NO_GO.
   limitations and warnings (without writing metadata).
 - HTML preview and download get a prominent static alert, without altering
   the file on disk; unrelated manual uploads retain their normal behavior.
+- Canonical DOCX/PDF exports previously used stored canonical content, which
+  bypasses in-memory report masking. An archived EIS record without verified
+  current_live_eis_verified now returns explicit HTTP 409 *before any export*
+  instead of emitting an immutable PDF/DOCX with an old GO decision. Verified
+  non-EIS and explicitly attested live EIS cases retain their normal exports.
 - Existing original JSON and HTML bytes remain available as historical
   evidence; no automatic EIS, database, or tender submission occurs.
 

@@ -112,3 +112,15 @@ def projected_historical_eis_run(metadata: dict[str, Any], response: Any) -> Any
             "external_actions": False,
         }
     )
+
+
+def reject_unsafe_historical_eis_binary_export(metadata: dict[str, Any]) -> None:
+    """Stop canonical PDF/DOCX from bypassing read-time review projections."""
+    if not needs_live_eis_revision_review(metadata):
+        return
+    from fastapi import HTTPException
+
+    raise HTTPException(
+        status_code=409,
+        detail=EIS_ARCHIVE_REVIEW_MESSAGE,
+    )

@@ -146,3 +146,39 @@ def test_saved_run_summary_hides_stale_go_without_mutating_response():
     assert projected.human_in_the_loop
     assert original.final_recommendation.recommendation == "participate_conditionally"
     assert projected_historical_eis_run({"procurement_source": "manual_upload"}, original) is original
+
+def test_stale_eis_docx_pdf_export_fails_before_render(monkeypatch):
+    from fastapi import HTTPException
+
+    from src.modules.tender_operator_agent_demo import report_export_service as exports
+
+    monkeypatch.setattr(exports, "_load_metadata", lambda _rid: _archived())
+
+    for exporter in (
+        exports.export_demo_agent_report_docx,
+        exports.export_demo_agent_report_pdf,
+    ):
+        try:
+            exporter("historical-1")
+        except HTTPException as exc:
+            assert exc.status_code == 409
+            assert EIS_ARCHIVE_REVIEW_MESSAGE in exc.detail
+        else:
+            raise AssertionError("An archived EIS report must not be exported as a current PDF/DOCX")
+
+
+def test_manually_verified_eis_or_unrelated_upload_not_blocked_for_binary_export():
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        reject_unsafe_historical_eis_binary_export,
+    )
+
+    reject_unsafe_historical_eis_binary_export({"procurement_source": "manual_upload"})
+    reject_unsafe_historical_eis_binary_export(
+        {
+            "procurement_source": "zakupki_gov_ru_getdocs_ip",
+            "notice_revision_selected": {
+                "version": 5,
+                "current_live_eis_verified": True,
+            },
+        }
+    )
