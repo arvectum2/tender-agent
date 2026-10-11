@@ -44,8 +44,10 @@ completed:
 - Added visible limitations message when revision is ambiguous or multiple archived
   versions conflict; 35 focused regression cases now pass, including previously failing
   manual XML report binding.
-current: 'Reconcile PR #330 merged main and rerun full local regression after manual
-  XML boundary fix; prior 1-failure full run intentionally not accepted.'
+- 'Reconciled main PR #330 5b12fb99be499c98d3c7ecf747f07e65323ac09b and preserved
+  source-only summary contract.'
+current: 'Full Python3.12 regression and fresh exact-head CI after main #330 merge
+  pending.'
 pending:
 - Implement safe parser and version-aware selection + tests
 - Full local regression, exact-head CI
@@ -59,9 +61,8 @@ test_results:
   binding, now resolved
 - 35 focused regression tests passed, including earlier failure
 - Ruff focused PASS
-resume_instruction: 'Continue this worktree. R2 source revision selection now passes
-  35 focused tests; initial full had manual sanitized non-EIS registry failure fixed.
-  Reconcile latest TA main after PR #330, then make check/full local Python3.12 and
-  exact-head CI. Only after green merge #331 and status complete bounded task. Parent
-  R2 authoritative live-current EIS edition and R5 human signoff remain blocked; watchdog
-  disabled.'
+resume_instruction: 'Continue /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-r2-eis-revision-precedence-20261011
+  after PR #330 main merge. Manual XML sanitized-report regression fixed and 35 focused
+  PASS. Run full Python3.12 pytest/make check and exact-head PR #331 GitHub CI before
+  merge; only bounded revision precedence may complete. R2 original current live EIS
+  validity and R4/R5 human gold acceptance still in_progress.'
