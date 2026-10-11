@@ -46,3 +46,20 @@ boundary stable, preserve AST parity or compare domain-level outputs, run
 focused full regression and exact-head CI. Only after these gates may the
 large main function be restructured. This safety baseline does NOT close R2
 live target data provenance, R4 human-gold benchmark or R5 owner acceptance.
+
+## Staged legacy facade extraction (2026-10-11)
+
+The original 266-line backfill_legacy_run_binding implementation now lives in
+legacy_binding_backfill_orchestrator.py as run_immutable_backfill, with its
+original Python function body AST SHA256:
+d6fe9df602e3726563d4996a4beea851923f2c3fece2cfe1755eddd913b20b30.
+The legacy public facade signature remains stable and injects 16 original
+runtime dependencies to preserve patch points and module ownership.
+
+The two deliberately broad exception handlers and redundant tuple conversion
+are suppressed only within the extracted module in Ruff, pending a future
+separately justified behavior-preserving cleanup. The original transaction,
+ownership, filesystem, source-graph and immutable-artifact semantics were not
+modified. Focused safety tests: 10 passed. Full local regressions: 3792 passed,
+238 skipped, 1 known unrelated R9 pg_restore test deselected. Exact-head CI and
+pull-request merge are still required before marking this stage integrated.

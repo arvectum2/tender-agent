@@ -254,3 +254,24 @@ def test_orm_values_restored_when_flush_fails(tmp_path, monkeypatch):
     assert artifact.verification_policy_version is None
     assert session.flushes == 1
     # This checks in-memory restoration; caller still owns DB rollback.
+
+
+def test_backfill_facade_resolves_runtime_directory_guard(monkeypatch, tmp_path):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    from src.modules.customer_pilot import legacy_binding_backfill as legacy
+    verified = []
+    def forbid_directory(path):
+        verified.append(path)
+        raise ValueError("unsafe_filesystem")
+    monkeypatch.setattr(legacy, "_directory", forbid_directory)
+    outcome = legacy.backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "CONFLICT"
+    assert outcome.error_category == "invalid_snapshot"
+    assert outcome.mutation_performed is False
+    assert len(verified) == 1
+    assert result.report_model_hash is None
+    assert artifact.manifest_file_sha256 is None
+    assert session.flushes == 0
