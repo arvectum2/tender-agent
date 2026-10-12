@@ -1,5 +1,5 @@
 task_id: TDP-CHATGPT-PROVIDER-20261012
-status: in_progress
+status: blocked
 goal: "Implement a real optional ChatGPT/OpenAI API independent semantic reviewer adapter with strict source-grounded input, bounded usage and fail-closed response validation, no manual involvement until final acceptance."
 definition_of_done:
   - "Authenticated OpenAI API request adapter with model/provider identity checks and no implicit network sends."
@@ -9,11 +9,8 @@ definition_of_done:
 completed:
   - "2026-10-12 inspected merged PR373 expert verdict contract and existing OpenAI compatible infrastructure."
   - "2026-10-12 OpenAI key absent in current Mac mini environment; real external call cannot yet run."
-current: "Build provider adapter on branch feat/tdp-chatgpt-review-20261012 in isolated worktree."
-remaining:
-  - "Create provider adapter with strict bounded JSON request and response schema."
-  - "Test mocked provider, failure, data bounds, credential handling and integration with semantic_expert_review."
-  - "Run tests/CI and merge; report unverified real API until credential exists."
+current: 'CANCELLED BY USER DIRECTION: no automated external OpenAI/ChatGPT API allowed. No prototype code was committed or merged and no network/API calls were made. A single untracked prototype file in abandoned local worktree may remain until approved local cleanup; do not use.'
+remaining: []
 last_verified_commit: aa27282b
 test_results: []
-resume_instruction: "Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-chatgpt-review-20261012. Build optional external OpenAI reviewer using existing semantic_expert_review.review_model_claims, avoiding frozen R3 analyzer AST and production changes. No OpenAI API key currently present: test mocked network, do not claim real ChatGPT API call. No bids/watchdog."
+resume_instruction: 'Do not continue this API-provider task. Explicit user instruction forbids additional API integrations. Work solely with local LLM executor and ChatGPT as interactive reviewer via RDC; update parent checkpoint with expert verdicts. No watchdog or bids.'
