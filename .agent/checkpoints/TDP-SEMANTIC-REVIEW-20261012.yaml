@@ -1,0 +1,18 @@
+task_id: TDP-SEMANTIC-REVIEW-20261012
+status: in_progress
+goal: "Design a real fail-closed semantic expert review handoff for local LLM claims, without making unexecuted ChatGPT calls look completed."
+definition_of_done:
+  - "Define a deterministic provenance and semantic reviewer-response contract, distinct from source quote validation."
+  - "Record review status and rejection reasons for local LLM results; unavailable expert stays REVIEW_REQUIRED."
+  - "Reject fabricated source matches and mismatched procurement IDs; no automatic bid GO."
+  - "Add isolated tests, Ruff and CI; merge only after green exact-head checks."
+completed:
+  - "Inspected operator_analyze_run controlled LLM path and separate authenticated original quote API."
+current: "Implement explicit optional independent semantic review adapter and conservative metadata status in isolated worktree."
+remaining:
+  - "Implement review validator, tests and metadata integration."
+  - "Run focused and full acceptance and GitHub CI."
+  - "Merge and finalize child checkpoint."
+last_verified_commit: 2ca614049e927408fa15b3ab2a24b75bab787117
+test_results: []
+resume_instruction: "Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-semantic-review-20261012, branch feat/tdp-semantic-review-20261012. Keep external expert opt-in and auditable, default unavailable; no automatic ChatGPT call without explicit configured provider. Never claim semantic VERIFIED from mere quote match, never fake human signoff, no production/bids/watchdog."
