@@ -125,6 +125,16 @@ def test_symlinks_refused_even_with_matching_hash(tmp_path: Path):
     assert evidence["status"] == "ORIGINAL_UNAVAILABLE"
 
 
+def test_symlinked_normalized_directory_cannot_redirect_to_outside(tmp_path: Path):
+    runs, original, transcript, manifest = _inputs(tmp_path)
+    directory = original.parent
+    outside = tmp_path / "outside"
+    directory.rename(outside)
+    directory.symlink_to(outside, target_is_directory=True)
+    evidence = build_review_packet(transcript, manifest, runs)["cases"][0]["claims"][0]["evidence"]
+    assert evidence["status"] == "ORIGINAL_UNAVAILABLE"
+
+
 @pytest.mark.parametrize("length", [41, 41_000])
 def test_unbounded_case_list_rejected(tmp_path: Path, length: int):
     runs, _, transcript, manifest = _inputs(tmp_path)
