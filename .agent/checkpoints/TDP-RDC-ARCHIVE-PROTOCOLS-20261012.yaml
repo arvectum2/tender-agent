@@ -1,0 +1,18 @@
+task_id: TDP-RDC-ARCHIVE-PROTOCOLS-20261012
+status: in_progress
+goal: Independently assess 20 official cached EIS ZIPs for archived procurement protocol evidence and historical submission windows, without claiming live current EIS status.
+definition_of_done:
+  - Inspect all 20 official ZIPs read-only, preserve missing 3 as NO_DATA.
+  - Check actual XML archive members' matching procurement numbers and protocol types and compare with last archived notice and saved report.
+  - Produce source-grounded evidence matrix and explicit temporal/legal UNKNOWN protections.
+  - Validate counted results against ZIP originals and save expert report with SHA references, update checkpoint.
+completed:
+  - "2026-10-12: Inspected archive manifest 17 completed/3 no_data and sample genuine official ZIP with original final protocol XML."
+current: Inspect all archives read-only and classify protocol artifacts without inferring winning bid or current EIS notice.
+remaining:
+  - Parse 17 cached official ZIPs and check all artifact matching procurement identifiers.
+  - Compare to archive deadlines and legacy report mismatches.
+  - Record detailed expert conclusions and status.
+last_verified_commit: 2a6310499eaa31ce9e1fc5db019a65ad686e0995
+test_results: []
+resume_instruction: "Read cached official archives from Mac mini /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/official-revision-batch-20261011 via RDC only. Count genuine XML protocol documents and classify archive-only evidence; do not infer live EIS status, do not call OpenAI API or submit bids. 3 no_data remain unknown. Write documented audit and finish child checkpoint."
