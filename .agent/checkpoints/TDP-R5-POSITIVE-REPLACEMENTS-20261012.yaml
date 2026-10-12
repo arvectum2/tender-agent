@@ -1,0 +1,19 @@
+task_id: TDP-R5-POSITIVE-REPLACEMENTS-20261012
+status: in_progress
+goal: "Replace three officially confirmed noncompetitive price-information inquiries in R5 positive tender acceptance cohort with three distinct genuinely competitive 44-FZ IT procurements independently verified in official EIS original ZIP, preserving the three price inquiries as negative regression cases."
+definition_of_done:
+  - "Find at least three distinct candidate IT competitive tender numbers not among existing 17 source-bearing cases or three price inquiries."
+  - "Through configured existing EIS individual-token read-only getDocsIP retrieve original official notice XML and SHA-pinned ZIP; confirm competitive method in original content, not external aggregators."
+  - "Produce private SHA-bound first-party evidence receipts and a GitHub acceptance matrix with 20 positive + 3 negative, clear limited scope and zero legal GO."
+  - "Run checks; update canonical checkpoint and mark child completed, or blocked with exact missing official source."
+completed:
+  - "2026-10-12: read canonical checkpoint; PR #379 previously pending now merged a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e after 9/9 GitHub CI; PR #383 original first-party price-inquiry guard already merged (04863f797) and must not be repeated."
+current: "Collect and verify three replacement 44-FZ competitive original EIS notice archives using Mac mini configured official read-only SOAP getDocsIP."
+remaining:
+  - "Verify official 44-FZ competitive notice originals for three IT candidate numbers."
+  - "Create SHA and relevant metadata receipts plus acceptance report (20 positive / 3 negative), keeping reports historical and legal UNKNOWN."
+  - "Update checkpoint and CI for any code changes; never claim source where unavailable."
+last_verified_commit: a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e
+test_results:
+  - "PR #379 exact-head 9/9 CI PASS and merged."
+resume_instruction: "On Mac mini via RDC, use pre-existing ZakupkiSoapClient and official getDocsIP with configured individual-token direct route, read-only. Possible competitively sourced candidate IDs from secondary discovery: 0151600003226000011 (Novosibirsk city portals); 0162200011826003089 (Sverdlovsk gov site platform), 0152200004026000069 (Omsk IT support), 0348100024426000021 (Podmoskovye govt site platform), 0369100012826000157 (RED OS support). Confirm first-party XML procurement method and original ZIP, do not substitute aggregators. No OpenAI API, bidding, production or watchdog."
