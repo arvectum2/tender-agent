@@ -1,0 +1,24 @@
+task_id: TDP-RDC-EXPERT-20261012
+status: in_progress
+goal: "ChatGPT in this conversation independently audits local Gemma outputs using original source records on Mac mini via RDC; fix real errors and build a source-grounded acceptance set, with owner participating only in final acceptance."
+definition_of_done:
+  - "No extra OpenAI API or external automatic reviewer transport; cancel rejected provider task."
+  - "Independently verify raw local Gemma outputs and exact source quotes, noting semantic overclaims and missing evidence."
+  - "Check original contract and technical sources for actionable defects and test them when appropriate."
+  - "Record evidence and issues in repository without private originals or commercial bids."
+  - "Run tests for code changes and final source-review acceptance, presenting only final business owner decision when otherwise ready."
+completed:
+  - "2026-10-12: Read all 26 Gemma claims from private Mac mini transcript in ChatGPT via RDC; one literal quote mismatch and multiple semantic scope/context overclaims identified."
+  - "2026-10-12: Published docs/acceptance/TDP_CHATGPT_RDC_SEMANTIC_REVIEW_2026-10-12.md as independently authored expert assessment, no API."
+  - "2026-10-12: Explicitly cancelled and abandoned uncommitted API provider prototype in isolated worktree; no API requests, no PR, no merge."
+current: "Expand original-document review and convert semantic errors into acceptance-gold cases. Only source claims with original matching text can be VERIFIED."
+remaining:
+  - "Examine additional high-risk clauses in full original local source context via RDC."
+  - "Add source-grounded contradiction/overclaim gold cases and exercise local Gemma against them without paid provider."
+  - "Audit remaining cases with available original docs; missing live EIS remains UNKNOWN."
+  - "Run affected code tests and CI for any product fixes, prepare final owner acceptance."
+last_verified_commit: 95bc5dad132b46d7a00ec43cf1fddfe85e578c3d
+test_results:
+  - "Prior PR373 full local suite 3862 PASS/238 SKIP and GitHub 9/9 PASS; no new product code changed this round."
+  - "Private prior exact quote oracle 25/26 match; expert source/semantic audit in this conversation."
+resume_instruction: "Continue in this same conversation: ChatGPT independently examines evidence under /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012 via RDC, avoiding API providers. Re-read source-gold issue log in docs/acceptance/TDP_CHATGPT_RDC_SEMANTIC_REVIEW_2026-10-12.md, audit complete original clauses and compare local model claims. Never invent EIS current state, owner signatures, business GO, production writes or watchdog. Final owner review only when all other technical/source checks genuinely complete."
