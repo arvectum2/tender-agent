@@ -138,18 +138,9 @@ def _run(command: list[str], env: dict[str, str]) -> None:
     )
     if result.returncode:
         executable = Path(command[0]).name if command else "recovery tool"
-        diagnostic = (result.stderr or "").strip().splitlines()
-        # pg_restore output should be actionable without echoing a DSN/password.
-        redacted = []
-        for line in diagnostic[-5:]:
-            for part in command:
-                if "://" in part:
-                    line = line.replace(part, "<redacted-dsn>")
-            redacted.append(line[:350])
-        detail = "; ".join(redacted)
+        # External tool output is not safe to surface to clients.
         raise RecoveryError(
             f"{executable} failed with exit code {result.returncode}"
-            + (f": {detail}" if detail else "")
         )
 
 

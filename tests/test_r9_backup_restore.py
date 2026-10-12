@@ -214,6 +214,5 @@ def test_restore_cli_failure_diagnostics_redact_connection_uri(
     with pytest.raises(r9_recovery.RecoveryError) as exc:
         r9_recovery._run(["pg_restore", "--dbname", secret_uri], {})
     message = str(exc.value)
-    assert "transaction_timeout" in message
+    assert message == "pg_restore failed with exit code 1"
     assert "secret" not in message
-    assert "<redacted-dsn>" in message
