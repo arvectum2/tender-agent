@@ -1,0 +1,18 @@
+task_id: TDP-REVIEW-GATE-20261012
+status: in_progress
+goal: "Implement repeatable fail-closed AI independent second-opinion claim gate leveraging existing hashed Data Platform quote binder without declaring semantic or legal approval from literal matches."
+definition_of_done:
+  - "Keep source identity and exact hashed DP chunk attribution fail-closed."
+  - "Keep literal quote, semantic review, and owner business approval as distinct statuses."
+  - "Provide deterministic tests for mismatched sources, paraphrase, unknown legal interpretation, and owner GO blocks."
+  - "Run targeted tests and CI, merge feature branch, update checkpoint."
+completed:
+  - "Reused existing src/modules/tender_operator_agent_demo/source_quote_binding.py; inspected its strict SHA/source/identity ambiguity tests."
+current: "Implement a lightweight reviewer gate and tests on isolated worktree."
+remaining:
+  - "Code and regression tests."
+  - "Targeted pytest, Ruff and make check."
+  - "PR exact-head CI and merge."
+last_verified_commit: c8ae6c24c5c376c7e2b2ac29f2b81974d5d4705b
+test_results: []
+resume_instruction: "Use worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-independent-review-gate-20261012 branch feature/tdp-independent-review-gate-20261012. Reuse bind_literal_source_quote and retain semantics UNKNOWN pending ChatGPT review and owner GO pending. Do not touch production, bids or watchdog."
