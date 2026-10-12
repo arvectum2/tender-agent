@@ -8,11 +8,11 @@ definition_of_done:
   - "Run targeted tests and CI, merge feature branch, update checkpoint."
 completed:
   - "Reused existing src/modules/tender_operator_agent_demo/source_quote_binding.py; inspected its strict SHA/source/identity ambiguity tests."
-current: "Implement a lightweight reviewer gate and tests on isolated worktree."
+current: 'Deterministic independent reviewer evidence-only library and 8 new regression cases implemented in PR #371 head b9ebcf5847b261e8640f52cfe837a2555f5074e2. 28 affected tests PASS, targeted Ruff PASS, make check PASS. Exact-head CI pending. Not wired into production/operator analyze pipeline; cannot claim automatic ChatGPT semantic review.'
 remaining:
-  - "Code and regression tests."
-  - "Targeted pytest, Ruff and make check."
-  - "PR exact-head CI and merge."
-last_verified_commit: c8ae6c24c5c376c7e2b2ac29f2b81974d5d4705b
+  - 'Exact-head CI and full test acceptance for PR #371.'
+  - 'Merge PR #371 and record final SHA.'
+  - 'Integrate review gate into a read-only reporting/analysis hook separately, with explicit safe defaults.'
+last_verified_commit: b9ebcf5847b261e8640f52cfe837a2555f5074e2
 test_results: []
-resume_instruction: "Use worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-independent-review-gate-20261012 branch feature/tdp-independent-review-gate-20261012. Reuse bind_literal_source_quote and retain semantics UNKNOWN pending ChatGPT review and owner GO pending. Do not touch production, bids or watchdog."
+resume_instruction: 'Check exact-head GitHub PR #371 b9ebcf5847b261e8640f52cfe837a2555f5074e2 CI, run full no-exclusion local suite with PG16 tooling, merge if all CI checks green. Then identify safe analysis pipeline hook for independent_review_gate; avoid representing quote matching as semantic/legal or GO approval. No production or bids.'
