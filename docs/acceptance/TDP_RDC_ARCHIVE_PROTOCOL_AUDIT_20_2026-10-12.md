@@ -23,3 +23,15 @@
 Приватный отчет с SHA каждого ZIP и 53 XML: evidence/tdp-r5/ai-expert-20261012/protocol-audit-20261012.json. Источники сроков: official-revision-batch-summary.json, latest-archive-notice-facts.json и ранее опубликованная матрица docs/acceptance/TDP_R5_INDEPENDENT_PERSISTED_FACTS_20_2026-10-12.csv. Оригиналы остаются на Mac mini.
 
 Для реального GO нужны свежая официальная редакция, полный актуальный пакет и финальная приёмка владельца. До неё ChatGPT — независимый эксперт через RDC. Никаких заявок, изменений production или watchdog.
+
+
+## Дополнительная проверка fail-closed на реальных сохранённых результатах
+
+12.10.2026 ChatGPT запустил **существующую** функцию `needs_live_eis_revision_review` и `projected_historical_eis_report` на приватных метаданных 20 выбранных реальных запусков Tender Agent, без записи в production:
+
+- **20/20** реальных `metadata.json` определены как архивные и требуют повторной проверки редакции.
+- У **10/20** запусков имелся `output/report.json`; **10/10** проецируются как `recommendation=manual_review_required`, `current_eis_revision_status=UNKNOWN`.
+- **Особый контроль:** `0162300005826000156` в сохранённом историческом отчёте имел `recommendation=participate_conditionally`; в защищённом представлении правильный результат — `manual_review_required`. Исходный файл при этом не переписывается.
+- Для остальных десяти случаев отсутствие сохранённого отчёта **не** выдаётся за успешно проверенный отчёт.
+
+Проверка тестирует только преобразование файлов и отчётов, а не доступность live ЕИС, подачу заявки или текущую правовую допустимость участия.
