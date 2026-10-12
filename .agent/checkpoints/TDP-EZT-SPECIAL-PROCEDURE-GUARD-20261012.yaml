@@ -10,11 +10,16 @@ definition_of_done:
 completed:
   - "2026-10-12: Discovered actual original 0349500000226000003 document type epNotificationEZT2020 in SHA-attested EIS ZIP, distinct from competitive EF/EZK/EOK."
   - "2026-10-12: Audited getDocsIP intake code; original archive extraction path lacks procedure-kind attestation before optional ordinary analysis."
-current: "Implement a small isolated official-notice classifier and wire its attested output into getDocsIP analysis guard."
+current: 'PR #385 head a397b4bcafc73973145ed636d0a9a40142b617a0: source-attested official 44-FZ EZT art93(12) classifier, saved SHA/notice type binding, special source needs_review, ordinary competitive analysis blocked before local LLM; EF/EZK/EOK preserved. Independently tested 20/20 actual official competitive ZIPs, plus real EZT special. Final full local 3936 PASSED, 238 SKIP, Ruff PASS. Exact-head GitHub CI run 38278970488 quality running; 8/9 jobs green. Do not merge until 9/9 PASS.'
 remaining:
   - "Write isolated XML type classifier with strict limits and source number binding."
   - "Wire into archived EIS run metadata and analyze_eis_archive_run fail-closed."
   - "Tests, CI, merge and checkpoint; R3 analyzer AST immutable."
-last_verified_commit: 56670f1f56978c8b9eb020fdc548e427ce31a09c
-test_results: []
-resume_instruction: "Use isolated worktree on Mac mini from origin/main; official archived test procurement 0349500000226000003 epNotificationEZT2020 from original EIS docs; do not include private original ZIP in repo. Build fixture synthetic XML in tests. Preserve ordinary competitive EA/EZK/EOK and UNKNOWN; only block source-attested special single supplier in normal analysis, never fake legal GO. Source provenance against registry number essential. No new external LLM APIs, production, bids or watchdog."
+last_verified_commit: a397b4bcafc73973145ed636d0a9a40142b617a0
+test_results:
+  - '38 focused + linked integration tests PASS and Ruff PASS.'
+  - 'Full Mac mini no-exclusion suite on final head: 3936 passed, 238 skipped, 296 warnings, zero failed in 147.12s.'
+  - 'Source-attestation manual smoke: 20/20 SHA-pinned genuine competitive ZIP and XML type/number/version match; real EZT art93(12) correctly blocked.'
+  - 'Exact-head GitHub Actions 38278970488: eight jobs successful, quality still in progress; not yet merged.'
+
+resume_instruction: 'PR #385 head a397b4bcafc73973145ed636d0a9a40142b617a0; check exact-head GitHub CI run 38278970488, quality currently runs make test. Full local 3936 PASS/238 SKIP no exclusions; Ruff PASS; real official 20/20 positive XML ZIP classifier PASS, special negative 0349500000226000003 PASS. Merge PR #385 ONLY when exact-head 9/9 green, then record squash merge hash and set child completed. Must update parent canonical checkpoint to latest; parent remains blocked by current legal/bid eligibility and final owner review. No external ChatGPT API, production, bids or watchdog.'
