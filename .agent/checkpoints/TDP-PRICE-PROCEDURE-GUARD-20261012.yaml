@@ -1,5 +1,5 @@
 task_id: TDP-PRICE-PROCEDURE-GUARD-20261012
-status: in_progress
+status: completed
 goal: "Fail-closed read-only recommendation projection for explicitly source-attested noncompetitive price-information enquiries; never infer type from SOAP no_data or IDs."
 definition_of_done:
   - "Only explicit trusted source provenance + allowed procedure type can attest price_information_request."
@@ -7,17 +7,15 @@ definition_of_done:
   - "Unknown/secondary-only type cannot silently become authoritative; existing EIS archive safety preserved."
   - "Tests, lint, full CI, merge and checkpoint."
 completed:
+  - '2026-10-12: PR #380 merged as 4edd9b973fafda9d41c153fa11e025ceb0b19273 after 21 focused tests, 3887 full local PASS/238 SKIP, Ruff PASS, exact-head 9/9 GitHub CI.'
   - "Reviewed merged archive fail-closed projection and three secondary-only price inquiry observations."
   - "Implemented source-attested price-information safeguard for JSON report, HTML report, run response, PDF/DOCX export in PR #380, exact head 78571164a7b665dfc7603952e43cf526278a256e."
   - "21 focused regression tests PASS; Ruff PASS; full no-exclusion Mac mini pytest 3887 PASS 238 SKIP 296 WARN zero failures. GitHub exact-head CI pending quality job, other 8 jobs green."
-current: 'PR #380 exact head 78571164 complete locally, all four report formats protected. Local 3887 PASS 238 SKIP, 21 focused PASS, Ruff clean. GitHub Actions run 38266116926 eight of nine jobs green, quality still running; do not merge until 9/9.'
-remaining:
-  - "Code guarded projection with no side effects and tests."
-  - "Run local pytest and CI, merge if green."
-  - "Record remaining official source classification blocker."
-last_verified_commit: a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e
+current: 'Completed PR380 merged to main commit 4edd9b973fafda9d41c153fa11e025ceb0b19273. Explicit official source-attested noncompetitive price request protects JSON, HTML, run API and PDF/DOCX; unknown and aggregator-only source cannot be promoted. No actual official procedure identity was fabricated for three no_data cases.'
+remaining: []
+last_verified_commit: 4edd9b973fafda9d41c153fa11e025ceb0b19273
 test_results:
   - '21 focused existing+new price-guard tests PASS, Ruff PASS.'
   - 'Full local pytest 3887 passed, 238 skipped, 296 warnings (current PR head).'
-  - 'GitHub CI 38266116926 eight of nine PASS, quality in_progress at checkpoint update.'
-resume_instruction: 'Check GitHub CI run 38266116926 on 78571164a7b665dfc7603952e43cf526278a256e. Only if quality and all nine jobs PASS, squash merge PR380; then mark this child completed and update canonical .agent/current-task.yaml via isolated docs PR. Do not misclassify three secondary-only price inquiries, no new API, production, bids or watchdog.'
+  - 'GitHub Actions exact-head CI 38266116926 9/9 jobs PASSED, PR380 merged.'
+resume_instruction: 'Child completed, do not repeat PR380. Parent retains blocked first-party official classification for 0148300050426000047, 0318200087026000163, 0348100024426000052, plus live EIS, full legal/commercial verification and final owner approval. Existing noncompetitive source evidence guard only activates on explicit metadata and cannot be used to certify these three secondary-only cases. No external ChatGPT API, production, bids or watchdog.'
