@@ -1,5 +1,5 @@
 task_id: TDP-R5-NEW-COMPETITIVE-DOCS-20261012
-status: in_progress
+status: completed
 goal: "Restore and independently inspect complete available official 44-FZ attachment set from the four newly verified competitive EIS auctions in the revised R5 positive corpus, using only Mac mini read-only existing EIS transport and ChatGPT-in-this-chat via RDC."
 definition_of_done:
   - "Extract attachmentInfo only from exact latest SHA-pinned official epNotificationEF2020 notice for each four selected procurement numbers."
@@ -9,12 +9,13 @@ definition_of_done:
   - "Publish truthful source coverage report, test receipts, checkpoint; no false complete legal/current EIS signoff."
 completed:
   - "2026-10-12: official read-only getDocsIP ZIP and exact latest notice XML verified for all four positive replacements. Inventory: 0151600003226000011 (4 attachments); 0162200011826003089 v4 (5); 0152200004026000069 (6); 0348100024426000021 (6); total 21."
-current: "Build SHA-bound read-only official filestore downloader and retrieve metadata-validated originals with strict input caps."
-remaining:
-  - "Download and validate 21 original public EIS attachments in private evidence directory."
-  - "Recover textual source evidence, identify gaps and original clause contexts."
-  - "Independent ChatGPT-in-chat review local Gemma and cite exact original SHA/offsets."
-  - "Publish acceptance report and checkpoint completed or blocked on actual source failures."
-last_verified_commit: c99724b3e0feb71cc2be0f05613432daeec3469a
-test_results: []
-resume_instruction: "On Mac mini work from /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012/positive-eis-replacements-20261012/verified-competitive-20-plus-four-negative.json and exact original ZIP. New positive numbers 0151600003226000011,0162200011826003089 (v4),0152200004026000069,0348100024426000021. Existing EIS native _default_transport source domain zakupki.gov.ru. ZIP/ODT security constraints, never execute archives or send external ChatGPT API. PR #384 source-type manifest currently awaiting 9/9 CI; do not repeat confirmed GETDOCS original notices. No production, bids, watchdog."
+current: 'COMPLETED: 21/21 SHA-bound authentic official EIS document containers retrieved securely, 22/22 text units extracted and verified (21 unique hashes, 1 nested duplicate). 21 local Gemma claims independently reviewed by ChatGPT via RDC: 20 actual exact source quotes, 17 strict literal+length gate, one altered quote and 3 overlong literal quotes; 3/4 model outputs exceed requested claim count. Sixteen claims directly source-and-semantically supported, one source-supported with art37/96 legal scope caveat. Four-case original rights/technology/SLA risks recorded in docs/acceptance/TDP_R5_FOUR_NEW_POSITIVE_ORIGINALS_CHATGPT_AUDIT_2026-10-12.md. No full current legal or GO signoffs.'
+remaining: []
+last_verified_commit: 2dbb98c07efc3540455c15b039c9f307d2f77f38
+test_results:
+  - 'Mac mini 21/21 original official file SHA+expected bytes checks PASS, including DOCX/ODT and bounded ZIP; no digital signature legal validity asserted.'
+  - '22/22 bounded extracted text SHA checks PASS, 21 unique content hashes.'
+  - '21/21 ChatGPT manually authored expert verdict source UID/binary SHA/text SHA and quotation checks PASS; 20 exact original quotes; 17 within quote cap, 1 altered quote, 3 overlong; 3 batch count violations.'
+  - 'No product code changed this child; original corpus PR384 full pytest 3912 PASS/238 SKIP and 9/9 CI PASS.'
+
+resume_instruction: 'This child COMPLETE. Do not redownload 21 attachment originals or repeat 21 Gemma claims. Report docs/acceptance/TDP_R5_FOUR_NEW_POSITIVE_ORIGINALS_CHATGPT_AUDIT_2026-10-12.md and private positive-docs-recovery-20261012 source SHA receipts. Remaining parent stages current live legal/bid eligibility/complete contract gold and final owner signoff, plus guard for epNotificationEZT special procurement. ChatGPT independent reviewer only through this conversation via Mac mini RDC, no external API/bids/production/watchdog.'
