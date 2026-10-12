@@ -169,7 +169,7 @@ completed:
   - '2026-10-12 new child TDP-FILESTORE-RECHECK-20261012: added fail-closed one-file official filestore HTTPS UID/SHA256 size recheck CLI with exactly one GET and no retry after 429, 15 targeted tests PASS, full 3828 PASS/238 skip/known R9 excluded; only commit and CI remain. Production filestore rate-limit remains active and original 72 binary source retransfer not yet proven.'
   - "2026-10-12 17-case source-locked official EIS XML Gemma4 12B benchmark: 17 verified ZIP SHA256/revisions, 17 local calls in 105.5 sec, 67/68 fields exact, 16/17 full cases. 13 independent tests, Ruff PASS; 20-case owner review packet generated. Not human legal/commercial gold."
   - "2026-10-12 R2 external filestore recovered: 72/72 distinct public EIS UID binaries from 13 procurements independently re-fetched with verified TLS, each single request matched stored original SHA256 and size (28,519,849 bytes); private recheck manifests offline 72/72 unique matched, 0 failures. New 24 focused tests and Ruff PASS; no live DP writes, no human GO."
-current: "R0/R1/R3 refactor merged, R4 original 17-case machine XML benchmark merged PR #366 082fd8e; R2 official filestore binary recovery 72/72 SHA and size now verified (PR pending). R2 live DP target five files missing and human R4 gold / R5 0/20 still open."
+  - "2026-10-12 PR #366 R4 17-case Gemma source-locked benchmark 67/68 machine fields and owner 20-case review brief merged 082fd8ef, all nine GitHub CI green; PR #367 filestore 72/72 exact HTTPS SHA+size (28,519,849 bytes, 13 procurements) private manifest and fail-closed 24-test verifier merged 0d36f1b6, all nine GitHub CI green. Local full pytest 3844 PASS/238 SKIP/known unrelated R9 deselected (Python PATH corrected), Ruff PASS. No live DP mutations or commercial owner approval."\ncurrent: "All R0/R1/R3 code refactor and technical EIS source transport audit complete; #366 082fd8ef (9/9 CI) and #367 0d36f1b6 (9/9 CI) merged. Local regression 3844 passed / 238 skipped / one known unrelated R9 excluded. Live DP five originals not persisted; R4 legal human gold and R5 0/20 owner signoffs remain blockers."
 pending:
   - 'R5 preparation TDP-R5-REVIEW-QUEUE-20261011: 20-case, 168-file SHA source-identified APR06 machine review queue merged #332; no independent original verification or human signoff.'
   - 'R2 remaining: recover validated live DP target source resource/document/chunk IDs without production writes; existing canonical upload/connector/recovery collections and 2034 scanned records had no matches for five source originals.'
@@ -178,7 +178,7 @@ pending:
   - 'Triage actual DP runtime and LLM fallback and SDK version compatibility with standalone DP; DP healthy 0.6.0 but TA operator preview llm_provider=stub.'
   - 'Sequentially refactor reusable platform vs product modules, tests and deployment gates in both repos.'
   - 'Run exact-head CI and Mac mini real E2E; owner approve human-visible quality before status completed.'
-last_verified_commit: '3fee431eed66e3f95639d46b2b6fd87646cc8f2c'
+last_verified_commit: '0d36f1b665d194a8568a1d4806e1a34913851a5a'
 test_results:
   - '2026-10-11 TA #337 after rebasing on #336: 15 source receipt focused tests PASS; full Python3.12 3690 passed/238 skipped/1 known Mac local R9 pg_restore test deselected, make check/Ruff PASS, all 9 exact-head GitHub CI including quality, security, Docker, Redis, PostgreSQL, migrations and bridge SUCCESS; merged #337 7c4be88af11180b392d511bec191fe4f20d55065.'
   - '2026-10-11 R3 three source parser AST-original parity; 34 focused, full local 3675 pass/238 skipped/1 known reproduced Mac R9 test deselected, make check, new/test Ruff and legacy F401/I001 PASS.'
@@ -229,7 +229,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: "Do not repeat PR #366 or 72/72 official filestore downloads. Finish filestore offline receipt verifier CI/PR, then R2 DP live provenance only in separately authorized non-production environment; R4 human legal gold and R5 20 owner approvals must not be fabricated. Watchdog stays disabled, no bids or production writes."
+resume_instruction: "Source transport 72/72 is DONE (#367) and XML model benchmark DONE (#366). R2 original identity is proven in isolated PostgreSQL API (5/5 files,127/127 chunks), not live production DP; no production writes without approval. Next is human-owned R4 legal gold and R5 20 source/commercial signoffs; preserve UNKNOWN, no GO, no bids. Watchdog disabled."
 execution:
   branch: docs/tdp-r2-filestore-72-20261012
   manual_override: true
