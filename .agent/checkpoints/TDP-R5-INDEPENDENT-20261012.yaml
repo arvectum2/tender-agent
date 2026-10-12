@@ -1,0 +1,25 @@
+task_id: TDP-R5-INDEPENDENT-20261012
+status: in_progress
+goal: 'Independently verify the 20 Tender Agent acceptance procurements against fresh official EIS read-only SOAP archives, receipt hashes, versions and available stored reports; deliver an evidence-linked portable audit package.'
+definition_of_done:
+  - 'Fresh authenticated read-only EIS archive attempt for all 20, with sha256, status and explicit no_data cases.'
+  - 'Source-oriented reparse of official raw XML (strict notice element version, deadline/price/UID) independent of historic extracted summaries.'
+  - 'Cryptographic comparison to 168 historical file receipts where bytes are present; isolate unverified binary attachments.'
+  - 'Read-only audit of nine saved run reports and special stale-revision cases; no assertion of owner signoff.'
+  - 'Reproducible evidence report with issues, dates, source hashes, xlsx/csv and portable files.'
+  - 'Tests/checks on audit logic and relevant CI before merge.'
+completed:
+  - '2026-10-12 fresh official authenticated read-only EIS getDocs SOAP twenty rechecks: 17 completed SHA256 ZIPs identical to previous, three no_data.'
+  - '2026-10-12 independent byte-hash recomputation on all 168 cached originals in separate private Docker: 168/168 SHA256 and size exact, 20 metadata, nine saved reports.'
+  - '2026-10-12 independently parsed official EIS original XML from ZIP and verified source hash provenance for 96/96 XML; all 17 notice receipt hashes match ZIP.'
+  - '2026-10-12 identified previously unflagged third stale source version: 0360600005326000018 v1 -> v2, endDT changed 2026-03-31 to 2026-04-06.'
+  - '2026-10-12 tracked 72/72 non-XML original attachment UID references in official XML; original bytes match cached historic receipts but fresh filestore download not confirmed (429 rate limit observed, no security bypass).'
+  - '2026-10-12 wrote independent 20-case and 168-file CSVs plus source limitations report; six source audit tests passed, 17 focused PASS.'
+current: 'Source audit and 20/168 CSVs completed and full Mac mini 3809 test PASS; exact-head GitHub CI and user-delivery still pending.'
+remaining:
+  - 'Run full source repo regression and make check.'
+  - 'Publish isolated PR; require exact-head GitHub CI before merge.'
+  - 'Deliver independent portable 20/168 case XLSX/CSV/ZIP to user and update main checkpoints.'
+last_verified_commit: '0f8edfab7651d10664c60c340d23ea7f1d778228'
+latest_checks: '17 focused tests PASS; make check & Ruff PASS; full Mac mini 3809 PASS, 238 expected skips, one known unrelated R9 pg_restore deselected; exact-head GitHub CI pending'
+resume_instruction: 'Use branch audit/tdp-r5-independent-20261012 and private Mac evidence /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/independent-20261012; 17 fresh EIS ZIP and 3 no_data, 168/168 cache SHA, 96/96 official XML, 72 official XML UID, 3 stale version notices, 9 historical reports; all source files already read-only checked. Next full tests, commit + exact-head GitHub CI, merge, checkpoint completed, generate portable user audit files. Do not download 72 filestore files repeatedly due 429; do not pretend human signoffs or 72 official binary source SHA proven; never touch prod/watchdog/bids.'
