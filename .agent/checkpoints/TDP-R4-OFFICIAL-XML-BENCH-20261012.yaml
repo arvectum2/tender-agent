@@ -1,0 +1,19 @@
+version: 1
+task_id: TDP-R4-OFFICIAL-XML-BENCH-20261012
+status: in_progress
+goal: Source-locked 17 official EIS XML machine benchmark plus 20-case owner review brief, not human legal gold.
+definition_of_done:
+  - Verify official ZIP SHA, latest notice revision, exact XML field oracle before local model.
+  - Real 17-case local Gemma4 12B inference, no deterministic fallback, fail-closed tests.
+  - Exact-head CI, merge and checkpoint final source SHA.
+completed:
+  - Official 17/17 ZIP SHA256 and notice version/facts verified; 3 SOAP no_data not evaluated.
+  - Local real 17 model calls, 67/68 fields exact, 16/17 full cases, 105.5 seconds.
+  - 13 focused tests and Ruff PASS; all 20 owner review cases tabulated.
+current: Exact-head PR CI and merge.
+pending:
+  - Open PR, all CI checks, merge, record commit.
+last_verified_commit: b195484f19984eeffa368309ce5eb5f437a96896
+test_results:
+  - 13 focused tests PASS, lint PASS, 17/17 actual model calls evaluated.
+resume_instruction: Finish CI/merge without claiming human-gold approval.
