@@ -45,6 +45,28 @@ The machine review previously flagged only the first two. The source-receipt
 SHA256 check found **three**. Their latest archived version is not proof of
 the current live published version or award/cancellation/availability.
 
+
+## Independent saved-report factual comparison (20 metadata records)
+
+The original private test-Docker metadata (read-only) was freshly compared
+with the highest revision returned in the fresh official EIS ZIP. This is an
+additional independent field-level comparison, not an LLM quality guarantee.
+
+- For the **9 stored historical reports**, initial price values **9/9** exactly
+  match the highest archived XML maxPrice (Decimal-normalized).
+- For those same nine reports, saved submission deadlines match **7/9**. Two
+  mismatches: 0158300034526000388 (stored 2026-10-09 08:00 +03, archive
+  v5 2026-10-12 08:00 +03) and 0348100024426000039 (stored
+  2026-10-16 10:00 +03, archive v3 2026-10-19 10:00 +03).
+- 0360600005326000018 receipt is v1 while latest archived v2; its persisted
+  metadata do not contain a completed report's price/deadline, so do not call
+  it a proven incorrect **final** recommendation.
+- The remaining 11 cases have no saved report: seven missing persisted
+  deadline/price despite available EIS XML, one EZT notice with no endDT and
+  no persisted price, and three official SOAP no_data. Preserve UNKNOWN.
+- The row-level source comparison is in
+  docs/acceptance/TDP_R5_INDEPENDENT_PERSISTED_FACTS_20_2026-10-12.csv.
+
 ## Explicit unresolved cases
 
 - SOAP no_data: 0348100024426000052, 0148300050426000047, 0318200087026000163.
