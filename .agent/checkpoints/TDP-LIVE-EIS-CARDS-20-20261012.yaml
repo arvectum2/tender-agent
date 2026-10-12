@@ -1,0 +1,20 @@
+task_id: TDP-LIVE-EIS-CARDS-20-20261012
+status: in_progress
+goal: "Attest official live card status for the verified 20 competitive cases, without inferring legal GO or weakening source integrity."
+definition_of_done:
+  - "Read official first-party live EIS HTML card for all 20 cases and require visible number/type plus matching stage, deadline and SHA."
+  - "If access unavailable, explicitly preserve all 20 SOURCE_UNAVAILABLE and avoid ungrounded live claims."
+  - "Use existing approved secure HTTPS route for a single bounded second pilot if possible; never disable TLS or invent official status."
+  - "Commit redacted evidence-only report and checkpoint; owner only final acceptance."
+completed:
+  - "2026-10-12 confirmed twenty positive competitive cases are already source-attested in latest repository work; no replacement work to repeat."
+  - "2026-10-12 strict direct HTTPS attempt across twenty first-party EIS common-info cards returned URLError 20/20; private JSON response receipts saved and 0 current live statuses attested."
+current: "Check one approved existing HTTPS path alternative and determine if first-party live status can be verified or must remain blocked."
+remaining:
+  - "One bounded first-party secure route pilot."
+  - "Produce source-grounded report of 20 read-only checks and current legal uncertainty."
+  - "Update canonical checkpoint without loss and finish child when evidence recorded."
+last_verified_commit: c0c054e6
+test_results:
+  - "20/20 live official card attempts SOURCE_UNAVAILABLE (URLError), no fabricated status."
+resume_instruction: "Read /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012/live-eis-cards-20261012/official-live-20-receipt.json on Mac mini. Try ONLY a bounded authorized HTTPS access route to official zakupki.gov.ru, verifying source host and visible procurement number; never turn archival ZIP into live status. NO OpenAI API, bids, production or watchdog. Owner final acceptance only."
