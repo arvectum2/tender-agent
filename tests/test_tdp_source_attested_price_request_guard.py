@@ -98,3 +98,67 @@ def test_idempotence_price_request_projection():
     assert out2["manual_checks"] == out["manual_checks"]
     assert out2["executive_summary"] == out["executive_summary"]
     assert out2["report_markdown"] == out["report_markdown"]
+
+
+def test_price_only_html_banner_and_idempotence():
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        review_annotated_html,
+    )
+    m = official_metadata()
+    m["procurement_source"] = "official_manual_eis_record"
+    html = "<html><body><article>Historical GO</article></body></html>"
+    result = review_annotated_html(m, html)
+    assert 'data-arvectum-price-request-review="required"' in result
+    assert "ЦЕНОВОЙ ИНФОРМАЦИИ" in result
+    assert review_annotated_html(m, result) == result
+
+
+def test_price_only_run_summary_fail_closed():
+    from pydantic import BaseModel
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        projected_historical_eis_run,
+    )
+
+    class Response(BaseModel):
+        limitations: list[str] = []
+        warnings: list[str] = []
+        final_recommendation: str | None = "participate_conditionally"
+        human_in_the_loop: bool = False
+        external_actions: bool = True
+
+    m = official_metadata()
+    m["procurement_source"] = "official_manual_eis_record"
+    original = Response()
+    result = projected_historical_eis_run(m, original)
+    assert original.final_recommendation == "participate_conditionally"
+    assert result.final_recommendation is None
+    assert result.external_actions is False
+    assert result.human_in_the_loop is True
+    assert "ЦЕНОВОЙ ИНФОРМАЦИИ" in result.limitations[0]
+    assert projected_historical_eis_run(m, result).limitations == result.limitations
+
+
+def test_price_only_binary_export_refused():
+    import pytest
+    from fastapi import HTTPException
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        reject_unsafe_historical_eis_binary_export,
+    )
+    m = official_metadata()
+    m["procurement_source"] = "official_manual_eis_record"
+    with pytest.raises(HTTPException) as e:
+        reject_unsafe_historical_eis_binary_export(m)
+    assert e.value.status_code == 409
+    assert "ЦЕНОВОЙ ИНФОРМАЦИИ" in e.value.detail
+
+
+def test_unverified_aggregator_type_does_not_restrict_non_eis_report():
+    from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+        reject_unsafe_historical_eis_binary_export,
+        review_annotated_html,
+    )
+    m = official_metadata()
+    m["procedure_type_evidence"]["authority"] = "secondary_aggregator"
+    m["procurement_source"] = "other"
+    reject_unsafe_historical_eis_binary_export(m)
+    assert review_annotated_html(m, "<body>hi</body>") == "<body>hi</body>"
