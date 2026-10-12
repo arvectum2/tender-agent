@@ -238,21 +238,6 @@ def analyze_uploaded_demo_run(
                 {"core_complete": core_complete, "fallback_reason": fallback_reason},
             )
         metadata["ai_runtime_provenance"] = ai_provenance
-        # An independent semantic expert must actually be invoked, not inferred
-        # from the local LLM result or a literal quote occurrence.
-        from src.modules.tender_operator_agent_demo.semantic_expert_review import (
-            review_model_claims,
-        )
-
-        metadata["independent_semantic_review"] = review_model_claims(
-            procurement_id=metadata.get("procurement_id"),
-            notice_purchase_number=(
-                metadata.get("notice_revision_selected", {}).get("purchase_number")
-                if isinstance(metadata.get("notice_revision_selected"), dict)
-                else None
-            ),
-            claims=[],  # No source-bound claims have been attested by an expert here.
-        )
 
         spreadsheet_comparison = build_quote_comparison(spreadsheet_sources, analysis_mode)
         if spreadsheet_comparison.supplier_quotes_found:
