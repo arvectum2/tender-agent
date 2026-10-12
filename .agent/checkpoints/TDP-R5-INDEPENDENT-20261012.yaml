@@ -1,5 +1,5 @@
 task_id: TDP-R5-INDEPENDENT-20261012
-status: in_progress
+status: completed
 goal: 'Independently verify the 20 Tender Agent acceptance procurements against fresh official EIS read-only SOAP archives, receipt hashes, versions and available stored reports; deliver an evidence-linked portable audit package.'
 definition_of_done:
   - 'Fresh authenticated read-only EIS archive attempt for all 20, with sha256, status and explicit no_data cases.'
@@ -16,11 +16,9 @@ completed:
   - '2026-10-12 tracked 72/72 non-XML original attachment UID references in official XML; original bytes match cached historic receipts but fresh filestore download not confirmed (429 rate limit observed, no security bypass).'
   - '2026-10-12 wrote independent 20-case and 168-file CSVs plus source limitations report; six source audit tests passed, 17 focused PASS.'
   - '2026-10-12 independently compared stored price and deadline values for all 20; among nine completed stored reports, prices exactly 9/9, deadlines 7/9 (two stale), others 11 no final verified reports; separate 20-case persisted-facts CSV.'
-current: '20/168 source CSVs and 20 persisted price/deadline comparisons complete, full Mac mini 3809 PASS and deliverable generated; exact-head GitHub CI and main merge pending.'
-remaining:
-  - 'Run full source repo regression and make check.'
-  - 'Publish isolated PR; require exact-head GitHub CI before merge.'
-  - 'Deliver independent portable 20/168 case XLSX/CSV/ZIP to user and update main checkpoints.'
-last_verified_commit: '0f8edfab7651d10664c60c340d23ea7f1d778228'
-latest_checks: '17 focused tests PASS; independent saved report price 9/9 exact and deadline 7/9; make check/Ruff PASS; full Mac 3809 PASS, 238 skip, 1 unrelated R9 restore deselected; exact-head CI pending'
-resume_instruction: 'Use branch audit/tdp-r5-independent-20261012 and private Mac evidence /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/independent-20261012; 17 fresh EIS ZIP and 3 no_data, 168/168 cache SHA, 96/96 official XML, 72 official XML UID, 3 stale version notices, 9 historical reports; all source files already read-only checked. Next full tests, commit + exact-head GitHub CI, merge, checkpoint completed, generate portable user audit files. Do not download 72 filestore files repeatedly due 429; do not pretend human signoffs or 72 official binary source SHA proven; never touch prod/watchdog/bids.'
+  - '2026-10-12 PR #362 exact-head nine checks green and merged main 518c63bc; independent raw notice XML fields vs prior machine extraction 68/68 exact, zero discrepancies; downloadable Excel and ZIP delivered.'
+current: 'Completed: independent R5 technical evidence audit PR #362 merged main 518c63bc0b37409b2fd76b8e3346f5c362f0c731 after nine exact-head CI jobs passed; 20/168 CSVs and portable Excel/ZIP delivered. Separate human R5 acceptance remains 0/20 and is NOT this technical task.'
+remaining: []
+last_verified_commit: '518c63bc0b37409b2fd76b8e3346f5c362f0c731'
+latest_checks: '17 focused tests PASS; full local 3809 PASS, 238 skipped, one known unrelated R9 restore deselected; make check/Ruff PASS; nine exact-head GitHub Actions jobs success in both runs 38208992134 and 38208996607; saved prices 9/9 and deadlines 7/9, independent XML machine extraction 68/68 match.'
+resume_instruction: 'Subtask R5 independent 20 tender original provenance audit COMPLETED, PR #362 merged main 518c63bc0b37409b2fd76b8e3346f5c362f0c731; do not repeat 20 SOAP, 17 ZIP hashes, 168 original SHA, 96 official XML, 72 attachment UID source links, three stale receipt revisions, nine archived report facts, 68 original XML machine comparisons. User received Excel/ZIP. Parent TDP-REFACTOR-20261009 remains in_progress: R2 live DP originals not proven, R4 human gold absent, R5 0/20 owner signoffs. No production writes, bids, or disabled watchdog changes.'
