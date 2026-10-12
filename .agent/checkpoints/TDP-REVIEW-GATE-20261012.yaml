@@ -1,5 +1,5 @@
 task_id: TDP-REVIEW-GATE-20261012
-status: in_progress
+status: completed
 goal: "Implement repeatable fail-closed AI independent second-opinion claim gate leveraging existing hashed Data Platform quote binder without declaring semantic or legal approval from literal matches."
 definition_of_done:
   - "Keep source identity and exact hashed DP chunk attribution fail-closed."
@@ -8,11 +8,11 @@ definition_of_done:
   - "Run targeted tests and CI, merge feature branch, update checkpoint."
 completed:
   - "Reused existing src/modules/tender_operator_agent_demo/source_quote_binding.py; inspected its strict SHA/source/identity ambiguity tests."
-current: 'Deterministic independent reviewer evidence-only library and 8 new regression cases implemented in PR #371 head b9ebcf5847b261e8640f52cfe837a2555f5074e2. 28 affected tests PASS, targeted Ruff PASS, make check PASS. Exact-head CI pending. Not wired into production/operator analyze pipeline; cannot claim automatic ChatGPT semantic review.'
-remaining:
-  - 'Exact-head CI and full test acceptance for PR #371.'
-  - 'Merge PR #371 and record final SHA.'
-  - 'Integrate review gate into a read-only reporting/analysis hook separately, with explicit safe defaults.'
-last_verified_commit: b9ebcf5847b261e8640f52cfe837a2555f5074e2
-test_results: []
-resume_instruction: 'Check exact-head GitHub PR #371 b9ebcf5847b261e8640f52cfe837a2555f5074e2 CI, run full no-exclusion local suite with PG16 tooling, merge if all CI checks green. Then identify safe analysis pipeline hook for independent_review_gate; avoid representing quote matching as semantic/legal or GO approval. No production or bids.'
+current: 'Library-level independent quote/source identity gate completed and merged in PR #371; NOT wired into operator analysis or automatic ChatGPT expert execution.'
+remaining: []
+last_verified_commit: a2bb07e130deae4d989480a2a98294de339f0137
+test_results:
+  - 'Local full no-exclusion pytest 3855 passed, 238 skipped, 296 warnings, 0 failures in 144.40s with PG16 client.'
+  - '28 targeted review/binder/stale-EIS tests passed; Ruff targeted and make check passed.'
+  - 'PR #371 exact-head GitHub CI 9/9 jobs passed.'
+resume_instruction: 'Child library feature complete. Next separate integration task: read-only hook into real operator evidence path with strong source identities, no automatic legal/semantic verification claim and automatic GO prohibited. Do not repeat PR #371.'
