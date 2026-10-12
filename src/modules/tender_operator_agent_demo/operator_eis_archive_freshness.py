@@ -24,6 +24,13 @@ def needs_live_eis_revision_review(metadata: dict[str, Any]) -> bool:
     if metadata.get("notice_revision_requires_review") is True:
         return True
     revision = metadata.get("notice_revision_selected")
+    # Never accept a live-verification flag attached to the wrong procurement.
+    # Older manually attested records may not have this optional field.
+    if isinstance(revision, dict) and revision.get("purchase_number") is not None:
+        actual = revision["purchase_number"]
+        expected = metadata.get("procurement_id") or metadata.get("notice_number")
+        if not isinstance(actual, str) or not expected or actual != str(expected):
+            return True
     return not (
         isinstance(revision, dict)
         and revision.get("current_live_eis_verified") is True
