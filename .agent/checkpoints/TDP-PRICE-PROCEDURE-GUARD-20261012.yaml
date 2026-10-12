@@ -1,0 +1,18 @@
+task_id: TDP-PRICE-PROCEDURE-GUARD-20261012
+status: in_progress
+goal: "Fail-closed read-only recommendation projection for explicitly source-attested noncompetitive price-information enquiries; never infer type from SOAP no_data or IDs."
+definition_of_done:
+  - "Only explicit trusted source provenance + allowed procedure type can attest price_information_request."
+  - "Such records cannot be presented as bidding GO; legacy report storage remains unchanged."
+  - "Unknown/secondary-only type cannot silently become authoritative; existing EIS archive safety preserved."
+  - "Tests, lint, full CI, merge and checkpoint."
+completed:
+  - "Reviewed merged archive fail-closed projection and three secondary-only price inquiry observations."
+current: "Implement explicit-evidence guard in isolated branch, no automatic inference of the 3 unverified cases."
+remaining:
+  - "Code guarded projection with no side effects and tests."
+  - "Run local pytest and CI, merge if green."
+  - "Record remaining official source classification blocker."
+last_verified_commit: a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e
+test_results: []
+resume_instruction: "Implement opt-in explicit official source attestation only. Never classify three no_data numbers based on number or third-party status. No OpenAI API, production changes, bidding or watchdog."
