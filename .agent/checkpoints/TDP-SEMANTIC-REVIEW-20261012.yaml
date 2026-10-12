@@ -8,11 +8,11 @@ definition_of_done:
   - "Add isolated tests, Ruff and CI; merge only after green exact-head checks."
 completed:
   - "Inspected operator_analyze_run controlled LLM path and separate authenticated original quote API."
-current: "Implement explicit optional independent semantic review adapter and conservative metadata status in isolated worktree."
+current: 'PR #373 1e1b2b1dda19000aa0361f25435c80483e48e5d5 adds independent semantic reviewer verdict validation and honest absent-reviewer metadata. 29 focused tests PASS, Ruff PASS. No automatic ChatGPT API call or actual second model invocation yet. Full local no-exclusion pytest and exact-head CI in progress.'
 remaining:
   - "Implement review validator, tests and metadata integration."
   - "Run focused and full acceptance and GitHub CI."
   - "Merge and finalize child checkpoint."
-last_verified_commit: 2ca614049e927408fa15b3ab2a24b75bab787117
+last_verified_commit: 1e1b2b1dda19000aa0361f25435c80483e48e5d5
 test_results: []
-resume_instruction: "Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tdp-semantic-review-20261012, branch feat/tdp-semantic-review-20261012. Keep external expert opt-in and auditable, default unavailable; no automatic ChatGPT call without explicit configured provider. Never claim semantic VERIFIED from mere quote match, never fake human signoff, no production/bids/watchdog."
+resume_instruction: 'Inspect PR #373 https://github.com/arvectum2/tender-agent/pull/373 head 1e1b2b1dda19000aa0361f25435c80483e48e5d5 exact-head CI run 38240160772 and full local /tmp/ta-semantic-review-full-20261012.log with PG16 tooling. Merge only if full suite and 9/9 CI green. No auto ChatGPT calls, user tender data transfer, business GO, production deploy, bid submission or watchdog activation. Follow-up separate opt-in OpenAI integration can be designed after review.'
