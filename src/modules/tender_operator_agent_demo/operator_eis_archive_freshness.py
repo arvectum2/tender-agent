@@ -91,9 +91,9 @@ def projected_historical_eis_report(
             projected.get("executive_summary"), PRICE_INFORMATION_REVIEW_MESSAGE
         )
         markdown = str(projected.get("report_markdown") or "")
-        if not markdown.startswith(PRICE_INFORMATION_REVIEW_MESSAGE):
+        if PRICE_INFORMATION_REVIEW_MESSAGE not in markdown:
             projected["report_markdown"] = (
-                PRICE_INFORMATION_REVIEW_MESSAGE + "\\n\\n---\\n\\n" + markdown
+                PRICE_INFORMATION_REVIEW_MESSAGE + "\n\n---\n\n" + markdown
             )
         decision = projected.get("decision_core")
         if isinstance(decision, dict):
@@ -109,7 +109,7 @@ def projected_historical_eis_report(
         projected.get("executive_summary"), EIS_ARCHIVE_REVIEW_MESSAGE
     )
     markdown = str(projected.get("report_markdown") or "")
-    if not markdown.startswith(EIS_ARCHIVE_REVIEW_MESSAGE):
+    if EIS_ARCHIVE_REVIEW_MESSAGE not in markdown:
         projected["report_markdown"] = (
             EIS_ARCHIVE_REVIEW_MESSAGE + "\n\n---\n\n" + markdown
         )
