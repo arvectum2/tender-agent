@@ -23,21 +23,22 @@ completed:
   - '2026-10-13 Desktop Commander reported two online Macs but terminal commands timed out; Mac mini new private-preview promotion not verified or performed.'
   - '2026-10-13 APR-05 PR #253 updated with explicit integration gate; draft and dirty with current main, no merge attempted. Earlier-branch Mac mini 105↔106 PG migration and three two-tenant HTTP smoke rounds reported green, but not revalidated on new main.'
   - '2026-10-13 B2B source report 9 legally identified buyer corporate opportunities published to main in cce54fbb; noncore SEO/marketing leads separated, no outbound messages or paid access.'
-current: 'APR-03B Safari real-flow technically inspected. Browser UX fix PR #391 submitted, awaiting exact-head CI and guarded merge. Live/legal source-gold, current EIS revision, local LLM quality, final owner GO DEFER. APR-04 #252 CI green, owner business acceptance pending; B2B 8/20.'
+  - '2026-10-13 after owner RDC restart: main CI at ef14fcf8 PASS, PR391/PR252 already merged; APR05 PR253 draft/dirty. Mac mini RDC OFFLINE, MacBook terminal command times out; no local migration/deploy performed.'
+current: 'BLOCKED: Mac mini RDC still OFFLINE after owner restart; MacBook remote terminal times out. APR03B/APR04 merged into main with CI PASS; APR05 draft PR253 conflicts with main, requires tested reconciliation. Local preview not updated; APR06/07 stacked, B2B 9/15-20.'
 pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
   - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
   - 'APR-04: PR252 merged into main. Private Arvectum legal-profile UI/business acceptance remains required; no public deployment.'
   - 'APR-05: reconcile draft PR253 against main after APR04 merge, resolve conflicts, run tenant isolation/roles/entitlement/database regression before any merge; do not activate paid pilot.'
   - 'After APR-03B technical closure, proceed to APR-04 onboarding, then B2B public discovery, APR-06/07, APR-05.'
-last_verified_commit: 'main cce54fbb40e5cff14c0994f93579e0a8d4448108 source-report commit (PR252 main merge 1912acdd, PR391 merge 57294f45); exact main CI in progress; earlier local full PG16 3954/238 PASS before merges.'
+last_verified_commit: 'main ef14fcf8662b23b3524b8cc266a228bbb26f6724 GitHub CI SUCCESS after APR03B and APR04 merges; subsequent changes only docs/checkpoint; new local verification blocked by RDC.'
 test_results:
   - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
   - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
   - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
   - 'B2B first source pass: nine corporate IT/digital source-attested opportunities including Workspace #19006; report docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md now in main. Remaining 15–20 accepted-source goal OPEN.'
   - 'PR391 SHA 61b8de2d exact-head push/PR CI success; merged 57294f45. PR252 SHA 3f289a04 exact-head push/PR CI success; merged 1912acdd. Main after both merges needs fresh CI check.'
-resume_instruction: 'APR-03B Safari real-browser flow verified, old snapshot deterministic and current EIS revision unproven; 6/6 source files, three real EIS XML facts. Latest main isolated read-only staging 18086 verified archive warning and guarded PDF/DOCX 409/409; stop staging after probe. PR #391 head 61b8de2d browser UX fix with 42 focused and Node 3-case E2E PASS, exact-head CI pending. Do not mark semantic/legal/commercial GO or final APR03B DONE. APR-04 PR #252 head 3f289a04 GitHub CI SUCCESS and full 3954/238 local suite, owner acceptance pending. B2B 8/20. Resume CI/guarded PR progression and user-initiated current revision check only. Never submit bids/sign, deploy VPS/production, enable watchdog or paid LLM API.'
+resume_instruction: 'RDC Mini OFFLINE as of 2026-10-13 despite restart; do not claim remote restored. Restore connection first, read checkpoint and git status; do not rerun completed APR03B/04 merges. Main CI success at ef14fcf8. On Mac mini reconcile APR05 PR253 from draft/dirty onto main, test PG16, tenant isolation, auth, quota and rollback; keep SaaS disabled, no payments or public launch. Then update owner-preview locally with safe rollback, verify current EIS revision, source facts and PDF/DOCX gate. APR06/07 stacked and B2B target 15-20 incomplete. No bids, signatures, VPS deploy, watchdog activation or paid API.'
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
