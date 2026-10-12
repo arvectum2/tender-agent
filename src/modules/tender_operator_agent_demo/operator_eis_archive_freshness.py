@@ -17,6 +17,33 @@ EIS_ARCHIVE_REVIEW_MESSAGE = (
 )
 EIS_ARCHIVE_REVIEW_LABEL = "Требуется ручная проверка редакции ЕИС"
 
+PRICE_INFORMATION_REVIEW_MESSAGE = (
+    "ЗАПРОС ЦЕНОВОЙ ИНФОРМАЦИИ: официальный источник подтверждает "
+    "исследование рынка, а не конкурентную процедуру подачи заявки. "
+    "Рекомендация участия в торгах неприменима."
+)
+PRICE_INFORMATION_REVIEW_LABEL = "Не конкурентная закупка: запрос ценовой информации"
+
+
+def verified_noncompetitive_price_request(metadata: dict[str, Any]) -> bool:
+    """Only source-attested official evidence, never a number or SOAP no_data."""
+    evidence = metadata.get("procedure_type_evidence")
+    if not isinstance(evidence, dict):
+        return False
+    number = metadata.get("procurement_id") or metadata.get("notice_number")
+    return (
+        evidence.get("authority") == "eis_official"
+        and evidence.get("procedure_type") == "price_information_request"
+        and isinstance(number, str)
+        and bool(number)
+        and evidence.get("procurement_id") == number
+        and isinstance(evidence.get("source_document_sha256"), str)
+        and re.fullmatch(r"[a-f0-9]{64}", evidence["source_document_sha256"]) is not None
+        and isinstance(evidence.get("official_source_url"), str)
+        and evidence["official_source_url"].startswith("https://zakupki.gov.ru/")
+    )
+
+
 
 def needs_live_eis_revision_review(metadata: dict[str, Any]) -> bool:
     if metadata.get("procurement_source") != "zakupki_gov_ru_getdocs_ip":
@@ -47,11 +74,34 @@ def append_once(values: list[str] | None, message: str) -> list[str]:
 def projected_historical_eis_report(
     metadata: dict[str, Any], report: dict[str, Any]
 ) -> dict[str, Any]:
-    if not needs_live_eis_revision_review(metadata):
+    price_request = verified_noncompetitive_price_request(metadata)
+    archive_review = needs_live_eis_revision_review(metadata)
+    if not price_request and not archive_review:
         return report
     projected = copy.deepcopy(report)
     projected["recommendation"] = "manual_review_required"
-    projected["recommendation_label"] = EIS_ARCHIVE_REVIEW_LABEL
+    projected["recommendation_label"] = (
+        PRICE_INFORMATION_REVIEW_LABEL if price_request else EIS_ARCHIVE_REVIEW_LABEL
+    )
+    if price_request:
+        projected["manual_checks"] = append_once(
+            projected.get("manual_checks"), PRICE_INFORMATION_REVIEW_MESSAGE
+        )
+        projected["executive_summary"] = append_once(
+            projected.get("executive_summary"), PRICE_INFORMATION_REVIEW_MESSAGE
+        )
+        markdown = str(projected.get("report_markdown") or "")
+        if PRICE_INFORMATION_REVIEW_MESSAGE not in markdown:
+            projected["report_markdown"] = (
+                PRICE_INFORMATION_REVIEW_MESSAGE + "\n\n---\n\n" + markdown
+            )
+        decision = projected.get("decision_core")
+        if isinstance(decision, dict):
+            decision["noncompetitive_price_request"] = True
+            decision["historical_decision_not_authoritative"] = True
+            decision["price_request_type_source"] = "eis_official"
+    if not archive_review:
+        return projected
     projected["manual_checks"] = append_once(
         projected.get("manual_checks"), EIS_ARCHIVE_REVIEW_MESSAGE
     )
@@ -59,7 +109,7 @@ def projected_historical_eis_report(
         projected.get("executive_summary"), EIS_ARCHIVE_REVIEW_MESSAGE
     )
     markdown = str(projected.get("report_markdown") or "")
-    if not markdown.startswith(EIS_ARCHIVE_REVIEW_MESSAGE):
+    if EIS_ARCHIVE_REVIEW_MESSAGE not in markdown:
         projected["report_markdown"] = (
             EIS_ARCHIVE_REVIEW_MESSAGE + "\n\n---\n\n" + markdown
         )
@@ -85,16 +135,27 @@ def projected_historical_eis_report(
 def review_annotated_html(
     metadata: dict[str, Any], html_document: str
 ) -> str:
-    if not needs_live_eis_revision_review(metadata):
+    price = verified_noncompetitive_price_request(metadata)
+    archive = needs_live_eis_revision_review(metadata)
+    if not price and not archive:
         return html_document
-    marker = 'data-arvectum-eis-archive-review="required"'
+    marker = (
+        'data-arvectum-eis-archive-review="required"'
+        if archive else 'data-arvectum-price-request-review="required"'
+    )
     if marker in html_document:
         return html_document
+    reasons = [
+        message for active, message in (
+            (archive, EIS_ARCHIVE_REVIEW_MESSAGE),
+            (price, PRICE_INFORMATION_REVIEW_MESSAGE),
+        ) if active
+    ]
     banner = (
         f'<aside {marker} role="alert" '
         'style="padding:18px;border:3px solid #b45309;'
         'background:#fff7ed;color:#7c2d12;font-weight:700">'
-        + EIS_ARCHIVE_REVIEW_MESSAGE + "</aside>"
+        + " ".join(reasons) + "</aside>"
     )
     body = re.search(r"<body(?:\s[^>]*)?>", html_document, flags=re.IGNORECASE)
     if body:
@@ -104,16 +165,25 @@ def review_annotated_html(
 
 def projected_historical_eis_run(metadata: dict[str, Any], response: Any) -> Any:
     """Pydantic model copy; original data and persisted outputs remain untouched."""
-    if not needs_live_eis_revision_review(metadata):
+    price = verified_noncompetitive_price_request(metadata)
+    archive = needs_live_eis_revision_review(metadata)
+    if not price and not archive:
         return response
+    messages = [
+        text for active, text in (
+            (price, PRICE_INFORMATION_REVIEW_MESSAGE),
+            (archive, EIS_ARCHIVE_REVIEW_MESSAGE),
+        ) if active
+    ]
+    limitations = list(response.limitations or [])
+    warnings = list(response.warnings or [])
+    for message in messages:
+        limitations = append_once(limitations, message)
+        warnings = append_once(warnings, message)
     return response.model_copy(
         update={
-            "limitations": append_once(
-                response.limitations, EIS_ARCHIVE_REVIEW_MESSAGE
-            ),
-            "warnings": append_once(
-                response.warnings, EIS_ARCHIVE_REVIEW_MESSAGE
-            ),
+            "limitations": limitations,
+            "warnings": warnings,
             "final_recommendation": None,
             "human_in_the_loop": True,
             "external_actions": False,
@@ -123,11 +193,16 @@ def projected_historical_eis_run(metadata: dict[str, Any], response: Any) -> Any
 
 def reject_unsafe_historical_eis_binary_export(metadata: dict[str, Any]) -> None:
     """Stop canonical PDF/DOCX from bypassing read-time review projections."""
-    if not needs_live_eis_revision_review(metadata):
+    price = verified_noncompetitive_price_request(metadata)
+    archive = needs_live_eis_revision_review(metadata)
+    if not price and not archive:
         return
     from fastapi import HTTPException
 
     raise HTTPException(
         status_code=409,
-        detail=EIS_ARCHIVE_REVIEW_MESSAGE,
+        detail=(
+            PRICE_INFORMATION_REVIEW_MESSAGE
+            if price else EIS_ARCHIVE_REVIEW_MESSAGE
+        ),
     )
