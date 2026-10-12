@@ -211,7 +211,7 @@ owner_deferred_acceptance:
   bids_and_signatures_authorized: false
   reviewer_paid_api_authorized: false
   watchdog_restart_authorized: false
-last_verified_commit: 'a2982cf9c2248b6b2bc9e8f3c8b66e37e0965648'
+last_verified_commit: '1fdc2a70a42b643ffdbc22fcc09d64f992277e40 (PR #388 exact-head 9/9 GitHub CI green, merged on main)'
 test_results:
   - '2026-10-12 fresh real-original isolated TA+DP HTTP acceptance: official 5/5 binaries, 5/5 DP mappings, 127/127 cited chunks, create/analyze/report HTTP 200, DOCX/PDF HTTP409 correct archived-EIS gate; manual nonofficial same 5/5 and 127/127, DOCX/PDF HTTP200, ZIP/PDF structure valid. Prior isolated PostgreSQL persists 5/5+127/127 separately; do not claim single continuous database-to-export transaction.'
   - '2026-10-12 independent technical verification on TA main a2982cf9: make check PASS, full pytest 3936 passed/238 skipped/0 failed in 149.60 s with PostgreSQL16 CLI; DP main daa0719 full pytest and exact CI-scope Ruff PASS; private original 21/21 EIS binaries SHA match and 20/20 official HTML SHA match. See docs/acceptance/TDP_REFACTOR_INDEPENDENT_TECHNICAL_VERIFICATION_2026-10-12.md. Parent remains BLOCKED on human legal gold, original-source current eligibility/economics, approved DP staging E2E and owner 0/20 signoffs.'

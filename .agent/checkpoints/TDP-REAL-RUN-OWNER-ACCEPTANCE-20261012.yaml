@@ -19,7 +19,7 @@ remaining:
   - Verify latest official notice and original source integrity at the moment of analysis.
   - Complete buyer eligibility, human legal/commercial evaluation and independent source gold.
   - Get owner-signed GO/NO_GO/DEFER and assess follow-on production/release gates.
-last_verified_commit: '31b96a6a1646d2ec7e0216dd0e779fb8c584ea24 (isolated technical E2E evidence; prior to merge)'
+last_verified_commit: '1fdc2a70a42b643ffdbc22fcc09d64f992277e40 (PR #388 merged, exact-head nine CI checks green; real-run owner signoff pending)'
 test_results:
   - Technical TA base: 3936 passed, 238 skipped, make check PASS.
   - DP full suite and Ruff PASS; 5/5 original SHA, 5/5 same persistent identity, 127/127 normalized chunks, manual-preview DOCX/PDF 200, archived official 409.
