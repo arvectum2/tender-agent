@@ -24,6 +24,9 @@ from src.modules.tender_operator_agent_demo.document_set_completeness import (
 from src.modules.tender_operator_agent_demo.eis_notice_parser import (
     extract_notice_attachments,
 )
+from src.modules.tender_operator_agent_demo.eis_official_procedure import (
+    classify_official_eis_archive,
+)
 from src.modules.tender_operator_agent_demo.eis_price_request_guard import (
     official_eis_price_request_source_error,
 )
@@ -1236,10 +1239,91 @@ def _write_eis_procurement_artifacts(
     )
 
 
+def _apply_attested_special_procedure_status(run_id: str) -> None:
+    """Prevent auto-analysis of a source-attested special single-supplier run."""
+    metadata = load_demo_run_metadata(run_id)
+    original = metadata.get("official_eis_procedure") or {}
+    if (
+        metadata.get("procurement_source") != "zakupki_gov_ru_getdocs_ip"
+        or not isinstance(original, dict)
+        or original.get("status") != "ATTESTED_SPECIAL"
+        or original.get("procedure_kind") != "SINGLE_SUPPLIER_ART93_12"
+    ):
+        return
+    metadata["status"] = TenderOperatorUploadedRunStatus.NEEDS_REVIEW.value
+    metadata["analysis_status"] = "special_single_supplier_requires_separate_workflow"
+    metadata["manual_upload_required"] = False
+    limitations = list(metadata.get("limitations") or [])
+    note = (
+        "Официальное извещение ЕИС относится к специальной процедуре у "
+        "единственного поставщика по ч. 12 ст. 93 44-ФЗ. Обычный "
+        "конкурентный анализ заблокирован; нужна отдельная процедура."
+    )
+    if note not in limitations:
+        limitations.append(note)
+    metadata["limitations"] = limitations
+    save_demo_run_metadata(run_id, metadata)
+    append_demo_run_event(
+        run_id, "eis_special_procedure_review_required", note,
+        {"notice_type": original.get("notice_type"), "source_attested": True},
+    )
+
+
 def analyze_eis_archive_run(run_id: str):
     metadata = load_demo_run_metadata(run_id)
     if metadata.get("procurement_source") != "zakupki_gov_ru_getdocs_ip":
         raise HTTPException(status_code=400, detail="Run is not an EIS getDocsIP intake run")
+    # Existing stored runs may predate procedure classification: always re-read
+    # the original archive instead of trusting a mutable metadata label.
+    original_dir = get_demo_run_input_dir(run_id)
+    source_name = metadata.get("archive_stored_name")
+    candidates = (
+        [original_dir / source_name]
+        if isinstance(source_name, str) and source_name == Path(source_name).name
+        and source_name.lower().endswith(".zip")
+        else list(original_dir.glob("*.zip"))
+    )
+    if not candidates:
+        # Keep existing docs-required state transitions for notice-only runs.
+        # A missing official archive still must never authorize analysis.
+        _apply_document_set_completeness(run_id)
+    attested = (
+        classify_official_eis_archive(
+            candidates[0],
+            str(metadata.get("reestr_number") or metadata.get("procurement_id") or ""),
+        )
+        if len(candidates) == 1
+        else {"status": "UNKNOWN", "reason": "OFFICIAL_ARCHIVE_NOT_UNIQUE"}
+    )
+    prior = metadata.get("official_eis_procedure")
+    if (
+        isinstance(prior, dict)
+        and prior.get("archive_sha256")
+        and prior["archive_sha256"] != attested.get("archive_sha256")
+    ):
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "OFFICIAL_EIS_ARCHIVE_HASH_CHANGED",
+                "message": "Оригинальный архив ЕИС отличается от сохранённого источника. Нужна повторная проверка.",
+            },
+        )
+    if attested.get("status") != "ATTESTED_COMPETITIVE":
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "OFFICIAL_EIS_PROCEDURE_REQUIRES_REVIEW",
+                "reason": attested.get("reason"),
+                "official_type": attested.get("notice_type"),
+                "procedure_kind": attested.get("procedure_kind", "UNKNOWN"),
+                "message": (
+                    "Это специальная закупка у единственного поставщика (ч. 12 ст. 93 44-ФЗ), "
+                    "не используйте обычный конкурентный анализ."
+                    if attested.get("status") == "ATTESTED_SPECIAL"
+                    else "Процедура не подтверждена по оригинальному извещению ЕИС."
+                ),
+            },
+        )
     summary = _apply_document_set_completeness(run_id)
     if not summary["analysis_allowed"]:
         raise HTTPException(
@@ -1561,6 +1645,12 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
     archive_download_attempts = 0
     documents_extracted_count = 0
     archive_extraction_complete: bool | None = None
+    archive_stored_name: str | None = None
+    official_eis_procedure: dict[str, Any] = {
+        "status": "UNKNOWN",
+        "reason": "OFFICIAL_ARCHIVE_NOT_DOWNLOADED",
+        "business_go_eligible": False,
+    }
 
     archive_urls = archive_result.archive_urls or ([archive_result.archive_url] if archive_result.archive_url else [])
     if archive_urls:
@@ -1629,6 +1719,11 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
             status = TenderOperatorUploadedRunStatus.DOCS_REQUIRED
         else:
             archive_downloaded = True
+            archive_stored_name = downloaded.stored_name
+            official_eis_procedure = classify_official_eis_archive(
+                get_demo_run_input_dir(run_id) / downloaded.stored_name,
+                request.reestr_number,
+            )
             append_demo_run_event(
                 run_id,
                 "eis_archive_downloaded",
@@ -1745,6 +1840,8 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
         "archive_download_attempts": archive_download_attempts,
         "documents_extracted_count": documents_extracted_count,
         "archive_extraction_complete": archive_extraction_complete,
+        "archive_stored_name": archive_stored_name,
+        "official_eis_procedure": official_eis_procedure,
         "getdocs_status": archive_result.status,
         "getdocs_request_id": archive_result.request_id,
         "getdocs_ref_id": archive_result.ref_id,
@@ -1763,6 +1860,7 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
     _write_procurement_artifacts(run_id, selected=selected, manifest=manifest)
     _supplement_run_with_notice_xml_attachments(run_id)
     _apply_document_set_completeness(run_id)
+    _apply_attested_special_procedure_status(run_id)
     append_demo_run_event(
         run_id,
         "run_created_from_eis_archive",
@@ -1848,6 +1946,7 @@ def create_run_from_search_result(
     _apply_search_result_context(result.run_id, request)
     _supplement_run_with_public_notice_attachments(result.run_id, request.source_url)
     _apply_document_set_completeness(result.run_id)
+    _apply_attested_special_procedure_status(result.run_id)
 
     status = result.status.value if hasattr(result.status, "value") else str(result.status)
     analysis_status = result.analysis_status
