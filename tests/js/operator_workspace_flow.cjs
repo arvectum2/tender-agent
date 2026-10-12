@@ -20,16 +20,21 @@ class Element {
     this.dataset = {};
     this.files = [];
     this.classList = {toggle() {}};
+    this.setAttribute = () => {};
+    this.removeAttribute = () => {};
   }
   set textContent(value) { this.text = String(value); this.children = []; }
   get textContent() { return this.text || ''; }
   append(...items) { this.children.push(...items); }
   replaceChildren(...items) { this.children = [...items]; }
   addEventListener(name, handler) { this.events[name] = handler; }
+  click() { if (this.download && this.onDownload) this.onDownload(); }
+  remove() {}
   scrollIntoView() {}
 }
 
-async function scenario({withFiles}) {
+async function scenario({withFiles, allowExports=false}) {
+  let downloadClicks = 0;
   const ids = new Map();
   const get = id => {
     if (!ids.has(id)) ids.set(id, new Element(id));
@@ -49,6 +54,7 @@ async function scenario({withFiles}) {
   };
   const run = () => ({
     run_id:'run-1', status:analyzed?'completed_with_warnings':withFiles?'ready_to_analyze':'docs_required',
+    analysis_mode:analyzed?'fallback_deterministic_adapter':'not_started',
     files:withFiles?[{...file,extracted_text_available:analyzed}]:[],
     created_at:'2026-10-09T08:00:00Z', tender_title:'Реальная закупка',
     procurement_notice_number:'0372200172326000015',procurement_law:'44-ФЗ',
@@ -73,6 +79,14 @@ async function scenario({withFiles}) {
       analyzed=true;value={status:'completed_with_warnings'};
     }
     else if(route.endsWith('/runs/run-1')) value=run();
+    else if(route.endsWith('/runs/run-1/export/pdf') || route.endsWith('/runs/run-1/export/docx')) {
+      if (!allowExports) return {ok:false,status:409,json:async()=>({detail:'Архивная редакция ЕИС не подтверждена'})};
+      return {
+        ok:true,status:200,
+        headers:{get:()=>route.endsWith('/pdf')?'application/pdf':'application/vnd.openxmlformats-officedocument.wordprocessingml.document'},
+        blob:async()=>new Blob(['valid-test-blob'])
+      };
+    }
     else if(route.endsWith('/runs/run-1/events')) value=[];
     else if(route.endsWith('/runs/run-1/report')) value={
       report_markdown:'Реальный отчёт',recommendation_label:'Проверка человеком',
@@ -93,12 +107,14 @@ async function scenario({withFiles}) {
   };
   const ctx = {
     document: {
+      body: {append(el) {el.onDownload=()=>{downloadClicks++;};}},
       getElementById:get,createElement:tag=>new Element(tag),
       querySelectorAll:query => query==='[data-tab]'?buttons:[]
     },
     window:{history:{replaceState(){}}},
     location:{hash:'',search:''},
-    URL,URLSearchParams,Intl,Date,Number,JSON,Math,Set,Promise,encodeURIComponent,
+    URL: class extends URL { static createObjectURL() {return 'blob:local-test';} static revokeObjectURL() {} },
+    URLSearchParams,Intl,Date,Number,JSON,Math,Set,Promise,encodeURIComponent,
     fetch,setTimeout,clearTimeout,setInterval:() => 101,clearInterval:() => {},
     FormData,console
   };
@@ -126,6 +142,27 @@ async function scenario({withFiles}) {
     assert(calls.includes('POST /api/demo/tender-agent/runs/run-1/analyze'),'One-click flow MUST analyze real files');
     assert(calls.includes('GET /api/demo/tender-agent/runs/run-1/report'));
     assert.equal(get('report-panel').hidden,false);
+    assert(get('report-analysis-mode').textContent.includes('без LLM'), 'Degraded model mode must be visible');
+    let prevented = false;
+    get('download-pdf').events.click({preventDefault() {prevented=true;}});
+    for(let i=0;i<50 && !(allowExports ? downloadClicks >= 1 : get('toast').textContent.includes('Экспорт PDF недоступен'));i++){
+      await new Promise(resolve=>setTimeout(resolve,2));
+    }
+    assert(prevented, 'Export must not navigate away from Operator Workspace');
+    assert(calls.includes('GET /api/demo/tender-agent/runs/run-1/export/pdf'));
+    if (allowExports) {
+      assert.equal(downloadClicks, 1, 'Verified PDF should download');
+      assert(!get('toast').textContent.includes('Экспорт PDF недоступен'));
+    } else {
+      assert(get('toast').textContent.includes('Архивная редакция ЕИС не подтверждена'));
+      get('download-docx').events.click({preventDefault() {}});
+      for(let i=0;i<50 && !get('toast').textContent.includes('Экспорт DOCX недоступен');i++){
+        await new Promise(resolve=>setTimeout(resolve,2));
+      }
+      assert(calls.includes('GET /api/demo/tender-agent/runs/run-1/export/docx'));
+      assert(get('toast').textContent.includes('Экспорт DOCX недоступен'));
+    }
+
     assert.equal(get('document-count').textContent,'1');
     assert.equal(get('quote-check').hidden,false,'Proof-check UI visible only for saved original files');
     get('quote-file').value='FILE-01';
@@ -151,6 +188,7 @@ async function scenario({withFiles}) {
 
 (async()=>{
   const complete = await scenario({withFiles:true});
+  const validExport = await scenario({withFiles:true,allowExports:true});
   const missing = await scenario({withFiles:false});
-  console.log('UNIFIED_UI_E2E_SIMULATION_PASS',complete,missing);
+  console.log('UNIFIED_UI_E2E_SIMULATION_PASS',complete,validExport,missing);
 })().catch(error=>{console.error(error);process.exitCode=1;});

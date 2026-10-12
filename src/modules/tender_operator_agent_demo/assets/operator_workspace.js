@@ -431,6 +431,48 @@
       root.append(block);
     }
   }
+  async function downloadReport(event, format) {
+    // Export may be forbidden for archived EIS records. Never navigate to the raw
+    // 409 JSON payload or treat an archived report as an official submission pack.
+    event.preventDefault();
+    if (!state.runId || state.busy || !['pdf', 'docx'].includes(format)) return;
+    const control = $('download-' + format);
+    control.setAttribute('aria-busy', 'true');
+    try {
+      const response = await fetch(
+        api + '/runs/' + encodeURIComponent(state.runId) + '/export/' + format,
+        {credentials: 'same-origin', cache: 'no-store'}
+      );
+      if (!response.ok) {
+        let detail = 'Ошибка HTTP ' + response.status;
+        try {
+          const payload = await response.json();
+          if (typeof payload.detail === 'string') detail = payload.detail;
+        } catch (_) { /* transport error body is not JSON */ }
+        throw new Error(detail);
+      }
+      const expectedType = format === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      if (!(response.headers.get('content-type') || '').toLowerCase().includes(expectedType)) {
+        throw new Error('Сервер вернул файл неожиданного формата');
+      }
+      const objectUrl = URL.createObjectURL(await response.blob());
+      try {
+        const anchor = document.createElement('a');
+        anchor.href = objectUrl;
+        anchor.download = 'tender-agent-' + state.runId + '.' + format;
+        document.body.append(anchor);
+        anchor.click();
+        anchor.remove();
+      } finally {
+        setTimeout(() => URL.revokeObjectURL(objectUrl), 30000);
+      }
+    } catch (error) {
+      msg('Экспорт ' + format.toUpperCase() + ' недоступен: ' + error.message);
+    } finally {
+      control.removeAttribute('aria-busy');
+    }
+  }
+
   async function loadReport(run) {
     show('report-panel',false);
     if (!['completed','completed_with_warnings','needs_review'].includes(run.status)) return;
@@ -440,6 +482,11 @@
         json(api + '/workspace/runs/' + encodeURIComponent(state.runId) + '/evidence')
       ]);
       show('report-panel');
+      $('report-analysis-mode').textContent = run.analysis_mode === 'fallback_deterministic_adapter'
+        ? 'Режим: детерминированный анализ без LLM. Требования, риски и экономика нуждаются в проверке по оригиналам.'
+        : run.analysis_mode === 'llm_tender_operator_provider'
+          ? 'Режим: анализ с LLM. Модельные утверждения не считаются подтверждёнными без первоисточников.'
+          : 'Режим анализа не подтверждён. Выводы необходимо проверять по оригиналам.';
       $('report-recommendation').textContent = report.recommendation_label || 'Требуется проверка человеком';
       wipe($('executive-summary'));
       summaryList($('executive-summary'), report.executive_summary);
@@ -549,6 +596,8 @@
   $('search-next').addEventListener('click',()=>{if(state.searchCursor)void loadSearchPage(state.searchCursor);});
   $('append-files-form').addEventListener('submit',appendMissingFiles);
   $('quote-verify-form').addEventListener('submit',event=>void verifyQuote(event));
+  $('download-pdf').addEventListener('click', event=>void downloadReport(event, 'pdf'));
+  $('download-docx').addEventListener('click', event=>void downloadReport(event, 'docx'));
   $('analyze-btn').addEventListener('click',()=>void analyze());
   $('refresh-run').addEventListener('click',()=>void loadRun().catch(e=>msg(e.message)));
   $('refresh-history').addEventListener('click',()=>void loadHistory());
