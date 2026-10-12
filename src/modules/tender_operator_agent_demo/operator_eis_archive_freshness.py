@@ -135,16 +135,27 @@ def projected_historical_eis_report(
 def review_annotated_html(
     metadata: dict[str, Any], html_document: str
 ) -> str:
-    if not needs_live_eis_revision_review(metadata):
+    price = verified_noncompetitive_price_request(metadata)
+    archive = needs_live_eis_revision_review(metadata)
+    if not price and not archive:
         return html_document
-    marker = 'data-arvectum-eis-archive-review="required"'
+    marker = (
+        'data-arvectum-eis-archive-review="required"'
+        if archive else 'data-arvectum-price-request-review="required"'
+    )
     if marker in html_document:
         return html_document
+    reasons = [
+        message for active, message in (
+            (archive, EIS_ARCHIVE_REVIEW_MESSAGE),
+            (price, PRICE_INFORMATION_REVIEW_MESSAGE),
+        ) if active
+    ]
     banner = (
         f'<aside {marker} role="alert" '
         'style="padding:18px;border:3px solid #b45309;'
         'background:#fff7ed;color:#7c2d12;font-weight:700">'
-        + EIS_ARCHIVE_REVIEW_MESSAGE + "</aside>"
+        + " ".join(reasons) + "</aside>"
     )
     body = re.search(r"<body(?:\s[^>]*)?>", html_document, flags=re.IGNORECASE)
     if body:
@@ -154,16 +165,25 @@ def review_annotated_html(
 
 def projected_historical_eis_run(metadata: dict[str, Any], response: Any) -> Any:
     """Pydantic model copy; original data and persisted outputs remain untouched."""
-    if not needs_live_eis_revision_review(metadata):
+    price = verified_noncompetitive_price_request(metadata)
+    archive = needs_live_eis_revision_review(metadata)
+    if not price and not archive:
         return response
+    messages = [
+        text for active, text in (
+            (price, PRICE_INFORMATION_REVIEW_MESSAGE),
+            (archive, EIS_ARCHIVE_REVIEW_MESSAGE),
+        ) if active
+    ]
+    limitations = list(response.limitations or [])
+    warnings = list(response.warnings or [])
+    for message in messages:
+        limitations = append_once(limitations, message)
+        warnings = append_once(warnings, message)
     return response.model_copy(
         update={
-            "limitations": append_once(
-                response.limitations, EIS_ARCHIVE_REVIEW_MESSAGE
-            ),
-            "warnings": append_once(
-                response.warnings, EIS_ARCHIVE_REVIEW_MESSAGE
-            ),
+            "limitations": limitations,
+            "warnings": warnings,
             "final_recommendation": None,
             "human_in_the_loop": True,
             "external_actions": False,
@@ -173,11 +193,16 @@ def projected_historical_eis_run(metadata: dict[str, Any], response: Any) -> Any
 
 def reject_unsafe_historical_eis_binary_export(metadata: dict[str, Any]) -> None:
     """Stop canonical PDF/DOCX from bypassing read-time review projections."""
-    if not needs_live_eis_revision_review(metadata):
+    price = verified_noncompetitive_price_request(metadata)
+    archive = needs_live_eis_revision_review(metadata)
+    if not price and not archive:
         return
     from fastapi import HTTPException
 
     raise HTTPException(
         status_code=409,
-        detail=EIS_ARCHIVE_REVIEW_MESSAGE,
+        detail=(
+            PRICE_INFORMATION_REVIEW_MESSAGE
+            if price else EIS_ARCHIVE_REVIEW_MESSAGE
+        ),
     )
