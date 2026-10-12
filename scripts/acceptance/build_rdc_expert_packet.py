@@ -39,7 +39,7 @@ def _source_evidence(
         return {"status": "SOURCE_NOT_IN_MANIFEST"}
     path = run_path / "normalized" / source
     # Require the actual file, not a symlink that escapes the evidence directory.
-    if path.is_symlink() or not path.is_file():
+    if run_path.is_symlink() or path.parent.is_symlink() or path.is_symlink() or not path.is_file():
         return {"status": "ORIGINAL_UNAVAILABLE"}
     try:
         if path.stat().st_size > _MAX_SOURCE_BYTES:
@@ -166,8 +166,8 @@ def main() -> None:
     parser.add_argument("--runs-root", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
-    if args.output.resolve().is_relative_to(Path.cwd().resolve()):
-        raise SystemExit("Review output must be outside the current repository/worktree")
+    if args.output.resolve().is_relative_to(Path(__file__).resolve().parents[2]):
+        raise SystemExit("Review output must be outside the source repository")
     transcript = json.loads(args.transcript.read_text(encoding="utf-8"))
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     packet = build_review_packet(transcript, manifest, args.runs_root)
