@@ -1,0 +1,20 @@
+task_id: TDP-R5-NEW-COMPETITIVE-DOCS-20261012
+status: in_progress
+goal: "Restore and independently inspect complete available official 44-FZ attachment set from the four newly verified competitive EIS auctions in the revised R5 positive corpus, using only Mac mini read-only existing EIS transport and ChatGPT-in-this-chat via RDC."
+definition_of_done:
+  - "Extract attachmentInfo only from exact latest SHA-pinned official epNotificationEF2020 notice for each four selected procurement numbers."
+  - "Retrieve all 21 listed original files with official UID/HTTPS host/expected size, safe file-type check and individual SHA-256 receipts; keep originals in private evidence only."
+  - "Bounded text recovery from supported DOCX/ODT and opaque ZIP inventory without unsafe extraction, distinguishing unreadable clauses as UNKNOWN."
+  - "Use local Gemma as executor for a small sample and ChatGPT in this chat as independent reviewer of claims, correcting overclaims and exact-quote mismatches."
+  - "Publish truthful source coverage report, test receipts, checkpoint; no false complete legal/current EIS signoff."
+completed:
+  - "2026-10-12: official read-only getDocsIP ZIP and exact latest notice XML verified for all four positive replacements. Inventory: 0151600003226000011 (4 attachments); 0162200011826003089 v4 (5); 0152200004026000069 (6); 0348100024426000021 (6); total 21."
+current: "Build SHA-bound read-only official filestore downloader and retrieve metadata-validated originals with strict input caps."
+remaining:
+  - "Download and validate 21 original public EIS attachments in private evidence directory."
+  - "Recover textual source evidence, identify gaps and original clause contexts."
+  - "Independent ChatGPT-in-chat review local Gemma and cite exact original SHA/offsets."
+  - "Publish acceptance report and checkpoint completed or blocked on actual source failures."
+last_verified_commit: c99724b3e0feb71cc2be0f05613432daeec3469a
+test_results: []
+resume_instruction: "On Mac mini work from /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012/positive-eis-replacements-20261012/verified-competitive-20-plus-four-negative.json and exact original ZIP. New positive numbers 0151600003226000011,0162200011826003089 (v4),0152200004026000069,0348100024426000021. Existing EIS native _default_transport source domain zakupki.gov.ru. ZIP/ODT security constraints, never execute archives or send external ChatGPT API. PR #384 source-type manifest currently awaiting 9/9 CI; do not repeat confirmed GETDOCS original notices. No production, bids, watchdog."
