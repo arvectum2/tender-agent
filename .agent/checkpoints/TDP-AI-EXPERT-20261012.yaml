@@ -8,6 +8,7 @@ definition_of_done:
   - "Publish source-grounded outcomes, false/overstated claims, limitations and no-GO safety decision."
   - "Preserve production, external submission, and current-owner approval gates; update parent checkpoint."
 completed:
+  - '2026-10-12 third-party aggregator cross-check classified three SOAP no_data records as expired market price inquiries (RQ), not live competitive bids; two potential future-deadline notices identified for separate official live verification. See docs/acceptance/TDP_EXTERNAL_MARKETPLACE_CROSSCHECK_2026-10-12.md. No current EIS official attestation claimed.'
   - "2026-10-12: 20/20 cases independently screened; 10 with substantive normalized source, seven archived-only, three official SOAP no_data and UNKNOWN."
   - "2026-10-12: Historical source reconciliation 17/20 official ZIP, 168/168 cached file SHA, 72/72 re-fetched binary UID proofs from earlier technical checkpoints."
   - "2026-10-12: Independent local source anchor verification 23/23 exact excerpts in ten cases; private evidence SHA+offset manifest."
@@ -19,7 +20,7 @@ completed:
   - "Earlier fresh disposable staging 5/5 file/resource/document identity, 127/127 normalized hashes+offsets, DP→TA real-source API+report HTTP200, archived export HTTP409 safely upheld; 39 export safety regression tests pass."
 current: "Independent AI second-opinion review and deliverable complete, with explicit source-coverage limits; parent TDP-REFACTOR still blocked by current live EIS attestation, incomplete full-document legal gold and owner's 20 signed business decisions."
 remaining: []
-last_verified_commit: d3c38529e7ba45ddac6507a7fd6c92c98db5de9a
+last_verified_commit: 77a2af0515b27122a70c5aa19c237542aa55aaa4
 test_results:
   - "Private source anchor verifier: 23 PASS, 0 FAIL, ten original-document cases."
   - "Local Gemma quote validation: 25 exact PASS, one FAIL of 26 total, one semantic overclaim flagged for independent review."
