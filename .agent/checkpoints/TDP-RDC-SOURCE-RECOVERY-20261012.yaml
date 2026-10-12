@@ -1,0 +1,20 @@
+task_id: TDP-RDC-SOURCE-RECOVERY-20261012
+status: in_progress
+goal: "Recover source-grounded read-only contract/technical facts for seven historical EIS runs that have no normalized texts, without inventing evidence or modifying production."
+definition_of_done:
+  - "Classify the seven old docs_required runs by actual cached input binaries, not by metadata file count alone."
+  - "Safely extract bounded text only from existing authenticated originals, with SHA256, original document identity, and confidence/limitations."
+  - "Independently review extracted text in this ChatGPT conversation over RDC and distinguish exact terms from missing annexes."
+  - "Test deterministic SHA/identity and no-source failure paths; only commit code/reports without private source content."
+  - "Record outcome and missing current EIS/three no_data blockers in canonical checkpoint."
+completed:
+  - "2026-10-12: inspected seven old runs: all lack normalized texts, four run folders contain cached DOCX originals; three have only XML from official ZIP; no original source terms may be inferred from empty normalized directory."
+current: "Check cached DOCX binary SHA against independent original receipt, recover text in private evidence workspace and evaluate scope."
+remaining:
+  - "Verify authenticity and source document inventory."
+  - "Extract and review exact original clause snippets with safe proof, no LLM API."
+  - "Add regression checks if a real code defect is found; run tests and CI."
+  - "Publish source-derived gap matrix and close child checkpoint."
+last_verified_commit: d937cca8ae58356b9aca546dfc28d638c03adabf
+test_results: []
+resume_instruction: "Continue only via Mac mini RDC, private evidence root /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012. Seven docs_required no-normalized-text runs: 0127100008626000013, 0148200000526000028, 0149200002326001555, 0349100009326000005, 0349500000226000003, 0360600005326000018, 0895100000126000897. Four include cached DOCX: 0148200000526000028 (2), 0149200002326001555 (1), 0349100009326000005 (1); count original hashes from verified official filestore receipts. Others XML-only and remain legal UNKNOWN. No production, bids, external ChatGPT API, or watchdog."
