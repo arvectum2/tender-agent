@@ -1,0 +1,20 @@
+task_id: TDP-LIVE-EIS-RECHECK-20261012
+status: in_progress
+goal: "Verify read-only latest getDocsIP responses and archive changes for three priority TDP cases, while retaining distinct live legal/status UNKNOWN; confirm three former SOAP no_data remain unknown."
+definition_of_done:
+  - "Use configured existing individual-token SOAP getDocsIP read-only only; no new APIs or production state writes."
+  - "Verify three known no_data responses, avoiding fabrication of documents."
+  - "For museum and two late-edition cases, inspect latest available live SOAP archive URLs and SHA-bound ZIP content if returned."
+  - "Compare official archive XML latest version to 2026-10-11 baseline; never assert live bidding status just from docs."
+  - "Produce private receipts, GitHub expert report and finish checkpoint."
+completed:
+  - "2026-10-12 authenticated individual getDocsIP client configured with strict direct route."
+  - "2026-10-12 all three cases 0148300050426000047, 0318200087026000163 and 0348100024426000052 returned no_data and zero archive URLs on new read-only SOAP check."
+current: "Inspect freshly obtained official archive content for 0372200172326000015, 0158300034526000388 and 0348100024426000039."
+remaining:
+  - "Fetch bounded new official ZIPs into isolated private evidence with strict host check and SHA recorded, or preserve block."
+  - "Compare EIS XML archive notice edition and deadlines, classify as archived snapshots not live legal status."
+  - "Finish report and checkpoint, update canonical task state."
+last_verified_commit: 6ab2fcec48d9b46f9e52c45ae5239086794ce8fe
+test_results: []
+resume_instruction: "Check configured getDocsIP via ZakupkiSoapClient with runtime_status_enabled=False and disable debug; no token logging. Check 3 priority targets, source baseline evidence/tdp-r5/official-revision-batch-20261011. Three no_data recheck already complete, no need repeat. No OpenAI API, production, bids or watchdog. Maintain current live EIS status UNKNOWN."
