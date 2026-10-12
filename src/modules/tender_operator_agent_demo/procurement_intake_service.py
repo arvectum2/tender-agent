@@ -24,6 +24,9 @@ from src.modules.tender_operator_agent_demo.document_set_completeness import (
 from src.modules.tender_operator_agent_demo.eis_notice_parser import (
     extract_notice_attachments,
 )
+from src.modules.tender_operator_agent_demo.eis_notice_revision_selector import (
+    select_latest_archived_notice_files,
+)
 from src.modules.tender_operator_agent_demo.eis_official_procedure import (
     classify_official_eis_archive,
 )
@@ -628,7 +631,17 @@ def _document_kind_from_role_hint(role_hint: str | None) -> str:
 def _discover_notice_xml_attachments(run_id: str, metadata: dict[str, Any]) -> list[ProcurementAttachment]:
     attachments: list[ProcurementAttachment] = []
     seen: set[tuple[str, str]] = set()
-    for item in metadata.get("files", []):
+    identity = (
+        metadata.get("notice_number")
+        or metadata.get("registry_number")
+        or metadata.get("procurement_id")
+        or (metadata.get("procurement") or {}).get("registry_number")
+        or (metadata.get("procurement") or {}).get("procurement_number")
+    )
+    sources = select_latest_archived_notice_files(
+        metadata.get("files", []), expected_registry_number=str(identity or "")
+    )
+    for item in sources:
         ext = Path(str(item.get("stored_name") or "")).suffix.lower()
         role_hint = str(item.get("role_hint") or "")
         if ext != ".xml" and role_hint != "notice":
