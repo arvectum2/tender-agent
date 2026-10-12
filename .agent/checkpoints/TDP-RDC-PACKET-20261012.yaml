@@ -1,0 +1,24 @@
+task_id: TDP-RDC-PACKET-20261012
+status: completed
+goal: Make independent ChatGPT review of local Gemma tender claims reproducible over Mac mini RDC without external API integration.
+definition_of_done:
+  - Generate offline evidence packets from existing local model transcripts and independently cached normalized originals.
+  - Verify source identity by immutable manifest SHA256 and exact quote offsets; reject traversal, symlinks, hash drift and ambiguous quotes.
+  - Distinguish exact original quote from whitespace/linebreak formatting and genuinely missing quotes.
+  - Leave semantic/legal validation to ChatGPT in this chat and all commercial GO decisions unresolved.
+  - Complete focused/full tests, exact-head GitHub CI and merge into main.
+completed:
+  - "PR #374 merged into main at 99bfa7c9efb03b54f2be0e05b9715603c523ceef."
+  - "Real private Mac mini evidence packet built for 10 cases and 26 Gemma claims: 22 LITERAL_MATCH, 3 QUOTE_FORMAT_VARIANT, 1 QUOTE_MISSING; raw originals not uploaded."
+  - "Three whitespace quote variants independently examined in full original context; contract start dates and Laravel confirmed."
+  - "Historical expert report corrected for deadlines/payment/SSL contexts, no falsified semantic/legal confirmation."
+  - "Added 14 focused source/identity/size/path/hash/security/formatting unit tests."
+  - "No OpenAI API calls, separate reviewer endpoints, production or bids."
+current: Completed; remaining procurement owner acceptances and fresh official EIS editions belong to parent task.
+remaining: []
+last_verified_commit: 99bfa7c9efb03b54f2be0e05b9715603c523ceef
+test_results:
+  - Focused offline evidence packet pytest 14 PASS and Ruff PASS.
+  - Full no-exclusions Mac mini pytest 3876 PASS, 238 SKIP, 296 WARN, zero failures in 145.71s; PostgreSQL 16 client used for disposable R9.
+  - GitHub Actions exact-head PR374 run 38245584550 9/9 jobs PASS.
+resume_instruction: "Child complete. Main remaining task: genuine official current EIS legal/source status and final authorized owner business GO/NO-GO. ChatGPT in this conversation remains independent reviewer over RDC; no external API, no production writes, no bids, no watchdog."
