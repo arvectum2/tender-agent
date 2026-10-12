@@ -1,0 +1,23 @@
+task_id: TDP-PRICE-INQUIRY-CORPUS-CLASSIFICATION-20261012
+status: blocked
+goal: "Classify three EIS 44-FZ price-information requests separately from actual competitive procurement notices in the 20-case acceptance corpus, without falsely labeling source types from aggregate sites alone."
+definition_of_done:
+  - "Obtain first-party official EIS source for the three price-request numbers, or another authoritative record of their legal notice type."
+  - "Confirm original source-procedure type and route price information inquiries to MARKET_RESEARCH_ONLY, not bid/GO/NO_GO, with evidence."
+  - "Add three positive replacement competitive procurement cases if R5 needs 20 actual competitive tender legal-gold signoffs."
+  - "Add or adjust affected product/core acceptance validation and tests, preserve type UNKNOWN when first-party proof is missing."
+completed:
+  - "2026-10-12 three official configured individual-token SOAP getDocsIP returned no_data and zero archive URLs, again."
+  - "2026-10-12 publicly indexed Kontur and Synapse cards independently categorize 0148300050426000047, 0318200087026000163 and 0348100024426000052 as price-information requests, not reported electronic auctions."
+  - "2026-10-12 source-aware corpus matrix distinguishes 10 initial original cases, 3 stored-DOCX recovery, 4 official filestore recovery, 3 likely price requests and 50 local Gemma claims reviewed."
+  - "2026-10-12 report docs/acceptance/TDP_RDC_CORPUS_INTEGRITY_20_2026-10-12.md committed with links to nonofficial category sources and explicit uncertainty."
+current: "First-party official price inquiry type/attachments not accessible through getDocsIP. Do not silently mark them as actual competitive procurement cases or deny their existence."
+remaining:
+  - "Identify official price requests category and original document, if available via authorized read-only official access."
+  - "Decide whether to retain three as documented negative regression cases and curate three separate competitive positive replacements."
+  - "Implement source-authorized type guard only when there is sufficient procedure identity evidence."
+last_verified_commit: c0d7daee7b02364ade1ec65b61460180f5473ded
+test_results:
+  - "20/20 private aggregate source matrix verified, 17 with real technical/contract documents, three official no_data; 50 distinct previously independently reviewed local model assertions."
+  - "No new product code and no false first-party type verification."
+resume_instruction: "This is BLOCKED on official first-party classification of 0148300050426000047, 0318200087026000163, 0348100024426000052, currently indicated as PRICE_INFORMATION_REQUEST only by secondary Kontur/Synapse sources. Do not infer legal type from digits or SOAP no_data alone. See docs/acceptance/TDP_RDC_CORPUS_INTEGRITY_20_2026-10-12.md. Optional: find first-party EIS price enquiry interface and source docs over authorized Mac mini read-only access. User participates only at final acceptance, no ChatGPT API, bids, production or watchdog."
