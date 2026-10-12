@@ -21,9 +21,12 @@ pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
   - 'APR-04: check exact-head GitHub CI of refreshed PR #252 and owner live acceptance before any merge or deployment.'
   - 'After APR-03B technical closure, proceed to APR-04 onboarding, then B2B public discovery, APR-06/07, APR-05.'
-last_verified_commit: 6e737d69dda1ed32394f803f261157c128df5bcf
+last_verified_commit: 'APR04 integration 3f289a04584c339ced7026dfedf19c3712aa3ad9: local full regression verified, GitHub exact-head CI pending; canonical TA main baseline 6e737d69dda1ed32394f803f261157c128df5bcf'
 test_results:
   - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
+  - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
+  - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
+  - 'B2B first source pass: seven corporate-source opportunities plus one organizer-unknown, target 15-20 not accepted.'
 resume_instruction: 'APR-03B live EIS import/XML and 48 tests PASS; owner visual/legal/final report remains blocked. APR-04 updated PR #252 head 3f289a04 has 3954/238 complete PG16 tests and auth security guard; wait for exact-head CI, owner approval before merge. B2B seven verified legal entities + one unknown, target 15-20 open. Continue only public-source research and review; never deploy production, submit bids, activate watchdog or paid model API.'
 execution:
   branch: feature/ta-roadmap-exec-20261012
