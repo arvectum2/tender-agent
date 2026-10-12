@@ -5,7 +5,7 @@
 ## Evidence
 
 - R2 isolated HTTP+Postgres: five original EIS file hashes and 127/127 normalized chunks valid; live Data Platform has no matching five originals among 2034 scanned resources.
-- R5 official SOAP: 17/20 ZIPs and 3 no_data; 168/168 cached historic original hashes matched, 96/96 original XML bytes matched official archives, 72 binary attachment UIDs anchored but external EIS filestore HTTP429 prevents fresh byte proof.
+- R5 official SOAP: 17/20 ZIPs and 3 no_data; 168/168 cached historic original hashes matched, 96/96 original XML bytes matched official archives, 72/72 official binary attachment UIDs and recovered verified-TLS original bytes matched SHA256 and size, 28,519,849 bytes; prior HTTP429 resolved for this bounded batch.
 - Historic nine reports: 9/9 maximum prices and 7/9 deadlines match newest archived XML; three cached notice versions are stale.
 - R4 local Gemma4 12B source-locked XML machine benchmark: 17 cases, 67/68 fields correct, 16/17 cases entirely correct, 105.5 model seconds. One incorrect registry number: 0895100000126000897. NOT human legal/commercial gold.
 
@@ -39,7 +39,7 @@ All deadlines and max prices below are from the latest archived official XML, no
 ## Blocking gates — do not declare refactor completed
 
 1. R2 live Data Platform 0.6.0 must demonstrate matching persisted original resource/document/chunk evidence. Isolated 5/5 is not live proof. No production writes without separate approval.
-2. Official EIS filestore original-binary re-fetch blocked by HTTP429; UID alone is not byte-level verification. No unsafe TLS bypass or retry storm.
+2. Resolved: all 72 known attachment binaries were re-downloaded over verified TLS with exact SHA256/size. Three SOAP no_data cases and unseen additional attachments remain UNKNOWN. No unsafe TLS bypass or retries.
 3. R4 benchmark remains MACHINE XML oracle, not human-labeled legal/citation/commercial gold. Unsupported facts must remain UNKNOWN.
 4. R5 independent human signoffs: 0/20. Use the already provided TDP_R5_20_CASE_HUMAN_REVIEW_QUEUE_2026-10-11.csv only after actual source review; no scripted GO.
 5. Re-run complete authenticated product E2E and exact-head CI after closing gates. No public deploy, bid submissions, signing or watchdog changes.
