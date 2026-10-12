@@ -1,5 +1,5 @@
 task_id: TDP-SOAP-ATTACHMENTS-20261012
-status: in_progress
+status: completed
 goal: 'Confirm exact EIS SOAP XML and official filestore binary download boundary, verify existing current downloader error handling and close test gaps without touching production.'
 definition_of_done:
   - 'Identify confirmed mechanism, read-only SOAP archive and filestore source paths.'
@@ -8,9 +8,8 @@ definition_of_done:
   - 'Run targeted quality tests, commit/CI/merge or record objective blocker.'
 completed:
   - 'Prior R5 independent audit: 17/20 official getDocsIP SOAP ZIPs; 96/96 original XML exact EIS SHA; 72/72 UID in XML; 168/168 stored byte SHA.'
-current: '22 focused tests, Ruff and make check PASS, complete 3813 tests PASS; exact-head CI and merge pending.'
-remaining:
-  - 'Require exact-head GitHub CI before merging test/report PR and update parent checkpoint.'
-last_verified_commit: '72e040b914b36b10c292937131041132360d6f43'
-latest_checks: '22 focused PASS; 3813 full PASS, 238 skipped, one known R9 pg_restore deselected; make check/Ruff PASS; GitHub CI pending'
-resume_instruction: 'Isolated branch/worktree audit/tdp-soap-attachment-20261012. Official SOAP ZIP contains XML, not full DOCX/PDF; original independent 72 binary UID anchors but no repeat retrieval proved, historical sample five original binaries already SHA checked. Probe one (not 72) filestore URL through current AttachmentDownloader safe network layer. Keep 429 and 404 fail-closed; never disable TLS/headers, no production writes. If code changes create PR with exact-head CI, otherwise finish with supported findings. Watchdog remains disabled.'
+current: 'Completed: PR #363 merged as 3fee431eed66e3f95639d46b2b6fd87646cc8f2c, all nine exact-head CI green; 3813 local tests passed.'
+remaining: []
+last_verified_commit: '3fee431eed66e3f95639d46b2b6fd87646cc8f2c'
+latest_checks: '22 focused PASS; 3813 full PASS, 238 skipped, one known R9 pg_restore deselected; make check/Ruff PASS; all 9 exact-head GitHub CI jobs SUCCESS'
+resume_instruction: 'Child TDP-SOAP-ATTACHMENTS-20261012 completed and merged PR #363, code SHA 3fee431e; do not repeat. Official XML getDocsIP SOAP works (17/20 archives, 3 no_data), filestore separate (one real safe downloader probe HTTP429), earlier five binaries cached integrity true, 72/72 UID anchored but not freshly transferred. Next objective for parent: independent human R4 gold, R5 owner signoffs and R2 non-production source provenance; schedule safe low-rate filestore recovery only when 429 clears; no production writes or watchdog.'
