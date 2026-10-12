@@ -14,15 +14,17 @@ completed:
   - '2026-10-12 inspected main HEAD 6e737d69, GitHub CI 9/9 PASS; TA refactor completed, DP core refactor complete but owner production/gold acceptance blocked.'
   - 'Mac mini online; isolated APR-03B preview HTTP200 /health and HTTP401 unauthorized workspace. Separate production services not modified.'
   - '2026-10-12 APR-03B actual authenticated staging preview: EIS 0372200172326000015 import HTTP200, 6 originals, notice XML 3 structured fields KNOWN; 48 focused current-main tests PASS. No final LLM/report or human acceptance; see docs/operations/TA_APR03B_OWNER_PROBE_2026-10-12.md.'
-current: 'APR-03B technical partial: real EIS import/XML verified, final live-model analysis and owner visual/semantic acceptance remain blocked. APR-04 onboarding code audit is next independent safe action.'
+  - '2026-10-12 APR-04 old PR #252 reconciled onto latest main and pushed updated head 3f289a04, with fail-closed onboarding auth; 3954 full PASS/238 SKIP/0 fail and 57 focused PASS. Exact-head GitHub CI in progress, owner acceptance gated.'
+  - '2026-10-12 first read-only Workspace B2B public-source pass: six source-attested corporate IT/digital opportunities, one organizer unknown, five individual/non-core exclusions; 15-20 case acceptance and other ETP sources remain OPEN. See docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md.'
+current: 'APR-03B owner/semantic signoff blocked, APR-04 PR #252 refreshed and awaiting exact-head CI before any merge. B2B public source research has six corporate leads; further independent source verification pending.'
 pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
-  - 'APR-04: verify PR #252 against current main and check focused integration without promoting premature deployment.'
+  - 'APR-04: check exact-head GitHub CI of refreshed PR #252 and owner live acceptance before any merge or deployment.'
   - 'After APR-03B technical closure, proceed to APR-04 onboarding, then B2B public discovery, APR-06/07, APR-05.'
 last_verified_commit: 6e737d69dda1ed32394f803f261157c128df5bcf
 test_results:
   - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
-resume_instruction: 'APR-03B preview EIS import and 48 regressions are verified; owner semantics/visual acceptance and final model report remain open, do not assert DONE. Proceed only with safe read-only audit of APR-04 PR #252 while awaiting owner; never modify production, submit bids, trigger watchdog or automatically send data to paid model API.'
+resume_instruction: 'APR-03B live EIS import/XML and 48 tests PASS; owner visual/legal/final report remains blocked. APR-04 updated PR #252 head 3f289a04 has 3954/238 complete PG16 tests and auth security guard; wait for exact-head CI, owner approval before merge. B2B six verified legal entities + one unknown, target 15-20 open. Continue only public-source research and review; never deploy production, submit bids, activate watchdog or paid model API.'
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
