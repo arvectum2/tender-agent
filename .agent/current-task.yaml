@@ -21,6 +21,8 @@ completed:
   - '2026-10-13 APR-04 PR #252 retargeted from obsolete APR-03 branch to main, 18 relevant changed files, green CI and 3954/238 local PG16 regression; draft cleared and merged main at 1912acdd. Code integration only: owner legal/business acceptance and production deployment remain pending.'
   - '2026-10-13 APR-05 PR #253 retargeted to main; GitHub reports merge conflicts, PR still draft. APR-06 #254 and APR-07 #255 remain stacked on APR-05 branch. Do not merge blindly.'
   - '2026-10-13 Desktop Commander reported two online Macs but terminal commands timed out; Mac mini new private-preview promotion not verified or performed.'
+  - '2026-10-13 APR-05 PR #253 updated with explicit integration gate; draft and dirty with current main, no merge attempted. Earlier-branch Mac mini 105↔106 PG migration and three two-tenant HTTP smoke rounds reported green, but not revalidated on new main.'
+  - '2026-10-13 B2B source report 9 legally identified buyer corporate opportunities published to main in cce54fbb; noncore SEO/marketing leads separated, no outbound messages or paid access.'
 current: 'APR-03B Safari real-flow technically inspected. Browser UX fix PR #391 submitted, awaiting exact-head CI and guarded merge. Live/legal source-gold, current EIS revision, local LLM quality, final owner GO DEFER. APR-04 #252 CI green, owner business acceptance pending; B2B 8/20.'
 pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
@@ -28,12 +30,12 @@ pending:
   - 'APR-04: PR252 merged into main. Private Arvectum legal-profile UI/business acceptance remains required; no public deployment.'
   - 'APR-05: reconcile draft PR253 against main after APR04 merge, resolve conflicts, run tenant isolation/roles/entitlement/database regression before any merge; do not activate paid pilot.'
   - 'After APR-03B technical closure, proceed to APR-04 onboarding, then B2B public discovery, APR-06/07, APR-05.'
-last_verified_commit: 'main PR252 merge 1912acdd8bbbb06c7ea41eabe4d25206ce3ddf21 (PR391 preceding merge 57294f45e12b81ea550ab4a128a2d2efe202ac24); local PG16 3954 pass/238 skip confirmed before merges, exact new main CI not yet verified'
+last_verified_commit: 'main cce54fbb40e5cff14c0994f93579e0a8d4448108 source-report commit (PR252 main merge 1912acdd, PR391 merge 57294f45); exact main CI in progress; earlier local full PG16 3954/238 PASS before merges.'
 test_results:
   - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
   - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
   - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
-  - 'B2B first source pass: eight corporate-source opportunities plus Workspace #19006 independently confirmed as organizer legal entity 2026-10-13; target 15-20 not accepted.'
+  - 'B2B first source pass: nine corporate IT/digital source-attested opportunities including Workspace #19006; report docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md now in main. Remaining 15–20 accepted-source goal OPEN.'
   - 'PR391 SHA 61b8de2d exact-head push/PR CI success; merged 57294f45. PR252 SHA 3f289a04 exact-head push/PR CI success; merged 1912acdd. Main after both merges needs fresh CI check.'
 resume_instruction: 'APR-03B Safari real-browser flow verified, old snapshot deterministic and current EIS revision unproven; 6/6 source files, three real EIS XML facts. Latest main isolated read-only staging 18086 verified archive warning and guarded PDF/DOCX 409/409; stop staging after probe. PR #391 head 61b8de2d browser UX fix with 42 focused and Node 3-case E2E PASS, exact-head CI pending. Do not mark semantic/legal/commercial GO or final APR03B DONE. APR-04 PR #252 head 3f289a04 GitHub CI SUCCESS and full 3954/238 local suite, owner acceptance pending. B2B 8/20. Resume CI/guarded PR progression and user-initiated current revision check only. Never submit bids/sign, deploy VPS/production, enable watchdog or paid LLM API.'
 execution:
