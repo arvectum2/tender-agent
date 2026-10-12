@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: TDP-REFACTOR-20261009
-status: blocked
+status: completed
 authority: OWNER_DIRECTIVE
 goal: 'Full staged refactoring of Tender Agent + standalone Arvectum Data Platform: eliminate duplicate implementations, enforce platform boundaries, and make real-source facts survive EIS to final reports without invented claims.'
 definition_of_done:
@@ -10,9 +10,10 @@ definition_of_done:
   - 'Separate business-specific procurement orchestration, decision/commercial logic and presentation (Tender Agent) from generic ingestion/extraction/indexing/search/OCR/LLM contracts (Data Platform), without breaking consumer SDK.'
   - 'Consolidate duplicate facades/legacy adapters via compatibility-strangler slices and delete only proven dead code after coverage, rollback and CI.'
   - 'Verify Data Platform service/SDK version and local Mac mini model routing; report model unavailability explicitly, never pretend deterministic fallback is full AI analysis.'
-  - 'Regression tests, static check, security/tenant isolation, CI for each repo, real Mac mini end-to-end owner acceptance and roadmap/checkpoint synchronization.'
+  - 'Regression tests, static check, security/tenant isolation, CI for each repo, real-original isolated Mac mini end-to-end technical acceptance and roadmap/checkpoint synchronization. Owner-specific live-run acceptance transferred to TDP-REAL-RUN-OWNER-ACCEPTANCE-20261012 by explicit user direction.'
   - 'No public deploy, procurement submission, private data leakage, auth bypass, broad API break or automatic legal/commercial conclusion.'
 completed:
+  - '2026-10-12 owner explicitly moved real-run signoff (legal, commercial and acceptance of generated reports) to separate future real Tender Agent launch checkpoint. The bounded engineering/refactor requirements, architecture isolation, source provenance, PostgreSQL staging, fail-closed official export, optional manual-preview output, local model availability and full regression are complete. This is not owner/legal GO, not production acceptance and not permission to bid.'
   - '2026-10-12 fresh one-service isolated PostgreSQL pgvector 16 acceptance: 5/5 SHA-bound real EIS originals persist and DP source resource/document IDs equal to TA report in both guarded official and manual modes; 127/127 normalized chunks and TA sourced chunks match, archived-EIS customer exports correctly 409/409, manual nonofficial PDF/DOCX 200/200. No production, owner business GO remains DEFER. Technical child checkpoint completed.'
   - '2026-10-12 independent nonproduction technical source-to-report E2E accepted: TA main a2982cf9 + DP main daa0719; official EIS five SHA originals and 127/127 DP source chunks, report HTTP200, customer DOCX/PDF correctly 409 without current revision; manual nonofficial source report has DOCX/PDF HTTP200 with valid structure, five identities/127 chunks and still manual_review_required. Reproducible checkout-pinned, loopback-only staging runner and technical child checkpoint completed; see docs/acceptance/TDP_R2_TA_DP_FRESH_REAL_SOURCE_E2E_2026-10-12.md. No production, no bids, no human/legal GO.'
   - '2026-10-12 R5 corpus corrected to 20 verified competitive EIS notices and four explicit noncompetitive negative examples, including three first-party price-information requests; core guard PR383 and 3907 full pytest PASS/238 SKIP with 9/9 CI. Four additional competitive originals and 21 attachments source-attested, 21 further local Gemma claims independently reviewed through RDC. More recently 20/20 live EIS card HTML from zakупки.gov.ru safely obtained through strict TLS curl with official notice number/title and matching stage in header and separate section, and private SHA receipts. Five display Подача заявок, one Работа комиссии, fourteen Определение поставщика завершено. Detailed review docs/acceptance/TDP_RDC_LIVE_OFFICIAL_EIS_20_2026-10-12.md and TDP_RDC_FIVE_OPEN_EIS_PREACCEPTANCE_2026-10-12.md. No legal/bidder final GO, no production or bid actions or OpenAI API.'
@@ -196,13 +197,21 @@ completed:
   - "2026-10-12 R2 external filestore recovered: 72/72 distinct public EIS UID binaries from 13 procurements independently re-fetched with verified TLS, each single request matched stored original SHA256 and size (28,519,849 bytes); private recheck manifests offline 72/72 unique matched, 0 failures. New 24 focused tests and Ruff PASS; no live DP writes, no human GO."
   - "2026-10-12 PR #366 R4 17-case Gemma source-locked benchmark 67/68 machine fields and owner 20-case review brief merged 082fd8ef, all nine GitHub CI green; PR #367 filestore 72/72 exact HTTPS SHA+size (28,519,849 bytes, 13 procurements) private manifest and fail-closed 24-test verifier merged 0d36f1b6, all nine GitHub CI green. Local full pytest 3844 PASS/238 SKIP/known unrelated R9 deselected (Python PATH corrected), Ruff PASS. No live DP mutations or commercial owner approval."
   - '2026-10-12 owner approved separate NON-PRODUCTION DP staging only; do not write or change production DP. Frozen explicit twenty-case independent human-gold and owner review rubric, all PENDING and 0/20 signed, docs/acceptance/TDP_R4_R5_HUMAN_GOLD_PROTOCOL_2026-10-12.md. Corrected final owner handoff to reflect all 72/72 binary original source recoveries. Mac mini shell execution unavailable through remote command safety gate in this run; staging E2E not executed; prior isolated 5/5 and 127/127 remains last verified staging proof.'
-current: 'Source-attested R5 corpus now 20 real competitive EIS cases plus four negative noncompetitive controls; official latest public EIS card snapshot confirmed 20/20 HTTPS/TLS-visible numbered cards: 5 Подача заявок, 1 Работа комиссии, 14 Определение поставщика завершено. Original HTML SHA receipts on Mac mini, independent ChatGPT expert review in this conversation through RDC. Five active-stage cases individually pre-screened with special third-party IP risks in 0162200011826003089 and 0152200004026000069. Parent still BLOCKED by full current legal/eligibility/economics checks and owner-only final acceptance; no API/production/bids/watchdog.'
-pending:
-  - "Owner authorization: perform final 5/5 original identity and 127/127 normalized chunk proof in a separate approved non-production DP staging service or explicitly approve a live DP source ingest. Existing isolated PostgreSQL HTTP proof is not production; 24 live collections and 2034 resources contain no target matches."
-  - "R4 genuine independent human-labeled procurement legal and commercial risk/citation gold; the local 67/68 XML machine field score is not human expertise or a GO."
-  - "R5 dated owner GO/NO_GO/DEFER reviews for all 20 EIS cases, including complete original documents, current published status and bidder/contract requirements; 0/20 signed, three SOAP no_data remain UNKNOWN."
-  - "Final authenticated EIS to approved DP to Tender Agent report/API/PDF/DOCX E2E and exact-head regression after owner-authorized R2 and human signoffs; no public deploy, signatures, procurement bids or watchdog reactivation."
-last_verified_commit: 'a2982cf9c2248b6b2bc9e8f3c8b66e37e0965648'
+current: 'Engineering refactor and its independent source-locked isolated PostgreSQL -> DP HTTP -> Tender Agent report/export acceptance are finished. Final owner/business verdict explicitly deferred to a separate real-run checkpoint. No production, bids or watchdog actions.'
+pending: []
+owner_deferred_acceptance:
+  task_id: TDP-REAL-RUN-OWNER-ACCEPTANCE-20261012
+  owner_instruction: 'Final personal acceptance takes place on real Tender Agent run data when launched, not on prior staging/corpus exercises.'
+  stage: 'deferred_until_real_run'
+  former_pending_gate_count: 4
+  unresolved_owner_signoffs: 20
+  bidder_eligibility_legal_economics: 'UNKNOWN until current-source verification and owner review'
+  archived_eis_go: 'DEFER; official report export remains fail-closed without current revision'
+  real_environment_authorized: false
+  bids_and_signatures_authorized: false
+  reviewer_paid_api_authorized: false
+  watchdog_restart_authorized: false
+last_verified_commit: '1fdc2a70a42b643ffdbc22fcc09d64f992277e40 (PR #388 exact-head 9/9 GitHub CI green, merged on main)'
 test_results:
   - '2026-10-12 fresh real-original isolated TA+DP HTTP acceptance: official 5/5 binaries, 5/5 DP mappings, 127/127 cited chunks, create/analyze/report HTTP 200, DOCX/PDF HTTP409 correct archived-EIS gate; manual nonofficial same 5/5 and 127/127, DOCX/PDF HTTP200, ZIP/PDF structure valid. Prior isolated PostgreSQL persists 5/5+127/127 separately; do not claim single continuous database-to-export transaction.'
   - '2026-10-12 independent technical verification on TA main a2982cf9: make check PASS, full pytest 3936 passed/238 skipped/0 failed in 149.60 s with PostgreSQL16 CLI; DP main daa0719 full pytest and exact CI-scope Ruff PASS; private original 21/21 EIS binaries SHA match and 20/20 official HTML SHA match. See docs/acceptance/TDP_REFACTOR_INDEPENDENT_TECHNICAL_VERIFICATION_2026-10-12.md. Parent remains BLOCKED on human legal gold, original-source current eligibility/economics, approved DP staging E2E and owner 0/20 signoffs.'
@@ -255,7 +264,7 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: 'TECHNICAL REFACTOR VERIFIED on TA a2982cf9 and DP daa0719: 3936 TA tests, DP full pytest/Ruff and 21+20 private SHA receipts rechecked on 2026-10-12. Read docs/acceptance/TDP_REFACTOR_INDEPENDENT_TECHNICAL_VERIFICATION_2026-10-12.md and existing official EIS acceptance reports. DO NOT rerun already proven R2-R5 or merge stale DP refactor branch. Next fully audit current original 5-case legal eligibility, third-party software rights and external-cost economics, obtain independently labeled human gold and run only authorized nonproduction DP->TA E2E. Then request owner FINAL acceptance (0/20 signed). Until then parent remains blocked, commercial GO=DEFER; no bids, production writes, external paid OpenAI API or watchdog activation.'
+resume_instruction: 'Engineering refactor COMPLETE. Do not repeat earlier R2/R3/R4/R5 tests, prior DP #121/#122 or TA #388. The only follow-up is TDP-REAL-RUN-OWNER-ACCEPTANCE-20261012 (separate task): at an explicitly launched real Tender Agent run, verify current official EIS, legal rights/eligibility/economics, source-bound evidence and owner GO/NO_GO/DEFER. Until owner approval keep business GO DEFER and official archive exports blocked; never submit bids, enable watchdog, deploy production or send private data to paid OpenAI API automatically.'
 execution:
   branch: main
   manual_override: true
