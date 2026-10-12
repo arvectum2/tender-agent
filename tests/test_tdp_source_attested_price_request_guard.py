@@ -115,6 +115,7 @@ def test_price_only_html_banner_and_idempotence():
 
 def test_price_only_run_summary_fail_closed():
     from pydantic import BaseModel
+
     from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
         projected_historical_eis_run,
     )
@@ -141,6 +142,7 @@ def test_price_only_run_summary_fail_closed():
 def test_price_only_binary_export_refused():
     import pytest
     from fastapi import HTTPException
+
     from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
         reject_unsafe_historical_eis_binary_export,
     )
