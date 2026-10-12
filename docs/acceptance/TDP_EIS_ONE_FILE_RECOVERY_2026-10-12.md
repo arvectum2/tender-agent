@@ -29,3 +29,7 @@ proof the external filestore is back online. See
 TDP_SOAP_BINARY_DOWNLOAD_BOUNDARY_2026-10-12.md for prior verified
 168/168 historical cached SHA, 96/96 fresh SOAP XML hashes and remaining
 72 official binary retransfer gaps.
+
+## 2026-10-12 later verification
+
+The external HTTP429 rate limit cleared for the bounded series. Verified-TLS EIS download rechecks matched SHA256 and size for 72/72 binary original attachments across 13 procurements. See TDP_EIS_BINARY_72_RECOVERY_2026-10-12.md and the private receipts. Earlier HTTP429 references in this document are historical.
