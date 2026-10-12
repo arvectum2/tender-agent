@@ -14,15 +14,16 @@ completed:
   - '2026-10-12 inspected main HEAD 6e737d69, GitHub CI 9/9 PASS; TA refactor completed, DP core refactor complete but owner production/gold acceptance blocked.'
   - 'Mac mini online; isolated APR-03B preview HTTP200 /health and HTTP401 unauthorized workspace. Separate production services not modified.'
   - '2026-10-12 APR-03B actual authenticated staging preview: EIS 0372200172326000015 import HTTP200, 6 originals, notice XML 3 structured fields KNOWN; 48 focused current-main tests PASS. No final LLM/report or human acceptance; see docs/operations/TA_APR03B_OWNER_PROBE_2026-10-12.md.'
-current: 'APR-03B technical partial: real EIS import/XML verified, final live-model analysis and owner visual/semantic acceptance remain blocked. APR-04 onboarding code audit is next independent safe action.'
+  - '2026-10-12 APR-04 PR #252 reconciled onto current TA main; explicit fail-closed onboarding auth guard added. 57 targeted PASS, Ruff/make check PASS, full PG16-matched 3954 PASS/238 SKIP/0 fail. Production untouched. See docs/operations/APR04_SECURITY_RECONCILIATION_2026-10-12.md.'
+current: 'APR-03B real-workspace final report/owner acceptance is still gated; APR-04 implementation reconciled and full local regressions passed, awaiting exact-head GitHub CI and owner acceptance before merge. Next independently safe work: B2B read-only source research.'
 pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
-  - 'APR-04: verify PR #252 against current main and check focused integration without promoting premature deployment.'
+  - 'APR-04: exact-head GitHub CI for refreshed PR #252, owner-approved merge and live profile acceptance; no public production deployment.'
   - 'After APR-03B technical closure, proceed to APR-04 onboarding, then B2B public discovery, APR-06/07, APR-05.'
 last_verified_commit: 6e737d69dda1ed32394f803f261157c128df5bcf
 test_results:
   - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
-resume_instruction: 'APR-03B preview EIS import and 48 regressions are verified; owner semantics/visual acceptance and final model report remain open, do not assert DONE. Proceed only with safe read-only audit of APR-04 PR #252 while awaiting owner; never modify production, submit bids, trigger watchdog or automatically send data to paid model API.'
+resume_instruction: 'APR-03B source probe complete but owner browser/final semantic acceptance OPEN; APR-04 code reconciled with new fail-closed onboarding security and 3954 full tests PASS. Check CI of updated PR #252 before any merge, do not treat code as production/owner acceptance. Continue public read-only B2B source/qualification research; never submit, deploy, trigger watchdog or paid model API.'
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
