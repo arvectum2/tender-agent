@@ -168,7 +168,8 @@ completed:
   - '2026-10-12 EIS transport child TDP-SOAP-ATTACHMENTS-20261012 completed: real current downloader received http_status:429 for one official UID, cached original SHA256 intact; EIS SOAP official XML ZIP is a distinct functioning service. Four 404/429 no-retry/no-fake-file regressions, 22 targeted PASS, local full 3813 PASS/238 skipped/one known restore deselected, make check PASS; PR #363 nine exact-head CI jobs SUCCESS and merged 3fee431eed66e3f95639d46b2b6fd87646cc8f2c. Never confuse 72 UID anchors with fresh binary transfer.'
   - '2026-10-12 new child TDP-FILESTORE-RECHECK-20261012: added fail-closed one-file official filestore HTTPS UID/SHA256 size recheck CLI with exactly one GET and no retry after 429, 15 targeted tests PASS, full 3828 PASS/238 skip/known R9 excluded; only commit and CI remain. Production filestore rate-limit remains active and original 72 binary source retransfer not yet proven.'
   - "2026-10-12 17-case source-locked official EIS XML Gemma4 12B benchmark: 17 verified ZIP SHA256/revisions, 17 local calls in 105.5 sec, 67/68 fields exact, 16/17 full cases. 13 independent tests, Ruff PASS; 20-case owner review packet generated. Not human legal/commercial gold."
-current: "17-case official XML R4 benchmark and R5 20-case owner review brief verified locally, PR exact-head CI pending. Live R2 DP original proof, filestore, human R4 gold and R5 0/20 owner signoffs open. No production writes."
+  - "2026-10-12 R2 external filestore recovered: 72/72 distinct public EIS UID binaries from 13 procurements independently re-fetched with verified TLS, each single request matched stored original SHA256 and size (28,519,849 bytes); private recheck manifests offline 72/72 unique matched, 0 failures. New 24 focused tests and Ruff PASS; no live DP writes, no human GO."
+current: "R0/R1/R3 refactor merged, R4 original 17-case machine XML benchmark merged PR #366 082fd8e; R2 official filestore binary recovery 72/72 SHA and size now verified (PR pending). R2 live DP target five files missing and human R4 gold / R5 0/20 still open."
 pending:
   - 'R5 preparation TDP-R5-REVIEW-QUEUE-20261011: 20-case, 168-file SHA source-identified APR06 machine review queue merged #332; no independent original verification or human signoff.'
   - 'R2 remaining: recover validated live DP target source resource/document/chunk IDs without production writes; existing canonical upload/connector/recovery collections and 2034 scanned records had no matches for five source originals.'
@@ -228,8 +229,8 @@ test_results:
   - '2026-10-10 R0 focused architecture/clone tests 5 PASS, strict cross-repo audit PASS (0 forbidden import edges), AST clone groups 0 above 12-line threshold after DP #97, Ruff and make check PASS.'
   - '2026-10-10 EIS full source/transport suite 3487 PASS, 238 SKIP; make check and targeted Ruff PASS; subsequent canonical-endpoint false-positive CLI guard added with 28 focused tests PASS, 1 expected SKIP; final exact-head CI pending.'
 
-resume_instruction: "Finish R4 original-source benchmark PR exact-head CI/merge; 17 Gemma calls already done. Then live DP R2 only via separately approved isolated input, one bounded filestore recheck after 429; R4 legal gold and R5 20 owner approvals genuinely human. No bids, production writes or watchdog."
+resume_instruction: "Do not repeat PR #366 or 72/72 official filestore downloads. Finish filestore offline receipt verifier CI/PR, then R2 DP live provenance only in separately authorized non-production environment; R4 human legal gold and R5 20 owner approvals must not be fabricated. Watchdog stays disabled, no bids or production writes."
 execution:
-  branch: refactor/tdp-r4-official-eis-benchmark-20261012
+  branch: docs/tdp-r2-filestore-72-20261012
   manual_override: true
   lease_until: null

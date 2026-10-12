@@ -1,0 +1,22 @@
+version: 1
+task_id: TDP-R2-FILESTORE-72-20261012
+status: in_progress
+goal: Confirm complete official EIS binary transport re-retrieval against 72 original private receipts without production writes.
+definition_of_done:
+  - Check 72 unique official UIDs anchored in 17 official XML ZIP source set.
+  - Use bounded verified TLS read-only GETs; independently compare bytes SHA256 and size.
+  - Reconcile all 72 private receipts with strict offline verifier and fail-closed tests.
+  - Integrate verifier, CI and checkpoint merged code SHA.
+completed:
+  - Source UIDs 72/72 match official notice XML, 72/72 HTTPS retrieved with verified SHA256 and byte sizes.
+  - 13 procurement binary source sets verified, combined 28519849 bytes, no failures.
+  - Private manifest SHA256 96a64d6d89f48478267bb2d976b241971f140ee2939e3478b82e3aef239acb82.
+  - Offline private manifest verifier 72/72 identities/bytes PASS, 24 focused tests and Ruff PASS.
+current: Open PR for receipt-verifier and checkpoint; wait exact-head CI.
+pending:
+  - Commit, PR, exact-head CI and merge.
+last_verified_commit: 082fd8ef0eba39a4a1bbb814cead25dd35f667dd
+test_results:
+  - 72 of 72 real bounded TLS GET receipts verified SHA256 and size against cached originals.
+  - 24 focused tests PASS, Ruff PASS.
+resume_instruction: Finish exact-head CI/merge, update parent; do not confuse fresh binary transport success with live Data Platform persistence or owner GO acceptance.
