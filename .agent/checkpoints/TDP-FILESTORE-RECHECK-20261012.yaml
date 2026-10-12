@@ -1,0 +1,19 @@
+task_id: TDP-FILESTORE-RECHECK-20261012
+status: in_progress
+goal: 'Provide a safe read-only one-attachment EIS filestore recheck against the authenticated historic source receipt after 429 clears.'
+definition_of_done:
+  - 'CLI accepts private historic receipt and one index, validates official HTTPS URL/UID, bounds download and verifies sha256 and byte length.'
+  - 'Only one network GET per command invocation, fail-closed 429/404/TLS/redirect and no original writes or rate-limit circumvention.'
+  - 'Offline tests for success, mismatch, rate limiting and malicious input pass.'
+  - 'Quality, full tests and nine exact-head CI checks pass; code merged and checkpoints updated.'
+completed:
+  - 'One-file read-only HTTPS EIS filestore CLI built with official UID+URL, SHA256 and byte length bounds.'
+  - 'No-retry 429/404, tampered bytes and unsafe URL/size regression tests 15 PASS; Ruff PASS.'
+  - 'Recovery usage and current HTTP429 limitation documented.'
+current: 'One-file read-only CLI and 15 targeted tests PASS, full 3828 tests PASS, make check PASS; GitHub CI pending.'
+remaining:
+  - 'Verify nine exact-head GitHub CI checks before merge.'
+  - 'Mark child completed and preserve TDP parent open.'
+last_verified_commit: '803ce0897b93bd4bdaa3c8eb9987708a419a1dcf'
+latest_checks: '15 targeted PASS; full 3828 PASS/238 skipped/one known R9 restore deselected; Ruff/make check PASS; GitHub CI pending'
+resume_instruction: 'Continue feat/tdp-filestore-single-recheck-20261012 in isolated worktree, only one official filestore HTTPS GET, no retries on 429, no bypass. Use previously stored SHA256 receipt. Do not mutate production or owner worktree. Need tests, exact CI and merge.'
