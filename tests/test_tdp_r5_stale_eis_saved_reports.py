@@ -53,6 +53,20 @@ def test_archived_eis_is_not_a_live_notice_attestation():
     assert not needs_live_eis_revision_review({"procurement_source": "manual_upload"})
 
 
+def test_live_attestation_never_crosses_procurement_identity() -> None:
+    data = _archived()
+    data["notice_revision_selected"] = {
+        "version": 5,
+        "purchase_number": "0895100000126000897",
+        "current_live_eis_verified": True,
+    }
+    assert needs_live_eis_revision_review(data)
+    data["notice_revision_selected"]["purchase_number"] = data["procurement_id"]
+    assert not needs_live_eis_revision_review(data)
+    data["notice_revision_selected"]["purchase_number"] = 123
+    assert needs_live_eis_revision_review(data)
+
+
 def test_report_projection_masks_historical_go_without_rewriting_source():
     report = _report()
     original = copy.deepcopy(report)
