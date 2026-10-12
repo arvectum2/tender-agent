@@ -18,6 +18,7 @@ The following are **screening candidates**, not commercially or legally approved
 
 | Link / opportunity | Public deadline | Public budget | Organizer | Product fit / next gate |
 |---|---|---|---|---|
+| [B2B-Center 4628040: prequalification of IT-project expert services](https://www.b2b-center.ru/market/okazanie-uslug-po-predostavleniiu-vydelennykh-ekspertov-dlia-realizatsii/tender-4628040/) | 20 Oct 12:00 MSK | Not stated | ООО «КЕХ еКоммерц» | CONDITIONAL, qualifications and supply model unknown; expert resourcing differs from product delivery |
 | [B2B-Center 4632682: brand-site creation and redesign prequalification](https://zakupki.kontur.ru/4632682_40) | 14 Oct 16:00 MSK | Not stated (0 placeholder, not a price) | АО «Логика молока» | HIGH INTEREST as qualification/shortlist only; verify exact platform docs, accreditation and future competitions |
 | [19005: prosthetics manufacturer website redesign + support](https://workspace.ru/tenders/redizayn-i-tehnicheskoe-obnovlenie-sayta-s-posleduyuschey-tehpodderzhkoy-19005/) | 13 Oct | ₽200k–800k | Legal entity | HIGH INTEREST, URGENT; full scope, timeline, service SLA and site rights unknown |
 | [19004: community organization portal](https://workspace.ru/tenders/internet-portal-dlya-obschstvnnoy-organizacii-19004/) | 14 Oct | ₽130k–400k | Legal entity | HIGH INTEREST; map/Gosuslugi links, accessibility and exact requirements must be reviewed |
@@ -35,11 +36,11 @@ The following are **screening candidates**, not commercially or legally approved
 - [19007 legal-assistance platform](https://workspace.ru/tenders/platforma-yuridicheskoy-pomoschi-19007/) — >=₽1.5m, 20 Oct; private individual and Kazakhstan-market focus; extensive scope and gated spec.
 - [19015 zoo center](https://workspace.ru/tenders/sayt-logotip-obraz-prodvizhenie-i-reklama-dlya-zoocentra-19015/) — ₽50k–200k, 23 Oct; private individual, primarily marketing/brand work rather than Arvectum core IT.
 
-**Evidence and exclusions:** Kwork, FL.ru, private freelance work, old/closed tenders, 44/223-FZ duplicates and unverified financial/legal facts are excluded from acceptance. **Verified legal-entity shortlist: 7**, including one B2B-Center commercial procedure, plus 1 Workspace organizer-unknown; 15–20 target remains OPEN. No assumptions about subscription tariffs or document rights. Need check official ETP terms, unique IT URLs and live deadlines before code connectors or spending. Source-sensitive citations are direct URLs in every row.
+**Evidence and exclusions:** Kwork, FL.ru, private freelance work, old/closed tenders, 44/223-FZ duplicates and unverified financial/legal facts are excluded from acceptance. **Verified legal-entity shortlist: 8**, including two B2B-Center commercial prequalifications, plus 1 Workspace organizer-unknown; 15–20 target remains OPEN. No assumptions about subscription tariffs or document rights. Need check official ETP terms, unique IT URLs and live deadlines before code connectors or spending. Source-sensitive citations are direct URLs in every row.
 
 ## Follow-up (read-only)
 
-1. Validate current receipt/status and buyer legal entity for seven corporate cards, prioritize 13–14 Oct deadlines without generating unsolicited external messages.
+1. Validate current receipt/status and buyer legal entity for eight corporate cards, prioritize 13–14 Oct deadlines without generating unsolicited external messages.
 2. Obtain official public IT source evidence, fees and permission terms for B2B-Center, Fabrikant and RTS commercial; avoid scrape/connector where rules disallow it.
 3. Extend to at least 15–20 unique contemporaneous **legal-entity B2B** IT procurement links before promoting the roadmap research gate to DONE.
 4. Reuse Tender Agent existing intake and dedupe; no new connector until coverage/permission/fees and owner decision.
