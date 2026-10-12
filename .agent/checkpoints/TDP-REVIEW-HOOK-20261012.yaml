@@ -1,5 +1,5 @@
 task_id: TDP-REVIEW-HOOK-20261012
-status: in_progress
+status: completed
 goal: "Integrate the fail-closed independent evidence review gate into the authenticated read-only original-quote workflow, without falsely asserting that ChatGPT semantic/legal review or business GO has occurred."
 definition_of_done:
   - "Official EIS run quote attestation must fail closed on missing or conflicting registry identity."
@@ -8,17 +8,16 @@ definition_of_done:
   - "No existing manual upload workflow regressions, production writes, bids or watchdog changes."
   - "Full local pytest without exclusions and exact-head 9/9 CI green; PR merged; SHA and tests checkpointed."
 completed:
+  - '2026-10-12: PR #372 merged to main at 785eee0becfabe6d4ba75278ae7d5e3be9a61a0a; 9/9 CI PASS, full local 3855 PASS/238 SKIP. No production modifications.'
   - "2026-10-12 existing review library #371 merged and reusable."
   - "2026-10-12 PR #372 implementation in authenticated original quote API; 33 focused regression tests PASS, Ruff PASS."
   - "2026-10-12 branch second commit ac56f21c fixes official EIS case missing procurement_id fail-closed and adds regression."
   - "2026-10-12 previous head c1336c30 full no-exclusion local pytest 3855 passed, 238 skipped, no failures."
-current: "PR #372 branch ac56f21c exact-head 9/9 CI and full local no-exclusion rerun underway; do not merge until current head green."
-remaining:
-  - "Check exact-head GitHub CI on ac56f21c."
-  - "Check no-exclusion local pytest log /tmp/ta-review-hook-final-20261012.log."
-  - "Merge PR #372 after all jobs green, update canonical checkpoint."
-last_verified_commit: ac56f21c
+current: 'Authenticated read-only quote integration complete: PR #372 merged with exact-head 9/9 GitHub CI and no-exclusion full local acceptance.'
+remaining: []
+last_verified_commit: 785eee0becfabe6d4ba75278ae7d5e3be9a61a0a
 test_results:
-  - "33/33 focused tests PASS; Ruff PASS."
-  - "Full 3855 passed, 238 skipped on previous head; current-head rerun pending."
-resume_instruction: "Read PR #372 https://github.com/arvectum2/tender-agent/pull/372 branch feat/tdp-review-hook-20261012 exact head ac56f21c, confirm CI and no-exclusion local test log. If green merge with expected head and record commit SHA. This is only a read-only manual quote verification hook; never claim every local LLM claim gets semantic ChatGPT expert review. Production, bids and watchdog untouched."
+  - '33 affected tests passed and Ruff PASS.'
+  - 'Final exact-head ac56f21cc617be50fdb81eb6a402d78b3437d1e1 full local 3855 passed, 238 skipped, no exclusions, 0 failed in 149.31s with PostgreSQL16 client.'
+  - 'GitHub CI run 38237857010 nine of nine jobs PASS.'
+resume_instruction: 'Child completed, do not repeat PR #372. Merged SHA 785eee0becfabe6d4ba75278ae7d5e3be9a61a0a, exact-head 9/9 CI and full local 3855 passed/238 skipped. Existing manual quote verification now fails closed on missing or wrong official EIS procurement ID and marks matched source quotes semantic PENDING/legal UNKNOWN/go_eligible false. Automatic semantic ChatGPT second pass remains separate work, not falsely claimed here.'
