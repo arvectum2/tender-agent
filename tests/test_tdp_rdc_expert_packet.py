@@ -69,6 +69,16 @@ def test_repeated_quote_ambiguous_not_verified(tmp_path: Path):
     assert evidence["occurrences"] == 2
 
 
+def test_whitespace_variant_needs_expert_and_cannot_count_as_literal(tmp_path: Path):
+    variant = TEXT.replace("Обеспечение исполнения обязательств", "Обеспечение\nисполнения\u00a0обязательств")
+    runs, _, transcript, manifest = _inputs(tmp_path, variant)
+    evidence = build_review_packet(transcript, manifest, runs)["cases"][0]["claims"][0]["evidence"]
+    assert evidence["status"] == "QUOTE_FORMAT_VARIANT"
+    assert evidence["semantic_review"] == "REQUIRES_CHATGPT_IN_CHAT"
+    assert evidence["go_eligible"] is False
+    assert "normalized_char_offset" not in evidence
+
+
 def test_modified_original_is_rejected_before_reading_source_context(tmp_path: Path):
     runs, original, transcript, manifest = _inputs(tmp_path)
     original.write_text("ПОДМЕНЕНО " + TEXT)
