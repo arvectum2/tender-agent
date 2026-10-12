@@ -1,0 +1,20 @@
+task_id: TDP-EIS-ATTACHMENT-RECOVERY-20261012
+status: in_progress
+goal: "Read-only recover original referenced attachments from official EIS XML for four previously XML-only historical runs; verify source identity, TLS endpoint, declared bytes and SHA; no legal or live-status claims."
+definition_of_done:
+  - "Enumerate official publishedContentId, filenames, URLs and declared byte sizes across latest archived XML revisions."
+  - "Try bounded read-only public filestore fetch only from zakupki.gov.ru; reject HTML redirects, large or mismatched bodies and false source attachments."
+  - "Extract DOCX/PDF/DOC text privately when originals are available and produce source-bound evidence for local Gemma and ChatGPT via RDC."
+  - "Fail closed and record exact missing links if public filestore unavailable; no fake source evidence."
+  - "Record evidence outcomes and checkpoint without external LLM API, bids, production or watchdog."
+completed:
+  - "2026-10-12: Read official XML attachmentsInfo for four XML-only cases 0127100008626000013, 0349500000226000003, 0360600005326000018, 0895100000126000897; original URIs point to official zakupki.gov.ru public filestore."
+current: "Run one bounded read-only probe for a small official attachment before choosing batch retrieval."
+remaining:
+  - "First official read-only pilot with TLS, size and identity verification."
+  - "If successful, batch selected latest-edition official attachments with bounded retrieval, SHA receipts and text extraction."
+  - "Independent Gemma/ChatGPT review only of verified new sources; otherwise record blocked evidence."
+  - "Complete child and update parent checkpoint."
+last_verified_commit: 14f8ccb5359a15959f736fa3e6714971890577e5
+test_results: []
+resume_instruction: "Only ChatGPT in this conversation through Mac mini RDC independently checks originals. Four XML-only cases contain official attachment links inside cached official-revision-batch-20261011 ZIPs, use only read-only same-domain HTTPS zakupki.gov.ru bounded official filestore. For 0360600005326000018 select latest archived v2, not v1. No OPENAI API, production changes, bids or watchdog. Do not invent source if HTTP inaccessible."
