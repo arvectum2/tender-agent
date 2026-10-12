@@ -7,12 +7,13 @@ definition_of_done:
   - "Reject fabricated source matches and mismatched procurement IDs; no automatic bid GO."
   - "Add isolated tests, Ruff and CI; merge only after green exact-head checks."
 completed:
+  - '2026-10-12: R3 frozen analyzer AST regression found in first full suite (one failing test) and resolved by keeping analyzer untouched on new commit 5119a8c4; final local pytest 3862 passed, 238 skipped, 0 failed.'
   - "Inspected operator_analyze_run controlled LLM path and separate authenticated original quote API."
-current: 'PR #373 1e1b2b1dda19000aa0361f25435c80483e48e5d5 adds independent semantic reviewer verdict validation and honest absent-reviewer metadata. 29 focused tests PASS, Ruff PASS. No automatic ChatGPT API call or actual second model invocation yet. Full local no-exclusion pytest and exact-head CI in progress.'
+current: 'PR #373 second commit 5119a8c423313d210ec0dcd8c41c2234aaf95374: strict standalone semantic expert response contract, provider is injected/not configured; immutable R3 analyzer AST restored after full-suite regression. 7 focused semantic tests, 9 R3/semantic combined tests PASS, Ruff PASS; final exact-head full local 3862 passed/238 skipped no exclusions. GitHub exact-head CI run 38240515707 8/9 PASS, quality still running. No automatic OpenAI service call or production changes.'
 remaining:
   - "Implement review validator, tests and metadata integration."
   - "Run focused and full acceptance and GitHub CI."
   - "Merge and finalize child checkpoint."
-last_verified_commit: 1e1b2b1dda19000aa0361f25435c80483e48e5d5
+last_verified_commit: 5119a8c423313d210ec0dcd8c41c2234aaf95374
 test_results: []
-resume_instruction: 'Inspect PR #373 https://github.com/arvectum2/tender-agent/pull/373 head 1e1b2b1dda19000aa0361f25435c80483e48e5d5 exact-head CI run 38240160772 and full local /tmp/ta-semantic-review-full-20261012.log with PG16 tooling. Merge only if full suite and 9/9 CI green. No auto ChatGPT calls, user tender data transfer, business GO, production deploy, bid submission or watchdog activation. Follow-up separate opt-in OpenAI integration can be designed after review.'
+resume_instruction: 'Verify PR #373 exact-head GitHub run 38240515707 quality on commit 5119a8c423313d210ec0dcd8c41c2234aaf95374. Local full no-exclusion 3862 passed, 238 skipped, 296 warnings in 146.82s; first head directly modified immutable R3 analyzer and failed, fixed in second head by reverting analyzer. If CI 9/9 pass merge PR #373; mark child completed as protocol-only handoff, not automated ChatGPT semantic reviewer. Next work is independently provisioned opt-in reviewer service with safe source-quote evidence and documented data transfer, or official live EIS acceptance. Do not send tender docs to external service without approved configuration, no production/bids/watchdog.'
