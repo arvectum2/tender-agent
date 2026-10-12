@@ -234,6 +234,13 @@ def test_run_level_facade_uses_stored_original_and_fails_closed(monkeypatch, tmp
         exact_quote=QUOTE,
     )
     assert conflicting == {"status": "unverified", "evidence": None}
+    metadata.pop("procurement_id")
+    missing_identity = verify_operator_run_quote(
+        run_id="toa-run-20261009101331-bfdddd",
+        file_id="FILE-01",
+        exact_quote=QUOTE,
+    )
+    assert missing_identity == {"status": "unverified", "evidence": None}
     assert verify_operator_run_quote(
         run_id="toa-run-20261009101331-bfdddd",
         file_id="FILE-01",

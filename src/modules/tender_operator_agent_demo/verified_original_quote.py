@@ -164,7 +164,7 @@ def verify_operator_run_quote(
         raise HTTPException(status_code=404, detail="Original file not found in run")
     revision = metadata.get("notice_revision_selected")
     review_id = (
-        metadata.get("procurement_id")
+        metadata.get("procurement_id") or ""
         if metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip"
         else None
     )
