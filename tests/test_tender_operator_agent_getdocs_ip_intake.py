@@ -363,6 +363,12 @@ def test_getdocs_archive_can_auto_analyze_after_download(client, monkeypatch, tm
                 archive.writestr("notice.txt", "Извещение о закупке электротехнического оборудования.")
                 archive.writestr("technical_spec.txt", "Техническая спецификация: срок поставки 45 дней, гарантия 12 месяцев.")
                 archive.writestr("contract_draft.txt", "Проект договора: штрафы за просрочку, постоплата 45 дней.")
+                archive.writestr(
+                    "epNotificationEF2020_0888200000224000038_1_01A0B2C3.xml",
+                    "<export><epNotificationEF2020><commonInfo>"
+                    "<purchaseNumber>0888200000224000038</purchaseNumber>"
+                    "</commonInfo></epNotificationEF2020></export>",
+                )
             return DownloadedAttachment(
                 file_name="bundle.zip",
                 stored_name="documentation-archive.zip",
