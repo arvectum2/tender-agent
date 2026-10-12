@@ -9,11 +9,11 @@ definition_of_done:
 completed:
   - '2026-10-12: R3 frozen analyzer AST regression found in first full suite (one failing test) and resolved by keeping analyzer untouched on new commit 5119a8c4; final local pytest 3862 passed, 238 skipped, 0 failed.'
   - "Inspected operator_analyze_run controlled LLM path and separate authenticated original quote API."
-current: 'PR #373 second commit 5119a8c423313d210ec0dcd8c41c2234aaf95374: strict standalone semantic expert response contract, provider is injected/not configured; immutable R3 analyzer AST restored after full-suite regression. 7 focused semantic tests, 9 R3/semantic combined tests PASS, Ruff PASS; final exact-head full local 3862 passed/238 skipped no exclusions. GitHub exact-head CI run 38240515707 8/9 PASS, quality still running. No automatic OpenAI service call or production changes.'
+current: 'PR #373 corrected to preserve immutable R3 analyzer AST: latest 5119a8c423313d210ec0dcd8c41c2234aaf95374 only adds standalone semantic expert interface, no automatic model invocation. Full local no-exclusion 3862 passed, 238 skipped, 0 failed in 146.82s; 7 focused expert tests PASS; latest exact-head CI run 38240515707 8/9 jobs PASS, quality still running. Must not merge until quality passes.'
 remaining:
   - "Implement review validator, tests and metadata integration."
   - "Run focused and full acceptance and GitHub CI."
   - "Merge and finalize child checkpoint."
 last_verified_commit: 5119a8c423313d210ec0dcd8c41c2234aaf95374
 test_results: []
-resume_instruction: 'Verify PR #373 exact-head GitHub run 38240515707 quality on commit 5119a8c423313d210ec0dcd8c41c2234aaf95374. Local full no-exclusion 3862 passed, 238 skipped, 296 warnings in 146.82s; first head directly modified immutable R3 analyzer and failed, fixed in second head by reverting analyzer. If CI 9/9 pass merge PR #373; mark child completed as protocol-only handoff, not automated ChatGPT semantic reviewer. Next work is independently provisioned opt-in reviewer service with safe source-quote evidence and documented data transfer, or official live EIS acceptance. Do not send tender docs to external service without approved configuration, no production/bids/watchdog.'
+resume_instruction: 'Check PR #373 exact head 5119a8c423313d210ec0dcd8c41c2234aaf95374 CI run 38240515707; quality remains. Local full no-exclusion tests 3862 PASS/238 SKIP, original analyzer AST restored after initial 1e1b2b1d caused R3 test failure. Merge only 9/9 green and update checkpoint. Do not imply automatic ChatGPT reviewer invocation; semantic expert validator is standalone, needs later provider wiring with authorization. No production, bids, watchdog.'
