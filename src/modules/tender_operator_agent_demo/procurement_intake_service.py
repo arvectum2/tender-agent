@@ -24,6 +24,9 @@ from src.modules.tender_operator_agent_demo.document_set_completeness import (
 from src.modules.tender_operator_agent_demo.eis_notice_parser import (
     extract_notice_attachments,
 )
+from src.modules.tender_operator_agent_demo.eis_price_request_guard import (
+    official_eis_price_request_source_error,
+)
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_demo_procurement,
     get_procurement_details,
@@ -1810,6 +1813,22 @@ def create_run_from_search_result(
 ) -> tender_schemas.SearchResultHandoffResponse:
     if not request.reestr_number or not request.reestr_number.strip():
         raise HTTPException(status_code=400, detail="reestr_number обязателен для запуска getDocsIP.")
+    source_error = official_eis_price_request_source_error(
+        request.source_url, request.reestr_number
+    )
+    if source_error:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": source_error,
+                "record_type": "price_information_request",
+                "message": (
+                    "Официальный реестр запросов ценовой информации ЕИС не является "
+                    "конкурентной закупкой для подачи заявки. Используйте отдельный "
+                    "сценарий исследования рынка."
+                ),
+            },
+        )
     normalized_law = _normalize_search_result_law(request)
     settings = get_zakupki_soap_settings()
     use_getdocs = normalized_law == "44fz" and settings.configured
