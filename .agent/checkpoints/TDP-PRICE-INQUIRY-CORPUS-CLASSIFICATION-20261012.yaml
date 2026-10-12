@@ -1,5 +1,5 @@
 task_id: TDP-PRICE-INQUIRY-CORPUS-CLASSIFICATION-20261012
-status: in_progress
+status: 'completed'
 goal: "Classify three EIS 44-FZ price-information requests separately from actual competitive procurement notices in the 20-case acceptance corpus, without falsely labeling source types from aggregate sites alone."
 definition_of_done:
   - "Obtain first-party official EIS source for the three price-request numbers, or another authoritative record of their legal notice type. [VERIFIED 9/9 first-party HTTP 200, 2026-10-12]"
@@ -9,15 +9,14 @@ definition_of_done:
 completed:
   - "2026-10-12 three official configured individual-token SOAP getDocsIP returned no_data and zero archive URLs, again."
   - "2026-10-12 publicly indexed Kontur and Synapse cards independently categorize 0148300050426000047, 0318200087026000163 and 0348100024426000052 as price-information requests, not reported electronic auctions."
-  - "2026-10-12 source-aware corpus matrix distinguishes 10 initial original cases, 3 stored-DOCX recovery, 4 official filestore recovery, 3 first-party CONFIRMED EIS price information requests and 50 local Gemma claims reviewed."\n  - "2026-10-12 official HTTPS search/card/docs pages 9/9 SHA verified; PR #383 conservative guard merged at 04863f797, 20 focused PASS, full local 3907 PASS/238 SKIP, GitHub 9/9 CI PASS. No production or bids."
+  - "2026-10-12 source-aware corpus matrix distinguishes 10 initial original cases, 3 stored-DOCX recovery, 4 official filestore recovery, 3 first-party CONFIRMED EIS price information requests and 50 local Gemma claims reviewed."
+  - "2026-10-12 official HTTPS search/card/docs pages 9/9 SHA verified; PR #383 conservative guard merged at 04863f797, 20 focused PASS, full local 3907 PASS/238 SKIP, GitHub 9/9 CI PASS. No production or bids."
   - "2026-10-12 report docs/acceptance/TDP_RDC_CORPUS_INTEGRITY_20_2026-10-12.md committed with links to nonofficial category sources and explicit uncertainty."
-current: 'FIRST-PARTY TYPE CHECK AND PROD-CODE GUARD COMPLETED: 9/9 official EIS /epz/pricereq HTML SHA receipts for three numbers, PR #383 merged into main at 04863f797f132ed96589cd787e16314f21feac0a, full local 3907 PASS / 238 SKIP, GitHub exact-head CI 9/9 PASS, 20 dedicated tests and Ruff PASS. The confirmed three are PRICE_INFORMATION_REQUEST and MARKET_RESEARCH_PRICE_REQUEST_ONLY. Remaining conditional stage: select 3 additional real competitive EIS notice cases if maintaining 20 competitive positive gold cases; current 20 total are 17 positive + 3 negative.'
-remaining:
-  - "Identify official price requests category and original document, if available via authorized read-only official access."
-  - "Decide whether to retain three as documented negative regression cases and curate three separate competitive positive replacements."
-  - "Implement source-authorized type guard only when there is sufficient procedure identity evidence."
-last_verified_commit: 04863f797f132ed96589cd787e16314f21feac0a
+current: 'COMPLETE: three price information requests first-party EIS verified and excluded from competitive bidding by merged PR383; PR384 replaced them and special EZT with four official first-party EF auctions, yielding twenty positive competitive sources and four negative regressions. PR385 now also blocks the source-attested special EZT procedure from normal analysis. Current EIS live status and owner commercial GO still UNKNOWN.'
+remaining: []
+last_verified_commit: 'e55e39a3dab386c9d3d545df08f5971e8541663d'
 test_results:
   - "20/20 private aggregate source matrix verified, 17 with real technical/contract documents, three official no_data; 50 distinct previously independently reviewed local model assertions."
-  - "No new product code and no false first-party type verification."
-resume_instruction: 'Do not repeat EIS first-party 3-card verification or PR #383; code guard merged 04863f797, tests 3907 PASS/238 SKIP and CI 9/9 PASS. Three confirmed price information requests are negative market-research-only fixtures, NOT competitive tenders. Next find and verify 3 NEW real positive competitive EIS notices (official original notice ID and archive), distinct from existing 17, if R5 requires 20 positive gold cases. Preserve R5 full current legal UNKNOWN, owner final signoff only. No OpenAI API, production writes, bids, watchdog.'
+  - "Official 9/9 price-inquiry web card/source receipts and first-party price guard PR383 PASS; PR384 20 competitive positive + four noncompetitive negatives independently checked with official original XML and SHA receipts."
+  - "Latest special 93(12) guard PR385 full Mac mini 3936 pass/238 skipped and CI 9/9 green."
+resume_instruction: 'Child completed and merged. Do not repeat verified official EIS special-procedure/price-information classification or earlier PRs. Real-run owner acceptance is separately tracked under .agent/checkpoints/TDP-REAL-RUN-OWNER-ACCEPTANCE-20261012.yaml, awaiting actual live launch and owner decision. Do not submit bids or change production based on historical proofs.'
