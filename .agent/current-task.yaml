@@ -17,10 +17,12 @@ completed:
   - '2026-10-12 APR-04 old PR #252 reconciled onto latest main and pushed updated head 3f289a04, with fail-closed onboarding auth; 3954 full PASS/238 SKIP/0 fail and 57 focused PASS. Exact-head GitHub CI in progress, owner acceptance gated.'
   - '2026-10-12 first read-only Workspace B2B public-source pass: eight source-attested corporate IT/digital opportunities (including B2B-Center #4632682 and #4628040), one organizer unknown, five individual/non-core exclusions; 15-20 case acceptance and other ETP sources remain OPEN. See docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md.'
   - '2026-10-12 Safari real saved run toa-run-20261012200402-7249ed analyzed, 6/6 extracted, browser report loaded, XML 3 facts KNOWN. Old preview PDF/DOCX 200; latest-main read-only stage protected 401/200, archived EIS report DEFER, exports 409/409. Added frontend fail-closed export UX and visible no-LLM banner; Node simulation 12/11/4 PASS and focused Python 42 PASS. See docs/acceptance/APR03B_SAFARI_OWNER_REAL_RUN_2026-10-12.md.'
-current: 'APR-03B Safari flow verified and latest-main archive gate 409/409; frontend UX fixes tested, semantic/legal owner GO remains DEFER. APR-04 PR #252 CI/owner acceptance still pending; B2B research 8/20.'
+  - '2026-10-12 isolated PR #391 browser fix head 61b8de2d: Node 3-case browser simulator PASS (including 409/409 and legitimate PDF), 42 focused pytest PASS, make check PASS; exact-head GitHub CI pending, no production/owner preview updated. APR-04 PR #252 head 3f289a04 exact-head GitHub CI completed SUCCESS; owner live acceptance still gated.'
+current: 'APR-03B Safari real-flow technically inspected. Browser UX fix PR #391 submitted, awaiting exact-head CI and guarded merge. Live/legal source-gold, current EIS revision, local LLM quality, final owner GO DEFER. APR-04 #252 CI green, owner business acceptance pending; B2B 8/20.'
 pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
-  - 'APR-04: check exact-head GitHub CI of refreshed PR #252 and owner live acceptance before any merge or deployment.'
+  - 'APR-03B: CI/merge PR #391 when checks and repository gates permit; revalidate fresh private owner-preview only with safe image/rollback, not production. Legal/commercial human decision remains DEFER.'
+  - 'APR-04: PR #252 exact-head CI green; owner live acceptance and safe integration still needed; no public deployment.'
   - 'After APR-03B technical closure, proceed to APR-04 onboarding, then B2B public discovery, APR-06/07, APR-05.'
 last_verified_commit: 'APR04 integration 3f289a04584c339ced7026dfedf19c3712aa3ad9: local full regression verified, GitHub exact-head CI pending; canonical TA main baseline 6e737d69dda1ed32394f803f261157c128df5bcf'
 test_results:
@@ -28,7 +30,7 @@ test_results:
   - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
   - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
   - 'B2B first source pass: eight corporate-source opportunities plus one organizer-unknown, target 15-20 not accepted.'
-resume_instruction: 'APR-03B Safari browser flow on Museum of Bread 6/6 files accepted technically, but old persisted report is deterministic, unverified semantic claims and archived EIS owner/legal GO remain DEFER. Latest main private read-only stage 18086 authenticates, warns and blocks PDF/DOCX 409; frontend error-handling/model banner tested and prepared. Before any preview promotion check exact-head CI and rollback. APR-04 PR #252 3954 full PG16 PASS, await CI/owner merge. B2B 8/20. Do not submit bids, sign, change production/VPS, activate watchdog or paid external LLM.'
+resume_instruction: 'APR-03B Safari real-browser flow verified, old snapshot deterministic and current EIS revision unproven; 6/6 source files, three real EIS XML facts. Latest main isolated read-only staging 18086 verified archive warning and guarded PDF/DOCX 409/409; stop staging after probe. PR #391 head 61b8de2d browser UX fix with 42 focused and Node 3-case E2E PASS, exact-head CI pending. Do not mark semantic/legal/commercial GO or final APR03B DONE. APR-04 PR #252 head 3f289a04 GitHub CI SUCCESS and full 3954/238 local suite, owner acceptance pending. B2B 8/20. Resume CI/guarded PR progression and user-initiated current revision check only. Never submit bids/sign, deploy VPS/production, enable watchdog or paid LLM API.'
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
