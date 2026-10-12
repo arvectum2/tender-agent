@@ -13,10 +13,12 @@ completed:
   - Official EIS archive-mode TA create/analyze/report 200, 5/5 source mappings, 127/127 attributable chunks; PDF/DOCX 409 expected due current-version verification gate.
   - Manual nonofficial mode same 5/5 and 127/127, PDF 40844 bytes and DOCX 37833 bytes HTTP 200 and file structure verified.
   - Added loopback-only reproducible acceptance runner and report; prior separate ephemeral PostgreSQL durable 5/5, 127/127 proof retained.
+  - Fresh isolated PG16 Data Platform with current migrations; five original persisted resource/document identities matched exactly to both real Tender Agent operator runs, normalized chunk hash/offset parity 127/127.
 current: Completed technical acceptance; next gates are external/business acceptance tracked by the parent TDP task.
 remaining: []
 last_verified_commit: a2982cf9c2248b6b2bc9e8f3c8b66e37e0965648
 test_results:
+  - Unified disposable Data Platform PostgreSQL HTTP + operator checks: 5/5 resource IDs, 5/5 document IDs, 127/127 persisted normalized chunks, 127/127 TA attributable chunks, official export correctly 409/409, manual nonofficial PDF/DOCX 200/200.
   - Tender Agent 3936 passed, 238 skipped, make check PASS on baseline.
   - Data Platform full pytest PASS and CI Ruff PASS on baseline.
   - Fresh operator original-source E2E: official 200/200/200, export 409/409 expected, 5/5 files and 127/127 source chunks.

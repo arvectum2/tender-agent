@@ -23,7 +23,7 @@ def run(*, receipt_path: Path, source_dir: Path, procurement_id: str, output_pat
     # authenticated test API; never send private source files to remote services.
     base_url = os.environ.get("AI_CORP_RAG_DATA_PLATFORM_BASE_URL", "")
     key = os.environ.get("AI_CORP_RAG_DATA_PLATFORM_API_KEY", "")
-    if urlsplit(base_url).hostname not in {"127.0.0.1", "localhost", "::1"} or not key:
+    if urlsplit(base_url).hostname not in {"127.0.0.1", "localhost", "::1"} or urlsplit(base_url).port != 18096 or not key:
         raise ValueError("An authenticated loopback Data Platform test endpoint is required")
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     items = receipt["files"]
@@ -148,7 +148,12 @@ def run(*, receipt_path: Path, source_dir: Path, procurement_id: str, output_pat
             }
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    private_receipt = dict(summary)
+    private_receipt["source_identities"] = [
+        {"original_sha256": item["sha256"], "resource_id": provenance["resource_id"], "document_id": provenance["document_id"]}
+        for item, provenance in zip(items, mappings, strict=True)
+    ]
+    output_path.write_text(json.dumps(private_receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("REAL_EIS_OPERATOR_EXPORT_ACCEPTANCE_PASS", json.dumps(summary, ensure_ascii=False))
 
 
