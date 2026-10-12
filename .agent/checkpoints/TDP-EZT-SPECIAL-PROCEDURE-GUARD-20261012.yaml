@@ -1,0 +1,20 @@
+task_id: TDP-EZT-SPECIAL-PROCEDURE-GUARD-20261012
+status: in_progress
+goal: "Fail closed on official 44-FZ epNotificationEZT2020 special single-supplier art93(12) when a getDocsIP archive is submitted to ordinary competitive Tender Agent analysis, while preserving normal EF/EZK/EOK routing."
+definition_of_done:
+  - "Parse official bounded, SHA-pinned archived notice XML and bind 19-digit procurement number and exact EIS document type. Do not infer category from reestr_number or from SOAP no_data."
+  - "Record source-attested procedure method and original hash in stored run metadata after genuine official getDocsIP archive."
+  - "Block ordinary analyze_eis_archive_run for official special single-supplier art93(12), without automatically declaring bidder ineligible or forbidding separate proper workflow."
+  - "Unit and integration tests covering exact source, conflicting IDs, unreadable XML, positive EF/EZK/EOK, 93(12) blocked, missing source UNKNOWN."
+  - "Run focused and full tests, Ruff, GitHub exact-head CI, merge and checkpoint; no production/bids/watchdog/OpenAI API."
+completed:
+  - "2026-10-12: Discovered actual original 0349500000226000003 document type epNotificationEZT2020 in SHA-attested EIS ZIP, distinct from competitive EF/EZK/EOK."
+  - "2026-10-12: Audited getDocsIP intake code; original archive extraction path lacks procedure-kind attestation before optional ordinary analysis."
+current: "Implement a small isolated official-notice classifier and wire its attested output into getDocsIP analysis guard."
+remaining:
+  - "Write isolated XML type classifier with strict limits and source number binding."
+  - "Wire into archived EIS run metadata and analyze_eis_archive_run fail-closed."
+  - "Tests, CI, merge and checkpoint; R3 analyzer AST immutable."
+last_verified_commit: 56670f1f56978c8b9eb020fdc548e427ce31a09c
+test_results: []
+resume_instruction: "Use isolated worktree on Mac mini from origin/main; official archived test procurement 0349500000226000003 epNotificationEZT2020 from original EIS docs; do not include private original ZIP in repo. Build fixture synthetic XML in tests. Preserve ordinary competitive EA/EZK/EOK and UNKNOWN; only block source-attested special single supplier in normal analysis, never fake legal GO. Source provenance against registry number essential. No new external LLM APIs, production, bids or watchdog."
