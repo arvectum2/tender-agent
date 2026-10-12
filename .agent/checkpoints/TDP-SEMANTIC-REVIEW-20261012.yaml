@@ -1,5 +1,5 @@
 task_id: TDP-SEMANTIC-REVIEW-20261012
-status: in_progress
+status: completed
 goal: "Design a real fail-closed semantic expert review handoff for local LLM claims, without making unexecuted ChatGPT calls look completed."
 definition_of_done:
   - "Define a deterministic provenance and semantic reviewer-response contract, distinct from source quote validation."
@@ -7,13 +7,11 @@ definition_of_done:
   - "Reject fabricated source matches and mismatched procurement IDs; no automatic bid GO."
   - "Add isolated tests, Ruff and CI; merge only after green exact-head checks."
 completed:
+  - '2026-10-12: PR #373 merged at 1506e85847746595c9ce8af3030fa697f6c8f8c8, 9/9 GitHub CI passed, full no-exclusion local 3862 PASS/238 SKIP. No production changes.'
   - '2026-10-12: R3 frozen analyzer AST regression found in first full suite (one failing test) and resolved by keeping analyzer untouched on new commit 5119a8c4; final local pytest 3862 passed, 238 skipped, 0 failed.'
   - "Inspected operator_analyze_run controlled LLM path and separate authenticated original quote API."
-current: 'PR #373 corrected to preserve immutable R3 analyzer AST: latest 5119a8c423313d210ec0dcd8c41c2234aaf95374 only adds standalone semantic expert interface, no automatic model invocation. Full local no-exclusion 3862 passed, 238 skipped, 0 failed in 146.82s; 7 focused expert tests PASS; latest exact-head CI run 38240515707 8/9 jobs PASS, quality still running. Must not merge until quality passes.'
-remaining:
-  - "Implement review validator, tests and metadata integration."
-  - "Run focused and full acceptance and GitHub CI."
-  - "Merge and finalize child checkpoint."
-last_verified_commit: 5119a8c423313d210ec0dcd8c41c2234aaf95374
+current: 'Standalone independent semantic expert response contract merged in PR #373 at 1506e85847746595c9ce8af3030fa697f6c8f8c8; immutable R3 analyzer AST preserved. It does not invoke ChatGPT or persist per-claim automatic expert verdicts.'
+remaining: []
+last_verified_commit: 1506e85847746595c9ce8af3030fa697f6c8f8c8
 test_results: []
-resume_instruction: 'Check PR #373 exact head 5119a8c423313d210ec0dcd8c41c2234aaf95374 CI run 38240515707; quality remains. Local full no-exclusion tests 3862 PASS/238 SKIP, original analyzer AST restored after initial 1e1b2b1d caused R3 test failure. Merge only 9/9 green and update checkpoint. Do not imply automatic ChatGPT reviewer invocation; semantic expert validator is standalone, needs later provider wiring with authorization. No production, bids, watchdog.'
+resume_instruction: 'Child standalone contract is completed and merged PR #373 SHA 1506e85847746595c9ce8af3030fa697f6c8f8c8, 9/9 CI green, local 3862 PASS 238 SKIP. Separate opt-in authenticated expert-provider integration and actual invocation may follow, but cannot be claimed as complete. Do not modify R3 analyzer AST, production, bids or watchdog.'
