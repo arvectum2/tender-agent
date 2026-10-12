@@ -284,6 +284,27 @@ active_product_roadmap_2026_10_08:
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
 
+b2b_procurement_source_discovery_2026_10_12:
+  id: B2B-SOURCE-DISCOVERY-2026-10-12
+  priority: P1
+  state: research_read_only_not_implementation
+  goal: 'Discover corporate B2B IT procurements accessible to ООО Арвектум; preserve the existing EIS/44-FZ/223-FZ pipeline.'
+  sources:
+    - { name: Roseltorg, segment: commercial_procurements }
+    - { name: B2B-Center, segment: corporate_procurements }
+    - { name: Fabrikant, segment: commercial_and_223fz }
+    - { name: Workspace, segment: digital_tenders }
+    - { name: RTS-Tender, segment: commercial_and_corporate }
+  excluded_channels: [Kwork, FL.ru, freelance_platforms]
+  research_gate:
+    - legal_entity_participation_and_platform_tariffs
+    - permitted_public_data_access_and_terms
+    - deduplication_against_EIS_and_existing_sources
+    - document_availability_and_unique_opportunity_coverage
+    - 15_to_20_current_IT_opportunities_with_source_links_and_GO_NO_GO
+  implementation_boundary: 'Read-only research and reuse of existing intake only; no new authenticated connector or external bid action without separate Owner approval. Broad ETP connectors retain their paid-customer/coverage trigger.'
+  legacy_mapping: [ARV-030, ARV-031, ARV-032, ARV-034, ARV-035, ARV-036]
+
 trigger_backlog_2026_10_08:
   rule: 'Not active product commitments. Reopen only when trigger evidence is recorded.'
   items:
