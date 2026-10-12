@@ -29,6 +29,8 @@ def attest_original_quote(
     collection_id: str,
     processor: Callable[..., ProcessedDocument],
     max_original_bytes: int = MAX_VERIFIABLE_ORIGINAL_BYTES,
+    review_procurement_id: str | None = None,
+    review_notice_number: str | None = None,
 ) -> dict[str, Any] | None:
     """Verify a literal quote against a saved original; no writes or logging.
 
@@ -104,7 +106,32 @@ def attest_original_quote(
     )
     if result is None:
         return None
-    return {**result, "original_sha256": hashlib.sha256(content).hexdigest()}
+    attested = {**result, "original_sha256": hashlib.sha256(content).hexdigest()}
+    if review_procurement_id is not None:
+        from .independent_review_gate import assess_claims_for_independent_review
+
+        review = assess_claims_for_independent_review(
+            procurement_id=review_procurement_id,
+            notice_purchase_number=review_notice_number,
+            claims=[{"file_id": file_id, "exact_quote": exact_quote}],
+            sources_by_file={file_id: provenance},
+            chunks=saved_chunks,
+            chunk_text_by_id=chunk_texts,
+        )
+        if (
+            review["source_identity"] != "MATCH"
+            or review["literal_verified_count"] != 1
+        ):
+            return None
+        attested["independent_review"] = {
+            "source_identity": review["source_identity"],
+            "quote_status": review["claims"][0]["quote_status"],
+            "semantic_review": review["claims"][0]["semantic_review"],
+            "legal_review": review["claims"][0]["legal_review"],
+            "business_decision": "DEFER",
+            "go_eligible": False,
+        }
+    return attested
 
 
 def verify_operator_run_quote(
@@ -135,12 +162,22 @@ def verify_operator_run_quote(
     )
     if file_record is None:
         raise HTTPException(status_code=404, detail="Original file not found in run")
+    revision = metadata.get("notice_revision_selected")
+    review_id = (
+        metadata.get("procurement_id")
+        if metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip"
+        else None
+    )
     result = attest_original_quote(
         input_root=_input_dir(run_id),
         file_record=file_record,
         exact_quote=exact_quote,
         collection_id=tender_processing_collection_id("upload"),
         processor=process_document_bytes,
+        review_procurement_id=review_id,
+        review_notice_number=(
+            revision.get("purchase_number") if isinstance(revision, dict) else None
+        ),
     )
     if result is None:
         return {"status": "unverified", "evidence": None}
