@@ -8,12 +8,15 @@ definition_of_done:
   - "Run checks; update canonical checkpoint and mark child completed, or blocked with exact missing official source."
 completed:
   - "2026-10-12: read canonical checkpoint; PR #379 previously pending now merged a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e after 9/9 GitHub CI; PR #383 original first-party price-inquiry guard already merged (04863f797) and must not be repeated."
-current: "Collect and verify three replacement 44-FZ competitive original EIS notice archives using Mac mini configured official read-only SOAP getDocsIP."
+current: 'Original source-audit corrected source positive count from 17 to 16: epNotificationEZT2020 0349500000226000003 is single-supplier art93(12), not standard competitive. Five NEW 44-FZ official getDocsIP EF XML/ZIP originals source-number SHA verified, 4 positives chosen, 1 reserve. Private SHA oracle PASS cohort 20 competitive + 4 negative + 1 reserve. PR #384 head c99724b3, 5 focused tests and Ruff PASS, full local no-exclusion 3912 PASS/238 SKIP (149.95s). Exact-head GitHub CI run 38274076703 8/9 green and quality pending; do not merge until 9/9.'
 remaining:
   - "Verify official 44-FZ competitive notice originals for three IT candidate numbers."
   - "Create SHA and relevant metadata receipts plus acceptance report (20 positive / 3 negative), keeping reports historical and legal UNKNOWN."
   - "Update checkpoint and CI for any code changes; never claim source where unavailable."
-last_verified_commit: a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e
+last_verified_commit: c99724b3e0feb71cc2be0f05613432daeec3469a
 test_results:
-  - "PR #379 exact-head 9/9 CI PASS and merged."
-resume_instruction: "On Mac mini via RDC, use pre-existing ZakupkiSoapClient and official getDocsIP with configured individual-token direct route, read-only. Possible competitively sourced candidate IDs from secondary discovery: 0151600003226000011 (Novosibirsk city portals); 0162200011826003089 (Sverdlovsk gov site platform), 0152200004026000069 (Omsk IT support), 0348100024426000021 (Podmoskovye govt site platform), 0369100012826000157 (RED OS support). Confirm first-party XML procurement method and original ZIP, do not substitute aggregators. No OpenAI API, bidding, production or watchdog."
+  - 'All original 17 ZIP and new five candidate official ZIP/XML hashes and purchaseNumber identities independently source checked in read-only Mac mini evidence; first-party 9 official price request HTML pages SHA reverified.'
+  - 'Five dedicated cohort tests PASS and Ruff PASS.'
+  - 'Full Mac mini no-exclusion pytest 3912 passed, 238 skipped, 296 warnings, zero failures in 149.95s.'
+  - 'GitHub exact-head CI 38274076703 quality pending, other 8/9 succeeded at checkpoint write.'
+resume_instruction: 'Check PR #384 https://github.com/arvectum2/tender-agent/pull/384 head c99724b3e0feb71cc2be0f05613432daeec3469a CI run 38274076703: quality pending, 8/9 others PASS. Full no-exclusion local 3912 passed/238 skipped, 5 focused and Ruff PASS. New official 20 positives comprise 11 electronic auctions, 7 electronic quotations, 2 open competitions; 4 negatives comprise 3 official price inquiries plus 0349500000226000003 epNotificationEZT2020 art93 single-supplier, 1 reserve. Merge only 9/9 green; update child then canonical. No GO/legal attestations, ChatGPT expert only via RDC, no new API/production/bids/watchdog.'
