@@ -55,10 +55,25 @@ def _source_evidence(
         return {"status": "QUOTE_INVALID", "source_sha256": digest}
     offsets = [m.start() for m in re.finditer(re.escape(quote), text)]
     if len(offsets) != 1:
+        # Formatting-only matches need a separate expert check. Never promote
+        # them to LITERAL_MATCH: these are not exact original offsets.
+        whitespace_quote = " ".join(quote.split())
+        whitespace_count = (
+            " ".join(text.split()).count(whitespace_quote)
+            if whitespace_quote and not offsets
+            else 0
+        )
         return {
-            "status": "QUOTE_MISSING" if not offsets else "QUOTE_AMBIGUOUS",
-            "occurrences": len(offsets),
+            "status": (
+                "QUOTE_FORMAT_VARIANT"
+                if whitespace_count
+                else "QUOTE_MISSING" if not offsets else "QUOTE_AMBIGUOUS"
+            ),
+            "occurrences": len(offsets) if offsets else whitespace_count,
             "source_sha256": digest,
+            "semantic_review": "REQUIRES_CHATGPT_IN_CHAT",
+            "legal_review": "UNKNOWN",
+            "go_eligible": False,
         }
     offset = offsets[0]
     lo, hi = max(0, offset - 160), min(len(text), offset + len(quote) + 160)
