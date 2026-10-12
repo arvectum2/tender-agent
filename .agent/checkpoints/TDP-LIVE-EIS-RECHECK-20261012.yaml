@@ -1,5 +1,5 @@
 task_id: TDP-LIVE-EIS-RECHECK-20261012
-status: in_progress
+status: completed
 goal: "Verify read-only latest getDocsIP responses and archive changes for three priority TDP cases, while retaining distinct live legal/status UNKNOWN; confirm three former SOAP no_data remain unknown."
 definition_of_done:
   - "Use configured existing individual-token SOAP getDocsIP read-only only; no new APIs or production state writes."
@@ -10,11 +10,13 @@ definition_of_done:
 completed:
   - "2026-10-12 authenticated individual getDocsIP client configured with strict direct route."
   - "2026-10-12 all three cases 0148300050426000047, 0318200087026000163 and 0348100024426000052 returned no_data and zero archive URLs on new read-only SOAP check."
-current: "Inspect freshly obtained official archive content for 0372200172326000015, 0158300034526000388 and 0348100024426000039."
-remaining:
-  - "Fetch bounded new official ZIPs into isolated private evidence with strict host check and SHA recorded, or preserve block."
-  - "Compare EIS XML archive notice edition and deadlines, classify as archived snapshots not live legal status."
-  - "Finish report and checkpoint, update canonical task state."
-last_verified_commit: 6ab2fcec48d9b46f9e52c45ae5239086794ce8fe
-test_results: []
-resume_instruction: "Check configured getDocsIP via ZakupkiSoapClient with runtime_status_enabled=False and disable debug; no token logging. Check 3 priority targets, source baseline evidence/tdp-r5/official-revision-batch-20261011. Three no_data recheck already complete, no need repeat. No OpenAI API, production, bids or watchdog. Maintain current live EIS status UNKNOWN."
+  - "2026-10-12 fetched 3/3 priority official archives, SHA identical to 11 October baseline, nine XML notice SHA assertions pass, archived historical deadlines corroborated. Independent report committed."
+current: 'Current configured individual-token SOAP read-only getDocsIP again returned no_data for 3/3 original missing cases, zero archive URLs. Three priority cases (museum bread, Tilda, code/IP platform) returned completed with official ZIP; 3/3 fresh ZIP SHA equal bit-for-bit to 11 October baseline and all notice XML hashes verified (1, 5 and 3 archived revisions). Legal live card status remains UNKNOWN; report committed.'
+remaining: []
+last_verified_commit: 68e4b3aa195af58928908a5bb38572e529ed677c
+test_results:
+  - 'Authenticated official getDocsIP 3/3 no_data with zero archive URLs, no authentication/network error.'
+  - '3/3 official priority ZIP SHA-256 match baseline independently, all 9 internal notice XML SHA checks revalidated.'
+  - 'No code modifications: direct source receipt assertions passed, no full suite claimed.'
+
+resume_instruction: 'Child complete. No need re-fetch source archives or rerun no_data; read docs/acceptance/TDP_RDC_FRESH_GETDOCS_6_CASES_2026-10-12.md and private fresh-soap-priority-20261012 receipts. Official archive unchanged for three priority procurements as of 2026-10-12; no_data remains 3. Parent must keep current live legal tender/ETP status and bidder eligibility UNKNOWN, final owner signoff only at final acceptance. No extra ChatGPT API, production, bids or watchdog.'
