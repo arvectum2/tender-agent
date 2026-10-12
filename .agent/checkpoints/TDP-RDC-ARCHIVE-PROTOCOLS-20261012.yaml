@@ -1,5 +1,5 @@
 task_id: TDP-RDC-ARCHIVE-PROTOCOLS-20261012
-status: in_progress
+status: completed
 goal: Independently assess 20 official cached EIS ZIPs for archived procurement protocol evidence and historical submission windows, without claiming live current EIS status.
 definition_of_done:
   - Inspect all 20 official ZIPs read-only, preserve missing 3 as NO_DATA.
@@ -8,11 +8,12 @@ definition_of_done:
   - Validate counted results against ZIP originals and save expert report with SHA references, update checkpoint.
 completed:
   - "2026-10-12: Inspected archive manifest 17 completed/3 no_data and sample genuine official ZIP with original final protocol XML."
-current: Inspect all archives read-only and classify protocol artifacts without inferring winning bid or current EIS notice.
-remaining:
-  - Parse 17 cached official ZIPs and check all artifact matching procurement identifiers.
-  - Compare to archive deadlines and legacy report mismatches.
-  - Record detailed expert conclusions and status.
-last_verified_commit: 2a6310499eaa31ce9e1fc5db019a65ad686e0995
-test_results: []
-resume_instruction: "Read cached official archives from Mac mini /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/official-revision-batch-20261011 via RDC only. Count genuine XML protocol documents and classify archive-only evidence; do not infer live EIS status, do not call OpenAI API or submit bids. 3 no_data remain unknown. Write documented audit and finish child checkpoint."
+current: 'Completed official cached-archive-only protocol evidence audit: 20 total, 17 SHA verified ZIP, 53/53 XML type and procurement identity validated, 13 contain final protocol, 1 results-only, 3 without protocols, 3 no_data; report committed.'
+remaining: []
+last_verified_commit: b6bcfed2b196ee86c3fbe05ee4c59514e48704c4
+test_results:
+  - '17/17 archive ZIP SHA-256 matched source receipts.'
+  - '53/53 protocol XML files parsed with matching internal document type and procurement ID, zero mismatches.'
+  - '20/20 cases assigned fail-closed archive status; 3 no_data retained UNKNOWN.'
+
+resume_instruction: 'Completed archive-only source check, see docs/acceptance/TDP_RDC_ARCHIVE_PROTOCOL_AUDIT_20_2026-10-12.md and private protocol-audit-20261012.json. Do not treat archive protocols as current EIS status. Parent blocked on genuine live/current EIS and final owner decisions. No OpenAI API/bids/production/watchdog.'
