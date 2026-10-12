@@ -211,6 +211,36 @@ def test_run_level_facade_uses_stored_original_and_fails_closed(monkeypatch, tmp
     assert good["status"] == "literal_quote_found_in_extracted_original_only"
     assert good["evidence"]["chunk_id"] == "c-001"
     assert "original_pdf_page" not in good["evidence"]
+    metadata.update(
+        procurement_source="zakupki_gov_ru_getdocs_ip",
+        procurement_id="0372200172326000015",
+        notice_revision_selected={"purchase_number": "0372200172326000015"},
+    )
+    review_result = verify_operator_run_quote(
+        run_id="toa-run-20261009101331-bfdddd",
+        file_id="FILE-01",
+        exact_quote=QUOTE,
+    )
+    review = review_result["evidence"]["independent_review"]
+    assert review["source_identity"] == "MATCH"
+    assert review["quote_status"] == "LITERAL_MATCH"
+    assert review["semantic_review"] == "PENDING_INDEPENDENT_EXPERT"
+    assert review["legal_review"] == "UNKNOWN"
+    assert review["go_eligible"] is False
+    metadata["notice_revision_selected"]["purchase_number"] = "0895100000126000897"
+    conflicting = verify_operator_run_quote(
+        run_id="toa-run-20261009101331-bfdddd",
+        file_id="FILE-01",
+        exact_quote=QUOTE,
+    )
+    assert conflicting == {"status": "unverified", "evidence": None}
+    metadata.pop("procurement_id")
+    missing_identity = verify_operator_run_quote(
+        run_id="toa-run-20261009101331-bfdddd",
+        file_id="FILE-01",
+        exact_quote=QUOTE,
+    )
+    assert missing_identity == {"status": "unverified", "evidence": None}
     assert verify_operator_run_quote(
         run_id="toa-run-20261009101331-bfdddd",
         file_id="FILE-01",
