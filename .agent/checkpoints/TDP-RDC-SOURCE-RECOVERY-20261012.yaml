@@ -1,5 +1,5 @@
 task_id: TDP-RDC-SOURCE-RECOVERY-20261012
-status: in_progress
+status: completed
 goal: "Recover source-grounded read-only contract/technical facts for seven historical EIS runs that have no normalized texts, without inventing evidence or modifying production."
 definition_of_done:
   - "Classify the seven old docs_required runs by actual cached input binaries, not by metadata file count alone."
@@ -8,13 +8,16 @@ definition_of_done:
   - "Test deterministic SHA/identity and no-source failure paths; only commit code/reports without private source content."
   - "Record outcome and missing current EIS/three no_data blockers in canonical checkpoint."
 completed:
-  - "2026-10-12: inspected seven old runs: all lack normalized texts, four run folders contain cached DOCX originals; three have only XML from official ZIP; no original source terms may be inferred from empty normalized directory."
-current: "Check cached DOCX binary SHA against independent original receipt, recover text in private evidence workspace and evaluate scope."
-remaining:
-  - "Verify authenticity and source document inventory."
-  - "Extract and review exact original clause snippets with safe proof, no LLM API."
-  - "Add regression checks if a real code defect is found; run tests and CI."
-  - "Publish source-derived gap matrix and close child checkpoint."
-last_verified_commit: d937cca8ae58356b9aca546dfc28d638c03adabf
-test_results: []
-resume_instruction: "Continue only via Mac mini RDC, private evidence root /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012. Seven docs_required no-normalized-text runs: 0127100008626000013, 0148200000526000028, 0149200002326001555, 0349100009326000005, 0349500000226000003, 0360600005326000018, 0895100000126000897. Four include cached DOCX: 0148200000526000028 (2), 0149200002326001555 (1), 0349100009326000005 (1); count original hashes from verified official filestore receipts. Others XML-only and remain legal UNKNOWN. No production, bids, external ChatGPT API, or watchdog."
+  - "2026-10-12: inspected seven old runs: all lack normalized texts; four verified DOCX files across three runs, remaining four runs XML-only; no original source terms inferred from empty normalized directories."
+  - "2026-10-12: recovered source-bound original text and independently reviewed eleven Gemma claims; full findings in the acceptance report."
+
+current: 'Seven source-empty legacy runs classified; four genuine DOCX originals independently SHA verified and text-recovered across three historical cases; local Gemma produced eleven claims, ChatGPT directly reviewed all eleven using recovered originals (8 source-and-meaning supported, 2 malformed quotes, 1 semantic overclaim). Four XML-only cases and three no_data remain source gaps. Full read-only report committed.'
+remaining: []
+last_verified_commit: 36bfb510eb283553139aa780ed2c5c04977a8150
+test_results:
+  - 'Four of four original DOCX file SHA256 values match stored receipts and pre-verified official filestore SHA+size.'
+  - 'Python scripts py_compile PASS, read-only DOCX recovery re-run PASS, independent expert receipt assertions PASS.'
+  - 'Eleven new Gemma claims evaluated: nine literal matches; eight exact source+semantic supported, two invalid exact quotes, one exact quote with semantic overclaim.'
+  - 'No repository product code modified; no full pytest/CI claimed for this evidence-only audit.'
+
+resume_instruction: 'Child completed. Do not repeat cached DOCX and 11-claim review; report docs/acceptance/TDP_RDC_SEVEN_CASE_SOURCE_RECOVERY_2026-10-12.md. Four original cached DOCX verified, four other legacy runs are XML-only; three separate cases no_data. Parent still needs current official EIS/complete contract documents and only final authorized owner signoff. ChatGPT review through this chat/RDC only, no OpenAI API/production/bids/watchdog.'
