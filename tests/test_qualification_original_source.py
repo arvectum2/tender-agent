@@ -332,7 +332,8 @@ def test_auto_run_rejects_scoring_docx_modified_after_download(
 
     run_id, metadata = _original_run_fixture(tmp_path, monkeypatch)
     doc_file = tmp_path / "input" / "evaluation.docx"
-    doc_file.write_bytes(doc_file.read_bytes() + b"changed")
+    original = doc_file.read_bytes()
+    doc_file.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
     with pytest.raises(ValueError, match="changed after"):
         discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
 
