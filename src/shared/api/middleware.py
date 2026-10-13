@@ -15,14 +15,25 @@ DEFAULT_PROTECTED_PREFIXES = ("/demo/tender-agent", "/pilot/tender-agent", "/api
 DEFAULT_PUBLIC_PATHS = ("/health",)
 
 class TenderPilotBasicAuthMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app, *, username: str, password: str, protected: tuple[str, ...] = DEFAULT_PROTECTED_PREFIXES, public: tuple[str, ...] = DEFAULT_PUBLIC_PATHS) -> None:
+    def __init__(self, app, *, username: str, password: str, protected: tuple[str, ...] = DEFAULT_PROTECTED_PREFIXES, public: tuple[str, ...] = DEFAULT_PUBLIC_PATHS, tenant_api_enabled: bool = False) -> None:
         super().__init__(app)
         self.username = username
         self.password = password
         self.protected = protected
         self.public = public
+        self.tenant_api_enabled = tenant_api_enabled
 
     async def dispatch(self, request: Request, call_next) -> Response:
+        # This path is guarded by its own Bearer/tenant FastAPI dependencies.
+        # Existing operator routes remain protected by the separate Basic gate.
+        if self.tenant_api_enabled and request.url.path.startswith("/api/saas/"):
+            response = await call_next(request)
+            response.headers.update({
+                "Cache-Control": "no-store", "Pragma": "no-cache",
+                "X-Content-Type-Options": "nosniff", "X-Frame-Options": "DENY",
+                "Referrer-Policy": "no-referrer",
+            })
+            return response
         if not _is_protected_path(request.url.path, self.protected, self.public):
             return await call_next(request)
 
@@ -67,6 +78,7 @@ def install_runtime_middlewares(app: FastAPI, settings: Settings) -> None:
             password=password,
             protected=tuple(settings.pilot_auth_protected_prefixes.split(",")),
             public=tuple(settings.pilot_auth_public_paths.split(",")),
+            tenant_api_enabled=settings.saas_foundation_enabled,
         )
 
     # Keep CORS outermost so browser preflight OPTIONS requests can complete
