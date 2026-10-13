@@ -82,5 +82,19 @@
     "no_bid_or_contact": true,
     "no_claim_of_open_status": true,
     "no_live_production_changes": true
+  },
+  "first_party_public_search_attempt": {
+    "url": "https://www.sberbank-ast.ru/UnitedPurchaseList.html",
+    "checked_at": "2026-10-13T23:06:09+03:00",
+    "browser": "Mac mini headless Chromium, fresh temporary profile, no existing user session",
+    "retrieval": "Direct Russian egress no-proxy, no login, public page interaction only",
+    "public_search_term": "SBR028-2610130033",
+    "page_rendered": true,
+    "listed_id_found_in_rendered_public_text": false,
+    "visible_listing_counter": "0 (observed public UI)",
+    "public_processing_api_http_200_observed": true,
+    "original_notice_verified": false,
+    "conclusion": "NO_PUBLIC_MATCH_OBSERVED_NOT_PROOF_NONEXISTENCE",
+    "caveat": "Exact procedure may be listed in a separate section or not returned by this public search; do not infer cancellation, deadline or bid readiness"
   }
 }
