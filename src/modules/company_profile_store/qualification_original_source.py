@@ -222,7 +222,7 @@ def _contract_rules(tables: list[list[list[str]]]) -> tuple[list[str], int]:
                 continue
             if not ("чат-бот" in text and "исполненн" in text
                     and "последний акт" in text and "до даты окончания срока подачи заявок" in text
-                    and ("сайт" in text or "информационн" in text)):
+                    and all(word in text for word in ("сайт", "веб-портал", "информационн", "модул"))):
                 raise ValueError("Unsupported detail qualification rule")
             laws = []
             for law in ("44", "223"):
