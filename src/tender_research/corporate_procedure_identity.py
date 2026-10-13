@@ -28,18 +28,25 @@ class _TextFromHtml(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self._ignored = 0
+        self._heading_depth = 0
         self._parts: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag in {"script", "style", "noscript"}:
             self._ignored += 1
+        if tag == "h1" and not self._ignored:
+            self._heading_depth += 1
 
     def handle_endtag(self, tag: str) -> None:
+        if tag == "h1" and self._heading_depth:
+            self._heading_depth -= 1
         if tag in {"script", "style", "noscript"} and self._ignored:
             self._ignored -= 1
 
     def handle_data(self, data: str) -> None:
-        if not self._ignored:
+        # An unrelated recommendation/sidebar must not supply procurement
+        # identity. Require the explicit original procedure in an H1 heading.
+        if not self._ignored and self._heading_depth:
             self._parts.append(data)
 
     def text(self) -> str:
