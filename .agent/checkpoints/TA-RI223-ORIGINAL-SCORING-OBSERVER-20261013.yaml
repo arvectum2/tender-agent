@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-RI223-ORIGINAL-SCORING-OBSERVER-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Add trustworthy read-only primary-source 223-FZ evaluation-criteria observation of RI223 #32616445795 without mistaking composite nonprice criteria for completed-contract reference score or inferring NO_GO.
+definition_of_done:
+  - Pin original real RI223 getDocsIP SOAP ZIP, EIS attachment UID and original RAR, nested PDF/DOC byte digests and stable source filenames.
+  - Extract 40/60 first-level and 20/20/60 optional non-price weights from actual 10-page PDF, distinguish reputation, finances and qualification, not claim single 60% qualification.
+  - Provide fail-closed offline observation tool with explicit unsupported scoring/eligibility, no legal or commercial GO/NO_GO output and no large unsafe files.
+  - Cover source tampering, extraction ambiguity, altered weights, missing criterion and wrong law/registry in regression tests; real Mac mini replay and CI.
+  - Keep source original binaries private, PR draft, no production/ETP/signed/paid action.
+completed:
+  - Historical 44-FZ corpus PR411 exact head a9fdb20a GitHub PR/push 3/3 SUCCESS, child marked completed.
+  - Found independently stored original RI223 #32616445795 at /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/; SOAP ZIP sha 65004d53..., RAR sha 36ef971b..., embedded PDF sha a44d9573... and legacy DOC sha c74b98fd....
+  - Verified original RI223 XML root purchaseNotice registrationNumber 32616445795 version 1 and contentUid E8D018399C8C4BC18A621DCB8CBB6F12 links RAR via official https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html.
+  - Actual PDF pdftotext shows cost criterion 40%, nonprice criterion 60%, subcriteria 20% reputation /20% financial /60% qualification, conditional phrasing means cannot treat nonprice as solely qualification.
+current: Implement read-only original source observer + negative tests, validate against real Mac mini bytes.
+pending:
+  - Commit pinned sanitized source metadata, pure criterion parser + bounded original-read-only script.
+  - Run original source replay and adversarial tests, document precise limits.
+  - Verify exact GitHub PR/push CI and checkpoint completion, preserve parent safeguards.
+last_verified_commit: 'New branch created from completed PR411; RI223 original source digests validated locally, code not created.'
+test_results: []
+resume_instruction: 'Continue original RI223 #32616445795 observer in research/ri223-original-scoring-observer-20261013. Private originals Mac mini /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/ri223-soap.zip (sha 65004d53a4d198857a192ad21052c95cfa7d812208c3ac6702324e42d7487de3) and attachments/01-3727.rar (sha 36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241). Embedded original 10-page PDF from RAR 3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf sha a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826; legacy DOC sha c74b98fd03de7eb87af2a8b0056c1342fdbf5099e05faa7c7fac8ba757a136ff. XML purchaseNotice version=1 registrationNumber, original RAR contentUid E8D018399C8C4BC18A621DCB8CBB6F12. PDF contains top-level 40% price, 60% nonprice; sub 20% reputation/20% finances/60% qualifications with discretionary wording. Never turn 60% nonprice into 60% completed contract weighting or 223-FZ automatic commercial NO_GO. Build read-only evidence observer, tests, PR and CI; keep PR draft, source bytes private, no ETP/prod/watchdog/payments/signature.'
