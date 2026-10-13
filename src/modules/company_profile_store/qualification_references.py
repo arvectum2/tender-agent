@@ -170,10 +170,14 @@ def assess_references(
         return QualificationAssessment(**common, reference_list_state="UNKNOWN",
             recommendation="QUALIFICATION_EVIDENCE_UNKNOWN",
             reasons=["No valid owner-confirmed completed-contract list exists for this customer."])
-    if snapshot.as_of_date > criterion.analysis_date or not snapshot.owner_confirmed:
+    if (
+        snapshot.as_of_date > criterion.analysis_date
+        or not snapshot.owner_confirmed
+        or (criterion.analysis_date - snapshot.as_of_date).days > 90
+    ):
         return QualificationAssessment(**common, reference_list_state="UNKNOWN",
             recommendation="QUALIFICATION_EVIDENCE_UNKNOWN",
-            reasons=["Reference-list date/owner confirmation is not valid for this analysis."])
+            reasons=["Reference list is unconfirmed, future-dated or older than 90 days; refresh owner snapshot."])
     if snapshot.completeness != "COMPLETE":
         return QualificationAssessment(**common, reference_list_state="PARTIAL",
             recommendation="QUALIFICATION_EVIDENCE_PARTIAL",
