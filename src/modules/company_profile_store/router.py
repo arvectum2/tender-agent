@@ -1,5 +1,10 @@
 from fastapi import APIRouter, Query, status
 
+from src.modules.company_profile_store.qualification_decision import (
+    QualificationAwareDecisionRequest,
+    QualificationAwareDecisionResponse,
+    build_qualification_aware_decision,
+)
 from src.modules.company_profile_store.qualification_references import (
     QualificationAssessment,
     QualificationCriterion,
@@ -176,6 +181,22 @@ def assess_company_qualification_route(
     """Read latest tenant-owned versioned completed-contract list. No bid action."""
     return assess_company_qualification(
         session, customer_id=customer_id, criterion=payload,
+    )
+
+
+
+@router.post(
+    "/qualification/decision-core",
+    response_model=QualificationAwareDecisionResponse,
+)
+def qualification_aware_decision_route(
+    customer_id: str,
+    payload: QualificationAwareDecisionRequest,
+    session: DBSession,
+) -> QualificationAwareDecisionResponse:
+    """Use the company's current reference list for a separate competitive NO_GO."""
+    return build_qualification_aware_decision(
+        session, customer_id=customer_id, request=payload,
     )
 
 
