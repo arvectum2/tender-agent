@@ -1,0 +1,44 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TA-DP-ACCEPTANCE-20261013
+status: blocked
+owner: tender-agent
+related_tracks:
+  - APR-06 commercial procurement acceptance
+  - APR-07 quality and SLO/human-gold validation
+  - R2 Data Platform-to-Tender Agent persisted source integrity
+origin_task: data-platform TDP-REFACTOR-20261009
+technical_refactor:
+  repository: arvectum2/data-platform
+  status: completed
+  merged_refactor_commit: 6cfdef7249e3ec62b80b1b921f44c4f57aed9c87
+  verified_main_at_handoff: daa0719da31f989afcf49283ffa295cfb5f2ccac
+goal: Independently accept actual current-source procurement processing through approved staging and human legal/commercial validation, without reopening the completed Data Platform code refactor.
+completed:
+  - Verified five source original bytes and five resource/document identities with 127/127 normalized chunks in disposable PostgreSQL/pgvector.
+  - Verified isolated authenticated Data Platform-to-Tender Agent report endpoints, manual DOCX/PDF outputs and archived official EIS fail-closed export HTTP 409.
+  - Rechecked bounded 72 binary attachments and 96 XML originals against official EIS evidence; historical-source integrity is not current auction revision.
+  - Preserved owner decision UNKNOWN/DEFER and disabled production writes, bids and watchdog.
+current: BLOCKED by independent human acceptance and explicit approved-staging/current-revision scope, not by unresolved Data Platform architecture.
+pending:
+  - id: R2
+    status: awaiting_owner_authorization_and_current_source_proof
+    acceptance: Approve disposable or persistent staging explicitly; establish one source-currentness-verified EIS -> authenticated DP original resource/document/chunk persistence -> Tender Agent report/API/DOCX/PDF trace on the approved dataset, with provenance and fail-closed stale-version behavior.
+  - id: R4
+    status: awaiting_human_gold
+    acceptance: Collect independent evidence-cited legal/eligibility/quality/commercial judgments, model disagreements and unknowns using the frozen source cohort. AI/machine checks cannot sign their own gold.
+  - id: R5
+    status: awaiting_owner_review
+    acceptance: Obtain dated source-currentness and owner-approved assessments for the 20-case EIS cohort, presently 0/20 signoffs. Keep separate from APR-06 wider 28-case measurement cohort.
+  - id: FINAL
+    status: awaiting_R2_R4_R5
+    acceptance: Repeat consumer end-to-end and exact-head CI, record source revisions and owner acceptance only after upstream approvals; no automatic commercial GO.
+references:
+  - docs/acceptance/TA_DP_ACCEPTANCE_HANDOFF_2026-10-13.md
+  - docs/acceptance/TDP_R2_TA_DP_FRESH_REAL_SOURCE_E2E_2026-10-12.md
+  - docs/acceptance/TDP_R4_R5_HUMAN_GOLD_PROTOCOL_2026-10-12.md
+  - docs/acceptance/TDP_R5_20_CASE_HUMAN_REVIEW_QUEUE_2026-10-11.csv
+restrictions:
+  - No live Data Platform port 8094 production writes, remote credentials, public bidding, legal GO, paid APIs, customer contact, production release, or watchdog changes without separate authority.
+  - Do not mark this task completed from AI-generated or archived-only procurement evidence.
+resume_instruction: Preserve the existing TA-ROADMAP-EXEC active current-task.yaml; run APR-06/APR-07 review and real-source acceptance only when authorized. DP technical refactor remains completed independently.
