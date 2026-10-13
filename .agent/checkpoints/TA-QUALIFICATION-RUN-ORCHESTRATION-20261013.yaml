@@ -12,14 +12,23 @@ definition_of_done:
   - Test CZN real original fixture, tenant isolation, malformed files, stale source, fake/supplied SHA, and report UX; local pytest+Ruff and exact GitHub CI.
   - Leave PR draft and do not promote human gold or signed source.
 completed:
+  - Parent PR408 exact-head 7f6024e1 official source scorer full PR/push CI SUCCESS, checkpoint completed.
+  - Implemented source-attested run discovery with current EIS notice version, attachment UID/name/size/official URL and exactly one valid scoring DOCX, no hardcoded weights or HTTP-supplied tenant ID.
+  - Preserved SHA-256 original getDocsIP archive at intake and SHA-256 downloaded document in run metadata; deny old/tampered saved bytes and suspicious or ambiguous origins.
+  - Authenticated SaaS run report and independent qualification endpoint now load principal.customer_id and owned_run before reading source or reference list. Viewer read-only existing report redacts private reference list.
+  - Added /saas panel for competitive qualification separate from legal readiness, with safe textContent and original-source disclaimer.
+  - Exact real CZN EIS SOAP v4 + UID-matched original DOCX replay with owner-zero snapshot returned 70/30 and competitive NO_GO; electronic signature/human-gold FALSE. Original source binaries never added to Git.
+  - Mac mini isolated source head 87e4160 tested 166 focused pytest PASS, 8 SKIP, Ruff PASS, git diff --check PASS (source, SaaS, getDocsIP import, archive/attachment/regression).
+  - Draft PR409 opened stacked on PR408, no live activation, signatures, bids, owner-profile DB changes or payments.
   - Parent source extractor PR408 full PR/push CI SUCCESS at 7f6024e1 and child marked completed.
   - Parent reference-list PR407 bearer-authenticated tenant scope and owner 0 contract CZN scoring verified.
-current: Inspect current run evidence model, derive safe automatic source file discovery and report projection, then implement.
+current: PR409 implemented and read-only local verified at source/docs head 9b2140e8bf290d605fa1d8509206d37c15720dc4; 166 PASS/8 SKIP, Ruff PASS; exact PR/push CI queued. Parent APR06/07 production and human gates OPEN.
 pending:
-  - Inspect run evidence and report/UI routes; design safe trust boundary.
-  - Implement original ZIP/UID based scoring discovery from run-local files, backed by saved original getDocsIP archive.
-  - Connect tenant qualification with run report UI/API and provenance notes; add tests.
-  - Run focused tests, verify exact CI, checkpoint completion.
-last_verified_commit: 'Branch created from completed PR408, no implementation yet.'
-test_results: []
-resume_instruction: 'Continue feature/qualification-run-orchestration-20261013 stacked on PR408. Run-local original getDocsIP ZIP, saved inputs and metadata already exist in procurement_intake_service, existing company_profile_store qualification_original_source.py and qualification_decision.py and saas_foundation/router.py available. Bearer token principal.customer_id must derive tenant. Never accept user-picked source hash, customer_id, or pretend verified digital signature. CZN original live XML v4 scoring DOCX SHA bda1eff35... owner zero -> competitive NO_GO. Keep read-only/no ETP, no prod, no watchdog, all PRs drafts.'
+  - Check PR409 exact-head push/PR GitHub CI, repair actual failure and mark this child completed only after green CI.
+  - Broader parser coverage (223-FZ/PDF/complex criteria) remains separate roadmap and requires original-source tests; no declaration of unconditional coverage.
+last_verified_commit: 'PR409 implementation/test head 87e416072b78ae005cf1cab2eda6be17c886176d verified Mac mini 166 PASS/8 SKIP, Ruff PASS, original CZN ZIP + DOCX run-discovery NO_GO replay PASS. Documentation/head 9b2140e8bf290d605fa1d8509206d37c15720dc4; PR CI 38425737477 queued, push 38425673047 queued, fast push 38425673046 SUCCESS.'
+test_results:
+  - 'Mac mini head 87e4160: 166 pytest PASS / 8 SKIP, Ruff PASS, git diff --check PASS (qualification/owner/bearer/auth/getDocsIP/archive/attachments/official EIS regression).'
+  - 'Real original EIS ZIP + current 22427-byte scoring DOCX via run-local auto discovery and pinned download-time SHA => CZN qualification 70/price 30, owner zero => NO_GO_QUALIFICATION_COMPETITIVENESS; no external action or signature/human-gold claim.'
+  - 'PR409 latest docs/source head 9b2140e8: exact GitHub PR+push CI in progress, fast push SUCCESS.'
+resume_instruction: 'Current active child TA-QUALIFICATION-RUN-ORCHESTRATION-20261013 on feature/qualification-run-orchestration-20261013, draft stacked PR409 on PR408. Code/test head 87e416072b78ae005cf1cab2eda6be17c886176d Mac mini 166 tests PASS/8 SKIP and Ruff PASS, REAL CZN original SOAP v4+scoring DOCX auto run-local discover from download-time pinned hashes => 70/30 and owner ZERO competitive qualification NO_GO. Latest docs/PR head 9b2140e8bf290d605fa1d8509206d37c15720dc4, exact GitHub run PR38425737477/push38425673047 pending and fast push38425673046 SUCCESS. Check CI, fix failures, mark child completed only on exact green; preserve all drafts. SaaS bearer owned_run qualification integrated automatically into GET /api/saas/runs/{run_id}/report and /qualification, /saas UI panel. No production tenant seeded, SaaS remains off. Digital signature and human-gold/legal approval not verified. Broader 223/PDF parser remains separate. Keep execution.manual_override true and watchdog disabled; no ETP, payments, signatures, merge or production.'
