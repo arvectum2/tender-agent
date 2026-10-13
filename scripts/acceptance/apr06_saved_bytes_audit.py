@@ -63,11 +63,11 @@ def audit_saved_bytes(
 
         expected = case.get("document_files")
         if not isinstance(expected, list):
-            raise ValueError("Missing original document_files list")
+            raise TypeError("Missing original document_files list")
         expected_keys: set[tuple[str, int]] = set()
         for item in expected:
             if not isinstance(item, dict) or not isinstance(item.get("sha256"), str):
-                raise ValueError("Malformed receipt entry")
+                raise TypeError("Malformed receipt entry")
             digest, size = item["sha256"], item.get("bytes")
             if not _SHA.fullmatch(digest) or not isinstance(size, int) or size <= 0:
                 raise ValueError("Malformed digest or file size")
