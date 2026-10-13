@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-44-ALTERNATE-PDF-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Verify a second primary original 44-FZ EOK evaluation PDF with distinct composition (60% price, 40% qualification, of qualification 5% completed contracts/95% specialists) and add fail-closed observation avoiding a false CZN-style NO_GO for zero company references.
+definition_of_done:
+  - Source-pin exact official no-proxy getDocsIP SOAP archive/latest v2 XML, document UID/name/size/HTTPS and exact original PDF SHA bytes (private Mac mini).
+  - Extract unique PDF rows of top-level price/qualification plus nested 5/95 experience/specialists; no independent supplier qualification or eligibility claim.
+  - Return NOT_ASSESSED for commercial verdict, no direct GO/NO_GO or unsupported universal formula. Separate source confidence and signature.
+  - Test mismatches, duplicates, unsupported structures and hash/edition/UID tampering; replay actual current primary EIS original.
+  - Complete targeted tests, Ruff, exact GitHub CI and checkpoint, keep draft/no deployment or external action.
+completed:
+  - PR412 original RI223 40/60 composite observer head 50f3a19 full PR and pushes GitHub CI SUCCESS, checkpoint completed.
+  - Direct Russian-IP/no-proxy official EIS getDocsIP PRIZ EOK region 77 on 2026-10-12 returned 29 unique EOK procurements (30 XML members), regional archive 868877 bytes SHA256 783279d03bb752af1c7660f3eba2a2abb873f54746bed469e4b4de174e8adb0f.
+  - Independently downloaded exact procurement 0173300009226000009 getDocsByReestrNumber SOAP original ZIP SHA256 655a3014a9fac9df2228332a562e05c2e050afcac62a0a7ad2ab3d235f366a91, latest v2 XML SHA256 c6805b5ff2618938c677a7754abe0cba0a8b1b446c0830ad8c47fc3dd2bead86.
+  - Original attached EIS PDF name Приложение 5 Порядок оценки Зюзино 1С .pdf UID 01A0F69F0B337A1996519D98C9AA2046 size 341407 bytes SHA256 6b0eca7991118be9d0f6d8d213f8fb37d2b263c7d0e5aea1477e58e79692aa0f, 8 pages landscape A4.
+  - Primary PDF text: 60% price /40% qualification; inside qualifying criterion 5% completed related contracts /95% specialists (not entire qualifying criterion based on experience), formal endDT 2026-10-22T08:00:00+03:00.
+current: Create source-bound read-only 44-FZ alternative PDF observer and prove failure-to-NO_GO when owner has zero contracts but specialist criteria dominate.
+pending:
+  - Commit exact pinned source receipt and bounded parser/CLI.
+  - Positive and negative tests including source digest/notice version/UID and 60/40/5/95 distribution, original replay.
+  - GitHub full CI, checkpoint completion, preserve drafts and owner/human gates.
+last_verified_commit: 'New stacked branch from completed PR412, original EOK source verified locally, code not yet added.'
+test_results: []
+resume_instruction: 'Continue feature/qualification-44-alternate-pdf-observer-20261013. Private originals /Volumes/ArvectumSSD/Arvectum/runtime/ta-scoring-alt-44-eok-20261013/0173300009226000009/: documentation-archive.zip sha 655a3014a9fac9df2228332a562e05c2e050afcac62a0a7ad2ab3d235f366a91; latest v2 epNotificationEOK2020 XML sha c6805b5ff2618938c677a7754abe0cba0a8b1b446c0830ad8c47fc3dd2bead86, endDT 2026-10-22T08:00:00+03:00; evaluation PDF 341407 bytes sha 6b0eca7991118be9d0f6d8d213f8fb37d2b263c7d0e5aea1477e58e79692aa0f and UID 01A0F69F0B337A1996519D98C9AA2046. PDF has price60%, qualification40%; within qualification only 5% completed similar 1C contracts and 95% specialists. Do NOT use absent completed contract references to auto-NO_GO this tender. Add source-verifiable read-only observer, real replay and tests, keep scope NOT_ASSESSED. No ETP, signature, payment, SaaS/prod/watchdog, main manual_override true, PRs draft.'
