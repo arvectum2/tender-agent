@@ -85,6 +85,7 @@ def _notice(*, version: int, doc_bytes: bytes, uid=UID, deadline="2026-10-23T10:
         f"<publishedContentId>{escape(uid)}</publishedContentId>"
         "<fileName>07-060577-26.docx</fileName>"
         f"<fileSize>{len(doc_bytes)}</fileSize>"
+        f"<url>https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid={escape(uid)}</url>"
         "</attachmentInfo></epNotificationEOK2020></x>"
     ).encode()
 
@@ -180,6 +181,18 @@ def test_stale_original_eis_edition_v3_rejected_even_if_receipt_reissued():
 def test_original_scoring_docx_uid_absent_in_latest_notice_rejected():
     archive, doc, receipt = _evidence(uid="A" * 32)
     with pytest.raises(ValueError, match="UID absent"):
+        _extract(archive, doc, receipt)
+
+
+def test_original_eis_attachment_untrusted_url_rejected():
+    doc = _docx()
+    original = _notice(version=4, doc_bytes=doc).replace(
+        b"https://zakupki.gov.ru/",
+        b"https://other.invalid/",
+    )
+    archive = _zip({"epNotificationEOK2020_4.xml": original})
+    _, _, receipt = _evidence(doc=doc, source_archive=archive)
+    with pytest.raises(ValueError, match="HTTPS source URL"):
         _extract(archive, doc, receipt)
 
 
