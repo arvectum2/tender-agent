@@ -10,17 +10,19 @@ definition_of_done:
   - Add positive, negative, ambiguity and duplicate-count regression coverage without widening authorization.
   - Run local focused tests/Ruff/checks, draft stacked PR, inspect exact-head GitHub CI and checkpoint.
 completed:
+  - 'Follow-up source-integrity review: restrict extraction to visible H1 notice heading, not unrelated sidebar text. Code source 91818451e62a7de9c4fff05fb705a89d5cd19266 Mac mini 56 focused pytest PASS, Ruff PASS, actual saved first-party HTML SHA replay PASS; baseline 11 unchanged.'
   - '2026-10-14 source-bound parent/lot resolver + conflict/unknown/tamper guards; actual Mac mini original HTML #4632699 SHA01edb692 replay produced PARENT_LOT_CONFIRMED, canonical b2b-center:4632682; other two originals excluded.'
   - 'Mac mini isolated source head 72436c8dbaee3ab19dddd5002c281b530f88495e: 55 focused pytest PASS/0 FAIL, Ruff PASS, original raw-HTML SHA verified and canonical identity PASS, JSON parse PASS, git diff --check PASS; one unrelated Starlette/httpx deprecation warning.'
   - '2026-10-14 00:26 MSK Russian Mac mini no-proxy public read-only original HTML: B2B-Center lot page #4632699 names itself lot 1 of parent prequalification #4632682, already researched. Original #4616411 archived with past Oct9 deadline, Rosatom RTS #4638345 remains market price monitoring and nuclear industrial SAKOR work, not contract-ready suitable IT.'
-current: 'Implementation and original-source replay verified, stacked draft PR and exact CI pending.'
+current: 'Stacked draft PR420 open on PR419; exact-head full GitHub CI pending on source 91818451e62a7de9c4fff05fb705a89d5cd19266. Mac mini 56 pytest PASS/Ruff/real-source replay PASS. No production or procurement.'
 pending:
-  - Open stacked draft PR on PR419 and inspect exact GitHub workflow head.
-  - Mark completed only after full exact-head CI success; leave all draft PRs unmerged.
-last_verified_commit: '72436c8dbaee3ab19dddd5002c281b530f88495e Mac mini 55 focused pytest PASS, Ruff PASS, SHA verified live original HTML replay PASS. Subsequent documentation commits untested code unchanged.'
+  - Verify exact PR420 GitHub pull_request and push workflow CI on final checkpoint head; fix actual failures if any.
+  - Mark child completed when full CI successful and update parent checkpoint; leave draft PR unmerged.
+last_verified_commit: '91818451e62a7de9c4fff05fb705a89d5cd19266 Mac mini 56 focused pytest PASS, Ruff PASS, source HTML SHA verified and parent/lot grouping PASS; PR420 latest CI queued.'
 test_results:
+  - 'Mac mini latest exact source 91818451e6: 56 pytest PASS, Ruff PASS, real original #4632699 HTML source binding and H1-only parent identity PASS, diff PASS.'
   - '55 focused pytest passed, 0 failed; Ruff PASS, real original HTML replay PASS, JSON PASS, git diff --check PASS; 1 third-party deprecation warning.'
-resume_instruction: 'Open draft PR stacked on fix/b2b-exact-original-card-path-20261013, check exact-head GitHub workflow status, correct any CI failures, and when green mark TA-B2B-PARENT-LOT-DEDUPE-20261014 completed. Local Mac mini tested code 72436c8dbaee3ab19dddd5002c281b530f88495e 55 focused pytest PASS/Ruff/real HTML replay. Keep 15-20 qualified originals OPEN, PR419/PR418 unmerged, no ETP, payment, signature, buyer contact, production, watchdog or automatic merge.'
+resume_instruction: 'Stacked draft PR420 research/b2b-parent-lot-dedupe-20261014 on PR419, source 91818451e62a7de9c4fff05fb705a89d5cd19266 validated on Mac mini: 56 pytest PASS, Ruff PASS, full saved original B2B #4632699 HTML SHA replay PARENT_LOT_CONFIRMED b2b-center:4632682, bid_ready=false. Check exact final PR/push GitHub CI after metadata checkpoint, fix verified failures, then mark completed. Goal 15-20 qualified current sources not met, baseline 11 historical originals unchanged. No ETP, login, payments, signatures, buyer contact, production, merges, watchdog.'
 execution:
   branch: research/b2b-parent-lot-dedupe-20261014
   manual_override: true
