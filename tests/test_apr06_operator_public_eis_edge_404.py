@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import io
+from datetime import UTC, datetime
 from email.message import Message
 from urllib.error import HTTPError
 
@@ -62,7 +63,7 @@ def test_operator_public_context_retries_known_pub01_404(monkeypatch):
     monkeypatch.setattr(service.time, "sleep", lambda sec: waits.append(sec))
     context = service._extract_public_page_context(NOTICE)
     assert "deadline" in context
-    assert context["deadline"]
+    assert context["deadline"] == "23.10.2026 10:00"
     assert opener.calls == 2
     assert waits == [0.25]
 
@@ -92,3 +93,23 @@ def test_operator_context_rejects_host_lookalike_before_network(monkeypatch):
     assert service._infer_public_documents_url(
         NOTICE.replace("zakupki.gov.ru", "notzakupki.gov.ru")
     ) is None
+
+
+def test_official_local_deadline_precedes_parsed_utc_in_operator_context(monkeypatch):
+    opener = _Opener([_HtmlResponse()])
+    monkeypatch.setattr(service, "create_urllib_opener", lambda url, source_direct_connection: opener)
+    monkeypatch.setattr(
+        service,
+        "_parse_detail_metadata",
+        lambda _html, _url: {
+            "application_deadline": datetime(2026, 10, 23, 7, tzinfo=UTC),
+        },
+    )
+    ctx = service._extract_public_page_context(NOTICE)
+    assert ctx["deadline"] == "23.10.2026 10:00"
+    assert opener.calls == 1
+
+
+def test_utc_fallback_is_never_rendered_as_unlabelled_local_time():
+    dt = datetime(2026, 10, 23, 7, tzinfo=UTC)
+    assert service._format_public_context_datetime(dt) == "23.10.2026 07:00 UTC"
