@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Exercise real Bearer-authenticated SaaS qualification/report HTTP endpoints, customer ownership and viewer redaction with the source-bound alternate 44-FZ 1C evaluation PDF; replay original private Mac mini bytes in test-only isolated DB without production tenant creation.
+definition_of_done:
+  - Real HTTP endpoints /api/saas/runs/{run_id}/qualification and /report verified through existing TestClient with temporary test DB, owner, second tenant and viewer; legal acceptance not bypassed.
+  - Use pinned actual ZIP/PDF 0173300009226000009 in optional local acceptance mode, CI synthetic source-bound fixture; never commit original data.
+  - Verify 60/40 and nested contracts5/specialists95 => NOT_ASSESSED; expired/mismatched PDF => NOT_ASSESSED and source invalid.
+  - Verify cross-tenant 404, unauthenticated 401 and viewer no private criterion/contract details; no auto-charge or production access.
+  - Document difference between isolated HTTP acceptance and owner live browser/production/cryptographic acceptance, run tests Ruff and exact GitHub CI.
+completed:
+  - PR415 exact source head 054c5e21 full GitHub PR+2 push CI 3/3 SUCCESS, child checkpoint completed.
+  - Canonical active roadmap has 59 completed and 76 open Markdown checkboxes; genuine P0 gates APR-03/03B/04/05/06/07 remain open, legacy ARV duplicates not new release blockers.
+current: Implement isolated HTTPS-equivalent TestClient API acceptance using temporary authenticated tenant DB and optional private real-source bytes.
+pending:
+  - Add test-only owner/viewer/cross-tenant source-bound GET/qualifications and tamper checks.
+  - Run synthetic CI fixture and optional private original Mac mini replay.
+  - Create draft PR, pass exact GitHub CI, update checkpoint.
+last_verified_commit: 'New branch stacked on PR415 source 054c5e21, no tests yet.'
+test_results: []
+resume_instruction: 'Work in feature/saas-source-eis-api-acceptance-20261013, stacked draft on PR415. Existing tests/test_apr05_saas_foundation.py has TestClient fixture, _seed/_auth/_legal and isolation tests with fake qualification; extend to REAL assess_owned_run_qualification, synthetic source-bound PDF fixture, private original ZIP/PDF optional from authorised Mac mini for local replay. No production auth/token/secrets or live tenant creation. Assert owner 200 NOT_ASSESSED 60/40/5/95, cross-tenant404, viewer redacted and no leaked document refs, tampered PDF abstains. Run local pytest/Ruff & GitHub CI, report accurately. Preserve manual_override true and watchdog disabled; leave all PRs draft and APR06 human gold/owner and APR07 real SLO OPEN.'
