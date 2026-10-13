@@ -30,6 +30,9 @@ from src.modules.company_profile_store.qualification_decision import (
     QualificationAwareDecisionResponse,
     build_qualification_aware_decision,
 )
+from src.modules.company_profile_store.qualification_run_service import (
+    assess_owned_run_qualification,
+)
 from src.modules.company_profile_store.qualification_references import (
     REFERENCE_FACT_KEY,
     CompletedContractReferenceSnapshot,
@@ -534,7 +537,12 @@ def report(run_id: str, principal: Member, session: DBSession) -> dict:
     legal_required(session, principal)
     owned_run(session, principal, run_id)
     r = get_uploaded_demo_report(run_id)
+    qualification = assess_owned_run_qualification(
+        session, run_id=run_id, customer_id=principal.customer_id,
+        as_of=datetime.now().date(),
+    )
     return {
+        "qualification": qualification,
         "run_id": r.run_id, "report_title": r.report_title,
         "recommendation": r.recommendation,
         "manual_checks": r.manual_checks,
@@ -542,6 +550,18 @@ def report(run_id: str, principal: Member, session: DBSession) -> dict:
         "sections": [section.model_dump(mode="json") for section in r.sections],
         "human_control_required": True, "external_action_allowed": False,
     }
+
+
+@router.get("/api/saas/runs/{run_id}/qualification")
+def owned_run_qualification(run_id: str, principal: Member, session: DBSession) -> dict:
+    """Zero input scoring weights/UID; supplier tenant from authenticated session."""
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    owned_run(session, principal, run_id)
+    return assess_owned_run_qualification(
+        session, run_id=run_id, customer_id=principal.customer_id,
+        as_of=datetime.now().date(),
+    )
 
 
 @router.post("/api/saas/runs/{run_id}/screen")
