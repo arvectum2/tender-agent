@@ -1,0 +1,22 @@
+task_id: TDP-EZT-SPECIAL-PROCEDURE-GUARD-20261012
+status: 'completed'
+goal: "Fail closed on official 44-FZ epNotificationEZT2020 special single-supplier art93(12) when a getDocsIP archive is submitted to ordinary competitive Tender Agent analysis, while preserving normal EF/EZK/EOK routing."
+definition_of_done:
+  - "Parse official bounded, SHA-pinned archived notice XML and bind 19-digit procurement number and exact EIS document type. Do not infer category from reestr_number or from SOAP no_data."
+  - "Record source-attested procedure method and original hash in stored run metadata after genuine official getDocsIP archive."
+  - "Block ordinary analyze_eis_archive_run for official special single-supplier art93(12), without automatically declaring bidder ineligible or forbidding separate proper workflow."
+  - "Unit and integration tests covering exact source, conflicting IDs, unreadable XML, positive EF/EZK/EOK, 93(12) blocked, missing source UNKNOWN."
+  - "Run focused and full tests, Ruff, GitHub exact-head CI, merge and checkpoint; no production/bids/watchdog/OpenAI API."
+completed:
+  - "2026-10-12: Discovered actual original 0349500000226000003 document type epNotificationEZT2020 in SHA-attested EIS ZIP, distinct from competitive EF/EZK/EOK."
+  - "2026-10-12: Audited getDocsIP intake code; original archive extraction path lacks procedure-kind attestation before optional ordinary analysis."
+current: 'COMPLETED: PR #385 merged at e55e39a3dab386c9d3d545df08f5971e8541663d; official archived XML epNotificationEZT2020 under 44-FZ art93(12) source-attested and blocked from conventional competitive analysis. Source metadata binds exact 19-digit commonInfo.purchaseNumber, archive and latest notice SHA256; original binary rechecked before analysis. Known EF/EZK/EOK routes preserved, malformed/missing/source SHA drift fails closed. 20/20 independently verified actual competitive ZIPs and source receipt types PASS; one real EZT negative PASS. Full local pytest 3936 passed/238 skipped, CI 9/9 PASS. No full live EIS/legal owner GO attested.'
+remaining: []
+last_verified_commit: 'e55e39a3dab386c9d3d545df08f5971e8541663d'
+test_results:
+  - 'Local focused 38 tests PASS, Ruff PASS.'
+  - 'Full local no-exclusion pytest 3936 passed, 238 skipped, 296 warnings, zero failed in 147.12s.'
+  - 'Official real original ZIP: twenty of twenty competitive cases match SHA/type/source purchaseNumber/revision; actual special EZT correctly identified and blocked.'
+  - 'GitHub PR385 exact head a397b4bcafc73973145ed636d0a9a40142b617a0 CI run 38278970488 9/9 jobs PASS, merged at e55e39a3dab386c9d3d545df08f5971e8541663d.'
+
+resume_instruction: 'Child completed and merged. Do not repeat verified official EIS special-procedure/price-information classification or earlier PRs. Real-run owner acceptance is separately tracked under .agent/checkpoints/TDP-REAL-RUN-OWNER-ACCEPTANCE-20261012.yaml, awaiting actual live launch and owner decision. Do not submit bids or change production based on historical proofs.'

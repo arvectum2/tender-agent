@@ -1,0 +1,23 @@
+task_id: TDP-RDC-SOURCE-RECOVERY-20261012
+status: completed
+goal: "Recover source-grounded read-only contract/technical facts for seven historical EIS runs that have no normalized texts, without inventing evidence or modifying production."
+definition_of_done:
+  - "Classify the seven old docs_required runs by actual cached input binaries, not by metadata file count alone."
+  - "Safely extract bounded text only from existing authenticated originals, with SHA256, original document identity, and confidence/limitations."
+  - "Independently review extracted text in this ChatGPT conversation over RDC and distinguish exact terms from missing annexes."
+  - "Test deterministic SHA/identity and no-source failure paths; only commit code/reports without private source content."
+  - "Record outcome and missing current EIS/three no_data blockers in canonical checkpoint."
+completed:
+  - "2026-10-12: inspected seven old runs: all lack normalized texts; four verified DOCX files across three runs, remaining four runs XML-only; no original source terms inferred from empty normalized directories."
+  - "2026-10-12: recovered source-bound original text and independently reviewed eleven Gemma claims; full findings in the acceptance report."
+
+current: 'Seven source-empty legacy runs classified; four genuine DOCX originals independently SHA verified and text-recovered across three historical cases; local Gemma produced eleven claims, ChatGPT directly reviewed all eleven using recovered originals (8 source-and-meaning supported, 2 malformed quotes, 1 semantic overclaim). Four XML-only cases and three no_data remain source gaps. Full read-only report committed.'
+remaining: []
+last_verified_commit: 36bfb510eb283553139aa780ed2c5c04977a8150
+test_results:
+  - 'Four of four original DOCX file SHA256 values match stored receipts and pre-verified official filestore SHA+size.'
+  - 'Python scripts py_compile PASS, read-only DOCX recovery re-run PASS, independent expert receipt assertions PASS.'
+  - 'Eleven new Gemma claims evaluated: nine literal matches; eight exact source+semantic supported, two invalid exact quotes, one exact quote with semantic overclaim.'
+  - 'No repository product code modified; no full pytest/CI claimed for this evidence-only audit.'
+
+resume_instruction: 'Child completed. Do not repeat cached DOCX and 11-claim review; report docs/acceptance/TDP_RDC_SEVEN_CASE_SOURCE_RECOVERY_2026-10-12.md. Four original cached DOCX verified, four other legacy runs are XML-only; three separate cases no_data. Parent still needs current official EIS/complete contract documents and only final authorized owner signoff. ChatGPT review through this chat/RDC only, no OpenAI API/production/bids/watchdog.'

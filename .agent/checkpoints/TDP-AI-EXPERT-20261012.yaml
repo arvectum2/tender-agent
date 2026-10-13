@@ -1,0 +1,29 @@
+task_id: TDP-AI-EXPERT-20261012
+status: completed
+goal: "Use independent ChatGPT source and semantic second opinion to review local Gemma execution on genuine EIS procurement sources without pretending unknown current notices, legal approval or commercial owner GO are verified."
+definition_of_done:
+  - "Review 20 historical cases at the level of evidence actually available, clearly classify source-rich, archive-only, and no_data."
+  - "Read genuine original contract/technical source text where present, verify precise source anchors and hashes, and identify legal/commercial conditions and contradictions."
+  - "Run local Gemma as first-pass executor for bounded source excerpts and independently check exact quotations and semantic interpretation."
+  - "Publish source-grounded outcomes, false/overstated claims, limitations and no-GO safety decision."
+  - "Preserve production, external submission, and current-owner approval gates; update parent checkpoint."
+completed:
+  - '2026-10-12 third-party aggregator cross-check classified three SOAP no_data records as expired market price inquiries (RQ), not live competitive bids; two potential future-deadline notices identified for separate official live verification. See docs/acceptance/TDP_EXTERNAL_MARKETPLACE_CROSSCHECK_2026-10-12.md. No current EIS official attestation claimed.'
+  - "2026-10-12: 20/20 cases independently screened; 10 with substantive normalized source, seven archived-only, three official SOAP no_data and UNKNOWN."
+  - "2026-10-12: Historical source reconciliation 17/20 official ZIP, 168/168 cached file SHA, 72/72 re-fetched binary UID proofs from earlier technical checkpoints."
+  - "2026-10-12: Independent local source anchor verification 23/23 exact excerpts in ten cases; private evidence SHA+offset manifest."
+  - "2026-10-12: Local Gemma4 12B analyzed ten bounded contract-source cases in 131.37 model seconds; 26 substantive first-pass claims; 25/26 exact quotation checks passed, one quote failed and rejected."
+  - "2026-10-12: ChatGPT semantic review flagged unqualified subcontract prohibition as an overclaim against original language, confirmed separately true 5% security fact but rejected inaccurate Gemma literal quote."
+  - "2026-10-12: Found two stale stored deadlines, three stale notices, one erroneous Gemma XML registry ID and two cases with cancellation-related document types requiring distinct contextual verification."
+  - "2026-10-12: Full Museum of Bread original-source review confirmed mandatory Laravel/MoonShine/Next.js, 07 Dec completion, post-acceptance payment, no advance, 12-month warranty and obligations."
+  - "2026-10-12: Three public source-review documents published under docs/acceptance; no private originals published."
+  - "Earlier fresh disposable staging 5/5 file/resource/document identity, 127/127 normalized hashes+offsets, DP→TA real-source API+report HTTP200, archived export HTTP409 safely upheld; 39 export safety regression tests pass."
+current: "Independent AI second-opinion review and deliverable complete, with explicit source-coverage limits; parent TDP-REFACTOR still blocked by current live EIS attestation, incomplete full-document legal gold and owner's 20 signed business decisions."
+remaining: []
+last_verified_commit: 77a2af0515b27122a70c5aa19c237542aa55aaa4
+test_results:
+  - "Private source anchor verifier: 23 PASS, 0 FAIL, ten original-document cases."
+  - "Local Gemma quote validation: 25 exact PASS, one FAIL of 26 total, one semantic overclaim flagged for independent review."
+  - "R2 staging source/normalization: five file SHA, five resource/document identities, 127/127 chunk hashes and offsets PASS."
+  - "R5 PDF/DOCX/review-only: 39 targeted pytest PASS; saved archived output HTTP409 by design."
+resume_instruction: "AI review complete. For parent TDP task, source fresh official live notice revision/status, recover missing three no_data cases where possible, and independently check complete legal/eligibility/costing of currently actionable procurements before any owner-approved commercial GO. Never invent signatures or submit bids."

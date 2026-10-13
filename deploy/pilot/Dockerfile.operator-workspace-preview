@@ -1,0 +1,17 @@
+# PRIVATE MAC MINI E2E ONLY. Not a public production/VPS image.
+# The selected-file overlay that caused Safari's int(None) incident is banned.
+ARG BASE_IMAGE=arvectum/tender-agent:apr03b-unified-final
+FROM ${BASE_IMAGE}
+
+ARG SOURCE_COMMIT=unknown
+LABEL org.opencontainers.image.revision="${SOURCE_COMMIT}"
+LABEL com.arvectum.component="apr03b-operator-workspace-preview"
+
+# Overlaying only the operator submodule leaves stale shared platform wrappers,
+# report models, scripts and access-controls behind in the intermediary base.
+# Build a reproducible whole-source snapshot, deleting orphaned old modules.
+USER root
+RUN rm -rf /app/src /app/scripts
+COPY --chown=app:app src/ /app/src/
+COPY --chown=app:app scripts/ /app/scripts/
+USER app

@@ -3,10 +3,10 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+from scripts.acceptance.run_r8_migration_backfill import _fixture as production_fixture
 from src.modules.customer_pilot.legacy_binding_backfill import (
     backfill_legacy_run_binding,
 )
-from scripts.acceptance.run_r8_migration_backfill import _fixture as production_fixture
 
 
 class Session:
@@ -165,3 +165,113 @@ def test_conflicting_legacy_hash_is_fail_closed_without_writes(tmp_path, monkeyp
         and artifact.manifest_file_sha256 is None
         and session.flushes == 0
     )
+
+def test_mismatched_tenant_ownership_rejects_before_any_mutation(tmp_path, monkeypatch):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    run.customer_id = "other-customer"
+    before = (result.report_model_hash, artifact.manifest_file_sha256)
+    outcome = backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "CONFLICT"
+    assert outcome.error_category == "ownership_mismatch"
+    assert outcome.mutation_performed is False
+    assert (result.report_model_hash, artifact.manifest_file_sha256) == before
+    assert session.flushes == 0
+
+
+def test_partial_preexisting_snapshot_binding_rejects_without_repair(tmp_path, monkeypatch):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    result.requirements_storage_key = "tampered/requirements.json"
+    outcome = backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "CONFLICT"
+    assert outcome.error_category == "partial_preexisting_binding"
+    assert outcome.mutation_performed is False
+    assert result.requirements_storage_key == "tampered/requirements.json"
+    assert result.report_model_hash is None
+    assert session.flushes == 0
+
+
+def test_unexpected_snapshot_file_rejects_before_writing_binding(tmp_path, monkeypatch):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    source_dir = (tmp_path / result.canonical_report_storage_key).parent
+    (source_dir / "unlisted.txt").write_text("must not be accepted")
+    outcome = backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "INCOMPLETE"
+    assert outcome.error_category == "exact_snapshot_file_set"
+    assert outcome.mutation_performed is False
+    assert result.report_model_hash is None
+    assert session.flushes == 0
+
+
+def test_symlink_inside_snapshot_rejected_without_path_traversal(tmp_path, monkeypatch):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    source_dir = (tmp_path / result.canonical_report_storage_key).parent
+    requirements = source_dir / "requirements.json"
+    external = tmp_path / "external-requirements.json"
+    requirements.rename(external)
+    requirements.symlink_to(external)
+    outcome = backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "CONFLICT"
+    assert outcome.error_category == "invalid_snapshot"
+    assert outcome.mutation_performed is False
+    assert external.is_file() and requirements.is_symlink()
+    assert result.report_model_hash is None
+    assert artifact.manifest_file_sha256 is None
+    assert session.flushes == 0
+
+
+def test_orm_values_restored_when_flush_fails(tmp_path, monkeypatch):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    def fail_flush():
+        session.flushes += 1
+        raise RuntimeError("simulated local flush failure")
+    monkeypatch.setattr(session, "flush", fail_flush)
+    outcome = backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "CONFLICT"
+    assert outcome.error_category == "artifact_manifest_invalid"
+    assert outcome.mutation_performed is False
+    assert all(getattr(result, field) is None for field in (
+        "requirements_storage_key", "requirements_file_sha256",
+        "canonical_report_file_sha256", "binding_manifest_storage_key",
+        "binding_manifest_file_sha256", "source_graph_hash_algorithm",
+        "report_model_hash", "verification_policy_version",
+    ))
+    assert artifact.manifest_file_sha256 is None
+    assert artifact.verification_policy_version is None
+    assert session.flushes == 1
+    # This checks in-memory restoration; caller still owns DB rollback.
+
+
+def test_backfill_facade_resolves_runtime_directory_guard(monkeypatch, tmp_path):
+    session, run, case, result, artifact = _fixture(tmp_path, monkeypatch)
+    from src.modules.customer_pilot import legacy_binding_backfill as legacy
+    verified = []
+    def forbid_directory(path):
+        verified.append(path)
+        raise ValueError("unsafe_filesystem")
+    monkeypatch.setattr(legacy, "_directory", forbid_directory)
+    outcome = legacy.backfill_legacy_run_binding(
+        session=session, run=run, case=case, run_result=result,
+        artifact=artifact, data_root=tmp_path,
+    )
+    assert outcome.status == "CONFLICT"
+    assert outcome.error_category == "invalid_snapshot"
+    assert outcome.mutation_performed is False
+    assert len(verified) == 1
+    assert result.report_model_hash is None
+    assert artifact.manifest_file_sha256 is None
+    assert session.flushes == 0

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import mimetypes
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
 from src.shared.config.settings import Settings, get_settings
 from src.shared.data_platform import DataPlatformHttpClient
@@ -21,6 +22,7 @@ class ProcessedChunk:
     char_start: int
     char_end: int
     token_estimate: int
+    chunk_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,12 @@ class ProcessedDocument:
     extraction_status: str
     text: str
     chunks: tuple[ProcessedChunk, ...]
+    # Preserves canonical generic provenance returned by the Data Platform SDK.
+    # All fields remain optional for existing deterministic/unit adapters.
+    resource_id: str | None = None
+    document_id: str | None = None
+    canonical_uri: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 def process_document_bytes(
@@ -107,10 +115,15 @@ def process_document_bytes(
                 char_start=int(item.get("char_start", 0)),
                 char_end=int(item.get("char_end", 0)),
                 token_estimate=int(item.get("token_estimate", 0)),
+                chunk_id=str(item["chunk_id"]) if item.get("chunk_id") else None,
             )
         )
     return ProcessedDocument(
         extraction_status=status,
         text=text,
         chunks=tuple(chunks),
+        resource_id=str(payload["resource_id"]) if payload.get("resource_id") else None,
+        document_id=str(payload["document_id"]) if payload.get("document_id") else None,
+        canonical_uri=str(payload.get("canonical_uri") or uri),
+        metadata=dict(payload["metadata"]) if isinstance(payload.get("metadata"), dict) else {},
     )

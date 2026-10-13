@@ -1,0 +1,27 @@
+task_id: TDP-REAL-RUN-OWNER-ACCEPTANCE-20261012
+status: blocked
+repository: arvectum2/tender-agent
+goal: Final human acceptance of Tender Agent on an actually launched real procurement run, after completed technical refactor.
+authority: OWNER_ONLY_LIVE_RUN_DECISIONS
+definition_of_done:
+  - Confirm explicit owner launch of a real case and permitted runtime/mutation scope.
+  - Retrieve current official EIS source/revision, number, filing-stage/deadline and complete original attachments; verify SHA and source-specific provenance.
+  - Prove genuine persisted DP/TA identity and normalized chunk evidence, full analysis and appropriate report/export for current notice, with unknowns never promoted to facts.
+  - Obtain independent human legal/commercial source-gold and bidder eligibility, all external-cost economics, third-party IP/license rights for the actual case; legacy 20-case review remains unsigned pending owner decisions.
+  - Present grounded GO/NO_GO/DEFER recommendation and obtain user/owner explicit final acceptance on real run data.
+  - Record production/real-run acceptance artifacts and only then consider permission for submission/deployment as separately authorized.
+completed:
+  - Engineering and isolated E2E acceptance recorded in TDP-TECHNICAL-E2E-ACCEPTANCE-20261012.
+  - User explicitly chose owner acceptance on data from the future real Tender Agent run rather than preliminary historical examples.
+current: Awaiting owner-triggered real Tender Agent launch and specific active procurement; existing historical data is not sufficient for final legal or business approval.
+remaining:
+  - Wait for authorized real Tender Agent run; do not invent or trigger unapproved production mutation.
+  - Verify latest official notice and original source integrity at the moment of analysis.
+  - Complete buyer eligibility, human legal/commercial evaluation and independent source gold.
+  - Get owner-signed GO/NO_GO/DEFER and assess follow-on production/release gates.
+last_verified_commit: '1fdc2a70a42b643ffdbc22fcc09d64f992277e40 (PR #388 merged, exact-head nine CI checks green; real-run owner signoff pending)'
+test_results:
+  - Technical TA base: 3936 passed, 238 skipped, make check PASS.
+  - DP full suite and Ruff PASS; 5/5 original SHA, 5/5 same persistent identity, 127/127 normalized chunks, manual-preview DOCX/PDF 200, archived official 409.
+  - Final real-run acceptance intentionally NOT performed and cannot be inferred from staging proof.
+resume_instruction: On next explicitly initiated real Tender Agent run, read this checkpoint and current .agent/current-task.yaml, use current live official EIS source and attached originals, then perform full legally grounded review and request owner decision on real outputs. Keep production, bids, signatures and watchdog changes gated by explicit separate authorization.

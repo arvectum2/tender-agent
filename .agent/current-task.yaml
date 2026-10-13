@@ -1,77 +1,53 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-07-QUALITY-SLO-EVIDENCE-001
-status: completed
-goal: Provide a reproducible read-only quality/SLO evidence bridge using existing
-  APR-06 Russian EIS case receipts and Data Platform benchmark outputs, with explicit
-  denominators and evidence gaps, no model acquisition/serving changes.
+task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: 'Execute owner-ordered Tender Agent product roadmap after TA/DP engineering refactor.'
 definition_of_done:
-- Reuse existing observability metrics and build offline source-hash-bound APR-07
-  quality snapshot.
-- Measure document acquisition, analysis/readiness and citation-presence without falsely
-  claiming verified citations, OCR or human quality.
-- Ingest existing Data Platform benchmark JSON evidence with SHA256 and strict provenance;
-  no downloads, model promotion or API provider calls.
-- Publish versioned machine-readable reproducible snapshot and human-readable operator
-  runbook.
-- Test corrupt input, missing denominators, no human labels, no automatic GO or promotion,
-  and compare actual local evidence.
-- Run targeted and broad tests, commit changes and checkpoint.
+  - 'APR-03B: reproduce a real authorized read-only 44-FZ workspace flow, verify source integrity, report and citations, fix reproducible code defects and collect owner browser/legal acceptance where required.'
+  - 'APR-04: reconcile, verify and safely merge versioned onboarding PR on current main with real-company profile eligibility and protected private data.'
+  - 'B2B discovery: verify authorized public procurement-source access and deliver 15-20 source-grounded IT opportunities before deciding on connector scope.'
+  - 'APR-06/07: reconcile and run official-source commercial/LLM quality benchmark without inventing human-gold or legal GO.'
+  - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
+  - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
-- Confirmed APR-06 blocked pending human acceptance, baseline branch clean c6c5fe9f.
-- Found existing 28-case EIS candidate corpus, 20 real 44-FZ receipts and nine machine
-  reports, plus existing ops_observability subsystem.
-- Located Data Platform comparison JSON; leave downloads and candidate model lifecycle
-  to Data Platform.
-- 'Added 44-FZ historical quality aggregator: strict run/evidence/source hash checks
-  and NOT_MEASURED semantics for unknown human/OCR denominators.'
-- Measured actual 20 procurements, 17 with documents, 9 analyzable, 109/118 file text
-  availability flags, 9 machine reports with citation presence.
-- Computed analysis-only nearest-rank latency p50 1.23s and p95 11.96s from nine exact-matched
-  local run IDs; not end-to-end.
-- Imported seven pre-existing Data Platform benchmark result JSONs by SHA256 with
-  matching site/reasoning suite checks. No models downloaded or run.
-- Generated deterministic SHA256 quality snapshot docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json.
-- Created source-bound nine-case candidate procurement roster; every label AI_CURATED_SILVER_NOT_HUMAN_GOLD,
-  none promoted to frozen truth.
-- Created Russian operator runbook, proposed unapproved SLO, exact evidence boundaries,
-  and owner-reported Aksay submitted/awaiting-results note.
-- Ruff clean, 17 targeted tests pass, full local pytest 3351 pass 238 skipped, make
-  check pass; regenerated both checked-in manifests byte-identically.
-- Committed implementation 627ae480cc87b882d096585b472955ac7c7d720e.
-current: Bounded APR-07 offline quality and existing Data Platform evidence bridge
-  completed; broader continuous SLO/gold benchmarks gated.
+  - '2026-10-12 inspected main HEAD 6e737d69, GitHub CI 9/9 PASS; TA refactor completed, DP core refactor complete but owner production/gold acceptance blocked.'
+  - 'Mac mini online; isolated APR-03B preview HTTP200 /health and HTTP401 unauthorized workspace. Separate production services not modified.'
+  - '2026-10-12 APR-03B actual authenticated staging preview: EIS 0372200172326000015 import HTTP200, 6 originals, notice XML 3 structured fields KNOWN; 48 focused current-main tests PASS. No final LLM/report or human acceptance; see docs/operations/TA_APR03B_OWNER_PROBE_2026-10-12.md.'
+  - '2026-10-12 APR-04 old PR #252 reconciled onto latest main and pushed updated head 3f289a04, with fail-closed onboarding auth; 3954 full PASS/238 SKIP/0 fail and 57 focused PASS. Exact-head GitHub CI in progress, owner acceptance gated.'
+  - '2026-10-12 first read-only Workspace B2B public-source pass: eight source-attested corporate IT/digital opportunities (including B2B-Center #4632682 and #4628040), one organizer unknown, five individual/non-core exclusions; 15-20 case acceptance and other ETP sources remain OPEN. See docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md.'
+  - '2026-10-12 Safari real saved run toa-run-20261012200402-7249ed analyzed, 6/6 extracted, browser report loaded, XML 3 facts KNOWN. Old preview PDF/DOCX 200; latest-main read-only stage protected 401/200, archived EIS report DEFER, exports 409/409. Added frontend fail-closed export UX and visible no-LLM banner; Node simulation 12/11/4 PASS and focused Python 42 PASS. See docs/acceptance/APR03B_SAFARI_OWNER_REAL_RUN_2026-10-12.md.'
+  - '2026-10-13 PR #391 merged main at 57294f45 after push and PR CI SUCCESS; historical-file fail-closed UI and deterministic-mode labels integrated. Owner private preview not updated.'
+  - '2026-10-13 APR-04 PR #252 retargeted from obsolete APR-03 branch to main, 18 relevant changed files, green CI and 3954/238 local PG16 regression; draft cleared and merged main at 1912acdd. Code integration only: owner legal/business acceptance and production deployment remain pending.'
+  - '2026-10-13 APR-05 PR #253 retargeted to main; GitHub reports merge conflicts, PR still draft. APR-06 #254 and APR-07 #255 remain stacked on APR-05 branch. Do not merge blindly.'
+  - '2026-10-13 Desktop Commander reported two online Macs but terminal commands timed out; Mac mini new private-preview promotion not verified or performed.'
+  - '2026-10-13 APR-05 PR #253 updated with explicit integration gate; draft and dirty with current main, no merge attempted. Earlier-branch Mac mini 105↔106 PG migration and three two-tenant HTTP smoke rounds reported green, but not revalidated on new main.'
+  - '2026-10-13 B2B source report 9 legally identified buyer corporate opportunities published to main in cce54fbb; noncore SEO/marketing leads separated, no outbound messages or paid access.'
+  - '2026-10-13 after owner RDC restart: main CI at ef14fcf8 PASS, PR391/PR252 already merged; APR05 PR253 draft/dirty. Mac mini RDC OFFLINE, MacBook terminal command times out; no local migration/deploy performed.'
+  - '2026-10-13 07:53-08:05 MSK: Mac mini RDC command execution restored. Separate APR05 worktree ta-apr05-current-20261013 created from main f2cb7083; historical APR05 branch integrated with exactly 3 roadmap/checkpoint conflicts resolved, primary APR07 checkout untouched. 30 focused tests PASS, Ruff PASS, make check PASS. Full regression 3971 passed/238 skipped/1 deselected with 3 failures: 2 R9 tests need Docker Engine (unavailable), 1 token-counter subprocess lacked python in PATH (single-test rerun PASS with venv PATH). No commit/merge or deployment done, APR05 worktree has staged changes. Docker Desktop backend running but daemon unavailable; owner preview 18083 down.'
+  - '2026-10-13 recovered Docker Engine 29.8.2. APR05 code reconciled with main after APR04 merge, worktree commit 9b68bbb6, 3975 full pytest PASS/238 SKIP, 3 R9 docker-based tests PASS, Ruff/make check PASS, isolated localhost:18085 actual HTTP synthetic two-tenant E2E PASS (9/9 categories), API auth HTTP401 without Basic, source SaaS defaults disabled. No production or public payment enabled.'
+  - '2026-10-13 APR-05 exact-head CI PR and push 9/9 SUCCESS at d91161fb; merged PR253 into main c21b5f8. Local full 3975 PASS/238 SKIP, isolated synthetic two-tenant 9/9 PASS, R9 Docker three PASS; 18082/18083 healthy, QA 18085 removed. No public SaaS/payments/VPS enabled.'
+  - '2026-10-13 APR-06 PR254 retargeted to main; isolated source merge has six conflicts, including strict EIS original revision selection and legacy facade. Do not replace main source-gating with historic APR06 heuristics; focused and full tests pending.'
+  - '2026-10-13 APR-06 current-main technical integration c1a3238e: six conflicts reconciled, strict current EIS original provenance preserved, cancellation/protocol event never accepted as notice. 56 focused tests PASS; full 4014 PASS/238 SKIP/0 FAIL with PostgreSQL16 and Docker; Ruff and make check PASS. Source manifest 28 candidates, human gold 0/28, commercial thresholds not owner-approved, no final acceptance.'
+  - '2026-10-13 APR07 historical branch source merged onto current APR06 4d0e96c8 in a new isolated worktree; only checkpoint and two roadmap conflicts, resolved to preserve current strict source and human-gold gates. Bounded offline quality snapshot code pending fresh tests, no model downloads.'
+  - '2026-10-13 APR07 bounded quality/SLO snapshot branch integrated on exact APR06 source tree 4d0e96c8: 17 focused PASS, full 4031 PASS/238 SKIP, Ruff and make check PASS; byte-identical regenerated snapshot SHA e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38. No model downloads, human-gold/rolling SLO remain NOT_MEASURED.'
+current: 'APR05 merged. APR06 PR254 candidate tree 4d0e96c8, local 4014 PASS/238 SKIP, exact-head CI pending; human gold 0/28 BLOCKED. APR07 bounded offline quality snapshot 4031 PASS/238 SKIP, reproducible, PR255 exact-head CI pending. APR03B owner source/legal GO DEFER; B2B 9/15-20.'
 pending:
-- 'APR-07 continuous: obtain independently human-labelled frozen Russian procurement
-  truth and run comparable model benchmark after Data Platform finishes its own downloads.'
-- 'APR-07 continuous: observe rolling live operator and page-level OCR metrics with
-  sufficient denominators before declaring SLO achieved.'
-- APR-06 parent remains blocked pending 20-30 verified human-reviewed acceptance,
-  commercial thresholds and EIS attachment revision checks.
-last_verified_commit: 627ae480cc87b882d096585b472955ac7c7d720e
+  - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
+  - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
+  - 'APR-04: PR252 merged into main. Private Arvectum legal-profile UI/business acceptance remains required; no public deployment.'
+  - 'APR-05: code merged and tested, do not activate paid/public SaaS, do not treat internal tenant pilot as real payment or legal acceptance.'
+  - 'APR-06: 4014 full tests PASS; complete PR254 exact-head CI and safe code integration. Actual 28-case expert-human gold 0/28 and threshold approval remain blocked; do not claim commercial acceptance DONE.'
+  - 'APR-07: after APR06 code integration, reconcile PR255 quality metrics and model comparison gates; keep old local model claims explicitly unevaluated.'
+  - 'B2B discovery: 9/15–20 verified corporate IT/digital opportunities. Complete source verification without paid access or ETP submissions.'
+last_verified_commit: 'APR07 source atop PR254 tree 2384b2a3c09e9f7c7963d47d7441dc35f5555f1e; local 4031 PASS/238 SKIP, 17 targeted PASS, exact read-only quality snapshot SHA e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38. GitHub PR255 new head pending.'
 test_results:
-- 17 focused APR-07 pytest passed (1 inherited warning); strict Ruff checks passed.
-- Full suite 3351 passed, 238 skipped, 329 warnings before the two added roster tests;
-  subsequent focused 17 passed.
-- make check success after final source changes; both generated snapshot and source
-  roster reproduce exactly.
-- Real historical sample denominators 17/20 downloaded, 9/20 analyzed, 109/118 text
-  flagged, 9/9 cited presence; no human truth.
-- Data Platform 7 pre-existing quality output hashes imported; model downloads/inference
-  by Tender Agent zero.
-- Snapshot digest e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38.
-resume_instruction: APR-07 bounded offline baseline completed. Do not re-download
-  Russian models; separate Data Platform is performing that work. Check docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
-  and measured snapshot. Next continue independent human procurement truth/provenance
-  and live rolling SLO only when evidence is available; APR-06 acceptance remains
-  blocked, do not invent human reviews or overwrite Aksay bid. APR-03 public Russian
-  VPS, ETP, payments and model promotion remain gated; watchdog disabled.
+  - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
+  - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
+  - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
+  - 'B2B first source pass: nine corporate IT/digital source-attested opportunities including Workspace #19006; report docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md now in main. Remaining 15–20 accepted-source goal OPEN.'
+  - 'PR391 SHA 61b8de2d exact-head push/PR CI success; merged 57294f45. PR252 SHA 3f289a04 exact-head push/PR CI success; merged 1912acdd. Main after both merges needs fresh CI check.'
+resume_instruction: 'APR05 PR253 already MERGED. APR06 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-apr06-reconcile-20261013: main and origin APR06 source merged, strict source/cancel event gating fix, focused 56 PASS, full 4014 PASS/238 SKIP, Ruff/make check PASS, current checkpoint updated. Commit pending merge, push fast-forward to feature/apr06-commercial-acceptance PR254 (already based on main), await exact-head GitHub CI; integrate code only if all gates green and retain APR06 human-gold 0/28 BLOCKED. APR07 PR255 stacked on historic APR06, reconcile next in isolated worktree. Never submit/sign, public deploy, enable payments/watchdog or paid APIs.'
 execution:
-  branch: feature/apr07-quality-slo-evidence
-  predecessor: feature/apr06-commercial-acceptance
-  data_platform_repo: /Volumes/ArvectumSSD/Arvectum/repos/data-platform
-  local_runtime: http://127.0.0.1:18082
-  snapshot: docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json
-  source_roster: docs/quality/APR07_PROCUREMENT_SOURCE_ROSTER_2026-10-09.json
-  operator_runbook: docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
-  model_downloads_performed: false
+  branch: feature/ta-roadmap-exec-20261012
+  manual_override: true

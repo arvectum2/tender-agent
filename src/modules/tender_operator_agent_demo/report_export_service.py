@@ -1,46 +1,59 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from datetime import datetime, timezone
-from html import escape as html_escape, unescape as html_unescape
-from pathlib import Path
 import hashlib
 import json
-import re
 import os
+import re
 import tempfile
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from html import escape as html_escape
+from html import unescape as html_unescape
+from pathlib import Path
 from typing import Literal
-from xml.sax.saxutils import escape as xml_escape
 
 from docx import Document
 from docx.shared import Pt
 from reportlab.lib.colors import HexColor
-from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import ListFlowable, ListItem, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import (
+    ListFlowable,
+    ListItem,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
 
+from src.modules.tender_operator_agent_demo.operator_eis_archive_freshness import (
+    reject_unsafe_historical_eis_binary_export,
+)
+from src.modules.tender_operator_agent_demo.operator_review_export import (
+    review_only_export_sections,
+)
+from src.modules.tender_operator_agent_demo.report_model import (
+    _verified_notice_fact_projection,
+)
 from src.modules.tender_operator_agent_demo.upload_service import (
     _load_metadata,
+    get_demo_run_output_dir,
     get_uploaded_demo_report,
     get_uploaded_demo_report_html,
-    get_demo_run_output_dir,
 )
 from src.tender_research.rag.export_service import (
     DOCX_CONTENT_TYPE,
     PDF_CONTENT_TYPE,
-    _parse_markdown_blocks,
-    _iter_inline_parts,
     _docx_add_formatted_paragraph,
     _ensure_pdf_font_registered,
-    _pdf_styles,
+    _parse_markdown_blocks,
     _pdf_inline_markup,
+    _pdf_styles,
+    _safe_output_path,
     _safe_segment,
     _short_run_id,
-    _safe_output_path,
 )
 
 
@@ -59,7 +72,7 @@ class ExportedDemoReport:
 
 _DEMO_EXPORT_SUBDIR = ("demo", "exports")
 _SAFE_RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$")
-_PDF_RENDERER_VERSION = "r7-persisted-pdf-v2"
+_PDF_RENDERER_VERSION = "r7-persisted-pdf-v3-eis-citations"
 
 
 def _analysis_title(registry_number: str) -> str:
@@ -122,7 +135,7 @@ def _build_export_file_name(registry_number: str, run_id: str, format_name: Lite
 
 
 def _pdf_artifact_key(registry_number: str, run_id: str, report_model_hash: str) -> str:
-    identity = f"{registry_number}\0{run_id}\0{report_model_hash}\0{_PDF_RENDERER_VERSION}".encode("utf-8")
+    identity = f"{registry_number}\0{run_id}\0{report_model_hash}\0{_PDF_RENDERER_VERSION}".encode()
     return hashlib.sha256(identity).hexdigest()[:24]
 
 
@@ -362,12 +375,42 @@ def _pdf_quantity(value: object) -> str:
     return "Не указано в проверенных документах" if value in {"Не указан документацией", "Не указано в проверенных документах"} else str(value)
 
 
-def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> None:
+def _verified_source_lines(model: dict) -> list[str]:
+    """Human-readable, original-XML-bound source lines; never trust generic labels."""
+    facts = _verified_notice_fact_projection(model)
+    lines: list[str] = []
+    for field, label in (
+        ("procurement_title", "Предмет закупки"),
+        ("application_deadline", "Срок подачи заявок"),
+        ("nmck", "НМЦК"),
+    ):
+        item = facts.get(field) or {}
+        citations = item.get("evidence") or []
+        if item.get("status") != "KNOWN" or len(citations) != 1:
+            continue
+        citation = citations[0]
+        lines.append(
+            f"{label}: {item['value']}. "
+            f"Источник: {citation['document']}; {citation['locator']}; "
+            f"ID: {citation['source_ref']}; "
+            f"Фрагмент: {citation['excerpt']}"
+        )
+    return lines
+
+
+def _build_docx_from_canonical(model: dict, title: str, output_path: Path, review_sections: list[tuple[str, list[str]]] | None = None) -> None:
     document = Document(); document.add_heading(title, 0)
-    summary, passport = model["executive_summary"], model["procurement_passport"]
+    summary, passport = model["executive_summary"], model["procurement_passport"]  # noqa: F841 - preserve legacy report variable bindings
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     for line in (f"Официальное название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}", f"Причина статуса объёма: {model.get('volume_status_reason')}"):
         document.add_paragraph(line)
+    source_lines = _verified_source_lines(model)
+    document.add_heading("Факты с подтверждёнными первоисточниками", 1)
+    if source_lines:
+        for source_line in source_lines:
+            document.add_paragraph(source_line)
+    else:
+        document.add_paragraph("UNKNOWN: атрибутированные цитаты отсутствуют; требуется ручная проверка.")
     if model["line_items"]:
         document.add_paragraph(f"Первая извлечённая позиция: {model['line_items'][0].get('display_name') or model['line_items'][0]['original_name']}")
     document.add_heading("Состав и объём закупки", 1)
@@ -382,17 +425,34 @@ def _build_docx_from_canonical(model: dict, title: str, output_path: Path) -> No
     document.add_heading("Ограничения анализа", 1)
     for item in model["missing_data"]: document.add_paragraph(item["description"], style="List Bullet")
     for item in model["limitations"]: document.add_paragraph(item, style="List Bullet")
+    if review_sections:
+        document.add_heading("Неподтверждённые предложения LLM — требуется проверка", 1)
+        document.add_paragraph(
+            "Ни один пункт ниже не подтверждён первоисточником. "
+            "Это предложения для проверки оператором, не решение об участии."
+        )
+        for heading, lines in review_sections:
+            document.add_heading(heading, 2)
+            for line in lines:
+                document.add_paragraph(line, style="List Bullet")
     document.add_paragraph("Техническая карта доказательств сохранена в JSON-версии отчёта.")
     document.save(output_path)
 
 
-def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> None:
+def _build_pdf_from_canonical(model: dict, title: str, output_path: Path, review_sections: list[tuple[str, list[str]]] | None = None) -> None:
     font_name = _ensure_pdf_font_registered(); styles = _pdf_styles(font_name)
     table_style = ParagraphStyle("focused_table", parent=styles["body"], fontSize=6.7, leading=7.5)
-    summary, passport = model["executive_summary"], model["procurement_passport"]
+    summary, passport = model["executive_summary"], model["procurement_passport"]  # noqa: F841 - preserve legacy report variable bindings
     story = [Paragraph(html_escape(title), styles["title"])]
     contract_label = "приложен" if model.get("contract_draft_status") == "present" else ("приложен, но автоматически разобрать его не удалось" if model.get("contract_draft_status") == "parse_failed" else _user_status(model.get("contract_draft_status")))
     story += [Paragraph(_pdf_inline_markup(str(line)), styles["body"]) for line in (f"Название закупки: {model.get('procurement_title')}", f"Номер закупки: {model.get('procurement_number')}", f"Заказчик: {model.get('customer_name')}", f"Место поставки: {model.get('delivery_place')}", f"Проект контракта: {contract_label}", f"Дата публикации: {model.get('publication_datetime')}", f"Окончание подачи заявок: {model.get('application_deadline')}", f"НМЦК: {model.get('nmck')} {model.get('currency')}", f"Решение: {model.get('decision')}", f"ОКПД2: {passport.get('okpd2')}", f"Статус объёма: {_user_status(model.get('procurement_volume_status'))}")]
+    story.append(Paragraph("Факты с подтверждёнными первоисточниками", styles["h1"]))
+    source_lines = _verified_source_lines(model)
+    if source_lines:
+        for source_line in source_lines:
+            story.append(Paragraph(_pdf_inline_markup(source_line), styles["body"]))
+    else:
+        story.append(Paragraph("UNKNOWN: атрибутированные цитаты отсутствуют.", styles["body"]))
     story.append(Paragraph("Состав и объём закупки", styles["h1"]))
     source_issues = [issue for row in model.get("line_items", []) for issue in row.get("field_issues", [])]
     if source_issues:
@@ -426,6 +486,17 @@ def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> Non
         table = Table(data, colWidths=[8*mm, 58*mm, 25*mm, 22*mm, 30*mm, 27*mm], repeatRows=1)
         table.setStyle(TableStyle([("GRID", (0,0), (-1,-1), .25, HexColor("#b9c8d0")), ("BACKGROUND", (0,0), (-1,0), HexColor("#e9f7f5")), ("VALIGN", (0,0), (-1,-1), "TOP")]))
         story.append(table)
+    if review_sections:
+        story.append(Paragraph("Неподтверждённые предложения LLM — требуется проверка", styles["h1"]))
+        story.append(Paragraph(
+            "Каждый пункт далее является только гипотезой для проверки по оригиналам; "
+            "автоматическое юридическое или коммерческое решение не принимается.",
+            styles["body"],
+        ))
+        for heading, lines in review_sections:
+            story.append(Paragraph(_pdf_inline_markup(heading), styles["h1"]))
+            for line in lines:
+                story.append(Paragraph(_pdf_inline_markup(line), styles["body"]))
     model_hash = ((model.get("provenance") or {}).get("production_model_hash") or model.get("production_model_hash") or "unknown")
     doc = SimpleDocTemplate(str(output_path), pagesize=A4, leftMargin=12*mm, rightMargin=12*mm, topMargin=14*mm, bottomMargin=14*mm, title=title, author=f"production_model_hash={model_hash}"); doc.build(story)
 
@@ -433,6 +504,7 @@ def _build_pdf_from_canonical(model: dict, title: str, output_path: Path) -> Non
 def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
     run_id = _validate_run_id(run_id)
     metadata = _load_metadata(run_id)
+    reject_unsafe_historical_eis_binary_export(metadata)
     report = get_uploaded_demo_report(run_id)
     report_markdown = _report_markdown_for_export(run_id, report.report_markdown)
 
@@ -444,8 +516,12 @@ def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
     file_name = _build_export_file_name(registry_number, run_id, "docx")
     output_path = _safe_output_path(root, file_name)
     canonical = _load_canonical_report(run_id)
+    review_sections = review_only_export_sections(get_demo_run_output_dir(run_id))
     if canonical:
-        _build_docx_from_canonical(canonical, title, output_path)
+        if review_sections:
+            _build_docx_from_canonical(canonical, title, output_path, review_sections)
+        else:
+            _build_docx_from_canonical(canonical, title, output_path)
     else:
         _build_docx_from_parts(title, metadata_lines, report_markdown, output_path)
 
@@ -457,7 +533,7 @@ def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
         file_path=str(output_path),
         content_type=DOCX_CONTENT_TYPE,
         size_bytes=output_path.stat().st_size,
-        created_at=datetime.now(timezone.utc).isoformat(),
+        created_at=datetime.now(UTC).isoformat(),
         source_report_path=str(metadata.get("_metadata_path", "")),
     )
 
@@ -465,6 +541,7 @@ def export_demo_agent_report_docx(run_id: str) -> ExportedDemoReport:
 def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
     run_id = _validate_run_id(run_id)
     metadata = _load_metadata(run_id)
+    reject_unsafe_historical_eis_binary_export(metadata)
     report = get_uploaded_demo_report(run_id)
     report_markdown = _report_markdown_for_export(run_id, report.report_markdown)
 
@@ -473,7 +550,14 @@ def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
     metadata_lines = _demo_metadata_lines(metadata)
 
     canonical = _load_canonical_report(run_id)
-    report_model_hash = hashlib.sha256(json.dumps(canonical, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest() if canonical else hashlib.sha256(report_markdown.encode("utf-8")).hexdigest()
+    review_sections = review_only_export_sections(get_demo_run_output_dir(run_id))
+    # Immutable PDF artifacts need a fresh identity when the review-only
+    # appendix changes; existing canonical-only PDFs keep their old hashes.
+    if review_sections and canonical:
+        model_material = {"canonical": canonical, "unverified_llm_review": review_sections, "renderer": "review-v1"}
+        report_model_hash = hashlib.sha256(json.dumps(model_material, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    else:
+        report_model_hash = hashlib.sha256(json.dumps(canonical, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest() if canonical else hashlib.sha256(report_markdown.encode("utf-8")).hexdigest()
     root = _safe_output_dir()
     artifact_key, output_path, manifest_path = _pdf_artifact_paths(root, registry_number, run_id, report_model_hash)
     file_name = output_path.name
@@ -499,7 +583,10 @@ def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
             temporary_path = Path(temporary_name)
             try:
                 if canonical:
-                    _build_pdf_from_canonical(canonical, title, temporary_path)
+                    if review_sections:
+                        _build_pdf_from_canonical(canonical, title, temporary_path, review_sections)
+                    else:
+                        _build_pdf_from_canonical(canonical, title, temporary_path)
                 else:
                     _build_pdf_from_parts(title, metadata_lines, report_markdown, temporary_path)
                 with temporary_path.open("rb") as created:
@@ -524,6 +611,6 @@ def export_demo_agent_report_pdf(run_id: str) -> ExportedDemoReport:
         file_path=str(output_path),
         content_type=PDF_CONTENT_TYPE,
         size_bytes=output_path.stat().st_size,
-        created_at=datetime.now(timezone.utc).isoformat(),
+        created_at=datetime.now(UTC).isoformat(),
         source_report_path=str(metadata.get("_metadata_path", "")),
     )

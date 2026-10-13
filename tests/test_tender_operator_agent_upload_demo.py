@@ -3,6 +3,7 @@ import zipfile
 from io import BytesIO
 from pathlib import Path
 
+import pytest
 from openpyxl import Workbook
 
 from src.modules.tender_operator_agent_demo import upload_service_legacy
@@ -771,3 +772,41 @@ def test_zip_path_traversal_is_rejected_safely(client, monkeypatch, tmp_path):
     assert analyze.status_code == 200
     run_payload = client.get(f"/api/demo/tender-agent/runs/{run_id}").json()
     assert any("unsafe path" in warning for warning in run_payload["warnings"])
+
+
+@pytest.mark.parametrize("previous_status", ["failed", "completed_with_warnings"])
+def test_successful_retry_clears_old_failure_without_erasing_audit(
+    client, monkeypatch, tmp_path, previous_status
+):
+    """Real Safari retry must not display last attempt's int(None) as a current risk."""
+    runs_root = _set_runs_root(monkeypatch, tmp_path)
+    data, files = _sample_upload_payload(include_quote=False)
+    created = client.post("/api/demo/tender-agent/runs", data=data, files=files)
+    assert created.status_code == 200
+    run_id = created.json()["run_id"]
+    metadata_path = runs_root / run_id / "metadata.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    metadata["status"] = previous_status
+    metadata["warnings"] = [
+        "Original source note: preserve during retry",
+        "Analysis failed safely: int() argument must be a string, not NoneType",
+    ]
+    metadata["limitations"] = [
+        "Original limitation: human review required",
+        "Fallback report generation failed. Manual operator review required.",
+    ]
+    metadata_path.write_text(json.dumps(metadata, ensure_ascii=False), encoding="utf-8")
+
+    analyzed = client.post(f"/api/demo/tender-agent/runs/{run_id}/analyze")
+    assert analyzed.status_code == 200
+    assert analyzed.json()["status"] in {"completed", "completed_with_warnings", "needs_review"}
+
+    fresh = client.get(f"/api/demo/tender-agent/runs/{run_id}").json()
+    assert fresh["status"] in {"completed", "completed_with_warnings", "needs_review"}
+    assert "Original source note: preserve during retry" in fresh["warnings"]
+    assert not any(item.startswith("Analysis failed safely:") for item in fresh["warnings"])
+    assert "Original limitation: human review required" in fresh["limitations"]
+    assert "Fallback report generation failed. Manual operator review required." not in fresh["limitations"]
+
+    events = client.get(f"/api/demo/tender-agent/runs/{run_id}/events").json()
+    assert any(event["event_type"] == "analysis_retry_started" for event in events)

@@ -1,0 +1,62 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R5-REVIEW-QUEUE-20261011
+status: completed
+goal: Prepare source-identified, reproducible NO-HUMAN-ASSUMPTIONS reviewer queue
+  for 20 real EIS procurement receipts recorded in unmerged APR-07; preserve archived
+  revision and commercial signoff as explicitly unverified.
+definition_of_done:
+- Reproducible offline standard library CSV generator from explicitly supplied APR06
+  JSON receipts + GPT machine review, validates registry IDs and SHA hex format and
+  never fills human fields from machine output
+- Document source branch/commit, 20 rows, 168 hash-bearing receipts, 0 human official
+  revision checks, key stale archive revision mismatches flagged, without printing
+  source or personal data
+- Pytest synthetic unit coverage incl malformed, duplicate, 0-filled human fields;
+  source generated CSV reviewed
+- PR exact-head GitHub CI green, merge as preparatory artifact only, mark bounded
+  checkpoint completed; leave R5 parent in_progress until 20 actual human reviews
+  and owner signoff
+completed:
+- Verified canonical TA main at 5b12fb99 does not include APR06 20-case JSON; source
+  exists only on unmerged feature/apr07-quality-slo-evidence repo HEAD fc41e652 and
+  tracked commit 891b6fe0.
+- Verified source receipts metadata 20 cases, 168 files hashes, 17 notice hashes and
+  all 20 operator_reviewed=false and official_notice_revision_verified_by_human=false;
+  independent GPT model audit is not human.
+- Created scripts/acceptance/build_apr06_human_review_queue.py, an explicit-input
+  local/offline CSV generator from source receipt and GPT machine-audit metadata;
+  validates registry numbers and hashes, fails closed on duplicates/non-bool human
+  fields, never fills signatures from model output.
+- Created source-labeled 20-row, 168-hash, 2 machine revision mismatch flag CSV. All
+  human fields empty; no internal run_id/source bytes/secret included.
+- Created README documenting original unmerged feature branch fc41e652/891b6fe0 provenance
+  and exact R5 independent reviewer workflow, warnings that this is not acceptance.
+- 11 focused synthetic tests PASS, target Ruff PASS, deterministic output counts 20/168/2
+  and 0 human approvals verified.
+- 'Reconciled latest main after bounded EIS source revision #331 5bd78d75e67a2aaa496c942f807931160a8ff228;
+  source revision checker and 20-case review queue remain independently scoped.'
+- README now warns to import reg_number column as text in Excel, preserving leading
+  zeros.
+- 'Reconciled TA main #331 source revision fix and rechecked 11 focused tests, Ruff
+  and make check PASS.'
+- Full local Python3.12 test suite 3664 passed, 238 skipped, zero failed (143.14s);
+  dual exact-head GitHub quality 9m10s and 9m22s and all integration/security CI passed.
+- 'PR #332 source-labeled 20-case/168 file hash/2 machine flags/0 human signoffs merged
+  main 8588115a9b4f2ea4053fc2fb0e036075b0f11171.'
+current: Completed bounded review queue; human R5 acceptance explicitly unfulfilled.
+pending: []
+last_verified_commit: 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+test_results:
+- 11 synthetic pytest PASSED, 1 warning
+- Ruff PASS
+- 20 rows, 168 files with hashes, 2 machine revision flags, 0 verified human decisions,
+  0 private run IDs
+- 11 focused tests PASS /Ruff PASS/make check PASS before latest merge
+- 3664 full passed /238 skipped /0 failed
+- Both exact-head quality & all integrations CI pass
+- Merged main 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+resume_instruction: 'R5 review queue preparation completed #332, do not repeat. Independent
+  actual-current official EIS binary/revision, source proof and 20 human-signed cases
+  still missing; parent R5/TDP-REFACTOR remains in_progress. No production/watchdog
+  actions.'

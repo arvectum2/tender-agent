@@ -1,0 +1,19 @@
+task_id: TDP-REPORT-MARKER-AUDIT-20261010
+parent_task_id: TDP-REFACTOR-20261009
+status: in_progress
+goal: 'Expose truthful saved EIS report marker counts without leaking source content or conflating literal UNKNOWN with factual correctness.'
+definition_of_done:
+  - 'Read-only source, unknown and LLM review marker counts by report section and EIS run.'
+  - 'Tests prove no raw customer report text is serialized by the auditor.'
+  - 'Exact-head CI green and merged into main.'
+completed:
+  - 'Created additive metrics for source, unknown and unverified model review markers.'
+  - 'Compared 29 EIS runs on old preview and an isolated local-model run using six actual original files.'
+  - 'Six targeted tests passed.'
+current: 'Await PR, CI and merge.'
+pending:
+  - 'CI and merge.'
+last_verified_commit: '6cd01d1e645e93f4d3a81c43673459f81f682b35'
+test_results:
+  - '6 tests passed, targeted Ruff passed.'
+resume_instruction: 'Open stacked PR after classifier extraction #288 and complete exact-head CI/merge. Parent TDP-REFACTOR-20261009 stays in_progress until original-file truth testing of 20+ procurements and owner browser acceptance.'

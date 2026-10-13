@@ -1,0 +1,52 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-REQUIREMENTS-CONTEXT-20261011
+status: completed
+goal: Extract the source-structured 47-line requirements analysis context projection
+  from tender upload monolith without changing field provenance, missing contract
+  terms, delivery UNKNOWN, pricing and manual review.
+definition_of_done:
+- One pure product-owned requirements report projector, explicit existing source helper
+  injection and AST equivalent calculation
+- Preserve source-bound NMCK and OKPD2, delivery unknown, contract drafts/claims,
+  evidence IDs and full API schema
+- Direct tests for service missing contract, goods scope and document roles, verified
+  source metadata/contract facts; full local Python3.12 tests and make check
+- Merge after exact-head dual quality/integration CI, checkpoint complete while TDP-REFACTOR
+  remains in_progress
+completed:
+- Verified current main 368da8c8 and identified 47-line requirements_payload block
+  with source fact/evidence and UNKNOWN semantics.
+- Extracted exactly 47-line requirements_payload into pure operator_requirements_context.py
+  with explicit injection of existing notice-price, source-OKPD2 and delivery helper
+  functions; AST projection value identity PASS.
+- Six direct regression tests protect missing/no evidence/UNKNOWN delivery and contract
+  fields, EIS evidence IDs, sourced NMCK, goods/service distinctions, original contract
+  fact passthrough.
+- 39 related focused local tests passed; targeted Ruff clean and make check passed.
+- 'Full local Python 3.12 pytest: 3634 passed, 238 skipped, 295 warnings, 0 failures
+  (142.93s); targeted Ruff and make check PASS.'
+- 'Before main reconciliation: PR #329 all exact-head GitHub quality 8m33s/9m27s and
+  all other CI passed.'
+- 'After #328 main reconciliation: local full Python3.12 pytest 3634 PASS, 238 skipped,
+  zero failures; make check green.'
+- 'PR #329 all exact-head GitHub CI passed: quality 7m10s and 7m11s, Docker, migrations,
+  Postgres/Redis, security.'
+- Merged TA main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666.
+current: Completed and merged main adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+pending: []
+last_verified_commit: adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+test_results:
+- 39 focused tests passed / 22 warnings
+- AST exact requirements_payload parity passed
+- Target Ruff PASS; make check PASS
+- Full local pytest 3634 passed, 238 skipped, zero failed
+- make check PASS; Ruff PASS
+- 'PR #329 pre-main-reconciliation GitHub dual quality/integrations PASS (will rerun
+  after merge main).'
+- Final post-merge full pytest 3634 passed, 238 skipped, zero failures
+- Exact head CI 2x quality + integration/security PASS
+- Merged adb6551e5c46b4e0e2a1751e5bc1c1a948a29666
+resume_instruction: 'R3 requirements context completed #329. Do not repeat. Continue
+  tender summary #330 and parent R2/EIS original evidence R4 gold/R5 human review.
+  Disabled watchdog unchanged.'
