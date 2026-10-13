@@ -83,6 +83,7 @@ class QualificationCriterion(APIModel):
     requires_chatbot: bool
     lookback_years: int = Field(ge=1, le=20)
     analysis_date: date
+    application_deadline_date: date
 
     @model_validator(mode="after")
     def strict_official_source(self):
@@ -182,7 +183,9 @@ def assess_references(
         return QualificationAssessment(**common, reference_list_state="PARTIAL",
             recommendation="QUALIFICATION_EVIDENCE_PARTIAL",
             reasons=["Incomplete contract list cannot prove absence of qualifying contracts."])
-    cutoff = _cutoff(criterion.analysis_date, criterion.lookback_years)
+    # The official CZN criterion measures five years back from bid deadline,
+    # not from the day when the agent happens to run its analysis.
+    cutoff = _cutoff(criterion.application_deadline_date, criterion.lookback_years)
     qualifying = [
         contract for contract in snapshot.contracts
         if (
@@ -191,7 +194,9 @@ def assess_references(
             and contract.subject in criterion.accepted_subjects
             and (not criterion.requires_chatbot or contract.chatbot_in_scope)
             and contract.acceptance_signed_at is not None
-            and cutoff <= contract.acceptance_signed_at <= criterion.analysis_date
+            and cutoff <= contract.acceptance_signed_at <= min(
+                criterion.analysis_date, criterion.application_deadline_date
+            )
             and bool(contract.contract_document_ref)
             and bool(contract.signed_final_act_ref)
         )
