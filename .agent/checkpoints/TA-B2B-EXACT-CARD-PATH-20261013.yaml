@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-EXACT-CARD-PATH-20261013
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Prevent catalog or homepage URLs from being classified as individual official-source B2B procurement candidates.
+definition_of_done:
+  - Limit original-card URL patterns to individual Workspace and B2B-Center notice pages.
+  - Add positive and negative regression tests preserving PUBLIC_CANDIDATE_ONLY as non-bid authorization.
+  - Execute focused local tests and Ruff on isolated checkout; repair failures.
+  - Open draft stacked PR, check exact-head CI and persist verified commit/test outcomes.
+completed:
+  - Implemented explicit exact individual-card path matching and regression cases on stacked branch.
+current: Local tests, CI and review pending.
+pending:
+  - Run local focused tests and Ruff.
+  - Create draft PR and inspect exact-head CI.
+  - Complete checkpoint when all checks pass; preserve any owner/production/ETP gates.
+last_verified_commit: Not yet verified by tests.
+test_results: []
+resume_instruction: Run isolated Mac mini tests on fix/b2b-exact-original-card-path-20261013, inspect exact commit, update checkpoint and draft PR. Never merge, place bid, log into ETP, pay or enable watchdog.
+execution:
+  branch: fix/b2b-exact-original-card-path-20261013
+  manual_override: true
