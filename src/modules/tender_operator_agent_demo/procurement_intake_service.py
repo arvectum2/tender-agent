@@ -503,6 +503,10 @@ def _infer_public_documents_url(source_url: str) -> str | None:
 def _format_public_context_datetime(value: Any) -> str | None:
     if not isinstance(value, datetime):
         return None
+    # This fallback receives normalized UTC timestamps; NEVER display HH:MM
+    # without an explicit zone when the primary local-time HTML field is absent.
+    if value.tzinfo is not None and value.utcoffset() is not None:
+        return value.astimezone(UTC).strftime("%d.%m.%Y %H:%M UTC")
     if value.hour == 0 and value.minute == 0 and value.second == 0:
         return value.strftime("%d.%m.%Y")
     return value.strftime("%d.%m.%Y %H:%M")
