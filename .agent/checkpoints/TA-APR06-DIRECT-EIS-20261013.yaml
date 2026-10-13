@@ -17,12 +17,13 @@ completed:
   - Current public HTML Museum contains Подача заявок, deadline 2026-10-16 10:00 MSK, last updated 08.10; not an XML edition/UID freshness assertion.
   - Public status report docs/acceptance/APR06_DIRECT_EIS_HTTPS_2026-10-13.md committed. Two regression tests verify source_direct_connection=True creates explicit empty ProxyHandler even with environment proxy variables.
   - Draft PR404 opened against APR06 parent branch, no ETP action.
-current: Direct HTTPS curl checks completed from RU Mac mini. Dated read-only report and two direct-open-proxy policy regressions in draft PR404 head e9f4195b60d0c9ea1e0caf79865cb013b0d64fdd; CI queued. Existing client already implements ProxyHandler({}). No new network client written.
+  - Inspected Python urllib: ProxyHandler({}) suppresses default environment proxy handler without registering any protocol handler itself. Corrected positive regression expectation in b4c9f9d.
+current: Direct HTTPS curl checks completed from RU Mac mini. Dated read-only report and two direct-open-proxy policy regressions in draft PR404 head b4c9f9d5341f415ab57ec2b6180be34b41a7e9cd; CI queued. Existing client already implements ProxyHandler({}). No new network client written.
 pending:
   - Verify PR404 exact-head CI for two offline proxy-bypass policy regressions, repair if needed.
   - Finish checkpoint after CI, retaining CZN live status and current EIS documents as unverified.
-last_verified_commit: 'PR404 research/test head e9f4195b60d0c9ea1e0caf79865cb013b0d64fdd; GitHub PR run 38393641501 queued and push run 38393577416 queued; local pytest not confirmed'
+last_verified_commit: 'PR404 current research/test head b4c9f9d5341f415ab57ec2b6180be34b41a7e9cd; GitHub PR run 38393920103 queued, push run 38393912440 queued; local pytest not confirmed'
 test_results:
   - 'Mac mini direct HTTPS curl: EIS home HTTP200 and Museum official notice HTTP200; CZN official notice HTTP404; RU/Moscow egress, macOS PAC present. Default/direct GET to exact routes agree.'
-  - 'Two new offline proxy bypass regressions committed, local pytest not independently executed. Exact-head PR CI pending.'
-resume_instruction: 'Review PR404 at head e9f4195b60d0c9ea1e0caf79865cb013b0d64fdd and check exact-head CI; repair regressions if CI fails, mark child completed only after CI success. Public EIS home and Museum official notice GET 200 from direct RU Mac mini, CZN original official GET 404 even direct. Do not infer cancellation. Existing source_direct_connection uses ProxyHandler({}), so do not change global PAC/proxy. Parent APR06 remains unaccepted with original-current source docs and 0 true human gold.'
+  - 'Two offline direct-opener regressions committed and corrected to reflect how urllib suppresses registration of empty ProxyHandler; local pytest not independently executed. Exact-head PR/push CI pending.'
+resume_instruction: 'Review PR404 at head b4c9f9d5341f415ab57ec2b6180be34b41a7e9cd and check exact-head CI; repair regressions if CI fails, mark child completed only after CI success. Public EIS home and Museum official notice GET 200 from direct RU Mac mini, CZN original official GET 404 even direct. Do not infer cancellation. Existing source_direct_connection uses ProxyHandler({}), so do not change global PAC/proxy. Parent APR06 remains unaccepted with original-current source docs and 0 true human gold.'
