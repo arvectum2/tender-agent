@@ -58,7 +58,9 @@ def _fixture(tmp_path: Path, *, second=False, missing_doc=False, no_date=False):
         (extracted / saved).write_bytes(raw)
         originals.append({"sha256": hashlib.sha256(raw).hexdigest(),
                           "bytes": len(raw), "file_id": f"FILE-{i+1:02}"})
-        rows.append({"status": "saved", "source_type": "getdocs_archive",
+        rows.append({"status": "saved",
+                     "source_type": ("getdocs_archive" if original_name.endswith(".xml")
+                                     else "notice_xml_attachments"),
                      "name": original_name, "stored_name": f"extracted/{saved}",
                      "size_bytes": len(raw)})
     (archive_root / "attachments_manifest.json").write_text(json.dumps(rows), encoding="utf-8")
