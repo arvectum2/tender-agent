@@ -242,10 +242,14 @@ def evaluate_observation(case: dict, obj: dict) -> dict:
     if not isinstance(claims, list) or not claims:
         _error(f"{reg}: no report claims to verify")
     cited = 0
+    claim_ids: set[str] = set()
     for idx, claim in enumerate(claims):
         if not isinstance(claim, dict):
             _error(f"{reg}: claims[{idx}] invalid")
-        _required(claim.get("claim_id"), f"{reg}.claim_id")
+        claim_id = _required(claim.get("claim_id"), f"{reg}.claim_id")
+        if claim_id in claim_ids:
+            _error(f"{reg}: duplicate report claim ID {claim_id}")
+        claim_ids.add(claim_id)
         if type(claim.get("citation_verified")) is not bool:
             _error(f"{reg}: verified citation marker missing")
         if claim["citation_verified"]:
@@ -268,6 +272,8 @@ def evaluate_observation(case: dict, obj: dict) -> dict:
     package = obj.get("application_package")
     if not isinstance(package, dict) or type(package.get("reviewed")) is not bool or type(package.get("required_rework")) is not bool:
         _error(f"{reg}: explicit package review/rework state required")
+    if not package["reviewed"]:
+        _error(f"{reg}: application package was not human-reviewed")
     confirmed = obj.get("confirmed_defects")
     if not isinstance(confirmed, list):
         _error(f"{reg}: explicit confirmed defects inventory required")
