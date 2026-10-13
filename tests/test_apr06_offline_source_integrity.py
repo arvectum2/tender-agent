@@ -138,7 +138,6 @@ def test_duplicate_sha_attestations_in_same_procurement_fail(tmp_path):
     corrupt = copy.deepcopy(manifest)
     first = corrupt["cases"][0]["verification"]
     first["document_sha256"] *= 2
-    from src.modules.commercial_acceptance.acceptance import sha256
 
     corrupt.pop("freeze")
     corrupt = freeze_manifest(corrupt, frozen_at="2026-10-13T10:05:00+03:00")
