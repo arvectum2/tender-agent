@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FRESH-SOURCE-GATE-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Extend lawful read-only B2B corporate IT discovery with newly published original Workspace and strict aggregator deadline-disagreement exclusions, without fake currently-open/qualified opportunities.
+definition_of_done:
+  - Verify at least one unique new direct original corporate IT procurement with organizer status, deadline and commercial/qualification caveats.
+  - Distinguish original platform proof from secondary aggregators and do not imply bidding access or pricing rights.
+  - Document two identified corporate tender IDs with conflicting secondary advertised deadlines; never promote them to current actionable shortlist pending original.
+  - Produce dated evidence matrix, dedup against B2B existing nine historical cards, source URLs and status confidence.
+  - Validate report/guard tests and exact GitHub PR CI where applicable; update checkpoint completed or blocked with remaining 15-20 source-verified target.
+completed:
+  - PR416 original-EIS SaaS HTTP bearer role/source test exact source fc24201c GitHub three workflows SUCCESS, child checkpoint completed.
+  - Source report PR399 existing historical 9 corporate IT/digital public-card evidence but not 9 currently active, and original-status-first gate for Workspace #19004.
+current: Add newly published direct Workspace #19023 with evidence and disallow false active status for conflicting secondary-only INK IT tenders.
+pending:
+  - Dated source-addendum original URL/organizer/deadline and false-active negative evidence.
+  - Run source assertions and GitHub CI; update canonical main progress and close research child.
+last_verified_commit: 'New research branch from PR399 source, no new docs yet.'
+test_results: []
+resume_instruction: 'Continue research/b2b-fresh-source-gate-20261013 stacked on PR399; read existing docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md and source status gate. Newly direct original Workspace #19023 published Oct13, status Идет прием заявок, organizer Юридическое лицо, budget 100-400k RUB, deadline Oct20, requires verified prior 1C-Bitrix Aspro frontend migration examples, Arvectum none confirmed -> FIT_CONDITIONAL, not a vetted bid. Original https://workspace.ru/tenders/integraciya-gotovogo-frontend-v-deystvuyuschiy-1s-bitriks-aspro-19023/. Corporate IT INK SZ-356-26 aggregator deadline Oct7 vs Oct14 and SZ-371-26 Oct14 vs Oct21, no official primary -> status REVIEW_REQUIRED not counted currently open. Fabrikant #3502252 is industrial software PRICE MONITORING per aggregator, not verified contract invitation. Avoid paid/membership actions, no ETP bids/auth/scraping, no invented prices/current status. Preserve manual_override true and watchdog off. Confirm current source evidence then commit report/CI, finish child.'
