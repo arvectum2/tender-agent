@@ -32,7 +32,7 @@ def discover_run_composite_pdf_observation(
     """Source-bound single PDF rubric; never fill missing supplier evidence."""
     if not _RUN_ID.fullmatch(run_id):
         raise ValueError("Invalid owned EIS run ID")
-    metadata = load_demo_run_metadata(run_id)
+    metadata = _run_service.load_demo_run_metadata(run_id)
     number = str(metadata.get("reestr_number") or "")
     if (
         metadata.get("procurement_source") != "zakupki_gov_ru_getdocs_ip"
