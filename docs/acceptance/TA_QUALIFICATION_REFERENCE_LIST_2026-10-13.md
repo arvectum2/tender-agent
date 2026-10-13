@@ -37,7 +37,7 @@ POST /api/company-profile/customers/{customer_id}/qualification/assess
 Content-Type: application/json
 ```
 
-Тело — поле `czn_source_bound_criterion` из [owner input](arvectum_owner_reference_list_and_czn_2026-10-13.json), в котором закреплены номер закупки, версия EIS, UID + SHA-256 исходного документа оценки, веса критериев, виды допускаемого опыта и дата анализа.
+Тело — поле `czn_source_bound_criterion` из [owner input](arvectum_owner_reference_list_and_czn_2026-10-13.json), в котором закреплены номер закупки, версия EIS, UID + SHA-256 исходного документа оценки, веса критериев, виды допускаемого опыта, дату анализа и **дату окончания подачи**. Пять лет для зачёта подписанных актов отсчитываются **от срока окончания подачи** (23.10.2026), а не от времени запуска агента; будущий на день анализа акт ещё не считается состоявшимся.
 
 Сервис также возвращает `QUALIFICATION_EVIDENCE_UNKNOWN`, если снимок референс-листа старше **90 дней** относительно даты анализа. Для долгих проектов список необходимо периодически переподтверждать. Сервис возвращает `QUALIFICATION_EVIDENCE_UNKNOWN`, если факт отсутствует или его источник не `CUSTOMER_PROVIDED`/`OWNER_CONFIRMED`; `QUALIFICATION_EVIDENCE_EXPIRED` если текущая версия просрочена; `QUALIFICATION_EVIDENCE_PARTIAL` если список неполный; **`NO_GO_QUALIFICATION_COMPETITIVENESS`** при подтверждённом нуле договоров и преобладающем весе квалификации (инженерное правило данного MVP: не менее 60%); `QUALIFYING_REFERENCES_PRESENT_REVIEW_SCORE` если есть потенциально зачётные контракты.
 
@@ -54,7 +54,7 @@ POST /api/company-profile/customers/{customer_id}/qualification/decision-core
 Content-Type: application/json
 ```
 
-Он принимает `criterion` (как в примере выше), `procurement_model` с реальными номером и режимом закупки, а также `source_binding` (`procurement_number`, `notice_version`, `document_uid`, `document_sha256`). Строго сверяет их между собой, **каждый раз читает референс-лист выбранной компании из БД**, вычисляет квалификационный результат и возвращает `decision_core` с полем `competitive_qualification` и отдельным `decision.competitive_recommendation`. При ЦЗН и подтверждённом нуле это `NO_GO`. Существующий `decision.status` о нормативной/документальной готовности и все запреты на внешние действия **не меняются**.
+Он принимает `criterion` (как в примере выше), `procurement_model` с реальными номером и режимом закупки, а также `source_binding` (`procurement_number`, `notice_version`, `document_uid`, `document_sha256`, `application_deadline_date`). Строго сверяет их между собой, **каждый раз читает референс-лист выбранной компании из БД**, вычисляет квалификационный результат и возвращает `decision_core` с полем `competitive_qualification` и отдельным `decision.competitive_recommendation`. При ЦЗН и подтверждённом нуле это `NO_GO`. Существующий `decision.status` о нормативной/документальной готовности и все запреты на внешние действия **не меняются**.
 
 Подмена источника данными другой закупки или другой редакции отвергается; однако строгое равенство `source_binding` полям `criterion` **ещё не заменяет отдельную проверку, что эти хеши действительно получены из доверенного реестра оригиналов ЕИС**. В нашем случае файл оценки уже отдельно хеширован при исходном аудите ЦЗН.
 
