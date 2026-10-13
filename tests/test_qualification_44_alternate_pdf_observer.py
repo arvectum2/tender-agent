@@ -59,7 +59,7 @@ def _fake_original(*, latest_version=2, url_host="zakupki.gov.ru"):
     latest = version_xml(latest_version)
     file_map = {
         f"notice_{v}.xml": latest if v == latest_version else version_xml(v)
-        for v in sorted(set([1, latest_version]))
+        for v in sorted({1, latest_version})
     }
     soap = _zip(file_map)
     receipt = {
