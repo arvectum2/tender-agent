@@ -7,6 +7,7 @@ import subprocess
 from datetime import date
 from urllib.parse import parse_qs, urlsplit
 
+from src.modules.company_profile_store import qualification_run_service as _run_service
 from src.modules.company_profile_store.qualification_44_alternate_observer import (
     observe_44_alternate_pdf_text,
     verify_44_alternate_originals,
@@ -15,7 +16,6 @@ from src.modules.company_profile_store.qualification_original_source import (
     _first,
     _local_name,
 )
-from src.modules.company_profile_store import qualification_run_service as _run_service
 from src.modules.company_profile_store.qualification_run_service import (
     _ALLOWED_TYPES,
     _DOCUMENT_HOST,
@@ -26,6 +26,8 @@ from src.modules.company_profile_store.qualification_run_service import (
     _current_notice_from_archive,
     _regular_inside,
 )
+
+
 def discover_run_composite_pdf_observation(
     run_id: str, *, analysis_date: date
 ) -> dict:
@@ -52,7 +54,7 @@ def discover_run_composite_pdf_observation(
         if not isinstance(item, dict) or item.get("source_type") not in _ALLOWED_TYPES:
             continue
         name = str(item.get("original_name") or "")
-        if not name.lower().endswith(".pdf") or not re.search("оценк|критери", name, re.I):
+        if not name.lower().endswith(".pdf") or not re.search("оценк|критери", name, re.IGNORECASE):
             continue
         url = urlsplit(str(item.get("source_url") or ""))
         uid = parse_qs(url.query).get("uid", [])
