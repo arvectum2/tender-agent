@@ -4,7 +4,6 @@ from __future__ import annotations
 import copy
 import json
 from datetime import datetime
-from pathlib import Path
 
 import pytest
 
@@ -131,3 +130,14 @@ def test_reject_naive_datetime_and_asof_time_propagates():
     review = build_review(manifest, audit, prefill, as_of=as_of)
     assert review["summary"]["archived_deadlines_passed_as_of_date"] == 6
     assert review["summary"]["archived_deadlines_future_as_of_date"] == 3
+
+
+def test_checked_in_asof_artifact_is_bitwise_reproducible_from_input():
+    from scripts.acceptance.apr06_ai_provisional_review import SOURCES
+
+    persisted = json.loads(
+        (SOURCES / "apr06_ai_provisional_asof_2026-10-13.json").read_text(encoding="utf-8")
+    )
+    assert persisted == build_review(*_sources(), as_of=AS_OF)
+    assert persisted["provenance"]["source_hashes_recomputed"] == 0
+    assert persisted["provenance"]["new_primary_bytes_verified"] == 0
