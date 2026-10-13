@@ -10,12 +10,21 @@ definition_of_done:
   - Extend original scoring parser only if real alternative documents and precise source-grounded acceptance can be demonstrated; otherwise preserve NOT_ASSESSED and document blocking evidence.
   - Validate read-only audit tests/tool outputs and GitHub CI if code is committed, update canonical checkpoint.
 completed:
+  - Read-only source inventory from authorised Mac mini Docker volume arvectum-local-e2e_app-artifacts (no network), 54 metadata.json, 20 unique archived 44-FZ getDocsIP procurement numbers.
+  - Exactly one document title candidate explicitly mentioning evaluation/scoring, CZN 0348100024426000039; independently verified original SOAP EOK2020 v4 + award DOCX sha256 bda1eff35... from preceding PR408, not inferred from old metadata.
+  - The other 19 cases have no scoring named file detected, but their file contents were not scanned; therefore only NOT_ASSESSED, no blanket claim of absence.
+  - Zero old archived metadata rows carry new download-time archive SHA receipt; never forge older evidence.
+  - 223-FZ original scoring PDFs are NOT AUDITED in this 44-FZ volume inventory; further parsers require genuinely different current original evaluation samples.
+  - Machine inventory JSON, Russian matrix report and explicit block code for unsupported other formats committed as stacked draft PR411 on PR410.
+  - Mac mini isolated source head 05a3665: 47 focused pytest PASS, Ruff PASS, JSON validation PASS, git diff --check PASS.
   - PR410 reference editor source head 8da48571 exact PR/push 3/3 SUCCESS and child checkpoint completed; no live data changed.
-current: Discover available archived real getDocsIP originals and source manifests from Mac mini without new network actions.
+current: Research audit complete and documented in draft PR411, head 05a36653f30078a779814d6e5510fb8a37bd5022; local 47 pytest PASS and Ruff/JSON PASS, exact GitHub PR/push CI pending.
 pending:
-  - Inventory original SOAP ZIPs and scoring attachments for non-CZN runs.
-  - Compare evidence to current accepted scoring parser; propose safe incremental next coverage.
-  - Record matrix, verify and finish checkpoint or mark blocked with exact evidence needs.
-last_verified_commit: 'New branch stacked on PR410; no source audit results yet.'
-test_results: []
-resume_instruction: 'Inspect original read-only EIS runs and attachments on authorized Mac mini, not GitHub fabricated sources. CZN v4 original scoring fully verified, other formats unsupported. Do not generalize 70/30 or auto-generate 223-FZ decision from unsupported sources. No prod, bids, ETP, signing, payments, paid APIs or watchdog. Keep all stacked PRs draft and preserve main manual_override true.'
+  - Check PR411 exact-head GitHub PR and push CI; repair if failing, then mark research child completed.
+  - Separate new parser development is blocked pending at least two distinct current original EIS scoring examples (44-FZ alternate + 223-FZ).
+last_verified_commit: 'PR411 source 05a36653f30078a779814d6e5510fb8a37bd5022, Mac mini 47 pytest PASS, Ruff PASS, source inventory JSON valid, git diff --check PASS; GitHub full exact CI pending.'
+test_results:
+  - 'Mac mini source 05a3665: 47 targeted pytest PASS, Ruff PASS, JSON valid and git diff --check PASS.'
+  - 'Read-only Docker volume historical evidence audit: 54 metadata, 20 unique 44-FZ, only CZN title/primary source verified, no historic download-time receipt, 223-FZ scoring evidence NOT AUDITED.'
+  - 'PR411 exact GitHub PR/push CI pending.'
+resume_instruction: 'Active bounded research child TA-QUALIFICATION-DIVERSE-EIS-CORPUS-20261013, branch research/qualification-diverse-eis-corpus-20261013 stacked draft PR411 on PR410 source head 05a36653f30078a779814d6e5510fb8a37bd5022. Mac mini 47 pytest PASS Ruff/JSON PASS, inventory 54 archival EIS run metadata 20 unique 44-FZ, one explicitly-named scoring DOCX from verified CZN original v4, no other scoring file titles (not proof of content absence), old runs have no download-time receipts, 223-FZ original scored docs not inspected. Check exact PR/push GitHub CI and mark this research child complete when green. Further parser expansion must remain BLOCKED_PENDING_DISTINCT_PRIMARY_ORIGINAL_DOCUMENTS; never assume 70/30 for other cases or invent competitive NO_GO. Preserve all PRs draft, no ETP/prod/SaaS/sign/paid action, manual_override true and watchdog off.'
