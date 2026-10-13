@@ -48,6 +48,20 @@ def test_original_lot_page_references_existing_parent_and_does_not_create_second
     assert lot.bid_ready is False and parent.bid_ready is False
 
 
+def test_separately_verified_parent_and_lot_share_procedure_key():
+    parent = DATA["verified_parent_original_notice"]
+    lot = DATA["original_pages"][0]
+    assert parent["direct_http_status"] == 200
+    assert parent["retrieved_bytes"] == 64714
+    assert len(parent["html_sha256"]) == 64
+    assert parent["card_number"] == lot["parent_procedure_number"]
+    assert parent["linked_lot_card_number"] == lot["card_number"]
+    assert parent["unique_procedure_key"] == "b2b-center:4632682"
+    assert parent["original_deadline_msk"] == "2026-10-14T16:00:00+03:00"
+    assert parent["participation_terms_verified"] is False
+    assert parent["new_unique_qualified_leads_added"] == 0
+
+
 def test_exact_original_receipt_and_exclusion_categories_remain_unpromoted():
     original = DATA["original_pages"]
     assert len(original) == 3
