@@ -15,6 +15,7 @@ from src.modules.company_profile_store.qualification_original_source import (
     _first,
     _local_name,
 )
+from src.modules.company_profile_store import qualification_run_service as _run_service
 from src.modules.company_profile_store.qualification_run_service import (
     _ALLOWED_TYPES,
     _DOCUMENT_HOST,
