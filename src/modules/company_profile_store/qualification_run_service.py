@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import hashlib
 import re
+import xml.etree.ElementTree as ET
+import zipfile
 from datetime import date
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
@@ -90,7 +92,7 @@ def _archive_bytes(folder: Path) -> bytes:
                 names = [m.filename for m in archive.infolist()]
                 if any("epNotification" in x for x in names):
                     candidates.append(raw)
-        except (ValueError, OSError, EOFError, KeyError):
+        except (ValueError, OSError, EOFError, KeyError, zipfile.BadZipFile, ET.ParseError):
             continue
     if len(candidates) != 1:
         raise ValueError("Unique saved original SOAP notice archive not found")
@@ -131,6 +133,7 @@ def discover_run_criterion(run_id: str, *, analysis_date: date):
             or url.port is not None
             or url.path != "/44fz/filestore/public/1.0/download/priz/file.html"
             or len(uid) != 1
+            or parse_qs(url.query) != {"uid": uid}
         ):
             continue
         # Source UID/name/size must match latest original EIS notice, never a
@@ -188,7 +191,7 @@ def assess_owned_run_qualification(
     }
     try:
         criterion = discover_run_criterion(run_id, analysis_date=as_of)
-    except (ValueError, OSError, KeyError) as exc:
+    except (ValueError, OSError, KeyError, zipfile.BadZipFile, ET.ParseError) as exc:
         return {
             **base,
             "source_status": "ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED",
