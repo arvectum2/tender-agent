@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-DIVERSE-EIS-CORPUS-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Identify independently attested real current original EIS scoring documents from distinct 44/223-FZ procurements before expanding unsupported parser criteria or PDF formats.
+definition_of_done:
+  - Enumerate saved read-only company_agent_runs and separate original getDocsIP ZIP + latest notice-scoped attachment evidence from mere uploaded/manual synthetic cases.
+  - Produce concise source- and digest-based compatibility matrix for CZN and at least attempted two other distinct procurements; distinguish evidence confirmed, missing, expired, contradictory, or unsupported.
+  - Extend original scoring parser only if real alternative documents and precise source-grounded acceptance can be demonstrated; otherwise preserve NOT_ASSESSED and document blocking evidence.
+  - Validate read-only audit tests/tool outputs and GitHub CI if code is committed, update canonical checkpoint.
+completed:
+  - PR410 reference editor source head 8da48571 exact PR/push 3/3 SUCCESS and child checkpoint completed; no live data changed.
+current: Discover available archived real getDocsIP originals and source manifests from Mac mini without new network actions.
+pending:
+  - Inventory original SOAP ZIPs and scoring attachments for non-CZN runs.
+  - Compare evidence to current accepted scoring parser; propose safe incremental next coverage.
+  - Record matrix, verify and finish checkpoint or mark blocked with exact evidence needs.
+last_verified_commit: 'New branch stacked on PR410; no source audit results yet.'
+test_results: []
+resume_instruction: 'Inspect original read-only EIS runs and attachments on authorized Mac mini, not GitHub fabricated sources. CZN v4 original scoring fully verified, other formats unsupported. Do not generalize 70/30 or auto-generate 223-FZ decision from unsupported sources. No prod, bids, ETP, signing, payments, paid APIs or watchdog. Keep all stacked PRs draft and preserve main manual_override true.'
