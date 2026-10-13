@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: APR06-ADVERSARIAL-ACCEPTANCE-20261013
-status: in_progress
+status: completed
 goal: Independently challenge Tender Agent APR-06 commercial acceptance with adversarial input tests and prevent unsupported ACCEPTED outcomes.
 definition_of_done:
   - Independently inspect actual APR-06 and APR-07 source code and existing acceptance fixtures.
@@ -13,12 +13,9 @@ completed:
   - Re-read canonical .agent/current-task.yaml from main; existing APR06 head 04f5ba77 and APR07 head 54a89534 independently confirmed CI green.
   - Reviewed actual source and existing tests of src/modules/commercial_acceptance/acceptance.py and APR07 product snapshot.
   - Identified unchecked application packages passing with other reviewed cases, duplicate claim IDs inflating citation coverage, and self-declared hashes/owner approval not constituting independent source authentication.
-current: 'Implement fail-closed code and adversarial test regressions in isolated APR06 branch.'
-pending:
-  - Patch APR06 score validation and test adversarial cases.
-  - Record limitations and independent review with explicit severity and residual risk.
-  - Await exact-head GitHub CI, then integrate code safely only if gates succeed.
-  - Preserve APR06 human-gold and current EIS source legal-review blockers.
+current: 'Engineering adversarial audit done: PR394 merged into APR06; both exact-head CI runs on APR06 e5af3c29 successful; official source and owner decisions remain external blockers.'
+pending: []
 last_verified_commit: 'APR06 parent 04f5ba77baebe7194b4fa91c5dfb6c8a06d12e17 (prior PR/push CI green).'
-test_results: []
-resume_instruction: 'Work in fix/apr06-adversarial-acceptance-gates-20261013 based on APR06 04f5ba77. Add strict per-observation unique claim_id and complete application package review checks to prevent false accepted metrics; write tests showing old code accepts partial package and duplicate citation inflation. CI on isolated PR first. Audit highlights source verification merely self-attested until actual independently checked EIS originals and hashes exist; no human reviews are fabricated. Do not merge APR06/07 into main without review gold, do not submit bids or enable payments.'
+test_results:
+  - 'APR06 e5af3c29 exact-head push and PR GitHub CI both SUCCESS; source-only negative tests reject duplicate claim IDs and unchecked application packages. Exact local full regression count not independently observed in this audit turn.'
+resume_instruction: 'AUDIT COMPLETED: PR394 merged into draft APR06 head e5af3c29, CI green. Do not repeat duplicate-claim/unchecked-package patch. Preserve HIGH severity release gate issue #395: independently hash real EIS original file bytes and bind current revision, verify externally attributable owner signoff, prevent fabricated human-gold. APR07 dependent draft head 96b749ee and exact CI green, do not promote to main without human corpus and accepted thresholds. No external bids, paid API or public deployment.'
