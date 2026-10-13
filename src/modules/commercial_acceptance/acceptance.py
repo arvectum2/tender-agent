@@ -366,8 +366,12 @@ def score(manifest: dict, observations: dict[str, dict], thresholds: dict) -> di
         status = "INSUFFICIENT_REVIEW_EVIDENCE"
     elif not thresholds_approved:
         status = "PENDING_OWNER_THRESHOLD_APPROVAL"
+    elif not meets:
+        status = "FAILED_ACCEPTANCE"
     else:
-        status = "ACCEPTED" if meets else "FAILED_ACCEPTANCE"
+        # Self-attested JSON does not establish official-source provenance or
+        # independently authenticated owner approval.
+        status = "PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION"
     return {
         "schema_version": "apr06-report-v1",
         "corpus_manifest_sha256": manifest["freeze"]["manifest_sha256"],
@@ -378,6 +382,9 @@ def score(manifest: dict, observations: dict[str, dict], thresholds: dict) -> di
         "threshold_limits": limits,
         "threshold_checks": comparisons,
         "thresholds_approved": thresholds_approved,
+        "owner_approval_authenticated": False,
+        "independent_official_eis_provenance_verified": False,
+        "commercial_release_authorized": False,
         "status": status,
         "operator_verified_cases": len(ready),
         "confirmed_regressions": regression_list,
@@ -439,7 +446,7 @@ def main(argv: list[str] | None = None) -> int:
             result = score(manifest, seen, load_json(args.thresholds))
             _new_file(args.output, result)
         print(json.dumps(result, ensure_ascii=False, indent=2))
-        return 0 if result.get("status") == "ACCEPTED" or args.command in {"validate", "freeze"} else 2
+        return 0 if args.command in {"validate", "freeze"} else 2
     except AcceptanceError as exc:
         print(json.dumps({"status": "BLOCKED", "reason": str(exc)}, ensure_ascii=False))
         return 2
