@@ -22,14 +22,17 @@ def test_real_archived_20_cases_no_source_or_human_promotion():
     assert data["summary"]["archived_latest_unmatched"] == 27
     assert data["summary"]["states"] == {
         "ARCHIVED_LATEST_ATTACHMENTS_INCOMPLETE": 7,
-        "ARCHIVED_NAME_SIZE_ONLY_CORRELATION": 9,
+        "ARCHIVED_UID_SHA_CORRELATION": 9,
         "DEADLINE_UNKNOWN_FROM_ARCHIVED_NOTICE": 1,
         "NO_ARCHIVED_NOTICE": 3,
     }
     assert data["official_current_eis_verified"] == 0
     assert data["human_gold_labels"] == 0
     assert data["commercial_accepted"] is False
-    assert data["notice_uid_or_attachment_version_link_verified"] is False
+    assert data["current_live_eis_uid_binding_verified"] is False
+    assert data["archived_eis_notice_uid_sha_correlation_supported"] is True
+    assert data["summary"]["archived_latest_uid_sha_correlations"] == 50
+    assert data["summary"]["archived_latest_uid_unmatched"] == 27
     assert all(c["official_current_eis_status_verified"] is False
                and c["official_attachment_uid_bound"] is False
                and c["human_reviewed"] is False
@@ -49,6 +52,7 @@ def test_regressions_on_two_changed_notices_and_missing_attachment():
     assert czn["latest_archived_deadline"] == "2026-10-19T10:00:00+03:00"
     assert czn["latest_notice_attachment_count"] == 7
     assert czn["archive_name_size_unmatched"] == 1
+    assert czn["archive_uid_unmatched"] == 1
     assert czn["source_state"] == "ARCHIVED_LATEST_ATTACHMENTS_INCOMPLETE"
 
 
