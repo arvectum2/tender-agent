@@ -14,11 +14,18 @@ definition_of_done:
 completed:
   - Parent PR407 tenant-aware reference list / Decision Core exact-head PR/push CI SUCCESS; child checkpoint marked completed.
   - APR06 real original CZN SOAP v4 XML+UID/source attachment receipts verified, original scoring DOCX 22,427 bytes SHA256 bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8.
-current: Investigate real original award DOCX tables, implement conservative extractor and offline source-bound replay.
+  - Implemented read-only fail-closed original EOK2020 XML/docx table parser, extracting actual CZN 70% qualification/30% price, completed 44/223+chatbot signed acts and 5y from EIS endDT; no assistant hardcoding of scoring weights.
+  - Original archived EIS SOAP ZIP and scoring DOCX copied/retained only on locked Mac mini ArvectumSSD, original UID/name/size/HTTPS path, SHA256 correlated to previously attested v4 receipt; digital signatures NOT validated.
+  - Offline script scripts/acceptance/replay_qualification_scoring.py successfully reproduced CZN competitive NO_GO from REAL original files + owner asserted 0 contracts, no ETP/data writes or LLM.
+  - Added 17 synthetic fail-closed negative/positive tests; Mac mini isolated checkout head 49e172d pytest 57 PASS, 8 SKIP, Ruff PASS, JSON source replay PASS and git diff clean.
+  - Opened stacked draft PR408 against PR407, no merge or deployment.
+current: PR408 code/docs head 49e172dec77e7a1d8d07b4cc5f50629964de838e, original source-derived scoring and owner-zero NO_GO replay verified. 57 pytest PASS/8 SKIP, Ruff PASS; exact GitHub CI queued.
 pending:
-  - Add deterministic scoring DOCX parser and EIS source binding.
-  - Add safe local replay against actual authorized private files.
-  - Add positive/negative tests and exact-head CI; complete checkpoint when verified.
-last_verified_commit: 'New stacked branch from PR407, no parser code yet'
-test_results: []
-resume_instruction: 'Continue feature/qualification-official-source-20261013 from checkpoint. Parent PR407 current last accepted exact CI head a400d8fd... (final checkpoint metadata efd162d), company ref-list module at src/modules/company_profile_store/qualification_references.py. Existing original getDocsIP XML v4 ZIP private on Mac mini /Volumes/ArvectumSSD/Arvectum/runtime/ta-apr06-czn-v4-eis-official-20261013/documentation-archive.zip, original scoring DOCX privately within Docker volume arvectum-local-e2e_app-artifacts at /evidence/tender_operator_demo/toa-run-20261009052425-d20f58/input/07-060577-26.docx. Source receipt public metadata docs/acceptance/apr06_czn_v4_public_eis_source_receipts_2026-10-13.json in PR404 stacked branch (not in PR407 main branch) so avoid assuming files present in this branch; can create source-bound minimal helper with locked CZN receipt. Confirm latest v4 EIS is XML SHA bd6a..., award doc UID 01A0F10655C27A35B5A5A70090D2BB1A and SHA bda1eff3..., deadline 23 Oct 10 MSK. Implement parser without copy/pasted weights. No official digital signature cryptographic verification, no ETP, payouts, prod, watchdog or parent acceptance.'
+  - Check exact-head GitHub PR/push CI for PR408, repair only confirmed failures.
+  - Update child status completed after CI success; preserve draft. Follow-on auto-run source discovery and full report/UI integration remains separate roadmap.
+last_verified_commit: 'PR408 source/report/tests head 49e172dec77e7a1d8d07b4cc5f50629964de838e; Mac mini 57 pytest PASS/8 SKIP, Ruff PASS, real original CZN v4 SOAP and scoring DOCX source-derived replay returned qualification NO_GO. GitHub exact-head CI pending.'
+test_results:
+  - 'Mac mini isolated 57 pytest PASS/8 SKIP, Ruff PASS, git diff --check PASS, direct original SOAP-v4/docx SHA and scoring table extraction 70/30 plus owner zero => NO_GO, signatures/human gold FALSE.'
+  - 'Synthetic negative tests: source ZIP/DOCX SHA, stale version, wrong UID, wrong HTTPS host, timezone, ZIP traversal, XML DTD, ambiguous/duplicate/nonintegral scoring, missing chatbot, missing 44/223, missing five year/unfinished exclusion all abstain/reject.'
+  - 'Exact PR408 GitHub push/PR CI pending.'
+resume_instruction: 'PR408 branch feature/qualification-official-source-20261013 stacked on PR407; code/docs head 49e172dec77e7a1d8d07b4cc5f50629964de838e tested Mac mini 57 pytest PASS/8 SKIP/Ruff PASS plus REAL EIS getDocsIP SOAP ZIP + original scoring DOCX SHA/UID replay -> deterministic 70 qualification/30 price from DOCX, 44/223 signed act 5y, owner zero => qualification COMPETITIVE NO_GO not legal bar. Check exact PR/push GitHub CI, repair and mark child completed when green. Private source files only Mac mini ArvectumSSD; public source pinned docs/acceptance/apr06_czn_v4_official_scoring_source_receipt_2026-10-13.json. No electronic signature verification, human gold, automatic SaaS run route/UI integration (separate next task), ETP bid, payment, production or watchdog changes. Preserve owner main manual_override true.'
