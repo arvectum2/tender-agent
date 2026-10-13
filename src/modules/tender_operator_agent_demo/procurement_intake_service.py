@@ -430,19 +430,28 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
         title_class="cardMainInfo__title",
         content_class="cardMainInfo__content",
     )
-    publication_date = _format_public_context_datetime(parsed_metadata.get("publication_date")) or _extract_card_value(
+    # The detailed public EIS HTML shows the local organizational time with
+    # its displayed timezone. The parsed metadata is normalized to UTC.
+    # Formatting that UTC instant as an unlabeled HH:MM previously shifted
+    # a real 10:00 MSK deadline to an incorrect 07:00 in the operator UI.
+    publication_date = _extract_card_value(
         page_html,
         "Размещено",
         title_class="cardMainInfo__title",
         content_class="cardMainInfo__content",
-    )
+    ) or _format_public_context_datetime(parsed_metadata.get("publication_date"))
     updated_date = _extract_card_value(page_html, "Обновлено", title_class="cardMainInfo__title", content_class="cardMainInfo__content")
-    deadline = _format_public_context_datetime(parsed_metadata.get("application_deadline")) or _extract_card_value(
+    deadline = _extract_card_value(
         page_html,
         "Дата и время окончания срока подачи заявок",
         title_class="section__title",
         content_class="section__info",
-    ) or _extract_card_value(page_html, "Окончание подачи заявок", title_class="cardMainInfo__title", content_class="cardMainInfo__content")
+    ) or _extract_card_value(
+        page_html,
+        "Окончание подачи заявок",
+        title_class="cardMainInfo__title",
+        content_class="cardMainInfo__content",
+    ) or _format_public_context_datetime(parsed_metadata.get("application_deadline"))
     initial_price_raw = _extract_card_value(
         page_html,
         "Начальная (максимальная) цена контракта",
