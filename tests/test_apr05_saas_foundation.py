@@ -437,3 +437,103 @@ def test_operator_and_tenant_ui_cover_invite_workflows_without_public_auth(clien
     assert 'id="revoke-member"' in customer
     assert 'localStorage' not in customer
     assert 'sessionStorage' not in customer
+
+
+def test_saas_qualification_uses_signed_tenant_identity_and_zero_references(client):
+    import json
+    from pathlib import Path
+
+    case = json.loads((
+        Path(__file__).resolve().parents[1]
+        / "docs/acceptance/arvectum_owner_reference_list_and_czn_2026-10-13.json"
+    ).read_text(encoding="utf-8"))
+    a, owner_a = _seed(client, "ООО Саас Квалификация А")
+    b, owner_b = _seed(client, "ООО Саас Квалификация Б")
+    base = "/api/saas/qualification"
+    criterion = case["czn_source_bound_criterion"]
+
+    # No inferred customer and no unauthenticated reads.
+    assert client.post(f"{base}/assess", json=criterion).status_code == 401
+    assert client.post(f"{base}/assess", headers=_auth(owner_a), json=criterion).status_code == 428
+    _legal(client, owner_a)
+    _legal(client, owner_b)
+    missing = client.get(f"{base}/references", headers=_auth(owner_a))
+    assert missing.status_code == 200
+    assert missing.json()["state"] == "UNKNOWN"
+
+    saved = client.post(
+        f"{base}/references", headers=_auth(owner_a),
+        json={
+            "snapshot": case["reference_fact_value"],
+            "source_ref": case["reference_fact_source_ref"],
+        },
+    )
+    assert saved.status_code == 201, saved.text
+    assert saved.json()["customer_id"] == a["customer_id"]
+    assert saved.json()["fact_version"] == 1
+    assert saved.json()["external_action_allowed"] is False
+
+    result = client.post(f"{base}/assess", headers=_auth(owner_a), json=criterion)
+    assert result.status_code == 200, result.text
+    assert result.json()["customer_id"] == a["customer_id"]
+    assert result.json()["recommendation"] == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert result.json()["qualifying_contracts"] == 0
+
+    # Different tenant is not affected by first tenant's confirmed zero.
+    other = client.post(f"{base}/assess", headers=_auth(owner_b), json=criterion)
+    assert other.status_code == 200, other.text
+    assert other.json()["customer_id"] == b["customer_id"]
+    assert other.json()["recommendation"] == "QUALIFICATION_EVIDENCE_UNKNOWN"
+    assert client.get(f"{base}/references", headers=_auth(owner_b)).json()["state"] == "UNKNOWN"
+
+    core_payload = {
+        "criterion": criterion,
+        "source_binding": {
+            "procurement_number": criterion["procurement_number"],
+            "notice_version": criterion["procurement_notice_version"],
+            "document_uid": criterion["source_document_uid"],
+            "document_sha256": criterion["source_document_sha256"],
+            "application_deadline_date": criterion["application_deadline_date"],
+        },
+        "procurement_model": {
+            "procurement_number": criterion["procurement_number"],
+            "procurement_law": "44fz",
+        },
+    }
+    core = client.post(f"{base}/decision-core", headers=_auth(owner_a), json=core_payload)
+    assert core.status_code == 200, core.text
+    assert core.json()["competitive_recommendation"] == "NO_GO"
+    assert core.json()["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
+    assert core.json()["external_action_allowed"] is False
+
+
+def test_saas_qualification_viewer_cannot_write_reference_list(client):
+    import json
+    from pathlib import Path
+
+    case = json.loads((
+        Path(__file__).resolve().parents[1]
+        / "docs/acceptance/arvectum_owner_reference_list_and_czn_2026-10-13.json"
+    ).read_text(encoding="utf-8"))
+    _tenant, owner = _seed(client, "ООО Чтение референсов")
+    _legal(client, owner)
+    invite = client.post(
+        "/api/saas/invitations", headers=_auth(owner),
+        json={"role": "viewer", "acquisition_channel": "referral"},
+    ).json()
+    viewer = client.post(
+        "/api/saas/invitations/redeem",
+        json={"invitation_code": invite["invitation_code"], "display_name": "Viewer"},
+    ).json()["access_token"]
+    _legal(client, viewer)
+    result = client.post(
+        "/api/saas/qualification/references",
+        headers=_auth(viewer),
+        json={
+            "snapshot": case["reference_fact_value"],
+            "source_ref": case["reference_fact_source_ref"],
+        },
+    )
+    assert result.status_code == 403
+    denied = client.get("/api/saas/qualification/references", headers=_auth(viewer))
+    assert denied.status_code == 403
