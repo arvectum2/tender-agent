@@ -115,6 +115,23 @@ def test_unsigned_or_forged_complete_contract_rejected():
             _snapshot([row])
 
 
+def test_five_year_reference_lookback_uses_bid_deadline_not_analysis_day():
+    criterion = _criterion()
+    assert str(criterion.application_deadline_date) == "2026-10-23"
+    # Old acceptance Oct 15 2021 is inside 5y from run date Oct 13, but
+    # outside 5y from actual CZN application deadline Oct 23.
+    older = assess_references(
+        customer_id="a", criterion=criterion,
+        snapshot=_snapshot([_contract(signed="2021-10-15")]),
+    )
+    assert older.qualifying_contracts == 0
+    within = assess_references(
+        customer_id="a", criterion=criterion,
+        snapshot=_snapshot([_contract(signed="2021-10-23")]),
+    )
+    assert within.qualifying_contracts == 1
+
+
 def test_a_smaller_qualification_weight_is_risk_not_automatic_no_go():
     result = assess_references(
         customer_id="a", criterion=_criterion(
