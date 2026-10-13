@@ -24,6 +24,8 @@ MAX_RESPONSE_BYTES = 5 * 1024 * 1024
 DEFAULT_TIMEOUT_SECONDS = 15
 DEFAULT_PAGE_SIZE = 30
 MAX_PAGE_SIZE = 100
+EIS_NOTICE_EDGE_404_RETRIES = 2
+EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS = 0.25
 USER_AGENT = "Mozilla/5.0 (compatible; ArvectumTenderAgent/0.1; read-only)"
 
 LAW_FLAGS = {
@@ -175,6 +177,34 @@ def _resolve_no_proxy_domains(config_domains: str | None, env_domains: str | Non
     return tuple(result) if result else DEFAULT_NO_PROXY_DOMAINS
 
 
+def _intermittent_eis_notice_edge_404(url: str, exc: HTTPError) -> bool:
+    """Recognize the observed EIS Varnish nginx stub, not a procurement status.
+
+    Only official HTTPS detail documents with an exact 19-digit registry number
+    qualify. A persistent 404 still fails closed after a tiny bounded retry.
+    """
+    if exc.code != 404:
+        return False
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.hostname != EIS_44FZ_HOST:
+        return False
+    if not re.fullmatch(
+        r"/epz/order/notice/[^/]+/view/(?:common-info|documents|event-journal)\\.html",
+        parsed.path,
+    ):
+        return False
+    numbers = parse_qs(parsed.query).get("regNumber", [])
+    if len(numbers) != 1 or not re.fullmatch(r"[0-9]{19}", numbers[0]):
+        return False
+    via = exc.headers.get("Via", "") if exc.headers else ""
+    if not re.search(r"eis-varnish-pub[0-9]+\\.zakupki\\.local", via, re.IGNORECASE):
+        return False
+    # Read only the tiny error stub (never the page/document body). This is not
+    # a captcha bypass; other 404s, 403 and 429 do not qualify for a retry.
+    stub = exc.read(512)
+    return b"<h1>404 Not Found</h1>" in stub and b"nginx" in stub.lower()
+
+
 class Public44FzSearchProvider:
     def __init__(
         self,
@@ -306,40 +336,53 @@ class Public44FzSearchProvider:
         else:
             opener = build_opener(HTTPSHandler(context=ssl_ctx))
 
-        try:
-            with opener.open(request, timeout=self._timeout) as response:
-                raw = response.read(MAX_RESPONSE_BYTES + 1)
-                if len(raw) > MAX_RESPONSE_BYTES:
-                    return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": "Response too large"}
-                html_content = raw.decode("utf-8", errors="replace")
-        except HTTPError as exc:
-            code = exc.code
-            if code in (502, 503):
-                return {"status": PublicSearchStatus.BAD_GATEWAY, "html": None, "error": f"HTTP {code}"}
-            if code == 403:
-                return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": f"HTTP {code} Forbidden"}
-            return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": f"HTTP {code}"}
-        except URLError as exc:
-            reason = str(exc.reason) if hasattr(exc, "reason") else str(exc)
-            reason_lower = reason.lower()
-            if "certificate_verify_failed" in reason_lower or "certificate verify failed" in reason_lower:
+        edge_retries = 0
+        for attempt in range(EIS_NOTICE_EDGE_404_RETRIES + 1):
+            try:
+                with opener.open(request, timeout=self._timeout) as response:
+                    raw = response.read(MAX_RESPONSE_BYTES + 1)
+                    if len(raw) > MAX_RESPONSE_BYTES:
+                        return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": "Response too large"}
+                    html_content = raw.decode("utf-8", errors="replace")
+                break
+            except HTTPError as exc:
+                intermittent_stub = _intermittent_eis_notice_edge_404(url, exc)
+                if intermittent_stub and attempt < EIS_NOTICE_EDGE_404_RETRIES:
+                    edge_retries += 1
+                    time.sleep(EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS * (attempt + 1))
+                    continue
+                code = exc.code
+                if code in (502, 503):
+                    return {"status": PublicSearchStatus.BAD_GATEWAY, "html": None, "error": f"HTTP {code}"}
+                if code == 403:
+                    return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": f"HTTP {code} Forbidden"}
+                return {
+                    "status": PublicSearchStatus.NETWORK_ERROR,
+                    "html": None,
+                    "error": f"HTTP {code}" + (" (intermittent EIS edge cache 404 persisted)" if intermittent_stub else ""),
+                    "eis_cache_retries": edge_retries,
+                }
+            except URLError as exc:
+                reason = str(exc.reason) if hasattr(exc, "reason") else str(exc)
+                reason_lower = reason.lower()
+                if "certificate_verify_failed" in reason_lower or "certificate verify failed" in reason_lower:
+                    return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": "TLS verification failed"}
+                if "timed out" in reason_lower or "timeout" in reason_lower:
+                    return {"status": PublicSearchStatus.TIMEOUT, "html": None, "error": reason}
+                if "connection reset" in reason_lower:
+                    return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": reason}
+                return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": reason}
+            except ssl.SSLError:
                 return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": "TLS verification failed"}
-            if "timed out" in reason_lower or "timeout" in reason_lower:
-                return {"status": PublicSearchStatus.TIMEOUT, "html": None, "error": reason}
-            if "connection reset" in reason_lower:
-                return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": reason}
-            return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": reason}
-        except ssl.SSLError:
-            return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": "TLS verification failed"}
-        except Exception as exc:
-            return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": str(exc)}
+            except Exception as exc:
+                return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": str(exc)}
 
         classification = _classify_search_html(html_content)
         if classification != "parsed":
             if classification == "captcha_or_blocked":
                 return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": "Captcha or blocking detected"}
             if classification == "empty_results":
-                return {"status": PublicSearchStatus.SUCCESS, "html": html_content, "error": None}
+                return {"status": PublicSearchStatus.SUCCESS, "html": html_content, "error": None, "eis_cache_retries": edge_retries}
             if classification == "unsupported_layout":
                 return {"status": PublicSearchStatus.PARSE_ERROR, "html": None, "error": f"Unsupported layout: {classification}"}
             return {"status": PublicSearchStatus.PARSE_ERROR, "html": None, "error": f"Unclassified: {classification}"}
@@ -390,12 +433,14 @@ class Public44FzSearchProvider:
         common_html = common_result["html"]
         detail.common_info_html = common_html
         detail.raw["common_info_url"] = resolved_card_url
+        detail.raw["common_info_eis_cache_retries"] = common_result.get("eis_cache_retries", 0)
         _merge_detail_metadata(detail, _parse_detail_metadata(common_html, resolved_card_url))
 
         documents_url = _build_documents_url(resolved_card_url, detail.registry_number)
         detail.raw["documents_url"] = documents_url
         if documents_url:
             docs_result = self._fetch_page(documents_url)
+            detail.raw["documents_eis_cache_retries"] = docs_result.get("eis_cache_retries", 0)
             detail.raw["documents_fetch_status"] = docs_result.get("status")
             if docs_result.get("status") == PublicSearchStatus.SUCCESS and docs_result.get("html"):
                 documents_html = docs_result["html"]
