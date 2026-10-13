@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-NOTICE-REVISION-INTEGRITY-20261013
+status: in_progress
+parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+goal: Independently inspect archived original 44-FZ EIS notice identities, edition chronology and attachment-provenance boundaries without claiming live EIS currentness.
+definition_of_done:
+  - Inspect archived XML notice records of all 20 APR06 44-FZ candidate runs from authorized read-only Docker source volume.
+  - Reconcile original notice number/edition/deadline across multiple XML candidates; fail closed on ambiguity, mismatch, cancellation or non-notice event.
+  - Record per-case source receipt and currentness limitations with no source bytes or private attachments committed.
+  - Add deterministic offline code and negative regression tests for version selection and unsafe assumptions, fix confirmed defects only.
+  - Pass isolated focused validation and exact-head CI, publish review-only PR and checkpoint complete or honest blocked reason.
+completed:
+  - Existing APR06 byte-integrity subtask 168/168 archived 44-FZ and 5/5 separate 223-FZ hashes completed in draft PR401, exact source-head CI green.
+current: Inspect original archived notice XML layouts and existing parser behavior in read-only scope.
+pending:
+  - Implement version/identity/deadline audit and validate against original archived XML bytes.
+  - Add tests, documentation, review-only PR and confirm exact-head CI.
+last_verified_commit: 'APR06 branch source head pending pin'
+test_results: []
+resume_instruction: 'Inspect original EIS notice XML in Docker artifacts volume read-only/no-network and existing notice parser. Work only on new feature branch; persist no sensitive original bytes. Do not treat archived latest revision as live authoritative current notice, or attachments as version-bound merely because filenames are present. Keep parent APR06 draft and no bids, payments, signatures, public deploy.'
