@@ -11,15 +11,24 @@ definition_of_done:
   - Cover source tampering, extraction ambiguity, altered weights, missing criterion and wrong law/registry in regression tests; real Mac mini replay and CI.
   - Keep source original binaries private, PR draft, no production/ETP/signed/paid action.
 completed:
+  - Added pinned original RI223 source receipt JSON with SOAP ZIP digest 65004d53..., current purchaseNotice v1, official RAR contentUid E8D01839..., RAR SHA 36ef971b..., 10-page PDF SHA a44d9573... and parallel original legacy DOC SHA c74b98fd....
+  - Implemented pure source-bound original RI223 ZIP/RAR/PDF hash/UID validation and exact table observer for 40% cost, 60% nonprice with conditional nested 20% reputation/20% finances/60% qualification.
+  - Preserved supplier qualification total weight and completed contract weight as NULL because source language permits alternative nonprice weighting; always NOT_ASSESSED and no external action, never CZN-style NO_GO.
+  - Bounded offline CLI extracts verified original PDF from RAR and parses text without network, production mutation, signature claim or bidder decision; original byte files retained privately.
+  - Original Mac mini replay against preserved authentic getDocsIP ZIP/RAR/PDF successful, output source-correlated 40/60 and conditional 20/20/60, manual review required, signatures FALSE, human-gold FALSE.
+  - Tests cover exact SHA and EIS UID/notice/URL integrity, mutated ZIP/RAR/PDF, wrong registry and unsupported scoring weights; local combined regression source head 79dc168 103 pytest PASS, Ruff PASS, JSON and git diff checks PASS.
+  - Updated Russian evidence report, source receipt and MASTER_ROADMAP; stacked DRAFT PR412 on PR411; no production or ETP effects.
   - Historical 44-FZ corpus PR411 exact head a9fdb20a GitHub PR/push 3/3 SUCCESS, child marked completed.
   - Found independently stored original RI223 #32616445795 at /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/; SOAP ZIP sha 65004d53..., RAR sha 36ef971b..., embedded PDF sha a44d9573... and legacy DOC sha c74b98fd....
   - Verified original RI223 XML root purchaseNotice registrationNumber 32616445795 version 1 and contentUid E8D018399C8C4BC18A621DCB8CBB6F12 links RAR via official https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html.
   - Actual PDF pdftotext shows cost criterion 40%, nonprice criterion 60%, subcriteria 20% reputation /20% financial /60% qualification, conditional phrasing means cannot treat nonprice as solely qualification.
-current: Implement read-only original source observer + negative tests, validate against real Mac mini bytes.
+current: PR412 original RI223 source observation implemented and verified on actual Mac mini ZIP/RAR/PDF; code/docs head 79dc168da6ecf40274a6842874ad471e3a689100, 103 local pytest PASS, Ruff PASS; exact GitHub push/PR CI pending.
 pending:
-  - Commit pinned sanitized source metadata, pure criterion parser + bounded original-read-only script.
-  - Run original source replay and adversarial tests, document precise limits.
-  - Verify exact GitHub PR/push CI and checkpoint completion, preserve parent safeguards.
-last_verified_commit: 'New branch created from completed PR411; RI223 original source digests validated locally, code not created.'
-test_results: []
-resume_instruction: 'Continue original RI223 #32616445795 observer in research/ri223-original-scoring-observer-20261013. Private originals Mac mini /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/ri223-soap.zip (sha 65004d53a4d198857a192ad21052c95cfa7d812208c3ac6702324e42d7487de3) and attachments/01-3727.rar (sha 36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241). Embedded original 10-page PDF from RAR 3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf sha a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826; legacy DOC sha c74b98fd03de7eb87af2a8b0056c1342fdbf5099e05faa7c7fac8ba757a136ff. XML purchaseNotice version=1 registrationNumber, original RAR contentUid E8D018399C8C4BC18A621DCB8CBB6F12. PDF contains top-level 40% price, 60% nonprice; sub 20% reputation/20% finances/60% qualifications with discretionary wording. Never turn 60% nonprice into 60% completed contract weighting or 223-FZ automatic commercial NO_GO. Build read-only evidence observer, tests, PR and CI; keep PR draft, source bytes private, no ETP/prod/watchdog/payments/signature.'
+  - Check PR412 latest head full GitHub push + pull_request CI, repair only actual failures; mark child COMPLETED when green.
+  - True contract-related RI223 eligibility/GO model blocked pending source-grounded applied lot formula and human review, separate task.
+last_verified_commit: 'PR412 source 79dc168da6ecf40274a6842874ad471e3a689100; Mac mini 103 pytest PASS and Ruff PASS; real RI223 SOAP+RAR+PDF offline replay 40/60 with conditional 20/20/60 and NOT_ASSESSED. Exact full GitHub CI pending.'
+test_results:
+  - 'RI223 original private source SOAP ZIP sha 65004d53, RAR 36ef971b, PDF a44d9573 matched, observed first level price40/nonprice60 and conditional subweights 20/20/60; competitive NOT_ASSESSED; no signature/human gold.'
+  - 'Mac mini exact source 79dc168 combined 103 pytest PASS, Ruff PASS, original source replay PASS, source receipt JSON PASS, git diff --check PASS.'
+  - 'GitHub PR412 exact push/PR CI pending.'
+resume_instruction: 'Active original 223-FZ scoring observer child TA-RI223-ORIGINAL-SCORING-OBSERVER-20261013 branch research/ri223-original-scoring-observer-20261013 draft PR412 stacked on PR411. Source 79dc168da6ecf40274a6842874ad471e3a689100, Mac mini real original RI223 ZIP/RAR/PDF replay PASS (price 40/nonprice60, optional nested reputation20/finances20/qualification60), combined 103 pytest PASS Ruff PASS and JSON/diff PASS. Verify exact GitHub PR/push CI after checkpoint head, repair real failures, mark child completed. No supplier competitive NO_GO for RI223; NOT_ASSESSED, unverified applied lot formula/signature and owner commercial review. Source binaries private Mac mini, source metadata in Git only. Parent PR411 exact full CI green and child complete, PR405/407/408/409/410 drafts; preserve no SaaS/prod/ETP/pay/sign/merge and main manual_override true/watchdog off.'
