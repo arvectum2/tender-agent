@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR03B-CURRENT-MAIN-PREVIEW-20261014
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Safely compare current main APR03B Operator Workspace with the saved genuine Museum of Bread EIS run on a private loopback-only preview without touching the prior preview or production.
 definition_of_done:
   - Record tested main source revision, Docker image build result, isolated preview endpoints and protection.
@@ -11,16 +11,18 @@ definition_of_done:
   - If defects, implement targeted tests/fixes on an isolated branch and run focused checks.
   - Record exact results/limitations and update canonical parent checkpoint; never claim Owner browser/semantic/legal acceptance without approval.
 completed:
+  - '2026-10-14 private current-main image cc9efe6b built sha256:7950d3..., started isolated QA container 127.0.0.1:18087, root read-only and all 5 artifact mounts read-only; old 18083 preview unchanged.'
+  - 'Auth HTTP health200/unauth workspace401/auth HTML200/registry200/saved real Museum run 200/evidence200/report200; PDF and DOCX archived-current-EIS gate409 each; deterministic fallback explicitly observed.'
+  - 'Mac mini source cc9efe6b 50 focused pytest PASS, Ruff PASS, Node JS --check PASS, git diff --check PASS. Third-party 5 warnings; no runtime/test failures.'
+  - 'Preserved dated APR03B current-main QA report; owner-browser and real LLM/legal/semantic acceptance OPEN.'
   - '2026-10-14 read-only host inspection: Mac mini current 18083 preview uses 9 Oct apr03b-owner-safari-fixed-v2 and is healthy; prior current-main main source fetch cc9efe6b0c6a9ceea29fd008b83de2e299af8563, old UI must not count as latest-main acceptance.'
-current: 'Build from isolated source worktree begun; current preview not replaced.'
-pending:
-  - Finish current-main private image build.
-  - Launch separate loopback/read-only preview with existing local e2e env but no new remote actions.
-  - Perform HTTP acceptance for existing case and report caveats.
-  - Document test evidence and close bounded checkpoint or real blocker.
-last_verified_commit: 'cc9efe6b0c6a9ceea29fd008b83de2e299af8563 retrieved origin/main for private build; build pending.'
-test_results: []
-resume_instruction: 'On Mac mini inspect docker build pid 51100 for arvectum/tender-agent:apr03b-current-main-20261014 built from /Volumes/ArvectumSSD/Arvectum/worktrees/ta-apr03b-current-validation-20261014 source cc9efe6b. If built, launch separate 127.0.0.1:18087 protected preview, preserve 18083 and live stack, volumes read-only, get credentials without logging values, HTTP GET source/report/export of saved Museum run 0372200172326000015. Record source-lock archived 409 where appropriate, do not mutate production or external ETP. Check PR420 once but no passive wait or merge. Update checkpoint and parent.'
+current: 'COMPLETED bounded safe current-main HTTP QA; APR03B Owner browser/semantic/LLM acceptance remains open, QA container 18087 protected, old 18083 preserved.'
+pending: []
+last_verified_commit: 'Current-main application cc9efe6b0c6a9ceea29fd008b83de2e299af8563, image sha256:7950d3f17c5a120be7388f7501cf9351d4e32157d551f711f9bb62b78a9bdedb, 50 pytest PASS/Ruff/JS PASS, isolated HTTP 200/401/409 guards PASS.'
+test_results:
+  - '50 pytest PASS, 0 failed, 5 third-party warnings; Ruff PASS, Node JS PASS, diff PASS.'
+  - 'Isolated staging HTTP health 200, unauthorized workspace 401, authenticated UI 200, real saved run/evidence/report 200, historical PDF/DOCX 409, readonly root/mounts verified.'
+resume_instruction: 'This bounded QA task is complete, do not repeat image build/HTTP checks. Owner APR03B remains NOT ACCEPTED: use isolated local 18087 browser to review current official EIS revision with full LLM/citations/economics/source files, then obtain Owner approval. Do not promote archived 409 exports. Preserve old 18083 and private QA 18087, no production/ETP/signatures/payments/merges/watchdog.'
 execution:
   branch: qa/apr03b-private-current-20261014
   manual_override: true
