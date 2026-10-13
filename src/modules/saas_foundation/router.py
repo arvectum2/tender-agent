@@ -10,6 +10,7 @@ import binascii
 import hmac
 from datetime import datetime, timedelta
 from typing import Annotated, Literal
+from zoneinfo import ZoneInfo
 
 from fastapi import (
     APIRouter,
@@ -30,15 +31,15 @@ from src.modules.company_profile_store.qualification_decision import (
     QualificationAwareDecisionResponse,
     build_qualification_aware_decision,
 )
-from src.modules.company_profile_store.qualification_run_service import (
-    assess_owned_run_qualification,
-)
 from src.modules.company_profile_store.qualification_references import (
     REFERENCE_FACT_KEY,
     CompletedContractReferenceSnapshot,
     QualificationAssessment,
     QualificationCriterion,
     assess_company_qualification,
+)
+from src.modules.company_profile_store.qualification_run_service import (
+    assess_owned_run_qualification,
 )
 from src.modules.company_profile_store.schemas import AppendCompanyProfileFactRequest
 from src.modules.company_profile_store.service import (
@@ -540,7 +541,7 @@ def report(run_id: str, principal: Member, session: DBSession) -> dict:
     qualification = (
         assess_owned_run_qualification(
             session, run_id=run_id, customer_id=principal.customer_id,
-            as_of=datetime.now().date(),
+            as_of=datetime.now(ZoneInfo("Europe/Moscow")).date(),
         )
         if principal.role in {"owner", "admin", "analyst"}
         else {
@@ -569,7 +570,7 @@ def owned_run_qualification(run_id: str, principal: Member, session: DBSession) 
     owned_run(session, principal, run_id)
     return assess_owned_run_qualification(
         session, run_id=run_id, customer_id=principal.customer_id,
-        as_of=datetime.now().date(),
+        as_of=datetime.now(ZoneInfo("Europe/Moscow")).date(),
     )
 
 
