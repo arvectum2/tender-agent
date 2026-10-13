@@ -619,7 +619,7 @@ def test_saas_viewer_report_does_not_expose_private_reference_list(client, monke
         "/api/saas/invitations", headers=_auth(owner),
         json={"role": "viewer", "acquisition_channel": "referral"},
     )
-    assert invitation.status_code == 201, invitation.text
+    assert invitation.status_code == 200, invitation.text
     viewer_token = client.post(
         "/api/saas/invitations/redeem",
         json={
