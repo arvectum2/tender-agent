@@ -1,9 +1,44 @@
 """APR-04 operator onboarding, durable profile + evidence + cautious screening."""
 from types import SimpleNamespace
 
+import pytest
+
 from src.modules.customer_onboarding import router as module
 
 BASE = "/api/onboarding/customers"
+
+
+@pytest.fixture(autouse=True)
+def _isolated_unit_operator_auth_override(client):
+    """Business-only fixture; separate tests exercise the real fail-closed gate."""
+    client.app.dependency_overrides[module.require_private_onboarding] = lambda: None
+    yield
+    client.app.dependency_overrides.pop(module.require_private_onboarding, None)
+
+
+def test_private_onboarding_refuses_unprotected_application(client, monkeypatch):
+    client.app.dependency_overrides.pop(module.require_private_onboarding, None)
+    monkeypatch.setattr(module, "get_settings", lambda: SimpleNamespace(
+        pilot_auth_is_enabled=lambda: False,
+        pilot_auth_password_safe=lambda: False,
+        pilot_auth_protected_prefixes="/api,/pilot",
+        pilot_auth_public_paths="/health",
+    ))
+    assert client.get("/pilot/onboarding").status_code == 503
+    assert client.post(BASE, json=sample()).status_code == 503
+
+
+def test_private_onboarding_rejects_mis_scoped_auth(client, monkeypatch):
+    client.app.dependency_overrides.pop(module.require_private_onboarding, None)
+    monkeypatch.setattr(module, "get_settings", lambda: SimpleNamespace(
+        pilot_auth_is_enabled=lambda: True,
+        pilot_auth_password_safe=lambda: True,
+        pilot_auth_protected_prefixes="/api/demo/tender-agent,/pilot/tender-agent",
+        pilot_auth_public_paths="/health",
+    ))
+    assert client.get("/pilot/onboarding").status_code == 503
+    assert client.get(BASE + "/untrusted-id").status_code == 503
+
 
 
 def sample(name="ООО Тестовый поставщик", **changes):

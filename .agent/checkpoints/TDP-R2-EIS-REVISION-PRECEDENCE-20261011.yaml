@@ -1,0 +1,85 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R2-EIS-REVISION-PRECEDENCE-20261011
+status: completed
+goal: Prevent outdated EIS notice v1 from winning over higher-version v3/v5 original
+  XML in Tender Agent product reports, especially when a stale deadline exists on
+  the card; no false claim that archived highest is current live EIS.
+definition_of_done:
+- Source-locked exact epNotification version+registry parser (no arbitrary XML, cancel/protocol,
+  DTD/ENTITY or mismatched number) with fail-closed ambiguous handling
+- Tender Agent metadata enrichment selects highest authenticated in-corpus notice
+  revision independent of order, replaces stale card deadline and records revision
+  provenance with human review status
+- Regression tests Aksay v1/v5, Moscow CZN v1/v3, reversed order, stale card and alien
+  revision; preserve existing other report behaviors
+- Ruff/make check/full Python3.12 local regression and all exact-head GitHub CI pass,
+  merge and mark bounded checkpoint completed; parent R2 independent live EIS source
+  validation/R5 still in_progress
+completed:
+- 'Investigated APR-06 independent model audit: 9 machine cases, two critical stale
+  revision errors (0158300034526000388 v1 instead of v5, 0348100024426000039 v1 instead
+  of v3).'
+- Verified prior APR-07 branch implements revision-aware tests, but canonical main
+  adb6551e does not contain its revision test or revision-aware candidate ordering.
+- Confirmed current main operator_metadata_enrichment.py selects first notice-role
+  XML regardless of version; initialized isolated worktree from main.
+- Added strict epNotification/commonInfo purchaseNumber/versionNumber matcher (XML
+  DTD/ENTITY, bad registry, protocol/cancel and conflicting events do not claim a
+  version).
+- Updated source-first metadata enrichment to prefer the highest exact registry-matched
+  version in archive, independent of filename/order, override stale card submission
+  deadline, preserve evidence mapping and explicitly mark current_live_eis_verified
+  false.
+- Source mismatches, unversioned documents and multiple archived revisions require
+  operator review.
+- Eight new regression cases protect APR-06 Aksay v1/v5 and Moscow CZN v1/v3 against
+  stale-card NO_GO; 30 focused tests and Ruff/make check passed.
+- 'Initial full regression after source revision selection exposed one real failure
+  in manual/XML report source binding: non-EIS sanitized identifiers were incorrectly
+  forced through official registry matching.'
+- 'Fixed boundary: enforce exact registry only when identifier is valid 11/19-digit
+  EIS number; preserve manual upload XML evidence and explicitly mark unknown revision
+  for review.'
+- Added visible limitations message when revision is ambiguous or multiple archived
+  versions conflict; 35 focused regression cases now pass, including previously failing
+  manual XML report binding.
+- 'Reconciled main PR #330 5b12fb99be499c98d3c7ecf747f07e65323ac09b and preserved
+  source-only summary contract.'
+- After finding correct metadata v5 but stale first-file v1 notice_text could be supplied
+  to LLM, added selected_archived_notice_text() verifying exact raw content registry+version+file_id
+  before returning corresponding text; integrated in analyze_uploaded_demo_run before
+  controlled LLM/preliminary analysis.
+- Added two order-dependent source routing cases, one forged source selection rejection,
+  and a real uploaded v1+v5 FastAPI analyze run asserting LLM notice_text sees only
+  archived v5. 39 focused tests PASS, including manual XML R10.1 and EIS persisted
+  report.
+- Confirmed aggregate combined_text still contains original document inventory and
+  may include older archived XML; does not claim universal downstream corpus de-duplication
+  or live EIS authoritativeness.
+- Updated exact highest archived version also controls LLM notice_text, tested through
+  real FastAPI upload+analyze. 39 focused tests pass.
+- Full post-#330 local Python3.12 suite 3653 passed, 238 skipped, 0 failed, make check
+  + Ruff PASS.
+- 'PR #331 all exact-head GitHub CI green, including dual quality (9m05s/9m24s), Docker/migrations/Postgres/Redis/security.
+  Merged TA main 5bd78d75e67a2aaa496c942f807931160a8ff228.'
+current: Completed bounded archived revision fix, merged main 5bd78d75e67a2aaa496c942f807931160a8ff228
+pending: []
+last_verified_commit: 5bd78d75e67a2aaa496c942f807931160a8ff228
+test_results:
+- 30 focused tests PASS, 22 warnings
+- Target Ruff and make check PASS
+- Initial full 3641 passed/238 skipped/1 failed; failure in manual XML sanitized registry
+  binding, now resolved
+- 35 focused regression tests passed, including earlier failure
+- Ruff focused PASS
+- After LLM notice-text fix, 39 focused PASS, 23 warnings and target Ruff PASS.
+- Prior 3649 full local passed/238 skipped before notice-text change; fresh full still
+  required.
+- Final 3653 passed, 238 skipped, 0 failed and make check PASS
+- Both exact-head quality + integration CI green
+- Merged 5bd78d75e67a2aaa496c942f807931160a8ff228
+resume_instruction: 'TDP-R2-EIS-REVISION-PRECEDENCE-20261011 completed PR #331. Do
+  not repeat. This does not establish highest archived notice is live current EIS;
+  parent R2 independent EIS binary/edition evidence still required, R4 model gold
+  and R5 20 human reviews/owner signoff. Owner-disabled watchdog untouched.'

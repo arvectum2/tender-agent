@@ -1,0 +1,19 @@
+task_id: TDP-STRUCTURED-UNKNOWN-AUDIT-20261010
+parent_task_id: TDP-REFACTOR-20261009
+status: in_progress
+goal: 'Count persisted structured unknowns as distinct from literal UNKNOWN strings in user report items.'
+definition_of_done:
+  - 'Read-only counters include decision_core.unknowns and exact canonical passport unknown-valued fields.'
+  - 'Malformed values and private report bodies cannot leak into audit output.'
+  - 'Local and exact-head CI green and merged.'
+completed:
+  - 'Read-only best-run EIS baseline: 16 decision-core unknown entries and 7 unknown passport fields in 11 reports; preserved separate markers.'
+  - 'Isolated Gemma 6-original-document run: five structured unknown entries and one passport unknown despite successful 3 XML facts.'
+  - 'Eight targeted audit tests passed and Ruff passed.'
+current: 'CI PR and merge.'
+pending:
+  - 'Pass CI, merge, update canonical parent checkpoint.'
+last_verified_commit: 'e95bf3282a536a53b73d4eb24d30741e679e1af2'
+test_results:
+  - 'Eight tests passed, Ruff passed.'
+resume_instruction: 'After parent PR #289 merges, rebase/retarget this branch on main; exact-head CI and merge. Do not count missing structured facts as a failed LLM; leave parent TDP-REFACTOR-20261009 in_progress until original source and owner acceptance.'

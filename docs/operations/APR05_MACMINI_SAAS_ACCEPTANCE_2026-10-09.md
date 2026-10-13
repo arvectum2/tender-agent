@@ -87,4 +87,3 @@ this local pilot before any real tenant is marked verified.
 - First CI quality failed from ORM registry import auto-fix; repaired by ac0de309. Latest GitHub Actions run 37851685586 succeeded in all nine jobs.
 - Full local pytest with PostgreSQL 16 client: **3297 passed, 238 skipped, 329 warnings**, ~133s. With default Homebrew PostgreSQL 18 client one R9 recovery test failed due to pg_restore version mismatch; the exact test was rerun successfully with PG16 toolchain. Both operator and SaaS JS syntax tests passed.
 - Not validated/authorized: real payments, public customer contracts/prices, full externally backed-up production VPS, public Internet tenant launch.
-

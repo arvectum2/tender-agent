@@ -94,5 +94,5 @@ def test_protocol_cancel_or_unidentified_xml_never_claims_authoritative_revision
         "<purchaseNumber>0158300034526000388</purchaseNumber>"
         "</commonInfo></epNoticeApplicationCancel></export>"
     )
-    assert extract_notice_revision_info(text) is None
-    assert extract_notice_revision_info("<other><versionNumber>7</versionNumber></other>") is None
+    assert extract_notice_revision_info(text) == {}
+    assert extract_notice_revision_info("<other><versionNumber>7</versionNumber></other>") == {}

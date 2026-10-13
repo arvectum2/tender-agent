@@ -1,0 +1,36 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: ACTIVE-ROADMAP-ARV-061-001
+status: completed
+authority: OWNER_DIRECTIVE
+goal: Fast evidence-grounded cited procurement pre-analysis for supported 44-FZ number/URL using existing facts/evidence/Decision Core.
+definition_of_done:
+  - Supported 44-FZ registry numbers/URLs yield bounded subject, deadlines, requirements, blockers, unknowns, fit signals and provenance citations.
+  - Unsupported or missing fields fail closed as UNKNOWN; no autonomous GO/NO_GO decision.
+  - Latency measured against documented target; focused regressions and exact-head CI pass.
+  - Changes merged; checkpoint completed with verified commit.
+completed:
+  - Synchronized canonical main and inspected APR-01 queue scope and done gate.
+  - Started isolated feature branch from current main.
+  - Implemented bounded read-only projection and existing-run API with fail-closed citations.
+  - Focused regressions: 30 passed, 1 upstream deprecation warning; Ruff and diff check pass.
+  - Added strict URL/registry-number path via the existing public EIS card parser; missing documentation remains UNKNOWN.
+  - Measured 1000-run mocked-card projection p95 0.009 ms, network excluded; make check passes.
+  - Live 44-FZ EIS check 0372200172326000015: exact source found, subject and deadline KNOWN with citation, 0.368 s.
+  - PR #225 merged into main as 59c477eb7421c1814e23fea574eeb8348a5e1322.
+  - Exact-head CI run 37764420661 finished successfully, 9/9 jobs.
+  - Queue and roadmap APR-01 closure recorded; APR-02 is the next planned outcome.
+current: Completed. PR #225 merged to main; exact-head CI 37764420661 SUCCESS 9/9; APR-01 closed and APR-02 next (requires queue admission).
+pending: []
+last_verified_commit: 59c477eb7421c1814e23fea574eeb8348a5e1322
+test_results:
+  - Focused tests: 30 passed, 1 warning.
+  - Mocked public-card projection p95 0.009 ms (1000 calls); network excluded.
+  - make check: PASS.
+  - Live EIS 0372200172326000015: 0.368 s, cited subject and deadline.
+  - CI exact-head 3103dd9d run 37764420661: SUCCESS 9/9.
+  - Ruff lint and git diff --check: PASS.
+resume_instruction: ARV-061 fully closed. Next APR-02/ARV-006 223-FZ breadth only after explicit admission and frozen real-gap corpus. Do not repeat ARV-061 implementation. Public-card-only claims remain distinct from documented attachment-level citation.
+execution:
+  branch: null
+  base_commit: f60d736d

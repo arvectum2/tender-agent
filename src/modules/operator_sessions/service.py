@@ -2,8 +2,15 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.modules.event_log.service import append_event_record
-from src.modules.integration_tasks.models import IntegrationTaskRecord, IntegrationTaskSet
-from src.modules.operator_sessions.models import OperatorSessionItem, OperatorSessionRecord, OperatorSessionSet
+from src.modules.integration_tasks.models import (
+    IntegrationTaskRecord,
+    IntegrationTaskSet,
+)
+from src.modules.operator_sessions.models import (
+    OperatorSessionItem,
+    OperatorSessionRecord,
+    OperatorSessionSet,
+)
 from src.modules.operator_sessions.schemas import (
     AcknowledgeOperatorSessionItemRequest,
     BuildOperatorSessionRequest,
@@ -11,6 +18,7 @@ from src.modules.operator_sessions.schemas import (
 from src.shared.control_package import (
     ensure_scope_exists,
     latest_action_queue_context,
+    latest_integration_task_set,
     latest_workspace_feed_context,
     resolve_scope_deal_id,
 )
@@ -70,23 +78,8 @@ def _latest_integration_task_set(
     scope_type: str,
     scope_ref: str,
 ) -> tuple[IntegrationTaskSet | None, list[IntegrationTaskRecord]]:
-    task_set = session.scalar(
-        select(IntegrationTaskSet)
-        .where(IntegrationTaskSet.scope_type == scope_type, IntegrationTaskSet.scope_ref == scope_ref)
-        .order_by(IntegrationTaskSet.created_at.desc(), IntegrationTaskSet.id.desc())
-        .limit(1)
-    )
-    if not task_set:
-        return None, []
-    records = list(
-        session.scalars(
-            select(IntegrationTaskRecord)
-            .where(IntegrationTaskRecord.integration_task_set_id == task_set.integration_task_set_id)
-            .order_by(IntegrationTaskRecord.created_at.asc(), IntegrationTaskRecord.id.asc())
-        )
-    )
-    return task_set, records
-
+    # Historical private name kept for call sites and monkeypatchable tests.
+    return latest_integration_task_set(session, scope_type, scope_ref)
 
 def build_operator_session(session: Session, payload: BuildOperatorSessionRequest) -> OperatorSessionSet:
     ensure_scope_exists(session, payload.scope_type, payload.scope_ref)

@@ -1,19 +1,76 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from src.modules.action_queue.models import ActionQueueApproval, ActionQueueRecord, ActionQueueSet
-from src.modules.copilot_feed.models import CopilotFeedItem, CopilotFeedRecord, CopilotFeedSet
-from src.modules.connector_registry.models import ConnectorRegistryRecord, ConnectorRegistrySet
+from src.modules.action_queue.models import (
+    ActionQueueApproval,
+    ActionQueueRecord,
+    ActionQueueSet,
+)
+from src.modules.connector_registry.models import (
+    ConnectorRegistryRecord,
+    ConnectorRegistrySet,
+)
+from src.modules.copilot_feed.models import (
+    CopilotFeedItem,
+    CopilotFeedRecord,
+    CopilotFeedSet,
+)
 from src.modules.deal_registry.models import Deal
 from src.modules.execution_command.models import ExecutionCommandSet
-from src.modules.execution_ledger.models import ExecutionLedgerRecord, ExecutionLedgerSet, ExecutionResultRecord
-from src.modules.optimization.models import OptimizationRecommendationRecord, OptimizationRecommendationSet
-from src.modules.operator_sessions.models import OperatorSessionItem, OperatorSessionRecord, OperatorSessionSet
-from src.modules.workflow_runs.models import WorkflowRunRecord, WorkflowRunSet, WorkflowStepRecord
-from src.modules.workspace_feed.models import WorkspaceFeedItem, WorkspaceFeedRecord, WorkspaceFeedSet
+from src.modules.execution_ledger.models import (
+    ExecutionLedgerRecord,
+    ExecutionLedgerSet,
+    ExecutionResultRecord,
+)
+from src.modules.integration_tasks.models import (
+    IntegrationTaskRecord,
+    IntegrationTaskSet,
+)
+from src.modules.operator_sessions.models import (
+    OperatorSessionItem,
+    OperatorSessionRecord,
+    OperatorSessionSet,
+)
+from src.modules.optimization.models import (
+    OptimizationRecommendationRecord,
+    OptimizationRecommendationSet,
+)
+from src.modules.workflow_runs.models import (
+    WorkflowRunRecord,
+    WorkflowRunSet,
+    WorkflowStepRecord,
+)
+from src.modules.workspace_feed.models import (
+    WorkspaceFeedItem,
+    WorkspaceFeedRecord,
+    WorkspaceFeedSet,
+)
 from src.shared.enums import OptimizationScopeType, WorkflowScopeType
 from src.shared.errors import NotFoundError
 
+
+def latest_integration_task_set(
+    session: Session,
+    scope_type: str,
+    scope_ref: str,
+) -> tuple[IntegrationTaskSet | None, list[IntegrationTaskRecord]]:
+    """Single canonical query shared by ledger, execution and operator sessions."""
+    task_set = session.scalar(
+        select(IntegrationTaskSet)
+        .where(IntegrationTaskSet.scope_type == scope_type, IntegrationTaskSet.scope_ref == scope_ref)
+        .order_by(IntegrationTaskSet.created_at.desc(), IntegrationTaskSet.id.desc())
+        .limit(1)
+    )
+    if not task_set:
+        return None, []
+    records = list(
+        session.scalars(
+            select(IntegrationTaskRecord)
+            .where(IntegrationTaskRecord.integration_task_set_id == task_set.integration_task_set_id)
+            .order_by(IntegrationTaskRecord.created_at.asc(), IntegrationTaskRecord.id.asc())
+        )
+    )
+    return task_set, records
 
 def ensure_scope_exists(session: Session, scope_type: str, scope_ref: str) -> None:
     if scope_type == WorkflowScopeType.DEAL:

@@ -1,0 +1,26 @@
+task_id: TDP-TECHNICAL-E2E-ACCEPTANCE-20261012
+status: completed
+goal: Reproduce real-source Data Platform HTTP -> Tender Agent provenance and guarded PDF/DOCX technical acceptance on exact canonical code.
+definition_of_done:
+  - Five SHA-verified original EIS attachments processed against authenticated nonproduction Data Platform HTTP.
+  - Preserve source/document identities and complete attributable-chunk parity.
+  - Prove legitimate manual-preview PDF and DOCX generation and genuine archived-EIS fail-closed restriction.
+  - Recheck existing isolated PostgreSQL persistence evidence without representing the two tests as one transaction.
+  - Add reproducible script, report and regression validation; do not mutate production or assert legal GO.
+completed:
+  - Canonical TA main a2982cf9 full pytest 3936 PASS/238 SKIP, make check PASS; DP main daa0719 full pytest/Ruff PASS.
+  - Nonproduction DP authenticated contract v1.0 200, anonymous collection GET 401, five source originals SHA verified.
+  - Official EIS archive-mode TA create/analyze/report 200, 5/5 source mappings, 127/127 attributable chunks; PDF/DOCX 409 expected due current-version verification gate.
+  - Manual nonofficial mode same 5/5 and 127/127, PDF 40844 bytes and DOCX 37833 bytes HTTP 200 and file structure verified.
+  - Added loopback-only reproducible acceptance runner and report; prior separate ephemeral PostgreSQL durable 5/5, 127/127 proof retained.
+  - Fresh isolated PG16 Data Platform with current migrations; five original persisted resource/document identities matched exactly to both real Tender Agent operator runs, normalized chunk hash/offset parity 127/127.
+current: Completed technical acceptance; next gates are external/business acceptance tracked by the parent TDP task.
+remaining: []
+last_verified_commit: a2982cf9c2248b6b2bc9e8f3c8b66e37e0965648
+test_results:
+  - Unified disposable Data Platform PostgreSQL HTTP + operator checks: 5/5 resource IDs, 5/5 document IDs, 127/127 persisted normalized chunks, 127/127 TA attributable chunks, official export correctly 409/409, manual nonofficial PDF/DOCX 200/200.
+  - Tender Agent 3936 passed, 238 skipped, make check PASS on baseline.
+  - Data Platform full pytest PASS and CI Ruff PASS on baseline.
+  - Fresh operator original-source E2E: official 200/200/200, export 409/409 expected, 5/5 files and 127/127 source chunks.
+  - Fresh manual nonofficial E2E: 200/200/200, DOCX 200 PDF 200, 5/5 files and 127/127 chunks.
+resume_instruction: This child technical acceptance task is completed; do not repeat. Parent .agent/current-task.yaml remains blocked on five current legal/economics/rights checks, live revision, human source-gold and owner final acceptance (0/20). No production, bids, external AI API or watchdog.

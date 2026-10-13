@@ -12,16 +12,22 @@ from src.modules.external_execution.schemas import (
     BuildExternalExecutionRequest,
     StartExternalExecutionRequest,
 )
-from src.modules.integration_tasks.models import IntegrationTaskRecord, IntegrationTaskSet
-from src.modules.vendor_connectors.models import VendorConnectorRecord, VendorConnectorSet
+from src.modules.integration_tasks.models import (
+    IntegrationTaskRecord,
+    IntegrationTaskSet,
+)
+from src.modules.vendor_connectors.models import (
+    VendorConnectorRecord,
+    VendorConnectorSet,
+)
 from src.shared.control_package import (
     ensure_scope_exists,
     latest_execution_ledger_context,
+    latest_integration_task_set,
     resolve_scope_deal_id,
 )
 from src.shared.db.base import utcnow
 from src.shared.enums import (
-    ConnectorScopeType,
     EventSeverity,
     ExecutionStatus,
     ExternalExecutionStatus,
@@ -101,23 +107,8 @@ def _latest_integration_task_set(
     scope_type: str,
     scope_ref: str,
 ) -> tuple[IntegrationTaskSet | None, list[IntegrationTaskRecord]]:
-    task_set = session.scalar(
-        select(IntegrationTaskSet)
-        .where(IntegrationTaskSet.scope_type == scope_type, IntegrationTaskSet.scope_ref == scope_ref)
-        .order_by(IntegrationTaskSet.created_at.desc(), IntegrationTaskSet.id.desc())
-        .limit(1)
-    )
-    if not task_set:
-        return None, []
-    records = list(
-        session.scalars(
-            select(IntegrationTaskRecord)
-            .where(IntegrationTaskRecord.integration_task_set_id == task_set.integration_task_set_id)
-            .order_by(IntegrationTaskRecord.created_at.asc(), IntegrationTaskRecord.id.asc())
-        )
-    )
-    return task_set, records
-
+    # Historical private name kept for call sites and monkeypatchable tests.
+    return latest_integration_task_set(session, scope_type, scope_ref)
 
 def _gateway_action_type(task_type: str) -> GatewayActionType:
     if task_type == IntegrationTaskType.EMAIL_SEND:

@@ -7,51 +7,84 @@ from typing import Any
 from urllib.parse import urlparse
 
 
-def extract_notice_revision_info(xml_text: str) -> dict[str, Any] | None:
-    """Identify an actual EIS notification revision, never a protocol/cancel event.
+def extract_notice_revision_info(xml_text: str) -> dict[str, Any]:
+    """Extract an unambiguous exact EIS registry identity, never infer a missing revision.
 
-    The ordering information comes from the notification's commonInfo node,
-    not arbitrary endDate/contract-period fields elsewhere in the XML.
-    A matching source notice is still not a substitute for a fresh live EIS
-    revision/status check when preparing a real bid.
+    Treat notice versions conservatively: unmatched, conflicting, unsafe or broken
+    XML cannot authorize overriding customer-facing data with documentary text.
     """
-    if not isinstance(xml_text, str) or not xml_text.lstrip().startswith("<"):
-        return None
+    if not xml_text or len(xml_text) > 12_000_000:
+        return {}
+    if "<!DOCTYPE" in xml_text.upper() or "<!ENTITY" in xml_text.upper():
+        return {}
     try:
         root = ET.fromstring(xml_text)
     except ET.ParseError:
-        return None
-    events = [node for node in root.iter()
-              if _local_name(node.tag).startswith("epNotification")]
-    if len(events) != 1:
-        return None
-    common = next((x for x in events[0] if _local_name(x.tag) == "commonInfo"), None)
-    if common is None:
-        return None
-    values = {
-        _local_name(x.tag): (x.text or "").strip()
-        for x in common if not list(x) and (x.text or "").strip()
-    }
-    # In real EIS epNotificationEZK2020/EOK2020 XML, versionNumber is
-    # a direct child of epNotification, while purchaseNumber/publishDTInEIS
-    # are inside commonInfo. Synthetic payloads may place it in commonInfo.
-    raw_version = next(
-        (x.text.strip() for x in events[0]
-         if _local_name(x.tag) == "versionNumber" and x.text and x.text.strip()),
-        values.get("versionNumber", ""),
-    )
-    raw_number = values.get("purchaseNumber", "")
-    if not re.fullmatch(r"\d{1,4}", raw_version) or not re.fullmatch(r"\d{11}|\d{19}", raw_number):
-        return None
-    version = int(raw_version)
-    if version < 1:
-        return None
-    return {
-        "version": version,
-        "purchase_number": raw_number,
-        "published_at": values.get("publishDTInEIS") or "",
-    }
+        return {}
+    # Event archives can include cancellation/protocol XML with the same
+    # purchaseNumber: only an exact epNotification is a versioned notice.
+    # Keep the legacy {} invalid contract while using the shared strict
+    # archived-notice identity checker for official EIS event documents.
+    event_names = [
+        _local_name(node.tag)
+        for node in root.iter()
+        if _local_name(node.tag).startswith(("epNotice", "epNotification"))
+    ]
+    if event_names:
+        if len(event_names) != 1 or not event_names[0].startswith("epNotification"):
+            return {}
+        notice = next(
+            node for node in root.iter()
+            if _local_name(node.tag) == event_names[0]
+        )
+        common = next(
+            (node for node in notice if _local_name(node.tag) == "commonInfo"),
+            None,
+        )
+        if common is None:
+            return {}
+        numbers = {
+            (node.text or "").strip()
+            for node in common
+            if _local_name(node.tag) == "purchaseNumber"
+            and node.text and re.fullmatch(r"(?:\d{11}|\d{19})", node.text.strip())
+        }
+        if len(numbers) != 1:
+            return {}
+        from src.modules.tender_operator_agent_demo.operator_notice_revision import (
+            matched_archived_eis_notification,
+        )
 
+        return matched_archived_eis_notification(xml_text, next(iter(numbers))) or {}
+
+    registry_tags = {"purchasenumber", "regnumber", "registrynumber", "notificationnumber"}
+    registry_numbers = {
+        (element.text or "").strip()
+        for element in root.iter()
+        if _local_name(element.tag).lower() in registry_tags
+        and element.text and re.fullmatch(r"(?:\d{11}|\d{19})", element.text.strip())
+    }
+    if len(registry_numbers) != 1:
+        return {}
+    version_text = next(
+        ((element.text or "").strip()
+         for element in root.iter()
+         if _local_name(element.tag).lower() in {"version", "docversion", "revision"}
+         and element.text and re.fullmatch(r"\d{1,6}", element.text.strip())),
+        None,
+    )
+    publication = next(
+        ((element.text or "").strip()
+         for element in root.iter()
+         if _local_name(element.tag).lower() in {"publishdtineis", "publishdate"}
+         and element.text),
+        None,
+    )
+    return {
+        "purchase_number": next(iter(registry_numbers)),
+        "version": int(version_text) if version_text else None,
+        "published_at": publication,
+    }
 
 def extract_notice_metadata(xml_text: str) -> dict[str, Any]:
     if not xml_text or not xml_text.strip():

@@ -1,0 +1,54 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-TRAINING-LOCATION-20261011
+status: completed
+goal: Remove an invented fixed city from training-service next-action recommendations
+  while preserving source-based city reporting and public evidence guard.
+definition_of_done:
+- Recommendations never claim a particular city unless explicitly supplied by source.
+- Source-present, format-only and unknown-location behavior covered by tests.
+- Previous service reports remain contract-compatible.
+- Full pytest/make check and exact-head GitHub CI pass; merge and checkpoint completed.
+completed:
+- Identified unsafe generic hardcoded Habarovsk action in education-service preliminary
+  report.
+- Confirmed a separate Habarovsk delivery label is conditional on actual source text
+  and must not be conflated.
+- Added product-owned training location question helper; removed unconditional Habarovsk
+  from generic next-actions.
+- Preserved location-specific Habarovsk delivery statement only when original source
+  mentions Habarovsk.
+- Added seven tests including Kazan/Moscow/other location, format-only, unknown, source-conditional
+  wording and report integration.
+- 48 focused tests and make check passed.
+- Confirmed missing source location under unnumbered paragraph caused previously masked
+  full-suite failure; fixed source regex in canonical operator_training_source_facts.py.
+- Grounded first-line location is retained in a bounded source-referenced next action;
+  unsourced cities remain unmentioned.
+- 54 focused tests passed including previously failing report HTML golden and two
+  new city extraction cases.
+- 'Merged latest main after TA #316 training-source extraction and #317 completion
+  checkpoint without losing either import or parent state.'
+- make check passed with latest main.
+- Full local Python 3.12 on rebased main passed 3573 tests / 238 skipped, zero failures.
+- 'Both exact-head quality GitHub jobs and other checks passed; PR #318 merged main
+  df63b093246179d344b2030789e2ffda40415f07.'
+- 'Original report test that initially failed now passed: source city before an unnumbered
+  paragraph is preserved, while absent location never causes Habarovsk to be inserted.'
+current: Completed on main df63b093246179d344b2030789e2ffda40415f07
+pending: []
+last_verified_commit: df63b093246179d344b2030789e2ffda40415f07
+test_results:
+- 48 focused passed
+- Ruff targeted passed
+- make check passed
+- 54 focused pytest passed / 2 warnings
+- make check passed
+- Ruff targeted clean
+- full pytest 3573 passed / 238 skipped
+- exact-head all GitHub CI green
+- 'PR #318 merged df63b093246179d344b2030789e2ffda40415f07'
+resume_instruction: Completed R3 training location correctness gate; continue overarching
+  TDP-REFACTOR-20261009. Next R2 confirm normalize_text source-coordinate replay and
+  original source attachment hash; R4 real product LLM quality; R5 human original
+  EIS review. Owner-disabled watchdog stays disabled.

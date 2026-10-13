@@ -1,0 +1,16 @@
+task_id: TDP-CHATGPT-PROVIDER-20261012
+status: blocked
+goal: "Implement a real optional ChatGPT/OpenAI API independent semantic reviewer adapter with strict source-grounded input, bounded usage and fail-closed response validation, no manual involvement until final acceptance."
+definition_of_done:
+  - "Authenticated OpenAI API request adapter with model/provider identity checks and no implicit network sends."
+  - "Only verified source-bound minimized claim data, safe size and cost caps, short HTTP timeout; no original file uploads."
+  - "Opaque provider failures, no secrets in errors, no false semantic confirmation; audit receipts with model and hashes."
+  - "Offline test responses, failure modes, no authorization/identity bypass, pytest, Ruff, CI and merge."
+completed:
+  - "2026-10-12 inspected merged PR373 expert verdict contract and existing OpenAI compatible infrastructure."
+  - "2026-10-12 OpenAI key absent in current Mac mini environment; real external call cannot yet run."
+current: 'CANCELLED BY USER DIRECTION: no automated external OpenAI/ChatGPT API allowed. No prototype code was committed or merged and no network/API calls were made. A single untracked prototype file in abandoned local worktree may remain until approved local cleanup; do not use.'
+remaining: []
+last_verified_commit: aa27282b
+test_results: []
+resume_instruction: 'Do not continue this API-provider task. Explicit user instruction forbids additional API integrations. Work solely with local LLM executor and ChatGPT as interactive reviewer via RDC; update parent checkpoint with expert verdicts. No watchdog or bids.'

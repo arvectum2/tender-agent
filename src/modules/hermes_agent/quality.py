@@ -82,25 +82,26 @@ GENERIC_SUBJECT_PREFIXES = [
 ]
 
 
+def _is_generic_subject(subject: str) -> bool:
+    """One canonical rule for both Hermes quality and readiness decisions."""
+    if not subject:
+        return True
+    if subject in GENERIC_SUBJECT_EXACT:
+        return True
+    words = subject.split()
+    if len(words) <= 3:
+        for prefix in GENERIC_SUBJECT_PREFIXES:
+            if subject.startswith(prefix):
+                rest = subject[len(prefix):].strip()
+                if not rest or len(rest.split()) <= 2:
+                    return True
+    return False
+
+
 def check_summary_subject_not_too_generic(analysis: HermesAnalysisResponse) -> HermesQualityCheck:
     subject_lower = analysis.summary.subject.lower().strip()
 
-    def is_generic_subject(s: str) -> bool:
-        if not s:
-            return True
-        for pattern in GENERIC_SUBJECT_EXACT:
-            if s == pattern:
-                return True
-        words = s.split()
-        if len(words) <= 3:
-            for prefix in GENERIC_SUBJECT_PREFIXES:
-                if s.startswith(prefix):
-                    rest = s[len(prefix):].strip()
-                    if not rest or len(rest.split()) <= 2:
-                        return True
-        return False
-
-    is_generic = is_generic_subject(subject_lower)
+    is_generic = _is_generic_subject(subject_lower)
 
     if is_generic and not analysis.line_items:
         return HermesQualityCheck(
@@ -363,22 +364,7 @@ def determine_final_status(analysis: HermesAnalysisResponse, quality_checks: lis
     if analysis.summary.subject and not analysis.line_items:
         subject_lower = analysis.summary.subject.lower().strip()
 
-        def _is_generic(s: str) -> bool:
-            if not s:
-                return True
-            for pattern in GENERIC_SUBJECT_EXACT:
-                if s == pattern:
-                    return True
-            words = s.split()
-            if len(words) <= 3:
-                for prefix in GENERIC_SUBJECT_PREFIXES:
-                    if s.startswith(prefix):
-                        rest = s[len(prefix):].strip()
-                        if not rest or len(rest.split()) <= 2:
-                            return True
-            return False
-
-        if _is_generic(subject_lower):
+        if _is_generic_subject(subject_lower):
             return ("needs_review", "Subject is too generic and no line items found.")
 
     has_extra_docs = any(

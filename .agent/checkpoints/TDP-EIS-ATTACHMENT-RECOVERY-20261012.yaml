@@ -1,0 +1,22 @@
+task_id: TDP-EIS-ATTACHMENT-RECOVERY-20261012
+status: completed
+goal: "Read-only recover original referenced attachments from official EIS XML for four previously XML-only historical runs; verify source identity, TLS endpoint, declared bytes and SHA; no legal or live-status claims."
+definition_of_done:
+  - "Enumerate official publishedContentId, filenames, URLs and declared byte sizes across latest archived XML revisions."
+  - "Try bounded read-only public filestore fetch only from zakupki.gov.ru; reject HTML redirects, large or mismatched bodies and false source attachments."
+  - "Extract DOCX/PDF/DOC text privately when originals are available and produce source-bound evidence for local Gemma and ChatGPT via RDC."
+  - "Fail closed and record exact missing links if public filestore unavailable; no fake source evidence."
+  - "Record evidence outcomes and checkpoint without external LLM API, bids, production or watchdog."
+completed:
+  - "2026-10-12: Read official XML attachmentsInfo for four XML-only cases 0127100008626000013, 0349500000226000003, 0360600005326000018, 0895100000126000897; latest archived notices, URL/UID/size cross-checked."
+  - "2026-10-12: 16/16 files securely fetched from official public EIS filestore; 16/16 extracted text SHA and 13 Gemma claim independent verdicts validated; report committed in GitHub."
+current: 'Recovered and verified all 16 publicly referenced official EIS attachments across four historical XML-only cases: official archived latest notice SHA, official HTTPS UID and declared size, actual binary SHA/format; 16/16 text extractions SHA verified; 13 local Gemma claims independently ChatGPT-reviewed (12 literal quotes, 11 source+meaning supported, one inaccurate quote, one timing ambiguity), one extra claim beyond max3. Report docs/acceptance/TDP_RDC_RECOVERED_16_EIS_FILSTORE_ATTACHMENTS_2026-10-12.md. Historical-only, live EIS UNKNOWN.'
+remaining: []
+last_verified_commit: def6244a56fcb8a7dba02b8a9ef51e261c15bc45
+test_results:
+  - 'All 16 source binaries pass UID/host/HTTP/file format, advertised-byte-size checks; SHA-256 computed and revalidated against stored private receipts.'
+  - 'All 16 normalized text copies SHA-256 verified, recovery scripts py_compile PASS.'
+  - '13 local Gemma claims checked by ChatGPT via RDC: 12 exact source quotes, 11 semantic-source support, one altered whitespace quote, one ambiguity re rights transfer timing; one 4-claim format cap violation.'
+  - 'No repository product code change, no fresh full-suite pytest/CI asserted.'
+
+resume_instruction: 'Child done. Read docs/acceptance/TDP_RDC_RECOVERED_16_EIS_FILSTORE_ATTACHMENTS_2026-10-12.md and original private filestore-recovery-20261012/* receipts before resuming. Do not redownload 16 originals or rerun 13 claims. Parent remaining 3 official SOAP no_data, genuinely current official EIS revision attestation, complete legal bid eligibility and final owner business authorization. ChatGPT in chat via RDC only; no OpenAI API, production, bidding or watchdog.'

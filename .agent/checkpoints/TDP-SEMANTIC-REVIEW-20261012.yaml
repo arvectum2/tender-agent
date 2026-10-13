@@ -1,0 +1,17 @@
+task_id: TDP-SEMANTIC-REVIEW-20261012
+status: completed
+goal: "Design a real fail-closed semantic expert review handoff for local LLM claims, without making unexecuted ChatGPT calls look completed."
+definition_of_done:
+  - "Define a deterministic provenance and semantic reviewer-response contract, distinct from source quote validation."
+  - "Record review status and rejection reasons for local LLM results; unavailable expert stays REVIEW_REQUIRED."
+  - "Reject fabricated source matches and mismatched procurement IDs; no automatic bid GO."
+  - "Add isolated tests, Ruff and CI; merge only after green exact-head checks."
+completed:
+  - '2026-10-12: PR #373 merged at 1506e85847746595c9ce8af3030fa697f6c8f8c8, 9/9 GitHub CI passed, full no-exclusion local 3862 PASS/238 SKIP. No production changes.'
+  - '2026-10-12: R3 frozen analyzer AST regression found in first full suite (one failing test) and resolved by keeping analyzer untouched on new commit 5119a8c4; final local pytest 3862 passed, 238 skipped, 0 failed.'
+  - "Inspected operator_analyze_run controlled LLM path and separate authenticated original quote API."
+current: 'Standalone strict independent semantic-review protocol completed and merged via PR #373; immutable R3 analyzer remains unchanged. No live OpenAI/ChatGPT endpoint or background second-pass service wired.'
+remaining: []
+last_verified_commit: 1506e85847746595c9ce8af3030fa697f6c8f8c8
+test_results: []
+resume_instruction: 'Protocol child complete: merged PR373 1506e85847746595c9ce8af3030fa697f6c8f8c8. Nine exact-head CI jobs passed, no-exclusion local suite 3862 PASS/238 SKIP. No automatic ChatGPT API call exists: next separately create opt-in, credentialed, audit-logged expert service with source excerpts and approval for transmitting tender content. Never claim unactioned expert review or owner GO.'

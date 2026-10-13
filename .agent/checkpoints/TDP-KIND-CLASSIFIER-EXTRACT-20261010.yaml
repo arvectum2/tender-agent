@@ -1,0 +1,19 @@
+task_id: TDP-KIND-CLASSIFIER-EXTRACT-20261010
+parent_task_id: TDP-REFACTOR-20261009
+status: in_progress
+goal: 'Remove procurement type classification from upload_service_legacy.py while retaining behavior through exact old callable interface.'
+definition_of_done:
+  - 'Classifier runs as pure standalone procurement domain module.'
+  - 'Original function remains a thin compatibility wrapper.'
+  - 'Relevant regression tests and static checks pass.'
+  - 'Exact-head GitHub CI green and merged into main.'
+completed:
+  - 'Extracted 144 lines of procurement classification into product-owned pure module.'
+  - 'Added parity checks for old and new call signatures, 59 relevant tests passed.'
+current: 'Await exact-head PR CI and merge.'
+pending:
+  - 'Finish CI and integrate without losing concurrent main updates.'
+last_verified_commit: '133f7e8cf9aee1b0e7fc3177efb587b4bef11250'
+test_results:
+  - '59 tests passed, Ruff on new module and test green.'
+resume_instruction: 'From PR refactor/tdp-kind-classifier-extract-20261010 stacked on #287, check exact-head CI, retarget to merged main after #287 and merge. Parent task remains in_progress for >20 ground-truth EIS reports and owner acceptance.'

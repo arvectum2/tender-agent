@@ -1,120 +1,51 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
-status: blocked
-goal: Deliver a frozen, source-verified corpus of 20-30 distinct real Russian procurements,
-  full data-to-report workflow and seven measurements of operator usefulness, with
-  human-attributed decisions, calibrated thresholds, persistent regression defects
-  and auditable acceptance. Never claim technical probe results are human acceptance.
+task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: 'Execute owner-ordered Tender Agent product roadmap after TA/DP engineering refactor.'
 definition_of_done:
-- Freeze 20-30 distinct genuine EIS cases with law/procedure/revision evidence and
-  source document hashes.
-- Run extraction, full analysis, citation audit, HUMAN review and application package
-  review for every case.
-- Measure seven agreed KPIs and independent comparisons to attributable human reference.
-- Record each human-confirmed false decision/missed blocker/correction as source-backed
-  regression.
-- Pass negative security and regression tests, local runbook and complete GitHub CI.
-- Issue immutable accepted/failed report only after operator reviews and owner-approved
-  limits.
+  - 'APR-03B: reproduce a real authorized read-only 44-FZ workspace flow, verify source integrity, report and citations, fix reproducible code defects and collect owner browser/legal acceptance where required.'
+  - 'APR-04: reconcile, verify and safely merge versioned onboarding PR on current main with real-company profile eligibility and protected private data.'
+  - 'B2B discovery: verify authorized public procurement-source access and deliver 15-20 source-grounded IT opportunities before deciding on connector scope.'
+  - 'APR-06/07: reconcile and run official-source commercial/LLM quality benchmark without inventing human-gold or legal GO.'
+  - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
+  - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
-- APR-05 predecessor completed; full pytest 3297 passed, 238 skipped on PostgreSQL
-  16, GitHub CI 9/9.
-- Initialized APR-06 feature branch and draft PR 254 with canonical checkpoint.
-- Created 28 candidate numbered references (20 44-FZ, 8 223-FZ); candidate status
-  explicitly unverified.
-- Implemented fail-closed immutable-manifest freeze, seven-metric scoring, human evidence/decision
-  and attributable defect gates.
-- Implemented bounded, resumable read-only 44-FZ EIS probe; 223-FZ wrong SOAP handoff
-  is prohibited.
-- Added test suite for corpus/law/owner approvals, tampering, duplicate runs, missed
-  blockers, false GO/NO_GO, crash recovery.
-- Targeted Mac mini tests 24 passed and Ruff clean on code commit 972554f20d57480f05fa18aaf75c20be64833204.
-- Recovered authorized Mac mini SSH via already connected MacBook; no macOS TCC bypass.
-- Executed 20 distinct actual read-only 44-FZ EIS getDocsIP intakes: 168 downloaded
-    source files and SHA256 receipts; 17 had notice content hashes, three had no files.
-- 9 machine reports analyzed from complete-enough case sources (118 total files, 109
-  extracted text flags, 10 report sections per case); 11 cases remain docs_required.
-- Probed 8 separate 223-FZ public HTML document pages through native adapter, all
-  docs_required with 0 attachments.
-- Preserved audit logs on Mac mini and publishable SHA-only summary, operator review
-  queue for nine machine reports; no customer data or secrets in Git.
-- Corrected 223-FZ public document routing: 223-specific parser instead of 44, official
-    common-info to noticeGuid navigation, multi-revision fail-closed validation.
-- Verified all eight 223-FZ candidates against correct official navigation: 4 had
-    document links and 4 require ambiguous-revision human review.
-- Downloaded five bounded read-only 223-FZ files across four cases to local-only /tmp
-  (four PDF/DOCX magic matches and one HTML-extension/ZIP-content mismatch), published
-  hash/size receipts only.
-- Added safe filename recovery for malformed EIS 223-FZ HTML attributes, strict official
-  host/GUID validation, extra security/regression tests, and nine-case machine-only
-  pre-review queue.
-- Full local APR-06 regression suite 3328 passed, 238 skipped, 329 warnings; make
-  check clean. After final GUID hardening 51 targeted tests passed.
-- Deployed exact GitHub revision 6c869543 to existing isolated Mac mini API/worker;
-  loopback /health HTTP 200, both processes running.
-- In updated running API, attached 1+3+1 public 223-FZ files to three previously created
-  runs, all fail-closed as docs_required; left content-format-mismatched case unattached.
-- 'Independent GPT-6 model review 9/9 historical runs complete: six expired NO_GO
-  supported, Aksay false hard NO_GO, CZN stale deadline, three model DEFER; NOT attributed
-  human review.'
-- Review documents and source SHA256 committed to docs/acceptance/APR06_GPT6_INDEPENDENT_REVIEW_2026-10-09.md
-  and apr06_independent_gpt6_audit_2026-10-09.json.
-- Version-aware structured EIS source selection corrected and verified using original
-  archived Aksay v5 and CZN v3; new regression tests.
-- Full local pytest 3336 pass, 238 skipped; make check pass.
-current: Model cross-check and source-revision fix done; awaiting human decisions
-  for 20-30 verified procurements, attachment revision binding and thresholds.
+  - '2026-10-12 inspected main HEAD 6e737d69, GitHub CI 9/9 PASS; TA refactor completed, DP core refactor complete but owner production/gold acceptance blocked.'
+  - 'Mac mini online; isolated APR-03B preview HTTP200 /health and HTTP401 unauthorized workspace. Separate production services not modified.'
+  - '2026-10-12 APR-03B actual authenticated staging preview: EIS 0372200172326000015 import HTTP200, 6 originals, notice XML 3 structured fields KNOWN; 48 focused current-main tests PASS. No final LLM/report or human acceptance; see docs/operations/TA_APR03B_OWNER_PROBE_2026-10-12.md.'
+  - '2026-10-12 APR-04 old PR #252 reconciled onto latest main and pushed updated head 3f289a04, with fail-closed onboarding auth; 3954 full PASS/238 SKIP/0 fail and 57 focused PASS. Exact-head GitHub CI in progress, owner acceptance gated.'
+  - '2026-10-12 first read-only Workspace B2B public-source pass: eight source-attested corporate IT/digital opportunities (including B2B-Center #4632682 and #4628040), one organizer unknown, five individual/non-core exclusions; 15-20 case acceptance and other ETP sources remain OPEN. See docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md.'
+  - '2026-10-12 Safari real saved run toa-run-20261012200402-7249ed analyzed, 6/6 extracted, browser report loaded, XML 3 facts KNOWN. Old preview PDF/DOCX 200; latest-main read-only stage protected 401/200, archived EIS report DEFER, exports 409/409. Added frontend fail-closed export UX and visible no-LLM banner; Node simulation 12/11/4 PASS and focused Python 42 PASS. See docs/acceptance/APR03B_SAFARI_OWNER_REAL_RUN_2026-10-12.md.'
+  - '2026-10-13 PR #391 merged main at 57294f45 after push and PR CI SUCCESS; historical-file fail-closed UI and deterministic-mode labels integrated. Owner private preview not updated.'
+  - '2026-10-13 APR-04 PR #252 retargeted from obsolete APR-03 branch to main, 18 relevant changed files, green CI and 3954/238 local PG16 regression; draft cleared and merged main at 1912acdd. Code integration only: owner legal/business acceptance and production deployment remain pending.'
+  - '2026-10-13 APR-05 PR #253 retargeted to main; GitHub reports merge conflicts, PR still draft. APR-06 #254 and APR-07 #255 remain stacked on APR-05 branch. Do not merge blindly.'
+  - '2026-10-13 Desktop Commander reported two online Macs but terminal commands timed out; Mac mini new private-preview promotion not verified or performed.'
+  - '2026-10-13 APR-05 PR #253 updated with explicit integration gate; draft and dirty with current main, no merge attempted. Earlier-branch Mac mini 105↔106 PG migration and three two-tenant HTTP smoke rounds reported green, but not revalidated on new main.'
+  - '2026-10-13 B2B source report 9 legally identified buyer corporate opportunities published to main in cce54fbb; noncore SEO/marketing leads separated, no outbound messages or paid access.'
+  - '2026-10-13 after owner RDC restart: main CI at ef14fcf8 PASS, PR391/PR252 already merged; APR05 PR253 draft/dirty. Mac mini RDC OFFLINE, MacBook terminal command times out; no local migration/deploy performed.'
+  - '2026-10-13 07:53-08:05 MSK: Mac mini RDC command execution restored. Separate APR05 worktree ta-apr05-current-20261013 created from main f2cb7083; historical APR05 branch integrated with exactly 3 roadmap/checkpoint conflicts resolved, primary APR07 checkout untouched. 30 focused tests PASS, Ruff PASS, make check PASS. Full regression 3971 passed/238 skipped/1 deselected with 3 failures: 2 R9 tests need Docker Engine (unavailable), 1 token-counter subprocess lacked python in PATH (single-test rerun PASS with venv PATH). No commit/merge or deployment done, APR05 worktree has staged changes. Docker Desktop backend running but daemon unavailable; owner preview 18083 down.'
+  - '2026-10-13 recovered Docker Engine 29.8.2. APR05 code reconciled with main after APR04 merge, worktree commit 9b68bbb6, 3975 full pytest PASS/238 SKIP, 3 R9 docker-based tests PASS, Ruff/make check PASS, isolated localhost:18085 actual HTTP synthetic two-tenant E2E PASS (9/9 categories), API auth HTTP401 without Basic, source SaaS defaults disabled. No production or public payment enabled.'
+  - '2026-10-13 APR-05 exact-head CI PR and push 9/9 SUCCESS at d91161fb; merged PR253 into main c21b5f8. Local full 3975 PASS/238 SKIP, isolated synthetic two-tenant 9/9 PASS, R9 Docker three PASS; 18082/18083 healthy, QA 18085 removed. No public SaaS/payments/VPS enabled.'
+  - '2026-10-13 APR-06 PR254 retargeted to main; isolated source merge has six conflicts, including strict EIS original revision selection and legacy facade. Do not replace main source-gating with historic APR06 heuristics; focused and full tests pending.'
+  - '2026-10-13 APR-06 current-main technical integration c1a3238e: six conflicts reconciled, strict current EIS original provenance preserved, cancellation/protocol event never accepted as notice. 56 focused tests PASS; full 4014 PASS/238 SKIP/0 FAIL with PostgreSQL16 and Docker; Ruff and make check PASS. Source manifest 28 candidates, human gold 0/28, commercial thresholds not owner-approved, no final acceptance.'
+current: 'APR05 code merged; APR06 candidate code reconciled with current main and full 4014/238 local regression PASS. APR06 PR254 exact-head GitHub CI and guarded integration pending; real procurement 28-candidate human-gold 0/28 remains BLOCKED. APR07 PR255 stacked; B2B 9/15-20; owner legal/source GO DEFER.'
 pending:
-- Reconcile all 28 candidate numbers/subjects/procedures with official EIS and verify
-  specific notice revisions and all file hashes.
-- Repair/document gaps for 11 incomplete 44-FZ cases and four 223-FZ ambiguous revisions;
-  check coverage for four 223-FZ source-link cases and format mismatch, or select
-  20-30 complete cases.
-- Freeze qualifying 20-30 case corpus by digest; do not mark unverified candidates
-  frozen.
-- Obtain actual attributed HUMAN GO/NO_GO/DEFER, citation corrections, timestamps
-  and application package assessments per case (0/28 so far).
-- Get owner sign-off on seven score thresholds; score all reviewed observations and
-  persist regressions for confirmed defects.
-- Merge upstream PR only under current governance and after final acceptance; keep
-  RU VPS and payment gates deferred.
-last_verified_commit: a51a9f5c9aca5121ae422f97cdf5f698fd5b2079
+  - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
+  - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
+  - 'APR-04: PR252 merged into main. Private Arvectum legal-profile UI/business acceptance remains required; no public deployment.'
+  - 'APR-05: code merged and tested, do not activate paid/public SaaS, do not treat internal tenant pilot as real payment or legal acceptance.'
+  - 'APR-06: 4014 full tests PASS; complete PR254 exact-head CI and safe code integration. Actual 28-case expert-human gold 0/28 and threshold approval remain blocked; do not claim commercial acceptance DONE.'
+  - 'APR-07: after APR06 code integration, reconcile PR255 quality metrics and model comparison gates; keep old local model claims explicitly unevaluated.'
+  - 'B2B discovery: 9/15–20 verified corporate IT/digital opportunities. Complete source verification without paid access or ETP submissions.'
+last_verified_commit: 'APR06 current-main technical integration c1a3238e8be2e89afe882133d59c9afcf8bd62d5; main APR05 c21b5f8 plus checkpoint 3f709d52. Local PG16 full 4014 PASS/238 SKIP, focused 56 PASS, Ruff/make check PASS, exact-head GitHub CI pending.'
 test_results:
-- APR-06 targeted Mac mini pytest 24 passed; Ruff clean.
-- Real 44-FZ SOAP cases 20 unique; 168 files SHA256; 9 analyzed, 11 docs_required.
-- Read-only 223-FZ HTML cases 8; 0 downloaded docs; all docs_required.
-- Human reference decisions 0/28; operator measured time/corrections/citation accuracy/missed
-  blockers and package rework NOT MEASURED.
-- APR-05 full local pytest 3297 passed 238 skipped; predecessor CI 37851685586 success.
-- APR-06 GitHub CI pending latest head; do not claim final pass before actual result.
-- APR-06 223-FZ 4 official navigation results with document links, 4 ambiguous revision
-  stops; 5 bounded source files (4 format-matching, 1 content/extension mismatch),
-  no submitted bids.
-- Full Mac mini pytest 3328 passed / 238 skipped, 329 warnings, PostgreSQL 16 CLI;
-  make check passed; final targeted 51 passed.
-- Mac mini real runtime image 6c869543 deployed; API HTTP 200, worker running, 3/3
-  attempted public 223-FZ run supplements stay docs_required.
-- 'GPT-6 AI-only audit: nine case reviews, six supported NO_GO and three conditional
-  DEFER. Two stale dates, one false hard NO_GO.'
-- 'Post-fix local pytest: 3336 passed 238 skipped, 329 warnings; make check PASS.'
-- Full GitHub CI to verify final code/commit before sign-off.
-resume_instruction: 'APR-06 overall remains BLOCKED, but AI GPT-6 model review subtask
-  completed. Read the independent audit/evidence and do NOT repeat source checks or
-  re-run old 9 reports. Next: independently bind active notice revision to technical
-  attachments; get real company supplier profile, collect actual human reviews and
-  approve thresholds; do not invent them. The historical AI conclusion is 6 deadline
-  NO_GO and 3 DEFER; Aksay originally false NO_GO from v1 and CZN used old deadline.
-  Public VPS/payment/ETP remain paused; watchdog disabled.'
+  - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
+  - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
+  - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
+  - 'B2B first source pass: nine corporate IT/digital source-attested opportunities including Workspace #19006; report docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md now in main. Remaining 15–20 accepted-source goal OPEN.'
+  - 'PR391 SHA 61b8de2d exact-head push/PR CI success; merged 57294f45. PR252 SHA 3f289a04 exact-head push/PR CI success; merged 1912acdd. Main after both merges needs fresh CI check.'
+resume_instruction: 'APR05 PR253 already MERGED. APR06 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-apr06-reconcile-20261013: main and origin APR06 source merged, strict source/cancel event gating fix, focused 56 PASS, full 4014 PASS/238 SKIP, Ruff/make check PASS, current checkpoint updated. Commit pending merge, push fast-forward to feature/apr06-commercial-acceptance PR254 (already based on main), await exact-head GitHub CI; integrate code only if all gates green and retain APR06 human-gold 0/28 BLOCKED. APR07 PR255 stacked on historic APR06, reconcile next in isolated worktree. Never submit/sign, public deploy, enable payments/watchdog or paid APIs.'
 execution:
-  branch: feature/apr06-commercial-acceptance
-  base_commit: c8384b2983e63a9d02cf31d3e3bec573013bd38b
-  pull_request: 254
-  operator_queue: docs/acceptance/APR06_OPERATOR_REVIEW_QUEUE_2026-10-09.md
-  source_receipts: docs/acceptance/apr06_real_probe_receipts_2026-10-09.json
-  public_223_receipts: docs/acceptance/apr06_223fz_public_probe_2026-10-09.json
-  public_223_download_receipts: docs/acceptance/apr06_223fz_download_receipts_2026-10-09.json
-  machine_pre_review: docs/acceptance/apr06_machine_prefill_2026-10-09.json
-  local_runtime_smoke: docs/acceptance/APR06_MACMINI_223FZ_RUNTIME_SMOKE_2026-10-09.md
-  independent_model_audit: docs/acceptance/APR06_GPT6_INDEPENDENT_REVIEW_2026-10-09.md
-  independent_model_evidence: docs/acceptance/apr06_independent_gpt6_audit_2026-10-09.json
+  branch: feature/ta-roadmap-exec-20261012
+  manual_override: true
