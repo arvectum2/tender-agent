@@ -2,7 +2,7 @@
 
 > Canonical scope/history source for `arvectum2/tender-agent`. The executor queue is only a filtered executable projection and is **not** the complete roadmap.
 
-## Оптимизированная Active Product Roadmap — обновлено 2026-10-09
+## Оптимизированная Active Product Roadmap — сверено 2026-10-13
 
 Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
 
@@ -10,10 +10,10 @@
 
 - [x] **APR-01 / ARV-061 — Fast cited pre-analysis — DONE (PR #225, CI 9/9).** Номер/URL закупки → быстрый предмет, сроки, ключевые требования, blockers/unknowns, fit и цитаты. Reuse существующих facts/evidence/Decision Core; без второго analysis engine.
 - [x] **APR-02 / ARV-006 — 223-ФЗ breadth — DONE (bounded frozen corpus, 2026-10-08).** Реальный RI223 SOAP/архивы, многолотовость, редакции, разъяснения, документы и цитируемый анализ с защитой UNKNOWN/NEEDS_REVIEW. Документ приёмки: docs/223fz/APR02_BOUNDED_ACCEPTANCE_2026-10-08.md. НЕ означает универсальной поддержки 223-ФЗ или завершения всего исторического ARV-006; сравнение моделей отложено до APR-07.
-- [ ] **APR-03 — Production Runtime Epic (репозиторный пакет PR #251; VPS-acceptance отложен).** Проверенный локально пакет Compose, worker, секретов, backup/isolated restore и doctor можно принять в код без покупки VPS. Полная приёмка **не завершена**: российский VPS, публичный TLS/ingress, внешние резервные копии, алерты и реальная проверка восстановления остаются заблокированы до отдельного решения владельца. Объединяет ARV-008/011/012/013/014/058 + ARV-076.
+- [ ] **APR-03 — Production Runtime Epic (код PR #251 MERGED; VPS-acceptance отложен).** Проверенный локально пакет Compose, worker, секретов, backup/isolated restore и doctor можно принять в код без покупки VPS. Полная приёмка **не завершена**: российский VPS, публичный TLS/ingress, внешние резервные копии, алерты и реальная проверка восстановления остаются заблокированы до отдельного решения владельца. Объединяет ARV-008/011/012/013/014/058 + ARV-076.
 - [ ] **APR-03B — Operator Workspace — единый поиск/скачивание/анализ PR #259 + исправление падения в Safari и контроль версий Docker PR #260 MERGED; личная браузерная приёмка остаётся открытой.** Приватный кабинет на Mac mini: ввод номера/официального URL ЕИС (44-ФЗ/223-ФЗ), исходные файлы и события, реальный результат анализа с доказательствами, человеческими проверками, рисками/экономикой и PDF/DOCX; список сохранённых запусков и read-only канонической базы. Вход /pilot/tender-agent/workspace; **не DONE до браузерной приёмки владельца на реальной закупке**. Нет VPS, автоподачи, подписи и платежей. После APR-03B — APR-04.
 - [ ] **APR-04 — Customer Onboarding (PR #252 merged, bounded code integration; owner business acceptance still open).** На базе ARV-015 + ARV-064: реквизиты, документы, лицензии/SRO, регионы, категории, НМЦК, маржа/риски и reusable evidence в одном onboarding flow.
-- [ ] **APR-05 — Paid Pilot & SaaS Foundation (PR #253 code being reconciled onto current main, review/test pending).** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
+- [ ] **APR-05 — Paid Pilot & SaaS Foundation (код PR #253 MERGED в main 13.10.2026; производственная и коммерческая приёмка не завершена).** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
 - [ ] **APR-06 — Commercial Acceptance Gate (PR #254 открыт, не слит).** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.
 - [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation (PR #255 открыт, не слит).** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
 
@@ -37,6 +37,23 @@
 - [ ] **ARV-062 GitVerse mirror, ARV-075 Mac mini cleanup, ARV-051 dev protocol** — engineering/ops/governance, не product backlog.
 - [ ] **ARV-073/074 ID conflicts** — owner/governance reconciliation only.
 - [ ] **ARV-067 new vertical ontologies** — только если frozen benchmark показывает устойчивый vertical gap.
+
+## Срез активных чекбоксов — 13.10.2026 (верифицирован по GitHub)
+
+**Смысл статусов.** `MERGED/CI GREEN` — технический результат в репозитории, **не** завершённая бизнес-приёмка. Исторические `ARV/BASE` чекбоксы остаются legacy-регистром и могут повторять APR. Полный счётчик Markdown-чекбоксов включает пересечения и отложенные направления; его нельзя читать как число оставшихся этапов до релиза.
+
+| P0 / ближайшее направление | Технический статус, который удалось подтвердить | Незакрытый gate |
+| --- | --- | --- |
+| **APR-03 Production Runtime** | PR #251 **MERGED**; локальная Compose/backup/restore подготовка | Российский VPS, боевой TLS/доступ, backup/restore и наблюдаемость в реальной среде. Внешние расходы/production — Owner |
+| **APR-03B Operator Workspace** | PR #259 и #260 **MERGED**, локальная проверка оригиналов и CI | **Браузерная приёмка владельца** в /pilot/tender-agent/workspace на реальной закупке (работа с оригиналами, отчёт, цитаты, PDF/DOCX) |
+| **APR-04 Onboarding** | PR #252 **MERGED** | Бизнес-проверка профиля ООО «Арвектум», полноты и точности данных, документов, применимости на реальной закупке |
+| **APR-05 Paid Pilot / SaaS** | PR #253 **MERGED**, tenant/role/entitlement реализованы в коде; квалификационные PR #407–415 пока **DRAFT и НЕ MERGED** | staging-приёмка изоляции, ролей, легальной обвязки, тарифов и явного Owner-разрешения перед live SaaS/оплатой |
+| **APR-06 Commercial Acceptance** | PR #254 и связанные аудиты/квалификация созданы, оригинальные CZN 70/30, 1C 60/40/5/95, RI223 40/60 разобраны; PR #415 `054c5e21` **3/3 GitHub CI SUCCESS**; исходники проверены локально | **20–30 независимых реальных коммерческих кейсов**, оригиналы/изменения ЕИС и точные SHA, человеческие gold-метки, ставки/маржа/квалификация, approved Owner KPI; не объявлять AI-оценку human-gold |
+| **APR-07 Quality / SLO** | PR #255 DRAFT, локальные метрики и frozen acceptance snapshots | Независимая человеческая оценка R4, датированные решения владельца R5, достоверные rolling SLO с production/staging, актуальность R2 |
+| **B2B corporate sourcing** | PR #399 DRAFT, примерно 10 source-grounded исторических карточек с дедупликацией | 15–20 **актуальных и подходящих** корпоративных IT-закупок, публичные условия участия ООО, тарифы и юридические ограничения; без авторизованных ЭТП-интеграций |
+| **P1/P2 / ARV deferred** | APR-08 copilot, APR-09 supplier RFQ/TKP, APR-10 reviewed feedback и прочие ARV/n8n/infra задачи — **не автоматическая P0 очередь** | Фактический клиентский спрос, ≥2 платных sourcing кейса, ≥30 useful corrections / ≥3 customer contexts, либо измеренный capacity/benchmark trigger |
+
+**Дальнейший порядок без дополнительных внешних прав:** (1) безопасно сверить source/CI и статус очереди, (2) подготовить браузерную/юридическую приёмку и независимый APR-06 corpus, (3) собрать качественные текущие B2B источники. Для настоящей браузерной подписи Owner, закупочных заявок, production SaaS и платёжных действий нужно отдельное решение владельца. Один зелёный CI **не** закрывает APR-03/03B/04/05/06/07. Watchdog остаётся в ручном режиме согласно `execution.manual_override=true`.
 
 ## Provenance and restoration rule
 
@@ -127,7 +144,7 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 - [x] **Stage 5 — Reliability + moat (admitted v1 boundary)**
 - [x] **Daily Tender Run DTR-1 → DTR-3**
 - [x] **iPhone Tender Agent MOB-1 → MOB-4**
-- [ ] **Commercial Workflow** — **10/12**; ARV-066 активно выполняется, ARV-069 остаётся последним admitted item.
+- [ ] **Commercial Workflow** — **11/12 технически завершены**; ARV-066 merged в main, ARV-069 — deferred experiment по порогу данных, **не** автоматическое следующее задание.
 
 ### Commercial Workflow — текущая исполняемая ветка
 
@@ -141,8 +158,8 @@ This changes utilization/cadence only. It does **not** expand AM-4 authority, qu
 - [x] ARV-060 — Case discussion / immutable decision journal
 - [x] ARV-063 — Review-only application package generator
 - [x] ARV-064 — Reusable company document/profile store
-- [ ] 🔄 **ARV-066 — One-click procurement import boundary — in progress** (`agent/commercial-workflow-arv-066-001`)
-- [ ] ⏳ **ARV-069 — Competition / bid-price forecast context — ready**
+- [x] **ARV-066 — One-click procurement import boundary — DONE** (merged main `9a5a693f`; исходный исторический ARV ниже не переписывается)
+- [ ] ⏳ **ARV-069 — Competition / bid-price forecast context — DEFERRED** (после ≥100 сопоставимых source-bound outcomes и замороженного benchmark; не следующий P0 шаг)
 
 ### Полный canonical legacy registry
 
