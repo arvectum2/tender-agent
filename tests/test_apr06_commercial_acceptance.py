@@ -280,3 +280,67 @@ def test_false_go_no_go_and_corrections_must_be_regressions():
     obs[reg]["corrected_fields"] = 1
     obs[reg]["confirmed_defects"] = []
     assert score(manifest, obs, approved(policy()))["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+
+
+def test_one_unreviewed_application_package_blocks_full_corpus_acceptance():
+    """The rework-rate denominator cannot silently omit a partial case."""
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["application_package"] = {
+        "reviewed": False, "required_rework": False,
+    }
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    assert result["eligible_count"] == 27
+    assert any(
+        x["reg_number"] == reg and "package" in x["reason"]
+        for x in result["unreviewed_or_invalid"]
+    )
+
+
+def test_duplicate_citation_claim_id_fails_closed():
+    """Do not let repeated quoted evidence inflate citation coverage."""
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["claims"] = [
+        {"claim_id": "same-claim", "citation_verified": False},
+        {"claim_id": "same-claim", "citation_verified": True,
+         "source_ref": "test-only:source-1"},
+        {"claim_id": "same-claim", "citation_verified": True,
+         "source_ref": "test-only:source-1"},
+    ]
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    assert result["eligible_count"] == 27
+    assert any(
+        "duplicate report claim" in x["reason"]
+        for x in result["unreviewed_or_invalid"]
+    )
+
+
+def test_distinct_citation_claim_ids_are_allowed_but_bad_metric_fails():
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["claims"] = [
+        {"claim_id": "fact-1", "citation_verified": False},
+        {"claim_id": "fact-2", "citation_verified": True,
+         "source_ref": "test-only:source-2"},
+    ]
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "FAILED_ACCEPTANCE"
+    assert 0 < result["metrics"]["citation_coverage"] < 1
+
+
+def test_unreviewed_package_with_rework_flag_is_not_a_review():
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["application_package"] = {
+        "reviewed": False, "required_rework": True,
+    }
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    assert result["eligible_count"] == 27
