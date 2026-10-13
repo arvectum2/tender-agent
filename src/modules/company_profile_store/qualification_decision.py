@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Any
 
 from pydantic import Field
+from sqlalchemy.orm import Session
 
 from src.modules.company_profile_store.qualification_references import (
     QualificationAssessment,
@@ -18,7 +19,6 @@ from src.modules.company_profile_store.qualification_references import (
 from src.modules.tender_operator_agent_demo.decision_core import build_decision_core
 from src.shared.errors import ValidationError
 from src.shared.types.common import APIModel
-from sqlalchemy.orm import Session
 
 
 class QualificationAwareDecisionRequest(APIModel):
