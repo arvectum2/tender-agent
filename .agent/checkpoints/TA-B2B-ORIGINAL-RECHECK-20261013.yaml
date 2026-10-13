@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-ORIGINAL-RECHECK-20261013
+status: in_progress
+goal: Add independent original-platform B2B-Center evidence to the existing corporate IT discovery, without treating publicly indexed open status as authorization to bid.
+definition_of_done:
+  - Confirm at least one additional unique corporate IT-related original ETP public card with original URL, buyer, publication, deadline, status and qualification caveats.
+  - Deduplicate against the existing discovery; distinguish historical count from currently source-verified, qualified and eligible live leads.
+  - Persist a source-grounded addendum in the canonical discovery report and confirm exact-head GitHub CI or record a precise blocker.
+  - Stop at research/review; do not create platform accounts, bid, pay, sign or deploy.
+completed:
+  - Public B2B-Center notice 4637497 verified as separate one-lot IT/software-tagged qualification by ООО «КЕХ еКоммерц», published 2026-10-12 and indexed active until 2026-10-19 16:00 MSK.
+  - Prior 4628040 reconfirmed from original B2B-Center card without duplicate counting.
+  - Source limitations / registration-gated detailed conditions and historical-vs-qualified count recorded in report.
+current: Await exact-head CI after research-only PR is created.
+pending:
+  - Verify PR CI and finalize checkpoint; do not auto-merge without applicable acceptance authority.
+last_verified_commit: 'main a0d28c038d2b012692623565837adf86b8623756 before research branch; final PR head pending'
+test_results:
+  - External original public notice metadata checked; no application code touched, no local code tests applicable.
+resume_instruction: 'Confirm the research PR exact-head checks. One unique source-attested #4637497 is added, but 15-20 live and eligible corporate IT lead goal remains OPEN. Keep PR review-only; do not submit ETP bids, purchase access or promote historical candidates to BID_READY.'
