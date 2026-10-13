@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-RUN-ORCHESTRATION-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Attach original EIS scoring extraction and tenant-owned verified completed contracts to actual read-only Tender Agent run, report projection and user interface without manually supplying criterion or tenant ID.
+definition_of_done:
+  - Discover exact original scoring DOCX and original notice from existing run evidence using source binding and safe path rules, not hardcoded CZN weights.
+  - Authenticate supplier/tenant and read owner-confirmed reference list; avoid trusting arbitrary customer_id or source SHA in request.
+  - Return per-run qualification competitive assessment in report-ready format, never mutate legal eligibility, never invoke ETP.
+  - Expose clear states including missing original source and owner profile, and separate legal/source verification warning.
+  - Test CZN real original fixture, tenant isolation, malformed files, stale source, fake/supplied SHA, and report UX; local pytest+Ruff and exact GitHub CI.
+  - Leave PR draft and do not promote human gold or signed source.
+completed:
+  - Parent source extractor PR408 full PR/push CI SUCCESS at 7f6024e1 and child marked completed.
+  - Parent reference-list PR407 bearer-authenticated tenant scope and owner 0 contract CZN scoring verified.
+current: Inspect current run evidence model, derive safe automatic source file discovery and report projection, then implement.
+pending:
+  - Inspect run evidence and report/UI routes; design safe trust boundary.
+  - Implement original ZIP/UID based scoring discovery from run-local files, backed by saved original getDocsIP archive.
+  - Connect tenant qualification with run report UI/API and provenance notes; add tests.
+  - Run focused tests, verify exact CI, checkpoint completion.
+last_verified_commit: 'Branch created from completed PR408, no implementation yet.'
+test_results: []
+resume_instruction: 'Continue feature/qualification-run-orchestration-20261013 stacked on PR408. Run-local original getDocsIP ZIP, saved inputs and metadata already exist in procurement_intake_service, existing company_profile_store qualification_original_source.py and qualification_decision.py and saas_foundation/router.py available. Bearer token principal.customer_id must derive tenant. Never accept user-picked source hash, customer_id, or pretend verified digital signature. CZN original live XML v4 scoring DOCX SHA bda1eff35... owner zero -> competitive NO_GO. Keep read-only/no ETP, no prod, no watchdog, all PRs drafts.'
