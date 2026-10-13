@@ -125,7 +125,7 @@ def test_recorded_digest_must_be_well_formed_but_is_not_rehashed():
 def test_reject_naive_datetime_and_asof_time_propagates():
     manifest, audit, prefill = _sources()
     with pytest.raises(ValueError, match="UTC offset"):
-        build_review(manifest, audit, prefill, as_of=datetime(2026, 10, 13))
+        build_review(manifest, audit, prefill, as_of=AS_OF.replace(tzinfo=None))
     as_of = datetime.fromisoformat("2026-10-09T07:00:00+03:00")
     review = build_review(manifest, audit, prefill, as_of=as_of)
     assert review["summary"]["archived_deadlines_passed_as_of_date"] == 6
