@@ -22,12 +22,20 @@ completed:
   - Public status report docs/acceptance/APR06_DIRECT_EIS_HTTPS_2026-10-13.md committed. Two regression tests verify source_direct_connection=True creates explicit empty ProxyHandler even with environment proxy variables.
   - Draft PR404 opened against APR06 parent branch, no ETP action.
   - Inspected Python urllib: ProxyHandler({}) suppresses default environment proxy handler without registering any protocol handler itself. Corrected positive regression expectation in b4c9f9d.
-current: Direct HTTPS curl checks completed from RU Mac mini. Dated read-only report and two direct-open-proxy policy regressions in draft PR404 head b4c9f9d5341f415ab57ec2b6180be34b41a7e9cd; CI queued. Existing client already implements ProxyHandler({}). No new network client written.
+  - Source adapter _fetch_page and operator fallback _extract_public_page_context now bounded retry only on 146-byte EIS pub01 Varnish/nginx HTTP404; 403,429,host lookalikes and persistent 404 fail closed.
+  - Found and fixed dangerous secondary operator deadline UTC 07:00 shown without timezone instead of official 10:00 MSK. Real direct operator CZN fetch now returns 23.10.2026 10:00 (МСК).
+  - Public official documents HTML shows CZN active v4, seven current UID attachments. Three unchanged UID original archived files rehashed against previous corpus, four changed UID files fetched directly read-only, ZIP/PDF magic and SHA-256 verified; binaries private Mac mini only.
+  - Evidence in docs/acceptance/APR06_DIRECT_EIS_HTTPS_2026-10-13.md and 7-case JSON source receipts. 160 targeted pytest PASS + Ruff PASS + JSON validation + git diff --check on code/report head 01ee6851.
+current: PR404 code/report head 01ee68516d01e141f1523f5d54a6c86a2e408ec4, real direct EIS CZN v4 discovery + bounded pub01 cache 404 retries in both public detail and operator fallback, UTC/MSK deadline corrected; 7/7 current HTML UID to private SHA bytes. Mac mini 160 focused PASS/Ruff PASS, exact GitHub CI queued.
 pending:
-  - Verify PR404 exact-head CI for two offline proxy-bypass policy regressions, repair if needed.
-  - Finish checkpoint after CI, retaining CZN live status and current EIS documents as unverified.
-last_verified_commit: 'PR404 current research/test head b4c9f9d5341f415ab57ec2b6180be34b41a7e9cd; GitHub PR run 38393920103 queued, push run 38393912440 queued; local pytest not confirmed'
+  - Verify PR404 exact-head push/PR CI on 01ee6851, repair any failures and record definitive results.
+  - Investigate obtaining authentic epNotificationEOK2020 XML revision 4 and signature/source receipt; do not promote HTML-only UID binding to original signed XML truth.
+  - Complete checkpoint only after CI pass; no owner commercial approval or production.
+last_verified_commit: 'PR404 tested code/report head 01ee68516d01e141f1523f5d54a6c86a2e408ec4; Mac mini 160 pytest PASS, Ruff PASS; GitHub PR run 38398230396 queued and push runs 38398221683 queued / 38398222038 SUCCESS at last check.'
 test_results:
   - 'Mac mini direct HTTPS curl: EIS home HTTP200 and Museum official notice HTTP200; CZN official notice HTTP404; RU/Moscow egress, macOS PAC present. Default/direct GET to exact routes agree.'
-  - 'Two offline direct-opener regressions committed and corrected to reflect how urllib suppresses registration of empty ProxyHandler; local pytest not independently executed. Exact-head PR/push CI pending.'
-resume_instruction: 'Review PR404 at head b4c9f9d5341f415ab57ec2b6180be34b41a7e9cd and check exact-head CI; repair regressions if CI fails, mark child completed only after CI success. Public EIS home and Museum official notice GET 200 from direct RU Mac mini, CZN original official GET 404 even direct. Do not infer cancellation. Existing source_direct_connection uses ProxyHandler({}), so do not change global PAC/proxy. Parent APR06 remains unaccepted with original-current source docs and 0 true human gold.'
+  - 'On PR404 head 01ee6851 Mac mini 160 focused pytest PASS, Ruff PASS, JSON validation and git diff --check PASS.'
+  - 'Live Public44FzSearchProvider.fetch_detail: CZN source success, active v4, seven links, 23 Oct 10:00 MSK; live secondary operator context after fix also 23 Oct 10:00 (МСК).'
+  - 'Four new current v4 files downloaded read-only under /tmp/ta-apr06-czn-v4-originals-20261013, 4/4 SHA256 and ZIP/PDF signatures verified; three prior UID files rehashed under existing RO Docker corpus; no original v4 epNotification XML yet.'
+  - 'GitHub exact code head 01ee6851 PR CI 38398230396 queued; push CI 38398221683 queued and 38398222038 SUCCESS (last check).'
+resume_instruction: 'Code/report verified at PR404 head 01ee68516d01e141f1523f5d54a6c86a2e408ec4 (160 Mac mini PASS/Ruff PASS). Check exact push/PR GitHub CI 38398230396/38398221683, repair only verified failure and mark child complete once green. CZN official EIS current HTML active v4 12 Oct 22:24, application deadline 23 Oct 10:00 MSK, seven UID linked to verified local files (3 archive reused, 4 new). EIS pub01 intermittent fake nginx404 vs pub02 HTTP200 handled by bounded direct GET retry. Main outstanding evidence: original signed EIS epNotification v4 XML/UID and ZIP internals; do not infer signed full legal source truth from public HTML, keep APR06 commercial acceptance draft/blocked, no ETP actions/paid APIs/production/PAC updates.'
