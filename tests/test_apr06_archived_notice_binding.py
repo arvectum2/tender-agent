@@ -16,12 +16,22 @@ REG = "0372200172326000015"
 RUN = "toa-run-20261009052409-9c4515"
 
 
+def _uid(name: str) -> str:
+    return ("1" if name == "terms.docx" else "2") * 32
+
+
+def _attachment_url(name: str) -> str:
+    return "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/priz/file.html?uid=" + _uid(name)
+
+
 def _xml(version=1, number=REG, deadline="2026-10-16T10:00:00+03:00",
          attachments=(("terms.docx", 5),), tag="epNotificationEZK2020",
          url=None):
     url = url or f"https://zakupki.gov.ru/epz/order/notice/view?regNumber={number}"
     xml_attachments = "".join(
-        f"<attachmentInfo><fileName>{name}</fileName><fileSize>{size}</fileSize></attachmentInfo>"
+        f"<attachmentInfo><fileName>{name}</fileName><fileSize>{size}</fileSize>"
+        f"<publishedContentId>{_uid(name)}</publishedContentId>"
+        f"<url>{_attachment_url(name)}</url></attachmentInfo>"
         for name, size in attachments
     )
     xml_deadline = f"<endDT>{deadline}</endDT>" if deadline is not None else ""
@@ -62,7 +72,9 @@ def _fixture(tmp_path: Path, *, second=False, missing_doc=False, no_date=False):
                      "source_type": ("getdocs_archive" if original_name.endswith(".xml")
                                      else "notice_xml_attachments"),
                      "name": original_name, "stored_name": f"extracted/{saved}",
-                     "size_bytes": len(raw)})
+                     "size_bytes": len(raw),
+                     "source_url": (None if original_name.endswith(".xml")
+                                    else _attachment_url(original_name))})
     (archive_root / "attachments_manifest.json").write_text(json.dumps(rows), encoding="utf-8")
     manifest = {"schema_version": "apr06-readonly-receipts-v1",
                 "cases": [{"reg_number": REG, "run_id": RUN, "document_files": originals}]}
@@ -76,7 +88,8 @@ def test_offline_latest_v2_selected_and_only_latest_doc_matched(tmp_path):
     assert case["archived_notice_revisions"] == [1, 2]
     assert case["latest_archived_notice_version"] == 2
     assert case["latest_archived_deadline"] == "2026-10-16T10:00:00+03:00"
-    assert case["source_state"] == "ARCHIVED_NAME_SIZE_ONLY_CORRELATION"
+    assert case["source_state"] == "ARCHIVED_UID_SHA_CORRELATION"
+    assert case["archive_uid_sha_correlated"] == 1
     assert case["archive_name_size_correlated"] == 1
     assert case["official_current_eis_status_verified"] is False
     assert case["official_attachment_uid_bound"] is False
@@ -88,6 +101,7 @@ def test_latest_attachment_missing_is_not_implied_by_old_version(tmp_path):
     c = audit_original_notice_revisions(manifest, base)["cases"][0]
     assert c["latest_archived_notice_version"] == 2
     assert c["archive_name_size_unmatched"] == 1
+    assert c["archive_uid_unmatched"] == 1
     assert c["source_state"] == "ARCHIVED_LATEST_ATTACHMENTS_INCOMPLETE"
 
 
@@ -199,3 +213,25 @@ def test_duplicate_case_cannot_inflate_denominators(tmp_path):
     manifest["cases"].append(copy.deepcopy(manifest["cases"][0]))
     with pytest.raises(ValueError,match="duplicate"):
         audit_original_notice_revisions(manifest,base)
+
+def test_wrong_stored_url_uid_fails_archived_uid_binding(tmp_path):
+    manifest, base, _ = _fixture(tmp_path)
+    p = base / RUN / "procurement/attachments_manifest.json"
+    rows = json.loads(p.read_text(encoding="utf-8"))
+    rows[-1]["source_url"] = rows[-1]["source_url"].replace("1" * 32, "2" * 32)
+    p.write_text(json.dumps(rows), encoding="utf-8")
+    c = audit_original_notice_revisions(manifest, base)["cases"][0]
+    assert c["archive_name_size_correlated"] == 1
+    assert c["archive_uid_sha_correlated"] == 0
+    assert c["source_state"] == "ARCHIVED_LATEST_ATTACHMENTS_INCOMPLETE"
+
+
+def test_malformed_notice_published_uid_refused(tmp_path):
+    manifest, base, extracted = _fixture(tmp_path)
+    altered = _xml().replace(b"1" * 32, b"x" * 32, 1)
+    (extracted / "notice_1.xml").write_bytes(altered)
+    manifest["cases"][0]["document_files"][0].update({
+        "sha256": hashlib.sha256(altered).hexdigest(), "bytes": len(altered)
+    })
+    c = audit_original_notice_revisions(manifest, base)["cases"][0]
+    assert c["source_state"] == "FAIL_CLOSED_ORIGINAL_SOURCE_INCONSISTENT"
