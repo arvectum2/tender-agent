@@ -38,10 +38,13 @@ def test_70_30_qualification_first_is_separate_from_technical_feasibility():
     assert scoring["price_weight_percent"] == 30
     assert scoring["qualification_weight_percent"] == 70
     assert scoring["qualification_basis"].startswith("количество исполненных")
-    assert scoring["qualifying_contracts_user_confirmed"] is None
+    assert scoring["qualifying_contracts_user_confirmed"] == 0
+    assert scoring["user_reference_statement_as_of"] == "2026-10-13"
+    assert scoring["user_reference_independently_verified"] is False
     assert scoring["price_weight_percent"] + scoring["qualification_weight_percent"] == 100
     decision = evidence["provisional_analysis"]
-    assert decision["recommendation"].startswith("DEFER_")
+    assert decision["recommendation"] == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert decision["competitive_no_go_owner_reference_zero"] is True
     assert decision["cost_estimate_rub"] is None
     assert decision["legal_opinion_final"] is False
     assert decision["user_should_not_auto_bid"] is True
