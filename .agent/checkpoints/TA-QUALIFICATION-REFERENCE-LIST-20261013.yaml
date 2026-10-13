@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-REFERENCE-LIST-20261013
+status: in_progress
+goal: Implement original-source-bound competitive qualification decision using a tenant-scoped versioned reference list of completed company contracts.
+definition_of_done:
+  - Versioned tenant-scoped company reference-list snapshot distinguishes verified empty list from unknown/missing data; source reference and freshness preserved.
+  - Independent deterministic 44-FZ/223-FZ contract matching against an evidence-bound criterion (regime, subject including chatbot, completion act recency); do not assert legal ineligibility from zero score.
+  - CZN 0348100024426000039 yields competitive NO_GO because owner confirms Arvectum has zero executed contracts, with source 70% qualification/30% price, unchanged legal eligibility.
+  - Expose usable read-only assessment path from company profile store; integrate risk decision into operator Decision Core only when explicit source-bound criterion + same tenant snapshot present; no global demo profile assumptions.
+  - Include negative tests for tenant isolation, unknown/expired list, nonqualifying 44/223 or incomplete contracts, fabricated source and wrong version; pass local and exact-head CI.
+  - Document how to update reference list after first signed contract and how evaluation reacts.
+completed: []
+current: Inspect existing company profile store and decision core; implement tenant-isolated feature.
+pending:
+  - Add contract reference schema, fact persistence retrieval and pure conservative evaluator.
+  - Add API and optional Decision Core integration with strict source provenance.
+  - Pin Arvectum owner-zero user declaration and CZN current source v4 qualification NO_GO example.
+  - Test locally with real Mac mini and CI; complete checkpoint.
+last_verified_commit: 'new branch based main, no implementation yet'
+test_results: []
+resume_instruction: 'Continue source-bound qualification reference list feature in feature/qualification-reference-list-20261013. Existing CompanyProfileFactVersion supports EXPERИENCE (actual spelling EXPERIENCE) fact group and immutable versions, can persist explicit owner-asserted completed_contract_reference_list empty snapshot. Never count no fact as zero; no cross tenant. Independent factor no-go for CZN due to user-declared zero completed contracts vs 70% experience/30% price, NOT legal disqualification. Keep safe and focus tests, no bids, ETP, production, watchdog or signatures.'
