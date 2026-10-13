@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import copy
 import hashlib
-import io
 import json
 import xml.etree.ElementTree as ET
 import zipfile
