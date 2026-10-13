@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-QUALIFICATION-MULTIFORMAT-RUN-ROUTING-20261013
-status: in_progress
+status: completed
 parent_task_id: TA-ROADMAP-EXEC-20261012
 goal: Add safe original 44-FZ composite PDF observation to tenant SaaS run report, preserving existing CZN DOCX and conservative NOT_ASSESSED.
 definition_of_done:
@@ -11,6 +11,7 @@ definition_of_done:
   - Include auth/viewer isolation and tampering/ambiguous source negative tests.
   - Local tests plus GitHub exact-head CI green, PR draft and no production.
 completed:
+  - Exact PR414 source checkpoint head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 GitHub pull_request 38445274161 and pushes 38445262922/38445262896 all SUCCESS. Source integration engineering child completed; draft remains unmerged.
   - Implemented independent original PDF discovery module for tenant-owned PRIZ 44-FZ runs, requiring getDocsIP at-ingest SOAP SHA, latest original EOK XML, official download UID/name/size/HTTPS and at-download PDF SHA.
   - Existing CZN DOCX source-first qualification and owner reference list preserved; only missing-supported-DOCX route allows composite PDF observation. Tampered DOCX source fails closed without PDF override.
   - Composite PDF 60% price/40% qualifications nested 5% executed related contracts and 95% specialists is information only, NEVER automatic commercial NO_GO when owner has zero contracts, and no legal/human/electronic signature conclusions.
@@ -18,14 +19,13 @@ completed:
   - Added positive/adversarial synthetic source-bound run tests (old/missing download SHA, mutated PDF, wrong PRIZ/RI223, untrusted HTTPS host, ambiguous duplicate PDF and DOCX integrity). Mac mini final code+report head 5ffda3c: 112 pytest PASS, Ruff PASS, embedded SaaS node --check PASS, git diff --check PASS.
   - Russian evidence report and MASTER_ROADMAP committed; stacked DRAFT PR414 opened on PR413, no real tenant DB writes or SaaS/ETP/prod action.
   - Parent PR413 original PDF observer full GitHub PR/push CI success.
-current: PR414 draft stacked on PR413 source head 5ffda3ce176c70459e6c1d6735ea49e88abc4fe3. Mac mini 112 focused pytest PASS, Ruff PASS, SaaS Node JS syntax PASS. Exact GitHub PR/push CI pending.
-pending:
-  - Check PR414 exact GitHub PR/push CI at final checkpoint head and fix actual failures, mark child completed only when green.
-  - Actual production SaaS tenant integration, owner/human expert acceptance and generic 223-FZ PDF/LOT parsing stay separate roadmap gates.
-last_verified_commit: 'PR414 source head 5ffda3ce176c70459e6c1d6735ea49e88abc4fe3 Mac mini 112 targeted pytest PASS, Ruff PASS and SaaS Node JS PASS. Synthetic source-bound run PDF integration PASS, standalone real 1C original v2 archive/PDF PR413 previous verified. GitHub exact CI pending.'
+current: Completed source-bound SaaS DOCX/PDF routing with exact head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345, full PR/push CI 3/3 SUCCESS, local 112 tests/Ruff/Node PASS; not deployed.
+pending: []
+last_verified_commit: 'PR414 exact code/docs source head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345, GitHub PR38445274161 and pushes38445262922/38445262896 all SUCCESS; Mac mini 112 focused tests PASS, Ruff and embedded UI Node syntax PASS; no production activation.'
 test_results:
+  - 'PR414 exact head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345: full GitHub PR38445274161 and both pushes38445262922/38445262896 completed SUCCESS.'
   - 'Mac mini exact source head 5ffda3c: 112 focused pytest PASS, Ruff PASS, SaaS node --check PASS, git diff --check PASS.'
   - 'Synthetic owned-run source-bound PDF 60/40/5/95 => NOT_ASSESSED, malicious/old/duplicate/misrouted originals => NOT_ASSESSED; existing CZN DOCX source and SaaS tenant permission regressions PASS.'
   - 'Standalone previous PR413 original source ZIP+PDF 60/40/5/95 replay PASS; do not misreport integrated PDF run as live tenant run.'
   - 'PR414 GitHub exact-head CI pending.'
-resume_instruction: 'Active TA-QUALIFICATION-MULTIFORMAT-RUN-ROUTING-20261013, branch feature/qualification-multiformat-run-routing-20261013 DRAFT stacked PR414 base PR413. Source head 5ffda3ce176c70459e6c1d6735ea49e88abc4fe3. New source-linked 44-FZ PDF method observation routed only if no supported source-bound original DOCX exists. Legacy CZN source DOCX => owner-zero competitive NO_GO preserved; alternate 1C source PDF 60/40 nested contracts5/specialists95 => commercial NOT_ASSESSED. Tenant from Bearer owned_run; viewer redaction; old/no at-ingest hash/tampering/wrong law/ambiguous method abstains, no ETP. Mac mini 112 focused pytest PASS, Ruff PASS, Node SaaS UI PASS; original 1C private PDF standalone replay from PR413 already green, new integration tests use synthetic current source fixtures. Check exact GitHub PR414 PR/push CI, repair and mark child completed only after green. Keep PR405/407/408/409/410/411/412/413/414 draft, SaaS production disabled, manual_override true, watchdog disabled, no bid/sign/pay/deploy, APR06 human gold/Owner KPI and APR07 actual production SLO open.'
+resume_instruction: 'TA-QUALIFICATION-MULTIFORMAT-RUN-ROUTING-20261013 COMPLETED: PR414 source head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 exact three GitHub workflows SUCCESS, local 112 PASS/Ruff/Node PASS. Keep draft/unmerged and SaaS disabled. Next distinct child: validate new actual original 1C 44-FZ v2 ZIP/PDF through integrated source-bound report, using privately saved bytes on authorized Mac mini, without posting to production tenant; ensure actual replay NOT_ASSESSED and CZN DOCX path remains safe. Only then consider broader generalization or source selector. Preserve manual_override true/watchdog disabled, no ETP/bids/payments/signatures/deploy; APR06 independent human gold, owner KPIs, APR07 production SLO blocked.'
