@@ -11,11 +11,11 @@ import argparse
 import hashlib
 import json
 import re
+import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlsplit
-import xml.etree.ElementTree as ET
 
 _REG = re.compile(r"[0-9]{19}\Z")
 _RUN = re.compile(r"toa-run-[0-9]{14}-[a-f0-9]{6}\Z")
@@ -37,7 +37,7 @@ def _nested_text(element: ET.Element, tag: str) -> str | None:
 
 def _safe_input(root: Path, relative: str) -> Path:
     if not isinstance(relative, str):
-        raise ValueError("Missing relative source path")
+        raise TypeError("Missing relative source path")
     p = Path(relative)
     if p.is_absolute() or ".." in p.parts or not p.parts or p.parts[0] == ".":
         raise ValueError("Unsafe source path")
@@ -185,7 +185,7 @@ def audit_original_notice_revisions(receipts: dict, runs_root: Path) -> dict:
                 name, relative = entry.get("name"), entry.get("stored_name")
                 size = entry.get("size_bytes")
                 if not isinstance(name, str) or not isinstance(relative, str):
-                    raise ValueError("Malformed archived file metadata")
+                    raise TypeError("Malformed archived file metadata")
                 if name.lower().endswith(".xml"):
                     raw = _read_receipted(input_root, relative, approved_receipts)
                     parsed = _notice_from_xml(raw, reg, hashlib.sha256(raw).hexdigest())
