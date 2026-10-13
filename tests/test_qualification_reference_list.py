@@ -72,6 +72,7 @@ def test_missing_or_partial_references_are_not_silently_treated_as_zero():
         (_snapshot(completeness="PARTIAL"), False, "QUALIFICATION_EVIDENCE_PARTIAL"),
         (_snapshot(), True, "QUALIFICATION_EVIDENCE_EXPIRED"),
         (_snapshot(owner_confirmed=False, completeness="PARTIAL"), False, "QUALIFICATION_EVIDENCE_UNKNOWN"),
+        (_snapshot(as_of_date="2026-01-01"), False, "QUALIFICATION_EVIDENCE_UNKNOWN"),
     ):
         result = assess_references(
             customer_id="tenant-1", criterion=_criterion(),
