@@ -189,7 +189,7 @@ def _intermittent_eis_notice_edge_404(url: str, exc: HTTPError) -> bool:
     if parsed.scheme != "https" or parsed.hostname != EIS_44FZ_HOST:
         return False
     if not re.fullmatch(
-        r"/epz/order/notice/[^/]+/view/(?:common-info|documents|event-journal)\\.html",
+        r"/epz/order/notice/[^/]+/view/(?:common-info|documents|event-journal)\.html",
         parsed.path,
     ):
         return False
@@ -197,7 +197,7 @@ def _intermittent_eis_notice_edge_404(url: str, exc: HTTPError) -> bool:
     if len(numbers) != 1 or not re.fullmatch(r"[0-9]{19}", numbers[0]):
         return False
     via = exc.headers.get("Via", "") if exc.headers else ""
-    if not re.search(r"eis-varnish-pub[0-9]+\\.zakupki\\.local", via, re.IGNORECASE):
+    if not re.search(r"eis-varnish-pub[0-9]+\.zakupki\.local", via, re.IGNORECASE):
         return False
     # Read only the tiny error stub (never the page/document body). This is not
     # a captcha bypass; other 404s, 403 and 429 do not qualify for a retry.
