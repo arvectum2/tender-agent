@@ -13,11 +13,21 @@ definition_of_done:
 completed:
   - Previous PR404 archived/public CZN v4 EIS proof exact-head CI push/PR SUCCESS (a076c8c8).
   - Official original SOAP EOK2020 v4 XML plus 7 UID and exact file byte receipts are preserved on authorized Mac mini ArvectumSSD.
-current: Identify nested DOCX/PDF source files, their content quality and requirements in a read-only safe workflow.
+  - Safely inspected original v4 current OOЗ ИТОГ 95-page PDF, nested state-contract DOCX and PIK appendix DOCX, plus unchanged tender application/scoring DOCX and two original NMCK calculation PDFs from saved unchanged UID ZIP. One OOЗ PDF occurs twice identically; never double counted.
+  - Verified primary source NMCK: 685000 chatbot, 315000 youth and 245000 training/events = 1245000 ₽, not aggregator-derived.
+  - Verified original evaluation weights: 70% qualifying completed 44-FZ/223-FZ web/IS contracts with chatbot, 30% price; prior last acceptance act <= 5 years, unfinished excluded. Conditional DEFER/competitive NO_GO if no qualifying references, not legally ineligible.
+  - Confirmed current custom PHP/JS/SQL platform, mandated reverse-compatible modules and CMS, local semantic embeddings only on explicit agreement, project milestones 2/7/10/15 December 2026, no advance, 12-month warranty, 1/5 business-day defect fixes.
+  - Private document text kept only on ArvectumSSD, nested ZIP CRC and size checked; no original binary/source personal data committed.
+  - Added detailed Russian original-document/page-anchored report and JSON separated from human-gold; four artifact regression tests committed; Mac mini APR06/public provider targeted 172 PASS, Ruff PASS, original SOAP v4 offline UID verifier PASS.
+  - Draft stacked PR405 opened against research/apr06-eis-direct-20261013, no ETP actions.
+current: Completed original-source read-only semantic review and drafted PR405. Mac mini 172 focused tests PASS and Ruff PASS, original EIS SOAP archive v4 UID verification PASS; exact PR/push CI pending. No human-gold promotion.
 pending:
-  - Inspect source materials locally; collect supporting counts and exact document section references.
-  - Write provenance-grounded provisional assessment and tests.
-  - Run relevant tests and CI; complete checkpoint or honest block.
-last_verified_commit: 'research APR06 source head prior to this review; no semantic analysis verified'
-test_results: []
-resume_instruction: 'Read this file then inspect safe local originals on Mac mini /Volumes/ArvectumSSD/Arvectum/runtime/ta-apr06-czn-v4-eis-official-20261013/source-files-v4 read-only. Use verified UID/hash manifest docs/acceptance/apr06_czn_v4_public_eis_source_receipts_2026-10-13.json. Do not conflate AI source review with human acceptance or current signature verification. Preserve binaries outside Git, no ETP action, signatures/payments/production.'
+  - Verify exact-head PR405 push and pull_request CI on code/report; repair only actual failures.
+  - Mark this child completed after green CI, leaving parent commercial acceptance, owner reference confirmation and digital signature pending.
+last_verified_commit: 'PR405 source/report/test head ff76cc30220f4f13962242e57bd15a1414342ed1, Mac mini 172 pytest PASS/Ruff PASS, original EIS getDocsIP v4 independent UID verification PASS; GitHub PR/push exact-head CI pending.'
+test_results:
+  - 'Current v4 95p PDF source duplicate exact SHA within current documents ZIP. Two new DOCX and two unchanged bid/score DOCX parsed locally, no source binary added to Git.'
+  - 'Original NMCK PDF 685000+315000+245000=1245000 and score DOCX 70% qualification completed 44-FZ/223-FZ incl chatbot, 30% price.'
+  - 'Mac mini exact tested head ff76cc3 targeted pytest 172 PASS/10 unrelated warnings, Ruff PASS, JSON syntax PASS, git diff --check PASS; real original SOAP EIS EOK v4 7 UID PASS.'
+  - 'Exact-head GitHub PR/push CI PR405 pending.'
+resume_instruction: 'PR405 source/document assessment head ff76cc30220f4f13962242e57bd15a1414342ed1 has 172 focused pytest PASS, Ruff PASS, original EIS SOAP v4 source verify PASS. Check GitHub exact-head push and PR CI; if green mark child completed. AI provisional recommendation DEFER/competitive NO_GO *conditional on zero completed eligible 44/223 reference contracts with chatbot*, because original competition formula weights experience 70%, price 30%. Do not treat as legal disqualification or human gold. Full original source analysis docs/acceptance/APR06_CZN_V4_SEMANTIC_REVIEW_2026-10-13.md with ZIP/PDF contract terms. Parent APR06 owner threshold, human references and digital signature unverified; keep PR draft and no ETP, signatures, payment or production.'
