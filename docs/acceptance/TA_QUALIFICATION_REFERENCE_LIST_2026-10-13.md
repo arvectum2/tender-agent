@@ -43,6 +43,21 @@ Content-Type: application/json
 
 Этот результат **не** подтверждает юридическую допустимость, не вычисляет точную вероятность победы и не разрешает подачу заявки. При смене редакции извещения нужно извлечь, подтвердить и заново связать критерий с актуальным документом. **Перенос цифр 70/30 на другие конкурсы запрещён.**
 
+## Безопасный SaaS-доступ без передачи чужого customer_id
+
+Для SaaS добавлен **основной, рекомендуемый путь**. Он включается только при явном `AI_CORP_SAAS_FOUNDATION_ENABLED=true`, использует действующий Bearer-токен участника, проверку пользовательской роли и принятие актуальных условий:
+
+| Метод | Путь | Доступ |
+|---|---|---|
+| `GET` | `/api/saas/qualification/references` | owner/admin/analyst; сведения **своей** компании |
+| `POST` | `/api/saas/qualification/references` | owner/admin; добавить **новую** версию референс-листа |
+| `POST` | `/api/saas/qualification/assess` | owner/admin/analyst; детерминированная оценка квалификации |
+| `POST` | `/api/saas/qualification/decision-core` | owner/admin/analyst; совмещённый вывод с исходным Decision Core |
+
+Ни один из этих маршрутов **не** принимает `customer_id` в теле либо URL: используется только `principal.customer_id` из реальной tenant-authorized Bearer-сессии. Для `POST .../references` тело: `{"snapshot": {"schema_version":"completed-contract-references-v1","as_of_date":"2026-10-13","completeness":"COMPLETE","owner_confirmed":true,"contracts":[]}, "source_ref":"OWNER_USER_STATEMENT_2026-10-13_ZERO_COMPLETED_CONTRACTS"}`. Пользователь с ролью `viewer` не может просматривать или изменять этот частный референс-лист.
+
+**Ограничение старых внутренних маршрутов:** `/api/company-profile/customers/{customer_id}` — существующий внутренний API реестра компании; его старую систему авторизации нужно отдельно проверять перед прямым публичным предоставлением. Для SaaS рекомендуется использовать только перечисленные Bearer-маршруты и не открывать внутренний API напрямую наружу.
+
 ## Интеграция с Decision Core и остающиеся ограничения
 
 Детерминированный модуль `src/modules/company_profile_store/qualification_references.py` работает с версионным профилем и доступен по read-only маршруту оценки. Он не использует общий демо-профиль, не обращается к ETP, не меняет статус закупки и не вызывает платные модели.
