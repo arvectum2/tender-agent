@@ -12,10 +12,17 @@ definition_of_done:
   - Pass isolated focused validation and exact-head CI, publish review-only PR and checkpoint complete or honest blocked reason.
 completed:
   - Existing APR06 byte-integrity subtask 168/168 archived 44-FZ and 5/5 separate 223-FZ hashes completed in draft PR401, exact source-head CI green.
-current: Inspect original archived notice XML layouts and existing parser behavior in read-only scope.
+  - Parsed genuine EIS epNotification XML from archived immutable original corpus, including Aksay v5, CZN v3 and another later edition; excluded epClarificationDoc event from notice versions.
+  - Reconciled 50 of 77 latest archived notice attachments by exact name/size against archived verified source bytes; 27 unmatched and not promoted, three original notices absent.
+  - Built reusable fail-closed offline checker, persisted original source-limited per-case JSON and Russian report, 16 new invariants/tests.
+  - Mac mini 94 APR06 focused PASS, Ruff PASS and review-only draft PR402 opened.
+current: Archived notice/attachment source-integrity report, offline code and review-only PR402 complete; exact-head GitHub PR CI run 38390127009 queued and push CI 38390030216 in_progress. No source-currentness promotion.
 pending:
-  - Implement version/identity/deadline audit and validate against original archived XML bytes.
-  - Add tests, documentation, review-only PR and confirm exact-head CI.
-last_verified_commit: 'APR06 branch source head pending pin'
-test_results: []
-resume_instruction: 'Inspect original EIS notice XML in Docker artifacts volume read-only/no-network and existing notice parser. Work only on new feature branch; persist no sensitive original bytes. Do not treat archived latest revision as live authoritative current notice, or attachments as version-bound merely because filenames are present. Keep parent APR06 draft and no bids, payments, signatures, public deploy.'
+  - Verify exact-head CI of PR402 at 6880156f (PR run 38390127009, push run 38390030216) and repair failures if any.
+  - Mark this checkpoint completed only when source integrity tests and CI are green.
+last_verified_commit: 'PR402 source/test/report head 6880156f63a3d114391d965524f677e257ec8298, Mac mini APR06 94 focused pytest PASS, Ruff PASS; GitHub exact PR/push CI pending.'
+test_results:
+  - 'Offline network-none/read-only Docker original corpus: 20 historical 44-FZ runs, 17 archived notice XMLs, 3 no XML, 77 latest archived notice attachments, 50 correlated to SHA-verified local bytes by exact filename+size, 27 unmatched; 9 full name-size correlations, 7 incomplete, 1 deadline unknown.'
+  - 'CZN 0348100024426000039 v3: six of seven attachments correlated, last skipped due archived http_status:429; original bytes not re-downloaded.'
+  - 'Mac mini isolated APR06 suite 94 PASS, Ruff PASS; exact head 6880156f; CI queued/pending.'
+resume_instruction: 'PR402 code+report head 6880156f63a3d114391d965524f677e257ec8298, 94 APR06 pytest PASS/Ruff PASS; check GitHub exact-head PR run 38390127009 and push run 38390030216, plus other head workflows, repair if failure and mark child completed after full green. Source evidence: 17/20 archived notices, 50/77 attachment filename+size correlations, 27 missing; CZN last original file skipped due HTTP429. This is NOT official current-EIS/UID binding or commercial acceptance. Do not repeat already verified evidence. Continue with bounded read-only missing-attachment recovery only after current official revision check; no bids, signatures, payments, paid API, watchdog or production deploy.'
