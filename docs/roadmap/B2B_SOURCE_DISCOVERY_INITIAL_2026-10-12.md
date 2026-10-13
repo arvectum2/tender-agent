@@ -75,3 +75,8 @@ Until owner-approved account/plan and first-customer CAC assessment: mark self-s
 
 For B2B-Center, official [B2B-Center help](https://www.b2b-center.ru/help/) documents procedure-specific participation and prequalification workflows; it does not establish one universal free fee for each candidate. An official [B2B-Center simple-procurement help page](https://www.b2b-center.ru/help/) must not be generalized from one 1% simple-purchase mechanism to all commercial procedures. Verify actual procurement-specific tariff and contract separately.
 
+## Contradictory platform versus aggregator deadline — 13 October 2026
+
+A public [Kontur aggregator card for B2B-Center 4618502](https://zakupki.kontur.ru/4618502_40) lists an IT supplier-accreditation/prequalification by ООО «МВС» with submission until **14 Oct 2026 at 16:00 MSK**. In contrast, the [B2B-Center original public search index for lot 4618502/1](https://www.b2b-center.ru/search/bajkonur/akkreditaciya/) publishes **12 Oct 2026 at 16:00 MSK** for the similarly named supplier-accreditation by ООО «МТС ВЕБ СЕРВИСЫ».
+
+The discrepancy might reflect lot identity, changed revision, a stale source index or a changed deadline. **Do not resolve the difference by choosing the later deadline.** It is a potentially relevant additional *historical* corporate IT lead, but not confirmed currently open; do **not** increase the 9 historical source-attested leads or 15–20 active-source acceptance counter pending exact original procedure/lot verification. The suggested `src/tender_research/corporate_lead_gate.py` is an offline preliminary source-status gate only, not live bookability or permission to bid.
