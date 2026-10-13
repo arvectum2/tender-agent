@@ -15,7 +15,7 @@ import xml.etree.ElementTree as ET
 import zipfile
 from datetime import date, datetime, timedelta
 from pathlib import PurePosixPath
-from typing import Any, Literal
+from typing import Literal
 
 from pydantic import Field, model_validator
 
