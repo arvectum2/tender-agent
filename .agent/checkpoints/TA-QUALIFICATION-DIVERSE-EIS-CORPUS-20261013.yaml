@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-QUALIFICATION-DIVERSE-EIS-CORPUS-20261013
-status: in_progress
+status: completed
 parent_task_id: TA-ROADMAP-EXEC-20261012
 goal: Identify independently attested real current original EIS scoring documents from distinct 44/223-FZ procurements before expanding unsupported parser criteria or PDF formats.
 definition_of_done:
@@ -10,6 +10,7 @@ definition_of_done:
   - Extend original scoring parser only if real alternative documents and precise source-grounded acceptance can be demonstrated; otherwise preserve NOT_ASSESSED and document blocking evidence.
   - Validate read-only audit tests/tool outputs and GitHub CI if code is committed, update canonical checkpoint.
 completed:
+  - 'Exact PR411 source head a9fdb20a9efe7459ac480cebee18e33cadffe3cb GitHub PR38435826846 and pushes38435819400/38435819620 all SUCCESS. This historical 44-FZ inventory child COMPLETED.'
   - Read-only source inventory from authorised Mac mini Docker volume arvectum-local-e2e_app-artifacts (no network), 54 metadata.json, 20 unique archived 44-FZ getDocsIP procurement numbers.
   - Exactly one document title candidate explicitly mentioning evaluation/scoring, CZN 0348100024426000039; independently verified original SOAP EOK2020 v4 + award DOCX sha256 bda1eff35... from preceding PR408, not inferred from old metadata.
   - The other 19 cases have no scoring named file detected, but their file contents were not scanned; therefore only NOT_ASSESSED, no blanket claim of absence.
@@ -18,13 +19,12 @@ completed:
   - Machine inventory JSON, Russian matrix report and explicit block code for unsupported other formats committed as stacked draft PR411 on PR410.
   - Mac mini isolated source head 05a3665: 47 focused pytest PASS, Ruff PASS, JSON validation PASS, git diff --check PASS.
   - PR410 reference editor source head 8da48571 exact PR/push 3/3 SUCCESS and child checkpoint completed; no live data changed.
-current: Research audit complete and documented in draft PR411, head 05a36653f30078a779814d6e5510fb8a37bd5022; local 47 pytest PASS and Ruff/JSON PASS, exact GitHub PR/push CI pending.
-pending:
-  - Check PR411 exact-head GitHub PR and push CI; repair if failing, then mark research child completed.
-  - Separate new parser development is blocked pending at least two distinct current original EIS scoring examples (44-FZ alternate + 223-FZ).
-last_verified_commit: 'PR411 source 05a36653f30078a779814d6e5510fb8a37bd5022, Mac mini 47 pytest PASS, Ruff PASS, source inventory JSON valid, git diff --check PASS; GitHub full exact CI pending.'
+current: Completed bounded archived 44-FZ scoring corpus inventory. Exact PR411 head a9fdb20a9efe7459ac480cebee18e33cadffe3cb GitHub PR/push workflows 3/3 SUCCESS; draft and unmerged.
+pending: []
+last_verified_commit: 'PR411 exact source head a9fdb20a9efe7459ac480cebee18e33cadffe3cb; PR38435826846/push38435819400/38435819620 all completed SUCCESS; Mac mini 47 pytest PASS and Ruff/JSON PASS.'
 test_results:
+  - 'GitHub PR411 exact 3/3 workflows SUCCESS: pull_request38435826846, pushes38435819400/38435819620; source head a9fdb20a9efe7459ac480cebee18e33cadffe3cb.'
   - 'Mac mini source 05a3665: 47 targeted pytest PASS, Ruff PASS, JSON valid and git diff --check PASS.'
   - 'Read-only Docker volume historical evidence audit: 54 metadata, 20 unique 44-FZ, only CZN title/primary source verified, no historic download-time receipt, 223-FZ scoring evidence NOT AUDITED.'
   - 'PR411 exact GitHub PR/push CI pending.'
-resume_instruction: 'Active bounded research child TA-QUALIFICATION-DIVERSE-EIS-CORPUS-20261013, branch research/qualification-diverse-eis-corpus-20261013 stacked draft PR411 on PR410 source head 05a36653f30078a779814d6e5510fb8a37bd5022. Mac mini 47 pytest PASS Ruff/JSON PASS, inventory 54 archival EIS run metadata 20 unique 44-FZ, one explicitly-named scoring DOCX from verified CZN original v4, no other scoring file titles (not proof of content absence), old runs have no download-time receipts, 223-FZ original scored docs not inspected. Check exact PR/push GitHub CI and mark this research child complete when green. Further parser expansion must remain BLOCKED_PENDING_DISTINCT_PRIMARY_ORIGINAL_DOCUMENTS; never assume 70/30 for other cases or invent competitive NO_GO. Preserve all PRs draft, no ETP/prod/SaaS/sign/paid action, manual_override true and watchdog off.'
+resume_instruction: 'TA-QUALIFICATION-DIVERSE-EIS-CORPUS-20261013 historical 44-FZ corpus audit COMPLETE at PR411 source head a9fdb20a all GitHub workflows green; no need to redo 47 local tests. NEW DISTINCT SOURCE FOUND OUTSIDE THIS AUDIT: original preserved RI223 #32616445795 SOAP ZIP SHA256 65004d53..., original RAR attachment SHA256 36ef971b..., embedded 10-page original evaluation PDF SHA256 a44d9573... and legacy DOC SHA256 c74b98fd..., table has 40% price, 60% non-price and suggested subcriteria 20% reputation/20% financial/60% qualifications, but full scoring formulas not reviewed and it is NOT 44-FZ source. Begin separate 223-FZ source-gated evaluation research child with private Mac mini path /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/; do not claim legal suitability/GO or general 223 parser. All PR draft, SaaS disabled, no ETP/prod/bids/payments/signatures/watchdog, preserve main manual_override true.'
