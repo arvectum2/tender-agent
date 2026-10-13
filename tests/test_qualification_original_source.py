@@ -231,3 +231,137 @@ def test_invalid_owner_receipt_uid_and_digest_rejected():
                         ("scoring_document_sha256", "wrong")):
         with pytest.raises(ValueError):
             OriginalScoringEvidence.model_validate({**receipt.model_dump(),attr:wrong})
+
+
+def _original_run_fixture(tmp_path, monkeypatch, *, bad_name=False,
+                          bad_provenance=False, tampered_archive=False):
+    from src.modules.company_profile_store import qualification_run_service as run_service
+
+    archive, doc, receipt = _evidence()
+    input_dir = tmp_path / "input"
+    input_dir.mkdir()
+    (input_dir / "official-documentation.zip").write_bytes(
+        archive + b"faked" if tampered_archive else archive
+    )
+    (input_dir / "evaluation.docx").write_bytes(doc)
+    run_id = "toa-run-20261013000000-abc123"
+    metadata = {
+        "procurement_source": "zakupki_gov_ru_getdocs_ip",
+        "reestr_number": REG,
+        "archive_downloaded": True,
+        "getdocs_status": "completed",
+        "subsystem_type": "PRIZ",
+        "token_owner": "individual",
+        "archive_source_host": "int.zakupki.gov.ru",
+        "files": [{
+            "source_type": "manual_upload" if bad_provenance else "notice_xml_attachments",
+            "original_name": "07-060577-26.docx",
+            "stored_name": "../unsafe.docx" if bad_name else "evaluation.docx",
+            "source_url": (
+                "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/"
+                f"priz/file.html?uid={UID}"
+            ),
+        }],
+    }
+    monkeypatch.setattr(run_service, "load_demo_run_metadata", lambda _: metadata)
+    monkeypatch.setattr(run_service, "get_demo_run_input_dir", lambda _: input_dir)
+    return run_id, metadata
+
+
+def test_auto_qualify_official_run_derives_no_go_without_manual_criterion(
+    tmp_path, monkeypatch,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        discover_run_criterion,
+    )
+
+    run_id, _ = _original_run_fixture(tmp_path, monkeypatch)
+    c = discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
+    assert c.qualification_weight_percent == 70
+    assert c.price_weight_percent == 30
+    assert c.accepted_contract_laws == ["44fz", "223fz"]
+    assert c.source_document_uid == UID
+    assert c.application_deadline_date == date(2026, 10, 23)
+
+
+@pytest.mark.parametrize("flags", [
+    {"bad_name": True},
+    {"bad_provenance": True},
+    {"tampered_archive": True},
+])
+def test_auto_run_does_not_trust_manual_or_tampered_originals(
+    tmp_path, monkeypatch, flags,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        discover_run_criterion,
+    )
+
+    run_id, _ = _original_run_fixture(tmp_path, monkeypatch, **flags)
+    with pytest.raises(ValueError):
+        discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
+
+
+def test_auto_run_refuses_mismatched_provenance_or_unsupported_id(
+    tmp_path, monkeypatch,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        discover_run_criterion,
+    )
+
+    run_id, metadata = _original_run_fixture(tmp_path, monkeypatch)
+    for key, value in (
+        ("archive_source_host", "untrusted.invalid"),
+        ("token_owner", "unknown"),
+        ("archive_downloaded", False),
+        ("getdocs_status", "in_progress"),
+        ("procurement_source", "manual_upload"),
+    ):
+        previous = metadata[key]
+        metadata[key] = value
+        with pytest.raises(ValueError):
+            discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
+        metadata[key] = previous
+    with pytest.raises(ValueError, match="run identifier"):
+        discover_run_criterion("../other-run", analysis_date=date(2026, 10, 13))
+
+
+def test_auto_run_different_or_missing_reference_list_is_never_no_go(
+    tmp_path, monkeypatch, session,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        assess_owned_run_qualification,
+    )
+    from src.modules.customer_registry.models import CustomerProfile
+
+    run_id, _ = _original_run_fixture(tmp_path, monkeypatch)
+    customer = CustomerProfile(
+        customer_id="qa-tenant-1", legal_name="ООО проверка", customer_status="PROSPECT"
+    )
+    session.add(customer)
+    session.commit()
+    result = assess_owned_run_qualification(
+        session, run_id=run_id, customer_id="qa-tenant-1",
+        as_of=date(2026, 10, 13),
+    )
+    assert result["competitive_recommendation"] == "HUMAN_REVIEW_REQUIRED"
+    assert result["qualifying_contracts"] is None
+    assert result["electronic_signature_validated"] is False
+    assert result["external_action_allowed"] is False
+
+
+def test_auto_run_returns_safe_abstention_when_source_missing(
+    tmp_path, monkeypatch, session,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        assess_owned_run_qualification,
+    )
+
+    run_id, metadata = _original_run_fixture(tmp_path, monkeypatch)
+    metadata["files"] = []
+    result = assess_owned_run_qualification(
+        session, run_id=run_id, customer_id="any",
+        as_of=date(2026, 10, 13),
+    )
+    assert result["source_status"] == "ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED"
+    assert result["competitive_recommendation"] == "NOT_ASSESSED"
+    assert result["external_action_allowed"] is False
