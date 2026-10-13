@@ -162,11 +162,14 @@ def test_complete_synthetic_unit_test_is_always_pending_owner_if_proposed():
     assert out["regressions_total"] == 0
 
 
-def test_unit_test_only_approved_policy_all_metrics_pass():
+def test_self_attested_owner_policy_never_yields_commercial_acceptance():
     manifest = frozen_corpus()
     out = score(manifest, observations(manifest), approved(policy()))
-    assert out["status"] == "ACCEPTED"
+    assert out["status"] == "PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION"
     assert all(out["threshold_checks"].values())
+    assert out["owner_approval_authenticated"] is False
+    assert out["independent_official_eis_provenance_verified"] is False
+    assert out["commercial_release_authorized"] is False
     assert out["no_automatic_bid_or_payment"] is True
 
 
@@ -346,3 +349,24 @@ def test_unreviewed_package_with_rework_flag_is_not_a_review():
     result = score(manifest, obs, approved(policy()))
     assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
     assert result["eligible_count"] == 27
+
+
+def test_cli_cannot_exit_success_on_invented_approved_review(tmp_path):
+    """Synthetic signatures and checksums may exercise metrics but not commercial GO."""
+    manifest = frozen_corpus()
+    manifest_path = tmp_path / "frozen.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    threshold_path = tmp_path / "thresholds.json"
+    threshold_path.write_text(json.dumps(approved(policy())), encoding="utf-8")
+    review_dir = tmp_path / "observations"
+    review_dir.mkdir()
+    for reg, item in observations(manifest).items():
+        (review_dir / f"{reg}.json").write_text(json.dumps(item), encoding="utf-8")
+    output = tmp_path / "score.json"
+    assert main(["score", "--manifest", str(manifest_path),
+                 "--thresholds", str(threshold_path),
+                 "--observations", str(review_dir), "--output", str(output)]) == 2
+    summary = json.loads(output.read_text(encoding="utf-8"))
+    assert summary["status"] == "PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION"
+    assert summary["thresholds_approved"] is True
+    assert summary["commercial_release_authorized"] is False

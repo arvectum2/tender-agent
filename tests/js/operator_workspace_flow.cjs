@@ -115,7 +115,17 @@ async function scenario({withFiles, allowExports=false}) {
     location:{hash:'',search:''},
     URL: class extends URL { static createObjectURL() {return 'blob:local-test';} static revokeObjectURL() {} },
     URLSearchParams,Intl,Date,Number,JSON,Math,Set,Promise,encodeURIComponent,
-    fetch,setTimeout,clearTimeout,setInterval:() => 101,clearInterval:() => {},
+    fetch,
+    // Browser timers do not keep a tab alive; Node timers normally keep
+    // the process alive even when the UI scenario has already finished.
+    // Keep short async scheduling real while detaching long toast/blob
+    // cleanup timers (8s / 30s) from the simulated test process lifetime.
+    setTimeout: (callback, delay, ...args) => {
+      const timer = setTimeout(callback, delay, ...args);
+      if (delay >= 1000) timer.unref?.();
+      return timer;
+    },
+    clearTimeout,setInterval:() => 101,clearInterval:() => {},
     FormData,console
   };
   vm.runInNewContext(source,ctx,{filename:'operator_workspace.js'});
