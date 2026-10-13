@@ -10,7 +10,8 @@ import re
 from datetime import UTC, date, datetime
 from typing import Literal
 
-from pydantic import Field, ValidationError as PydanticValidationError, model_validator
+from pydantic import Field, model_validator
+from pydantic import ValidationError as PydanticValidationError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -149,18 +150,18 @@ def assess_references(
     expired: bool = False,
 ) -> QualificationAssessment:
     """Deterministic conservative assessment, no user reference inferred from absence."""
-    common = dict(
-        customer_id=customer_id,
-        procurement_number=criterion.procurement_number,
-        procurement_notice_version=criterion.procurement_notice_version,
-        source_document_uid=criterion.source_document_uid,
-        source_document_sha256=criterion.source_document_sha256,
-        criterion=criterion.model_dump(mode="json"),
-        reference_fact_version=fact_version,
-        reference_fact_source_type=fact_source_type,
-        reference_fact_source_ref=fact_source_ref,
-        reference_snapshot_as_of=snapshot.as_of_date if snapshot else None,
-    )
+    common = {
+        "customer_id": customer_id,
+        "procurement_number": criterion.procurement_number,
+        "procurement_notice_version": criterion.procurement_notice_version,
+        "source_document_uid": criterion.source_document_uid,
+        "source_document_sha256": criterion.source_document_sha256,
+        "criterion": criterion.model_dump(mode="json"),
+        "reference_fact_version": fact_version,
+        "reference_fact_source_type": fact_source_type,
+        "reference_fact_source_ref": fact_source_ref,
+        "reference_snapshot_as_of": snapshot.as_of_date if snapshot else None,
+    }
     if expired:
         return QualificationAssessment(**common, reference_list_state="EXPIRED",
             recommendation="QUALIFICATION_EVIDENCE_EXPIRED",
