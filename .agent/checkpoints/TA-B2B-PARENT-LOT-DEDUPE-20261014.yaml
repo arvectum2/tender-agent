@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-PARENT-LOT-DEDUPE-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Fail-closed deduplicate corporate original B2B-Center procedure pages and their separate lot pages so public research counts unique procedures, not page IDs.
+definition_of_done:
+  - Record timestamped read-only original-source SHA receipts for candidate linked lot, expired card and monitoring-of-prices exclusion.
+  - Implement a narrow pure offline original page-text parent-lot identity resolver, with no inferred ID from a secondary source or URL alone.
+  - Add positive, negative, ambiguity and duplicate-count regression coverage without widening authorization.
+  - Run local focused tests/Ruff/checks, draft stacked PR, inspect exact-head GitHub CI and checkpoint.
+completed:
+  - '2026-10-14 00:26 MSK Russian Mac mini no-proxy public read-only original HTML: B2B-Center lot page #4632699 names itself lot 1 of parent prequalification #4632682, already researched. Original #4616411 archived with past Oct9 deadline, Rosatom RTS #4638345 remains market price monitoring and nuclear industrial SAKOR work, not contract-ready suitable IT.'
+current: Implementing source-bound parent/lot deduplication with offline tests and evidence.
+pending:
+  - Add guarded identity resolver and regressions.
+  - Record evidence receipts and non-addition to historically unique lead count.
+  - Run Mac mini local validation, draft PR and CI.
+last_verified_commit: 'Parent PR419 original-card URL fix 807859cedbde51dd7e94cb64380104b626441b9c GitHub 3/3 CI SUCCESS on prior head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f.'
+test_results: []
+resume_instruction: 'Branch research/b2b-parent-lot-dedupe-20261014 stacked on PR419. Implement offline parent-lot identity from original textual reference, ensure unknown/conflict do not count, test on isolated Mac mini, record exact original HTML SHA and source confidence, create draft PR. No bidding, registration, spending, contact, signing, merge, production or watchdog.'
+execution:
+  branch: research/b2b-parent-lot-dedupe-20261014
+  manual_override: true
