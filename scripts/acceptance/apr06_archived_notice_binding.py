@@ -180,7 +180,9 @@ def audit_original_notice_revisions(receipts: dict, runs_root: Path) -> dict:
             sources = defaultdict(list)
             notices = []
             for entry in manifest:
-                if entry.get("status") != "saved" or entry.get("source_type") != "getdocs_archive":
+                if entry.get("status") != "saved":
+                    continue
+                if entry.get("source_type") not in {"getdocs_archive", "notice_xml_attachments"}:
                     continue
                 name, relative = entry.get("name"), entry.get("stored_name")
                 size = entry.get("size_bytes")
