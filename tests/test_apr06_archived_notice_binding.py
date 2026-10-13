@@ -8,7 +8,9 @@ from pathlib import Path
 
 import pytest
 
-from scripts.acceptance.apr06_archived_notice_binding import audit_original_notice_revisions
+from scripts.acceptance.apr06_archived_notice_binding import (
+    audit_original_notice_revisions,
+)
 
 REG = "0372200172326000015"
 RUN = "toa-run-20261009052409-9c4515"
@@ -40,12 +42,12 @@ def _fixture(tmp_path: Path, *, second=False, missing_doc=False, no_date=False):
     archive_root = base / RUN / "procurement"
     archive_root.mkdir()
     pieces = [
-        ("notice_1.xml", _xml(version=1, deadline="2026-10-09T08:00:00+03:00"), "xml"),
+        ("notice_1.xml", _xml(version=1, deadline="2026-10-09T08:00:00+03:00"), "notice_1.xml"),
     ]
     if second:
         pieces.append(("notice_2.xml", _xml(version=2, deadline=None if no_date
                                          else "2026-10-16T10:00:00+03:00",
-                                         attachments=(("new_terms.docx", 4),)), "xml"))
+                                         attachments=(("new_terms.docx", 4),)), "notice_2.xml"))
     if not missing_doc:
         pieces.append(("old_terms.docx", b"abcde", "terms.docx"))
         if second:
