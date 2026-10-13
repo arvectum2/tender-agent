@@ -657,7 +657,7 @@ def test_saas_viewer_report_does_not_expose_private_reference_list(client, monke
 
 def test_owner_reference_list_optimistic_version_and_explicit_zero(client):
     """Missing != complete zero, stale edit is 409; previous version remains immutable."""
-    tenant, owner = _seed(client, "ООО Версионированные референсы")
+    _tenant, owner = _seed(client, "ООО Версионированные референсы")
     _legal(client, owner)
     endpoint = "/api/saas/qualification/references"
     unseen = client.get(endpoint, headers=_auth(owner))
