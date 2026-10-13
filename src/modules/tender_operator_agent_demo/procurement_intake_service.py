@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import html
 import io
 import json
@@ -754,6 +755,8 @@ def _supplement_run_with_discovered_attachments(
         )
         if item.provenance:
             descriptor["source_provenance"] = item.provenance
+        if item.sha256:
+            descriptor["source_download_sha256"] = item.sha256
         existing_files.append(descriptor)
         append_demo_run_event(
             run_id,
@@ -1659,6 +1662,7 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
     documents_extracted_count = 0
     archive_extraction_complete: bool | None = None
     archive_stored_name: str | None = None
+    original_getdocs_archive_sha256: str | None = None
     official_eis_procedure: dict[str, Any] = {
         "status": "UNKNOWN",
         "reason": "OFFICIAL_ARCHIVE_NOT_DOWNLOADED",
@@ -1733,6 +1737,11 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
         else:
             archive_downloaded = True
             archive_stored_name = downloaded.stored_name
+            # Pin transport-received bytes NOW, before any later local workspace
+            # mutation. This is a receipt, not an EIS e-signature verification.
+            original_getdocs_archive_sha256 = hashlib.sha256(
+                (get_demo_run_input_dir(run_id) / archive_stored_name).read_bytes()
+            ).hexdigest()
             official_eis_procedure = classify_official_eis_archive(
                 get_demo_run_input_dir(run_id) / downloaded.stored_name,
                 request.reestr_number,
@@ -1854,6 +1863,7 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
         "documents_extracted_count": documents_extracted_count,
         "archive_extraction_complete": archive_extraction_complete,
         "archive_stored_name": archive_stored_name,
+        "original_getdocs_archive_sha256": original_getdocs_archive_sha256,
         "official_eis_procedure": official_eis_procedure,
         "getdocs_status": archive_result.status,
         "getdocs_request_id": archive_result.request_id,
