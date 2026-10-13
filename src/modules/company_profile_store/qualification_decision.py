@@ -50,6 +50,7 @@ def build_qualification_aware_decision(
         "notice_version": criterion.procurement_notice_version,
         "document_uid": criterion.source_document_uid,
         "document_sha256": criterion.source_document_sha256,
+        "application_deadline_date": criterion.application_deadline_date.isoformat(),
     }
     if declared != expected:
         raise ValidationError("Source-bound criterion is missing or conflicts with the original document")
