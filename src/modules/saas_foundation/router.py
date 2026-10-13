@@ -537,9 +537,18 @@ def report(run_id: str, principal: Member, session: DBSession) -> dict:
     legal_required(session, principal)
     owned_run(session, principal, run_id)
     r = get_uploaded_demo_report(run_id)
-    qualification = assess_owned_run_qualification(
-        session, run_id=run_id, customer_id=principal.customer_id,
-        as_of=datetime.now().date(),
+    qualification = (
+        assess_owned_run_qualification(
+            session, run_id=run_id, customer_id=principal.customer_id,
+            as_of=datetime.now().date(),
+        )
+        if principal.role in {"owner", "admin", "analyst"}
+        else {
+            "source_status": "REFERENCE_ACCESS_RESTRICTED",
+            "competitive_recommendation": "NOT_ASSESSED",
+            "human_gold": False,
+            "external_action_allowed": False,
+        }
     )
     return {
         "qualification": qualification,
