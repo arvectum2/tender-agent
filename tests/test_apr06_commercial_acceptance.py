@@ -325,7 +325,9 @@ def test_distinct_citation_claim_ids_are_allowed_but_bad_metric_fails():
     obs = observations(manifest)
     reg = manifest["cases"][0]["reg_number"]
     obs[reg]["claims"] = [
-        {"claim_id": "fact-1", "citation_verified": False},
+        {"claim_id": f"uncited-{i}", "citation_verified": False}
+        for i in range(25)
+    ] + [
         {"claim_id": "fact-2", "citation_verified": True,
          "source_ref": "test-only:source-2"},
     ]
