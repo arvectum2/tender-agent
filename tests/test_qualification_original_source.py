@@ -253,10 +253,13 @@ def _original_run_fixture(tmp_path, monkeypatch, *, bad_name=False,
         "subsystem_type": "PRIZ",
         "token_owner": "individual",
         "archive_source_host": "int.zakupki.gov.ru",
+        "archive_stored_name": "official-documentation.zip",
+        "original_getdocs_archive_sha256": hashlib.sha256(archive).hexdigest(),
         "files": [{
             "source_type": "manual_upload" if bad_provenance else "notice_xml_attachments",
             "original_name": "07-060577-26.docx",
             "stored_name": "../unsafe.docx" if bad_name else "evaluation.docx",
+            "source_download_sha256": hashlib.sha256(doc).hexdigest(),
             "source_url": (
                 "https://zakupki.gov.ru/44fz/filestore/public/1.0/download/"
                 f"priz/file.html?uid={UID}"
@@ -298,6 +301,39 @@ def test_auto_run_does_not_trust_manual_or_tampered_originals(
 
     run_id, _ = _original_run_fixture(tmp_path, monkeypatch, **flags)
     with pytest.raises(ValueError):
+        discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
+
+
+def test_auto_run_cannot_score_without_download_time_source_receipts(
+    tmp_path, monkeypatch,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        discover_run_criterion,
+    )
+
+    run_id, metadata = _original_run_fixture(tmp_path, monkeypatch)
+    metadata.pop("original_getdocs_archive_sha256")
+    with pytest.raises(ValueError, match="download-time"):
+        discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
+    metadata["original_getdocs_archive_sha256"] = hashlib.sha256(
+        (tmp_path / "input" / "official-documentation.zip").read_bytes()
+    ).hexdigest()
+    metadata["files"][0].pop("source_download_sha256")
+    with pytest.raises(ValueError, match="No unique"):
+        discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
+
+
+def test_auto_run_rejects_scoring_docx_modified_after_download(
+    tmp_path, monkeypatch,
+):
+    from src.modules.company_profile_store.qualification_run_service import (
+        discover_run_criterion,
+    )
+
+    run_id, metadata = _original_run_fixture(tmp_path, monkeypatch)
+    doc_file = tmp_path / "input" / "evaluation.docx"
+    doc_file.write_bytes(doc_file.read_bytes() + b"changed")
+    with pytest.raises(ValueError, match="changed after"):
         discover_run_criterion(run_id, analysis_date=date(2026, 10, 13))
 
 
