@@ -49,7 +49,9 @@ def replay(
             "procurement_number", "procurement_notice_version", "source_document_uid",
             "source_document_sha256", "application_deadline_date",
         ):
-            if prior.get(key) != getattr(criterion, key).isoformat() if key == "application_deadline_date" else prior.get(key) != getattr(criterion, key):
+            derived = getattr(criterion, key)
+            expected = derived.isoformat() if isinstance(derived, date) else derived
+            if prior.get(key) != expected:
                 raise ValueError("Original current EIS source differs from archived owner input")
     result = assess_references(
         customer_id="arvectum-research-only",
