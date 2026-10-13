@@ -1,0 +1,94 @@
+{
+  "schema_version": "b2b-live-source-evidence-v1",
+  "audit_date": "2026-10-13",
+  "purpose": "Incremental public legal-entity IT procurement discovery; no bid/eligibility/bookability decision",
+  "previous_historical_source_attested_count": 10,
+  "added_unique_original_cards": 1,
+  "distinct_historical_coverage_after_addendum": 11,
+  "fully_qualified_current_opportunities_claimed": null,
+  "goal_unique_current_eligible_procurements": "15-20",
+  "goal_met": false,
+  "new_original_cards": [
+    {
+      "id": "workspace-19023",
+      "source_url": "https://workspace.ru/tenders/integraciya-gotovogo-frontend-v-deystvuyuschiy-1s-bitriks-aspro-19023/",
+      "source_kind": "OFFICIAL_PUBLIC_PLATFORM_CARD",
+      "checked_at": "2026-10-13T22:30:24+03:00",
+      "retrieval": "Mac mini direct HTTPS no system proxy / curl --noproxy '*'",
+      "http_status": 200,
+      "source_html_response_bytes": 61868,
+      "source_html_sha256": "c94e9d7b70fdb21e0a2633f05e765e9050f02224a1da2a6eaaeed930ba4bb038",
+      "source_status": "Идет прием заявок",
+      "organizer_type": "Юридическое лицо",
+      "application_deadline_date": "2026-10-20",
+      "application_deadline_time": "UNKNOWN",
+      "budget_rub_min": 100000,
+      "budget_rub_max": 400000,
+      "subject": "Integration of prepared HTML/CSS/JS frontend into active 1C-Bitrix (Aspro) with existing catalogue preserved",
+      "duplicate_of_prior_pool": false,
+      "competitive_fit": "FIT_CONDITIONAL",
+      "qualifying_past_aspro_cases": "NOT_CONFIRMED_FOR_ARVECTUM",
+      "direct_bidding_or_registration_verified": false,
+      "attached_brief_publicly_downloadable": "NOT_VERIFIED",
+      "result_state": "PUBLIC_CANDIDATE_ONLY",
+      "bid_ready": false,
+      "human_gold": false
+    }
+  ],
+  "conflicting_secondary_only": [
+    {
+      "tender_id": "INK-SZ-356-26",
+      "buyer": "ООО Иркутская нефтяная компания",
+      "subject": "Development of an integration service between KGIC and APPIUS systems",
+      "observed_deadline_dates": [
+        "2026-10-07",
+        "2026-10-14"
+      ],
+      "secondary_urls": [
+        "https://energybase.ru/tender/01a0f174-2bc2-7137-ae17-06144ded5b83",
+        "https://zakupki.kontur.ru/IS78234304"
+      ],
+      "original_platform_notice_verified": false,
+      "result_state": "REVIEW_REQUIRED",
+      "bid_ready": false,
+      "note": "Potential updated deadline vs stale aggregators; do not assume current opening or choose latest without original source"
+    },
+    {
+      "tender_id": "INK-SZ-371-26",
+      "buyer": "ООО Иркутская нефтяная компания",
+      "subject": "Enhancement of KGIC geologic-economic assessment automation",
+      "observed_deadline_dates": [
+        "2026-10-14",
+        "2026-10-21"
+      ],
+      "secondary_urls": [
+        "https://zakupki.kontur.ru/IS79969234",
+        "https://energybase.ru/tender/01a11644-9387-72ce-8e9d-8372675372c2"
+      ],
+      "original_platform_notice_verified": false,
+      "result_state": "REVIEW_REQUIRED",
+      "bid_ready": false,
+      "note": "Possible revision; neither aggregator proves latest original notice or eligibility"
+    }
+  ],
+  "not_admitted_other_cards": [
+    {
+      "source_url": "https://zakupki.kontur.ru/3502252",
+      "id": "Fabrikant-3502252",
+      "reason": "Secondary-only original platform not verified; price monitoring of specialist industrial control software, not confirmed contract award opportunity; ETP documents and terms not checked"
+    },
+    {
+      "source_url": "https://workspace.ru/tenders/marketingovaya-i-produktovaya-prorabotka-multiyazychnogo-finansovogo-sovetnika-19020/",
+      "id": "Workspace-19020",
+      "reason": "Corporate but scope primarily product/marketing strategy, PRO-gated original attachment; not admitted as Arvectum software implementation tender"
+    }
+  ],
+  "privacy_and_authority": {
+    "no_registration": true,
+    "no_paid_etp": true,
+    "no_submission": true,
+    "no_scraping_bulk": true,
+    "legal_entity_eligibility_verified": false,
+    "future_deadline_not_live_submission_guarantee": true
+  }
+}
