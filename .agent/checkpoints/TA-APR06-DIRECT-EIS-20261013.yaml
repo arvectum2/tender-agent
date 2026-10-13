@@ -14,11 +14,15 @@ completed:
   - macOS PAC present at localhost port 8082, process proxy environment absent.
   - Public EIS home via HTTPS direct GET 200; museum common-info GET 200, status Подача заявок and deadline 2026-10-16 10:00 MSK.
   - CZN archived official URL returns nginx 404 via direct GET; no status inferred.
-current: Implement source-specific direct read-only verification, tests, and report.
+  - Current public HTML Museum contains Подача заявок, deadline 2026-10-16 10:00 MSK, last updated 08.10; not an XML edition/UID freshness assertion.
+  - Public status report docs/acceptance/APR06_DIRECT_EIS_HTTPS_2026-10-13.md committed. Two regression tests verify source_direct_connection=True creates explicit empty ProxyHandler even with environment proxy variables.
+  - Draft PR404 opened against APR06 parent branch, no ETP action.
+current: Direct HTTPS curl checks completed from RU Mac mini. Dated read-only report and two direct-open-proxy policy regressions in draft PR404 head e9f4195b60d0c9ea1e0caf79865cb013b0d64fdd; CI queued. Existing client already implements ProxyHandler({}). No new network client written.
 pending:
-  - Add offline test and public no-proxy probe.
-  - Validate actual authorized Mac mini invocation and source-limited report.
-  - Confirm exact-head CI; finish checkpoint.
-last_verified_commit: 'research branch starts from APR06 parent; no branch-specific code commit yet'
-test_results: []
-resume_instruction: 'Use Mac mini with source_direct_connection=True for official EIS public HTTPS, never infer procurement cancellation from 404. Existing HTTP client creates ProxyHandler({}) for source_direct_connection. Keep owner/human-gold gates and no bids, payments, signatures or production changes.'
+  - Verify PR404 exact-head CI for two offline proxy-bypass policy regressions, repair if needed.
+  - Finish checkpoint after CI, retaining CZN live status and current EIS documents as unverified.
+last_verified_commit: 'PR404 research/test head e9f4195b60d0c9ea1e0caf79865cb013b0d64fdd; GitHub PR run 38393641501 queued and push run 38393577416 queued; local pytest not confirmed'
+test_results:
+  - 'Mac mini direct HTTPS curl: EIS home HTTP200 and Museum official notice HTTP200; CZN official notice HTTP404; RU/Moscow egress, macOS PAC present. Default/direct GET to exact routes agree.'
+  - 'Two new offline proxy bypass regressions committed, local pytest not independently executed. Exact-head PR CI pending.'
+resume_instruction: 'Review PR404 at head e9f4195b60d0c9ea1e0caf79865cb013b0d64fdd and check exact-head CI; repair regressions if CI fails, mark child completed only after CI success. Public EIS home and Museum official notice GET 200 from direct RU Mac mini, CZN original official GET 404 even direct. Do not infer cancellation. Existing source_direct_connection uses ProxyHandler({}), so do not change global PAC/proxy. Parent APR06 remains unaccepted with original-current source docs and 0 true human gold.'
