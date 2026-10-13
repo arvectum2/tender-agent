@@ -31,9 +31,9 @@ _LEGAL_ENTITY = frozenset({"юридическое лицо", "legal entity", "c
 # A platform's landing page, search result or category page is not a
 # procurement notice. This is only a URL-shape check, NOT source attestation.
 _ORIGINAL_CARD_PATHS = {
-    "workspace.ru": r"/tenders/[a-z0-9][a-z0-9-]*-\\d{5}/?",
-    "www.b2b-center.ru": r"/market/[a-z0-9][a-z0-9-]*/tender-\\d+/?",
-    "b2b-center.ru": r"/market/[a-z0-9][a-z0-9-]*/tender-\\d+/?",
+    "workspace.ru": r"/tenders/[a-z0-9][a-z0-9-]*-\d{5}/?",
+    "www.b2b-center.ru": r"/market/[a-z0-9][a-z0-9-]*/tender-\d+/?",
+    "b2b-center.ru": r"/market/[a-z0-9][a-z0-9-]*/tender-\d+/?",
 }
 
 
