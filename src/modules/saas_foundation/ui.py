@@ -122,7 +122,7 @@ function showQualification(reply){
  const rec=item.competitive_recommendation;
  document.getElementById("qualification-verdict").textContent =
    rec==="NO_GO" ? "NO GO по квалификационной конкурентоспособности" :
-   rec==="NOT_ASSESSED" ? "Квалификация не оценена — недостаточно оригинальных документов" :
+   rec==="NOT_ASSESSED" ? (item.source_status==="ORIGINAL_EIS_BYTES_CORRELATED_SIGNATURE_NOT_VERIFIED" ? "Оригинал оценки подтверждён — специалисты и опыт требуют проверки" : "Квалификация не оценена — исходных сведений недостаточно") :
    "Квалификация: требуется проверка";
  const c=item.criterion_source || {};
  document.getElementById("qualification-source-note").textContent =
