@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-CZN-V4-SEMANTIC-20261013
+status: in_progress
+parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+goal: Inspect contents of current original CZN EIS notice revision 4 document set and give source-grounded, clearly provisional engineering/commercial assessment.
+definition_of_done:
+  - Verify exact currently stored 7 original EIS document receipts and four newly downloaded files with prior source SHA-256, without relocating binary files to GitHub.
+  - Safely inspect nested two DOCX and two PDF, check actual business requirements, document quality and traceability; differentiate original language from AI interpretation.
+  - Record feasible deliverables, unknowns, prices and contract risks only when documented in source; no invented legal facts/estimates.
+  - Publish traceable review-only report and focused tests, validate locally and exact-head CI.
+  - Leave independent human-gold, e-signature and owner approvals unclaimed, PR draft.
+completed:
+  - Previous PR404 archived/public CZN v4 EIS proof exact-head CI push/PR SUCCESS (a076c8c8).
+  - Official original SOAP EOK2020 v4 XML plus 7 UID and exact file byte receipts are preserved on authorized Mac mini ArvectumSSD.
+current: Identify nested DOCX/PDF source files, their content quality and requirements in a read-only safe workflow.
+pending:
+  - Inspect source materials locally; collect supporting counts and exact document section references.
+  - Write provenance-grounded provisional assessment and tests.
+  - Run relevant tests and CI; complete checkpoint or honest block.
+last_verified_commit: 'research APR06 source head prior to this review; no semantic analysis verified'
+test_results: []
+resume_instruction: 'Read this file then inspect safe local originals on Mac mini /Volumes/ArvectumSSD/Arvectum/runtime/ta-apr06-czn-v4-eis-official-20261013/source-files-v4 read-only. Use verified UID/hash manifest docs/acceptance/apr06_czn_v4_public_eis_source_receipts_2026-10-13.json. Do not conflate AI source review with human acceptance or current signature verification. Preserve binaries outside Git, no ETP action, signatures/payments/production.'
