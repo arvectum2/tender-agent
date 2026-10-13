@@ -75,8 +75,6 @@ def _trusted_pdf_run(tmp_path, monkeypatch):
             "source_url": url,
         }],
     }
-    monkeypatch.setattr(pdf_run, "load_demo_run_metadata", lambda _: meta)
-    monkeypatch.setattr(pdf_run, "get_demo_run_input_dir", lambda _: source)
     monkeypatch.setattr(run_service, "load_demo_run_metadata", lambda _: meta)
     monkeypatch.setattr(run_service, "get_demo_run_input_dir", lambda _: source)
     monkeypatch.setattr(
