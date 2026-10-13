@@ -13,16 +13,18 @@ definition_of_done:
 completed:
   - Existing APR06 byte-integrity subtask 168/168 archived 44-FZ and 5/5 separate 223-FZ hashes completed in draft PR401, exact source-head CI green.
   - Parsed genuine EIS epNotification XML from archived immutable original corpus, including Aksay v5, CZN v3 and another later edition; excluded epClarificationDoc event from notice versions.
-  - Reconciled 50 of 77 latest archived notice attachments by exact name/size against archived verified source bytes; 27 unmatched and not promoted, three original notices absent.
+  - Reconciled 50 of 77 latest archived notice attachments by exact filename+size, source_url.uid ↔ original notice publishedContentId and archived SHA-256 bytes; 27 unmatched and not promoted, three original notices absent.
   - Built reusable fail-closed offline checker, persisted original source-limited per-case JSON and Russian report, 16 new invariants/tests.
   - Mac mini 94 APR06 focused PASS, Ruff PASS and review-only draft PR402 opened.
-current: Archived notice/attachment source-integrity report, offline code and review-only PR402 complete; exact-head GitHub PR CI run 38390127009 queued and push CI 38390030216 in_progress. No source-currentness promotion.
+  - Found original saved document source_url.uid in local original attachment index and cross-verified it to each archived epNotification.publishedContentId. Updated checker and artifact: all 50 prior filename+size links ALSO match UID and SHA-256 (50/77), remaining 27 unsigned/unmatched; no current EIS revision verified.
+  - Added UID domain/spoof mismatches as regression; reran 96 APR06 focused pytest PASS, Ruff PASS at report/head a29311e, latest CI pending.
+current: Source evidence improved to 50/77 verified *archived* original notice UID-to-SHA correlations, PR402 new head a29311e6126de8f8315536a8bb2409a64b4566af, Mac mini 96 APR06 pytest PASS and Ruff PASS; exact latest-head CI pending. No online-current EIS status.
 pending:
-  - Verify exact-head CI of PR402 at 6880156f (PR run 38390127009, push run 38390030216) and repair failures if any.
+  - Verify exact-head CI of PR402 at a29311e (latest head PR/push runs) and repair failures if any.
   - Mark this checkpoint completed only when source integrity tests and CI are green.
-last_verified_commit: 'PR402 source/test/report head 6880156f63a3d114391d965524f677e257ec8298, Mac mini APR06 94 focused pytest PASS, Ruff PASS; GitHub exact PR/push CI pending.'
+last_verified_commit: 'PR402 source/test/report head a29311e6126de8f8315536a8bb2409a64b4566af, Mac mini APR06 96 focused pytest PASS, Ruff PASS; new exact PR/push CI pending.'
 test_results:
   - 'Offline network-none/read-only Docker original corpus: 20 historical 44-FZ runs, 17 archived notice XMLs, 3 no XML, 77 latest archived notice attachments, 50 correlated to SHA-verified local bytes by exact filename+size, 27 unmatched; 9 full name-size correlations, 7 incomplete, 1 deadline unknown.'
   - 'CZN 0348100024426000039 v3: six of seven attachments correlated, last skipped due archived http_status:429; original bytes not re-downloaded.'
-  - 'Mac mini isolated APR06 suite 94 PASS, Ruff PASS; exact head 6880156f; CI queued/pending.'
-resume_instruction: 'PR402 code+report head 6880156f63a3d114391d965524f677e257ec8298, 94 APR06 pytest PASS/Ruff PASS; check GitHub exact-head PR run 38390127009 and push run 38390030216, plus other head workflows, repair if failure and mark child completed after full green. Source evidence: 17/20 archived notices, 50/77 attachment filename+size correlations, 27 missing; CZN last original file skipped due HTTP429. This is NOT official current-EIS/UID binding or commercial acceptance. Do not repeat already verified evidence. Continue with bounded read-only missing-attachment recovery only after current official revision check; no bids, signatures, payments, paid API, watchdog or production deploy.'
+  - 'Mac mini isolated APR06 suite 96 PASS, Ruff PASS; archived original EIS publishedContentId and source_url.uid bound to existing SHA for 50/77 source attachments; exact head a29311e, CI pending.'
+resume_instruction: 'PR402 source/test/report head a29311e6126de8f8315536a8bb2409a64b4566af, 96 APR06 pytest PASS/Ruff PASS. Verify exact head GitHub PR/push CI and mark child completed only after success. Source evidence 17/20 archived EIS notices, 50/77 latest archived attachment *UID and original SHA* correlations (not merely filename/size), 27 absent/unmatched. CZN latest archived v3 appendix skipped due original HTTP429. Do not infer live EIS current revision or current attachment UID: source version currentness/complete official attachment corpus remain unverified. Continue bounded read-only recovery only after fresh official notice revision verification; no bids, signatures, payments, paid API, watchdog or public production changes.'
