@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR06-DIRECT-EIS-20261013
-status: in_progress
+status: completed
 goal: Diagnose intermittent public EIS cached 404 from direct Russian egress, implement bounded source-specific recovery and verify current CZN v4 HTML evidence without procurement external actions.
 definition_of_done:
   - Record direct vs default EIS HTTP status and Mac mini network settings.
@@ -30,16 +30,13 @@ completed:
   - Original v4 XML 106,471 bytes SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 23 Oct 10:00 MSK, published 12 Oct 22:24:55 MSK, 7/7 UID/file names/fileSize matches validated to SHA-hashed local originals. Digital signature NOT VERIFIED.
   - Hardened read-only offline SOAP v4 verification script plus eight negative tests for original checksum/host/deadline/UID/traversal/duplicated version, all 8 PASS; overall 168 focused tests PASS, Ruff PASS, and real archived SOAP verifier PASS at head ac972df99.
   - Four new current v4 attachment bytes persisted in protected Mac mini ArvectumSSD runtime/source-files-v4, 4/4 SHA rechecked. Three ZIP internal CRC and path-safety checks PASS; two DOCX and one PDF nested, no execution or macros. Original PDF retained.
-current: PR404 code/report head ac972df9920c93a4eef9955dd9ef146e88a6e617, original EIS getDocsIP current v4 XML verified offline against 7/7 current UID/name/size+SHA file receipts, 168 focused PASS/Ruff PASS. Exact PR/push CI queued; digital signature & document semantic acceptance remain OPEN.
-pending:
-  - Verify PR404 exact-head push/PR CI on ac972df99, repair failures and record actual results.
-  - Preserve local original SOAP archive, verified current v4 files, and durable source hash receipts on ArvectumSSD. Do not claim digital signature verified.
-  - Complete this child after exact-head CI, leaving internal ZIP legal/commercial content review and independent human-gold parent task separate.
-last_verified_commit: 'PR404 tested code/report head ac972df9920c93a4eef9955dd9ef146e88a6e617; Mac mini 168 pytest PASS, Ruff PASS, original getDocsIP archive+7 UID verified; PR CI 38399459148 queued/push 38399452112 queued and 38399452256 SUCCESS at last check.'
+current: 'Technical direct EIS read-only source proof complete; PR404 exact-head CI SUCCESS. Separate expert content review remains pending.'
+pending: []
+last_verified_commit: 'PR404 code/head a076c8c89da1c7eb2a4c40377facc349e25a0666 verified PR run 38401431113 SUCCESS, push runs 38401426507 and 38401426493 SUCCESS; checkpoint metadata change follows.'
 test_results:
   - 'Mac mini direct HTTPS curl: EIS home HTTP200 and Museum official notice HTTP200; CZN official notice HTTP404; RU/Moscow egress, macOS PAC present. Default/direct GET to exact routes agree.'
   - 'On PR404 head 01ee6851 Mac mini 160 focused pytest PASS, Ruff PASS, JSON validation and git diff --check PASS.'
   - 'Live Public44FzSearchProvider.fetch_detail: CZN source success, active v4, seven links, 23 Oct 10:00 MSK; live secondary operator context after fix also 23 Oct 10:00 (МСК).'
   - 'Four new current v4 files downloaded read-only under /tmp/ta-apr06-czn-v4-originals-20261013, 4/4 SHA256 and ZIP/PDF signatures verified; three prior UID files rehashed under existing RO Docker corpus; no original v4 epNotification XML yet.'
   - 'PR404 code/report head ac972df99: 168 focused pytest PASS/Ruff PASS/diff; official original SOAP archive and epNotificationEOK2020 v4 exact UID/name/size binding 7/7 PASS, signature validation NOT RUN. Exact PR CI 38399459148 queued, push 38399452112 queued and 38399452256 SUCCESS.'
-resume_instruction: 'Check exact PR404 head ac972df9920c93a4eef9955dd9ef146e88a6e617 GitHub PR38399459148/push38399452112, repair only actual CI failures, then set this child COMPLETED. Mac mini 168 focused PASS and Ruff PASS; official getDocsIP archive SHA dad574..., original v4 XML SHA bd6a..., version4 deadline 23 Oct 10 MSK and 7/7 UID/name/size link to local SHA originals VERIFIED. Four fresh attachments and official SOAP ZIP persisted under /Volumes/ArvectumSSD/Arvectum/runtime/ta-apr06-czn-v4-eis-official-20261013/. Three nested ZIP CRC PASS. Signature and semantic legal acceptance NOT VERIFIED; keep PR draft and APR06 parent human-gold/Owner KPI blocked; no ETP, signatures, paid APIs, prod or PAC changes.'
+resume_instruction: 'TECHNICAL CHILD COMPLETED. Original EIS SOAP v4 XML and 7/7 UID/name/size to local SHA verified. CZN content and legal expert review is a separate pending APR06 task; signature and human gold not verified. Keep PR404 draft and no bids/production.'
