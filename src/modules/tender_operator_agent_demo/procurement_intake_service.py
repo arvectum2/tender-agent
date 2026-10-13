@@ -9,6 +9,7 @@ import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError
 from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request
 
@@ -78,8 +79,11 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 from src.shared.network.http_client import create_urllib_opener
 from src.tender_research.providers.public_44fz_search import (
+    EIS_NOTICE_EDGE_404_RETRIES,
+    EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS,
     Public44FzSearchProvider,
     PublicDocumentLink,
+    _intermittent_eis_notice_edge_404,
     _parse_detail_metadata,
     _select_current_revision_document_links,
 )
@@ -385,16 +389,28 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
     hostname = (parsed.hostname or "").lower()
     if parsed.scheme not in {"http", "https"}:
         return {}
-    if not hostname.endswith("zakupki.gov.ru"):
+    if not (hostname == "zakupki.gov.ru" or hostname.endswith(".zakupki.gov.ru")):
         return {}
 
     opener = create_urllib_opener(source_url, source_direct_connection=True)
     request = Request(source_url, headers={"User-Agent": PUBLIC_EIS_USER_AGENT}, method="GET")
-    try:
-        with opener.open(request, timeout=20) as response:
-            page_html = response.read(PUBLIC_EIS_MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
-    except (OSError, ValueError):
-        return {}
+    for attempt in range(EIS_NOTICE_EDGE_404_RETRIES + 1):
+        try:
+            with opener.open(request, timeout=20) as response:
+                page_html = response.read(PUBLIC_EIS_MAX_RESPONSE_BYTES + 1).decode(
+                    "utf-8", errors="replace"
+                )
+            break
+        except HTTPError as exc:
+            if (
+                attempt < EIS_NOTICE_EDGE_404_RETRIES
+                and _intermittent_eis_notice_edge_404(source_url, exc)
+            ):
+                time.sleep(EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {}
+        except (OSError, ValueError):
+            return {}
     if len(page_html) > PUBLIC_EIS_MAX_RESPONSE_BYTES:
         return {}
 
@@ -466,7 +482,7 @@ def _infer_public_documents_url(source_url: str) -> str | None:
     hostname = (parsed.hostname or "").lower()
     if parsed.scheme not in {"http", "https"}:
         return None
-    if not hostname.endswith("zakupki.gov.ru"):
+    if not (hostname == "zakupki.gov.ru" or hostname.endswith(".zakupki.gov.ru")):
         return None
     if parsed.path.endswith("/documents.html"):
         return source_url
