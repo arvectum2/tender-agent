@@ -67,3 +67,11 @@ Scope: publicly indexed Workspace direct cards and platform's public status desc
 
 **Regression requirement for Tender Agent:** when a platform reports a terminal state, make status outrank printed deadline and search snippets; persist the status evidence timestamp and avoid silently resurrecting stale leads. Do not infer exact cutoff time, buyer eligibility, source documents, or live invitation from incomplete public cards.
 
+## Participation-cost verification — 13 October 2026
+
+Official [Workspace agency FAQ](https://workspace.ru/help/) says that an agency/company must register to participate. **Unsolicited self-selected applications to public tenders require a paid PRO account**; participation is free when the buyer has **personally invited** the agency. Official [Workspace paid options](https://workspace.ru/advertising/) lists **PRO from ₽2,900 per month** (category-based, subject to the platform's current offer). Historical [Workspace announcement of paid "responses"](https://workspace.ru/news/novaya-optsiya-dlya-ispolniteley-otkliki/) describes a different older paid option: **do not assume its 2019 pricing is still valid**. This materially changes the commercial actionability of the nine source-attested cards: public visibility of a lead is **not free participation**.
+
+Until owner-approved account/plan and first-customer CAC assessment: mark self-selected Workspace opportunities **APPLICATION_PAYWALL_UNVERIFIED_OR_REQUIRED**. Do not buy PRO, register a corporate profile, send invitations/messages, or promise free bidding on the user's behalf. Historical discovery count is separate from executable leads; verify current terms/eligibility immediately before any committed expense.
+
+For B2B-Center, official [B2B-Center help](https://www.b2b-center.ru/help/) documents procedure-specific participation and prequalification workflows; it does not establish one universal free fee for each candidate. An official [B2B-Center simple-procurement help page](https://www.b2b-center.ru/help/) must not be generalized from one 1% simple-purchase mechanism to all commercial procedures. Verify actual procurement-specific tariff and contract separately.
+
