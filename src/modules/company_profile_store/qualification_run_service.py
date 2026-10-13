@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+import subprocess
 import xml.etree.ElementTree as ET
 import zipfile
 from datetime import date
@@ -198,6 +199,38 @@ def assess_owned_run_qualification(
     try:
         criterion = discover_run_criterion(run_id, analysis_date=as_of)
     except (ValueError, OSError, KeyError, zipfile.BadZipFile, ET.ParseError) as exc:
+        # Only "no supported DOCX method found" permits a PDF source-type
+        # attempt. A tampered ZIP/DOCX/source reference remains fail-closed.
+        if str(exc) == (
+            "No unique original source-scored qualification document in current EIS run"
+        ):
+            from src.modules.company_profile_store.qualification_run_composite_pdf import (
+                discover_run_composite_pdf_observation,
+            )
+
+            try:
+                observed = discover_run_composite_pdf_observation(
+                    run_id, analysis_date=as_of
+                )
+            except (
+                ValueError, OSError, KeyError, UnicodeError, subprocess.TimeoutExpired,
+                subprocess.CalledProcessError, zipfile.BadZipFile, ET.ParseError,
+            ):
+                pass
+            else:
+                return {
+                    **base,
+                    "source_status": observed["source_status"],
+                    "competitive_recommendation": "NOT_ASSESSED",
+                    "qualifying_contracts": None,
+                    "criterion_source": observed,
+                    "message": (
+                        "Подтверждена составная методика оценки PDF: "
+                        "договоры и специалисты оцениваются раздельно. "
+                        "Конкурентоспособность требует проверки специалистами; "
+                        "NO_GO по нулевому референс-листу не выставляется."
+                    ),
+                }
         return {
             **base,
             "source_status": "ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED",
