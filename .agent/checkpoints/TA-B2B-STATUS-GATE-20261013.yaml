@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-STATUS-GATE-20261013
+status: in_progress
+goal: Prevent a publicly indexed corporate opportunity with a terminal status and future printed deadline from being accepted as an actionable live procurement.
+definition_of_done:
+  - Introduce offline read-only status-first and freshness-first triage contract for corporate-source cards, with no network, bids or authenticated connectors.
+  - Cover terminal-before-deadline, missing status/identity, date-only same-day cutoff, mismatched source, stale evidence and no automatic commercial GO in unit tests.
+  - Document the Workspace 19004 real-source regression without claiming real-time external availability.
+  - Pass targeted tests, make check, and applicable CI; create PR without deployment.
+completed:
+  - Retrieved authoritative public Workspace status glossary and observed closed state for 19004 despite printed October 14 deadline.
+  - Created isolated worktree from main 70e5aff4; other feature worktrees preserved.
+  - Implemented pure corporate public-source status/clock/domain triage; no ETP connector/authenticated fetch or outgoing request.
+  - Added 26 negative and positive regressions including real Workspace 19004 closed despite future deadline, same-day unknown cutoff, stale status, spoofed host and unverified buyer.
+  - Targeted 26 tests PASS; Ruff PASS, make check PASS.
+  - Full PG16/Docker regression 4001 passed, 238 skipped, 0 failures, 328 warnings (182.76 sec).
+current: Full regression verified; commit and exact-head GitHub PR CI pending.
+pending:
+  - Commit verified branch and publish exact source tree.
+  - Publish GitHub PR and await exact-head CI, without production connector activation.
+last_verified_commit: 70e5aff4
+test_results:
+  - 26 new focused tests PASS, Ruff PASS, make check PASS.
+  - Full PG16/Docker pytest 4001 PASS, 238 SKIP, 0 FAIL in 182.76 sec.
+resume_instruction: 'Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-b2b-status-gate-20261013 branch feature/ta-b2b-status-gate-20261013. Module src/tender_research/corporate_lead_gate.py: 26 focused PASS, full 4001 PASS/238 SKIP, Ruff/make check PASS. Commit and publish via authorized GitHub git-tree API (Mini SSH may be read-only); compare local source tree digest exactly with GitHub; await CI before code-only merge. No B2B connector/public bidding, human APR06 remains gated.'
