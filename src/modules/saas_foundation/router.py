@@ -25,6 +25,7 @@ from fastapi import (
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
 from src.modules.company_profile_store.qualification_decision import (
     QualificationAwareDecisionRequest,
@@ -591,6 +592,7 @@ def screen_run(run_id: str, principal: Member, session: DBSession) -> dict:
 class OwnerReferencesRequest(BaseModel):
     snapshot: CompletedContractReferenceSnapshot
     source_ref: str = Field(min_length=1, max_length=512)
+    expected_version: int = Field(ge=0)
     expires_at: datetime | None = None
 
 
@@ -625,18 +627,37 @@ def saas_record_company_references(
     """An authorized owner/admin appends a new immutable company fact version."""
     role_required(principal, "owner", "admin")
     legal_required(session, principal)
-    record = append_company_profile_fact(
-        session,
-        customer_id=principal.customer_id,
-        fact_key=REFERENCE_FACT_KEY,
-        payload=AppendCompanyProfileFactRequest(
-            fact_group="EXPERIENCE",
-            value=payload.snapshot.model_dump(mode="json"),
-            source_type="CUSTOMER_PROVIDED",
-            source_ref=payload.source_ref,
-            expires_at=payload.expires_at,
-        ),
-    )
+    from src.shared.errors import NotFoundError
+
+    try:
+        history = get_company_profile_fact_history(
+            session, customer_id=principal.customer_id, fact_key=REFERENCE_FACT_KEY,
+        )
+        latest = history[-1].version_no
+    except NotFoundError:
+        latest = 0
+    if payload.expected_version != latest:
+        raise HTTPException(
+            409, "Reference list was updated by another editor; reload before saving",
+        )
+    try:
+        record = append_company_profile_fact(
+            session,
+            customer_id=principal.customer_id,
+            fact_key=REFERENCE_FACT_KEY,
+            payload=AppendCompanyProfileFactRequest(
+                fact_group="EXPERIENCE",
+                value=payload.snapshot.model_dump(mode="json"),
+                source_type="CUSTOMER_PROVIDED",
+                source_ref=payload.source_ref,
+                expires_at=payload.expires_at,
+            ),
+        )
+    except IntegrityError as exc:
+        session.rollback()
+        raise HTTPException(
+            409, "Concurrent reference-list version write; reload before saving",
+        ) from exc
     return {
         "customer_id": principal.customer_id,
         "fact_version": record.version_no,
