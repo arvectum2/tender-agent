@@ -466,6 +466,7 @@ def test_saas_qualification_uses_signed_tenant_identity_and_zero_references(clie
         json={
             "snapshot": case["reference_fact_value"],
             "source_ref": case["reference_fact_source_ref"],
+            "expected_version": 0,
         },
     )
     assert saved.status_code == 201, saved.text
@@ -532,6 +533,7 @@ def test_saas_qualification_viewer_cannot_write_reference_list(client):
         json={
             "snapshot": case["reference_fact_value"],
             "source_ref": case["reference_fact_source_ref"],
+            "expected_version": 0,
         },
     )
     assert result.status_code == 403
