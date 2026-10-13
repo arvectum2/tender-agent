@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR06-SAVED-BYTE-INTEGRITY-20261013
-status: in_progress
+status: completed
 parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
 goal: Independently rehash existing read-only APR06 EIS source bytes against the original 2026-10-09 manifest without claiming current live EIS revisions or human review.
 definition_of_done:
@@ -13,12 +13,15 @@ definition_of_done:
 completed:
   - Confirmed Mac mini SSH reachability and original Docker volume mounted only as read-only in an ephemeral network-isolated container.
   - Initial direct hash recheck matched 168 of 168 expected documented blobs across 20/20 historical run folders; three runs have zero source files, no claims of completeness or current revision.
-current: Implement portable read-only digest verification with negative tests, reproduce and document.
-pending:
-  - Complete code and negative tests.
-  - Execute isolated historical corpus verification, document per-case counts.
-  - Confirm exact-head CI and finalize checkpoint.
-last_verified_commit: 'Source APR06 parent head pending pin; initial ephemeral check not yet recorded as durable evidence'
+  - Added reusable hardened offline manifest rehash verifier, symlink/digest/duplicate negative tests, Russian/English evidence scope document and source-limited semantics.
+  - Exact 44-FZ stored bytes rehashed again at 2026-10-13 13:45 MSK: 168/168 matches across 20/20 source folders, 17 nonempty, 3 empty.
+  - Local 223-FZ 5/5 separate archived bytes across four candidate cases verified; one HTML-suffixed file has ZIP signature.
+  - Mac mini 24 focused tests PASS, Ruff PASS; GitHub latest tested source report head 280fd22a push runs 38385964039/38385963996 SUCCESS and PR run 38385968596 SUCCESS.
+current: Completed archived 44-FZ and 223-FZ source-byte integrity evidence and executable verifier in draft PR401; code-head push and PR CI both SUCCESS, no commercial or owner acceptance implied.
+pending: []
+last_verified_commit: 'PR401 exact tested source-report head 280fd22ad7ae9bb64d2e9413632c59a84c2ec6ff; GitHub PR run 38385968596 SUCCESS, push runs 38385964039 and 38385963996 SUCCESS. Subsequent completion-checkpoint-only commit does not modify evidence code.'
 test_results:
-  - 'Initial network-disabled Docker RO hash pass: 168/168 matching size+SHA-256, 20/20 run directories, three zero-file runs; independent source currency and semantic review NOT VERIFIED.'
-resume_instruction: 'Continue from first pending work. No ETP mutation, no source downloads, no authentication use, no changes to production containers; ephemeral Docker uses --network none --read-only -v arvectum-local-e2e_app-artifacts:/evidence:ro. Keep original EIS artifacts off Git. APR06 commercial acceptance stays blocked on source edition currentness, completeness, human gold and approved thresholds.'
+  - 'Mac mini pytest 24 PASS and strict Ruff PASS on verifier and focused source-integrity tests.'
+  - 'Exact network-disabled Docker RO hash pass 168/168 matching size+SHA-256 across 20/20 run dirs (3 zero-file). Separate 223-FZ locally archived 5/5 bytes match; current EIS revision and procurement completeness NOT VERIFIED.'
+  - 'GitHub CI latest evidence head 280fd22a PR38385968596 SUCCESS and push38385964039/38385963996 SUCCESS.'
+resume_instruction: 'CHILD COMPLETE. PR401 evidence is review-only and exact code/report-head CI green. Next independent task APR06 original notice revision/attachment binding audit, not repeating byte hashes. Keep original EIS artifacts off Git, parent APR06 commercial acceptance blocked on current live-source edition, completeness, human gold and approved thresholds. No ETP mutation, payment, signatures or production deployment.'
