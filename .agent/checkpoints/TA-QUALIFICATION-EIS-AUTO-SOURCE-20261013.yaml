@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-QUALIFICATION-EIS-AUTO-SOURCE-20261013
-status: in_progress
+status: completed
 parent_task_id: TA-ROADMAP-EXEC-20261012
 goal: Automatically derive qualification weights and contract evidence criteria from verified, original EIS award evaluation documents, not user-supplied criterion values, then safely assess a tenant-specific completed-contract list.
 definition_of_done:
@@ -12,6 +12,7 @@ definition_of_done:
   - Test source tamper, parser ambiguity, missing evidence, stale revision, and source eligibility; record local test counts and exact GitHub CI.
   - Keep drafts and legal/human gold/owner commercial acceptance gates independent.
 completed:
+  - 'PR408 exact verified head 7f6024e1 complete push and PR CI SUCCESS; closed child, preserving review-only draft.'
   - Parent PR407 tenant-aware reference list / Decision Core exact-head PR/push CI SUCCESS; child checkpoint marked completed.
   - APR06 real original CZN SOAP v4 XML+UID/source attachment receipts verified, original scoring DOCX 22,427 bytes SHA256 bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8.
   - Implemented read-only fail-closed original EOK2020 XML/docx table parser, extracting actual CZN 70% qualification/30% price, completed 44/223+chatbot signed acts and 5y from EIS endDT; no assistant hardcoding of scoring weights.
@@ -19,13 +20,12 @@ completed:
   - Offline script scripts/acceptance/replay_qualification_scoring.py successfully reproduced CZN competitive NO_GO from REAL original files + owner asserted 0 contracts, no ETP/data writes or LLM.
   - Added 17 synthetic fail-closed negative/positive tests; Mac mini isolated checkout head 49e172d pytest 57 PASS, 8 SKIP, Ruff PASS, JSON source replay PASS and git diff clean.
   - Opened stacked draft PR408 against PR407, no merge or deployment.
-current: PR408 code/docs head 49e172dec77e7a1d8d07b4cc5f50629964de838e, original source-derived scoring and owner-zero NO_GO replay verified. 57 pytest PASS/8 SKIP, Ruff PASS; exact GitHub CI queued.
-pending:
-  - Check exact-head GitHub PR/push CI for PR408, repair only confirmed failures.
-  - Update child status completed after CI success; preserve draft. Follow-on auto-run source discovery and full report/UI integration remains separate roadmap.
-last_verified_commit: 'PR408 source/report/tests head 49e172dec77e7a1d8d07b4cc5f50629964de838e; Mac mini 57 pytest PASS/8 SKIP, Ruff PASS, real original CZN v4 SOAP and scoring DOCX source-derived replay returned qualification NO_GO. GitHub exact-head CI pending.'
+current: COMPLETED. Original source parser and real EIS source replay validated; exact PR408 head 7f6024e1251639c8294126f9d5d0c77886bd7574 three full GitHub workflows SUCCESS. PR408 remains draft.
+pending: []
+last_verified_commit: 'PR408 exact CI head 7f6024e1251639c8294126f9d5d0c77886bd7574; PR 38421310979 SUCCESS; push 38421294605 and 38421294641 SUCCESS. Local 57 PASS/8 SKIP, Ruff PASS, original EIS replay verified. Final checkpoint metadata commit after source CI.'
 test_results:
+  - 'PR408 exact head 7f6024e1 PR38421310979/push38421294605/38421294641 all GitHub CI SUCCESS.'
   - 'Mac mini isolated 57 pytest PASS/8 SKIP, Ruff PASS, git diff --check PASS, direct original SOAP-v4/docx SHA and scoring table extraction 70/30 plus owner zero => NO_GO, signatures/human gold FALSE.'
   - 'Synthetic negative tests: source ZIP/DOCX SHA, stale version, wrong UID, wrong HTTPS host, timezone, ZIP traversal, XML DTD, ambiguous/duplicate/nonintegral scoring, missing chatbot, missing 44/223, missing five year/unfinished exclusion all abstain/reject.'
   - 'Exact PR408 GitHub push/PR CI pending.'
-resume_instruction: 'PR408 branch feature/qualification-official-source-20261013 stacked on PR407; code/docs head 49e172dec77e7a1d8d07b4cc5f50629964de838e tested Mac mini 57 pytest PASS/8 SKIP/Ruff PASS plus REAL EIS getDocsIP SOAP ZIP + original scoring DOCX SHA/UID replay -> deterministic 70 qualification/30 price from DOCX, 44/223 signed act 5y, owner zero => qualification COMPETITIVE NO_GO not legal bar. Check exact PR/push GitHub CI, repair and mark child completed when green. Private source files only Mac mini ArvectumSSD; public source pinned docs/acceptance/apr06_czn_v4_official_scoring_source_receipt_2026-10-13.json. No electronic signature verification, human gold, automatic SaaS run route/UI integration (separate next task), ETP bid, payment, production or watchdog changes. Preserve owner main manual_override true.'
+resume_instruction: 'Child TA-QUALIFICATION-EIS-AUTO-SOURCE-20261013 COMPLETE. PR408 exact source head 7f6024e1 passes PR+push CI, source-verified original EIS parser, 57 tests and real SOAP+DOCX replay. Next engineering task: run-scoped trusted source discovery and automatic tenant qualification presentation in operator report/UI; start separate child checkpoint and draft stacked branch. Do not merge PR407/408 without approvals, never claim cryptographic signed EIS/human gold, no ETP/payments/sign/production/watchdog.'
