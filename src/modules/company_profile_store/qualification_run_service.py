@@ -18,12 +18,12 @@ from sqlalchemy.orm import Session
 
 from src.modules.company_profile_store.qualification_original_source import (
     OriginalScoringEvidence,
+    _contract_rules,
     _docx_rows,
     _first,
     _local_name,
     _safe_zip,
     _score_table,
-    _contract_rules,
     _xml,
     extract_official_qualification_criterion,
 )
