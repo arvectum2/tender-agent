@@ -1,0 +1,86 @@
+{
+  "schema_version": "b2b-secondary-only-original-gate-v1",
+  "audit_date": "2026-10-13",
+  "audit_time_msk": "2026-10-13T22:57:41+03:00",
+  "task": "Verify new public Sberbank-AST corporate web-services tender vs secondary aggregator before adding actionable shortlist",
+  "first_party_site_check": {
+    "url": "https://www.sberbank-ast.ru/",
+    "retrieval": "Mac mini direct HTTPS using urllib.ProxyHandler({}) no system proxy",
+    "http_status": 200,
+    "response_bytes": 56005,
+    "sha256": "3234ad55384a5555e7b0f691859f7454356d2dfc5f4300b8fcf34e3f79da224f",
+    "specific_tender_public_card_found": false,
+    "specific_tender_number_in_homepage_html": false,
+    "no_credentials_used": true,
+    "claim": "PLATFORM_HOST_REACHABLE_NOT_PROCUREMENT_ORIGINAL"
+  },
+  "unverified_secondary_candidate": {
+    "id": "SBR028-2610130033",
+    "secondary_url": "https://zakupki.kontur.ru/SBR028-2610130033",
+    "secondary_source": "Контур.Закупки, indexed 13 October 2026",
+    "platform_claimed": "Сбербанк-АСТ",
+    "buyer_claimed": "ООО «Звук»",
+    "buyer_inn_claimed": "7708328948",
+    "subject_claimed": "Оказание услуг по разработке, дизайну, поддержке веб-сайтов и цифровых сервисов",
+    "publication_date_claimed": "2026-10-13",
+    "publication_msk_claimed": "14:24",
+    "deadline_msk_claimed": "2026-10-21T11:00:00+03:00",
+    "estimate_rub_claimed": 12204855.6,
+    "procurement_type_claimed": "Коммерческие, запрос предложений (закупка с ЭП)",
+    "mac_mini_direct_secondary_http_status": 403,
+    "original_platform_notice_url": null,
+    "original_notice_verified": false,
+    "original_documents_verified": false,
+    "organizer_original_verified": false,
+    "exact_original_deadline_verified": false,
+    "actual_participation_terms_verified": false,
+    "legal_entity_access_verified": false,
+    "fit": "POTENTIAL_WEB_DIGITAL_DELIVERY_CONTRACT_BUT_UNASSESSED",
+    "source_status": "SECONDARY_ONLY_REVIEW_REQUIRED",
+    "bid_ready": false,
+    "human_gold": false,
+    "external_action_allowed": false
+  },
+  "workspace_current_index": {
+    "url": "https://workspace.ru/tenders/",
+    "http_status": 200,
+    "bytes": 127077,
+    "sha256": "8bb7386f4cd37fb6e1ac42883ccc6257031e67477cb180fc87d8080cffaa7ec9",
+    "retrieval": "Mac mini direct HTTPS no system proxy",
+    "observed_ids": [
+      "19026",
+      "19027",
+      "19023"
+    ],
+    "known_existing_id": "19023",
+    "new_verified_corporate_it_cards_added": 0,
+    "new_index_cards_not_promoted": [
+      {
+        "id": "19026",
+        "visible_title": "Запуск и ведение продаж на маркетплейсах Wildberries/Ozon/Яндекс Маркет",
+        "reason": "NON_SOFTWARE_MARKETPLACE_OPERATIONS"
+      },
+      {
+        "id": "19027",
+        "visible_title": "Англоязычный комплект материалов: презентация, one-pager и лендинг",
+        "reason": "MIXED_COPYWRITING_DESIGN_ORGANIZER_ORIGINAL_UNCHECKED"
+      }
+    ]
+  },
+  "coverage": {
+    "prior_distinct_historical_corporate_it_cards": 11,
+    "new_first_party_contract_cards_verified": 0,
+    "distinct_historical_corporate_it_cards_after": 11,
+    "goal_current_qualified_legal_entity_it_cards": "15-20",
+    "goal_met": false,
+    "currently_qualified_opportunity_count": null
+  },
+  "constraints": {
+    "no_original_platform_bypass": true,
+    "no_login_or_registration": true,
+    "no_paid_data": true,
+    "no_bid_or_contact": true,
+    "no_claim_of_open_status": true,
+    "no_live_production_changes": true
+  }
+}
