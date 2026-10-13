@@ -7,8 +7,8 @@ import re
 import ssl
 import time
 from dataclasses import dataclass, field
+from datetime import UTC, date, datetime, timedelta, timezone
 from decimal import Decimal
-from datetime import date, datetime, timedelta, timezone
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
@@ -228,8 +228,7 @@ class Public44FzSearchProvider:
         law_type: str = "44fz",
         status_filter: str | None = None,
     ) -> PublicTenderSearchPage:
-        if page_size > MAX_PAGE_SIZE:
-            page_size = MAX_PAGE_SIZE
+        page_size = min(page_size, MAX_PAGE_SIZE)
         url = self._build_url(
             query=query,
             date_from=date_from,
@@ -304,9 +303,9 @@ class Public44FzSearchProvider:
         normalized_law = _normalize_law(law_type)
         flag = LAW_FLAGS.get(normalized_law, "fz44")
         if date_from is None:
-            date_from = date.today() - timedelta(days=3)
+            date_from = date.today() - timedelta(days=3)  # noqa: DTZ011 - operator-local search window
         if date_to is None:
-            date_to = date.today()
+            date_to = date.today()  # noqa: DTZ011 - operator-local search window
         params = {
             "morphology": "on",
             "sortDirection": "false",
@@ -374,7 +373,7 @@ class Public44FzSearchProvider:
                 return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": reason}
             except ssl.SSLError:
                 return {"status": PublicSearchStatus.BLOCKED, "html": None, "error": "TLS verification failed"}
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001 - transport classification must fail closed
                 return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": str(exc)}
 
         classification = _classify_search_html(html_content)
@@ -940,10 +939,10 @@ def _parse_public_datetime(value: str | None) -> datetime | None:
 
     for fmt in ("%d.%m.%Y %H:%M", "%d.%m.%Y %H:%M:%S", "%d.%m.%Y", "%Y-%m-%d"):
         try:
-            parsed = datetime.strptime(cleaned, fmt)
+            parsed = datetime.strptime(cleaned, fmt)  # noqa: DTZ007 - attached below
             if explicit_timezone is not None:
-                return parsed.replace(tzinfo=explicit_timezone).astimezone(timezone.utc)
-            return parsed.replace(tzinfo=timezone.utc)
+                return parsed.replace(tzinfo=explicit_timezone).astimezone(UTC)
+            return parsed.replace(tzinfo=UTC)
         except ValueError:
             continue
     return None
@@ -1386,11 +1385,11 @@ def _guess_content_type(name_or_url: str, icon_alt: str | None = None) -> str | 
         return "application/pdf"
     if lower.endswith(".docx") or (icon_alt and "word" in icon_alt.lower()):
         return "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    if lower.endswith(".xlsx") or lower.endswith(".xls") or (icon_alt and "excel" in icon_alt.lower()):
+    if lower.endswith((".xlsx", ".xls")) or (icon_alt and "excel" in icon_alt.lower()):
         return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     if lower.endswith(".txt"):
         return "text/plain"
-    if lower.endswith(".html") or lower.endswith(".htm"):
+    if lower.endswith((".html", ".htm")):
         return "text/html"
     if lower.endswith(".xml"):
         return "application/xml"
