@@ -542,8 +542,9 @@ def test_saas_qualification_viewer_cannot_write_reference_list(client):
 def test_saas_auto_qualification_only_for_owned_run_without_request_scores(
     client, monkeypatch,
 ):
-    from src.modules.saas_foundation import router as saas
     from types import SimpleNamespace
+
+    from src.modules.saas_foundation import router as saas
 
     tenant_a, token_a = _seed(client, "ООО Авторизованный EIS")
     _, token_b = _seed(client, "ООО Другая компания")
@@ -602,10 +603,11 @@ def test_saas_auto_qualification_only_for_owned_run_without_request_scores(
 
 
 def test_saas_viewer_report_does_not_expose_private_reference_list(client, monkeypatch):
-    from src.modules.saas_foundation import router as saas
     from types import SimpleNamespace
 
-    tenant, owner = _seed(client, "ООО Приватность референсов")
+    from src.modules.saas_foundation import router as saas
+
+    _tenant, owner = _seed(client, "ООО Приватность референсов")
     _legal(client, owner)
     upload = client.post(
         "/api/saas/runs",
