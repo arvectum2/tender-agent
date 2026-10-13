@@ -1,0 +1,20 @@
+{
+  "schema_version": "ri223-scoring-original-evidence-v1",
+  "procurement_number": "32616445795",
+  "law": "223fz",
+  "soap_original_sha256": "65004d53a4d198857a192ad21052c95cfa7d812208c3ac6702324e42d7487de3",
+  "soap_notice_member": "purchaseNotice_32616445795_1_01A11721DE117B148A2C81697F6A8EE7.xml",
+  "soap_notice_version": 1,
+  "original_attachment_name": "3727_МИ.rar",
+  "original_attachment_content_uid": "E8D018399C8C4BC18A621DCB8CBB6F12",
+  "original_attachment_url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=E8D018399C8C4BC18A621DCB8CBB6F12",
+  "original_attachment_sha256": "36ef971be08ba1c4040e717239b78e464743542ee180f63bf37eb2ce79774241",
+  "evaluation_pdf_member": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.pdf",
+  "evaluation_pdf_sha256": "a44d95730fad4fe3b117544b5b651cdfdf70514fb2c8ce9a7febdbb69cd2c826",
+  "parallel_legacy_doc_member": "3727-МИ/РАЗДЕЛ 9. МЕТОДИКА ОЦЕНКИ (работы-услуги) 40х60.doc",
+  "parallel_legacy_doc_sha256": "c74b98fd03de7eb87af2a8b0056c1342fdbf5099e05faa7c7fac8ba757a136ff",
+  "original_source_observed_on": "2026-10-08",
+  "independently_verified_digital_signature": false,
+  "commercial_decision_authorized": false,
+  "scoring_parser_scope": "read_only_observation_not_automated_qualification_verdict"
+}
