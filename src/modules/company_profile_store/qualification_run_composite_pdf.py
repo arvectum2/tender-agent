@@ -26,12 +26,6 @@ from src.modules.company_profile_store.qualification_run_service import (
     _current_notice_from_archive,
     _regular_inside,
 )
-from src.modules.tender_operator_agent_demo.upload_service import (
-    get_demo_run_input_dir,
-    load_demo_run_metadata,
-)
-
-
 def discover_run_composite_pdf_observation(
     run_id: str, *, analysis_date: date
 ) -> dict:
