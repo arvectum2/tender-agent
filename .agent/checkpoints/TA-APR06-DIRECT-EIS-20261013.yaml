@@ -2,16 +2,20 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR06-DIRECT-EIS-20261013
 status: in_progress
-goal: Test public EIS HTTPS reachability and notice status from Mac mini via direct Russian egress, without commercial actions.
+goal: Diagnose intermittent public EIS cached 404 from direct Russian egress, implement bounded source-specific recovery and verify current CZN v4 HTML evidence without procurement external actions.
 definition_of_done:
   - Record direct vs default EIS HTTP status and Mac mini network settings.
   - Validate public page facts and distinguish official GET from unsuccessful endpoints.
-  - Add executable repeatable read-only verification and offline tests.
+  - Add bounded EIS Varnish HTML 404 retry only on official notice GET, fail closed on persistent 404/403/429/untrusted hosts; provenance of transient recovery.
   - Create review-only draft PR with exact-head CI and checkpoint.
 completed:
   - Inspected parent roadmap and prior PR402 exact-head CI SUCCESS.
   - Mac mini internet egress confirmed RU/Moscow via independent IP-geolocation result.
   - macOS PAC present at localhost port 8082, process proxy environment absent.
+  - Confirmed user report: exact CZN official ok20 URL intermittently 200/404 through same direct RU IP. Eight HTTP/1.1 same-URL runs yielded six 200 on eis-varnish-pub02, two 404 on eis-varnish-pub01. 404 is 146-byte nginx stub; not procurement status.
+  - Official CZN common-info HTML 200 contains Подача заявок, updated 12.10.2026 and new deadline 23.10.2026 10:00 MSK.
+  - Official documents.html 200 identifies active revision 4, published 12.10.2026 22:24 MSK, revision 3 inactive; event-journal.html 200 confirms change event and clarifications. Historical v3 19 Oct deadline is superseded.
+  - Existing official docs tab names updated 12 Oct contract and ООЗ ИТОГ, so do not download missing old v3 appendix before official v4 UID inventory.
   - Public EIS home via HTTPS direct GET 200; museum common-info GET 200, status Подача заявок and deadline 2026-10-16 10:00 MSK.
   - CZN archived official URL returns nginx 404 via direct GET; no status inferred.
   - Current public HTML Museum contains Подача заявок, deadline 2026-10-16 10:00 MSK, last updated 08.10; not an XML edition/UID freshness assertion.
