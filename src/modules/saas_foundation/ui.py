@@ -59,7 +59,12 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Тендерные документы (.pdf, .docx, .txt и др.)<input id="tender-files" type="file" multiple></label>
 <button id="create-run">Загрузить в контур</button><button id="append-files">Дополнить текущий прогон</button><label>ID своего прогона<input id="run-id" placeholder="toa-run-…"></label>
 <button id="analyze-run">Анализировать</button><button id="report-run">Посмотреть отчёт</button>
-<button id="screen-run">Сопоставить с профилем</button></section>
+<button id="screen-run">Сопоставить с профилем</button>
+<button id="qualify-run">Оценить шансы по оригинальным критериям ЕИС</button>
+<div id="qualification-panel" hidden role="status" aria-live="polite" style="border:1px solid #496477;border-radius:10px;padding:12px;margin-top:12px">
+<strong id="qualification-verdict"></strong>
+<p id="qualification-source-note"></p>
+</div></section>
 <section><h2>5. Мой пакет и лимиты</h2><button id="me">Мой кабинет</button>
 <button id="packages">Показать пакеты</button>
 <button id="usage">Остатки лимитов</button>
@@ -91,9 +96,27 @@ async function call(path,{method="GET",body=null,auth=true,upload=false}={}){
  const r=await fetch(path,options);const d=await r.json().catch(()=>({error:"Non-JSON server response"}));
  if(!r.ok)throw Error("HTTP "+r.status+" "+JSON.stringify(d));return d;
 }
+function showQualification(reply){
+ const item=reply?.qualification || (reply?.competitive_recommendation ? reply : null);
+ const panel=document.getElementById("qualification-panel");
+ if(!item){panel.hidden=true;return}
+ panel.hidden=false;
+ const rec=item.competitive_recommendation;
+ document.getElementById("qualification-verdict").textContent =
+   rec==="NO_GO" ? "NO GO по квалификационной конкурентоспособности" :
+   rec==="NOT_ASSESSED" ? "Квалификация не оценена — недостаточно оригинальных документов" :
+   "Квалификация: требуется проверка";
+ const c=item.criterion_source || {};
+ document.getElementById("qualification-source-note").textContent =
+   "Референс-лист исполненных контрактов: " + (item.qualifying_contracts ?? "не подтверждён") +
+   ". Вес квалификации: " + (c.qualification_weight_percent ?? "не установлен") +
+   "%; вес цены: " + (c.price_weight_percent ?? "не установлен") +
+   "%. Источник: " + (item.source_status || "не подтверждён") +
+   ". Это не юридический отказ, подпись ЕИС не проверена, подача заявки запрещена без решения человека.";
+}
 async function run(task){document.getElementById("state").textContent="Обработка…";try{
- const result=await task();document.getElementById("state").textContent="Готово";output(result);
-}catch(err){document.getElementById("state").textContent="Нужна проверка";output({error:err.message});}}
+ const result=await task();document.getElementById("state").textContent="Готово";output(result);showQualification(result);
+}catch(err){document.getElementById("state").textContent="Нужна проверка";output({error:err.message});document.getElementById("qualification-panel").hidden=true;}}
 function bind(id,task){document.getElementById(id).addEventListener("click",()=>run(task))}
 bind("redeem",async()=>{
  const result=await call("/api/saas/invitations/redeem",{method:"POST",auth:false,body:{invitation_code:val("invite-code"),display_name:val("display-name")}});
@@ -146,6 +169,7 @@ bind("create-run",async()=>{
 });
 bind("analyze-run",()=>call("/api/saas/runs/"+encodeURIComponent(val("run-id"))+"/analyze",{method:"POST"}));
 bind("report-run",()=>call("/api/saas/runs/"+encodeURIComponent(val("run-id"))+"/report"));
+bind("qualify-run",()=>call("/api/saas/runs/"+encodeURIComponent(val("run-id"))+"/qualification"));
 bind("screen-run",()=>call("/api/saas/runs/"+encodeURIComponent(val("run-id"))+"/screen",{method:"POST"}));
 bind("me",()=>call("/api/saas/me"));
 bind("packages",()=>call("/api/saas/packages",{auth:false}));
