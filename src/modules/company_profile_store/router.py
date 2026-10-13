@@ -1,5 +1,10 @@
 from fastapi import APIRouter, Query, status
 
+from src.modules.company_profile_store.qualification_references import (
+    QualificationAssessment,
+    QualificationCriterion,
+    assess_company_qualification,
+)
 from src.modules.company_profile_store.schemas import (
     AppendCompanyDocumentVersionRequest,
     AppendCompanyProfileFactRequest,
@@ -156,6 +161,22 @@ def list_current_facts_route(
         _fact_response(record, latest_version_no=record.version_no)
         for record in records
     ]
+
+
+
+@router.post(
+    "/qualification/assess",
+    response_model=QualificationAssessment,
+)
+def assess_company_qualification_route(
+    customer_id: str,
+    payload: QualificationCriterion,
+    session: DBSession,
+) -> QualificationAssessment:
+    """Read latest tenant-owned versioned completed-contract list. No bid action."""
+    return assess_company_qualification(
+        session, customer_id=customer_id, criterion=payload,
+    )
 
 
 @router.post(
