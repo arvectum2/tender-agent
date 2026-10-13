@@ -16,6 +16,7 @@ import zipfile
 from datetime import date, datetime, timedelta
 from pathlib import PurePosixPath
 from typing import Literal
+from urllib.parse import parse_qs, urlsplit
 
 from pydantic import Field, model_validator
 
@@ -138,11 +139,21 @@ def _original_scoring_attachment(
         uid = _first(attachment, "publishedContentId")
         name = _first(attachment, "fileName")
         size = _first(attachment, "fileSize")
+        source_url = _first(attachment, "url")
         if uid in seen or not uid or not _UID.fullmatch(uid):
             raise ValueError("Duplicate/invalid original EIS attachment UID")
         seen.add(uid)
         if not name or not size or not size.isdecimal():
             raise ValueError("Invalid original EIS attachment name/size")
+        url = urlsplit(source_url or "")
+        if (
+            url.scheme != "https"
+            or url.hostname != "zakupki.gov.ru"
+            or url.port is not None
+            or url.path != "/44fz/filestore/public/1.0/download/priz/file.html"
+            or parse_qs(url.query) != {"uid": [uid]}
+        ):
+            raise ValueError("Original EIS attachment HTTPS source URL/UID mismatch")
         if uid == receipt.scoring_document_uid:
             matches.append((name, int(size)))
     if len(matches) != 1:
