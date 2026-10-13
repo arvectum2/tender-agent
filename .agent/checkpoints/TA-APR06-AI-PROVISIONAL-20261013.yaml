@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR06-AI-PROVISIONAL-20261013
-status: in_progress
+status: completed
 parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
 goal: Provide a new as-of-date AI-only 28-candidate risk and source-integrity screen without counterfeit human truth.
 definition_of_done:
@@ -13,11 +13,14 @@ definition_of_done:
 completed:
   - Read canonical main checkpoint, APR06 draft scope, prior nine-case AI audit and 28-candidate manifest.
   - Confirmed original nine-case AI audit already fixed Aksay and CZN stale notice revisions; do not repeat source corrections or relabel them as human approval.
-  - Confirmed Mac mini RDC offline; original private attachments not currently independently accessible, so new work is source-limited retrospective screening.
-current: Build isolated read-only AI screening artifact and tests on an APR06 child branch.
-pending:
-  - Implement and run targeted tests and generate immutable dated 28-case output.
-  - Verify PR exact-head CI and finalize checkpoint with truthful remaining human/legal gates.
-last_verified_commit: 'APR06 draft head pending recheck'
-test_results: []
-resume_instruction: 'Read this checkpoint and branch PR. Preserve 9 historical source-reviewed versus 19 aggregator-only distinction; NEVER write APR06 observation human reviewer fields, approval, or frozen benchmark truth. Finish code, exact-head tests and review PR. Keep parent APR06 blocked on 20-30 independently verified official EIS sources, real expert human review and Owner thresholds.'
+  - Confirmed Mac mini RDC offline; original private attachments not independently revalidated in this AI task, so screening is historical-source limited.
+  - Added deterministic offline 28-case generator, machine-readable dated artifact, source confidence and Russian report; separated 9 previously source-read from 19 without primary review.
+  - As-of 13 Oct, 7/9 saved deadlines passed, 2 future saved deadlines; no current EIS live-status or human truth inferred.
+  - Mac mini focused regression 88/88 PASS, Ruff PASS; code-head push and PR CI SUCCESS.
+current: AI-only dated 28-case internal retrospective screening delivered as draft PR400; exact-head push and PR CI SUCCESS; no human-gold or commercial approval.
+pending: []
+last_verified_commit: 'Code head 3cc864542a3c34ce96ab4190b94fc0fdf7149a3b; PR CI 38381740128 SUCCESS and push CI 38381733914/38381733985 SUCCESS. Completion checkpoint commit changes metadata only.'
+test_results:
+  - 'Mac mini isolated APR06 focused suite 88 PASS, Ruff PASS; dated 28-case JSON recomputation and negative tests PASS.'
+  - 'GitHub exact code-head PR run 38381740128 SUCCESS, push runs 38381733914/38381733985 SUCCESS; no merge or production action.'
+resume_instruction: 'THIS CHILD TASK COMPLETE; code and 28-case AI evidence are review-ready in draft PR400 and no further work here is needed. Preserve 9 historical source-reviewed vs 19 aggregator-only; never copy into human-gold observations. Parent APR06 remains blocked for real expert labels, source revision-currentness, frozen 20-30 original cases and Owner KPI approval. Separate new branch PR401 audits stored byte hashes.'
