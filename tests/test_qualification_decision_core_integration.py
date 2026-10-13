@@ -40,6 +40,7 @@ def _request(**changes):
         "notice_version": criterion["procurement_notice_version"],
         "document_uid": criterion["source_document_uid"],
         "document_sha256": criterion["source_document_sha256"],
+        "application_deadline_date": criterion["application_deadline_date"],
     }
     model = {
         "procurement_law": "44fz", "procurement_number": criterion["procurement_number"],
@@ -92,6 +93,14 @@ def test_other_tenant_without_reference_list_is_unknown_not_zero(client):
         "notice_version": 3,
         "document_uid": "01A0F10655C27A35B5A5A70090D2BB1A",
         "document_sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+        "application_deadline_date": "2026-10-23",
+    }},
+    {"source_binding": {
+        "procurement_number": "0348100024426000039",
+        "notice_version": 4,
+        "document_uid": "01A0F10655C27A35B5A5A70090D2BB1A",
+        "document_sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+        "application_deadline_date": "2026-10-19",
     }},
     {"procurement_model": {
         "procurement_number": "0372200172326000015", "procurement_law": "44fz",
