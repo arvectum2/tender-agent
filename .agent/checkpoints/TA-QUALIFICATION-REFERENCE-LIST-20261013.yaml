@@ -10,13 +10,22 @@ definition_of_done:
   - Expose usable read-only assessment path from company profile store; integrate risk decision into operator Decision Core only when explicit source-bound criterion + same tenant snapshot present; no global demo profile assumptions.
   - Include negative tests for tenant isolation, unknown/expired list, nonqualifying 44/223 or incomplete contracts, fabricated source and wrong version; pass local and exact-head CI.
   - Document how to update reference list after first signed contract and how evaluation reacts.
-completed: []
-current: Inspect existing company profile store and decision core; implement tenant-isolated feature.
+completed:
+  - Reused existing immutable tenant-scoped CompanyProfileFactVersion for fact key completed_contract_reference_list, group EXPERIENCE; latest active fact only and owner-provided source.
+  - Explicit owner-confirmed complete zero != absent/partial/expired/untrusted/stale list. 90-day freshness window and source provenance retained.
+  - Implemented completed 44-FZ/223-FZ contract matching, signed final act reference/date and requirement of chatbot; lookback measured from official bid deadline, not analysis run date.
+  - Pinned original CZN EOK2020 v4 source UID/SHA and 70/30 evaluation weights in owner-statement example, competitive no-go (not legal ineligibility).
+  - Added read-only GET-dependent POST /qualification/assess and /qualification/decision-core, with exact original notice version+UID+checksum+deadline binding and no cross-tenant data.
+  - Tested source mismatch/future act/owner unknown/tenant isolation/superseded fact/nonlegal core status. Mac mini 50 focused pytest PASS, 8 skipped, Ruff PASS, JSON validation PASS, git diff --check PASS on b129b2f.
+  - Draft main-based PR407 created, no production or ETP changes.
+current: Implementation complete in draft PR407 at source head b129b2f50fd0b1e0b79f0d5f105b219ebcaecc82. API evaluates reference list and safely attaches competitive recommendation to Decision Core; local 50 pytest PASS/8 SKIP, Ruff PASS, JSON and diff checks PASS. Full GitHub CI pending.
 pending:
-  - Add contract reference schema, fact persistence retrieval and pure conservative evaluator.
-  - Add API and optional Decision Core integration with strict source provenance.
-  - Pin Arvectum owner-zero user declaration and CZN current source v4 qualification NO_GO example.
-  - Test locally with real Mac mini and CI; complete checkpoint.
-last_verified_commit: 'new branch based main, no implementation yet'
-test_results: []
-resume_instruction: 'Continue source-bound qualification reference list feature in feature/qualification-reference-list-20261013. Existing CompanyProfileFactVersion supports EXPERИENCE (actual spelling EXPERIENCE) fact group and immutable versions, can persist explicit owner-asserted completed_contract_reference_list empty snapshot. Never count no fact as zero; no cross tenant. Independent factor no-go for CZN due to user-declared zero completed contracts vs 70% experience/30% price, NOT legal disqualification. Keep safe and focus tests, no bids, ETP, production, watchdog or signatures.'
+  - Wait exact PR407 push/PR GitHub CI on current checkpoint head, repair any failures.
+  - Mark this engineering child completed with exact CI head, keep draft/approval outstanding.
+  - Separate follow-up: automatically supply authenticated supplier customer_id + original EIS scoring facts to every full Tender Agent analysis report and UI; do not claim it already runs unconditionally.
+last_verified_commit: 'Source/test branch head b129b2f50fd0b1e0b79f0d5f105b219ebcaecc82; Mac mini targeted 50 PASS/8 SKIP, Ruff PASS, JSON and git diff clean. Exact PR407 CI pending.'
+test_results:
+  - 'Mac mini checkout b129b2f: 50 pytest PASS/8 SKIP, unrelated warnings 10, Ruff PASS, owner-zero JSON valid and git diff --check PASS.'
+  - 'Synthetic multi-tenant FastAPI test: Arvectum complete 0 references + original CZN v4 evaluation document 70/30 -> competitive NO_GO, legal Decision Core remains NEEDS_REVIEW, no bids allowed. Other tenant returns UNKNOWN. Exact 5-year deadline-based act cutoff tested.'
+  - 'Exact-head GitHub PR407 CI not yet confirmed.'
+resume_instruction: 'PR407 draft source head b129b2f50fd0b1e0b79f0d5f105b219ebcaecc82, branch feature/qualification-reference-list-20261013 based main. Implementation validated Mac mini 50 pytest PASS/8 SKIP, Ruff PASS, JSON PASS. First check exact-head GitHub PR/push full CI; fix failures then mark child COMPLETED with final tests+hash. Product now has tenant-scoped owner-confirmed complete contract reference-list versions, /qualification/assess and /qualification/decision-core read-only endpoints. CZN qualification NO_GO with zero owner-confirmed completed 44/223 chatbot contracts and 70% experience vs 30% price, NOT legal ineligibility. No live Arvectum tenant fact seeded (unknown production customer_id). Full-report/UI automatic calling from trusted EIS criterion plus actual authenticated supplier ID remains future work. Keep PR draft until reviewer approval, never issue ETP actions, signatures, payments, live deploy or watchdog updates.'
