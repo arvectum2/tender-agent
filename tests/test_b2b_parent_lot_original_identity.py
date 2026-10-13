@@ -71,7 +71,7 @@ def test_exact_original_receipt_and_exclusion_categories_remain_unpromoted():
     "<html><script>Лот № 1 Предварительного квалификационного отбора № 4632682</script></html>",
     "<h1>Предварительный квалификационный отбор № 4632683</h1>",
     ("<h1>Лот № 1 Предварительного квалификационного отбора № 4632682</h1>"
-     "<h2>Лот № 2 Предварительного квалификационного отбора № 4632684</h2>"),
+     "<h1>Лот № 2 Предварительного квалификационного отбора № 4632684</h1>"),
 ])
 def test_missing_script_only_or_conflicting_procedure_does_not_count(body):
     result = checked(LOT_URL, body)
