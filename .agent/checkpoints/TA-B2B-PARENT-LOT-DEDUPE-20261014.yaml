@@ -10,15 +10,17 @@ definition_of_done:
   - Add positive, negative, ambiguity and duplicate-count regression coverage without widening authorization.
   - Run local focused tests/Ruff/checks, draft stacked PR, inspect exact-head GitHub CI and checkpoint.
 completed:
+  - '2026-10-14 source-bound parent/lot resolver + conflict/unknown/tamper guards; actual Mac mini original HTML #4632699 SHA01edb692 replay produced PARENT_LOT_CONFIRMED, canonical b2b-center:4632682; other two originals excluded.'
+  - 'Mac mini isolated source head 72436c8dbaee3ab19dddd5002c281b530f88495e: 55 focused pytest PASS/0 FAIL, Ruff PASS, original raw-HTML SHA verified and canonical identity PASS, JSON parse PASS, git diff --check PASS; one unrelated Starlette/httpx deprecation warning.'
   - '2026-10-14 00:26 MSK Russian Mac mini no-proxy public read-only original HTML: B2B-Center lot page #4632699 names itself lot 1 of parent prequalification #4632682, already researched. Original #4616411 archived with past Oct9 deadline, Rosatom RTS #4638345 remains market price monitoring and nuclear industrial SAKOR work, not contract-ready suitable IT.'
-current: Implementing source-bound parent/lot deduplication with offline tests and evidence.
+current: 'Implementation and original-source replay verified, stacked draft PR and exact CI pending.'
 pending:
-  - Add guarded identity resolver and regressions.
-  - Record evidence receipts and non-addition to historically unique lead count.
-  - Run Mac mini local validation, draft PR and CI.
-last_verified_commit: 'Parent PR419 original-card URL fix 807859cedbde51dd7e94cb64380104b626441b9c GitHub 3/3 CI SUCCESS on prior head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f.'
-test_results: []
-resume_instruction: 'Branch research/b2b-parent-lot-dedupe-20261014 stacked on PR419. Implement offline parent-lot identity from original textual reference, ensure unknown/conflict do not count, test on isolated Mac mini, record exact original HTML SHA and source confidence, create draft PR. No bidding, registration, spending, contact, signing, merge, production or watchdog.'
+  - Open stacked draft PR on PR419 and inspect exact GitHub workflow head.
+  - Mark completed only after full exact-head CI success; leave all draft PRs unmerged.
+last_verified_commit: '72436c8dbaee3ab19dddd5002c281b530f88495e Mac mini 55 focused pytest PASS, Ruff PASS, SHA verified live original HTML replay PASS. Subsequent documentation commits untested code unchanged.'
+test_results:
+  - '55 focused pytest passed, 0 failed; Ruff PASS, real original HTML replay PASS, JSON PASS, git diff --check PASS; 1 third-party deprecation warning.'
+resume_instruction: 'Open draft PR stacked on fix/b2b-exact-original-card-path-20261013, check exact-head GitHub workflow status, correct any CI failures, and when green mark TA-B2B-PARENT-LOT-DEDUPE-20261014 completed. Local Mac mini tested code 72436c8dbaee3ab19dddd5002c281b530f88495e 55 focused pytest PASS/Ruff/real HTML replay. Keep 15-20 qualified originals OPEN, PR419/PR418 unmerged, no ETP, payment, signature, buyer contact, production, watchdog or automatic merge.'
 execution:
   branch: research/b2b-parent-lot-dedupe-20261014
   manual_override: true
