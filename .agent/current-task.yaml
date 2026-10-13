@@ -43,7 +43,7 @@ completed:
   - '2026-10-13 APR06 draft PR254 synchronized current main and verified private packet: head 04f5ba77, latest-main B2B code merged, local 4054 full PASS/238 SKIP and 60 targeted PASS, make check PASS, exact-head PR and push CI 9/9 SUCCESS, human gold 0/28 BLOCKED.'
   - '2026-10-13 APR07 draft PR255 synchronized latest APR06: head 54a89534, exact local Git tree 2cf74297, 57 targeted PASS, full PG16/Docker 4071 PASS/238 SKIP, Ruff and make check PASS, no source-code conflicts; GitHub exact-head PR/push CI pending. Offline snapshot human truth and rolling production SLO remain NOT_MEASURED.'
   - '2026-10-13 APR07 latest APR06 reconciliation completed TECHNICALLY: PR255 exact head 54a8953434680ba5a22d0a1fbd195c3dda5b511c, source tree 2cf742979e78d2fbf6e76ee0214d5f90b866e522 matches Mac mini full 4071 PASS/238 SKIP and 57 focused PASS, Ruff/make check PASS; exact-head push and PR CI runs 38365321455/38365314201 9/9 each SUCCESS, GitVerse mirror SUCCESS. Remains DRAFT for human gold, approved metrics and rolling production SLO.'
-current: 'Independent APR06 adversarial audit active: draft PR394 closes duplicate citation IDs and unchecked package reviews; draft PR396 checks local file bytes; both exact-head CI pending. Official EIS provenance and real owner/expert approval still release blockers issue395. APR06/07 remain draft and commercial acceptance blocked.'
+current: 'APR06 code-only PR394 and PR396 merged into draft branch; adversarial tests green. APR07 PR255 restacked to 96b749ee, exact-head CI running. APR06 strict final acceptance PR397 2fddac69 in draft; CI running. Genuine official EIS original source and owner review 0/28 outstanding. APR07 rolling SLO and B2B source coverage outstanding.'
 pending:
   - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
   - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
@@ -61,7 +61,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Review PR394 and stacked PR396 exact-head GitHub CI. Repair any failing checks and integrate only verified code into draft APR06, then reconcile draft APR07. Original EIS source, real human labels 0/28, approved thresholds, live B2B and production SLO remain OPEN. No bids, payments, signing, deployments or watchdog changes.'
+resume_instruction: 'Check exact-head CI PR397 2fddac69 and PR255 96b749ee. Merge proven code-only PR397 into APR06 draft if CI green, restack APR07, verify CI. Keep official-source provenance issue395, expert decisions and owner threshold approval blocked. No bid submission or public deployment.'
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
