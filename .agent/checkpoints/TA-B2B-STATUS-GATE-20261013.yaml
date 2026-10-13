@@ -14,11 +14,10 @@ completed:
   - Implemented pure corporate public-source status/clock/domain triage; no ETP connector/authenticated fetch or outgoing request.
   - Added 26 negative and positive regressions including real Workspace 19004 closed despite future deadline, same-day unknown cutoff, stale status, spoofed host and unverified buyer.
   - Targeted 26 tests PASS; Ruff PASS, make check PASS.
-  - Full PG16/Docker regression 4001 passed, 238 skipped, 0 failures, 328 warnings (182.76 sec).\n  - All four added Git blobs were independently verified equal to the locally tested Git tree 23646f91bf9f916865c4410edec8fa9c89cc7e45; PR392 exact head 845af2d1 push and PR GitHub CI 9/9 successful each; merged into main at 774705045a545236e64b838e5a5039c0143848fe.
+  - Full PG16/Docker regression 4001 passed, 238 skipped, 0 failures, 328 warnings (182.76 sec).
+  - All four added Git blobs were independently verified equal to the locally tested Git tree 23646f91bf9f916865c4410edec8fa9c89cc7e45; PR392 exact head 845af2d1 push and PR GitHub CI 9/9 successful each; merged into main at 774705045a545236e64b838e5a5039c0143848fe.
 current: Completed bounded source-status triage integration as code only; corporate connectors and bids remain disabled.
-pending:
-  - Commit verified branch and publish exact source tree.
-  - Publish GitHub PR and await exact-head CI, without production connector activation.
+pending: []
 last_verified_commit: 774705045a545236e64b838e5a5039c0143848fe
 test_results:
   - 26 new focused tests PASS, Ruff PASS, make check PASS.
