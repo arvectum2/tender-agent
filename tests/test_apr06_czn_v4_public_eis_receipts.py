@@ -11,7 +11,7 @@ SOURCE = (
 )
 
 
-def test_official_html_version_4_is_not_promoted_to_original_eis_xml_truth():
+def test_current_official_html_and_original_soap_v4_proof_are_separately_scoped():
     obj = json.loads(SOURCE.read_text(encoding="utf-8"))
     assert obj["schema_version"] == "apr06-czn-v4-public-html-source-receipt-v1"
     assert obj["reg_number"] == "0348100024426000039"
@@ -27,9 +27,14 @@ def test_official_html_version_4_is_not_promoted_to_original_eis_xml_truth():
     assert source["official_v4_html_uids_with_matching_local_sha256_bytes"] == 7
     assert source["new_direct_v4_uid_downloads"] == 4
     assert source["reused_original_v3_uids"] == 3
-    assert source["original_v4_epnotification_xml_acquired"] is False
-    assert source["original_v4_epnotification_xml_sha256_verified"] is False
-    assert source["official_v4_xml_attachment_size_binding_verified"] is False
+    assert source["original_v4_epnotification_xml_acquired"] is True
+    assert source["original_v4_epnotification_xml_sha256_verified"] is True
+    assert source["official_v4_xml_attachment_size_binding_verified"] is True
+    assert source["official_v4_xml_UID_name_size_matches"] == 7
+    assert source["official_v4_xml_cryptographic_signature_validated"] is False
+    assert obj["official_soap_original"]["version_4_notice_type"] == "epNotificationEOK2020"
+    assert obj["official_soap_original"]["version_4_deadline"] == "2026-10-23T10:00:00+03:00"
+    assert obj["official_soap_original"]["digital_signature_validation"] == "NOT_PERFORMED"
     assert source["zip_internal_document_review_completed"] is False
     assert source["legal_or_commercial_acceptance"] is False
     assert source["human_gold_labels"] == 0
