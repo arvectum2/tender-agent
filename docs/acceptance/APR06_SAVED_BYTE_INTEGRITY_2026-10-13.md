@@ -51,3 +51,11 @@ python -m scripts.acceptance.apr06_saved_bytes_audit \
 The output must not exist yet. The real run was performed with no network, a read-only artifact volume and separate temporary output; do not give a verifier write access to original source volumes.
 
 **Next:** obtain current primary EIS notice edition and source-linked official attachments per candidate; focus on 11 `docs_required` cases and 223-ФЗ correct adapter; then independent procurement review of actual TЗ and owner KPI approval. No bids, ETP registration, signing, payment, model download or production deployment performed.
+
+## Supplemental 223-FZ archived-source check
+
+A separate read-only Mac mini filesystem comparison against `docs/acceptance/apr06_223fz_download_receipts_2026-10-09.json` found **5 of 5** previously stored files with exact matching SHA-256 **and** byte length, across four 223-ФЗ candidate numbers: `32616416057` (2/2), `32616412768` (1/1), `32616369437` (1/1) and `32616045143` (1/1). Files were read from the historical local `/tmp/apr06-223fz-verified-attachments/<reg_number>/` directory; the original bytes remain off Git. The other four candidate 223-ФЗ procedures did not have such archived downloads in this manifest.
+
+**Original-format anomaly confirmed:** `32616369437` has one recorded `.html` file whose first bytes are ZIP magic (`PK`), not reliable HTML. This is a format/provenance review blocker, **not** proof that the attachment was fraudulent or a valid DOCX. It must be classified by a guarded content sniffer before any parsing, with the extension mismatch visible to an operator. No archive extraction or execution was performed.
+
+These 5 matches are **additional to**, not part of, the 168/168 44-ФЗ count. As in the 44-ФЗ audit, the 223-ФЗ file byte match does not establish true active revision, source-link completeness, current notice state, participant eligibility, legal conclusions or human acceptance.
