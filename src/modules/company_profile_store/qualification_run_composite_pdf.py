@@ -44,7 +44,7 @@ def discover_run_composite_pdf_observation(
         or not _NOTICE_NO.fullmatch(number)
     ):
         raise ValueError("Missing trusted original 44-FZ getDocsIP run metadata")
-    folder = get_demo_run_input_dir(run_id)
+    folder = _run_service.get_demo_run_input_dir(run_id)
     archive = _archive_bytes(folder, metadata)
     version, (notice, xml_sha) = _current_notice_from_archive(archive, number)
     observations = []
