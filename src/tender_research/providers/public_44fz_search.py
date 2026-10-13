@@ -387,7 +387,7 @@ class Public44FzSearchProvider:
                 return {"status": PublicSearchStatus.PARSE_ERROR, "html": None, "error": f"Unsupported layout: {classification}"}
             return {"status": PublicSearchStatus.PARSE_ERROR, "html": None, "error": f"Unclassified: {classification}"}
 
-        return {"status": PublicSearchStatus.SUCCESS, "html": html_content, "error": None}
+        return {"status": PublicSearchStatus.SUCCESS, "html": html_content, "error": None, "eis_cache_retries": edge_retries}
 
     def fetch_detail(
         self,
