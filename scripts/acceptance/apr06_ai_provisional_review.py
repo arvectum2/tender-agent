@@ -18,7 +18,7 @@ SOURCES = ROOT / "docs/acceptance"
 CANDIDATES = SOURCES / "apr06_candidate_pool_2026-10-09.json"
 PRIOR_AUDIT = SOURCES / "apr06_independent_gpt6_audit_2026-10-09.json"
 PREFILL = SOURCES / "apr06_machine_prefill_2026-10-09.json"
-_SHA256 = re.compile(r"[0-9a-f]{64}\\Z")
+_SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 
 
 def _unique(items: list[dict[str, Any]], field: str) -> dict[str, dict[str, Any]]:
@@ -192,7 +192,7 @@ def main() -> None:
     )
     with args.output.open("x", encoding="utf-8") as stream:
         json.dump(evidence, stream, ensure_ascii=False, indent=2)
-        stream.write("\\n")
+        stream.write("\n")
     print(json.dumps(evidence["summary"], ensure_ascii=False))
 
 
