@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-DIRECT-EIS-20261013
+status: in_progress
+goal: Test public EIS HTTPS reachability and notice status from Mac mini via direct Russian egress, without commercial actions.
+definition_of_done:
+  - Record direct vs default EIS HTTP status and Mac mini network settings.
+  - Validate public page facts and distinguish official GET from unsuccessful endpoints.
+  - Add executable repeatable read-only verification and offline tests.
+  - Create review-only draft PR with exact-head CI and checkpoint.
+completed:
+  - Inspected parent roadmap and prior PR402 exact-head CI SUCCESS.
+  - Mac mini internet egress confirmed RU/Moscow via independent IP-geolocation result.
+  - macOS PAC present at localhost port 8082, process proxy environment absent.
+  - Public EIS home via HTTPS direct GET 200; museum common-info GET 200, status Подача заявок and deadline 2026-10-16 10:00 MSK.
+  - CZN archived official URL returns nginx 404 via direct GET; no status inferred.
+current: Implement source-specific direct read-only verification, tests, and report.
+pending:
+  - Add offline test and public no-proxy probe.
+  - Validate actual authorized Mac mini invocation and source-limited report.
+  - Confirm exact-head CI; finish checkpoint.
+last_verified_commit: 'research branch starts from APR06 parent; no branch-specific code commit yet'
+test_results: []
+resume_instruction: 'Use Mac mini with source_direct_connection=True for official EIS public HTTPS, never infer procurement cancellation from 404. Existing HTTP client creates ProxyHandler({}) for source_direct_connection. Keep owner/human-gold gates and no bids, payments, signatures or production changes.'
