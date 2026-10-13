@@ -806,7 +806,7 @@ def test_http_source_bound_1c_qualification_through_tenant_roles(
             f"<fileSize>{len(pdf_bytes)}</fileSize>"
             f"<url>{url}</url>"
             "</attachmentInfo></epNotificationEOK2020></root>"
-        ).encode("utf-8")
+        ).encode()
         archive_bytes = io.BytesIO()
         with zipfile.ZipFile(archive_bytes, "w") as z:
             z.writestr(f"epNotificationEOK2020_{number}_2.xml", xml)
