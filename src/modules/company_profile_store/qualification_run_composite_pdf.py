@@ -122,4 +122,4 @@ def discover_run_composite_pdf_observation(
         observations.append({**source, **observation})
     if len(observations) != 1:
         raise ValueError("No unique supported original composite PDF methodology")
-    return observations[0]
+    return {**observations[0], "observation_as_of": analysis_date.isoformat()}
