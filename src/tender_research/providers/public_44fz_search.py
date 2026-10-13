@@ -323,7 +323,7 @@ class Public44FzSearchProvider:
     def _fetch_page(self, url: str) -> dict[str, Any]:
         parsed = urlparse(url)
         hostname = (parsed.hostname or "").lower()
-        if not hostname.endswith(EIS_44FZ_HOST):
+        if not (hostname == EIS_44FZ_HOST or hostname.endswith(f".{EIS_44FZ_HOST}")):
             return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": f"Host {hostname} is not allowed"}
         if parsed.scheme not in {"http", "https"}:
             return {"status": PublicSearchStatus.NETWORK_ERROR, "html": None, "error": "Only http/https URLs"}
