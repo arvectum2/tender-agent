@@ -15,7 +15,7 @@
 - [ ] **APR-04 — Customer Onboarding (PR #252 merged, bounded code integration; owner business acceptance still open).** На базе ARV-015 + ARV-064: реквизиты, документы, лицензии/SRO, регионы, категории, НМЦК, маржа/риски и reusable evidence в одном onboarding flow.
 - [ ] **APR-05 — Paid Pilot & SaaS Foundation (PR #253 MERGED; bounded code accepted, public payment/offer and owner commercial GO NOT authorized).** Объединяет ARV-041/043/054/068/038/039/040: tenant/roles/isolation, entitlement/usage, pricing/package, legal HUMAN gate, product-first acquisition/metrics.
 - [ ] **APR-06 — Commercial Acceptance Gate (PR #254 source-evidence framework under integration review; human-gold 0/28 and owner thresholds BLOCKED).** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.
-- [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation (PR #255 bounded offline snapshot under integration review; human gold and rolling SLO BLOCKED).** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
+- [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation (PR #255 открыт, не слит).** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
 
 ### P1/P2 — после P0 или при подтверждённом спросе
 

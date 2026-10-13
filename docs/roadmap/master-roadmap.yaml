@@ -259,11 +259,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Frozen acceptance report demonstrates agreed thresholds and records every confirmed failure as a regression.'
     - id: APR-07-QUALITY-MODEL-EVAL
       priority: P0
-      state: continuous_snapshot_pr_review_human_gold_blocked
-      bounded_apr07_quality_snapshot: technically_validated_2026_10_09
-      frozen_procurement_gold: not_available
-      data_platform_model_downloads: owned_by_separate_data_platform_workflow_not_tender_agent
-      prospective_production_slo_gate: not_yet_measured
+      state: continuous_pr_open_not_merged
       legacy_mapping: [ARV-010, ARV-039, ARV-067, ARV-072]
       outcome: 'Product SLO/quality dashboard plus Russian procurement benchmark for LLM/VLM/OCR/embeddings and vertical extraction.'
       why_now: 'Prevents cosmetic model churn and makes quality decisions evidence-based.'
