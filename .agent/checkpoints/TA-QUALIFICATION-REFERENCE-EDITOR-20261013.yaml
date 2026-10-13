@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-REFERENCE-EDITOR-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Build secure first-party SaaS UX for reviewing and versioning owner-attested completed contract reference list, without silently treating missing as zero or leaking across tenants.
+definition_of_done:
+  - Show current owner reference snapshot and version in SaaS with UNKNOWN clearly distinct from confirmed zero.
+  - Allow owner/admin to append a new immutable version, including signed-act document references, chatbot scope, law and subject; don't edit older version.
+  - Apply explicit owner confirmation for COMPLETE and prevent accidental empty/partial conflation; preserve client role boundary.
+  - Prevent accidental lost updates from concurrent editors with expected version check.
+  - Validate semantics through FastAPI tests and client JS syntax, Ruff and exact GitHub PR CI.
+  - Preserve SaaS disabled by default, no production customer writes and no ETP/bids/merges/watchdog.
+completed:
+  - PR409 exact head 4c0fdeb full PR and two push workflows SUCCESS, source-run orchestration checkpoint marked COMPLETED.
+current: Inspect reference API and SaaS frontend, implement UI and version-conflict guard.
+pending:
+  - Add optimistic concurrency and API coverage.
+  - Build safe editable SaaS reference-list UI and tests.
+  - Local focused regression + Ruff + JS and GitHub exact-head CI; complete child only when green.
+last_verified_commit: 'New stacked branch from PR409, no new code'
+test_results: []
+resume_instruction: 'Continue feature/qualification-reference-editor-20261013. PR409 source-run flow and PR407 versioned reference facts implemented. No new production writes or SaaS enablement. Implement owner/admin opt-in UI to read, version and update references with unsigned/future partial states explicit, contract source refs for every completed contract, and expected_version optimistic concurrency; tenant identity comes only from bearer. Run tests and CI; do not open legacy internal API to public. No signed evidence/human gold from self assertion.'
