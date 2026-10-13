@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: APR06-OWNER-REVIEW-PACKET-20261013
+status: in_progress
+goal: Prepare a safe, private, actionable human evaluation queue for APR-06 without fabricating expert results.
+definition_of_done:
+  - Build read-only private HTML from 28 candidate registry numbers and 9 available machine prefill cases.
+  - Never invent reviewer, EIS current revision or document SHA; expose 0 verified human decisions.
+  - Verify local-only protected report navigation and HTML injection handling.
+  - Generate private Mac mini queue with permissions 0600, do not commit sensitive user observations to GitHub.
+  - Pass focused and full regression, static checks, and publish reviewable code PR on APR-06.
+completed:
+  - Generator scripts/acceptance/apr06_review_packet.py implemented in isolated feature branch based on APR06 4d0e96c8.
+  - Private offline HTML generated at /Users/master/arvectum-runtime/private-operator-acceptance/apr06-review-queue-20261013.html.
+  - Generated inventory 28 candidates, 9 machine report links, 20 source-incomplete cases and 0 human decisions.
+  - 14 focused pytest PASS with XSS, local base URL, unsafe run ID, duplicate candidate, read-only output/overwrite prevention.
+  - Full PostgreSQL16/Docker regression 4028 PASS, 238 SKIP, 0 FAIL in 183.69 seconds.
+  - Ruff and make check PASS.
+  - macOS Safari open request sent, not an independent visual approval.
+current: Source changes checked locally and private reviewer queue available; awaiting GitHub PR and exact-head CI.
+pending:
+  - Commit reviewed branch without generated private HTML.
+  - Publish exact branch/tree to GitHub and create a PR based on feature/apr06-commercial-acceptance.
+  - Verify exact-head GitHub CI.
+  - Human owner/experts must later review actual EIS primary documents and establish 20-30 attributable human results, approve APR06 thresholds. This is NOT an engineering completion condition of this packet.
+last_verified_commit: 'Parent APR06 4d0e96c8; new implementation not yet committed.'
+test_results:
+  - '14/14 focused pass, full 4028 pass/238 skip, Ruff pass, make check pass.'
+resume_instruction: 'Mac mini worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-apr06-review-packet-20261013, branch feature/apr06-owner-review-packet-20261013, based on APR06 draft 4d0e96c8. Source helper/scripts and 14 test cases + local read-only private HTML (not in Git). Full 4028 PASS/238 SKIP, Ruff/make check PASS. Git commit and publish exact Git tree via Github object API if Mini SSH write denied, create draft PR against feature/apr06-commercial-acceptance, await CI. Mark this subtask completed when CI green. Do NOT declare APR06 commercial acceptance or set human data, enable bids/payments/VPS/model promotions/watchdog.'
