@@ -37,7 +37,7 @@ class _HtmlResponse:
             '<html><body><span class="section__title">Дата и время окончания срока '
             'подачи заявок</span><span class="section__info">23.10.2026 10:00</span>'
             '<p>Подача заявок, 0348100024426000039</p></body></html>'
-        ).encode("utf-8")
+        ).encode()
 
 
 class _Opener:
