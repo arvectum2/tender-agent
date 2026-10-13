@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-REAL-RUN-REPLAY-20261013
+status: in_progress
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Verify end-to-end authenticated-run qualification service with private real original 44-FZ 1C EIS v2 SOAP ZIP + original PDF, without creating a production tenant, then harden source/original dispatch if evidence needs it.
+definition_of_done:
+  - Read only the confirmed private Mac mini original SOAP ZIP and EIS original PDF for 0173300009226000009; compare SHA/UID/version/deadline to committed receipt.
+  - Build temporary isolated run metadata fixture from actual EIS source receipts and invoke official integrated report qualification service with no tenant writes or external requests.
+  - Confirm 60/40 within qualification contracts5/specialists95 and commercial NOT_ASSESSED, no false NO_GO.
+  - Add independent reproducible regression harness/tests and source evidence documentation; run local focused tests and GitHub CI if code changed.
+  - Keep all PRs draft/unmerged, no SaaS production or ETP/bids/signing/payments.
+completed:
+  - PR414 source-bound DOCX/PDF report routing exact source head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 had PR38445274161 and push38445262922/38445262896 full GitHub CI SUCCESS, child checkpoint completed.
+current: Read private original files and prove integrated qualification report outcome via temporary read-only cloned run.
+pending:
+  - Local real-original report end-to-end replay and negative tampering.
+  - Reproducible audit script without distributing copyrighted originals, focused regression tests.
+  - PR and exact full CI if code changes; final checkpoint and canonical main sync.
+last_verified_commit: 'New branch from completed PR414; no new integrated real replay yet.'
+test_results: []
+resume_instruction: 'Continue research/qualification-real-run-replay-20261013. Source originals on authorized Mac mini: /Volumes/ArvectumSSD/Arvectum/runtime/ta-scoring-alt-44-eok-20261013/0173300009226000009/documentation-archive.zip SHA 655a3014a9fac9df2228332a562e05c2e050afcac62a0a7ad2ab3d235f366a91, evaluation PDF in evaluation/*.pdf SHA 6b0eca7991118be9d0f6d8d213f8fb37d2b263c7d0e5aea1477e58e79692aa0f. Original v2 XML SHA c6805b5f2618938c677a7754abe0cba0a8b1b446c0830ad8c47fc3dd2bead86, UID 01A0F69F0B337A1996519D98C9AA2046; source code source-bound integrated report on parent PR414. Use temp dir and monkeypatch local metadata hooks only; no DB writes/production SaaS/ETP and never mark human-gold true. Expect source-backed 60/40/5/95 commercial NOT_ASSESSED. Preserve execution.manual_override true and watchdog disabled.'
