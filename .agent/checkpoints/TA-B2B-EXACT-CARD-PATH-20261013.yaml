@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-EXACT-CARD-PATH-20261013
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Prevent catalog or homepage URLs from being classified as individual official-source B2B procurement candidates.
 definition_of_done:
   - Limit original-card URL patterns to individual Workspace and B2B-Center notice pages.
@@ -13,15 +13,14 @@ completed:
   - 'Added fullmatch original card shapes: Workspace slug-ID and B2B-Center slug/tender-ID; domain or prefix alone no longer sufficient. URL shape is not proof of source originality.'
   - 'Added 10 regression cases for catalog rejection/valid card URLs; existing source and deadline safeguards retained.'
   - '2026-10-13 Mac mini isolated worktree tested code head efc461958cbf3604b62551a1879e02a8d60325e1: 43 pytest PASS, 1 pre-existing Starlette/httpx deprecation warning; Ruff PASS; git diff --check PASS.'
-current: Local implementation verified; create stacked PR and inspect exact-head CI.
-pending:
-  - Check exact-head GitHub PR and push CI, correct failures if present.
-  - On green completion close checkpoint and preserve owner/production/ETP gates.
-last_verified_commit: 'efc461958cbf3604b62551a1879e02a8d60325e1 local 43 pytest PASS, Ruff PASS.'
+current: 'COMPLETED: PR419 head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f GitHub PR38462374923/push38462366947/push38462366807 all SUCCESS, draft remains unmerged. Mac mini 43 pytest PASS/Ruff PASS; preserves no-bid, no-prod.'
+pending: []
+last_verified_commit: 'e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f — exact PR419 GitHub CI 3/3 SUCCESS; code source efc461958cbf3604b62551a1879e02a8d60325e1 43 pytest PASS, Ruff PASS.'
 test_results:
+  - 'PR419 exact head GitHub PR38462374923/push38462366947/push38462366807 all COMPLETED SUCCESS.'
   - '43 passed, 0 failed, 1 unrelated third-party deprecation warning.'
   - 'Ruff 4 focused files PASS, git diff --check PASS.'
-resume_instruction: Open draft PR stacked on PR418 (research/b2b-sber-zvuk-20261013) and verify exact-head GitHub CI. PR418 and other inherited PRs remain draft; no merge, ETP, payments, production or watchdog.
+resume_instruction: 'Child completed, no repeat testing. Continue parent TA-ROADMAP-EXEC-20261012 from first not-accepted APR or source-qualified B2B opportunity. PR418 and PR419 remain stacked drafts; no merge, submission, signatures, payments, buyer contact, SaaS activation or watchdog.'
 execution:
   branch: fix/b2b-exact-original-card-path-20261013
   manual_override: true
