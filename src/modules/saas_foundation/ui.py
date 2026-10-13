@@ -45,6 +45,24 @@ button:disabled{opacity:.45;cursor:default}pre{padding:17px;background:#081a2a;b
 <label>Лицензии через запятую<input id="licenses"></label>
 <label>Допуски СРО через запятую<input id="sro"></label></div>
 <button id="read-profile">Показать профиль</button><button id="save-profile">Сохранить новую версию</button></section>
+<section><h2>3a. Референс-лист исполненных контрактов</h2>
+<p>Версии не удаляются: новая запись замещает предыдущую для будущей оценки. Отсутствие списка — UNKNOWN, а не ноль контрактов. Указывайте только фактически исполненные договоры и ссылки на подписанные акты.</p>
+<p id="reference-state" role="status">Список пока не загружен</p>
+<button id="load-references">Загрузить мой референс-лист</button>
+<div class="grid">
+<label>Дата подтверждения владельцем<input id="references-as-of" type="date"></label>
+<label>Полнота сведений<select id="references-completeness">
+<option value="PARTIAL">Частичный список — NO GO запрещён</option>
+<option value="COMPLETE">Полный список — отсутствие контрактов подтверждаю</option>
+</select></label>
+<label>Основание новой версии<input id="references-source" maxlength="512" placeholder="OWNER_ATTESTATION_2026-10-13"></label>
+</div>
+<label><input type="checkbox" id="references-confirm" style="width:auto"> Подтверждаю полноту данных о выполненных контрактах своей компании. Это заявление владельца, не юридическая проверка документов.</label>
+<div id="references-contracts" aria-live="polite"></div>
+<button id="references-add">Добавить договор</button>
+<button id="references-save">Сохранить новую версию</button>
+<p>Для зачёта договора обязательны номер, закон, предмет, флаг чат-бота, дата подписания последнего акта и ссылки на договор и итоговый акт. Результат конкурентный, не юридический.</p>
+</section>
 <section><h2>4. Документы и анализ закупок</h2>
 <div class="grid"><label>Ключ документа<input id="doc-key" placeholder="license_2026"></label>
 <label>Тип документа<select id="doc-type"><option>LICENSE</option><option>STATUTORY</option><option>CERTIFICATE</option><option>EXPERIENCE</option><option>REQUISITES</option><option>TEMPLATE</option></select></label>
@@ -129,6 +147,109 @@ bind("accept",async()=>{
  if(!document.getElementById("legal-agree").checked)throw Error("Требуется явное ознакомление");
  const info=await call("/api/saas/legal");legalVersions=info;
  return call("/api/saas/legal/accept",{method:"POST",body:{terms_version:info.terms_version,privacy_version:info.privacy_version,confirm_read:true}});
+});
+let referenceVersion=null;
+function referenceField(holder,labelText,id,type,value,choices){
+ const label=document.createElement("label");
+ label.textContent=labelText;
+ let input;
+ if(choices){
+   input=document.createElement("select");
+   for(const [key,title] of choices){
+     const opt=document.createElement("option");opt.value=key;opt.textContent=title;
+     input.append(opt);
+   }
+ }else{
+   input=document.createElement("input");input.type=type;
+ }
+ input.dataset.refField=id;
+ if(type==="checkbox"){input.checked=Boolean(value);input.style.width="auto"}
+ else{input.value=value??""}
+ label.append(input);holder.append(label);
+ return input;
+}
+function addReferenceContract(values={}){
+ const group=document.createElement("fieldset");
+ group.style.cssText="border:1px solid #496477;border-radius:8px;padding:12px;margin-top:12px";
+ const legend=document.createElement("legend");legend.textContent="Договор";
+ group.append(legend);
+ const grid=document.createElement("div");grid.className="grid";group.append(grid);
+ referenceField(grid,"Закон","law","select",values.law??"44fz",[["44fz","44-ФЗ"],["223fz","223-ФЗ"]]);
+ referenceField(grid,"Номер договора","contract_number","text",values.contract_number);
+ referenceField(grid,"Предмет","subject","select",values.subject??"website",[
+   ["website","Сайт"],["web_portal","Веб-портал"],
+   ["information_system","Информационная система"],["module","Модуль"]]);
+ referenceField(grid,"Чат-бот входил в договор","chatbot_in_scope","checkbox",values.chatbot_in_scope);
+ referenceField(grid,"Договор полностью исполнен","completed","checkbox",values.completed);
+ referenceField(grid,"Дата последнего подписанного акта","acceptance_signed_at","date",values.acceptance_signed_at);
+ referenceField(grid,"Ссылка/ключ документа договора","contract_document_ref","text",values.contract_document_ref);
+ referenceField(grid,"Ссылка/ключ подписанного итогового акта","signed_final_act_ref","text",values.signed_final_act_ref);
+ const remove=document.createElement("button");remove.type="button";
+ remove.textContent="Удалить строку договора из новой версии";
+ remove.addEventListener("click",()=>group.remove());group.append(remove);
+ document.getElementById("references-contracts").append(group);
+}
+function getReferenceContracts(){
+ const fields=["law","contract_number","subject","chatbot_in_scope","completed",
+               "acceptance_signed_at","contract_document_ref","signed_final_act_ref"];
+ return [...document.getElementById("references-contracts").querySelectorAll("fieldset")].map(group=>{
+  const result={};
+  for(const field of fields){
+    const input=group.querySelector('[data-ref-field="'+field+'"]');
+    result[field]=input.type==="checkbox"?input.checked:(input.value||null);
+  }
+  return result;
+ });
+}
+function displayReferences(data){
+ referenceVersion=data.fact_version??0;
+ const snapshot=data.snapshot||{};
+ document.getElementById("references-state").textContent =
+   "Текущее состояние: "+(data.state||"UNKNOWN")+
+   "; версия "+referenceVersion+
+   "; договоров "+(snapshot.contracts?.length??"неизвестно")+
+   ". Без подтверждения владельца вывод UNKNOWN.";
+ document.getElementById("references-as-of").value=snapshot.as_of_date??"";
+ document.getElementById("references-completeness").value=snapshot.completeness??"PARTIAL";
+ document.getElementById("references-confirm").checked=Boolean(snapshot.owner_confirmed);
+ document.getElementById("references-source").value="";
+ document.getElementById("references-contracts").replaceChildren();
+ for(const contract of snapshot.contracts||[])addReferenceContract(contract);
+}
+bind("load-references",async()=>{
+ const result=await call("/api/saas/qualification/references");
+ displayReferences(result);return result;
+});
+bind("references-add",()=>{if(referenceVersion===null)throw Error("Сначала загрузите текущую версию");
+ addReferenceContract();return {draft_contracts:getReferenceContracts().length};
+});
+bind("references-save",async()=>{
+ if(referenceVersion===null)throw Error("Перед сохранением загрузите текущую версию");
+ const asOf=val("references-as-of");
+ const completeness=val("references-completeness");
+ const ownerConfirmed=document.getElementById("references-confirm").checked;
+ const contracts=getReferenceContracts();
+ const sourceRef=val("references-source");
+ if(!asOf||!sourceRef)throw Error("Укажите дату подтверждения и основание новой версии");
+ if(completeness==="COMPLETE"&&!ownerConfirmed)throw Error("Для полного списка необходимо подтверждение владельца");
+ if(completeness==="COMPLETE"&&contracts.length===0&&!ownerConfirmed)
+   throw Error("Нулевой список может подтвердить только владелец");
+ for(const contract of contracts){
+   if(!contract.contract_number)throw Error("У каждого договора должен быть номер");
+   if(contract.completed&&(!contract.acceptance_signed_at||
+       !contract.contract_document_ref||!contract.signed_final_act_ref))
+     throw Error("Для завершённого договора нужны дата, договор и подписанный итоговый акт");
+ }
+ const payload={
+   expected_version:referenceVersion,
+   source_ref:sourceRef,
+   snapshot:{schema_version:"completed-contract-references-v1",
+     as_of_date:asOf,completeness,owner_confirmed:ownerConfirmed,contracts}
+ };
+ const saved=await call("/api/saas/qualification/references",{method:"POST",body:payload});
+ const refreshed=await call("/api/saas/qualification/references");
+ displayReferences(refreshed);
+ return {saved_version:saved.fact_version,current_snapshot:refreshed};
 });
 bind("read-profile",async()=>{
  const r=await call("/api/saas/profile"),p=r.profile||{},c=p.criteria||{},q=p.qualification||{},m=p.commercial||{};
