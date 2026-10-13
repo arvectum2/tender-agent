@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-FRESH-SOURCE-GATE-20261013
-status: in_progress
+status: completed
 parent_task_id: TA-ROADMAP-EXEC-20261012
 goal: Extend lawful read-only B2B corporate IT discovery with newly published original Workspace and strict aggregator deadline-disagreement exclusions, without fake currently-open/qualified opportunities.
 definition_of_done:
@@ -11,6 +11,7 @@ definition_of_done:
   - Produce dated evidence matrix, dedup against B2B existing nine historical cards, source URLs and status confidence.
   - Validate report/guard tests and exact GitHub PR CI where applicable; update checkpoint completed or blocked with remaining 15-20 source-verified target.
 completed:
+  - 'PR417 exact source head 476aaa24f46238d2a9c990492e1077a138aecbc2: pull_request38455956035 + pushes38455950242/38455950124 3/3 GitHub workflows SUCCESS. Research child completed; B2B 15-20 currently qualified source gate remains OPEN.'
   - Newly published Workspace #19023 source DIRECT verified 13.10.2026T22:30:24+03 on authorized Mac mini using HTTPS no system proxy, HTTP200, 61868-byte HTML SHA256 c94e9d7b70fdb21e0a2633f05e765e9050f02224a1da2a6eaaeed930ba4bb038.
   - Original platform HTML confirms Идет прием заявок, organizer legal entity, date-only deadline Oct20, budget 100-400k RUB; explicit prior Bitrix/Aspro frontend implementation examples required, no verified Arvectum matching reference, FIT_CONDITIONAL/PUBLIC_CANDIDATE_ONLY, not BID_READY.
   - Previous source-attested historical pool 10 different cards incl PR399; one new distinct direct card now 11 historical, explicitly NOT 11 currently eligible/active; original 15-20 current qualified target remains open.
@@ -20,14 +21,13 @@ completed:
   - Draft PR417 opened stacked on research PR399, no paid ETP, registration, buyer contact, bids, production or watcher actions.
   - PR416 original-EIS SaaS HTTP bearer role/source test exact source fc24201c GitHub three workflows SUCCESS, child checkpoint completed.
   - Source report PR399 existing historical 9 corporate IT/digital public-card evidence but not 9 currently active, and original-status-first gate for Workspace #19004.
-current: Draft PR417 on PR399 original-source B2B fresh addendum, docs source head 18e377122beb64c355ef37d9e289191ffaae09e7, 29 focused Mac mini pytest PASS and Ruff PASS; exact GitHub CI pending. B2B target 15-20 CURRENT source-grounded qualified leads remains OPEN.
-pending:
-  - Check PR417 exact current source head pull_request and push GitHub CI, repair actual failures; mark research child completed once source/docs green.
-  - More official primary cards and current live source verifications (incl INK platform-original revision or cancellation) are needed before the 15-20 B2B opportunity gate can close.
-last_verified_commit: 'PR417 source docs head 18e377122beb64c355ef37d9e289191ffaae09e7. Mac mini tests/data head f81358c3a32ff7ad24afd362fd6156fcf2dd0bec with 29 pytest PASS, Ruff PASS, original Workspace direct no-proxy HTML SHA c94e9d7.../HTTP200; GitHub full CI pending.'
+current: PR417 bounded public B2B source verification COMPLETED, original source 476aaa24f46238d2a9c990492e1077a138aecbc2 three exact GitHub CI workflows SUCCESS. 11 distinct historical source-attested cards, not necessarily currently qualified.
+pending: []
+last_verified_commit: 'PR417 exact source 476aaa24f46238d2a9c990492e1077a138aecbc2 GitHub pull_request38455956035, push38455950242, push38455950124 completed SUCCESS; Mac mini targeted 29 PASS, Ruff PASS, original Workspace #19023 direct no-proxy 200 and saved SHA verified.'
 test_results:
+  - 'PR417 exact GitHub source 476aaa24f46238d2a9c990492e1077a138aecbc2 three workflows PR38455956035/push38455950242/push38455950124 all completed SUCCESS.'
   - 'Original Workspace #19023 no-proxy Mac mini 2026-10-13 22:30:24 MSK 200, 61,868 bytes HTML SHA256 c94e9d7b70fdb21e0a2633f05e765e9050f02224a1da2a6eaaeed930ba4bb038; legal organizer/open public status/future date, no authenticated eligibility.'
   - '29 pytest PASS / Ruff PASS on Mac mini head f81358c including original-host-only lead triage and secondary conflicting-deadline refusal; source JSON valid and diff clean.'
   - 'GitHub PR417 exact source head 18e3771 full PR/push CI pending.'
 
-resume_instruction: 'Current bounded B2B source research child TA-B2B-FRESH-SOURCE-GATE-20261013 branch research/b2b-fresh-source-gate-20261013, draft stacked PR417 base PR399 head 18e377122beb64c355ef37d9e289191ffaae09e7. Direct original Workspace #19023 checked Oct13 22:30:24 MSK HTTP 200 via no-proxy Mac mini with SHA256 c94e9d7... original shows legal organizer, open public status, Oct20 date-only deadline, 100-400k RUB budget and requires actual prior Bitrix/Aspro portfolio unavailable for Arvectum; conditional source-only lead, never bid_ready. Conflicting intermediary INK SZ-356-26 Oct7/14 and SZ-371-26 Oct14/21, absent original revision -> REVIEW_REQUIRED; Fabrikant3502252 only monitoring prices. Historical pool 10 PR399 +1 new =11 distinct documented, NOT 11 active or eligible; target 15-20 CURRENT qualified remains OPEN. Mac mini code head f81358c 29 pytest PASS/Ruff/json/diff PASS. Check PR417 exact GitHub PR/push CI then mark child completed; do not claim owner acceptance or bid. Preserve main execution.manual_override true/watchdog disabled, no ETP/paid API/signatures/payments/bids or production.'
+resume_instruction: 'TA-B2B-FRESH-SOURCE-GATE-20261013 COMPLETED, exact source PR417 head 476aaa24f46238d2a9c990492e1077a138aecbc2 GitHub PR/push 3/3 SUCCESS, 29 focused local PASS/Ruff PASS. B2B target 15-20 CURRENT verified qualified legal-entity IT opportunities still OPEN; original Workspace #19023 is only PUBLIC_CANDIDATE_ONLY due unverified Bitrix/Aspro portfolio. Do not repeat old audit; continue via separate bounded original-source read-only task if queue/Owner directive admits. Preserve direct no-proxy Russian IP source, distinguish platform-original vs secondary, avoid date-only open-now assumptions, no customer outreach, registration, paid ETP, actual bid, production, merging or watchdog. Keep main manual_override true.'
