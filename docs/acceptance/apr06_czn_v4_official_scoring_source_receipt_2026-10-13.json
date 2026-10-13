@@ -1,0 +1,10 @@
+{
+  "schema_version": "eis-original-scoring-receipt-v1",
+  "procurement_number": "0348100024426000039",
+  "procurement_law": "44fz",
+  "notice_version": 4,
+  "original_soap_archive_sha256": "dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908",
+  "original_notice_xml_sha256": "bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c",
+  "scoring_document_uid": "01A0F10655C27A35B5A5A70090D2BB1A",
+  "scoring_document_sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8"
+}
