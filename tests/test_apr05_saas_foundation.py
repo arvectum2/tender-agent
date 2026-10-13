@@ -653,3 +653,90 @@ def test_saas_viewer_report_does_not_expose_private_reference_list(client, monke
     assert report.status_code == 200, report.text
     assert report.json()["qualification"]["source_status"] == "REFERENCE_ACCESS_RESTRICTED"
     assert "qualifying_contracts" not in report.json()["qualification"]
+
+
+def test_owner_reference_list_optimistic_version_and_explicit_zero(client):
+    """Missing != complete zero, stale edit is 409; previous version remains immutable."""
+    tenant, owner = _seed(client, "ООО Версионированные референсы")
+    _legal(client, owner)
+    endpoint = "/api/saas/qualification/references"
+    unseen = client.get(endpoint, headers=_auth(owner))
+    assert unseen.status_code == 200
+    assert unseen.json()["state"] == "UNKNOWN"
+    assert unseen.json()["fact_version"] is None
+
+    snapshot = {
+        "schema_version": "completed-contract-references-v1",
+        "as_of_date": "2026-10-13",
+        "completeness": "PARTIAL",
+        "owner_confirmed": False,
+        "contracts": [],
+    }
+    payload = {
+        "source_ref": "OWNER_DRAFT_ZERO_NOT_CONFIRMED",
+        "snapshot": snapshot,
+        "expected_version": 0,
+    }
+    incomplete = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert incomplete.status_code == 201, incomplete.text
+    assert incomplete.json()["fact_version"] == 1
+
+    payload["snapshot"] = {
+        **snapshot, "completeness": "COMPLETE", "owner_confirmed": True,
+    }
+    payload["source_ref"] = "OWNER_CONFIRMED_ZERO_2026-10-13"
+    stale = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert stale.status_code == 409, stale.text
+    assert client.get(endpoint, headers=_auth(owner)).json()["snapshot"]["completeness"] == "PARTIAL"
+
+    payload["expected_version"] = 1
+    second = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert second.status_code == 201, second.text
+    assert second.json()["fact_version"] == 2
+    current = client.get(endpoint, headers=_auth(owner))
+    assert current.json()["fact_version"] == 2
+    assert current.json()["snapshot"]["completeness"] == "COMPLETE"
+    assert current.json()["snapshot"]["contracts"] == []
+
+    # An out-of-date browser cannot change an owner-confirmed current list.
+    again = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert again.status_code == 409
+    invalid = client.post(endpoint, headers=_auth(owner), json={
+        "source_ref": "IMPROPER_UNCONFIRMED_ZERO",
+        "expected_version": 2,
+        "snapshot": {**snapshot, "completeness": "COMPLETE", "owner_confirmed": False},
+    })
+    assert invalid.status_code == 422
+    assert client.get(endpoint, headers=_auth(owner)).json()["fact_version"] == 2
+
+
+def test_completed_contract_entry_requires_signed_act_and_document_refs(client):
+    _tenant, owner = _seed(client, "ООО Верификация актов")
+    _legal(client, owner)
+    ep = "/api/saas/qualification/references"
+    base = {
+        "source_ref": "OWNER_COMPLETED_CONTRACTS",
+        "expected_version": 0,
+        "snapshot": {
+            "schema_version": "completed-contract-references-v1",
+            "as_of_date": "2026-10-13",
+            "completeness": "COMPLETE",
+            "owner_confirmed": True,
+            "contracts": [{
+                "law": "44fz", "contract_number": "КТ-001", "subject": "website",
+                "chatbot_in_scope": True, "completed": True,
+                "acceptance_signed_at": "2026-08-01",
+                "contract_document_ref": "COMPANY_DOC_CONTRACT_KT001",
+                "signed_final_act_ref": "COMPANY_DOC_FINAL_ACT_KT001",
+            }],
+        },
+    }
+    good = client.post(ep, headers=_auth(owner), json=base)
+    assert good.status_code == 201, good.text
+    assert client.get(ep, headers=_auth(owner)).json()["snapshot"]["contracts"][0]["completed"]
+    # A contract marked complete cannot be saved without the signed final act.
+    base["expected_version"] = 1
+    base["snapshot"]["contracts"][0]["signed_final_act_ref"] = None
+    bad = client.post(ep, headers=_auth(owner), json=base)
+    assert bad.status_code == 422
+    assert client.get(ep, headers=_auth(owner)).json()["fact_version"] == 1
