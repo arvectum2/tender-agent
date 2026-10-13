@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-AI-PROVISIONAL-20261013
+status: in_progress
+parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+goal: Provide a new as-of-date AI-only 28-candidate risk and source-integrity screen without counterfeit human truth.
+definition_of_done:
+  - Reassess all 28 case IDs against existing documented 9-case primary-source AI audit and 19 unverified entries as of 13 Oct 2026.
+  - Do not fabricate new official EIS hashes, notice revisions, attachments, commercial GO, verified human reviews or score thresholds.
+  - Preserve last archived notice deadlines as retrospective evidence and distinguish current-date relevance from live-EIS status.
+  - Add reusable deterministic offline reviewer, 28-case dated artifact, explicit limitations, negative regressions and exact-head CI evidence.
+  - Submit isolated review-ready PR on APR06 draft branch; no public deployment, procurement activity or commercial acceptance.
+completed:
+  - Read canonical main checkpoint, APR06 draft scope, prior nine-case AI audit and 28-candidate manifest.
+  - Confirmed original nine-case AI audit already fixed Aksay and CZN stale notice revisions; do not repeat source corrections or relabel them as human approval.
+  - Confirmed Mac mini RDC offline; original private attachments not currently independently accessible, so new work is source-limited retrospective screening.
+current: Build isolated read-only AI screening artifact and tests on an APR06 child branch.
+pending:
+  - Implement and run targeted tests and generate immutable dated 28-case output.
+  - Verify PR exact-head CI and finalize checkpoint with truthful remaining human/legal gates.
+last_verified_commit: 'APR06 draft head pending recheck'
+test_results: []
+resume_instruction: 'Read this checkpoint and branch PR. Preserve 9 historical source-reviewed versus 19 aggregator-only distinction; NEVER write APR06 observation human reviewer fields, approval, or frozen benchmark truth. Finish code, exact-head tests and review PR. Keep parent APR06 blocked on 20-30 independently verified official EIS sources, real expert human review and Owner thresholds.'
