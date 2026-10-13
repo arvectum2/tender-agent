@@ -94,6 +94,17 @@ def test_non_original_or_catalog_urls_do_not_count(url):
     assert x.state == "REVIEW_REQUIRED" and x.unique_procedure_key is None
 
 
+def test_unrelated_sidebar_lot_reference_cannot_override_main_heading():
+    x = checked(
+        LOT_URL,
+        "<h1>Объявление о консультационных услугах № 4632699</h1>"
+        "<aside>Рекомендуем: Лот № 1 Предварительного квалификационного отбора № 4632682</aside>",
+    )
+    assert (x.state, x.reason, x.unique_procedure_key) == (
+        "REVIEW_REQUIRED", "procedure_identity_unverified", None,
+    )
+
+
 def test_source_sha_mismatch_abstains_even_with_matching_lot_reference():
     x = checked(
         LOT_URL,
