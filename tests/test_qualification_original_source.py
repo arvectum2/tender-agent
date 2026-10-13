@@ -192,6 +192,11 @@ def test_original_eis_attachment_untrusted_url_rejected():
     )
     archive = _zip({"epNotificationEOK2020_4.xml": original})
     _, _, receipt = _evidence(doc=doc, source_archive=archive)
+    # Even when the receipt separately attests the mutant XML digest, the
+    # official attachment host must remain allowed.
+    receipt = receipt.model_copy(update={
+        "original_notice_xml_sha256": hashlib.sha256(original).hexdigest(),
+    })
     with pytest.raises(ValueError, match="HTTPS source URL"):
         _extract(archive, doc, receipt)
 
