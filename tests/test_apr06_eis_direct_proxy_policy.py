@@ -19,8 +19,9 @@ def test_official_eis_direct_opener_ignores_environment_proxy(monkeypatch):
     )
 
     proxy_handlers = [x for x in opener.handlers if isinstance(x, ProxyHandler)]
-    assert len(proxy_handlers) == 1
-    assert proxy_handlers[0].proxies == {}
+    # An empty ProxyHandler registers no protocol methods in urllib's opener.
+    # Its explicit construction suppresses urllib's environment-based default.
+    assert proxy_handlers == []
 
 
 def test_eis_no_redirect_opener_has_no_proxy_handlers_from_environment(monkeypatch):
