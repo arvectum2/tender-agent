@@ -537,3 +537,115 @@ def test_saas_qualification_viewer_cannot_write_reference_list(client):
     assert result.status_code == 403
     denied = client.get("/api/saas/qualification/references", headers=_auth(viewer))
     assert denied.status_code == 403
+
+
+def test_saas_auto_qualification_only_for_owned_run_without_request_scores(
+    client, monkeypatch,
+):
+    from src.modules.saas_foundation import router as saas
+    from types import SimpleNamespace
+
+    tenant_a, token_a = _seed(client, "ООО Авторизованный EIS")
+    _, token_b = _seed(client, "ООО Другая компания")
+    _legal(client, token_a)
+    _legal(client, token_b)
+    upload = client.post(
+        "/api/saas/runs",
+        headers=_auth(token_a),
+        data={
+            "tender_title": "Тестовый конкурc",
+            "procurement_customer_name": "Публичный заказчик",
+        },
+        files=[("files", ("contract.txt", b"test tender reference", "text/plain"))],
+    )
+    assert upload.status_code == 201, upload.text
+    run_id = upload.json()["run_id"]
+    observed = []
+
+    def fake_qualification(session, *, run_id, customer_id, as_of):
+        observed.append((run_id, customer_id))
+        return {
+            "source_status": "ORIGINAL_EIS_TRANSPORT_CORRELATED_SIGNATURE_NOT_VERIFIED",
+            "competitive_recommendation": "NO_GO",
+            "qualifying_contracts": 0,
+            "external_action_allowed": False,
+        }
+
+    monkeypatch.setattr(saas, "assess_owned_run_qualification", fake_qualification)
+    path = f"/api/saas/runs/{run_id}/qualification"
+    no_auth = client.get(path)
+    assert no_auth.status_code == 401
+    other_tenant = client.get(path, headers=_auth(token_b))
+    assert other_tenant.status_code in (403, 404)
+    assert not observed
+    owned = client.get(path, headers=_auth(token_a))
+    assert owned.status_code == 200, owned.text
+    assert owned.json()["competitive_recommendation"] == "NO_GO"
+    assert observed == [(run_id, tenant_a["customer_id"])]
+
+    monkeypatch.setattr(
+        saas, "get_uploaded_demo_report",
+        lambda _: SimpleNamespace(
+            run_id=run_id, report_title="Тендер", recommendation="NEEDS_REVIEW",
+            manual_checks=["Проверить ТЗ"], executive_summary="Обзор",
+            sections=[],
+        ),
+    )
+    report = client.get(f"/api/saas/runs/{run_id}/report", headers=_auth(token_a))
+    assert report.status_code == 200, report.text
+    assert report.json()["qualification"]["competitive_recommendation"] == "NO_GO"
+    assert report.json()["recommendation"] == "NEEDS_REVIEW"
+    assert report.json()["external_action_allowed"] is False
+    foreign = client.get(f"/api/saas/runs/{run_id}/report", headers=_auth(token_b))
+    assert foreign.status_code in (403, 404)
+    assert len(observed) == 2
+
+
+def test_saas_viewer_report_does_not_expose_private_reference_list(client, monkeypatch):
+    from src.modules.saas_foundation import router as saas
+    from types import SimpleNamespace
+
+    tenant, owner = _seed(client, "ООО Приватность референсов")
+    _legal(client, owner)
+    upload = client.post(
+        "/api/saas/runs",
+        headers=_auth(owner),
+        data={"tender_title": "Аудит", "procurement_customer_name": "Заказчик"},
+        files=[("files", ("contract.txt", b"test contract", "text/plain"))],
+    )
+    assert upload.status_code == 201, upload.text
+    run_id = upload.json()["run_id"]
+    invitation = client.post(
+        "/api/saas/invitations", headers=_auth(owner),
+        json={"role": "viewer", "acquisition_channel": "referral"},
+    )
+    assert invitation.status_code == 201, invitation.text
+    viewer_token = client.post(
+        "/api/saas/invitations/redeem",
+        json={
+            "invitation_code": invitation.json()["invitation_code"],
+            "display_name": "Viewer",
+        },
+    ).json()["access_token"]
+    _legal(client, viewer_token)
+    monkeypatch.setattr(
+        saas, "assess_owned_run_qualification",
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("private reference list must not be loaded for viewer")
+        ),
+    )
+    monkeypatch.setattr(
+        saas, "get_uploaded_demo_report",
+        lambda _: SimpleNamespace(
+            run_id=run_id, report_title="Тендер", recommendation="NEEDS_REVIEW",
+            manual_checks=[], executive_summary="Описание", sections=[],
+        ),
+    )
+    assert client.get(
+        f"/api/saas/runs/{run_id}/qualification",
+        headers=_auth(viewer_token),
+    ).status_code == 403
+    report = client.get(f"/api/saas/runs/{run_id}/report", headers=_auth(viewer_token))
+    assert report.status_code == 200, report.text
+    assert report.json()["qualification"]["source_status"] == "REFERENCE_ACCESS_RESTRICTED"
+    assert "qualifying_contracts" not in report.json()["qualification"]
