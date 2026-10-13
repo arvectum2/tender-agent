@@ -81,8 +81,11 @@
       "qualification_weight_percent": 70,
       "qualifying_evidence": "исполненные договоры 44-ФЗ/223-ФЗ по разработке/модернизации сайтов или ИС с чат-ботом в составе; подписанный последний акт не ранее 5 лет",
       "qualification_basis": "количество исполненных договоров, единица штука",
-      "qualifying_contracts_user_confirmed": null,
-      "basis_document": "Порядок рассмотрения и оценки заявок, раздел II/III, показатель 4.1.1"
+      "qualifying_contracts_user_confirmed": 0,
+      "basis_document": "Порядок рассмотрения и оценки заявок, раздел II/III, показатель 4.1.1",
+      "user_reference_statement_as_of": "2026-10-13",
+      "user_reference_statement_source": "OWNER_USER_CHAT_STATEMENT_ZERO_COMPLETED_CONTRACTS",
+      "user_reference_independently_verified": false
     },
     "architecture": {
       "business_logic": "PHP",
@@ -138,9 +141,9 @@
     "scoping_risk": "HIGH_LEGACY_CUSTOM_PLATFORM_AND_CMS_MIGRATION",
     "schedule_risk": "HIGH_PARALLEL_DELIVERABLES_BY_DECEMBER",
     "cash_flow_risk": "HIGH_NO_ADVANCE_WITH_WARRANTY",
-    "recommendation": "DEFER_COMMERCIAL_GO_PENDING_QUALIFYING_REFERENCES_ACCESS_AND_COSTING",
+    "recommendation": "NO_GO_QUALIFICATION_COMPETITIVENESS",
     "requested_user_confirmation": [
-      "Does Arvectum have completed 44-FZ/223-FZ contracts explicitly including chatbot work with signed final acts during the prior 5 years?",
+      "Owner confirmed no completed contracts on 2026-10-13. Ask owner to update reference list when first eligible fully accepted 44/223 contract appears.",
       "Can a verified PHP/SQL/JavaScript implementation and Russian test environment be delivered within original fixed timeline?",
       "What actual stage-wise payments and security/guarantee amounts are specified in full operative contract notice and bank documentation?"
     ],
@@ -149,6 +152,7 @@
     "bid_submitted": false,
     "cost_estimate_rub": null,
     "legal_opinion_final": false,
-    "user_should_not_auto_bid": true
+    "user_should_not_auto_bid": true,
+    "competitive_no_go_owner_reference_zero": true
   }
 }
