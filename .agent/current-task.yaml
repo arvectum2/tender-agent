@@ -55,8 +55,10 @@ pending:
   - 'APR-06: exact-head PR+push CI green, draft awaiting attributable human reference evaluations on 20-30 verified cases, source revision checks, owner-approved thresholds before commercial acceptance/merge.'
   - 'APR-07: exact-head PR+push CI green on draft stacked PR255; bounded reproducible offline snapshot tested but rolling production SLO and human procurement model comparison NOT_MEASURED, no promotion.'
   - 'B2B discovery: nine historically source-attested corporate IT/digital cards, NOT nine presently open: Workspace19004 terminal despite future printed deadline, official Workspace PRO needed for self-initiated bids. Bounded status-first library PR392 merged, discovery source connectivity and 15-20 qualified original-platform leads still open; no purchases or ETP submissions.'
-last_verified_commit: 'APR06 guarded head c5c3d9bf3e8a2f367c5737fc86efdd8477e1c4f7, PR394/397 merged after exact green CI. Main test-only PR398 merged at 47fb8f024a64a5447cea30a0f062518291e92928 after CI green. APR07 stacked head e79ae87697a635f626f257809bf8b53647aec41d based APR06 c5c3d9bf, exact CI queued.'
+last_verified_commit: 'APR06 guarded head c5c3d9bf3e8a2f367c5737fc86efdd8477e1c4f7, PR394/397 merged after exact green CI. Main test-only PR398 merged at 47fb8f024a64a5447cea30a0f062518291e92928 after CI green. APR07 stacked head e79ae87697a635f626f257809bf8b53647aec41d based APR06 c5c3d9bf, exact-head push/PR CI SUCCESS; B2B original-source draft PR399 cb024f5e has local diff/sanity PASS, CI pending.'
 test_results:
+  - 'APR07 head e79ae876 exact-head push 38375419717 and PR 38375426038 GitHub CI COMPLETED SUCCESS; no expert/production acceptance inferred.'
+  - 'B2B original-source research PR399 cb024f5e: MacBook isolated clean clone, git diff --check PASS and report source-addendum assertions PASS; PR CI 38377724507 in_progress.'
   - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
   - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
   - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
