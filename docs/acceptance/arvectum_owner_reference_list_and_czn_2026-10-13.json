@@ -35,7 +35,8 @@
     ],
     "requires_chatbot": true,
     "lookback_years": 5,
-    "analysis_date": "2026-10-13"
+    "analysis_date": "2026-10-13",
+    "application_deadline_date": "2026-10-23"
   },
   "expected_no_go_qualification": "NO_GO_QUALIFICATION_COMPETITIVENESS",
   "legal_eligibility_remains": "NOT_ASSESSED",
