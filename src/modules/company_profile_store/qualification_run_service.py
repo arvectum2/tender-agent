@@ -79,24 +79,25 @@ def _current_notice_from_archive(archive_bytes: bytes, number: str):
     return max(versions), versions[max(versions)]
 
 
-def _archive_bytes(folder: Path) -> bytes:
-    candidates = []
-    for path in sorted(folder.glob("*.zip"))[:16]:
-        if path.is_symlink() or not path.is_file() or not path.resolve().is_relative_to(folder.resolve()):
-            continue
-        if path.stat().st_size > 16 * 1024 * 1024:
-            continue
-        raw = path.read_bytes()
-        try:
-            with _safe_zip(raw, xml_archive=True) as archive:
-                names = [m.filename for m in archive.infolist()]
-                if any("epNotification" in x for x in names):
-                    candidates.append(raw)
-        except (ValueError, OSError, EOFError, KeyError, zipfile.BadZipFile, ET.ParseError):
-            continue
-    if len(candidates) != 1:
-        raise ValueError("Unique saved original SOAP notice archive not found")
-    return candidates[0]
+def _archive_bytes(folder: Path, metadata: dict) -> bytes:
+    stored = metadata.get("archive_stored_name")
+    expected = metadata.get("original_getdocs_archive_sha256")
+    if (
+        not isinstance(stored, str)
+        or not isinstance(expected, str)
+        or not re.fullmatch(r"[a-f0-9]{64}", expected)
+    ):
+        raise ValueError("Missing download-time original EIS SOAP archive receipt")
+    archive = _regular_inside(folder, stored)
+    if archive.stat().st_size > 16 * 1024 * 1024:
+        raise ValueError("Official archive too large")
+    raw = archive.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise ValueError("Stored original SOAP archive changed after EIS download")
+    with _safe_zip(raw, xml_archive=True) as original:
+        if not any("epNotification" in member.filename for member in original.infolist()):
+            raise ValueError("Downloaded archive lacks official EIS notice")
+    return raw
 
 
 def discover_run_criterion(run_id: str, *, analysis_date: date):
@@ -116,7 +117,7 @@ def discover_run_criterion(run_id: str, *, analysis_date: date):
     ):
         raise ValueError("Run is not a completed trusted original EIS getDocsIP import")
     folder = get_demo_run_input_dir(run_id)
-    archive_bytes = _archive_bytes(folder)
+    archive_bytes = _archive_bytes(folder, metadata)
     version, (notice, original_xml_sha) = _current_notice_from_archive(archive_bytes, number)
     valid = []
     for item in metadata.get("files", []):
@@ -148,7 +149,12 @@ def discover_run_criterion(run_id: str, *, analysis_date: date):
         doc = _regular_inside(folder, relative)
         if doc.stat().st_size > _MAX_FILE or doc.stat().st_size != int(_first(matching[0], "fileSize") or "-1"):
             continue
+        expected_doc_sha = item.get("source_download_sha256")
+        if not isinstance(expected_doc_sha, str) or not re.fullmatch(r"[a-f0-9]{64}", expected_doc_sha):
+            continue  # old runs without intake-time receipt: do not promote
         doc_bytes = doc.read_bytes()
+        if hashlib.sha256(doc_bytes).hexdigest() != expected_doc_sha:
+            raise ValueError("Original scoring DOCX changed after EIS download")
         try:
             tables = _docx_rows(doc_bytes)
             _score_table(tables)
