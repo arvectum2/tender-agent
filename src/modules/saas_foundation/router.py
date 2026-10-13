@@ -8,7 +8,7 @@ from __future__ import annotations
 import base64
 import binascii
 import hmac
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Annotated, Literal
 
 from fastapi import (
@@ -25,6 +25,23 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 
+from src.modules.company_profile_store.qualification_decision import (
+    QualificationAwareDecisionRequest,
+    QualificationAwareDecisionResponse,
+    build_qualification_aware_decision,
+)
+from src.modules.company_profile_store.qualification_references import (
+    REFERENCE_FACT_KEY,
+    CompletedContractReferenceSnapshot,
+    QualificationAssessment,
+    QualificationCriterion,
+    assess_company_qualification,
+)
+from src.modules.company_profile_store.schemas import AppendCompanyProfileFactRequest
+from src.modules.company_profile_store.service import (
+    append_company_profile_fact,
+    get_company_profile_fact_history,
+)
 from src.modules.customer_onboarding.router import (
     OnboardingProfile,
     TenderScreenRequest,
@@ -539,6 +556,91 @@ def screen_run(run_id: str, principal: Member, session: DBSession) -> dict:
         session.rollback()
         refund(session, principal, "screens")
         raise
+
+
+class OwnerReferencesRequest(BaseModel):
+    snapshot: CompletedContractReferenceSnapshot
+    source_ref: str = Field(min_length=1, max_length=512)
+    expires_at: datetime | None = None
+
+
+@router.get("/api/saas/qualification/references")
+def saas_company_references(principal: Member, session: DBSession) -> dict:
+    """Current private reference-list version for bearer-authenticated owner tenant."""
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    from src.shared.errors import NotFoundError
+
+    try:
+        history = get_company_profile_fact_history(
+            session, customer_id=principal.customer_id, fact_key=REFERENCE_FACT_KEY,
+        )
+    except NotFoundError:
+        return {"state": "UNKNOWN", "fact_version": None, "snapshot": None}
+    record = history[-1]
+    return {
+        "state": "STORED",
+        "fact_version": record.version_no,
+        "source_type": record.source_type,
+        "source_ref": record.source_ref,
+        "expires_at": record.expires_at,
+        "snapshot": record.value_json,
+    }
+
+
+@router.post("/api/saas/qualification/references", status_code=201)
+def saas_record_company_references(
+    payload: OwnerReferencesRequest, principal: Member, session: DBSession,
+) -> dict:
+    """An authorized owner/admin appends a new immutable company fact version."""
+    role_required(principal, "owner", "admin")
+    legal_required(session, principal)
+    record = append_company_profile_fact(
+        session,
+        customer_id=principal.customer_id,
+        fact_key=REFERENCE_FACT_KEY,
+        payload=AppendCompanyProfileFactRequest(
+            fact_group="EXPERIENCE",
+            value=payload.snapshot.model_dump(mode="json"),
+            source_type="CUSTOMER_PROVIDED",
+            source_ref=payload.source_ref,
+            expires_at=payload.expires_at,
+        ),
+    )
+    return {
+        "customer_id": principal.customer_id,
+        "fact_version": record.version_no,
+        "fact_id": record.id,
+        "source_type": record.source_type,
+        "human_gold": False,
+        "external_action_allowed": False,
+    }
+
+
+@router.post("/api/saas/qualification/assess", response_model=QualificationAssessment)
+def saas_qualify_company(
+    payload: QualificationCriterion, principal: Member, session: DBSession,
+) -> QualificationAssessment:
+    """Tenant identity comes only from authenticated Bearer principal."""
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    return assess_company_qualification(
+        session, customer_id=principal.customer_id, criterion=payload,
+    )
+
+
+@router.post(
+    "/api/saas/qualification/decision-core",
+    response_model=QualificationAwareDecisionResponse,
+)
+def saas_qualification_decision(
+    payload: QualificationAwareDecisionRequest, principal: Member, session: DBSession,
+) -> QualificationAwareDecisionResponse:
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    return build_qualification_aware_decision(
+        session, customer_id=principal.customer_id, request=payload,
+    )
 
 
 @router.get("/saas", response_class=HTMLResponse)
