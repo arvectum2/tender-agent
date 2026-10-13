@@ -1,8 +1,8 @@
 """Fail-closed offline reconciliation of archived APR06 EIS notices and attachments.
 
-Matches downloaded documents to *archived notice* by exact filename+size only.
-EIS publishedContentId is NOT recorded with extracted filenames, so this is not
-an independently verified official revision/UID binding or current EIS status.
+Matches downloaded documents to an *archived notice* by original filename, size,
+source URL/publishedContentId UID and SHA-256. This verifies saved archived EIS
+source correlation, never current official EIS revision or complete live corpus.
 No network, no bid activity, no original blobs in outputs.
 """
 from __future__ import annotations
@@ -15,12 +15,13 @@ import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 _REG = re.compile(r"[0-9]{19}\Z")
 _RUN = re.compile(r"toa-run-[0-9]{14}-[a-f0-9]{6}\Z")
 _MAX_XML_BYTES = 8_000_000
 _MAX_FILES_PER_CASE = 250
+_UID = re.compile(r"[a-fA-F0-9]{32}\Z")
 
 
 def _name(element: ET.Element) -> str:
@@ -63,6 +64,19 @@ def _read_receipted(root: Path, relative: str, hashes: set[tuple[str, int]]) -> 
     return data
 
 
+def _official_attachment_uid(url: str | None) -> str:
+    if not isinstance(url, str) or not url:
+        raise ValueError("Missing EIS attachment source URL")
+    parsed = urlsplit(url)
+    if (parsed.scheme != "https" or parsed.hostname != "zakupki.gov.ru"
+            or not parsed.path.startswith("/44fz/filestore/public/1.0/download/")):
+        raise ValueError("Attachment source is not original EIS HTTPS filestore")
+    values = parse_qs(parsed.query).get("uid", [])
+    if len(values) != 1 or not _UID.fullmatch(values[0]):
+        raise ValueError("Invalid original publishedContentId source URL")
+    return values[0].upper()
+
+
 def _notice_from_xml(raw: bytes, expected_reg: str, sha: str) -> dict | None:
     if b"<!DOCTYPE" in raw.upper() or b"<!ENTITY" in raw.upper():
         raise ValueError("XML DTD or entity definition prohibited")
@@ -102,7 +116,7 @@ def _notice_from_xml(raw: bytes, expected_reg: str, sha: str) -> dict | None:
         except ValueError as exc:
             raise ValueError("Invalid saved notice endDT") from exc
     # This is evidence of what this particular archived notice contained.
-    attachment_pairs: list[tuple[str, int]] = []
+    attachment_pairs: list[dict] = []
     for item in notice.iter():
         if _name(item) != "attachmentInfo":
             continue
@@ -110,9 +124,17 @@ def _notice_from_xml(raw: bytes, expected_reg: str, sha: str) -> dict | None:
         size_raw = _child_text(item, "fileSize")
         if not filename or size_raw is None or not size_raw.isdecimal():
             raise ValueError("Malformed notice attachment filename/size")
-        attachment_pairs.append((filename, int(size_raw)))
-    if len(attachment_pairs) != len(set(attachment_pairs)):
+        uid = _child_text(item, "publishedContentId")
+        url_uid = _official_attachment_uid(_child_text(item, "url"))
+        if not uid or not _UID.fullmatch(uid) or uid.upper() != url_uid:
+            raise ValueError("Archived EIS notice UID and official URL mismatch")
+        attachment_pairs.append({
+            "name": filename, "size": int(size_raw), "uid": uid.upper()
+        })
+    if len({(x["name"], x["size"]) for x in attachment_pairs}) != len(attachment_pairs):
         raise ValueError("Ambiguous repeated attachment filename+size")
+    if len({x["uid"] for x in attachment_pairs}) != len(attachment_pairs):
+        raise ValueError("Duplicate publishedContentId inside original EIS notice")
     return {
         "version": int(version_raw),
         "xml_sha256": sha,
@@ -161,6 +183,8 @@ def audit_original_notice_revisions(receipts: dict, runs_root: Path) -> dict:
             "latest_notice_attachment_count": 0,
             "archive_name_size_correlated": 0,
             "archive_name_size_unmatched": 0,
+            "archive_uid_sha_correlated": 0,
+            "archive_uid_unmatched": 0,
             "source_state": "NO_ARCHIVED_NOTICE",
             "official_current_eis_status_verified": False,
             "official_attachment_uid_bound": False,
@@ -188,19 +212,21 @@ def audit_original_notice_revisions(receipts: dict, runs_root: Path) -> dict:
                 size = entry.get("size_bytes")
                 if not isinstance(name, str) or not isinstance(relative, str):
                     raise TypeError("Malformed archived file metadata")
-                if name.lower().endswith(".xml"):
+                if entry.get("source_type") == "getdocs_archive" and name.lower().endswith(".xml"):
                     raw = _read_receipted(input_root, relative, approved_receipts)
                     parsed = _notice_from_xml(raw, reg, hashlib.sha256(raw).hexdigest())
                     if parsed is not None:
                         notices.append(parsed)
-                elif type(size) is int and size > 0:
-                    # Count only verified file bytes from archived receipt inventory.
+                elif entry.get("source_type") == "notice_xml_attachments" and type(size) is int and size > 0:
+                    # Count only verified original source bytes; bind to recorded
+                    # URL uid from the exact original notice, never by name alone.
                     p = _safe_input(input_root, relative)
                     if p.stat().st_size != size:
                         raise ValueError("Mismatch between extracted doc and archive index")
                     if (hashlib.sha256(p.read_bytes()).hexdigest(), size) not in approved_receipts:
                         raise ValueError("Archived document not present in original receipts")
-                    sources[(name, size)].append(relative)
+                    uid = _official_attachment_uid(entry.get("source_url"))
+                    sources[(name, size)].append(uid)
             if not notices:
                 result["source_state"] = "NO_ARCHIVED_NOTICE"
             else:
@@ -213,16 +239,24 @@ def audit_original_notice_revisions(receipts: dict, runs_root: Path) -> dict:
                 result["latest_archived_notice_sha256"] = latest["xml_sha256"]
                 result["latest_archived_deadline"] = latest["archived_deadline"]
                 expected = latest["attachments"]
-                hits = sum(len(sources.get(key, [])) == 1 for key in expected)
+                pairs = [(a["name"], a["size"]) for a in expected]
+                hits = sum(len(sources.get(key, [])) == 1 for key in pairs)
+                uid_hits = sum(
+                    len(sources.get((a["name"], a["size"]), [])) == 1
+                    and sources[(a["name"], a["size"])][0] == a["uid"]
+                    for a in expected
+                )
                 result["latest_notice_attachment_count"] = len(expected)
                 result["archive_name_size_correlated"] = hits
                 result["archive_name_size_unmatched"] = len(expected) - hits
+                result["archive_uid_sha_correlated"] = uid_hits
+                result["archive_uid_unmatched"] = len(expected) - uid_hits
                 if latest["archived_deadline"] is None:
                     result["source_state"] = "DEADLINE_UNKNOWN_FROM_ARCHIVED_NOTICE"
-                elif hits != len(expected):
+                elif uid_hits != len(expected):
                     result["source_state"] = "ARCHIVED_LATEST_ATTACHMENTS_INCOMPLETE"
                 else:
-                    result["source_state"] = "ARCHIVED_NAME_SIZE_ONLY_CORRELATION"
+                    result["source_state"] = "ARCHIVED_UID_SHA_CORRELATION"
         except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError) as exc:
             result["source_state"] = "FAIL_CLOSED_ORIGINAL_SOURCE_INCONSISTENT"
             result["source_error_type"] = type(exc).__name__
@@ -234,13 +268,16 @@ def audit_original_notice_revisions(receipts: dict, runs_root: Path) -> dict:
         "official_current_eis_verified": 0,
         "human_gold_labels": 0,
         "commercial_accepted": False,
-        "notice_uid_or_attachment_version_link_verified": False,
+        "current_live_eis_uid_binding_verified": False,
+        "archived_eis_notice_uid_sha_correlation_supported": True,
         "summary": {
             "cases": len(results),
             "cases_with_archived_notices": sum(bool(x["archived_notice_revisions"]) for x in results),
             "archived_latest_attachment_count": sum(x["latest_notice_attachment_count"] for x in results),
             "archived_latest_name_size_correlations": sum(x["archive_name_size_correlated"] for x in results),
             "archived_latest_unmatched": sum(x["archive_name_size_unmatched"] for x in results),
+            "archived_latest_uid_sha_correlations": sum(x["archive_uid_sha_correlated"] for x in results),
+            "archived_latest_uid_unmatched": sum(x["archive_uid_unmatched"] for x in results),
             "states": dict(sorted(counts.items())),
         },
         "cases": results,
