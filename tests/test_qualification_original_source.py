@@ -235,9 +235,11 @@ def test_invalid_owner_receipt_uid_and_digest_rejected():
 
 def _original_run_fixture(tmp_path, monkeypatch, *, bad_name=False,
                           bad_provenance=False, tampered_archive=False):
-    from src.modules.company_profile_store import qualification_run_service as run_service
+    from src.modules.company_profile_store import (
+        qualification_run_service as run_service,
+    )
 
-    archive, doc, receipt = _evidence()
+    archive, doc, _receipt = _evidence()
     input_dir = tmp_path / "input"
     input_dir.mkdir()
     (input_dir / "official-documentation.zip").write_bytes(
@@ -330,7 +332,7 @@ def test_auto_run_rejects_scoring_docx_modified_after_download(
         discover_run_criterion,
     )
 
-    run_id, metadata = _original_run_fixture(tmp_path, monkeypatch)
+    run_id, _metadata = _original_run_fixture(tmp_path, monkeypatch)
     doc_file = tmp_path / "input" / "evaluation.docx"
     original = doc_file.read_bytes()
     doc_file.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
