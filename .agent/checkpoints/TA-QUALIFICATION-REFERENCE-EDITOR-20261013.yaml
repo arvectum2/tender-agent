@@ -12,12 +12,20 @@ definition_of_done:
   - Validate semantics through FastAPI tests and client JS syntax, Ruff and exact GitHub PR CI.
   - Preserve SaaS disabled by default, no production customer writes and no ETP/bids/merges/watchdog.
 completed:
+  - Added version-aware owner/admin SaaS reference-list editor in /saas with initial UNKNOWN state, explicit PARTIAL vs owner-confirmed COMPLETE, selectable 44/223-FZ contract subject/chatbot/completed and signed act source refs.
+  - UI only uses createElement, textContent and value for user content, no risky HTML insertion or local credential persistence.
+  - Added required expected_version optimistic concurrency guard to POST /api/saas/qualification/references, stale edits HTTP409; DB unique-version IntegrityError maps to HTTP409 and rolls back.
+  - Tests check no list UNKNOWN; initial PARTIAL; stale HTTP409; complete zero only owner-confirmed; source refs and signed final act for completed contracts required (422); existing auth/tenant tests retained.
+  - Mac mini isolated feature code head e985a11 pytest 77 PASS/8 SKIP, Ruff PASS, node --check on embedded SaaS JS PASS, git diff --check PASS.
+  - Updated canonical roadmap and Russian runbook, opened stacked draft PR410 on PR409, no live customer writes or SaaS/prod activation.
   - PR409 exact head 4c0fdeb full PR and two push workflows SUCCESS, source-run orchestration checkpoint marked COMPLETED.
-current: Inspect reference API and SaaS frontend, implement UI and version-conflict guard.
+current: PR410 draft stacked on PR409, latest doc/roadmap source head 0ab41a29e73b99e113defa82e537e9561a34c86e. Mac mini code head e985a11073ed773e86e14dde5fbac130795ecdaa local 77 PASS/8 SKIP, Ruff PASS, JS syntax PASS; exact GitHub PR/push CI pending.
 pending:
-  - Add optimistic concurrency and API coverage.
-  - Build safe editable SaaS reference-list UI and tests.
-  - Local focused regression + Ruff + JS and GitHub exact-head CI; complete child only when green.
-last_verified_commit: 'New stacked branch from PR409, no new code'
-test_results: []
-resume_instruction: 'Continue feature/qualification-reference-editor-20261013. PR409 source-run flow and PR407 versioned reference facts implemented. No new production writes or SaaS enablement. Implement owner/admin opt-in UI to read, version and update references with unsigned/future partial states explicit, contract source refs for every completed contract, and expected_version optimistic concurrency; tenant identity comes only from bearer. Run tests and CI; do not open legacy internal API to public. No signed evidence/human gold from self assertion.'
+  - Check PR410 exact-head full GitHub PR and push CI; repair failures, then status completed once green.
+  - Wider scoring formats with real primary EIS evidence, actual signed contract verification, owner human-gold and APR07 SLO remain independent.
+last_verified_commit: 'PR410 code/test head e985a11073ed773e86e14dde5fbac130795ecdaa local 77 PASS/8 SKIP, Ruff PASS and embedded SaaS Node JS syntax PASS. Documentation+roadmap head 0ab41a29e73b99e113defa82e537e9561a34c86e; exact GitHub CI pending.'
+test_results:
+  - 'Mac mini source e985a11: 77 pytest PASS, 8 SKIP; Ruff PASS and node --check SaaS UI script PASS; git diff --check PASS.'
+  - 'Real tenant integration tests: missing UNKNOWN, partial vs complete zero, stale 409, signed act 422, owner/admin only, cross tenant excluded.'
+  - 'PR410 GitHub full PR/push CI pending on latest roadmap head 0ab41a29.'
+resume_instruction: 'Active TA-QUALIFICATION-REFERENCE-EDITOR-20261013, draft stacked PR410 feature/qualification-reference-editor-20261013 based PR409, source head 0ab41a29e73b99e113defa82e537e9561a34c86e. Mac mini code head e985a11073ed773e86e14dde5fbac130795ecdaa 77 focused pytest PASS/8 SKIP, Ruff and embedded Node UI script PASS. Check PR410 exact PR and push GitHub CI, repair failures, mark child completed when green. Reference editing owner/admin uses Bearer tenant, typed 44/223 contracts and signed acts, explicit owner confirmed COMPLETE vs PARTIAL, expected_version required/409 stale. No live Arvectum tenant updated, SaaS disabled. PR407/408/409 remain DRAFT/unmerged; no electronic signature/human gold/legal eligibility/ETP/bid/production/watchdog/payment. Next sourced scoring-format expansion only with adequate real originals, otherwise conservative NOT_ASSESSED. Preserve manual_override true.'
