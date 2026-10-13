@@ -124,6 +124,7 @@ from src.modules.runtime_control_traces.router import (
 from src.modules.runtime_metadata_slices.router import (
     router as runtime_metadata_slices_router,
 )
+from src.modules.saas_foundation.router import router as saas_foundation_router
 from src.modules.shipping_acceptance.router import router as shipping_acceptance_router
 from src.modules.similar_procurements.router import (
     router as similar_procurements_router,
@@ -183,6 +184,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     acceptance_control_router,
     customer_registry_router,
     customer_onboarding_router,
+    saas_foundation_router,
     counterparty_cards_router,
     customer_pilot_router,
     expert_review_router,
