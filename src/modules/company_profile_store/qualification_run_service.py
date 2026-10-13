@@ -37,7 +37,7 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 
 _RUN_ID = re.compile(r"toa-run-[0-9]{14}-[a-f0-9]{6}\Z")
 _NOTICE_NO = re.compile(r"[0-9]{19}\Z")
-_EIS_HOST = "int.zakupki.gov.ru"
+_EIS_HOSTS = {"int.zakupki.gov.ru", "int44.zakupki.gov.ru"}
 _DOCUMENT_HOST = "zakupki.gov.ru"
 _ALLOWED_TYPES = {"notice_xml_attachments", "public_notice_documents"}
 _MAX_FILE = 10 * 1024 * 1024
@@ -112,7 +112,7 @@ def discover_run_criterion(run_id: str, *, analysis_date: date):
         or metadata.get("getdocs_status") != "completed"
         or metadata.get("subsystem_type") != "PRIZ"
         or metadata.get("token_owner") != "individual"
-        or metadata.get("archive_source_host") != _EIS_HOST
+        or metadata.get("archive_source_host") not in _EIS_HOSTS
         or not _NOTICE_NO.fullmatch(number)
     ):
         raise ValueError("Run is not a completed trusted original EIS getDocsIP import")
