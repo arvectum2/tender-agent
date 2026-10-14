@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-R4-20-SOURCE-COVERAGE-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Reproducibly reconcile all twenty existing official EIS R4/R5 machine-audit cases and their evidence gaps, with conservative readiness classification and no claims of human/legal gold.
+definition_of_done:
+  - Join exactly the 20 official EIS case IDs from existing R4 human protocol to independent 20-case audit, independent 168-original-file inventory, 20 persisted source facts and 20 human-review queue, with duplicate and mismatch fail closed.
+  - Report per case original ZIP status, cached SHA coverage, fresh original XML versus attachment byte provenance, historic notice revision mismatch, persisted report price/deadline mismatch or missing and human signature state.
+  - Distinguish archived original source authority from up-to-date live EIS; never count XML-only evidence as full tender-document/legal verification or infer GO from cached SHA.
+  - Validate exact document IDs/counts and all referenced file digests/flags; emit deterministic and privacy-safe review JSON/CSV and automated summary with explicit missing evidence and no human approval.
+  - Test 17/20 official archive, 3 no_data, 3 stale revisions, 2 model/report deadline mismatches, 168/168 historical original SHA records, and missing/duplicate/tampered audit fixture fail-closed.
+  - Run Mac mini isolated focused tests/Ruff, original read-only replay and full tests when feasible, create stacked draft PR with exact-head CI and update checkpoint.
+completed:
+  - 'Parent stage TA-EXPERT-SOURCE-PACKET-20261014 PR428 exact original GitHub head bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 all3 workflows SUCCESS and full Mac mini 4059 pytest PASS/238 SKIP/0 fail; child technical stage completed, draft unmerged.'
+current: 'Implement conservative 20-case reconciler over existing original source audit CSV and existing R4 expert queue; do not query live EIS or invent document availability.'
+pending:
+  - Build validation and deterministic source completeness/source revision matrix.
+  - Replay on original first-party audit CSVs; write reviewed aggregate report, no personal identifiers.
+  - Add positive/negative tests, Mac mini QA, draft PR and CI.
+last_verified_commit: 'Predecessor PR428 3/3 original GitHub workflow SUCCESS on bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9, Mac mini 4059 pytest PASS.'
+test_results:
+  - 'Existing first-party R5 CSV preinspection: official SOAP completed17/no_data3, 168 historical file SHA match YES, 96 XML original confirmed, 72 attachment official retransfer unconfirmed, 3 outdated archived notices, 2 persisted deadline mismatches among nine stored reports, 0 human verified.'
+resume_instruction: 'On feature/r4-20-source-coverage-20261014 stacked on PR428, use existing docs/acceptance/TDP_R4_R5_HUMAN_GOLD_PROTOCOL_2026-10-12.md, TDP_R5_INDEPENDENT_20_CASES_2026-10-12.csv, TDP_R5_INDEPENDENT_168_FILES_2026-10-12.csv, TDP_R5_INDEPENDENT_PERSISTED_FACTS_20_2026-10-12.csv, TDP_R5_20_CASE_HUMAN_REVIEW_QUEUE_2026-10-11.csv. Build fail-closed 20-case source/evidence review matrix and reject inconsistent/duplicate receipt IDs, with archived-only historical claims. Do NOT re-use a stale report as current, do not claim official filestore verification for 72 cached attachments and do not mark human verification. Generate machine-only output and source audit source SHA receipts and report. Test on Mac mini in new isolated worktree. PR428 preceding stage 3/3 original CI green, draft and unmerged. Manual_override true and hourly watchdog disabled. No ETP, bids, payments, signing, live production, buyer contact or draft merging.'
+execution:
+  branch: feature/r4-20-source-coverage-20261014
+  manual_override: true
