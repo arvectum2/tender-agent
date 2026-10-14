@@ -90,7 +90,13 @@ def _document_inventory(
         if key:
             by_id.setdefault(key, []).append(manifest_item)
 
-    for idx, item in enumerate(documents):
+    document_rows = list(documents)
+    document_id_counts: dict[str, int] = {}
+    for document in document_rows:
+        identifier = _string(getattr(document, "file_id", None)).casefold()
+        if identifier:
+            document_id_counts[identifier] = document_id_counts.get(identifier, 0) + 1
+    for idx, item in enumerate(document_rows):
         file_id = _string(getattr(item, "file_id", None)) or f"missing-file-id-{idx}"
         role = _string(getattr(item, "role", None)) or "supporting"
         name = _string(getattr(item, "display_name", None)) or file_id
@@ -113,7 +119,9 @@ def _document_inventory(
             bool(expected_text_sha and expected_text_sha != computed_text_sha)
             or bool(expected_raw_sha and expected_raw_sha != computed_raw_sha)
         )
-        if len(receipts) > 1:
+        if document_id_counts.get(file_id.casefold(), 0) > 1:
+            status = "DUPLICATE_SOURCE_ID_UNREVIEWED"
+        elif len(receipts) > 1:
             status = "DUPLICATE_MANIFEST_ID_UNREVIEWED"
         elif invalid_receipts:
             status = "INVALID_SHA_RECEIPT_UNREVIEWED"
