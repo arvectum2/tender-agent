@@ -47,8 +47,8 @@ def verify_saved_quote(run:Path,source:str,quote:str,source_sha:str,
     literal=quote in text
     whitespace_match=(
         not literal
-        and re.sub(r"\\s+", " ", quote).strip()
-        in re.sub(r"\\s+", " ", text).strip()
+        and re.sub(r"\s+", " ", quote).strip()
+        in re.sub(r"\s+", " ", text).strip()
     )
     file_id="-".join(source.split("-",2)[:2]).upper()
     meta=json.loads(metadata.read_text())
