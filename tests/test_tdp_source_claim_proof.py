@@ -197,3 +197,71 @@ def test_missing_original_xml_fields_not_inferred_from_unlabelled_model_text():
     assert missing["unmentioned_archived_eis_fields"]==["nmck","submission_deadline"]
     assert missing["bid_ready"] is False
     assert missing["claim_semantics_verified"] is False
+
+
+def test_actual_operator_projection_preserves_historical_truth_when_model_changes_price():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    original=d("FILE-01","notice",purchase_xml(
+        "1000000.00","2026-10-16T10:00:00+03:00"
+    ))
+    metadata={"files":[{"file_id":"FILE-01"}],"limitations":[]}
+    model={"tender_summary": (
+        "NMCK: 1,200,000.00 RUB. "
+        "Submission deadline: 17.10.2026 10:00:00 +03:00"
+    ),"qualification_requirements":[],"technical_requirements":[],
+       "document_requirements":[],"evaluation_criteria":[]}
+
+    def handler(run_id, **deps):
+        docs=deps["_collect_documents"](run_id,metadata)
+        return deps["_build_output_payloads"](
+            metadata=metadata, documents=docs,
+            requirements=model, calibrated_risks=[],
+        )
+
+    output=run_with_full_corpus_research(
+        handler,"verified-original-projection",
+        _collect_documents=lambda *_:[original],
+        _try_run_llm_workflow=lambda **_:None,
+        _build_output_payloads=lambda **_:{"requirements":{},"trace":{}},
+    )
+    gate=output["trace"]["source_research_quality_gate"]
+    typed=output["trace"]["source_eis_typed_claims"]
+    proofs=output["trace"]["source_quote_proofs"]
+    assert typed["contradictions_count"]==2
+    assert gate["status"]=="CONTRADICTION_REVIEW_REQUIRED"
+    assert gate["historical_eis_value_contradictions"]==2
+    assert gate["bid_ready"] is False
+    assert gate["source_quote_proof_failures"]==0
+    assert any(proof["status"]=="EXACT_NORMALIZED_SOURCE_TEXT" for proof in proofs)
+    assert all(proof["physical_locator_status"]=="PAGE_OR_CELL_NOT_ATTESTED" for proof in proofs)
+    assert output["requirements"]["source_eis_typed_claims"]==typed
+    assert any("противоречат" in str(l) for l in metadata["limitations"])
+
+
+def test_operator_projection_does_not_claim_223_fz_as_official_eis_xml():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    metadata={"files":[{"file_id":"B2B-01"}],"limitations":[]}
+    source=d("B2B-01","supporting","Корпоративная закупка 223-ФЗ, цена 900000 рублей.")
+    def handler(run_id,**deps):
+        docs=deps["_collect_documents"](run_id,metadata)
+        return deps["_build_output_payloads"](
+            metadata=metadata, documents=docs,
+            requirements={"tender_summary":"NMCK: 900000 RUB",
+                          "qualification_requirements":[]},
+            calibrated_risks=[],
+        )
+    out=run_with_full_corpus_research(
+        handler,"b2b",
+        _collect_documents=lambda *_:[source],
+        _try_run_llm_workflow=lambda **_:None,
+        _build_output_payloads=lambda **_:{"trace":{},"requirements":{}},
+    )
+    result=out["trace"]["source_eis_typed_claims"]
+    assert result["claims"][0]["status"]=="UNKNOWN_NOT_ATTESTED"
+    assert out["trace"]["source_research_quality_gate"]["bid_ready"] is False
