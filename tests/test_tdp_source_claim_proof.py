@@ -2,11 +2,12 @@
 from __future__ import annotations
 
 import hashlib
-from datetime import datetime
 from pathlib import Path
 from types import SimpleNamespace
 
-from src.modules.tender_operator_agent_demo.full_corpus_research import research_full_corpus
+from src.modules.tender_operator_agent_demo.full_corpus_research import (
+    research_full_corpus,
+)
 from src.modules.tender_operator_agent_demo.source_claim_proof import (
     bind_source_span,
     check_typed_original_facts,
