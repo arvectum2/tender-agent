@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-R4-20-COMPETITIVE-SEMANTIC-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Critically independently assess all 20 actual source-attested competitive EIS historical original notices and their claim/document semantics, while retaining 4 noncompetitive negative controls and one reserve, without inventing present live EIS eligibility or legal GO.
+definition_of_done:
+  - Verify canonical 20 unique historical actual competitive cases: 16 from original source batch plus 4 additional official getDocsIP originals, with source-pinned ZIP+chosen notice XML SHA, type, revision and precise original EIS method.
+  - Distinguish exactly 4 negative controls (3 official market price enquiries and 1 single-supplier art93 part12) and one official reserve; reject mismatched/missing source IDs, stale edition or quoted words not in originals.
+  - Enumerate every reachable native notice XML and referenced DOC/DOCX/PDF source for each positive; independently verify original official binary, normalized page/section/table claims, data completeness and exact source locators; mark unsupported/ambiguous as unknown.
+  - Compare all preserved historical LLM reports where present against original latest archived facts and exact contract/document evidence, flag wrong procurement ID, two known archived deadline conflicts, missing mandatory terms and ungrounded commercial or legal GO.
+  - Emit client-safe critical original-source report for exactly 20 positive notice IDs, with explicit priority material obligations and per-case missing evidence, and separate audit JSON; no raw source files or technical codes in client report.
+  - Add negative and original-source regression tests, run Mac mini original read-only replay and full pytest/Ruff, draft stacked PR exact GitHub CI; preserve human-gold 0 signed and legal Owner approval open.
+completed:
+  - '2026-10-14 prior bounded no_data expert PR431 completed: 4100 Mac mini pytest pass/238 skipped, exact GitHub 3/3 CI green; source type routing reads direct official EIS price registry with native TLS, 3 price inquiries actual originals 9 HTML and four filestore binaries, false missing-doc narratives removed. Drafts unmerged.'
+  - '2026-10-14 old task TA-R4-17-ORIGINAL-SEMANTIC-20261014 blocked/superseded: 17 historical original archives are 16 competitive notice XML and one explicit art93 part12 single-supplier; prior R4 cohort was unsuitable for 20 competitive gold.'
+  - '2026-10-14 discovered private first-party verified historical selection 20 positives (16 original plus4 new), 4 negative (three price enquiries plus1 special article93), one reserve; method classes 11 electronic auctions,7 electronic quotation procedures,2 open electronic contests. Checked original source ZIP SHA and exact notice XML SHA/type 21/21 for twenty positive and single-supplier negative against Mac mini original bytes, no discrepancies.'
+current: 'Reproduce and encode canonical 20 positives plus4 negative original-source quality gate; audit textual DOC/DOCX/PDF evidence and legacy LLM claim semantics with conservative per-case review states.'
+pending:
+  - Build deterministic source identity/type/ZIP SHA validator and 20+4 cohorts from private pinned original manifest; reserve distinct.
+  - Reconcile all full document binaries per 20 case and report actual available text, missing pages/contract and original claim locators.
+  - Inspect nine historical LLM report facts plus independent Gemma error claims, original revision precedence and legal obligations; flag unsupported, no invented GO.
+  - Produce customer-safe full 20 positive original source claim report with a machine JSON source audit, negative controls and honest unknowns.
+  - Run Mac mini focused/full pytest/Ruff and draft PR exact CI, mark bounded child completed only upon validated DoD.
+last_verified_commit: 'Predecessor PR431 branch CI ebd12584942790d51c36ce759787133b50e13a22 GitHub 3/3 success, Mac mini code fcb568d1 4100 PASS; new positive cohort original ZIP/XML SHA independently 21/21 PASS on Mac mini Oct14.'
+test_results:
+  - 'Verified private source first-party ZIP SHA21/21, chosen notice XML SHA21/21, official EIS type XML tag21/21 for twenty verified historical competitive plus one single-supplier control. Three market price enquiry original HTML and four DOC/DOCX/PDF source byte SHA previously separately verified.'
+resume_instruction: 'Continue TA-R4-20-COMPETITIVE-SEMANTIC-20261014 branch research/r4-20-competitive-semantic-20261014 (stacked on superseded 17-archive task branch and completed bounded PR431). Canonical source manifest ONLY private Mac mini /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012/positive-eis-replacements-20261012/verified-competitive-20-plus-four-negative.json. It has 20 positive competitive (16 original corpus ZIP from /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/independent-20261012/<id>/documentation-archive.zip plus4 new ZIP from ai-expert-20261012/positive-eis-replacements-20261012/<id>/documentation-archive.zip), 4 negative (3 EIS pricereq no-zip noncompetitions and one original art93 part12 special single supplier 0349500000226000003), reserve 0369100012826000157, 11 auctions/7 quotations/2 electronic open competitions. Checked original ZIP SHA21/21, exact selected official notice XML SHA21/21 and XML type tag21/21 PASS; this is historical SOURCE validity, not live EIS or legal GO. Contrast old 17 EIS ZIP: only 96 XML, the other72 binary attachments fetched separately by EIS filestore saved official receipts and need actual text source grounding. Stored older reports in private ai-expert-20261012/tender_operator_demo and docs/acceptance/TDP_R5_INDEPENDENT_PERSISTED_FACTS_20_2026-10-12.csv; two archived deadline mismatches, one wrong Gemma procurement ID, mandatory contract terms often missing. Implement fail-closed 20+4 source/semantic claim verifier, privacy-safe 20-case user critical report, negative tests and Mac mini source replay. Do not declare 20 human legal-gold signed (0) or current bid readiness. No ETP/bids/prod/signatures/payment/customer contact/PR merge, watchdog disabled/manual_override true.'
+execution:
+  branch: research/r4-20-competitive-semantic-20261014
+  manual_override: true
