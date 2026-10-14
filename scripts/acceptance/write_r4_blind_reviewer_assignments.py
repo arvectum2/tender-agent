@@ -7,6 +7,7 @@ from pathlib import Path
 
 from src.modules.tender_operator_agent_demo.r4_blind_reviewer_assignment import (
     build_source_only_assignment,
+    human_label_input_template,
 )
 
 
@@ -22,6 +23,11 @@ def main() -> None:
         assignment = build_source_only_assignment(bundle)
         output = source.parent / "independent-reviewer-worksheet.md"
         output.write_text(assignment, encoding="utf8")
+        draft = human_label_input_template(bundle)
+        (source.parent / "human-labels-BLANK-template.json").write_text(
+            json.dumps(draft, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+            encoding="utf8",
+        )
         print("SOURCE_ONLY_EXPERT_WORKSHEET_PREPARED", bundle["case_id"])
     print("INDEPENDENT_LEGAL_GOLD_SIGNED", 0)
 

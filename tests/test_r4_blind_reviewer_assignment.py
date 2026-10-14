@@ -11,6 +11,7 @@ import pytest
 from src.modules.tender_operator_agent_demo.r4_blind_reviewer_assignment import (
     REVIEW_CATEGORIES,
     build_source_only_assignment,
+    human_label_input_template,
 )
 
 
@@ -50,3 +51,22 @@ def test_reviewer_bundle_refuses_leaked_analysis_keys():
     empty["documents"] = []
     with pytest.raises(ValueError):
         build_source_only_assignment(empty)
+
+
+
+def test_human_label_template_is_deliberately_invalid_until_expert_fills():
+    from src.modules.benchmark_pipeline.contract import (
+        BenchmarkContractError,
+        validate_artifact,
+    )
+
+    bundle = _case()
+    blank = human_label_input_template(bundle)
+    assert blank["draft_status"] == "TEMPLATE_ONLY_NOT_HUMAN_GOLD"
+    assert blank["sut_inference_allowed"] is False
+    assert blank["blind_document_truth"]["facts"] == []
+    assert blank["blind_discovery_label"]["label"] is None
+    assert blank["external_human_reviewer_attestation"]["ed25519_signature_b64"] is None
+    for field, kind in (("blind_discovery_label", "blind_discovery_label"), ("blind_document_truth", "blind_document_truth")):
+        with pytest.raises(BenchmarkContractError):
+            validate_artifact(kind, blank[field])
