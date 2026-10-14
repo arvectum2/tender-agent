@@ -115,7 +115,8 @@ def select_document_context(
                 # Reward explicit, first-listed obligation phrases over incidental\n                # mentions such as menu labels, then diversify topics.
                 # of the same generic word in several overlapping concepts.
                 sum(
-                    3 if alternatives[0] in samples[item] else 1
+                    (6 if group < 2 else 5 if group == 2 else 2)
+                    if alternatives[0] in samples[item] else 1
                     for group, alternatives in enumerate(critical)
                     if group not in covered and any(t in samples[item] for t in alternatives)
                 ),
