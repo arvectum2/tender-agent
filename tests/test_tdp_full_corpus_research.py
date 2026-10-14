@@ -352,3 +352,14 @@ def test_invalid_or_duplicate_manifest_receipts_fail_closed():
     )
     assert duplicate["documents"][0]["status"] == "DUPLICATE_MANIFEST_ID_UNREVIEWED"
     assert duplicate["unread_file_ids"] == ["FILE-03"]
+
+
+def test_duplicate_extracted_file_ids_are_not_independent_provenance():
+    first = doc("same", "notice", "<maxPrice>100</maxPrice>")
+    second = doc("SAME", "notice", "<maxPrice>200</maxPrice>")
+    report = research_full_corpus([first, second])
+    assert report["document_count"] == 2
+    assert report["extracted_document_count"] == 0
+    assert report["source_status"] == "INCOMPLETE"
+    assert all(x["status"] == "DUPLICATE_SOURCE_ID_UNREVIEWED" for x in report["documents"])
+    assert next(x for x in report["findings"] if x["key"] == "price")["hits"] == []
