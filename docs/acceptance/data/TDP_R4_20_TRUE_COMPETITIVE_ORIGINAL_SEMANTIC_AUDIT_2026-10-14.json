@@ -2325,6 +2325,20 @@
     "source_scope": "20_ORIGINAL_ARCHIVED_NOTICE_VERSIONS_NOT_CURRENT_EIS",
     "source_shas_attested": 96
   },
+  "selected_original_notice_text_availability": {
+    "additional_inner_original_text_units": 22,
+    "archived_original_attachments": 96,
+    "attachments_with_nonempty_source_text": 96,
+    "bid_ready": false,
+    "current_EIS_revision_verified": false,
+    "fresh_20261014_original_documents_text": 25,
+    "full_legal_semantic_reviews_signed": 0,
+    "new_original_documents_text": 21,
+    "note": "All 96 original archived attachments have nonempty recorded text. This does not attest every table cell, spreadsheet formula, PDF scan or the legal completeness of extracted source.",
+    "older_and_fresh_text_characters": 2402767,
+    "older_original_documents_text": 50,
+    "text_extraction_completeness_asserted": false
+  },
   "separate_official_reserve": "0369100012826000157",
   "source_cohort": {
     "competitive": 20,
