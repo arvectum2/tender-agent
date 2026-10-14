@@ -9,6 +9,9 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
+from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
+    audit_model_contract_clause_references,
+)
 from src.modules.tender_operator_agent_demo.full_corpus_research import (
     build_research_brief,
     examine_llm_assertions,
@@ -106,6 +109,14 @@ def run_with_full_corpus_research(
         )
         claim_index = examine_llm_assertions(research, claims)
         metadata["source_research_llm_claims"] = claim_index
+        original_documents = kwargs.get("documents")
+        clause_reviews = audit_model_contract_clause_references(
+            risks if isinstance(risks, list) else [],
+            original_documents if isinstance(original_documents, list) else [],
+        )
+        metadata["source_research_clause_review"] = clause_reviews
+        # Never interpret a located paragraph as semantic approval. If a
+        # numbered source clause is missing or repeated, keep it review-only.
         # Persist reviewable source locations separately from model assertions.
         # Existing outputs and public shape are preserved by adding optional
         # research keys in the existing trace and requirement payloads.
@@ -113,10 +124,12 @@ def run_with_full_corpus_research(
         if isinstance(trace, dict):
             trace["full_corpus_research"] = research
             trace["source_claim_assessment"] = claim_index
+            trace["source_clause_review"] = clause_reviews
         requirement_payload = outputs.get("requirements")
         if isinstance(requirement_payload, dict):
             requirement_payload["full_corpus_research"] = research
             requirement_payload["source_claim_assessment"] = claim_index
+            requirement_payload["source_clause_review"] = clause_reviews
         return outputs
 
     return handler(
