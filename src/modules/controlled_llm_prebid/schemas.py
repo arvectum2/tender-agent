@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field
 
-from src.modules.quote_repository.tkp_normalization_schemas import NormalizedTKPQuoteBatch
+from src.modules.quote_repository.tkp_normalization_schemas import (
+    NormalizedTKPQuoteBatch,
+)
 
 
 class LLMTenderSummaryDraft(BaseModel):
