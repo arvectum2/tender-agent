@@ -365,7 +365,7 @@ def readable_review(review:dict)->str:
         "",
         "### Несовпадение формулировок между договором, ТЗ и заявкой",
         "",
-        ("В четырёх архивных конкурентных закупках вручную выбраны, а затем "
+        (f"В {contrasted['case_count']} архивных конкурентных закупках вручную выбраны, а затем "
          "побайтово перепроверены по исходным приложениям короткие точные "
          "фрагменты с различиями в формулировке субъекта обязанности либо "
          "документа, подтверждающего право. Расхождение текста не означает "
@@ -377,7 +377,7 @@ def readable_review(review:dict)->str:
     for item in contrasted["cases"]:
         evidence = "; ".join(
             f"{s['original_filename'].replace('|', '—')}, {s['source_locator']}: "
-            f"«{s['exact_archival_quote'].replace('|', '—')}»"
+            f"«{s['exact_archival_quote'].replace('|', '—').replace(chr(9), ' ')}»"
             for s in item["archival_source_excerpts"]
         )
         lines.append(

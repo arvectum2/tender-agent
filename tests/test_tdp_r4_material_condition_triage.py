@@ -158,9 +158,15 @@ def test_all_96_actual_originals_remain_non_decisional_when_present():
     assert len(audit["cases"]) == 20
     assert sum(case["source_documents_read"] for case in audit["cases"]) == 96
     compared = audit["cross_document_original_scope_review"]
-    assert compared["case_count"] == 4
-    assert sum(len(c["archival_source_excerpts"]) for c in compared["cases"]) == 14
-    assert sum(c["independent_original_documents"] for c in compared["cases"]) == 10
+    assert compared["case_count"] == 12
+    assert sum(len(c["archival_source_excerpts"]) for c in compared["cases"]) == 31
+    assert sum(c["independent_original_documents"] for c in compared["cases"]) == 27
+    assert any(
+        c["registry_number"] == "0360600005326000018"
+        and any("строительному контролю" in e["exact_archival_quote"]
+                for e in c["archival_source_excerpts"])
+        for c in compared["cases"]
+    )
     assert compared["human_signed_legal_interpretations"] == 0
     assert compared["bid_ready"] is False
     assert all(not c["expert_signed"] and not c["live_eis_edition_verified"]

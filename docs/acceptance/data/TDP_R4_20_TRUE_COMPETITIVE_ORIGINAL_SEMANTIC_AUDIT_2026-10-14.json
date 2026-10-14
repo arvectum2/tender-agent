@@ -5727,7 +5727,7 @@
     },
     "cross_document_original_scope_review": {
       "bid_ready": false,
-      "case_count": 4,
+      "case_count": 12,
       "cases": [
         {
           "archival_source_excerpts": [
@@ -5958,12 +5958,329 @@
           "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "В контракте установлено соблюдение чужих исключительных прав, ТЗ предусматривает передачу прав на создаваемый сайт, а требования к заявке описывают владение правами участником. Не считать эти три формулировки тождественными.",
           "topic": "Права на будущий сайт и права участника на результаты"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Правообладатель: ООО «Интернет-Фрегат», исключительные права принадлежат ООО «Интернет-Фрегат»",
+              "legal_duty_confirmed": false,
+              "literal_start": 2918,
+              "original_binary_sha256": "5018d0b6313546ae0ee58a60d2fe9503d061d65c5bbba69ad0bbb58a30376041",
+              "original_filename": "Описание объекта закупки.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "356896e5119309748e63eb7f7cbb380f206958deeb8b1dd4148cdba278eb8c68",
+              "source_locator": "PARAGRAPH-0035",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "2433de1359d4f665a5e064c25b7ddd90d49fe1acd2465efc92f2ac719ca8cfd1",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Наличие у участника неисключительных прав на воспроизведение, распространение, переработку (модификацию)",
+              "legal_duty_confirmed": false,
+              "literal_start": 7791,
+              "original_binary_sha256": "98e3be9768d9f062f894117fe5e5782ce96a6d314bdb4374f5c00506e44b9ec9",
+              "original_filename": "Требования к содержанию и составу заявки.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "6ef54540c69a702d0d17cdc1dbe5647913341a24e49f09a6404847497d1feb3b",
+              "source_locator": "PARAGRAPH-0024",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "1949b1a9ec72498f5583b03780ac43bfa989d3303410170dcf15a3650b9b9dfa",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Без увеличения цены Договора передать заказчику права на использование охраняемых результатов интеллектуальной деятельности",
+              "legal_duty_confirmed": false,
+              "literal_start": 10333,
+              "original_binary_sha256": "810c0693336171845bf7ab7e3685ba098ae48defad756f716161c1e1316c3a05",
+              "original_filename": "Проект контракта.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "dd6b6bf14d77fd7e26b954ec0e3c8bb59bdda9602119d92c28f221e2b13a224a",
+              "source_locator": "PARAGRAPH-0064",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "088f8579fe8de438f39eecd170b069e154ba3ad10a85fd1e0adc0a0a94183a5a",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 3,
+          "live_eis_edition_verified": false,
+          "registry_number": "0149200002326001555",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Описание объекта закупки называет правообладателя ПО «Фактор», требования к заявке — наличие у участника неисключительных прав на переработку, а контракт — передачу используемых прав заказчику. Проверить источник прав и допустимость их передачи.",
+          "topic": "Права правообладателя программного комплекса и права на результат"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Гарантийный срок на оказываемые по Контракту Услуги не установлен",
+              "legal_duty_confirmed": false,
+              "literal_start": 28043,
+              "original_binary_sha256": "7b88f5b59f8b96cc559e74a8429a54128794641837a018a56dfe7e321812d348",
+              "original_filename": "ООЗ.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "224b2e0f9bd7d7707c3c5cf4ac936c467779cdd16162ce9d5131114f5ba1f532",
+              "source_locator": "Строка 265",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "ecddaec9f2e9cc5ddb73db7453ae301b6f79a45da51d9978b4b2cdcd5c8124d2",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Обеспечить устранение недостатков, выявленных при приемке Заказчиком Услуг",
+              "legal_duty_confirmed": false,
+              "literal_start": 18142,
+              "original_binary_sha256": "dcacb4f765c9d9e9781e754f4d32495c828f061e96e310eea4644aa649ef1412",
+              "original_filename": "ПК.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "8ea88c94ebb26f5148468556401eb8313c852b5d8a66b4527f1392b2a739a077",
+              "source_locator": "Строка 82",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "e5e70c5bac7aad660e7eeffec07621fd25946d684e928c3d348c05e7d9d8f47f",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0151600003226000011",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Описание объекта закупки не устанавливает гарантийного срока, но проект контракта отдельно предписывает устранение дефектов, найденных при приёмке. Не считать отсутствие гарантийного срока освобождением от исправлений.",
+          "topic": "Отсутствие гарантийного срока не отменяет устранение недостатков"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Устранять за свой счет выявленные в процессе выполнения работ, при приемке выполненных работ и в течение гарантийного срока недостатки",
+              "legal_duty_confirmed": false,
+              "literal_start": 26737,
+              "original_binary_sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185",
+              "original_filename": "Проект контракта, сост. 08.10.2026.zip",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "ba18457c9cf3a5e1d0c32890b765ce6c87487d15562b2ad841a2f435a618a9e4",
+              "source_locator": "PARAGRAPH-0106",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "784d0838134ef42f32fb2e6a535e1fba56c0fa338c491c0cd98d450c244140cf",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Гарантийный срок на результат работ устанавливается продолжительностью 12 (двенадцать) месяцев",
+              "legal_duty_confirmed": false,
+              "literal_start": 21152,
+              "original_binary_sha256": "5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9",
+              "original_filename": "Приложение к проекту контракта, сост. 08.10.2026.zip",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "a006db47bb5d45503e4eb23b6b0d6f83cd2391c3c560bc5db12514134a8d1c27",
+              "source_locator": "TABLE-003 ROW-004 CELL-02",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "d2bcc7494e7e727012766e5abf56ed10952fd3a3e993fa5ce0242d10ce5f6cef",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0348100024426000039",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Основной проект контракта содержит обязанность исправления недостатков в гарантийный срок; отдельное приложение задаёт длительность 12 месяцев. Не пропускать срок, если он находится не в основном файле.",
+          "topic": "Гарантийный срок указан в отдельном приложении к контракту"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Если Исполнитель в установленный срок не устранит выявленные недостатки (дефекты)",
+              "legal_duty_confirmed": false,
+              "literal_start": 14360,
+              "original_binary_sha256": "b9a8468f35a5d1108463dd500875256f969ae161b937d54943cb748985d7cbb0",
+              "original_filename": "Приложение №2.Проект  контракта.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "3b0417ff50df85420ce299afd2717e4c9f9f2a7d1ad938a9018851852b18d6d3",
+              "source_locator": "Строка 78",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "e1ab1a0b7a1806d4409770a2bf572c8dc2f717c631d3ccfaf7b01a290dbf6c0a",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Гарантийный срок на разработанное программное обеспечение и выполненные работы составляет 12 (двенадцать) месяцев",
+              "legal_duty_confirmed": false,
+              "literal_start": 10086,
+              "original_binary_sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd",
+              "original_filename": "Приложение № 3 Описание объекта закупки.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "8784ddfb84229c482102a4dd0bc844d75678d52ebc9550749db8e4e6bd20e1d8",
+              "source_locator": "Строка 43",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "db40a3f2dcc9fbdfe719845e4055eed65c421192826bd2c1113cc24640039514",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0377100005726000128",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Проект контракта устанавливает последствия неустранения недостатков; в ТЗ гарантийный срок указан как 12 месяцев либо иной срок по проекту контракта. Проверить согласованную длительность и процедуры исправлений по полной редакции.",
+          "topic": "Гарантийные исправления и срок гарантии в разных приложениях"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "1.4. Неисключительное право на результаты интеллектуальной деятельности Исполнителя",
+              "legal_duty_confirmed": false,
+              "literal_start": 1809,
+              "original_binary_sha256": "64f1dd988630665dbca3f28ca8516408fccfe4cd6e40b76536b1175300783ce8",
+              "original_filename": "Проект контракта.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "c58b1bc9ea6eb97213302ceed168e423cc337ebd2306084abb211d67080ca047",
+              "source_locator": "Строка 11",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "f5d67cd58f55078cafb2fffdc167d18bd2f129ae821c4dc4b5c2b535c40d14e3",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Гарантийный срок на результат оказанной услуги составляет 12 месяцев",
+              "legal_duty_confirmed": false,
+              "literal_start": 11514,
+              "original_binary_sha256": "84752ad82bec1c16106f04ec398584f81f1fc05ae314d34fa280d00a0525f78a",
+              "original_filename": "Описание объекта закупки.doc",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "f20ad1b26703b72f14c8b9bae9b129d4328f304174c18824493863fe114f50e9",
+              "source_locator": "Строка 89",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "224421e384b2e8c8c00bb08710ddd0feb59ebcc96d52b02b538c367c657fde0e",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0162300005826000156",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Неисключительное право на программный сервис передаётся бессрочно; отдельно описание объекта закупки устанавливает гарантийный срок 12 месяцев. Не сокращать срок права использования до длительности гарантии.",
+          "topic": "Бессрочное право на сервис ЕСИА и гарантия результата 12 месяцев"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "«Сайт с версией для слабовидящих» (бессрочно)\t1\tусл. ед.",
+              "legal_duty_confirmed": false,
+              "literal_start": 31810,
+              "original_binary_sha256": "27fe6bfa83e6bf497a6678218b32a7ba984de8b9b5f260e5526f92774f6d3ed5",
+              "original_filename": "Приложение 2 Проект контракта (с приложениями).docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "25110bcc62253d4b4890da040c5d001f9e172255bbc5b4a3b40c3225dbe65cb5",
+              "source_locator": "Строка 153",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "14c503828631c4df344e00b1c64c2dcfdb42de0c61c924692296f01d93faff00",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Срок гарантии на программные элементы системы - в течение срока действия Контракта",
+              "legal_duty_confirmed": false,
+              "literal_start": 27545,
+              "original_binary_sha256": "2aaf7f8d4377d941c94fdbcca329b3cc7f90639fed23697940f7811f91dc0c7c",
+              "original_filename": "Приложение 3 Техническое задание (Описание объекта закупки).docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "0c561c874fcae2d1f2be2374ce729e7f561d4f91ffbc1d6a9a583f9fef4ab6c7",
+              "source_locator": "Строка 220",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "88d8180175e68815d4d83642258ab716b2b3c5b42e965fd929a44f3f23fa08e2",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0169300003326000181",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Проект контракта предусматривает бессрочную передачу неисключительных прав на модуль сайта для слабовидящих, а ТЗ определяет срок гарантии на ПО сроком контракта. Уточнить права и поддержку как разные условия.",
+          "topic": "Бессрочная лицензия на доступный сайт и ограниченная гарантия"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "у гаранта, предоставившего независимую гарантию в качестве обеспечения исполнения контракта, лицензии на осуществление банковских операций",
+              "legal_duty_confirmed": false,
+              "literal_start": 21547,
+              "original_binary_sha256": "a4519b4ba45d7eb95239612449b32d9c4a1ccdbc2d1cb3dce9d8332c31005560",
+              "original_filename": "Прилoжение 5 Проект контракта.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "2dd691c50a391a60c86e71ef6557c768da0324ba2a788c741866078b4c4b9662",
+              "source_locator": "Строка 95",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c704ee136f7b02afa9000cf3a2afef46391ca668b7be20ea6d80564e21218e08",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Услуги должны оказываться на основе использования сертифицированных (лицензионных) программно-технических средств.",
+              "legal_duty_confirmed": false,
+              "literal_start": 3438,
+              "original_binary_sha256": "30371bc3755126ae07200bc9793cc6465a622802a8f024db19f682f78f62551b",
+              "original_filename": "Прилoжение 2 Описание объекта закупки.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "b3438e90b2a34f5dccbb198d119e44558f80b2f4030ba07d7435134b7ac56abd",
+              "source_locator": "Строка 27",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "62a38a888459209bfed9c5059c504ddb462885ce860c20de5aa32a214450062c",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0152200004026000069",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Контракт говорит об отзыве лицензии у банка-гаранта, а ТЗ требует сертифицированных/лицензионных средств при оказании услуг. Это разные субъекты и разные проверки, не требование банковской лицензии участнику.",
+          "topic": "Банковская лицензия гаранта и лицензионные программные средства"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Гарантийный срок на оказание Услуг по строительному контролю соответствует гарантийному сроку",
+              "legal_duty_confirmed": false,
+              "literal_start": 25379,
+              "original_binary_sha256": "e8082053921f097d1d735b11d44918a651599ded5b2544a5ac024f543b8adc56",
+              "original_filename": "Проект контракта.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "346ea3b4bba6a26e4ffe369d89f2ba68b3d6aa35b83eb70308a6acfbb1ec6c26",
+              "source_locator": "PARAGRAPH-0119",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "b92d4c7132e4f817e91e5964b8c03196a18fc22796e6a230b5170ce1abdfbc64",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Гарантийный срок поддержки — 12 месяцев.",
+              "legal_duty_confirmed": false,
+              "literal_start": 4168,
+              "original_binary_sha256": "431daee8d0870540aedd2520652ed879061d7e9c90e92c591d1664cf26b008b3",
+              "original_filename": "Техническое задание и технические характеристики.doc",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "d2c9d86d2fcb73be03633856f0067528d0c69c8d6bfa960d0cb2c96ca72e8728",
+              "source_locator": "Строка 66",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "88dfe78b65cb9d1b973bcd40f65871f922739a6dd43227665e92e31b705ccab2",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0360600005326000018",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "По извещению закупается VR-контент для музея; в разделе о гарантиях проекта контракта говорится о строительном контроле и конструктивных элементах, тогда как ТЗ определяет поддержку VR 12 месяцев. Проверить правильность проекта и толкование гарантийного пункта.",
+          "topic": "Потенциально чужой шаблон: строительный контроль вместо VR-контента"
         }
       ],
       "current_eis_revision_attested": false,
       "human_signed_legal_interpretations": 0,
       "limitations": "Exact quotes from separate original attachments illustrate textual scope differences, not proven legal conflicts. Cross-document context does not establish procurement legality, current EIS revisions, required participant qualifications or eligibility for tender.",
-      "scope": "FOUR_ARCHIVED_SOURCE_ATTESTED_CROSS_DOCUMENT_WORDING_COMPARISONS"
+      "scope": "SELECTED_ARCHIVED_SOURCE_ATTESTED_CROSS_DOCUMENT_WORDING_COMPARISONS"
     },
     "current_eis_revision_attested": false,
     "human_signed_full_semantic_reviews": 0,
