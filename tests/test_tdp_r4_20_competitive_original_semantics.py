@@ -9,16 +9,16 @@ from pathlib import Path
 
 import pytest
 
+from scripts.acceptance.build_r4_competitive_semantic_audit import (
+    build_review,
+    readable_review,
+)
 from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort import (
     validate_cohort,
     verify_original_notice,
 )
 from src.modules.tender_operator_agent_demo.r4_original_claim_audit import (
     verify_saved_quote,
-)
-from scripts.acceptance.build_r4_competitive_semantic_audit import (
-    build_review,
-    readable_review,
 )
 
 
