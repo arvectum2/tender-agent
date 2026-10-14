@@ -18,11 +18,11 @@ sys.path.insert(0,str(ROOT))
 from src.modules.tender_operator_agent_demo.r4_additional_original_claims import (
     audit_additional_sources,
 )
-from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
-    verify_attachment_coverage,
-)
 from src.modules.tender_operator_agent_demo.r4_all_original_text_coverage import (
     verify_all_96_original_texts,
+)
+from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
+    verify_attachment_coverage,
 )
 from src.modules.tender_operator_agent_demo.r4_new_original_material_leads import (
     validate_clause_leads_against_official_attachments,
