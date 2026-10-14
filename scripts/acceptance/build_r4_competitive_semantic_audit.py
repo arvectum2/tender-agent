@@ -170,7 +170,8 @@ def readable_review(review:dict)->str:
             f"В четырёх дополнительных модельных запусках сверены {new_claims['model_claims_checked']} цитата "
             f"по {new_claims['original_binaries_sha_verified']} скачанному с ЕИС приложению: "
             f"{new_claims['model_claims_exact_source_quotes']} дословных совпадений, "
-            f"{new_claims['claims_requiring_quote_correction']} цитата требует замены; "
+            f"{new_claims['claims_requiring_quote_correction']} цитата требует замены, "
+            f"{new_claims['claims_breaching_quote_length_policy']} цитаты длиннее установленного лимита; "
             f"{new_claims['model_batches_exceeding_claim_count_cap']} ответа превысили ограничение на количество утверждений."
         ),
         "",
