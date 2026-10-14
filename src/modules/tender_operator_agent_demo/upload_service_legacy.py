@@ -684,6 +684,7 @@ def _try_run_llm_workflow(
     contract_draft_text: str | None,
     quote_paths: list[Path],
     provider_mode: str = "llm",
+    source_research: dict[str, Any] | None = None,
 ) -> dict[str, Any] | None:
     """Legacy compatibility shim; no other source of controlled workflow logic."""
     from src.modules.tender_operator_agent_demo.operator_llm_workflow import (
@@ -699,6 +700,7 @@ def _try_run_llm_workflow(
         provider_mode=provider_mode,
         emit_event=append_demo_run_event,
         settings_getter=get_settings,
+        source_research=source_research,
     )
 
 
