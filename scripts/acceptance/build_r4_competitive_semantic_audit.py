@@ -25,6 +25,9 @@ from src.modules.tender_operator_agent_demo.r4_original_claim_audit import (
     audit_claims,
     index_binary_receipts,
 )
+from src.modules.tender_operator_agent_demo.r4_saved_report_deadline_audit import (
+    audit_saved_decisions,
+)
 
 _PINS={
     "selection":"93f72ba5127f21c9b7744688da2b375d80779a49d64243155e6657ff4d436da1",
@@ -72,6 +75,9 @@ def build_review(originals:Path)->dict:
                 "reason":n["noncompetitive_reason"],
                 "bid_ready":False} for n in selected["negative_cases"]]
     new_documents=audit_additional_sources(originals)
+    previous_deadlines=audit_saved_decisions(
+        expert["cases"],official,ai/"tender_operator_demo"
+    )
     report={
         "scope":"HISTORIC_FIRST_PARTY_OFFICIAL_20_COMPETITIVE_4_NEGATIVE_NOT_LIVE",
         "methodology":"Original ZIP and notice XML exact SHA+type; historic model source quotes only; legal interpretation not attested",
@@ -83,6 +89,7 @@ def build_review(originals:Path)->dict:
         "separate_official_reserve":selected["reserve_case"]["reg_number"],
         "saved_model_claims":claims,
         "additional_four_cases_and_21_original_binaries":new_documents,
+        "historical_model_report_deadline_audit":previous_deadlines,
         "all_saved_model_claims_checked":(
             claims["claims"] + new_documents["model_claims_checked"]
         ),
@@ -98,6 +105,8 @@ def readable_review(review:dict)->str:
     items=review["competitive_notices"]
     claim_map={c["registry_number"]:c for c in review["saved_model_claims"]["cases"]}
     new_claims=review["additional_four_cases_and_21_original_binaries"]
+    deadline_review=review["historical_model_report_deadline_audit"]
+
     additional_ids={
         v["registry_number"] for v in new_claims["claim_checks"]
     }
@@ -170,6 +179,14 @@ def readable_review(review:dict)->str:
         "",
         ("Даже при точной цитате смысл нормы договора и применимость требования к участнику требуют отдельной проверки. "
          "Подписанных юридических заключений по этой выборке нет."),
+        "",
+        (
+            f"При повторной сверке {deadline_review['saved_reports_verified']} сохранённых пользовательских отчётов "
+            f"найдены {deadline_review['date_conflict_count']} противоречия относительно официальной архивной редакции. "
+            f"{deadline_review['unattested_strong_blocker_decisions']} прежних выводов о якобы подтверждённом жёстком "
+            "препятствии не имеют независимого юридического утверждения и не должны автоматически использоваться "
+            "для решения об участии."
+        ),
     ])
     lines.extend([
         "",
