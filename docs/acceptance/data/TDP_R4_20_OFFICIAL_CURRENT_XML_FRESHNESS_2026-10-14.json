@@ -309,6 +309,8 @@
         }
       ],
       "unchanged_attachment_refs": 3,
+      "removed_attachment_count": 4,
+      "attachment_inventory_changed": true,
       "old_semantic_review_is_stale": true
     },
     {

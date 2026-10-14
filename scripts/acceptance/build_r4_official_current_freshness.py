@@ -1,7 +1,6 @@
 """Fail-closed current getDocsIP XML comparison, with source-verified replacement files."""
 from __future__ import annotations
 
-import hashlib
 import json
 import zipfile
 from datetime import UTC, datetime
@@ -10,6 +9,10 @@ from xml.etree import ElementTree as ET
 
 from scripts.acceptance.audit_r5_official_sources import audit_archive, local_name
 from scripts.acceptance.check_r4_live_eis_cards import compare_deadline
+from src.modules.tender_operator_agent_demo.eis_attachment_revision_guard import (
+    compare_official_attachment_manifests,
+    verify_new_original_binary,
+)
 
 
 def notice_attachments(zip_path: Path, number: str, version: int) -> dict[str, dict]:
@@ -126,31 +129,24 @@ def verified_current_sources(
                 old_root / n / "documentation-archive.zip", n, historical["archived_version"]
             )
             new = notice_attachments(file, n, current["version"])
-            replaced = set(new) - set(prev)
-            retired = set(prev) - set(new)
-            if len(replaced) != len(retired) or replaced != set(new_receipt):
-                raise ValueError("Latest official replacement attachments not fully recovered")
+            delta = compare_official_attachment_manifests(prev, new)
+            if delta["same_uid_metadata_conflicts"]:
+                raise ValueError("Conflicting metadata for reused official attachment UID")
+            # An amendment may add files without removing any, or delete
+            # files without adding replacements. Never require 1:1 pairing.
+            added = set(delta["added_ids"])
+            if added != set(new_receipt):
+                raise ValueError("Latest official new attachment bytes not fully recovered")
             evidence = []
-            for uid in replaced:
+            for uid in added:
                 item, proof = new[uid], new_receipt[uid]
                 suffix = Path(item["fileName"]).suffix.lower()
-                raw = (binary_dir / (uid + suffix)).read_bytes()
-                if (
-                    proof["status"] != "FIRST_PARTY_BINARY_VERIFIED"
-                    or proof["file_name"] != item["fileName"]
-                    or proof["file_size"] != len(raw) or int(item["fileSize"]) != len(raw)
-                    or proof["sha256"] != hashlib.sha256(raw).hexdigest()
-                ):
-                    raise ValueError("New EIS original binary SHA/size/identity mismatch")
-                evidence.append({
-                    "filename": item["fileName"],
-                    "size_bytes": len(raw),
-                    "sha256": proof["sha256"],
-                    "binary_verified": True,
-                    "full_legal_scope_review_signed": False,
-                })
+                binary_file = binary_dir / (uid + suffix)
+                evidence.append(verify_new_original_binary(uid, item, proof, binary_file))
             case["new_replaced_attachments"] = sorted(evidence, key=lambda x: x["filename"])
-            case["unchanged_attachment_refs"] = len(set(new) & set(prev))
+            case["unchanged_attachment_refs"] = len(delta["retained_ids"])
+            case["removed_attachment_count"] = len(delta["removed_ids"])
+            case["attachment_inventory_changed"] = delta["manifest_changed"]
             case["old_semantic_review_is_stale"] = True
         cases.append(case)
     return {
