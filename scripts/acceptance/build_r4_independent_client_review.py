@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from src.modules.tender_operator_agent_demo.r4_price_inquiry_primary_audit import (  # noqa: E402
+from src.modules.tender_operator_agent_demo.r4_price_inquiry_primary_audit import (
     client_expert_source_report,
     reconcile_price_inquiry_originals,
 )
