@@ -67,7 +67,7 @@ def test_page_locator_cannot_be_inferred_from_unicode_offset_or_unsupported_proo
     loose = bind_source_span([doc],r,**options,physical_locator={"kind":"pdf_page","label":"17"})
     assert loose["physical_locator"] is None
     assert loose["physical_locator_status"] == "PAGE_OR_CELL_NOT_ATTESTED"
-    checked = bind_source_span(
+    untrusted = bind_source_span(
         [doc],r,**options,physical_locator={
             "kind":"pdf_page","label":"17","extraction_attested":True,
             "normalized_span_map":{
@@ -76,9 +76,42 @@ def test_page_locator_cannot_be_inferred_from_unicode_offset_or_unsupported_proo
             },
         },
     )
+    assert untrusted["physical_locator"] is None
+
+    # Even a separately supplied mapping must originate from an independently
+    # registered extractor with the raw original SHA receipt.
+    doc.raw_content = b"synthetic immutable original PDF bytes"
+    raw_digest = hashlib.sha256(doc.raw_content).hexdigest()
+    trusted = research_full_corpus(
+        [doc], manifest=[{"file_id":"d","raw_sha256":raw_digest}],
+    )
+    loc_map = {
+        "file_id":"d","raw_sha256":raw_digest,"source_sha256":sha(source),
+        "start":0,"end":len(source),
+    }
+    trusted["physical_span_maps"] = [{
+        **loc_map, "kind":"pdf_page","label":"17",
+        "producer":"data_platform_original_coordinate_map_v1",
+    }]
+    checked = bind_source_span(
+        [doc], trusted, **options,
+        physical_locator={
+            "kind":"pdf_page","label":"17","extraction_attested":True,
+            "normalized_span_map":loc_map,
+        },
+    )
     assert checked["physical_locator"] == {"kind":"pdf_page","label":"17"}
     assert checked["physical_locator_status"] == "EXPLICIT_SOURCE_MAPPING_REVIEW"
     assert checked["semantic_verification"] == "NOT_PERFORMED"
+
+    wrong = bind_source_span(
+        [doc], trusted, **options,
+        physical_locator={
+            "kind":"pdf_page","label":"18","extraction_attested":True,
+            "normalized_span_map":loc_map,
+        },
+    )
+    assert wrong["physical_locator"] is None
 
 
 def test_tampered_source_does_not_appear_as_verified_evidence():
