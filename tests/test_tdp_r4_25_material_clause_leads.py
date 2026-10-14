@@ -108,3 +108,30 @@ def test_private_25_original_clause_evidence_replay_if_connected():
     assert proof["independently_located_clause_leads"] == 12
     assert proof["source_original_attachments_with_text"] == 25
     assert proof["full_contract_semantic_reviews_signed"] == 0
+
+
+def test_clause_must_be_tied_to_same_official_notice_and_binary_sha(tmp_path, monkeypatch):
+    root = _fixture(tmp_path, monkeypatch)
+    extraction = leads.verify_material_clause_leads(root)
+    cases = {}
+    for item in extraction["leads"]:
+        case = cases.setdefault(item["registry_number"], {
+            "registry_number": item["registry_number"], "documents": [],
+        })
+        record = {
+            "original_filename": item["original_document_name"],
+            "original_document_sha256": item["original_binary_sha256"],
+        }
+        if record not in case["documents"]:
+            case["documents"].append(record)
+    # The remaining original cases remain in the archive, but are not sampled.
+    for i in range(13):
+        n = f"{i+1000:019d}"
+        cases[n] = {"registry_number": n, "documents": []}
+    coverage = {"source_shas_attested": 96, "cases": list(cases.values())}
+    assert leads.validate_clause_leads_against_official_attachments(
+        extraction, coverage
+    )["original_binary_sha_and_notice_edition_links_verified"] == 12
+    coverage["cases"][0]["documents"][0]["original_document_sha256"] = "f" * 64
+    with pytest.raises(ValueError, match="not attested"):
+        leads.validate_clause_leads_against_official_attachments(extraction, coverage)
