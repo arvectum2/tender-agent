@@ -106,7 +106,13 @@ def _normalized_value(kind: str, value: Any) -> str | None:
         if isinstance(value, bool) or value is None:
             return None
         try:
-            raw = str(value).strip().replace("\u00a0", "").replace(" ", "").replace(",", ".")
+            raw = str(value).strip().replace("\u00a0", "").replace(" ", "")
+            if "," in raw and "." in raw and raw.index(",") < raw.rindex("."):
+                raw = raw.replace(",", "")
+            elif raw.count(",") > 1 and "." not in raw:
+                raw = raw.replace(",", "")
+            else:
+                raw = raw.replace(",", ".")
             number = Decimal(raw)
             if not number.is_finite() or number < 0:
                 return None
@@ -190,3 +196,50 @@ def check_typed_original_facts(
         "source_corruption_or_revision_conflict": edition_conflict,
         "bid_ready": False,
     }
+
+
+def extract_model_eis_summary_claims(requirements: dict[str, Any]) -> list[dict[str, Any]]:
+    """Strictly extract explicit labelled numbers/dates, not free prose guesses.
+
+    An unrecognised label is NOT silently assigned to an EIS field, and a
+    missed parser match is exposed separately as an unanswered source field.
+    """
+    summary = str(requirements.get("tender_summary") or "")
+    claims: list[dict[str, Any]] = []
+    price = re.search(
+        r"(?:НМЦК|NMCK)\s*[:=–-]\s*"
+        r"(?P<value>\d[\d,.\s]*\d|\d)\s*(?:RUB|₽|руб(?:лей)?)",
+        summary, re.IGNORECASE,
+    )
+    if price:
+        claims.append({"field": "nmck", "value": price.group("value").strip()})
+    deadline = re.search(
+        r"(?:submission\s+deadline|срок\s+подачи\s+заявок)\s*[:=–-]\s*"
+        r"(?P<value>(?:\d{4}-\d{2}-\d{2}T|\d{2}\.\d{2}\.\d{4}\s+)"
+        r"\d{2}:\d{2}(?::\d{2})?\s*[+-]\d{2}:\d{2})",
+        summary, re.IGNORECASE,
+    )
+    if deadline:
+        claims.append({"field": "submission_deadline", "value": deadline.group("value").strip()})
+    return claims
+
+
+def audit_model_eis_summary(
+    research: dict[str, Any],
+    requirements: dict[str, Any],
+) -> dict[str, Any]:
+    claims = extract_model_eis_summary_claims(requirements)
+    checked = check_typed_original_facts(research, claims)
+    available = {
+        str(f.get("field")) for f in research.get("structured_notice_facts", [])
+        if f.get("field") in {"nmck", "submission_deadline"}
+    }
+    asserted = {c["field"] for c in claims}
+    checked["unmentioned_archived_eis_fields"] = sorted(available - asserted)
+    checked["explicit_assertions_count"] = len(claims)
+    checked["contradictions_count"] = sum(
+        c["status"] == "CONTRADICTED_BY_HISTORICAL_EIS_SOURCE"
+        for c in checked["claims"]
+    )
+    checked["claim_semantics_verified"] = False
+    return checked
