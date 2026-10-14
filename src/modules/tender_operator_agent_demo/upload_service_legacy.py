@@ -1575,7 +1575,6 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
     from src.modules.tender_operator_agent_demo.operator_analyze_run import (
         analyze_uploaded_demo_run as _analyze_run,
     )
-
     from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
         run_with_full_corpus_research,
     )
