@@ -1,0 +1,28 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EXPERT-SOURCE-PACKET-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Bridge source-exact tender proofs into the existing R4/R5 20-case human-gold review protocol and ARV-001 quality gate without inventing expert signoff.
+definition_of_done:
+  - Emit a reproducible per-case reviewer packet with source-file SHA, provenance, unique source claims, typed EIS exceptions, missing documents, unresolved revisions and concrete human rubric fields.
+  - Never infer current EIS version, page/table coordinates, expert labels, signed GO or project release from machine output.
+  - Preserve machine verdicts separately from human labels; only explicitly entered independent reviewer evidence can eventually support ARV-001, and no auto-signoff action in this task.
+  - Integrate optional packet into operator report/API trace via frozen-AST compatible facade, privacy-safe and read-only.
+  - Test real original 44-FZ Museum source replay, synthetic 223-FZ and commercial B2B, tampered source, missing page, conflicting notice, unsupported model claims.
+  - Run isolated Mac mini targeted tests/Ruff plus exact GitHub draft stacked PR CI, record hash/status.
+completed:
+  - '2026-10-14 prerequisite PR426 full-corpus source research code locally full pytest 4042 PASS/238 SKIP and original exact GitHub PR/push CI 3/3 SUCCESS; bounded child completed.'
+  - '2026-10-14 prerequisite PR427 source proof implemented code9f5d5c58b88c4261db2b9d1210c0a88a9f60af26 full Mac mini 4053 PASS/238 SKIP/0 FAIL, 75 relevant PASS/Ruff, six museum source/15 exact original quotes; GitHub final PR/push CI in_progress, keep draft unmerged.'
+current: 'Inspect existing reviewer gold / ARV-001 protocol and implement machine prefill packet that cannot masquerade as an approval.'
+pending:
+  - Implement per-case source grounded reviewer sheet in original rubric categories.
+  - Add negative tests for machine vs human status separation, synthetic 223/B2B unknowns and archived EIS revision.
+  - Report integration, Mac mini tests/Ruff, draft PR exact-head CI, checkpoint and parent update.
+last_verified_commit: 'PR427 code9f5d5c58b88c4261db2b9d1210c0a88a9f60af26 full Mac mini pytest 4053 PASS/238 SKIP/0 failed/Ruff, child checkpoint 026355cedd9341d10f934e238123803f412ef4fe CI in progress.'
+test_results:
+  - 'Historical original source six Museum files and 15 explicit char span/source_sha quote verifications. R4 reviewer gold 20 cases 0/20 human acceptance per existing protocol.'
+resume_instruction: 'On feature/expert-source-review-packet-20261014 stacked on PR427, implement machine-generated expert evidence queue strictly separate from human-reviewed labels under existing docs/acceptance/TDP_R4_R5_HUMAN_GOLD_PROTOCOL_2026-10-12.md and docs/quality/ARV-001_Golden_Report_Quality_Gate.md. No fictitious reviewer/approval, page or table, current EIS, GO or enterprise release. Integrate report via injection-only wrapper, test negative and real original six-source Museum read-only replay, draft stacked PR/CI. Check predecessor PR427 exact CI when pending; close predecessor checkpoint only if 3/3 successful, no merging. manual_override true watchdog disabled, no ETP, bid, payment, signing, contact or production.'
+execution:
+  branch: feature/expert-source-review-packet-20261014
+  manual_override: true
