@@ -1,0 +1,18 @@
+{
+  "evaluator_source_only_packs": 3,
+  "expert_gold_signed_cases": 0,
+  "first_party_authority": "OFFICIAL_GETDOCSIP_TLS_ORIGINAL_ZIP_XML_AND_RAW_ATTACHMENTS",
+  "legal_bid_ready": false,
+  "limitations": "Pilot sample n=3 is not statistically adequate for accuracy claims; source-only identity freeze. Independent expert labels must precede SUT run and sample must remain hidden from model-driven tuning.",
+  "lock_sha256": "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+  "original_binary_files_sha_verified": 16,
+  "pre_registered_discovery_digest": "57f716d009e4480b3864907f237241aa790513be8d39f03b8c7de2e35245ff8a",
+  "precision": null,
+  "public_secondary_discovery": "https://tendigo.ru/tenders/razrabotka-po/",
+  "recall": null,
+  "selected_real_procurements": 3,
+  "semantic_accuracy_status": "NOT_MEASURED",
+  "source_selection": "FIRST_THREE_44FZ_COMPETITIVE_IT_FROM_FIXED_2026_10_14_DISCOVERY_ORDER",
+  "status": "SOURCE_LOCKED_AWAITING_INDEPENDENT_EXPERT_GOLD",
+  "sut_inference_executed_on_holdout": false
+}
