@@ -1108,6 +1108,1013 @@
     "whitespace_variant_official_originals": 3
   },
   "scope": "HISTORIC_FIRST_PARTY_OFFICIAL_20_COMPETITIVE_4_NEGATIVE_NOT_LIVE",
+  "selected_original_notice_attachment_coverage": {
+    "bid_ready": false,
+    "case_count": 20,
+    "cases": [
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 20839,
+            "original_document_sha256": "e676dad9cce36e801ec4bd271719240460460ec10b297e818c0338c943a43fea",
+            "original_filename": "ОБОСНОВАНИЕ НАЧАЛЬНОЙ.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 209408,
+            "original_document_sha256": "8c6eabfe92f7d8597391c4272a5a5d6a770975dc76eed47bf72ac31711f0fabb",
+            "original_filename": "проект контракта.doc",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 65024,
+            "original_document_sha256": "40b7f02c04139923e45ecb1c9e6e07b4b0b14a617841468beb53755eccb5ae17",
+            "original_filename": "ТЗ обслуживание Сайта.doc",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 35306,
+            "original_document_sha256": "28ee36931f3b486441a44b9ca798dacad1099a78193644b1df78e176357d6411",
+            "original_filename": "ТРЕБОВАНИЯ К СОДЕРЖАНИЮ, СОСТАВУ ЗАЯВКИ И ИНСТРУКЦИЯ ПО ЕЕ ЗАПОЛНЕНИЮ.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0127100008626000013",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 11234,
+            "original_document_sha256": "979a64878f0b026ed6ead69f1bd42ef7591741234cd1a5ae02acdf2d9c863dd8",
+            "original_filename": "Обоснование НМЦК_сайт.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 209920,
+            "original_document_sha256": "a30954f2ba0cfce49c13af94e887174329e6591bb046764de8a4be5e4d693791",
+            "original_filename": "Проект конкракта_сайт.doc",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 55873,
+            "original_document_sha256": "816b8f182ce6d99aad80ca2b5af1d16179cd4b9c41248625aa194c399cdfaac6",
+            "original_filename": "Описание объекта закупки_сайт.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 21911,
+            "original_document_sha256": "14ba7e24a167e756204975a4ac540457f05139ce45bdd7258585211ae674febd",
+            "original_filename": "ТРЕБОВАНИЯ К СОДЕРЖАНИЮ СОСТАВУ ЗАЯВКИ НА УЧАСТИЕ В ЗАКУПКЕ.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0137200001226007700",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 26075,
+            "original_document_sha256": "f000205e0c0bb7c1166fdc0272fabfd592d4060a5c32f8d7e52f8e1490c39f05",
+            "original_filename": "1_Обоснование НМЦК.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 62751,
+            "original_document_sha256": "918ebcea3930147b45d4125497ac8d36eeb20f2109fc5e368e01c79aa5df6d71",
+            "original_filename": "2_Проект государственного контракта.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 53190,
+            "original_document_sha256": "8142d03a12475aa5ab382286d654ad694f0408ea69c7c4c5aa59f1a81dc5c455",
+            "original_filename": "3_Описание объекта закупки.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 32762,
+            "original_document_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+            "original_filename": "4_Требования к содержанию, составу заявки.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0148200000526000028",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 65536,
+            "original_document_sha256": "f25bb5ee0779fb94d88a99a21f1d9b5ac5c46f658d8181f313e934d3c7cae601",
+            "original_filename": "Обоснование НМЦК.doc",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 899201,
+            "original_document_sha256": "810c0693336171845bf7ab7e3685ba098ae48defad756f716161c1e1316c3a05",
+            "original_filename": "Проект контракта.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 855530,
+            "original_document_sha256": "5018d0b6313546ae0ee58a60d2fe9503d061d65c5bbba69ad0bbb58a30376041",
+            "original_filename": "Описание объекта закупки.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 32674,
+            "original_document_sha256": "98e3be9768d9f062f894117fe5e5782ce96a6d314bdb4374f5c00506e44b9ec9",
+            "original_filename": "Требования к содержанию и составу заявки.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 10109,
+            "original_document_sha256": "9a605e8ec34c862d7b5faba393a3876652cb9150ccb07c6e8169edefbdc441e3",
+            "original_filename": "Состав извещения10811978.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0149200002326001555",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 16021,
+            "original_document_sha256": "ac030447826a7e0c52baef899c2f1b6adaddb75e99ff4796e51997def2d41aee",
+            "original_filename": "НМЦК.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 514279,
+            "original_document_sha256": "dcacb4f765c9d9e9781e754f4d32495c828f061e96e310eea4644aa649ef1412",
+            "original_filename": "ПК.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 494309,
+            "original_document_sha256": "7b88f5b59f8b96cc559e74a8429a54128794641837a018a56dfe7e321812d348",
+            "original_filename": "ООЗ.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 19205,
+            "original_document_sha256": "b3251f5118cc85a5add3a810b40d354c46d8cd61308506d6ead0dbe0ee09bdad",
+            "original_filename": "Требования к заявке.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0151600003226000011",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 14705,
+            "original_document_sha256": "376413127e2362b505934c65a1e1fe89efa8a36ce61f3a9f66caae2a6227333a",
+            "original_filename": "Прилoжение 3 Обоснование НМЦК.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 30782,
+            "original_document_sha256": "a4519b4ba45d7eb95239612449b32d9c4a1ccdbc2d1cb3dce9d8332c31005560",
+            "original_filename": "Прилoжение 5 Проект контракта.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 15015,
+            "original_document_sha256": "30371bc3755126ae07200bc9793cc6465a622802a8f024db19f682f78f62551b",
+            "original_filename": "Прилoжение 2 Описание объекта закупки.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 20290,
+            "original_document_sha256": "536f9e4981669d9eba2148d0537b9ee09bb41fcf6ebab706e57ee2153d41652c",
+            "original_filename": "Прилoжение 4 Требования к заявке.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 20986,
+            "original_document_sha256": "d4734cde72e3c6f25506fd9d142aad84165cc91f362fce96d86353fe98f4e3e0",
+            "original_filename": "Прилoжение 6 Обеспечение исполнения контракта.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 6,
+            "original_declared_bytes": 17481,
+            "original_document_sha256": "fa69e541a6fbcf7fdd828b0bfc2165f59ae30bc95074ad4ff5ee704753d99dc8",
+            "original_filename": "Прилoжение 1 Требования к участникам.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 6,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0152200004026000069",
+        "required_original_attachments": 6
+      },
+      {
+        "archived_version": 5,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 18617,
+            "original_document_sha256": "4c58d851e93bf1fd046904e2253a8c4e31cebf9731bf5cc707d89f5cd17978c1",
+            "original_filename": "Обоснование НМЦК.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 77167,
+            "original_document_sha256": "8ca942f6a5860a99824fc57a0b017bc251b8e13e85521d187824d2c49a013403",
+            "original_filename": "контракт Разработка веб сайта Молодежный центр.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 1411307,
+            "original_document_sha256": "4b4a93740285af66390711c8e224b83dd0732f6c449e71cc97c4cddbbb654dc0",
+            "original_filename": "макет .docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 37543,
+            "original_document_sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a",
+            "original_filename": "описание объекта закупки 2.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 24374,
+            "original_document_sha256": "d247616f3a05b0fbf0d23d32a9f79ddabf248983f82625ee58e137fa4b881a0f",
+            "original_filename": "Требования к содержанию и составу заявки общие с нац режимом-.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0158300034526000388",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 4,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 54376,
+            "original_document_sha256": "b5cbff3cfd517c83113e04754292e9515eee3272bf33d35a07cec7da675a7899",
+            "original_filename": "3. Обоснование НМЦК.odt",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 85975,
+            "original_document_sha256": "cb191f2dbf1e42b3b436ed931935bdb5e7bb6f706c3cb58ab233f4a11cd0fbdc",
+            "original_filename": "Проект контракта.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 287878,
+            "original_document_sha256": "54e5e92c7c873c890dbd3cdb1bded45be8edd1f241c9c705d0b8c5d9ec66bda0",
+            "original_filename": "Описание объекта закупки.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 59318,
+            "original_document_sha256": "a8be7c776cde3eddbf1c0469e785fac9f495b5f7a46ba4d87ca29f94d1865919",
+            "original_filename": "Требования к содержанию_ составу заявки на участие в закупке8345347.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 32064,
+            "original_document_sha256": "3e02050b90cf3cf058d70dc85ec5b6775a349f9036791b2e8cc5d6d52e8fea8d",
+            "original_filename": "Приложение к Извещению.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0162200011826003089",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 15604,
+            "original_document_sha256": "94ba8936295863a48a6fe665e31fd70678dc7dfae4b9fa0b80984e12a7aec263",
+            "original_filename": "Обоснование НМЦК.xlsx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 78903,
+            "original_document_sha256": "64f1dd988630665dbca3f28ca8516408fccfe4cd6e40b76536b1175300783ce8",
+            "original_filename": "Проект контракта.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 137728,
+            "original_document_sha256": "84752ad82bec1c16106f04ec398584f81f1fc05ae314d34fa280d00a0525f78a",
+            "original_filename": "Описание объекта закупки.doc",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 28106,
+            "original_document_sha256": "d56b94802e3a5879ae1901e0f8424d2014d0c924a95a7451dbadfcf9c79a7559",
+            "original_filename": "SYS_REQUEST_PART_EA.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 32106,
+            "original_document_sha256": "0f5530d01fda6dc0c3a6939b097cb404d5a85a55e968d20a865a8fe358c16410",
+            "original_filename": "Приложение к извещению (ЗЗ)4762753.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0162300005826000156",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 46080,
+            "original_document_sha256": "95eb6bc59e910e0f159cb4eacf543d2ee40106bcbf3c3a8c3612e1f53a07dc56",
+            "original_filename": "Приложение 1 Обоснование НМЦК .xls",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 108045,
+            "original_document_sha256": "27fe6bfa83e6bf497a6678218b32a7ba984de8b9b5f260e5526f92774f6d3ed5",
+            "original_filename": "Приложение 2 Проект контракта (с приложениями).docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 60975,
+            "original_document_sha256": "2aaf7f8d4377d941c94fdbcca329b3cc7f90639fed23697940f7811f91dc0c7c",
+            "original_filename": "Приложение 3 Техническое задание (Описание объекта закупки).docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 25654,
+            "original_document_sha256": "bbdcb3ff39ce4ba1a559658b8e4897cad0f7397e4e29af804b8e7817fefb2580",
+            "original_filename": "Приложение 4 Требования к содержанию и составу заявки, инструкция .docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 191488,
+            "original_document_sha256": "df3c84ad4281b21b697d74648fe2870ae5266e8ebaf14cb47f9d15e2416fbd61",
+            "original_filename": "Извещение электронного аукциона №178.doc",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0169300003326000181",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 20553,
+            "original_document_sha256": "eb9fde84ce751787c5f8bd643b1b935c17576a48f26dafe82169ce233fa80ff9",
+            "original_filename": "Приложение 2 - Обоснование НМЦК.xlsx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 45637,
+            "original_document_sha256": "d4793e94b272b1f06a79e75600c2f01481a219799b211ac5ca0b692d14107b02",
+            "original_filename": "Проект контракта.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 29543,
+            "original_document_sha256": "b2af61e3c9ea8bbea3e0cf72f3b7e8f4fb23d1c3e9c2f4bef4c9e9ad955b8f9d",
+            "original_filename": "Приложение 1 - Описание объекта закупки.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 71168,
+            "original_document_sha256": "d63ad34a60c4e5f2599999ea4d60b648c5a3b0a26663eacf7b685f2699b98eba",
+            "original_filename": "Приложение 3 - Требования к содержанию и составу заявки.doc",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0169300008226000223",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 20535,
+            "original_document_sha256": "c806a7b82ad10b6acc99b1addbf3925e59fb9db51e626e4752e74b20bedbc19a",
+            "original_filename": "Приложение 2 - Обоснование НМЦК.xlsx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 48010,
+            "original_document_sha256": "704a9fc8ba767767060267795795a3a1960e5a6843c68a50127d538005a0c4e4",
+            "original_filename": "Проект контракта.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 29587,
+            "original_document_sha256": "762a0ea182ac4ae7a7f7ec922c089fe1d44bad096348517b4abf995bce409935",
+            "original_filename": "Приложение 1 - Описание объекта закупки.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 71168,
+            "original_document_sha256": "b57afdb1d1f2a62961ed8880aba7f539356398c3710b7ffb6a06ba41722e68a1",
+            "original_filename": "Приложение 3 - Требования к содержанию и составу заявки.doc",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0169300008226000225",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 139241,
+            "original_document_sha256": "3f94bb97450d8bd5ba887834f72638c98eefc017b8fe7453d74d8ca2146a0e1e",
+            "original_filename": "Обоснование НМЦК.zip",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 58232,
+            "original_document_sha256": "adf7010e9846d5b114cb33318fbc10ec661b28a4dbc269385e07c87cdc5d945b",
+            "original_filename": "Проект контракта, сост. 30.03.2026.zip",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 982370,
+            "original_document_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+            "original_filename": "САЙТ_ТЗ_на_ДОРАБОТКУ_2026 ИТОГ.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 37904,
+            "original_document_sha256": "28f381eaa5cacbef625961b54f31685d2dbb17247c21288734f5c8fbe2f43f44",
+            "original_filename": "Требования_к_составу_заявки_на_участие_в_аукционе.docx",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 522978,
+            "original_document_sha256": "0efdfd67f7b21c493cae28dc33db4cddd7fd109da5068242a2838a4ac9d75d04",
+            "original_filename": "Приложение к проекту контракта, сост. 30.03.2026.zip",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 6,
+            "original_declared_bytes": 915835,
+            "original_document_sha256": "4998e23fb76153b2b55ada03888e7f9f4af022275ec8eb10a35a7f5b8fa74862",
+            "original_filename": "Другое приложение, сост. 30.03.2026.zip",
+            "source_proof": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 6,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0348100024426000021",
+        "required_original_attachments": 6
+      },
+      {
+        "archived_version": 3,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 135528,
+            "original_document_sha256": "fb3be0c95f7f9cd48cb41188cfe5da6336dd0f382a8834bd47710b8ae5fb7d8d",
+            "original_filename": "Обоснование НМЦК.zip",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 52073,
+            "original_document_sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185",
+            "original_filename": "Проект контракта, сост. 08.10.2026.zip",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 1778149,
+            "original_document_sha256": "901c0b7607c71673f592df8f2e4a40d3a0d1a4b26521765652017240d7dc93f4",
+            "original_filename": "ООЗ ДОРАБОТКА САЙТА.pdf",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 35558,
+            "original_document_sha256": "6c0d6fd49a8698a72ef9c6fd654cbcbc9671b23948699dad58004210bf9aec40",
+            "original_filename": "Требование к содержанию, составу заявки на участие в закупке закупка №060577-26.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 499446,
+            "original_document_sha256": "5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9",
+            "original_filename": "Приложение к проекту контракта, сост. 08.10.2026.zip",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 6,
+            "original_declared_bytes": 1348706,
+            "original_document_sha256": "4d67941f0a8acdc9922e005f157f41937d4f0fef7a59fbe77065577d14f18143",
+            "original_filename": "Другое приложение, сост. 08.10.2026.zip",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 7,
+            "original_declared_bytes": 22427,
+            "original_document_sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+            "original_filename": "Порядок рассмотрения и оценки заявок на участие в конкурсах закупка №060577-26.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 7,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0348100024426000039",
+        "required_original_attachments": 7
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 50688,
+            "original_document_sha256": "59a9818f1d74c9191fcf955235642c04ecb1f05e446cb3f9d850972effe038f2",
+            "original_filename": "Приложение  1_Обоснование НМЦК.doc",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 56625,
+            "original_document_sha256": "aa2a235185682736cf3b04fa7a6149ca1e13f3a97995ed75b6be739d5ef3e9f7",
+            "original_filename": "Приложение 5_ Проект Контракта.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 79872,
+            "original_document_sha256": "44cf5037944f23432af1c6e904c12e10cf3167cd3a4632a83178c2b98e1c2678",
+            "original_filename": "Приложение  2_Описание обьекта закупки. Техническое задание. Сверенное - Актуальное 18.10.2024.doc",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 45210,
+            "original_document_sha256": "2ec9091585b1e82d4be175d2c5521ae7a1a6f6b72b80b0450b158426fbc389cd",
+            "original_filename": "Приложение  3_ Требования к содержанию, составу заявки и инструкцию по ее заполнению..docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 49960,
+            "original_document_sha256": "9fa22bf6a2f10ca2e44eae21a6279810b975b3e68e9cb27d6949b24111285d3f",
+            "original_filename": "Приложение 4_ Порядок рассмотрения и оценки заявок.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0349100009326000005",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 2,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 131334,
+            "original_document_sha256": "849201361c9b2545a09e21b60ed814ca8b6f59675e8447917f0c19f8e8e65ee6",
+            "original_filename": "ПРИЛОЖЕНИЕ № 2 Обоснование начальной (максимальной) цены контракта (3).docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 110560,
+            "original_document_sha256": "e8082053921f097d1d735b11d44918a651599ded5b2544a5ac024f543b8adc56",
+            "original_filename": "Проект контракта.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 179712,
+            "original_document_sha256": "431daee8d0870540aedd2520652ed879061d7e9c90e92c591d1664cf26b008b3",
+            "original_filename": "Техническое задание и технические характеристики.doc",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 40850,
+            "original_document_sha256": "c88ac15de17a96a3a5513e10b55c192ee65fe662f33630d72db41afb27a4bb92",
+            "original_filename": "Требования к содержанию, составу заявки на участие в закупке и инструкция по ее заполнению.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0360600005326000018",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 126976,
+            "original_document_sha256": "b91ed27947df6065f5ca22697343dda76837758015c77874a03f4e8a121a71c8",
+            "original_filename": "Приложение_2_Расчет_и_обоснование_НМЦК_сайт.xls",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 317440,
+            "original_document_sha256": "9294908cc3aec0bda85c84d41cd19b80fe1e5ddebd1b386b4830466d64eca091",
+            "original_filename": "Приложение_1_Проект_контракта.doc",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 53606,
+            "original_document_sha256": "3e029344d179742632d519d4e425e6f8e9f757ce4df23e0419aa4302d4068536",
+            "original_filename": "Приложение_3_Описание_объекта_закупки_сайт.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 27424,
+            "original_document_sha256": "69f5c122eef4ebb2d4130a9950cc1ba269f2a72b01a049268b014b0d77fd2bed",
+            "original_filename": "приложение_4_Требования_к_содержанию,_составу_заявки_и_инструкция_по_заполнению.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 30479,
+            "original_document_sha256": "31d97c4fb2aba0827aa09c3302e157464ce1dd946992363043623a04c54fda79",
+            "original_filename": "Автоматический контроль.pdf",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 5,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0372200172326000015",
+        "required_original_attachments": 5
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 32796,
+            "original_document_sha256": "e9f53e1feb1560610e7ea3ebf8c4c8e0090376d11a9f0e59fae94f286e8fd495",
+            "original_filename": "Пр 2. Обоснование НМЦК.  Создание сайта и ТП..docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 47989,
+            "original_document_sha256": "01710aa6addbea66d1bdff43891fc2f98cfb503dc29b2247455c5338ee6209c8",
+            "original_filename": "Пр 4. Проект контракта. Создание сайта и ТП.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 51521,
+            "original_document_sha256": "6a408d91d6148e2c6a88c1b087ed7ad1601910d0ca99d921a73acdbd49e77edc",
+            "original_filename": "Пр 1. Описание объекта закупки.  Создание сайта и ТП..docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 27606,
+            "original_document_sha256": "d003fc57d678745ac7c17adfdc5a9eab4ba69a4ab21d37ed1433bd030af1df8e",
+            "original_filename": "Пр 3. Требование к заявке.  Создание сайта и ТП.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0376300000126000193",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 19271,
+            "original_document_sha256": "d9a8eca5dc1de44d0a42b553a69b41dc51f0b7bedcaee258b4b8d08782a462e0",
+            "original_filename": "Приложение № 1 Расчет НМЦК.xlsx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 61293,
+            "original_document_sha256": "b9a8468f35a5d1108463dd500875256f969ae161b937d54943cb748985d7cbb0",
+            "original_filename": "Приложение №2.Проект  контракта.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 22352,
+            "original_document_sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd",
+            "original_filename": "Приложение № 3 Описание объекта закупки.docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 17327,
+            "original_document_sha256": "52ebd5a917425ffa0a76a9394bb621cf6c5426c1bb40a18eb37d47e2ec719407",
+            "original_filename": "Приложение №4.Требование к содержанию, составу заявки на участие в закупке (6).docx",
+            "source_proof": "OLDER_VERIFIED_TLS_RECHECK",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 4,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0377100005726000128",
+        "required_original_attachments": 4
+      },
+      {
+        "archived_version": 1,
+        "bid_ready": false,
+        "document_content_legal_review": "NOT_APPROVED",
+        "documents": [
+          {
+            "archive_attachment_slot": 1,
+            "original_declared_bytes": 33813,
+            "original_document_sha256": "9b84ce642892ae13083ea92f6fc3bdd3ad0b2c550c4e45b68b7b1dbccd6c19c9",
+            "original_filename": "1 Обоснование НМЦК ОАЭФ-098.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 2,
+            "original_declared_bytes": 134395,
+            "original_document_sha256": "cf0453e8a18887c57b4129e92fb5155a0242760f3733a65cddd6de20337bcf50",
+            "original_filename": "2 Проект контракта ОАЭФ-098.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 3,
+            "original_declared_bytes": 121495,
+            "original_document_sha256": "98ff84b5bef505ed34b19da501f8901e00ba6b4a90bac239fb35d0c9683c60d3",
+            "original_filename": "3 Описание объекта закупки ОАЭФ-098.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 4,
+            "original_declared_bytes": 43123,
+            "original_document_sha256": "3b4c4887f370eea9de83be2ad176e71f61e4579fca46ca57e0a07cf24b0b243c",
+            "original_filename": "3.1 Обоснование неприменения запрета ПП РФ 1875 ПР ВП ФК.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 5,
+            "original_declared_bytes": 30020,
+            "original_document_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+            "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          },
+          {
+            "archive_attachment_slot": 6,
+            "original_declared_bytes": 16432,
+            "original_document_sha256": "8de3a1f957c408296f583963cc9735b3f1547ae4e6977fd229d50cb8724c04db",
+            "original_filename": "5 Реквизиты счета для перечисления обеспечения.docx",
+            "source_proof": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+            "text_interpretation_approved": false
+          }
+        ],
+        "first_party_sha_verified": 6,
+        "latest_eis_revision_attested": false,
+        "registry_number": "0895100000126000897",
+        "required_original_attachments": 6
+      }
+    ],
+    "evidence_methods": {
+      "ADDITIONAL_ORIGINAL_DOWNLOAD": 21,
+      "NEWLY_RETRIEVED_OFFICIAL_SOURCE": 25,
+      "OLDER_VERIFIED_TLS_RECHECK": 50
+    },
+    "fresh_20261014_binary_originals": 25,
+    "human_signed_full_contract_reviews": 0,
+    "latest_publication_attested": false,
+    "new_20261012_binary_originals": 21,
+    "notice_attachment_references": 96,
+    "prior_72_TLS_verified": 72,
+    "source_scope": "20_ORIGINAL_ARCHIVED_NOTICE_VERSIONS_NOT_CURRENT_EIS",
+    "source_shas_attested": 96
+  },
   "separate_official_reserve": "0369100012826000157",
   "source_cohort": {
     "competitive": 20,
