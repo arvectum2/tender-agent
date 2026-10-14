@@ -120,3 +120,61 @@ def test_duplicate_versions_do_not_prove_price_contradiction():
     )
     assert report["contradiction_count"] == 0
     assert report["status"] == "NO_DETECTED_CONTRADICTIONS_NOT_VERIFIED"
+
+
+def test_real_operator_facade_blocks_semantically_wrong_schema_valid_model_claim():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    metadata = {
+        "files": [{"file_id": "ELIG", "display_name": "notice.txt"},
+                  {"file_id": "CONTRACT", "display_name": "contract.txt"}],
+        "limitations": [],
+    }
+    source_docs = [
+        doc("ELIG", "notice", _ELIGIBILITY),
+        doc("CONTRACT", "contract_draft", _PRICE),
+    ]
+    model = {
+        "requirements": {
+            "technical_requirements": [],
+            "qualification_requirements": ["Preference for small businesses and SONKO."],
+            "document_requirements": [],
+            "evaluation_criteria": [],
+        },
+        "contract_risks": [{
+            "clause": "3.8",
+            "description": "The contract price is fixed for the entire term.",
+        }],
+    }
+
+    def handler(run_id, **kwargs):
+        docs = kwargs["_collect_documents"](run_id, metadata)
+        result = kwargs["_try_run_llm_workflow"]()
+        return kwargs["_build_output_payloads"](
+            metadata=metadata,
+            requirements=result["requirements"],
+            calibrated_risks=result["contract_risks"],
+            documents=docs,
+        )
+
+    output = run_with_full_corpus_research(
+        handler,
+        "source-audit-1",
+        _collect_documents=lambda *_args: source_docs,
+        _try_run_llm_workflow=lambda **_kwargs: model,
+        _build_output_payloads=lambda **_kwargs: {"trace": {}, "requirements": {}},
+    )
+    report = output["trace"]
+    quality = report["source_research_quality_gate"]
+    audit = report["source_modality_audit"]
+    assert quality["status"] == "CONTRADICTION_REVIEW_REQUIRED"
+    assert quality["source_modality_contradictions"] == 2
+    assert quality["bid_ready"] is False
+    assert quality["claim_semantics_verified"] is False
+    assert audit["contradiction_count"] == 2
+    assert len(audit["findings"]) >= 2
+    assert all(x["semantic_verification"] == "NOT_PERFORMED" for x in audit["findings"])
+    assert "source_research_modality_audit" in metadata
+    assert any("Обнаружено противоречие" in str(s) for s in metadata["limitations"])
