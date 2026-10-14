@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-INDEPENDENT-LLM-CLAIMS-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Independently audit substantive local Gemma4 claims against preserved full archived EIS Museum of Bread originals, not just JSON validation.
+definition_of_done:
+  - Reverify saved original and extracted text SHA hashes and selected-context coverage.
+  - Capture private temporary local-only model outputs for audit; never upload document texts or raw model responses.
+  - Independently classify material model claims as supported, contradicted or unverifiable, and identify omissions.
+  - Add regression tests/fix for demonstrated source-grounding defect, check CI and checkpoint.
+completed:
+  - '2026-10-14 PR424 3/3 GitHub CI passed, schema validation 4/4 PASSED and human review required; stored runtime trace output only says raw_response_stored=false, no actual model answer persisted.'
+current: 'Run local-only controlled model replay with private JSON output, then check statements against preserved original documents.'
+pending:
+  - Record local four-section output privately in /tmp.
+  - Independently verify assertions with full archived originals.
+  - Update source-bound QA report, add tests/fix if needed, verify CI.
+last_verified_commit: 'PR424 exact 33a32e3ddfeeca910ebec15e515f2e50c97569bf GitHub 3/3 CI SUCCESS.'
+test_results:
+  - 'Prior 4/4 model output schema PASSED, substantive claim validation not performed.'
+resume_instruction: 'Read private SHA-matched Museum Bread original normalized text under /tmp/ta-apr03b-archived-local-llm-20261014/runs/toa-run-20261012200402-7249ed/normalized on Mac mini. Replay actual localhost Gemma4 controlled workflow into separate /tmp mode0600 JSON; inspect claim correctness against full text, keep summary only in GitHub. No ETP, bids, production, signing, payments, buyer contact, merge or watchdog. Owner current EIS/browser/legal acceptance remains open.'
+execution:
+  branch: qa/apr03b-independent-llm-claims-20261014
+  manual_override: true
