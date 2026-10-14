@@ -254,3 +254,46 @@ def test_extra_model_research_only_passed_to_explicitly_compatible_callable():
         _build_output_payloads=lambda **kwargs: {},
     )
     assert received["notice_text"] == "оригинал"
+
+
+def test_structured_eis_xml_fields_remain_source_defined_and_historical():
+    from src.modules.tender_operator_agent_demo.full_corpus_research import (
+        build_research_brief,
+    )
+
+    xml = (
+        "<export><purchaseNumber>0372200172326000015</purchaseNumber>"
+        "<maxPrice>1000000.00</maxPrice>"
+        "<endDT>2026-10-16T10:00:00+03:00</endDT>"
+        "<publishDTInEIS>2026-10-08T10:53:46+03:00</publishDTInEIS>"
+        "</export>"
+    )
+    result = research_full_corpus([doc("notice", "notice", xml)])
+    facts = {item["field"]: item for item in result["structured_notice_facts"]}
+    assert facts["nmck"]["value"] == 1000000.0
+    assert "2026-10-16" in facts["submission_deadline"]["value"]
+    assert all(item["requires_human_review"] for item in facts.values())
+    assert all(
+        item["source_status"] == "ORIGINAL_XML_EXTRACTED_NOT_CURRENT_ATTESTED"
+        for item in facts.values()
+    )
+    brief = build_research_brief(result)
+    assert "nmck=1000000.0" in brief["source_evidence_brief"]
+    assert "current authority" in brief["source_evidence_brief"]
+    assert result["source_truth_attested"] is False
+
+
+def test_unsafe_or_ambiguous_xml_never_exposes_structured_facts():
+    unsafe = (
+        '<!DOCTYPE export [<!ENTITY p "999">]>'
+        "<export><purchaseNumber>0372200172326000015</purchaseNumber>"
+        "<maxPrice>&p;</maxPrice></export>"
+    )
+    ambiguous = (
+        "<export><purchaseNumber>0372200172326000015</purchaseNumber>"
+        "<purchaseNumber>0372200172326000016</purchaseNumber>"
+        "<maxPrice>1000000</maxPrice></export>"
+    )
+    for source in (unsafe, ambiguous):
+        findings = research_full_corpus([doc("xml", "notice", source)])
+        assert findings["structured_notice_facts"] == []
