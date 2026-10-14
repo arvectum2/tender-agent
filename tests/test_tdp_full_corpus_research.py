@@ -225,6 +225,13 @@ def test_real_run_facade_indexes_all_docs_before_llm_and_keeps_sources_review_on
     assert metadata["source_research"]["unread_file_ids"] == []
     assert metadata["source_research_llm_claims"][0]["semantic_verification"] == "NOT_PERFORMED"
     assert state["outputs"]["trace"]["full_corpus_research"]["overall_decision"] == "HUMAN_REVIEW_REQUIRED"
+    gate = state["outputs"]["trace"]["source_research_quality_gate"]
+    assert gate["documents_total"] == 3
+    assert gate["documents_indexed"] == 3
+    assert gate["status"] == "SEMANTIC_REVIEW_REQUIRED"
+    assert gate["bid_ready"] is False
+    assert gate["claim_semantics_verified"] is False
+    assert gate["official_revision_current_attested"] is False
     assert any("не правильность юридического толкования" in s for s in metadata["limitations"])
 
 
