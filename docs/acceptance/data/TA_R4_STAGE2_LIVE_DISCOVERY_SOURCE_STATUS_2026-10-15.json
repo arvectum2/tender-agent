@@ -1,0 +1,29 @@
+{
+  "selection_intent_sha256": "8c7cd8ae0b916a277fb97949f66f6b891a6f73d7601f1f2b48b3063c838792c5",
+  "capture_recorded_at_utc": "2026-10-14T21:59:50+00:00",
+  "discovery_pages_attempted": 2,
+  "https_pages_verified": 0,
+  "discovery_candidate_ids_confirmed": 0,
+  "new_official_original_eis_cases_verified": 0,
+  "stage2_status": "BLOCKED_SOURCE_TLS_HANDSHAKE_TIMEOUT",
+  "stage2_target": 12,
+  "status_by_registered_page": [
+    {
+      "ordinal_rank": 1,
+      "url": "https://tendigo.ru/tenders/razrabotka-po/",
+      "capture_status": "SOURCE_UNAVAILABLE",
+      "error_type": "TLS_HANDSHAKE_TIMEOUT"
+    },
+    {
+      "ordinal_rank": 2,
+      "url": "https://tendigo.ru/tenders/razrabotka-saytov/",
+      "capture_status": "SOURCE_UNAVAILABLE",
+      "error_type": "TLS_HANDSHAKE_TIMEOUT"
+    }
+  ],
+  "prior_blind_cases_preserved": 3,
+  "prior_blind_originals_preserved": 16,
+  "human_signed_gold": 0,
+  "sut_ran_on_blind": false,
+  "legal_bid_ready": false
+}

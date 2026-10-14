@@ -73,6 +73,37 @@ def _xlsx_text(data: bytes) -> str:
         workbook.close()
 
 
+def verified_pdf_citation_pages(raw: bytes, filename: str) -> list[str] | None:
+    """Extract PDF page texts for strictly localized citation verification.
+
+    Preserve empty pages: removing one would shift all following citations.
+    Layout extraction remains incomplete for scans/tables, so human legal
+    review is still necessary even when a page quote is textually verified.
+    """
+    suffix = Path(filename).suffix.lower()
+    if suffix == ".zip":
+        if len(raw) > 30_000_000:
+            raise ValueError("Original ZIP too large for PDF page evidence")
+        with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+            entries = [info for info in archive.infolist() if not info.is_dir()]
+            if len(entries) != 1 or entries[0].file_size > 20_000_000:
+                raise ValueError("Ambiguous/oversize nested original for PDF page proof")
+            info = entries[0]
+            if info.flag_bits & 1 or Path(info.filename).is_absolute() or ".." in Path(info.filename).parts:
+                raise ValueError("Unsafe nested PDF original")
+            if Path(info.filename).suffix.lower() != ".pdf":
+                return None
+            return verified_pdf_citation_pages(archive.read(info), info.filename)
+    if suffix != ".pdf":
+        return None
+    pages = _pdf_text(raw).split("\f")
+    if pages and not pages[-1].strip():
+        pages.pop()
+    if not pages or len(pages) > 1_500:
+        raise ValueError("Unverifiable PDF page count")
+    return pages
+
+
 def verified_document_text(raw: bytes, filename: str) -> str:
     suffix = Path(filename).suffix.lower()
     if suffix == ".pdf":

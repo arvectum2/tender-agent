@@ -29,6 +29,7 @@ from src.modules.benchmark_pipeline.workflow import (
 )
 from src.modules.tender_operator_agent_demo.r4_original_text_extract import (
     verified_document_text,
+    verified_pdf_citation_pages,
 )
 
 _WS = re.compile(r"\s+")
@@ -80,6 +81,7 @@ def _quotes_exactly_grounded(
                 raise BenchmarkContractError("ASSERTED gold requires exact original source")
             all_evidence.extend(fact["evidence"])
     text_cache: dict[str, str] = {}
+    pdf_pages_cache: dict[str, list[str] | None] = {}
     for ref in all_evidence:
         name = ref["source_ref"]
         if name not in docs:
@@ -98,6 +100,7 @@ def _quotes_exactly_grounded(
                 raise BenchmarkContractError("Original source binary SHA changed")
             try:
                 text_cache[name] = verified_document_text(payload, original.name)
+                pdf_pages_cache[name] = verified_pdf_citation_pages(payload, original.name)
             except (ValueError, OSError) as exc:
                 raise BenchmarkContractError(
                     "Original unsearchable by text extractor; human source "
@@ -107,8 +110,16 @@ def _quotes_exactly_grounded(
         source_quote = _WS.sub(" ", quote).strip()
         if source_quote not in normalized:
             raise BenchmarkContractError("Reviewer quote not verbatim from source original")
-        # DOCX paragraphs and cells have deterministic structural locators.
-        # PDF page locators still require human visual verification.
+        pages = pdf_pages_cache[name]
+        if pages is not None:
+            page_match = re.fullmatch(r"PAGE-([1-9][0-9]*)", str(locator))
+            if page_match is None:
+                raise BenchmarkContractError("PDF citation needs a PAGE-N locator")
+            index = int(page_match.group(1)) - 1
+            if index >= len(pages) or source_quote not in _WS.sub(" ", pages[index]).strip():
+                raise BenchmarkContractError("PDF citation quote not found on claimed page")
+            continue
+        # DOCX paragraph/table and XLSX cells have structural locators.
         docx_locator = re.fullmatch(
             r"PARAGRAPH-\d+|TABLE-\d+ ROW-\d+ CELL-\d+", str(locator),
         )
