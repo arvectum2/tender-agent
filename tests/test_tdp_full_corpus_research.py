@@ -304,3 +304,51 @@ def test_unsafe_or_ambiguous_xml_never_exposes_structured_facts():
     for source in (unsafe, ambiguous):
         findings = research_full_corpus([doc("xml", "notice", source)])
         assert findings["structured_notice_facts"] == []
+
+
+def test_declared_normalized_sha_mismatch_excludes_text_from_research_and_brief():
+    source = doc("FILE-01", "notice", "<maxPrice>1000000</maxPrice>")
+    report = research_full_corpus(
+        [source],
+        manifest=[{"file_id": "file-01", "text_sha256": "a" * 64}],
+    )
+    assert report["source_status"] == "INCOMPLETE"
+    assert report["unread_file_ids"] == ["FILE-01"]
+    assert report["extracted_document_count"] == 0
+    assert report["documents"][0]["status"] == "HASH_MISMATCH_UNREVIEWED"
+    assert report["documents"][0]["receipt_status"] == "NOT_VERIFIED"
+    assert report["structured_notice_facts"] == []
+    assert next(x for x in report["findings"] if x["key"] == "price")["hits"] == []
+
+
+def test_declared_raw_sha_requires_raw_bytes_and_checks_exact_value():
+    import hashlib
+
+    d = doc("FILE-02", "contract_draft", "3.8. Изменение цены возможно.")
+    raw = b"real original"
+    manifest = [{"file_id": "file-02", "raw_sha256": hashlib.sha256(raw).hexdigest()}]
+    # A source with an expected raw hash must not silently bypass it.
+    missing_raw = research_full_corpus([d], manifest=manifest)
+    assert missing_raw["documents"][0]["status"] == "HASH_MISMATCH_UNREVIEWED"
+    d.raw_content = raw
+    good = research_full_corpus([d], manifest=manifest)
+    assert good["extracted_document_count"] == 1
+    assert good["documents"][0]["receipt_status"] == "MATCHED_DECLARED_DIGEST"
+    assert good["documents"][0]["raw_sha256"] == hashlib.sha256(raw).hexdigest()
+    d.raw_content = b"tampered"
+    bad = research_full_corpus([d], manifest=manifest)
+    assert bad["extracted_document_count"] == 0
+    assert bad["unread_file_ids"] == ["FILE-02"]
+
+
+def test_invalid_or_duplicate_manifest_receipts_fail_closed():
+    d = doc("FILE-03", "notice", "<maxPrice>600000</maxPrice>")
+    malformed = research_full_corpus(
+        [d], manifest=[{"file_id": "file-03", "text_sha256": "not-a-sha"}],
+    )
+    assert malformed["documents"][0]["status"] == "INVALID_SHA_RECEIPT_UNREVIEWED"
+    duplicate = research_full_corpus(
+        [d], manifest=[{"file_id": "file-03"}, {"file_id": "FILE-03"}],
+    )
+    assert duplicate["documents"][0]["status"] == "DUPLICATE_MANIFEST_ID_UNREVIEWED"
+    assert duplicate["unread_file_ids"] == ["FILE-03"]
