@@ -21,7 +21,6 @@ _MAX_CARD_BYTES=1_600_000
 class _NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, request, fp, code, msg, headers, newurl):
         del request, fp, code, msg, headers, newurl
-        return None
 
 
 def _official_identity(url: str, expected: str) -> bool:
