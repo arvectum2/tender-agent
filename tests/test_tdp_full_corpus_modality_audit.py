@@ -178,3 +178,46 @@ def test_real_operator_facade_blocks_semantically_wrong_schema_valid_model_claim
     assert all(x["semantic_verification"] == "NOT_PERFORMED" for x in audit["findings"])
     assert "source_research_modality_audit" in metadata
     assert any("Обнаружено противоречие" in str(s) for s in metadata["limitations"])
+
+
+def test_integrity_rejected_document_cannot_reenter_through_clause_or_modality_audit():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    bad_document = doc("tampered", "contract_draft", _ELIGIBILITY + "\n" + _PRICE)
+    metadata = {
+        "files": [{"file_id": "TAMPERED", "text_sha256": "0" * 64}],
+        "limitations": [],
+    }
+    model = {
+        "requirements": {
+            "qualification_requirements": ["Preference for SMEs/SONKO"],
+            "technical_requirements": [], "document_requirements": [],
+            "evaluation_criteria": [],
+        },
+        "contract_risks": [{"clause": "3.8", "description": "Contract price is fixed."}],
+    }
+
+    def handler(run_id, **deps):
+        docs = deps["_collect_documents"](run_id, metadata)
+        return deps["_build_output_payloads"](
+            documents=docs,
+            metadata=metadata,
+            requirements=model["requirements"],
+            calibrated_risks=model["contract_risks"],
+        )
+
+    output = run_with_full_corpus_research(
+        handler, "tamper-case",
+        _collect_documents=lambda *_args: [bad_document],
+        _try_run_llm_workflow=lambda **_kw: model,
+        _build_output_payloads=lambda **_kw: {"trace": {}, "requirements": {}},
+    )
+    trace = output["trace"]
+    assert trace["full_corpus_research"]["unread_file_ids"] == ["tampered"]
+    assert trace["source_research_quality_gate"]["status"] == "CORPUS_INCOMPLETE"
+    assert trace["source_research_quality_gate"]["bid_ready"] is False
+    assert trace["source_modality_audit"]["findings"] == []
+    assert trace["source_clause_review"][0]["status"] == "CLAUSE_NOT_FOUND"
+    assert not trace["source_clause_review"][0]["evidence"]
