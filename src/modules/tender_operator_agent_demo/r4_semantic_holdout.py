@@ -42,6 +42,37 @@ def forbidden_development_sources(original_audit: Mapping[str, Any]) -> dict[str
     }
 
 
+def forbid_reuse_of_prior_blind_cohorts(
+    development: Mapping[str, set[str]],
+    prior_locks: list[Mapping[str, Any]],
+) -> dict[str, set[str]]:
+    """Extend development exclusion with *all* previously locked blind sources.
+
+    Prior blind sources must NOT be reused in a fresh evaluation: a different
+    name/version wrapper or subsequent source pair is not a novel test case.
+    Only provenance metadata is consumed; no legal text, gold or model output.
+    """
+    result = {
+        key: set(development[key])
+        for key in ("notice_numbers", "binary_sha256", "zip_sha256", "xml_sha256")
+    }
+    for lock in prior_locks:
+        verify_cohort_lock(lock)
+        for case in lock["cases"]:
+            number = case["registry_number"]
+            shas = {
+                "notice_numbers": {number},
+                "binary_sha256": set(case["original_attachment_sha256"]),
+                "zip_sha256": {case["official_zip_sha256"]},
+                "xml_sha256": {case["official_xml_sha256"]},
+            }
+            if any(shas[field] & result[field] for field in shas):
+                raise HoldoutLeakageError("Prior blind cohort overlaps a previously protected source")
+            for field, values in shas.items():
+                result[field].update(values)
+    return result
+
+
 def lock_unseen_real_cohort(
     candidates: list[dict[str, Any]],
     *,

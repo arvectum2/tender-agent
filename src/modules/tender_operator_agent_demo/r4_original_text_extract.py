@@ -12,6 +12,7 @@ import zipfile
 from pathlib import Path
 
 from docx import Document
+from openpyxl import load_workbook
 
 
 def _pdf_text(data: bytes) -> str:
@@ -28,10 +29,56 @@ def _pdf_text(data: bytes) -> str:
     return text
 
 
+def _xlsx_text(data: bytes) -> str:
+    """Read static XLSX cells for citation checks; reject formulas and large files."""
+    if len(data) > 10_000_000:
+        raise ValueError("XLSX file exceeds safe size")
+    with zipfile.ZipFile(io.BytesIO(data)) as container:
+        entries = container.infolist()
+        if (
+            len(entries) > 500
+            or sum(item.file_size for item in entries) > 40_000_000
+            or any(item.file_size > 20_000_000 or item.flag_bits & 1 for item in entries)
+        ):
+            raise ValueError("Unbounded or encrypted XLSX")
+        if any(
+            "externalLinks/" in item.filename or item.filename.startswith("xl/embeddings/")
+            for item in entries
+        ):
+            raise ValueError("External-link or embedded XLSX source requires human review")
+    workbook = load_workbook(
+        io.BytesIO(data), read_only=True, data_only=False, keep_links=False,
+    )
+    try:
+        lines = []
+        for sheet in workbook.worksheets:
+            rows, columns = sheet.max_row or 0, sheet.max_column or 0
+            if rows * columns > 250_000 or rows > 100_000 or columns > 200:
+                raise ValueError("Oversized XLSX sheet requires independent review")
+            for row in sheet.iter_rows():
+                for cell in row:
+                    if cell.value is None:
+                        continue
+                    if cell.data_type == "f":
+                        raise ValueError("Formula value is not a literal source fact")
+                    if cell.data_type == "e":
+                        raise ValueError("XLSX error cell requires independent review")
+                    text = " ".join(str(cell.value).split())
+                    if text:
+                        lines.append(f"SHEET-{sheet.title} CELL-{cell.coordinate}: {text}")
+        if not lines:
+            raise ValueError("No literal XLSX source cells")
+        return chr(10).join(lines)
+    finally:
+        workbook.close()
+
+
 def verified_document_text(raw: bytes, filename: str) -> str:
     suffix = Path(filename).suffix.lower()
     if suffix == ".pdf":
         return _pdf_text(raw)
+    if suffix == ".xlsx":
+        return _xlsx_text(raw)
     if suffix == ".docx":
         doc = Document(io.BytesIO(raw))
         lines = [
@@ -60,6 +107,6 @@ def verified_document_text(raw: bytes, filename: str) -> str:
         inner_path = Path(info.filename)
         if info.flag_bits & 1 or inner_path.is_absolute() or ".." in inner_path.parts:
             raise ValueError("Unsafe ZIP inner original document")
-        if inner_path.suffix.lower() not in {".docx", ".pdf"}:
+        if inner_path.suffix.lower() not in {".docx", ".pdf", ".xlsx"}:
             raise ValueError("Unsupported inner original source document")
         return verified_document_text(archive.read(info), info.filename)

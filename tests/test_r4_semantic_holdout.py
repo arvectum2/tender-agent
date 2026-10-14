@@ -8,6 +8,7 @@ import pytest
 
 from src.modules.tender_operator_agent_demo.r4_semantic_holdout import (
     HoldoutLeakageError,
+    forbid_reuse_of_prior_blind_cohorts,
     forbidden_development_sources,
     lock_unseen_real_cohort,
     semantic_metrics_or_not_measured,
@@ -126,3 +127,35 @@ def test_no_sources_cannot_create_fictitious_gold_or_metrics():
             human_gold_freeze_receipt={"fake": True},
             sut_run_receipt={"fake": True},
         )
+
+def test_no_reuse_of_previous_blind_case_ids_or_xml_or_binary_bytes():
+    historical = forbidden_development_sources(baseline())
+    prior = make_lock()
+    protected = forbid_reuse_of_prior_blind_cohorts(historical, [prior])
+    assert "9000000000000000001" in protected["notice_numbers"]
+    new_case = clean_candidate("9000000000000000012")
+    assert make_lock([new_case], forbidden=protected)["case_count"] == 1
+
+    old = clean_candidate("9000000000000000001")
+    with pytest.raises(HoldoutLeakageError, match="Previously inspected procurement"):
+        make_lock([old], forbidden=protected)
+
+    new_case["official_xml_sha256"] = prior["cases"][0]["official_xml_sha256"]
+    with pytest.raises(HoldoutLeakageError, match="Identical previous"):
+        make_lock([new_case], forbidden=protected)
+
+    new_case["official_xml_sha256"] = sha("NEWXML")
+    new_case["binary_original_sha256"] = prior["cases"][0]["original_attachment_sha256"][:]
+    with pytest.raises(HoldoutLeakageError, match="Previously inspected original"):
+        make_lock([new_case], forbidden=protected)
+
+
+def test_repeated_or_modified_prior_lock_cannot_be_excluded_silently():
+    historical = forbidden_development_sources(baseline())
+    prior = make_lock()
+    with pytest.raises(HoldoutLeakageError, match="overlaps"):
+        forbid_reuse_of_prior_blind_cohorts(historical, [prior, prior])
+    altered = copy.deepcopy(prior)
+    altered["cases"][0]["registry_number"] = "9000000000000000088"
+    with pytest.raises(HoldoutLeakageError, match="edited"):
+        forbid_reuse_of_prior_blind_cohorts(historical, [altered])

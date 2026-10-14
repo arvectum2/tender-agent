@@ -109,12 +109,26 @@ def _quotes_exactly_grounded(
             raise BenchmarkContractError("Reviewer quote not verbatim from source original")
         # DOCX paragraphs and cells have deterministic structural locators.
         # PDF page locators still require human visual verification.
-        if re.fullmatch(r"PARAGRAPH-\d+|TABLE-\d+ ROW-\d+ CELL-\d+", str(locator)):
+        docx_locator = re.fullmatch(
+            r"PARAGRAPH-\d+|TABLE-\d+ ROW-\d+ CELL-\d+", str(locator),
+        )
+        xlsx_locator = re.fullmatch(
+            r"SHEET-.+ CELL-[A-Z]+[1-9][0-9]*", str(locator),
+        )
+        first_line = text_cache[name].splitlines()[0]
+        if first_line.startswith("SHEET-") and not xlsx_locator:
+            raise BenchmarkContractError("XLSX evidence must locate the exact sheet/cell")
+        if first_line.startswith(("PARAGRAPH-", "TABLE-")) and not docx_locator:
+            raise BenchmarkContractError("DOCX evidence must locate the exact paragraph/cell")
+        if docx_locator or xlsx_locator:
             matching_lines = [
                 line for line in text_cache[name].splitlines()
-                if line.startswith(locator + ":")
+                if line.startswith(locator + ": ")
             ]
-            if len(matching_lines) != 1 or source_quote not in _WS.sub(" ", matching_lines[0]):
+            if len(matching_lines) != 1:
+                raise BenchmarkContractError("Claimed source locator does not exist")
+            value = matching_lines[0].split(": ", 1)[1]
+            if source_quote not in _WS.sub(" ", value):
                 raise BenchmarkContractError(
                     "Reviewer quote is not in claimed source paragraph or table cell"
                 )

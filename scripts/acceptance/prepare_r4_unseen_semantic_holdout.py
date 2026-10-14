@@ -15,6 +15,7 @@ from pathlib import Path
 
 from scripts.acceptance.audit_r5_official_sources import audit_archive
 from src.modules.tender_operator_agent_demo.r4_semantic_holdout import (
+    forbid_reuse_of_prior_blind_cohorts,
     forbidden_development_sources,
     lock_unseen_real_cohort,
     verify_cohort_lock,
@@ -47,10 +48,14 @@ def prepare_real_holdout(
     development_audit: dict,
     source_set_id: str,
     frozen_at_utc: str,
+    prior_blind_locks: list[dict] | None = None,
 ) -> dict:
     if not candidate_receipts:
         raise ValueError("No previously unseen official cases available; do not invent a holdout")
-    baseline = forbidden_development_sources(development_audit)
+    baseline = forbid_reuse_of_prior_blind_cohorts(
+        forbidden_development_sources(development_audit),
+        prior_blind_locks or [],
+    )
     verified = []
     for candidate in candidate_receipts:
         number = candidate["registry_number"]
@@ -98,6 +103,10 @@ def main() -> None:
     p.add_argument("--candidate-receipt", type=Path, required=True)
     p.add_argument("--development-audit", type=Path, required=True)
     p.add_argument("--source-set-id", required=True)
+    p.add_argument(
+        "--prior-holdout-lock", type=Path, action="append", required=True,
+        help="Include every earlier immutable pilot holdout lock to prevent reuse",
+    )
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     candidates = json.loads(args.candidate_receipt.read_text(encoding="utf8"))
@@ -106,6 +115,10 @@ def main() -> None:
         candidates, source_root=args.source_root,
         development_audit=audit, source_set_id=args.source_set_id,
         frozen_at_utc=datetime.now(UTC).isoformat(timespec="seconds"),
+        prior_blind_locks=[
+            json.loads(path.read_text(encoding="utf8"))
+            for path in args.prior_holdout_lock
+        ],
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(lock, ensure_ascii=False, indent=2) + "\n", "utf8")
