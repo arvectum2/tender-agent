@@ -24,6 +24,9 @@ from src.modules.tender_operator_agent_demo.r4_all_original_text_coverage import
 from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
     verify_attachment_coverage,
 )
+from src.modules.tender_operator_agent_demo.r4_material_condition_triage import (
+    source_bound_triage,
+)
 from src.modules.tender_operator_agent_demo.r4_new_original_material_leads import (
     validate_clause_leads_against_official_attachments,
     verify_material_clause_leads,
@@ -98,6 +101,7 @@ def build_review(originals:Path)->dict:
     clause_original_link=validate_clause_leads_against_official_attachments(
         material_leads,full_attachment_coverage
     )
+    all_original_topic_triage=source_bound_triage(originals,full_attachment_coverage)
     previous_deadlines=audit_saved_decisions(
         expert["cases"],official,ai/"tender_operator_demo"
     )
@@ -116,6 +120,7 @@ def build_review(originals:Path)->dict:
         "selected_original_notice_text_availability":full_text_coverage,
         "historical_model_report_deadline_audit":previous_deadlines,
         "first_party_new_contract_clause_leads":material_leads,
+        "all_original_material_condition_triage":all_original_topic_triage,
         "material_clause_verified_notice_provenance":clause_original_link,
         "all_saved_model_claims_checked":(
             claims["claims"] + new_documents["model_claims_checked"]
@@ -250,6 +255,33 @@ def readable_review(review:dict)->str:
          "подписанию основанием для отклонения без изучения полного ТЗ, договора и применимых правил."),
         ("Выполнена только первая выборочная проверка условий восстановленных 25 приложений; "
          "остальные документы корпуса не получили исчерпывающей независимой семантической оценки."),
+    ])
+    all_review=review["all_original_material_condition_triage"]
+    lines.extend([
+        "",
+        "## Тематическая проверка остальных оригиналов: вопросы для эксперта",
+        "",
+        (f"По {all_review['original_attachments_with_source_matched_text']} оригинальным "
+         f"приложениям из {all_review['case_count']} закупок автоматически проверены "
+         "текстовые признаки финансовых, договорных, правовых и технических условий. "
+         "Это только указатель, где читать исходные документы; наличие или отсутствие "
+         "слов не подтверждает применимость условия."),
+        "",
+        "| Номер извещения | Исходные документы | Текстовые ориентиры | Приоритетные темы для проверки |",
+        "|---|---:|---:|---|",
+    ])
+    for case in all_review["cases"]:
+        lines.append(
+            f"| {case['registry_number']} | {case['source_documents_read']} | "
+            f"{case['literal_topic_leads']} | "
+            f"{'; '.join(case['top_review_topics']) or 'Полное чтение оригиналов'} |"
+        )
+    lines.extend([
+        "",
+        ("Тематические ориентиры привязаны к исходным документам и местам в тексте "
+         "в отдельной технической ведомости. Они могут встречаться в заголовках, "
+         "отрицаниях и неприменимых разделах; отсутствие ориентира также не доказывает "
+         "отсутствие требования. Подписанных заключений нет."),
     ])
     saved=review["saved_model_claims"]
     lines.extend([
