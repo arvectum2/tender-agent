@@ -354,9 +354,17 @@ def _build_getdocs_result(reestr_number: str, archive_result: DocsArchiveResult)
         attachments_status="downloadable" if archive_result.archive_url else "manual_upload_required",
         attachments_count=1 if archive_result.archive_url else 0,
         available_attachments_count=1 if archive_result.archive_url else 0,
-        summary=archive_result.raw_summary or f"Статус getDocsIP: {archive_result.status}",
+        summary=(
+            archive_result.raw_summary
+            if archive_result.status == "completed" and archive_result.raw_summary
+            else (
+                "В этом разделе ЕИС архив конкурсной документации не получен. "
+                "Это не подтверждает отсутствие самой записи или документов "
+                "в других официальных разделах."
+            )
+        ),
         attachment_names=["documentation-archive.zip"] if archive_result.archive_url else [],
-        source_note="Read-only getDocsIP intake для токена физлица.",
+        source_note="Проверка официальной документации ЕИС без подачи заявки.",
     )
 
 
@@ -1633,6 +1641,28 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
 
     client = ZakupkiSoapClient(settings)
     archive_result = client.get_docs_by_reestr_number(request.reestr_number, subsystem_type=request.subsystem_type)
+    if archive_result.status == "no_data":
+        from src.modules.tender_operator_agent_demo.eis_price_request_source_probe import (
+            probe_exact_eis_price_request,
+        )
+
+        official = probe_exact_eis_price_request(request.reestr_number)
+        if official is not None:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "code": "MARKET_RESEARCH_PRICE_REQUEST_ONLY",
+                    "record_type": "price_information_request",
+                    "official_source_url": official["official_source_url"],
+                    "source_document_sha256": official["source_document_sha256"],
+                    "message": (
+                        "Запись найдена в официальном реестре запросов ценовой "
+                        "информации ЕИС. Это сбор рыночных предложений, а не "
+                        "конкурентная закупка для подачи заявки. "
+                        "Исходные документы следует изучать в разделе запросов цен."
+                    ),
+                },
+            )
     selected = _build_getdocs_result(request.reestr_number, archive_result)
     archive_summary = _sanitize_archive_url_summary(archive_result.archive_url)
 
