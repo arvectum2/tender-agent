@@ -14,6 +14,9 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 
+from src.modules.tender_operator_agent_demo.r4_additional_original_claims import (
+    audit_additional_sources,
+)
 from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort import (
     validate_cohort,
     verify_original_notice,
@@ -68,6 +71,7 @@ def build_review(originals:Path)->dict:
     negatives=[{"registry_number":n["reg_number"],
                 "reason":n["noncompetitive_reason"],
                 "bid_ready":False} for n in selected["negative_cases"]]
+    new_documents=audit_additional_sources(originals)
     report={
         "scope":"HISTORIC_FIRST_PARTY_OFFICIAL_20_COMPETITIVE_4_NEGATIVE_NOT_LIVE",
         "methodology":"Original ZIP and notice XML exact SHA+type; historic model source quotes only; legal interpretation not attested",
@@ -78,6 +82,10 @@ def build_review(originals:Path)->dict:
         "negative_controls":sorted(negatives,key=lambda v:v["registry_number"]),
         "separate_official_reserve":selected["reserve_case"]["reg_number"],
         "saved_model_claims":claims,
+        "additional_four_cases_and_21_original_binaries":new_documents,
+        "all_saved_model_claims_checked":(
+            claims["claims"] + new_documents["model_claims_checked"]
+        ),
         "current_official_EIS_state_verified":False,
         "full_contract_semantic_review_signed":0,
         "human_gold_review_signed":0,
@@ -89,6 +97,11 @@ def build_review(originals:Path)->dict:
 def readable_review(review:dict)->str:
     items=review["competitive_notices"]
     claim_map={c["registry_number"]:c for c in review["saved_model_claims"]["cases"]}
+    new_claims=review["additional_four_cases_and_21_original_binaries"]
+    additional_ids={
+        v["registry_number"] for v in new_claims["claim_checks"]
+    }
+
     lines=[
         "# Независимая проверка 20 конкурентных закупок по документам ЕИС",
         "",
@@ -107,8 +120,8 @@ def readable_review(review:dict)->str:
         "",
         "## По каждой конкурентной процедуре",
         "",
-        "| № | Номер извещения | Способ определения поставщика | Последняя выбранная архивная редакция | Срок из архива | Состояние выводов |",
-        "|---:|---|---|---:|---|---|",
+        "| № | Номер извещения | Предмет | Процедура | Архивная редакция | Срок по архиву | Доказательность цитат |",
+        "|---:|---|---|---|---:|---|---|",
     ]
     methods={
         "COMPETITIVE_ELECTRONIC_AUCTION":"Электронный аукцион",
@@ -118,12 +131,46 @@ def readable_review(review:dict)->str:
     for i,case in enumerate(items,1):
         n=case["registry_number"]
         saved=claim_map.get(n)
-        state=("Сохранённые цитаты проверены, смысл и полнота требуют экспертизы"
-               if saved else "Нет проверенного анализа содержания по этой записи")
-        deadline=case["archived_submission_end"] or "В исходной редакции не подтверждён"
-        lines.append(
-            f"| {i} | {n} | {methods[case['method']]} | {case['archived_version']} | {deadline} | {state} |"
+        state=(
+            "Проверка исходных документов и цитат выполнена, юридические выводы не утверждены"
+            if saved or n in additional_ids else
+            "Нет проверенной подборки цитат по полному комплекту документов"
         )
+        deadline=case["archived_submission_end"] or "В архиве не подтверждён"
+        subject=" ".join(str(case.get("original_purchase_object") or "").split())
+        subject=subject.replace("|","—")
+        if len(subject)>115:
+            subject=subject[:112].rstrip()+"…"
+        if not subject:
+            subject="Предмет требует уточнения по документам"
+        lines.append(
+            f"| {i} | {n} | {subject} | {methods[case['method']]} | {case['archived_version']} | {deadline} | {state} |"
+        )
+    saved=review["saved_model_claims"]
+    lines.extend([
+        "",
+        "## Проверка цитат и вывода модели",
+        "",
+        (
+            f"В десяти исходных модельных запусках проверены {saved['claims']} цитат: "
+            f"{saved['literal_official_originals']} дословно совпадают с текстом исходного файла, "
+            f"{saved['whitespace_variant_official_originals']} совпадают после восстановления пробелов и переносов строк, "
+            f"{saved['unsubstantiated_literal_quotes']} цитата требует исправления."
+        ),
+        (
+            f"В четырёх дополнительных модельных запусках сверены {new_claims['model_claims_checked']} цитата "
+            f"по {new_claims['original_binaries_sha_verified']} скачанному с ЕИС приложению: "
+            f"{new_claims['model_claims_exact_source_quotes']} дословных совпадений, "
+            f"{new_claims['claims_requiring_quote_correction']} цитата требует замены; "
+            f"{new_claims['model_batches_exceeding_claim_count_cap']} ответа превысили ограничение на количество утверждений."
+        ),
+        "",
+        "Требуют отдельного исправления цитаты по закупкам 0376300000126000193 и 0162200011826003089. "
+        "Три других расхождения в ранних отчётах сводятся к пробелам и переносам, но должны отображаться как текст документа, а не как выдуманная дословная цитата.",
+        "",
+        "Даже при точной цитате смысл нормы договора и применимость требования к участнику требуют отдельной проверки. "
+        "Подписанных юридических заключений по этой выборке нет.",
+    ])
     lines.extend([
         "",
         "## Выявленные ограничения и необходимые проверки",
@@ -172,7 +219,7 @@ def main()->None:
     print(json.dumps({"official_verified":packet["official_source_verified"],
         "competitive":packet["source_cohort"]["competitive"],
         "negative":packet["source_cohort"]["negative"],
-        "claim_checks":packet["saved_model_claims"]["claims"],
+        "claim_checks":packet["all_saved_model_claims_checked"],
         "human_signed":packet["human_gold_review_signed"]},sort_keys=True))
 
 
