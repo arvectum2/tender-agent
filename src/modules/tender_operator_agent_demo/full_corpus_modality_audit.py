@@ -18,39 +18,39 @@ _EXCLUSIVE_PARTICIPANTS = re.compile(
     r"(?:участник(?:ами|ов|и)?\s+закуп\w*[^.\n]{0,130}?)?"
     r"(?:могут\s+быть\s+только|допускаются\s+только|"
     r"участвова\w*\s+могут\s+только)[^.\n]{0,170}",
-    re.I,
+    re.IGNORECASE,
 )
 _SMALL_BUSINESS = re.compile(
     r"(?:субъект\w*\s+малого\s+предпринимательств\w*|"
     r"\bСМП\b|\bСОНКО\b|социально\s+ориентирован\w*)",
-    re.I,
+    re.IGNORECASE,
 )
-_MODEL_PREFERENCE = re.compile(r"\b(?:preferen\w*|preferred|предпочтен\w*|преимуществ\w*)\b", re.I)
+_MODEL_PREFERENCE = re.compile(r"\b(?:preferen\w*|preferred|предпочтен\w*|преимуществ\w*)\b", re.IGNORECASE)
 _MODEL_EXCLUSIVE = re.compile(
     r"\b(?:only|exclusively|limited\s+to|exclusiv\w*|"
-    r"только|исключительно|лишь|ограничен\w*)\b", re.I,
+    r"только|исключительно|лишь|ограничен\w*)\b", re.IGNORECASE,
 )
 _MODEL_SMALL_BIZ = re.compile(
     r"(?:\bSME\b|\bSMP\b|\bSONKO\b|\bСМП\b|\bСОНКО\b|"
     r"small\s+(?:business|enterpris\w*)|социально\s+ориентир\w*|малого\s+предпринимательств\w*)",
-    re.I,
+    re.IGNORECASE,
 )
 _SOURCE_ADJUSTMENT = re.compile(
     r"(?:по\s+соглашению\s+сторон|соглашени\w*\s+сторон)"
     r".{0,300}?(?:увеличени\w*|уменьшени\w*|изменени\w*)"
     r".{0,200}?(?:объем\w*|объ[её]м\w*)",
-    re.I | re.S,
+    re.IGNORECASE | re.DOTALL,
 )
-_SOURCE_PRICE = re.compile(r"цен[ауыео]\s+контракт\w*|цен[ауыео]\s+договора", re.I)
+_SOURCE_PRICE = re.compile(r"цен[ауыео]\s+контракт\w*|цен[ауыео]\s+договора", re.IGNORECASE)
 _MODEL_FIXED = re.compile(
     r"(?:fixed\s+price|price\s+is\s+fixed|cannot\s+(?:be\s+)?chang\w*|"
-    r"цен[аыуе]\s+фиксирован\w*|цен[аыуе]\s+не\s+мож\w*\s+измен\w*)", re.I,
+    r"цен[аыуе]\s+фиксирован\w*|цен[аыуе]\s+не\s+мож\w*\s+измен\w*)", re.IGNORECASE,
 )
 _MODEL_NO_SCOPE_CHANGE = re.compile(
     r"(?:without\s+chang\w*\s+(?:the\s+)?(?:volume|scope)|"
-    r"без\s+изменени\w*\s+(?:объем\w*|объ[её]м\w*))", re.I,
+    r"без\s+изменени\w*\s+(?:объем\w*|объ[её]м\w*))", re.IGNORECASE,
 )
-_MODEL_PRICE_CONTEXT = re.compile(r"(?:price|contract|scope|цен\w*|контракт\w*|объем\w*|объ[её]м\w*)", re.I)
+_MODEL_PRICE_CONTEXT = re.compile(r"(?:price|contract|scope|цен\w*|контракт\w*|объем\w*|объ[её]м\w*)", re.IGNORECASE)
 
 
 def _sha(text: str) -> str:
