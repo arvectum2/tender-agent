@@ -100,11 +100,11 @@ def _document_inventory(
         rows.append(row)
         if has_text and not too_large:
             complete.append({**row, "text": text})
-    known = {row["file_id"] for row in rows}
+    known = {row["file_id"].casefold() for row in rows}
     if manifest:
         for item in manifest:
             file_id = _string(item.get("file_id"))
-            if file_id and file_id not in known:
+            if file_id and file_id.casefold() not in known:
                 rows.append({
                     "file_id": file_id,
                     "role": _string(item.get("role_hint") or item.get("document_kind")) or "unknown",
@@ -150,13 +150,27 @@ def _find_source_evidence(
     candidates.sort(key=lambda row: (-row[0], row[1], row[2]))
     out: list[dict[str, Any]] = []
     chosen: list[tuple[str, int, int]] = []
-    for _, file_id, start, hit in candidates:
+
+    def add(row: tuple[float, str, int, dict[str, Any]]) -> None:
+        _, file_id, start, hit = row
         if any(fid == file_id and abs(start - prior) < 550 for fid, prior, _ in chosen):
-            continue
+            return
         out.append(hit)
         chosen.append((file_id, start, hit["end"]))
+
+    # A claim about price or bidder eligibility cannot rely on contract snippets
+    # alone when a separately sourced EIS notice is available. Reserve at
+    # least one slot for each explicitly relevant document role.
+    for role in question.roles:
         if len(out) >= limit:
             break
+        best = next((row for row in candidates if row[3]["role"] == role), None)
+        if best is not None:
+            add(best)
+    for row in candidates:
+        if len(out) >= limit:
+            break
+        add(row)
     return out
 
 
@@ -185,9 +199,19 @@ def research_full_corpus(
             "required_human_review": True, "hits": hits,
         })
     problem_files = [row["file_id"] for row in inventory if row["status"] != "EXTRACTED"]
+    notice_files = {row["file_id"] for row in complete if row["role"] == "notice"}
+    # Multiple archived notices may describe different revisions. Only an
+    # independently pinned official revision can settle precedence.
+    revision_ambiguous = len(notice_files) > 1
     missing_topics = [f["key"] for f in findings if not f["hits"]]
+    source_status = (
+        "INCOMPLETE" if problem_files
+        else "MULTIPLE_NOTICE_REVISIONS_REVIEW" if revision_ambiguous
+        else "EXTRACTED_NOT_SEMANTICALLY_VERIFIED"
+    )
     return {
-        "version": 1, "source_status": "INCOMPLETE" if problem_files else "EXTRACTED_NOT_SEMANTICALLY_VERIFIED",
+        "version": 1, "source_status": source_status,
+        "multiple_notices_require_revision_resolution": revision_ambiguous,
         "document_count": len(inventory), "extracted_document_count": len(complete),
         "unread_file_ids": problem_files, "missing_research_topics": missing_topics,
         "documents": inventory, "findings": findings,
