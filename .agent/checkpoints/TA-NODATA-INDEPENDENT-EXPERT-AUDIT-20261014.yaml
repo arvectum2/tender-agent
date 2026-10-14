@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-NODATA-INDEPENDENT-EXPERT-AUDIT-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Critically audit R4/R5 procurement documentation and every prior no_data source, distinguish pricing requests from competitive notices, fix wrong source interpretation and remove technical diagnostics from customer-facing reports.
+definition_of_done:
+  - Independently inspect all three no_data registry IDs using first party EIS where possible, corroborate with independent published listings and distinguish official bytes from derivative summaries.
+  - Establish each type/status, originals present or absent, explicit documentary facts (not guess NMCK), report retrieval and extraction failure causes and uncertainty.
+  - Correct upstream classifier/adapter so request-for-prices cannot be silently marked "no procurement" or converted into normal bid, add resilient source reference/evidence statuses.
+  - Audit 20-case expert matrix semantics and stored model reports for unsupported claims, wrong archive version, omitted material facts; expose clear human-readable review status and separate machine diagnostics.
+  - Add safe customer-facing report projection with no raw exception names, trace fields or cryptic no_data/HTTP codes; human language and source limits, no GO from archive.
+  - Real source regression for three source IDs, synthetic negative cases for real zero data versus source error, fail closed on wrong/ambiguous primary sources.
+  - Validate Mac mini focused and full repo pytest/Ruff, draft stacked PR CI and complete canonical checkpoint only when verified.
+completed:
+  - 'Predecessor PR429 machine archive 20-case and later official filestore 72 saved recovered source receipts Mac mini FULL 4072 passed/238 skipped, original CI exact head ed669ba8aa53b59681ba3216d025d0ff02a59b09 3/3 success; earlier PR426-428 technical CI success but all stacked drafts unmerged.'
+  - '2026-10-14 first independent public source search finds original price-inquiry listings for all three previous no_data IDs: 0148300050426000047, 0348100024426000052, 0318200087026000163; supplier submission and NMCK must not be falsely claimed. Secondary sources Kontur and Synapse, official raw EIS attachments not yet independently verified.'
+current: 'Audit actual archived source receipts and exact EIS enquiry API, classify no_data as source retrieval gap rather than nonexistent purchase; inspect risk of customer report technical status.'
+pending:
+  - Inspect source retrieval code paths and private logs/official direct EIS sources.
+  - Implement source type/availability reconciliation and user-report diagnosis separation.
+  - Add independently sourced original evidence test and negative tests, real source read-only QA, Mac mini full suite and GitHub CI.
+last_verified_commit: 'PR429 original head ed669ba8aa53b59681ba3216d025d0ff02a59b09 CI 3/3 success; local 4072 suite PASS. New independent audit branch created 2026-10-14.'
+test_results:
+  - 'Predecessor full 4072 PASS/238 SKIP; actual original no_data audit not yet code-verified.'
+resume_instruction: 'Continue TA-NODATA-INDEPENDENT-EXPERT-AUDIT-20261014 on fix/r4-no-data-original-source-20261014 stacked draft on PR429. Three previously marked no_data IDs are identifiable request-for-pricing notices on external indexes, not proof of absent original: 0148300050426000047, 0348100024426000052, 0318200087026000163. Verify original EIS category/attachment separately, inspect old SOAP ZIP class mismatch, code fix upstream source fallback and clear user-facing reports (hide technical trace/no_data). Distinguish derivative source from official, DO NOT invent NMCK or bid deadlines for price inquiry, legal GO stays blocked. Build independent expert critical report with exact supporting sources and unresolved official bytes. Run Mac mini pytest/Ruff/full, draft PR, checkpoint. manual_override true/watchdog disabled, no ETP, submission, signing, payment, prod, buyer contact or merging drafts.'
+execution:
+  branch: fix/r4-no-data-original-source-20261014
+  manual_override: true
