@@ -13,6 +13,9 @@ from typing import Any
 from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
     audit_model_contract_clause_references,
 )
+from src.modules.tender_operator_agent_demo.expert_source_review_packet import (
+    build_expert_source_review_packet,
+)
 from src.modules.tender_operator_agent_demo.full_corpus_modality_audit import (
     audit_source_modalities,
 )
@@ -224,6 +227,16 @@ def run_with_full_corpus_research(
             "manual_review_required": True,
         }
         metadata["source_research_quality_gate"] = quality_gate
+        # Reuse the existing R4/R5 human gold rubric and ARV-001 policy.
+        # Machine prefill contains no reviewer names, timestamps or approvals.
+        expert_source_packet = build_expert_source_review_packet(
+            research,
+            quote_proofs=quote_proofs,
+            typed_eis_claims=typed_eis_audit,
+            source_modality_audit=modality_audit,
+            quality_gate=quality_gate,
+        )
+        metadata["source_expert_review_prefill"] = expert_source_packet
         if typed_eis_audit["contradictions_count"]:
             limitations = metadata.setdefault("limitations", [])
             if isinstance(limitations, list):
@@ -272,6 +285,7 @@ def run_with_full_corpus_research(
             trace["source_clause_review"] = clause_reviews
             trace["source_modality_audit"] = modality_audit
             trace["source_research_quality_gate"] = quality_gate
+            trace["expert_source_review_prefill"] = expert_source_packet
             trace["source_eis_typed_claims"] = typed_eis_audit
             trace["source_quote_proofs"] = quote_proofs
         requirement_payload = outputs.get("requirements")
@@ -281,6 +295,7 @@ def run_with_full_corpus_research(
             requirement_payload["source_clause_review"] = clause_reviews
             requirement_payload["source_modality_audit"] = modality_audit
             requirement_payload["source_research_quality_gate"] = quality_gate
+            requirement_payload["expert_source_review_prefill"] = expert_source_packet
             requirement_payload["source_eis_typed_claims"] = typed_eis_audit
             requirement_payload["source_quote_proofs"] = quote_proofs
         return outputs
