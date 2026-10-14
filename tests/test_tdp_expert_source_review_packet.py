@@ -6,7 +6,9 @@ from types import SimpleNamespace
 from src.modules.tender_operator_agent_demo.expert_source_review_packet import (
     build_expert_source_review_packet,
 )
-from src.modules.tender_operator_agent_demo.full_corpus_research import research_full_corpus
+from src.modules.tender_operator_agent_demo.full_corpus_research import (
+    research_full_corpus,
+)
 from src.modules.tender_operator_agent_demo.source_claim_proof import (
     audit_model_eis_summary,
     bind_source_span,
