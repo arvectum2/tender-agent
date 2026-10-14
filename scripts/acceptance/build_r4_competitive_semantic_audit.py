@@ -6,6 +6,7 @@ machine evidence. No current procurement status, legal eligibility or GO.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 import hashlib
 import json
 import sys
@@ -106,6 +107,22 @@ def build_review(originals:Path)->dict:
     return report
 
 
+
+def _readable_archived_deadline(value: str | None) -> str:
+    """Show a document's recorded local time, never a raw machine timestamp."""
+    if not value:
+        return "В архиве не подтверждён"
+    parsed = datetime.fromisoformat(value)
+    offset = parsed.utcoffset()
+    if offset is None:
+        raise ValueError("official source date lacks timezone")
+    total_minutes = int(offset.total_seconds() // 60)
+    sign = "+" if total_minutes >= 0 else "-"
+    hours, minutes = divmod(abs(total_minutes), 60)
+    zone = "МСК" if total_minutes == 180 else f"UTC{sign}{hours:02d}:{minutes:02d}"
+    return parsed.strftime("%d.%m.%Y, %H:%M") + f" ({zone})"
+
+
 def readable_review(review:dict)->str:
     items=review["competitive_notices"]
     claim_map={c["registry_number"]:c for c in review["saved_model_claims"]["cases"]}
@@ -157,11 +174,11 @@ def readable_review(review:dict)->str:
         n=case["registry_number"]
         saved=claim_map.get(n)
         state=(
-            "Проверка исходных документов и цитат выполнена, юридические выводы не утверждены"
+            "Выборочные цитаты сверены; полный анализ договора и ТЗ ещё требуется"
             if saved or n in additional_ids else
             "Нет проверенной подборки цитат по полному комплекту документов"
         )
-        deadline=case["archived_submission_end"] or "В архиве не подтверждён"
+        deadline=_readable_archived_deadline(case["archived_submission_end"])
         subject=" ".join(str(case.get("original_purchase_object") or "").split())
         subject=subject.replace("|","—")
         if len(subject)>115:
