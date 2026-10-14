@@ -10,16 +10,20 @@ definition_of_done:
   - Independently classify material model claims as supported, contradicted or unverifiable, and identify omissions.
   - Add regression tests/fix for demonstrated source-grounding defect, check CI and checkpoint.
 completed:
+  - '2026-10-14 independently read private Gemma output: four JSON schemas PASSED but substantive audit documented failures including SMP/SONKO exclusivity softened to preference, technical requirements called bid evaluation criteria, warranty 24h action confused, IP clause location wrong, missing NMCK and quote deadline. Model correct on 10% security, payment7 working days, financing risk and 3 concepts.'
+  - '2026-10-14 confirmed source selection missed literal ticket-sale, visually impaired, exclusive IP and contract security clauses; implemented coverage-aware exact-obligation selector and 2 synthetic regression tests. On original archived 3-role texts all these clauses now selected while retaining price/date/3 concepts/interview/payment/warranty.'
+  - 'Mac mini isolated head 69b1ad4b3eb617077ff35c7359fe4aedee1b2d8f: 60 targeted pytest PASS, Ruff PASS, source-bound original coverage PASS, git diff check PASS. Safe independent source audit written docs/acceptance/APR03B_INDEPENDENT_GEMMA_CLAIM_AUDIT_2026-10-14.md; raw private answer not published.'
   - '2026-10-14 PR424 3/3 GitHub CI passed, schema validation 4/4 PASSED and human review required; stored runtime trace output only says raw_response_stored=false, no actual model answer persisted.'
-current: 'Run local-only controlled model replay with private JSON output, then check statements against preserved original documents.'
+current: 'Source-claim audit and high-impact context selection fix locally validated; actual patched source Gemma4 rerun Mac mini PID61111 pending output, after which verify semantic differences and open draft PR/full CI.'
 pending:
-  - Record local four-section output privately in /tmp.
-  - Independently verify assertions with full archived originals.
-  - Update source-bound QA report, add tests/fix if needed, verify CI.
-last_verified_commit: 'PR424 exact 33a32e3ddfeeca910ebec15e515f2e50c97569bf GitHub 3/3 CI SUCCESS.'
+  - Read patched real local LLM response from PID61111, compare key omissions/errors and update audit note.
+  - Create draft PR and verify exact GitHub CI, record state and parent resume, no merge.
+last_verified_commit: '69b1ad4b3eb617077ff35c7359fe4aedee1b2d8f tested Mac mini 60 focused pytest PASS/Ruff and real source role coverage PASS; report commit 9bfd157f215b93f9691f1382cc8a1c365a5adc8f docs only.'
 test_results:
+  - '60 relevant pytest PASS/0 FAIL, Ruff PASS, git diff --check PASS at implementation 69b1ad4b; preserved original source context critical obligations all present after patch.'
+  - 'Independent Gemma prior-answer audit: actual model outputs 4/4 JSON schema PASSED but high-severity legal/source omissions; read docs/acceptance/APR03B_INDEPENDENT_GEMMA_CLAIM_AUDIT_2026-10-14.md.'
   - 'Prior 4/4 model output schema PASSED, substantive claim validation not performed.'
-resume_instruction: 'Read private SHA-matched Museum Bread original normalized text under /tmp/ta-apr03b-archived-local-llm-20261014/runs/toa-run-20261012200402-7249ed/normalized on Mac mini. Replay actual localhost Gemma4 controlled workflow into separate /tmp mode0600 JSON; inspect claim correctness against full text, keep summary only in GitHub. No ETP, bids, production, signing, payments, buyer contact, merge or watchdog. Owner current EIS/browser/legal acceptance remains open.'
+resume_instruction: 'Active TA-APR03B-INDEPENDENT-LLM-CLAIMS-20261014 branch qa/apr03b-independent-llm-claims-20261014, code head 69b1ad4b3eb617077ff35c7359fe4aedee1b2d8f Mac mini 60 targeted pytest PASS/Ruff and real Museum archived original source critical clause coverage PASS. Existing before patch Gemma answer /tmp/ta-apr03b-archived-local-llm-20261014/independent-claims-qa.json private mode0600, independently audited in docs/acceptance/APR03B_INDEPENDENT_GEMMA_CLAIM_AUDIT_2026-10-14.md, found critical legal classification and source omissions. Mac mini PID61111 reruns full local Gemma4 four-section response on patched selector, save after to /tmp/ta-apr03b-archived-local-llm-20261014/independent-claims-qa-after.json restricted, never publish raw docs. Read output, audit if newly selected ticket sales/visual impairment/IP/security reflected accurately, record limitations. Then draft PR, verify GitHub CI, update checkpoint. APR03B current-EIS comprehensive human legal/browser acceptance remains OPEN, all PRs drafts/unmerged; watchdog disabled/manual_override true; no ETP, bids, production, payments, signatures or customer contact.'
 execution:
   branch: qa/apr03b-independent-llm-claims-20261014
   manual_override: true
