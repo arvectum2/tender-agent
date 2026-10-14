@@ -47,6 +47,21 @@ def _sha(value: str, *, field: str) -> str:
     return value
 
 
+def _parse_source_deadline(value: str) -> datetime:
+    """Interpret source archives' ISO and persisted Russian datetime with TZ."""
+    raw = value.strip().replace("Z", "+00:00")
+    try:
+        parsed = datetime.fromisoformat(raw)
+    except ValueError:
+        try:
+            parsed = datetime.strptime(raw, "%d.%m.%Y %H:%M:%S %z")
+        except ValueError as exc:
+            raise ValueError("invalid source deadline format") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ValueError("source deadline has no verifiable timezone offset")
+    return parsed
+
+
 def _validate_consistency(case: dict[str, str], facts: dict[str, str]) -> None:
     if case["official_SOAP_status"] != facts["archive_status"]:
         raise ValueError("archive status differs between independent source matrices")
@@ -70,12 +85,7 @@ def _validate_consistency(case: dict[str, str], facts: dict[str, str]) -> None:
     ):
         if left and right:
             if field == "deadline":
-                try:
-                    equal = datetime.fromisoformat(left.replace("Z", "+00:00")) == datetime.fromisoformat(
-                        right.replace("Z", "+00:00")
-                    )
-                except ValueError as exc:
-                    raise ValueError("invalid source date") from exc
+                equal = _parse_source_deadline(left) == _parse_source_deadline(right)
             else:
                 try:
                     equal = Decimal(left) == Decimal(right)
