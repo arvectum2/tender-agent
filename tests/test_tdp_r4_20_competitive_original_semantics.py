@@ -153,6 +153,7 @@ def test_official_all_twenty_and_llm_original_claims_private_offline(tmp_path):
     assert new["model_claims_checked"] == 21
     assert new["model_claims_exact_source_quotes"] == 20
     assert new["claims_requiring_quote_correction"] == 1
+    assert new["claims_breaching_quote_length_policy"] == 3
     assert new["model_batches_exceeding_claim_count_cap"] == 3
     assert result["all_saved_model_claims_checked"] == 47
     reports=result["historical_model_report_deadline_audit"]
