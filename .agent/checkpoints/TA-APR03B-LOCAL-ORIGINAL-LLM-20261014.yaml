@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-LOCAL-ORIGINAL-LLM-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Reprocess a read-only copy of the already-preserved six EIS originals for Museum of Bread notice 0372200172326000015 with the existing local Gemma4 model, preserving archival provenance, human review and no ETP/production effects.
+definition_of_done:
+  - Copy preserved original run into new /tmp Mac mini QA directory without modifying preview 18083/18087, original Docker volume or production.
+  - Set temporary SQLite/database, run directory and localhost-only OpenAI-compatible Gemma4 provider for isolated application analysis.
+  - Record exact source/run provenance, completed sections, model validation statuses, warnings, and archived-export safety caveat. Never interpret archived original as current tender.
+  - Run or document objective blocker and update checkpoints. No external API/model download/ETP/contact/paid production.
+completed:
+  - '2026-10-14 source original 44-FZ Museum Bread 0372200172326000015 previously privately acquired 6 files, original saved run toa-run-20261012200402-7249ed and operator report deterministic fallback; current 18087 QA read-only protected HTTP confirmed.'
+  - '2026-10-14 original run in private preview container /app/company_agent_runs/tender_operator_demo/toa-run-20261012200402-7249ed size 1.6MiB, input 6 files. A local independent synthetic-only Gemma4 controlled workflow already ran 4/4 validated in 69.4s.'
+current: 'Clone preserved original run to /tmp and run a local-only four-section LLM analysis on archived first-party source copy.'
+pending:
+  - Copy and hash-check saved archived EIS originals without altering live source.
+  - Run isolated local LLM archived replay on copy with private temp SQLite.
+  - Record result/report and keep current EIS/owner legal acceptance open.
+last_verified_commit: 'App code source 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb (isolated Mac mini worktree), 53 tests PASS/Ruff PASS/Node PASS. No app changes planned.'
+test_results:
+  - 'Synthetic local controlled operator workflow 4 sections 4/4 PASSED validation, 4 human review required, local-only.'
+resume_instruction: 'Mac mini original read-only source container arvectum-apr03b-current-main-qa-20261014: /app/company_agent_runs/tender_operator_demo/toa-run-20261012200402-7249ed, 6 input files 1.6MiB; copy into separate /tmp folder, keep original intact. On Mac mini invoke analyze_uploaded_demo_run for copied run in isolated source worktree with AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR temp, AI_CORP_DATABASE_URL temp SQLite, AI_CORP_LLM_PROVIDER=openai_compatible local base http://127.0.0.1:8081/v1 model arvectum-gemma4-12b-it-qat-q4_0, disable internet search. Collect only safe verification statuses. Note original EIS archived; PDF/DOCX exports remain 409, no human legal GO. No production, ETP, payments, signatures, customer contact, merges, watchdog.'
+execution:
+  branch: qa/apr03b-local-original-llm-20261014
+  manual_override: true
