@@ -45,6 +45,11 @@ def verify_saved_quote(run:Path,source:str,quote:str,source_sha:str,
         return {"status":"SOURCE_TEXT_SHA_MISMATCH","literal_quote":False,"original_bytes":False}
     text=raw.decode("utf8","replace")
     literal=quote in text
+    whitespace_match=(
+        not literal
+        and re.sub(r"\\s+", " ", quote).strip()
+        in re.sub(r"\\s+", " ", text).strip()
+    )
     file_id="-".join(source.split("-",2)[:2]).upper()
     meta=json.loads(metadata.read_text())
     matches=[f for f in meta.get("files",[]) if str(f.get("file_id","")).upper()==file_id]
@@ -57,9 +62,11 @@ def verify_saved_quote(run:Path,source:str,quote:str,source_sha:str,
                 b=attached.read_bytes()
                 binary=(sha(b),len(b)) in original_receipts
     status=("EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA" if literal and binary
-            else "QUOTE_ONLY_IN_SAVED_TEXT_NOT_ORIGINAL_ATTESTED" if literal
-            else "QUOTE_NOT_LITERAL_IN_PINNED_SOURCE")
+            else "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA" if whitespace_match and binary
+            else "QUOTE_MATCH_ONLY_SAVED_TEXT" if literal or whitespace_match
+            else "QUOTE_NOT_SUPPORTED_AS_LIVE_QUOTATION")
     return {"status":status,"literal_quote":literal,
+            "layout_normalized_match":literal or whitespace_match,
             "original_bytes":binary,"saved_source_sha256":sha(raw),
             "quote_sha256":sha(quote.encode("utf8")),
             "char_offset":text.find(quote) if literal else None,
@@ -95,4 +102,12 @@ def audit_claims(packet:dict,runs_root:Path,binary:dict,
     return {"saved_runs":len(result),"claims":sum(r["claims"] for r in result),
             "literal_quotes":sum(r["literal_text_proven"] for r in result),
             "literal_official_originals":sum(r["literal_plus_official_original_sha"] for r in result),
+            "whitespace_variant_official_originals":sum(
+                sum(v["status"]=="WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA" for v in r["checks"])
+                for r in result
+            ),
+            "unsubstantiated_literal_quotes":sum(
+                sum(v["status"]=="QUOTE_NOT_SUPPORTED_AS_LIVE_QUOTATION" for v in r["checks"])
+                for r in result
+            ),
             "human_signed_legal_interpretations":0,"cases":sorted(result,key=lambda v:v["registry_number"])}
