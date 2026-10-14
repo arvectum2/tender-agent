@@ -196,7 +196,7 @@ def test_wrong_saved_model_report_procurement_number_fails_closed(tmp_path):
             })
         )
         packet.append({"reg_number":n,"run_id":runid})
-    with pytest.raises(ValueError, match="different original procurement"):
+    with pytest.raises(ValueError, match="wrong original procurement"):
         audit_saved_decisions(packet,original,tmp_path)
 
 
