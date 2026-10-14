@@ -21,6 +21,9 @@ from src.modules.tender_operator_agent_demo.r4_additional_original_claims import
 from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
     verify_attachment_coverage,
 )
+from src.modules.tender_operator_agent_demo.r4_all_original_text_coverage import (
+    verify_all_96_original_texts,
+)
 from src.modules.tender_operator_agent_demo.r4_new_original_material_leads import (
     validate_clause_leads_against_official_attachments,
     verify_material_clause_leads,
@@ -84,6 +87,11 @@ def build_review(originals:Path)->dict:
                 "bid_ready":False} for n in selected["negative_cases"]]
     new_documents=audit_additional_sources(originals)
     full_attachment_coverage=verify_attachment_coverage(selected,originals)
+    full_text_coverage=verify_all_96_original_texts(
+        root=originals,
+        attachment_inventory=full_attachment_coverage,
+        additional_document_audit=new_documents,
+    )
     material_leads=verify_material_clause_leads(
         ai/"competitive-25-original-text-20261014"
     )
@@ -105,6 +113,7 @@ def build_review(originals:Path)->dict:
         "saved_model_claims":claims,
         "additional_four_cases_and_21_original_binaries":new_documents,
         "selected_original_notice_attachment_coverage":full_attachment_coverage,
+        "selected_original_notice_text_availability":full_text_coverage,
         "historical_model_report_deadline_audit":previous_deadlines,
         "first_party_new_contract_clause_leads":material_leads,
         "material_clause_verified_notice_provenance":clause_original_link,
@@ -141,6 +150,7 @@ def readable_review(review:dict)->str:
     new_claims=review["additional_four_cases_and_21_original_binaries"]
     deadline_review=review["historical_model_report_deadline_audit"]
     attachment_coverage=review["selected_original_notice_attachment_coverage"]
+    text_coverage=review["selected_original_notice_text_availability"]
     attachments_per_case={
         row["registry_number"]:row for row in attachment_coverage["cases"]
     }
@@ -168,6 +178,12 @@ def readable_review(review:dict)->str:
             "в выбранных исторических редакциях извещений. "
             "Подтверждены контрольные суммы и размеры файлов; правовой смысл "
             "и нынешняя редакция ЕИС проверяются отдельно."
+        ),
+        (
+            f"- Для {text_coverage['attachments_with_nonempty_source_text']} из "
+            f"{text_coverage['archived_original_attachments']} приложений выбранных архивных редакций "
+            "имеется непустое текстовое представление, связанное с оригинальным файлом по контрольной сумме. "
+            "Полнота таблиц, формул, сканов и юридических условий при этом не подтверждена."
         ),
         ("- Наличие цитаты в тексте ещё не доказывает правильность юридического вывода модели. "
         "Поэтому ни одна процедура не получила автоматического разрешения на участие."),
