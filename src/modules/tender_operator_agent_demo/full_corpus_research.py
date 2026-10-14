@@ -136,6 +136,11 @@ def _find_source_evidence(
             passage = text[start:end]
             matched_in_passage = tuple(a for a in question.anchors if a.casefold().replace("ё", "е") in passage.casefold().replace("ё", "е"))
             score = (4.0 if doc["role"] in question.roles else 0.0) + len(matched_in_passage) * 3
+            # First query anchor is the authoritative/most specific form
+            # (e.g. XML maxPrice) and should beat dozens of generic references
+            # to "price" elsewhere in the same document.
+            if question.anchors[0] in matched_in_passage:
+                score += 12
             score += len(set(_WORD.findall(question.query.casefold())) & set(_WORD.findall(passage.casefold()))) * 0.1
             hit = {
                 "file_id": doc["file_id"], "document": doc["document"],
