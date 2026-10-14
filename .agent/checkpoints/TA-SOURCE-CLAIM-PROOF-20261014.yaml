@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SOURCE-CLAIM-PROOF-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Advance source-grounded research beyond generic matches with explicit original-text source spans, checked optional page/table anchors, independently evaluated typed material assertions and honest contradiction/unknown decisions.
+definition_of_done:
+  - Implement verified source-span binding requiring exact file_id, SHA-256, Unicode offsets, quote and optional explicit page/table locator; never derive page or spreadsheet cell from bare normalized text.
+  - Implement source-authoritative typed facts from registry-safe XML and independent evaluation of material numeric/date eligibility and clause claims, distinguishing supported exact facts, contradicted assertions and unknown.
+  - Quarantine claims referring to a rejected/tampered source, obsolete/multiple revisions or absent source locator; preserve human review, no model declaration of GO.
+  - Integrate into operator saved report without modifying AST-frozen orchestration and without trusting generated source labels.
+  - Add independent negative tests for 44-FZ museum source, synthetic 223-FZ and corporate B2B, missing/conflicting pages, altered quoted spans and expected SHA.
+  - Run Mac mini targeted and real-source checks/Ruff and verify exact-head GitHub CI of stacked draft PR; checkpoint status only complete once done.
+completed:
+  - '2026-10-14 predecessor PR426 stage1 implementation 112 focused pytest PASS/Ruff and full Mac mini 4042 PASS/238 SKIP/0 FAIL at correct venv+PG16 PATH. Real archived six-source XML/contract research and Gemma contradictory claim review. PR426 GitHub exact-head full quality/pull_request CI still queued, not merged.'
+current: 'Create source-span proof contract, independent typed fact evidence checks, negative benchmark and wrapper metadata integration in isolated successor.'
+pending:
+  - Write and validate source-span evidence locator with explicit-only page/table anchors.
+  - Define portable typed claim tests and verifiers for critical source facts, negative contradictions and unknown.
+  - Integrate into operator output quality gate (never bid-ready), regression/full CI and source audit.
+last_verified_commit: 'Predecessor PR426 checkpoint head 114065a897d80573cdaa8e72b71ef8d8847ab8f3; Mac mini code 3d5016a4 4042 full pytest PASS/238 SKIP and Ruff, CI full queued.'
+test_results:
+  - 'PR426 predecessor Mac mini 4042 PASS/238 SKIP/0 failed and 112 targeted PASS/Ruff; real Gemma model v1 2 false source interpretations and v2 one source contradiction safely detected.'
+resume_instruction: 'On feature/source-claim-proof-20261014 stacked on PR426, implement source span proof and independent typed-claim verifier, using existing full_corpus_research and integrity boundary. Do not fabricate page or table provenance from normalized extraction. Keep stored original six Museum EIS files private on Mac mini; audit only computed source receipts and statuses. PR426 exact GitHub full CI still waiting; check periodically and close its checkpoint only when green. Create draft stacked PR and relevant tests. New child own status in_progress until DoD. Manual_override true, hourly watchdog disabled; no ETP/bid/production/signatures/payments/buyer contact or draft merges.'
+execution:
+  branch: feature/source-claim-proof-20261014
+  manual_override: true
