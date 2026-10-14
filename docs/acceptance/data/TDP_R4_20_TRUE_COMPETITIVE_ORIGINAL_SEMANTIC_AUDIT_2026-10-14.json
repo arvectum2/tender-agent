@@ -5727,7 +5727,7 @@
     },
     "cross_document_original_scope_review": {
       "bid_ready": false,
-      "case_count": 12,
+      "case_count": 20,
       "cases": [
         {
           "archival_source_excerpts": [
@@ -5776,7 +5776,7 @@
           "independent_original_documents": 3,
           "live_eis_edition_verified": false,
           "registry_number": "0349100009326000005",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "В ТЗ допускается лицензия у исполнителя и/или соисполнителя; контракт и требования к заявке называют исполнителя. Проверить применимость к участнику и допустимость соисполнителя.",
           "topic": "Телематическая лицензия: исполнитель либо соисполнитель"
         },
@@ -5840,7 +5840,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0895100000126000897",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "В требованиях к заявке лицензии ФСТЭК и ФСБ названы для участника; в контракте фигурируют подрядчик, субподрядчик, соисполнитель. Проверить законность и субъект каждого требования.",
           "topic": "ФСТЭК и ФСБ: участник заявки и подрядчик/соисполнитель"
         },
@@ -5904,7 +5904,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0148200000526000028",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "ТЗ фиксирует платформу заказчика. Документ о заявке отдельно перечисляет варианты подтверждения прав на неё и лицензию ФСТЭК. Нужно проверить объём допустимых прав и точную обязанность участника.",
           "topic": "Права SiteSoft.Platform и отдельная лицензия ФСТЭК"
         },
@@ -5955,7 +5955,7 @@
           "independent_original_documents": 3,
           "live_eis_edition_verified": false,
           "registry_number": "0372200172326000015",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "В контракте установлено соблюдение чужих исключительных прав, ТЗ предусматривает передачу прав на создаваемый сайт, а требования к заявке описывают владение правами участником. Не считать эти три формулировки тождественными.",
           "topic": "Права на будущий сайт и права участника на результаты"
         },
@@ -6006,7 +6006,7 @@
           "independent_original_documents": 3,
           "live_eis_edition_verified": false,
           "registry_number": "0149200002326001555",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Описание объекта закупки называет правообладателя ПО «Фактор», требования к заявке — наличие у участника неисключительных прав на переработку, а контракт — передачу используемых прав заказчику. Проверить источник прав и допустимость их передачи.",
           "topic": "Права правообладателя программного комплекса и права на результат"
         },
@@ -6044,7 +6044,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0151600003226000011",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Описание объекта закупки не устанавливает гарантийного срока, но проект контракта отдельно предписывает устранение дефектов, найденных при приёмке. Не считать отсутствие гарантийного срока освобождением от исправлений.",
           "topic": "Отсутствие гарантийного срока не отменяет устранение недостатков"
         },
@@ -6082,7 +6082,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0348100024426000039",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Основной проект контракта содержит обязанность исправления недостатков в гарантийный срок; отдельное приложение задаёт длительность 12 месяцев. Не пропускать срок, если он находится не в основном файле.",
           "topic": "Гарантийный срок указан в отдельном приложении к контракту"
         },
@@ -6120,7 +6120,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0377100005726000128",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Проект контракта устанавливает последствия неустранения недостатков; в ТЗ гарантийный срок указан как 12 месяцев либо иной срок по проекту контракта. Проверить согласованную длительность и процедуры исправлений по полной редакции.",
           "topic": "Гарантийные исправления и срок гарантии в разных приложениях"
         },
@@ -6158,7 +6158,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0162300005826000156",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Неисключительное право на программный сервис передаётся бессрочно; отдельно описание объекта закупки устанавливает гарантийный срок 12 месяцев. Не сокращать срок права использования до длительности гарантии.",
           "topic": "Бессрочное право на сервис ЕСИА и гарантия результата 12 месяцев"
         },
@@ -6196,7 +6196,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0169300003326000181",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Проект контракта предусматривает бессрочную передачу неисключительных прав на модуль сайта для слабовидящих, а ТЗ определяет срок гарантии на ПО сроком контракта. Уточнить права и поддержку как разные условия.",
           "topic": "Бессрочная лицензия на доступный сайт и ограниченная гарантия"
         },
@@ -6234,7 +6234,7 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0152200004026000069",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "Контракт говорит об отзыве лицензии у банка-гаранта, а ТЗ требует сертифицированных/лицензионных средств при оказании услуг. Это разные субъекты и разные проверки, не требование банковской лицензии участнику.",
           "topic": "Банковская лицензия гаранта и лицензионные программные средства"
         },
@@ -6272,9 +6272,313 @@
           "independent_original_documents": 2,
           "live_eis_edition_verified": false,
           "registry_number": "0360600005326000018",
-          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
           "scope_question": "По извещению закупается VR-контент для музея; в разделе о гарантиях проекта контракта говорится о строительном контроле и конструктивных элементах, тогда как ТЗ определяет поддержку VR 12 месяцев. Проверить правильность проекта и толкование гарантийного пункта.",
           "topic": "Потенциально чужой шаблон: строительный контроль вместо VR-контента"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Оплата производится Заказчиком по факту оказания услуги.",
+              "legal_duty_confirmed": false,
+              "literal_start": 3591,
+              "original_binary_sha256": "8c6eabfe92f7d8597391c4272a5a5d6a770975dc76eed47bf72ac31711f0fabb",
+              "original_filename": "проект контракта.doc",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "f3877332a63119e95e70b5071eb492a0884ffa7ff9f8e03f205f1323219a8208",
+              "source_locator": "Строка 20",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "0c090a967e6d1b6e3a7cb22b0d7a8c86eede9e3f67c430cf3c5ea773cf78b5a3",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Обеспечение безопасности сайта от внешних кибератак",
+              "legal_duty_confirmed": false,
+              "literal_start": 1531,
+              "original_binary_sha256": "40b7f02c04139923e45ecb1c9e6e07b4b0b14a617841468beb53755eccb5ae17",
+              "original_filename": "ТЗ обслуживание Сайта.doc",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "d264d9b3d0bec18840004f6a3c646d68b7dca51ea07c1c206c5c3a15b5eafd02",
+              "source_locator": "Строка 20",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "5dadd2705e0783d30da24f7ef4375e009ba029da53731daaf7950f2fb26ef8ff",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0127100008626000013",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "ТЗ содержит обязанности по защите сайта от атак, а контракт устанавливает оплату после оказания услуг. Проверить расходы и исполнимость требований по ИБ отдельно от режима расчётов.",
+          "topic": "Защита ГИС-сайта и постоплата поддержки"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Если используется платная лицензия, её приобретение, продление и поддержка полностью обеспечиваются исполнителем",
+              "legal_duty_confirmed": false,
+              "literal_start": 70135,
+              "original_binary_sha256": "a30954f2ba0cfce49c13af94e887174329e6591bb046764de8a4be5e4d693791",
+              "original_filename": "Проект конкракта_сайт.doc",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "712d2ee209f2fa304dabf1b61fed744c0c0aba6b02123ba6b9264a4fce146c37",
+              "source_locator": "Строка 441",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "eed9f61144d6d2d1a1e4e3732b60347e1a8875fb5c9c4873463899cbb4bbffc9",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Предпочтительно использовать свободно распространяемые шрифты и иные компоненты и избегать платных лицензий.",
+              "legal_duty_confirmed": false,
+              "literal_start": 42203,
+              "original_binary_sha256": "816b8f182ce6d99aad80ca2b5af1d16179cd4b9c41248625aa194c399cdfaac6",
+              "original_filename": "Описание объекта закупки_сайт.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "514f682087ca45064a4fb273a41c708da3ca728c01550a991c6ed747703d18ca",
+              "source_locator": "Строка 303",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "ede9e05cf7bc0766f7c44bf2ced9dd178fe9e152e4c94fb4a8bc1991f109ae56",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0137200001226007700",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Описание объекта закупки рекомендует свободные шрифты и компоненты, а контракт предусматривает оплату платных лицензий исполнителем, если они используются. Не выдавать предпочтение за абсолютный запрет.",
+          "topic": "Предпочтение свободных компонентов и расходы на платные лицензии"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Результатом работ является работоспособный адаптивный сайт",
+              "legal_duty_confirmed": false,
+              "literal_start": 34643,
+              "original_binary_sha256": "8ca942f6a5860a99824fc57a0b017bc251b8e13e85521d187824d2c49a013403",
+              "original_filename": "контракт Разработка веб сайта Молодежный центр.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "01847ebe06c4414016bb794100ae7e41458db53147baf7c1cfd9e6acb087611f",
+              "source_locator": "Строка 196",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "8a1dc25f4ea7ff5b5dcdffab62c9283b0aa53e891ae7c4e64e3d28f2c8060cc8",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Исполнитель до начала разработки сообщает Заказчику наименование и редакцию выбранной CMS",
+              "legal_duty_confirmed": false,
+              "literal_start": 6694,
+              "original_binary_sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a",
+              "original_filename": "описание объекта закупки 2.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "0c912292f76ec66ba5608a6cce6a92529a6a619311c3851b69ae2a6509f29ed0",
+              "source_locator": "Строка 67",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "9345f6974c06b4f3683ebb14693fe5edc4175b9b1679433a705967e631f1ab75",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0158300034526000388",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Контракт описывает итоговый передаваемый сайт, а ТЗ требует до начала разработки определить наименование, версию, лицензию и реестровую запись выбранной CMS. Проверить достаточность прав и передаваемых административных доступов.",
+          "topic": "Передаваемый адаптивный сайт и выбор российской CMS"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Министерство цифрового развития и связи Свердловской области обладает правом на использование ПО",
+              "legal_duty_confirmed": false,
+              "literal_start": 5815,
+              "original_binary_sha256": "54e5e92c7c873c890dbd3cdb1bded45be8edd1f241c9c705d0b8c5d9ec66bda0",
+              "original_filename": "Описание объекта закупки.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "ea1c07e9b631745895c80b9d62d07b842278d3595f74e8cbf5706cbed161e89b",
+              "source_locator": "Строка 40",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c0987d9e7718ce42c7b96b9e934f9d8a74b7a8228c5bff2aed3a9fc20bd7210d",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Исполнитель обязан обеспечить гарантийное сопровождение разработанных разделов и подразделов в срок не менее 12 (двенадцати) месяцев",
+              "legal_duty_confirmed": false,
+              "literal_start": 49479,
+              "original_binary_sha256": "cb191f2dbf1e42b3b436ed931935bdb5e7bb6f706c3cb58ab233f4a11cd0fbdc",
+              "original_filename": "Проект контракта.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "267b6ab32b11d10920709fcfbfdf2c4de85f140ecfb2da63c1634ff35ba2f710",
+              "source_locator": "Строка 207",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "f4d1a82d9d32a64ff8adaefcbd15ee268ffb4024e38c31b960e1d78035ec4984",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0162200011826003089",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "В описании объекта закупки приведён лицензионный источник прав заказчика на систему, контракт отдельно назначает гарантийное сопровождение доработок не менее 12 месяцев. Проверить права на изменение существующей ГИС и ответственность за новые модули.",
+          "topic": "Неисключительные права заказчика на ГИС и 12-месячная поддержка"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Подрядчик при заключении Контракта обязан предоставить Заказчику обеспечение гарантийных обязательств в размере 10 (десяти) процентов",
+              "legal_duty_confirmed": false,
+              "literal_start": 13606,
+              "original_binary_sha256": "d4793e94b272b1f06a79e75600c2f01481a219799b211ac5ca0b692d14107b02",
+              "original_filename": "Проект контракта.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "96bcff5f60f655f0ca02218dacdafcbcd8ec466e8eb73726c9f0729f36ad0a85",
+              "source_locator": "Строка 72",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "bb05a1934625b30f5e8e62ab2d7e2786e8b8d3674bcd39830925436e0094ff66",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Устранение недостатков осуществляется Подрядчиком за свой счет в срок не более 10 (десяти) рабочих дней",
+              "legal_duty_confirmed": false,
+              "literal_start": 14929,
+              "original_binary_sha256": "b2af61e3c9ea8bbea3e0cf72f3b7e8f4fb23d1c3e9c2f4bef4c9e9ad955b8f9d",
+              "original_filename": "Приложение 1 - Описание объекта закупки.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "b90af10e4fde4e594cc2d591712e4dcecfe096e3ce4a18860e5f75926311d8de",
+              "source_locator": "Строка 120",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c4f9cbb708d6994f8883aa1352cdb738d64510bf1446e1b56c0ac8acf9c8963e",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0169300008226000223",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Проект контракта требует обеспечение гарантийных обязательств в размере 10 процентов, а ТЗ устанавливает срок исправления недостатков до 10 рабочих дней. Финансовое обеспечение и обязанность устранения недостатков не являются одним и тем же.",
+          "topic": "Обеспечение гарантии и срок исправления мультимедийного контента"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "критическая ошибка (остановка работы приложения/сервиса) — в течение 8 (восьми) часов",
+              "legal_duty_confirmed": false,
+              "literal_start": 17110,
+              "original_binary_sha256": "704a9fc8ba767767060267795795a3a1960e5a6843c68a50127d538005a0c4e4",
+              "original_filename": "Проект контракта.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "caac043c6d267fcd8b66f9750e73adf7df3184f91c7f4a90dd9ce99d71cb0988",
+              "source_locator": "Строка 97",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c1550ad5697ab3b2ab41ba1902d8cbd128285728750fe1133071f5f1959fcadc",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "передачу Заказчику права использования результата на условиях простой (неисключительной) лицензии",
+              "legal_duty_confirmed": false,
+              "literal_start": 802,
+              "original_binary_sha256": "762a0ea182ac4ae7a7f7ec922c089fe1d44bad096348517b4abf995bce409935",
+              "original_filename": "Приложение 1 - Описание объекта закупки.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "4200429b4afa36c4fc18fc6720dd6fc75376334e0318842d15d5cd23ff3c19a2",
+              "source_locator": "Строка 10",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "28ffc2ef311806ceb264def3ecb090c35419812cf336e4372a949e0343e33906",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0169300008226000225",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Контракт содержит восьмичасовой срок устранения критической ошибки AR-приложения, ТЗ отдельно описывает передачу результата по неисключительной лицензии. Проверить SLA и режим прав независимо.",
+          "topic": "Срок устранения критических ошибок и неисключительная лицензия"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Исполнитель должен обеспечить гарантию работоспособности Платформы, включая гарантийную поддержку, в течение 12-ти месяцев",
+              "legal_duty_confirmed": false,
+              "literal_start": 85086,
+              "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+              "original_filename": "САЙТ_ТЗ_на_ДОРАБОТКУ_2026 ИТОГ.docx",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "bbcdf1188c1f4835dc6973e01bc6f072386d7a266597c9207b949d6dbb018f63",
+              "source_locator": "Строка 1264",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Требование обеспечения гарантийных обязательств не установлено.",
+              "legal_duty_confirmed": false,
+              "literal_start": 3251,
+              "original_binary_sha256": "0efdfd67f7b21c493cae28dc33db4cddd7fd109da5068242a2838a4ac9d75d04",
+              "original_filename": "Приложение к проекту контракта, сост. 30.03.2026.zip",
+              "original_notice_source_method": "ADDITIONAL_ORIGINAL_DOWNLOAD",
+              "quote_sha256": "0686197965018d99d0ef6e585c66f761fb2e672c10da703ab116fb9aa4d11166",
+              "source_locator": "Строка 27",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "1af2d56308790cf666ddecbd41748a796c14ab6c379dfacf7fee5eb14b7265b2",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0348100024426000021",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "ТЗ предусматривает 12 месяцев гарантийной поддержки платформы, но другое приложение к контракту говорит, что требование финансового обеспечения гарантийных обязательств не установлено. Не интерпретировать отсутствие обеспечения как отсутствие гарантии.",
+          "topic": "Гарантия платформы 12 месяцев без отдельного обеспечения гарантии"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Устранять выявленные в процессе оказания услуг недостатки в день обнаружения этих недостатков.",
+              "legal_duty_confirmed": false,
+              "literal_start": 9214,
+              "original_binary_sha256": "01710aa6addbea66d1bdff43891fc2f98cfb503dc29b2247455c5338ee6209c8",
+              "original_filename": "Пр 4. Проект контракта. Создание сайта и ТП.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "b06b22b22450422a6b5b470ddc75b83b13af9fe2c71f8a4341b519dd3bccbb2b",
+              "source_locator": "Строка 59",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "a23c14c241551e0cfab6d63e46bd43622f9aae162356fd0ab358c5e6044312fe",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "срок выполнения задач – до 5 рабочих дней.",
+              "legal_duty_confirmed": false,
+              "literal_start": 11907,
+              "original_binary_sha256": "6a408d91d6148e2c6a88c1b087ed7ad1601910d0ca99d921a73acdbd49e77edc",
+              "original_filename": "Пр 1. Описание объекта закупки.  Создание сайта и ТП..docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "386bfa87c1ca8813db70cd3e3ca0e1a7d7cf8c8a1a00493f9c90fad65933c2d1",
+              "source_locator": "Строка 169",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "1758b9d52f8dd7addfa7032e82d4bcdcc2f42e9a506ea1108141210f60f1e69f",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0376300000126000193",
+          "scope_difference_status": "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "Проект контракта требует устранять обнаруженные недостатки в день обнаружения, а ТЗ указывает до пяти рабочих дней для выполнения задач. Проверить границу между дефектами и обычными задачами техподдержки, не считать сроки взаимозаменяемыми.",
+          "topic": "Исправление обнаруженных дефектов в день обнаружения и обычные задачи"
         }
       ],
       "current_eis_revision_attested": false,

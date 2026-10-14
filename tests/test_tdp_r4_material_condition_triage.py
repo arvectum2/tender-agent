@@ -158,9 +158,12 @@ def test_all_96_actual_originals_remain_non_decisional_when_present():
     assert len(audit["cases"]) == 20
     assert sum(case["source_documents_read"] for case in audit["cases"]) == 96
     compared = audit["cross_document_original_scope_review"]
-    assert compared["case_count"] == 12
-    assert sum(len(c["archival_source_excerpts"]) for c in compared["cases"]) == 31
-    assert sum(c["independent_original_documents"] for c in compared["cases"]) == 27
+    assert compared["case_count"] == 20
+    assert sum(len(c["archival_source_excerpts"]) for c in compared["cases"]) == 47
+    assert sum(c["independent_original_documents"] for c in compared["cases"]) == 43
+    assert {c["registry_number"] for c in compared["cases"]} == {
+        c["registry_number"] for c in audit["cases"]
+    }
     assert any(
         c["registry_number"] == "0360600005326000018"
         and any("строительному контролю" in e["exact_archival_quote"]
@@ -171,7 +174,7 @@ def test_all_96_actual_originals_remain_non_decisional_when_present():
     assert compared["bid_ready"] is False
     assert all(not c["expert_signed"] and not c["live_eis_edition_verified"]
                and c["scope_difference_status"] ==
-               "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED"
+               "CROSS_DOCUMENT_MATERIAL_SCOPE_EXPERT_REVIEW_REQUIRED"
                for c in compared["cases"])
     assert all(
         v["original_binary_sha256"] and v["source_text_sha256"] and v["quote_sha256"]
