@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-FULL-CORPUS-RESEARCH-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Replace ad-hoc three-excerpt quality assumptions with a reusable original-document research stage that inventories every input, indexes all extracted text, retrieves provenance-addressed evidence by research theme, records omissions/unsupported claims and always gates material LLM findings for human review.
+definition_of_done:
+  - Provide deterministic, bounded and version/hash-bound full-corpus research index for ALL extracted attachment roles with status for missing/failed originals; refuse source verification for missing/empty/mismatched bytes.
+  - Generate multi-topic evidence packets across complete document text, independent of chosen LLM context excerpts; handle same-topic conflicting clauses and return char offsets, source SHA and exact quotes.
+  - Detect unverified/contradicted material model claims fail-closed (never claim semantic entailment from lexical match); separate source-quoted evidence from the model recommendation.
+  - Integrate research status into real APR03B saved-run analysis/report so schema PASSED is never marketed as factual approval, while preserving existing API and human-only NO BID boundaries.
+  - Test synthetic tricky documents and preserved six-file Museum of Bread originals on isolated Mac mini with source SHA receipts; run relevant focused pytest/Ruff and exact GitHub CI, open draft PR.
+  - Publish reproducible technical design and remaining owner/latest-EIS/legal gates without merging or deploying.
+completed:
+  - '2026-10-14 existing PR425 source excerpt selector local 60 focused pytest/Ruff/source coverage PASS and GitHub 3/3 CI SUCCESS, child completed. Full corpus review still absent; Gemma4 before/after source-independent semantic audit documented incorrect SMP participant status, bid criteria, fixed-price assertions and missed NMCK/deadline despite JSON schema PASS.'
+current: 'Inspect module seams, introduce new provenance-index and research/claim gate with offline tests, use source query taxonomy and entire extracted corpus including supporting files.'
+pending:
+  - Implement reusable corpus index and question-specific evidence retrieval with original source offsets/hashes, missing docs and contradiction flagging.
+  - Wire bounded source-research results into actual operator analysis metadata and safe user report; guard failure.
+  - Test full-scope negative and original snapshot, assess completeness, prepare draft PR and CI.
+last_verified_commit: 'PR425 tested code 69b1ad4b3eb617077ff35c7359fe4aedee1b2d8f, latest checkpoint 3f93725032804bf7a181a0b78ab1a7715d66d054. PR425 3/3 GitHub CI SUCCESS.'
+test_results:
+  - 'PR425 prior 60 focused PASS, full PR/push CI 3/3 SUCCESS; independent actual Gemma4 model 4/4 schemas PASS but source semantics FAIL.'
+resume_instruction: 'On Mac mini use isolated worktree branch feature/full-corpus-tender-research-20261014 based on PR425. Implement complete extraction-inventory/source-query provenance engine and LLM fact-check fail-close in APR03B without affecting preview18083/18087 or live volumes. Cover original Museum six file corpus (raw SHA multiset 5bf958ce; normalized SHA 882f341b) and synthetic contradictory/missing documents. Test integration, Ruff and exact GitHub CI; update task after every stage. Keep manual_override true, hourly watchdog disabled, PRs draft/unmerged; no ETP/bid/production/signatures/payments/contact.'
+execution:
+  branch: feature/full-corpus-tender-research-20261014
+  manual_override: true
