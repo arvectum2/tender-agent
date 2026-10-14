@@ -84,3 +84,19 @@ def test_missing_document_text_produces_no_supported_evidence():
     )[0]
     assert result["status"] == "CLAUSE_NOT_FOUND"
     assert result["requires_human_review"] is True
+
+
+def test_model_dotted_clause_number_supported_without_confusing_numeric_dates():
+    contract = document(
+        "contract", "contract_draft",
+        "3.4. Заказчик осуществляет расчёты по мере поступления средств. "
+        "3.5. Авансирование не предусмотрено.",
+    )
+    result = audit_model_contract_clause_references(
+        [{"clause": "3.4. Payment terms"}, {"clause": "Section 99.8."}],
+        [contract],
+    )
+    assert result[0]["model_clause_reference"] == "3.4"
+    assert result[0]["status"] == "CLAUSE_LOCATED_NOT_SEMANTICALLY_VERIFIED"
+    assert "поступления средств" in result[0]["evidence"][0]["quote"]
+    assert result[1]["status"] == "CLAUSE_NOT_FOUND"
