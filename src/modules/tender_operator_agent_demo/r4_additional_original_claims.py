@@ -82,7 +82,12 @@ def audit_additional_sources(source_root:Path)->dict:
     batches_over=0
     for row in cases:
         n=row["reg_number"]
-        if not row["format_claim_count_ok"]:
+        if row.get("max_claims_requested")!=3:
+            raise ValueError("unexpected model claim policy request")
+        count_ok=len(row.get("claims") or [])<=3
+        if row["format_claim_count_ok"] is not count_ok:
+            raise ValueError("model output count approval conflicts with actual claims")
+        if not count_ok:
             batches_over+=1
         for i,claim in enumerate(row.get("claims",[]),1):
             key=(n,claim["source_uid"])
@@ -100,7 +105,8 @@ def audit_additional_sources(source_root:Path)->dict:
                 "quote_sha256":sha(quote.encode("utf8")),
                 "quote_literal":exact,
                 "quote_chars":len(quote),
-                "claim_format_count_valid":bool(row["format_claim_count_ok"]),
+                "quote_length_valid":18<=len(quote)<=180,
+                "claim_format_count_valid":count_ok,
                 "semantic_or_legal_gold_signed":False,"bid_ready":False,
             })
     if len(claims)!=21:
@@ -113,6 +119,7 @@ def audit_additional_sources(source_root:Path)->dict:
         "model_claims_checked":len(claims),
         "model_claims_exact_source_quotes":sum(c["quote_literal"] for c in claims),
         "claims_requiring_quote_correction":sum(not c["quote_literal"] for c in claims),
+        "claims_breaching_quote_length_policy":sum(not c["quote_length_valid"] for c in claims),
         "model_batches_exceeding_claim_count_cap":batches_over,
         "human_legal_signoffs":0,
         "claim_checks":claims,
