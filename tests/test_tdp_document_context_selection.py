@@ -39,6 +39,57 @@ def test_mid_document_high_value_source_survives_budget():
     assert "передача исходников" in result.text
 
 
+def test_explicit_accessibility_and_ticketing_clauses_beat_navigation_mentions():
+    def window(body: str) -> str:
+        return body + " " * (900 - len(body))
+
+    source = "".join([
+        window("Общее введение в техническое задание."),
+        window("В меню есть билеты и подпись для слабовидящих. Требования к сайту."),
+        window("Различные правила: сроки, структура, приёмка, результаты и безопасность."),
+        window("Продажа билетов должна осуществляться через сайт музея."),
+        window("Система управления контентом, технические требования, исходники."),
+        window("Версия сайта для слабовидящих обязательна."),
+        window("Раздел о внешнем виде, функциональности и этапах."),
+        window("Заключение технического задания."),
+    ])
+    result = select_document_context(
+        source, role="technical_spec", max_chars=6000, window_chars=900,
+    )
+    assert result.truncated is True
+    assert len(result.text) <= 6000
+    assert "Продажа билетов должна осуществляться" in result.text
+    assert "Версия сайта для слабовидящих обязательна" in result.text
+    assert source[result.excerpts[0].char_start:result.excerpts[0].char_end] == result.excerpts[0].text
+
+
+def test_exclusive_rights_security_and_payment_clauses_survive_contract_budget():
+    def window(body: str) -> str:
+        return body + " " * (900 - len(body))
+
+    source = "".join([
+        window("Вводная часть проекта договора."),
+        window("Обычные условия, срок, приёмка, штраф, неустойка и акт."),
+        window("Исключительные права передаются заказчику после приёмки."),
+        window("Обеспечение исполнения Контракта необходимо по условиям закупки."),
+        window("Оплата в течение 7 (семи) рабочих дней после приёмки."),
+        window("Риски, контроль и общие гарантии."),
+        window("Подписи сторон."),
+    ])
+    result = select_document_context(
+        source, role="contract_draft", max_chars=6000, window_chars=900,
+    )
+    assert result.truncated
+    assert len(result.text) <= 6000
+    assert "Исключительные права передаются" in result.text
+    assert "Обеспечение исполнения Контракта" in result.text
+    assert "7 (семи) рабочих дней" in result.text
+    assert all(
+        source[part.char_start:part.char_end] == part.text
+        for part in result.excerpts
+    )
+
+
 def test_wrong_source_does_not_get_fake_page_number_or_identification():
     source = "без сведений " * 2000
     result = select_document_context(source, role="notice", max_chars=6000, window_chars=900)
