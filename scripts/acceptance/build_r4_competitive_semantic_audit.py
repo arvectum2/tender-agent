@@ -6,10 +6,10 @@ machine evidence. No current procurement status, legal eligibility or GO.
 from __future__ import annotations
 
 import argparse
-from datetime import datetime
 import hashlib
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
