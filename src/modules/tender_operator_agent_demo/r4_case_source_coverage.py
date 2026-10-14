@@ -11,7 +11,7 @@ import hashlib
 import io
 import json
 import re
-from collections import Counter, defaultdict
+from collections import defaultdict
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 from typing import Any
