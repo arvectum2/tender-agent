@@ -107,12 +107,11 @@ def _normalized_value(kind: str, value: Any) -> str | None:
             return None
         try:
             raw = str(value).strip().replace("\u00a0", "").replace(" ", "")
-            if "," in raw and "." in raw and raw.index(",") < raw.rindex("."):
-                raw = raw.replace(",", "")
-            elif raw.count(",") > 1 and "." not in raw:
-                raw = raw.replace(",", "")
-            else:
-                raw = raw.replace(",", ".")
+            has_group_separators = (
+                ("," in raw and "." in raw and raw.index(",") < raw.rindex("."))
+                or (raw.count(",") > 1 and "." not in raw)
+            )
+            raw = raw.replace(",", "" if has_group_separators else ".")
             number = Decimal(raw)
             if not number.is_finite() or number < 0:
                 return None
