@@ -146,3 +146,23 @@ def test_archive_no_data_is_never_reinterpreted_as_source_verified():
     )
     with pytest.raises(ValueError):
         build_r4_20_case_source_coverage(**data)
+
+
+def test_deterministic_machine_only_json_and_human_queue_csv_export(tmp_path):
+    import json
+
+    from scripts.acceptance.build_r4_20_source_coverage import export_matrix
+
+    first = export_matrix(tmp_path)
+    json_out = tmp_path / "r4-20-historical-source-coverage.json"
+    csv_out = tmp_path / "r4-20-historical-source-coverage.csv"
+    initial_bytes = (json_out.read_bytes(), csv_out.read_bytes())
+    second = export_matrix(tmp_path)
+    assert first == second
+    assert initial_bytes == (json_out.read_bytes(), csv_out.read_bytes())
+    assert len(list(csv.DictReader(io.StringIO(csv_out.read_text())))) == 20
+    decoded = json.loads(json_out.read_text())
+    assert decoded["summary"]["archived_official_zip"] == 17
+    assert decoded["summary"]["human_gold_reviews_completed"] == 0
+    assert all(not row["bid_ready"] for row in decoded["cases"])
+    assert all(row["human_reviewer"] is None for row in decoded["cases"])
