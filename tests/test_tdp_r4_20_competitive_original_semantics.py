@@ -20,6 +20,10 @@ from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort impor
 from src.modules.tender_operator_agent_demo.r4_original_claim_audit import (
     verify_saved_quote,
 )
+from src.modules.tender_operator_agent_demo.r4_saved_report_deadline_audit import (
+    _parse_deadline,
+    audit_saved_decisions,
+)
 
 
 def _sha(b: bytes) -> str:
@@ -151,6 +155,11 @@ def test_official_all_twenty_and_llm_original_claims_private_offline(tmp_path):
     assert new["claims_requiring_quote_correction"] == 1
     assert new["model_batches_exceeding_claim_count_cap"] == 3
     assert result["all_saved_model_claims_checked"] == 47
+    reports=result["historical_model_report_deadline_audit"]
+    assert reports["saved_reports_verified"]==10
+    assert reports["date_conflict_count"]==2
+    assert reports["unattested_strong_blocker_decisions"]==8
+
     assert result["bid_ready"] is False
     assert result["human_gold_review_signed"] == 0
     text = readable_review(result)
@@ -160,3 +169,56 @@ def test_official_all_twenty_and_llm_original_claims_private_offline(tmp_path):
     for value in ("no_data", "getDocsIP", "Traceback", "HTTP 409"):
         assert value not in text
     (tmp_path / "test-user-report.md").write_text(text)
+
+
+def test_historic_report_deadlines_are_timezones_not_naive_strings():
+    a=_parse_deadline("09.10.2026 08:00:00 +03:00")
+    b=_parse_deadline("2026-10-09T05:00:00+00:00")
+    assert a == b
+    assert a != _parse_deadline("2026-10-12T08:00:00+03:00")
+    with pytest.raises(ValueError, match="no timezone"):
+        _parse_deadline("2026-10-09T08:00:00")
+
+
+def test_wrong_saved_model_report_procurement_number_fails_closed(tmp_path):
+    original=[{"registry_number": f"{i:019d}","archived_submission_end": "2026-10-12T08:00:00+03:00"} for i in range(1,21)]
+    packet=[]
+    for i in range(1,11):
+        n=f"{i:019d}"
+        runid=f"toa-run-20261014-{i:06d}"
+        folder=tmp_path/runid/"output"
+        folder.mkdir(parents=True)
+        (folder/"canonical_report.json").write_text(
+            json.dumps({
+                "procurement_number": "0"*19 if i==1 else n,
+                "application_deadline":"12.10.2026 08:00:00 +03:00",
+                "decision":"Подтверждён жёсткий блокер",
+            })
+        )
+        packet.append({"reg_number":n,"run_id":runid})
+    with pytest.raises(ValueError, match="different original procurement"):
+        audit_saved_decisions(packet,original,tmp_path)
+
+
+def test_wrong_archived_deadline_remains_conflict_without_model_go(tmp_path):
+    original=[{"registry_number": f"{i:019d}","archived_submission_end":"2026-10-12T08:00:00+03:00"} for i in range(1,21)]
+    packet=[]
+    for i in range(1,11):
+        n=f"{i:019d}"
+        runid=f"toa-run-20261014-{i:06d}"
+        folder=tmp_path/runid/"output"
+        folder.mkdir(parents=True)
+        (folder/"canonical_report.json").write_text(
+            json.dumps({
+                "procurement_number":n,
+                "application_deadline":"09.10.2026 08:00:00 +03:00" if i==1 else "12.10.2026 08:00:00 +03:00",
+                "decision":"Не участвовать: подтверждён жёсткий блокер",
+            })
+        )
+        packet.append({"reg_number":n,"run_id":runid})
+    audit=audit_saved_decisions(packet,original,tmp_path)
+    assert audit["saved_reports_verified"]==10
+    assert audit["date_conflict_count"]==1
+    assert audit["unattested_strong_blocker_decisions"]==10
+    assert audit["human_business_approved"]==0
+    assert all(not item["bid_ready"] for item in audit["cases"])
