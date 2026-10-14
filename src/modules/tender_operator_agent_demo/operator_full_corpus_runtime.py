@@ -16,14 +16,14 @@ from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
 from src.modules.tender_operator_agent_demo.full_corpus_modality_audit import (
     audit_source_modalities,
 )
-from src.modules.tender_operator_agent_demo.source_claim_proof import (
-    audit_model_eis_summary,
-    bind_source_span,
-)
 from src.modules.tender_operator_agent_demo.full_corpus_research import (
     build_research_brief,
     examine_llm_assertions,
     research_full_corpus,
+)
+from src.modules.tender_operator_agent_demo.source_claim_proof import (
+    audit_model_eis_summary,
+    bind_source_span,
 )
 
 _BASE_LIMITATION = (
