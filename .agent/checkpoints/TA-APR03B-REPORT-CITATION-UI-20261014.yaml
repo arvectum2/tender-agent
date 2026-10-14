@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-REPORT-CITATION-UI-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Prevent the operator report UI from claiming model/report citations or risk statuses are source-verified merely because source_ref, document and locator strings exist.
+definition_of_done:
+  - Keep server-verified original EIS XML facts marked KNOWN only when the existing original-source evidence endpoint provides attributable evidence.
+  - Distinguish unverified report-supplied citations from independently source-verified facts in the risk/readiness panels; never imply claim evidence authenticity based solely on field presence.
+  - Add reproducible HTML/JS regression tests for full- and partial-citation risk cases while preserving visible warnings.
+  - Test on isolated Mac mini checkout (focused pytest, JS syntax, Ruff), open draft PR and verify GitHub CI.
+  - Update canonical parent and child checkpoint without claiming owner semantic/legal/production acceptance.
+completed:
+  - '2026-10-14 read code: renderEvidence decision_core blockers/unknowns/readiness defines grounded = validCitations(item.evidence).length > 0, with validCitations only checking source_ref/document/locator existence. Current UI risks overclaims verification.'
+current: Create focused fail-closed UI citation presentation and regression.
+pending:
+  - Implement separate verified-XML and unverified-report source rendering.
+  - Test, stage draft PR, inspect CI and close when green.
+last_verified_commit: '5ded8868484f85ad2237bb3fd9d94ff0f85fee60 main checkpoint; UI code verified manually from isolated APR03B source cc9efe6b.'
+test_results: []
+resume_instruction: 'Branch fix/apr03b-report-citation-verification-20261014 from main; update operator_workspace.js citation rendering for source-backed XML facts vs report-supplied risk claims, add regression checks in existing APR03B tests, test Mac mini isolated checkout and submit stacked draft PR. Never claim independent original quote matches when not verified. Owner APR03B semantic and legal acceptance, live 15-20 B2B sourcing remain open; no merge, bids, ETP, paid services, production, signing, buyer contact, watchdog.'
+execution:
+  branch: fix/apr03b-report-citation-verification-20261014
+  manual_override: true
