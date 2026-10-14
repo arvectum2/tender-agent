@@ -115,6 +115,40 @@ def run_with_full_corpus_research(
             original_documents if isinstance(original_documents, list) else [],
         )
         metadata["source_research_clause_review"] = clause_reviews
+        unresolved = [
+            item for item in clause_reviews
+            if item["status"] != "CLAUSE_LOCATED_NOT_SEMANTICALLY_VERIFIED"
+        ]
+        # Source-first gate is independent of the model output schema. It
+        # explicitly counts known gaps and NEVER returns a bid-ready verdict.
+        quality_gate = {
+            "status": (
+                "CORPUS_INCOMPLETE" if research["unread_file_ids"]
+                else "SEMANTIC_REVIEW_REQUIRED"
+            ),
+            "documents_indexed": research["extracted_document_count"],
+            "documents_total": research["document_count"],
+            "missing_topics": list(research["missing_research_topics"]),
+            "unlocated_claims": sum(
+                item["status"] == "NO_MATCH_IN_INDEXED_SNIPPETS"
+                for item in claim_index
+            ),
+            "ambiguous_or_missing_clause_refs": len(unresolved),
+            "claim_semantics_verified": False,
+            "official_revision_current_attested": False,
+            "bid_ready": False,
+            "manual_review_required": True,
+        }
+        metadata["source_research_quality_gate"] = quality_gate
+        if unresolved:
+            limitations = metadata.setdefault("limitations", [])
+            if isinstance(limitations, list):
+                _once(
+                    limitations,
+                    "У модели есть риски без однозначной ссылки на исходный "
+                    "пункт договора; требуется ручная проверка ссылок, "
+                    "содержания и редакций.",
+                )
         # Never interpret a located paragraph as semantic approval. If a
         # numbered source clause is missing or repeated, keep it review-only.
         # Persist reviewable source locations separately from model assertions.
@@ -125,11 +159,13 @@ def run_with_full_corpus_research(
             trace["full_corpus_research"] = research
             trace["source_claim_assessment"] = claim_index
             trace["source_clause_review"] = clause_reviews
+            trace["source_research_quality_gate"] = quality_gate
         requirement_payload = outputs.get("requirements")
         if isinstance(requirement_payload, dict):
             requirement_payload["full_corpus_research"] = research
             requirement_payload["source_claim_assessment"] = claim_index
             requirement_payload["source_clause_review"] = clause_reviews
+            requirement_payload["source_research_quality_gate"] = quality_gate
         return outputs
 
     return handler(
