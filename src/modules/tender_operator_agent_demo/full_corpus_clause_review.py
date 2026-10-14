@@ -15,7 +15,7 @@ _SECTION = re.compile(
     r"(?=[A-Za-zА-Яа-яЁё])",
 )
 _MODEL_SECTION = re.compile(
-    r"(?<![\d.])(?P<number>\d{1,2}(?:\.\d{1,2}){1,5})(?![\d.])",
+    r"(?<![\d.])(?P<number>\d{1,2}(?:\.\d{1,2}){1,5})(?!\d|\.\d)",
 )
 _REVIEW_STATUSES = {
     "CLAUSE_LOCATED_NOT_SEMANTICALLY_VERIFIED",
