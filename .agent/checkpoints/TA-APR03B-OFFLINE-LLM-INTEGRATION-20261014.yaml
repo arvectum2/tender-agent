@@ -1,0 +1,28 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-OFFLINE-LLM-INTEGRATION-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Test exact local OpenAI-compatible model adapter and four-section controlled Tender Agent LLM workflow using exclusively synthetic input and temporary local-only SQLite, without changing private preview, source corpus or production.
+definition_of_done:
+  - Verify active local model name and host-only endpoint without download or model restart.
+  - Verify local model OpenAI-compatible JSON schema request using actual Tender Agent provider.
+  - Attempt actual four-section controlled operator workflow with fake notice/spec/contract and temporary local SQLite; record specific success or reproducible error without overclaiming model accuracy.
+  - Preserve all prior previews, main data and model service; no outward API or procurement action.
+  - Save exact test outcome and completed or blocked checkpoint.
+completed:
+  - '2026-10-14 Gemma4 12B model arvectum-gemma4-12b-it-qat-q4_0 already served via llama.cpp 127.0.0.1:8081, GET /health ok, GET /v1/models identifies model; no Ollama models needed and no download.'
+  - 'Direct localhost synthetic json_object with schema succeeded, verified expected boolean output.'
+  - 'Actual src.modules.controlled_llm_prebid.service._OpenAICompatibleJSONProvider.generate real local model returned verified=false/can_bid=false for synthetic unverified fixture, schema/transport PASS.'
+current: 'Mac mini synthetic four-section run_controlled_operator_llm started asynchronously PID 20152 with temporary /tmp/ta-apr03b-synthetic-local-llm-20261014.sqlite and ephemeral AI_CORP_* variables in process only.'
+pending:
+  - Read Mac mini process PID 20152 output, troubleshoot bounded failures if possible.
+  - Record source revision, validation output and explicit semantic/no-GO limits.
+  - Close bounded checkpoint and update parent or mark blocked if genuine blocker.
+last_verified_commit: '5ded8868484f85ad2237bb3fd9d94ff0f85fee60 main; synthetic runner worktree from UI source 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb, no application modifications.'
+test_results:
+  - 'Actual local OpenAI-compatible JSON schema transport OK; actual Tender Agent provider.generate returns false/false for synthetic fixture.'
+resume_instruction: 'Check Mac mini process PID 20152 output on Mac-mini-master.local. Current test invokes run_controlled_operator_llm on synthetic notice/spec/contract, localhost Gemma4 12B, isolated SQLite /tmp and no bid_decision. Record result, do not claim live procurement semantic quality. Do not change 18083/18087 previews, model service, production, ETP, payments, secrets, contacts, merges or watchdog.'
+execution:
+  branch: qa/apr03b-offline-local-llm-20261014
+  manual_override: true
