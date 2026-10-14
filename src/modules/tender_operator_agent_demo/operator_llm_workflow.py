@@ -25,6 +25,7 @@ def run_controlled_operator_llm(
     provider_mode: str = "llm",
     emit_event: Callable[..., Any] | None = None,
     settings_getter: Callable[[], Any] = get_settings,
+    source_research: dict[str, Any] | None = None,
 ) -> dict[str, Any] | None:
     try:
         from sqlalchemy import create_engine
@@ -66,6 +67,9 @@ def run_controlled_operator_llm(
             },
             "tkp_inputs": [],
         }
+        if source_research is not None:
+            context["source_research"] = source_research
+
         with Session(engine) as session:
             result = run_controlled_tender_operator_workflow(
                 session,
