@@ -81,21 +81,49 @@ def bind_source_span(
     result["quote_sha256"] = _sha(quote)
     result["quote"] = quote
     result["source_ref"] = f"normalized:{file_id}:{start}-{end}"
-    # A page/cell can only be accepted with proof of an externally extracted
-    # mapping. Do not believe unchecked human/LLM "page 12" labels.
+    # A caller-supplied "page 17" is never sufficient. The physical
+    # coordinate must be independently registered in the source-research
+    # index, tied to a declared raw-source SHA and an exactly overlapping
+    # normalized Unicode span. Current DP evidence_chunks do not provide
+    # PDF/worksheet coordinates, so current deployments correctly return
+    # PAGE_OR_CELL_NOT_ATTESTED until such mappings really exist.
     location = physical_locator if isinstance(physical_locator, dict) else {}
     mapping = location.get("normalized_span_map")
-    if isinstance(mapping, dict) and (
-        mapping.get("source_sha256") == expected_text_sha256
-        and mapping.get("file_id", "").casefold() == file_id.casefold()
+    raw_sha = indexed.get("raw_sha256")
+    raw_receipt_ok = indexed.get("receipt_status") == "MATCHED_DECLARED_DIGEST"
+    source_maps = research.get("physical_span_maps")
+    if (
+        isinstance(mapping, dict)
+        and isinstance(source_maps, list)
+        and raw_receipt_ok
+        and isinstance(raw_sha, str)
+        and mapping.get("raw_sha256") == raw_sha
+        and mapping.get("source_sha256") == expected_text_sha256
+        and str(mapping.get("file_id") or "").casefold() == file_id.casefold()
         and isinstance(mapping.get("start"), int)
         and isinstance(mapping.get("end"), int)
         and mapping["start"] <= start < end <= mapping["end"]
         and location.get("extraction_attested") is True
     ):
-        kind = location.get("kind")
-        label = location.get("label")
-        if kind in {"pdf_page", "docx_page", "spreadsheet_cell"} and isinstance(label, str) and label.strip():
+        kind, label = location.get("kind"), location.get("label")
+        approved = any(
+            isinstance(item, dict)
+            and item == {
+                "file_id": file_id,
+                "raw_sha256": raw_sha,
+                "source_sha256": expected_text_sha256,
+                "start": mapping["start"],
+                "end": mapping["end"],
+                "kind": kind,
+                "label": label,
+                "producer": "data_platform_original_coordinate_map_v1",
+            }
+            for item in source_maps
+        )
+        if (
+            approved and kind in {"pdf_page", "docx_page", "spreadsheet_cell"}
+            and isinstance(label, str) and label.strip()
+        ):
             result["physical_locator_status"] = "EXPLICIT_SOURCE_MAPPING_REVIEW"
             result["physical_locator"] = {"kind": kind, "label": label.strip()}
     return result
