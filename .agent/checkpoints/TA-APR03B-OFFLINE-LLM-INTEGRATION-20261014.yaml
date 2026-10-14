@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR03B-OFFLINE-LLM-INTEGRATION-20261014
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Test exact local OpenAI-compatible model adapter and four-section controlled Tender Agent LLM workflow using exclusively synthetic input and temporary local-only SQLite, without changing private preview, source corpus or production.
 definition_of_done:
   - Verify active local model name and host-only endpoint without download or model restart.
@@ -11,18 +11,18 @@ definition_of_done:
   - Preserve all prior previews, main data and model service; no outward API or procurement action.
   - Save exact test outcome and completed or blocked checkpoint.
 completed:
+  - '2026-10-14 full controlled operator workflow with 4 synthetic sections returned provider openai_compatible and analysis_mode llm_tender_operator_provider, 4 persisted runtime_control_traces validation_status PASSED, all human_review_status needs_human_review, bid_decision None; elapsed 69.4sec.'
+  - 'Saved original observed QA results to docs/acceptance/APR03B_LOCAL_GEMMA_CONTROLLED_SYNTHETIC_2026-10-14.md, reviewed SQLite trace statuses read-only.'
   - '2026-10-14 Gemma4 12B model arvectum-gemma4-12b-it-qat-q4_0 already served via llama.cpp 127.0.0.1:8081, GET /health ok, GET /v1/models identifies model; no Ollama models needed and no download.'
   - 'Direct localhost synthetic json_object with schema succeeded, verified expected boolean output.'
   - 'Actual src.modules.controlled_llm_prebid.service._OpenAICompatibleJSONProvider.generate real local model returned verified=false/can_bid=false for synthetic unverified fixture, schema/transport PASS.'
-current: 'Mac mini synthetic four-section run_controlled_operator_llm started asynchronously PID 20152 with temporary /tmp/ta-apr03b-synthetic-local-llm-20261014.sqlite and ephemeral AI_CORP_* variables in process only.'
-pending:
-  - Read Mac mini process PID 20152 output, troubleshoot bounded failures if possible.
-  - Record source revision, validation output and explicit semantic/no-GO limits.
-  - Close bounded checkpoint and update parent or mark blocked if genuine blocker.
-last_verified_commit: '5ded8868484f85ad2237bb3fd9d94ff0f85fee60 main; synthetic runner worktree from UI source 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb, no application modifications.'
+current: 'COMPLETED bounded real local model integration on synthetic-only data. Real EIS legal/semantic/owner acceptance NOT achieved, no change to 18083/18087 private previews.'
+pending: []
+last_verified_commit: '570909a46fbf3a1581d5a3a29f4df4a20de6fbbb code revision used by Mac mini synthetic run; 4/4 persisted trace validations PASSED, 4 human review required. QA branch docs have no application-code changes.'
 test_results:
+  - 'Actual four-section provider run PASSED validation 4/4, runtime trace rows 4, all needs_human_review, bid_decision None; elapsed 69.4sec.'
   - 'Actual local OpenAI-compatible JSON schema transport OK; actual Tender Agent provider.generate returns false/false for synthetic fixture.'
-resume_instruction: 'Check Mac mini process PID 20152 output on Mac-mini-master.local. Current test invokes run_controlled_operator_llm on synthetic notice/spec/contract, localhost Gemma4 12B, isolated SQLite /tmp and no bid_decision. Record result, do not claim live procurement semantic quality. Do not change 18083/18087 previews, model service, production, ETP, payments, secrets, contacts, merges or watchdog.'
+resume_instruction: 'Local Gemma4 12B synthetic controlled operator integration stage COMPLETED: real Tender Agent provider OpenAI-compatible localhost 127.0.0.1:8081 and 4-section run; all 4 runtime_control_traces validation_status PASSED, human_review_status needs_human_review; elapsed 69.4sec. No repeat synthetic test. Next parent roadmap stage: only fresh source-pinned real EIS and Owner browser/semantic review can close APR03B. PR422 citation UI fix separate CI pending; no ETP/production/bids, contacts, payments/signatures/merges/watchdog.'
 execution:
   branch: qa/apr03b-offline-local-llm-20261014
   manual_override: true
