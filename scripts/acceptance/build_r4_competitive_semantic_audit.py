@@ -21,6 +21,9 @@ from src.modules.tender_operator_agent_demo.r4_additional_original_claims import
 from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
     verify_attachment_coverage,
 )
+from src.modules.tender_operator_agent_demo.r4_new_original_material_leads import (
+    verify_material_clause_leads,
+)
 from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort import (
     validate_cohort,
     verify_original_notice,
@@ -80,6 +83,9 @@ def build_review(originals:Path)->dict:
                 "bid_ready":False} for n in selected["negative_cases"]]
     new_documents=audit_additional_sources(originals)
     full_attachment_coverage=verify_attachment_coverage(selected,originals)
+    material_leads=verify_material_clause_leads(
+        ai/"competitive-25-original-text-20261014"
+    )
     previous_deadlines=audit_saved_decisions(
         expert["cases"],official,ai/"tender_operator_demo"
     )
@@ -96,6 +102,7 @@ def build_review(originals:Path)->dict:
         "additional_four_cases_and_21_original_binaries":new_documents,
         "selected_original_notice_attachment_coverage":full_attachment_coverage,
         "historical_model_report_deadline_audit":previous_deadlines,
+        "first_party_new_contract_clause_leads":material_leads,
         "all_saved_model_claims_checked":(
             claims["claims"] + new_documents["model_claims_checked"]
         ),
@@ -192,6 +199,37 @@ def readable_review(review:dict)->str:
         lines.append(
             f"| {i} | {n} | {subject} | {methods[case['method']]} | {docs_label} | {case['archived_version']} | {deadline} | {state} |"
         )
+    clause_review=review["first_party_new_contract_clause_leads"]
+    lines.extend([
+        "",
+        "## Существенные условия, обнаруженные в восстановленных документах",
+        "",
+        (
+            f"Во всех {clause_review['source_original_attachments_with_text']} дополнительно восстановленных документах "
+            f"извлечён текст, а в {clause_review['procurements_with_early_clause_leads']} закупках "
+            f"найдено {clause_review['independently_located_clause_leads']} конкретных фрагментов, "
+            "требующих отдельной правовой и технической оценки."
+        ),
+        "",
+        "| Номер извещения | Вопрос для проверки | Документ и место | Фрагмент исходного текста |",
+        "|---|---|---|---|",
+    ])
+    for clause in clause_review["leads"]:
+        filename=clause["original_document_name"].replace("|", "—")
+        excerpt=clause["literal_quote"].replace("|", "—")
+        anchor=clause["evidence_locator"]
+        lines.append(
+            f"| {clause['registry_number']} | {clause['review_subject']} "
+            f"({clause['question_category']}) | {filename}, {anchor} | «{excerpt}» |"
+        )
+    lines.extend([
+        "",
+        "Здесь приведены проверенные цитаты и вопросы для оценки, а не юридические выводы: "
+        "нельзя считать наличие лицензии, права на платформу, требования к безопасности или электронному "
+        "подписанию основанием для отклонения без изучения полного ТЗ, договора и применимых правил.",
+        "Выполнена только первая выборочная проверка условий восстановленных 25 приложений; "
+        "остальные документы корпуса не получили исчерпывающей независимой семантической оценки.",
+    ])
     saved=review["saved_model_claims"]
     lines.extend([
         "",
