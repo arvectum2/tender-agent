@@ -917,6 +917,11 @@
     "unattested_strong_blocker_decisions": 8
   },
   "human_gold_review_signed": 0,
+  "material_clause_verified_notice_provenance": {
+    "bid_ready": false,
+    "human_legal_approvals": 0,
+    "original_binary_sha_and_notice_edition_links_verified": 12
+  },
   "methodology": "Original ZIP and notice XML exact SHA+type; historic model source quotes only; legal interpretation not attested",
   "negative_controls": [
     {
