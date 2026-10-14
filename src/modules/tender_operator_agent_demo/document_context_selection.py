@@ -36,7 +36,7 @@ _DECISION_CRITICAL_CONCEPTS = {
     ),
     "technical_spec": (
         ("продажа билетов", "билет"),
-        ("слабовид", "ограниченными возможностями зрения"),
+        ("версия сайта для слабовидящих", "слабовид", "ограниченными возможностями зрения"),
         ("не менее 3", "не менее трех"),
         ("лично на территории", "очное интервью"),
         ("12 (двенадцать) месяцев", "гарантийный срок"),
@@ -112,9 +112,13 @@ def select_document_context(
         index = max(
             candidates,
             key=lambda item: (
-                # Reward *new* high-impact obligations, not repeated matches
+                # Reward explicit, first-listed obligation phrases over incidental\n                # mentions such as menu labels, then diversify topics.
                 # of the same generic word in several overlapping concepts.
-                sum(2 if group < 2 else 1 for group in concepts(item) - covered),
+                sum(
+                    3 if alternatives[0] in samples[item] else 1
+                    for group, alternatives in enumerate(critical)
+                    if group not in covered and any(t in samples[item] for t in alternatives)
+                ),
                 sum(term in samples[item] for term in terms),
                 -item,
             ),
