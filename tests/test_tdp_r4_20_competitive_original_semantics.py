@@ -13,6 +13,9 @@ from scripts.acceptance.build_r4_competitive_semantic_audit import (
     build_review,
     readable_review,
 )
+from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
+    _local_file,
+)
 from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort import (
     validate_cohort,
     verify_original_notice,
@@ -232,3 +235,16 @@ def test_wrong_archived_deadline_remains_conflict_without_model_go(tmp_path):
     assert audit["unattested_strong_blocker_decisions"]==10
     assert audit["human_business_approved"]==0
     assert all(not item["bid_ready"] for item in audit["cases"])
+
+
+def test_official_original_document_digest_detects_changed_bytes(tmp_path):
+    registry="0372200172326000015"
+    folder=tmp_path/registry
+    folder.mkdir()
+    filename="contract.docx"
+    body=b"saved original document evidence"
+    (folder/filename).write_bytes(body)
+    _local_file(tmp_path,registry,filename,_sha(body),len(body))
+    (folder/filename).write_bytes(body+b"changed")
+    with pytest.raises(ValueError,match="source bytes"):
+        _local_file(tmp_path,registry,filename,_sha(body),len(body))
