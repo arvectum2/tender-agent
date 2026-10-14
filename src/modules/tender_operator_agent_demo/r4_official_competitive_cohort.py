@@ -72,9 +72,15 @@ def verify_original_notice(case:dict,zip_path:Path)->dict:
         if digest(raw)!=selected["source_xml_sha256"]:
             raise ValueError("original notice XML SHA mismatch")
         root=ElementTree.fromstring(raw)
-        xml_type=root.tag.rsplit("}",1)[-1]
+        # Official EIS exports wrap one typed notice in the export root.
+        # A matching mention deep inside another document cannot identify
+        # the document's own competitive procedure type.
+        nodes=list(root) if root.tag.rsplit("}",1)[-1]=="export" else [root]
+        if len(nodes)!=1:
+            raise ValueError("original EIS export contains ambiguous notice documents")
+        xml_type=nodes[0].tag.rsplit("}",1)[-1]
         if xml_type!=selected["type_xml"]:
-            raise ValueError("original XML root type conflict")
+            raise ValueError("original EIS typed notice conflicts with method")
         return {
             "registry_number":case["reg_number"],
             "notice_type":xml_type,"method":selected["method"],
