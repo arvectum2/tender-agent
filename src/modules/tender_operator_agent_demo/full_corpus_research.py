@@ -72,8 +72,9 @@ def _anchor_positions(text: str, anchors: tuple[str, ...]) -> list[tuple[int, st
                 break
             positions.append((at, anchor))
             begin = at + max(1, len(needle))
-            if len(positions) >= 6000:
-                return positions
+            # Do not terminate the *whole* scan when one common anchor repeats:
+            # later, more specific obligations must remain discoverable.
+            # The final evidence list is bounded independently.
     return positions
 
 
@@ -122,14 +123,13 @@ def _find_source_evidence(
         matches = _anchor_positions(text, question.anchors)
         if not matches:
             continue
-        positions: dict[tuple[int, int], set[str]] = {}
+        positions: set[int] = set()
         for at, anchor in matches:
             start = max(0, at - _HALF_WINDOW)
             end = min(len(text), start + _WINDOW_CHARS)
             # Avoid near-duplicate windows for the same paragraph.
-            group = (at // 700, min(len(text), at // 700 * 700 + 1200))
-            positions.setdefault(group, set()).add(anchor)
-        for (group, _), matched in positions.items():
+            positions.add(at // 700)
+        for group in positions:
             center = group * 700 + 350
             start = max(0, center - _HALF_WINDOW)
             end = min(len(text), start + _WINDOW_CHARS)
