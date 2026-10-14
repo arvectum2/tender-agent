@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+from bisect import bisect_right
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -35,6 +36,42 @@ TOPICS = (
     ("Гарантийные обязательства", r"(?:гарантийн\w*\s+(?:срок|обязательств|обслуживан)|устранени\w*\s+(?:дефектов|недостатков))"),
 )
 _PATTERNS = [(name, re.compile(p, re.IGNORECASE)) for name, p in TOPICS]
+
+
+# Independently checked source meaning for five PRECISE archival clauses.
+# Not a general legal rule, qualifications registry or participant GO.
+_LICENSE_SOURCE_ROLE_CASES = (
+    (
+        "0151600003226000011",
+        "ISSUING_BANK_LICENSE_NOT_PARTICIPANT_LICENSE",
+        "у банка, предоставившего независимую гарантию",
+        "Условие об отзыве банковской лицензии у банка-гаранта",
+    ),
+    (
+        "0348100024426000039",
+        "ISSUING_BANK_LICENSE_NOT_PARTICIPANT_LICENSE",
+        "у банка, предоставившего независимую гарантию",
+        "Условие об отзыве банковской лицензии у банка-гаранта",
+    ),
+    (
+        "0372200172326000015",
+        "ISSUING_BANK_LICENSE_NOT_PARTICIPANT_LICENSE",
+        "у банка, предоставившего независимую гарантию",
+        "Условие об отзыве банковской лицензии у банка-гаранта",
+    ),
+    (
+        "0895100000126000897",
+        "DELIVERED_SOFTWARE_LICENSE_TERMS_NOT_PARTICIPANT_LICENSE",
+        "Лицензии на такие программные продукты не должны",
+        "Ограничения условий лицензий на программные продукты",
+    ),
+    (
+        "0349100009326000005",
+        "CONTRACTOR_LICENSE_WORDING_REQUIRES_LEGAL_REVIEW",
+        "Исполнитель должен иметь лицензию на телематические услуги связи",
+        "Формулировка проекта контракта о лицензии исполнителя",
+    ),
+)
 
 # Source snippets independently inspected on the immutable first-party corpus.
 # These are archival textual statements for expert review, never legal/Owner GO.
@@ -131,6 +168,39 @@ def literal_candidates(text: str) -> list[dict]:
     return result
 
 
+
+def all_topic_occurrences(text: str) -> list[dict]:
+    """Scan every occurrence of the same eight keywords, not just their first hit.
+
+    The exhaustive claim applies ONLY to these fixed patterns and current
+    normalized text, never to completeness of contract obligations or OCR.
+    """
+    original_hash = _sha(text.encode("utf8"))
+    anchors = [(m.start(), m.group(0)) for m in _LOCATOR.finditer(text)]
+    anchor_positions = [a[0] for a in anchors]
+    newline_positions = [m.start() for m in re.finditer("\n", text)]
+    matches = []
+    for title, pattern in _PATTERNS:
+        for match in pattern.finditer(text):
+            anchor_ix = bisect_right(anchor_positions, match.start()) - 1
+            line_ix = bisect_right(newline_positions, match.start())
+            anchor = (anchors[anchor_ix][1] if anchor_ix >= 0
+                      else f"Строка {line_ix + 1}")
+            local, lo, hi, flag = _local_context(text, match.start(), match.end())
+            matches.append({
+                "review_topic": title,
+                "literal_text": match.group(0),
+                "literal_start": match.start(),
+                "source_locator": anchor,
+                "source_text_sha256": original_hash,
+                "context_start": lo,
+                "context_end": hi,
+                "context_sha256": _sha(local.encode("utf8")),
+                "context_flag": flag,
+                "review_status": "LEXICAL_HIT_NOT_LEGAL_OBLIGATION",
+            })
+    return sorted(matches, key=lambda v: (v["literal_start"], v["review_topic"]))
+
 def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
     """Require exactly 50+25+21 source-matched, hash-verified attachments."""
     cases = attachment_inventory.get("cases", [])
@@ -211,11 +281,31 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
     if set(verified_texts) != set(expected) or sum(len(v) for v in verified_texts.values()) != 97:
         raise ValueError("not all 96 selected source attachments have an attested text")
     signals = []
+    all_mention_total = 0
+    occurrence_summary = []
+    second_hit_source_leads = []
     for (number, sha), texts in sorted(verified_texts.items()):
         doc = expected[number, sha]
         # Multiple text units can originate from one official ZIP attachment.
         for part, content in enumerate(texts, 1):
-            for match in literal_candidates(content):
+            first = literal_candidates(content)
+            all_hits = all_topic_occurrences(content)
+            if len(all_hits) < len(first):
+                raise ValueError("all-occurrence scan lost first topical hits")
+            all_mention_total += len(all_hits)
+            counts = Counter(v["review_topic"] for v in all_hits)
+            occurrence_summary.append({
+                "registry_number": number,
+                "original_filename": doc["original_filename"],
+                "original_binary_sha256": sha,
+                "original_notice_source_method": doc["source_proof"],
+                "text_part": part,
+                "first_topic_leads": len(first),
+                "all_topic_occurrences": len(all_hits),
+                "topic_occurrences": dict(sorted(counts.items())),
+                "human_approved": False,
+            })
+            for match in first:
                 signals.append({
                     "registry_number": number,
                     "original_filename": doc["original_filename"],
@@ -225,6 +315,30 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
                     **match,
                     "expert_signed": False,
                     "bid_ready": False,
+                })
+            # The previous report exposed only the FIRST hit per topic/source.
+            # Independently pin the next occurrence (if any), showing the
+            # reviewer an exact unexamined source point rather than claiming
+            # all later contract clauses have been legally interpreted.
+            for topic in counts:
+                other = [v for v in all_hits if v["review_topic"] == topic]
+                if len(other) < 2:
+                    continue
+                second = other[1]
+                second_hit_source_leads.append({
+                    "registry_number": number,
+                    "original_filename": doc["original_filename"],
+                    "original_binary_sha256": sha,
+                    "text_part": part,
+                    "review_topic": topic,
+                    "literal_text": second["literal_text"],
+                    "source_locator": second["source_locator"],
+                    "literal_start": second["literal_start"],
+                    "source_text_sha256": second["source_text_sha256"],
+                    "context_sha256": second["context_sha256"],
+                    "context_flag": second["context_flag"],
+                    "review_status": "ADDITIONAL_OCCURRENCE_FOR_EXPERT_NOT_LEGAL_GOLD",
+                    "human_signed": False,
                 })
     verified_examples = []
     for number, topic, quote in _VERIFIED_NONREQUIREMENT_SNIPPETS:
@@ -254,7 +368,93 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
             "current_eis_verified": False,
             "bid_ready": False,
         })
+    # At least one additional original locator per procurement, deliberately
+    # selected outside the earlier first-hit-only sample. Filename ranking is
+    # a navigation convenience, never a document type or legal interpretation.
+    review_priority = {
+        "Лицензирование/квалификация": 0,
+        "Права на ПО и результаты": 1,
+        "Персональные данные и ИБ": 2,
+        "Гарантийные обязательства": 3,
+        "Приёмка результата": 4,
+        "Обеспечение заявки/контракта": 5,
+        "Сроки исполнения": 6,
+        "Оплата и аванс": 7,
+    }
+
+    def _example_rank(v: dict) -> tuple:
+        name = v["original_filename"].lower()
+        file_kind = (
+            0 if "контракт" in name or "договор" in name or name == "пк.docx"
+            else 1 if "описани" in name or "техническ" in name
+            or "тз " in name or name == "ооз.docx"
+            else 2 if "требован" in name or "заявк" in name
+            else 3
+        )
+        context_kind = {
+            "OBLIGATION_VERB_NEAR_MENTION": 0,
+            "NEGATION_CUE_NEAR_MENTION": 1,
+            "CONTEXT_UNCERTAIN": 2,
+            "POSSIBLE_HEADING_OR_TABLE_LABEL": 3,
+        }
+        return (
+            file_kind, context_kind.get(v["context_flag"], 4),
+            review_priority[v["review_topic"]],
+            v["original_filename"], v["literal_start"],
+        )
+
+    review_examples = []
+    for case in sorted(cases, key=lambda v: v["registry_number"]):
+        n = case["registry_number"]
+        candidates = [v for v in second_hit_source_leads if v["registry_number"] == n]
+        if not candidates:
+            raise ValueError("no further original source condition located for procurement")
+        selected = min(candidates, key=_example_rank)
+        review_examples.append({
+            **selected,
+            "review_purpose": "ADDITIONAL_SOURCE_LOCATOR_NOT_LEGAL_GOLD",
+            "bid_ready": False,
+        })
+    clarified_roles = []
+    for number, role, exact_words, customer_question in _LICENSE_SOURCE_ROLE_CASES:
+        candidates = [
+            item for item in review_examples
+            if item["registry_number"] == number
+            and item["review_topic"] == "Лицензирование/квалификация"
+        ]
+        if len(candidates) != 1:
+            raise ValueError("pinned extra source licence locator changed")
+        example = candidates[0]
+        units = verified_texts[(number, example["original_binary_sha256"])]
+        if len(units) < example["text_part"]:
+            raise ValueError("source text part missing from verified original")
+        text = units[example["text_part"] - 1]
+        position = example["literal_start"]
+        context = text[max(0, position - 350):position + 350]
+        if exact_words not in context:
+            raise ValueError("literal licensing role cannot be checked in original context")
+        clarified_roles.append({
+            "registry_number": number,
+            "source_role": role,
+            "original_filename": example["original_filename"],
+            "original_binary_sha256": example["original_binary_sha256"],
+            "source_text_sha256": example["source_text_sha256"],
+            "source_locator": example["source_locator"],
+            "exact_original_words": exact_words,
+            "exact_words_sha256": _sha(exact_words.encode("utf8")),
+            "source_question": customer_question,
+            "participant_eligibility_approved": False,
+            "expert_signed": False,
+            "bid_ready": False,
+        })
     per_case = Counter(x["registry_number"] for x in signals)
+    all_by_case = Counter()
+    source_spans_by_case = Counter()
+    for unit in occurrence_summary:
+        all_by_case[unit["registry_number"]] += unit["all_topic_occurrences"]
+        source_spans_by_case[unit["registry_number"]] += (
+            unit["all_topic_occurrences"] - unit["first_topic_leads"]
+        )
     context_per_case: dict[str, Counter[str]] = defaultdict(Counter)
     for signal in signals:
         context_per_case[signal["registry_number"]][signal["context_flag"]] += 1
@@ -266,6 +466,10 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
             "registry_number": case["registry_number"],
             "source_documents_read": case["required_original_attachments"],
             "literal_topic_leads": per_case[case["registry_number"]],
+            "all_pattern_occurrences": all_by_case[case["registry_number"]],
+            "previously_unreported_additional_occurrences": source_spans_by_case[
+                case["registry_number"]
+            ],
             "negation_cue_leads": context_per_case[case["registry_number"]][
                 "NEGATION_CUE_NEAR_MENTION"
             ],
@@ -293,6 +497,20 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
         "case_count": len(case_summary),
         "cases": case_summary,
         "source_bound_literal_leads": signals,
+        "all_topic_mentions_scan": {
+            "scope": "ALL_MATCHES_OF_EIGHT_FIXED_PATTERNS_IN_97_TEXT_UNITS_NOT_ALL_LEGAL_TERMS",
+            "text_units": len(occurrence_summary),
+            "original_attachments": len(verified_texts),
+            "total_pattern_occurrences": all_mention_total,
+            "first_only_prior_coverage": len(signals),
+            "additional_pattern_occurrences": all_mention_total - len(signals),
+            "unit_counts": occurrence_summary,
+            "second_source_hit_per_topic": second_hit_source_leads,
+            "one_additional_original_locator_per_case": review_examples,
+            "license_context_role_clarifications": clarified_roles,
+            "human_signed_legal_interpretation": 0,
+            "bid_ready": False,
+        },
         "context_flag_totals": dict(sorted(Counter(
             signal["context_flag"] for signal in signals
         ).items())),
