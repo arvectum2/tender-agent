@@ -18,6 +18,9 @@ sys.path.insert(0, str(ROOT))
 from src.modules.tender_operator_agent_demo.r4_case_source_coverage import (
     build_r4_20_case_source_coverage,
 )
+from src.modules.tender_operator_agent_demo.r4_filestore_recovery_overlay import (
+    attach_later_original_binary_receipts,
+)
 
 SOURCES = {
     "protocol_markdown": "TDP_R4_R5_HUMAN_GOLD_PROTOCOL_2026-10-12.md",
@@ -36,7 +39,11 @@ CSV_COLUMNS = (
 )
 
 
-def export_matrix(output_dir: Path, *, acceptance_dir: Path | None = None) -> dict:
+def export_matrix(
+    output_dir: Path, *, acceptance_dir: Path | None = None,
+    recovery_source_path: Path | None = None,
+    recovery_verified_path: Path | None = None,
+) -> dict:
     acceptance = acceptance_dir or ROOT / "docs" / "acceptance"
     inputs = {
         key: (acceptance / name).read_text(encoding="utf-8")
@@ -60,14 +67,46 @@ def export_matrix(output_dir: Path, *, acceptance_dir: Path | None = None) -> di
                 k: "|".join(case.get(k) or []) if k == "blockers" else case.get(k)
                 for k in CSV_COLUMNS
             })
+    if (recovery_source_path is None) != (recovery_verified_path is None):
+        raise ValueError("both pinned private receipt manifests are mandatory for later overlay")
+    if recovery_source_path is not None and recovery_verified_path is not None:
+        overlay = attach_later_original_binary_receipts(
+            packet,
+            inputs["independent_files_csv"],
+            recovery_source_path.read_bytes(),
+            recovery_verified_path.read_bytes(),
+        )
+        augmented_json = output_dir / "r4-20-later-verified-binary-source-coverage.json"
+        augmented_csv = output_dir / "r4-20-later-verified-binary-source-coverage.csv"
+        augmented_json.write_text(
+            json.dumps(overlay, sort_keys=True, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        new_cols = (*CSV_COLUMNS, "later_20261012_verified_official_binary_recovery",
+                    "later_recovery_evidence_status")
+        with augmented_csv.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=new_cols, lineterminator="\n")
+            writer.writeheader()
+            for row in overlay["cases"]:
+                writer.writerow({
+                    k: "|".join(row.get(k) or []) if k == "blockers" else row.get(k)
+                    for k in new_cols
+                })
+        return overlay
     return packet
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build read-only historical R4 source review queue")
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--private-source-manifest", type=Path)
+    parser.add_argument("--private-verified-recheck", type=Path)
     args = parser.parse_args()
-    summary = export_matrix(args.output_dir)["summary"]
+    summary = export_matrix(
+        args.output_dir,
+        recovery_source_path=args.private_source_manifest,
+        recovery_verified_path=args.private_verified_recheck,
+    )["summary"]
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
 
 
