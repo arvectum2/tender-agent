@@ -98,7 +98,7 @@ def test_original_binary_sha_and_quote_literal_and_layout_not_semantic_go(tmp_pa
     (folder / "metadata.json").write_text(
         json.dumps({"files": [{"file_id": "FILE-07", "stored_name": "original.docx"}]})
     )
-    valid = {_sha(binary), len(binary)}
+    valid = (_sha(binary), len(binary))
     exact = verify_saved_quote(folder, source, "5 процентов", _sha(b), {valid})
     assert exact["literal_quote"] is True
     assert exact["original_bytes"] is True
