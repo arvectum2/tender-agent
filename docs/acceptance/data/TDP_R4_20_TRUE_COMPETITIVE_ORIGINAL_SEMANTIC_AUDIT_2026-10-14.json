@@ -1,0 +1,1137 @@
+{
+  "additional_four_cases_and_21_original_binaries": {
+    "claim_checks": [
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": true,
+        "claim_index": 1,
+        "original_binary_sha256": "7b88f5b59f8b96cc559e74a8429a54128794641837a018a56dfe7e321812d348",
+        "original_text_sha256": "ecddaec9f2e9cc5ddb73db7453ae301b6f79a45da51d9978b4b2cdcd5c8124d2",
+        "quote_chars": 46,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "3d89631eabef075781d6be31aa41af2088680101d6f2a8de1be3ab832af3c3ba",
+        "registry_number": "0151600003226000011",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": true,
+        "claim_index": 2,
+        "original_binary_sha256": "7b88f5b59f8b96cc559e74a8429a54128794641837a018a56dfe7e321812d348",
+        "original_text_sha256": "ecddaec9f2e9cc5ddb73db7453ae301b6f79a45da51d9978b4b2cdcd5c8124d2",
+        "quote_chars": 65,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "224b2e0f9bd7d7707c3c5cf4ac936c467779cdd16162ce9d5131114f5ba1f532",
+        "registry_number": "0151600003226000011",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": true,
+        "claim_index": 3,
+        "original_binary_sha256": "7b88f5b59f8b96cc559e74a8429a54128794641837a018a56dfe7e321812d348",
+        "original_text_sha256": "ecddaec9f2e9cc5ddb73db7453ae301b6f79a45da51d9978b4b2cdcd5c8124d2",
+        "quote_chars": 68,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "6cd12ffac4be732a8ff5a73430d631657ad54a8240d36df2909dd3e1c65255bd",
+        "registry_number": "0151600003226000011",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 1,
+        "original_binary_sha256": "54e5e92c7c873c890dbd3cdb1bded45be8edd1f241c9c705d0b8c5d9ec66bda0",
+        "original_text_sha256": "c0987d9e7718ce42c7b96b9e934f9d8a74b7a8228c5bff2aed3a9fc20bd7210d",
+        "quote_chars": 111,
+        "quote_length_valid": true,
+        "quote_literal": false,
+        "quote_sha256": "78547f12cf481dd2ab1ebd5a507cbf08042eb7fe3064d6b733a559bd99863024",
+        "registry_number": "0162200011826003089",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 2,
+        "original_binary_sha256": "54e5e92c7c873c890dbd3cdb1bded45be8edd1f241c9c705d0b8c5d9ec66bda0",
+        "original_text_sha256": "c0987d9e7718ce42c7b96b9e934f9d8a74b7a8228c5bff2aed3a9fc20bd7210d",
+        "quote_chars": 110,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "f0ae50b5f81953916201224cab9ea7c85e06a08ad6951ae54af61073a7d06bf6",
+        "registry_number": "0162200011826003089",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 3,
+        "original_binary_sha256": "cb191f2dbf1e42b3b436ed931935bdb5e7bb6f706c3cb58ab233f4a11cd0fbdc",
+        "original_text_sha256": "f4d1a82d9d32a64ff8adaefcbd15ee268ffb4024e38c31b960e1d78035ec4984",
+        "quote_chars": 27,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "ae2c59db17f0b3cb60c963feacbc82e54e9ab724994742705d4dd9efe1b9cf9d",
+        "registry_number": "0162200011826003089",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 4,
+        "original_binary_sha256": "cb191f2dbf1e42b3b436ed931935bdb5e7bb6f706c3cb58ab233f4a11cd0fbdc",
+        "original_text_sha256": "f4d1a82d9d32a64ff8adaefcbd15ee268ffb4024e38c31b960e1d78035ec4984",
+        "quote_chars": 92,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "8b2e910f11f56b2a58626563749f753c4d3ee1f6a801dd145ef4c46a1d908273",
+        "registry_number": "0162200011826003089",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 5,
+        "original_binary_sha256": "cb191f2dbf1e42b3b436ed931935bdb5e7bb6f706c3cb58ab233f4a11cd0fbdc",
+        "original_text_sha256": "f4d1a82d9d32a64ff8adaefcbd15ee268ffb4024e38c31b960e1d78035ec4984",
+        "quote_chars": 132,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "267b6ab32b11d10920709fcfbfdf2c4de85f140ecfb2da63c1634ff35ba2f710",
+        "registry_number": "0162200011826003089",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 6,
+        "original_binary_sha256": "cb191f2dbf1e42b3b436ed931935bdb5e7bb6f706c3cb58ab233f4a11cd0fbdc",
+        "original_text_sha256": "f4d1a82d9d32a64ff8adaefcbd15ee268ffb4024e38c31b960e1d78035ec4984",
+        "quote_chars": 104,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "a13bb928ec7c84e79eb94fde1a7181a5999bab295b13baedb715dc30d5a79c64",
+        "registry_number": "0162200011826003089",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 1,
+        "original_binary_sha256": "a4519b4ba45d7eb95239612449b32d9c4a1ccdbc2d1cb3dce9d8332c31005560",
+        "original_text_sha256": "c704ee136f7b02afa9000cf3a2afef46391ca668b7be20ea6d80564e21218e08",
+        "quote_chars": 72,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "138c6c30826ee0d4a6f38cf11a0b3570237c2840a8549807031de27718d44bcd",
+        "registry_number": "0152200004026000069",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 2,
+        "original_binary_sha256": "a4519b4ba45d7eb95239612449b32d9c4a1ccdbc2d1cb3dce9d8332c31005560",
+        "original_text_sha256": "c704ee136f7b02afa9000cf3a2afef46391ca668b7be20ea6d80564e21218e08",
+        "quote_chars": 88,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "c367a0efdc46e9465ad200f44a53ff24b79bcad8c2284d09f8a0525b569a77ed",
+        "registry_number": "0152200004026000069",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 3,
+        "original_binary_sha256": "a4519b4ba45d7eb95239612449b32d9c4a1ccdbc2d1cb3dce9d8332c31005560",
+        "original_text_sha256": "c704ee136f7b02afa9000cf3a2afef46391ca668b7be20ea6d80564e21218e08",
+        "quote_chars": 73,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "05abe77e573bb198539912593dbdc95fde48a11438b3194da3aa8cef109d0d7f",
+        "registry_number": "0152200004026000069",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 4,
+        "original_binary_sha256": "a4519b4ba45d7eb95239612449b32d9c4a1ccdbc2d1cb3dce9d8332c31005560",
+        "original_text_sha256": "c704ee136f7b02afa9000cf3a2afef46391ca668b7be20ea6d80564e21218e08",
+        "quote_chars": 83,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "8ff03e9eaf808935b906d5033c9db15044875459a7255fea07651c6b19ca228f",
+        "registry_number": "0152200004026000069",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 5,
+        "original_binary_sha256": "30371bc3755126ae07200bc9793cc6465a622802a8f024db19f682f78f62551b",
+        "original_text_sha256": "62a38a888459209bfed9c5059c504ddb462885ce860c20de5aa32a214450062c",
+        "quote_chars": 55,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "eaa662e8bc822217d50cebce8fdeb13fa0ef21ef5b25fe8408f5668eb409052c",
+        "registry_number": "0152200004026000069",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 6,
+        "original_binary_sha256": "30371bc3755126ae07200bc9793cc6465a622802a8f024db19f682f78f62551b",
+        "original_text_sha256": "62a38a888459209bfed9c5059c504ddb462885ce860c20de5aa32a214450062c",
+        "quote_chars": 71,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "d1af91711187a068495fa1c48e2acbce65fa89f303a150dafbb3111b84f72793",
+        "registry_number": "0152200004026000069",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 1,
+        "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+        "original_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+        "quote_chars": 130,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "ac2f5eba6e632a148b73778f6b63cfa18db47ed5137f126e70e5f2b6d245f944",
+        "registry_number": "0348100024426000021",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 2,
+        "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+        "original_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+        "quote_chars": 176,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "c5156c9ce8f83fcd19ab250dedc5f5e7f3351e159f92d2a4ba96956e56e77ac5",
+        "registry_number": "0348100024426000021",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 3,
+        "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+        "original_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+        "quote_chars": 187,
+        "quote_length_valid": false,
+        "quote_literal": true,
+        "quote_sha256": "fab0108ac62eec80c1bb7c44b7880263cc09cb34eff78553c3392483ce5efeac",
+        "registry_number": "0348100024426000021",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 4,
+        "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+        "original_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+        "quote_chars": 260,
+        "quote_length_valid": false,
+        "quote_literal": true,
+        "quote_sha256": "3f4df6a51469e7c31a3f5295a441026edd20a297649bd468a9f489f6a8107bff",
+        "registry_number": "0348100024426000021",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 5,
+        "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+        "original_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+        "quote_chars": 214,
+        "quote_length_valid": false,
+        "quote_literal": true,
+        "quote_sha256": "04e61f2645c056cbcadac612417d57e3fb7fbf0b505b61743b23f8fe64c13f1d",
+        "registry_number": "0348100024426000021",
+        "semantic_or_legal_gold_signed": false
+      },
+      {
+        "bid_ready": false,
+        "claim_format_count_valid": false,
+        "claim_index": 6,
+        "original_binary_sha256": "dfbf3ffe2c3041925240ce8da4c8f1842339731278cd6518cd7e3530dd4410b0",
+        "original_text_sha256": "9be8afc9ca89bf786adca4c73470ab756d8886885d5b6544f4ed41757a007843",
+        "quote_chars": 136,
+        "quote_length_valid": true,
+        "quote_literal": true,
+        "quote_sha256": "5575cefb0c5703281d22495dba9bf11f191e642494687edb5235388d1abc095f",
+        "registry_number": "0348100024426000021",
+        "semantic_or_legal_gold_signed": false
+      }
+    ],
+    "claims_breaching_quote_length_policy": 3,
+    "claims_requiring_quote_correction": 1,
+    "four_competitive_case_count": 4,
+    "human_legal_signoffs": 0,
+    "model_batches_exceeding_claim_count_cap": 3,
+    "model_claims_checked": 21,
+    "model_claims_exact_source_quotes": 20,
+    "normalized_texts_sha_verified": 22,
+    "original_binaries_sha_verified": 21,
+    "source": "PINNED_PRIOR_FIRST_PARTY_EIS_2026_10_12"
+  },
+  "all_saved_model_claims_checked": 47,
+  "bid_ready": false,
+  "competitive_notices": [
+    {
+      "archive_xml_files": 6,
+      "archived_submission_end": "2026-09-30T07:30:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по технической поддержке и размещению сайта http://32.rospotrebnadzor.ru (относиться к сфере ГИС)",
+      "original_xml_sha256": "4a046442328e9917a49dbafdad9712600ecd51f0b709b5224fad28f947f6d6a6",
+      "original_zip_sha256": "1e6c59497e31ab6fb05ea13eee90eff19745e35b92c47be3405920414f484597",
+      "registry_number": "0127100008626000013",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 4,
+      "archived_submission_end": "2026-10-08T08:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Услуги по доработке туристического сайта «Калужское гостеприимство»",
+      "original_xml_sha256": "ae2ff6b5a68999ffb7c70cc8c762f101ffb70363b0b913e0e5c5475bea2ac26d",
+      "original_zip_sha256": "6c2d812fd7148fa8dcf78cbccf62121c1bf731a067cc3031b5aa6c3679c9d7e3",
+      "registry_number": "0137200001226007700",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 5,
+      "archived_submission_end": "2026-09-18T07:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по технической поддержке сайта",
+      "original_xml_sha256": "d78c77d484130e004c6678b0e41608c847487f462da873fd226d8a5b3b20a3ce",
+      "original_zip_sha256": "2eff3fedb8bef1a7945bc7938a353a9e0c07a3f7bd2195bdec798426e7040f44",
+      "registry_number": "0148200000526000028",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 4,
+      "archived_submission_end": "2026-04-07T07:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Оказание услуг по модификации и разработке новых сервисов и разделов Инвестиционного портала Мурманской области, в том числе Инвестиционной карты Мурманской области",
+      "original_xml_sha256": "4d204d076a2386adc1c94db8299b1ffa7a6dcff9b4163126c3097d2594af1d1a",
+      "original_zip_sha256": "672e0091b35aff92afabfdaf62a55c8a3b57ac6be0eb08266d4ec8cbfc84992b",
+      "registry_number": "0149200002326001555",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 1,
+      "archived_submission_end": "2026-10-16T09:00:00+07:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по технической поддержке внешних и внутренних порталов мэрии города Новосибирска",
+      "original_xml_sha256": "8e35b7f24d4059f9f2b6bf490afccd0ba8346a926cc95d2e0365c0a5bf799611",
+      "original_zip_sha256": "cfa1c3fca71761f5de9395b885985fbcf76f88239fa08882d4dee907fbd93c5f",
+      "registry_number": "0151600003226000011",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 1,
+      "archived_submission_end": "2026-10-15T09:00:00+06:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по сопровождению программного обеспечения для автоматизации процедуры выдачи разрешений на добычу охотничьих ресурсов, систематизации, хранения и обработки информации о выданных разрешениях на добычу охотн",
+      "original_xml_sha256": "67daa28bbbc539b07afc18808959a27c78706feef27c94aba2b2be5bbb363029",
+      "original_zip_sha256": "8b9bec4e0bf171579edbd18fcbeec481533fa99bbb79f6fe6a079548062fa2c5",
+      "registry_number": "0152200004026000069",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 5,
+      "archived_submission_end": "2026-10-12T08:00:00+03:00",
+      "archived_version": 5,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Услуга по разработке веб сайта",
+      "original_xml_sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b",
+      "original_zip_sha256": "d7ed9c567890f2f11733e7985bede528e2593505a9c04db3fbf3d4ad0842c74a",
+      "registry_number": "0158300034526000388",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 12,
+      "archived_submission_end": "2026-10-16T07:00:00+05:00",
+      "archived_version": 4,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Выполнение работ по технической поддержке и доработке информационных систем, размещенных в резервном центре обработки данных Правительства Свердловской области или на вычислительных ресурсах в специализированных помещени",
+      "original_xml_sha256": "6712bf2058e7f7d047d6fb15467b7d173de48e06dbd82fff6295e8f69f6b6b20",
+      "original_zip_sha256": "3daf341cee2e26c670ccd1b6101105ce21706497b38cd15989ff9db3a4708ded",
+      "registry_number": "0162200011826003089",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 9,
+      "archived_submission_end": "2026-06-17T07:00:00+05:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по настройке личного кабинета гражданина и сервиса авторизации посредством Единой системы идентификации и аутентификации на официальном сайте городского округа Верхняя Пышма",
+      "original_xml_sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614",
+      "original_zip_sha256": "445edafcd5ea57ece3e2e74de7a3bb2e84470fea0fc5709e16433a3817502d6d",
+      "registry_number": "0162300005826000156",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 8,
+      "archived_submission_end": "2026-07-27T07:00:00+05:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по сопровождению официального сайта Администрации Златоустовского городского округа",
+      "original_xml_sha256": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298",
+      "original_zip_sha256": "3812536483e483cff866bebbb63f4b750c6b6a88e2b9537a013faaada0fa6a8b",
+      "registry_number": "0169300003326000181",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 8,
+      "archived_submission_end": "2026-09-14T09:00:00+05:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Выполнение работ по созданию мультимедийного контента для интерактивной экскурсии по достопримечательностям города Троицка для туристического портала «Троицк-туристический»",
+      "original_xml_sha256": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6",
+      "original_zip_sha256": "6ce89c873764e01a00f1d3d92001cbf19a8b1ec5d84769316d86df1ae92d606e",
+      "registry_number": "0169300008226000223",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 8,
+      "archived_submission_end": "2026-09-14T09:00:00+05:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Выполнение работ по созданию мультимедийного контента для AR-экскурсии по туристскому коду центра города Троицка и его интеграции в существующий сайт Заказчика",
+      "original_xml_sha256": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12",
+      "original_zip_sha256": "4f52bad007ffbfcbfec08c10db43983a6c0991c93b33b4346a4d1400f8cdbc3e",
+      "registry_number": "0169300008226000225",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 8,
+      "archived_submission_end": "2026-04-07T10:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Доработка, оптимизация структуры и конфигурации, а также реализация обновлённой концепции отдельных компонентов платформы управления типовым сайтом Кадрового центра Подмосковья (в сфере ИКТ)",
+      "original_xml_sha256": "e52bb5a8cea4160987bd9a77f79a62bca3530410ca227e6ca3dde2d71a0d1f57",
+      "original_zip_sha256": "bbaaece40c884873819b406310c09b14a543eef39873e6f8a3265af8df7945bd",
+      "registry_number": "0348100024426000021",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 4,
+      "archived_submission_end": "2026-10-19T10:00:00+03:00",
+      "archived_version": 3,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_OPEN_ELECTRONIC_COMPETITION",
+      "notice_type": "epNotificationEOK2020",
+      "original_purchase_object": "Выполнение работ по развитию и модернизации платформы управления типовым сайтом Государственного казенного учреждения «Центр занятости населения Московской области» (в сфере ИКТ)",
+      "original_xml_sha256": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d",
+      "original_zip_sha256": "af61797c60db6a9054380b052c495deacb62c0be5813fe3a78bb07c648dcde1e",
+      "registry_number": "0348100024426000039",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 4,
+      "archived_submission_end": "2026-03-02T07:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_OPEN_ELECTRONIC_COMPETITION",
+      "notice_type": "epNotificationEOK2020",
+      "original_purchase_object": "Услуги по технической поддержке и размещению сайта Управления (содержание порталов в информационно-коммуникационной сети Интернет)",
+      "original_xml_sha256": "02fb7a3e0bb7297417f715e2cae144d8a96dddfcfc5a4ec512a0fdd042213adf",
+      "original_zip_sha256": "47010a0f889a13b6caf78371254d5b0130ae73b7ef58c23a409c422c1cbe1b54",
+      "registry_number": "0349100009326000005",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 8,
+      "archived_submission_end": "2026-04-06T10:00:00+04:00",
+      "archived_version": 2,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по разработке и внедрению мультимедийного контента в формате виртуальной реальности (VR) для музейных экспозиций",
+      "original_xml_sha256": "0e4b65ba36fad901856783aa2c1903ed9a70eae98966c663bc67e16565826db8",
+      "original_zip_sha256": "54824559f800e0382650140620b796482740ac5b5d3936223f99620043b238ae",
+      "registry_number": "0360600005326000018",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 1,
+      "archived_submission_end": "2026-10-16T10:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Оказание услуг по разработке сайта СПб ГБУК «Санкт-Петербургский музей Хлеба» с элементами фирменного стиля",
+      "original_xml_sha256": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba",
+      "original_zip_sha256": "35978ce41fc87955491cc53705b0bd126c6d8217b82134e640eed1d78ed9e500",
+      "registry_number": "0372200172326000015",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 4,
+      "archived_submission_end": "2026-06-02T07:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "original_purchase_object": "Оказание услуг по разработке, технической поддержке и обслуживанию туристско-информационного сайта",
+      "original_xml_sha256": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d",
+      "original_zip_sha256": "467c0f69024305162c2af2fafd21d579a32d41700b84455bdf8971279da7a29a",
+      "registry_number": "0376300000126000193",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 7,
+      "archived_submission_end": "2026-08-13T08:00:00+07:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Оказание услуг по разработке официального веб-сайта на базе \"1С-Битрикс:Управление сайтом\"",
+      "original_xml_sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777",
+      "original_zip_sha256": "8df59538a21209e6505961f09f8afd97646c6533aba67af05eb67bbc4dd4c69a",
+      "registry_number": "0377100005726000128",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    },
+    {
+      "archive_xml_files": 7,
+      "archived_submission_end": "2026-06-19T09:00:00+03:00",
+      "archived_version": 1,
+      "bid_ready": false,
+      "current_eis_attested": false,
+      "legal_gold_signed": false,
+      "method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "original_purchase_object": "Выполнение работ по развитию подсистемы «Правовая работа» информационной системы «Ведомственный портал Федерального казначейства»",
+      "original_xml_sha256": "d0a17037e52e9ae7a0ef374241bf865a0efaf2a9db7cdfc278f36b720a7b0f04",
+      "original_zip_sha256": "1b18e3231d1b06f4373dd66633ac4496cf7a4309d0cf97cc072d0c73174f3968",
+      "registry_number": "0895100000126000897",
+      "source_class": "COMPETITIVE_HISTORIC_ORIGINAL"
+    }
+  ],
+  "current_official_EIS_state_verified": false,
+  "full_contract_semantic_review_signed": 0,
+  "historical_model_report_deadline_audit": {
+    "cases": [
+      {
+        "archived_deadline": "2026-10-08T08:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "08.10.2026 08:00:00 +03:00",
+        "registry_number": "0137200001226007700",
+        "saved_report_sha256": "f658d10d74fc16a6fd133b9fdc642c1f270ab7c2436f3fd5b24cd31fbd2c69b7"
+      },
+      {
+        "archived_deadline": "2026-10-12T08:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONFLICTS_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "09.10.2026 08:00:00 +03:00",
+        "registry_number": "0158300034526000388",
+        "saved_report_sha256": "af74fbd8472220e9482318b944ef887ad11f16a11d3a34143089a3a2800632b1"
+      },
+      {
+        "archived_deadline": "2026-06-17T07:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "17.06.2026 07:00:00 +05:00",
+        "registry_number": "0162300005826000156",
+        "saved_report_sha256": "cf87770fd19f19cb93440b7bf0167d05888bc7d8fb5c623e644e098d2f305bf1"
+      },
+      {
+        "archived_deadline": "2026-07-27T07:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "27.07.2026 07:00:00 +05:00",
+        "registry_number": "0169300003326000181",
+        "saved_report_sha256": "2f8de7a21339ad0b6f0e0730bd7175954d9b51045298a6d38e3016b2ebc93dae"
+      },
+      {
+        "archived_deadline": "2026-09-14T09:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "14.09.2026 09:00:00 +05:00",
+        "registry_number": "0169300008226000223",
+        "saved_report_sha256": "0eb9aea5c38e8ed250301699d21f8d11b0a35731c93f4dc01baa5e5632243652"
+      },
+      {
+        "archived_deadline": "2026-09-14T09:00:00+05:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "14.09.2026 09:00:00 +05:00",
+        "registry_number": "0169300008226000225",
+        "saved_report_sha256": "8a6e603356a6dac23ff9bee0b18d0dac308167326a1db377eb82eebd48de7aa6"
+      },
+      {
+        "archived_deadline": "2026-10-19T10:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONFLICTS_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": false,
+        "previous_report_deadline": "16.10.2026 10:00:00 +03:00",
+        "registry_number": "0348100024426000039",
+        "saved_report_sha256": "6f06e68614b5108a20ed1e4b9c2b752f1dfac79b4190abf1ebd9237f43b91f02"
+      },
+      {
+        "archived_deadline": "2026-10-16T10:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": false,
+        "previous_report_deadline": "16.10.2026 10:00:00 +03:00",
+        "registry_number": "0372200172326000015",
+        "saved_report_sha256": "e1d36ee54fcbab5c9ee86209ec3184a42488043f716fb7825d2035623130da6a"
+      },
+      {
+        "archived_deadline": "2026-06-02T07:00:00+03:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "02.06.2026 07:00:00 +03:00",
+        "registry_number": "0376300000126000193",
+        "saved_report_sha256": "9c20827359b7a05beb31105dcdf9d07a5ed0aad6cdfd0e7be63d83da49eefc3e"
+      },
+      {
+        "archived_deadline": "2026-08-13T08:00:00+07:00",
+        "bid_ready": false,
+        "historical_deadline_relation": "CONSISTENT_WITH_HISTORICAL_ORIGINAL",
+        "human_decision_reviewed": false,
+        "live_eis_revision_attested": false,
+        "model_claims_strong_blocker": true,
+        "previous_report_deadline": "13.08.2026 08:00:00 +07:00",
+        "registry_number": "0377100005726000128",
+        "saved_report_sha256": "2bcf0ab5e59c3f07d61e436b7275a17f598f1006e032cbd6991e1026b29d42e6"
+      }
+    ],
+    "date_conflict_count": 2,
+    "historical_matches_count": 8,
+    "human_business_approved": 0,
+    "saved_reports_verified": 10,
+    "unattested_strong_blocker_decisions": 8
+  },
+  "human_gold_review_signed": 0,
+  "methodology": "Original ZIP and notice XML exact SHA+type; historic model source quotes only; legal interpretation not attested",
+  "negative_controls": [
+    {
+      "bid_ready": false,
+      "reason": "MARKET_RESEARCH_PRICE_INFORMATION_REQUEST",
+      "registry_number": "0148300050426000047"
+    },
+    {
+      "bid_ready": false,
+      "reason": "MARKET_RESEARCH_PRICE_INFORMATION_REQUEST",
+      "registry_number": "0318200087026000163"
+    },
+    {
+      "bid_ready": false,
+      "reason": "MARKET_RESEARCH_PRICE_INFORMATION_REQUEST",
+      "registry_number": "0348100024426000052"
+    },
+    {
+      "bid_ready": false,
+      "reason": "SPECIAL_SINGLE_SUPPLIER_NOT_REGULAR_COMPETITIVE_TENDER",
+      "registry_number": "0349500000226000003"
+    }
+  ],
+  "official_source_verified": 21,
+  "saved_model_claims": {
+    "cases": [
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 11364,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "67954bc27a91deeb7ae312d464326f49614b1f242737cfc5b1d9246432ab6368",
+            "saved_source_sha256": "eed9f61144d6d2d1a1e4e3732b60347e1a8875fb5c9c4873463899cbb4bbffc9",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": null,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": false,
+            "original_bytes": true,
+            "quote_sha256": "90efbebe29cd6f21bebf6ab46e7d09bf26f0cc1a42180d135459b98296369aaf",
+            "saved_source_sha256": "ede9e05cf7bc0766f7c44bf2ced9dd178fe9e152e4c94fb4a8bc1991f109ae56",
+            "status": "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 2,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 1,
+        "literal_text_proven": 1,
+        "registry_number": "0137200001226007700"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 3291,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "51484d73107a8f283f64786d3ae6eb26eb976c1e2f57b0e5579bccb7bc0676b2",
+            "saved_source_sha256": "55cc0ff61a755e466c7dc457376747ce8b86a4f4e30b2a4102b0ae17bdd21af3",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 2493,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "699bd57621e7bc2409b842798f16cb7405f4e5ad879e5244bf5a3de6fa0fea47",
+            "saved_source_sha256": "55cc0ff61a755e466c7dc457376747ce8b86a4f4e30b2a4102b0ae17bdd21af3",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 33356,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "008dbb4b6946ff6f4614fd7887a1b31351bf812a67f0823e15de2fd77b60270f",
+            "saved_source_sha256": "55cc0ff61a755e466c7dc457376747ce8b86a4f4e30b2a4102b0ae17bdd21af3",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 3,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 3,
+        "literal_text_proven": 3,
+        "registry_number": "0158300034526000388"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 4091,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "74e506d7cf6871a7b405948c5ddf6d455f2a594846e6fd42ac3844bb11245f92",
+            "saved_source_sha256": "f5d67cd58f55078cafb2fffdc167d18bd2f129ae821c4dc4b5c2b535c40d14e3",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 15833,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "d9efefce3d0bbff98e7b97f3d5af5351630f062c9ac66a272b336355ec5797ba",
+            "saved_source_sha256": "f5d67cd58f55078cafb2fffdc167d18bd2f129ae821c4dc4b5c2b535c40d14e3",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 2,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 2,
+        "literal_text_proven": 2,
+        "registry_number": "0162300005826000156"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 1454,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "df70376254d130af692d5bbec2f3f44f34791398227c929f23b8b226cbaa3cf1",
+            "saved_source_sha256": "36890194021bb9e36006172b09800974ce964043f31dda349e0f64fa971e30f0",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 1636,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "5ab98cfdfd3d4ac3cabc8818a72a08f9cd857cd1f4b6de1810e88d0f1944418e",
+            "saved_source_sha256": "36890194021bb9e36006172b09800974ce964043f31dda349e0f64fa971e30f0",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 1704,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "68db8bbdc581ec266a508b8d421adec1a4e74906a758a66bd75f2c52d12cdd45",
+            "saved_source_sha256": "36890194021bb9e36006172b09800974ce964043f31dda349e0f64fa971e30f0",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 3,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 3,
+        "literal_text_proven": 3,
+        "registry_number": "0169300003326000181"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 12156,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "bae765e56e96756734468ec0db03e1cb0ec0da80abd4bc4c8de8c41e7421b7d4",
+            "saved_source_sha256": "bb05a1934625b30f5e8e62ab2d7e2786e8b8d3674bcd39830925436e0094ff66",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 5709,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "086cc2459b5cf094f78657f90cadc72d1e00226f5772b25552ab166025a11958",
+            "saved_source_sha256": "bb05a1934625b30f5e8e62ab2d7e2786e8b8d3674bcd39830925436e0094ff66",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": null,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": false,
+            "original_bytes": true,
+            "quote_sha256": "0c0b6814b310263779446a16572002dc9d7c98236ec04c53af123961397e051b",
+            "saved_source_sha256": "bb05a1934625b30f5e8e62ab2d7e2786e8b8d3674bcd39830925436e0094ff66",
+            "status": "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 3,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 2,
+        "literal_text_proven": 2,
+        "registry_number": "0169300008226000223"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 11893,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "bae765e56e96756734468ec0db03e1cb0ec0da80abd4bc4c8de8c41e7421b7d4",
+            "saved_source_sha256": "c1550ad5697ab3b2ab41ba1902d8cbd128285728750fe1133071f5f1959fcadc",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 1886,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "0c0b6814b310263779446a16572002dc9d7c98236ec04c53af123961397e051b",
+            "saved_source_sha256": "c1550ad5697ab3b2ab41ba1902d8cbd128285728750fe1133071f5f1959fcadc",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 2,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 2,
+        "literal_text_proven": 2,
+        "registry_number": "0169300008226000225"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 2225,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "d8326e62dcd5fd8e685647b452e0987f063b30ea8d350231553dc1233b8d9458",
+            "saved_source_sha256": "0f45527e001a872d3afede94fef4ba631540e8864d60f5732d51574fd7c8cc1e",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 2573,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "b72384cceaadd1181c52299628c111e9d468e65af16c259d3303fac0e80ec391",
+            "saved_source_sha256": "0f45527e001a872d3afede94fef4ba631540e8864d60f5732d51574fd7c8cc1e",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 2883,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "9ed9706fed2aeef0ad43d430771bc2b37ac7937ec6f8d0b0b5b9e786b6025419",
+            "saved_source_sha256": "0f45527e001a872d3afede94fef4ba631540e8864d60f5732d51574fd7c8cc1e",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 3,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 3,
+        "literal_text_proven": 3,
+        "registry_number": "0348100024426000039"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": null,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": false,
+            "original_bytes": true,
+            "quote_sha256": "716bab5023d0089f0940e790dafcad64fea7c8f35bf07879c2c81db9ee639857",
+            "saved_source_sha256": "16fcb1b330d562cedda811b7188b6cd3b0034d8851e65bc114b8d8715c8945a7",
+            "status": "WHITESPACE_VARIANT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 20221,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "294aae43dd74aa3ca3a0cc792d958c9d1772ebe2b99f08c73ea77dae24534994",
+            "saved_source_sha256": "16fcb1b330d562cedda811b7188b6cd3b0034d8851e65bc114b8d8715c8945a7",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 20960,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "3680552bb2e5bde653a968f9f075e5494120c684e14a216c21049cc81e51c2bf",
+            "saved_source_sha256": "16fcb1b330d562cedda811b7188b6cd3b0034d8851e65bc114b8d8715c8945a7",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 3,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 2,
+        "literal_text_proven": 2,
+        "registry_number": "0372200172326000015"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 586,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "6c6c85ba25fa4b38e52b57c0779c09ce12b925723ad82c07888d6bc81290b6fe",
+            "saved_source_sha256": "edf079cdc2edf4ac5125f1e7eb319047a0bbaef3d071e2d3cc51763cb9afe473",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": null,
+            "layout_normalized_match": false,
+            "legal_interpretation_approved": false,
+            "literal_quote": false,
+            "original_bytes": true,
+            "quote_sha256": "622118e34c5f187287bf45d56529a53d99d52739ae1e06b799beb8e09fb25f49",
+            "saved_source_sha256": "a23c14c241551e0cfab6d63e46bd43622f9aae162356fd0ab358c5e6044312fe",
+            "status": "QUOTE_NOT_SUPPORTED_AS_LIVE_QUOTATION"
+          }
+        ],
+        "claims": 2,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 1,
+        "literal_text_proven": 1,
+        "registry_number": "0376300000126000193"
+      },
+      {
+        "bid_ready": false,
+        "checks": [
+          {
+            "char_offset": 8694,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "363f000260c2e84aa5380cb8067db75932f0007142913b471a597bacd72c342c",
+            "saved_source_sha256": "e1ab1a0b7a1806d4409770a2bf572c8dc2f717c631d3ccfaf7b01a290dbf6c0a",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 8760,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "4b02888d2e33c89dcb00fff9bd0f13fdf9c599b628a99bff3cde30ad00dbcbf4",
+            "saved_source_sha256": "e1ab1a0b7a1806d4409770a2bf572c8dc2f717c631d3ccfaf7b01a290dbf6c0a",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          },
+          {
+            "char_offset": 9370,
+            "layout_normalized_match": true,
+            "legal_interpretation_approved": false,
+            "literal_quote": true,
+            "original_bytes": true,
+            "quote_sha256": "771b5c6df43d514f45ea8cc4ff1b31c9c9ed1213e021f6cb82fbb77e8dd879df",
+            "saved_source_sha256": "db40a3f2dcc9fbdfe719845e4055eed65c421192826bd2c1113cc24640039514",
+            "status": "EXACT_QUOTE_FROM_SAVED_TEXT_WITH_OFFICIAL_BINARY_SHA"
+          }
+        ],
+        "claims": 3,
+        "legal_semantic_signed": false,
+        "literal_plus_official_original_sha": 3,
+        "literal_text_proven": 3,
+        "registry_number": "0377100005726000128"
+      }
+    ],
+    "claims": 26,
+    "human_signed_legal_interpretations": 0,
+    "literal_official_originals": 22,
+    "literal_quotes": 22,
+    "saved_runs": 10,
+    "unsubstantiated_literal_quotes": 1,
+    "whitespace_variant_official_originals": 3
+  },
+  "scope": "HISTORIC_FIRST_PARTY_OFFICIAL_20_COMPETITIVE_4_NEGATIVE_NOT_LIVE",
+  "separate_official_reserve": "0369100012826000157",
+  "source_cohort": {
+    "competitive": 20,
+    "methods": {
+      "COMPETITIVE_ELECTRONIC_AUCTION": 11,
+      "COMPETITIVE_ELECTRONIC_QUOTATIONS": 7,
+      "COMPETITIVE_OPEN_ELECTRONIC_COMPETITION": 2
+    },
+    "negative": 4,
+    "new_original_competitive": 4,
+    "original_competitive": 16
+  },
+  "special_noncompetitive_original": {
+    "archive_xml_files": 4,
+    "archived_submission_end": null,
+    "archived_version": 1,
+    "bid_ready": false,
+    "current_eis_attested": false,
+    "legal_gold_signed": false,
+    "method": "NONCOMPETITIVE_SINGLE_SUPPLIER_ART93_12",
+    "notice_type": "epNotificationEZT2020",
+    "original_purchase_object": null,
+    "original_xml_sha256": "b780f02c0d7de7b8e5041ca477543d1a9e39cfee809d84ef4118f44f27e4080c",
+    "original_zip_sha256": "ffad3cf02f415845e69a3381f9faddd3134491f1619d2ff91f56a147929031f1",
+    "registry_number": "0349500000226000003"
+  }
+}
