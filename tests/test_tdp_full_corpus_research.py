@@ -166,3 +166,91 @@ def test_bounded_brief_retains_cross_document_references_and_never_verifies():
     assert "HUMAN CHECK REQUIRED" in brief["source_evidence_brief"]
     assert brief["semantic_verification"] == "NOT_PERFORMED"
     assert brief["review_status"] == "HUMAN_REVIEW_REQUIRED"
+
+
+def test_real_run_facade_indexes_all_docs_before_llm_and_keeps_sources_review_only():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    state = {}
+    metadata = {
+        "files": [
+            {"file_id": "FILE-01", "display_name": "notice.xml"},
+            {"file_id": "FILE-02", "display_name": "contract.docx"},
+            {"file_id": "FILE-03", "display_name": "annex.xls"},
+        ],
+        "limitations": [],
+    }
+    originals = [
+        doc("file-01", "notice", "<maxPrice>1000000</maxPrice>"),
+        doc("file-02", "contract_draft", "По соглашению сторон цена может меняться."),
+        doc("file-03", "supporting", "Дополнительная спецификация: обслуживание."),
+    ]
+
+    def collect(_run_id, _metadata):
+        return originals
+
+    def model(*, source_research=None, **_kwargs):
+        state["model_brief"] = source_research
+        return {"requirements": {"technical_requirements": ["Обслуживание."]}}
+
+    def project(*, metadata, requirements, calibrated_risks, **_kwargs):
+        assert metadata["source_research"]["document_count"] == 3
+        assert metadata["source_research"]["extracted_document_count"] == 3
+        return {"trace": {}, "requirements": {}}
+
+    def handler(run_id, **dependencies):
+        assert run_id == "case-1"
+        dependencies["_collect_documents"](run_id, metadata)
+        generated = dependencies["_try_run_llm_workflow"]()
+        outputs = dependencies["_build_output_payloads"](
+            metadata=metadata,
+            requirements=generated["requirements"],
+            calibrated_risks=[],
+        )
+        state["outputs"] = outputs
+        return outputs
+
+    run_with_full_corpus_research(
+        handler, "case-1",
+        _collect_documents=collect,
+        _try_run_llm_workflow=model,
+        _build_output_payloads=project,
+    )
+    brief = state["model_brief"]
+    assert brief["original_document_count"] == 3
+    assert brief["review_status"] == "HUMAN_REVIEW_REQUIRED"
+    assert "normalized:" in brief["source_evidence_brief"]
+    assert metadata["source_research"]["unread_file_ids"] == []
+    assert metadata["source_research_llm_claims"][0]["semantic_verification"] == "NOT_PERFORMED"
+    assert state["outputs"]["trace"]["full_corpus_research"]["overall_decision"] == "HUMAN_REVIEW_REQUIRED"
+    assert any("не правильность юридического толкования" in s for s in metadata["limitations"])
+
+
+def test_extra_model_research_only_passed_to_explicitly_compatible_callable():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    received = {}
+    def collector(_id, _meta):
+        return [doc("file1", "notice", "Срок подачи заявок указан в документации.")]
+
+    def legacy_llm_without_new_kwarg(*, notice_text):
+        received["notice_text"] = notice_text
+        return {}
+
+    def handler(run_id, **dependencies):
+        metadata = {"files": []}
+        dependencies["_collect_documents"](run_id, metadata)
+        dependencies["_try_run_llm_workflow"](notice_text="оригинал")
+        return metadata
+
+    run_with_full_corpus_research(
+        handler, "run1",
+        _collect_documents=collector,
+        _try_run_llm_workflow=legacy_llm_without_new_kwarg,
+        _build_output_payloads=lambda **kwargs: {},
+    )
+    assert received["notice_text"] == "оригинал"
