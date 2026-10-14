@@ -16,6 +16,10 @@ from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
 from src.modules.tender_operator_agent_demo.full_corpus_modality_audit import (
     audit_source_modalities,
 )
+from src.modules.tender_operator_agent_demo.source_claim_proof import (
+    audit_model_eis_summary,
+    bind_source_span,
+)
 from src.modules.tender_operator_agent_demo.full_corpus_research import (
     build_research_brief,
     examine_llm_assertions,
@@ -145,6 +149,41 @@ def run_with_full_corpus_research(
             risks=risks if isinstance(risks, list) else [],
         )
         metadata["source_research_modality_audit"] = modality_audit
+        typed_eis_audit = audit_model_eis_summary(
+            research,
+            requirements if isinstance(requirements, dict) else {},
+        )
+        metadata["source_research_typed_eis_audit"] = typed_eis_audit
+
+        # Check concrete SHA/Unicode span of source research hits against
+        # integrity-admitted original texts; no inferred PDF pages or cells.
+        quote_proofs = []
+        for theme in research.get("findings", []):
+            for hit in theme.get("hits", [])[:1]:
+                proof = bind_source_span(
+                    integrity_checked_documents,
+                    research,
+                    file_id=str(hit["file_id"]),
+                    start=hit["start"],
+                    end=hit["end"],
+                    quote=str(hit["quote"]),
+                    expected_text_sha256=str(hit["source_sha256"]),
+                )
+                quote_proofs.append({
+                    "theme": theme["key"],
+                    "file_id": proof["file_id"],
+                    "source_ref": proof.get("source_ref"),
+                    "source_sha256": proof["source_sha256"],
+                    "quote_sha256": proof.get("quote_sha256"),
+                    "status": proof["status"],
+                    "physical_locator_status": proof["physical_locator_status"],
+                    "semantic_verification": "NOT_PERFORMED",
+                })
+        metadata["source_research_quote_proofs"] = quote_proofs
+        invalid_proofs = sum(
+            proof["status"] != "EXACT_NORMALIZED_SOURCE_TEXT"
+            for proof in quote_proofs
+        )
         unresolved = [
             item for item in clause_reviews
             if item["status"] != "CLAUSE_LOCATED_NOT_SEMANTICALLY_VERIFIED"
@@ -155,7 +194,12 @@ def run_with_full_corpus_research(
             "status": (
                 "CORPUS_INCOMPLETE" if research["unread_file_ids"]
                 else "CONTRADICTION_REVIEW_REQUIRED"
-                if modality_audit["contradiction_count"]
+                if (
+                    modality_audit["contradiction_count"]
+                    or typed_eis_audit["contradictions_count"]
+                )
+                else "EVIDENCE_INTEGRITY_REVIEW"
+                if invalid_proofs
                 else "SEMANTIC_REVIEW_REQUIRED"
             ),
             "documents_indexed": research["extracted_document_count"],
@@ -167,12 +211,32 @@ def run_with_full_corpus_research(
             ),
             "ambiguous_or_missing_clause_refs": len(unresolved),
             "source_modality_contradictions": modality_audit["contradiction_count"],
+            "historical_eis_value_contradictions": typed_eis_audit["contradictions_count"],
+            "missing_eis_fields_in_llm_summary": typed_eis_audit["unmentioned_archived_eis_fields"],
+            "source_quote_proof_failures": invalid_proofs,
             "claim_semantics_verified": False,
             "official_revision_current_attested": False,
             "bid_ready": False,
             "manual_review_required": True,
         }
         metadata["source_research_quality_gate"] = quality_gate
+        if typed_eis_audit["contradictions_count"]:
+            limitations = metadata.setdefault("limitations", [])
+            if isinstance(limitations, list):
+                _once(
+                    limitations,
+                    "Сумма НМЦК или срок подачи в ответе LLM противоречат "
+                    "историческому оригиналу XML ЕИС. Нужна сверка актуальной "
+                    "официальной редакции; допуск заблокирован.",
+                )
+        if invalid_proofs:
+            limitations = metadata.setdefault("limitations", [])
+            if isinstance(limitations, list):
+                _once(
+                    limitations,
+                    "Некоторые найденные фрагменты не выдержали проверку "
+                    "точного диапазона/хеша нормализованного оригинала.",
+                )
         if modality_audit["contradiction_count"]:
             limitations = metadata.setdefault("limitations", [])
             if isinstance(limitations, list):
@@ -204,6 +268,8 @@ def run_with_full_corpus_research(
             trace["source_clause_review"] = clause_reviews
             trace["source_modality_audit"] = modality_audit
             trace["source_research_quality_gate"] = quality_gate
+            trace["source_eis_typed_claims"] = typed_eis_audit
+            trace["source_quote_proofs"] = quote_proofs
         requirement_payload = outputs.get("requirements")
         if isinstance(requirement_payload, dict):
             requirement_payload["full_corpus_research"] = research
@@ -211,6 +277,8 @@ def run_with_full_corpus_research(
             requirement_payload["source_clause_review"] = clause_reviews
             requirement_payload["source_modality_audit"] = modality_audit
             requirement_payload["source_research_quality_gate"] = quality_gate
+            requirement_payload["source_eis_typed_claims"] = typed_eis_audit
+            requirement_payload["source_quote_proofs"] = quote_proofs
         return outputs
 
     return handler(
