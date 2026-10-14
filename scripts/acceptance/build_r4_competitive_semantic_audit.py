@@ -22,6 +22,7 @@ from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_covera
     verify_attachment_coverage,
 )
 from src.modules.tender_operator_agent_demo.r4_new_original_material_leads import (
+    validate_clause_leads_against_official_attachments,
     verify_material_clause_leads,
 )
 from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort import (
@@ -86,6 +87,9 @@ def build_review(originals:Path)->dict:
     material_leads=verify_material_clause_leads(
         ai/"competitive-25-original-text-20261014"
     )
+    clause_original_link=validate_clause_leads_against_official_attachments(
+        material_leads,full_attachment_coverage
+    )
     previous_deadlines=audit_saved_decisions(
         expert["cases"],official,ai/"tender_operator_demo"
     )
@@ -103,6 +107,7 @@ def build_review(originals:Path)->dict:
         "selected_original_notice_attachment_coverage":full_attachment_coverage,
         "historical_model_report_deadline_audit":previous_deadlines,
         "first_party_new_contract_clause_leads":material_leads,
+        "material_clause_verified_notice_provenance":clause_original_link,
         "all_saved_model_claims_checked":(
             claims["claims"] + new_documents["model_claims_checked"]
         ),
