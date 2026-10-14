@@ -12,15 +12,12 @@ import html
 import re
 from collections.abc import Callable
 from urllib.parse import urlsplit
-from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
+from urllib.request import Request
+
+from src.shared.network.http_client import create_urllib_opener
 
 _PRICE_CARD_PREFIX="https://zakupki.gov.ru/epz/pricereq/card/common-info.html?reestrNumber="
 _MAX_CARD_BYTES=1_600_000
-
-
-class _NoRedirect(HTTPRedirectHandler):
-    def redirect_request(self, request, fp, code, msg, headers, newurl):
-        del request, fp, code, msg, headers, newurl
 
 
 def _official_identity(url: str, expected: str) -> bool:
@@ -31,7 +28,9 @@ def _official_identity(url: str, expected: str) -> bool:
 
 
 def _download_official_card(url: str) -> tuple[bytes,str]:
-    opener=build_opener(ProxyHandler({}),_NoRedirect())
+    opener=create_urllib_opener(
+        url, follow_redirects=False, source_direct_connection=True
+    )
     req=Request(url,headers={
         "User-Agent":"Mozilla/5.0 (compatible; ArvectumTenderAgent/1.0; read-only)",
         "Accept":"text/html",
