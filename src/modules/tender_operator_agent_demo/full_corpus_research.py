@@ -83,6 +83,13 @@ def _document_inventory(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     complete: list[dict[str, Any]] = []
+    manifest_rows = list(manifest or ())
+    by_id: dict[str, list[Mapping[str, Any]]] = {}
+    for manifest_item in manifest_rows:
+        key = _string(manifest_item.get("file_id")).casefold()
+        if key:
+            by_id.setdefault(key, []).append(manifest_item)
+
     for idx, item in enumerate(documents):
         file_id = _string(getattr(item, "file_id", None)) or f"missing-file-id-{idx}"
         role = _string(getattr(item, "role", None)) or "supporting"
@@ -91,25 +98,58 @@ def _document_inventory(
         text = body if isinstance(body, str) else ""
         has_text = bool(text.strip())
         too_large = len(text) > _MAX_DOCUMENT_CHARS
-        status = "OVERSIZE_UNREVIEWED" if too_large else ("EXTRACTED" if has_text else "UNEXTRACTED")
+        computed_text_sha = _digest(text) if has_text else None
+        raw = getattr(item, "raw_content", None)
+        computed_raw_sha = hashlib.sha256(raw).hexdigest() if isinstance(raw, bytes) else None
+        receipts = by_id.get(file_id.casefold(), [])
+        receipt = receipts[0] if len(receipts) == 1 else {}
+        expected_text_sha = _string(
+            receipt.get("normalized_text_sha256") or receipt.get("text_sha256")
+        ).lower()
+        expected_raw_sha = _string(receipt.get("raw_sha256")).lower()
+        provided = [value for value in (expected_text_sha, expected_raw_sha) if value]
+        invalid_receipts = any(not re.fullmatch(r"[0-9a-f]{64}", value) for value in provided)
+        mismatch = (
+            bool(expected_text_sha and expected_text_sha != computed_text_sha)
+            or bool(expected_raw_sha and expected_raw_sha != computed_raw_sha)
+        )
+        if len(receipts) > 1:
+            status = "DUPLICATE_MANIFEST_ID_UNREVIEWED"
+        elif invalid_receipts:
+            status = "INVALID_SHA_RECEIPT_UNREVIEWED"
+        elif mismatch:
+            status = "HASH_MISMATCH_UNREVIEWED"
+        elif too_large:
+            status = "OVERSIZE_UNREVIEWED"
+        elif not has_text:
+            status = "UNEXTRACTED"
+        else:
+            status = "EXTRACTED"
         row = {
             "file_id": file_id, "role": role, "document": name,
-            "text_sha256": _digest(text) if has_text else None,
+            "text_sha256": computed_text_sha, "raw_sha256": computed_raw_sha,
             "text_length": len(text), "status": status,
+            "receipt_status": (
+                "MATCHED_DECLARED_DIGEST" if provided and status == "EXTRACTED"
+                else "NO_DECLARED_DIGEST" if not provided and status == "EXTRACTED"
+                else "NOT_VERIFIED"
+            ),
         }
         rows.append(row)
-        if has_text and not too_large:
+        if status == "EXTRACTED":
             complete.append({**row, "text": text})
     known = {row["file_id"].casefold() for row in rows}
-    if manifest:
-        for item in manifest:
+    if manifest_rows:
+        for item in manifest_rows:
             file_id = _string(item.get("file_id"))
             if file_id and file_id.casefold() not in known:
                 rows.append({
                     "file_id": file_id,
                     "role": _string(item.get("role_hint") or item.get("document_kind")) or "unknown",
                     "document": _string(item.get("display_name") or item.get("original_name")) or file_id,
-                    "text_sha256": None, "text_length": 0, "status": "NOT_PROCESSED",
+                    "text_sha256": None, "raw_sha256": None,
+                    "text_length": 0, "status": "NOT_PROCESSED",
+                    "receipt_status": "NOT_VERIFIED",
                 })
     return rows, complete
 
