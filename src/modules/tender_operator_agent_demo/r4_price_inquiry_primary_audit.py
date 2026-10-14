@@ -173,7 +173,7 @@ def reconcile_price_inquiry_originals(
             raise ValueError("downloaded original file inventory mismatch")
         for fn,phrase in facts["proofs_in_extracts"]:
             text=(attachment_root/fn).read_text(encoding="utf8")
-            if phrase not in text:
+            if re.sub(r"\\s+", " ", phrase).strip() not in re.sub(r"\\s+", " ", text).strip():
                 raise ValueError("critical technical requirement not supported by original")
         row["verified_primary_record_type"]="EIS_PRICE_INFORMATION_REQUEST"
         row["customer_source_status"]="Запрос ценовой информации найден в ЕИС, документы доступны"
