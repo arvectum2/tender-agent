@@ -8,7 +8,6 @@ are NEVER inferred from normalized Unicode character offsets.
 from __future__ import annotations
 
 import hashlib
-import math
 import re
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
