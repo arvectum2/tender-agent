@@ -160,6 +160,13 @@ def test_official_all_twenty_and_llm_original_claims_private_offline(tmp_path):
     assert new["claims_breaching_quote_length_policy"] == 3
     assert new["model_batches_exceeding_claim_count_cap"] == 3
     assert result["all_saved_model_claims_checked"] == 47
+    readable = result["selected_original_notice_text_availability"]
+    assert readable["attachments_with_nonempty_source_text"] == 96
+    assert readable["older_original_documents_text"] == 50
+    assert readable["new_original_documents_text"] == 21
+    assert readable["fresh_20261014_original_documents_text"] == 25
+    assert readable["text_extraction_completeness_asserted"] is False
+    assert readable["full_legal_semantic_reviews_signed"] == 0
     coverage = result["selected_original_notice_attachment_coverage"]
     assert coverage["case_count"] == 20
     assert coverage["notice_attachment_references"] == 96
