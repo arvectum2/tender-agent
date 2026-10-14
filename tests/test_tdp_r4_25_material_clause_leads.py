@@ -8,7 +8,9 @@ from pathlib import Path
 
 import pytest
 
-from src.modules.tender_operator_agent_demo import r4_new_original_material_leads as leads
+from src.modules.tender_operator_agent_demo import (
+    r4_new_original_material_leads as leads,
+)
 
 
 def _sha(content: bytes) -> str:
