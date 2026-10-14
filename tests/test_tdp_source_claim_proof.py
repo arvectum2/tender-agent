@@ -154,3 +154,46 @@ def test_archived_real_eis_source_matches_registered_values():
         "MATCHES_HISTORICAL_EIS_SOURCE", "MATCHES_HISTORICAL_EIS_SOURCE",
     ]
     assert all(not x["current_official_revision_attested"] for x in verified["claims"])
+
+
+def test_strict_model_summary_parser_and_historical_eis_fact_gate():
+    from src.modules.tender_operator_agent_demo.source_claim_proof import (
+        audit_model_eis_summary,
+    )
+
+    xml=purchase_xml("1000000.00", "2026-10-16T10:00:00+03:00")
+    report=research_full_corpus([d("n","notice",xml)])
+    model={"tender_summary": (
+        "Website procurement. NMCK: 1,000,000.00 RUB (historical EIS revision). "
+        "Submission deadline: 16.10.2026 10:00:00 +03:00 (historical)."
+    )}
+    res=audit_model_eis_summary(report,model)
+    assert res["explicit_assertions_count"]==2
+    assert res["contradictions_count"]==0
+    assert res["unmentioned_archived_eis_fields"]==[]
+    assert [x["status"] for x in res["claims"]]==[
+        "MATCHES_HISTORICAL_EIS_SOURCE", "MATCHES_HISTORICAL_EIS_SOURCE",
+    ]
+    assert res["bid_ready"] is False
+
+    fake={"tender_summary": (
+        "NMCK: 1,200,000.00 RUB; Submission deadline: 17.10.2026 10:00:00 +03:00"
+    )}
+    res=audit_model_eis_summary(report,fake)
+    assert res["contradictions_count"]==2
+    assert all(x["status"]=="CONTRADICTED_BY_HISTORICAL_EIS_SOURCE" for x in res["claims"])
+
+
+def test_missing_original_xml_fields_not_inferred_from_unlabelled_model_text():
+    from src.modules.tender_operator_agent_demo.source_claim_proof import (
+        audit_model_eis_summary,
+    )
+
+    report=research_full_corpus([d("n","notice",purchase_xml(
+        "1000000", "2026-10-16T10:00:00+03:00"
+    ))])
+    missing=audit_model_eis_summary(report,{"tender_summary":"The offer price is quite low."})
+    assert missing["explicit_assertions_count"]==0
+    assert missing["unmentioned_archived_eis_fields"]==["nmck","submission_deadline"]
+    assert missing["bid_ready"] is False
+    assert missing["claim_semantics_verified"] is False
