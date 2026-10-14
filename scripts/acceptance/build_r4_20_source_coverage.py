@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from src.modules.tender_operator_agent_demo.r4_case_source_coverage import (  # noqa: E402
+from src.modules.tender_operator_agent_demo.r4_case_source_coverage import (
     build_r4_20_case_source_coverage,
 )
 
