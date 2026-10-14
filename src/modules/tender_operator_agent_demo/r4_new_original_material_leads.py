@@ -121,3 +121,41 @@ def verify_material_clause_leads(private_folder: Path) -> dict:
         "bid_ready": False,
         "leads": results,
     }
+
+
+def validate_clause_leads_against_official_attachments(
+    leads: dict, official_coverage: dict,
+) -> dict:
+    """Tie each extracted clause back to the exact selected EIS notice binary.
+
+    A saved normalized text digest alone is never an original source proof.
+    """
+    if official_coverage.get("source_shas_attested") != 96:
+        raise ValueError("incomplete official selected-archive attachment inventory")
+    by_procurement = {
+        item["registry_number"]: item for item in official_coverage.get("cases", [])
+    }
+    if len(by_procurement) != 20:
+        raise ValueError("procurement archive source inventory incomplete")
+    checked = 0
+    for entry in leads.get("leads", []):
+        case = by_procurement.get(entry["registry_number"])
+        if not case:
+            raise ValueError("original clause belongs to unverified procurement")
+        source = [
+            doc for doc in case["documents"]
+            if doc["original_filename"] == entry["original_document_name"]
+            and doc["original_document_sha256"] == entry["original_binary_sha256"]
+        ]
+        if len(source) != 1:
+            raise ValueError("quoted original contract not attested in chosen EIS notice")
+        if not entry.get("literal_quote") or entry["human_signed"] is not False:
+            raise ValueError("invalid or human-approved material finding")
+        checked += 1
+    if checked != 12:
+        raise ValueError("partial source clause provenance cannot be promoted")
+    return {
+        "original_binary_sha_and_notice_edition_links_verified": checked,
+        "human_legal_approvals": 0,
+        "bid_ready": False,
+    }
