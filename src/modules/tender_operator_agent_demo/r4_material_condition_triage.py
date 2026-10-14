@@ -36,26 +36,96 @@ TOPICS = (
 )
 _PATTERNS = [(name, re.compile(p, re.IGNORECASE)) for name, p in TOPICS]
 
+# Source snippets independently inspected on the immutable first-party corpus.
+# These are archival textual statements for expert review, never legal/Owner GO.
+_VERIFIED_NONREQUIREMENT_SNIPPETS = (
+    ("0127100008626000013", "Оплата и аванс", "Авансирование не предусмотрено."),
+    ("0149200002326001555", "Оплата и аванс", "Авансирование не предусмотрено."),
+    (
+        "0151600003226000011",
+        "Гарантийные обязательства",
+        "Гарантийный срок на оказываемые по Контракту Услуги не установлен",
+    ),
+)
+
 
 def _sha(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+_NEGATION_CUES = re.compile(
+    r"\bне\s+(?:требует(?:ся)?|предусмотрен\w*|установлен\w*|"
+    r"применя\w*|явля\w*\s+обязательн\w*|допуска\w*)\b"
+    r"|\bбез\s+(?:обеспечения|лицензии)\b",
+    re.IGNORECASE,
+)
+_DUTY_CUES = re.compile(
+    r"\b(?:обязан\w*|должен|должна|должны|требует(?:ся)?|"
+    r"предоставить|представить|предусмотрен\w*|установлен\w*|"
+    r"составляет|осуществляется|передает|подписывает)\b",
+    re.IGNORECASE,
+)
+_LOCATOR = re.compile(r"PARAGRAPH-\d+|TABLE-\d+ ROW-\d+ CELL-\d+")
+
+
+def _local_context(text: str, start: int, end: int) -> tuple[str, int, int, str]:
+    """Bounded source around a literal mention, never treat it as a complete legal clause."""
+    line_start = text.rfind("\n", 0, start) + 1
+    next_line = text.find("\n", end)
+    line_end = len(text) if next_line < 0 else next_line
+    # Long flattened DOC/PDF paragraphs are never published; cap context for evidence flags.
+    left = max(line_start, start - 140)
+    right = min(line_end, end + 140)
+    if right - left > 360:
+        right = left + 360
+    segment = text[left:right]
+    if not text[start:end] or text[start:end] not in segment:
+        raise ValueError("literal candidate context cannot be located")
+    line = text[line_start:line_end].strip()
+    label = "CONTEXT_UNCERTAIN"
+    # Negation from the PREVIOUS or NEXT sentence must never negate this topic.
+    relative_start, relative_end = start - left, end - left
+    previous = max(
+        (segment.rfind(delimiter, 0, relative_start)
+         for delimiter in ".;!?\n"),
+        default=-1,
+    )
+    following = [
+        position for delimiter in ".;!?\n"
+        if (position := segment.find(delimiter, relative_end)) >= 0
+    ]
+    sentence = segment[previous + 1:min(following, default=len(segment))]
+    if _NEGATION_CUES.search(sentence):
+        label = "NEGATION_CUE_NEAR_MENTION"
+    elif len(line) <= 115 and not _DUTY_CUES.search(line) and not line.endswith((".", ";", ":", "!")):
+        label = "POSSIBLE_HEADING_OR_TABLE_LABEL"
+    elif _DUTY_CUES.search(segment):
+        label = "OBLIGATION_VERB_NEAR_MENTION"
+    return segment, left, right, label
+
+
 def literal_candidates(text: str) -> list[dict]:
-    """One shortest locator per topic for this source; no fabricated interpretation."""
+    """First literal mention of each topic and bounded context flags, not legal findings."""
     result = []
+    original_text_sha = _sha(text.encode("utf8"))
     for title, pattern in _PATTERNS:
         match = pattern.search(text)
         if not match:
             continue
-        locators = list(re.finditer(r"PARAGRAPH-\d+|TABLE-\d+ ROW-\d+ CELL-\d+", text[:match.start()]))
+        locators = list(_LOCATOR.finditer(text, 0, match.start()))
         anchor = (locators[-1].group(0) if locators
                   else f"Строка {text.count(chr(10), 0, match.start()) + 1}")
+        local, lo, hi, flag = _local_context(text, match.start(), match.end())
         result.append({
             "review_topic": title,
             "literal_text": match.group(0),
             "source_locator": anchor,
             "literal_start": match.start(),
+            "source_text_sha256": original_text_sha,
+            "context_start": lo,
+            "context_end": hi,
+            "context_sha256": _sha(local.encode("utf8")),
+            "context_flag": flag,
             "review_status": "LITERAL_SIGNAL_NOT_LEGAL_INTERPRETATION",
         })
     return result
@@ -156,7 +226,38 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
                     "expert_signed": False,
                     "bid_ready": False,
                 })
+    verified_examples = []
+    for number, topic, quote in _VERIFIED_NONREQUIREMENT_SNIPPETS:
+        matches = [
+            record for record in signals
+            if record["registry_number"] == number and record["review_topic"] == topic
+            and record["context_flag"] == "NEGATION_CUE_NEAR_MENTION"
+        ]
+        if len(matches) != 1:
+            raise ValueError("previously examined negative wording has changed")
+        entry = matches[0]
+        unit = verified_texts[(number, entry["original_binary_sha256"])][entry["text_part"] - 1]
+        if quote not in unit or quote not in unit[
+            entry["context_start"]:entry["context_end"]
+        ]:
+            raise ValueError("original context quotation no longer exactly matches source")
+        verified_examples.append({
+            "registry_number": number,
+            "review_topic": topic,
+            "archived_quote": quote,
+            "archived_quote_sha256": _sha(quote.encode("utf8")),
+            "original_filename": entry["original_filename"],
+            "original_binary_sha256": entry["original_binary_sha256"],
+            "source_locator": entry["source_locator"],
+            "source_text_sha256": entry["source_text_sha256"],
+            "legal_interpretation_signed": False,
+            "current_eis_verified": False,
+            "bid_ready": False,
+        })
     per_case = Counter(x["registry_number"] for x in signals)
+    context_per_case: dict[str, Counter[str]] = defaultdict(Counter)
+    for signal in signals:
+        context_per_case[signal["registry_number"]][signal["context_flag"]] += 1
     topics_by_case: dict[str, Counter[str]] = defaultdict(Counter)
     for signal in signals:
         topics_by_case[signal["registry_number"]][signal["review_topic"]] += 1
@@ -165,6 +266,15 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
             "registry_number": case["registry_number"],
             "source_documents_read": case["required_original_attachments"],
             "literal_topic_leads": per_case[case["registry_number"]],
+            "negation_cue_leads": context_per_case[case["registry_number"]][
+                "NEGATION_CUE_NEAR_MENTION"
+            ],
+            "heading_like_leads": context_per_case[case["registry_number"]][
+                "POSSIBLE_HEADING_OR_TABLE_LABEL"
+            ],
+            "obligation_verb_leads": context_per_case[case["registry_number"]][
+                "OBLIGATION_VERB_NEAR_MENTION"
+            ],
             "top_review_topics": [
                 name for name, _ in sorted(
                     topics_by_case[case["registry_number"]].items(),
@@ -183,11 +293,19 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
         "case_count": len(case_summary),
         "cases": case_summary,
         "source_bound_literal_leads": signals,
+        "context_flag_totals": dict(sorted(Counter(
+            signal["context_flag"] for signal in signals
+        ).items())),
+        "literal_scope": "FIRST_MENTION_OF_EIGHT_TOPICS_PER_SOURCE_TEXT_UNIT",
+        "manually_rechecked_archival_nonrequirement_wording": verified_examples,
         "review_topic_categories": [name for name, _ in TOPICS],
         "human_signed_full_semantic_reviews": 0,
         "current_eis_revision_attested": False,
         "bid_ready": False,
         "limitations": (
+            "Context flags are lexical cues only, NOT legal classifications. "
+            "One first occurrence per topic per text unit; all other occurrences "
+            "and operative document clauses are not exhaustively reviewed. "
             "Literal lexical signals can occur in a negation, example, heading, or "
             "inapplicable annex. Absence of a match does not prove absence of a duty. "
             "Original tables, scans, figures and legal applicability require human review."
