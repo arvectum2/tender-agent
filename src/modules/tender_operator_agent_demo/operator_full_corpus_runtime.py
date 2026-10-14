@@ -10,6 +10,7 @@ from collections.abc import Callable
 from typing import Any
 
 from src.modules.tender_operator_agent_demo.full_corpus_research import (
+    build_research_brief,
     examine_llm_assertions,
     research_full_corpus,
 )
@@ -50,11 +51,15 @@ def run_with_full_corpus_research(
     """Wrap one actual run without changing AST-locked orchestration body."""
     collect_original = dependencies["_collect_documents"]
     project_original = dependencies["_build_output_payloads"]
+    controlled_original = dependencies["_try_run_llm_workflow"]
+    current_research: dict[str, Any] | None = None
 
     def collect(run: str, metadata: dict[str, Any]) -> list[Any]:
+        nonlocal current_research
         documents = collect_original(run, metadata)
         report = research_full_corpus(documents, manifest=metadata.get("files"))
         metadata["source_research"] = report
+        current_research = report
         limitations = metadata.setdefault("limitations", [])
         if not isinstance(limitations, list):
             limitations = []
@@ -75,6 +80,15 @@ def run_with_full_corpus_research(
                 + ". Это не подтверждает отсутствия соответствующих условий.",
             )
         return documents
+
+    def controlled_model(**kwargs: Any) -> Any:
+        import inspect
+
+        if current_research is not None:
+            params = inspect.signature(controlled_original).parameters
+            if "source_research" in params:
+                kwargs["source_research"] = build_research_brief(current_research)
+        return controlled_original(**kwargs)
 
     def project(**kwargs: Any) -> dict[str, Any]:
         outputs = project_original(**kwargs)
@@ -110,6 +124,7 @@ def run_with_full_corpus_research(
         **{
             **dependencies,
             "_collect_documents": collect,
+            "_try_run_llm_workflow": controlled_model,
             "_build_output_payloads": project,
         },
     )
