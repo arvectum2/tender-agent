@@ -1,6 +1,7 @@
 """Fail-closed current getDocsIP XML comparison, with source-verified replacement files."""
 from __future__ import annotations
 
+import hashlib
 import json
 import zipfile
 from datetime import UTC, datetime
@@ -11,6 +12,7 @@ from scripts.acceptance.audit_r5_official_sources import audit_archive, local_na
 from scripts.acceptance.check_r4_live_eis_cards import compare_deadline
 from src.modules.tender_operator_agent_demo.eis_attachment_revision_guard import (
     compare_official_attachment_manifests,
+    matching_payload_groups,
     verify_new_original_binary,
 )
 
@@ -144,6 +146,11 @@ def verified_current_sources(
                 binary_file = binary_dir / (uid + suffix)
                 evidence.append(verify_new_original_binary(uid, item, proof, binary_file))
             case["new_replaced_attachments"] = sorted(evidence, key=lambda x: x["filename"])
+            case["identical_inner_payloads"] = matching_payload_groups({
+                hashlib.sha256(uid.encode("utf8")).hexdigest()[:12] + " :: " + new[uid]["fileName"]:
+                binary_dir / (uid + Path(new[uid]["fileName"]).suffix.lower())
+                for uid in added
+            })
             case["unchanged_attachment_refs"] = len(delta["retained_ids"])
             case["removed_attachment_count"] = len(delta["removed_ids"])
             case["attachment_inventory_changed"] = delta["manifest_changed"]
@@ -239,6 +246,20 @@ def readable_freshness(audit: dict) -> str:
             lines.append(
                 f"| {item['filename']} | {item['size_bytes']} | {item['sha256']} |"
             )
+        if c.get("identical_inner_payloads"):
+            lines.extend([
+                "",
+                ("**Одинаковое содержание в разных оригинальных вложениях:** "
+                 "SHA-256 совпадает для внутренних файлов, включая "
+                 "ZIP-обёртки. Не считать такие экземпляры независимыми "
+                 "подтверждениями условий договора."),
+                "",
+            ])
+            for pair in c["identical_inner_payloads"]:
+                lines.append(
+                    f"- Идентичный внутренний SHA-256: {pair['sha256']}; "
+                    f"вхождений: {len(pair['source_locations'])}."
+                )
         lines.extend([
             "",
             (

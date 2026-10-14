@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import hashlib
 import re
+import zipfile
+from collections import defaultdict
 from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
@@ -114,3 +116,41 @@ def prior_clause_evidence_applicability(
     if current_hash != original_sha256:
         return "STALE_SOURCE_BINARY_CHANGED"
     return "CURRENT_BINARY_EXACT_MATCH_LEGAL_MEANING_NOT_SIGNED"
+
+
+def matching_payload_groups(originals: Mapping[str, Path]) -> list[dict[str, Any]]:
+    """Group byte-identical *inner* payloads, independent of outer EIS ZIP IDs.
+
+    A ZIP containing exactly the same PDF as another direct attachment does
+    not supply a second independent document. This is a SHA fact, not NLP.
+    """
+    if len(originals) > 100:
+        raise ValueError("Too many original binary attachments in one group")
+    matches: dict[str, list[str]] = defaultdict(list)
+    for name, location in sorted(originals.items()):
+        if not name or not isinstance(name, str) or not location.is_file():
+            raise ValueError("Missing original binary attachment for content comparison")
+        suffix = location.suffix.lower()
+        if suffix == ".zip":
+            with zipfile.ZipFile(location) as container:
+                members = [m for m in container.infolist() if not m.is_dir()]
+                if len(members) > 100 or sum(m.file_size for m in members) > 20_000_000:
+                    raise ValueError("Unsafe official ZIP member limits")
+                for member in members:
+                    if member.flag_bits & 0x1:
+                        raise ValueError("Encrypted original ZIP member")
+                    if member.file_size > 20_000_000:
+                        raise ValueError("Oversize original ZIP member")
+                    blob = container.read(member)
+                    matches[hashlib.sha256(blob).hexdigest()].append(
+                        name + " :: " + member.filename
+                    )
+        else:
+            if location.stat().st_size > 20_000_000:
+                raise ValueError("Oversize official source binary")
+            matches[hashlib.sha256(location.read_bytes()).hexdigest()].append(name)
+    return [
+        {"sha256": digest, "source_locations": sorted(locations)}
+        for digest, locations in sorted(matches.items())
+        if len(locations) >= 2
+    ]

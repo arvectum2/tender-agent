@@ -11,6 +11,7 @@ import pytest
 
 from src.modules.tender_operator_agent_demo.eis_attachment_revision_guard import (
     compare_official_attachment_manifests,
+    matching_payload_groups,
     prior_clause_evidence_applicability,
     verify_new_original_binary,
 )
@@ -132,3 +133,37 @@ def test_invalid_original_attestation_never_becomes_current():
             original_uid="x", original_sha256="b" * 64,
             current_manifest=valid, independently_verified_current_sha256={"x": "UNKNOWN"}
         )
+
+
+
+def test_unrelated_zip_wrapper_and_direct_pdf_share_one_evidence_identity(tmp_path):
+    import zipfile
+
+    payload = b"%PDF fake binary content for byte-level equality only"
+    direct = tmp_path / "direct.pdf"
+    nested = tmp_path / "copy.zip"
+    other = tmp_path / "other.docx"
+    direct.write_bytes(payload)
+    with zipfile.ZipFile(nested, "w") as z:
+        z.writestr("appendix.pdf", payload)
+    other.write_bytes(b"some other unrelated source")
+    duplicates = matching_payload_groups({
+        "first original": direct, "second original": nested, "third original": other,
+    })
+    assert len(duplicates) == 1
+    assert duplicates[0]["sha256"] == hashlib.sha256(payload).hexdigest()
+    assert len(duplicates[0]["source_locations"]) == 2
+    assert not matching_payload_groups({"one": direct, "three": other})
+
+
+def test_duplicate_content_gate_rejects_missing_files_and_zip_bombs(tmp_path):
+    import zipfile
+
+    file = tmp_path / "missing.pdf"
+    with pytest.raises(ValueError, match="Missing original"):
+        matching_payload_groups({"absent": file})
+    zipfile_path = tmp_path / "oversized.zip"
+    with zipfile.ZipFile(zipfile_path, "w") as archive:
+        archive.writestr("member.txt", b"0" * 21000000)
+    with pytest.raises(ValueError, match="Unsafe official ZIP"):
+        matching_payload_groups({"oversized": zipfile_path})

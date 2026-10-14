@@ -308,6 +308,15 @@
           "full_legal_scope_review_signed": false
         }
       ],
+      "identical_inner_payloads": [
+        {
+          "sha256": "3a668cd9140770851920d4a6b99ea0568f129a7eba0496ad63e1254d619b8364",
+          "source_locations": [
+            "65d1b418a8d8 :: Другое приложение, сост. 12.10.2026.zip :: ООЗ ИТОГ.pdf",
+            "ecabbd2d6bae :: ООЗ ИТОГ.pdf"
+          ]
+        }
+      ],
       "unchanged_attachment_refs": 3,
       "removed_attachment_count": 4,
       "attachment_inventory_changed": true,

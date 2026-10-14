@@ -95,6 +95,8 @@ def test_original_20_soap_sources_edited_attachments_not_mistaken_for_old():
     assert case["current_official_xml_endDT"] == "2026-10-23T10:00:00+03:00"
     assert case["unchanged_attachment_refs"] == 3
     assert len(case["new_replaced_attachments"]) == 4
+    assert len(case["identical_inner_payloads"]) == 1
+    assert len(case["identical_inner_payloads"][0]["source_locations"]) == 2
     assert case["old_semantic_review_is_stale"]
     assert all(v["binary_verified"] and not v["full_legal_scope_review_signed"]
                for v in case["new_replaced_attachments"])
