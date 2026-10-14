@@ -8,6 +8,10 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
+from src.modules.tender_operator_agent_demo.operator_customer_report_language import (
+    sanitize_customer_report_markdown,
+)
+
 
 def preliminary_supply_section_title(preliminary_analysis: dict[str, Any]) -> str:
     columns = preliminary_analysis.get("spec_table", {}).get("columns", []) or []
@@ -108,7 +112,7 @@ def render_operator_report_markdown(
             f"{downloaded_documents_block}\n"
             f"{blocked_note}\n"
         )
-    return (
+    draft = (
         "# Отчёт по загруженному прогону тендерного агента\n\n"
         f"- Run ID: {metadata['run_id']}\n"
         f"- Закупка: {metadata['tender_title']}\n"
@@ -164,4 +168,4 @@ def render_operator_report_markdown(
         + "\n".join(f"- {item}" for item in final_recommendation["manual_checks"])
         + "\n"
     )
-
+    return sanitize_customer_report_markdown(draft)
