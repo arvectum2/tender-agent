@@ -6,6 +6,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from src.modules.tender_operator_agent_demo.operator_customer_report_language import (
+    customer_narrative,
+    readable_document_origin,
+    readable_document_text_state,
+)
+
 
 def render_operator_html_layout(
     archive_button_html: Any,
@@ -180,14 +186,14 @@ def render_operator_html_layout(
           <div class="card">
             <h2>Загруженные документы</h2>
             {render_table(
-                ["Тип", "Файл", "Статус скачивания", "Статус текста", "Источник"],
+                ["Тип", "Файл", "Наличие документа", "Содержание", "Происхождение"],
                 [
                     {
                         "Тип": item["type"],
                         "Файл": item["name"],
-                        "Статус скачивания": item["download_status"],
-                        "Статус текста": item["text_status"],
-                        "Источник": item["source"],
+                        "Наличие документа": "Получен",
+                        "Содержание": readable_document_text_state(item["text_status"]),
+                        "Происхождение": readable_document_origin(item["source"]),
                     }
                     for item in downloaded_docs
                 ],
@@ -300,9 +306,9 @@ def render_operator_html_layout(
           </div>
 
           <div class="card">
-            <h2>Трассировка и обоснование</h2>
-            <p>{html.escape(trace['overall_explanation'])}</p>
-            <ul>{list_html(trace.get('limitations', []))}</ul>
+            <h2>Основания выводов и ограничения</h2>
+            <p>{html.escape(customer_narrative(trace['overall_explanation']))}</p>
+            <ul>{list_html([customer_narrative(v) for v in trace.get('limitations', [])])}</ul>
           </div>
         </div>
       </body>
