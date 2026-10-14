@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pytest
 
+import src.modules.tender_operator_agent_demo.r4_cross_document_scope_review as scope_review
 from scripts.acceptance.build_r4_competitive_semantic_audit import build_review
 from src.modules.tender_operator_agent_demo.r4_material_condition_triage import (
     all_topic_occurrences,
@@ -100,6 +101,47 @@ def test_repeated_keyword_hits_keep_sha_bound_offsets_and_separate_table_locator
                for v in hits)
 
 
+def test_cross_document_scope_fails_closed_when_source_was_not_provided():
+    import pytest
+
+    with pytest.raises(ValueError, match="cross-document source not found"):
+        scope_review.verify_archival_scope_contrasts({}, {})
+
+
+def test_cross_document_scope_rejects_tampered_and_ambiguous_exact_quotes(monkeypatch):
+    import pytest
+
+    monkeypatch.setattr(scope_review, "_CROSS_DOCUMENT_CASES", ({
+        "registry_number": "TEST-NOT-OFFICIAL",
+        "topic": "test",
+        "question": "not a legal conclusion",
+        "sources": (("Contract.docx", "Исполнитель должен иметь лицензию"),
+                    ("Terms.docx", "Участник должен иметь лицензию")),
+    },))
+    a = "PARAGRAPH-0001: Исполнитель должен иметь лицензию."
+    b = "PARAGRAPH-0002: Участник должен иметь лицензию."
+    k1 = "TEST-NOT-OFFICIAL", "a" * 64
+    k2 = "TEST-NOT-OFFICIAL", "b" * 64
+    expected = {
+        k1: {"original_filename": "Contract.docx", "source_proof": "fixture"},
+        k2: {"original_filename": "Terms.docx", "source_proof": "fixture"},
+    }
+    attested = {k1: [a], k2: [b]}
+    valid = scope_review.verify_archival_scope_contrasts(attested, expected)
+    assert valid["case_count"] == 1
+    assert valid["human_signed_legal_interpretations"] == 0
+    assert all(not e["legal_duty_confirmed"]
+               for e in valid["cases"][0]["archival_source_excerpts"])
+    with pytest.raises(ValueError, match="missing or ambiguous"):
+        scope_review.verify_archival_scope_contrasts(
+            {k1: [a], k2: [b.replace("должен", "вправе")]}, expected
+        )
+    with pytest.raises(ValueError, match="missing or ambiguous"):
+        scope_review.verify_archival_scope_contrasts(
+            {k1: [a + "\n" + a], k2: [b]}, expected
+        )
+
+
 def test_empty_or_incomplete_source_manifest_fails_closed(tmp_path: Path):
     with pytest.raises(ValueError, match="complete original EIS"):
         source_bound_triage(tmp_path, {"cases": [], "source_shas_attested": 0})
@@ -115,6 +157,21 @@ def test_all_96_actual_originals_remain_non_decisional_when_present():
     assert audit["source_text_units_read"] == 97
     assert len(audit["cases"]) == 20
     assert sum(case["source_documents_read"] for case in audit["cases"]) == 96
+    compared = audit["cross_document_original_scope_review"]
+    assert compared["case_count"] == 4
+    assert sum(len(c["archival_source_excerpts"]) for c in compared["cases"]) == 14
+    assert sum(c["independent_original_documents"] for c in compared["cases"]) == 10
+    assert compared["human_signed_legal_interpretations"] == 0
+    assert compared["bid_ready"] is False
+    assert all(not c["expert_signed"] and not c["live_eis_edition_verified"]
+               and c["scope_difference_status"] ==
+               "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED"
+               for c in compared["cases"])
+    assert all(
+        v["original_binary_sha256"] and v["source_text_sha256"] and v["quote_sha256"]
+        and v["source_locator"] and not v["legal_duty_confirmed"]
+        for c in compared["cases"] for v in c["archival_source_excerpts"]
+    )
     assert len(audit["source_bound_literal_leads"]) == 265
     full = audit["all_topic_mentions_scan"]
     assert full["text_units"] == 97

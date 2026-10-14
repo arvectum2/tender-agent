@@ -5725,6 +5725,246 @@
       "OBLIGATION_VERB_NEAR_MENTION": 78,
       "POSSIBLE_HEADING_OR_TABLE_LABEL": 61
     },
+    "cross_document_original_scope_review": {
+      "bid_ready": false,
+      "case_count": 4,
+      "cases": [
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Исполнитель должен иметь лицензию на телематические услуги связи",
+              "legal_duty_confirmed": false,
+              "literal_start": 3848,
+              "original_binary_sha256": "aa2a235185682736cf3b04fa7a6149ca1e13f3a97995ed75b6be739d5ef3e9f7",
+              "original_filename": "Приложение 5_ Проект Контракта.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "773726eb98ebb7b7c7319d0dba89cec173d762d0ef949b28c3de0ee050b4bb72",
+              "source_locator": "PARAGRAPH-0031",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c8c1435efb89a4324465488353b9f36c6ff443aaad247f26cee955e75e19dacc",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Наличие у Исполнителя (и/или соисполнителя) лицензии на телематические услуги связи",
+              "legal_duty_confirmed": false,
+              "literal_start": 4380,
+              "original_binary_sha256": "44cf5037944f23432af1c6e904c12e10cf3167cd3a4632a83178c2b98e1c2678",
+              "original_filename": "Приложение  2_Описание обьекта закупки. Техническое задание. Сверенное - Актуальное 18.10.2024.doc",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "dfac636b0f554d50ae87cf03febec89741063d1b5542ff8a634367b726d6dc90",
+              "source_locator": "Строка 90",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "fb73686126c37dab7eba74164bcdadd06423a6854385d14edf6cd04834de9a82",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "наличие у Исполнителя лицензии на оказание телематических услуг связи является обязательным требованием",
+              "legal_duty_confirmed": false,
+              "literal_start": 9635,
+              "original_binary_sha256": "2ec9091585b1e82d4be175d2c5521ae7a1a6f6b72b80b0450b158426fbc389cd",
+              "original_filename": "Приложение  3_ Требования к содержанию, составу заявки и инструкцию по ее заполнению..docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "b56c4b4f195f7b6680c69c70427352dd570ca9af2ecdd84e5f715895de93bb33",
+              "source_locator": "PARAGRAPH-0038",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "abb1c257a6e305ea4d2c8958d272c1c315e3eef573a467e7634ea8e670c2838d",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 3,
+          "live_eis_edition_verified": false,
+          "registry_number": "0349100009326000005",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "В ТЗ допускается лицензия у исполнителя и/или соисполнителя; контракт и требования к заявке называют исполнителя. Проверить применимость к участнику и допустимость соисполнителя.",
+          "topic": "Телематическая лицензия: исполнитель либо соисполнитель"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Участник закупки должен иметь лицензии:",
+              "legal_duty_confirmed": false,
+              "literal_start": 7781,
+              "original_binary_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+              "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "541cbd36887fe4944ec59572c3cfc41ddc3b1383372b8a0da6f2f8a2d7a37866",
+              "source_locator": "PARAGRAPH-0029",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "e11df28cc3cc8bcedcbff7473cb6ea350ed2742d3c6af437375b2b32c1adacbd",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Лицензия ФСТЭК России на деятельность по технической защите конфиденциальной информации",
+              "legal_duty_confirmed": false,
+              "literal_start": 7840,
+              "original_binary_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+              "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "4fe9fdb693279fbce2cb7afd669a7cfb1c6752ac232ef3165301266e95235f8f",
+              "source_locator": "PARAGRAPH-0030",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "e11df28cc3cc8bcedcbff7473cb6ea350ed2742d3c6af437375b2b32c1adacbd",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Лицензия ФСБ России на деятельность по разработке",
+              "legal_duty_confirmed": false,
+              "literal_start": 8699,
+              "original_binary_sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+              "original_filename": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "e25642fe59c37c9ec62542ac8d9ffd4148e981bdd1f98b61425c740752f0267d",
+              "source_locator": "PARAGRAPH-0033",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "e11df28cc3cc8bcedcbff7473cb6ea350ed2742d3c6af437375b2b32c1adacbd",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Подрядчик (субподрядчик, соисполнитель) - обязуется иметь следующие действующие лицензии:",
+              "legal_duty_confirmed": false,
+              "literal_start": 42287,
+              "original_binary_sha256": "cf0453e8a18887c57b4129e92fb5155a0242760f3733a65cddd6de20337bcf50",
+              "original_filename": "2 Проект контракта ОАЭФ-098.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "8c711d88dfdcd3cc96a6ae81c77d7a3c08cc791dac65211c9261f832c324a12a",
+              "source_locator": "PARAGRAPH-0214",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "f09a80b23a8a7ae26e6c64cdc1947bcdf3f1a0f7be20d06799cddfcac797e906",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0895100000126000897",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "В требованиях к заявке лицензии ФСТЭК и ФСБ названы для участника; в контракте фигурируют подрядчик, субподрядчик, соисполнитель. Проверить законность и субъект каждого требования.",
+          "topic": "ФСТЭК и ФСБ: участник заявки и подрядчик/соисполнитель"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Сайт реализован на системе управления Сайтом SiteSoft.Platform",
+              "legal_duty_confirmed": false,
+              "literal_start": 5255,
+              "original_binary_sha256": "8142d03a12475aa5ab382286d654ad694f0408ea69c7c4c5aa59f1a81dc5c455",
+              "original_filename": "3_Описание объекта закупки.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "12cecff88e7163dcfe633057c78638fb89655e1dc0c46d63e881073874227694",
+              "source_locator": "PARAGRAPH-0056",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "673ae2b54f51ab32d3ddf5f3dd618126629e7072737615b52c966a36ae7c8efd",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "лицензионный договор с правообладателем ПО «SiteSoft.Platform»",
+              "legal_duty_confirmed": false,
+              "literal_start": 7624,
+              "original_binary_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+              "original_filename": "4_Требования к содержанию, составу заявки.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "81f54e042226b04bbc017dd0e0a4f70e07cad9739428b314984f20d3142592fa",
+              "source_locator": "PARAGRAPH-0037",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c9aa5aca35106eab8db72fb516d662e408d80bd41e6d94e60ace75ab1d208055",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "сублицензионный договор с лицом, с которым правообладатель ПО «SiteSoft.Platform»",
+              "legal_duty_confirmed": false,
+              "literal_start": 7873,
+              "original_binary_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+              "original_filename": "4_Требования к содержанию, составу заявки.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "f1fc6cad1480b58c26ee07a0ea99b2a7ed121bb6621105cf56792c81dbaa35f0",
+              "source_locator": "PARAGRAPH-0038",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c9aa5aca35106eab8db72fb516d662e408d80bd41e6d94e60ace75ab1d208055",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "в составе заявки Исполнитель должен предоставить копию действующей лицензии",
+              "legal_duty_confirmed": false,
+              "literal_start": 8536,
+              "original_binary_sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+              "original_filename": "4_Требования к содержанию, составу заявки.docx",
+              "original_notice_source_method": "NEWLY_RETRIEVED_OFFICIAL_SOURCE",
+              "quote_sha256": "d179d961064ea7a7cb018a65436bd7382ccb6860ad29090c0aaea2607226a6f2",
+              "source_locator": "PARAGRAPH-0039",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "c9aa5aca35106eab8db72fb516d662e408d80bd41e6d94e60ace75ab1d208055",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 2,
+          "live_eis_edition_verified": false,
+          "registry_number": "0148200000526000028",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "ТЗ фиксирует платформу заказчика. Документ о заявке отдельно перечисляет варианты подтверждения прав на неё и лицензию ФСТЭК. Нужно проверить объём допустимых прав и точную обязанность участника.",
+          "topic": "Права SiteSoft.Platform и отдельная лицензия ФСТЭК"
+        },
+        {
+          "archival_source_excerpts": [
+            {
+              "exact_archival_quote": "Обеспечить соблюдение всех исключительных прав на все результаты интеллектуальной деятельности",
+              "legal_duty_confirmed": false,
+              "literal_start": 6295,
+              "original_binary_sha256": "9294908cc3aec0bda85c84d41cd19b80fe1e5ddebd1b386b4830466d64eca091",
+              "original_filename": "Приложение_1_Проект_контракта.doc",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "ce9850c0756aebb8a580bbbb58526d34e877b5b253cb53fc7a11629d22a82acb",
+              "source_locator": "Строка 100",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "6812b7d14f9ea4548129818efcf555e492e463197999b2bd29bbbb21d2a80f2e",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Исполнитель передает Заказчику исключительные права на созданный сайт",
+              "legal_duty_confirmed": false,
+              "literal_start": 36215,
+              "original_binary_sha256": "3e029344d179742632d519d4e425e6f8e9f757ce4df23e0419aa4302d4068536",
+              "original_filename": "Приложение_3_Описание_объекта_закупки_сайт.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "79d21afef436b417a424aca96e60536692345ab3d4b927a40ffd8f7fdd6c3b95",
+              "source_locator": "Строка 282",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "16fcb1b330d562cedda811b7188b6cd3b0034d8851e65bc114b8d8715c8945a7",
+              "text_part": 1
+            },
+            {
+              "exact_archival_quote": "Обладание участником закупки исключительными правами на результаты интеллектуальной деятельности",
+              "legal_duty_confirmed": false,
+              "literal_start": 6131,
+              "original_binary_sha256": "69f5c122eef4ebb2d4130a9950cc1ba269f2a72b01a049268b014b0d77fd2bed",
+              "original_filename": "приложение_4_Требования_к_содержанию,_составу_заявки_и_инструкция_по_заполнению.docx",
+              "original_notice_source_method": "OLDER_VERIFIED_TLS_RECHECK",
+              "quote_sha256": "47269c66551ec1de332f0d910d38839527573f354bf4f527c3e4932c3571018d",
+              "source_locator": "Строка 18",
+              "source_role_requires_expert_review": true,
+              "source_text_sha256": "53bdfbe2ba528e06556f63dbeb758e3e1734a9e291b06e5780a06eb1f553b2bc",
+              "text_part": 1
+            }
+          ],
+          "bid_ready": false,
+          "expert_signed": false,
+          "independent_original_documents": 3,
+          "live_eis_edition_verified": false,
+          "registry_number": "0372200172326000015",
+          "scope_difference_status": "POTENTIAL_SCOPE_DIFFERENCE_EXPERT_REVIEW_REQUIRED",
+          "scope_question": "В контракте установлено соблюдение чужих исключительных прав, ТЗ предусматривает передачу прав на создаваемый сайт, а требования к заявке описывают владение правами участником. Не считать эти три формулировки тождественными.",
+          "topic": "Права на будущий сайт и права участника на результаты"
+        }
+      ],
+      "current_eis_revision_attested": false,
+      "human_signed_legal_interpretations": 0,
+      "limitations": "Exact quotes from separate original attachments illustrate textual scope differences, not proven legal conflicts. Cross-document context does not establish procurement legality, current EIS revisions, required participant qualifications or eligibility for tender.",
+      "scope": "FOUR_ARCHIVED_SOURCE_ATTESTED_CROSS_DOCUMENT_WORDING_COMPARISONS"
+    },
     "current_eis_revision_attested": false,
     "human_signed_full_semantic_reviews": 0,
     "limitations": "Context flags are lexical cues only, NOT legal classifications. One first occurrence per topic per text unit; all other occurrences and operative document clauses are not exhaustively reviewed. Literal lexical signals can occur in a negation, example, heading, or inapplicable annex. Absence of a match does not prove absence of a duty. Original tables, scans, figures and legal applicability require human review.",

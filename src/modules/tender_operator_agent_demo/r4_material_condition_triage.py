@@ -23,6 +23,9 @@ from src.modules.tender_operator_agent_demo.r4_all_original_text_coverage import
     _read_original_text_receipt,
     _verify_text_location,
 )
+from src.modules.tender_operator_agent_demo.r4_cross_document_scope_review import (
+    verify_archival_scope_contrasts,
+)
 
 # These patterns trigger *questions*, not confirmed legal requirements.
 TOPICS = (
@@ -496,6 +499,9 @@ def source_bound_triage(root: Path, attachment_inventory: dict) -> dict:
         "source_text_units_read": sum(len(v) for v in verified_texts.values()),
         "case_count": len(case_summary),
         "cases": case_summary,
+        "cross_document_original_scope_review": verify_archival_scope_contrasts(
+            verified_texts, expected
+        ),
         "source_bound_literal_leads": signals,
         "all_topic_mentions_scan": {
             "scope": "ALL_MATCHES_OF_EIGHT_FIXED_PATTERNS_IN_97_TEXT_UNITS_NOT_ALL_LEGAL_TERMS",
