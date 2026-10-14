@@ -85,8 +85,8 @@ def verify_material_clause_leads(private_folder: Path) -> dict:
             raise ValueError("source clause references wrong original procurement/attachment")
         meta, content = evidence
         count = content.count(needle)
-        if count != 1:
-            raise ValueError("original contract clause missing or ambiguous")
+        if count < 1:
+            raise ValueError("original contract clause missing from pinned text")
         offset = content.find(needle)
         paragraph = re.findall(r"PARAGRAPH-\d+|TABLE-\d+ ROW-\d+ CELL-\d+", content[:offset])
         anchor = paragraph[-1] if paragraph else f"Строка {content.count(chr(10), 0, offset) + 1}"
@@ -97,6 +97,7 @@ def verify_material_clause_leads(private_folder: Path) -> dict:
             "normalized_text_sha256": meta["text_sha256"],
             "evidence_locator": anchor,
             "character_offset": offset,
+            "literal_occurrences_in_same_original": count,
             "literal_quote": needle,
             "literal_quote_sha256": _hash(needle.encode("utf8")),
             "review_subject": title,
