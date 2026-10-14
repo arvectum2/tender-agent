@@ -699,9 +699,13 @@ def _dedupe_procurement_attachments(
     for item in attachments:
         name_key = str(item.name or "").strip().lower()
         url_key = str(item.url or "").strip()
-        if name_key in existing_names or (url_key and url_key in existing_urls):
+        # Different official files can share the same display name. Identity
+        # follows the exact source URL; name is a fallback only without URL.
+        if (url_key and url_key in existing_urls) or (
+            not url_key and name_key in existing_names
+        ):
             continue
-        key = (name_key, url_key)
+        key = ("url", url_key) if url_key else ("name", name_key)
         if key in seen:
             continue
         seen.add(key)
@@ -886,6 +890,15 @@ def _supplement_run_with_public_notice_attachments(run_id: str, source_url: str 
 def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
     metadata = load_demo_run_metadata(run_id)
     attachments = _discover_notice_xml_attachments(run_id, metadata)
+    if attachments:
+        from src.modules.tender_operator_agent_demo.eis_original_attachment_completeness import (
+            expected_eis_notice_attachments,
+        )
+
+        metadata["official_xml_attachment_inventory"] = (
+            expected_eis_notice_attachments(attachments)
+        )
+        save_demo_run_metadata(run_id, metadata)
     return _supplement_run_with_discovered_attachments(
         run_id,
         attachments=attachments,
@@ -898,11 +911,23 @@ def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
 def _apply_document_set_completeness(run_id: str) -> dict[str, Any]:
     metadata = load_demo_run_metadata(run_id)
     summary = apply_document_set_summary(metadata)
-    limitation = (
-        "Комплект документов неполон: до анализа необходимо получить проект "
-        "контракта и техническое задание или описание объекта закупки."
-    )
-    limitations = list(metadata.get("limitations") or [])
+    official_set = summary.get("official_original_attachments") or {}
+    if official_set.get("official_original_attachments_missing", 0) > 0:
+        limitation = (
+            "Не все приложения исходного извещения ЕИС получены: "
+            f"{official_set['official_original_attachments_downloaded']} из "
+            f"{official_set['official_original_attachments_announced']}. "
+            "Нужна догрузка и проверка недостающих документов."
+        )
+    else:
+        limitation = (
+            "Комплект документов неполон: до анализа необходимо получить проект "
+            "контракта и техническое задание или описание объекта закупки."
+        )
+    limitations = [
+        x for x in list(metadata.get("limitations") or [])
+        if not x.startswith("Не все приложения исходного извещения ЕИС получены:")
+    ]
     if summary["analysis_allowed"]:
         if metadata.get("files"):
             metadata["status"] = TenderOperatorUploadedRunStatus.READY_TO_ANALYZE.value
@@ -1347,13 +1372,19 @@ def analyze_eis_archive_run(run_id: str):
         )
     summary = _apply_document_set_completeness(run_id)
     if not summary["analysis_allowed"]:
-        raise HTTPException(
-            status_code=409,
-            detail=(
+        original_set = summary.get("official_original_attachments") or {}
+        if original_set.get("official_original_attachments_missing", 0) > 0:
+            message = (
+                "Не все приложения, перечисленные в исходном извещении ЕИС, "
+                "получены. Автоматический анализ остановлен до догрузки "
+                "недостающих документов."
+            )
+        else:
+            message = (
                 "Комплект документов неполон. До анализа получите проект "
                 "контракта и техническое задание или описание объекта закупки."
-            ),
-        )
+            )
+        raise HTTPException(status_code=409, detail=message)
     return analyze_uploaded_demo_run(run_id)
 
 
