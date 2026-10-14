@@ -14,7 +14,7 @@ def _parse_deadline(value:str)->datetime:
     if not value or not isinstance(value,str):
         raise ValueError("missing source deadline")
     try:
-        parsed=datetime.fromisoformat(value.replace("Z","+00:00"))
+        parsed=datetime.fromisoformat(value)
     except ValueError:
         try:
             parsed=datetime.strptime(value,"%d.%m.%Y %H:%M:%S %z")
