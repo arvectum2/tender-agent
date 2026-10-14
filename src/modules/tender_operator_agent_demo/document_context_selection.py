@@ -25,6 +25,32 @@ _TERMS_BY_ROLE = {
 }
 
 
+# Distinct material obligations must compete for scarce excerpt windows.
+# Without coverage-aware ranking several windows mentioning generic deadlines
+# can crowd out accessibility, ticketing or assignment of exclusive rights.
+# These are discovery cues, not evidence validation or an exhaustive checklist.
+_DECISION_CRITICAL_CONCEPTS = {
+    "notice": (
+        ("enddt", "окончание подачи"), ("maxprice", "начальная цена"),
+        ("purchasenumber", "номер закупки"),
+    ),
+    "technical_spec": (
+        ("продажа билетов", "билет"),
+        ("слабовид", "ограниченными возможностями зрения"),
+        ("не менее 3", "не менее трех"),
+        ("лично на территории", "очное интервью"),
+        ("12 (двенадцать) месяцев", "гарантийный срок"),
+    ),
+    "contract_draft": (
+        ("исключительные права", "исключительных прав"),
+        ("обеспечение исполнения",),
+        ("7 (семи) рабочих дней", "срок оплаты"),
+        ("неустойк", "штраф"),
+        ("расторжен",),
+    ),
+}
+
+
 @dataclass(frozen=True)
 class SourceExcerpt:
     role: str
@@ -68,18 +94,33 @@ def select_document_context(
     # prevent repeating the same clause multiple times in the model prompt.
     spans = [(i, min(i + window_chars, len(text))) for i in range(0, len(text), window_chars)]
     terms = _TERMS_BY_ROLE.get(role, ("срок", "требован", "оплат", "результат"))
-    def rank(index: int) -> tuple[int, int]:
-        a, b = spans[index]
-        sample = text[a:b].lower()
-        score = sum(1 for term in terms if term in sample)
-        return (score, -index)
+    critical = _DECISION_CRITICAL_CONCEPTS.get(role, ())
+    samples = [text[a:b].lower() for a, b in spans]
+
+    def concepts(index: int) -> set[int]:
+        return {
+            group_index
+            for group_index, alternatives in enumerate(critical)
+            if any(term in samples[index] for term in alternatives)
+        }
 
     max_windows = max(2, (max_chars - 800) // (window_chars + 110))
     chosen = {0, len(spans) - 1}
-    for idx in sorted(range(len(spans)), key=rank, reverse=True):
-        if len(chosen) >= max_windows:
-            break
-        chosen.add(idx)
+    covered = set().union(*(concepts(index) for index in chosen))
+    while len(chosen) < min(max_windows, len(spans)):
+        candidates = (index for index in range(len(spans)) if index not in chosen)
+        index = max(
+            candidates,
+            key=lambda item: (
+                # Reward *new* high-impact obligations, not repeated matches
+                # of the same generic word in several overlapping concepts.
+                sum(2 if group < 2 else 1 for group in concepts(item) - covered),
+                sum(term in samples[item] for term in terms),
+                -item,
+            ),
+        )
+        chosen.add(index)
+        covered.update(concepts(index))
 
     excerpts = tuple(SourceExcerpt(role, *spans[i], text[slice(*spans[i])]) for i in sorted(chosen))
     labeled = [
