@@ -108,10 +108,6 @@ def test_tampered_historic_sha_fails_hard():
 
 def test_cached_source_hash_mismatch_and_duplicate_file_fails_hard():
     data = originals()
-    data["independent_files_csv"] = rewrite_csv(
-        data["independent_files_csv"],
-        "cached_bytes_SHA_match", "YES", "NO", registry="0372200172326000015",
-    ) if False else data["independent_files_csv"]
     # per-file receipt mutation: duplicate the exact Museum file line.
     lines = data["independent_files_csv"].splitlines()
     match = next(x for x in lines[1:] if x.startswith("0372200172326000015,FILE-01,"))
