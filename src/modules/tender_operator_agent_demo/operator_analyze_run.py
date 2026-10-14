@@ -97,29 +97,6 @@ def analyze_uploaded_demo_run(
         documents = _collect_documents(run_id, metadata)
         warnings = list(dict.fromkeys(metadata.get("warnings", []) + [warning for doc in documents for warning in doc.warnings]))
 
-        # Research the complete extracted corpus independently of the model's
-        # token-limited three-role excerpts. Every missing attachment remains
-        # visible; a citation locator never implies semantic/legal attestation.
-        from src.modules.tender_operator_agent_demo.full_corpus_research import (
-            research_full_corpus,
-        )
-
-        source_research = research_full_corpus(
-            documents, manifest=metadata.get("files"),
-        )
-        metadata["source_research"] = source_research
-        append_demo_run_event(
-            run_id,
-            "full_corpus_source_research_completed",
-            "Индексированы извлечённые оригиналы; цитаты требуют независимой проверки.",
-            {
-                "documents": source_research["document_count"],
-                "extracted": source_research["extracted_document_count"],
-                "unread": len(source_research["unread_file_ids"]),
-                "topics_not_located": len(source_research["missing_research_topics"]),
-            },
-        )
-
         notice_text = _collect_role_text(documents, "notice") or _collect_role_text(documents, "supporting") or metadata["tender_title"]
         technical_spec_text = _collect_role_text(documents, "technical_spec")
         contract_draft_text = _collect_role_text(documents, "contract_draft")
@@ -201,28 +178,6 @@ def analyze_uploaded_demo_run(
             calibrated_risks = llm_result.get("contract_risks", [])
             supplier_questions = llm_result.get("supplier_questions", [])
             rfq_draft = llm_result.get("rfq_draft", {})
-
-            from src.modules.tender_operator_agent_demo.full_corpus_research import (
-                examine_llm_assertions,
-            )
-
-            candidate_statements = [
-                item
-                for key in (
-                    "technical_requirements", "qualification_requirements",
-                    "document_requirements", "evaluation_criteria",
-                )
-                for item in (requirements.get(key, []) if isinstance(requirements, dict) else [])
-                if isinstance(item, str)
-            ]
-            candidate_statements.extend(
-                str(item["description"])
-                for item in calibrated_risks
-                if isinstance(item, dict) and isinstance(item.get("description"), str)
-            )
-            metadata["source_research_llm_claims"] = examine_llm_assertions(
-                source_research, candidate_statements,
-            )
             analysis_mode = llm_classification["analysis_mode"]
             if llm_validation_failed:
                 warnings.append(
@@ -323,30 +278,6 @@ def analyze_uploaded_demo_run(
             )
 
         limitations = list(dict.fromkeys(metadata.get("limitations", [])))
-        if source_research["unread_file_ids"]:
-            limitations.append(
-                "Не все исходные файлы извлечены и проиндексированы: "
-                + ", ".join(source_research["unread_file_ids"][:12])
-                + ". Отсутствие найденных требований не означает их отсутствия в документации."
-            )
-        if source_research["missing_research_topics"]:
-            limitations.append(
-                "Поиск по полным извлечённым текстам не нашёл явного фрагмента "
-                "для тем: " + ", ".join(source_research["missing_research_topics"][:14])
-                + ". Это неопределённость, а не подтверждение отсутствия обязательства."
-            )
-        limitations.append(
-            "Полнотекстовый исследовательский индекс возвращает проверяемые "
-            "фрагменты и хеши, но не подтверждает смысл правовых выводов; "
-            "структурный PASS LLM также не является проверкой фактов. "
-            "Необходима независимая проверка цитат человеком."
-        )
-        if analysis_mode == "llm_tender_operator_provider":
-            limitations.append(
-                "Выводы LLM — гипотезы: формальные критерии оценки, допуск, "
-                "НМЦК, сроки и изменения цены должны быть отдельно "
-                "подтверждены по оригиналам даже при PASSED JSON."
-            )
         if analysis_mode == "fallback_deterministic_adapter":
             limitations.append(
                 "Полный LLM-анализ документов не выполнялся "
