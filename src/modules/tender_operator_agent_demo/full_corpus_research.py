@@ -231,3 +231,59 @@ def examine_llm_assertions(
             "requires_human_review": True,
         })
     return out
+
+
+def build_research_brief(
+    research: Mapping[str, Any], *, max_chars: int = 11500,
+) -> dict[str, Any]:
+    """Bounded multi-question context from ALL scanned source documents.
+
+    We do not drop the original full-index metadata or mark these quotations as
+    verified. The brief is a separate, non-authoritative evidence input to
+    the model in addition to its legacy notice/spec/contract excerpts.
+    """
+    if max_chars < 1200:
+        raise ValueError("research brief budget too small")
+    intro = (
+        "SOURCE RESEARCH — ORIGINAL FRAGMENTS, NOT VERIFIED CLAIMS. "
+        "Check each statement against its quoted source. Do not invent "
+        "evaluation criteria, bidder eligibility, price, dates or terms. "
+        "Source paragraphs can contradict each other or be obsolete; "
+        "if so report UNKNOWN and require human review."
+    )
+    sections = [intro]
+    used = len(intro)
+    missing: list[str] = []
+    for question in research.get("findings") or []:
+        hits = question.get("hits") or []
+        if not hits:
+            missing.append(_string(question.get("key")))
+            continue
+        # Per-question fair-share prevents e.g. generic scope from consuming
+        # the whole budget before later risk/contract questions.
+        remaining_topics = max(1, len(research.get("findings") or []) - len(sections) + 1)
+        budget = min(650, max(220, (max_chars - used) // remaining_topics))
+        if used + budget >= max_chars:
+            missing.append(_string(question.get("key")))
+            continue
+        hit = hits[0]
+        heading = (
+            f"[{question['key']} | source={hit['source_ref']} "
+            f"| sha256={hit['source_sha256'][:14]} | HUMAN CHECK REQUIRED]\n"
+        )
+        text = _string(hit.get("quote"))
+        payload = heading + text[:max(0, budget - len(heading))]
+        sections.append(payload)
+        used += len(payload) + 2
+    return {
+        "version": 1,
+        "source_status": research.get("source_status"),
+        "original_document_count": research.get("document_count", 0),
+        "unread_file_ids": list(research.get("unread_file_ids") or []),
+        "uncovered_research_topics": sorted(
+            set(missing + list(research.get("missing_research_topics") or []))
+        ),
+        "source_evidence_brief": "\n\n".join(sections)[:max_chars],
+        "review_status": "HUMAN_REVIEW_REQUIRED",
+        "semantic_verification": "NOT_PERFORMED",
+    }
