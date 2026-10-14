@@ -64,10 +64,12 @@ def run_with_full_corpus_research(
     project_original = dependencies["_build_output_payloads"]
     controlled_original = dependencies["_try_run_llm_workflow"]
     current_research: dict[str, Any] | None = None
+    current_documents: list[Any] = []
 
     def collect(run: str, metadata: dict[str, Any]) -> list[Any]:
-        nonlocal current_research
+        nonlocal current_research, current_documents
         documents = collect_original(run, metadata)
+        current_documents = documents
         report = research_full_corpus(documents, manifest=metadata.get("files"))
         metadata["source_research"] = report
         current_research = report
@@ -118,6 +120,8 @@ def run_with_full_corpus_research(
         claim_index = examine_llm_assertions(research, claims)
         metadata["source_research_llm_claims"] = claim_index
         original_documents = kwargs.get("documents")
+        if not isinstance(original_documents, list):
+            original_documents = current_documents
         # All downstream clause/model audits MUST share the same trust
         # boundary as full-corpus indexing. A document rejected for a
         # declared hash mismatch/duplicate ID cannot re-enter as "evidence".
