@@ -179,6 +179,42 @@ def _find_source_evidence(
     return out
 
 
+
+def _structured_xml_notice_facts(documents: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Parse source-defined official fields, never infer revision freshness."""
+    from src.modules.tender_operator_agent_demo.eis_notice_parser import (
+        extract_notice_metadata,
+        extract_notice_revision_info,
+    )
+
+    found: list[dict[str, Any]] = []
+    for doc in documents:
+        if doc["role"] != "notice" or not doc["text"].lstrip().startswith("<"):
+            continue
+        # Reject missing/ambiguous registry identities and unsafe XML before
+        # treating any value as a source-defined fact.
+        revision = extract_notice_revision_info(doc["text"])
+        if not revision.get("purchase_number"):
+            continue
+        parsed = extract_notice_metadata(doc["text"])
+        if not parsed.get("_has_notice_data"):
+            continue
+        for field in ("nmck", "submission_deadline", "publication_date", "procurement_subject"):
+            value = parsed.get(field)
+            if value is None or value == "":
+                continue
+            found.append({
+                "field": field, "value": value,
+                "file_id": doc["file_id"],
+                "source_sha256": doc["text_sha256"],
+                "procurement_number": revision["purchase_number"],
+                "document_published_at": revision.get("published_at"),
+                "source_status": "ORIGINAL_XML_EXTRACTED_NOT_CURRENT_ATTESTED",
+                "requires_human_review": True,
+            })
+    return found
+
+
 def research_full_corpus(
     documents: Iterable[Any],
     *,
@@ -195,6 +231,7 @@ def research_full_corpus(
     if len(qs) > _MAX_QUESTIONS or max_hits_per_topic not in range(1, 9):
         raise ValueError("research budget exceeded")
     inventory, complete = _document_inventory(documents, manifest)
+    structured_facts = _structured_xml_notice_facts(complete)
     findings: list[dict[str, Any]] = []
     for q in qs:
         hits = _find_source_evidence(q, complete, limit=max_hits_per_topic)
@@ -219,7 +256,8 @@ def research_full_corpus(
         "multiple_notices_require_revision_resolution": revision_ambiguous,
         "document_count": len(inventory), "extracted_document_count": len(complete),
         "unread_file_ids": problem_files, "missing_research_topics": missing_topics,
-        "documents": inventory, "findings": findings,
+        "documents": inventory, "structured_notice_facts": structured_facts,
+        "findings": findings,
         "overall_decision": "HUMAN_REVIEW_REQUIRED",
         "source_truth_attested": False,
         "llm_claims_verified": False,
@@ -282,6 +320,18 @@ def build_research_brief(
     )
     sections = [intro]
     used = len(intro)
+    # Model-visible source-defined XML facts take precedence over guesses from
+    # prose; provenance does not attest that this is the latest EIS revision.
+    notice_facts = list(research.get("structured_notice_facts") or [])[:12]
+    if notice_facts:
+        header = "ORIGINAL EIS XML FIELDS — historical source, NOT current authority: "
+        values = "; ".join(
+            f"{item['field']}={item['value']} (source={item['file_id']})"
+            for item in notice_facts
+        )
+        section = header + values
+        sections.append(section[:min(900, max_chars // 9)])
+        used += len(sections[-1]) + 2
     missing: list[str] = []
     for question in research.get("findings") or []:
         hits = question.get("hits") or []
