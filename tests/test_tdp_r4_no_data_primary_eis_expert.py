@@ -110,7 +110,7 @@ def test_customer_report_clear_and_technical_messages_excluded(tmp_path,monkeypa
     assert "до 31 декабря 2025 года" in report
     assert "пять календарных дней" in report
     assert "83 физические страницы" in report
-    assert "текущей" in report
+    assert "актуальной" in report
     assert "сведения" in report.lower()
 
 
