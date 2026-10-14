@@ -6,6 +6,7 @@ default even when the model JSON schema passes validation.
 """
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Callable
 from typing import Any
 
@@ -113,13 +114,33 @@ def run_with_full_corpus_research(
         claim_index = examine_llm_assertions(research, claims)
         metadata["source_research_llm_claims"] = claim_index
         original_documents = kwargs.get("documents")
+        # All downstream clause/model audits MUST share the same trust
+        # boundary as full-corpus indexing. A document rejected for a
+        # declared hash mismatch/duplicate ID cannot re-enter as "evidence".
+        accepted = {
+            (str(row["file_id"]).casefold(), str(row["text_sha256"]))
+            for row in research.get("documents", [])
+            if row.get("status") == "EXTRACTED" and row.get("text_sha256")
+        }
+        integrity_checked_documents = []
+        if isinstance(original_documents, list):
+            for document in original_documents:
+                text = getattr(document, "text", None)
+                if not isinstance(text, str) or not text.strip():
+                    continue
+                identity = (
+                    str(getattr(document, "file_id", "") or "").casefold(),
+                    hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                )
+                if identity in accepted:
+                    integrity_checked_documents.append(document)
         clause_reviews = audit_model_contract_clause_references(
             risks if isinstance(risks, list) else [],
-            original_documents if isinstance(original_documents, list) else [],
+            integrity_checked_documents,
         )
         metadata["source_research_clause_review"] = clause_reviews
         modality_audit = audit_source_modalities(
-            original_documents if isinstance(original_documents, list) else [],
+            integrity_checked_documents,
             requirements=requirements if isinstance(requirements, dict) else {},
             risks=risks if isinstance(risks, list) else [],
         )
