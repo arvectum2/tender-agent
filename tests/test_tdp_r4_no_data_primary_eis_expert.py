@@ -7,7 +7,9 @@ from pathlib import Path
 
 import pytest
 
-from src.modules.tender_operator_agent_demo import r4_price_inquiry_primary_audit as audit
+from src.modules.tender_operator_agent_demo import (
+    r4_price_inquiry_primary_audit as audit,
+)
 
 _DATA = Path(__file__).resolve().parents[1] / "docs" / "acceptance" / "data"
 
