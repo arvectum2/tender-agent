@@ -113,3 +113,56 @@ def test_custom_question_can_index_new_industry_without_changing_code():
         questions=[ResearchQuestion("calibration", "Калибровка", ("калибровк",))],
     )
     assert "калибровки датчиков" in result["findings"][0]["hits"][0]["quote"]
+
+
+def test_manifest_ids_ignore_case_without_claiming_missing_documents():
+    sources = [doc("file-01", "notice", "<purchaseNumber>123</purchaseNumber>")]
+    result = research_full_corpus(
+        sources, manifest=[{"file_id": "FILE-01", "display_name": "original.xml"}],
+    )
+    assert result["document_count"] == 1
+    assert result["unread_file_ids"] == []
+
+
+def test_price_evidence_includes_notice_and_contract_instead_of_contract_repeats():
+    notice = doc("first", "notice", "<maxPrice>1000000.00</maxPrice>")
+    contract = doc("second", "contract_draft", ("Цена контракта и изменение цены контракта. " * 200))
+    result = research_full_corpus(
+        [notice, contract],
+        questions=[
+            ResearchQuestion(
+                "price", "НМЦК и изменение цены", ("maxprice", "цена контракта", "изменение цены"),
+                ("notice", "contract_draft"),
+            ),
+        ],
+    )
+    hits = result["findings"][0]["hits"]
+    assert hits[0]["role"] == "notice"
+    assert any(h["role"] == "contract_draft" for h in hits)
+    assert "<maxPrice>1000000.00</maxPrice>" in hits[0]["quote"]
+
+
+def test_multiple_published_notice_versions_are_not_silently_reconciled():
+    report = research_full_corpus([
+        doc("rev01", "notice", "<maxPrice>1000000</maxPrice>"),
+        doc("rev02", "notice", "<maxPrice>800000</maxPrice>"),
+    ])
+    assert report["multiple_notices_require_revision_resolution"] is True
+    assert report["source_status"] == "MULTIPLE_NOTICE_REVISIONS_REVIEW"
+
+
+def test_bounded_brief_retains_cross_document_references_and_never_verifies():
+    from src.modules.tender_operator_agent_demo.full_corpus_research import (
+        build_research_brief,
+    )
+
+    report = research_full_corpus([
+        doc("first", "notice", "<maxPrice>1000000</maxPrice>"),
+        doc("second", "contract_draft", "Исключительные права передаются Заказчику."),
+    ])
+    brief = build_research_brief(report, max_chars=4300)
+    assert len(brief["source_evidence_brief"]) <= 4300
+    assert "normalized:" in brief["source_evidence_brief"]
+    assert "HUMAN CHECK REQUIRED" in brief["source_evidence_brief"]
+    assert brief["semantic_verification"] == "NOT_PERFORMED"
+    assert brief["review_status"] == "HUMAN_REVIEW_REQUIRED"
