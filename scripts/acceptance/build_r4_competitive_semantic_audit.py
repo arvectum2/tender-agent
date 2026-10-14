@@ -17,6 +17,9 @@ sys.path.insert(0,str(ROOT))
 from src.modules.tender_operator_agent_demo.r4_additional_original_claims import (
     audit_additional_sources,
 )
+from src.modules.tender_operator_agent_demo.r4_archived_notice_attachment_coverage import (
+    verify_attachment_coverage,
+)
 from src.modules.tender_operator_agent_demo.r4_official_competitive_cohort import (
     validate_cohort,
     verify_original_notice,
@@ -75,6 +78,7 @@ def build_review(originals:Path)->dict:
                 "reason":n["noncompetitive_reason"],
                 "bid_ready":False} for n in selected["negative_cases"]]
     new_documents=audit_additional_sources(originals)
+    full_attachment_coverage=verify_attachment_coverage(selected,originals)
     previous_deadlines=audit_saved_decisions(
         expert["cases"],official,ai/"tender_operator_demo"
     )
@@ -89,6 +93,7 @@ def build_review(originals:Path)->dict:
         "separate_official_reserve":selected["reserve_case"]["reg_number"],
         "saved_model_claims":claims,
         "additional_four_cases_and_21_original_binaries":new_documents,
+        "selected_original_notice_attachment_coverage":full_attachment_coverage,
         "historical_model_report_deadline_audit":previous_deadlines,
         "all_saved_model_claims_checked":(
             claims["claims"] + new_documents["model_claims_checked"]
@@ -106,6 +111,10 @@ def readable_review(review:dict)->str:
     claim_map={c["registry_number"]:c for c in review["saved_model_claims"]["cases"]}
     new_claims=review["additional_four_cases_and_21_original_binaries"]
     deadline_review=review["historical_model_report_deadline_audit"]
+    attachment_coverage=review["selected_original_notice_attachment_coverage"]
+    attachments_per_case={
+        row["registry_number"]:row for row in attachment_coverage["cases"]
+    }
 
     additional_ids={
         v["registry_number"] for v in new_claims["claim_checks"]
@@ -129,8 +138,8 @@ def readable_review(review:dict)->str:
         "",
         "## По каждой конкурентной процедуре",
         "",
-        "| № | Номер извещения | Предмет | Процедура | Архивная редакция | Срок по архиву | Доказательность цитат |",
-        "|---:|---|---|---|---:|---|---|",
+        "| № | Номер извещения | Предмет | Процедура | Документы по архиву | Архивная редакция | Срок по архиву | Доказательность цитат |",
+        "|---:|---|---|---|---:|---:|---|---|",
     ]
     methods={
         "COMPETITIVE_ELECTRONIC_AUCTION":"Электронный аукцион",
@@ -152,8 +161,12 @@ def readable_review(review:dict)->str:
             subject=subject[:112].rstrip()+"…"
         if not subject:
             subject="Предмет требует уточнения по документам"
+        docs=attachments_per_case.get(n)
+        if not docs or docs["first_party_sha_verified"]!=docs["required_original_attachments"]:
+            raise ValueError("client report cannot claim all procurement documents verified")
+        docs_label=f"{docs['first_party_sha_verified']}/{docs['required_original_attachments']}"
         lines.append(
-            f"| {i} | {n} | {subject} | {methods[case['method']]} | {case['archived_version']} | {deadline} | {state} |"
+            f"| {i} | {n} | {subject} | {methods[case['method']]} | {docs_label} | {case['archived_version']} | {deadline} | {state} |"
         )
     saved=review["saved_model_claims"]
     lines.extend([
