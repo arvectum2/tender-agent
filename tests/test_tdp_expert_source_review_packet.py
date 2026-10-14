@@ -125,3 +125,41 @@ def test_source_manifest_hash_deterministic_and_independent_of_input_order():
     right = build_expert_source_review_packet(research_full_corpus(docs[::-1]))
     assert left["case_source_manifest_sha256"] == right["case_source_manifest_sha256"]
     assert left["source_inventory"] == right["source_inventory"]
+
+
+def test_operator_facade_exposes_reviewer_packet_without_claiming_approval():
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
+
+    original = doc("FILE-01","notice",source_xml())
+    metadata={"files":[{"file_id":"FILE-01"}],"limitations":[]}
+
+    def handler(run_id,**dependencies):
+        documents=dependencies["_collect_documents"](run_id,metadata)
+        return dependencies["_build_output_payloads"](
+            metadata=metadata,documents=documents,
+            requirements={
+                "tender_summary": "NMCK: 1,000,000.00 RUB; "
+                                  "Submission deadline: 16.10.2026 10:00:00 +03:00",
+                "qualification_requirements": [],
+            },
+            calibrated_risks=[],
+        )
+
+    result=run_with_full_corpus_research(
+        handler,"packet-qa",
+        _collect_documents=lambda *_:[original],
+        _try_run_llm_workflow=lambda **_:None,
+        _build_output_payloads=lambda **_:{"trace":{},"requirements":{}},
+    )
+    packet=result["trace"]["expert_source_review_prefill"]
+    assert packet==result["requirements"]["expert_source_review_prefill"]
+    assert packet==metadata["source_expert_review_prefill"]
+    assert packet["human_gold_attested"] is False
+    assert packet["human_reviews_completed"]==0
+    assert packet["bid_ready"] is False
+    assert packet["arv001_release_gate"]=="NOT_READY"
+    assert packet["registry_number_from_original_only"]=="0372200172326000015"
+    assert packet["source_proof_count"]>0
+    assert all(i["human_label"] is None for i in packet["rubric"])
