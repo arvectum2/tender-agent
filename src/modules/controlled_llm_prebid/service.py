@@ -12,7 +12,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.modules.agent_registry.models import AgentRegistryRecord
-from src.modules.agent_registry.schemas import BuildAgentRegistryEntryInput, BuildAgentRegistryRequest
+from src.modules.agent_registry.schemas import (
+    BuildAgentRegistryEntryInput,
+    BuildAgentRegistryRequest,
+)
 from src.modules.agent_registry.service import build_agent_registry
 from src.modules.controlled_llm_prebid.schemas import (
     LLMBidDecisionDraft,
@@ -28,7 +31,10 @@ from src.modules.controlled_llm_prebid.schemas import (
     LLMTenderSummaryDraft,
 )
 from src.modules.prompt_schema_library.models import PromptSchemaRecord
-from src.modules.prompt_schema_library.schemas import BuildPromptSchemaAssetInput, BuildPromptSchemaLibraryRequest
+from src.modules.prompt_schema_library.schemas import (
+    BuildPromptSchemaAssetInput,
+    BuildPromptSchemaLibraryRequest,
+)
 from src.modules.prompt_schema_library.service import build_prompt_schema_library
 from src.modules.runtime_control_traces.schemas import CreateRuntimeControlTraceRequest
 from src.modules.runtime_control_traces.service import create_runtime_control_trace
@@ -46,7 +52,6 @@ from src.shared.enums import (
     RuntimeTraceValidationStatus,
 )
 from src.shared.errors import ValidationError
-
 
 PROMPT_VERSION = "v1"
 
@@ -315,7 +320,7 @@ def _ensure_metadata(session: Session, bundle: _PromptBundle) -> tuple[AgentRegi
         agent_records = session.scalars(
             select(AgentRegistryRecord).where(AgentRegistryRecord.agent_registry_set_id == registry_set.agent_registry_set_id)
         ).all()
-        agent = list(agent_records)[0]
+        agent = next(iter(agent_records))
 
     prompts: dict[str, PromptSchemaRecord] = {}
     missing_sections: list[str] = []
@@ -1050,7 +1055,7 @@ def _run_controlled_sections(
             review_status = HumanReviewStatus.NEEDS_HUMAN_REVIEW
             disposition = RuntimeTraceDisposition.NEEDS_HUMAN_REVIEW
             working_context["_validated_sections"][section] = validated_output
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - provider/runtime failure must fail closed
             raw_output = {"error": str(exc)}
             validated_output = None
             validation_status = RuntimeTraceValidationStatus.FAILED
