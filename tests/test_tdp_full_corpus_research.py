@@ -271,7 +271,7 @@ def test_structured_eis_xml_fields_remain_source_defined_and_historical():
     result = research_full_corpus([doc("notice", "notice", xml)])
     facts = {item["field"]: item for item in result["structured_notice_facts"]}
     assert facts["nmck"]["value"] == 1000000.0
-    assert "2026-10-16" in facts["submission_deadline"]["value"]
+    assert "16.10.2026 10:00:00" in facts["submission_deadline"]["value"]
     assert all(item["requires_human_review"] for item in facts.values())
     assert all(
         item["source_status"] == "ORIGINAL_XML_EXTRACTED_NOT_CURRENT_ATTESTED"
