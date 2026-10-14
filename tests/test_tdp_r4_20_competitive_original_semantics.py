@@ -156,6 +156,15 @@ def test_official_all_twenty_and_llm_original_claims_private_offline(tmp_path):
     assert new["claims_breaching_quote_length_policy"] == 3
     assert new["model_batches_exceeding_claim_count_cap"] == 3
     assert result["all_saved_model_claims_checked"] == 47
+    coverage = result["selected_original_notice_attachment_coverage"]
+    assert coverage["case_count"] == 20
+    assert coverage["notice_attachment_references"] == 96
+    assert coverage["source_shas_attested"] == 96
+    assert coverage["evidence_methods"] == {
+        "OLDER_VERIFIED_TLS_RECHECK": 50,
+        "ADDITIONAL_ORIGINAL_DOWNLOAD": 21,
+        "NEWLY_RETRIEVED_OFFICIAL_SOURCE": 25,
+    }
     reports=result["historical_model_report_deadline_audit"]
     assert reports["saved_reports_verified"]==10
     assert reports["date_conflict_count"]==2
