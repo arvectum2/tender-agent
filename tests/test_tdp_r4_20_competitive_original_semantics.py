@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 from scripts.acceptance.build_r4_competitive_semantic_audit import (
+    _readable_archived_deadline,
     build_review,
     readable_review,
 )
@@ -248,3 +249,11 @@ def test_official_original_document_digest_detects_changed_bytes(tmp_path):
     (folder/filename).write_bytes(body+b"changed")
     with pytest.raises(ValueError,match="source bytes"):
         _local_file(tmp_path,registry,filename,_sha(body),len(body))
+
+
+def test_archived_user_deadlines_are_human_readable_with_original_timezones():
+    assert _readable_archived_deadline("2026-10-19T10:00:00+03:00") == "19.10.2026, 10:00 (МСК)"
+    assert _readable_archived_deadline("2026-10-16T09:00:00+07:00") == "16.10.2026, 09:00 (UTC+07:00)"
+    assert _readable_archived_deadline(None) == "В архиве не подтверждён"
+    with pytest.raises(ValueError,match="timezone"):
+        _readable_archived_deadline("2026-10-19T10:00:00")
