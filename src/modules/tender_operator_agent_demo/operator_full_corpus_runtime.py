@@ -10,11 +10,11 @@ import hashlib
 from collections.abc import Callable
 from typing import Any
 
-from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
-    audit_model_contract_clause_references,
-)
 from src.modules.tender_operator_agent_demo.expert_source_review_packet import (
     build_expert_source_review_packet,
+)
+from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
+    audit_model_contract_clause_references,
 )
 from src.modules.tender_operator_agent_demo.full_corpus_modality_audit import (
     audit_source_modalities,
