@@ -12,6 +12,9 @@ from typing import Any
 from src.modules.tender_operator_agent_demo.full_corpus_clause_review import (
     audit_model_contract_clause_references,
 )
+from src.modules.tender_operator_agent_demo.full_corpus_modality_audit import (
+    audit_source_modalities,
+)
 from src.modules.tender_operator_agent_demo.full_corpus_research import (
     build_research_brief,
     examine_llm_assertions,
@@ -115,6 +118,12 @@ def run_with_full_corpus_research(
             original_documents if isinstance(original_documents, list) else [],
         )
         metadata["source_research_clause_review"] = clause_reviews
+        modality_audit = audit_source_modalities(
+            original_documents if isinstance(original_documents, list) else [],
+            requirements=requirements if isinstance(requirements, dict) else {},
+            risks=risks if isinstance(risks, list) else [],
+        )
+        metadata["source_research_modality_audit"] = modality_audit
         unresolved = [
             item for item in clause_reviews
             if item["status"] != "CLAUSE_LOCATED_NOT_SEMANTICALLY_VERIFIED"
@@ -124,6 +133,8 @@ def run_with_full_corpus_research(
         quality_gate = {
             "status": (
                 "CORPUS_INCOMPLETE" if research["unread_file_ids"]
+                else "CONTRADICTION_REVIEW_REQUIRED"
+                if modality_audit["contradiction_count"]
                 else "SEMANTIC_REVIEW_REQUIRED"
             ),
             "documents_indexed": research["extracted_document_count"],
@@ -134,12 +145,23 @@ def run_with_full_corpus_research(
                 for item in claim_index
             ),
             "ambiguous_or_missing_clause_refs": len(unresolved),
+            "source_modality_contradictions": modality_audit["contradiction_count"],
             "claim_semantics_verified": False,
             "official_revision_current_attested": False,
             "bid_ready": False,
             "manual_review_required": True,
         }
         metadata["source_research_quality_gate"] = quality_gate
+        if modality_audit["contradiction_count"]:
+            limitations = metadata.setdefault("limitations", [])
+            if isinstance(limitations, list):
+                _once(
+                    limitations,
+                    "Обнаружено противоречие выводов LLM обязательным "
+                    "формулировкам первоисточников. Проверить ограничения "
+                    "допуска и изменение условий договора по точным цитатам; "
+                    "форматная валидация модели не отменяет блокировку.",
+                )
         if unresolved:
             limitations = metadata.setdefault("limitations", [])
             if isinstance(limitations, list):
@@ -159,12 +181,14 @@ def run_with_full_corpus_research(
             trace["full_corpus_research"] = research
             trace["source_claim_assessment"] = claim_index
             trace["source_clause_review"] = clause_reviews
+            trace["source_modality_audit"] = modality_audit
             trace["source_research_quality_gate"] = quality_gate
         requirement_payload = outputs.get("requirements")
         if isinstance(requirement_payload, dict):
             requirement_payload["full_corpus_research"] = research
             requirement_payload["source_claim_assessment"] = claim_index
             requirement_payload["source_clause_review"] = clause_reviews
+            requirement_payload["source_modality_audit"] = modality_audit
             requirement_payload["source_research_quality_gate"] = quality_gate
         return outputs
 
