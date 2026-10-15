@@ -29,12 +29,12 @@ remaining:
 - PR CI/review and stack ordering after PR433.
 - Additional independently checked archived cases for broader quality statistics.
 - Owner commercial/legal decisions and production quality measurements remain separate.
-last_verified_commit: 47d66cba564d015a38f9dc492a4a8e112b435c46
+last_verified_commit: b1b87e8554602c66d8a3065f225793cc1652e729
 last_tests: 4055 passed / 238 skipped / 0 failed (153.85s); focused 52 passed; Ruff
-  passed
-resume_instruction: This bounded quality slice is complete. Verify PR CI; do not repeat.
-  Expand the independently verified sample next. Do not infer all-model claim accuracy
-  or commercial readiness from three selected facts.
+  passed; substantive source commit b1b87e85 verified locally
+resume_instruction: Bounded quality slice completed at tested source commit b1b87e85.
+  Check CI on PR436 and its metadata-only head, then expand real independent original-source
+  case sample. Maintain commercial and full legal accuracy NOT_MEASURED.
 execution:
   branch: feature/apr067-grounded-e2e-quality-20261015
   manual_override: true
