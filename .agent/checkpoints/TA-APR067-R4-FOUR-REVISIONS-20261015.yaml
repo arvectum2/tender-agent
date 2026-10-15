@@ -2,48 +2,50 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR067-R4-FOUR-REVISIONS-20261015
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
-goal: Reproduce second unsupported historical model excerpt for 0162200011826003089 with actual local Gemma and official archived
-  44FZ originals, evaluate revisions selection and repair an actual E2E defect if reproduced.
+status: completed
+goal: Reproduce second unsupported historical model excerpt for 0162200011826003089 with actual local Gemma and official archived 44FZ
+  originals, evaluate revisions selection and repair an actual E2E defect if reproduced.
 definition_of_done:
 - Verify original archived ZIP and all five downloaded source binary SHA against original pinned development R4 EIS receipts.
 - Create isolated offline replay with original saved archived versions, reference attachments and true current LLM analysis through
   current endpoint.
-- Keep four notice revisions differentiated from protocol/result XML; ensure chosen archived edition is source-pinned and never
-  represented as live/current EIS.
+- Keep four notice revisions differentiated from protocol/result XML; ensure chosen archived edition is source-pinned and never represented
+  as live/current EIS.
 - Check quotes/report citations and invalid old historical snippet behavior; fail-closed if unsupported.
-- Targeted, adversarial and full relevant regression; record exact commit and CI PR result; do not deploy/submit or require human
-  gold for DEVELOPMENT E2E.
+- Targeted, adversarial and full relevant regression; record exact commit and CI PR result; do not deploy/submit or require human gold
+  for DEVELOPMENT E2E.
 completed:
 - 2026-10-15 verified first-party archived 44FZ case 0162200011826003089 official ZIP SHA 3daf341cee2e26c670ccd1b6101105ce21706497b38cd15989ff9db3a4708ded
   and selected notice v4 XML SHA 6712bf2058e7f7d047d6fb15467b7d173de48e06dbd82fff6295e8f69f6b6b20.
-- 2026-10-15 created OFFLINE development replay with actual EIS ZIP unpacker and 5 original filestore attachments, 17 SHA-pinned
-  source documents, legitimate four archived epNotification versions. SOAP/filestore fully local cached original bytes; blind cases
-  untouched.
-- 2026-10-15 initial real Gemma4 local 4 calls 350.92 sec, 16/17 extracted; ODT price-justification unsupported (not misreported
-  as success), original hashes preserved, archive export409 and NEEDS_REVIEW.
+- 2026-10-15 created OFFLINE development replay with actual EIS ZIP unpacker and 5 original filestore attachments, 17 SHA-pinned source
+  documents, legitimate four archived epNotification versions. SOAP/filestore fully local cached original bytes; blind cases untouched.
+- 2026-10-15 initial real Gemma4 local 4 calls 350.92 sec, 16/17 extracted; ODT price-justification unsupported (not misreported as
+  success), original hashes preserved, archive export409 and NEEDS_REVIEW.
 - 2026-10-15 native ODT support fixed IN DATA PLATFORM separate PR125; real original ODT extracted 3447 chars, three DP HTTP chunks,
   Data Platform 61 documents tests/CI+GitVerse success.
 - 2026-10-15 second actual Gemma4 local 4 calls 150.08sec, 17/17 original document extraction, no fallback, report/history/steps/evidence/read-only
   registry200, archived PDF/DOCX409, all source SHA identical.
-- 2026-10-15 implemented SHA-pinned highest archived notice selection, distinguish 4 original notice revisions from actual LIVE
-  EIS; 3 anchored facts in persisted report; if selected XML changed/duplicated missing cannot downgrade to prior v1 as trusted
-  current source.
+- 2026-10-15 implemented SHA-pinned highest archived notice selection, distinguish 4 original notice revisions from actual LIVE EIS;
+  3 anchored facts in persisted report; if selected XML changed/duplicated missing cannot downgrade to prior v1 as trusted current source.
 - 2026-10-15 prior unsupported literal excerpt quote SHA 78547f12cf481dd2ab1ebd5a507cbf08042eb7fe3064d6b733a559bd99863024 is absent
   from new model HTML; 51 focused regression tests PASS with fake/altered source controls.
-- 2026-10-15 Mac mini full Tender Agent pytest 4104 PASS / 238 SKIP / 0 FAIL,328 known warnings in159.26s; Ruff source tests pass;
-  bounded development E2E accepted under Owner ChatGPT-expert equivalence rule.
-current_stage: source_four_revisions_and_full_17_document_e2e_verified
+- 2026-10-15 Mac mini full Tender Agent pytest 4104 PASS / 238 SKIP / 0 FAIL,328 known warnings in159.26s; Ruff source tests pass; bounded
+  development E2E accepted under Owner ChatGPT-expert equivalence rule.
+- '2026-10-15 Tender Agent PR439 exact-head a241c6bc49118b8e357c4a3d39279ea5617feba0 GitHub CI #3478 run 38756379440 SUCCESS, all 9
+  required jobs, quality make check/make test passed. Code commit 4b6bcceae24a28081953db7ca201016ac56dfe1d; no merge/deploy.'
+current_stage: third_real_offline_eis_gemma_e2e_17_of_17_completed_ci_verified
 remaining:
-- PR exact-head GitHub CI/review for new source selector; stop dedicated DP localhost staging ports when no more replays
-- Cross-repo Data Platform PR125 remains Draft until merge/deploy approval; DP source tests CI verified
-- More independent historical full E2E cases only when needed for workflow stability; production SLO and current EIS GO separate
-last_verified_commit: a22e107b7ad053377310cc32f1c766b81eb4876e
-last_tests: Mac mini full 4104 pass/238 skip/0 fail; source/four-revision focused 51 pass; Ruff pass; Data Platform 61 documents
-  pass, DP substantive CI success; true Gemma4 E2E 17/17 extracted, four calls,150.08 sec.
-resume_instruction: 'APR067 R4 4-revision local E2E code/source reproduction complete. Push new PR stacked after #438, check GitHub
-  CI then mark completed. No need to rerun two Gemma rounds. One ODT extraction is Data Platform PR125 CI green. Real archived
-  v4 original does NOT attest live/current EIS, ETP/GO/bids separate.'
+- 'PR439 stacked review and merge chain #433/#436/#437/#438/#439 only under applicable authority, plus Data Platform PR125 review; no
+  auto-merge or live production source expansion in this task.'
+- Expand real distinct historic offline-source E2E acceptance cases as subsequently admitted; full commercial legal GO and production
+  SLO remain separate.
+last_verified_commit: a241c6bc49118b8e357c4a3d39279ea5617feba0
+last_tests: 'Mac mini 4104 passed,238 skipped,0 failed,328 warnings; focused 51 passed; Ruff pass. Real Gemma four calls second run
+  150.08s,17/17 originals extracted,3 original v4 citations,17 SHA matched, history/report200, archived export409. GitHub exact-head
+  #3478 SUCCESS all 9 jobs. Data Platform PR125 CI+GitVerse success.'
+resume_instruction: This source-grounded third historical DEVELOPMENT E2E is COMPLETE at exact CI-verified code head a241c6bc; do not
+  repeat any Gemma inference or first-party acquisition. For next owner-directed Tender Agent roadmap task read parent .agent/current-task.yaml
+  and resume first admitted unfinished stage. PR439 and DP125 remain Draft; do not imply live EIS participation/legal/business GO.
 execution:
   branch: feature/apr067-r4-four-revisions-replay-20261015
   manual_override: true
