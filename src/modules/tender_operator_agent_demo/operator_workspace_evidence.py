@@ -23,6 +23,28 @@ _FIELDS = dict(EIS_NOTICE_FACT_TAGS)
 _MAX_XML_BYTES = 5 * 1024 * 1024
 _NUMBER = re.compile(r"\d{19}\Z")
 
+# Official 44-FZ getDocsIP archives legitimately contain protocols, placement
+# results and proposal outcomes alongside the notice. They may repeat the same
+# purchaseNumber but MUST NOT be counted as alternative notice revisions.
+_SUPPORTED_44FZ_NOTICE_TYPES = frozenset({
+    "epNotificationEF2020",
+    "epNotificationEZK2020",
+    "epNotificationEOK2020",
+})
+
+
+def _is_notice_xml(root: ET.Element) -> bool:
+    """Select the notice by its top-level EIS document type, not its number alone."""
+    if _tag(root) == "notice":
+        # Narrow legacy fixture of the read-only parser: still validated by
+        # registry, field uniqueness and source file identification.
+        return True
+    if _tag(root) != "export":
+        return False
+    children = list(root)
+    return len(children) == 1 and _tag(children[0]) in _SUPPORTED_44FZ_NOTICE_TYPES
+
+
 
 def _tag(element: ET.Element) -> str:
     return element.tag.rsplit("}", 1)[-1]
@@ -61,6 +83,10 @@ def _matching_notice_xml_candidates(run_id: str, metadata: dict[str, Any]) -> li
         try:
             parsed = ET.fromstring(raw)
         except ET.ParseError:
+            continue
+        if not _is_notice_xml(parsed):
+            # e.g. epProtocolEZK2020Final / fcsPlacementResult, not a second
+            # version of epNotificationEZK2020 with the same registry number.
             continue
         matches.append((parsed, item))
     number = str(

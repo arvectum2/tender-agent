@@ -263,6 +263,7 @@ active_product_roadmap_2026_10_08:
       development_observation_2026_10_15: 'One archived real 44-FZ Gemma E2E: 6/6 saved SHA matches, 6/6 extraction flags, three original XML facts verified in HTML, 138.79 seconds analysis-only. All-claim accuracy, qualified-human gold, rolling production SLO and commercial launch NOT_MEASURED.'
       private_evidence_policy: 'Only one original-source quality measurement in private Mac mini storage; no raw documents, tokens or owner personal data in Git.'
       historical_r4_development_2026_10_15: '20/20 original archived EIS ZIP+matching XML independent SHA; reproduced first-party R4 96/96 selected archived originals; saved-model selected 47 quotes:42 exact,3 layout-only,2 unsupported literals. 2/10 old date conflicts; 8/10 unattested strong blocker decisions. NOT twenty operator E2Es, human legal gold or rolling SLO.'
+      original_r4_gemma_e2e_replay_2026_10_15: 'Separate second archived 44-FZ procurement 0376300000126000193: SHA verified all 8 original files; local Gemma4 12B four calls,358.92sec analysis; archive export409 and NEEDS_REVIEW. Found and fixed genuine protocol/result XML erroneously classified as duplicate notice; now 1 unique epNotification and 3 exact cited facts. Not commercial SLO.'
       legacy_mapping: [ARV-010, ARV-039, ARV-067, ARV-072]
       outcome: 'Product SLO/quality dashboard plus Russian procurement benchmark for LLM/VLM/OCR/embeddings and vertical extraction.'
       why_now: 'Prevents cosmetic model churn and makes quality decisions evidence-based.'
