@@ -14,6 +14,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from scripts.acceptance.audit_r5_official_sources import audit_archive
+from scripts.acceptance.build_r4_official_current_freshness import notice_attachments
 from src.modules.tender_operator_agent_demo.r4_semantic_holdout import (
     forbid_reuse_of_prior_blind_cohorts,
     forbidden_development_sources,
@@ -72,15 +73,30 @@ def prepare_real_holdout(
         original_docs = candidate["documents"]
         if not isinstance(original_docs, list) or not original_docs:
             raise ValueError("Holdout requires at least one original official attachment")
+        inventory = notice_attachments(source_zip, number, audited["highest"]["version"])
+        if not inventory or len(original_docs) != len(inventory):
+            raise ValueError("Incomplete original attachment inventory; every official XML UID required")
+        linked_uids = set()
         shas = []
         for document in original_docs:
             path = _safe_file(source_root, document["relative_path"])
             expected = document["sha256"]
             if not isinstance(expected, str) or SHA.fullmatch(expected) is None:
                 raise ValueError("Candidate original document SHA absent or malformed")
-            if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+            raw_bytes = path.read_bytes()
+            if hashlib.sha256(raw_bytes).hexdigest() != expected:
                 raise ValueError("Original attachment bytes not attested by source receipt")
+            linked = [
+                uid for uid, meta in inventory.items()
+                if path.name == uid + Path(meta["fileName"]).suffix.lower()
+                and int(meta["fileSize"]) == len(raw_bytes)
+            ]
+            if len(linked) != 1 or linked[0] in linked_uids:
+                raise ValueError("Original attachment UID, filename or XML size mismatch")
+            linked_uids.add(linked[0])
             shas.append(expected)
+        if linked_uids != set(inventory):
+            raise ValueError("Incomplete EIS original attachment UID coverage")
         verified.append({
             "registry_number": number,
             "attestation": "VERIFIED_OFFICIAL_GETDOCSIP_XML_AND_BINARY",

@@ -11,6 +11,9 @@ import re
 from pathlib import Path
 
 from src.modules.benchmark_pipeline.contract import canonical_sha256
+from src.modules.tender_operator_agent_demo.r4_discovery_html_parser import (
+    parse_source_cards,
+)
 from src.modules.tender_operator_agent_demo.r4_prospective_sampling import (
     validate_sampling_intent,
 )
@@ -65,13 +68,16 @@ def check_live_discovery_evidence(
         ):
             raise ValueError("Parsed discovery IDs are not bound to original HTML")
         html_numbers = list(dict.fromkeys(NOTICE.findall(content.decode("utf8", errors="replace"))))
+        derived_rows = parse_source_cards(content)
+        parsed_rows = parsed.get("rows")
+        if not isinstance(parsed_rows, list) or parsed_rows != derived_rows:
+            raise ValueError("Parsed tender-card rank/law/number differs from original HTML")
         parsed_numbers = [
-            row.get("registry_number") for row in parsed.get("rows", [])
+            row["registry_number"] for row in derived_rows
+            if row["registry_number"] is not None
         ]
-        if html_numbers != list(dict.fromkeys(parsed_numbers)):
+        if html_numbers != parsed_numbers:
             raise ValueError(
-                "Missing, reordered, duplicated or fabricated discovery identifiers"
+                "Original HTML numbers are not uniquely grounded in 44-ФЗ card order"
             )
-        if len(parsed_numbers) != len(set(parsed_numbers)):
-            raise ValueError("Repeated discovery notice ranks are not source-unique")
     return canonical_sha256(capture_receipt)

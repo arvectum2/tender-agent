@@ -7,6 +7,9 @@ from pathlib import Path
 
 import pytest
 
+from src.modules.tender_operator_agent_demo.r4_discovery_html_parser import (
+    parse_source_cards,
+)
 from src.modules.tender_operator_agent_demo.r4_discovery_snapshot_provenance import (
     check_live_discovery_evidence,
 )
@@ -25,13 +28,20 @@ def fixture(tmp_path: Path):
     notice = ["9000000000000000009", "9000000000000000010"]
     captures, parsed = [], []
     for rank, url in enumerate(KNOWN_PAGES, 1):
-        ids = notice if rank == 1 else []
-        html = ("<html><body>" + " ".join(ids) + "</body></html>").encode()
+        ids = notice if rank == 1 else [notice[0]]
+        cards = "".join(
+            f'<article class="tender-card"><div class="tags"><span class="tag grad">44-ФЗ</span></div>'
+            f'<h3><a href="https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber={no}">'
+            'Source item</a></h3></article>'
+            for no in ids
+        )
+        html = ("<html><body>" + cards + "</body></html>").encode()
         file = tmp_path / f"page{rank}.html"
         file.write_bytes(html)
         digest = hashlib.sha256(html).hexdigest()
         captures.append({
             "url": url, "source_page_rank": rank,
+            "capture_started_at_utc": "2026-10-15T01:00:00+00:00",
             "status": "TLS_SHA_ORIGINAL_CAPTURED_NOT_YET_PARSED",
             "http_status": 200, "tls_context": "STANDARD_CA_CERTIFICATE_VERIFICATION",
             "html_file": file.name, "content_sha256": digest,
@@ -40,10 +50,7 @@ def fixture(tmp_path: Path):
             "url": url, "status": "SOURCE_FETCH_VERIFIED",
             "captured_at_utc": "2026-10-15T01:00:00+00:00",
             "source_capture_sha256": digest,
-            "rows": [
-                {"visible_rank": i + 1, "registry_number": no, "law": "44-ФЗ"}
-                for i, no in enumerate(ids)
-            ],
+            "rows": parse_source_cards(html),
         })
     return {
         "intent": intent,

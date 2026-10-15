@@ -52,11 +52,21 @@ def mock_official_zip(monkeypatch, receipt):
             "highest": {
                 "xml_sha256": receipt[0]["official_xml_sha256"],
                 "notice_type": "epNotificationEF2020",
+                "version": 1,
             },
         }
 
     monkeypatch.setattr(
         "scripts.acceptance.prepare_r4_unseen_semantic_holdout.audit_archive", audit
+    )
+    monkeypatch.setattr(
+        "scripts.acceptance.prepare_r4_unseen_semantic_holdout.notice_attachments",
+        lambda _path, _no, _version: {
+            "primary": {
+                "fileName": "primary.docx",
+                "fileSize": str(len(b"First-party original document")),
+            },
+        },
     )
 
 
@@ -108,3 +118,29 @@ def test_noncompetitive_doc_type_is_rejected(tmp_path, monkeypatch):
     )
     with pytest.raises(ValueError, match="genuinely competitive"):
         run(receipt, tmp_path)
+
+
+
+def test_missing_one_official_original_is_not_a_real_complete_holdout(tmp_path, monkeypatch):
+    receipt = case_files(tmp_path)
+    mock_official_zip(monkeypatch, receipt)
+    (tmp_path / "extra.pdf").write_bytes(b"additional official document")
+    monkeypatch.setattr(
+        "scripts.acceptance.prepare_r4_unseen_semantic_holdout.notice_attachments",
+        lambda _path, _no, _version: {
+            "primary": {"fileName":"primary.docx", "fileSize":str(len(b"First-party original document"))},
+            "secondary": {"fileName":"extra.pdf","fileSize":str(len(b"additional official document"))},
+        },
+    )
+    with pytest.raises(ValueError,match="Incomplete original attachment"):
+        run(receipt,tmp_path)
+    receipt[0]["documents"].append({
+        "relative_path":"extra.pdf",
+        "sha256":hashlib.sha256(b"additional official document").hexdigest(),
+    })
+    with pytest.raises(ValueError,match="UID, filename"):
+        run(receipt,tmp_path)
+    (tmp_path/"secondary.pdf").write_bytes(b"additional official document")
+    receipt[0]["documents"][1]["relative_path"]="secondary.pdf"
+    result = run(receipt, tmp_path)
+    assert result["case_count"] == 1
