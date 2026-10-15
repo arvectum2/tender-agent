@@ -2,236 +2,708 @@ version: 2
 repository: arvectum2/tender-agent
 task_id: TA-ROADMAP-EXEC-20261012
 status: in_progress
-goal: 'Execute owner-ordered Tender Agent product roadmap after TA/DP engineering refactor.'
+goal: Execute owner-ordered Tender Agent product roadmap after TA/DP engineering refactor.
 definition_of_done:
-  - 'APR-03B development E2E: accept an Owner-delegated source-grounded AI expert evaluation instead of human gold for this stage; verify actual workspace workflow and citations; preserve independent legal/commercial approval for later stages.'
-  - 'APR-04: reconcile, verify and safely merge versioned onboarding PR on current main with real-company profile eligibility and protected private data.'
-  - 'B2B discovery: verify authorized public procurement-source access and deliver 15-20 source-grounded IT opportunities before deciding on connector scope.'
-  - 'APR-06/07: reconcile and run official-source commercial/LLM quality benchmark without inventing human-gold or legal GO.'
-  - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
-  - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
+- 'APR-03B development E2E: accept an Owner-delegated source-grounded AI expert evaluation instead of human gold for this stage; verify
+  actual workspace workflow and citations; preserve independent legal/commercial approval for later stages.'
+- 'APR-04: reconcile, verify and safely merge versioned onboarding PR on current main with real-company profile eligibility and protected
+  private data.'
+- 'B2B discovery: verify authorized public procurement-source access and deliver 15-20 source-grounded IT opportunities before deciding
+  on connector scope.'
+- 'APR-06/07: reconcile and run official-source commercial/LLM quality benchmark without inventing human-gold or legal GO.'
+- 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately
+  authorized owner decision.'
+- Final CI, risk review, exact commit and checkpoint status for all completed stages.
 completed:
-  - "2026-10-15 APR067 fourth independent historical EIS development E2E 0151600003226000011: 5 original SHA-pinned files, source-bound official XML docKindInfo CP/MRJ/POD/CAR, Gemma4 4 calls 403.23s,5/5 extracted, 3 original XML citations, archived exports409, NEEDS_REVIEW. AI expert accepted for DEVELOPMENT E2E; current live EIS/bid GO separate."
-  - "2026-10-15 APR067 third historical firstparty 44FZ offline-source Gemma E2E 0162200011826003089: SHA-verified ZIP and 17 originals; four archived notice revisions including original v4, first model run 350.92sec 16/17 extraction due unsupported ODT, fixed Data Platform PR125, second real Gemma4 four calls150.08sec, 17/17 sources extracted, 3 pinned XML citations, historic archive exports 409, no original SHA mutation, old unsupported literal absent, 51 focus PASS/4104 full PASS/238 SKIP. DEVELOPMENT ChatGPT-expert acceptance, not current legal/bid GO."
-  - "2026-10-15 APR067 second real R4 historical E2E on 0376300000126000193: 8/8 original saved SHA and extraction, Gemma4 four calls 358.92 sec, unsupported old literal not repeated; found and fixed notice XML mistaken for protocol/results duplicate, recovered exact original XML subject/deadline/NMCK citations, archived export 409, source model report NEEDS_REVIEW. 4093 full pytest PASS/238 SKIP/0 FAIL, targeted46 PASS Ruff. Draft PR pending; not 20 full E2E nor Owner commercial/legal GO."
-  - "APR067 R4 development source QA 2026-10-15: 20 ZIP and 20 XML verified; original R4 96 attachments verified; 47 model snippets categorized 42 exact,3 formatted,2 unsupported; full 4074 PASS,238 SKIP. Commercial and independent legal gold open."
-  - "2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts 3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured."
-  - "2026-10-15 APR03B DEVELOPMENT E2E ACCEPTED on original archived EIS 0372200172326000015: 6/6 extracted, Gemma4 12B 4 calls/138.79s, 3 HTML citations from original XML, 8/8 source-quality workflow gates, auth401, archived PDF/DOCX409; real original/read-only 4031 full pytest PASS/238 SKIP, Ruff clean. Owner-designated AI expert accepted for dev only; commercial/current-EIS/prod and independent human gold not claimed. Draft PR433 remains unmerged; next APR04 onboarding."
-  - '2026-10-15 new Owner E2E decision: source-grounded ChatGPT assessment accepted as expert for development stage; human legal-gold removed as APR03B blocking prerequisite. New 8-step acceptance gate with 21 new tests, 45 combined focused PASS, authenticated current full LLM E2E still open; roadmap/owner policy updated.'
-  - "2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini exact full 4119 pytest PASS/242 SKIP/0 failed,146.20s, Github three workflows SUCCESS. Selected archival original 96/96 EIS attachment SHA+size, nonempty source texts and first material clause citations; runtime fail-closed when XML lists missing appendix; client report regenerated SHA6e4461f6. Child checkpoint latest02cfe0218c2977f4a82319d6ca5c2f7c886a7872 still in_progress because full material 96-document legal/suitability review/20 signed gold and latest live official EIS revisions not attested. All drafts unmerged."
-  - "2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 GitHub 3/3 exact CI SUCCESS (PR38580994393 push38580983108 push38580983130). Complete selected historical official archive attachment source 96/96 firstparty original SHA:50 prior verified TLS,21 additional files,25 fresh verified TLS. Source-level normalized nonempty text and sampled clause provenance added; production pipeline now fail-closed if ANY official listed attachment absent, even if contract+TZ exist. Independent 14 model-run 47 quotes (42 exact,3 whitespace,2 inaccurate),2 persisted stale deadlines/8 unapproved hard-blocker recommendations; human legal-gold0/20. Local exact head 11 original target tests PASS/Ruff and client report reproducibly identical SHA6e4461f6. Mac mini full pytest exact head PID69735 still running, CI checkpoint metadata-only branch78e9fcf0. Draft PR432 unmerged, no owner/ETP/prod actions."
-  - "2026-10-14 active TA-R4-20-COMPETITIVE-SEMANTIC-20261014 draft PR432: 20 verified historical competitive +4 noncompetitive negative, firstparty 21 official ZIP/XML verified. Independently reconciled all 96 original documents linked in selected archived EIS notice editions: 50 older verified-TLS receipts of72, 21 previously recovered new competitors,25 FRESH firstparty verified-TLS official binary retrieval Oct14 with SHA+size exact, hashes privately stored. 47 saved LLM cited claims from 14 runs:42 exact/3 layout spacing/2 unsupported literal wording;3 overlong quotes,3 batches > claim cap,2 stale historic report deadlines,8 unapproved old model hard blocker decisions. Client report docs/acceptance/TDP_R4_20_TRUE_COMPETITIVE_INDEPENDENT_CLIENT_REVIEW_2026-10-14.md no technical messages and machine source proof JSON published in draft PR432. Mac mini exact code/report head780ebd1139e05cb1e6b0edc6a55a355bd9474948 FULL 4106 passed/242 skipped/0 fails 149.74s; Ruff and ten focused PASS. Latest checkpoint branch df06e432 GitHub full PR/push CI queued/in_progress, quick push SUCCESS, all drafts unmerged. Full 96-document semantic/legal expert signoffs0/20, current EIS revision, right to bid/Owner GO still OPEN."
-  - '2026-10-14 independent R4 cohort source-type correction: 17 old ZIP archive cases are 16 official competitive notices plus one noncompetitive special single supplier article93 part12 (0349500000226000003), NOT 17 competitive. Read-only private source manifest discovered twenty actual historically competitive (16 original plus4 verified new ZIP), four negative source controls (three official market-price requests plus one special art93), one separate reserve; methods 11 auctions,7 quotations,2 open competitions. Independently rehashed 21 official ZIP and exact selected XML bytes/type, 21/21 ZIP SHA, 21/21 original XML SHA and type matching. Former 17-case child blocked/superseded metadata2cf08bd, new canonical child TA-R4-20-COMPETITIVE-SEMANTIC-20261014 branch research/r4-20-competitive-semantic-20261014 checkpoint9ae1ae77328823bd776929dd68af054dad793072 in_progress. Historical source correctness only; zero full legal/Owner human signed gold.'
-  - '2026-10-14 bounded child TA-NODATA-INDEPENDENT-EXPERT-AUDIT-20261014 COMPLETED: source branch PR431 exact code+checkpoint head ebd12584942790d51c36ce759787133b50e13a22 GitHub CI 3/3 SUCCESS (9 PR +9 push +1 quick jobs), Mac mini substantive fcb568d1 full4100 pytest PASS/238 SKIP/0 FAIL. Three old SOAP no_data are 3 official EIS price-information-only requests (9 prior HTML first-party proofs +3 fresh TLS card source SHA exact + four official downloaded DOC/DOCX/PDF originals). Original source legal risks identified, 20-case independent source report in client-safe prose with separate machine proof, native verified TLS official registry number-only lookup and safe no-bid guard. Child status completed branch metadata-only commit7f585a21c621078553d8adfd15070526df95db54, all PRs draft unmerged. Human/legal/current full gold 0/20 remains OPEN.'
-  - '2026-10-14 independent critical R4 price source child draft PR431: original official EIS card HTML 9/9 hash exact, all three prior SOAP no_data confirmed NONCOMPETITIVE official requests for price information, not absent records; fresh official TLS primary cards3/3 match original SHA; source documents 4/4 first-party DOC/DOCX/PDF with SHA and critical clauses inspected. Client-ready 20-case expert source report and separate proof JSON produced with 17 historical competitive and three price requests (no automatic legal GO, signed R4 0/20). New upstream number-only SOAP no_data trusted official EIS category fallback, pre-run fail-closed; client report formatting no transport codes while preserving original HTML AST. Exact substantive source fcb568d14252b353baaf449f5b0c5332786ed49d Mac mini FULL 4100 pytest PASS/238 SKIP/0 FAIL; 77+69 focused PASS/Ruff. GitHub PR431 latest child checkpoint ebd12584942790d51c36ce759787133b50e13a22 exact CI pending (PR and push long running, one quick green); all stacked drafts unmerged.'
-  - '2026-10-14 PR429 machine source matrix original exact head ed669ba8aa53b59681ba3216d025d0ff02a59b09 GitHub pull_request+two push workflow 3/3 SUCCESS; previous Mac mini full 4072 PASS/238 SKIP, 13 focused PASS/Ruff, child technical task completion pending branch checkpoint. Critical new independent source investigation: all three old SOAP no_data actually official EIS price information inquiries, 9/9 official EIS HTTP200 search+card+docs archived with SHA receipts from Oct12, URLs /epz/pricereq/, all have official attached-file listings. Existing docs/acceptance/TDP_OFFICIAL_EIS_PRICE_REQUEST_REGISTRY_2026-10-12.md already says these are MARKET_RESEARCH_ONLY, while the later 20-case matrix labels them NO_DATA without type overlay. This is a reconciliation/report-quality bug, not true absence of procurement.'
-  - '2026-10-14 TA-R4-20-SOURCE-COVERAGE-20261014 PR429 report/code b6c8643e9cb439b099f82cc041577157a925802b FULL Mac mini test 4072 PASS/238 SKIP/0 FAIL 166.75s, targeted13 PASS/Ruff/diff. Historical R4 20-case source audit plus later 72/72 verified-TLS source recovery pinned private manifests, SHA/byte size/public original join; four published first-party JSON/CSV source files regenerate byte-identical. Human R4 accepted0/20; current live EIS and GO not attested. PR429 latest child checkpoint ed669ba8aa53b59681ba3216d025d0ff02a59b09 exact GitHub CI queued, stacked draft unmerged.'
-  - '2026-10-14 active successor TA-R4-20-SOURCE-COVERAGE-20261014 draft PR429: systematic matrix of all 20 R4 EIS cases using first-party R5 20-case, 168-file SHA, persisted fact and unsigned human review CSV; official archived ZIP17/20, no_data3; 96 archived XML original confirmed; 3 stale relative to last archived edition; 2 historic persisted report deadline mismatches; full 20 machine-only bid_ready false/human0/20. Resolved time-ordered evidence: later Oct12 pinned private manifests show verified-TLS refetch 72/72 original binary attachments across 13 cases totaling 28,519,849 bytes; independent offline replay exact reg/file/SHA/byte-size joins 72/72, no private UID or raw original published. Four deterministic source JSON/CSV assets and readable 20-case source-quality report committed. Tested PR429 code b6c8643e9cb439b099f82cc041577157a925802b Mac mini 13 focused pytest PASS/Ruff/diff, 4 generated files byte-identical. Full Mac mini PID22958 + latest GitHub PR429 exact CI pending. Prior PR428 original bd40d59f 3/3 CI green, completed child. All PRs drafts/unmerged.'
-  - '2026-10-14 PR428 bounded source-expert packet exact original head bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 GitHub 3/3 CI SUCCESS, Mac mini full4059 PASS/238 SKIP, 58 focused/Ruff; child checkpoint marked completed after CI green in predecessor branch. R4 report remains machine-only, human 0/20.'
-  - '2026-10-14 systemic source-research full chain stacked draft PRs426→427→428: source-index first PR426 original full CI 3/3 SUCCESS and Mac mini4042 PASS; source-proof PR427 original head026355cedd9341d10f934e238123803f412ef4fe full CI 3/3 SUCCESS and Mac mini4053 PASS/238 SKIP, both bounded child checkpoints COMPLETED, unmerged. Active third stage PR428 expert source prefill uses EXISTING R4 20-case gold protocol and ARV-001 gate, 16 human rubric fields, exact SHA source receipts and typed claims, never fake human approval. On saved archive Museum 6/6 documents, 15/15 source proof, 1 SMP-only LLM contradiction, 0 reviewer signoffs, ARV001 NOT_READY and bid_ready false. Full Mac mini current code615d2bd6cc246b8d3e3e5eb7c189b6c061dd0c5d 4059 PASS/238 SKIP/0 FAIL and focused58 PASS/Ruff/diff; PR428 current checkpoint bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 exact GitHub CI pending. No production/ETP/merge.'
-  - '2026-10-14 PR427 source-proof final source9f5d5c58b88c4261db2b9d1210c0a88a9f60af26: after strengthening no-fabricated-PDF-page/cell mapping with externally pinned raw SHA and registered DP coordinate maps, isolated Mac mini full 4053 pytest PASS/238 SKIP/0 FAIL/328 warnings 152.00secs, 75 focused PASS/Ruff/diff PASS. Historical EIS XML museum 6/6 original files and 15 exact SHA-bound quote spans validated; first actual Gemma model omitted NMCK/deadline while source-v2 matched historical originals 2/2. Typed EIS checks and source span proof persisted into actual operator report quality gate, 223/B2B unsupported official EIS values remain UNKNOWN. Draft PR427 latest checkpoint branch head026355cedd9341d10f934e238123803f412ef4fe full Github CI pending, no merger/deployment.'
-  - '2026-10-14 full-corpus source research bounded PR426 technical stage now complete: GitHub original source head114065a897d80573cdaa8e72b71ef8d8847ab8f3 3/3 SUCCESS, completed child checkpoint branch fd961c064b5863a860ccbdab50fa2fc9299a9046, full Mac mini 4042 PASS/238 SKIP/Ruff; no drafts merged.'
-  - '2026-10-14 advanced successor draft stacked PR427 source claim proof stage: source-exact Unicode char offsets and full/quote SHA, no invented original PDF page/sheet locator, typed historical EIS NMCK and deadline model claim reconciliation, report quality gate false values/omissions. Museum six originals 6/6, 15 exact source snippets, first Gemma answer missing NMCK/deadline and source-v2 2/2 historical XML matches, 223-FZ/B2B unknown (not fabricated 44-FZ source). Mac mini 100 focused tests/Ruff PASS and FULL 4053 PASS/238 SKIP/0 failed in 153.43s at implementation31b20fb014c7749959f2b78be2c74e0bcc7358e9. PR427 docs/checkpoint head eb35a1cc98b6284793b7c9092c86971536435770 exact GitHub CI still pending, draft unmerged, no Owner legal GO.'
-  - '2026-10-14 FULL Tender Agent Mac mini regression of systemic source-research PR426 implementation 3d5016a4c5824f19c760e22ebe504edf8957f36f after proper Python venv and PostgreSQL16 client PATH: 4042 PASS, 238 SKIP, 0 FAIL, 328 warnings, 167.34s. Wrong PATH produced two isolated environment-only failures; both tests separately rerun 2/2 PASS then full suite 4042 PASS. Separate 112 new/related pytest PASS/Ruff PASS. All original six Museum archived normalized files indexed across 15 topics; independent source-modality negative verifier detects actual model claims 2 contradictions old/1 v2, bid_ready false. Source SHA mismatches and duplicate ID rejected in both retrieval and secondary verifier. All details source-grounded in draft PR426, latest checkpoint 114065a897d80573cdaa8e72b71ef8d8847ab8f3. Exact full GitHub CI still pending; PR not merged.'
-  - '2026-10-14 systemic Tender Agent APR03B full-corpus research v1 PR426 draft stacked on PR425: all six archived EIS Museum original normalized texts 6/6 indexed across roles/15 research topics, full normalized SHA and quote exact offsets, registry-safe EIS XML NMCK1m/date16Oct10, clause number span/citation audit 236 numbered original clauses; no meaning verified from a simple hit. Versioned LLM schemas permit empty unsupported criteria/risks, local Gemma4 source-v2 186s/2 sections 2/2 schema PASS, improved price/deadline/official scoring and §3.8 price interpretation but SMP-only still false preference. Independent source-modality negative audit on real old/v2 answers catches 2→1 source contradictions with exact evidence, holds source_research_quality_gate bid_ready false. Hash mismatch/raw missing/duplicated source IDs fail closed. Last implementation source 07bc5e40dd86972caaf3ae13c2f91866ecb27916 Mac mini 111 focused pytest PASS/Ruff/diff and six-source replay PASS; documented docs/architecture/TENDER_FULL_CORPUS_RESEARCH_V1_2026-10-14.md. Latest phase1 child checkpoint PR426 head 628b0e200e30db0538776fff93438281d3dfcf30 exact CI pending. This is foundational, NOT generalized legal semantic accuracy and NOT APR03B Owner acceptance.'
-  - '2026-10-14 PR425 previous independent Gemma factual audit source 65435380d2228d2fcfcb57f595986b4f92daf903 exact GitHub 3/3 SUCCESS; child TA-APR03B-INDEPENDENT-LLM-CLAIMS-20261014 marked COMPLETED branch head 3f93725032804bf7a181a0b78ab1a7715d66d054. Failure mode proved: 4/4 schema validation yet SMP-only softened, §3.8 ±10% erroneously claimed fixed price, missing official NMCK/deadline; prior context-window fix insufficient.'
-  - '2026-10-14 systemic successor TA-FULL-CORPUS-RESEARCH-20261014 stage1 implementation draft stacked PR426 head 216f2a98bc2cc9db57564e06379242383184bebe. Full original-document corpus across ALL attachment roles, 15 research questions, char-offset+document/quote SHA, explicit unread/oversize/revision ambiguity, source-defined EIS XML registry-guarded NMCK/deadline, bounded multi-topic LLM evidence brief, candidate claim provenance kept unverified, preserve frozen R3 AST via injection. Mac mini 84 focused pytest PASS/Ruff/diff PASS. Real Museum six original normalized docs 6/6, all 15 topics found and key original terms checked, no human legal approval. Source-only design docs/architecture/TENDER_FULL_CORPUS_RESEARCH_V1_2026-10-14.md; exact GitHub CI pending. Existing protected previews untouched.'
-  - '2026-10-14 independent Gemma4 model-output audit on SHA-pinned archived Museum Bread EIS originals (QA branch PR425): initial 4/4 schema PASSED but source-meaning FAIL. Original context omitted ticket sales, visual accessibility, rights and security. Context selector now prioritizes explicit distinct obligations; Mac mini 60 focused pytest PASS/Ruff/source-real coverage PASS, code69b1ad4b. Patched real localhost Gemma4 run 313.2s 4/4 schema PASS and regained tickets/accessibility in output. However persistent SMP-only misclassified as mere preference, bid evaluation criteria unsupported, 1m NMCK and 16Oct10 deadline missing, and new false §3.8 fixed-price claim where contract allows ±10% modification. Full report docs/acceptance/APR03B_INDEPENDENT_GEMMA_CLAIM_AUDIT_2026-10-14.md in draft PR425, head 65435380d2228d2fcfcb57f595986b4f92daf903 CI in progress. No real legal GO.'
-  - '2026-10-14 PR422 report-only citation trust guard, latest checkpoint head e6e8dbfd14c1957ecca2d8d385cd368b1d9df387 exact GitHub 3/3 CI SUCCESS; child completed, Mac mini 53 focused pytest/Ruff/Node PASS.'
-  - '2026-10-14 PR423 localhost Gemma4 synthetic four-section QA head ebc4f54104792f6da2ea3a48138e1e1c5d8a84f4 exact GitHub 3/3 CI SUCCESS, child completed; real controlled local provider four JSON validation traces PASSED, all human review required, 69.4s.'
-  - '2026-10-14 PR424 source-text QA child completed at 33a32e3ddfeeca910ebec15e515f2e50c97569bf (draft, CI queued): six preserved archived original Museum EIS files SHA-multiset 5bf958ce and six DP-normalized outputs SHA-multiset 882f341b independently match copied source; first full app attempt failed all six local DP extractions and was explicitly excluded. Separate local Gemma4 model on preserved original notice/spec/contract selected contexts (8.2%,20.7%,8.7% only) produced 4/4 validation PASSED, all needs_human_review, no bid decision, 312.3s. No real legal/semantic/active-ETP acceptance.'
-  - '2026-10-14 PR422 APR03B report citation trust implementation exact tested GitHub CI f4a30654609f17b3fc4742af760ac03e93185028 PR/push 3/3 SUCCESS; child status completed at branch commit e6e8dbfd14c1957ecca2d8d385cd368b1d9df387, documentation update itself CI running. Local 53 pytest PASS/Ruff/Node. Report status never grounds legal risk on source_ref fields alone.'
-  - '2026-10-14 offline first-party Museum Bread saved 6 original binary inputs SHA set 5bf958cea4ad3b45af57fb0ea02c20cf814f68e9541abeaed443b4aa28217b4f and preserved 6 original DP extracted text artifacts SHA set 882f341b8adc8d47c7e69c64f749dff30c665d2a1d3a0b3e3bb66a5fe238ff75 verified identical in source QA container and isolated /tmp clone. First local whole-app re-analysis used Gemma4 four validated sections but 6/6 document extraction failed due host DP endpoint unreachability; not accepted as source-content analysis. New controlled model replay on SHA-pinned original extracted texts started PID22751.'
-  - '2026-10-14 bounded TA-APR03B-OFFLINE-LLM-INTEGRATION-20261014 COMPLETED, documentation-only draft PR423 head ebc4f54104792f6da2ea3a48138e1e1c5d8a84f4. Actual localhost Gemma4 12B OpenAI-compatible controlled four-section synthetic run mode llm_tender_operator_provider, 4 runtime_control_traces 4/4 validation PASSED, each human_review needs_human_review, bid_decision None, elapsed 69.4 sec; no model download, external API, private original EIS disclosure or production change.'
-  - '2026-10-14 APR03B report-citation trust UI fix source 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb: 53 Mac mini focused pytest PASS, Ruff PASS, node syntax PASS, git diff check PASS. Draft PR422 head f4a30654609f17b3fc4742af760ac03e93185028; GitHub all jobs except full quality SUCCESS; quality still IN_PROGRESS, child in_progress.'
-  - '2026-10-14 independent localhost Gemma4 12B at 127.0.0.1:8081/health and /v1/models verified, model alias arvectum-gemma4-12b-it-qat-q4_0; actual Tender Agent _OpenAICompatibleJSONProvider.generate with synthetic fixture returns expected verified=false/can_bid=false. No downloads, no cloud API, no bid, temporary SQLite four-section synthetic smoke launched in independent child.'
-  - '2026-10-14 PR420 exact tested source e65aedf15b502087d570c840a9a9772d1f1197b5 GitHub pull_request38471828970 and pushes38471822456/38471822467 all 3/3 SUCCESS; child TA-B2B-PARENT-LOT-DEDUPE-20261014 marked completed on branch commit f3d10c7dd9f60b65d152af58ba263a145545a9ab; dual-source parent/lot dedupe and Mac mini 57 local tests PASS. PR421 QA documentation head 8777a8ee93f4da3044324e4a727e0e2c4cc6cde5 GitHub pull_request38473329432/push38473324020/push38473323988 all SUCCESS, child already completed. Owner gates still open.'
-  - '2026-10-14 bounded TA-APR03B-CURRENT-MAIN-PREVIEW-20261014 technical QA completed, draft PR421 head 8777a8ee93f4da3044324e4a727e0e2c4cc6cde5. Private Mac mini current-main image cc9efe6b, SHA7950d3f..., separate 127.0.0.1:18087 with RO root and five RO mounts, old 18083 preserved. Real saved Museum Bread EIS run/evidence/report authenticated200, unauth401, archived PDF/DOCX409 each; analysis_mode=fallback_deterministic_adapter. 50 focused pytest PASS, Ruff/Node PASS, exact PR421 GitHub CI queued. Owner browser/semantic/full LLM still OPEN.'
-  - '2026-10-14 independent original B2B Center parent #4632682 direct no-proxy HTTP200/64714-byte/SHA4af001503f07, source prequalification active and deadline Oct14 16:00 MSK; original child #4632699 SHA01edb692, source-confirmed lot 1 of same parent. Both SHA-pinned real bytes replayed through H1-only parser to the SAME b2b-center:4632682 key with bid_ready false. Follow-up PR420 code e65aedf15b502087d570c840a9a9772d1f1197b5 57 focused pytest PASS, Ruff PASS, dual-original replay PASS, no new unique qualified lead; CI pending.'
-  - '2026-10-14 PR420 source integrity improved after original-page audit: H1-only parent/lot identity prevents sidebar cross-links from asserting procedure identity. Mac mini tested 91818451e62a7de9c4fff05fb705a89d5cd19266: 56 focused pytest PASS, Ruff PASS, real original #4632699 raw-HTML SHA replay PASS, non-counted same parent #4632682. Draft PR420 exact GitHub CI pending.'
-  - '2026-10-14 bounded new B2B public-source discovery #4632699 from Russian Mac mini (HTTP200/SHA01edb692...) proved original lot 1 of already-counted parent prequalification #4632682; #4616411 archive and #4638345 specialized nuclear SAKOR price monitoring excluded. New pure SHA-bound parent/lot dedupe module + original-source regressions. Mac mini code 72436c8dbaee3ab19dddd5002c281b530f88495e 55 focused pytest PASS/Ruff/actual original bytes replay PASS. Draft stacked PR420 at 36519ccfe7ca04fc445a62206b033d2293d511ea, exact PR/push GitHub CI not yet verified; no new qualified leads, 11 historical distinct procedure baseline unchanged.'
-  - '2026-10-14 PR419 source-card URL gate draft exact head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f GitHub PR38462374923/push38462366947/push38462366807 3/3 SUCCESS; Mac mini code efc461958cbf3604b62551a1879e02a8d60325e1 43 pytest PASS/Ruff PASS; child completed. PR418 updated checkpoint head 36e49832860b3d3327ce58bed7d35aaeda38d207 3/3 CI SUCCESS. All drafts remain unmerged.'
-  - '2026-10-13 PR418 source-bound secondary-only Zvuk/Workspace audit code 090ec838 Mac mini 33 pytest PASS/Ruff PASS, exact head 587a755abd26f8854121b7c0259b535ae1f2116c PR38460471608/push38460463687/push38460463649 all SUCCESS; child marked completed, no confirmed Sberbank-AST exact original tender, 15-20 live qualified still OPEN.'
-  - '2026-10-13 new bounded successor TA-B2B-EXACT-CARD-PATH-20261013: original Workspace/B2B-Center full card URL patterns, not general catalogs; new regression tests Mac mini isolated 43 pytest PASS/Ruff PASS, code efc461958cbf3604b62551a1879e02a8d60325e1. Draft stacked PR419 head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f, exact GitHub CI queued, child in_progress.'
-  - '2026-10-13 PR417 exact source 476aaa24f46238d2a9c990492e1077a138aecbc2 full GitHub PR38455956035 and pushes38455950242/38455950124 SUCCESS, child completed at 4a0b5c09. New PR418 original-Sberbank Zvuk lead source check: direct RU/no-proxy official Sberbank homepage 200 but exact SBR028-2610130033 original tender not verified; secondary Kontur claimed 12.2m RUB and Oct21 deadline only, direct aggregator 403. Workspace current original index 200, new listings 19026 and 19027 not promoted to suitable software opportunities. Source code 196a866 local 33 pytest PASS/Ruff PASS, PR418 exact checkpoint head 59e7294 GitHub CI queued. B2B 15-20 current qualified goal OPEN; no ETP, buyer contact, login or paid data.'
-  - '2026-10-13 PR416 completed exact source fc24201c737e29c6d89e0587fa5d758c1e770785 GitHub 3/3 PR/push SUCCESS, 67 Mac mini focused PASS/Ruff PASS, child checkpoint 8c53d2d3 COMPLETED; APR05/06 commercial/human gates still OPEN. New B2B read-only source discovery PR417 draft stacked on PR399: direct Mac mini official Workspace #19023 no-proxy HTTPS200 on Oct13 22:30:24 MSK, 61868-byte HTML SHA c94e9d7..., legal entity organizer, public open status, Oct20 date-only deadline, 100-400k RUB, prior Aspro examples required and unverified => FIT_CONDITIONAL not bid ready. Historic source-attested pool 10+1=11 distinct, NOT 11 currently actionable; INK SZ-356-26 and SZ-371-26 conflicting aggregator deadlines flagged REVIEW_REQUIRED, Fabrikant3502252 price monitoring not counted. 29 local pytest PASS/Ruff PASS/JSON, PR417 source checkpoint 476aaa24f46238d2a9c990492e1077a138aecbc2 GitHub CI queued. 15-20 CURRENT qualified B2B gate remains OPEN.'
-  - '2026-10-13 PR416 source-bound SaaS HTTP acceptance exact implementation/doc head fc24201c737e29c6d89e0587fa5d758c1e770785 GitHub pull_request38453272162 and pushes38453265878/38453266119 all SUCCESS; child TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013 COMPLETED checkpoint 8c53d2d3df2ff412b9091d242bc902d6d14c47d9. Mac mini 67 focused pytest PASS/Ruff PASS incl private original 44-FZ 1C ZIP/PDF HTTP GET SaaS qualified source weights60/40/5/95 NOT_ASSESSED, unauth401, other tenant404, viewer403/private report redaction, temp PDF tamper refused; no real company tenant/production/browser usage. PR416 and prior stacked PRs DRAFT/unmerged. All APR05/06 owner-human gates still OPEN.'
-  - '2026-10-13 bounded APR05/06 authenticated original EIS HTTP QA child TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013 active on feature/saas-source-eis-api-acceptance-20261013, draft stacked PR416 on PR415; source/current checkpoint head fc24201c737e29c6d89e0587fa5d758c1e770785. Isolated SaaS TestClient real Bearer owner 200 original 60/40/5/95 NOT_ASSESSED, no-auth 401, second tenant 404, viewer qualification403/report private redacted, temporary PDF tamper => unavailable. Mac mini 67 focused pytest PASS including exact private 1C EIS v2 ZIP/PDF + synthetic CI fixture, Ruff PASS, git diff clean, no live tenant. PR416 exact GitHub PR38453272162/push38453266119/push38453265878 queued/in progress. No ARR/APR05/06/07 owner/human completion claim, no production/ETP.'
-  - '2026-10-13 PR415 exact verified source 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub PR38448017188 and pushes38448007346/38448007308 all SUCCESS; child TA-QUALIFICATION-REAL-RUN-REPLAY-20261013 marked completed checkpoint d1c2a074107fc2fc6d6ab8a89b010d0d14a932fd. Local original 1C 44-FZ v2 genuine EIS ZIP/PDF integrated report NOT_ASSESSED at 60/40/5/95 and temp one-byte tamper rejection; 58 focused pytest and Ruff PASS. Canonical MASTER_ROADMAP overlay reconciled in main commit 4f59ed4d958af56fad551cc07e39ef27c5586a41: 135 checkboxes, 59 done/76 unchecked; current APR03 code PR251 merged, APR04 PR252 merged, APR05 PR253 merged (none business/production accepted), ARV066 confirmed merged; historical legacy entries intentionally preserved. Remaining admitted P0 gates APR03/03B/04/05/06/07 and optional read-only B2B 15-20 original-card sourcing; no protected actions authorized.'
-  - '2026-10-13 PR414 original DOCX/PDF tenant-run routing exact head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 GitHub PR38445274161 and pushes38445262922/38445262896 all SUCCESS, child completed at eb5937af4a1fd7620a5e96324fbbc3b2c023be13. New research DRAFT PR415 real original 44-FZ 1C ZIP+PDF through actual integrated assess_owned_run_qualification using temporary source-bound run: price60/qualification40 nested contracts5/specialists95, competitive NOT_ASSESSED, original EIS ZIP/PDF SHA verified and temp copy bit-flip => ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED, no tenant DB or production login. Reproducible read-only CLI+tests; Mac mini 58 pytest PASS, Ruff PASS, real-source replay PASS code cecf94c, docs/roadmap+child source 054c5e21; full GitHub PR415 CI pending. No ETP, signatures, payments, production SaaS or watchdog.'
-  - '2026-10-13 PR413 original 44-FZ 1C v2 PDF source head c9cafab all full GitHub PR38441925371 and pushes38441916713/38441916714 SUCCESS, child completed checkpoint 149c8766768fdd70dbbafe9037a228b563e07593. New stacked DRAFT PR414 feature/qualification-multiformat-run-routing-20261013 on PR413: authenticated tenant-run SaaS report now preserves CZN DOCX source-first owner reference scoring while only missing supported DOCX tries at-download source-sha/latest UID/XML original composite 44-FZ PDF observation. 1C 60/40 nested contract5/specialist95 => NOT_ASSESSED, not false zero-contract NO_GO; tamper/old SHA/wrong mode/multiple file => fail-closed. Mac mini source head 5ffda3c 112 focused PASS/Ruff and Node JS PASS; exact PR414 latest checkpoint 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 full GitHub CI pending. PRs all drafts, SaaS off, no production or ETP.'
-  - '2026-10-13 PR413 original 44-FZ 1C EOK2020 v2 PDF composite score observer exact source head c9cafab33abece6f56be08687445d1c233b0b291 all GitHub PR38441925371 and pushes38441916713/38441916714 SUCCESS; child checkpoint COMPLETED at 149c8766768fdd70dbbafe9037a228b563e07593. 81 Mac mini targeted PASS/Ruff PASS + private original 44-FZ SOAP+PDF replay 60% price/40% qualification nested 5% completed matching contracts and 95% specialists. Commercial NOT_ASSESSED, not false owner-zero NO_GO. All PRs 405/407/408/409/410/411/412/413 draft, production SaaS disabled, no paid APIs/ETP/watchdog.'
-  - '2026-10-13 PR412 original RI223 223-FZ 40/60 source observer exact head 50f3a19a069333b1777858b9bd3c53da51230291: GitHub PR38438694970 and both push38438686614/38438686626 SUCCESS; child marked COMPLETED checkpoint 694c731bc027e3fba6f57dbb00f54b347a412539. Fresh official Russian-IP/no-proxy EIS EOK2020 region Moscow Oct12 getDocsIP discovery: 29 unique EOK notices, regional ZIP sha783279d0; exact-number 44-FZ 0173300009226000009 separate SOAP ZIP SHA655a3014, latest XML v2 SHA c6805b5f, original 341407-byte linked evaluation PDF sha6b0eca79 UID 01A0F69F..., cached privately on Mac mini. Primary PDF 60% PRICE/40% QUALIFICATION, only 5% within qualification completed relevant 1C contracts, 95% qualified specialists; new source-verified read-only PR413 draft, local 81 pytest PASS/Ruff PASS and actual SOAP/PDF replay PASS, outcome NOT_ASSESSED not false owner-zero NO_GO. Latest PR413 child checkpoint c9cafab33abece6f56be08687445d1c233b0b291, full exact GitHub CI queued. Production SaaS/ETP/signatures/payment/watchdog untouched.'
-  - '2026-10-13 PR411 bounded original 44-FZ archive audit exact head a9fdb20a9efe7459ac480cebee18e33cadffe3cb three full PR/push GitHub workflows SUCCESS; child completed checkpoint 15d592846219e1a3ded748c798c87184a4df2fbd. New independent original RI223 223-FZ source #32616445795 found on authorized Mac mini outside earlier 44-FZ archive: SOAP ZIP SHA 65004d53..., original RAR SHA 36ef971b..., original 10-page evaluation PDF SHA a44d9573... from exact EIS notice UID E8D01839...; PDF explicitly price40% nonprice60% and suggested nested reputation20/financial20/qualification60 with conditional wording. New separate source-bound observer + offline replay PR412 draft stacked on PR411 at source 79dc168, 103 focused Mac mini pytest PASS/Ruff PASS, exact private originals confirmed and output NOT_ASSESSED (NOT CZN-style NO_GO), GitHub latest head checkpoint 50f3a19 CI queued. No production/legal signature/ETP actions.'
-  - '2026-10-13 PR410 owner reference-list editor exact verified source head 8da48571d9d50b5345b8373b7385ef7d0e5c129e: GitHub PR38433181463 + push38433171288 + push38433171386 all SUCCESS, local 77 PASS/8 SKIP Ruff/Node PASS. Child TA-QUALIFICATION-REFERENCE-EDITOR-20261013 status COMPLETED checkpoint 66f4f2919d4aab676c95dc631d220546f14271f2. Owner/admin can read and append immutable signed-act references with version-concurrency 409, confirmed COMPLETE vs PARTIAL vs UNKNOWN; no actual Arvectum tenant seeded, SaaS off. All PRs 405/407/408/409/410 still draft, owner/human acceptance and SLO open.'
-  - '2026-10-13 PR409 final exact head 4c0fdeb all GitHub PR38426317250 and both push38426307139/38426307140 SUCCESS; child TA-QUALIFICATION-RUN-ORCHESTRATION-20261013 marked COMPLETED at 3e91c275. Next stacked DRAFT PR410 feature/qualification-reference-editor-20261013: owner/admin /saas UI typed contract references, explicit owner COMPLETE/PARTIAL/UNKNOWN, signed final act document refs, optimistic expected_version -> HTTP409 on stale concurrent writes, no tenant ID supplied. Mac mini 77 focused pytest PASS/8 SKIP + Ruff/Node JS PASS code head e985a11, docs/roadmap PR head 0ab41a29, checkpoint head 8da48571; exact GitHub full CI pending. No live tenant writes or SaaS activation, all drafts unmerged, human gold/production SLO gates open.'
-  - '2026-10-13 PR408 official source scoring extractor exact-head GitHub PR38421310979 and push38421294605/38421294641 all SUCCESS, child checkpoint COMPLETED. New PR409 stacked on PR408: EIS getDocsIP intake pins SOAP archive SHA256 at download, XML attachment downloader pins actual DOCX SHA256; tenant Bearer owned_run automatic current-original EIS UID/name/size/file digest scoring and reference-list recommendation appear in SaaS /api/saas/runs/{run_id}/report and /qualification and /saas UI. Viewer references redacted; missing/old original receipt => NOT_ASSESSED. Actual CZN v4 local run simulation with private original SOAP ZIP and scoring DOCX, owner zero => 70% qualification /30% price and competitive NO_GO not legal. Isolated Mac mini 166 focused PASS/8 SKIP, Ruff PASS on code head 87e4160; PR409 docs source 9b2140e8, checkpoint 3d585a10 and exact PR/push CI queued. All draft/unmerged, SaaS off, no ETP/prod/owner DB writes/signature or human gold.'
-  - '2026-10-13 PR407 and PR405 prior exact PR/push GitHub CI SUCCESS, their child checkpoints marked COMPLETED while PRs remain DRAFT. New stacked PR408 feature/qualification-official-source-20261013 on PR407, source head 49e172d original EIS SOAP v4 XML and award-evaluation DOCX 22427 bytes exact SHA/UID, parser derives 70 qualification/30 price, qualifying 44/223 completed chatbot contracts and five-year lookback automatically from actual DOCX tables and EIS endDT; Arvectum owner-stated 0 => COMPETITIVE NO_GO. Real Mac mini offline source replay PASS plus 57 local tests PASS/8 SKIP/Ruff PASS, source binary private; exact PR408 push/PR CI pending. No signed-original cryptographic trust or full default UI run integration yet; no ETP/prod/watchdog changes.'
-  - '2026-10-13 PR407 reference-list engineering advanced: source code b3e3174 adds real SaaS Bearer principal.customer_id routes for company reference-list GET/owner/admin POST + qualification assessment and Decision Core, verifies role/tenant/terms. Local isolated Mac mini 71 tests PASS, 8 SKIP, Ruff PASS; final docs head 3c8b7290 and child checkpoint a400d8fd, PR/push CI pending. Older PR405 source-semantic review updated to owner ZERO references and competitive NO_GO (not legal prohibition), local 100 APR06 PASS; full CI pending. Both PRs DRAFT, SaaS not enabled, no prod tenant seeded or ETP actions.'
-  - '2026-10-13 OWNER confirms Arvectum has ZERO completed contracts. Original CZN 0348100024426000039 EOK2020 v4 qualification 70% completed 44-FZ/223-FZ website/IS contracts INCLUDING chatbot, 30% price; therefore confirmed for Arvectum as of owner statement COMPETITIVE NO_GO, NOT legal ineligibility. Implemented tenant-scoped immutable owner-reference-list fact, 90d freshness, precise 5-year act lookback from official Oct23 bid deadline, qualification /assess and /decision-core endpoints. New main-based draft PR407 source head b129b2f, checkpoint head e56e8c1, Mac mini 50 focused PASS/8 SKIP/Ruff PASS, exact GitHub CI queued. Owner-zero snapshot is committed as JSON input example but NOT inserted into unknown Arvectum live customer_id; no prod/ETP changes. PR405 source audit original documents exact PR38407699617 and push38407689429 CI SUCCESS; keep draft.'
-  - '2026-10-12 inspected main HEAD 6e737d69, GitHub CI 9/9 PASS; TA refactor completed, DP core refactor complete but owner production/gold acceptance blocked.'
-  - 'Mac mini online; isolated APR-03B preview HTTP200 /health and HTTP401 unauthorized workspace. Separate production services not modified.'
-  - '2026-10-12 APR-03B actual authenticated staging preview: EIS 0372200172326000015 import HTTP200, 6 originals, notice XML 3 structured fields KNOWN; 48 focused current-main tests PASS. No final LLM/report or human acceptance; see docs/operations/TA_APR03B_OWNER_PROBE_2026-10-12.md.'
-  - '2026-10-12 APR-04 old PR #252 reconciled onto latest main and pushed updated head 3f289a04, with fail-closed onboarding auth; 3954 full PASS/238 SKIP/0 fail and 57 focused PASS. Exact-head GitHub CI in progress, owner acceptance gated.'
-  - '2026-10-12 first read-only Workspace B2B public-source pass: eight source-attested corporate IT/digital opportunities (including B2B-Center #4632682 and #4628040), one organizer unknown, five individual/non-core exclusions; 15-20 case acceptance and other ETP sources remain OPEN. See docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md.'
-  - '2026-10-12 Safari real saved run toa-run-20261012200402-7249ed analyzed, 6/6 extracted, browser report loaded, XML 3 facts KNOWN. Old preview PDF/DOCX 200; latest-main read-only stage protected 401/200, archived EIS report DEFER, exports 409/409. Added frontend fail-closed export UX and visible no-LLM banner; Node simulation 12/11/4 PASS and focused Python 42 PASS. See docs/acceptance/APR03B_SAFARI_OWNER_REAL_RUN_2026-10-12.md.'
-  - '2026-10-13 PR #391 merged main at 57294f45 after push and PR CI SUCCESS; historical-file fail-closed UI and deterministic-mode labels integrated. Owner private preview not updated.'
-  - '2026-10-13 APR-04 PR #252 retargeted from obsolete APR-03 branch to main, 18 relevant changed files, green CI and 3954/238 local PG16 regression; draft cleared and merged main at 1912acdd. Code integration only: owner legal/business acceptance and production deployment remain pending.'
-  - '2026-10-13 APR-05 PR #253 retargeted to main; GitHub reports merge conflicts, PR still draft. APR-06 #254 and APR-07 #255 remain stacked on APR-05 branch. Do not merge blindly.'
-  - '2026-10-13 Desktop Commander reported two online Macs but terminal commands timed out; Mac mini new private-preview promotion not verified or performed.'
-  - '2026-10-13 APR-05 PR #253 updated with explicit integration gate; draft and dirty with current main, no merge attempted. Earlier-branch Mac mini 105↔106 PG migration and three two-tenant HTTP smoke rounds reported green, but not revalidated on new main.'
-  - '2026-10-13 B2B source report 9 legally identified buyer corporate opportunities published to main in cce54fbb; noncore SEO/marketing leads separated, no outbound messages or paid access.'
-  - '2026-10-13 after owner RDC restart: main CI at ef14fcf8 PASS, PR391/PR252 already merged; APR05 PR253 draft/dirty. Mac mini RDC OFFLINE, MacBook terminal command times out; no local migration/deploy performed.'
-  - '2026-10-13 07:53-08:05 MSK: Mac mini RDC command execution restored. Separate APR05 worktree ta-apr05-current-20261013 created from main f2cb7083; historical APR05 branch integrated with exactly 3 roadmap/checkpoint conflicts resolved, primary APR07 checkout untouched. 30 focused tests PASS, Ruff PASS, make check PASS. Full regression 3971 passed/238 skipped/1 deselected with 3 failures: 2 R9 tests need Docker Engine (unavailable), 1 token-counter subprocess lacked python in PATH (single-test rerun PASS with venv PATH). No commit/merge or deployment done, APR05 worktree has staged changes. Docker Desktop backend running but daemon unavailable; owner preview 18083 down.'
-  - '2026-10-13 recovered Docker Engine 29.8.2. APR05 code reconciled with main after APR04 merge, worktree commit 9b68bbb6, 3975 full pytest PASS/238 SKIP, 3 R9 docker-based tests PASS, Ruff/make check PASS, isolated localhost:18085 actual HTTP synthetic two-tenant E2E PASS (9/9 categories), API auth HTTP401 without Basic, source SaaS defaults disabled. No production or public payment enabled.'
-  - '2026-10-13 APR-05 exact-head CI PR and push 9/9 SUCCESS at d91161fb; merged PR253 into main c21b5f8. Local full 3975 PASS/238 SKIP, isolated synthetic two-tenant 9/9 PASS, R9 Docker three PASS; 18082/18083 healthy, QA 18085 removed. No public SaaS/payments/VPS enabled.'
-  - '2026-10-13 APR-06 PR254 retargeted to main; isolated source merge has six conflicts, including strict EIS original revision selection and legacy facade. Do not replace main source-gating with historic APR06 heuristics; focused and full tests pending.'
-  - '2026-10-13 APR06 source-safe commercial framework published as draft PR254 head 4d0e96c8 with exact local Git tree 2384b2a3. 56 targeted tests PASS, full 4014 PASS/238 SKIP, Ruff/make check PASS. Cancellation/protocol EIS events now fail closed. Human labels 0/28, approved threshold and current EIS attachment binding OPEN; not accepted.'
-  - '2026-10-13 APR07 bounded offline quality evidence published as stacked draft PR255 head d7d2aa17, exact local tree 93045a20, 17 targeted tests PASS, full 4031 PASS/238 SKIP, snapshot byte-identical digest e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38. No model downloads, expert gold and rolling SLO NOT_MEASURED.'
-  - '2026-10-13 APR06 PR254 head 4d0e96c8 push and pull_request exact-head GitHub Actions CI BOTH COMPLETED SUCCESS (9/9), GitVerse mirror SUCCESS. Kept draft due 0/28 human-gold and absent owner-approved KPI thresholds; technical code/CI success is not commercial acceptance.'
-  - '2026-10-13 exact-head CI for APR06 draft PR254 4d0e96c8 completed PR and push SUCCESS 9/9 each, GitVerse SUCCESS; draft and 0/28 human truth stay BLOCKED. No main merge authorized under human-gold gate.'
-  - '2026-10-13 exact-head CI for APR07 stacked draft PR255 d7d2aa17 completed PR and push SUCCESS 9/9 each, GitVerse SUCCESS; isolated 4031 PASS/238 SKIP and exact reproducible snapshot. No model promotion or rolling production SLO acceptance.'
-  - '2026-10-13 B2B read-only public-source recency audit: Workspace #19004 now indexed as Завершён despite Oct 14 printed deadline; 19005 indexed accepting Oct 13 but cutoff time unknown; 19003 qualification references and budget contradictory; 19006 technical brief absent. Status-first fail-closed rule documented in docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md. 9 historical cards, not nine confirmed currently-open leads; verified 15-20 target OPEN.'
-  - '2026-10-13 B2B status-first standalone module prepared in PR392 head 845af2d1, exact Git tree equals local 23646f91; 26 focused tests PASS, full PG16/Docker 4001 PASS/238 SKIP, Ruff/make check PASS. GitHub push+PR exact-head CI pending; module not yet merged/wired to ETP. Dedicated checkpoint .agent/checkpoints/TA-B2B-STATUS-GATE-20261013.yaml on PR branch status in_progress.'
-  - '2026-10-13 bounded corporate lead source-status gate delivered: PR392 head 845af2d1 exact tested tree 23646f91, 26 focused PASS, full PG16/Docker 4001 PASS/238 SKIP, Ruff and make check PASS, push+PR CI 9/9 SUCCESS, merged main 77470504; dedicated .agent/checkpoints/TA-B2B-STATUS-GATE-20261013.yaml status COMPLETED. No external connector, bidder, paid subscription or production deployment.'
-  - '2026-10-13 source-only expansion after PR392: Fabrikant secondary-index commercial IT monitoring 3503859 ООО РЭНЕРА and 3503884 АО ЦПТИ; Roseltorg commercial FastReport development B0810260717501 АО Новосибирскэнергосбыт. Primary original ETP live status/eligibility/documents still missing. Recorded in docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md; three candidate IDs NOT counted as active 15-20. Conflicting B2B-Center 4618502 platform Oct12 versus aggregator Oct14 deadline source caveat preserved.'
-  - '2026-10-13 APR03B read-only owner-preview latest-main QA: built local image arvectum/tender-agent:owner-stage-main-20261013 from main aa6709b3; loopback 127.0.0.1:18086 staging health HTTP200, unauth workspace/report/export HTTP401, all original data/artifacts/EIS volumes read-only; no authenticated report probe because secret access restricted. Staging container and clean QA worktree stopped/removed; image cached locally. Original private preview 18083 still HTTP200 untouched. No human browser/legal semantic GO claimed.'
-  - '2026-10-13 APR06 private human-review handoff generated locally: 28 candidates, 9 protected report links, 20 source-incomplete cases and 0 human decisions, mode 0600 file /Users/master/arvectum-runtime/private-operator-acceptance/apr06-review-queue-20261013.html, Safari open requested. Generator source tree 5255ccc1 matches Mac mini, local targeted 14 PASS, full PG16/Docker 4028 PASS/238 SKIP, Ruff/make check PASS. Draft stacked PR393 head 988ef6cc created; CI pending.'
-  - '2026-10-13 APR06 owner-review subtask PR393 exact-head PR/push CI 9/9 SUCCESS, merged as code-only into APR06 draft head 6c433bf6; dedicated checkpoint .agent/checkpoints/APR06-OWNER-REVIEW-PACKET-20261013.yaml status COMPLETED. Private Mac mini queue 28 candidates, 9 reports, 20 source-incomplete, 0 expert decisions, only local file mode 0600.'
-  - '2026-10-13 APR06 draft PR254 synchronized current main and verified private packet: head 04f5ba77, latest-main B2B code merged, local 4054 full PASS/238 SKIP and 60 targeted PASS, make check PASS, exact-head PR and push CI 9/9 SUCCESS, human gold 0/28 BLOCKED.'
-  - '2026-10-13 APR07 draft PR255 synchronized latest APR06: head 54a89534, exact local Git tree 2cf74297, 57 targeted PASS, full PG16/Docker 4071 PASS/238 SKIP, Ruff and make check PASS, no source-code conflicts; GitHub exact-head PR/push CI pending. Offline snapshot human truth and rolling production SLO remain NOT_MEASURED.'
-  - '2026-10-13 APR07 latest APR06 reconciliation completed TECHNICALLY: PR255 exact head 54a8953434680ba5a22d0a1fbd195c3dda5b511c, source tree 2cf742979e78d2fbf6e76ee0214d5f90b866e522 matches Mac mini full 4071 PASS/238 SKIP and 57 focused PASS, Ruff/make check PASS; exact-head push and PR CI runs 38365321455/38365314201 9/9 each SUCCESS, GitVerse mirror SUCCESS. Remains DRAFT for human gold, approved metrics and rolling production SLO.'
-  - '2026-10-13 independent APR06 audit: PR394 corrected accepted-with-unreviewed-package and duplicate-claim citation inflation; PR397 code-only guard prevents self-asserted acceptance; both exact-head CI green and merged to APR06 branch c5c3d9bf. PR398 Node E2E timer fixture green CI merged main 47fb8f02. APR07 restacked on new APR06 head in PR255 at e79ae876 (full CI queued). Official EIS bytes/source-currentness/approvals and human gold 0/28 remain BLOCKED.'
-  - '2026-10-13 AI-only provisional 28/28 screening PR400 (3cc86454) against preserved 9-case historic EIS/GPT6 audit + 19 aggregator-only: 7 archived deadlines passed, 2 future saved deadlines, 0 new originals/human labels. Isolated Mac mini SSH tested APR06-focused pytest 88 PASS, Ruff PASS, JSON exact reproduce PASS. Additional public cards reveal Museum site/design split and conditional bid/contract security; no live EIS truth promoted. Exact-head GitHub PR and push CI in progress, draft unmerged.'
-  - '2026-10-13 APR07 draft PR255 e79ae87697a635f626f257809bf8b53647aec41d exact-head push CI 38375419717 and PR CI 38375426038 both SUCCESS. Technical pass only; 0/28 human gold and production SLO still NOT_MEASURED; no merge.'
-  - '2026-10-13 independent original-site B2B verification: B2B-Center public qualification 4637497 ООО КЕХ еКоммерц active according to indexed 13-Oct original card until 19-Oct 16:00; existing 4628040 original active through 20-Oct 12:00 without duplicate counting. Research-only draft PR399 cb024f5e adds documentation+separate checkpoint; local exact diff check and report sanity PASS, PR CI running; no accepted 15-20 qualified leads or bidder authority.'
-  - '2026-10-13 APR06 source bytes independently rehashed in isolated network-disabled read-only Docker on Mac mini: historical 44-FZ 168/168 SHA256+size exact matches across 20 saved runs (17 with source bytes, 3 zero-file), plus local 223-FZ 5/5 bytes across four cases; HTML suffix/ZIP magic mismatch in 32616369437 confirmed. This proves archived byte integrity only, NOT current EIS edition, complete original attachment set or human/legal review. Reusable audited checker PR401 head 280fd22a, 24 targeted tests PASS, Ruff PASS, GitHub exact-head CI pending.'
-  - '2026-10-13 APR06 independent archived EIS notice edition/attachment audit on actual Mac mini read-only Docker volume: 20 cases, 17 original notices, 3 no XML; latest archived editions reference 77 attachment pairs (50 local name+size + SHA evidence correlated, 27 unmatched), 9 fully name-size correlated only (NOT UID-bound), 7 partial, 1 notice deadline absent. CZN last v3 contract appendix file skipped on initial download due HTTP429. Source-limited JSON, Russian report and negative tests in draft PR402 head 6880156f; 94 local APR06 focused PASS, Ruff PASS, PR/push CI pending. No active EIS status, source UID/current attachment binding or human truth fabricated.'
-  - '2026-10-13 APR06 archived notice PR402 stronger original source binding found on Mac mini: saved attachments_manifest.source_url contains EIS uid, matching original XML publishedContentId; 50 of 77 latest-archived attachments matched exact UID, original source URL, name, size and SHA-256. 17/20 archive notices, 27 unmatched, CZN v3 missing 1 due HTTP429. 96 focused APR06 pytest PASS/Ruff PASS at a29311e, latest child checkpoint head 044b7b80 CI queued. Official current notice HEAD returns HTTP404 for Museum/CZN from Mac mini, not proof procurement ended; no current-EIS status asserted.'
-  - '2026-10-13 direct public HTTPS EIS diagnosis via Mac mini: PAC enabled via localhost:8082 but curl -q --noproxy * --proxy empty egress RU/Moscow (IP geo), process proxy env unset. HTTPS /epz/main/public/home.html 200, official Museum common-info 0372200172326000015 200, HTML Подача заявок until 16 Oct 10:00 MSK updated 08 Oct. CZN 0348100024426000039 official ok20 common-info 404 nginx EVEN direct; never infer cancellation/closure from 404. Existing urllib create_urllib_opener source_direct_connection=True uses ProxyHandler({}). Source-limited report and two policy regressions draft PR404 latest checkpoint head fa41bef4, exact PR/push CI queued. PR402 prior original-archived UID/SHA evidence latest tested checkpoint head 044b7b80 PR/push CI SUCCESS, child metadata completion 5199faf2.'
-  - '2026-10-13 APR06 Mac mini public EIS direct HTTPS follow-up: system PAC http://127.0.0.1:8082/proxy.pac present, no HTTP_PROXY vars; forced curl -q --noproxy * --proxy empty and removed proxy vars via RU/Moscow egress. EIS HTTPS /epz/main/public/home.html 200, Museum official 0372200172326000015 common-info 200 status Подача заявок until 16 Oct 10:00 Moscow, updated 08 Oct. CZN 0348100024426000039 original official ok20 common-info route 404 nginx EVEN direct; do not infer closed/cancelled. Existing urllib source_direct_connection=True inserts ProxyHandler({}); verified pure Python behavior suppresses inherited environment proxy. Documentation and two offline regression tests in draft PR404 latest metadata head 67c1a01d, GitHub full CI queued (local test not confirmed). Archived-source PR402 code/metadata exact CI PASS; child completion checkpoint 5199faf2.'
-  - '2026-10-13 CZN EIS restored via direct RU HTTPS: intermittent pub01 146-byte nginx404 vs pub02 HTTP200; PR404 bounded 404-only retry implemented in two adapters, plus corrected operator UTC 07:00 vs official 10:00 MSK. Official current v4 EOK 12 Oct 22:24, deadline 23 Oct 10:00, 7 original UID. Real read-only getDocsIP PRIZ SOAP from int.zakupki.gov.ru returned archive ZIP 76759 bytes SHA256 dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908, original v4 XML SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 7/7 UID+name+size crosscheck against three archived SHA originals and four newly downloaded verified files. Four new files moved to restricted ArvectumSSD local evidence and three ZIP CRC PASS (2 nested DOCX, 1 PDF). Offline verifier/negative tests in draft PR404 head ac972df99: 168 pytest PASS, Ruff PASS, original offline source test PASS; exact PR/push CI queued. DIGITAL SIGNATURE, ZIP CONTENT EXPERT REVIEW AND HUMAN GOLD NOT COMPLETED.'
-  - '2026-10-13 PR404 exact tested checkpoint a076c8c8: GitHub PR38401431113 and push38401426507/38401426493 all SUCCESS; local 168 APR06 tests PASS/Ruff PASS; child direct-EIS checkpoint completed. New CZN v4 semantic review PR405 source report/test head ff76cc3 independently reads original 95p OОЗ, v4 nested contract/PIK DOCX, unchanged 44-FZ application/evaluation DOCX and two NMCK PDFs; official primary NMCK 685000 chatbot + 315000 youth + 245000 trainings = 1245000 RUB, tender evaluation 70% completed 44-FZ/223-FZ contracts incl chatbot, 30% price. Custom PHP/JS/SQL, 2/7/10/15 December deadlines, no advance, 12-month warranty. Original source-linked private binary bytes stay on Mac mini. Mac mini 172 tests PASS/Ruff PASS/real v4 SOAP 7/7 UID PASS; draft PR405 CI pending. Provisional DEFER conditional on qualifying references, NOT human gold or legal acceptance.'
-  - '2026-10-13 CZN v4 source assessment follow-up: draft PR405 checkpoint latest head a15c68e2937f2225fb0e57189f306fba5415c6b1, source report/code head ff76cc3; Mac mini 172 focused pytest PASS, Ruff PASS, original EIS v4 UID verifier PASS. GitHub PR38407699617 and push38407689429 quality job make test still in progress, fast push38407689203 SUCCESS, other 8 PR jobs SUCCESS. New roadmap issue #406 tracks future general source-bound qualification-weight competitive-risk feature; no code implemented for it. PR405 do not merge, human-gold unapproved.'
-current: "TA-R4-20-COMPETITIVE-SEMANTIC-20261014 PR432 verified source2c40b4bf Mac mini FULL 4119 PASS/242 SKIP, exact GitHub 3/3 SUCCESS, 96/96 selected archived EIS original attachment SHA and texts, fail-closed runtime missing appendix, 47 historical LLM quotes checked. Canonical child checkpoint02cfe021; technical foundation green, FULL human legally grounded semantics across96 original documents and current EIS/Owner signoff0/20 still in progress. Other APR03B/APR04-07/B2B roadmap gates remain."
-
+- '2026-10-15 fifth distinct R4 source-offline 44FZ actual E2E 0152200004026000069: 1 original EIS XML + 6 original DOCX SHA exact,
+  Gemma4 four calls348.24s with 7/7 extraction and three source XML citations; real HTTP200 archive export409 NEEDS_REVIEW. Expert review
+  found and patched source-contract status for software; private no-LLM corrected reprojection. Full 4149 pass/238 skip/0 fail.'
+- '2026-10-15 APR067 fourth independent historical EIS development E2E 0151600003226000011: 5 original SHA-pinned files, source-bound
+  official XML docKindInfo CP/MRJ/POD/CAR, Gemma4 4 calls 403.23s,5/5 extracted, 3 original XML citations, archived exports409, NEEDS_REVIEW.
+  AI expert accepted for DEVELOPMENT E2E; current live EIS/bid GO separate.'
+- '2026-10-15 APR067 third historical firstparty 44FZ offline-source Gemma E2E 0162200011826003089: SHA-verified ZIP and 17 originals;
+  four archived notice revisions including original v4, first model run 350.92sec 16/17 extraction due unsupported ODT, fixed Data Platform
+  PR125, second real Gemma4 four calls150.08sec, 17/17 sources extracted, 3 pinned XML citations, historic archive exports 409, no original
+  SHA mutation, old unsupported literal absent, 51 focus PASS/4104 full PASS/238 SKIP. DEVELOPMENT ChatGPT-expert acceptance, not current
+  legal/bid GO.'
+- '2026-10-15 APR067 second real R4 historical E2E on 0376300000126000193: 8/8 original saved SHA and extraction, Gemma4 four calls
+  358.92 sec, unsupported old literal not repeated; found and fixed notice XML mistaken for protocol/results duplicate, recovered exact
+  original XML subject/deadline/NMCK citations, archived export 409, source model report NEEDS_REVIEW. 4093 full pytest PASS/238 SKIP/0
+  FAIL, targeted46 PASS Ruff. Draft PR pending; not 20 full E2E nor Owner commercial/legal GO.'
+- 'APR067 R4 development source QA 2026-10-15: 20 ZIP and 20 XML verified; original R4 96 attachments verified; 47 model snippets categorized
+  42 exact,3 formatted,2 unsupported; full 4074 PASS,238 SKIP. Commercial and independent legal gold open.'
+- '2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts
+  3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured.'
+- '2026-10-15 APR03B DEVELOPMENT E2E ACCEPTED on original archived EIS 0372200172326000015: 6/6 extracted, Gemma4 12B 4 calls/138.79s,
+  3 HTML citations from original XML, 8/8 source-quality workflow gates, auth401, archived PDF/DOCX409; real original/read-only 4031
+  full pytest PASS/238 SKIP, Ruff clean. Owner-designated AI expert accepted for dev only; commercial/current-EIS/prod and independent
+  human gold not claimed. Draft PR433 remains unmerged; next APR04 onboarding.'
+- '2026-10-15 new Owner E2E decision: source-grounded ChatGPT assessment accepted as expert for development stage; human legal-gold
+  removed as APR03B blocking prerequisite. New 8-step acceptance gate with 21 new tests, 45 combined focused PASS, authenticated current
+  full LLM E2E still open; roadmap/owner policy updated.'
+- 2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini exact full 4119 pytest PASS/242 SKIP/0 failed,146.20s, Github
+  three workflows SUCCESS. Selected archival original 96/96 EIS attachment SHA+size, nonempty source texts and first material clause
+  citations; runtime fail-closed when XML lists missing appendix; client report regenerated SHA6e4461f6. Child checkpoint latest02cfe0218c2977f4a82319d6ca5c2f7c886a7872
+  still in_progress because full material 96-document legal/suitability review/20 signed gold and latest live official EIS revisions
+  not attested. All drafts unmerged.
+- 2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 GitHub 3/3 exact CI SUCCESS (PR38580994393 push38580983108 push38580983130).
+  Complete selected historical official archive attachment source 96/96 firstparty original SHA:50 prior verified TLS,21 additional
+  files,25 fresh verified TLS. Source-level normalized nonempty text and sampled clause provenance added; production pipeline now fail-closed
+  if ANY official listed attachment absent, even if contract+TZ exist. Independent 14 model-run 47 quotes (42 exact,3 whitespace,2 inaccurate),2
+  persisted stale deadlines/8 unapproved hard-blocker recommendations; human legal-gold0/20. Local exact head 11 original target tests
+  PASS/Ruff and client report reproducibly identical SHA6e4461f6. Mac mini full pytest exact head PID69735 still running, CI checkpoint
+  metadata-only branch78e9fcf0. Draft PR432 unmerged, no owner/ETP/prod actions.
+- '2026-10-14 active TA-R4-20-COMPETITIVE-SEMANTIC-20261014 draft PR432: 20 verified historical competitive +4 noncompetitive negative,
+  firstparty 21 official ZIP/XML verified. Independently reconciled all 96 original documents linked in selected archived EIS notice
+  editions: 50 older verified-TLS receipts of72, 21 previously recovered new competitors,25 FRESH firstparty verified-TLS official binary
+  retrieval Oct14 with SHA+size exact, hashes privately stored. 47 saved LLM cited claims from 14 runs:42 exact/3 layout spacing/2 unsupported
+  literal wording;3 overlong quotes,3 batches > claim cap,2 stale historic report deadlines,8 unapproved old model hard blocker decisions.
+  Client report docs/acceptance/TDP_R4_20_TRUE_COMPETITIVE_INDEPENDENT_CLIENT_REVIEW_2026-10-14.md no technical messages and machine
+  source proof JSON published in draft PR432. Mac mini exact code/report head780ebd1139e05cb1e6b0edc6a55a355bd9474948 FULL 4106 passed/242
+  skipped/0 fails 149.74s; Ruff and ten focused PASS. Latest checkpoint branch df06e432 GitHub full PR/push CI queued/in_progress, quick
+  push SUCCESS, all drafts unmerged. Full 96-document semantic/legal expert signoffs0/20, current EIS revision, right to bid/Owner GO
+  still OPEN.'
+- '2026-10-14 independent R4 cohort source-type correction: 17 old ZIP archive cases are 16 official competitive notices plus one noncompetitive
+  special single supplier article93 part12 (0349500000226000003), NOT 17 competitive. Read-only private source manifest discovered twenty
+  actual historically competitive (16 original plus4 verified new ZIP), four negative source controls (three official market-price requests
+  plus one special art93), one separate reserve; methods 11 auctions,7 quotations,2 open competitions. Independently rehashed 21 official
+  ZIP and exact selected XML bytes/type, 21/21 ZIP SHA, 21/21 original XML SHA and type matching. Former 17-case child blocked/superseded
+  metadata2cf08bd, new canonical child TA-R4-20-COMPETITIVE-SEMANTIC-20261014 branch research/r4-20-competitive-semantic-20261014 checkpoint9ae1ae77328823bd776929dd68af054dad793072
+  in_progress. Historical source correctness only; zero full legal/Owner human signed gold.'
+- '2026-10-14 bounded child TA-NODATA-INDEPENDENT-EXPERT-AUDIT-20261014 COMPLETED: source branch PR431 exact code+checkpoint head ebd12584942790d51c36ce759787133b50e13a22
+  GitHub CI 3/3 SUCCESS (9 PR +9 push +1 quick jobs), Mac mini substantive fcb568d1 full4100 pytest PASS/238 SKIP/0 FAIL. Three old
+  SOAP no_data are 3 official EIS price-information-only requests (9 prior HTML first-party proofs +3 fresh TLS card source SHA exact
+  + four official downloaded DOC/DOCX/PDF originals). Original source legal risks identified, 20-case independent source report in client-safe
+  prose with separate machine proof, native verified TLS official registry number-only lookup and safe no-bid guard. Child status completed
+  branch metadata-only commit7f585a21c621078553d8adfd15070526df95db54, all PRs draft unmerged. Human/legal/current full gold 0/20 remains
+  OPEN.'
+- '2026-10-14 independent critical R4 price source child draft PR431: original official EIS card HTML 9/9 hash exact, all three prior
+  SOAP no_data confirmed NONCOMPETITIVE official requests for price information, not absent records; fresh official TLS primary cards3/3
+  match original SHA; source documents 4/4 first-party DOC/DOCX/PDF with SHA and critical clauses inspected. Client-ready 20-case expert
+  source report and separate proof JSON produced with 17 historical competitive and three price requests (no automatic legal GO, signed
+  R4 0/20). New upstream number-only SOAP no_data trusted official EIS category fallback, pre-run fail-closed; client report formatting
+  no transport codes while preserving original HTML AST. Exact substantive source fcb568d14252b353baaf449f5b0c5332786ed49d Mac mini
+  FULL 4100 pytest PASS/238 SKIP/0 FAIL; 77+69 focused PASS/Ruff. GitHub PR431 latest child checkpoint ebd12584942790d51c36ce759787133b50e13a22
+  exact CI pending (PR and push long running, one quick green); all stacked drafts unmerged.'
+- '2026-10-14 PR429 machine source matrix original exact head ed669ba8aa53b59681ba3216d025d0ff02a59b09 GitHub pull_request+two push
+  workflow 3/3 SUCCESS; previous Mac mini full 4072 PASS/238 SKIP, 13 focused PASS/Ruff, child technical task completion pending branch
+  checkpoint. Critical new independent source investigation: all three old SOAP no_data actually official EIS price information inquiries,
+  9/9 official EIS HTTP200 search+card+docs archived with SHA receipts from Oct12, URLs /epz/pricereq/, all have official attached-file
+  listings. Existing docs/acceptance/TDP_OFFICIAL_EIS_PRICE_REQUEST_REGISTRY_2026-10-12.md already says these are MARKET_RESEARCH_ONLY,
+  while the later 20-case matrix labels them NO_DATA without type overlay. This is a reconciliation/report-quality bug, not true absence
+  of procurement.'
+- 2026-10-14 TA-R4-20-SOURCE-COVERAGE-20261014 PR429 report/code b6c8643e9cb439b099f82cc041577157a925802b FULL Mac mini test 4072 PASS/238
+  SKIP/0 FAIL 166.75s, targeted13 PASS/Ruff/diff. Historical R4 20-case source audit plus later 72/72 verified-TLS source recovery pinned
+  private manifests, SHA/byte size/public original join; four published first-party JSON/CSV source files regenerate byte-identical.
+  Human R4 accepted0/20; current live EIS and GO not attested. PR429 latest child checkpoint ed669ba8aa53b59681ba3216d025d0ff02a59b09
+  exact GitHub CI queued, stacked draft unmerged.
+- '2026-10-14 active successor TA-R4-20-SOURCE-COVERAGE-20261014 draft PR429: systematic matrix of all 20 R4 EIS cases using first-party
+  R5 20-case, 168-file SHA, persisted fact and unsigned human review CSV; official archived ZIP17/20, no_data3; 96 archived XML original
+  confirmed; 3 stale relative to last archived edition; 2 historic persisted report deadline mismatches; full 20 machine-only bid_ready
+  false/human0/20. Resolved time-ordered evidence: later Oct12 pinned private manifests show verified-TLS refetch 72/72 original binary
+  attachments across 13 cases totaling 28,519,849 bytes; independent offline replay exact reg/file/SHA/byte-size joins 72/72, no private
+  UID or raw original published. Four deterministic source JSON/CSV assets and readable 20-case source-quality report committed. Tested
+  PR429 code b6c8643e9cb439b099f82cc041577157a925802b Mac mini 13 focused pytest PASS/Ruff/diff, 4 generated files byte-identical. Full
+  Mac mini PID22958 + latest GitHub PR429 exact CI pending. Prior PR428 original bd40d59f 3/3 CI green, completed child. All PRs drafts/unmerged.'
+- 2026-10-14 PR428 bounded source-expert packet exact original head bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 GitHub 3/3 CI SUCCESS,
+  Mac mini full4059 PASS/238 SKIP, 58 focused/Ruff; child checkpoint marked completed after CI green in predecessor branch. R4 report
+  remains machine-only, human 0/20.
+- '2026-10-14 systemic source-research full chain stacked draft PRs426→427→428: source-index first PR426 original full CI 3/3 SUCCESS
+  and Mac mini4042 PASS; source-proof PR427 original head026355cedd9341d10f934e238123803f412ef4fe full CI 3/3 SUCCESS and Mac mini4053
+  PASS/238 SKIP, both bounded child checkpoints COMPLETED, unmerged. Active third stage PR428 expert source prefill uses EXISTING R4
+  20-case gold protocol and ARV-001 gate, 16 human rubric fields, exact SHA source receipts and typed claims, never fake human approval.
+  On saved archive Museum 6/6 documents, 15/15 source proof, 1 SMP-only LLM contradiction, 0 reviewer signoffs, ARV001 NOT_READY and
+  bid_ready false. Full Mac mini current code615d2bd6cc246b8d3e3e5eb7c189b6c061dd0c5d 4059 PASS/238 SKIP/0 FAIL and focused58 PASS/Ruff/diff;
+  PR428 current checkpoint bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 exact GitHub CI pending. No production/ETP/merge.'
+- '2026-10-14 PR427 source-proof final source9f5d5c58b88c4261db2b9d1210c0a88a9f60af26: after strengthening no-fabricated-PDF-page/cell
+  mapping with externally pinned raw SHA and registered DP coordinate maps, isolated Mac mini full 4053 pytest PASS/238 SKIP/0 FAIL/328
+  warnings 152.00secs, 75 focused PASS/Ruff/diff PASS. Historical EIS XML museum 6/6 original files and 15 exact SHA-bound quote spans
+  validated; first actual Gemma model omitted NMCK/deadline while source-v2 matched historical originals 2/2. Typed EIS checks and source
+  span proof persisted into actual operator report quality gate, 223/B2B unsupported official EIS values remain UNKNOWN. Draft PR427
+  latest checkpoint branch head026355cedd9341d10f934e238123803f412ef4fe full Github CI pending, no merger/deployment.'
+- '2026-10-14 full-corpus source research bounded PR426 technical stage now complete: GitHub original source head114065a897d80573cdaa8e72b71ef8d8847ab8f3
+  3/3 SUCCESS, completed child checkpoint branch fd961c064b5863a860ccbdab50fa2fc9299a9046, full Mac mini 4042 PASS/238 SKIP/Ruff; no
+  drafts merged.'
+- '2026-10-14 advanced successor draft stacked PR427 source claim proof stage: source-exact Unicode char offsets and full/quote SHA,
+  no invented original PDF page/sheet locator, typed historical EIS NMCK and deadline model claim reconciliation, report quality gate
+  false values/omissions. Museum six originals 6/6, 15 exact source snippets, first Gemma answer missing NMCK/deadline and source-v2
+  2/2 historical XML matches, 223-FZ/B2B unknown (not fabricated 44-FZ source). Mac mini 100 focused tests/Ruff PASS and FULL 4053 PASS/238
+  SKIP/0 failed in 153.43s at implementation31b20fb014c7749959f2b78be2c74e0bcc7358e9. PR427 docs/checkpoint head eb35a1cc98b6284793b7c9092c86971536435770
+  exact GitHub CI still pending, draft unmerged, no Owner legal GO.'
+- '2026-10-14 FULL Tender Agent Mac mini regression of systemic source-research PR426 implementation 3d5016a4c5824f19c760e22ebe504edf8957f36f
+  after proper Python venv and PostgreSQL16 client PATH: 4042 PASS, 238 SKIP, 0 FAIL, 328 warnings, 167.34s. Wrong PATH produced two
+  isolated environment-only failures; both tests separately rerun 2/2 PASS then full suite 4042 PASS. Separate 112 new/related pytest
+  PASS/Ruff PASS. All original six Museum archived normalized files indexed across 15 topics; independent source-modality negative verifier
+  detects actual model claims 2 contradictions old/1 v2, bid_ready false. Source SHA mismatches and duplicate ID rejected in both retrieval
+  and secondary verifier. All details source-grounded in draft PR426, latest checkpoint 114065a897d80573cdaa8e72b71ef8d8847ab8f3. Exact
+  full GitHub CI still pending; PR not merged.'
+- '2026-10-14 systemic Tender Agent APR03B full-corpus research v1 PR426 draft stacked on PR425: all six archived EIS Museum original
+  normalized texts 6/6 indexed across roles/15 research topics, full normalized SHA and quote exact offsets, registry-safe EIS XML NMCK1m/date16Oct10,
+  clause number span/citation audit 236 numbered original clauses; no meaning verified from a simple hit. Versioned LLM schemas permit
+  empty unsupported criteria/risks, local Gemma4 source-v2 186s/2 sections 2/2 schema PASS, improved price/deadline/official scoring
+  and §3.8 price interpretation but SMP-only still false preference. Independent source-modality negative audit on real old/v2 answers
+  catches 2→1 source contradictions with exact evidence, holds source_research_quality_gate bid_ready false. Hash mismatch/raw missing/duplicated
+  source IDs fail closed. Last implementation source 07bc5e40dd86972caaf3ae13c2f91866ecb27916 Mac mini 111 focused pytest PASS/Ruff/diff
+  and six-source replay PASS; documented docs/architecture/TENDER_FULL_CORPUS_RESEARCH_V1_2026-10-14.md. Latest phase1 child checkpoint
+  PR426 head 628b0e200e30db0538776fff93438281d3dfcf30 exact CI pending. This is foundational, NOT generalized legal semantic accuracy
+  and NOT APR03B Owner acceptance.'
+- '2026-10-14 PR425 previous independent Gemma factual audit source 65435380d2228d2fcfcb57f595986b4f92daf903 exact GitHub 3/3 SUCCESS;
+  child TA-APR03B-INDEPENDENT-LLM-CLAIMS-20261014 marked COMPLETED branch head 3f93725032804bf7a181a0b78ab1a7715d66d054. Failure mode
+  proved: 4/4 schema validation yet SMP-only softened, §3.8 ±10% erroneously claimed fixed price, missing official NMCK/deadline; prior
+  context-window fix insufficient.'
+- 2026-10-14 systemic successor TA-FULL-CORPUS-RESEARCH-20261014 stage1 implementation draft stacked PR426 head 216f2a98bc2cc9db57564e06379242383184bebe.
+  Full original-document corpus across ALL attachment roles, 15 research questions, char-offset+document/quote SHA, explicit unread/oversize/revision
+  ambiguity, source-defined EIS XML registry-guarded NMCK/deadline, bounded multi-topic LLM evidence brief, candidate claim provenance
+  kept unverified, preserve frozen R3 AST via injection. Mac mini 84 focused pytest PASS/Ruff/diff PASS. Real Museum six original normalized
+  docs 6/6, all 15 topics found and key original terms checked, no human legal approval. Source-only design docs/architecture/TENDER_FULL_CORPUS_RESEARCH_V1_2026-10-14.md;
+  exact GitHub CI pending. Existing protected previews untouched.
+- '2026-10-14 independent Gemma4 model-output audit on SHA-pinned archived Museum Bread EIS originals (QA branch PR425): initial 4/4
+  schema PASSED but source-meaning FAIL. Original context omitted ticket sales, visual accessibility, rights and security. Context selector
+  now prioritizes explicit distinct obligations; Mac mini 60 focused pytest PASS/Ruff/source-real coverage PASS, code69b1ad4b. Patched
+  real localhost Gemma4 run 313.2s 4/4 schema PASS and regained tickets/accessibility in output. However persistent SMP-only misclassified
+  as mere preference, bid evaluation criteria unsupported, 1m NMCK and 16Oct10 deadline missing, and new false §3.8 fixed-price claim
+  where contract allows ±10% modification. Full report docs/acceptance/APR03B_INDEPENDENT_GEMMA_CLAIM_AUDIT_2026-10-14.md in draft PR425,
+  head 65435380d2228d2fcfcb57f595986b4f92daf903 CI in progress. No real legal GO.'
+- 2026-10-14 PR422 report-only citation trust guard, latest checkpoint head e6e8dbfd14c1957ecca2d8d385cd368b1d9df387 exact GitHub 3/3
+  CI SUCCESS; child completed, Mac mini 53 focused pytest/Ruff/Node PASS.
+- 2026-10-14 PR423 localhost Gemma4 synthetic four-section QA head ebc4f54104792f6da2ea3a48138e1e1c5d8a84f4 exact GitHub 3/3 CI SUCCESS,
+  child completed; real controlled local provider four JSON validation traces PASSED, all human review required, 69.4s.
+- '2026-10-14 PR424 source-text QA child completed at 33a32e3ddfeeca910ebec15e515f2e50c97569bf (draft, CI queued): six preserved archived
+  original Museum EIS files SHA-multiset 5bf958ce and six DP-normalized outputs SHA-multiset 882f341b independently match copied source;
+  first full app attempt failed all six local DP extractions and was explicitly excluded. Separate local Gemma4 model on preserved original
+  notice/spec/contract selected contexts (8.2%,20.7%,8.7% only) produced 4/4 validation PASSED, all needs_human_review, no bid decision,
+  312.3s. No real legal/semantic/active-ETP acceptance.'
+- 2026-10-14 PR422 APR03B report citation trust implementation exact tested GitHub CI f4a30654609f17b3fc4742af760ac03e93185028 PR/push
+  3/3 SUCCESS; child status completed at branch commit e6e8dbfd14c1957ecca2d8d385cd368b1d9df387, documentation update itself CI running.
+  Local 53 pytest PASS/Ruff/Node. Report status never grounds legal risk on source_ref fields alone.
+- 2026-10-14 offline first-party Museum Bread saved 6 original binary inputs SHA set 5bf958cea4ad3b45af57fb0ea02c20cf814f68e9541abeaed443b4aa28217b4f
+  and preserved 6 original DP extracted text artifacts SHA set 882f341b8adc8d47c7e69c64f749dff30c665d2a1d3a0b3e3bb66a5fe238ff75 verified
+  identical in source QA container and isolated /tmp clone. First local whole-app re-analysis used Gemma4 four validated sections but
+  6/6 document extraction failed due host DP endpoint unreachability; not accepted as source-content analysis. New controlled model
+  replay on SHA-pinned original extracted texts started PID22751.
+- 2026-10-14 bounded TA-APR03B-OFFLINE-LLM-INTEGRATION-20261014 COMPLETED, documentation-only draft PR423 head ebc4f54104792f6da2ea3a48138e1e1c5d8a84f4.
+  Actual localhost Gemma4 12B OpenAI-compatible controlled four-section synthetic run mode llm_tender_operator_provider, 4 runtime_control_traces
+  4/4 validation PASSED, each human_review needs_human_review, bid_decision None, elapsed 69.4 sec; no model download, external API,
+  private original EIS disclosure or production change.
+- '2026-10-14 APR03B report-citation trust UI fix source 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb: 53 Mac mini focused pytest PASS,
+  Ruff PASS, node syntax PASS, git diff check PASS. Draft PR422 head f4a30654609f17b3fc4742af760ac03e93185028; GitHub all jobs except
+  full quality SUCCESS; quality still IN_PROGRESS, child in_progress.'
+- 2026-10-14 independent localhost Gemma4 12B at 127.0.0.1:8081/health and /v1/models verified, model alias arvectum-gemma4-12b-it-qat-q4_0;
+  actual Tender Agent _OpenAICompatibleJSONProvider.generate with synthetic fixture returns expected verified=false/can_bid=false. No
+  downloads, no cloud API, no bid, temporary SQLite four-section synthetic smoke launched in independent child.
+- 2026-10-14 PR420 exact tested source e65aedf15b502087d570c840a9a9772d1f1197b5 GitHub pull_request38471828970 and pushes38471822456/38471822467
+  all 3/3 SUCCESS; child TA-B2B-PARENT-LOT-DEDUPE-20261014 marked completed on branch commit f3d10c7dd9f60b65d152af58ba263a145545a9ab;
+  dual-source parent/lot dedupe and Mac mini 57 local tests PASS. PR421 QA documentation head 8777a8ee93f4da3044324e4a727e0e2c4cc6cde5
+  GitHub pull_request38473329432/push38473324020/push38473323988 all SUCCESS, child already completed. Owner gates still open.
+- 2026-10-14 bounded TA-APR03B-CURRENT-MAIN-PREVIEW-20261014 technical QA completed, draft PR421 head 8777a8ee93f4da3044324e4a727e0e2c4cc6cde5.
+  Private Mac mini current-main image cc9efe6b, SHA7950d3f..., separate 127.0.0.1:18087 with RO root and five RO mounts, old 18083 preserved.
+  Real saved Museum Bread EIS run/evidence/report authenticated200, unauth401, archived PDF/DOCX409 each; analysis_mode=fallback_deterministic_adapter.
+  50 focused pytest PASS, Ruff/Node PASS, exact PR421 GitHub CI queued. Owner browser/semantic/full LLM still OPEN.
+- '2026-10-14 independent original B2B Center parent #4632682 direct no-proxy HTTP200/64714-byte/SHA4af001503f07, source prequalification
+  active and deadline Oct14 16:00 MSK; original child #4632699 SHA01edb692, source-confirmed lot 1 of same parent. Both SHA-pinned real
+  bytes replayed through H1-only parser to the SAME b2b-center:4632682 key with bid_ready false. Follow-up PR420 code e65aedf15b502087d570c840a9a9772d1f1197b5
+  57 focused pytest PASS, Ruff PASS, dual-original replay PASS, no new unique qualified lead; CI pending.'
+- '2026-10-14 PR420 source integrity improved after original-page audit: H1-only parent/lot identity prevents sidebar cross-links from
+  asserting procedure identity. Mac mini tested 91818451e62a7de9c4fff05fb705a89d5cd19266: 56 focused pytest PASS, Ruff PASS, real original
+  #4632699 raw-HTML SHA replay PASS, non-counted same parent #4632682. Draft PR420 exact GitHub CI pending.'
+- '2026-10-14 bounded new B2B public-source discovery #4632699 from Russian Mac mini (HTTP200/SHA01edb692...) proved original lot 1
+  of already-counted parent prequalification #4632682; #4616411 archive and #4638345 specialized nuclear SAKOR price monitoring excluded.
+  New pure SHA-bound parent/lot dedupe module + original-source regressions. Mac mini code 72436c8dbaee3ab19dddd5002c281b530f88495e
+  55 focused pytest PASS/Ruff/actual original bytes replay PASS. Draft stacked PR420 at 36519ccfe7ca04fc445a62206b033d2293d511ea, exact
+  PR/push GitHub CI not yet verified; no new qualified leads, 11 historical distinct procedure baseline unchanged.'
+- 2026-10-14 PR419 source-card URL gate draft exact head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f GitHub PR38462374923/push38462366947/push38462366807
+  3/3 SUCCESS; Mac mini code efc461958cbf3604b62551a1879e02a8d60325e1 43 pytest PASS/Ruff PASS; child completed. PR418 updated checkpoint
+  head 36e49832860b3d3327ce58bed7d35aaeda38d207 3/3 CI SUCCESS. All drafts remain unmerged.
+- 2026-10-13 PR418 source-bound secondary-only Zvuk/Workspace audit code 090ec838 Mac mini 33 pytest PASS/Ruff PASS, exact head 587a755abd26f8854121b7c0259b535ae1f2116c
+  PR38460471608/push38460463687/push38460463649 all SUCCESS; child marked completed, no confirmed Sberbank-AST exact original tender,
+  15-20 live qualified still OPEN.
+- '2026-10-13 new bounded successor TA-B2B-EXACT-CARD-PATH-20261013: original Workspace/B2B-Center full card URL patterns, not general
+  catalogs; new regression tests Mac mini isolated 43 pytest PASS/Ruff PASS, code efc461958cbf3604b62551a1879e02a8d60325e1. Draft stacked
+  PR419 head e296bbf0f68a02f5622d0737cb2cfe60a8fa7b0f, exact GitHub CI queued, child in_progress.'
+- '2026-10-13 PR417 exact source 476aaa24f46238d2a9c990492e1077a138aecbc2 full GitHub PR38455956035 and pushes38455950242/38455950124
+  SUCCESS, child completed at 4a0b5c09. New PR418 original-Sberbank Zvuk lead source check: direct RU/no-proxy official Sberbank homepage
+  200 but exact SBR028-2610130033 original tender not verified; secondary Kontur claimed 12.2m RUB and Oct21 deadline only, direct aggregator
+  403. Workspace current original index 200, new listings 19026 and 19027 not promoted to suitable software opportunities. Source code
+  196a866 local 33 pytest PASS/Ruff PASS, PR418 exact checkpoint head 59e7294 GitHub CI queued. B2B 15-20 current qualified goal OPEN;
+  no ETP, buyer contact, login or paid data.'
+- '2026-10-13 PR416 completed exact source fc24201c737e29c6d89e0587fa5d758c1e770785 GitHub 3/3 PR/push SUCCESS, 67 Mac mini focused
+  PASS/Ruff PASS, child checkpoint 8c53d2d3 COMPLETED; APR05/06 commercial/human gates still OPEN. New B2B read-only source discovery
+  PR417 draft stacked on PR399: direct Mac mini official Workspace #19023 no-proxy HTTPS200 on Oct13 22:30:24 MSK, 61868-byte HTML SHA
+  c94e9d7..., legal entity organizer, public open status, Oct20 date-only deadline, 100-400k RUB, prior Aspro examples required and
+  unverified => FIT_CONDITIONAL not bid ready. Historic source-attested pool 10+1=11 distinct, NOT 11 currently actionable; INK SZ-356-26
+  and SZ-371-26 conflicting aggregator deadlines flagged REVIEW_REQUIRED, Fabrikant3502252 price monitoring not counted. 29 local pytest
+  PASS/Ruff PASS/JSON, PR417 source checkpoint 476aaa24f46238d2a9c990492e1077a138aecbc2 GitHub CI queued. 15-20 CURRENT qualified B2B
+  gate remains OPEN.'
+- 2026-10-13 PR416 source-bound SaaS HTTP acceptance exact implementation/doc head fc24201c737e29c6d89e0587fa5d758c1e770785 GitHub pull_request38453272162
+  and pushes38453265878/38453266119 all SUCCESS; child TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013 COMPLETED checkpoint 8c53d2d3df2ff412b9091d242bc902d6d14c47d9.
+  Mac mini 67 focused pytest PASS/Ruff PASS incl private original 44-FZ 1C ZIP/PDF HTTP GET SaaS qualified source weights60/40/5/95
+  NOT_ASSESSED, unauth401, other tenant404, viewer403/private report redaction, temp PDF tamper refused; no real company tenant/production/browser
+  usage. PR416 and prior stacked PRs DRAFT/unmerged. All APR05/06 owner-human gates still OPEN.
+- 2026-10-13 bounded APR05/06 authenticated original EIS HTTP QA child TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013 active on feature/saas-source-eis-api-acceptance-20261013,
+  draft stacked PR416 on PR415; source/current checkpoint head fc24201c737e29c6d89e0587fa5d758c1e770785. Isolated SaaS TestClient real
+  Bearer owner 200 original 60/40/5/95 NOT_ASSESSED, no-auth 401, second tenant 404, viewer qualification403/report private redacted,
+  temporary PDF tamper => unavailable. Mac mini 67 focused pytest PASS including exact private 1C EIS v2 ZIP/PDF + synthetic CI fixture,
+  Ruff PASS, git diff clean, no live tenant. PR416 exact GitHub PR38453272162/push38453266119/push38453265878 queued/in progress. No
+  ARR/APR05/06/07 owner/human completion claim, no production/ETP.
+- '2026-10-13 PR415 exact verified source 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub PR38448017188 and pushes38448007346/38448007308
+  all SUCCESS; child TA-QUALIFICATION-REAL-RUN-REPLAY-20261013 marked completed checkpoint d1c2a074107fc2fc6d6ab8a89b010d0d14a932fd.
+  Local original 1C 44-FZ v2 genuine EIS ZIP/PDF integrated report NOT_ASSESSED at 60/40/5/95 and temp one-byte tamper rejection; 58
+  focused pytest and Ruff PASS. Canonical MASTER_ROADMAP overlay reconciled in main commit 4f59ed4d958af56fad551cc07e39ef27c5586a41:
+  135 checkboxes, 59 done/76 unchecked; current APR03 code PR251 merged, APR04 PR252 merged, APR05 PR253 merged (none business/production
+  accepted), ARV066 confirmed merged; historical legacy entries intentionally preserved. Remaining admitted P0 gates APR03/03B/04/05/06/07
+  and optional read-only B2B 15-20 original-card sourcing; no protected actions authorized.'
+- '2026-10-13 PR414 original DOCX/PDF tenant-run routing exact head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 GitHub PR38445274161 and
+  pushes38445262922/38445262896 all SUCCESS, child completed at eb5937af4a1fd7620a5e96324fbbc3b2c023be13. New research DRAFT PR415 real
+  original 44-FZ 1C ZIP+PDF through actual integrated assess_owned_run_qualification using temporary source-bound run: price60/qualification40
+  nested contracts5/specialists95, competitive NOT_ASSESSED, original EIS ZIP/PDF SHA verified and temp copy bit-flip => ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED,
+  no tenant DB or production login. Reproducible read-only CLI+tests; Mac mini 58 pytest PASS, Ruff PASS, real-source replay PASS code
+  cecf94c, docs/roadmap+child source 054c5e21; full GitHub PR415 CI pending. No ETP, signatures, payments, production SaaS or watchdog.'
+- '2026-10-13 PR413 original 44-FZ 1C v2 PDF source head c9cafab all full GitHub PR38441925371 and pushes38441916713/38441916714 SUCCESS,
+  child completed checkpoint 149c8766768fdd70dbbafe9037a228b563e07593. New stacked DRAFT PR414 feature/qualification-multiformat-run-routing-20261013
+  on PR413: authenticated tenant-run SaaS report now preserves CZN DOCX source-first owner reference scoring while only missing supported
+  DOCX tries at-download source-sha/latest UID/XML original composite 44-FZ PDF observation. 1C 60/40 nested contract5/specialist95
+  => NOT_ASSESSED, not false zero-contract NO_GO; tamper/old SHA/wrong mode/multiple file => fail-closed. Mac mini source head 5ffda3c
+  112 focused PASS/Ruff and Node JS PASS; exact PR414 latest checkpoint 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 full GitHub CI pending.
+  PRs all drafts, SaaS off, no production or ETP.'
+- 2026-10-13 PR413 original 44-FZ 1C EOK2020 v2 PDF composite score observer exact source head c9cafab33abece6f56be08687445d1c233b0b291
+  all GitHub PR38441925371 and pushes38441916713/38441916714 SUCCESS; child checkpoint COMPLETED at 149c8766768fdd70dbbafe9037a228b563e07593.
+  81 Mac mini targeted PASS/Ruff PASS + private original 44-FZ SOAP+PDF replay 60% price/40% qualification nested 5% completed matching
+  contracts and 95% specialists. Commercial NOT_ASSESSED, not false owner-zero NO_GO. All PRs 405/407/408/409/410/411/412/413 draft,
+  production SaaS disabled, no paid APIs/ETP/watchdog.
+- '2026-10-13 PR412 original RI223 223-FZ 40/60 source observer exact head 50f3a19a069333b1777858b9bd3c53da51230291: GitHub PR38438694970
+  and both push38438686614/38438686626 SUCCESS; child marked COMPLETED checkpoint 694c731bc027e3fba6f57dbb00f54b347a412539. Fresh official
+  Russian-IP/no-proxy EIS EOK2020 region Moscow Oct12 getDocsIP discovery: 29 unique EOK notices, regional ZIP sha783279d0; exact-number
+  44-FZ 0173300009226000009 separate SOAP ZIP SHA655a3014, latest XML v2 SHA c6805b5f, original 341407-byte linked evaluation PDF sha6b0eca79
+  UID 01A0F69F..., cached privately on Mac mini. Primary PDF 60% PRICE/40% QUALIFICATION, only 5% within qualification completed relevant
+  1C contracts, 95% qualified specialists; new source-verified read-only PR413 draft, local 81 pytest PASS/Ruff PASS and actual SOAP/PDF
+  replay PASS, outcome NOT_ASSESSED not false owner-zero NO_GO. Latest PR413 child checkpoint c9cafab33abece6f56be08687445d1c233b0b291,
+  full exact GitHub CI queued. Production SaaS/ETP/signatures/payment/watchdog untouched.'
+- '2026-10-13 PR411 bounded original 44-FZ archive audit exact head a9fdb20a9efe7459ac480cebee18e33cadffe3cb three full PR/push GitHub
+  workflows SUCCESS; child completed checkpoint 15d592846219e1a3ded748c798c87184a4df2fbd. New independent original RI223 223-FZ source
+  #32616445795 found on authorized Mac mini outside earlier 44-FZ archive: SOAP ZIP SHA 65004d53..., original RAR SHA 36ef971b..., original
+  10-page evaluation PDF SHA a44d9573... from exact EIS notice UID E8D01839...; PDF explicitly price40% nonprice60% and suggested nested
+  reputation20/financial20/qualification60 with conditional wording. New separate source-bound observer + offline replay PR412 draft
+  stacked on PR411 at source 79dc168, 103 focused Mac mini pytest PASS/Ruff PASS, exact private originals confirmed and output NOT_ASSESSED
+  (NOT CZN-style NO_GO), GitHub latest head checkpoint 50f3a19 CI queued. No production/legal signature/ETP actions.'
+- '2026-10-13 PR410 owner reference-list editor exact verified source head 8da48571d9d50b5345b8373b7385ef7d0e5c129e: GitHub PR38433181463
+  + push38433171288 + push38433171386 all SUCCESS, local 77 PASS/8 SKIP Ruff/Node PASS. Child TA-QUALIFICATION-REFERENCE-EDITOR-20261013
+  status COMPLETED checkpoint 66f4f2919d4aab676c95dc631d220546f14271f2. Owner/admin can read and append immutable signed-act references
+  with version-concurrency 409, confirmed COMPLETE vs PARTIAL vs UNKNOWN; no actual Arvectum tenant seeded, SaaS off. All PRs 405/407/408/409/410
+  still draft, owner/human acceptance and SLO open.'
+- '2026-10-13 PR409 final exact head 4c0fdeb all GitHub PR38426317250 and both push38426307139/38426307140 SUCCESS; child TA-QUALIFICATION-RUN-ORCHESTRATION-20261013
+  marked COMPLETED at 3e91c275. Next stacked DRAFT PR410 feature/qualification-reference-editor-20261013: owner/admin /saas UI typed
+  contract references, explicit owner COMPLETE/PARTIAL/UNKNOWN, signed final act document refs, optimistic expected_version -> HTTP409
+  on stale concurrent writes, no tenant ID supplied. Mac mini 77 focused pytest PASS/8 SKIP + Ruff/Node JS PASS code head e985a11, docs/roadmap
+  PR head 0ab41a29, checkpoint head 8da48571; exact GitHub full CI pending. No live tenant writes or SaaS activation, all drafts unmerged,
+  human gold/production SLO gates open.'
+- '2026-10-13 PR408 official source scoring extractor exact-head GitHub PR38421310979 and push38421294605/38421294641 all SUCCESS, child
+  checkpoint COMPLETED. New PR409 stacked on PR408: EIS getDocsIP intake pins SOAP archive SHA256 at download, XML attachment downloader
+  pins actual DOCX SHA256; tenant Bearer owned_run automatic current-original EIS UID/name/size/file digest scoring and reference-list
+  recommendation appear in SaaS /api/saas/runs/{run_id}/report and /qualification and /saas UI. Viewer references redacted; missing/old
+  original receipt => NOT_ASSESSED. Actual CZN v4 local run simulation with private original SOAP ZIP and scoring DOCX, owner zero =>
+  70% qualification /30% price and competitive NO_GO not legal. Isolated Mac mini 166 focused PASS/8 SKIP, Ruff PASS on code head 87e4160;
+  PR409 docs source 9b2140e8, checkpoint 3d585a10 and exact PR/push CI queued. All draft/unmerged, SaaS off, no ETP/prod/owner DB writes/signature
+  or human gold.'
+- 2026-10-13 PR407 and PR405 prior exact PR/push GitHub CI SUCCESS, their child checkpoints marked COMPLETED while PRs remain DRAFT.
+  New stacked PR408 feature/qualification-official-source-20261013 on PR407, source head 49e172d original EIS SOAP v4 XML and award-evaluation
+  DOCX 22427 bytes exact SHA/UID, parser derives 70 qualification/30 price, qualifying 44/223 completed chatbot contracts and five-year
+  lookback automatically from actual DOCX tables and EIS endDT; Arvectum owner-stated 0 => COMPETITIVE NO_GO. Real Mac mini offline
+  source replay PASS plus 57 local tests PASS/8 SKIP/Ruff PASS, source binary private; exact PR408 push/PR CI pending. No signed-original
+  cryptographic trust or full default UI run integration yet; no ETP/prod/watchdog changes.
+- '2026-10-13 PR407 reference-list engineering advanced: source code b3e3174 adds real SaaS Bearer principal.customer_id routes for
+  company reference-list GET/owner/admin POST + qualification assessment and Decision Core, verifies role/tenant/terms. Local isolated
+  Mac mini 71 tests PASS, 8 SKIP, Ruff PASS; final docs head 3c8b7290 and child checkpoint a400d8fd, PR/push CI pending. Older PR405
+  source-semantic review updated to owner ZERO references and competitive NO_GO (not legal prohibition), local 100 APR06 PASS; full
+  CI pending. Both PRs DRAFT, SaaS not enabled, no prod tenant seeded or ETP actions.'
+- 2026-10-13 OWNER confirms Arvectum has ZERO completed contracts. Original CZN 0348100024426000039 EOK2020 v4 qualification 70% completed
+  44-FZ/223-FZ website/IS contracts INCLUDING chatbot, 30% price; therefore confirmed for Arvectum as of owner statement COMPETITIVE
+  NO_GO, NOT legal ineligibility. Implemented tenant-scoped immutable owner-reference-list fact, 90d freshness, precise 5-year act lookback
+  from official Oct23 bid deadline, qualification /assess and /decision-core endpoints. New main-based draft PR407 source head b129b2f,
+  checkpoint head e56e8c1, Mac mini 50 focused PASS/8 SKIP/Ruff PASS, exact GitHub CI queued. Owner-zero snapshot is committed as JSON
+  input example but NOT inserted into unknown Arvectum live customer_id; no prod/ETP changes. PR405 source audit original documents
+  exact PR38407699617 and push38407689429 CI SUCCESS; keep draft.
+- 2026-10-12 inspected main HEAD 6e737d69, GitHub CI 9/9 PASS; TA refactor completed, DP core refactor complete but owner production/gold
+  acceptance blocked.
+- Mac mini online; isolated APR-03B preview HTTP200 /health and HTTP401 unauthorized workspace. Separate production services not modified.
+- '2026-10-12 APR-03B actual authenticated staging preview: EIS 0372200172326000015 import HTTP200, 6 originals, notice XML 3 structured
+  fields KNOWN; 48 focused current-main tests PASS. No final LLM/report or human acceptance; see docs/operations/TA_APR03B_OWNER_PROBE_2026-10-12.md.'
+- '2026-10-12 APR-04 old PR #252 reconciled onto latest main and pushed updated head 3f289a04, with fail-closed onboarding auth; 3954
+  full PASS/238 SKIP/0 fail and 57 focused PASS. Exact-head GitHub CI in progress, owner acceptance gated.'
+- '2026-10-12 first read-only Workspace B2B public-source pass: eight source-attested corporate IT/digital opportunities (including
+  B2B-Center #4632682 and #4628040), one organizer unknown, five individual/non-core exclusions; 15-20 case acceptance and other ETP
+  sources remain OPEN. See docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md.'
+- 2026-10-12 Safari real saved run toa-run-20261012200402-7249ed analyzed, 6/6 extracted, browser report loaded, XML 3 facts KNOWN.
+  Old preview PDF/DOCX 200; latest-main read-only stage protected 401/200, archived EIS report DEFER, exports 409/409. Added frontend
+  fail-closed export UX and visible no-LLM banner; Node simulation 12/11/4 PASS and focused Python 42 PASS. See docs/acceptance/APR03B_SAFARI_OWNER_REAL_RUN_2026-10-12.md.
+- '2026-10-13 PR #391 merged main at 57294f45 after push and PR CI SUCCESS; historical-file fail-closed UI and deterministic-mode labels
+  integrated. Owner private preview not updated.'
+- '2026-10-13 APR-04 PR #252 retargeted from obsolete APR-03 branch to main, 18 relevant changed files, green CI and 3954/238 local
+  PG16 regression; draft cleared and merged main at 1912acdd. Code integration only: owner legal/business acceptance and production
+  deployment remain pending.'
+- '2026-10-13 APR-05 PR #253 retargeted to main; GitHub reports merge conflicts, PR still draft. APR-06 #254 and APR-07 #255 remain
+  stacked on APR-05 branch. Do not merge blindly.'
+- 2026-10-13 Desktop Commander reported two online Macs but terminal commands timed out; Mac mini new private-preview promotion not
+  verified or performed.
+- '2026-10-13 APR-05 PR #253 updated with explicit integration gate; draft and dirty with current main, no merge attempted. Earlier-branch
+  Mac mini 105↔106 PG migration and three two-tenant HTTP smoke rounds reported green, but not revalidated on new main.'
+- 2026-10-13 B2B source report 9 legally identified buyer corporate opportunities published to main in cce54fbb; noncore SEO/marketing
+  leads separated, no outbound messages or paid access.
+- '2026-10-13 after owner RDC restart: main CI at ef14fcf8 PASS, PR391/PR252 already merged; APR05 PR253 draft/dirty. Mac mini RDC OFFLINE,
+  MacBook terminal command times out; no local migration/deploy performed.'
+- '2026-10-13 07:53-08:05 MSK: Mac mini RDC command execution restored. Separate APR05 worktree ta-apr05-current-20261013 created from
+  main f2cb7083; historical APR05 branch integrated with exactly 3 roadmap/checkpoint conflicts resolved, primary APR07 checkout untouched.
+  30 focused tests PASS, Ruff PASS, make check PASS. Full regression 3971 passed/238 skipped/1 deselected with 3 failures: 2 R9 tests
+  need Docker Engine (unavailable), 1 token-counter subprocess lacked python in PATH (single-test rerun PASS with venv PATH). No commit/merge
+  or deployment done, APR05 worktree has staged changes. Docker Desktop backend running but daemon unavailable; owner preview 18083
+  down.'
+- 2026-10-13 recovered Docker Engine 29.8.2. APR05 code reconciled with main after APR04 merge, worktree commit 9b68bbb6, 3975 full
+  pytest PASS/238 SKIP, 3 R9 docker-based tests PASS, Ruff/make check PASS, isolated localhost:18085 actual HTTP synthetic two-tenant
+  E2E PASS (9/9 categories), API auth HTTP401 without Basic, source SaaS defaults disabled. No production or public payment enabled.
+- 2026-10-13 APR-05 exact-head CI PR and push 9/9 SUCCESS at d91161fb; merged PR253 into main c21b5f8. Local full 3975 PASS/238 SKIP,
+  isolated synthetic two-tenant 9/9 PASS, R9 Docker three PASS; 18082/18083 healthy, QA 18085 removed. No public SaaS/payments/VPS enabled.
+- 2026-10-13 APR-06 PR254 retargeted to main; isolated source merge has six conflicts, including strict EIS original revision selection
+  and legacy facade. Do not replace main source-gating with historic APR06 heuristics; focused and full tests pending.
+- 2026-10-13 APR06 source-safe commercial framework published as draft PR254 head 4d0e96c8 with exact local Git tree 2384b2a3. 56 targeted
+  tests PASS, full 4014 PASS/238 SKIP, Ruff/make check PASS. Cancellation/protocol EIS events now fail closed. Human labels 0/28, approved
+  threshold and current EIS attachment binding OPEN; not accepted.
+- 2026-10-13 APR07 bounded offline quality evidence published as stacked draft PR255 head d7d2aa17, exact local tree 93045a20, 17 targeted
+  tests PASS, full 4031 PASS/238 SKIP, snapshot byte-identical digest e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38.
+  No model downloads, expert gold and rolling SLO NOT_MEASURED.
+- 2026-10-13 APR06 PR254 head 4d0e96c8 push and pull_request exact-head GitHub Actions CI BOTH COMPLETED SUCCESS (9/9), GitVerse mirror
+  SUCCESS. Kept draft due 0/28 human-gold and absent owner-approved KPI thresholds; technical code/CI success is not commercial acceptance.
+- 2026-10-13 exact-head CI for APR06 draft PR254 4d0e96c8 completed PR and push SUCCESS 9/9 each, GitVerse SUCCESS; draft and 0/28 human
+  truth stay BLOCKED. No main merge authorized under human-gold gate.
+- 2026-10-13 exact-head CI for APR07 stacked draft PR255 d7d2aa17 completed PR and push SUCCESS 9/9 each, GitVerse SUCCESS; isolated
+  4031 PASS/238 SKIP and exact reproducible snapshot. No model promotion or rolling production SLO acceptance.
+- '2026-10-13 B2B read-only public-source recency audit: Workspace #19004 now indexed as Завершён despite Oct 14 printed deadline; 19005
+  indexed accepting Oct 13 but cutoff time unknown; 19003 qualification references and budget contradictory; 19006 technical brief absent.
+  Status-first fail-closed rule documented in docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md. 9 historical cards, not nine
+  confirmed currently-open leads; verified 15-20 target OPEN.'
+- 2026-10-13 B2B status-first standalone module prepared in PR392 head 845af2d1, exact Git tree equals local 23646f91; 26 focused tests
+  PASS, full PG16/Docker 4001 PASS/238 SKIP, Ruff/make check PASS. GitHub push+PR exact-head CI pending; module not yet merged/wired
+  to ETP. Dedicated checkpoint .agent/checkpoints/TA-B2B-STATUS-GATE-20261013.yaml on PR branch status in_progress.
+- '2026-10-13 bounded corporate lead source-status gate delivered: PR392 head 845af2d1 exact tested tree 23646f91, 26 focused PASS,
+  full PG16/Docker 4001 PASS/238 SKIP, Ruff and make check PASS, push+PR CI 9/9 SUCCESS, merged main 77470504; dedicated .agent/checkpoints/TA-B2B-STATUS-GATE-20261013.yaml
+  status COMPLETED. No external connector, bidder, paid subscription or production deployment.'
+- '2026-10-13 source-only expansion after PR392: Fabrikant secondary-index commercial IT monitoring 3503859 ООО РЭНЕРА and 3503884 АО
+  ЦПТИ; Roseltorg commercial FastReport development B0810260717501 АО Новосибирскэнергосбыт. Primary original ETP live status/eligibility/documents
+  still missing. Recorded in docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md; three candidate IDs NOT counted as active 15-20.
+  Conflicting B2B-Center 4618502 platform Oct12 versus aggregator Oct14 deadline source caveat preserved.'
+- '2026-10-13 APR03B read-only owner-preview latest-main QA: built local image arvectum/tender-agent:owner-stage-main-20261013 from
+  main aa6709b3; loopback 127.0.0.1:18086 staging health HTTP200, unauth workspace/report/export HTTP401, all original data/artifacts/EIS
+  volumes read-only; no authenticated report probe because secret access restricted. Staging container and clean QA worktree stopped/removed;
+  image cached locally. Original private preview 18083 still HTTP200 untouched. No human browser/legal semantic GO claimed.'
+- '2026-10-13 APR06 private human-review handoff generated locally: 28 candidates, 9 protected report links, 20 source-incomplete cases
+  and 0 human decisions, mode 0600 file /Users/master/arvectum-runtime/private-operator-acceptance/apr06-review-queue-20261013.html,
+  Safari open requested. Generator source tree 5255ccc1 matches Mac mini, local targeted 14 PASS, full PG16/Docker 4028 PASS/238 SKIP,
+  Ruff/make check PASS. Draft stacked PR393 head 988ef6cc created; CI pending.'
+- 2026-10-13 APR06 owner-review subtask PR393 exact-head PR/push CI 9/9 SUCCESS, merged as code-only into APR06 draft head 6c433bf6;
+  dedicated checkpoint .agent/checkpoints/APR06-OWNER-REVIEW-PACKET-20261013.yaml status COMPLETED. Private Mac mini queue 28 candidates,
+  9 reports, 20 source-incomplete, 0 expert decisions, only local file mode 0600.
+- '2026-10-13 APR06 draft PR254 synchronized current main and verified private packet: head 04f5ba77, latest-main B2B code merged, local
+  4054 full PASS/238 SKIP and 60 targeted PASS, make check PASS, exact-head PR and push CI 9/9 SUCCESS, human gold 0/28 BLOCKED.'
+- '2026-10-13 APR07 draft PR255 synchronized latest APR06: head 54a89534, exact local Git tree 2cf74297, 57 targeted PASS, full PG16/Docker
+  4071 PASS/238 SKIP, Ruff and make check PASS, no source-code conflicts; GitHub exact-head PR/push CI pending. Offline snapshot human
+  truth and rolling production SLO remain NOT_MEASURED.'
+- '2026-10-13 APR07 latest APR06 reconciliation completed TECHNICALLY: PR255 exact head 54a8953434680ba5a22d0a1fbd195c3dda5b511c, source
+  tree 2cf742979e78d2fbf6e76ee0214d5f90b866e522 matches Mac mini full 4071 PASS/238 SKIP and 57 focused PASS, Ruff/make check PASS;
+  exact-head push and PR CI runs 38365321455/38365314201 9/9 each SUCCESS, GitVerse mirror SUCCESS. Remains DRAFT for human gold, approved
+  metrics and rolling production SLO.'
+- '2026-10-13 independent APR06 audit: PR394 corrected accepted-with-unreviewed-package and duplicate-claim citation inflation; PR397
+  code-only guard prevents self-asserted acceptance; both exact-head CI green and merged to APR06 branch c5c3d9bf. PR398 Node E2E timer
+  fixture green CI merged main 47fb8f02. APR07 restacked on new APR06 head in PR255 at e79ae876 (full CI queued). Official EIS bytes/source-currentness/approvals
+  and human gold 0/28 remain BLOCKED.'
+- '2026-10-13 AI-only provisional 28/28 screening PR400 (3cc86454) against preserved 9-case historic EIS/GPT6 audit + 19 aggregator-only:
+  7 archived deadlines passed, 2 future saved deadlines, 0 new originals/human labels. Isolated Mac mini SSH tested APR06-focused pytest
+  88 PASS, Ruff PASS, JSON exact reproduce PASS. Additional public cards reveal Museum site/design split and conditional bid/contract
+  security; no live EIS truth promoted. Exact-head GitHub PR and push CI in progress, draft unmerged.'
+- 2026-10-13 APR07 draft PR255 e79ae87697a635f626f257809bf8b53647aec41d exact-head push CI 38375419717 and PR CI 38375426038 both SUCCESS.
+  Technical pass only; 0/28 human gold and production SLO still NOT_MEASURED; no merge.
+- '2026-10-13 independent original-site B2B verification: B2B-Center public qualification 4637497 ООО КЕХ еКоммерц active according
+  to indexed 13-Oct original card until 19-Oct 16:00; existing 4628040 original active through 20-Oct 12:00 without duplicate counting.
+  Research-only draft PR399 cb024f5e adds documentation+separate checkpoint; local exact diff check and report sanity PASS, PR CI running;
+  no accepted 15-20 qualified leads or bidder authority.'
+- '2026-10-13 APR06 source bytes independently rehashed in isolated network-disabled read-only Docker on Mac mini: historical 44-FZ
+  168/168 SHA256+size exact matches across 20 saved runs (17 with source bytes, 3 zero-file), plus local 223-FZ 5/5 bytes across four
+  cases; HTML suffix/ZIP magic mismatch in 32616369437 confirmed. This proves archived byte integrity only, NOT current EIS edition,
+  complete original attachment set or human/legal review. Reusable audited checker PR401 head 280fd22a, 24 targeted tests PASS, Ruff
+  PASS, GitHub exact-head CI pending.'
+- '2026-10-13 APR06 independent archived EIS notice edition/attachment audit on actual Mac mini read-only Docker volume: 20 cases, 17
+  original notices, 3 no XML; latest archived editions reference 77 attachment pairs (50 local name+size + SHA evidence correlated,
+  27 unmatched), 9 fully name-size correlated only (NOT UID-bound), 7 partial, 1 notice deadline absent. CZN last v3 contract appendix
+  file skipped on initial download due HTTP429. Source-limited JSON, Russian report and negative tests in draft PR402 head 6880156f;
+  94 local APR06 focused PASS, Ruff PASS, PR/push CI pending. No active EIS status, source UID/current attachment binding or human truth
+  fabricated.'
+- '2026-10-13 APR06 archived notice PR402 stronger original source binding found on Mac mini: saved attachments_manifest.source_url
+  contains EIS uid, matching original XML publishedContentId; 50 of 77 latest-archived attachments matched exact UID, original source
+  URL, name, size and SHA-256. 17/20 archive notices, 27 unmatched, CZN v3 missing 1 due HTTP429. 96 focused APR06 pytest PASS/Ruff
+  PASS at a29311e, latest child checkpoint head 044b7b80 CI queued. Official current notice HEAD returns HTTP404 for Museum/CZN from
+  Mac mini, not proof procurement ended; no current-EIS status asserted.'
+- '2026-10-13 direct public HTTPS EIS diagnosis via Mac mini: PAC enabled via localhost:8082 but curl -q --noproxy * --proxy empty egress
+  RU/Moscow (IP geo), process proxy env unset. HTTPS /epz/main/public/home.html 200, official Museum common-info 0372200172326000015
+  200, HTML Подача заявок until 16 Oct 10:00 MSK updated 08 Oct. CZN 0348100024426000039 official ok20 common-info 404 nginx EVEN direct;
+  never infer cancellation/closure from 404. Existing urllib create_urllib_opener source_direct_connection=True uses ProxyHandler({}).
+  Source-limited report and two policy regressions draft PR404 latest checkpoint head fa41bef4, exact PR/push CI queued. PR402 prior
+  original-archived UID/SHA evidence latest tested checkpoint head 044b7b80 PR/push CI SUCCESS, child metadata completion 5199faf2.'
+- '2026-10-13 APR06 Mac mini public EIS direct HTTPS follow-up: system PAC http://127.0.0.1:8082/proxy.pac present, no HTTP_PROXY vars;
+  forced curl -q --noproxy * --proxy empty and removed proxy vars via RU/Moscow egress. EIS HTTPS /epz/main/public/home.html 200, Museum
+  official 0372200172326000015 common-info 200 status Подача заявок until 16 Oct 10:00 Moscow, updated 08 Oct. CZN 0348100024426000039
+  original official ok20 common-info route 404 nginx EVEN direct; do not infer closed/cancelled. Existing urllib source_direct_connection=True
+  inserts ProxyHandler({}); verified pure Python behavior suppresses inherited environment proxy. Documentation and two offline regression
+  tests in draft PR404 latest metadata head 67c1a01d, GitHub full CI queued (local test not confirmed). Archived-source PR402 code/metadata
+  exact CI PASS; child completion checkpoint 5199faf2.'
+- '2026-10-13 CZN EIS restored via direct RU HTTPS: intermittent pub01 146-byte nginx404 vs pub02 HTTP200; PR404 bounded 404-only retry
+  implemented in two adapters, plus corrected operator UTC 07:00 vs official 10:00 MSK. Official current v4 EOK 12 Oct 22:24, deadline
+  23 Oct 10:00, 7 original UID. Real read-only getDocsIP PRIZ SOAP from int.zakupki.gov.ru returned archive ZIP 76759 bytes SHA256 dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908,
+  original v4 XML SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 7/7 UID+name+size crosscheck against
+  three archived SHA originals and four newly downloaded verified files. Four new files moved to restricted ArvectumSSD local evidence
+  and three ZIP CRC PASS (2 nested DOCX, 1 PDF). Offline verifier/negative tests in draft PR404 head ac972df99: 168 pytest PASS, Ruff
+  PASS, original offline source test PASS; exact PR/push CI queued. DIGITAL SIGNATURE, ZIP CONTENT EXPERT REVIEW AND HUMAN GOLD NOT
+  COMPLETED.'
+- '2026-10-13 PR404 exact tested checkpoint a076c8c8: GitHub PR38401431113 and push38401426507/38401426493 all SUCCESS; local 168 APR06
+  tests PASS/Ruff PASS; child direct-EIS checkpoint completed. New CZN v4 semantic review PR405 source report/test head ff76cc3 independently
+  reads original 95p OОЗ, v4 nested contract/PIK DOCX, unchanged 44-FZ application/evaluation DOCX and two NMCK PDFs; official primary
+  NMCK 685000 chatbot + 315000 youth + 245000 trainings = 1245000 RUB, tender evaluation 70% completed 44-FZ/223-FZ contracts incl chatbot,
+  30% price. Custom PHP/JS/SQL, 2/7/10/15 December deadlines, no advance, 12-month warranty. Original source-linked private binary bytes
+  stay on Mac mini. Mac mini 172 tests PASS/Ruff PASS/real v4 SOAP 7/7 UID PASS; draft PR405 CI pending. Provisional DEFER conditional
+  on qualifying references, NOT human gold or legal acceptance.'
+- '2026-10-13 CZN v4 source assessment follow-up: draft PR405 checkpoint latest head a15c68e2937f2225fb0e57189f306fba5415c6b1, source
+  report/code head ff76cc3; Mac mini 172 focused pytest PASS, Ruff PASS, original EIS v4 UID verifier PASS. GitHub PR38407699617 and
+  push38407689429 quality job make test still in progress, fast push38407689203 SUCCESS, other 8 PR jobs SUCCESS. New roadmap issue
+  #406 tracks future general source-bound qualification-weight competitive-risk feature; no code implemented for it. PR405 do not merge,
+  human-gold unapproved.'
+current: TA-R4-20-COMPETITIVE-SEMANTIC-20261014 PR432 verified source2c40b4bf Mac mini FULL 4119 PASS/242 SKIP, exact GitHub 3/3 SUCCESS,
+  96/96 selected archived EIS original attachment SHA and texts, fail-closed runtime missing appendix, 47 historical LLM quotes checked.
+  Canonical child checkpoint02cfe021; technical foundation green, FULL human legally grounded semantics across96 original documents
+  and current EIS/Owner signoff0/20 still in progress. Other APR03B/APR04-07/B2B roadmap gates remain.
 pending:
-  - 'PR407: verify exact-head GitHub push and PR CI; repair verified failures and complete TA-QUALIFICATION-REFERENCE-LIST-20261013 child. Report UI automatic integration, authorized known Arvectum customer_id fact seeding and strict original EIS criterion hash crosscheck are separate remaining roadmap tasks; do not pretend done.'
-  - 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external bid action.'
-  - 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current live revision/source-locked analysis and owner semantic acceptance without changing production.'
-  - 'APR-04: PR252 merged into main. Private Arvectum legal-profile UI/business acceptance remains required; no public deployment.'
-  - 'APR-05: code merged and tested, do not activate paid/public SaaS, do not treat internal tenant pilot as real payment or legal acceptance.'
-  - 'APR-06: original CZN 0348100024426000039 v4 SOAP XML/7 UID SHA binding and public status 23 Oct 10 MSK verified; PR404 bounded EIS cache retry, fixed timezone and exact-head CI SUCCESS. PR405 source-grounded AI-only doc review: official NMCK 685k/315k/245k, experience 70% and price 30%; if no qualifying completed 44/223 chatbot contracts, commercial win chance likely low; keep DEFER conditional, not legal denial. Need company reference confirmation, economic/security cost, owner KPI, actual human gold 20-30 independent cases, cryptographic signature if needed; PR254/PR255 do not merge.'
-  - 'APR-07: exact-head PR+push CI green on draft stacked PR255; bounded reproducible offline snapshot tested but rolling production SLO and human procurement model comparison NOT_MEASURED, no promotion.'
-  - 'B2B discovery: nine historically source-attested corporate IT/digital cards, NOT nine presently open: Workspace19004 terminal despite future printed deadline, official Workspace PRO needed for self-initiated bids. Bounded status-first library PR392 merged, discovery source connectivity and 15-20 qualified original-platform leads still open; no purchases or ETP submissions.'
-last_verified_commit: "PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini 4119 passed/242 skipped/0 failed 146.20s, Github 3/3 workflows SUCCESS; child checkpoint metadata02cfe0218c2977f4a82319d6ca5c2f7c886a7872. No merged commits."
-
+- 'PR407: verify exact-head GitHub push and PR CI; repair verified failures and complete TA-QUALIFICATION-REFERENCE-LIST-20261013 child.
+  Report UI automatic integration, authorized known Arvectum customer_id fact seeding and strict original EIS criterion hash crosscheck
+  are separate remaining roadmap tasks; do not pretend done.'
+- 'APR-03B: obtain actual model report, full legal/source review and explicit owner visual/semantic acceptance; no unapproved external
+  bid action.'
+- 'APR-03B: PR391 merged. Validate private 18083 preview using newly built image and rollback when Mac mini is reachable; perform current
+  live revision/source-locked analysis and owner semantic acceptance without changing production.'
+- 'APR-04: PR252 merged into main. Private Arvectum legal-profile UI/business acceptance remains required; no public deployment.'
+- 'APR-05: code merged and tested, do not activate paid/public SaaS, do not treat internal tenant pilot as real payment or legal acceptance.'
+- 'APR-06: original CZN 0348100024426000039 v4 SOAP XML/7 UID SHA binding and public status 23 Oct 10 MSK verified; PR404 bounded EIS
+  cache retry, fixed timezone and exact-head CI SUCCESS. PR405 source-grounded AI-only doc review: official NMCK 685k/315k/245k, experience
+  70% and price 30%; if no qualifying completed 44/223 chatbot contracts, commercial win chance likely low; keep DEFER conditional,
+  not legal denial. Need company reference confirmation, economic/security cost, owner KPI, actual human gold 20-30 independent cases,
+  cryptographic signature if needed; PR254/PR255 do not merge.'
+- 'APR-07: exact-head PR+push CI green on draft stacked PR255; bounded reproducible offline snapshot tested but rolling production SLO
+  and human procurement model comparison NOT_MEASURED, no promotion.'
+- 'B2B discovery: nine historically source-attested corporate IT/digital cards, NOT nine presently open: Workspace19004 terminal despite
+  future printed deadline, official Workspace PRO needed for self-initiated bids. Bounded status-first library PR392 merged, discovery
+  source connectivity and 15-20 qualified original-platform leads still open; no purchases or ETP submissions.'
+last_verified_commit: PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini 4119 passed/242 skipped/0 failed 146.20s, Github
+  3/3 workflows SUCCESS; child checkpoint metadata02cfe0218c2977f4a82319d6ca5c2f7c886a7872. No merged commits.
 test_results:
-  - "PR432 Mac mini FULL source780ebd11 4106 pytest PASS,242 SKIP,0 failed,329 warnings,149.74s; ten focused tests PASS, Ruff PASS, original 96/96 EIS archive attachment provenance checked and 47 quote classification reproducible."
-  - '2026-10-14 PR431 complete: GitHub original head ebd12584 exact 3/3 workflow SUCCESS (9+9+1 jobs); Mac mini full source fcb568d1 4100 PASS/238 SKIP/0 FAIL 153.58s, original primary EIS 3/3 fresh verified TLS and four binary originals SHA.'
-  - 'PR431 original source fcb568d1 complete Mac mini pytest 4100 PASSED,238 SKIPPED,0 failed,328 benign warnings,153.58 seconds; 77+69 targeted pytest PASS/Ruff and legacy HTML protected AST PASS; GitHub final head ebd12584 three workflows pending.'
-  - 'PR429 2026-10-14 final code b6c8643e Mac mini FULL pytest 4072 PASS,238 SKIP,0 failed/328 benign warnings/166.75 sec, 13 targeted PASS/Ruff/diff PASS and 4 committed machine-readable case-source assets byte-identical to generator.'
-  - '20 archived cases: ZIP17/no_data3, cached SHA168, XML96, 3 stale receipts vs newer archive,2 historic persisted deadline mismatches; later 72 official binary verified-TLS saved receipts pinned/replayed offline exact joins to public source file SHA/size/ID 72/72 across13 cases total28,519,849 bytes, not new live EIS download. Signed human R4 0/20, 0 legal GO.'
-  - 'PR429 20-case R4 archive evidence and late72-source recovery 13 focused pytest PASS, Ruff PASS, all four archived original+overlay JSON/CSV byte-for-byte replay with private pinned SHA receipt manifests, no private original bytes/UID published. Full Mac mini baseline pending PID22958.'
-  - 'Latest dated source recap 17/20 official original ZIP, 3 no_data; cached SHA168, official XML96; later Oct12 saved filestore verified-TLS receipts72/72 validated UID and SHA/size across 13 cases (28,519,849 bytes). Human R4/R5 reviewed0/20 and ARV001 not signed, not current EIS.'
-  - '2026-10-14 PR428 full isolated Mac mini repo pytest 4059 PASS/238 SKIP/0 FAIL/328 warnings/153.18s at source615d2bd6, 58 focused PASS/Ruff/diff; original Museum 6 source docs, 15 exact quote proofs, 16 R4 rubric criteria, one exposed source contradiction, no expert approval.'
-  - '2026-10-14 PR427 source proof original exact GitHub 3/3 SUCCESS, bounded child completed; PR426 source research original exact GitHub 3/3 SUCCESS, bounded child completed; all PRs draft/unmerged.'
-  - 'Latest PR427 implementation9f5d5c full Mac mini 4053 pytest PASS/238 SKIP/0 FAIL/328 warnings in152.00s, 75 targeted PASS/Ruff/diff. Original 6 museum archived docs, 15 excerpt SHA/offset checks, two structured EIS facts accurate in source-v2 and both omitted earlier. Forged physical PDF labels rejected without raw SHA+verified mapping.'
-  - 'R4/R5 expert gold docs already define 20 cases but 0 approved; ARV-001 existing quality gate must not be substituted by generated synthetic benchmark.'
-  - '2026-10-14 PR427 full Mac mini pytest 4053 PASS/238 SKIP/0 failed/328 warnings, 153.43s in isolated worktree, venv+PG16 PATH. 100 focused tests PASS/Ruff/diff PASS; 6/6 archived Museum original docs, 15 SHA-exact quote spans, 2 EIS typed source fields absent in first LLM and historically matching in v2 model; source mismatch blocks bid_ready.'
-  - 'PR426 predecessor exact 3/3 GitHub SUCCESS, full 4042 PASS/238 SKIP/0 failed, checkpoint completed; all PRs drafts/unmerged.'
-  - 'PR426 full isolated Mac mini pytest 4042 PASS/238 SKIP/0 FAIL in 167.34s with PY venv and PostgreSQL16 CLI PATH, 112 targeted tests/Ruff PASS. Original 6/6 museum XML/contract/TZ and 15 source questions benchmark, independently caught real v1 2 and v2 1 Gemma semantic contradictions.'
-  - 'PR426 Mac mini 111 focused pytest PASS/0 FAIL/Ruff PASS/diff PASS. Actual saved six original EIS normalized document texts all indexed, 15 categories all source matches, EIS XML structured facts 1m RUB/16 Oct 10 original archive but live version not attested.'
-  - 'Real Gemma4 source-v2 2/2 schema PASS/needs_human_review, material SMP-only misdescribed as preference; independent source modality audit old version 2 contradictions vs v2 1 contradiction, both automatic bid_ready false. Source SHA receipt mismatch cases excluded from retrieval.'
-  - 'PR426 full-source research 84 focused Mac mini pytest PASS, Ruff PASS, git diff --check PASS; original 6/6 documents and 15 research topics source hits, official EIS XML NMCK 1000000 RUB and deadline16Oct10 from registry guarded parser, no semantic legal GO.'
-  - 'PR425 exact source GitHub full 3/3 CI SUCCESS, independent Gemma before-after semantic audit FAIL despite schema validation.'
-  - 'Independent Gemma source audit: four 4/4 schema-valid sections before and after source-window patch; after 313.2s model recovered ticketing and visually impaired features, but fact-check FAIL for SMP-only, §3.8 ±10% price change, missing NMCK/deadline and evaluation criteria labels. Do NOT treat model outputs as legal GO.'
-  - 'PR425 fixed context selector 60 focused pytest PASS, Ruff PASS and original archived source obligation inclusion PASS. Latest full GitHub CI pending.'
-  - 'PR424 exact head 33a32e3d GitHub PR/push 8/9 jobs SUCCESS each; quality still IN_PROGRESS in both workflows, fast push SUCCESS, no detected failures. Not yet full 3/3 CI.'
-  - 'PR422 3/3 GitHub CI SUCCESS and 53 Mac mini tests PASS, Ruff/JS PASS.'
-  - 'PR423 3/3 GitHub CI SUCCESS; local Gemma4 synthetic controlled 4/4 runtime trace validation PASS.'
-  - 'PR424 six original EIS file and six DP-normalized original text SHA multiset exact match, raw host extraction failed DP, separate original text controlled Gemma4 4/4 schema PASS, 312.3sec, all needs_human_review, incomplete context. PR424 GitHub CI queued.'
-  - 'PR422 exact tested source GitHub 3/3 success and Mac mini 53 focused PASS. Child completed, draft unmerged.'
-  - 'Offline archived Museum 6/6 binary originals and 6/6 DP text artifacts SHA multiset exact match source container. Initial whole-app host DP extraction 6 failed, model schema4/4 pass NOT accepted as content review. Current SHA-pinned normalized original text LLM run PID22751 pending.'
-  - 'Local Gemma4 12B controlled synthetic 4/4 PASSED in runtime_control_traces, 4 needs_human_review, no bid decision, 69.4 sec; actual OpenAI-compatible provider transport PASS.'
-  - 'Offline archived Museum Bread 6 original inputs copied only to /tmp and SHA aggregate 51656c89..., original private preview ports 18083/18087 both HTTP200; real local LLM analyze process PID21322 in progress.'
-  - 'PR422 Mac mini 53 focused pytest PASS/0 failed, Ruff PASS, Node syntax PASS; exact GitHub security/build/DB integration SUCCESS, quality IN_PROGRESS.'
-  - 'Local Gemma4 12B model HTTP health/model and actual Tender Agent OpenAI-compatible provider synthetic structured JSON PASS, no outward API. Four-section pipeline RUNNING.'
-  - 'PR420 exact source 3/3 GitHub CI SUCCESS; 57 Mac mini pytest PASS/Ruff and dual original HTML SHA replay PASS. Child completed.'
-  - 'PR421 exact source 3/3 GitHub CI SUCCESS; 50 Mac mini pytest PASS/Ruff JS check, private HTTP auth and archived export gates PASS. Child completed.'
-  - '2026-10-14 APR03B current-main isolated 18087 image source cc9efe6b: 50 pytest PASS, Ruff PASS, Node --check PASS; real saved run/evidence/report200, unauthorized401, archived source PDF/DOCX409, RO mounts/root confirmed, 18083 untouched.'
-  - 'PR420 latest code source e65aedf15b 57 pytest PASS/Ruff, actual parent+lot original source SHA replay PASS; GitHub PR/push CI at last check 1 SUCCESS / 2 IN_PROGRESS.'
-  - 'PR420 e65aedf source 57 focused pytest PASS/0 fail, Ruff PASS, direct source parent#4632682 and child#4632699 SHA-bound identity replay PASS, JSON and diff PASS; exact GitHub CI waiting.'
-  - 'PR420 Mac mini source 91818451e6 H1 original parser 56 focused pytest PASS, Ruff PASS, original HTML SHA replay PASS, 0 failed.'
-  - 'PR420 code 72436c8d Mac mini 55 focused pytest PASS, Ruff PASS, original HTML SHA replay PARENT_LOT_CONFIRMED b2b-center:4632682 PASS, JSON and git diff --check PASS; exact GitHub PR/push CI pending.'
-  - 'PR419 exact-head PR/push GitHub three runs SUCCESS; Mac mini 43 passed, Ruff PASS, git diff --check PASS.'
-  - 'PR418 latest checkpoint head 36e49832860b3d3327ce58bed7d35aaeda38d207 PR/push GitHub three runs SUCCESS.'
-  - 'PR418 exact GitHub PR38460471608/push38460463687/push38460463649 SUCCESS all 3; source Mac mini 33 pytest PASS/Ruff PASS.'
-  - 'PR419 individual-card URL gate Mac mini source efc461958c local 43 pytest PASS/0 FAIL, Ruff PASS and git diff --check PASS; PR/push GitHub CI queued.'
-  - 'PR418 latest tested source 090ec83: Mac mini 33 pytest PASS/Ruff PASS plus official public Sberbank search negative-evidence guard PASS; no exact original tender match and no nonexistence claim. Child checkpoint 587a755a exact GitHub CI pending.'
-  - 'PR417 exact PR/push GitHub three workflows SUCCESS; PR418 original-host vs secondary-only B2B source gate Mac mini 33 pytest PASS/Ruff PASS, exact GitHub CI queued.'
-  - 'B2B PR417 direct source audit: Workspace19023 HTML HTTP200/61868 bytes SHA c94e9d7 at 2026-10-13T22:30:24+03, source legal entity/open public status, conditional prior Bitrix/Aspro experience unverified; INK two contradictory deadlines not promoted. Mac mini 29 focused PASS/Ruff/JSON/diff PASS; GitHub PR38455956035/push38455950242/fast38455950124 queued/in progress.'
-  - 'PR416 full GitHub exact source head fc24201c PR38453272162/push38453265878/push38453266119 3/3 SUCCESS, private real original EIS HTTP SaaS tenant-guarded test Mac mini 67 pytest PASS/Ruff PASS, no production/import/payment/signature/ETP.'
-  - 'PR416 Mac mini original source API acceptance: 67 pytest PASS including private real EIS ZIP+PDF and synthetic fixture, Ruff PASS, no auth 401, second tenant 404, viewer qualification403/redacted report, owner200 60/40/5/95 NOT_ASSESSED, temporary PDF tamper rejected. GitHub PR38453272162 + pushes38453266119/38453265878 queued/in_progress.'
-  - 'PR415 source 054c5e21 exact GitHub PR38448017188 + pushes38448007346/38448007308 all SUCCESS; full original ZIP/PDF report replay 60/40/5/95 NOT_ASSESSED and tamper failure verified. Parent roadmap checklist 135 total, 59 checked, 76 open after ARV066 current overlay correction.'
-  - 'PR415 exact source head 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub both push workflows38448007346/38448007308 completed SUCCESS including full quality; separate PR38448017188 quality make test still IN_PROGRESS with other eight jobs completed SUCCESS at last check. Do not mark child complete until PR workflow finishes.'
-  - 'PR414 full GitHub 3/3 SUCCESS. PR415 Mac mini 58 focused tests PASS and Ruff PASS; genuine private original 44-FZ ZIP/PDF integrated report 60/40/5/95 NOT_ASSESSED, temporary bit-flip rejected. Latest source full CI pending.'
-  - 'PR414 44-FZ DOCX/PDF SaaS tenant-run source-gated routing local 112 pytest PASS, Ruff PASS, SaaS Node UI PASS, git diff clean at 5ffda3c; original standalone 1C EIS v2 zip/pdf replay PR413 PASS. GitHub PR414 full CI pending.'
-  - 'PR413 exact GitHub PR38441925371 and two pushes38441916713/38441916714 all SUCCESS at source head c9cafab; local 81 pytest PASS/Ruff PASS and original 44-FZ EOK v2 60/40/5/95 source replay PASS; child completed.'
-  - 'PR412 exact head 50f3a19 GitHub PR38438694970/push38438686614/38438686626 all SUCCESS. PR413 original 44-FZ #0173300009226000009 Mac mini focused 81 pytest PASS/Ruff PASS, verified real PDF and original v2 EIS ZIP SHA. Current PR413 exact CI queued.'
-  - 'PR411 historical 44-FZ corpus exact PR38435826846 plus pushes38435819400/38435819620 all SUCCESS. PR412 RI223 source head 79dc168 Mac mini 103 focused PASS, Ruff/JSON/diff PASS, original source private PDF/ZIP/RAR 40/60 plus conditional 20/20/60 => NOT_ASSESSED, no e-signature; latest checkpoint full CI queued.'
-  - 'PR410 exact full GitHub PR38433181463 and push38433171288/38433171386 3/3 SUCCESS at source head 8da48571; 77 local PASS/8 SKIP, Ruff and Node JS PASS; owner zero vs unknown and stale 409 verified.'
-  - 'PR409 exact PR/push workflows all green at 4c0fdeb, engineering child completed; PR410 reference editor e985a11 local 77 PASS/8 SKIP, Ruff PASS, Node SaaS UI PASS, exact GitHub CI queued.'
-  - 'PR409 final roadmap/docs head 4c0fdebfa and code head 87e4160: local 166 PASS/8 SKIP, Ruff PASS, real original CZN SOAP+DOCX run simulation competitive NO_GO and Node--check SaaS JS PASS. GitHub exact PR38426317250/push38426307140 quality make test IN_PROGRESS (other 8 PR jobs success), fast push38426307139 SUCCESS at last check. Child stays in_progress until full exact CI green.'
-  - 'PR409 automatic tenant-run original EIS qualification: Mac mini 166 focused pytest PASS /8 SKIP and Ruff PASS; actual original CZN v4 SOAP ZIP+UID scoring DOCX and owner zero => 70/30 and competitive NO_GO; no digital signature/human gold, no ETP actions. GitHub CI queued.'
-  - 'PR408 exact-head GitHub PR38421310979 and pushes38421294605/38421294641 SUCCESS, child marked completed.'
-  - 'PR408 original EIS v4 ZIP/award DOCX scoring extractor real offline source replay PASS: derived 70% qualification, 30% price, completed 44/223 chatbot, 5y cutoff 23 Oct; Arvectum owner zero => competitive NO_GO, not legal block. Local 57 PASS/8 SKIP and Ruff PASS, GitHub exact CI pending.'
-  - 'PR407 exact GitHub PR38415954750/push38415943973+38415943861 SUCCESS; PR405 PR38414910423/push38414902253+38414901761 SUCCESS. Child checkpoints complete.'
-  - 'PR407 SaaS Bearer tenant-scope integration b3e3174: Mac mini 71 pytest PASS /8 SKIP, Ruff PASS, JSON & diff PASS; owner/admin writes only, legal acceptance and tenant principal required, no anonymous reads, other tenant isolated.'
-  - 'PR405 owner zero corrected original semantic report/test 64c8ffe: Mac mini 100 APR06 tests PASS, Ruff PASS; CI queued on latest checkpoint.'
-  - 'PR407 qualification owner-reference list source head b129b2f: Mac mini 50 targeted pytest PASS, 8 skipped; Ruff PASS, fact tenant isolation, Decision Core legal independence, CZN 70/30 zero reference no-go verified. Exact-head PR/push GitHub CI queued on checkpoint e56e8c1.'
-  - 'PR405 CZN v4 source grounded semantic review CI exact head a15c68e PR38407699617/push38407689429 SUCCESS; original 172 focused pytest PASS, Ruff PASS.'
-  - 'PR405 CZN v4 original document semantic review: primary 95p PDF, 2 current DOCX, unchanged bid/score DOCX and 2 NMCK PDFs; primary numbers 685k + 315k + 245k RUB; evaluation 70% completed 44/223 chatbot work vs 30% price; Mac mini 172 tests PASS/Ruff PASS/JSON and original SOAP UID v4 check PASS. Human gold 0 and competitive DEFER provisional.'
-  - 'PR404 head a076c8c8 exact PR38401431113 and push38401426507/38401426493 GitHub CI SUCCESS, local original SOAP SHA+UID 7/7; source child status completed.'
-  - 'PR404 v4 original EIS SOAP source head ac972df99 local 168 pytest PASS/Ruff PASS, original ZIP+XML exact SHA and 7/7 UID/name/size/local-file SHA verification PASS; GitHub PR/push full CI pending. Signature/human/legal acceptance NOT VERIFIED.'
-  - 'APR06 direct EIS branch PR404 head 67c1a01d: official Museum common-info HTTPS 200 and public live HTML, CZN official common-info HTTPS 404 from direct Russian egress. Two offline ProxyHandler({}) policy regressions committed, exact-head GitHub checks queued; no claim of local pytest success.'
-  - 'PR402 original-archived UID+SHA head 044b7b80 exact PR38390827395 and push38390820228/38390820231 SUCCESS; Mac mini APR06 96 PASS/Ruff PASS. New PR404 direct-source environment test/report branch checkpoint head fa41bef4, exact CI pending.'
-  - 'APR06 PR402 final pre-checkpoint source head a29311e: Mac mini 96 pytest PASS/Ruff PASS; exact original archived latest notice UID ↔ local SHA correlates for 50/77 source attachments; 27 not matched. Full latest-head CI queued.'
-  - 'APR06 archived EIS XML revision audit PR402 source head 6880156f: 94 pytest PASS/Ruff PASS, real read-only Docker 17 archived notices of 20, 50/77 latest notice attachments correlated by exact name+size to locally SHA-verified file; 27 unmatched; PR38390127009 queued/push38390030216 in_progress.'
-  - 'APR06 PR400 code checkpoint head 90a1fb45 exact push/PR CI SUCCESS and PR401 code/report head 280fd22a exact push/PR CI SUCCESS. Parent draft APR06/07 commercial gates not met.'
-  - 'APR06 source-byte branch PR401: Mac mini isolated read-only network-disabled hash check 168/168 44-FZ + local 223-FZ 5/5, three 44-FZ runs have no source bytes; 24 focused pytest PASS, Ruff PASS; exact-head 280fd22a PR/push GitHub CI pending.'
-  - 'APR06 AI-only branch PR400 at 3cc86454: Mac mini isolated 88 APR06 pytest PASS / 1 benign deprecation warning, strict Ruff PASS, exact dated JSON regeneration PASS; CI PR38381740128 and push38381733914 pending.'
-  - 'B2B PR399 research exact-head cb024f5e CI run38377724507 COMPLETED SUCCESS; branch checkpoint completion bd1941e9 pending exact-head CI for metadata.'
-  - 'APR07 head e79ae876 exact-head push 38375419717 and PR 38375426038 GitHub CI COMPLETED SUCCESS; no expert/production acceptance inferred.'
-  - 'B2B original-source research PR399 cb024f5e: MacBook isolated clean clone, git diff --check PASS and report source-addendum assertions PASS; PR CI 38377724507 in_progress.'
-  - 'Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.'
-  - 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
-  - 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report pending.'
-  - 'B2B first source pass: nine corporate IT/digital source-attested opportunities including Workspace #19006; report docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md now in main. Remaining 15–20 accepted-source goal OPEN.'
-  - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
-  - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
-  - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Follow active child checkpoint TA-APR067-R4-FOURTH-DISTINCT-E2E-20261015: fourth historical official source-offline Gemma E2E source/role fix implemented and 4130 tests passed; inspect stacked PR and CI before marking completed. Owner ChatGPT-expert acceptance for DEVELOPMENT only; no live EIS/ETP GO.'
+- PR432 Mac mini FULL source780ebd11 4106 pytest PASS,242 SKIP,0 failed,329 warnings,149.74s; ten focused tests PASS, Ruff PASS, original
+  96/96 EIS archive attachment provenance checked and 47 quote classification reproducible.
+- '2026-10-14 PR431 complete: GitHub original head ebd12584 exact 3/3 workflow SUCCESS (9+9+1 jobs); Mac mini full source fcb568d1 4100
+  PASS/238 SKIP/0 FAIL 153.58s, original primary EIS 3/3 fresh verified TLS and four binary originals SHA.'
+- PR431 original source fcb568d1 complete Mac mini pytest 4100 PASSED,238 SKIPPED,0 failed,328 benign warnings,153.58 seconds; 77+69
+  targeted pytest PASS/Ruff and legacy HTML protected AST PASS; GitHub final head ebd12584 three workflows pending.
+- PR429 2026-10-14 final code b6c8643e Mac mini FULL pytest 4072 PASS,238 SKIP,0 failed/328 benign warnings/166.75 sec, 13 targeted
+  PASS/Ruff/diff PASS and 4 committed machine-readable case-source assets byte-identical to generator.
+- '20 archived cases: ZIP17/no_data3, cached SHA168, XML96, 3 stale receipts vs newer archive,2 historic persisted deadline mismatches;
+  later 72 official binary verified-TLS saved receipts pinned/replayed offline exact joins to public source file SHA/size/ID 72/72 across13
+  cases total28,519,849 bytes, not new live EIS download. Signed human R4 0/20, 0 legal GO.'
+- PR429 20-case R4 archive evidence and late72-source recovery 13 focused pytest PASS, Ruff PASS, all four archived original+overlay
+  JSON/CSV byte-for-byte replay with private pinned SHA receipt manifests, no private original bytes/UID published. Full Mac mini baseline
+  pending PID22958.
+- Latest dated source recap 17/20 official original ZIP, 3 no_data; cached SHA168, official XML96; later Oct12 saved filestore verified-TLS
+  receipts72/72 validated UID and SHA/size across 13 cases (28,519,849 bytes). Human R4/R5 reviewed0/20 and ARV001 not signed, not current
+  EIS.
+- 2026-10-14 PR428 full isolated Mac mini repo pytest 4059 PASS/238 SKIP/0 FAIL/328 warnings/153.18s at source615d2bd6, 58 focused PASS/Ruff/diff;
+  original Museum 6 source docs, 15 exact quote proofs, 16 R4 rubric criteria, one exposed source contradiction, no expert approval.
+- 2026-10-14 PR427 source proof original exact GitHub 3/3 SUCCESS, bounded child completed; PR426 source research original exact GitHub
+  3/3 SUCCESS, bounded child completed; all PRs draft/unmerged.
+- Latest PR427 implementation9f5d5c full Mac mini 4053 pytest PASS/238 SKIP/0 FAIL/328 warnings in152.00s, 75 targeted PASS/Ruff/diff.
+  Original 6 museum archived docs, 15 excerpt SHA/offset checks, two structured EIS facts accurate in source-v2 and both omitted earlier.
+  Forged physical PDF labels rejected without raw SHA+verified mapping.
+- R4/R5 expert gold docs already define 20 cases but 0 approved; ARV-001 existing quality gate must not be substituted by generated
+  synthetic benchmark.
+- 2026-10-14 PR427 full Mac mini pytest 4053 PASS/238 SKIP/0 failed/328 warnings, 153.43s in isolated worktree, venv+PG16 PATH. 100
+  focused tests PASS/Ruff/diff PASS; 6/6 archived Museum original docs, 15 SHA-exact quote spans, 2 EIS typed source fields absent in
+  first LLM and historically matching in v2 model; source mismatch blocks bid_ready.
+- PR426 predecessor exact 3/3 GitHub SUCCESS, full 4042 PASS/238 SKIP/0 failed, checkpoint completed; all PRs drafts/unmerged.
+- PR426 full isolated Mac mini pytest 4042 PASS/238 SKIP/0 FAIL in 167.34s with PY venv and PostgreSQL16 CLI PATH, 112 targeted tests/Ruff
+  PASS. Original 6/6 museum XML/contract/TZ and 15 source questions benchmark, independently caught real v1 2 and v2 1 Gemma semantic
+  contradictions.
+- PR426 Mac mini 111 focused pytest PASS/0 FAIL/Ruff PASS/diff PASS. Actual saved six original EIS normalized document texts all indexed,
+  15 categories all source matches, EIS XML structured facts 1m RUB/16 Oct 10 original archive but live version not attested.
+- Real Gemma4 source-v2 2/2 schema PASS/needs_human_review, material SMP-only misdescribed as preference; independent source modality
+  audit old version 2 contradictions vs v2 1 contradiction, both automatic bid_ready false. Source SHA receipt mismatch cases excluded
+  from retrieval.
+- PR426 full-source research 84 focused Mac mini pytest PASS, Ruff PASS, git diff --check PASS; original 6/6 documents and 15 research
+  topics source hits, official EIS XML NMCK 1000000 RUB and deadline16Oct10 from registry guarded parser, no semantic legal GO.
+- PR425 exact source GitHub full 3/3 CI SUCCESS, independent Gemma before-after semantic audit FAIL despite schema validation.
+- 'Independent Gemma source audit: four 4/4 schema-valid sections before and after source-window patch; after 313.2s model recovered
+  ticketing and visually impaired features, but fact-check FAIL for SMP-only, §3.8 ±10% price change, missing NMCK/deadline and evaluation
+  criteria labels. Do NOT treat model outputs as legal GO.'
+- PR425 fixed context selector 60 focused pytest PASS, Ruff PASS and original archived source obligation inclusion PASS. Latest full
+  GitHub CI pending.
+- PR424 exact head 33a32e3d GitHub PR/push 8/9 jobs SUCCESS each; quality still IN_PROGRESS in both workflows, fast push SUCCESS, no
+  detected failures. Not yet full 3/3 CI.
+- PR422 3/3 GitHub CI SUCCESS and 53 Mac mini tests PASS, Ruff/JS PASS.
+- PR423 3/3 GitHub CI SUCCESS; local Gemma4 synthetic controlled 4/4 runtime trace validation PASS.
+- PR424 six original EIS file and six DP-normalized original text SHA multiset exact match, raw host extraction failed DP, separate
+  original text controlled Gemma4 4/4 schema PASS, 312.3sec, all needs_human_review, incomplete context. PR424 GitHub CI queued.
+- PR422 exact tested source GitHub 3/3 success and Mac mini 53 focused PASS. Child completed, draft unmerged.
+- Offline archived Museum 6/6 binary originals and 6/6 DP text artifacts SHA multiset exact match source container. Initial whole-app
+  host DP extraction 6 failed, model schema4/4 pass NOT accepted as content review. Current SHA-pinned normalized original text LLM
+  run PID22751 pending.
+- Local Gemma4 12B controlled synthetic 4/4 PASSED in runtime_control_traces, 4 needs_human_review, no bid decision, 69.4 sec; actual
+  OpenAI-compatible provider transport PASS.
+- Offline archived Museum Bread 6 original inputs copied only to /tmp and SHA aggregate 51656c89..., original private preview ports
+  18083/18087 both HTTP200; real local LLM analyze process PID21322 in progress.
+- PR422 Mac mini 53 focused pytest PASS/0 failed, Ruff PASS, Node syntax PASS; exact GitHub security/build/DB integration SUCCESS, quality
+  IN_PROGRESS.
+- Local Gemma4 12B model HTTP health/model and actual Tender Agent OpenAI-compatible provider synthetic structured JSON PASS, no outward
+  API. Four-section pipeline RUNNING.
+- PR420 exact source 3/3 GitHub CI SUCCESS; 57 Mac mini pytest PASS/Ruff and dual original HTML SHA replay PASS. Child completed.
+- PR421 exact source 3/3 GitHub CI SUCCESS; 50 Mac mini pytest PASS/Ruff JS check, private HTTP auth and archived export gates PASS.
+  Child completed.
+- '2026-10-14 APR03B current-main isolated 18087 image source cc9efe6b: 50 pytest PASS, Ruff PASS, Node --check PASS; real saved run/evidence/report200,
+  unauthorized401, archived source PDF/DOCX409, RO mounts/root confirmed, 18083 untouched.'
+- PR420 latest code source e65aedf15b 57 pytest PASS/Ruff, actual parent+lot original source SHA replay PASS; GitHub PR/push CI at last
+  check 1 SUCCESS / 2 IN_PROGRESS.
+- PR420 e65aedf source 57 focused pytest PASS/0 fail, Ruff PASS, direct source parent#4632682 and child#4632699 SHA-bound identity replay
+  PASS, JSON and diff PASS; exact GitHub CI waiting.
+- PR420 Mac mini source 91818451e6 H1 original parser 56 focused pytest PASS, Ruff PASS, original HTML SHA replay PASS, 0 failed.
+- PR420 code 72436c8d Mac mini 55 focused pytest PASS, Ruff PASS, original HTML SHA replay PARENT_LOT_CONFIRMED b2b-center:4632682 PASS,
+  JSON and git diff --check PASS; exact GitHub PR/push CI pending.
+- PR419 exact-head PR/push GitHub three runs SUCCESS; Mac mini 43 passed, Ruff PASS, git diff --check PASS.
+- PR418 latest checkpoint head 36e49832860b3d3327ce58bed7d35aaeda38d207 PR/push GitHub three runs SUCCESS.
+- PR418 exact GitHub PR38460471608/push38460463687/push38460463649 SUCCESS all 3; source Mac mini 33 pytest PASS/Ruff PASS.
+- PR419 individual-card URL gate Mac mini source efc461958c local 43 pytest PASS/0 FAIL, Ruff PASS and git diff --check PASS; PR/push
+  GitHub CI queued.
+- 'PR418 latest tested source 090ec83: Mac mini 33 pytest PASS/Ruff PASS plus official public Sberbank search negative-evidence guard
+  PASS; no exact original tender match and no nonexistence claim. Child checkpoint 587a755a exact GitHub CI pending.'
+- PR417 exact PR/push GitHub three workflows SUCCESS; PR418 original-host vs secondary-only B2B source gate Mac mini 33 pytest PASS/Ruff
+  PASS, exact GitHub CI queued.
+- 'B2B PR417 direct source audit: Workspace19023 HTML HTTP200/61868 bytes SHA c94e9d7 at 2026-10-13T22:30:24+03, source legal entity/open
+  public status, conditional prior Bitrix/Aspro experience unverified; INK two contradictory deadlines not promoted. Mac mini 29 focused
+  PASS/Ruff/JSON/diff PASS; GitHub PR38455956035/push38455950242/fast38455950124 queued/in progress.'
+- PR416 full GitHub exact source head fc24201c PR38453272162/push38453265878/push38453266119 3/3 SUCCESS, private real original EIS
+  HTTP SaaS tenant-guarded test Mac mini 67 pytest PASS/Ruff PASS, no production/import/payment/signature/ETP.
+- 'PR416 Mac mini original source API acceptance: 67 pytest PASS including private real EIS ZIP+PDF and synthetic fixture, Ruff PASS,
+  no auth 401, second tenant 404, viewer qualification403/redacted report, owner200 60/40/5/95 NOT_ASSESSED, temporary PDF tamper rejected.
+  GitHub PR38453272162 + pushes38453266119/38453265878 queued/in_progress.'
+- PR415 source 054c5e21 exact GitHub PR38448017188 + pushes38448007346/38448007308 all SUCCESS; full original ZIP/PDF report replay
+  60/40/5/95 NOT_ASSESSED and tamper failure verified. Parent roadmap checklist 135 total, 59 checked, 76 open after ARV066 current
+  overlay correction.
+- PR415 exact source head 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub both push workflows38448007346/38448007308 completed SUCCESS
+  including full quality; separate PR38448017188 quality make test still IN_PROGRESS with other eight jobs completed SUCCESS at last
+  check. Do not mark child complete until PR workflow finishes.
+- PR414 full GitHub 3/3 SUCCESS. PR415 Mac mini 58 focused tests PASS and Ruff PASS; genuine private original 44-FZ ZIP/PDF integrated
+  report 60/40/5/95 NOT_ASSESSED, temporary bit-flip rejected. Latest source full CI pending.
+- PR414 44-FZ DOCX/PDF SaaS tenant-run source-gated routing local 112 pytest PASS, Ruff PASS, SaaS Node UI PASS, git diff clean at 5ffda3c;
+  original standalone 1C EIS v2 zip/pdf replay PR413 PASS. GitHub PR414 full CI pending.
+- PR413 exact GitHub PR38441925371 and two pushes38441916713/38441916714 all SUCCESS at source head c9cafab; local 81 pytest PASS/Ruff
+  PASS and original 44-FZ EOK v2 60/40/5/95 source replay PASS; child completed.
+- 'PR412 exact head 50f3a19 GitHub PR38438694970/push38438686614/38438686626 all SUCCESS. PR413 original 44-FZ #0173300009226000009
+  Mac mini focused 81 pytest PASS/Ruff PASS, verified real PDF and original v2 EIS ZIP SHA. Current PR413 exact CI queued.'
+- PR411 historical 44-FZ corpus exact PR38435826846 plus pushes38435819400/38435819620 all SUCCESS. PR412 RI223 source head 79dc168
+  Mac mini 103 focused PASS, Ruff/JSON/diff PASS, original source private PDF/ZIP/RAR 40/60 plus conditional 20/20/60 => NOT_ASSESSED,
+  no e-signature; latest checkpoint full CI queued.
+- PR410 exact full GitHub PR38433181463 and push38433171288/38433171386 3/3 SUCCESS at source head 8da48571; 77 local PASS/8 SKIP, Ruff
+  and Node JS PASS; owner zero vs unknown and stale 409 verified.
+- PR409 exact PR/push workflows all green at 4c0fdeb, engineering child completed; PR410 reference editor e985a11 local 77 PASS/8 SKIP,
+  Ruff PASS, Node SaaS UI PASS, exact GitHub CI queued.
+- 'PR409 final roadmap/docs head 4c0fdebfa and code head 87e4160: local 166 PASS/8 SKIP, Ruff PASS, real original CZN SOAP+DOCX run
+  simulation competitive NO_GO and Node--check SaaS JS PASS. GitHub exact PR38426317250/push38426307140 quality make test IN_PROGRESS
+  (other 8 PR jobs success), fast push38426307139 SUCCESS at last check. Child stays in_progress until full exact CI green.'
+- 'PR409 automatic tenant-run original EIS qualification: Mac mini 166 focused pytest PASS /8 SKIP and Ruff PASS; actual original CZN
+  v4 SOAP ZIP+UID scoring DOCX and owner zero => 70/30 and competitive NO_GO; no digital signature/human gold, no ETP actions. GitHub
+  CI queued.'
+- PR408 exact-head GitHub PR38421310979 and pushes38421294605/38421294641 SUCCESS, child marked completed.
+- 'PR408 original EIS v4 ZIP/award DOCX scoring extractor real offline source replay PASS: derived 70% qualification, 30% price, completed
+  44/223 chatbot, 5y cutoff 23 Oct; Arvectum owner zero => competitive NO_GO, not legal block. Local 57 PASS/8 SKIP and Ruff PASS, GitHub
+  exact CI pending.'
+- PR407 exact GitHub PR38415954750/push38415943973+38415943861 SUCCESS; PR405 PR38414910423/push38414902253+38414901761 SUCCESS. Child
+  checkpoints complete.
+- 'PR407 SaaS Bearer tenant-scope integration b3e3174: Mac mini 71 pytest PASS /8 SKIP, Ruff PASS, JSON & diff PASS; owner/admin writes
+  only, legal acceptance and tenant principal required, no anonymous reads, other tenant isolated.'
+- 'PR405 owner zero corrected original semantic report/test 64c8ffe: Mac mini 100 APR06 tests PASS, Ruff PASS; CI queued on latest checkpoint.'
+- 'PR407 qualification owner-reference list source head b129b2f: Mac mini 50 targeted pytest PASS, 8 skipped; Ruff PASS, fact tenant
+  isolation, Decision Core legal independence, CZN 70/30 zero reference no-go verified. Exact-head PR/push GitHub CI queued on checkpoint
+  e56e8c1.'
+- PR405 CZN v4 source grounded semantic review CI exact head a15c68e PR38407699617/push38407689429 SUCCESS; original 172 focused pytest
+  PASS, Ruff PASS.
+- 'PR405 CZN v4 original document semantic review: primary 95p PDF, 2 current DOCX, unchanged bid/score DOCX and 2 NMCK PDFs; primary
+  numbers 685k + 315k + 245k RUB; evaluation 70% completed 44/223 chatbot work vs 30% price; Mac mini 172 tests PASS/Ruff PASS/JSON
+  and original SOAP UID v4 check PASS. Human gold 0 and competitive DEFER provisional.'
+- PR404 head a076c8c8 exact PR38401431113 and push38401426507/38401426493 GitHub CI SUCCESS, local original SOAP SHA+UID 7/7; source
+  child status completed.
+- PR404 v4 original EIS SOAP source head ac972df99 local 168 pytest PASS/Ruff PASS, original ZIP+XML exact SHA and 7/7 UID/name/size/local-file
+  SHA verification PASS; GitHub PR/push full CI pending. Signature/human/legal acceptance NOT VERIFIED.
+- 'APR06 direct EIS branch PR404 head 67c1a01d: official Museum common-info HTTPS 200 and public live HTML, CZN official common-info
+  HTTPS 404 from direct Russian egress. Two offline ProxyHandler({}) policy regressions committed, exact-head GitHub checks queued;
+  no claim of local pytest success.'
+- PR402 original-archived UID+SHA head 044b7b80 exact PR38390827395 and push38390820228/38390820231 SUCCESS; Mac mini APR06 96 PASS/Ruff
+  PASS. New PR404 direct-source environment test/report branch checkpoint head fa41bef4, exact CI pending.
+- 'APR06 PR402 final pre-checkpoint source head a29311e: Mac mini 96 pytest PASS/Ruff PASS; exact original archived latest notice UID
+  ↔ local SHA correlates for 50/77 source attachments; 27 not matched. Full latest-head CI queued.'
+- 'APR06 archived EIS XML revision audit PR402 source head 6880156f: 94 pytest PASS/Ruff PASS, real read-only Docker 17 archived notices
+  of 20, 50/77 latest notice attachments correlated by exact name+size to locally SHA-verified file; 27 unmatched; PR38390127009 queued/push38390030216
+  in_progress.'
+- APR06 PR400 code checkpoint head 90a1fb45 exact push/PR CI SUCCESS and PR401 code/report head 280fd22a exact push/PR CI SUCCESS. Parent
+  draft APR06/07 commercial gates not met.
+- 'APR06 source-byte branch PR401: Mac mini isolated read-only network-disabled hash check 168/168 44-FZ + local 223-FZ 5/5, three 44-FZ
+  runs have no source bytes; 24 focused pytest PASS, Ruff PASS; exact-head 280fd22a PR/push GitHub CI pending.'
+- 'APR06 AI-only branch PR400 at 3cc86454: Mac mini isolated 88 APR06 pytest PASS / 1 benign deprecation warning, strict Ruff PASS,
+  exact dated JSON regeneration PASS; CI PR38381740128 and push38381733914 pending.'
+- B2B PR399 research exact-head cb024f5e CI run38377724507 COMPLETED SUCCESS; branch checkpoint completion bd1941e9 pending exact-head
+  CI for metadata.
+- APR07 head e79ae876 exact-head push 38375419717 and PR 38375426038 GitHub CI COMPLETED SUCCESS; no expert/production acceptance inferred.
+- 'B2B original-source research PR399 cb024f5e: MacBook isolated clean clone, git diff --check PASS and report source-addendum assertions
+  PASS; PR CI 38377724507 in_progress.'
+- Tender Agent last exact-head CI 9/9 PASS; baseline TA 3936 passed/238 skipped, DP pytest/Ruff PASS in recorded technical checkpoint.
+- 'APR04 on reconciled 3f289a04: 57 targeted PASS, 3954 full PASS / 238 SKIP / 0 FAIL with matching PostgreSQL 16 CLI, Ruff PASS, make
+  check PASS; GitHub exact-head CI in_progress, GitVerse mirror success.'
+- 'APR03B source probe: authenticated preview and six real 44-FZ files, 3 official XML fields KNOWN, 48 focused PASS; owner/model report
+  pending.'
+- 'B2B first source pass: nine corporate IT/digital source-attested opportunities including Workspace #19006; report docs/roadmap/B2B_SOURCE_DISCOVERY_INITIAL_2026-10-12.md
+  now in main. Remaining 15–20 accepted-source goal OPEN.'
+- APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8
+  push+PR CI 9/9 SUCCESS.
+- APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local;
+  head d7d2aa17 push+PR CI 9/9 SUCCESS.
+- 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted
+  RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved
+  HTTP200, temporary container removed, image kept local.'
+resume_instruction: 'Continue in-progress child TA-APR067-R4-FIFTH-DISTINCT-E2E-20261015: fifth archived 44FZ true Gemma4 7/7 sources
+  and 4149 local tests PASS; exact PR CI/review remaining, after verification mark completed. Owner-delegated expert DEVELOPMENT acceptance
+  only. Do not rerun accepted model or perform live EIS/ETP/commercial GO.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
-
 owner_e2e_ai_acceptance_2026_10_15:
   accepted_as_expert_for: DEVELOPMENT_E2E_ONLY
   reviewer: owner_delegated_chatgpt
-  not_required_for_this_stage: [signed_external_human_gold, twenty_independent_legal_reviews]
-  still_required: [real_source_integrity, reproducible_functional_e2e, cited_claims, error_safety, unknown_handling]
-  never_authorizes: [legal_bid_go, bid_submission, e_signature, production_deploy, payments, signed_human_gold_fabrication]
+  not_required_for_this_stage:
+  - signed_external_human_gold
+  - twenty_independent_legal_reviews
+  still_required:
+  - real_source_integrity
+  - reproducible_functional_e2e
+  - cited_claims
+  - error_safety
+  - unknown_handling
+  never_authorizes:
+  - legal_bid_go
+  - bid_submission
+  - e_signature
+  - production_deploy
+  - payments
+  - signed_human_gold_fabrication
   post_stabilization: owner_expert_corrections_and_calibration
-
 latest_completed_quality_child: TA-APR067-GROUNDED-QUALITY-20261015
-
 latest_verified_quality_code_commit: b1b87e8554602c66d8a3065f225793cc1652e729
-
 latest_completed_r4_quality_child: TA-APR067-R4-20-QUALITY-20261015
-
 latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
-
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
-
-latest_active_distinct_e2e_child: TA-APR067-R4-FOURTH-DISTINCT-E2E-20261015
+latest_active_distinct_e2e_child: TA-APR067-R4-FIFTH-DISTINCT-E2E-20261015

@@ -528,6 +528,19 @@ def _classify_notice_attachment_kind(name: str) -> str:
         return "procurement_object_description"
     if any(token in lowered for token in ("спецификац",)):
         return "specification"
+    # Contract security annex is NOT the draft contract, even when its
+    # generic docKindInfo code is AD (additional document). Preserve the
+    # distinction through the document-set completeness and risk analysis.
+    if any(
+        token in lowered
+        for token in (
+            "обеспечение исполнения контракта",
+            "реквизиты обеспечения исполнения",
+            "реквизиты для обеспечения исполнения",
+            "contract performance security",
+        )
+    ):
+        return "contract_performance_security"
     if any(
         token in lowered
         for token in (

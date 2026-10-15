@@ -1,0 +1,53 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-FIFTH-DISTINCT-E2E-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Complete a fifth distinct archived 44FZ source-pinned local Gemma4 operator E2E with six original EIS DOCX attachments case
+  0152200004026000069; detect, fix and verify real report/source regressions without making live-EIS, legal or bid-authority claims.
+definition_of_done:
+- Verify first-party archived ZIP selected XML and six attachments against SHA + EIS UID, no blind sources or live getDocsIP.
+- Correct obvious EIS filename/docKindInfo attachment-role precedence without loosening completeness and verify security file is
+  not a contract draft.
+- Execute actual isolated EIS intake, Data Platform + local Gemma4, verify source integrity, citations, history/report, archived
+  export fail-closed; inspect source-attested semantic contradictions.
+- Run relevant adversarial and full local regression, then Draft PR on top of fourth E2E PR440, exact-head GitHub CI and checkpoint
+  completion.
+- Retain all private bytes only locally, without ETP, payments, production mutations or legal/bid GO.
+completed:
+- 2026-10-15 R4 frozen case 0152200004026000069 archived official 44FZ ZIP SHA 8b9bec4e0bf171579edbd18fcbeec481533fa99bbb79f6fe6a079548062fa2c5
+  verified; one XML SHA 67daa28bbbc539b07afc18808959a27c78706feef27c94aba2b2be5bbb363029 verified; six original DOCX SHA/bytes
+  match pinned first-party filestore receipts.
+- 2026-10-15 source XML docKindInfo CP/MRJ/POD/CAR and AD; security document has generic AD and explicit official filename Обеспечение
+  исполнения контракта, must not conflate with project contract.
+- '2026-10-15 source-verified stage run toa-run-20261015163934-5b2bd5: 1 official epNotification XML and 6 original DOCX saved
+  SHA verified, complete state without bypass, original archive ZIP byte-pinned.'
+- 2026-10-15 security annex AD filename with Обеспечение исполнения контракта no longer wrongly classified as contract draft; official
+  CP contract still distinct; 24 focused security/role/completeness PASS.
+- 2026-10-15 actual local Gemma4 12B run started PID89221, private Data Platform at 127.0.0.1:18097 PID89148, do not repeat LLM
+  analysis while active.
+- 2026-10-15 authentic fifth historical local Gemma4 12B 4 calls 348.24sec, 7/7 original source docs extracted, 0 failure/warnings,
+  report/history/steps/source evidence/read-only registry HTTP200, archived PDF/DOCX409, NEEDS_REVIEW, no fallback. 3 verified
+  original XML citations in persisted HTML SHA7047137761da52c15a1017a392952312331a8dd40eb2b47ee33c4219195056f7.
+- 2026-10-15 Owner-approved ChatGPT expert semantic review found actual fifth software_modification saved report false missing
+  contract despite source-verified CP original. Generalized recommendation-source contract_draft_status from output orchestrator
+  for all scopes; separate present/parse_failed/absent/unknown, preserve MANUAL_REVIEW; six files + one XML SHA intact. Private
+  reprojection recorded without re-running Gemma or altering original model output.
+- 2026-10-15 residual English LLM risk hypotheses remain visibly unverified_llm and manual_review; no blanket model quality/production
+  SLO claims; targeted 57 original source and 14 contract-state tests pass, Ruff clean.
+- 2026-10-15 fifth case final post-generalized contract status full regression 4149 PASS /238 SKIP /0 FAIL /328 existing warnings
+  in159.53sec, Ruff PASS, private source7/7 all SHA unchanged, four original Gemma calls348.24sec.
+current_stage: fifth_source_gemma_expert_audit_full_regression_verified_pr_exact_ci_pending
+remaining:
+- Inspect final post-semantic full suite PID93199 and Ruff/diff
+- Commit/push PR against closed fourth stack PR440 branch; exact-head CI
+- Mark checkpoint completed and stop dedicated DP port18097
+last_verified_commit: 936477f577d91c9b094685addb20308fad9c048d
+last_tests: 4149 passed/238 skipped/0 failed,328 known warnings in159.53s; 57 source targeted and14 contract-state targeted pass,
+  Ruff PASS; model E2E7/7 + three original XML citations, archived export409, no fallback.
+resume_instruction: 'Fifth distinct 44FZ E2E accepted development: original 7/7 docs real Gemma4 4 calls348.24s, source-attested
+  generalized contract fix, 4149 full regression PASS. Push stacked PR after #440; exact-head GitHub CI then mark completed. Do
+  NOT rerun model.'
+execution:
+  branch: feature/apr067-r4-fifth-distinct-e2e-20261015
+  manual_override: true

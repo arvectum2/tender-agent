@@ -100,3 +100,29 @@ def test_unrelated_outer_kind_does_not_fill_missing_inner_doc_kind() -> None:
     rows = extract_notice_attachments(xml)
     assert len(rows) == 1
     assert rows[0]["document_kind"] == "attachment"
+
+
+def test_official_generic_additional_security_annex_is_not_contract_draft() -> None:
+    rows = extract_notice_attachments(_notice(
+        _item("Приложение 6 Обеспечение исполнения контракта.docx", "A" * 32,
+              code="AD", description="Дополнительная информация и документы"),
+        _item("Приложение 5 Проект контракта.docx", "B" * 32,
+              code="CP", description="Проект контракта"),
+    ))
+    assert [r["document_kind"] for r in rows] == [
+        "contract_performance_security", "contract_draft",
+    ]
+    assert not build_document_set_summary([
+        {"original_name": "epNotificationEF2020.xml", "document_kind": "eis_notice"},
+        {"original_name": rows[0]["name"], "document_kind": rows[0]["document_kind"]},
+        {"original_name": "ООЗ.docx", "document_kind": "procurement_object_description"},
+    ])["analysis_allowed"]
+
+
+def test_unrelated_containing_contract_word_is_not_security_doc() -> None:
+    rows = extract_notice_attachments(_notice(
+        _item("Приложение к проекту контракта.docx", "B" * 32,
+              code="AD", description="Дополнительная информация и документы"),
+    ))
+    assert len(rows) == 1
+    assert rows[0]["document_kind"] != "contract_performance_security"

@@ -19,7 +19,7 @@ from secrets import token_urlsafe
 def verify_copy_source(saved: Path, pinned: dict) -> int:
     """Fail closed on a tampered original, duplicated ID or unsafe archive path."""
     if pinned.get("run_id") != saved.name or pinned.get("registry_number") not in {
-        "0162200011826003089", "0151600003226000011",
+        "0162200011826003089", "0151600003226000011", "0152200004026000069",
     }:
         raise ValueError("the pinned R4 historical case identity does not match")
     rows = pinned.get("all_input_sha256")
@@ -55,12 +55,18 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stage", type=Path, required=True)
     parser.add_argument("--run-id", required=True)
-    parser.add_argument("--registry", choices=("0162200011826003089", "0151600003226000011"), default="0162200011826003089")
-    parser.add_argument("--dp-port", choices=(18095, 18096), type=int, default=18095)
+    parser.add_argument(
+        "--registry", choices=(
+            "0162200011826003089", "0151600003226000011",
+            "0152200004026000069",
+        ), default="0162200011826003089",
+    )
+    parser.add_argument("--dp-port", choices=(18095, 18096, 18097), type=int, default=18095)
     args = parser.parse_args()
     allowed_stage = {
         "0162200011826003089": "ta-apr067-r4-four-revisions-20261015",
         "0151600003226000011": "ta-apr067-r4-fourth-distinct-20261015",
+        "0152200004026000069": "ta-apr067-r4-fifth-distinct-20261015",
     }[args.registry]
     root = args.stage.resolve()
     runs = root / "runs"
@@ -207,7 +213,8 @@ def main() -> int:
             checked["events_last_8"]=event_types[-8:]
     receipt_name = (
         "apr067_r4_four_version_replay.json" if args.registry == "0162200011826003089"
-        else "apr067_r4_fourth_distinct_e2e.json"
+        else "apr067_r4_fourth_distinct_e2e.json" if args.registry == "0151600003226000011"
+        else "apr067_r4_fifth_distinct_e2e.json"
     )
     output=root/"output"/receipt_name
     output.parent.mkdir(parents=True,exist_ok=True)
