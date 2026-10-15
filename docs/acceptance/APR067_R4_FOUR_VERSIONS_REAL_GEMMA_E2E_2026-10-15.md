@@ -36,7 +36,7 @@ When the original cannot establish the selected archived edition, subject/deadli
 ## Tests, privacy, and next engineering priority
 
 - Tender Agent local full regression **4104 passed / 238 skipped / 0 failures** (159.26 s), Ruff clean; **51 focused tests passed**, including 12 adversarial archived notice selector tests and 17-original staging source integrity tests.
-- Data Platform `tests/documents/` full **61 passed**, Ruff clean; PR #125 code CI and GitVerse mirror both passed. 
+- Data Platform `tests/documents/` full **61 passed**, Ruff clean; PR #125 code CI and GitVerse mirror both passed.
 - All source original files, exact source text, offline metadata and machine receipts stay in a private Mac mini source stage. Public commits contain only generic code, SHA fingerprints and non-sensitive case registry numbers.
 - Remaining objective: expand the number of distinct real E2E cases and decide workflow stability from repeatability, then incorporate the owner's expert corrections. Neither another qualified-human gold task nor currently active bid approval is a prerequisite for **DEVELOPMENT E2E acceptance**.
 
