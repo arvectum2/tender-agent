@@ -40,12 +40,44 @@ permission to bid.
   selection, wrong source-role, unsafe relative source path, and independent
   restored receipt tampering.
 
-The isolated actual Gemma4 12B original-source run is staged privately at
-`ta-apr067-r4-seventh-eok-revisions-20261015`, run
-`toa-run-20261015185058-9a58e4`. It may run only once; report/API/source
-citations and the successful exact-head CI must be observed rather than
-presumed. **At protocol creation the real local model analysis is still
-IN_PROGRESS; do not yet count this as seventh accepted E2E.**
+## Actual local model + source-grounded E2E observed
+
+The authentic standalone Data Platform + Gemma4-12B run
+`toa-run-20261015185058-9a58e4` completed **once**, with **4 real
+localhost Gemma calls in 333.22 seconds**, HTTP200, mode
+`llm_tender_operator_provider`, no fallback, and saved result
+`needs_review` / `manual_review_required`.
+
+- All **11/11 exact SHA-protected source files** preserved and text-enabled:
+  4 original XML, 3 direct PDF/DOCX, 4 signed ZIP containers. All 4 ZIPs
+  `archive_extracted`, **5/5 nested substantive PDF/DOCX**, zero failed
+  direct/nested documents. The actual report trace has **12** text documents
+  (4 XML + 3 direct + 5 nested). Source containers and nested texts counted
+  separately.
+- Original evidence selector is
+  `pinned_latest_archived_notice_revision`; all 3 material EIS XML facts
+  `KNOWN` with **3 actual HTML `eis-xml:` citations**. Original v3 title,
+  **deadline 19.10.2026 10:00 +03:00** and **NMCK 1,245,000 RUB** are
+  retained; the superseded **16.10.2026** deadline does not occur in the
+  persisted final recommendation, report JSON or tender summary.
+- The authenticated workspace, persisted report/history, source evidence
+  and read-only registry re-opened successfully (HTTP200). Both PDF and
+  DOCX export for archived source returned **HTTP409**. Original report HTML
+  SHA-256 `5d70b6230215b73290841c82f0689a8eaebc2f3791a632cf05e2ef0ccd7bee44`.
+- ChatGPT development expert reading of the saved actual report found
+  the supplied contract correctly marked **present**, no false request to
+  obtain it, correct revision-specific deadline, and a review-only decision.
+  Five LLM-suggested contractual risks remain explicitly labeled
+  `[Гипотеза LLM — проверить договор]`, several in English. They are **not**
+  independently confirmed contract clauses; absence of commercial pricing,
+  staffing model or current EIS status remains an unresolved review matter.
+
+**Tests:** 20 focused/adversarial source-UID/SHA/revision/cross-path
+tests PASS; complete Mac mini regression **4,164 passed, 238 skipped,
+0 failed**, 328 pre-existing warnings (189.66 s), Ruff PASS.
+The Draft PR's exact-head GitHub CI is tracked separately; until that
+returns SUCCESS this child checkpoint stays `in_progress`. The original
+private LLM result and source file bytes were not rewritten or regenerated.
 
 **Authority boundary:** Owner-approved ChatGPT source review is accepted as
 expert judgement for DEVELOPMENT E2E. No human legal-gold is needed as a
