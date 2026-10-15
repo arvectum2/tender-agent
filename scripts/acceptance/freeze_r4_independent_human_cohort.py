@@ -16,6 +16,7 @@ from scripts.acceptance.freeze_r4_independent_human_gold import (
     accept_independent_submission,
 )
 from src.modules.benchmark_pipeline.contract import (
+    canonical_json,
     canonical_sha256,
     write_artifact,
 )
@@ -91,7 +92,14 @@ def preflight_complete_human_cohort(
         )
         if result["frozen"]["case_id"] != case["case_id"]:
             raise ValueError("Signed human result does not match locked case identity")
-        evaluated.append({"case_id": case["case_id"], **result})
+        # Keep the ORIGINAL signed submission for independent future audit.
+        # A human-attested SHA of just the unsigned discovery/truth is NOT
+        # enough to re-verify Ed25519 years after the initial acceptance.
+        evaluated.append({
+            "case_id": case["case_id"],
+            "signed_submission": submission,
+            **result,
+        })
     if len(evaluated) != enrollment["case_count"]:
         raise ValueError("Cannot partially freeze an independent blind cohort")
     hashes = [
@@ -99,6 +107,7 @@ def preflight_complete_human_cohort(
             "case_id": item["case_id"],
             "label_set_sha256": item["frozen"]["label_set_sha256"],
             "source_bundle_sha256": item["frozen"]["source_bundle_sha256"],
+            "signed_submission_sha256": canonical_sha256(item["signed_submission"]),
         }
         for item in evaluated
     ]
@@ -144,6 +153,18 @@ def write_complete_human_cohort(
         raise ValueError("Cohort label SHA ledger changed between preflight and write")
     for case, expected in zip(cases, receipt["signed_case_label_receipts"]):
         frozen = case["frozen"]
+        signed = case.get("signed_submission")
+        if not isinstance(signed, dict) or not isinstance(
+            signed.get("external_human_reviewer_attestation"), dict
+        ):
+            raise TypeError("Verified human signed source submission is missing")
+        if (
+            signed.get("case_id") != case["case_id"]
+            or signed.get("blind_discovery_label") != case["discovery"]
+            or signed.get("blind_document_truth") != case["truth"]
+            or canonical_sha256(signed) != expected["signed_submission_sha256"]
+        ):
+            raise ValueError("Original signed human submission changed after trusted preflight")
         if (
             frozen["case_id"] != case["case_id"]
             or case["discovery"]["case_id"] != case["case_id"]
@@ -177,6 +198,11 @@ def write_complete_human_cohort(
                 destination / "frozen_label.json",
                 case["frozen"],
                 "frozen_label",
+            )
+            # Source-only private evidence: intentionally NOT in Git/public
+            # acceptance reports. This preserves Ed25519 signature provenance.
+            (destination / "independent-human-signed-submission.json").write_bytes(
+                canonical_json(case["signed_submission"]) + b"\n"
             )
         (stage / "full-cohort-freeze-receipt.json").write_text(
             json.dumps(receipt, ensure_ascii=False, sort_keys=True, indent=2) + "\n",

@@ -24,3 +24,14 @@
 ## Финальная техническая проверка
 
 Релевантные source-only/private приемочные тесты: **17 пройдены**, включая реальную пустую ведомость 15 EIS-кейсов и искусственные Ed25519-подписи только в тестовой среде. Полный pytest на ArvectumSSD: **4 316 passed, 242 skipped, 0 failed**, 329 прежних warnings, **153.97 секунды**. Ruff — PASS. Полный журнал хранится приватно на SSD; SHA-256 журнала: 53af6c13514955a793da10dfe1a5a5573f3784f1649d7266edf8b69626d07984.
+
+
+## Signed original provenance retained for later independent re-verification
+
+After *all* signed reviewer answers have passed the original Ed25519 and first-party EIS source checks, each case's original signed JSON is saved **privately** as independent-human-signed-submission.json next to discovery, document truth and the frozen label. The SHA-256 of the entire signed answer is included in the cohort's sealed per-case ledger and cumulative checksum. The writer re-checks the signed source against the already verified snapshot, including the signature, before publishing the staged directory. A modified signature or quote after preflight rejects the entire cohort; interrupted writes do not leave partial gold.
+
+This creates a verifiable audit trail for future re-checks using the owner's independently vetted reviewer public key. It does NOT certify the reviewer's qualifications or permit SUT evaluation, bid submission or Owner GO. No real reviewer answers have been received: signed gold 0/15, precision/recall NOT_MEASURED, bid_ready=false. No signed answers are uploaded to Git.
+
+### Final source-provenance regression
+
+Full local ArvectumSSD pytest after signed-original retention: **4,317 passed, 242 skipped, 0 failed; 329 pre-existing warnings; 167.91 seconds**. Ruff clean. A private, byte-for-byte QA log is kept on ArvectumSSD with SHA-256 6d3a686159bafbcba09325f0f0f7cd47fbd4d94812e27f64b4b920e7f0c04543. External legal-reviewer gold remains **0/15**. Signed originals only persist privately after the full validated 15-case freeze.

@@ -126,6 +126,13 @@ def test_complete_two_synthetic_reviewers_freeze_atomically(tmp_path):
         assert (directory / "frozen_label.json").is_file()
         assert (directory / "blind_discovery_label.json").is_file()
         assert (directory / "blind_document_truth.json").is_file()
+    import json
+
+    for row in result["signed_case_label_receipts"]:
+        signed_path = out / row["case_id"] / "independent-human-signed-submission.json"
+        assert signed_path.is_file()
+        assert canonical_sha256(json.loads(signed_path.read_text())) == row["signed_submission_sha256"]
+        assert json.loads(signed_path.read_text())["external_human_reviewer_attestation"]["ed25519_signature_b64"]
     assert (out / "full-cohort-freeze-receipt.json").is_file()
     with pytest.raises(ValueError, match="overwrite"):
         write_complete_human_cohort(validated=checked, private_output=out)
@@ -233,3 +240,16 @@ def test_second_case_disk_write_failure_cleans_staging_without_partial_gold(
     assert not destination.exists()
     assert not list(tmp_path.glob(".full-independent-gold-*"))
     assert not list(tmp_path.rglob("frozen_label.json"))
+
+
+
+def test_mutated_external_signature_after_preflight_blocks_private_gold(tmp_path):
+    args = prepare_two_synthetic_independent_signers(tmp_path)
+    validated = preflight_complete_human_cohort(**args)
+    validated["case_artifacts"][1]["signed_submission"]["external_human_reviewer_attestation"][
+        "ed25519_signature_b64"
+    ] = "fake-signature"
+    private_output = tmp_path / "refuse-changed-signed-attestation"
+    with pytest.raises(ValueError, match="changed after trusted preflight"):
+        write_complete_human_cohort(validated=validated, private_output=private_output)
+    assert not private_output.exists()
