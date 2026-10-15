@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR067-R4-SIXTH-SIGNED-ZIPS-20261015
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Independently assess first-party historical EIS 44-FZ №0348100024426000021 signed ZIP attachments with nested DOCX/PDF/HTML/sign,
   verifying precise source integrity, safe intake, document completeness and an authentic Gemma E2E only if it clears fail-closed
   gates.
@@ -17,7 +17,8 @@ definition_of_done:
 - No live EIS, ETP, bids, payments, production or signing.
 completed:
 - '2026-10-15 located original saved EIS 0348100024426000021: 6/6 filestore attachments SHA verifiable. Four ZIP include 2 PDFs,
-  a contract DOCX, a technical spec DOCX, HTML signing sheets and detached .sign files; the PIK annex is a genuine .docx and must remain a separate document from the signed source container.'
+  a contract DOCX, a technical spec DOCX, HTML signing sheets and detached .sign files; the PIK annex is a genuine .docx and must
+  remain a separate document from the signed source container.'
 - 2026-10-15 fifth distinct E2E child completed at substantive CI verified head 958c5fb3 and 4149 local tests PASS; do not repeat
   its model.
 - '2026-10-15 authentic frozen 0348100024426000021 first-party source stage created toa-run-20261015173500-78dec8, all 14 original
@@ -40,17 +41,20 @@ completed:
 - 2026-10-15 no-LLM re-projection on separate same-original 14 SHA copy through native Data Platform at localhost18098 yielded
   10 direct text extractions, four archive_extracted originals, five ZIP nested substantive texts, zero failures; real report unchanged.
   Private combined proof validates model4 calls, HTML three citations, 14 SHA and failure source before fix.
-current_stage: sixth_source_semantics_repaired_full_regression_and_exact_head_ci_pending
+- '2026-10-15/verified follow-up GitHub exact substantive head 04d603c7021288e8cbde5868f64d07c03fab4f7f PR442 CI run38781380860
+  #3497 SUCCESS all 9 jobs; 4155 post-fix local tests PASS/238 SKIP/0 FAIL. Real sixth Gemma4 four calls368.53sec, 14/14 source
+  SHA, 10 direct+4 archived containers+5 nested documents extraction reproduced without second LLM, source cited 3 facts, archival
+  exports409, manual_review_required.'
+current_stage: sixth_source_gemma_zip_metadata_verified_and_exact_code_head_ci_success
 remaining:
-- Full local suite after ZIP metadata patch and focused security test
-- Commit/push update PR442, exact-head GitHub CI
-- Complete child checkpoint only once exact CI green; stop temporary DP18098
-last_verified_commit: d6ed400362c84253263479e1be6ae7cffe590ce6
-last_tests: Before ZIP status fix 4151 local PASS/238 SKIP, focused 33 PASS; after ZIP status fix focused metadata regression passes,
-  full suite pending; real Gemma4 4 calls368.53sec, 3 source citations, private combined 10+4+5 original-text reproject PASS.
-resume_instruction: Model sixth original EIS archived case completed once, no rerun. Old strict receipt1 preserved; fixed ZIP status
-  in generic collector, private SHA14 source reprojection proves 10 direct+4 archive-extracted+5 nested docs. Run full suite after
-  change, push PR442, exact CI, mark child completed. No live EIS/ETP.
+- Review/merge draft PR442 and parent stack under release policy; no auto deploy
+- Seventh independent EIS original-source cohort case to be tracked as new child
+last_verified_commit: 04d603c7021288e8cbde5868f64d07c03fab4f7f
+last_tests: PR442 code head04d603c7 GitHub CI run38781380860 success 9/9; local 4155 passed/238 skipped/0 failed/328 warnings;
+  single genuine Gemma4 four calls 368.53s, 14 source SHA intact, five nested substantive doc text verified, 3 cited XML facts,
+  blocked historical exports409.
+resume_instruction: COMPLETE. Sixth historical signed-ZIP developmental E2E accepted with exact-head PR442 CI success, no duplicate
+  model. Remaining extended APR06 corpus now 6/20 minimum; proceed to seventh with own SHA-pinned checkpoint. Parent remains active.
 execution:
   branch: feature/apr067-r4-sixth-signed-zips-20261015
   manual_override: true
