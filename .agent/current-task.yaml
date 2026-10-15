@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "APR067 R4 development source QA 2026-10-15: 20 ZIP and 20 XML verified; original R4 96 attachments verified; 47 model snippets categorized 42 exact,3 formatted,2 unsupported; full 4074 PASS,238 SKIP. Commercial and independent legal gold open."
   - "2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts 3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured."
   - "2026-10-15 APR03B DEVELOPMENT E2E ACCEPTED on original archived EIS 0372200172326000015: 6/6 extracted, Gemma4 12B 4 calls/138.79s, 3 HTML citations from original XML, 8/8 source-quality workflow gates, auth401, archived PDF/DOCX409; real original/read-only 4031 full pytest PASS/238 SKIP, Ruff clean. Owner-designated AI expert accepted for dev only; commercial/current-EIS/prod and independent human gold not claimed. Draft PR433 remains unmerged; next APR04 onboarding."
   - '2026-10-15 new Owner E2E decision: source-grounded ChatGPT assessment accepted as expert for development stage; human legal-gold removed as APR03B blocking prerequisite. New 8-step acceptance gate with 21 new tests, 45 combined focused PASS, authenticated current full LLM E2E still open; roadmap/owner policy updated.'
@@ -223,3 +224,5 @@ owner_e2e_ai_acceptance_2026_10_15:
 latest_completed_quality_child: TA-APR067-GROUNDED-QUALITY-20261015
 
 latest_verified_quality_code_commit: b1b87e8554602c66d8a3065f225793cc1652e729
+
+latest_completed_r4_quality_child: TA-APR067-R4-20-QUALITY-20261015
