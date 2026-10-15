@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-15 seventh distinct EOK original case 0348100024426000039: selected archived EOK2020 revision3 XML and 7 original filestore files exact source UID/bytes/SHA pinned, one independently recovered ZIP matched first-party receipt; local source stage 4 XML+7 official attachments, 5 nested texts, real Gemma PID54222 in progress; 20 source adversarial tests pass."
   - "2026-10-15 sixth distinct historical EIS case 0348100024426000021 source QA: 8 XML+6 official attachments SHA verified, four signed ZIPs yield 5 substantive DP PDF/DOCX, signing HTML and .sign excluded, NMCK PDF not treated as draft contract; 4151 full PASS/238 SKIP, genuine Gemma4 E2E PID16155 IN_PROGRESS. Not counted as sixth completed yet."
   - "2026-10-15 fifth distinct official 44FZ archived E2E 0152200004026000069: 7/7 SHA-pinned original XML/DOCX sources, real Gemma4 four calls348.24s, 3 source XML citations, archived exports409. Expert report caught false missing contract for software scope; source-bound present/parse_failed/absent/unknown fixed, private corrected reprojection without LLM; 4149 full tests passed/238 skipped."
   - "2026-10-15 APR067 fourth independent historical EIS development E2E 0151600003226000011: 5 original SHA-pinned files, source-bound official XML docKindInfo CP/MRJ/POD/CAR, Gemma4 4 calls 403.23s,5/5 extracted, 3 original XML citations, archived exports409, NEEDS_REVIEW. AI expert accepted for DEVELOPMENT E2E; current live EIS/bid GO separate."
@@ -213,7 +214,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Continue active child TA-APR067-R4-SIXTH-SIGNED-ZIPS-20261015 in isolated sixth branch: signed ZIP originals verified 14/14 SHA and five substantive nested PDF/DOCX extracted; real Gemma run PID16155 and 4151 full tests passed, observe model receipt, never rerun model, record separate native-container and nested text extraction, then exact-head CI. Fifth child already completed on verified PR441 head.'
+resume_instruction: 'Active child TA-APR067-R4-SEVENTH-EOK-REVISIONS-20261015: 7th archived EOK with 3 notice revisions and 7 exact UID/SHA-bound v3 first-party attachments staged, four ZIP with five nested PDF/DOCX, one genuine Gemma PID54222 in progress. Read outcome, do not rerun; follow child checkpoint. Sixth case completed and CI success.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -236,4 +237,4 @@ latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
 
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
 
-latest_active_distinct_e2e_child: TA-APR067-R4-SIXTH-SIGNED-ZIPS-20261015
+latest_active_distinct_e2e_child: TA-APR067-R4-SEVENTH-EOK-REVISIONS-20261015

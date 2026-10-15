@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import xml.etree.ElementTree as ET
 import zipfile
@@ -27,9 +28,105 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+
+def resolve_original_eok_v3(
+    *, source_root: Path, case: dict, pinned_case_manifest: Path,
+) -> tuple[Path, list[dict]]:
+    """Source-verify the original Oct-09 archive and frozen Oct-14 recovery.
+
+    Unlike the positive replacement fixtures this case uses first-party
+    saved-run originals and one independently recovered original ZIP. Every
+    attachment is bound to the selected v3 XML by original EIS UID, exact
+    filename, declared byte count, SHA, and first-party provenance.
+    """
+    if (case.get("registry_number") != "0348100024426000039"
+            or case.get("source_role") != "ORIGINAL_20_CORPUS"
+            or case.get("archived_version") != 3
+            or case.get("notice_type") != "epNotificationEOK2020"
+            or pinned_case_manifest.name !=
+            "APR067_R4_SEVENTH_EOK_V3_SHA_PINNED_SOURCES_2026-10-15.json"):
+        raise ValueError("unapproved original EOK source case")
+    pinned = json.loads(pinned_case_manifest.read_text())
+    if (pinned.get("registry_number") != case["registry_number"]
+            or pinned.get("source_role") != case["source_role"]
+            or pinned.get("selected_notice_version") != 3
+            or pinned.get("selected_notice_type") != case["notice_type"]
+            or pinned.get("archive_sha256") != case["archived_zip_sha256"]
+            or pinned.get("selected_xml_sha256") != case["selected_xml_sha256"]
+            or not isinstance(pinned.get("attachments"), list)
+            or len(pinned["attachments"]) != case["selected_xml_attachment_references"]):
+        raise ValueError("seventh frozen first-party manifest is inconsistent")
+    def checked(relative: str) -> Path:
+        if not isinstance(relative, str) or not relative:
+            raise ValueError("missing source relative path")
+        path = source_root / relative
+        if (path.is_symlink() or not path.resolve().is_relative_to(source_root)
+                or not path.is_file()):
+            raise ValueError("source escapes frozen original root")
+        return path
+    old_run = checked(pinned["original_saved_run"] + "/metadata.json").parent
+    oldmeta = json.loads((old_run / "metadata.json").read_text())
+    if oldmeta.get("procurement_id") != case["registry_number"]:
+        raise ValueError("first-party saved-run procurement identity mismatch")
+    archived = checked(pinned["archive_relative_path"])
+    if sha(archived.read_bytes()) != case["archived_zip_sha256"]:
+        raise ValueError("saved EIS ZIP original is not pinned")
+    receipt_file = checked(pinned["recovery_receipt_relative_path"])
+    if sha(receipt_file.read_bytes()) != pinned["recovery_receipt_sha256"]:
+        raise ValueError("recovered filestore receipt changed")
+    recovery = json.loads(receipt_file.read_text())
+    seen: set[str] = set()
+    rows = []
+    for slot, row in enumerate(pinned["attachments"], start=1):
+        uid = row.get("source_uid")
+        if (not isinstance(uid, str) or not re.fullmatch(r"[0-9A-F]{32}", uid)
+                or uid in seen or row.get("source_role") not in {
+                    "oct09_first_party_saved_run",
+                    "oct14_recovered_first_party_receipt",
+                }):
+            raise ValueError("invalid, repeated or unverified original UID")
+        seen.add(uid)
+        path = checked(row.get("source_root_relative_path"))
+        if (path.suffix.lower() != row.get("file_extension")
+                or path.stat().st_size != row.get("bytes")
+                or sha(path.read_bytes()) != row.get("sha256")):
+            raise ValueError("attached original sha/size/type mismatch")
+        if row["source_role"] == "oct09_first_party_saved_run":
+            matches = [
+                x for x in oldmeta.get("files", [])
+                if x.get("original_name") == row["official_name"]
+                and x.get("size_bytes") == row["bytes"]
+                and parse_qs(urlsplit(str(x.get("source_url") or "")).query).get("uid", [""])[0] == uid
+                and (old_run / "input" / str(x.get("stored_name"))).resolve() == path.resolve()
+            ]
+            if len(matches) != 1:
+                raise ValueError("old original saved-run source URL/UID/name/size not bound")
+        else:
+            matches = [
+                x for x in recovery
+                if x.get("registry_number") == case["registry_number"]
+                and x.get("slot_in_original_notice") == slot
+                and x.get("name_in_original_notice") == row["official_name"]
+                and x.get("declared_bytes") == row["bytes"]
+                and x.get("sha256") == row["sha256"]
+                and x.get("notice_xml_sha256") == case["selected_xml_sha256"]
+                and x.get("state") == "VERIFIED_FIRST_PARTY_BINARY"
+                and (receipt_file.parent / case["registry_number"] / str(x.get("file"))).resolve() == path.resolve()
+            ]
+            if len(matches) != 1:
+                raise ValueError("independent recovered original receipt mismatch")
+        rows.append({
+            "uid": uid, "file_extension": row["file_extension"],
+            "actual_bytes": row["bytes"], "sha256": row["sha256"],
+            "official_name": row["official_name"],
+            "source_root_relative_path": row["source_root_relative_path"],
+        })
+    return archived, rows
+
 def prepare(
     *, stage: Path, source_root: Path, pinned_manifest: Path,
     registry_number: str = NUMBER, stage_name: str = STAGE_NAME,
+    original_case_manifest: Path | None = None,
 ) -> dict:
     stage = stage.resolve()
     source_root = source_root.resolve()
@@ -39,19 +136,28 @@ def prepare(
         raise ValueError("must use the original historical R4 development source")
     manifest = json.loads(pinned_manifest.read_text())
     record = next((r for r in manifest["cases"] if r["registry_number"] == registry_number), None)
-    if record is None or record["source_role"] != "NEW_OFFICIAL_POSITIVE_REPLACEMENT":
+    if record is None:
         raise ValueError("missing pinned development original source manifest")
-
-    archived = source_root / "positive-eis-replacements-20261012" / registry_number / "documentation-archive.zip"
-    if archived.is_symlink() or sha(archived.read_bytes()) != record["archived_zip_sha256"]:
-        raise ValueError("archived EIS ZIP SHA mismatch")
     binaries_root = source_root / "positive-docs-recovery-20261012"
-    receipt_path = binaries_root / "official-21-attachments-receipt.json"
-    if receipt_path.is_symlink() or sha(receipt_path.read_bytes()) != RECEIPT_PIN:
-        raise ValueError("first-party R4 attachments source receipt not pinned")
-    rows = [x for x in json.loads(receipt_path.read_text())["results"] if x["reg_number"] == registry_number]
+    if record["source_role"] == "ORIGINAL_20_CORPUS":
+        if original_case_manifest is None or registry_number != "0348100024426000039":
+            raise ValueError("unapproved historical original corpus source")
+        archived, rows = resolve_original_eok_v3(
+            source_root=source_root, case=record,
+            pinned_case_manifest=original_case_manifest,
+        )
+    elif record["source_role"] == "NEW_OFFICIAL_POSITIVE_REPLACEMENT":
+        archived = source_root / "positive-eis-replacements-20261012" / registry_number / "documentation-archive.zip"
+        if archived.is_symlink() or sha(archived.read_bytes()) != record["archived_zip_sha256"]:
+            raise ValueError("archived EIS ZIP SHA mismatch")
+        receipt_path = binaries_root / "official-21-attachments-receipt.json"
+        if receipt_path.is_symlink() or sha(receipt_path.read_bytes()) != RECEIPT_PIN:
+            raise ValueError("first-party R4 attachments source receipt not pinned")
+        rows = [x for x in json.loads(receipt_path.read_text())["results"] if x["reg_number"] == registry_number]
+    else:
+        raise ValueError("source role not supported for isolated actual E2E")
     if len(rows) != record["selected_xml_attachment_references"] or not 1 <= len(rows) <= 12:
-        raise ValueError("incorrect five original source receipts")
+        raise ValueError("wrong original source receipt count")
     source_by_uid = {x["uid"]: x for x in rows}
     if len(source_by_uid) != len(rows):
         raise ValueError("duplicate original source uid")
@@ -89,10 +195,17 @@ def prepare(
         if uid not in source_by_uid or url.hostname != "zakupki.gov.ru":
             raise ValueError("official XML attachment uid/host absent")
         source = source_by_uid[uid]
-        original_file = binaries_root / registry_number / (uid + source["file_extension"])
-        if (original_file.is_symlink() or not original_file.is_file()
+        original_file = (
+            source_root / source["source_root_relative_path"]
+            if record["source_role"] == "ORIGINAL_20_CORPUS"
+            else binaries_root / registry_number / (uid + source["file_extension"])
+        )
+        if (original_file.is_symlink() or not original_file.resolve().is_relative_to(source_root)
+                or not original_file.is_file()
                 or len(original_file.read_bytes()) != source["actual_bytes"]
                 or sha(original_file.read_bytes()) != source["sha256"]
+                or (record["source_role"] == "ORIGINAL_20_CORPUS"
+                    and row["fileName"] != source["official_name"])
                 or int(row["fileSize"]) != source["actual_bytes"]):
             raise ValueError("official binary original SHA, bytes or size conflict")
         if uid not in source_kinds or not source_kinds[uid]:
@@ -216,10 +329,11 @@ def main() -> None:
     parser.add_argument("--stage", type=Path, required=True)
     parser.add_argument("--development-root", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--original-case-manifest", type=Path)
     parser.add_argument(
         "--registry", choices=(
             NUMBER, "0151600003226000011", "0152200004026000069",
-            "0348100024426000021",
+            "0348100024426000021", "0348100024426000039",
         ),
         default=NUMBER,
     )
@@ -229,12 +343,14 @@ def main() -> None:
         "0151600003226000011": "ta-apr067-r4-fourth-distinct-20261015",
         "0152200004026000069": "ta-apr067-r4-fifth-distinct-20261015",
         "0348100024426000021": "ta-apr067-r4-sixth-signed-zips-20261015",
+        "0348100024426000039": "ta-apr067-r4-seventh-eok-revisions-20261015",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")
     report = prepare(stage=args.stage, source_root=args.development_root,
                      pinned_manifest=args.manifest,
-                     registry_number=args.registry, stage_name=allowed_stage)
+                     registry_number=args.registry, stage_name=allowed_stage,
+                     original_case_manifest=args.original_case_manifest)
     print(json.dumps({
         "run_id": report["run_id"],
         "archive_xml_originals": report["archive_xml_originals"],
