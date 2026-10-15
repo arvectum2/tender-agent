@@ -32,15 +32,27 @@ completed:
 - 2026-10-15 63 focused original-source/role/SHA-adversarial tests PASS, Ruff PASS; full suite running.
 - 2026-10-15 exact updated source branch full Mac mini regression 4130 PASS / 238 SKIP / 0 FAIL / 328 known warnings in 161.42 s, focused
   63 PASS, Ruff and git diff --check PASS, private distinct R4 5/5 docs SHA pinned.
-current_stage: fourth_real_e2e_and_full_local_regression_completed_github_pr_pending
+- '2026-10-15 owner-delegated ChatGPT-expert semantic review of true saved report found contradictory old generic recommendation: requests
+  obtain contract while source-attested ПК.docx extracted. Fixed services preanalysis typed contract_draft_available and source-conditioned
+  next_actions/final rationale; real case five-SHA deterministic corrected reprojection in private stage with no second Gemma run; original
+  incorrect HTML untouched as evidence; 11 targeted recommendation/contract tests PASS.'
+- 2026-10-15 further ChatGPT expert reading of original ООЗ.docx confirmed 01.01.2027–31.12.2027 volume 50 hours, while previous generic
+  services analyzer made unsupported statement fixed volume absent with zero extracted structured items. Corrected overview/delivery
+  model/extracted_fields/next_actions/supply_section_note to avoid overclaim; negative and positive 50h-focused tests PASS, original
+  raw source SHA untouched.
+- '2026-10-15 full local test suite after both semantic patches and volume-correction tests: 4135 passed,238 skipped,0 failed,328 pre-existing
+  warnings in149.73sec; Ruff clean; initial real E2E five originals unchanged and historical result preserved as separate evidence.'
+current_stage: final_local_regression_verified_push_exact_ci_pending
 remaining:
-- Commit/push Draft PR stacked on PR439 with current code and original-source evidence
-- Exact-head CI proof, correct failures if needed, child checkpoint completed
+- New full regression and Ruff verification after typed draft-contract semantics fix
+- Push PR440 correction and exact-head CI; mark checkpoint completed
+- No second actual model call; original E2E report retained as audit artifact
 last_verified_commit: b68093df5184db7029d548ae340c9394b1330e57
-last_tests: Mac mini 4130 passed/238 skipped/0 failed/328 known warnings in161.42sec; 63 focused source tests passed; Ruff PASS; actual
-  E2E 5/5 Gemma4 4 calls403.23sec with 3 cited EIS XML facts.
-resume_instruction: Full E2E and 4130 local tests passed. Next commit/push this isolated branch, open stacked Draft PR against feature/apr067-r4-four-revisions-replay-20261015,
-  await exact-head CI; do not rerun local models.
+last_tests: 4135 PASS/238 SKIP/0 FAIL/328 known warnings 149.73sec full local; 13 recommendation-focused pass, 63 source-focused pass,
+  Ruff pass. Real case Gemma4 4 calls403.23sec5/5 originals, report citations3. New deterministic contract/source-volume code tested
+  without rerunning model.
+resume_instruction: 'Both post-Gemma expert-source corrections verified: 4135 local tests passed. Push updated code to PR440, verify
+  exact-head CI; no need to rerun Gemma. Mark this child completed only after actual source-head CI. No live bid or deployment.'
 execution:
   branch: feature/apr067-r4-fourth-distinct-e2e-20261015
   manual_override: true
