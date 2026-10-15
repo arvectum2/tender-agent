@@ -234,7 +234,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Owner signs in by browser, submits supported live procurement, observes progress, inspects evidence-bound requirements/risks/economics, source documents and report, finds saved procurement/history without terminal/Swagger; no arbitrary SQL, mock-only UI or external consequential actions.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
-      state: implementation_pr_open_not_merged
+      state: implementation_merged_owner_identity_development_e2e_accepted_business_document_gate_open
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'

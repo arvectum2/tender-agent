@@ -1,0 +1,41 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR04-OWNER-ONBOARDING-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Validate real Arvectum corporate identity and limited procurement preferences through isolated customer onboarding,
+  with evidence and fail-closed unknown qualifications.
+definition_of_done:
+- Capture sourced corporate name, INN and KPP from the owner-provided registration documents without committing sensitive
+  documents or personal data.
+- E2E local isolated create/read/revision and personalized screen for original 44-FZ procurement run, no change to existing
+  operator records.
+- Check documents and qualifications remain UNVERIFIED/UNKNOWN unless original source and human confirmation are available.
+- Run relevant regression tests, review auth/isolation/export, and publish acceptance receipt and checkpoint.
+completed:
+- 2026-10-15 corporate name/INN/KPP source-checked against two owner-provided official registration PDFs, both original SHA
+  recorded ONLY in private Mac runtime; original PDFs not copied to Mac mini, credentials/personal and bank identifiers never
+  committed.
+- 2026-10-15 isolated APR04 actual-company identity POST201 / read200 / duplicate409 / UI auth200 anonymous401, no production
+  DB; real saved archived original EIS report source NMCK citation, no owner NMCK bounds -> UNKNOWN, no licenses/margin ->
+  UNKNOWN, HUMAN_REVIEW_REQUIRED, no ETP or external action.
+- 2026-10-15 test-only bounds exercised WITHIN_BOUNDS correctly and then restored to null, persisted profile version3 read
+  with a new SQLAlchemy DB session. Synthetic PDF storage SHA round-trip passed and stays UPLOADED_UNVERIFIED, cross-customer
+  GET404.
+- '2026-10-15 corrected code: missing minimum and maximum NMCK limits cannot produce misleading WITHIN_BOUNDS even for cited
+  official tender price. APR04 / company-store / APR05 focused 34 PASS, Ruff PASS; isolated private receipt persisted.'
+current_stage: bounded_owner_identity_dev_e2e_pass
+remaining:
+- Actual original corporate PDFs upload/owner document review (outside bounded technical development acceptance)
+- Explicit real owner criteria regions/margin/NMCK/qualification (business decisions separate)
+- APR05 staged multi-tenant/roles/entitlement E2E next child
+last_verified_commit: 347aab2e77b84b232b59ab11c8c9a804feb175ff
+last_tests: 34 relevant pytest PASS/0 FAIL,35 preexisting warnings; isolated actual legal identity HTTP E2E PASS; source-read-only
+  SHA unchanged, staged DB persisted, private test artifacts only; Ruff clean.
+resume_instruction: APR04 bounded corporate identity + archived EIS operator E2E accepted and source fact checked. Do not
+  repeat. Proceed APR05 staged tenant/roles/entitlement isolation with private synthetic tenants, no payments/public access.
+  Owner must separately accept original corporate PDFs, set business price limits/risks/licenses, and approve production/paid
+  actions. PR433 exact-head CI SUCCESS; PR433 and APR04 branch not merged.
+execution:
+  branch: feature/apr04-arvectum-onboarding-e2e-20261015
+  manual_override: true
