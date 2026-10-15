@@ -27,43 +27,58 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
+def prepare(
+    *, stage: Path, source_root: Path, pinned_manifest: Path,
+    registry_number: str = NUMBER, stage_name: str = STAGE_NAME,
+) -> dict:
     stage = stage.resolve()
     source_root = source_root.resolve()
-    if stage.name != STAGE_NAME or (stage / "runs").exists():
+    if stage.name != stage_name or (stage / "runs").exists():
         raise ValueError("refuse nonisolated/repeated run stage")
     if source_root.name != "ai-expert-20261012":
         raise ValueError("must use the original historical R4 development source")
     manifest = json.loads(pinned_manifest.read_text())
-    record = next((r for r in manifest["cases"] if r["registry_number"] == NUMBER), None)
+    record = next((r for r in manifest["cases"] if r["registry_number"] == registry_number), None)
     if record is None or record["source_role"] != "NEW_OFFICIAL_POSITIVE_REPLACEMENT":
         raise ValueError("missing pinned development original source manifest")
 
-    archived = source_root / "positive-eis-replacements-20261012" / NUMBER / "documentation-archive.zip"
+    archived = source_root / "positive-eis-replacements-20261012" / registry_number / "documentation-archive.zip"
     if archived.is_symlink() or sha(archived.read_bytes()) != record["archived_zip_sha256"]:
         raise ValueError("archived EIS ZIP SHA mismatch")
     binaries_root = source_root / "positive-docs-recovery-20261012"
     receipt_path = binaries_root / "official-21-attachments-receipt.json"
     if receipt_path.is_symlink() or sha(receipt_path.read_bytes()) != RECEIPT_PIN:
         raise ValueError("first-party R4 attachments source receipt not pinned")
-    rows = [x for x in json.loads(receipt_path.read_text())["results"] if x["reg_number"] == NUMBER]
-    if len(rows) != record["selected_xml_attachment_references"] or len(rows) != 5:
+    rows = [x for x in json.loads(receipt_path.read_text())["results"] if x["reg_number"] == registry_number]
+    if len(rows) != record["selected_xml_attachment_references"] or not 1 <= len(rows) <= 12:
         raise ValueError("incorrect five original source receipts")
     source_by_uid = {x["uid"]: x for x in rows}
-    if len(source_by_uid) != 5:
+    if len(source_by_uid) != len(rows):
         raise ValueError("duplicate original source uid")
 
+    if (record.get("notice_type") not in {
+        "epNotificationEF2020", "epNotificationEZK2020", "epNotificationEOK2020",
+    } or not isinstance(record.get("archived_version"), int)
+            or not 1 <= record["archived_version"] <= 999):
+        raise ValueError("unsupported pinned historical source notice type/version")
+    prefix = f"{record['notice_type']}_{registry_number}_{record['archived_version']}_"
     with zipfile.ZipFile(archived) as zip_data:
-        matches = [n for n in zip_data.namelist()
-                   if n.startswith(f"epNotificationEF2020_{NUMBER}_4_")]
+        matches = [n for n in zip_data.namelist() if n.startswith(prefix)]
         if len(matches) != 1:
-            raise ValueError("not exactly one v4 official archived notice")
+            raise ValueError("not exactly one pinned official archived notice")
         selected_raw = zip_data.read(matches[0])
         if sha(selected_raw) != record["selected_xml_sha256"]:
-            raise ValueError("selected archived v4 notice SHA mismatch")
+            raise ValueError("selected archived notice SHA mismatch")
     if b"<!DOCTYPE" in selected_raw.upper() or b"<!ENTITY" in selected_raw.upper():
         raise ValueError("unsafe XML")
     xml = ET.fromstring(selected_raw)
+    from src.modules.tender_operator_agent_demo.eis_notice_parser import (
+        extract_notice_attachments,
+    )
+    source_kinds = {
+        parse_qs(urlsplit(str(item["url"])).query).get("uid", [""])[0]: item["document_kind"]
+        for item in extract_notice_attachments(selected_raw.decode("utf-8"))
+    }
     refs = []
     for info in xml.iter():
         if info.tag.rsplit("}", 1)[-1] != "attachmentInfo":
@@ -74,15 +89,17 @@ def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
         if uid not in source_by_uid or url.hostname != "zakupki.gov.ru":
             raise ValueError("official XML attachment uid/host absent")
         source = source_by_uid[uid]
-        original_file = binaries_root / NUMBER / (uid + source["file_extension"])
+        original_file = binaries_root / registry_number / (uid + source["file_extension"])
         if (original_file.is_symlink() or not original_file.is_file()
                 or len(original_file.read_bytes()) != source["actual_bytes"]
                 or sha(original_file.read_bytes()) != source["sha256"]
                 or int(row["fileSize"]) != source["actual_bytes"]):
             raise ValueError("official binary original SHA, bytes or size conflict")
-        refs.append((row["fileName"], original_file, source))
-    if len(refs) != 5 or len({r[2]["uid"] for r in refs}) != 5:
-        raise ValueError("selected v4 original attachments missing")
+        if uid not in source_kinds or not source_kinds[uid]:
+            raise ValueError("original attached document kind cannot be bound to the selected notice")
+        refs.append((row["fileName"], original_file, source, source_kinds[uid]))
+    if len(refs) != len(rows) or len({r[2]["uid"] for r in refs}) != len(rows):
+        raise ValueError("selected archived original attachments missing")
 
     from src.modules.tender_operator_agent_demo import (
         procurement_intake_service as procurement,
@@ -106,7 +123,7 @@ def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
             pass
 
         def get_docs_by_reestr_number(self, number: str, subsystem_type: str = "PRIZ"):
-            if number != NUMBER or subsystem_type != "PRIZ":
+            if number != registry_number or subsystem_type != "PRIZ":
                 raise ValueError("wrong offline historical source")
             return DocsArchiveResult(
                 request_id="archived-r4-offline-readonly", status="completed",
@@ -135,7 +152,7 @@ def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
         patch.object(procurement, "_supplement_run_with_notice_xml_attachments", lambda _run: 0),
     ):
         created = procurement.create_run_from_eis_docs_archive(
-            EisDocsArchiveRunRequest(reestr_number=NUMBER, analyze_after_download=False)
+            EisDocsArchiveRunRequest(reestr_number=registry_number, analyze_after_download=False)
         )
 
     run_id = created.run_id
@@ -143,7 +160,7 @@ def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
     run_input = upload.get_demo_run_input_dir(run_id)
     prior_files = list(meta.get("files") or [])
     verified_binary_files = []
-    for i, (official_name, original, source) in enumerate(refs, start=1):
+    for i, (official_name, original, source, official_kind) in enumerate(refs, start=1):
         relative = source["uid"] + source["file_extension"]
         target = run_input / relative
         target.parent.mkdir(exist_ok=True)
@@ -156,7 +173,7 @@ def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
             role_hint=procurement._role_hint_from_procurement_attachment(official_name),
             size_bytes=target.stat().st_size, content_type="application/octet-stream",
             source="eis_official_original_saved", source_type="first_party_archived_R4_verified",
-            parent_archive="documentation-archive.zip",
+            document_kind=official_kind, parent_archive="documentation-archive.zip",
         )
         meta["files"].append(row)
         verified_binary_files.append({"file_id": file_id, "stored_name": relative,
@@ -171,7 +188,7 @@ def prepare(*, stage: Path, source_root: Path, pinned_manifest: Path) -> dict:
         raise ValueError("offline official source document set incomplete: " + str(completeness))
     output = {
         "run_id": run_id,
-        "registry_number": NUMBER,
+        "registry_number": registry_number,
         "archived_eis_zip_sha256": record["archived_zip_sha256"],
         "selected_archived_notice_xml_sha256": record["selected_xml_sha256"],
         "selected_archived_version": record["archived_version"],
@@ -199,9 +216,17 @@ def main() -> None:
     parser.add_argument("--stage", type=Path, required=True)
     parser.add_argument("--development-root", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--registry", choices=(NUMBER, "0151600003226000011"), default=NUMBER)
     args = parser.parse_args()
+    allowed_stage = {
+        NUMBER: STAGE_NAME,
+        "0151600003226000011": "ta-apr067-r4-fourth-distinct-20261015",
+    }[args.registry]
+    if args.stage.name != allowed_stage:
+        parser.error("unapproved isolated source stage")
     report = prepare(stage=args.stage, source_root=args.development_root,
-                     pinned_manifest=args.manifest)
+                     pinned_manifest=args.manifest,
+                     registry_number=args.registry, stage_name=allowed_stage)
     print(json.dumps({
         "run_id": report["run_id"],
         "archive_xml_originals": report["archive_xml_originals"],

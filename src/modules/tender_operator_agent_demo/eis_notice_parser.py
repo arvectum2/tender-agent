@@ -203,6 +203,34 @@ def _node_attribute(node: ET.Element, names: tuple[str, ...]) -> str | None:
     return None
 
 
+# Official EIS epNotification attachment docKindInfo has stronger provenance
+# than abbreviations like "ПК.docx". Require BOTH the exact standardized
+# code and its matching label; ambiguous/inconsistent hints stay unknown.
+_OFFICIAL_EIS_DOC_KIND = {
+    ("CP", "проект контракта"): "contract_draft",
+    ("POD", "описание объекта закупки"): "procurement_object_description",
+    ("MRJ", "обоснование начальной (максимальной) цены контракта"): "price_justification",
+    ("CAR", "требование к содержанию, составу заявки на участие в закупке"): "application_requirements",
+}
+
+
+def _official_notice_attachment_kind(node: ET.Element) -> str | None:
+    kinds = [item for item in node if _local_name(item.tag) == "docKindInfo"]
+    if len(kinds) != 1:
+        return None
+    children = {}
+    for child in kinds[0]:
+        tag = _local_name(child.tag)
+        if tag in children:
+            return None
+        if tag in {"code", "name"}:
+            children[tag] = (child.text or "").strip()
+    code, name = children.get("code"), children.get("name")
+    if not code or not name:
+        return None
+    return _OFFICIAL_EIS_DOC_KIND.get((code, " ".join(name.casefold().split())))
+
+
 def extract_notice_attachments(xml_text: str) -> list[dict[str, str | None]]:
     if not xml_text or not xml_text.strip():
         return []
@@ -221,7 +249,10 @@ def extract_notice_attachments(xml_text: str) -> list[dict[str, str | None]]:
 
     for node in root.iter():
         local = _local_name(node.tag).lower()
-        if "attachment" not in local and local not in candidate_tags:
+        # The surrounding <attachments> collection is NOT a file.
+        # Treating it as one silently eats the FIRST actual attachment when
+        # the nested attachmentInfo has the same name/URL (dedupe collision).
+        if local not in candidate_tags:
             continue
         name = _extract_child_text(node, name_fields) or _node_attribute(node, name_fields)
         url = _extract_child_text(node, url_fields) or _node_attribute(node, url_fields)
@@ -240,7 +271,10 @@ def extract_notice_attachments(xml_text: str) -> list[dict[str, str | None]]:
             {
                 "name": name.strip(),
                 "url": safe_url,
-                "document_kind": _classify_notice_attachment_kind(name),
+                "document_kind": (
+                    _official_notice_attachment_kind(node)
+                    or _classify_notice_attachment_kind(name)
+                ),
             }
         )
     return attachments

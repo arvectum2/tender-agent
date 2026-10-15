@@ -18,11 +18,17 @@ from secrets import token_urlsafe
 
 def verify_copy_source(saved: Path, pinned: dict) -> int:
     """Fail closed on a tampered original, duplicated ID or unsafe archive path."""
-    if pinned.get("run_id") != saved.name or pinned.get("registry_number") != "0162200011826003089":
+    if pinned.get("run_id") != saved.name or pinned.get("registry_number") not in {
+        "0162200011826003089", "0151600003226000011",
+    }:
         raise ValueError("the pinned R4 historical case identity does not match")
     rows = pinned.get("all_input_sha256")
-    if not isinstance(rows, list) or len(rows) != 17 or pinned.get("archive_xml_originals") != 12:
-        raise ValueError("the exact 17-source original inventory was not retained")
+    xml_count = pinned.get("archive_xml_originals")
+    attachments = pinned.get("first_party_attachment_originals")
+    if (not isinstance(rows, list) or not isinstance(xml_count, int)
+            or not isinstance(attachments, list) or not 1 <= len(attachments) <= 12
+            or len(rows) != xml_count + len(attachments)):
+        raise ValueError("source inventory count does not match pinned archive XML and original attachments")
     input_dir = (saved / "input").resolve()
     checked = set()
     for item in rows:
@@ -49,18 +55,26 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stage", type=Path, required=True)
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--registry", choices=("0162200011826003089", "0151600003226000011"), default="0162200011826003089")
+    parser.add_argument("--dp-port", choices=(18095, 18096), type=int, default=18095)
     args = parser.parse_args()
+    allowed_stage = {
+        "0162200011826003089": "ta-apr067-r4-four-revisions-20261015",
+        "0151600003226000011": "ta-apr067-r4-fourth-distinct-20261015",
+    }[args.registry]
     root = args.stage.resolve()
     runs = root / "runs"
     saved = runs / args.run_id
-    if not (saved / "metadata.json").is_file() or root.name != "ta-apr067-r4-four-revisions-20261015":
+    if not (saved / "metadata.json").is_file() or root.name != allowed_stage:
         parser.error("Only the designated isolated historical R4 case copy is allowed")
     meta = json.loads((saved / "metadata.json").read_text())
     if (meta.get("mode") != "procurement_search_intake"
-            or len(meta.get("files", [])) != 17
-            or meta.get("procurement_id") != "0162200011826003089"):
+            or meta.get("procurement_id") != args.registry):
         parser.error("Expected seventeen firstparty official archived EIS original documents")
     pinned = json.loads((root / "output/offline_archived_source_receipt.json").read_text())
+    if (pinned.get("registry_number") != args.registry
+            or len(meta.get("files", [])) != len(pinned.get("all_input_sha256", []))):
+        parser.error("original file inventory not bound to the specified case")
     try:
         verify_copy_source(saved, pinned)
     except (TypeError, ValueError) as exc:
@@ -75,7 +89,7 @@ def main() -> int:
         "AI_CORP_OPENAI_BASE_URL": "http://127.0.0.1:8081/v1",
         "AI_CORP_LLM_MODEL": "arvectum-gemma4-12b-it-qat-q4_0",
         "AI_CORP_LOCAL_LLM_BASE_URL": "http://127.0.0.1:8081/v1",
-        "AI_CORP_RAG_DATA_PLATFORM_BASE_URL": "http://127.0.0.1:18095",
+        "AI_CORP_RAG_DATA_PLATFORM_BASE_URL": "http://127.0.0.1:" + str(args.dp_port),
         "AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS": "90",
         "AI_CORP_LLM_TIMEOUT_SECONDS": "240",
         "AI_CORP_LLM_MAX_RETRIES": "1",
@@ -191,14 +205,18 @@ def main() -> int:
                 try: event_types.append(json.loads(line).get("event_type"))
                 except ValueError: pass
             checked["events_last_8"]=event_types[-8:]
-    output=root/"output"/"apr067_r4_four_version_replay.json"
+    receipt_name = (
+        "apr067_r4_four_version_replay.json" if args.registry == "0162200011826003089"
+        else "apr067_r4_fourth_distinct_e2e.json"
+    )
+    output=root/"output"/receipt_name
     output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(json.dumps(checked,ensure_ascii=False,indent=2,sort_keys=True)+"\n")
     print("E2E_RECEIPT",output,flush=True)
     return 0 if (checked.get("analysis_http")==200
                  and checked.get("persisted_analysis_mode")=="llm_tender_operator_provider"
                  and checked.get("persisted_llm_invoked") is True
-                 and checked.get("extracted_original_count") == 17
+                 and checked.get("extracted_original_count") == len(pinned["all_input_sha256"])
                  and checked.get("failed_original_count") == 0
                  and checked.get("original_file_sha_preserved") is True
                  and checked.get("official_zip_sha_preserved") is True

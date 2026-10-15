@@ -33,6 +33,7 @@ def staged(tmp_path):
         "run_id": run.name,
         "registry_number": NOTICE,
         "archive_xml_originals": 12,
+        "first_party_attachment_originals": [{} for _ in range(5)],
         "all_input_sha256": items,
         "archived_eis_zip_sha256": hashlib.sha256(z).hexdigest(),
     }
