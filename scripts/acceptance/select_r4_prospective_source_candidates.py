@@ -57,6 +57,14 @@ def select_officially_unverified_candidates(
     return result
 
 
+def validated_captured_snapshot_rows(payload: object) -> list[dict]:
+    """Use strict source-parser rows, including when stored in its receipt wrapper."""
+    rows = payload.get("parsed_snapshots") if isinstance(payload, dict) else payload
+    if not isinstance(rows, list) or any(not isinstance(p, dict) for p in rows):
+        raise TypeError("Captured source parser did not produce page snapshots")
+    return rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--registered-intent", type=Path, required=True)
@@ -70,7 +78,9 @@ def main() -> None:
     if args.private_output.exists():
         raise ValueError("Do not silently replace an immutable candidate discovery receipt")
     intent = json.loads(args.registered_intent.read_text())
-    snapshots = json.loads(args.live_verified_snapshots.read_text())
+    snapshots = validated_captured_snapshot_rows(
+        json.loads(args.live_verified_snapshots.read_text())
+    )
     historic = json.loads(args.development_audit.read_text())
     earlier = json.loads(args.prior_blind_lock.read_text())
     capture = json.loads(args.tls_capture_receipt.read_text())

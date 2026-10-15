@@ -20,8 +20,8 @@
   "new_firstparty_sha_size_verified_binaries": 21,
   "distinct_new_raw_sha256": 21,
   "future_holdout_target": 12,
-  "new_final_blind_locked_cases": 0,
-  "prior_blind_private_hash_overlap_check": "PENDING_EXTERNAL_SSD_READ_RECOVERY",
+  "new_final_blind_locked_cases": 4,
+  "prior_blind_private_hash_overlap_check": "PASS_20_DEV_PLUS_3_PRIOR_BLIND_SHA_DISJOINT",
   "source_original_receipt_digest": "8594a8d8ba4b3eba3442500d88e8cd05704944ef6edd724c6494413452f86bb7",
   "html_capture_receipt_digest": "6aa0e01d87f00e58a0ff7ded984d99da1af6ccafd83523c09c7176a0f2741479",
   "source_only_review": true,
@@ -29,5 +29,16 @@
   "gold_signed": 0,
   "precision_recall": "NOT_MEASURED",
   "bid_ready": false,
-  "status": "FOUR_REAL_EIS_SOURCE_CASES_PRELOCK_PENDING"
+  "status": "FOUR_BLIND_CASES_FROZEN_OUT_OF_TARGET_12_REMAINDER_UNDERFILLED",
+  "previous_development_original_sha_count": 96,
+  "previous_blind_original_sha_count": 16,
+  "latest_verified_stage2_lock_sha256": "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a",
+  "partial_source_only_blind_evaluator_packs": 4,
+  "remaining_cases_to_target": 8,
+  "eis_source_storage_location": "ARVECTUMSSD_PRIVATE_EVIDENCE_NOT_GIT",
+  "mac_filesystem_live_verify": "APFS_VOLUME_AND_CONTAINER_OK_EXIT_0",
+  "full_regression_location": "ARVECTUMSSD",
+  "full_regression_passed": 4250,
+  "full_regression_skipped": 242,
+  "full_regression_failed": 0
 }

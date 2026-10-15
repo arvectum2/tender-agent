@@ -8,6 +8,7 @@ import pytest
 
 from scripts.acceptance.select_r4_prospective_source_candidates import (
     select_officially_unverified_candidates,
+    validated_captured_snapshot_rows,
 )
 from src.modules.tender_operator_agent_demo.r4_discovery_html_parser import (
     parse_source_cards,
@@ -84,3 +85,13 @@ def test_prior_blind_notice_excluded_before_any_official_fetch(tmp_path):
     # Changing the registered sample quota must not be silently accepted.
     with pytest.raises(ValueError):
         select_officially_unverified_candidates(**kwargs)
+
+
+def test_captured_source_cli_wrapper_reads_source_parser_receipt_not_fake_list():
+    parsed = [{"url": KNOWN_PAGES[0], "rows": []}]
+    assert validated_captured_snapshot_rows({"parsed_snapshots": parsed}) is parsed
+    assert validated_captured_snapshot_rows(parsed) is parsed
+    with pytest.raises(TypeError):
+        validated_captured_snapshot_rows({"rows": parsed})
+    with pytest.raises(TypeError):
+        validated_captured_snapshot_rows({"parsed_snapshots": ["fake page"]})
