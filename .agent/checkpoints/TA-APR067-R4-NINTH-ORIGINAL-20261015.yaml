@@ -1,0 +1,37 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-NINTH-ORIGINAL-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: 'Distinct authentic original-source 44FZ EIS archival development E2E 0360600005326000018: exact source-v1/v2 and first-party
+  document SHA/UID, native Data Platform, real Gemma4, evidence and independent legal/manual gates.'
+definition_of_done:
+- Original 20-case frozen EIS ZIP selected latest archived notice XML and restored first-party attachment SHA + UID/size/name exact
+- Native completeness gate ready_to_analyze without bypass, full local Gemma4 provider E2E and authenticated report/history source
+  citations
+- Expert developmental semantic review and archived export 409, preserved original private sources, no commercial GO
+- Relevant tests/Ruff, full regression, stacked Draft PR and exact-head GitHub CI; checkpoint completed only after verified
+completed:
+- 2026-10-15 native historic source stage toa-run-20261015192351-e8e8a5 0360600005326000018, 12 original SHA-protected archived XML/official
+  DOCs exact verified, EIS type ATTESTED_COMPETITIVE, document set ready_to_analyze, no live EIS.
+- 2026-10-15 first dry attempt failed closed on missing identity in strict source helper before any model call; then exact allowlist
+  9+10 repaired and a SINGLE serial ninth->tenth run process PID69976 launched. 23 focused source security/regression tests PASS.
+- 2026-10-15 authentic ninth original archival EF2020 revision2 local Gemma4 4 calls457.90 sec HTTP200, no fallback, 12/12 original
+  source SHA/text extracted (8 XML+4 DOC/DOCX including original legacy .doc), source selection pinned_latest_archived_notice_revision;
+  original source NMCK2,700,000 RUB, subject VR museum content and deadline2026-04-06T10:00+04:00, 3 actual original EIS XML citations
+  HTML SHA4b31d05f1a18eb42080113d70625823b983882affb14f0c3743f09eba76d5072; 200 history, archived exports409, manual_review. Contract
+  correctly present, five LLM risks visibly hypothetical.
+current_stage: ninth_original_eis_llm_expert_source_pass_waiting_full_ci
+remaining:
+- Full suite still running under exceptional unrelated iOS simulators load
+- One stacked PR quality CI and review before completed status, no rerun ninth
+- Tenth serial model has automatically started and is separately staged
+last_verified_commit: 891d9449427bb08c78bf699acce97ba3a469f7b2
+last_tests: Ninth one real Gemma4 457.90s four calls, original 12/12 file SHA, 3 EIS citations, export409; 23 first-party adversarial
+  source tests PASS; full regression still running.
+resume_instruction: Ninth true 12 originals 4 real Gemma calls457.9s persisted and validated, do NOT rerun; wait for full tests and
+  GitHub CI. Tenth already running in same serial process PID69976, inspect /tmp/ta-apr067-tenth-original-llm-20261015.log and saved
+  output receipt. Finalize both checkpoints separately and staged PR.
+execution:
+  branch: feature/apr067-r4-ninth-tenth-original-e2e-20261015
+  manual_override: true

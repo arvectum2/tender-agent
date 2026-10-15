@@ -127,19 +127,28 @@ def resolve_original_eok_v3(
 def resolve_recovered_legacy_word_originals(
     *, source_root: Path, case: dict, pinned_case_manifest: Path,
 ) -> tuple[Path, list[dict]]:
-    """Source-verify original EF2020 .doc/.docx files, no live filestore calls."""
-    if (case.get("registry_number") != "0127100008626000013"
-            or case.get("source_role") != "ORIGINAL_20_CORPUS"
+    """Verify archived EF2020 cases with exact first-party Oct14 recovered files.
+
+    Source UID/name/size is independently enforced by selected EIS XML in
+    prepare(); this binder additionally verifies complete recovered SHA and
+    original archive receipt, preserving legacy .doc and other originals.
+    """
+    approved = {
+        "0127100008626000013": (1, "APR067_R4_EIGHTH_LEGACY_DOC_V1_SHA_PINNED_SOURCES_2026-10-15.json"),
+        "0360600005326000018": (2, "APR067_R4_ORIGINAL_0360600005326000018_SHA_PINNED_SOURCES_2026-10-15.json"),
+        "0895100000126000897": (1, "APR067_R4_ORIGINAL_0895100000126000897_SHA_PINNED_SOURCES_2026-10-15.json"),
+    }
+    expected = approved.get(case.get("registry_number"))
+    if (expected is None or case.get("source_role") != "ORIGINAL_20_CORPUS"
             or case.get("notice_type") != "epNotificationEF2020"
-            or case.get("archived_version") != 1
-            or pinned_case_manifest.name !=
-            "APR067_R4_EIGHTH_LEGACY_DOC_V1_SHA_PINNED_SOURCES_2026-10-15.json"):
-        raise ValueError("unapproved first-party legacy Word source case")
+            or case.get("archived_version") != expected[0]
+            or pinned_case_manifest.name != expected[1]):
+        raise ValueError("unapproved first-party recovered source case")
     pin = json.loads(pinned_case_manifest.read_text())
     if (pin.get("registry_number") != case["registry_number"]
             or pin.get("source_role") != "ORIGINAL_20_CORPUS"
             or pin.get("selected_notice_type") != case["notice_type"]
-            or pin.get("selected_notice_version") != 1
+            or pin.get("selected_notice_version") != case["archived_version"]
             or pin.get("archive_sha256") != case["archived_zip_sha256"]
             or pin.get("selected_xml_sha256") != case["selected_xml_sha256"]
             or not isinstance(pin.get("attachments"), list)
@@ -221,7 +230,9 @@ def prepare(
                 source_root=source_root, case=record,
                 pinned_case_manifest=original_case_manifest,
             )
-        elif registry_number == "0127100008626000013":
+        elif registry_number in {
+            "0127100008626000013", "0360600005326000018", "0895100000126000897",
+        }:
             archived, rows = resolve_recovered_legacy_word_originals(
                 source_root=source_root, case=record,
                 pinned_case_manifest=original_case_manifest,
@@ -416,7 +427,8 @@ def main() -> None:
         "--registry", choices=(
             NUMBER, "0151600003226000011", "0152200004026000069",
             "0348100024426000021", "0348100024426000039",
-            "0127100008626000013",
+            "0127100008626000013", "0360600005326000018",
+            "0895100000126000897",
         ),
         default=NUMBER,
     )
@@ -428,6 +440,8 @@ def main() -> None:
         "0348100024426000021": "ta-apr067-r4-sixth-signed-zips-20261015",
         "0348100024426000039": "ta-apr067-r4-seventh-eok-revisions-20261015",
         "0127100008626000013": "ta-apr067-r4-eighth-legacy-doc-20261015",
+        "0360600005326000018": "ta-apr067-r4-ninth-original-20261015",
+        "0895100000126000897": "ta-apr067-r4-tenth-original-20261015",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")

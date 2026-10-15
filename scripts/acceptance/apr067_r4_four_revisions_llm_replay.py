@@ -21,6 +21,7 @@ def verify_copy_source(saved: Path, pinned: dict) -> int:
     if pinned.get("run_id") != saved.name or pinned.get("registry_number") not in {
         "0162200011826003089", "0151600003226000011", "0152200004026000069",
         "0348100024426000021", "0348100024426000039", "0127100008626000013",
+        "0360600005326000018", "0895100000126000897",
     }:
         raise ValueError("the pinned R4 historical case identity does not match")
     rows = pinned.get("all_input_sha256")
@@ -92,6 +93,7 @@ def main() -> int:
             "0162200011826003089", "0151600003226000011",
             "0152200004026000069", "0348100024426000021",
             "0348100024426000039", "0127100008626000013",
+            "0360600005326000018", "0895100000126000897",
         ), default="0162200011826003089",
     )
     parser.add_argument("--dp-port", choices=(18095, 18096, 18097, 18098, 18099, 18100), type=int, default=18095)
@@ -103,6 +105,8 @@ def main() -> int:
         "0348100024426000021": "ta-apr067-r4-sixth-signed-zips-20261015",
         "0348100024426000039": "ta-apr067-r4-seventh-eok-revisions-20261015",
         "0127100008626000013": "ta-apr067-r4-eighth-legacy-doc-20261015",
+        "0360600005326000018": "ta-apr067-r4-ninth-original-20261015",
+        "0895100000126000897": "ta-apr067-r4-tenth-original-20261015",
     }[args.registry]
     root = args.stage.resolve()
     runs = root / "runs"
@@ -247,7 +251,9 @@ def main() -> int:
         else "apr067_r4_fifth_distinct_e2e.json" if args.registry == "0152200004026000069"
         else "apr067_r4_sixth_signed_zips_e2e.json" if args.registry == "0348100024426000021"
         else "apr067_r4_seventh_eok_revisions_e2e.json" if args.registry == "0348100024426000039"
-        else "apr067_r4_eighth_legacy_doc_e2e.json"
+        else "apr067_r4_eighth_legacy_doc_e2e.json" if args.registry == "0127100008626000013"
+        else "apr067_r4_ninth_original_e2e.json" if args.registry == "0360600005326000018"
+        else "apr067_r4_tenth_original_e2e.json"
     )
     output=root/"output"/receipt_name
     output.parent.mkdir(parents=True,exist_ok=True)

@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-TENTH-ORIGINAL-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: 'Distinct authentic original-source 44FZ EIS archival development E2E 0895100000126000897: exact source-v1/v2 and first-party
+  document SHA/UID, native Data Platform, real Gemma4, evidence and independent legal/manual gates.'
+definition_of_done:
+- Original 20-case frozen EIS ZIP selected latest archived notice XML and restored first-party attachment SHA + UID/size/name exact
+- Native completeness gate ready_to_analyze without bypass, full local Gemma4 provider E2E and authenticated report/history source
+  citations
+- Expert developmental semantic review and archived export 409, preserved original private sources, no commercial GO
+- Relevant tests/Ruff, full regression, stacked Draft PR and exact-head GitHub CI; checkpoint completed only after verified
+completed:
+- 2026-10-15 native historic source stage toa-run-20261015192352-83888b 0895100000126000897, 13 original SHA-protected archived XML/official
+  DOCs exact verified, EIS type ATTESTED_COMPETITIVE, document set ready_to_analyze, no live EIS.
+- 2026-10-15 first dry attempt failed closed on missing identity in strict source helper before any model call; then exact allowlist
+  9+10 repaired and a SINGLE serial ninth->tenth run process PID69976 launched. 23 focused source security/regression tests PASS.
+- 2026-10-15 ninth prior case exited real API200 complete, serial parent PID69976 proceeded to tenth original source run toa-run-20261015192352-83888b
+  (13 original SHA files, native readiness passed). No concurrent Gemma inference.
+current_stage: tenth_actual_local_gemma_running_after_successful_ninth
+remaining:
+- Wait for scheduled sequential single authentic model invocation; ninth before tenth
+- Check source/LLM output exact citations and domain-specific semantic interpretation
+- Full regression and PR CI, truthful child closure
+last_verified_commit: 891d9449427bb08c78bf699acce97ba3a469f7b2
+last_tests: 23 focused original-source adverse tests PASS, Ruff PASS; ninth/tenth model sequence PID69976 active; full regression
+  pending.
+resume_instruction: Tenth original 0895100000126000897 serial model child of PID69976 now active, 13 original files. Do NOT rerun.
+  Inspect /tmp/ta-apr067-tenth-original-llm-20261015.log and output/apr067_r4_tenth_original_e2e.json then verify model/13 source
+  SHA/3 citations/archived export. Ninth real output already accepted source+model, CI pending.
+execution:
+  branch: feature/apr067-r4-ninth-tenth-original-e2e-20261015
+  manual_override: true

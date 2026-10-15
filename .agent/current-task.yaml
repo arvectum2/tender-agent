@@ -215,7 +215,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Continue child TA-APR067-R4-EIGHTH-LEGACY-DOC-20261015 on isolated branch with original historical 44FZ case 0127100008626000013. Six original archived XML, four UID/SHA-pinned first-party DOC/DOCX, local Gemma PID62278 active. Do not rerun model, finish E2E/tests/exact-head CI. Seventh case completed with PR443 exact code CI green.'
+resume_instruction: 'Tenth case TA-APR067-R4-TENTH-ORIGINAL-20261015 real Gemma running as SECOND case in PID69976 serial queue; ninth original 0360600005326000018 source+real Gemma 4 calls457.9 sec complete. Both source manifests ready, do not repeat. Finish tenth proof, full tests and exact-head stacked PR CI. Eighth checkpoint completed code CI success.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -238,4 +238,4 @@ latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
 
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
 
-latest_active_distinct_e2e_child: TA-APR067-R4-EIGHTH-LEGACY-DOC-20261015
+latest_active_distinct_e2e_child: TA-APR067-R4-TENTH-ORIGINAL-20261015
