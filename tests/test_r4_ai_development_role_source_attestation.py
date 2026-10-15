@@ -108,3 +108,46 @@ def test_previous_development_contract_december_payment_timeline(original_docs):
     calendar_december = contract.tables[3].rows[12].cells[2].text
     assert "01.12.2027" in calendar_december
     assert "31.12.2027" in calendar_december
+
+
+def test_legacy_telematics_application_vs_technical_spec_actor_and_nmkc():
+    """Third DEVELOPMENT procurement: exact DOCX+DOC SHA, no blind access."""
+    import subprocess
+
+    source = _historical_source_root() / "0349100009326000005"
+    identities = {
+        "attachment-04.docx": "2ec9091585b1e82d4be175d2c5521ae7a1a6f6b72b80b0450b158426fbc389cd",
+        "attachment-03.doc": "44cf5037944f23432af1c6e904c12e10cf3167cd3a4632a83178c2b98e1c2678",
+        "attachment-01.doc": "59a9818f1d74c9191fcf955235642c04ecb1f05e446cb3f9d850972effe038f2",
+    }
+    for filename, digest in identities.items():
+        binary = source / filename
+        assert binary.is_file()
+        assert hashlib.sha256(binary.read_bytes()).hexdigest() == digest
+    application = Document(source / "attachment-04.docx")
+    _literal(application, 37, "99-ФЗ")
+    _literal(application, 38, "наличие у Исполнителя лицензии")
+    _literal(application, 39, "участник закупки должен предоставить действующую лицензию")
+    _literal(application, 39, "телематические услуги связи")
+
+    def original_doc_lines(name: str):
+        result = subprocess.run(
+            ["/usr/bin/textutil", "-convert", "txt", "-stdout", str(source / name)],
+            capture_output=True,
+            check=True,
+            timeout=15,
+        )
+        return result.stdout.decode("utf-8").splitlines()
+
+    if not Path("/usr/bin/textutil").exists():
+        pytest.skip("macOS legacy DOC source line conversion unavailable")
+    tz = original_doc_lines("attachment-03.doc")
+    assert "Исполнителя (и/или соисполнителя)" in tz[89]
+    assert "телематические услуги связи" in tz[89]
+    assert "государственной аккредитации" in tz[90]
+    assert "не менее четырех штатных специалистов" in tz[80]
+    assert "территории Российской Федерации" in tz[86]
+    assert "99,9%" in tz[124]
+    assert "1000" in tz[122]
+    nmck = original_doc_lines("attachment-01.doc")
+    assert "130 000,00" in nmck[21]
