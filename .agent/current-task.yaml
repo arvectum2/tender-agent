@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-15 APR067 third historical firstparty 44FZ offline-source Gemma E2E 0162200011826003089: SHA-verified ZIP and 17 originals; four archived notice revisions including original v4, first model run 350.92sec 16/17 extraction due unsupported ODT, fixed Data Platform PR125, second real Gemma4 four calls150.08sec, 17/17 sources extracted, 3 pinned XML citations, historic archive exports 409, no original SHA mutation, old unsupported literal absent, 51 focus PASS/4104 full PASS/238 SKIP. DEVELOPMENT ChatGPT-expert acceptance, not current legal/bid GO."
   - "2026-10-15 APR067 second real R4 historical E2E on 0376300000126000193: 8/8 original saved SHA and extraction, Gemma4 four calls 358.92 sec, unsupported old literal not repeated; found and fixed notice XML mistaken for protocol/results duplicate, recovered exact original XML subject/deadline/NMCK citations, archived export 409, source model report NEEDS_REVIEW. 4093 full pytest PASS/238 SKIP/0 FAIL, targeted46 PASS Ruff. Draft PR pending; not 20 full E2E nor Owner commercial/legal GO."
   - "APR067 R4 development source QA 2026-10-15: 20 ZIP and 20 XML verified; original R4 96 attachments verified; 47 model snippets categorized 42 exact,3 formatted,2 unsupported; full 4074 PASS,238 SKIP. Commercial and independent legal gold open."
   - "2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts 3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured."
@@ -229,3 +230,5 @@ latest_verified_quality_code_commit: b1b87e8554602c66d8a3065f225793cc1652e729
 latest_completed_r4_quality_child: TA-APR067-R4-20-QUALITY-20261015
 
 latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
+
+latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
