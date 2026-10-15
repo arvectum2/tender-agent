@@ -30,7 +30,7 @@ remaining:
 - authorized_real_original_current_llm_e2e_with_source_citations
 - evaluate_gate_on_runtime_receipt
 - fix_functional_problems_then_close_apr03b
-last_verified_commit: bc98bd39
+last_verified_commit: 0c551bf40eeb9661e8c9abcbc24526178d177fbf
 last_tests: Mac-mini 2026-10-15 focused pytest 45 PASS/0 FAIL/1 pre-existing warning; Ruff clean; owner/roadmap/current YAML
   parse; private previews health200 and unauth 401 on both
 resume_instruction: Verify pushed change/PR and CI once. Next run authenticated isolated/current-main 44-FZ full LLM UI flow
