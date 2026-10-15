@@ -24,7 +24,9 @@ completed:
 - 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder, all
   extracted with text, 2 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process
   PID6706 starts order 3, no concurrent models.
-current_stage: queued_third_no_model_call_yet
+- 2026-10-16 eleventh and twelfth genuine Gemma4 source E2Es exited zero, original source/three XML citations and archival exports409
+  validated, serial PID6706 started THIRTEENTH source run toa-run-20261015214554-288eac. No concurrent model analysis.
+current_stage: thirteenth_actual_local_Gemma4_processing
 remaining:
 - Freeze split Oct14 first-party 11-recovered and 4-older originals under selected official notice SHA and UID
 - Isolated original source stage and local Data Platform preflight
@@ -33,10 +35,9 @@ remaining:
 last_verified_commit: ba55a7ead0fbffe07378893d01756762ac547cca
 last_tests: Original firstparty SHA verified, 5 actual substantive original DOC/DOCX Data Platform text extractions PASS; native ready_to_analyze,
   selected original notice and official kind pinned; full regression pending.
-resume_instruction: Original immutable staged ta-apr067-r4-thirteenth-eok-20261016; one serial remote process PID6706 launches case
-  11, then 12, then 13 ONLY on previous success. Read /tmp/ta-apr067-eleventh-real-gemma-20261016.log, twelfth-real-gemma and thirteenth-real-gemma
-  and each output receipt. Never rerun any model after saved output. Focused tests, full local suite, stacked Draft PR and exact CI
-  pending.
+resume_instruction: Third case original EOK 0349100009326000005 model running as last step PID6706; saved 4 XML+5 original attachments
+  SHA pinned, Data Platform five substantive original doc texts available. Read /tmp/ta-apr067-thirteenth-real-gemma-20261016.log and
+  private E2E receipt; do not rerun if receipt exists. Full local4214 PASS/238 SKIP, CI pending.
 execution:
   branch: feature/apr067-r4-eleven-thirteen-original-e2e-20261016
   stage_name: ta-apr067-r4-thirteenth-eok-20261016

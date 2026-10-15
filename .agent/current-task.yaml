@@ -215,7 +215,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Three next original cases in child checkpoints TA-APR067-R4-ELEVENTH/TWELFTH/THIRTEENTH-ORIGINAL-20261016 isolated on feature/apr067-r4-eleven-thirteen-original-e2e-20261016. Each has split first-party Oct14 recovered receipt sources, bind to saved original selected notice XML UID/sha and stage native EIS, serialize one real Gemma model per new case, test and exact CI. Do not repeat ten previous accepted E2Es.'
+resume_instruction: 'Cases 11 and 12 on historical original EIS source+real Gemma source-grounded expert E2E completed: each 9/9 sources/3 XML citations, timings379.06s and389.27s. Full local4214 PASS/238 SKIP, 50 focused PASS. Third case 0349100009326000005 now running real Gemma PID6706 and exact PR446 CI pending. Do not repeat prior model, finish third proof and mark all three completed only after exact substantive CI.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -238,4 +238,4 @@ latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
 
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
 
-latest_active_distinct_e2e_child: TA-APR067-R4-ELEVENTH-ORIGINAL-20261016
+latest_active_distinct_e2e_child: TA-APR067-R4-THIRTEENTH-ORIGINAL-20261016
