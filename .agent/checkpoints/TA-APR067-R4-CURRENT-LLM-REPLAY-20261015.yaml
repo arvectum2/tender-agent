@@ -15,11 +15,11 @@ completed:
   private stage; no blind data touched.
 - 2026-10-15 real current Gemma4-12B four-call analysis 358.92s HTTP200 no fallback, all8 document files extracted, zero warnings,
   persisted history/report/registry200, unauth401 and archived PDF/DOCX409, no ETP/payments/prod.
-- 2026-10-15 historical unsupported literal excerpt not repeated in new HTML; all broad generated claims remain review-only, status
-  NEEDS_REVIEW.
-- '2026-10-15 discovered real EIS XML selection bug: one epNotificationEZK2020 plus protocol and two result XML with same registry
-  treated as four competing notices. Fixed to accept supported top-level notice document types, not protocol/result, keep ambiguous
-  multiple true notice revisions UNKNOWN.'
+- 2026-10-15 historical unsupported literal excerpt not repeated in new HTML; all broad generated claims remain review-only,
+  status NEEDS_REVIEW.
+- '2026-10-15 discovered real EIS XML selection bug: one epNotificationEZK2020 plus protocol and two result XML with same
+  registry treated as four competing notices. Fixed to accept supported top-level notice document types, not protocol/result,
+  keep ambiguous multiple true notice revisions UNKNOWN.'
 - 2026-10-15 persisted model output re-rendered without rerunning LLM, unique original XML 1, three source-cited facts subject/deadline/NMCK
   restored, eight original hashes unchanged. Private final HTML SHA c071d34f28a4b1c74fce58828e479c19aef4a6366944dd47cc1aac9826b08b66.
 - 2026-10-15 local targeted 46 PASS, Ruff clean; full branch regression 4093 passed,238 skipped,0 failed,328 existing warnings
@@ -29,12 +29,13 @@ remaining:
 - New PR exact-head GitHub CI and review
 - Further historical unsupported quote case separate; do not conflate with this case
 - Current official edition/live bid, 20 E2E cohort, legal/business GO and production remain separate.
-last_verified_commit: a04fb0ba7b94c7f6995f68f38ef74a474c0091e0
-last_tests: Mac mini 4093 passed,238 skipped,0 failed,328 existing warnings in154.39s; 46 source/test cases passed, Ruff PASS;
-  actual R4 Gemma4 local4 calls 358.92sec and 8 original hash exact.
-resume_instruction: Bounded R4 second real archived E2E completed and source XML selector fixed. Check PR GitHub CI, not repeat
-  358.92sec model call. Next audit alternate historical unsupported quote on new private test, without touching blind sample or
-  promising GO. No production/ETP/payments/signatures. Stop private DP18094 after tests.
+last_verified_commit: e3e13ff161978b9db3fceaa19dbb7d27f3f652a1
+last_tests: 'Mac mini 4093 passed,238 skipped,0 failed,328 existing warnings in154.39s; 46 source/test cases passed, Ruff
+  PASS; actual R4 Gemma4 local4 calls 358.92sec and 8 original hash exact.; substantive commit e3e13ff1 PR438 code uploaded;
+  CI #3473 pending'
+resume_instruction: 'Completed actual archived R4 second Gemma E2E source revision selection fix and saved report citations
+  at e3e13ff1. PR438 stacked on #437, exact CI #3473 pending. Do not rerun model. Next separate source-grounded problematic
+  R4 quote case, no human gold/production. Dedicated localhost DP PID30322 may be stopped once idle.'
 execution:
   branch: feature/apr067-r4-current-llm-replay-20261015
   manual_override: true
