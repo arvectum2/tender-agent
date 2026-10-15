@@ -110,5 +110,5 @@ def collect_operator_spreadsheet_sources(documents: list[AnalyzedDocument]) -> l
             role_hint=doc.role,
         )
         for doc in documents
-        if doc.extension in {".xlsx", ".xls"} and doc.raw_content
+        if doc.extension in {".xlsx", ".xls"} and doc.raw_content and doc.role == "tkp"
     ]
