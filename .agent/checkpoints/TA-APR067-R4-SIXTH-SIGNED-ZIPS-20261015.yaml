@@ -17,8 +17,7 @@ definition_of_done:
 - No live EIS, ETP, bids, payments, production or signing.
 completed:
 - '2026-10-15 located original saved EIS 0348100024426000021: 6/6 filestore attachments SHA verifiable. Four ZIP include 2 PDFs,
-  a contract DOCX, a technical spec DOCX, HTML signing sheets and detached .sign files; at least one extensionless PIK annex stays
-  unsupported until inspected.'
+  a contract DOCX, a technical spec DOCX, HTML signing sheets and detached .sign files; the PIK annex is a genuine .docx and must remain a separate document from the signed source container.'
 - 2026-10-15 fifth distinct E2E child completed at substantive CI verified head 958c5fb3 and 4149 local tests PASS; do not repeat
   its model.
 - '2026-10-15 authentic frozen 0348100024426000021 first-party source stage created toa-run-20261015173500-78dec8, all 14 original
@@ -32,17 +31,26 @@ completed:
   PIK member still unsupported and not promoted.'
 - 2026-10-15 single sixth authentic localhost Gemma4 E2E started process PID16155; do not rerun or change input source stage while
   it runs.
-current_stage: single_real_local_gemma_e2e_running_and_security_regression
+- 2026-10-15 true sixth Gemma4 local 4 calls368.53sec API200, real original14 SHA verified and 3 archived XML source citations,
+  original ZIP export409 and manual_review; initial strict receipt exit1 because four ZIP parent metadata remained pending despite
+  model trace15 read docs.
+- 2026-10-15 corrected product operator_document_collection to assign archive_extracted, archive_partial, archive_unreadable statuses
+  and nested read/failure counts; strict generic acceptance summary distinguishes ZIP parent and substantive child and fail-closed
+  on pending/partial; focused tests passed.
+- 2026-10-15 no-LLM re-projection on separate same-original 14 SHA copy through native Data Platform at localhost18098 yielded
+  10 direct text extractions, four archive_extracted originals, five ZIP nested substantive texts, zero failures; real report unchanged.
+  Private combined proof validates model4 calls, HTML three citations, 14 SHA and failure source before fix.
+current_stage: sixth_source_semantics_repaired_full_regression_and_exact_head_ci_pending
 remaining:
-- Wait for exactly one existing real Gemma run PID16155 and inspect saved truthful original/ZIP-derived extraction metrics
-- Full regression, semantic source review and precise source unsupported handling
-- Draft PR plus CI, checkpoint completion only if done
+- Full local suite after ZIP metadata patch and focused security test
+- Commit/push update PR442, exact-head GitHub CI
+- Complete child checkpoint only once exact CI green; stop temporary DP18098
 last_verified_commit: d6ed400362c84253263479e1be6ae7cffe590ce6
-last_tests: 33 ZIP/source focused PASS; two original NMCK PDF roles fixed; five substantive ZIP member text extracted via DP18098;
-  14 original input SHA verified, model run PID16155 in flight.
-resume_instruction: Read existing PID16155 only; do not start second real Gemma. Sixth original 0348100024426000021 8 XML+6 attached
-  source originals; signed ZIP contains 5 substantive PDF/DOCX via DP but source ZIP container may be unsupported. Report exact
-  extraction statuses, do not say 14/14 extracted without original status proof. Finish tests/PR/checkpoint.
+last_tests: Before ZIP status fix 4151 local PASS/238 SKIP, focused 33 PASS; after ZIP status fix focused metadata regression passes,
+  full suite pending; real Gemma4 4 calls368.53sec, 3 source citations, private combined 10+4+5 original-text reproject PASS.
+resume_instruction: Model sixth original EIS archived case completed once, no rerun. Old strict receipt1 preserved; fixed ZIP status
+  in generic collector, private SHA14 source reprojection proves 10 direct+4 archive-extracted+5 nested docs. Run full suite after
+  change, push PR442, exact CI, mark child completed. No live EIS/ETP.
 execution:
   branch: feature/apr067-r4-sixth-signed-zips-20261015
   manual_override: true

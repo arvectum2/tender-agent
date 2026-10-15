@@ -52,6 +52,37 @@ def verify_copy_source(saved: Path, pinned: dict) -> int:
     return len(checked)
 
 
+
+def summarize_original_and_nested_extraction(files: list[dict]) -> dict:
+    """Keep ZIP source containers distinct from extracted nested PDF/DOCX.
+
+    Native text extraction is not the same operation as bounded ZIP inspection;
+    a completed ZIP counts as available source text only when all its included
+    substantive child documents yielded text without extraction failures.
+    """
+    direct = [f for f in files if f.get("extension") != ".zip"]
+    archived = [f for f in files if f.get("extension") == ".zip"]
+    good_statuses = {"extracted", "archive_extracted"}
+    statuses = [f.get("text_extraction_status") for f in files]
+    return {
+        "extracted_original_count": sum(f.get("extracted_text_available") is True
+                                        and f.get("text_extraction_status") in good_statuses
+                                        for f in files),
+        "failed_original_count": sum(status not in good_statuses for status in statuses),
+        "file_extraction_statuses": statuses,
+        "direct_original_text_extracted": sum(f.get("text_extraction_status") == "extracted" for f in direct),
+        "zip_original_containers": len(archived),
+        "zip_containers_with_extracted_children": sum(f.get("text_extraction_status") == "archive_extracted"
+                                                       for f in archived),
+        "zip_substantive_child_count": sum(int(f.get("nested_document_count") or 0)
+                                         for f in archived),
+        "zip_substantive_children_extracted": sum(int(f.get("nested_extracted_text_count") or 0)
+                                              for f in archived),
+        "zip_substantive_children_failed": sum(int(f.get("nested_failed_text_count") or 0)
+                                           for f in archived),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stage", type=Path, required=True)
@@ -191,13 +222,7 @@ def main() -> int:
         )
         checked["registry_number"] = savedmeta.get("procurement_id")
         checked["source_warning_count"] = len(savedmeta.get("warnings", []))
-        checked["extracted_original_count"] = sum(
-            1 for item in savedmeta.get("files", []) if item.get("extracted_text_available") is True
-        )
-        checked["failed_original_count"] = sum(
-            1 for item in savedmeta.get("files", []) if item.get("text_extraction_status") != "extracted"
-        )
-        checked["file_extraction_statuses"] = [item.get("text_extraction_status") for item in savedmeta.get("files", [])]
+        checked.update(summarize_original_and_nested_extraction(savedmeta.get("files", [])))
         checked["warning_count"] = len(savedmeta.get("warnings", []))
         report=saved/"output"/"report.html"
         if report.exists():

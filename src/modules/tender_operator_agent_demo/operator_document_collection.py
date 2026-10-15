@@ -34,8 +34,25 @@ def collect_operator_documents(
         if ext == ".zip":
             extracted_docs = extract_archive(stored_path, item["file_id"])
             documents.extend(extracted_docs)
-            if extracted_docs:
-                item["warnings"] = list(dict.fromkeys(item.get("warnings", []) + ["ZIP archive inspected in safe local mode."]))
+            extracted_children = sum(bool(doc.text) and doc.extracted_text_available for doc in extracted_docs)
+            failed_children = len(extracted_docs) - extracted_children
+            item["nested_document_count"] = len(extracted_docs)
+            item["nested_extracted_text_count"] = extracted_children
+            item["nested_failed_text_count"] = failed_children
+            # A ZIP container isn't native PDF/DOCX text. Keep the provenance
+            # distinction, while accurately reporting whether bounded child
+            # extraction yielded substantive text for the operator.
+            item["extracted_text_available"] = extracted_children > 0
+            item["text_extraction_status"] = (
+                "archive_extracted" if extracted_children and not failed_children
+                else "archive_partial" if extracted_children
+                else "archive_unreadable"
+            )
+            item["warnings"] = list(dict.fromkeys(
+                list(item.get("warnings", []))
+                + (["ZIP archive inspected in safe local mode."] if extracted_docs else [])
+                + [warning for doc in extracted_docs for warning in doc.warnings]
+            ))
             continue
 
         raw = stored_path.read_bytes()

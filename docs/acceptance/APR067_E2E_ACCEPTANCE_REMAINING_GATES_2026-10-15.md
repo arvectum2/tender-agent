@@ -14,10 +14,10 @@ granted by that rule.
 | Track | At 15 October 2026 | Remaining for that track |
 |---|---|---|
 | **APR-03B DEVELOPMENT technical E2E** | **ACCEPTED**, frozen original source, real local Gemma4, source facts and citations, authenticated workspace/reopen/history, protected archived export | None of the extra commercial corpus / independent human gold is a reason to revoke this development acceptance; separately, owner-facing browser ergonomics in Safari is still an open *product UX* check |
-| APR-06 extended commercial acceptance | **5 distinct historical source-offline full model runs** accepted in development; minimum planned corpus **20** (upper end **30**) | **15–25 additional distinct full real-source E2E cases** to reach numeric target, not repeats of XML-only audits or the same case run again; sampling across procedures/formats/editions/business profiles |
-| APR-06 claim-level decision metrics | Three key EIS XML facts source-backed on each of the five sample runs; selected original-source citations and source SHA verified | Track time-to-decision (not merely LLM compute), claim-level citation coverage, corrections, missed blockers, false GO/NO-GO, unknown rate, application rework. Source-grounded ChatGPT expert classifications usable for development labels; genuinely independent commercial legal attestations are a separate release/participation gate |
+| APR-06 extended commercial acceptance | **6 distinct historical source-offline full model runs** with evidence admitted for development; minimum planned corpus **20** (upper end **30**) | **14–24 additional distinct full real-source E2E cases** to reach numeric target, not repeats of XML-only audits or the same case run again; sampling across procedures/formats/editions/business profiles |
+| APR-06 claim-level decision metrics | Three key EIS XML facts source-backed on each of the six sample runs; selected original-source citations and source SHA verified | Track time-to-decision (not merely LLM compute), claim-level citation coverage, corrections, missed blockers, false GO/NO-GO, unknown rate, application rework. Source-grounded ChatGPT expert classifications usable for development labels; genuinely independent commercial legal attestations are a separate release/participation gate |
 | APR-07 model and document quality | ZIP/XML/DOCX/PDF/ODT examples and regression fixes; local wall times for five different Gemma analyses | Frozen representative benchmark and auditable denominators for unsupported/fallback/OCR/document completeness, hallucinations, source versions, evidence coverage and model comparisons; don't modify benchmark truth after observing results |
-| APR-07 reliable performance | Five individual model timings; static local CI; no steady-state measurement | A **rolling** staging/production-like reliability window measuring full path latency percentiles, error, OCR/document, uptime/retries. Five isolated model durations are **not** p95 SLO |
+| APR-07 reliable performance | Six individual model timings; static local CI; no steady-state measurement | A **rolling** staging/production-like reliability window measuring full path latency percentiles, error, OCR/document, uptime/retries. Six isolated model durations are **not** p95 SLO |
 | Development PR/release boundary | Technical E2E changes stacked in Draft PRs #433–#441; Data Platform native ODT #125 code CI verified | Resolve review/dependency chain and integrate only under applicable change authority; separately stage and smoke-test assembled stack, not merely each isolated Draft branch |
 | APR-03 / APR-04 / APR-05 commercial launch | Local runtime/onboarding/SaaS code exists separately | Russian VPS, public TLS, backup/restore, monitoring, tenant/customer onboarding accuracy, live paid pilot/legal/commercial authorization. **Not prerequisites to the already accepted DEVELOPMENT E2E**, but required before claiming a public commercial production launch |
 
@@ -30,17 +30,18 @@ granted by that rule.
 | 0162200011826003089 | 17 | 4 | 150.08 | accepted after original ODT correction | Four authentic archived notice revisions; selected XML SHA pinned |
 | 0151600003226000011 | 5 | 4 | 403.23 | accepted after source-bound docKind and report correction | Old report remains as audit artifact |
 | 0152200004026000069 | 7 | 4 | 348.24 | accepted after generalized draft-contract report correction | Old report remains as audit artifact |
-| 0348100024426000021 | 14 original containers/files (8 XML + 6 filestore files) | **IN PROGRESS** | **NOT MEASURED** | **NOT YET COUNTED** | Four original filestore ZIPs hold signed nested PDF/DOCX and non-substantive HTML/.sign; don't equate original ZIP containers with successfully extracted embedded documents |
+| 0348100024426000021 | 14 original (8 XML + 6 attachments, including 4 ZIP) | 4 | 368.53 | source+model verified, source-status correction pending exact-head CI | 10 flat texts + 4 archive-extracted ZIP containers + 5 nested substantive PDF/DOCX; original strict receipt failed pre-fix, preserved, corrected via deterministic replay without model |
 
-The five completed case counts total **43** SHA-protected original source files,
-but 43 is *not* the number of independent commercial decisions or examples
-of full semantic correctness. Case six is deliberately excluded pending its
-own full outcome and model/source verification.
+The six case counts total **57** SHA-protected original source files,
+but 57 is *not* the number of independent commercial decisions or examples
+of full semantic correctness. Case six's model and source proof now passed;
+its corrected extraction status is pending exact-head CI before changing
+the canonical sixth child checkpoint to `completed`.
 
 ## Recommended completion path
 
-1. Finish signed ZIP/PDF development case six with accurate split metrics for
-   original containers, content documents and ignored signed receipts.
+1. Finish exact-head CI for the signed ZIP/PDF source status correction
+   and close child checkpoint six without repeating Gemma.
 2. Use the same bounded SHA-pinned harness on the remainder of the frozen
    R4 original corpus; include at least a few real DOC/PDF/OCR/223-FZ
    procedures rather than manufacturing 15 variants of one XML.
