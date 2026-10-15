@@ -80,6 +80,14 @@ def read_operator_zip_documents(
                 seen.add(key)
                 entry_name = PurePosixPath(info.filename).name
                 extension = Path(entry_name).suffix.lower()
+                # Signed EIS filestore ZIPs contain non-substantive HTML
+                # signing receipts beside the signed contract/PDF and .sign
+                # payloads. Do not send the signing receipt to LLM as if it
+                # contained procurement conditions.
+                if extension in {".sign", ".sig", ".p7s", ".p7m"}:
+                    continue
+                if extension == ".html" and "лист подписания" in entry_name.casefold():
+                    continue
                 if extension not in allowed_extensions or extension == ".zip":
                     continue
                 if info.flag_bits & 1:

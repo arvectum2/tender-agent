@@ -1,0 +1,48 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-SIXTH-SIGNED-ZIPS-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Independently assess first-party historical EIS 44-FZ №0348100024426000021 signed ZIP attachments with nested DOCX/PDF/HTML/sign,
+  verifying precise source integrity, safe intake, document completeness and an authentic Gemma E2E only if it clears fail-closed
+  gates.
+definition_of_done:
+- Original getDocsIP ZIP/selected XML and all six first-party filestore original attachment bytes verified using frozen manifest
+  and pinned SHA receipt.
+- Safe nested ZIP handling refuses traversal, symlinks, duplicates, encrypted/oversized archives and separates human-visible documents
+  from signatures/HTML; no false 'extracted' claims for unsupported extensions.
+- Run authentic isolated EIS source intake + DP + Gemma4 only after documented completeness; record any original-vs-document text
+  omissions and avoid false security or scope claims.
+- Quality tests, full suite, Draft PR and exact-head CI for any code correction; checkpoint truthful if blocked.
+- No live EIS, ETP, bids, payments, production or signing.
+completed:
+- '2026-10-15 located original saved EIS 0348100024426000021: 6/6 filestore attachments SHA verifiable. Four ZIP include 2 PDFs,
+  a contract DOCX, a technical spec DOCX, HTML signing sheets and detached .sign files; at least one extensionless PIK annex stays
+  unsupported until inspected.'
+- 2026-10-15 fifth distinct E2E child completed at substantive CI verified head 958c5fb3 and 4149 local tests PASS; do not repeat
+  its model.
+- '2026-10-15 authentic frozen 0348100024426000021 first-party source stage created toa-run-20261015173500-78dec8, all 14 original
+  input SHA exact: 8 official archived XML + 6 attachment originals, including 4 signed ZIP, status ready_to_analyze without gate
+  override.'
+- 2026-10-15 Data Platform HTTP original nested ZIP preflight found 5 substantive child PDFs/DOCX and four non-substantive signing
+  HTML. Detected false contract role for two NMCK PDFs. Fixed shared document role classifier for NMCK and execution security,
+  skip signed HTML and detached .sign/.sig/.p7s/.p7m regardless allowed extensions. 33 targeted source/ZIP tests PASS.
+- '2026-10-15 second signed ZIP preflight read all five substantive nested documents through live local DP API 18098: 2 NMCK PDFs
+  (supporting), 2 contract DOCX (contract_draft), 1 technical specification DOCX, text chars 1301/4370/50968/33998/85952; one extensionless
+  PIK member still unsupported and not promoted.'
+- 2026-10-15 single sixth authentic localhost Gemma4 E2E started process PID16155; do not rerun or change input source stage while
+  it runs.
+current_stage: single_real_local_gemma_e2e_running_and_security_regression
+remaining:
+- Wait for exactly one existing real Gemma run PID16155 and inspect saved truthful original/ZIP-derived extraction metrics
+- Full regression, semantic source review and precise source unsupported handling
+- Draft PR plus CI, checkpoint completion only if done
+last_verified_commit: d6ed400362c84253263479e1be6ae7cffe590ce6
+last_tests: 33 ZIP/source focused PASS; two original NMCK PDF roles fixed; five substantive ZIP member text extracted via DP18098;
+  14 original input SHA verified, model run PID16155 in flight.
+resume_instruction: Read existing PID16155 only; do not start second real Gemma. Sixth original 0348100024426000021 8 XML+6 attached
+  source originals; signed ZIP contains 5 substantive PDF/DOCX via DP but source ZIP container may be unsupported. Report exact
+  extraction statuses, do not say 14/14 extracted without original status proof. Finish tests/PR/checkpoint.
+execution:
+  branch: feature/apr067-r4-sixth-signed-zips-20261015
+  manual_override: true

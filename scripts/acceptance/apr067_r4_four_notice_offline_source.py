@@ -217,7 +217,10 @@ def main() -> None:
     parser.add_argument("--development-root", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument(
-        "--registry", choices=(NUMBER, "0151600003226000011", "0152200004026000069"),
+        "--registry", choices=(
+            NUMBER, "0151600003226000011", "0152200004026000069",
+            "0348100024426000021",
+        ),
         default=NUMBER,
     )
     args = parser.parse_args()
@@ -225,6 +228,7 @@ def main() -> None:
         NUMBER: STAGE_NAME,
         "0151600003226000011": "ta-apr067-r4-fourth-distinct-20261015",
         "0152200004026000069": "ta-apr067-r4-fifth-distinct-20261015",
+        "0348100024426000021": "ta-apr067-r4-sixth-signed-zips-20261015",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")
