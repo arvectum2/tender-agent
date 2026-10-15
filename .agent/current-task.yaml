@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts 3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured."
   - "2026-10-15 APR03B DEVELOPMENT E2E ACCEPTED on original archived EIS 0372200172326000015: 6/6 extracted, Gemma4 12B 4 calls/138.79s, 3 HTML citations from original XML, 8/8 source-quality workflow gates, auth401, archived PDF/DOCX409; real original/read-only 4031 full pytest PASS/238 SKIP, Ruff clean. Owner-designated AI expert accepted for dev only; commercial/current-EIS/prod and independent human gold not claimed. Draft PR433 remains unmerged; next APR04 onboarding."
   - '2026-10-15 new Owner E2E decision: source-grounded ChatGPT assessment accepted as expert for development stage; human legal-gold removed as APR03B blocking prerequisite. New 8-step acceptance gate with 21 new tests, 45 combined focused PASS, authenticated current full LLM E2E still open; roadmap/owner policy updated.'
   - "2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini exact full 4119 pytest PASS/242 SKIP/0 failed,146.20s, Github three workflows SUCCESS. Selected archival original 96/96 EIS attachment SHA+size, nonempty source texts and first material clause citations; runtime fail-closed when XML lists missing appendix; client report regenerated SHA6e4461f6. Child checkpoint latest02cfe0218c2977f4a82319d6ca5c2f7c886a7872 still in_progress because full material 96-document legal/suitability review/20 signed gold and latest live official EIS revisions not attested. All drafts unmerged."
@@ -206,7 +207,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'APR03B bounded DEVELOPMENT E2E fully accepted on archived original source with owner-delegated ChatGPT expert review and 4031 full PASS. Advance APR04 company onboarding in isolated staging, verify company profile, eligibility constraints and first personalized analysis. PR433 draft update/CI must be reconciled before merge; owner legal GO, live EIS revision, paid SaaS and production remain separate. Do not touch blind benchmark gold, disable watchdog or perform ETP/payment/signature.'
+resume_instruction: 'APR03B, APR04, APR05 bounded development acceptance recorded; APR067 one-case original-source quality verifier completed. Follow child checkpoint TA-APR067-GROUNDED-QUALITY-20261015. Check exact PR CI, then collect more original-verified cases; no automatic legal or commercial GO.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -218,3 +219,5 @@ owner_e2e_ai_acceptance_2026_10_15:
   still_required: [real_source_integrity, reproducible_functional_e2e, cited_claims, error_safety, unknown_handling]
   never_authorizes: [legal_bid_go, bid_submission, e_signature, production_deploy, payments, signed_human_gold_fabrication]
   post_stabilization: owner_expert_corrections_and_calibration
+
+latest_completed_quality_child: TA-APR067-GROUNDED-QUALITY-20261015
