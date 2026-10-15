@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-10-15",
+  "bid_ready": false,
+  "blind_cohort_sizes": [
+    3,
+    4,
+    4,
+    4
+  ],
+  "blind_lock_sha256": [
+    "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+    "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a",
+    "66545450de466dc742d7525a8f7a539644784f4e98696e63edce6cf5da00937e",
+    "e13b4238056f527a75f82d9d9dbf6603c125aec3a9a6498ac6dcbfbd4e6c983c"
+  ],
+  "blind_original_documents_total": 73,
+  "blind_pilot_cases": 3,
+  "blind_sut_runs": 0,
+  "incremental_44fz_it_blind_cases": 12,
+  "independent_human_signed_gold_cases": 0,
+  "original_development_case_count": 20,
+  "original_firstparty_documents_by_cohort": [
+    16,
+    21,
+    19,
+    17
+  ],
+  "precision_recall": "NOT_MEASURED",
+  "private_reviewer_handoff_archives": 15,
+  "source_blind_cases_total": 15,
+  "stage4_excluded_cases_by_source_evidence": {
+    "REPEATED_ORIGINAL_BINARY_WITH_PREVIOUS_OR_EARLIER_CASE": 3,
+    "UNATTESTED_OFFICIAL_EIS_ORIGINALS": 3
+  },
+  "stage4_independence_audit_sha256": "41de0c0ab916f81309e08d003e760f45b50a9e286f9bbdcc1359235a18a51826",
+  "stage4_locked_first_eligible_four": 4,
+  "stage4_official_eis_cases_complete": 9,
+  "stage4_original_documents_locked": 17,
+  "stage4_original_eis_receipt_sha256": "710c7ce8937d6d878c3d18fa6425af4400124809f97e82e673922ef4cbb17130",
+  "stage4_other_independent_but_outside_fixed_quota": 2,
+  "stage4_preregistered_intent_sha256": "f5a6d9ae991cd1dfee1a04c483c5abe89c46615a3b607efb67d58077f9cd9163",
+  "stage4_preregistered_source_ranked_candidate_numbers": 12,
+  "stage4_preregistration_commit": "67beb4117612934475eb85b68ca73a4914e84298",
+  "stage4_ranked_discovery_receipt_sha256": "328c0c3c094015e7536dd47f48888c133c585ac247c251190dd77fc69730b3c6",
+  "stage4_source_html_pages_captured_and_sha_verified": 4,
+  "stage4_source_independent_cases_before_fixed_target_cap": 6,
+  "status": "FOUR_DISJOINT_FROZEN_SOURCE_COHORTS_PRE_SUT_PRE_GOLD",
+  "unique_development_and_blind_original_binary_sha_count": 169,
+  "unique_development_and_blind_source_notices": 35
+}
