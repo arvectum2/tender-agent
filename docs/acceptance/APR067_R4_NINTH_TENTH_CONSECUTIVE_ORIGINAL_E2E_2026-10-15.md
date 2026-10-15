@@ -40,17 +40,47 @@ the first exited 0 and its original source/LLM receipt had been persisted.
 Ninth evidence is not reused for tenth. Original SHA-pinned bytes and model
 outputs were never rewritten.
 
-## Tenth case — running
+## Tenth case — observed true model result, before PR exact-head CI
 
 Registry **0895100000126000897**, original v1 EIS and 6 real DOCX.
 Contains a distinct source appendix justifying applicability of PP РФ
 №1875 national-regime prohibition (not an externally validated conclusion
 about the actual regulation). Original XML reports NMCK **10,138,500 RUB**
-and archived deadline **19.06.2026 09:00 +03:00**. Await the genuine Gemma4
-model receipt to assert any actual analyses, source citations or report.
+and archived deadline **19.06.2026 09:00 +03:00**. One genuine local Gemma4-12B execution completed automatically after the
+ninth successful exit: **4 calls / 338.62 seconds**, HTTP200,
+`llm_tender_operator_provider`, no fallback. Preserved and extracted
+**13/13 original first-party SHA**: seven official EIS XML and six
+original DOCX sources, zero failed/unsupported. Three original EIS XML
+source citations anchor the official works developing the Federal
+Treasury portal "Legal Work" subsystem, archived submission deadline
+**19.06.2026 09:00 +03:00**, and **10,138,500 RUB** NMCK.
+Original saved HTML SHA-256
+`a9f4102f5bb23284d2807a885b34f1ee4796113d001124990f9a2bfb330447e1`.
+
+Authenticated report/history/source evidence HTTP200, unauthorized access
+401, archived export both PDF and DOCX 409, decision
+`manual_review_required` (not actual bid GO). Model's five generated
+contract risks are explicitly marked hypotheses and in part English;
+contract draft is **present**, not declared missing. The documentary note
+on applicability of PP РФ №1875 is an original legal-source record,
+but its operative legal conclusion is **NOT attested** by this
+development check. Actual model, input files and original report
+remain private; neither case was rerun to generate these observations.
 
 Full post-change local regression (including two new bounded source
 manifests, and old E2E guards): **4187 passed, 238 skipped, 0 failed**,
 328 known warnings, completed in 480.25s during severe unrelated iOS
 Simulator load. Source/UID/size/receipt anti-tamper focused **23 PASS**;
 Ruff PASS. GitHub exact-head CI pending until branch PR is created.
+
+
+## Final acceptance and exact substantive-head CI
+
+PR445 original code commit bd8414bd52ed539c76ef38780fbc317efeb7b873
+verified by GitHub Actions CI run38795527804: 9/9 jobs SUCCESS,
+matching the source-tested code. Mac mini 4187 PASS/238 SKIP,
+23 anti-tamper source tests PASS and Ruff PASS. Both ninth and tenth
+single real original-source Gemma4 model receipts passed; private output
+and original first-party bytes remain immutable. Both case checkpoints
+now COMPLETED. This is the delegated DEVELOPMENT technical gate; it
+is not business bidding GO, legal signoff or production SLO.

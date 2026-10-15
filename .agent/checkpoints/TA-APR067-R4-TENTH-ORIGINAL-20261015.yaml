@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR067-R4-TENTH-ORIGINAL-20261015
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: 'Distinct authentic original-source 44FZ EIS archival development E2E 0895100000126000897: exact source-v1/v2 and first-party
   document SHA/UID, native Data Platform, real Gemma4, evidence and independent legal/manual gates.'
 definition_of_done:
@@ -12,23 +12,28 @@ definition_of_done:
 - Expert developmental semantic review and archived export 409, preserved original private sources, no commercial GO
 - Relevant tests/Ruff, full regression, stacked Draft PR and exact-head GitHub CI; checkpoint completed only after verified
 completed:
-- 2026-10-15 native historic source stage toa-run-20261015192352-83888b 0895100000126000897, 13 original SHA-protected archived XML/official
-  DOCs exact verified, EIS type ATTESTED_COMPETITIVE, document set ready_to_analyze, no live EIS.
+- 2026-10-15 native historic source stage toa-run-20261015192352-83888b 0895100000126000897, 13 original SHA-protected archived
+  XML/official DOCs exact verified, EIS type ATTESTED_COMPETITIVE, document set ready_to_analyze, no live EIS.
 - 2026-10-15 first dry attempt failed closed on missing identity in strict source helper before any model call; then exact allowlist
   9+10 repaired and a SINGLE serial ninth->tenth run process PID69976 launched. 23 focused source security/regression tests PASS.
 - 2026-10-15 ninth prior case exited real API200 complete, serial parent PID69976 proceeded to tenth original source run toa-run-20261015192352-83888b
   (13 original SHA files, native readiness passed). No concurrent Gemma inference.
-current_stage: tenth_actual_local_gemma_running_after_successful_ninth
+- 2026-10-15 exact PR445 substantive head bd8414bd52ed539c76ef38780fbc317efeb7b873, CI run38795527804 SUCCESS all 9 jobs; 4187
+  local pass/238 skip/0 failed, 23 source-focused pass. Case 0895100000126000897 genuine Gemma4 4 calls 338.62s, source 13/13 SHA/extracted,
+  3 original EIS XML citations, manual_review_required, archived export409, no fallback or current EIS GO.
+- 2026-10-15 tenth original EIS model reported Federal Treasury Legal Work subsystem, archived deadline2026-06-19T09:00+03:00 and
+  NMCK10,138,500 RUB from 3 source-attested XML citations. Contract correctly present; original PP1875 document preserved but legal
+  applicability not adjudicated. Real HTML SHA a9f4102f5bb23284d2807a885b34f1ee4796113d001124990f9a2bfb330447e1.
+current_stage: tenth_firstparty_sha_gemma_expert_full_local_regression_and_exact_pr445_ci_verified
 remaining:
-- Wait for scheduled sequential single authentic model invocation; ninth before tenth
-- Check source/LLM output exact citations and domain-specific semantic interpretation
-- Full regression and PR CI, truthful child closure
-last_verified_commit: 891d9449427bb08c78bf699acce97ba3a469f7b2
-last_tests: 23 focused original-source adverse tests PASS, Ruff PASS; ninth/tenth model sequence PID69976 active; full regression
-  pending.
-resume_instruction: Tenth original 0895100000126000897 serial model child of PID69976 now active, 13 original files. Do NOT rerun.
-  Inspect /tmp/ta-apr067-tenth-original-llm-20261015.log and output/apr067_r4_tenth_original_e2e.json then verify model/13 source
-  SHA/3 citations/archived export. Ninth real output already accepted source+model, CI pending.
+- Draft PR445 and stacked parent PR chain remain unmerged; no production, bids, payments, signatures
+- Development extended APR-06 remaining 10 different E2Es minimum, APR-07 commercial quality and rolling SLO independently open
+last_verified_commit: bd8414bd52ed539c76ef38780fbc317efeb7b873
+last_tests: Exact PR445 run38795527804 CI SUCCESS 9/9 jobs; local 4187 passed/238 skipped/0 failed/328 known warnings/480.25sec,
+  23 focused pass, Ruff PASS; real Gemma4 4 calls338.62s, 13/13 original SHA/extracted and three XML citations; export409.
+resume_instruction: COMPLETED tenth original 0895100000126000897 real-source Gemma4 E2E, exact substantive CI bd8414bd SUCCESS.
+  Never rerun. Parent APR-06 extended cohort now ten distinct cases, continue next unused first-party original with own checkpoint
+  and no current live EIS or ETP GO.
 execution:
   branch: feature/apr067-r4-ninth-tenth-original-e2e-20261015
   manual_override: true
