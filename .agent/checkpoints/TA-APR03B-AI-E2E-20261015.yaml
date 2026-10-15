@@ -1,0 +1,43 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-AI-E2E-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Accept Tender Agent development-stage operator E2E using Owner-delegated source-grounded ChatGPT expert evaluation,
+  then advance roadmap without requiring independent human gold for this developmental stage.
+definition_of_done:
+- Record the explicit Owner 2026-10-15 delegation and scope, separating E2E technical/product acceptance from legal GO, qualified
+  human gold, future production and commercial decisions.
+- Create automated development E2E acceptance criteria: real original sources, reproducible UI/workflow, source-cited material
+    facts, safe UNKNOWN, persistence and safe export rules.
+- Check current main/isolated Mac mini E2E evidence and regressions; report unmet functional criteria precisely rather than
+  claiming a passing report from schema-only or old runtime.
+- Update the canonical roadmap and current-task continuation to prioritize E2E instead of completing 20 human-gold reviews
+  first.
+- Run targeted tests, Ruff, exact-source check, commit and push review-ready change with checkpoint.
+completed:
+- 2026-10-15 owner explicitly delegated ChatGPT source-grounded analysis as EXPERT E2E DEVELOPMENT review, not external human
+  legal-gold or bid GO; owner directive, roadmap YAML/MD and policy documented.
+- '2026-10-15 isolated original-main development E2E gate implemented: 8 mandatory source/report/UI steps, official source
+  SHA declarations, cited material facts, local LLM, archival 409 and six prohibited-action negative checks. 21 new pytest
+  pass and Ruff pass.'
+- 2026-10-15 combined 45 APR03B operator/frontend/AI-stage tests PASS, 1 existing Starlette deprecation warning. Current private
+  main image 18087 and old image 18083 both health200 and unauthenticated workspace/evidence401; authorized full fresh model
+  and source-citation replay remain unverified.
+current_stage: ready_for_review_and_current_authenticated_llm_replay
+remaining:
+- commit_push_verify_exact_head_ci
+- authorized_real_original_current_llm_e2e_with_source_citations
+- evaluate_gate_on_runtime_receipt
+- fix_functional_problems_then_close_apr03b
+last_verified_commit: bc98bd39
+last_tests: Mac-mini 2026-10-15 focused pytest 45 PASS/0 FAIL/1 pre-existing warning; Ruff clean; owner/roadmap/current YAML
+  parse; private previews health200 and unauth 401 on both
+resume_instruction: Verify pushed change/PR and CI once. Next run authenticated isolated/current-main 44-FZ full LLM UI flow
+  against original official EIS materials; use owner-delegated ChatGPT source review as development expert, DO NOT request
+  20 human gold signoffs. Capture source SHA, report SHA, citations, history/reopened run, safe archived 409, mark TRUE E2E
+  pass only with these receipts. Keep signed human gold/Owner legal GO independent. Do not touch prod/ETP/purchases/signatures
+  or enable watchdog.
+execution:
+  branch: feature/apr03b-ai-e2e-acceptance-20261015
+  manual_override: true
