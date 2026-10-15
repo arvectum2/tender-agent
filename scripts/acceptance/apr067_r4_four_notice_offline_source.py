@@ -206,6 +206,106 @@ def resolve_recovered_legacy_word_originals(
         })
     return archive, verified
 
+
+def resolve_mixed_first_party_originals(
+    *, source_root: Path, case: dict, pinned_case_manifest: Path,
+) -> tuple[Path, list[dict]]:
+    """Original mixed Oct14 first-party 11-restored + 4-old binary receipts.
+
+    Every source binds an official selected notice XML slot/UID/name/bytes,
+    its immutable first-party binary SHA, and the intact original receipt.
+    """
+    approved = {
+        "0149200002326001555": ("epNotificationEZK2020", 1),
+        "0148200000526000028": ("epNotificationEF2020", 1),
+        "0349100009326000005": ("epNotificationEOK2020", 1),
+    }
+    identity = approved.get(case.get("registry_number"))
+    if (identity is None or case.get("source_role") != "ORIGINAL_20_CORPUS"
+            or (case.get("notice_type"), case.get("archived_version")) != identity
+            or pinned_case_manifest.name !=
+            f"APR067_R4_MIXED_FIRST_PARTY_{case['registry_number']}_2026-10-16.json"):
+        raise ValueError("mixed original first-party case not approved")
+    pin = json.loads(pinned_case_manifest.read_text())
+    if (pin.get("registry_number") != case["registry_number"]
+            or pin.get("source_role") != "ORIGINAL_20_CORPUS"
+            or pin.get("selected_notice_type") != identity[0]
+            or pin.get("selected_notice_version") != identity[1]
+            or pin.get("selected_xml_sha256") != case["selected_xml_sha256"]
+            or pin.get("archive_sha256") != case["archived_zip_sha256"]
+            or not isinstance(pin.get("attachments"), list)
+            or len(pin["attachments"]) != case["selected_xml_attachment_references"]):
+        raise ValueError("mixed first-party source manifest mismatch")
+    def checked(relative: str) -> Path:
+        if not isinstance(relative, str) or not relative:
+            raise ValueError("source path missing")
+        path = source_root / relative
+        if path.is_symlink() or not path.resolve().is_relative_to(source_root) or not path.is_file():
+            raise ValueError("unverified original source escapes root")
+        return path
+    meta_file = checked(pin["original_saved_run"] + "/metadata.json")
+    if json.loads(meta_file.read_text()).get("procurement_id") != case["registry_number"]:
+        raise ValueError("saved original EIS run registry mismatch")
+    archive = checked(pin["archive_relative_path"])
+    if sha(archive.read_bytes()) != case["archived_zip_sha256"]:
+        raise ValueError("original getDocsIP archive changed")
+    receipts = {}
+    for name, relative_key, sha_key in (
+        ("missing11", "missing11_receipt_relative_path", "missing11_receipt_sha256"),
+        ("older4", "older4_receipt_relative_path", "older4_receipt_sha256"),
+    ):
+        rp = checked(pin[relative_key])
+        if sha(rp.read_bytes()) != pin[sha_key]:
+            raise ValueError("original recovered receipt SHA changed")
+        receipts[name] = (rp, json.loads(rp.read_text()))
+    seen = set()
+    rows = []
+    for slot, row in enumerate(pin["attachments"], start=1):
+        uid = row.get("source_uid")
+        role = row.get("source_role")
+        if (not isinstance(uid, str) or not re.fullmatch(r"[0-9A-F]{32}", uid)
+                or uid in seen or role not in receipts or row.get("slot") != slot):
+            raise ValueError("mixed original UID/slot/source role duplicate or wrong")
+        seen.add(uid)
+        path = checked(row.get("source_root_relative_path"))
+        if (path.suffix.lower() != row.get("file_extension")
+                or path.stat().st_size != row.get("bytes")
+                or sha(path.read_bytes()) != row.get("sha256")):
+            raise ValueError("mixed first-party original binary SHA mismatch")
+        rp, saved = receipts[role]
+        if role == "missing11":
+            matching = [
+                x for x in saved
+                if x.get("registry_number") == case["registry_number"]
+                and x.get("slot_in_original_notice") == slot
+                and x.get("name_in_original_notice") == row["official_name"]
+                and x.get("declared_bytes") == row["bytes"]
+                and x.get("actual_bytes") == row["bytes"]
+                and x.get("notice_xml_sha256") == case["selected_xml_sha256"]
+                and x.get("sha256") == row["sha256"]
+                and x.get("state") == "VERIFIED_FIRST_PARTY_BINARY"
+                and (rp.parent / case["registry_number"] / str(x.get("file"))).resolve() == path.resolve()
+            ]
+        else:
+            matching = [
+                x for x in saved
+                if x.get("registry_number") == case["registry_number"]
+                and x.get("display_name") == row["official_name"]
+                and x.get("size") == row["bytes"]
+                and x.get("source_selected_xml_sha256") == case["selected_xml_sha256"]
+                and x.get("sha256") == row["sha256"]
+                and (rp.parent / case["registry_number"] / str(x.get("filename"))).resolve() == path.resolve()
+            ]
+        if len(matching) != 1:
+            raise ValueError("first-party mixed source receipt cannot be independently linked")
+        rows.append({
+            "uid": uid, "file_extension": row["file_extension"],
+            "actual_bytes": row["bytes"], "sha256": row["sha256"],
+            "official_name": row["official_name"],
+            "source_root_relative_path": row["source_root_relative_path"],
+        })
+    return archive, rows
+
 def prepare(
     *, stage: Path, source_root: Path, pinned_manifest: Path,
     registry_number: str = NUMBER, stage_name: str = STAGE_NAME,
@@ -236,6 +336,12 @@ def prepare(
             archived, rows = resolve_recovered_legacy_word_originals(
                 source_root=source_root, case=record,
                 pinned_case_manifest=original_case_manifest,
+            )
+        elif registry_number in {
+            "0149200002326001555", "0148200000526000028", "0349100009326000005",
+        }:
+            archived, rows = resolve_mixed_first_party_originals(
+                source_root=source_root, case=record, pinned_case_manifest=original_case_manifest,
             )
         else:
             raise ValueError("unapproved original first-party EIS case")
@@ -428,7 +534,8 @@ def main() -> None:
             NUMBER, "0151600003226000011", "0152200004026000069",
             "0348100024426000021", "0348100024426000039",
             "0127100008626000013", "0360600005326000018",
-            "0895100000126000897",
+            "0895100000126000897", "0149200002326001555",
+            "0148200000526000028", "0349100009326000005",
         ),
         default=NUMBER,
     )
@@ -442,6 +549,9 @@ def main() -> None:
         "0127100008626000013": "ta-apr067-r4-eighth-legacy-doc-20261015",
         "0360600005326000018": "ta-apr067-r4-ninth-original-20261015",
         "0895100000126000897": "ta-apr067-r4-tenth-original-20261015",
+        "0149200002326001555": "ta-apr067-r4-eleventh-quotation-20261016",
+        "0148200000526000028": "ta-apr067-r4-twelfth-auction-20261016",
+        "0349100009326000005": "ta-apr067-r4-thirteenth-eok-20261016",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")

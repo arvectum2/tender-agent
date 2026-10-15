@@ -1,0 +1,66 @@
+{
+  "registry_number": "0149200002326001555",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052432-75763d",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052432-75763d/input/documentation-archive.zip",
+  "archive_sha256": "672e0091b35aff92afabfdaf62a55c8a3b57ac6be0eb08266d4ec8cbfc84992b",
+  "selected_xml_sha256": "4d204d076a2386adc1c94db8299b1ffa7a6dcff9b4163126c3097d2594af1d1a",
+  "selected_notice_version": 1,
+  "selected_notice_type": "epNotificationEZK2020",
+  "missing11_receipt_relative_path": "competitive-missing-11-originals-20261014/private-source-receipt.json",
+  "missing11_receipt_sha256": "ba641df2f40f480aa0b42166bcf6f2b429bcec31089530fa8f979478fadd2700",
+  "older4_receipt_relative_path": "competitive-older-missing-4-originals-20261014/four-older-contract-originals-private.json",
+  "older4_receipt_sha256": "6cf03e5fb6e6e64b27228a158a57c7fddebfa75dc90166d1ea48e5789c93c019",
+  "attachments": [
+    {
+      "source_uid": "0E7D1C40F87B497FBB858752160A4DF7",
+      "official_name": "Обоснование НМЦК.doc",
+      "bytes": 65536,
+      "sha256": "f25bb5ee0779fb94d88a99a21f1d9b5ac5c46f658d8181f313e934d3c7cae601",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0149200002326001555/attachment-01.doc",
+      "file_extension": ".doc",
+      "source_role": "missing11",
+      "slot": 1
+    },
+    {
+      "source_uid": "5BB49FDCBEEE4746B2AA1CEA4615B4C7",
+      "official_name": "Проект контракта.docx",
+      "bytes": 899201,
+      "sha256": "810c0693336171845bf7ab7e3685ba098ae48defad756f716161c1e1316c3a05",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0149200002326001555/attachment-02.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 2
+    },
+    {
+      "source_uid": "A77AED20E1F44ABEA135DD99B3C46D7A",
+      "official_name": "Описание объекта закупки.docx",
+      "bytes": 855530,
+      "sha256": "5018d0b6313546ae0ee58a60d2fe9503d061d65c5bbba69ad0bbb58a30376041",
+      "source_root_relative_path": "competitive-older-missing-4-originals-20261014/0149200002326001555/slot-03.docx",
+      "file_extension": ".docx",
+      "source_role": "older4",
+      "slot": 3
+    },
+    {
+      "source_uid": "AD923E216E5A4458B1F08AC74505F754",
+      "official_name": "Требования к содержанию и составу заявки.docx",
+      "bytes": 32674,
+      "sha256": "98e3be9768d9f062f894117fe5e5782ce96a6d314bdb4374f5c00506e44b9ec9",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0149200002326001555/attachment-04.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 4
+    },
+    {
+      "source_uid": "938BA680E3B045238E903BC2BE89DADB",
+      "official_name": "Состав извещения10811978.docx",
+      "bytes": 10109,
+      "sha256": "9a605e8ec34c862d7b5faba393a3876652cb9150ccb07c6e8169edefbdc441e3",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0149200002326001555/attachment-05.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 5
+    }
+  ]
+}

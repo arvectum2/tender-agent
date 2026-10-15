@@ -1,0 +1,43 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-THIRTEENTH-ORIGINAL-20261016
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Original-source 44FZ independent E2E thirteenth case 0349100009326000005; official saved selected XML, 5 filestore originals recovered
+  from independent first-party receipts; EOK competition with two old binary DOCs and evaluation rules; one real local Gemma4 only.
+definition_of_done:
+- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without
+  mixing editions or overwriting originals
+- Native offline EIS stage ready_to_analyze without bypass; local Data Platform original DOC/DOCX content verified
+- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked
+  archived export
+- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model
+  timing
+- Full local suite and exact substantive GitHub CI, Draft PR, final immutable source/analysis checkpoint completed only when evidence
+  exists
+completed:
+- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases 10/20
+  minimum, originals preserved.
+- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources with
+  exact UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214554-288eac 0349100009326000005: 4 archived
+  original XML + 5 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
+- 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder, all
+  extracted with text, 2 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process
+  PID6706 starts order 3, no concurrent models.
+current_stage: queued_third_no_model_call_yet
+remaining:
+- Freeze split Oct14 first-party 11-recovered and 4-older originals under selected official notice SHA and UID
+- Isolated original source stage and local Data Platform preflight
+- Single serial Gemma E2E and expert fact check
+- Full tests/PR/exact substantive CI and completion
+last_verified_commit: ba55a7ead0fbffe07378893d01756762ac547cca
+last_tests: Original firstparty SHA verified, 5 actual substantive original DOC/DOCX Data Platform text extractions PASS; native ready_to_analyze,
+  selected original notice and official kind pinned; full regression pending.
+resume_instruction: Original immutable staged ta-apr067-r4-thirteenth-eok-20261016; one serial remote process PID6706 launches case
+  11, then 12, then 13 ONLY on previous success. Read /tmp/ta-apr067-eleventh-real-gemma-20261016.log, twelfth-real-gemma and thirteenth-real-gemma
+  and each output receipt. Never rerun any model after saved output. Focused tests, full local suite, stacked Draft PR and exact CI
+  pending.
+execution:
+  branch: feature/apr067-r4-eleven-thirteen-original-e2e-20261016
+  stage_name: ta-apr067-r4-thirteenth-eok-20261016
+  manual_override: true
