@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-15 eighth historic 44FZ real-source legacy DOC case 0127100008626000013: six source XML+four first-party archived .docx/.doc docs pinned UID+SHA, two old DOC texts Data Platform extracted 50612/7682 characters, source stage ready, 21 focused tests PASS, one real Gemma PID62278 in progress."
   - "2026-10-15 seventh distinct EOK original case 0348100024426000039: selected archived EOK2020 revision3 XML and 7 original filestore files exact source UID/bytes/SHA pinned, one independently recovered ZIP matched first-party receipt; local source stage 4 XML+7 official attachments, 5 nested texts, real Gemma PID54222 in progress; 20 source adversarial tests pass."
   - "2026-10-15 sixth distinct historical EIS case 0348100024426000021 source QA: 8 XML+6 official attachments SHA verified, four signed ZIPs yield 5 substantive DP PDF/DOCX, signing HTML and .sign excluded, NMCK PDF not treated as draft contract; 4151 full PASS/238 SKIP, genuine Gemma4 E2E PID16155 IN_PROGRESS. Not counted as sixth completed yet."
   - "2026-10-15 fifth distinct official 44FZ archived E2E 0152200004026000069: 7/7 SHA-pinned original XML/DOCX sources, real Gemma4 four calls348.24s, 3 source XML citations, archived exports409. Expert report caught false missing contract for software scope; source-bound present/parse_failed/absent/unknown fixed, private corrected reprojection without LLM; 4149 full tests passed/238 skipped."
@@ -214,7 +215,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Active child TA-APR067-R4-SEVENTH-EOK-REVISIONS-20261015: 7th archived EOK with 3 notice revisions and 7 exact UID/SHA-bound v3 first-party attachments staged, four ZIP with five nested PDF/DOCX, one genuine Gemma PID54222 in progress. Read outcome, do not rerun; follow child checkpoint. Sixth case completed and CI success.'
+resume_instruction: 'Continue child TA-APR067-R4-EIGHTH-LEGACY-DOC-20261015 on isolated branch with original historical 44FZ case 0127100008626000013. Six original archived XML, four UID/SHA-pinned first-party DOC/DOCX, local Gemma PID62278 active. Do not rerun model, finish E2E/tests/exact-head CI. Seventh case completed with PR443 exact code CI green.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -237,4 +238,4 @@ latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
 
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
 
-latest_active_distinct_e2e_child: TA-APR067-R4-SEVENTH-EOK-REVISIONS-20261015
+latest_active_distinct_e2e_child: TA-APR067-R4-EIGHTH-LEGACY-DOC-20261015

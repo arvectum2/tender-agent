@@ -1,0 +1,50 @@
+{
+  "registry_number": "0127100008626000013",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052438-25d890",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052438-25d890/input/documentation-archive.zip",
+  "archive_sha256": "1e6c59497e31ab6fb05ea13eee90eff19745e35b92c47be3405920414f484597",
+  "selected_xml_sha256": "4a046442328e9917a49dbafdad9712600ecd51f0b709b5224fad28f947f6d6a6",
+  "selected_notice_version": 1,
+  "selected_notice_type": "epNotificationEF2020",
+  "recovery_receipt_relative_path": "competitive-missing-14-originals-20261014/private-originals-receipt.json",
+  "recovery_receipt_sha256": "5f78318e75344020cfd9a035531178e2befbebcaefcaeee0c80a61c1c561876f",
+  "attachments": [
+    {
+      "source_uid": "01A0C843FF8370079E03A320380EB90A",
+      "official_name": "ОБОСНОВАНИЕ НАЧАЛЬНОЙ.docx",
+      "bytes": 20839,
+      "sha256": "e676dad9cce36e801ec4bd271719240460460ec10b297e818c0338c943a43fea",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0127100008626000013/attachment-01.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "01A0C84416EF72BD9F5FE69FEFA0BBDD",
+      "official_name": "проект контракта.doc",
+      "bytes": 209408,
+      "sha256": "8c6eabfe92f7d8597391c4272a5a5d6a770975dc76eed47bf72ac31711f0fabb",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0127100008626000013/attachment-02.doc",
+      "file_extension": ".doc",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "01A0C84423B37F7CB1043242555FF1D9",
+      "official_name": "ТЗ обслуживание Сайта.doc",
+      "bytes": 65024,
+      "sha256": "40b7f02c04139923e45ecb1c9e6e07b4b0b14a617841468beb53755eccb5ae17",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0127100008626000013/attachment-03.doc",
+      "file_extension": ".doc",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "01A0C84431BF7A81810F8E7C5FBC38F1",
+      "official_name": "ТРЕБОВАНИЯ К СОДЕРЖАНИЮ, СОСТАВУ ЗАЯВКИ И ИНСТРУКЦИЯ ПО ЕЕ ЗАПОЛНЕНИЮ.docx",
+      "bytes": 35306,
+      "sha256": "28ee36931f3b486441a44b9ca798dacad1099a78193644b1df78e176357d6411",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0127100008626000013/attachment-04.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    }
+  ]
+}

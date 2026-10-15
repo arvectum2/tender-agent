@@ -123,6 +123,80 @@ def resolve_original_eok_v3(
         })
     return archived, rows
 
+
+def resolve_recovered_legacy_word_originals(
+    *, source_root: Path, case: dict, pinned_case_manifest: Path,
+) -> tuple[Path, list[dict]]:
+    """Source-verify original EF2020 .doc/.docx files, no live filestore calls."""
+    if (case.get("registry_number") != "0127100008626000013"
+            or case.get("source_role") != "ORIGINAL_20_CORPUS"
+            or case.get("notice_type") != "epNotificationEF2020"
+            or case.get("archived_version") != 1
+            or pinned_case_manifest.name !=
+            "APR067_R4_EIGHTH_LEGACY_DOC_V1_SHA_PINNED_SOURCES_2026-10-15.json"):
+        raise ValueError("unapproved first-party legacy Word source case")
+    pin = json.loads(pinned_case_manifest.read_text())
+    if (pin.get("registry_number") != case["registry_number"]
+            or pin.get("source_role") != "ORIGINAL_20_CORPUS"
+            or pin.get("selected_notice_type") != case["notice_type"]
+            or pin.get("selected_notice_version") != 1
+            or pin.get("archive_sha256") != case["archived_zip_sha256"]
+            or pin.get("selected_xml_sha256") != case["selected_xml_sha256"]
+            or not isinstance(pin.get("attachments"), list)
+            or len(pin["attachments"]) != case["selected_xml_attachment_references"]):
+        raise ValueError("legacy original source manifest not bound")
+    def checked(relative: str) -> Path:
+        if not isinstance(relative, str) or not relative:
+            raise ValueError("missing original file path")
+        path = source_root / relative
+        if path.is_symlink() or not path.resolve().is_relative_to(source_root) or not path.is_file():
+            raise ValueError("unsafe historical first-party original path")
+        return path
+
+    meta_path = checked(pin["original_saved_run"] + "/metadata.json")
+    if json.loads(meta_path.read_text()).get("procurement_id") != case["registry_number"]:
+        raise ValueError("saved EIS archive procurement identity not attested")
+    archive = checked(pin["archive_relative_path"])
+    if sha(archive.read_bytes()) != case["archived_zip_sha256"]:
+        raise ValueError("frozen EIS getDocsIP archive SHA mismatch")
+    receipt_path = checked(pin["recovery_receipt_relative_path"])
+    if sha(receipt_path.read_bytes()) != pin["recovery_receipt_sha256"]:
+        raise ValueError("first-party recovery receipt SHA mismatch")
+    receipt = json.loads(receipt_path.read_text())
+    seen: set[str] = set()
+    verified = []
+    for item in pin["attachments"]:
+        uid = item.get("source_uid")
+        if (not isinstance(uid, str) or not re.fullmatch(r"[0-9A-F]{32}", uid)
+                or uid in seen or item.get("source_role") != "oct14_recovered_first_party_receipt"):
+            raise ValueError("unbound/duplicate original EIS UID")
+        seen.add(uid)
+        path = checked(item.get("source_root_relative_path"))
+        if (path.stat().st_size != item.get("bytes")
+                or path.suffix.lower() != item.get("file_extension")
+                or sha(path.read_bytes()) != item.get("sha256")):
+            raise ValueError("original legacy Word bytes or format differ")
+        matched = [
+            r for r in receipt
+            if r.get("registry_number") == case["registry_number"]
+            and r.get("original_name") == item.get("official_name")
+            and r.get("declared_bytes") == item.get("bytes")
+            and r.get("actual_bytes") == item.get("bytes")
+            and r.get("sha256") == item.get("sha256")
+            and r.get("status") == "OFFICIAL_BINARY_SHA_SAVED"
+            and r.get("original_eis_notice_xml_sha256") == case["selected_xml_sha256"]
+            and (receipt_path.parent / case["registry_number"] / str(r.get("private_filename"))).resolve() == path.resolve()
+        ]
+        if len(matched) != 1:
+            raise ValueError("recovered legacy Word filestore receipt not matched")
+        verified.append({
+            "uid": uid, "file_extension": item["file_extension"],
+            "actual_bytes": item["bytes"], "sha256": item["sha256"],
+            "official_name": item["official_name"],
+            "source_root_relative_path": item["source_root_relative_path"],
+        })
+    return archive, verified
+
 def prepare(
     *, stage: Path, source_root: Path, pinned_manifest: Path,
     registry_number: str = NUMBER, stage_name: str = STAGE_NAME,
@@ -140,12 +214,20 @@ def prepare(
         raise ValueError("missing pinned development original source manifest")
     binaries_root = source_root / "positive-docs-recovery-20261012"
     if record["source_role"] == "ORIGINAL_20_CORPUS":
-        if original_case_manifest is None or registry_number != "0348100024426000039":
-            raise ValueError("unapproved historical original corpus source")
-        archived, rows = resolve_original_eok_v3(
-            source_root=source_root, case=record,
-            pinned_case_manifest=original_case_manifest,
-        )
+        if original_case_manifest is None:
+            raise ValueError("missing original corpus first-party case manifest")
+        if registry_number == "0348100024426000039":
+            archived, rows = resolve_original_eok_v3(
+                source_root=source_root, case=record,
+                pinned_case_manifest=original_case_manifest,
+            )
+        elif registry_number == "0127100008626000013":
+            archived, rows = resolve_recovered_legacy_word_originals(
+                source_root=source_root, case=record,
+                pinned_case_manifest=original_case_manifest,
+            )
+        else:
+            raise ValueError("unapproved original first-party EIS case")
     elif record["source_role"] == "NEW_OFFICIAL_POSITIVE_REPLACEMENT":
         archived = source_root / "positive-eis-replacements-20261012" / registry_number / "documentation-archive.zip"
         if archived.is_symlink() or sha(archived.read_bytes()) != record["archived_zip_sha256"]:
@@ -334,6 +416,7 @@ def main() -> None:
         "--registry", choices=(
             NUMBER, "0151600003226000011", "0152200004026000069",
             "0348100024426000021", "0348100024426000039",
+            "0127100008626000013",
         ),
         default=NUMBER,
     )
@@ -344,6 +427,7 @@ def main() -> None:
         "0152200004026000069": "ta-apr067-r4-fifth-distinct-20261015",
         "0348100024426000021": "ta-apr067-r4-sixth-signed-zips-20261015",
         "0348100024426000039": "ta-apr067-r4-seventh-eok-revisions-20261015",
+        "0127100008626000013": "ta-apr067-r4-eighth-legacy-doc-20261015",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")
