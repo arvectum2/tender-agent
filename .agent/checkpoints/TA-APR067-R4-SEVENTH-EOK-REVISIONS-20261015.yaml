@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR067-R4-SEVENTH-EOK-REVISIONS-20261015
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Verify seventh distinct real 44FZ historical EOK2020 development E2E 0348100024426000039 with 3 archived notice editions, 7 documents
   in v3 including separately recovered first-party annex, and a single genuine local Gemma4 run.
 definition_of_done:
@@ -37,17 +37,21 @@ completed:
 - '2026-10-15 full isolated Mac mini suite 4164 passed/238 skipped/0 failed/328 known warnings in189.66sec; 20 source/UID/revision/adversarial
   focused tests PASS; Ruff PASS. Real saved report expert reviewed: contract correctly present, wrong old deadline absent; five English
   LLM contract hypotheses remain explicitly unverified, no legal/GO claims.'
-current_stage: seventh_true_source_version_bound_gemma_and_full_tests_pass_exact_pr_ci_pending
+- '2026-10-15 GitHub PR443 exact source head fe9f3c242ea91ddf6891b6e0623e93a73a409c8b CI #3503 run38790430326 completed SUCCESS; 4164
+  local PASS/238 SKIP/0 FAIL. Single real Gemma4 four calls333.22sec, original 11/11 exact UID/SHA including separately recovered ZIP,
+  4 archived XML and 5 nested substantial doc texts, 3 original latest v3 XML citations with deadline19Oct not old16Oct, report and
+  history200, archived exports409, manual_review_required.'
+current_stage: seventh_original_EOK_v3_11_source_gemma_and_exact_head_ci_verified
 remaining:
-- Commit/push evidence updates to PR443 and exact-head CI success
-- Mark child completed and stop isolated DP 18099 after CI
-- No rerun of actual model, no live EIS/ETP participation
-last_verified_commit: 9a4619be14f1c25af17e0030e095695ca80a63ce
-last_tests: True Gemma4 4 calls333.22s, 11/11 original SHA sources, 4 ZIP +5 child texts, 3 original XML citations v3 deadline19Oct,
-  stored HTML SHA recorded, archive409; 4164 local tests PASS/238 skip/0 fail and20 source tests PASS, Ruff PASS.
-resume_instruction: Seventh historical EOK v3 original-source actual Gemma4 4 calls333.22s completed successfully, 11 originals, 5 nested
-  texts, v3 deadline19Oct with old16Oct absent. Mac mini4164 tests PASS; expert source review PASS for key facts, risks flagged unverified.
-  Next commit evidence updates, await exact-head PR443 CI, complete child checkpoint; never rerun Gemma.
+- Draft PR443 and stacked parents remain for authorized review/merge, not automatically deployed
+- Next eighth distinct original EIS source .doc legacy case 0127100008626000013 tracked as separate child
+- Remaining APR-06 13 cases to numeric 20 minimum, APR-07 metrics and rolling SLO separate
+last_verified_commit: fe9f3c242ea91ddf6891b6e0623e93a73a409c8b
+last_tests: 'Exact-head GitHub PR443 CI run38790430326 #3503 SUCCESS; local 4164 passed/238 skipped/0 failed/328 known warnings, 20
+  focused source adversarial PASS and Ruff; true Gemma4 333.22 s source 11/11 cite3 and export409.'
+resume_instruction: COMPLETED seventh original 44FZ EOK2020 v3 source bound Gemma E2E. Verified code head fe9f3c24 GitHub CI run3503
+  SUCCESS. No rerun of accepted model. Continue new eighth case 0127100008626000013 with legacy DOC first-party original .doc/.docx,
+  own checkpoint; no current live EIS or legal GO.
 execution:
   branch: feature/apr067-r4-seventh-eok-revisions-20261015
   manual_override: true
