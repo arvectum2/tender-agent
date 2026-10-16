@@ -12,7 +12,7 @@ from collections import Counter
 from hashlib import sha256
 from pathlib import Path
 
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine, func, select
 
 from scripts.procurement_llm.import_candidates import _engine_url
 from src.modules.procurement_learning_corpus.models import (
@@ -46,10 +46,12 @@ def audit_observations(
     *,
     eis_root: Path,
     data_root: Path | None = None,
+    preview_run_ids: set[str] | None = None,
 ) -> dict:
     """Pure classification except for read-only on-disk existence/SHA checks."""
     if data_root is None:
         data_root = eis_root.parents[2]
+    preview_run_ids = preview_run_ids or set()
     count = Counter()
     manifest_cache: dict[str, str | None] = {}
     kinds = Counter()
@@ -117,6 +119,8 @@ def audit_observations(
                     count["saved_report_path_resolved_canonical_relative"] += 1
                 else:
                     count["saved_report_path_missing"] += 1
+                    if run_id in preview_run_ids:
+                        count["missing_report_has_db_preview_only"] += 1
             else:
                 count["analysis_no_report_path"] += 1
         elif kind == "development_e2e":
@@ -192,10 +196,14 @@ def audit_live_database(eis_root: Path, data_root: Path | None = None) -> dict:
                     ProcurementLearningObservation.payload_json,
                 )
             ).mappings().all()
-            run_ids = set(conn.execute(select(TenderAnalysisRun.id)).scalars().all())
+            run_rows = conn.execute(
+                select(TenderAnalysisRun.id, func.length(TenderAnalysisRun.report_markdown_preview))
+            ).all()
+            run_ids = {run_id for run_id, _length in run_rows}
+            preview_run_ids = {run_id for run_id, length in run_rows if length and length > 0}
         return audit_observations(
             [dict(row) for row in rows], run_ids, eis_root=eis_root,
-            data_root=data_root,
+            data_root=data_root, preview_run_ids=preview_run_ids,
         )
     finally:
         engine.dispose()

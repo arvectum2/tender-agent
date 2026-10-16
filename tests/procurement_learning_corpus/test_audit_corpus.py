@@ -199,3 +199,17 @@ def test_nested_blind_source_role_fails_closed(tmp_path):
     )
     result = audit_corpus.audit_observations([row], set(), eis_root=tmp_path)
     assert result["checks"]["protected_split_present"] == 1
+
+
+def test_missing_full_report_with_db_preview_is_not_full_source(tmp_path):
+    row = make_row(
+        "report-preview", "analysis_run", "0123456789012345678",
+        {"run_id": "saved-run", "report_path": "data/rag/reports/deleted-full.md"},
+    )
+    result = audit_corpus.audit_observations(
+        [row], {"saved-run"}, eis_root=tmp_path, data_root=tmp_path,
+        preview_run_ids={"saved-run"},
+    )
+    assert result["checks"]["saved_report_path_missing"] == 1
+    assert result["checks"]["missing_report_has_db_preview_only"] == 1
+    assert result["checks"]["linked_saved_analysis_runs"] == 1

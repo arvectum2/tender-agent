@@ -363,6 +363,7 @@ procurement_llm_data_collection_2026_10_16:
     report_paths_present: 43
     report_paths_readable: 21
     report_paths_missing: 22
+    missing_full_reports_with_database_preview_only: 22
     protected_blind_train_rows: 0
     training_ready_rows: 0
     pending: [restore_22_missing_report_receipts, get_primary_bid_participation_receipts, verify_archived_zip_files, owner_legal_gold_and_data_use_review]
