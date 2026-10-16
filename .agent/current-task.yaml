@@ -219,12 +219,14 @@ procurement_llm_capture_2026_10_16:
   draft_pr: 451
   last_code_commit: 5c647072aa96a8c7a8b9d3e52d71b82e75d28c04
   data_rows_in_existing_postgres: 77
-  current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OUTCOMES-20261016.yaml
+  current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OFFICIAL-FINAL-20261016.yaml
+  completed_outcomes_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OUTCOMES-20261016.yaml
+  primary_eis_source_report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_EIS_FINAL_PROTOCOLS_2026-10-16.md
   completed_legacy_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016.yaml
   official_outcomes_evidence_report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_OUTCOMES_2026-10-16.md
   official_outcomes_review_no_training: true
   blocked_etp_email_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-ETP-EMAIL-20261016.yaml
-  pending_etp_operator_candidate_events: 8
+  pending_etp_operator_candidate_events: 9
   pending_etp_import_is_blocked: true
   independently_verified_aksay_rts_receipt_dates: [2026-10-05, 2026-10-06]
   etp_private_source_batch_validated_only: true

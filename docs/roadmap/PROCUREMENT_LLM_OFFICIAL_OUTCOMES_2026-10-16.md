@@ -1,5 +1,7 @@
 # Закупки с участием ООО «Арвектум»: evidence-qualified outcomes
 
+**SOURCE UPDATE 16.10.2026:** Official EIS original final XML now independently verifies company Aksioma app3630084 admitted/399000 RUB/appRating6 and Aksay app122031738 admitted/119000 RUB/appRating38. See [new primary EIS SHA audit](PROCUREMENT_LLM_OFFICIAL_EIS_FINAL_PROTOCOLS_2026-10-16.md). Older unverified/pending findings below are a historical earlier-state snapshot.
+
 Актуально на **16.10.2026**. Исходный корпус Procurement LLM: **77 кандидатных наблюдений** в единой PostgreSQL `arvectum`; дополнительные восемь ETP metadata events успешно проверены в dry-run, но **не импортированы** (блокировка инструментального доступа). Протокол сверки: `python -m scripts.procurement_llm.audit_outcomes`. Инструмент только читает три уже существующих файла, не копирует исходный Markdown/email bodies и не выдаёт `legal_gold`/ `train_ready`.
 
 | Закупка | Наличие участия компании | Исходный результат | Границы достоверности |

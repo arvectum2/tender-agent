@@ -454,6 +454,37 @@ procurement_llm_data_collection_2026_10_16:
     museum_bread_final_outcome_verified: false
     read_only_tool: scripts/procurement_llm/audit_outcomes.py
     train_ready_rows: 0
+  primary_official_final_eis_protocols_2026_10_16:
+    id: PROC-LLM-DATA-08
+    state: real_official_eis_getdocs_zip_xml_sha_verified
+    report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_EIS_FINAL_PROTOCOLS_2026-10-16.md
+    canonical_original_storage: /Volumes/ArvectumSSD/Arvectum/data/tenders/eis
+    aksioma:
+      procurement_ref: '0187200001726001304'
+      company_application: '3630084'
+      admitted: true
+      price_rub: 399000
+      app_rating_raw: '6'
+      total: 17
+      admitted_count: 12
+      winner_price_rub: 119000
+      zip_sha256: 39fef1af482907b2c2382518d339d932e09197c2e36e68a6134fc5910ff7dd18
+      xml_sha256: 183023905c0af4bca1f1468ea09837e7c85a86068a48f71f87db2b908da70ec4
+    aksay:
+      procurement_ref: '0158300034526000388'
+      company_application: '122031738'
+      admitted: true
+      price_rub: 119000
+      app_rating_raw: '38'
+      total: 55
+      admitted_count: 45
+      winner_price_rub: 28400
+      zip_sha256: d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8
+      xml_sha256: 2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5
+    source_validator: scripts/procurement_llm/audit_official_finals.py
+    pending_private_etp_events: 9
+    postgres_observations_unchanged: 77
+    approved_gold: 0
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:
