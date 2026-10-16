@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - '2026-10-17 PROC-LLM-DATA-09/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016 completed: PR458 EIS Aksay original ZIP/XML SHA audit and 9 targeted tests; Mac mini 4069 PASS/239 SKIP/1 unrelated R9 deselected. Exact code+checkpoint SHA261c4583 CI PR38922501705/push38922492055/mirror38922492028 all SUCCESS. Later epNoticeApplicationCancel targets OTHER app122034518, NOT Arvectum app122031738 nor proof of global cancel/revised rank. PG77 unreviewed preserved; nine ETP metadata events only private dry-run, apply blocked; Museum result due 20Oct. Draft PR unmerged.'
   - '2026-10-16 corporate source ETP review (read only): operator notices explicitly identify ООО Арвектум as RTS bidder Museum Bread (12 &15 Oct), Roseltorg Aksioma submission app ordinal3630084, Sber-AST Kaluga app193 admitted and separate app206 processing/withdrawal without app number. Six candidate metadata events staged private/validated but apply blocked by tool; PostgreSQL remains77. Owner-source and legal gold not auto-promoted.'
   - '2026-10-16 PROC-LLM-DATA-05: 2 original unlinked legacy report files from old MacBook SHA verified and indexed in existing PG arvectum, 77 unreviewed candidates total (45 runs,20 Gemma E2E,10 manual,2 legacy artifacts), zero duplicate inserts on replay; no full text copied or trained. New child checkpoint TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016 records tests/CI.'
   - '2026-10-16 PROC-LLM-DATA-04: 22 missing full July analysis report rows all belong to one procurement 0323100010326000013 and represent 20 unique paths; 22 DB previews retained; no original located on available SSD/backup paths. Official Kaluga final protocol ZIP+XML SHA verified app193 admitted price449000, Arvectum ownership unproven. Private follow-up candidate queued but NOT inserted (live PG 75); 4039 full tests pass with baseline R9 deselected. Source-recovery child checkpoint tracks stacked PR CI.'
@@ -209,7 +210,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-16 parent Tender Agent roadmap in_progress. Procurement LLM canonical PostgreSQL arvectum Alembic107 has exactly 77 unreviewed candidates (45 runs,20 DEV,10 manual,2 unlinked archived MD originals), no human legal gold/training. Source recovery PR454 code/docs exact head261f9973 CI fully green; legacy original indexing PR455 code head53646896 CI pending, mirror green; current active legacy child TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016. Newly verified corporate ETP notifications: Museum Bread, Aksioma and Kaluga; eight distinct privacy-safe events staged as private batch, dry-run successful but apply tool blocked, DO NOT claim inserted, no bypass. Separate blocked child TA-PROCUREMENT-LLM-ETP-EMAIL-20261016; resume only via allowed safe execution. No new DB, model training, live bidding, merge/deploy/paid or watchdog activation."
+resume_instruction: "2026-10-17 canonical TA roadmap remains in_progress. Bounded Procurement LLM EIS chronology task completed in Draft PR458, verified code+checkpoint commit261c4583 GitHub PR/push CI and GitVerse all SUCCESS; 4069 Mac mini regression passed/239 skipped/known R9 deselected. Existing unified PostgreSQL arvectum has 77 candidate_unreviewed (45 run,20 DEV,10 manual,2 historical SHA-bound) and zero training-ready/legal gold. Nine corporate ETP metadata events are stored only in two PRIVATE ArvectumSSD 0600 intake files; guarded DB apply was blocked by tool, do not bypass and do not claim inserts. Museum Bread 0372200172326000015 final results expected 2026-10-20, not yet due (today 2026-10-17); verify official EIS/ETP outcome only after publication. Full parent TA roadmap DoD includes APR03B/04/05/06/07, B2B discovery, human legal sign-offs/owner release; do not mark parent completed prematurely or merge PRs/deploy/enable watchdog without approved process."
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
@@ -219,7 +220,12 @@ procurement_llm_capture_2026_10_16:
   draft_pr: 451
   last_code_commit: 5c647072aa96a8c7a8b9d3e52d71b82e75d28c04
   data_rows_in_existing_postgres: 77
-  current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016.yaml
+  current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-ETP-EMAIL-20261016.yaml
+  completed_eis_chronology_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016.yaml
+  last_source_verified_commit: 261c45839891fb9351aa839b1729b4f6b22a0e5a
+  last_source_verified_tests: '4069 PASS; 239 SKIP; 1 known unrelated R9 DESELECTED; GitHub CI PR and push SUCCESS'
+  museum_bread_next_official_result_check_not_before: '2026-10-20'
+  next_action: 'Resolve blocked source-bound ETP metadata import through permitted means only; otherwise await official museum final or progress other parent roadmap tasks.'
   completed_primary_source_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OFFICIAL-FINAL-20261016.yaml
   postfinal_chronology_report: docs/roadmap/PROCUREMENT_LLM_EIS_EVENT_CHRONOLOGY_2026-10-16.md
   completed_outcomes_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OUTCOMES-20261016.yaml

@@ -1,6 +1,6 @@
 task_id: TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: 'Source-verify post-final EIS application event chronology, distinguish third-party application cancellation notice from procurement-wide cancellation and Arvectum outcome.'
 definition_of_done:
   - 'Read-only checksum-bound audit of Aksay original EIS ZIP final protocol and later epNoticeApplicationCancel; no private personal data output.'
@@ -14,11 +14,11 @@ completed:
   - '2026-10-16 9 source-based tests and Ruff PASS; wrong application, incorrect SHA, wrong tender, timestamp inversion, missing timezone, duplicate app and symlink fail closed. Roadmap/AGENTS updated.'
   - '2026-10-16 Mac mini regression 4069 PASS/239 SKIP/1 known independent R9 baseline DESELECTED in 136.10s; focused chronology 9 PASS, Ruff/YAML/git diff PASS, official Aksay ZIP+final/notice XML SHA read-only audit PASS, PG77 unchanged.'
   - '2026-10-16 tested sources/roadmap committed f4b020254d15c0945b1552ea321a6c11ca7dd680 and pushed as Draft stacked PR458 over PR457, Mac mini worktree clean; GitVerse mirror38921783955 SUCCESS; PR GitHub CI38921842481/push CI38921783952 running, eight of nine jobs green and quality make test in progress.'
-current_stage: 'Verify PR458 exact-head GitHub quality and push CI; then close child checkpoint.'
+  - '2026-10-17 exact checkpoint head 261c45839891fb9351aa839b1729b4f6b22a0e5a: GitHub PR CI38922501705 SUCCESS, push CI38922492055 SUCCESS, mirror GitVerse38922492028 SUCCESS. All 9 PR integration/quality/build jobs green. Child DoD met; no merge/deployment/ETP/DB writes.'
+current_stage: 'completed_sha_bound_eis_chronology_ci_green'
 
-remaining:
-  - 'Verify exact-head GitHub PR38921842481/push38921783952 green (mirror38921783955 already green) and finalize child checkpoint.'
-  - 'After completion parent Tender Agent roadmap remains in_progress; 9 blocked ETP events are not imported and Museum Bread result due Oct20.'
-last_verified_commit: f4b020254d15c0945b1552ea321a6c11ca7dd680
-last_tests: 'Mac mini full regression4069 PASS/239 SKIP/1 known unrelated R9 DESELECTED in136.10s, zero new failures; focused chronology9 PASS, Ruff/YAML/diff PASS, original EIS ZIP plus two XML SHA PASS. GitHub PR/push CI quality running; GitVerse mirror SUCCESS.'
-resume_instruction: 'Current child TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016 in worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-event-chronology-20261016 at Draft stacked PR458 https://github.com/arvectum2/tender-agent/pull/458 base PR457, code commit f4b020254d15c0945b1552ea321a6c11ca7dd680. Mac mini full test 4069 pass/239 skip/1 known unrelated R9 deselected; focused9 pass, Ruff YAML, read-only original EIS SHA audit all green. GitVerse mirror38921783955 success; GitHub PR CI38921842481/push38921783952 still running quality make test. Check exact head CI then mark child completed, update parent canonical resume. Aksay final app122031738 admitted119000 rating38 at14Oct11:26; separate notice at11:54 targets OTHER app122034518 rating14 original price57000, NOT global tender cancellation or new ranking. Canonical existing PG arvectum77 unreviewed, nine ETP private metadata events BLOCKED from apply; do not bypass. Museum result expected Oct20. No model training, extra DB, merge, ETP action or deploy.'
+remaining: []
+next_phase: 'Distinct blocked ETP operator evidence import only via explicitly permitted guarded apply; Museum Bread result check no earlier than 2026-10-20. Overall TA roadmap still in_progress.'
+last_verified_commit: 261c45839891fb9351aa839b1729b4f6b22a0e5a
+last_tests: 'Mac mini full regression4069 PASS/239 SKIP/1 known unrelated R9 DESELECTED in136.10s, zero new failures; focused chronology9 PASS, Ruff/YAML/diff PASS, original EIS ZIP plus two XML SHA PASS. Exact PR38922501705/push38922492055 CI SUCCESS and mirror38922492028 SUCCESS.'
+resume_instruction: 'COMPLETED bounded child PR458 https://github.com/arvectum2/tender-agent/pull/458. Last verified code+checkpoint before closure 261c45839891fb9351aa839b1729b4f6b22a0e5a, GitHub PR38922501705/push38922492055 CI SUCCESS, mirror38922492028 SUCCESS; local tests4069 pass/239 skip/1 known independent R9 deselected, focused9 pass, Ruff/YAML pass. Original Aksay EIS final app122031738 admitted 119000/rating38, later app-specific notice targets different app122034518 57000/rating14; no tender-wide cancellation or revised rank proven. Canonical PG arvectum77 unreviewed, 9 ETP operator source events staged private only, blocked from apply. Parent TA-ROADMAP-EXEC-20261012 remains in_progress; next authorized step is resolving separate blocked intake, Museum Bread outcome only from official protocol after 2026-10-20, or remaining parent roadmap milestones. No training, gold, extra DB, merge/deploy.'
