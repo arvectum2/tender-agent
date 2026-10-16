@@ -12,12 +12,17 @@ definition_of_done:
 completed:
 - 2026-10-16 GitHub PR433/434/435 each draft/open, PR checks 18/18 successful, no owner review approval; base main verified and review worktree
   created.
-current_stage: independent_no_main_mutation_branch_merge_simulation
+- 2026-10-16 local main-based dry integration of PR433 -> PR434 -> PR435 completed with ZERO merge conflicts; isolated HEAD04837411, main
+  origin/main bc98bd39 untouched; 63 focused combined APR03B/APR04/APR05/company tests PASS, Ruff PASS. Full merged-suite regression running
+  and exact review branch GitHub CI not yet created.
+current_stage: combined_integration_full_local_regression_running_review_packet
 remaining:
-- Simulate source merges 433 ->434 ->435 in isolated worktree
-- Targeted tests and full suite
-- CI and evidence/owner gate report
-last_verified_commit: bc98bd397bbd91186dd08e1e611d972077c4ab74
-last_tests: 'Source PRs #433/434/435 green, isolated integration not yet tested.'
-resume_instruction: Review branch isolated from main. Do git merge 433 then 434 then 435 only in isolated worktree; never touch main. If conflict,
-  resolve locally and add regression test. Then test and create draft review PR; do not infer owner approval or legal SaaS consent.
+- Wait complete merged branch full Mac mini pytest; resolve any new cross-PR failures
+- Create owner-gate decision packet and preserve canonical checkpoint
+- Push isolated branch and Draft non-prod integration PR, exact-head CI review
+- Close child as readiness-only, no merge into main
+last_verified_commit: 04837411
+last_tests: Combined 63 focused PASS, Ruff PASS. Full merged-suite still running; separate PR433/434/435 each18 successful checks.
+resume_instruction: Isolated review/apr0405-integration-readiness-20261016 from main bc98, local merged 433->434->435 in branch to SHA04837411
+  no conflict. 63 focused PASS/Ruff. Full suite PID68426 running. Draft owner gates, push review PR; no owner-authorized automatic merge,
+  no SaaS legal consent or production/paid activation.
