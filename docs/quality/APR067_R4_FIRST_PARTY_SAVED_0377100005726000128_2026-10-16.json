@@ -1,0 +1,57 @@
+{
+  "registry_number": "0377100005726000128",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052412-d5b9df",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052412-d5b9df/input/documentation-archive.zip",
+  "archive_sha256": "8df59538a21209e6505961f09f8afd97646c6533aba67af05eb67bbc4dd4c69a",
+  "selected_xml_sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777",
+  "selected_notice_type": "epNotificationEF2020",
+  "selected_notice_version": 1,
+  "saved_metadata_sha256": "f20e2cc1e5bcada56c67e66853b4b06166e3d8046ade5dcb52e32ff186c96809",
+  "attachments": [
+    {
+      "source_uid": "019FC5ED93777FEFB9BF2816CCC2B7C9",
+      "official_name": "Приложение № 1 Расчет НМЦК.xlsx",
+      "bytes": 19271,
+      "sha256": "d9a8eca5dc1de44d0a42b553a69b41dc51f0b7bedcaee258b4b8d08782a462e0",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052412-d5b9df/input/01-1.xlsx",
+      "file_extension": ".xlsx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "01-1.xlsx",
+      "source_slot": 1
+    },
+    {
+      "source_uid": "019FC5F11F2B757D9F54C5D8D7D94759",
+      "official_name": "Приложение №2.Проект  контракта.docx",
+      "bytes": 61293,
+      "sha256": "b9a8468f35a5d1108463dd500875256f969ae161b937d54943cb748985d7cbb0",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052412-d5b9df/input/02-2.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "02-2.docx",
+      "source_slot": 2
+    },
+    {
+      "source_uid": "019FC5F30A3B7AE0BB8E4CF325D69C3B",
+      "official_name": "Приложение № 3 Описание объекта закупки.docx",
+      "bytes": 22352,
+      "sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052412-d5b9df/input/03-3.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "03-3.docx",
+      "source_slot": 3
+    },
+    {
+      "source_uid": "019FC5F353F17F9E9961176FFC9BA064",
+      "official_name": "Приложение №4.Требование к содержанию, составу заявки на участие в закупке (6).docx",
+      "bytes": 17327,
+      "sha256": "52ebd5a917425ffa0a76a9394bb621cf6c5426c1bb40a18eb37d47e2ec719407",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052412-d5b9df/input/04-4.-6.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "04-4.-6.docx",
+      "source_slot": 4
+    }
+  ]
+}

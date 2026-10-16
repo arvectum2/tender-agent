@@ -1,0 +1,37 @@
+task_id: TA-APR067-R4-EIGHTEENTH-ORIGINAL-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: First-party source-grounded real 44FZ Gemma4 local DEVELOPMENT E2E case 0169300008226000223; last four distinct cases for first
+  20 real original EIS cohort.
+definition_of_done:
+- Select exact archived EIS notice version and hash, individually bind original filestore UID/name/size/metadata/binary SHA including
+  duplicated-archive first case
+- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP calls
+- One real Gemma4 provider run per unique case, preserve original output, verify original EIS XML three critical cites, report/history/auth
+  and archived export409, semantic source-grounded expert review
+- Focused adversarial provenance tests and full local suite, substantive exact-head CI SUCCESS, docs report and checkpoint completed
+  only for verified E2E
+completed:
+- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no other
+  model run repeated
+- 2026-10-16 frozen selected EIS original notice SHA, first-party metadata SHA, saved filestore UID/name/bytes/source slot SHA, native
+  EIS original stage toa-run-20261016052530-467820 ready_to_analyze initial; 12/12 original SHA-protected inputs incl exactly four substantive
+  documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case
+  exits 0.
+current_stage: queued_for_previous_original_model_success
+remaining:
+- Freeze selected original archived getDocsIP SHA and first-party filestore metadata including duplicate source choice
+- Original document extraction Data Platform and ready native ingestion
+- One serial local Gemma4 source E2E
+- Expert review tests full suite GitHub CI checkpoint close
+last_verified_commit: fa1356179da20a5f4de495616349fc768c8bc34c
+last_tests: 12/12 actual original saved source SHA and native EIS readiness, Data Platform 4/4 original binary text extraction; new
+  model pending; no live EIS/ETP.
+resume_instruction: One serial local real Gemma PID33179, original 0169300008226000223 stage ta-apr067-r4-eighteenth-ezk-20261016, run
+  toa-run-20261016052530-467820, 12/12 SHA. Cases17->18->19->20 only on previous success. Read private output receipt if exists, never
+  rerun completed Gemma. After model verify three original XML citations/history/export409 and tests/exact CI. Case13 old report remains
+  pending separately.
+execution:
+  branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
+  stage_name: ta-apr067-r4-eighteenth-ezk-20261016
+  manual_override: true

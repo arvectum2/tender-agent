@@ -319,6 +319,10 @@ def resolve_saved_first_party_originals(
         "0158300034526000388": ("epNotificationEZK2020", 5),
         "0162300005826000156": ("epNotificationEF2020", 1),
         "0169300003326000181": ("epNotificationEF2020", 1),
+        "0137200001226007700": ("epNotificationEZK2020", 1),
+        "0169300008226000223": ("epNotificationEZK2020", 1),
+        "0169300008226000225": ("epNotificationEZK2020", 1),
+        "0377100005726000128": ("epNotificationEF2020", 1),
     }
     expected = approved.get(case.get("registry_number"))
     if (expected is None or case.get("source_role") != "ORIGINAL_20_CORPUS"
@@ -424,6 +428,8 @@ def prepare(
             )
         elif registry_number in {
             "0158300034526000388", "0162300005826000156", "0169300003326000181",
+            "0137200001226007700", "0169300008226000223",
+            "0169300008226000225", "0377100005726000128",
         }:
             archived, rows = resolve_saved_first_party_originals(
                 source_root=source_root, case=record,
@@ -623,6 +629,8 @@ def main() -> None:
             "0895100000126000897", "0149200002326001555",
             "0148200000526000028", "0349100009326000005",
             "0158300034526000388", "0162300005826000156", "0169300003326000181",
+            "0137200001226007700", "0169300008226000223",
+            "0169300008226000225", "0377100005726000128",
         ),
         default=NUMBER,
     )
@@ -642,6 +650,10 @@ def main() -> None:
         "0158300034526000388": "ta-apr067-r4-fourteenth-ezk-five-revisions-20261016",
         "0162300005826000156": "ta-apr067-r4-fifteenth-ef-20261016",
         "0169300003326000181": "ta-apr067-r4-sixteenth-ef-20261016",
+        "0137200001226007700": "ta-apr067-r4-seventeenth-ezk-20261016",
+        "0169300008226000223": "ta-apr067-r4-eighteenth-ezk-20261016",
+        "0169300008226000225": "ta-apr067-r4-nineteenth-ezk-20261016",
+        "0377100005726000128": "ta-apr067-r4-twentieth-ef-20261016",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")
