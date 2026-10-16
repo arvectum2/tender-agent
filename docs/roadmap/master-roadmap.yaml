@@ -251,7 +251,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'A controlled paid pilot can be onboarded, metered, packaged and supported with legal/HUMAN gates explicit and no bespoke operator intervention for routine setup.'
     - id: APR-06-COMMERCIAL-ACCEPTANCE
       priority: P0
-      state: implementation_pr_open_not_merged
+      state: development_20_of_20_real_source_e2e_pass_independent_human_gold_pending
       legacy_mapping: [ARV-005, ARV-072]
       outcome: '20-30 real procurements through the full workflow with measured operator usefulness, not just technical completion.'
       why_now: 'Validates that the system saves time and improves decisions before broad feature expansion.'
@@ -259,7 +259,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Frozen acceptance report demonstrates agreed thresholds and records every confirmed failure as a regression.'
     - id: APR-07-QUALITY-MODEL-EVAL
       priority: P0
-      state: continuous_pr_open_not_merged
+      state: real_source_development_evidence_pass_rolling_slo_and_independent_gold_pending
       legacy_mapping: [ARV-010, ARV-039, ARV-067, ARV-072]
       outcome: 'Product SLO/quality dashboard plus Russian procurement benchmark for LLM/VLM/OCR/embeddings and vertical extraction.'
       why_now: 'Prevents cosmetic model churn and makes quality decisions evidence-based.'
@@ -286,6 +286,42 @@ active_product_roadmap_2026_10_08:
       outcome: 'Human correction -> regression case -> reviewed rule/model candidate -> controlled promotion.'
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
+
+roadmap_verified_progress_2026_10_16:
+  as_of: '2026-10-16'
+  baseline_main: bc98bd397bbd91186dd08e1e611d972077c4ab74
+  qa_development:
+    history: '20/20 original archival 44-FZ E2E cases, 210 original SHA files, 80 Gemma4 model calls, 60 EIS XML citations'
+    evidence_pr: 449
+    draft_unmerged: true
+    exact_pr_ci: SUCCESS
+    full_local_pytest: '4286 passed, 238 skipped, 0 failed'
+    independent_human_gold: '0/15'
+    blind_sut: 0
+    semantic_precision_recall: NOT_MEASURED
+    owner_bid_go: false
+  integrated_workspace_onboarding_saas:
+    evidence_pr: 450
+    source_prs: [433, 434, 435]
+    draft_unmerged: true
+    isolated_merge_conflicts: 0
+    full_local_pytest: '4033 passed, 238 skipped, 0 failed'
+    focused_pytest: '63 passed'
+    exact_review_code_ci: SUCCESS
+    verified_review_code_commit: a88af4279e0e13c9a9dd2cf463219c9e9700c7dd
+    child_integration_readiness: completed
+    owner_merge_approval: false
+    production_deployment: false
+    legal_and_eligibility_acceptance: false
+  b2b_discovery:
+    source_snapshot_date: '2026-10-12/13'
+    historical_corporate_candidates: 9
+    accepted_current_qualified_count: NOT_ATTESTED
+    target: '15-20 current unique IT opportunities'
+  watchdog:
+    enabled: false
+    manual_override: true
+  provenance: 'Verification overlay: green development tests and draft PR do not satisfy external owner/human/production/legal gates.'
 
 b2b_procurement_source_discovery_2026_10_12:
   id: B2B-SOURCE-DISCOVERY-2026-10-12
