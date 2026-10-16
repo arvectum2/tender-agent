@@ -1551,6 +1551,19 @@ def _persist_outputs(run_id: str, metadata: dict[str, Any], outputs: dict[str, d
     )
     renderer = _render_customer_report_html if metadata.get("analysis_mode") == "production_llm_r10_1" else _render_canonical_report_html
     persist_frozen_r7_outputs(output_dir=_output_dir(run_id), run_id=run_id, metadata=metadata, outputs=outputs, steps=steps, render_html=renderer, now_factory=_safe_datetime)
+    if metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip":
+        from src.modules.tender_operator_agent_demo.operator_eis_report_citations import (
+            append_official_eis_citations,
+        )
+
+        try:
+            append_official_eis_citations(
+                report_path=_report_html_path(run_id), run_id=run_id, metadata=metadata
+            )
+        except (OSError, ValueError):
+            # Do not invent a citation if a saved original is unreadable.
+            # Existing source-evidence quality gate stays closed independently.
+            pass
 
 
 def _render_procurement_blocked_report_html(metadata: dict[str, Any]) -> str:

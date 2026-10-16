@@ -225,13 +225,13 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
     - id: APR-03B-OPERATOR-WORKSPACE
       priority: P0
-      state: unified_search_and_real_eis_analysis_merged_owner_browser_acceptance_pending
+      state: archived_originals_development_e2e_accepted_owner_delegated_chatgpt_live_current_notice_and_production_separate
       depends_on: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME]
       legacy_mapping: [ARV-019, ARV-061, ARV-064, ARV-066]
       outcome: 'Authenticated browser workspace for live EIS number/URL request, status, cited results, report and read-only canonical procurement database.'
       why_now: 'Owner wants to personally use the product immediately after production runtime, before SaaS expansion.'
       scope: [request_panel_44fz_223fz, analysis_status, cited_results_and_unknowns, documents_and_report_export, read_only_canonical_database_explorer]
-      done_gate: 'Owner signs in by browser, submits supported live procurement, observes progress, inspects evidence-bound requirements/risks/economics, source documents and report, finds saved procurement/history without terminal/Swagger; no arbitrary SQL, mock-only UI or external consequential actions.'
+      done_gate: 'Owner delegates DEVELOPMENT E2E expert review to ChatGPT (2026-10-15). Verify a real-source stable authenticated workspace flow search/import, file integrity, local LLM, source-cited material report, history/read-only registry and archival export safety. No independent human gold required at this stage; legal GO and external actions remain separately gated.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
       state: implementation_pr_open_not_merged
