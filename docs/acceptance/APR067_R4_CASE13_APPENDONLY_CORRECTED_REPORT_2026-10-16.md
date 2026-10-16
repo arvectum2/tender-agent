@@ -63,9 +63,20 @@ The revised HTML has three official original XML source citation
 rows. All four API outputs are free of fabricated education,
 classrooms, vehicle repairs, learning hours and inaccurate
 evaluation-order service items. The original HTML SHA stayed exact.
-55 focused source/version anti-tamper and existing domain regression
-tests PASS, Ruff PASS. Full local suite and source code exact GitHub
-CI to be recorded independently below once complete.
+55 focused source/version anti-tamper and domain regression tests
+PASS, plus 28 exact old R3/R5 compatibility and new fail-closed
+revision tests PASS, Ruff PASS. **Full Mac mini suite 4,286 PASS /
+238 SKIP / 0 FAIL (328 warnings, 150.41s)**. The first full
+regression found three compatibility issues; all were corrected by
+restoring byte-for-byte R3 projection AST and preserving legacy
+HTML read hooks for runs without a corrected version, with green
+targeted and then green full rerun. GitHub CI exact source-code commit
+81481ea70a9f9ae42fa9c609f7d523cf5a15fe7c, run38861649220
+**9/9 jobs SUCCESS**. Private actual FastAPI acceptance
+receipt: runtime isolated output/apr067_case13_appendonly_corrected_real_api_receipt.json.
+It captures 4 authenticated200/unauthorized401 route pairs,
+immutable old/updated report SHA, 9 original files, 3 EIS XML cites,
+and zero new real model calls.
 
 The original 20-case cohort metric is preserved immutable with
 historical 19/20 semantic status. The additional corrected
@@ -80,3 +91,7 @@ calls, 60 official XML evidence fact citations.
 No qualified independent human legal-gold review, commercial price
 approval, current live EIS verification, bid, signature, payment,
 production deployment or rolling production SLA is implied.
+
+## Final closure
+
+Source-code CI 9/9 succeeded, the complete suite passed 4286/238 skipped, and the original case13 checkpoint status is **completed**. Repeated execution of the correction publisher was idempotent (old/new/pointer SHA all unchanged). The corrected source-only report is published, original model evidence preserved. The DEVELOPMENT report corpus is now 20/20, not independent signed legal gold, commercial bidding approval, ETP or production release. Draft PR449 remains unmerged.

@@ -2,53 +2,60 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-APR067-R4-THIRTEENTH-ORIGINAL-20261016
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
-goal: Original-source 44FZ independent E2E thirteenth case 0349100009326000005; official saved selected XML, 5 filestore originals recovered
-  from independent first-party receipts; EOK competition with two old binary DOCs and evaluation rules; one real local Gemma4 only.
+status: completed
+goal: Original-source 44FZ independent E2E thirteenth case 0349100009326000005; official saved selected XML, 5 filestore originals
+  recovered from independent first-party receipts; EOK competition with two old binary DOCs and evaluation rules; one real local
+  Gemma4 only.
 definition_of_done:
-- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without mixing
-  editions or overwriting originals
+- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without
+  mixing editions or overwriting originals
 - Native offline EIS stage ready_to_analyze without bypass; local Data Platform original DOC/DOCX content verified
-- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked archived
-  export
-- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model timing
+- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked
+  archived export
+- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model
+  timing
 - Full local suite and exact substantive GitHub CI, Draft PR, final immutable source/analysis checkpoint completed only when evidence
   exists
 completed:
-- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases 10/20
-  minimum, originals preserved.
-- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources with
-  exact UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214554-288eac 0349100009326000005: 4 archived
-  original XML + 5 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
-- 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder, all
-  extracted with text, 2 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process
-  PID6706 starts order 3, no concurrent models.
+- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases
+  10/20 minimum, originals preserved.
+- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources
+  with exact UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214554-288eac 0349100009326000005:
+  4 archived original XML + 5 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
+- 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder,
+  all extracted with text, 2 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real
+  Gemma process PID6706 starts order 3, no concurrent models.
 - 2026-10-16 eleventh and twelfth genuine Gemma4 source E2Es exited zero, original source/three XML citations and archival exports409
   validated, serial PID6706 started THIRTEENTH source run toa-run-20261015214554-288eac. No concurrent model analysis.
 - 2026-10-16 third original EOK real Gemma4 completed once 4 calls366.21s HTTP200 no fallback, 9/9 SHA originals and 3 EIS XML citations;
-  real original independent 32150-character evaluation order DOCX in 9-file model trace. Expert found wrong education/vehicle repair templates
-  in historical report, source-only private projection v2 corrected all source documents with no model replay, original old report preserved.
+  real original independent 32150-character evaluation order DOCX in 9-file model trace. Expert found wrong education/vehicle repair
+  templates in historical report, source-only private projection v2 corrected all source documents with no model replay, original
+  old report preserved.
 - 2026-10-16 append-only source-only corrected report-revision.json published in original isolated EIS run source; corrected report.json
-  sha b7af73f5.., corrected HTML SHA 6130efde.. and 3 original EIS XML citations with 9/9 original source SHAs; immutable original model
-  report HTML SHA20ee8584.. and original report.json SHAa77874.. preserved, metadata SHA f1979a.. unchanged; no new Gemma inference (original4
-  calls). Actual FastAPI /api/... report JSON200, HTML200, download200 and run history200, unauth401 each; false education, 24-hour teaching,
-  vehicle repair and bogus application-evaluation-as-services claims absent in all displays. Corrected report only requires manual human
-  check, no external bid authority.
-- 2026-10-16 old R3 AST parity and legacy R5 archived HTML/manual upload route regression found in first full suite (3 failed,4283 passed,238
-  skipped); fixed entirely within version-gated compatibility adapter, restored module original AST and legacy monkeypatch path semantics,
-  28 focused previous failing/anti-tamper PASS; full suite green rerun started. No original report or LLM changed.
-current_stage: appendonly_case13_corrected_report_published_actual_API_pass_full_suite_exact_CI_pending
+  sha b7af73f5.., corrected HTML SHA 6130efde.. and 3 original EIS XML citations with 9/9 original source SHAs; immutable original
+  model report HTML SHA20ee8584.. and original report.json SHAa77874.. preserved, metadata SHA f1979a.. unchanged; no new Gemma
+  inference (original4 calls). Actual FastAPI /api/... report JSON200, HTML200, download200 and run history200, unauth401 each;
+  false education, 24-hour teaching, vehicle repair and bogus application-evaluation-as-services claims absent in all displays.
+  Corrected report only requires manual human check, no external bid authority.
+- 2026-10-16 old R3 AST parity and legacy R5 archived HTML/manual upload route regression found in first full suite (3 failed,4283
+  passed,238 skipped); fixed entirely within version-gated compatibility adapter, restored module original AST and legacy monkeypatch
+  path semantics, 28 focused previous failing/anti-tamper PASS; full suite green rerun started. No original report or LLM changed.
+- '2026-10-16 final exact local full suite green: 4286 PASSED/238 skipped/0 failed/328 warning after restored legacy R3 AST and
+  R5 old HTML hooks; private report actual FastAPI authenticated JSON/html/download/history 200 and unauthorized401 each, receipt
+  output/apr067_case13_appendonly_corrected_real_api_receipt.json source original SHA immutable + 9 originals/3 citations/0 new
+  model.'
+- 2026-10-16 GitHub CI run38861649220 exact substantive SHA81481ea70a9f9ae42fa9c609f7d523cf5a15fe7c 9/9 SUCCESS, full pytest4286
+  PASS/238 SKIP, actual source-corrected private report/history four HTTP200 with unauth401, 9/9 source SHA, original report immutable,
+  zero new model calls.
+current_stage: appendonly_source_corrected_report_full_tests_exact_CI_completed
 remaining:
-- Full local suite after the corrected publisher/loader and exact GitHub substantive commit CI SUCCESS
-- Complete immutable private acceptance receipt and combined 20-case source audit 20/20 semantically corrected DEVELOPMENT, no legal gold
-- Close child after exact tests and CI; parent overall roadmap remains in_progress until broader DoD
-last_verified_commit: ba55a7ead0fbffe07378893d01756762ac547cca
-last_tests: First suite 4283 pass/238 skip/3 regression failed due new history AST / old HTML hook; fixed without weakening R3/R5 tests,
-  targeted exact regressions+tamper28 PASS and full green rerun launched. Actual private source HTTP all four200+unauth401, original unchanged,
-  source citation3.
-resume_instruction: 'Case13 source-only append-only report private already published and API validated; first full regression 3 incompatibilities
-  fixed in gated adapter, focused28PASS, new full suite running. Commit to stacked Draft PR over #448 and await exact-code CI, then mark
-  child completed (DEVELOPMENT report20/20) and preserve prior 19/20 historical cohort snapshot. Do not call LLM again.'
+- Draft PR449 unmerged; legal, commercial and production authority remain separate
+- Parent broader roadmap stages APR04/05 and B2B discovery remain pending
+last_verified_commit: 81481ea70a9f9ae42fa9c609f7d523cf5a15fe7c
+last_tests: GitHub CI38861649220 9/9 SUCCESS exact SHA81481ea, local4286 PASS/238 SKIP/0 FAIL, 55 focused+28 R3/R5 regressions PASS,
+  Ruff PASS, 4 real API routes200 unauth401, zero new model.
+resume_instruction: COMPLETED case13 original true Gemma E2E + append-only corrected source-only report/history; historical old
+  SHA unchanged; 20/20 DEV semantics accepted; continue parent other stages without rerunning LLM or claiming legal/ETP GO.
 execution:
   branch: feature/apr067-r4-eleven-thirteen-original-e2e-20261016
   stage_name: ta-apr067-r4-thirteenth-eok-20261016
