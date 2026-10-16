@@ -18,19 +18,20 @@ completed:
   EIS original stage toa-run-20261016052531-e9600f ready_to_analyze initial; 12/12 original SHA-protected inputs incl exactly four substantive
   documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case
   exits 0.
-current_stage: queued_for_previous_original_model_success
+- 2026-10-16 case18 original source/model exited zero, actual report/source/historical export verified; serial PID33179 now running distinct
+  case19 original 0169300008226000225 with 12/12 SHA and 2m RUB source NMCK, not reusing 4m case18.
+current_stage: nineteenth_true_gemma_running_distinct_AR_source
 remaining:
 - Freeze selected original archived getDocsIP SHA and first-party filestore metadata including duplicate source choice
 - Original document extraction Data Platform and ready native ingestion
 - One serial local Gemma4 source E2E
 - Expert review tests full suite GitHub CI checkpoint close
 last_verified_commit: fa1356179da20a5f4de495616349fc768c8bc34c
-last_tests: 12/12 actual original saved source SHA and native EIS readiness, Data Platform 4/4 original binary text extraction; new
-  model pending; no live EIS/ETP.
-resume_instruction: One serial local real Gemma PID33179, original 0169300008226000225 stage ta-apr067-r4-nineteenth-ezk-20261016, run
-  toa-run-20261016052531-e9600f, 12/12 SHA. Cases17->18->19->20 only on previous success. Read private output receipt if exists, never
-  rerun completed Gemma. After model verify three original XML citations/history/export409 and tests/exact CI. Case13 old report remains
-  pending separately.
+last_tests: 12/12 actual original saved source SHA and native EIS readiness, Data Platform 4/4 original binary text extraction; new model
+  pending; no live EIS/ETP.
+resume_instruction: Case19 0169300008226000225 original AR-excursion Troytsk, source SHA12/12, native ready_to_analyze. Running third
+  serial Gemma PID33179, inspect /tmp/ta-apr067-nineteenth-model-20261016.log and original saved receipt; do not repeat. Case18 similar
+  title 4m != case19 2m, keep sources and IDs distinct.
 execution:
   branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
   stage_name: ta-apr067-r4-nineteenth-ezk-20261016

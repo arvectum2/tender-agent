@@ -1,6 +1,6 @@
 task_id: TA-APR067-R4-SEVENTEENTH-ORIGINAL-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: First-party source-grounded real 44FZ Gemma4 local DEVELOPMENT E2E case 0137200001226007700; last four distinct cases for first
   20 real original EIS cohort.
 definition_of_done:
@@ -18,19 +18,25 @@ completed:
   EIS original stage toa-run-20261016052530-1f98d7 ready_to_analyze initial; 8/8 original SHA-protected inputs incl exactly four substantive
   documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case
   exits 0.
-current_stage: true_local_gemma_active_serial
+- '2026-10-16 first-party original EZK 0137200001226007700 true local Gemma4 4 calls351.32 seconds HTTP200 no fallback, 8/8 original
+  XML+DOC/DOCX SHA/text and exactly 3 original EIS XML cites: Kaluga hospitality tourism site development, archived deadline2026-10-08T08:00+03:00,
+  NMCK1,019,025 RUB. Original HTML sha fc616ee5373fc7981a4b2b6db3f6f7704df41a20aae50a6349ccd7657021e818; contract draft original binary
+  .doc correctly present, report/history/reopen/registry200, unauthorized401, archival PDF/DOCX409, manual_review_required. Exact pinned
+  one of duplicate archived saved-run meta, no mixing of binaries. Owner-delegated source-grounded expert report checked.'
+- 2026-10-16 exact substantive source code commit 68879954bc33f7187aa082e952d50b9d158ae629 GitHub Actions CI run38856008266 verified
+  completed SUCCESS 9/9 jobs. Original source/real Gemma4 DEVELOPMENT E2E 0137200001226007700 4 calls351.32s, 8/8 original SHA, 3 XML
+  cites, correct 1,019,025 rub NMCK/deadline, history200/exports409, no bid authority, full local4272 PASS/238 SKIP/0 errors, focused56
+  PASS Ruff.
+current_stage: original_firstparty_source_and_real_Gemma_expert_full_regression_exact_ci_completed
 remaining:
-- Freeze selected original archived getDocsIP SHA and first-party filestore metadata including duplicate source choice
-- Original document extraction Data Platform and ready native ingestion
-- One serial local Gemma4 source E2E
-- Expert review tests full suite GitHub CI checkpoint close
-last_verified_commit: fa1356179da20a5f4de495616349fc768c8bc34c
-last_tests: 8/8 actual original saved source SHA and native EIS readiness, Data Platform 4/4 original binary text extraction; new model
-  pending; no live EIS/ETP.
-resume_instruction: One serial local real Gemma PID33179, original 0137200001226007700 stage ta-apr067-r4-seventeenth-ezk-20261016,
-  run toa-run-20261016052530-1f98d7, 8/8 SHA. Cases17->18->19->20 only on previous success. Read private output receipt if exists, never
-  rerun completed Gemma. After model verify three original XML citations/history/export409 and tests/exact CI. Case13 old report remains
-  pending separately.
+- Draft PR448 remains unmerged, zero production/ETP
+- Complete cases18/19/20 original model runs and exact source audit
+- 'Previous #13 semantic old report/history still open separately'
+last_verified_commit: 68879954bc33f7187aa082e952d50b9d158ae629
+last_tests: Exact substantive code GitHub CI run38856008266 SUCCESS9/9, local4272/238skip, focused56PASS Ruff. Four actual Gemma4 calls351.32seconds,
+  8/8 original SHA text, 3 EIS XML citations and export409.
+resume_instruction: COMPLETED original case17 0137200001226007700 real Gemma4 4 calls351.32s 8/8 original source/3 XML citations, exact
+  substantive GitHub CI9/9 success. Never rerun. Case18 running second in serial PID33179, 19/20 queued. Case13 republish still open.
 execution:
   branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
   stage_name: ta-apr067-r4-seventeenth-ezk-20261016
