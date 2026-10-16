@@ -221,6 +221,9 @@ procurement_llm_capture_2026_10_16:
   prior_source_audit_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-EVIDENCE-AUDIT-20261016.yaml
   pending_kaluga_record_dry_run_only: true
   latest_provenance_findings: docs/roadmap/PROCUREMENT_LLM_SOURCE_RECOVERY_2026-10-16.md
+  additional_historical_reports_imported_from_old_macbook: 2
+  additional_report_sha_verified_on_both_devices: true
+  former_missing_report_rows_remaining: 22
   previous_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016.yaml
   latest_manual_observation: manual-aksay-protocol-20261014-v1
   alembic_revision: 107_add_procurement_learning_observations

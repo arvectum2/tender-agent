@@ -376,7 +376,17 @@ procurement_llm_data_collection_2026_10_16:
     missing_full_report_only_procurement: '0323100010326000013'
     missing_report_preview_rows: 22
     checked_local_roots: [data, archive, backups, artifacts, runtime, private, repos, worktrees, user_documents_downloads_desktop]
-    original_reports_recovered: 0
+    original_reports_recovered_among_22_missing: 0
+    additional_historical_full_reports_found_on_old_macbook: 2
+    additional_historical_originals_copied_into_existing_rag_reports_with_sha_match: 2
+    existing_canonical_rag_report_file_count_after_copy: 26
+    canonical_older_report_sha256:
+      analyze_tender_0323100010326000013_20260705T195400298896Z_09d21c02.md: a8285a58b68f2fda893312efbd81069a1fb174f79986195c4efd4011bfb03774
+      analyze_tender_0323100010326000013_20260705T195559914662Z_acbcfb55.md: b66ffb4fd4cb57a2a5224583f72fe89bc6ec865792fafdcd5df483ab6c5d8f38
+    historical_model_run_identity_verified_for_two_new_files: false
+    old_macbook_legacy_sqlite_read_only_reviewed: true
+    old_macbook_legacy_sqlite_tender_analysis_rows: 0
+    old_macbook_legacy_sqlite_submitted_receipts: 0
     kaluga_ref: '0137200001226007700'
     kaluga_official_application: '193'
     kaluga_eis_zip_sha256: 6c2d812fd7148fa8dcf78cbccf62121c1bf731a067cc3031b5aa6c3679c9d7e3
