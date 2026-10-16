@@ -140,6 +140,18 @@ def audit_observations(
                 count["dev_archive_sha_recorded_not_file_verified"] += 1
             else:
                 count["dev_archive_sha_missing"] += 1
+        elif kind == "legacy_report_artifact":
+            report_path = payload.get("report_path")
+            saved_sha = payload.get("report_sha256")
+            run_link = payload.get("historical_saved_run_id")
+            if run_link:
+                count["legacy_artifact_unexpected_run_link_claim"] += 1
+            else:
+                count["legacy_artifact_unlinked_run_id"] += 1
+            if report_path and saved_sha and _sha_file(Path(report_path), manifest_cache) == saved_sha:
+                count["legacy_artifact_sha_verified"] += 1
+            else:
+                count["legacy_artifact_missing_or_sha_mismatch"] += 1
         elif kind == "manual_review":
             state = row["review_state"]
             manual_reviews[state] += 1

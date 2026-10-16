@@ -399,6 +399,20 @@ procurement_llm_data_collection_2026_10_16:
     canonical_postgres_observation_count: 75
     new_canonical_records_from_this_child: 0
     training_ready_rows: 0
+  legacy_unlinked_report_artifacts_2026_10_16:
+    id: PROC-LLM-DATA-05
+    state: same_postgresql_indexed_2_unlinked_sha_receipts_not_training_ready
+    evidence: docs/roadmap/PROCUREMENT_LLM_LEGACY_REPORT_ARTIFACTS_2026-10-16.md
+    existing_postgres_database: arvectum
+    candidate_table: procurement_learning_observations
+    legacy_report_artifacts_appended: 2
+    duplicate_replay_new_rows: 0
+    current_live_candidates: 77
+    original_run_id_claim: not_available
+    full_report_copied_into_db: false
+    missing_historical_22_paths_resolved: false
+    pending_kaluga_manual_receipt_counted: false
+    train_ready: 0
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:

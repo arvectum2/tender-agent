@@ -16,6 +16,9 @@ from sqlalchemy import create_engine, inspect, select
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
+from src.modules.procurement_learning_corpus.legacy_report import (
+    make_unlinked_legacy_report_candidate,
+)
 from src.modules.procurement_learning_corpus.models import (
     ProcurementLearningObservation,
 )
@@ -85,6 +88,8 @@ def main(argv: list[str] | None = None) -> int:
     group.add_argument("--legacy-sqlite", type=Path)
     group.add_argument("--manual-file", type=Path)
     group.add_argument("--manual-stdin", action="store_true", help="Read JSON review from stdin; no intermediate file")
+    group.add_argument("--legacy-report-file", action="append", type=Path, help="SHA-bound original report in existing ArvectumSSD data/rag/reports")
+    parser.add_argument("--expected-report-sha256", action="append", help="Match 64-hex SHA256 for each --legacy-report-file")
     group.add_argument("--backfill-existing-runs", action="store_true")
     parser.add_argument("--apply", action="store_true", help="Write candidates after reviewed migration")
     parser.add_argument("--confirm-database", choices=["arvectum"])
@@ -95,6 +100,13 @@ def main(argv: list[str] | None = None) -> int:
         items = _legacy_items(args.legacy_sqlite)
     elif args.manual_file:
         items = _manual_items(args.manual_file)
+    elif args.legacy_report_file:
+        if len(args.legacy_report_file) > 100 or len(args.legacy_report_file) != len(args.expected_report_sha256 or []):
+            parser.error("1-100 legacy report paths, each with paired --expected-report-sha256, required")
+        items = [
+            make_unlinked_legacy_report_candidate(path, expected_sha256=expected)
+            for path, expected in zip(args.legacy_report_file, args.expected_report_sha256)
+        ]
     elif args.manual_stdin:
         if sys.stdin.isatty():
             parser.error("--manual-stdin requires piped JSON data")

@@ -17,7 +17,7 @@ from src.modules.procurement_learning_corpus.models import (
 _HEX = re.compile(r"[0-9a-f]{64}\Z")
 _PARTICIPATION = {"unknown", "considered", "reviewed_only", "submitted"}
 _REVIEWS = {"source_documented", "owner_reported", "unverified_chat_recall", "system_recorded"}
-_KINDS = {"development_e2e", "manual_review", "analysis_run"}
+_KINDS = {"development_e2e", "manual_review", "analysis_run", "legacy_report_artifact"}
 _PROTECTED_SOURCE_ROLES = {"blind", "blind_holdout", "independent_gold", "r4_blind_holdout"}
 
 

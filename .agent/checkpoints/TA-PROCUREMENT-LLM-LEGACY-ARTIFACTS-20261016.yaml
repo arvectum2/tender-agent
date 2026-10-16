@@ -1,0 +1,22 @@
+task_id: TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: 'Register two SHA-verified historical MD reports lacking saved run IDs as explicitly unlinked, unreviewed metadata candidates in the same existing PostgreSQL arvectum; no new DB or gold.'
+definition_of_done:
+  - 'Distinct legacy_report_artifact candidate type with strict source root/path/SHA/size constraints and no original text copying.'
+  - 'Operator-only guarded CLI, default dry-run; explicit apply after verified same PostgreSQL migration107, idempotent on replay.'
+  - 'Two known July historical originals linked by 19-digit registry and source SHA as unlinked historical metadata, clearly not genuine saved run IDs or training labels.'
+  - 'Focused tests, CI and roadmap/checkpoint evidence; Draft stacked PR, no merge/deploy/model training.'
+completed:
+  - '2026-10-16 source recovery PR454 code head 261f9973 currently running CI; two original July report files SHA verified on linked MacBook Air and existing SSD data/rag/reports, 168443 and 88832 bytes; neither equals the 20 missing historical run paths.'
+  - '2026-10-16 guarded distinct legacy_report_artifact event_kind implemented; metadata-only SHA/size/absolute-source/report-name/owner-internal, no run ID or training labels; CLI uses existing canonical Postgres arvectum and defaults dry-run.'
+  - '2026-10-16 both original reports SHA verified: a8285a58b68f2fda893312efbd81069a1fb174f79986195c4efd4011bfb03774 (168443 bytes) and b66ffb4fd4cb57a2a5224583f72fe89bc6ec865792fafdcd5df483ab6c5d8f38 (88832 bytes), both in existing Arvectum/data/rag/reports.'
+  - '2026-10-16 dry-run 2 candidates, then controlled append to same PG arvectum Alembic107: inserted 2; idempotent replay inserted0 existing2. Actual table 77 total: 45 saved analyses,20 DEV,10 manual,2 unlinked report artifacts, all candidate_unreviewed. Read-only audit --expect-total77 verifies both SHA, 45/45 run links, 22 missing old report paths still missing, no blind/gold/training-ready.'
+  - '2026-10-16 targeted 19 PASS/2 warnings, Ruff PASS and full regression 4045 PASS/239 SKIP/1 unrelated R9 DESELECTED/0 unexpected failed in 137.53s. Updated docs/roadmap and AGENTS; owner source-only 77-row corpus verified.'
+current_stage: 'Full code and tests verified, commit/push stacked Draft PR #455 and check exact CI.'
+remaining:
+  - 'Commit and open Draft stacked PR over source recovery PR454; verify GitHub exact-head CI and mirror.'
+  - 'Complete child checkpoint when CI green, preserving parent Tender Agent roadmap in_progress and leave training deferred.'
+last_verified_commit: 261f9973a1235b0e2738442dea5fe4b337c873c3
+last_tests: 'Mac mini full suite 4045 PASS/239 SKIP/1 independent baseline R9 DESELECTED/0 unexpected FAIL, 137.53s; focused new legacy+audit 19 PASS/2 warnings, Ruff/YAML/diff PASS. Same PG arvectum 77-row source audit: 2/2 legacy SHA PASS, 45/45 run IDs PASS, replay 2 existing/0 inserted.'
+resume_instruction: "On Mac mini worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-legacy-artifacts-20261016 branch feature/procurement-llm-legacy-artifacts-20261016 based on source PR454 head 261f9973. New legacy_report_artifact source-only kind+CLI implemented, exactly two July original MD source SHA bound appended to same PostgreSQL arvectum, total 77 (45 saved runs,20 DEV E2E,10 manual,2 unlinked originals), repeat zero new, gold/training status zero. Full 4045 passed/239 skip/1 unrelated R9 deselected, focused 19 pass. Next commit and open Draft stacked PR, verify exact CI and mirror, close child only after success. Prior PR454 latest CI pending; DO NOT merge or deploy, nor claim run IDs for two newly recovered MD, no model training or new DB."
