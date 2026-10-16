@@ -485,6 +485,29 @@ procurement_llm_data_collection_2026_10_16:
     pending_private_etp_events: 9
     postgres_observations_unchanged: 77
     approved_gold: 0
+  eis_postfinal_event_chronology_2026_10_16:
+    id: PROC-LLM-DATA-09
+    state: source_sha_bound_different_app_notice_no_global_cancel_inference
+    report: docs/roadmap/PROCUREMENT_LLM_EIS_EVENT_CHRONOLOGY_2026-10-16.md
+    procurement_ref: '0158300034526000388'
+    original_zip_sha256: d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8
+    final_xml_sha256: 2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5
+    final_published_at: '2026-10-14T11:26:58+03:00'
+    notice_xml_sha256: 915b237acdaeeee201b445d6ba3a77ec5bb7520ecafe7038d9753529c2aba4f5
+    notice_published_at: '2026-10-14T11:54:29.086+03:00'
+    notice_application: '122034518'
+    notice_original_rating: '14'
+    notice_original_price_rub: 57000
+    our_company_application: '122031738'
+    our_original_rating: '38'
+    our_original_price_rub: 119000
+    company_application_targeted_by_notice: false
+    entire_tender_cancellation_verified: false
+    revised_winner_rating_verified: false
+    read_only_audit: scripts/procurement_llm/audit_eis_chronology.py
+    existing_postgres_unreviewed_count: 77
+    pending_private_etp_events: 9
+    approved_human_gold: 0
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:

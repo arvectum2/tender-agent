@@ -1,0 +1,22 @@
+task_id: TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: 'Source-verify post-final EIS application event chronology, distinguish third-party application cancellation notice from procurement-wide cancellation and Arvectum outcome.'
+definition_of_done:
+  - 'Read-only checksum-bound audit of Aksay original EIS ZIP final protocol and later epNoticeApplicationCancel; no private personal data output.'
+  - 'Fail-closed tests protect against wrong procurement, wrong target application, altered SHA, reversed chronology and false global cancellation.'
+  - 'Document event provenance/limits in existing roadmap and AGENTS with source SHA; future training exclusion rules clearly stated.'
+  - 'Complete full regression, publish stacked Draft PR and verify CI; canonical checkpoint terminal status completed only when green.'
+completed:
+  - '2026-10-16 prior child PR457 exact head75184415 CI PR38905270288/push38905264489 and mirror38905264234 SUCCESS; checkpoint completed on branch commit88109403.'
+  - '2026-10-16 saved original Aksay ZIP d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8; final original XML published 2026-10-14 11:26:58+03:00; later epNoticeApplicationCancel of different applicant 122034518 rating14 published 2026-10-14 11:54:29+03:00, SHA915b237acdaeeee201b445d6ba3a77ec5bb7520ecafe7038d9753529c2aba4f5; our application 122031738 rating38 remains recorded in original final.'
+  - '2026-10-16 new source-only audit_eis_chronology.py verifies original EIS ZIP and two XML SHA, timestamp order; official final 11:26:58 company app122031738 admitted119000/rating38, later distinct app-specific notice 11:54:29 app122034518 rating14, original final price57000. No whole procurement cancellation/new ranking inferred.'
+  - '2026-10-16 9 source-based tests and Ruff PASS; wrong application, incorrect SHA, wrong tender, timestamp inversion, missing timezone, duplicate app and symlink fail closed. Roadmap/AGENTS updated.'
+current_stage: 'Run full regression, publish Draft stacked PR and verify CI.'
+
+remaining:
+  - 'Run full regression excluding only known unrelated R9 baseline; YAML/Ruff/diff check and confirm unchanged canonical PostgreSQL.'
+  - 'Commit and publish Draft stacked PR, verify GitHub exact-head CI and GitVerse mirror, then mark completed.'
+last_verified_commit: 881094032bd7323a0e35eb203e2c7d42e84a32ac
+last_tests: 'New nine focused EIS chronology tests PASS, Ruff PASS; real source EIS ZIP/XML audit PASS, prior full 4060 pass/239 skip/one known unrelated R9 deselected; new full pending.'
+resume_instruction: "Active child TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016 in worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-event-chronology-20261016 branch feature/procurement-llm-event-chronology-20261016 based completed Draft PR457 commit88109403. Added SHA-bound source-only audit_eis_chronology.py and nine tests PASS/Ruff PASS. Official Aksay final EIS XML14Oct11:26:58 company app122031738 admitted119000 rating38, separate epNoticeApplicationCancel14Oct11:54:29 targets other app122034518 originally57000/rating14, NOT proof of whole tender cancellation or changed winner/our rank. Same PostgreSQL arvectum77 candidate_unreviewed, nine private ETP evidence events still BLOCKED from apply and not imported; no bypass. Next full regression, Draft PR+CI, checkpoint completion; no training/new DB/PR merge/production deploy/watchdog."
