@@ -46,7 +46,20 @@ def upgrade() -> None:
     op.create_index("ix_learning_observations_kind", "procurement_learning_observations", ["event_kind"])
 
 
+def _assert_empty_before_downgrade(connection: sa.Connection) -> None:
+    count = connection.execute(sa.text("SELECT count(*) FROM procurement_learning_observations")).scalar_one()
+    if count:
+        raise RuntimeError("Cannot drop populated canonical procurement evidence without a reviewed archival plan.")
+
+
 def downgrade() -> None:
-    # Deliberately fail closed: learning/provenance observations are immutable
-    # data, not disposable schema. Rollback requires explicit archived migration.
-    raise RuntimeError("Cannot drop canonical procurement evidence without a reviewed archival plan.")
+    # CI and disposable test databases must be reversible. Production evidence
+    # is immutable; fail closed for any populated candidate table.
+    _assert_empty_before_downgrade(op.get_bind())
+    for name in (
+        "ix_learning_observations_kind",
+        "ix_learning_observations_customer",
+        "ix_learning_observations_procurement",
+    ):
+        op.drop_index(name, table_name="procurement_learning_observations")
+    op.drop_table("procurement_learning_observations")

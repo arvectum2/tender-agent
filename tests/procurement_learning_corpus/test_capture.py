@@ -186,3 +186,18 @@ def test_operator_cli_refuses_parallel_sqlite_store(monkeypatch):
     monkeypatch.setenv("AI_CORP_DATABASE_URL", "sqlite+pysqlite:///:memory:")
     with pytest.raises(ValueError, match="Only existing PostgreSQL"):
         _engine_url()
+
+
+def test_alembic_downgrade_blocks_real_observations(session):
+    import importlib.util
+    from pathlib import Path
+
+    module_path = Path(__file__).resolve().parents[2] / "migrations/versions/107_add_procurement_learning_observations.py"
+    spec = importlib.util.spec_from_file_location("migration_procurement_learning_107", module_path)
+    assert spec and spec.loader
+    migration = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(migration)
+    migration._assert_empty_before_downgrade(session.connection())
+    assert append_candidate(session, make_manual_candidate(manual("manual-test-downgrade")))
+    with pytest.raises(RuntimeError, match="populated canonical procurement evidence"):
+        migration._assert_empty_before_downgrade(session.connection())

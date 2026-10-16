@@ -44,4 +44,4 @@ python -m scripts.procurement_llm.verify_saas_existing
 python -m scripts.procurement_llm.import_candidates --manual-file /PRIVATE/path/review.json --apply --confirm-database arvectum
 ```
 
-**Не удалять бэкап PostgreSQL и старую SQLite до окончания всех проверок.** Временная тестовая БД подлежит удалению по завершении acceptance, чтобы не было дополнительного постоянного хранилища.
+**Не удалять бэкап PostgreSQL и старую SQLite до окончания всех проверок.** Временная тестовая БД **удалена после успешной acceptance**; дополнительного постоянного хранилища нет.
