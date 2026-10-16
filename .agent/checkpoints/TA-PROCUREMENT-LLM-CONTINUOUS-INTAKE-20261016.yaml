@@ -1,0 +1,22 @@
+task_id: TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: 'Close missing analysis-run recording path in customer_pilot and supply an explicit secure chat-review operator intake path using the existing PostgreSQL arvectum (no new storage).'
+definition_of_done:
+  - 'Implement opt-in transactionally consistent customer_pilot completed-run capture using the existing procurement_learning_observations table without changing business state.'
+  - 'Support private stdin/manual message intake into the same DB, dry-run default, apply only with confirmation, no public write route.'
+  - 'Document mandatory ChatGPT-to-intake invocation pattern and explicit limitation: no global chat history subscription.'
+  - 'Prove tests for idempotency, tenant scopes, blind/gold gates, capture on completed runs, no-write when disabled, CI and docs.'
+completed:
+  - '2026-10-16 preceding PR451 code branch head 3c0c6e95, live arvectum PostgreSQL schema 107, 74 persisted candidates. PR451 exact-head 8/9 checks success and quality running; GitVerse mirror passed.'
+  - 'Audit: history_service.record_analysis_run is already gated by TENDER_LEARNING_CAPTURE_ENABLED=1; customer_pilot/router.py creates TenderAnalysisRun directly and completes it without candidate capture.'
+  - '2026-10-16 customer_pilot completed-run capture implemented under TENDER_LEARNING_CAPTURE_ENABLED=1 in same transaction as completed snapshot, tenant scoped, stable run ID; RAG existing code unchanged.'
+  - '2026-10-16 manual-stdin operator CLI accepts piped bounded JSON into existing PostgreSQL with dry-run default, source/holdout/legal-gold checks, no new API route or database. AGENTS and roadmap include explicit ChatGPT invocation rule and limitations.'
+  - '2026-10-16 first live manual-stdin backfill sourced from Aksay 0158300034526000388 saved original SHA8f5c776a..., inserted 1; live corpus 75 (45 analysis+20 dev+10 manual). Targeted suite 39 passed/1 skipped, Ruff and YAML PASS; full suite rerunning.'
+current_stage: 'Full 4018 PASS confirmed. Commit/push stack based on PR451 and start CI for the continuous-intake child.'
+remaining:
+  - 'Commit/push separate stacked Draft PR based on feature/procurement-llm-corpus-capture-20261016, CI check.'
+  - 'Mark completed on verified exact-head code/CI, no deployment.'
+last_verified_commit: 3c0c6e95e02679b547f0f0accee46bdb578b5b8a
+last_tests: 'Mac mini full regression 4018 PASS/239 SKIP/1 known baseline R9 DESELECTED/0 unexpected failures 135.43s; focused 39 PASS/1 SKIP; Ruff PASS and YAML PASS. PR451 code+docs exact head 3c0c Github push/PR CI and GitVerse mirror SUCCESS.'
+resume_instruction: 'Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-continuous-intake-20261016, branch feature/procurement-llm-continuous-intake-20261016. PR451 base branch has completed backfill checkpoint (synced locally), remains draft/unmerged. Current live existing PG arvectum Alembic107 has 75 candidate records: 45+20+10, Aksay primary protocol inserted through new stdin CLI. Review full regression /tmp/ta-procurement-llm-continuous-20261016.log, finish test+docs, commit and push, open Draft stacked PR with base feature/procurement-llm-corpus-capture-20261016. No model training, no live service deployment, no automatic global ChatGPT subscription; never repeat backfill.'

@@ -215,6 +215,8 @@ procurement_llm_capture_2026_10_16:
   child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-BACKFILL-HOOK-20261016.yaml
   draft_pr: 451
   last_code_commit: 5c647072aa96a8c7a8b9d3e52d71b82e75d28c04
-  data_rows_in_existing_postgres: 74
+  data_rows_in_existing_postgres: 75
+  current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016.yaml
+  latest_manual_observation: manual-aksay-protocol-20261014-v1
   alembic_revision: 107_add_procurement_learning_observations
   model_training: deferred

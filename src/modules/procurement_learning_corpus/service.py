@@ -29,7 +29,7 @@ def digest(value: Any) -> str:
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
-def _safe_candidate(row: dict) -> None:
+def validate_candidate(row: dict) -> None:
     if row["event_kind"] not in _KINDS:
         raise ValueError("Unrecognised observation kind")
     if row["participation"] not in _PARTICIPATION or row["review_state"] not in _REVIEWS:
@@ -39,10 +39,16 @@ def _safe_candidate(row: dict) -> None:
     if not isinstance(row["payload_json"], dict):
         raise TypeError("Candidate payload must be an object")
     payload = row["payload_json"]
+    if len(canonical(payload)) > 65536:
+        raise ValueError("Candidate metadata payload exceeds 64 KiB")
+    if any(payload.get(key) for key in ("raw_chat", "full_chat_transcript", "private_attachments", "api_key", "access_token")):
+        raise ValueError("Raw chat contents or secrets cannot enter the candidate registry")
     if payload.get("signed_human_gold") or payload.get("legal_gold") or payload.get("model_gold"):
         raise ValueError("Human/legal gold cannot be imported as training candidates")
-    if payload.get("protected_blind") is True:
+    if payload.get("protected_blind") is True or "blind_holdout" in payload.get("tags", []):
         raise ValueError("Protected blind cases cannot enter a development corpus")
+    if str(payload.get("source_role", "")).lower() in _PROTECTED_SOURCE_ROLES:
+        raise ValueError("Protected blind source role cannot enter development")
     source = payload.get("source") or {}
     if isinstance(source, dict) and str(source.get("source_role", "")).lower() in _PROTECTED_SOURCE_ROLES:
         raise ValueError("Protected blind source must remain outside training")
@@ -72,7 +78,7 @@ def append_candidate(session: Session, row: dict) -> bool:
     Returns True on insert; a replay is False. Same key with altered content
     raises, rather than rewriting provenance. No commit/DDL/side effects.
     """
-    _safe_candidate(row)
+    validate_candidate(row)
     columns = {
         k: row[k] for k in (
             "observation_id", "event_kind", "procurement_ref", "source_ref",

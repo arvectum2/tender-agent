@@ -330,6 +330,22 @@ procurement_llm_data_collection_2026_10_16:
     backup_sha256: 730e33bdfcc9eb042b7ccf2b53318c4cfb2000aad45c27df34eb44b836c68593
     migration_rationale: 'SaaS schema existed on live 100, 9 SaaS tables matched ORM; upgrade 100-105, stamp existing 106, upgrade 107. Clone rehearsal and import PASS.'
     result: docs/roadmap/PROCUREMENT_LLM_BACKFILL_2026-10-16.md
+  future_manual_and_pilot_intake:
+    id: PROC-LLM-DATA-02
+    state: implementation_in_stacked_review
+    policy: docs/roadmap/PROCUREMENT_LLM_CONTINUOUS_INTAKE_2026-10-16.md
+    same_database: arvectum
+    sources: [manual_chat_structured_cli, customer_pilot_completed_run, history_service_saved_analysis]
+    manual_global_chat_subscription: not_available
+    deploy_feature_flag: TENDER_LEARNING_CAPTURE_ENABLED
+    training_or_promotion: deferred
+    verified_live_manual_capture_2026_10_16:
+      observation_id: manual-aksay-protocol-20261014-v1
+      procurement_ref: '0158300034526000388'
+      source_sha256: 8f5c776a269f8a4ca0363bc1537f7d95651f62e67ed964f9e42a94bce1868e8c
+      inserted: 1
+      total_live_candidates: 75
+      original_source_copied: false
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:

@@ -201,3 +201,47 @@ def test_alembic_downgrade_blocks_real_observations(session):
     assert append_candidate(session, make_manual_candidate(manual("manual-test-downgrade")))
     with pytest.raises(RuntimeError, match="populated canonical procurement evidence"):
         migration._assert_empty_before_downgrade(session.connection())
+
+
+def test_manual_stdin_can_validate_without_any_db_access(monkeypatch, capsys):
+    import io
+
+    from scripts.procurement_llm.import_candidates import main
+
+    raw = json.dumps(manual("manual-chat-20261016-001")).encode()
+    monkeypatch.setattr("sys.stdin", SimpleNamespace(buffer=io.BytesIO(raw), isatty=lambda: False))
+    monkeypatch.setenv("AI_CORP_DATABASE_URL", "sqlite+pysqlite:///:memory:")
+    assert main(["--manual-stdin"]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["candidates"] == 1
+    assert result["mode"] == "dry_run"
+
+
+def test_manual_stdin_rejects_blind_and_gold_even_in_dry_run(monkeypatch):
+    import io
+
+    from scripts.procurement_llm.import_candidates import main
+
+    for flag in ("signed_human_gold", "protected_blind"):
+        case = manual("manual-chat-20261016-002")
+        case[flag] = True
+        monkeypatch.setattr(
+            "sys.stdin",
+            SimpleNamespace(buffer=io.BytesIO(json.dumps(case).encode()), isatty=lambda: False),
+        )
+        with pytest.raises(ValueError, match="gold|blind"):
+            main(["--manual-stdin"])
+
+
+def test_manual_stdin_rejects_oversize_without_db_access(monkeypatch):
+    import io
+
+    from scripts.procurement_llm.import_candidates import main
+
+    huge = json.dumps({**manual("manual-chat-20261016-003"), "blob": "x" * 65536})
+    monkeypatch.setattr(
+        "sys.stdin",
+        SimpleNamespace(buffer=io.BytesIO(huge.encode()), isatty=lambda: False),
+    )
+    with pytest.raises(SystemExit, match="2"):
+        main(["--manual-stdin"])

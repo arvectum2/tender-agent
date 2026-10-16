@@ -9,6 +9,7 @@ import argparse
 import json
 import os
 import sqlite3
+import sys
 from pathlib import Path
 
 from sqlalchemy import create_engine, inspect, select
@@ -23,6 +24,7 @@ from src.modules.procurement_learning_corpus.service import (
     make_analysis_candidate,
     make_legacy_candidate,
     make_manual_candidate,
+    validate_candidate,
 )
 from src.tender_research.models import TenderAnalysisRun
 
@@ -50,6 +52,10 @@ def _legacy_items(path: Path) -> list[dict]:
 
 def _manual_items(path: Path) -> list[dict]:
     content = json.loads(path.read_text(encoding="utf-8"))
+    return _manual_payload_items(content)
+
+
+def _manual_payload_items(content: object) -> list[dict]:
     if not isinstance(content, dict):
         raise TypeError("Manual file must be JSON object")
     if "items" in content:
@@ -78,6 +84,7 @@ def main(argv: list[str] | None = None) -> int:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--legacy-sqlite", type=Path)
     group.add_argument("--manual-file", type=Path)
+    group.add_argument("--manual-stdin", action="store_true", help="Read JSON review from stdin; no intermediate file")
     group.add_argument("--backfill-existing-runs", action="store_true")
     parser.add_argument("--apply", action="store_true", help="Write candidates after reviewed migration")
     parser.add_argument("--confirm-database", choices=["arvectum"])
@@ -88,8 +95,17 @@ def main(argv: list[str] | None = None) -> int:
         items = _legacy_items(args.legacy_sqlite)
     elif args.manual_file:
         items = _manual_items(args.manual_file)
+    elif args.manual_stdin:
+        if sys.stdin.isatty():
+            parser.error("--manual-stdin requires piped JSON data")
+        raw = sys.stdin.buffer.read(65537)
+        if len(raw) > 65536:
+            parser.error("Manual review JSON exceeds 64 KiB")
+        items = _manual_payload_items(json.loads(raw.decode("utf-8")))
     else:
         items = []
+    for item in items:
+        validate_candidate(item)
     if not args.apply and not args.backfill_existing_runs:
         print(json.dumps({"mode": "dry_run", "candidates": len(items), "unique_ids": len({r["observation_id"] for r in items})}))
         return 0
