@@ -1,0 +1,217 @@
+{
+  "snapshot_date": "2026-10-16",
+  "scope": "Frozen original 20 distinctive historical 44-FZ EIS first-party E2E cases, source-grounded owner-authorized ChatGPT developmental expert assessment",
+  "actual_distinct_original_case_count": 20,
+  "actual_true_local_gemma_provider_calls": 80,
+  "original_firstparty_sha_file_count": 210,
+  "actual_original_eis_xml_critical_fact_citations": 60,
+  "per_case_critical_xml_fields": [
+    "procurement_title",
+    "application_deadline",
+    "nmck"
+  ],
+  "technical_original_source_model_e2e_count": 20,
+  "development_semantically_accepted_report_count": 19,
+  "semantic_open_case": [
+    "0349100009326000005"
+  ],
+  "semantic_open_case_explanation": "Original source and model passed but old historical report included unsupported education/vehicle repair templates; corrected source-only projection exists, actual historical report/history has not yet been republished. Do not claim 20/20 semantic acceptance.",
+  "local_model_analysis_only_seconds": {
+    "minimum": 138.79,
+    "median": 351.655,
+    "maximum": 457.9,
+    "p90_nearest_rank": 389.27,
+    "total": 6828.79
+  },
+  "not_measured": [
+    "true operator time-to-decision",
+    "claims beyond 3 critical EIS XML evidence citations",
+    "independent signed expert legal gold",
+    "current EIS availability",
+    "business ROI and price readiness",
+    "staging rolling production SLO",
+    "commercial bidding GO"
+  ],
+  "cases": [
+    {
+      "registry_number": "0372200172326000015",
+      "original_file_sha_count": 6,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 138.79,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0376300000126000193",
+      "original_file_sha_count": 8,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 358.92,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0162200011826003089",
+      "original_file_sha_count": 17,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 150.08,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0151600003226000011",
+      "original_file_sha_count": 5,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 403.23,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0152200004026000069",
+      "original_file_sha_count": 7,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 348.24,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0348100024426000021",
+      "original_file_sha_count": 14,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 368.53,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0348100024426000039",
+      "original_file_sha_count": 11,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 333.22,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0127100008626000013",
+      "original_file_sha_count": 10,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 349.03,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0360600005326000018",
+      "original_file_sha_count": 12,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 457.9,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0895100000126000897",
+      "original_file_sha_count": 13,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 338.62,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0149200002326001555",
+      "original_file_sha_count": 9,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 379.06,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0148200000526000028",
+      "original_file_sha_count": 9,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 389.27,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0349100009326000005",
+      "original_file_sha_count": 9,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 366.21,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": false,
+      "status": "source_model_passed_old_report_semantic_defect_not_closed"
+    },
+    {
+      "registry_number": "0158300034526000388",
+      "original_file_sha_count": 10,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 339.21,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0162300005826000156",
+      "original_file_sha_count": 14,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 329.37,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0169300003326000181",
+      "original_file_sha_count": 13,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 363.28,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0137200001226007700",
+      "original_file_sha_count": 8,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 351.32,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0169300008226000223",
+      "original_file_sha_count": 12,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 346.49,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0169300008226000225",
+      "original_file_sha_count": 12,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 351.99,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    },
+    {
+      "registry_number": "0377100005726000128",
+      "original_file_sha_count": 11,
+      "gemma4_local_llm_calls": 4,
+      "model_only_seconds": 366.03,
+      "original_eis_xml_critical_source_citations": 3,
+      "development_semantic_report_accepted": true,
+      "status": "technical_original_model_accepted"
+    }
+  ]
+}

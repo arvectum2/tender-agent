@@ -114,3 +114,49 @@ Full4272 local PASS/238SKIP/0fail and 56 source tests PASS;
 substantive code CI commit68879954 run38856008266 SUCCESS9/9 jobs.
 Case19 checkpoint COMPLETED. Case20 is the only remaining real
 model in the serial process.
+
+
+## Case 20 — authentic source/model/report accepted
+
+Official historical EF2020 0377100005726000128:
+one genuine local Gemma4 run **4 calls / 366.03s** (provider
+HTTP200, no fallback); all 11 first-party original source SHA/text
+including original XLSX NMCK calculation and DOCX contract/TZ.
+Three actual original EIS XML source citations identify the official
+web-site development on 1C-Bitrix for the tuberculosis sanatorium
+"Chemal", archived application deadline **13.08.2026 08:00 +07:00**,
+NMCK **135,083.33 RUB**. HTML sha256
+a394a3d40d6c9bd9749ea13d4bc4c97c3b1cfa72fdb731aa7178b8a85033994a.
+Original draft contract actually present, domain general_services with
+no false training/vehicle repair conditions. Result
+manual_review_required; actual report/history/reopen/registry HTTP200,
+unauthorized401, archived PDF and DOCX exports409. Not bidding GO.
+
+## Entire final four and full frozen 20-case corpus
+
+All four independent 17/18/19/20 real Gemma source-model E2Es now
+verified once each: **43 original SHA files, 16 real original
+DOC/DOCX/XLSX binary attachments, 16 actual local Gemma4 calls,
+12 original EIS XML core fact citations**. Model-only observed
+timings: 351.32, 346.49, 351.99 and 366.03 sec; not a production SLO.
+Four child checkpoints COMPLETED, no model reruns. GitHub Actions
+substantive code commit
+68879954bc33f7187aa082e952d50b9d158ae629
+run38856008266 SUCCESS **9/9 jobs**; local pytest
+**4272 passed/238 skipped/zero errors**, 56 focused source tamper
+tests PASS, Ruff PASS. No live EIS/ETP, prices, signing, real bids or
+deployment.
+
+Verified frozen **20 unique actual local model runs**: **210
+original source SHA files**, **80 genuine local Gemma4 calls**,
+**60 core original EIS XML source citation instances**. Source
+manifest aggregate docs/quality/APR067_R4_TWENTY_DISTINCT_TRUE_GEMMA_E2E_COHORT_2026-10-16.json.
+**19/20 historical developmental semantic report checks accepted**,
+because earlier case13 original historical report incorrectly included
+education / vehicle-repair templates. The case13 model/source
+receipt and original audit output are preserved, a corrected source-only
+projection exists, but it has NOT yet replaced the historical report
+and history. Never count case13 as DEVELOPMENT accepted until true
+corrected append-only history version can be verified. Entire frozen
+20-case coverage does not imply signed legal review, bid eligibility,
+commercial GO or rolling staging/production SLO.
