@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - '2026-10-16 corporate source ETP review (read only): operator notices explicitly identify ООО Арвектум as RTS bidder Museum Bread (12 &15 Oct), Roseltorg Aksioma submission app ordinal3630084, Sber-AST Kaluga app193 admitted and separate app206 processing/withdrawal without app number. Six candidate metadata events staged private/validated but apply blocked by tool; PostgreSQL remains77. Owner-source and legal gold not auto-promoted.'
   - '2026-10-16 PROC-LLM-DATA-05: 2 original unlinked legacy report files from old MacBook SHA verified and indexed in existing PG arvectum, 77 unreviewed candidates total (45 runs,20 Gemma E2E,10 manual,2 legacy artifacts), zero duplicate inserts on replay; no full text copied or trained. New child checkpoint TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016 records tests/CI.'
   - '2026-10-16 PROC-LLM-DATA-04: 22 missing full July analysis report rows all belong to one procurement 0323100010326000013 and represent 20 unique paths; 22 DB previews retained; no original located on available SSD/backup paths. Official Kaluga final protocol ZIP+XML SHA verified app193 admitted price449000, Arvectum ownership unproven. Private follow-up candidate queued but NOT inserted (live PG 75); 4039 full tests pass with baseline R9 deselected. Source-recovery child checkpoint tracks stacked PR CI.'
   - '2026-10-16 PROC-LLM-DATA-01: existing PostgreSQL arvectum migration 107 live; verified 20 DEV E2E + 9 historical manual + 45 existing run observations (74), 29 replay existing/0 new; 45 original analysis rows and 55 Aksay offers preserved. Canonical storage ArvectumSSD/data/tenders; 2 MB verified pg_dump SHA730e33bdfc preserved. PR451 code head 5c647072 in CI. Full 4009 PASS/239 SKIP/1 baseline R9 deselected; 27 targeted PASS; Ruff/YAML PASS. Separate child checkpoint TA-PROCUREMENT-LLM-BACKFILL-HOOK-20261016.yaml.'
@@ -208,7 +209,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-16 parent Tender Agent roadmap in_progress. Procurement LLM one PostgreSQL arvectum Alembic107 corpus now 77 source-only candidate observations (45 saved runs+20 DEV Gemma+10 manual+2 original unlinked July reports), never gold/training. Current child TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016 worktree feature/procurement-llm-legacy-artifacts-20261016: 2 reports indexed with SHA 100% match and idempotent replay, full regression running, need Draft PR+CI. Prior source recovery PR454 remains Draft; 22 old full report paths missing but DB previews and 2 different originals found; Kaluga app193 owner attribution unverified and private dry-run only. Do not create extra databases, train, merge, bid, deploy or reenable watchdog."
+resume_instruction: "2026-10-16 parent Tender Agent roadmap in_progress. Procurement LLM canonical PostgreSQL arvectum Alembic107 has exactly 77 unreviewed candidates (45 runs,20 DEV,10 manual,2 unlinked archived MD originals), no human legal gold/training. Source recovery PR454 code/docs exact head261f9973 CI fully green; legacy original indexing PR455 code head53646896 CI pending, mirror green; current active legacy child TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016. Newly verified corporate ETP notifications: Museum Bread, Aksioma and Kaluga; eight distinct privacy-safe events staged as private batch, dry-run successful but apply tool blocked, DO NOT claim inserted, no bypass. Separate blocked child TA-PROCUREMENT-LLM-ETP-EMAIL-20261016; resume only via allowed safe execution. No new DB, model training, live bidding, merge/deploy/paid or watchdog activation."
 execution:
   branch: feature/ta-roadmap-exec-20261012
   manual_override: true
@@ -219,6 +220,11 @@ procurement_llm_capture_2026_10_16:
   last_code_commit: 5c647072aa96a8c7a8b9d3e52d71b82e75d28c04
   data_rows_in_existing_postgres: 77
   current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016.yaml
+  blocked_etp_email_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-ETP-EMAIL-20261016.yaml
+  pending_etp_operator_candidate_events: 8
+  pending_etp_import_is_blocked: true
+  independently_verified_aksay_rts_receipt_dates: [2026-10-05, 2026-10-06]
+  etp_private_source_batch_validated_only: true
   source_recovery_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-SOURCE-RECOVERY-20261016.yaml
   prior_source_audit_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-EVIDENCE-AUDIT-20261016.yaml
   pending_kaluga_record_dry_run_only: true

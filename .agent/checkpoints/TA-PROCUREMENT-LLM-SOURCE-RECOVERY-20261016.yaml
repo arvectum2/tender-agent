@@ -1,6 +1,6 @@
 task_id: TA-PROCUREMENT-LLM-SOURCE-RECOVERY-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: 'Find and reconcile existing full historical analysis reports and source-bound evidence for Arvectum bid participation, without regenerating or altering any original evidence.'
 definition_of_done:
   - 'Audit missing 22 historical full report files against existing SSD paths, eligible backups and original immutable artifacts without changing existing records.'
@@ -16,10 +16,10 @@ completed:
   - '2026-10-16 code and report committed 6fec6417b538d9fa7020d954eba0376bd65f4c57, Draft stacked PR454 opened based on PR453. GitVerse mirror run38889012913 SUCCESS; CI PR run38889054475 and push38889012960 executing. Worktree clean. 75 canonical observations unchanged.'
   - '2026-10-16 independent MacBook Air Documents/AI-Corporation-live inspection: two additional original full July 5 markdown reports (168443/88832 bytes) found outside the 20 missing report basenames; rsync --ignore-existing into pre-existing Mac mini Arvectum/data/rag/reports, source and target SHA256 match a8285a58... and b66ffb4f.... Old MacBook SQLite analyzed read-only: tender_analysis_runs, tender_analysis_jobs, procurement_tenders, procurement_tender_documents, submission_receipt_records all empty; it is not a new source DB.'
   - '2026-10-16 canon PostgreSQL still 75 observations, 22 old missing report row paths remain unresolved, 2 newly recovered different full historical artifacts not linked to historical run IDs or gold. Existing canonical directory contains 26 full markdown reports after copy. Source report and roadmap corrected.'
-current_stage: 'PR454 source recovery evidence update plus original MacBook reports verified, exact-head CI pending. No model training or main merge.'
-remaining:
-  - 'Commit updated source-recovery report/roadmap and verify latest exact-head PR/push CI and GitVerse mirror for PR454.'
-  - 'If CI pass, mark child status completed with latest commit+tests. External 22 full reports and ETP company-attribution receipts remain independent source gaps outside this local recovery DoD.'
-last_verified_commit: b1a70ada02e01c0d03fc87a5d2a6432c5301c9a2
+  - '2026-10-16 PR454 exact head 261f9973a1235b0e2738442dea5fe4b337c873c3 fully validated GitHub PR38890016364 SUCCESS, push38890009531 SUCCESS, GitVerse mirror38890009521 SUCCESS. Two additional genuine full reports found on MacBook, source and SSD SHA identical, no old 22 report file path resolved.'
+current_stage: 'completed_source_recovery_evidence_verified_ci_green_no_merge'
+remaining: []
+next_phase: 'Legacy original indexing done in separate child TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016; source receipt email confirmation in blocked child TA-PROCUREMENT-LLM-ETP-EMAIL-20261016; 22 old reports remain missing.'
+last_verified_commit: 261f9973a1235b0e2738442dea5fe4b337c873c3
 last_tests: 'Mac mini full regression 4039 PASS, 239 skipped, 1 known unrelated baseline R9 deselected, zero unexpected failures, 134.78s. Focused source recovery+audit 21 PASS; Ruff clean, YAML valid, git diff check PASS. Live canonical PG still has 75 observations; pending Kaluga payload dry-run PASS.'
-resume_instruction: "On feature/procurement-llm-source-recovery-20261016 Draft PR454 stacked on PR453, Mac mini worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-source-recovery-20261016. Latest checkpoint code b1a70ada, PR/push CI in progress, GitVerse green. Two additional original July 5 MD were found on linked MacBook ~/Documents/AI-Corporation-live/data/rag/reports, copied by rsync --ignore-existing to existing Mac mini data/rag/reports with SHA identity 168443+88832 bytes, NOT matching 20 old missing basenames; all 22 old report-path rows still absent and DB has 75 observations. MacBook old SQLite inspected read-only, analysis/receipt tables all zero. Save updated docs+child checkpoint and ensure GitHub CI green, close child status completed only after checks, preserve parent in_progress. If original run ID is not in DB, do not assert new model run identity; no model training, new DB, blind gold, real tender submission, merges, runtime rollout, watchdog."
+resume_instruction: "Completed in Draft PR454, exact code+docs 261f9973 verified PR38890016364, push38890009531, mirror38890009521 ALL SUCCESS; no merge or deploy. Original 22 full MD report paths still missing for EIS0323100010326000013, 20 unique names and DB previews. Two other authentic July MD original files found on connected MacBook and SHA-preserved in existing SSD, not linked to old run IDs; separate child indexed those as unreviewed legacy artifacts in same PostgreSQL. Kaluga app193 official EIS ZIP source confirmed, operator-company identity additionally found in linked corporate email (recorded in separate blocked ETP child). Do not repeat source recovery or falsify run IDs. Source-owner receipts/legality/training gates remain separate."

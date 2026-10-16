@@ -413,6 +413,24 @@ procurement_llm_data_collection_2026_10_16:
     missing_historical_22_paths_resolved: false
     pending_kaluga_manual_receipt_counted: false
     train_ready: 0
+  etp_email_evidence_2026_10_16:
+    id: PROC-LLM-DATA-06
+    state: primary_operator_notifications_verified_private_batch_dryrun_apply_blocked
+    report: docs/roadmap/PROCUREMENT_LLM_ETP_EMAIL_EVIDENCE_2026-10-16.md
+    corporate_etp_emails_reviewed: 15
+    private_source_bound_candidate_events: 8
+    private_batch_dry_run: pass
+    insert_status: blocked_by_tool_execution
+    expected_live_new_rows_before_apply: 0
+    unchanged_postgresql_observation_count: 77
+    aksay_rts_received_events: 2
+    museum_rts_received_events: 2
+    aksioma_roseltorg_successful_submission_application_ordinal: '3630084'
+    kaluga_sberast_app193_admitted: true
+    kaluga_earlier_app206_processing: true
+    kaluga_withdrawal_application_number: unknown
+    kaluga_193_linked_to_arvectum_via_etp: true
+    model_training: deferred
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:
