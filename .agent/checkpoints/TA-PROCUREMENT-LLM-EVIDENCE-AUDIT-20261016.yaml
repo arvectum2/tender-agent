@@ -1,6 +1,6 @@
 task_id: TA-PROCUREMENT-LLM-EVIDENCE-AUDIT-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: 'Audit completeness and primary-source provenance of all existing Arvectum Procurement LLM candidate observations in the already existing PostgreSQL database without inventing gold or copying documents.'
 definition_of_done:
   - 'Build safe read-only corpus auditor: tally development/model/manual candidates, source file receipts, stored run references and evidence confidence; output summary only by default.'
@@ -14,10 +14,10 @@ completed:
   - '2026-10-16 scripts/procurement_llm/audit_corpus.py + 12 focused new audit tests added; Ruff PASS, targeted 28 PASS; Mac mini full suite pre-final nested blind enhancement: 4029 PASS / 239 SKIP / 1 known unrelated R9 DESELECTED / 0 fail in 131.64s. YAML PASS, git diff check PASS.'
   - '2026-10-16 code/docs committed 9e345517661e0ca92920cf2359e5549886b4f1fb, pushed and stacked Draft PR453 opened (base PR452); GitVerse mirror run38884581120 SUCCESS; PR CI run38884623102 and push CI38884580960 in progress.'
   - '2026-10-16 last code a527b3f476200b45370ca313ff0eb5a474e0576d additionally verified all 22 missing full reports retain DB text previews; no originals reconstructed. Added explicit preview-only classification and test. Focused latest 29 PASS, live read-only audit 75 observations PASS, Ruff/YAML/diff PASS, GitVerse mirror38885061241 SUCCESS.'
-current_stage: 'Draft PR453 latest code a527b3f4 exact-head CI in progress, quality job pending; check run38885066500 PR and run38885061327 push then complete.'
-remaining:
-  - 'Verify GitHub CI latest code a527b3f4: PR run38885066500 and push run38885061327 (8/9 PR jobs green, quality running); GitVerse mirror already SUCCESS.'
-  - 'Mark child completed on green; parent roadmap remains in_progress. Next separately admitted scope: recover 22 full report receipts and document four remaining submitted cases, or explicit authorized rollout.'
-last_verified_commit: a527b3f476200b45370ca313ff0eb5a474e0576d
+  - '2026-10-16 GitHub exact-head PR CI run38885506816 SUCCESS, push CI38885499630 SUCCESS, GitVerse mirror38885499742 SUCCESS for commit b8b326f2. Implementation verified. 22 missing report files have DB previews only; no model training or production actions.'
+current_stage: 'completed_verified_ci_green_no_merge_or_deploy'
+remaining: []
+next_phase: 'Separately tracked: recover missing full report receipts and independently source-bound bid participation; current parent roadmap stays in_progress.'
+last_verified_commit: b8b326f2d2218ce914788a7adabff37ca41e64cc
 last_tests: 'Auditor true live PostgreSQL 75-row read-only check PASS. Full Mac mini 4029 pass / 239 skip / 1 known baseline R9 deselected in 131.64s before two final coverage tests. Focused latest 29 pass / 9 warnings, Ruff PASS, YAML PASS, diff check PASS.'
-resume_instruction: 'Continue on /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-evidence-audit-20261016, branch feature/procurement-llm-evidence-audit-20261016, Draft stacked PR453 based on PR452/PR451. Latest code SHA a527b3f476200b45370ca313ff0eb5a474e0576d, GitVerse mirror38885061241 SUCCESS, PR38885066500 and push38885061327 CI in progress pending quality. Check exact-head CI, then mark child completed, update final test evidence and commit checkpoint. Audited live existing PG arvectum 75 unique observations, 45/45 run links, 20/20 DEV manifest SHA, 1/10 manual primary SHA, full report paths 21 accessible/22 missing with DB-only previews/2 absent. No data mutations/model training/new stores/merges/runtime rollout. Parent Tender Agent checkpoint stays in_progress; separate source recovery and owner legal gold still outstanding.'
+resume_instruction: 'Completed PR453 stacked on PR452/PR451. Last code a527b3f4, final checkpoint commit b8b326f2. Exact CI PR38885506816 and push38885499630 and mirror38885499742 all SUCCESS. Audit 75 candidates, source-bound original 1/10 manual, 22 missing full reports (all have DB previews), 20/20 DEV manifest SHA, 45/45 run links. No new DB, training, merge or runtime rollout. Next source recovery distinct child checkpoint; do not rerun read-only audit code task.'
