@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-16",
+  "scope": "development owner-delegated ChatGPT expert source-grounded E2E",
+  "case_count": 3,
+  "total_original_sha_files": 37,
+  "total_actual_local_gemma4_calls": 12,
+  "critical_source_eis_xml_citations": 9,
+  "model_only_seconds_total": 1031.86,
+  "model_only_median_seconds": 339.21,
+  "code_substantive_sha": "3141d97bf8b6a826688cfbe7fbc209ea7d011a8a",
+  "code_ci_run": 38852794273,
+  "code_ci_jobs_success": 9,
+  "local_full_pytest": {
+    "passed": 4240,
+    "skipped": 238,
+    "failures": 0
+  },
+  "not_accepted": [
+    "current EIS availability",
+    "blind signed legal gold",
+    "production rolling SLO",
+    "actual bid authority",
+    "price margin or internal resource sufficiency"
+  ],
+  "prior_case_13": "real source+model passed but original history report remains semantically wrong, source-only corrected preview only, not completed",
+  "cases": [
+    {
+      "registry_number": "0158300034526000388",
+      "original_source_files": 10,
+      "real_model_calls": 4,
+      "model_only_seconds": 339.21,
+      "source_critical_xml_citations": 3,
+      "nmck_original_eis_rub": 152033.33,
+      "archived_submission_deadline": "2026-10-12T08:00:00+03:00",
+      "source_original_html_sha256": "178e09813c6ccc5e70e0e2c57417a186f438a80b02f566347e68162820e82639",
+      "official_source_e2e": "verified",
+      "source_bound_report": "manual_review_required",
+      "historical_pdf_docx_export": "HTTP409",
+      "commercial_bid_authority": false
+    },
+    {
+      "registry_number": "0162300005826000156",
+      "original_source_files": 14,
+      "real_model_calls": 4,
+      "model_only_seconds": 329.37,
+      "source_critical_xml_citations": 3,
+      "nmck_original_eis_rub": 495000.0,
+      "archived_submission_deadline": "2026-06-17T07:00:00+05:00",
+      "source_original_html_sha256": "1ac81474a1bfe6aa76ba4fc6ebbf0108d74b4111313e96b3cdee8009ea9b9fd1",
+      "official_source_e2e": "verified",
+      "source_bound_report": "manual_review_required",
+      "historical_pdf_docx_export": "HTTP409",
+      "commercial_bid_authority": false
+    },
+    {
+      "registry_number": "0169300003326000181",
+      "original_source_files": 13,
+      "real_model_calls": 4,
+      "model_only_seconds": 363.28,
+      "source_critical_xml_citations": 3,
+      "nmck_original_eis_rub": 226938.66,
+      "archived_submission_deadline": "2026-07-27T07:00:00+05:00",
+      "source_original_html_sha256": "c67adc49653670015b55776a02ffa26da8b08b6d4f67e8e55434f1ccfd97eefb",
+      "official_source_e2e": "verified",
+      "source_bound_report": "manual_review_required",
+      "historical_pdf_docx_export": "HTTP409",
+      "commercial_bid_authority": false
+    }
+  ]
+}

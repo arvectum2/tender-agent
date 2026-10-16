@@ -84,3 +84,37 @@ Full local tests 4240 passed / 238 skipped / zero failures,
 51 focused source tamper PASS, Ruff PASS. Both child checkpoints
 COMPLETED; their native first-party source cases were never rerun.
 Case16 is the remaining third genuine Gemma E2E.
+
+
+## Case 16 — observed single real model success
+
+Historical EF №0169300003326000181: one real local Gemma4
+4 calls / 363.28 s, HTTP200, no fallback, 13/13 original SHA/extracted
+including actual Excel XLS price calculation and historical Word DOC
+notice. Three original EIS XML citations attest accompanying the
+official Zlatoust city administration website, archived deadline
+27.07.2026 07:00 +05:00, NMCK 226,938.66 RUB. Report source HTML
+SHA-256 c67adc49653670015b55776a02ffa26da8b08b6d4f67e8e55434f1ccfd97eefb.
+Real contract draft present and correctly classified. General-services
+domain was used without old education or motor vehicle repair template.
+Authenticated history/report/reopen/readonly-registry HTTP200,
+unauthenticated 401, archival PDF/DOCX exports409, manual_review_required.
+
+## Final three-case development E2E verification
+
+Separate frozen machine-readable summary:
+docs/quality/APR067_R4_FOURTEEN_SIXTEEN_REAL_GEMMA_E2E_METRICS_2026-10-16.json.
+Three **distinct** official saved historical EIS procurement IDs;
+**37 original source files**, 15 original binary attachments
+(including XLS, XLSX and DOC) extracted; **12 real Gemma4 calls**,
+**nine original EIS XML core fact citations**; model-only timings
+339.21 s, 329.37 s, 363.28 s (total 1031.86 s).
+All three reports manual_review_required with unauth access401,
+archival export409 and no fallback, real bid or production action.
+Full post-code local tests: **4240 passed / 238 skipped / 0 failed**,
+51 focused source-tamper PASS, Ruff PASS; exact substantive code commit
+3141d97bf8b6a826688cfbe7fbc209ea7d011a8a
+GitHub CI run38852794273 all **9/9 jobs SUCCESS**.
+All three separate child checkpoints are COMPLETED, PR447 stays Draft.
+The prior case13 is still a truthful independent blocker because its
+old persisted report/history needs corrected source-only publication.
