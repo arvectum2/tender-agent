@@ -1,0 +1,21 @@
+task_id: TA-PROCUREMENT-LLM-OUTCOMES-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: 'Verify outcomes and operator submission provenance for four Arvectum procurement cases without synthesizing ranks, withdrawing claims or promoting training data.'
+definition_of_done:
+  - 'Read-only EIS protocol/Aksay original source crosscheck with SHA, distinguishing admitted/price/app rating from company identity evidence.'
+  - 'Determine which original-source outcomes are proven, which are only secondary public website metadata, and which are future pending.'
+  - 'Build a small reproducible read-only outcome audit with tests and no database writes.'
+  - 'Document distinctions in AGENTS, master roadmap and task checkpoint; Draft stacked GitHub PR, run CI.'
+completed:
+  - '2026-10-16 previous PR455 legacy source-only artifact child completed with 77 unreviewed observations in canonical PG arvectum; 8 corporate ETP operator email metadata events dry-run only, import blocked separately.'
+  - '2026-10-16 corporate operator emails already verified for Aksay, Museum Bread, Aksioma, Kaluga. EIS Kaluga original ZIP+XML SHA checked; Aksay saved original bid protocol statistics exists. Aksioma secondary Contour shows winning price 119000 rub; rank of Arvectum not validated. Museum Bread outcome scheduled 20 October, not yet known.'
+  - '2026-10-16 read-only scripts/procurement_llm/audit_outcomes.py verified actual SSD source SHA: Kaluga EIS ZIP and XML app193 admitted true price449000; Aksay *derived* stats SHA55/45, rank38 our119000 winner28400. Operator private ETP metadata eight consistent, unknown withdrawal kept unknown. Aksioma app3630084 operator receipt and secondary winner119000 but own rank/price not proven; Museum Bread final due20 October, unknown. Zero DB changes or labels.'
+  - '2026-10-16 seven focused tests PASS incl unknown withdrawal, ZIP SHA mismatch, derived stats tamper, unauthorized gold, missing ETP event, private path safety; Ruff PASS.'
+current_stage: 'Run full regression, publish stacked Draft PR and verify CI; no production changes.'
+remaining:
+  - 'Run full Mac mini test suite, with one known unrelated baseline R9 test deselected, and YAML/Ruff/diff checks.'
+  - 'Commit/publish Draft stacked PR over PR455 via GitHub app, verify exact-head CI and mirror, mark child completed.'
+last_verified_commit: 6c393b865ee093cf78903df1b494f79c91a60ad9
+last_tests: 'Focused outcome 7 PASS, Ruff clean; actual original Kaluga ZIP+XML SHA and Aksay derived JSON SHA match. Full regression for this stage pending.'
+resume_instruction: "Active outcome evidence task worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-outcomes-20261016 branch feature/procurement-llm-outcomes-20261016 based on Draft PR455 last checkpoint6c393b86. Read-only audit_outcomes.py and 7 tests PASS on actual archives. Aksay SHA archived derived stats rank38/our119000/winner28400 NOT reverified original official DOCX; Kaluga original official EIS ZIP app193 admitted449000 rating26 and company operator email metadata; Aksioma our rank/price unknown while winning119000 public secondary; Museum result scheduled October20 unknown. Eight private operator ETP events dry-run only, apply blocked, existing PG77 unchanged. Need full regression, commit via GitHub App, Draft PR and CI. No model training, new database, ETP bid, merge/deployment or bypass blocked intake."

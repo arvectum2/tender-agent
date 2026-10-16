@@ -431,6 +431,29 @@ procurement_llm_data_collection_2026_10_16:
     kaluga_withdrawal_application_number: unknown
     kaluga_193_linked_to_arvectum_via_etp: true
     model_training: deferred
+  official_outcomes_evidence_2026_10_16:
+    id: PROC-LLM-DATA-07
+    state: four_cases_crosschecked_originals_and_limits_no_gold
+    report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_OUTCOMES_2026-10-16.md
+    canonical_postgres_observations: 77
+    pending_blocked_etp_evidence_events: 8
+    procurement_cases_checked: 4
+    aksay_archived_derived_rank: 38
+    aksay_archived_derived_bid_rub: 119000
+    aksay_archived_derived_winner_rub: 28400
+    aksay_original_final_protocol_docx_reverified: false
+    kaluga_official_eis_xml_sha_verified: true
+    kaluga_app193_admitted: true
+    kaluga_app193_price_rub: 449000
+    kaluga_app_rating_raw_value: '26'
+    kaluga_withdrawal_application_number: unknown
+    aksioma_operator_application_ordinal: '3630084'
+    aksioma_our_bid_rank_primary_proven: false
+    aksioma_winner_price_secondary_rub: 119000
+    museum_bread_result_scheduled: '2026-10-20'
+    museum_bread_final_outcome_verified: false
+    read_only_tool: scripts/procurement_llm/audit_outcomes.py
+    train_ready_rows: 0
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:
