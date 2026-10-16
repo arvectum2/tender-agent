@@ -30,8 +30,12 @@ financial record was modified.
 
 The local combined integration has **63 PASS** targeted APR-03B,
 APR-04, APR-05 and company profile regression tests; Ruff check PASS.
-A full merged-code regression is running independently and is not
-represented as complete until its summary exists.
+The complete merged-code Mac mini pytest regression independently
+passed **4,033 tests / 238 skipped / 0 failed** in 154.85 seconds
+(329 existing warnings). This combined execution is not an EIS- or
+production-effect test; its result is local software integration only.
+Exact GitHub review-branch CI is a separate acceptance gate and will be
+recorded when complete.
 
 This is an integration/review exercise, not a new validation of the
 original company's registration documents. The original business
