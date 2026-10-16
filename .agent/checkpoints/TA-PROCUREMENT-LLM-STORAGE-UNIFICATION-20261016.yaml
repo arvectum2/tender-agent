@@ -1,6 +1,6 @@
 task_id: TA-PROCUREMENT-LLM-STORAGE-UNIFICATION-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: 'Lock Procurement LLM data collection to the existing Tender Agent PostgreSQL + ArvectumSSD data/tenders store; prohibit parallel SQLite or other new training databases.'
 definition_of_done:
   - 'Identify and verify existing PostgreSQL database, original-document directory and real participated procurement example.'
@@ -11,11 +11,10 @@ completed:
   - '2026-10-16 read-only SSD audit: /Volumes/ArvectumSSD/Arvectum/data/tenders/eis contains 15 numbered folders and 142 files; /data/tenders/results contains original Aksay protocol artifacts.'
   - '2026-10-16 read-only Docker pg17 database arvectum: procurement_tenders=20, tender_analysis_runs=45, procurement_tender_documents=95, tender_bid_result_snapshots=1, tender_bid_result_offers=55. Postgres tables already contain Aksay 0158300034526000388 protocol evidence.'
   - 'Previous experimental /Volumes/ArvectumSSD/Arvectum/private/procurement-llm/corpus-v1/candidate-registry.sqlite3 has 29 metadata observations (20 DEV runs+9 manual), 27 unique refs; this is NOT a canonical new DB and must be frozen/reconciled without inventing legal gold.'
-current_stage: 'Write and verify single-storage policy; preserve existing data.'
-remaining:
-  - 'Commit storage policy to AGENTS.md and both canonical roadmap files.'
-  - 'Describe safe import of temporary candidate metadata to existing arvectum PG without mutating live DB in this policy-only task.'
-  - 'Run focused validation and publish review-ready PR.'
-last_verified_commit: bc98bd397bbd91186dd08e1e611d972077c4ab74
-last_tests: 'Read-only PostgreSQL counts and SSD inventory verified; no code test yet.'
-resume_instruction: 'Continue on worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-data-20261016, branch feature/procurement-llm-corpus-capture-20261016. Existing Docker PostgreSQL 17 database arvectum and SSD /Arvectum/data/tenders are sole canonical store. Document policy; do not promote experimental SQLite, create new DB, alter production tables, train models, copy blind corpus or delete existing observations.'
+  - '2026-10-16 policy committed 5eda8994b1ee988535123876a6fce7bde45a6692 and Draft PR #451 opened. AGENTS.md and both roadmaps/explicit policy constrain all future capture to pre-existing PG arvectum + ArvectumSSD data/tenders. Wrong untracked SQLite writer removed, original temporary 29 observations preserved. YAML x3 PASS, focused policy assertions PASS, git diff --check PASS; no live SQL mutation.'
+current_stage: 'completed_policy_only_no_prod_db_mutation'
+remaining: []
+next_separately_admitted_task: 'Backfill 20 DEV + 9 manual candidates with existing arvectum Alembic/ACL and no new DB; then implement runtime capture, owner review and legal permissions.'
+last_verified_commit: 5eda8994b1ee988535123876a6fce7bde45a6692
+last_tests: 'Focused policy checks PASS; 3 YAML parsed PASS; legacy SQLite 29/27 verified read-only; git diff --check PASS; static docs-only PR #451 draft, no live SQL writes.'
+resume_instruction: 'Storage unification policy child completed on worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-data-20261016, branch feature/procurement-llm-corpus-capture-20261016. Existing Docker PostgreSQL 17 database arvectum and SSD /Arvectum/data/tenders are sole canonical store. Document policy; do not promote experimental SQLite, create new DB, alter production tables, train models, copy blind corpus or delete existing observations.'
