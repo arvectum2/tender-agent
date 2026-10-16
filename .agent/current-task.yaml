@@ -215,7 +215,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Next independent first-party authentic EIS cases14 0158300034526000388 v5 EZK, 15 0162300005826000156 EF, 16 0169300003326000181 EF in separate worktree feature/apr067-r4-fourteen-sixteen-original-e2e-20261016. Source SHA/UID original saved metadata, stage native offline, one serial real Gemma call sequence, tests and exact CI. Case13 remains separate source-model-pass but old report republish incomplete, do not call completed. Previous 1-12 do not rerun.'
+resume_instruction: 'Case14 and case15 now COMPLETED real original EIS Gemma source/model/ChatGPT expert E2E and full4240 local PASS, exact substantive PR447 GitHub CI9/9 SUCCESS. 14=10 files,4 calls339.21s;15=14 files,4 calls329.37s; three XML citations and archival exports409 each. Case16 0169300003326000181 running third actual Gemma PID14368; check own receipt and finish. Previous case13 old report-history re-publication remains in_progress separately; do not rerun any prior model.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -238,4 +238,4 @@ latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
 
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
 
-latest_active_distinct_e2e_child: TA-APR067-R4-FOURTEENTH-ORIGINAL-20261016
+latest_active_distinct_e2e_child: TA-APR067-R4-SIXTEENTH-ORIGINAL-20261016

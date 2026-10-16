@@ -8,29 +8,33 @@ goal: Independent 44FZ historic first-party actual local Gemma E2E, registry 016
 definition_of_done:
 - Frozen saved original EIS archive and latest selected notice revision SHA, exact original file UID/name/bytes/SHA bound to first-party
   saved-run metadata
-- One native EIS offline run ready_to_analyze, Data Platform document extraction with original first-party binaries; fail closed
-  on source gaps
-- One real local Gemma4 analysis 4-provider calls with source-grounded ChatGPT expert review and persisted report/history/3 XML
-  fact citations, archival export409
+- One native EIS offline run ready_to_analyze, Data Platform document extraction with original first-party binaries; fail closed on
+  source gaps
+- One real local Gemma4 analysis 4-provider calls with source-grounded ChatGPT expert review and persisted report/history/3 XML fact
+  citations, archival export409
 - Adversarial/provenance tests and full suite pass, exact CI for Draft PR, status completed only on full verified evidence
 completed:
 - 2026-10-16 separate isolated worktree created for case 0169300003326000181, old 13 distinct runs unmodified; no prior model invocation
   for this case.
-- 2026-10-16 original EIS native source stage toa-run-20261016044742-0750df initially READY_NO_BYPASS; selected archived notice
-  and original metadata SHA-pinned, all 13/13 source XML+original files match SHA, all five substantive binaries extracted via
-  real Data Platform DOC/DOCX/legacy XLS/XLSX formats; no live EIS. First case already analyzing due serial PID14368.
-current_stage: queued_for_previous_real_gemma_success
+- 2026-10-16 original EIS native source stage toa-run-20261016044742-0750df initially READY_NO_BYPASS; selected archived notice and
+  original metadata SHA-pinned, all 13/13 source XML+original files match SHA, all five substantive binaries extracted via real Data
+  Platform DOC/DOCX/legacy XLS/XLSX formats; no live EIS. First case already analyzing due serial PID14368.
+- 2026-10-16 cases14/15 real original source+Gemma4 4 calls each completed and substantive PR447 code CI run38852794273 all9 jobs
+  SUCCESS. The serial PID14368 automatically started case16. Case16 original source 13/13 SHA and DOCX/XLS/DOC source text preflight
+  verified; no new model result yet.
+current_stage: sixteenth_genuine_local_Gemma4_processing
 remaining:
 - Bind original archived selected XML and attachments to source-run first-party UID/metadata and freeze manifest
 - Native EIS stage and original docs Data Platform preflight
 - Only one serial real Gemma4 E2E per case, user delegated developmental expert evidence and proper citations
 - Tests/Ruff/full regression/PR exact CI and checkpoint completion
 last_verified_commit: 4878e9cf7d1bcba907000d912e9cc185250b0274
-last_tests: Original exact source files SHA 13/13, 5/5 saved original binary content extracted, native ready_to_analyze, focused
-  new+legacy 51 PASS and Ruff. Full suite/CI pending.
-resume_instruction: Original selected official notice run toa-run-20261016044742-0750df and 13/13 SHA files stage ta-apr067-r4-sixteenth-ef-20261016
-  immutable. Single serial Gemma PID14368 runs 14->15->16 only after previous receipt success. Do not rerun any completed model;
-  check output file receipts, tests and exact CI.
+last_tests: Original exact source files SHA 13/13, 5/5 saved original binary content extracted, native ready_to_analyze, focused new+legacy
+  51 PASS and Ruff. Full suite/CI pending.
+resume_instruction: Case16 historical original 0169300003326000181 real Gemma third in single serial PID14368, 13/13 exact SHA original
+  source and legacy XLS/DOC extraction. Do not rerun. Read /tmp/ta-apr067-sixteenth-model-20261016.log and output/apr067_r4_sixteenth_ef_e2e.json,
+  check 3 EIS XML cites, report/history/auth and archive export409; full4240 local/CI 9 PASS. Prior case13 remains open for old report
+  republish.
 execution:
   branch: feature/apr067-r4-fourteen-sixteen-original-e2e-20261016
   stage_name: ta-apr067-r4-sixteenth-ef-20261016

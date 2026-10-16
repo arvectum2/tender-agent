@@ -40,3 +40,47 @@ Historical case13 from preceding group remains separately in_progress:
 real original source/model passed but previously persisted output
 included false training/vehicle repair templates; fixed source-only
 projection not yet republished to original historical report/history.
+
+
+## Case 14 — observed true model result
+
+Original official archived EZK №0158300034526000388 v5: one true
+local Gemma4 run with four LLM calls in 339.21 seconds, HTTP200,
+no fallback, 10/10 original SHA/extracted text including all five
+first-party DOCX. Three actual original source-linked EIS XML citations
+attest website development, selected latest archival revision-v5
+submission deadline 12.10.2026 08:00 +03:00, and NMCK 152,033.33 RUB.
+Five original archived revision deadlines are non-monotonic:
+v1 09 Oct, v2 12 Oct, v3 13 Oct, v4 12 Oct, v5 12 Oct; selecting
+maximum deadline by date would be wrong. Historical HTML SHA-256
+178e09813c6ccc5e70e0e2c57417a186f438a80b02f566347e68162820e82639.
+Read-only report/history/registry HTTP200, unauthorized 401,
+archived PDF/DOCX exports409. Decision manual_review_required:
+mixed software/site subject domain-specific automated model is
+not externally validated; no commercial/legal bidding GO.
+
+
+## Case 15 — authentic model-source evidence accepted
+
+EIS EF2020 0162300005826000156: one actual local Gemma4
+4 calls / 329.37 seconds HTTP200, no fallback, all 14 original
+first-party SHA documents extracted including 1,867-character XLSX
+NMCK source and 11,760-character original DOC technical description.
+Three source-attested original XML citations: citizen personal cabinet
+and ESIA authorization service on Verkhnyaya Pyshma website; archived
+deadline 17.06.2026 07:00 +05:00; NMCK 495,000 RUB.
+Original saved HTML SHA-256
+1ac81474a1bfe6aa76ba4fc6ebbf0108d74b4111313e96b3cdee8009ea9b9fd1.
+Actual draft contract found. Report/history/read-only registry200,
+unauthorized workspace401, archival exports PDF/DOCX409,
+manual_review_required (price model and internal capacity unverified).
+General-services domain used, no training or vehicle repair template.
+No commercial bid GO, no current live EIS.
+
+Case14 and case15 substantive source code commit
+3141d97bf8b6a826688cfbe7fbc209ea7d011a8a independently
+verified by GitHub Actions run38852794273: 9/9 jobs SUCCESS.
+Full local tests 4240 passed / 238 skipped / zero failures,
+51 focused source tamper PASS, Ruff PASS. Both child checkpoints
+COMPLETED; their native first-party source cases were never rerun.
+Case16 is the remaining third genuine Gemma E2E.
