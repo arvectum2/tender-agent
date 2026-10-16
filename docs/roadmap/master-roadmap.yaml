@@ -290,7 +290,7 @@ active_product_roadmap_2026_10_08:
 procurement_llm_data_collection_2026_10_16:
   id: PROC-LLM-DATA-01
   priority: P0
-  state: canonical_storage_verified_capture_backfill_pending
+  state: existing_postgres107_migrated_74_candidates_backfilled_capture_hook_opt_in
   active_scope: candidate_data_capture_only_no_model_training
   owner_directive_date: '2026-10-16'
   policy: docs/roadmap/PROCUREMENT_LLM_STORAGE_POLICY_2026-10-16.md
@@ -312,11 +312,24 @@ procurement_llm_data_collection_2026_10_16:
     write_enabled: false
     location: /Volumes/ArvectumSSD/Arvectum/private/procurement-llm/corpus-v1/candidate-registry.sqlite3
     observations: 29
-    status: frozen_pending_lossless_same_postgres_reconciliation
+    status: frozen_archival_backup_29_of_29_reconciled_to_pg
   capture_sources: [every_future_manual_tender_review, tender_agent_real_llm_runs, tender_agent_prior_runs, owner_participated_tenders, changes_and_bid_protocols, attributable_owner_corrections]
   protected_blind_holdout: 'R4 15 cases/73 originals excluded from future train exports'
   data_gate: 'Idempotent existing-schema reuse or reviewed additive Alembic in same arvectum DB, verified originals/hashes, no duplicate DB or source copy, no cross-tenant permissions.'
-  pending: [import_20_dev_e2e_and_9_manual_candidates, verify_historical_owner_participation, implement_automatic_run_and_manual_intake_hook, ensure_private_backup_before_sqlite_retirement]
+  pending: [verify_historical_owner_participation, enable_deployed_run_capture_after_review, connect_manual_chat_intake_and_other_runtime_entrypoints, preserve_backup_pending_final_deletion_review]
+  verified_pg_backfill_2026_10_16:
+    alembic_revision: 107_add_procurement_learning_observations
+    legacy_development_e2e: 20
+    legacy_manual_reviews: 9
+    existing_analysis_run_indexes: 45
+    total_unreviewed_candidates: 74
+    replay_existing: 29
+    replay_new: 0
+    original_tender_analysis_run_rows_preserved: 45
+    original_bid_offers_preserved: 55
+    backup_sha256: 730e33bdfcc9eb042b7ccf2b53318c4cfb2000aad45c27df34eb44b836c68593
+    migration_rationale: 'SaaS schema existed on live 100, 9 SaaS tables matched ORM; upgrade 100-105, stamp existing 106, upgrade 107. Clone rehearsal and import PASS.'
+    result: docs/roadmap/PROCUREMENT_LLM_BACKFILL_2026-10-16.md
   model_training: deferred_no_weights_no_training_now
 
 b2b_procurement_source_discovery_2026_10_12:

@@ -3,6 +3,7 @@
 # pilot_projects and other FK targets must be registered even without routers.
 # ruff: noqa: I001, F401, RUF100, RUF022
 
+from src.modules.procurement_learning_corpus.models import ProcurementLearningObservation  # noqa: F401
 from src.modules.action_queue.models import ActionQueueApproval, ActionQueueRecord, ActionQueueSet
 from src.modules.agent_registry.models import AgentRegistryRecord, AgentRegistrySet
 from src.tender_research.models import (
