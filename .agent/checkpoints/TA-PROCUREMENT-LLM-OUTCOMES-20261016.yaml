@@ -1,6 +1,6 @@
 task_id: TA-PROCUREMENT-LLM-OUTCOMES-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: 'Verify outcomes and operator submission provenance for four Arvectum procurement cases without synthesizing ranks, withdrawing claims or promoting training data.'
 definition_of_done:
   - 'Read-only EIS protocol/Aksay original source crosscheck with SHA, distinguishing admitted/price/app rating from company identity evidence.'
@@ -14,10 +14,10 @@ completed:
   - '2026-10-16 seven focused tests PASS incl unknown withdrawal, ZIP SHA mismatch, derived stats tamper, unauthorized gold, missing ETP event, private path safety; Ruff PASS.'
   - '2026-10-16 Mac mini full regression 4052 PASS /239 SKIP /1 known unrelated R9 DESELECTED, zero unexpected failures; focused outcome unit tests7 PASS, Ruff/YAML/diff clean, real 4-case source audit successful.'
   - '2026-10-16 code/docs committed as 09e2647666ef1c673772cf27e42d88eef5a7d84c, stacked Draft PR456 above PR455 opened; GitVerse mirror run38900826100 SUCCESS, GitHub PR CI run38900990331/push run38900826162 with 8/9 jobs green, quality running. Worktree synced, canonical PostgreSQL77 candidate_unreviewed unchanged.'
-current_stage: 'Verify exact-head GitHub PR/push quality and mirror for Draft PR456, then complete this child; no production changes.'
-remaining:
-  - 'Check GitHub PR38900990331 and push38900826162 quality full test job for exact code head09e26476; other eight CI jobs and mirror green.'
-  - 'After exact-head green, mark child completed and preserve parent Tender Agent roadmap in_progress. Future Museum Bread result due Oct20 and eight blocked private ETP events remain separate work.'
-last_verified_commit: 09e2647666ef1c673772cf27e42d88eef5a7d84c
+  - '2026-10-16 CI verified exact-head16a845a68156ff5d095acac1f43c42a30d0352f7 GitHub PR38901659439 SUCCESS, push38901653449 SUCCESS, GitVerse mirror38901653204 SUCCESS. Read-only four-case outcome audit DoD complete. Original Aksioma/Aksay EIS source retrieval separately started as new child.'
+current_stage: 'completed_ci_green_evidence_audit'
+remaining: []
+next_phase: 'Use newly retrieved EIS official final XML archives for Aksioma/Aksay in separately tracked source-validation child; do not train or auto-promote gold.'
+last_verified_commit: 16a845a68156ff5d095acac1f43c42a30d0352f7
 last_tests: 'Mac mini full 4052 PASS/239 SKIP/1 known unrelated R9 DESELECTED in 132.91s, no unexpected failures; focused outcome7 PASS; Ruff/YAML/git diff clean. Actual Kaluga original EIS ZIP+XML source SHA and Aksay archived derived JSON source SHA verified. GitHub PR/push CI8/9 jobs passed, quality in progress; mirror SUCCESS.'
-resume_instruction: 'Active task in Draft stacked PR456 https://github.com/arvectum2/tender-agent/pull/456 branch feature/procurement-llm-outcomes-20261016, commit09e2647666ef1c673772cf27e42d88eef5a7d84c. Code/docs locally verified 4052 PASS/239 SKIP/1 known unrelated R9 deselected; focused7 PASS; worktree clean and synced. GitHub PR CI38900990331, push38900826162 quality in progress at checkpoint; mirror38900826100 SUCCESS. Verify exact-head CI then mark this child completed, parent Tender Agent roadmap stays in_progress. Audit Aksay derived stats rank38/our119000/winner28400 with original DOCX unreverified, Kaluga original EIS ZIP app193 admitted449000 and appRating26 raw, Aksioma own rank/price unproven though public winner119000, Museum result due2026-10-20 unknown. Corporate ETP8 metadata events private dry-run only and tool apply BLOCKED; PostgreSQL arvectum remains77 unreviewed; no new DB, model training, PR merge or live deployment.'
+resume_instruction: 'Completed PR456 read-only outcome evidence gate, exact-head16a845a6 CI PR38901659439/push38901653449 and mirror38901653204 ALL GREEN. Existing PG arvectum 77 unreviewed, 8 private ETP email source events blocked from apply. Subsequent independent official EIS getDocsIP downloads now found for both Aksioma 0187200001726001304 and Aksay 0158300034526000388; this source-validation work belongs to NEXT child checkpoint, not this completed evidence task. No merged PR/production deploy/training.'
