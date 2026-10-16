@@ -306,6 +306,85 @@ def resolve_mixed_first_party_originals(
         })
     return archive, rows
 
+
+def resolve_saved_first_party_originals(
+    *, source_root: Path, case: dict, pinned_case_manifest: Path,
+) -> tuple[Path, list[dict]]:
+    """Bind selected archived EIS revision to actual Oct09 first-party saved run.
+
+    Every original binary must match the same archive's saved metadata
+    source URL UID, official filename, stored filename, byte count and SHA.
+    """
+    approved = {
+        "0158300034526000388": ("epNotificationEZK2020", 5),
+        "0162300005826000156": ("epNotificationEF2020", 1),
+        "0169300003326000181": ("epNotificationEF2020", 1),
+    }
+    expected = approved.get(case.get("registry_number"))
+    if (expected is None or case.get("source_role") != "ORIGINAL_20_CORPUS"
+            or (case.get("notice_type"), case.get("archived_version")) != expected
+            or pinned_case_manifest.name !=
+            f"APR067_R4_FIRST_PARTY_SAVED_{case['registry_number']}_2026-10-16.json"):
+        raise ValueError("unapproved saved EIS original case")
+    pin = json.loads(pinned_case_manifest.read_text())
+    if (pin.get("registry_number") != case["registry_number"]
+            or pin.get("source_role") != case["source_role"]
+            or pin.get("selected_notice_type") != expected[0]
+            or pin.get("selected_notice_version") != expected[1]
+            or pin.get("selected_xml_sha256") != case["selected_xml_sha256"]
+            or pin.get("archive_sha256") != case["archived_zip_sha256"]
+            or not isinstance(pin.get("attachments"), list)
+            or len(pin["attachments"]) != case["selected_xml_attachment_references"]):
+        raise ValueError("selected first-party EIS archive manifest changed")
+    def checked(relative: str) -> Path:
+        if not isinstance(relative, str) or not relative:
+            raise ValueError("missing original relative path")
+        path = source_root / relative
+        if path.is_symlink() or not path.resolve().is_relative_to(source_root) or not path.is_file():
+            raise ValueError("original source unsafe or unavailable")
+        return path
+    meta_file = checked(pin["original_saved_run"] + "/metadata.json")
+    if sha(meta_file.read_bytes()) != pin.get("saved_metadata_sha256"):
+        raise ValueError("original saved EIS metadata SHA mismatch")
+    meta = json.loads(meta_file.read_text())
+    if meta.get("procurement_id") != case["registry_number"]:
+        raise ValueError("original saved-run source identity mismatch")
+    archive = checked(pin["archive_relative_path"])
+    if sha(archive.read_bytes()) != case["archived_zip_sha256"]:
+        raise ValueError("archived EIS ZIP SHA mismatch")
+    old_input_dir = meta_file.parent / "input"
+    seen = set()
+    rows = []
+    for slot, item in enumerate(pin["attachments"], start=1):
+        uid = item.get("source_uid")
+        if (not isinstance(uid, str) or not re.fullmatch(r"[0-9A-F]{32}", uid)
+                or uid in seen or item.get("source_slot") != slot
+                or item.get("source_role") != "oct09_first_party_saved_run"):
+            raise ValueError("source UID/slot/provenance mismatch")
+        seen.add(uid)
+        file = checked(item.get("source_root_relative_path"))
+        if (file.stat().st_size != item.get("bytes")
+                or file.suffix.lower() != item.get("file_extension")
+                or sha(file.read_bytes()) != item.get("sha256")):
+            raise ValueError("original saved file SHA/size/type changed")
+        matches = [
+            row for row in meta.get("files", [])
+            if row.get("original_name") == item.get("official_name")
+            and row.get("size_bytes") == item.get("bytes")
+            and row.get("stored_name") == item.get("stored_name")
+            and parse_qs(urlsplit(str(row.get("source_url") or "")).query).get("uid", [""])[0] == uid
+            and (old_input_dir / str(row.get("stored_name"))).resolve() == file.resolve()
+        ]
+        if len(matches) != 1:
+            raise ValueError("original first-party saved filestore attachment not bound")
+        rows.append({
+            "uid": uid, "file_extension": item["file_extension"],
+            "actual_bytes": item["bytes"], "sha256": item["sha256"],
+            "official_name": item["official_name"],
+            "source_root_relative_path": item["source_root_relative_path"],
+        })
+    return archive, rows
+
 def prepare(
     *, stage: Path, source_root: Path, pinned_manifest: Path,
     registry_number: str = NUMBER, stage_name: str = STAGE_NAME,
@@ -342,6 +421,13 @@ def prepare(
         }:
             archived, rows = resolve_mixed_first_party_originals(
                 source_root=source_root, case=record, pinned_case_manifest=original_case_manifest,
+            )
+        elif registry_number in {
+            "0158300034526000388", "0162300005826000156", "0169300003326000181",
+        }:
+            archived, rows = resolve_saved_first_party_originals(
+                source_root=source_root, case=record,
+                pinned_case_manifest=original_case_manifest,
             )
         else:
             raise ValueError("unapproved original first-party EIS case")
@@ -536,6 +622,7 @@ def main() -> None:
             "0127100008626000013", "0360600005326000018",
             "0895100000126000897", "0149200002326001555",
             "0148200000526000028", "0349100009326000005",
+            "0158300034526000388", "0162300005826000156", "0169300003326000181",
         ),
         default=NUMBER,
     )
@@ -552,6 +639,9 @@ def main() -> None:
         "0149200002326001555": "ta-apr067-r4-eleventh-quotation-20261016",
         "0148200000526000028": "ta-apr067-r4-twelfth-auction-20261016",
         "0349100009326000005": "ta-apr067-r4-thirteenth-eok-20261016",
+        "0158300034526000388": "ta-apr067-r4-fourteenth-ezk-five-revisions-20261016",
+        "0162300005826000156": "ta-apr067-r4-fifteenth-ef-20261016",
+        "0169300003326000181": "ta-apr067-r4-sixteenth-ef-20261016",
     }[args.registry]
     if args.stage.name != allowed_stage:
         parser.error("unapproved isolated source stage")

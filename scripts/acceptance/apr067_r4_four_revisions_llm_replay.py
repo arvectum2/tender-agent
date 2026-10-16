@@ -24,6 +24,8 @@ def verify_copy_source(saved: Path, pinned: dict) -> int:
         "0360600005326000018", "0895100000126000897",
         "0149200002326001555", "0148200000526000028",
         "0349100009326000005",
+        "0158300034526000388", "0162300005826000156",
+        "0169300003326000181",
     }:
         raise ValueError("the pinned R4 historical case identity does not match")
     rows = pinned.get("all_input_sha256")
@@ -98,9 +100,11 @@ def main() -> int:
             "0360600005326000018", "0895100000126000897",
             "0149200002326001555", "0148200000526000028",
             "0349100009326000005",
+            "0158300034526000388", "0162300005826000156",
+            "0169300003326000181",
         ), default="0162200011826003089",
     )
-    parser.add_argument("--dp-port", choices=(18095, 18096, 18097, 18098, 18099, 18100, 18101), type=int, default=18095)
+    parser.add_argument("--dp-port", choices=(18095, 18096, 18097, 18098, 18099, 18100, 18101, 18102), type=int, default=18095)
     args = parser.parse_args()
     allowed_stage = {
         "0162200011826003089": "ta-apr067-r4-four-revisions-20261015",
@@ -114,6 +118,9 @@ def main() -> int:
         "0149200002326001555": "ta-apr067-r4-eleventh-quotation-20261016",
         "0148200000526000028": "ta-apr067-r4-twelfth-auction-20261016",
         "0349100009326000005": "ta-apr067-r4-thirteenth-eok-20261016",
+        "0158300034526000388": "ta-apr067-r4-fourteenth-ezk-five-revisions-20261016",
+        "0162300005826000156": "ta-apr067-r4-fifteenth-ef-20261016",
+        "0169300003326000181": "ta-apr067-r4-sixteenth-ef-20261016",
     }[args.registry]
     root = args.stage.resolve()
     runs = root / "runs"
@@ -263,7 +270,10 @@ def main() -> int:
         else "apr067_r4_tenth_original_e2e.json" if args.registry == "0895100000126000897"
         else "apr067_r4_eleventh_quotation_e2e.json" if args.registry == "0149200002326001555"
         else "apr067_r4_twelfth_auction_e2e.json" if args.registry == "0148200000526000028"
-        else "apr067_r4_thirteenth_eok_e2e.json"
+        else "apr067_r4_thirteenth_eok_e2e.json" if args.registry == "0349100009326000005"
+        else "apr067_r4_fourteenth_ezk_v5_e2e.json" if args.registry == "0158300034526000388"
+        else "apr067_r4_fifteenth_ef_e2e.json" if args.registry == "0162300005826000156"
+        else "apr067_r4_sixteenth_ef_e2e.json"
     )
     output=root/"output"/receipt_name
     output.parent.mkdir(parents=True,exist_ok=True)

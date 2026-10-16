@@ -1,0 +1,68 @@
+{
+  "registry_number": "0158300034526000388",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009051803-7193b2",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009051803-7193b2/input/documentation-archive.zip",
+  "archive_sha256": "d7ed9c567890f2f11733e7985bede528e2593505a9c04db3fbf3d4ad0842c74a",
+  "selected_xml_sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b",
+  "selected_notice_type": "epNotificationEZK2020",
+  "selected_notice_version": 5,
+  "saved_metadata_sha256": "5ff856da32eeaabab1b0d48319f88f891c18e8fcc2f298b20dc38c0318f39b48",
+  "attachments": [
+    {
+      "source_uid": "01A0F104A09C725291D675F32C08283B",
+      "official_name": "Обоснование НМЦК.docx",
+      "bytes": 18617,
+      "sha256": "4c58d851e93bf1fd046904e2253a8c4e31cebf9731bf5cc707d89f5cd17978c1",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009051803-7193b2/input/01-attachment-1.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "01-attachment-1.docx",
+      "source_slot": 1
+    },
+    {
+      "source_uid": "01A114E293177979B24BB1E298E07E56",
+      "official_name": "контракт Разработка веб сайта Молодежный центр.docx",
+      "bytes": 77167,
+      "sha256": "8ca942f6a5860a99824fc57a0b017bc251b8e13e85521d187824d2c49a013403",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009051803-7193b2/input/08-attachment-8.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "08-attachment-8.docx",
+      "source_slot": 2
+    },
+    {
+      "source_uid": "01A1112E3C597903BF1ADF257E68A620",
+      "official_name": "макет .docx",
+      "bytes": 1411307,
+      "sha256": "4b4a93740285af66390711c8e224b83dd0732f6c449e71cc97c4cddbbb654dc0",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009051803-7193b2/input/07-attachment-7.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "07-attachment-7.docx",
+      "source_slot": 3
+    },
+    {
+      "source_uid": "01A114E266C9792990EDCFAFD3B39C6C",
+      "official_name": "описание объекта закупки 2.docx",
+      "bytes": 37543,
+      "sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009051803-7193b2/input/09-2.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "09-2.docx",
+      "source_slot": 4
+    },
+    {
+      "source_uid": "01A1106AB7DF704C9B47372270898ACF",
+      "official_name": "Требования к содержанию и составу заявки общие с нац режимом-.docx",
+      "bytes": 24374,
+      "sha256": "d247616f3a05b0fbf0d23d32a9f79ddabf248983f82625ee58e137fa4b881a0f",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009051803-7193b2/input/06-attachment-6.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "06-attachment-6.docx",
+      "source_slot": 5
+    }
+  ]
+}
