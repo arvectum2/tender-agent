@@ -287,6 +287,38 @@ active_product_roadmap_2026_10_08:
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
 
+procurement_llm_data_collection_2026_10_16:
+  id: PROC-LLM-DATA-01
+  priority: P0
+  state: canonical_storage_verified_capture_backfill_pending
+  active_scope: candidate_data_capture_only_no_model_training
+  owner_directive_date: '2026-10-16'
+  policy: docs/roadmap/PROCUREMENT_LLM_STORAGE_POLICY_2026-10-16.md
+  canonical_structured_store: 'Mac mini: Docker PostgreSQL 17 arvectum-postgres, database arvectum'
+  canonical_originals_path: /Volumes/ArvectumSSD/Arvectum/data/tenders/eis
+  canonical_results_path: /Volumes/ArvectumSSD/Arvectum/data/tenders/results
+  existing_report_path: /Volumes/ArvectumSSD/Arvectum/data/rag/reports
+  verified_live_inventory:
+    procurement_tenders: 20
+    tender_analysis_runs: 45
+    procurement_tender_documents: 95
+    tender_bid_result_snapshots: 1
+    tender_bid_result_offers: 55
+    eis_document_folders: 15
+    eis_document_files: 142
+    first_real_protocol: '0158300034526000388'
+  experimental_sqlite:
+    canonical: false
+    write_enabled: false
+    location: /Volumes/ArvectumSSD/Arvectum/private/procurement-llm/corpus-v1/candidate-registry.sqlite3
+    observations: 29
+    status: frozen_pending_lossless_same_postgres_reconciliation
+  capture_sources: [every_future_manual_tender_review, tender_agent_real_llm_runs, tender_agent_prior_runs, owner_participated_tenders, changes_and_bid_protocols, attributable_owner_corrections]
+  protected_blind_holdout: 'R4 15 cases/73 originals excluded from future train exports'
+  data_gate: 'Idempotent existing-schema reuse or reviewed additive Alembic in same arvectum DB, verified originals/hashes, no duplicate DB or source copy, no cross-tenant permissions.'
+  pending: [import_20_dev_e2e_and_9_manual_candidates, verify_historical_owner_participation, implement_automatic_run_and_manual_intake_hook, ensure_private_backup_before_sqlite_retirement]
+  model_training: deferred_no_weights_no_training_now
+
 b2b_procurement_source_discovery_2026_10_12:
   id: B2B-SOURCE-DISCOVERY-2026-10-12
   priority: P1

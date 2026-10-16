@@ -17,6 +17,8 @@
 - [ ] **APR-06 — Commercial Acceptance Gate (PR #254 открыт, не слит).** 20–30 реальных закупок сквозным сценарием; измеряем time-to-decision, correction rate, citation coverage, unknown rate, missed blockers, false GO/NO-GO, rework application package.
 - [ ] **APR-07 — Product Quality/SLO + Russian Model Evaluation (PR #255 открыт, не слит).** Continuous track: ingest/document success, OCR fallback, latency, unsupported docs, evidence coverage, unknown/human override; LLM/VLM/OCR/embedding/ontology меняются только после frozen benchmark.
 
+- [ ] **PROC-LLM-DATA-01 / Arvectum Procurement LLM — единый корпус данных (P0, ongoing capture).** С 16.10.2026 собираем все реальные прогоны Tender Agent, разборы закупок с участием ООО «Арвектум», каждый будущий ручной разбор и результаты торгов в **существующих PostgreSQL `arvectum` + ArvectumSSD `Arvectum/data/tenders`**. Никаких отдельных SQLite, новых БД и копий исходников. Проверено: `procurement_tenders` 20, `tender_analysis_runs` 45, `procurement_tender_documents` 95, протокол Аксая `0158300034526000388` со всеми 55 ценовыми предложениями. Сведения о 20 DEVELOPMENT Gemma E2E и 9 ручных карточках пока находятся в замороженной **не-канонической временной SQLite (29 наблюдений)**; нужен без потерь backfill по hash/run_id и runtime hook в штатную PostgreSQL до DONE. Независимые blind R4 15/73 строго исключены из train. **Каноническое правило / порядок интеграции:** [PROCUREMENT_LLM_STORAGE_POLICY_2026-10-16.md](PROCUREMENT_LLM_STORAGE_POLICY_2026-10-16.md). Никакого обучения модели сейчас.
+
 **Приёмка TA ↔ Data Platform, R2/R4/R5 (2026-10-13):** технический рефакторинг Data Platform закрыт; оставшиеся проверки официальной актуальности и допустимого staging R2, независимое human-gold R4 и 20 датированных owner reviews R5 — это открытые ворота **APR-06/07**, а не новый DP core-refactor. Canonical checkpoint: `.agent/checkpoints/TA-DP-ACCEPTANCE-20261013.yaml`; [критерии и доказательства](../acceptance/TA_DP_ACCEPTANCE_HANDOFF_2026-10-13.md). Не путать R5 20 кейсов с более широким APR-06 корпусом 28 кейсов. Продакшен DP, ставки, платные API и watchdog не менять без отдельного разрешения.
 
 ### P1/P2 — после P0 или при подтверждённом спросе
@@ -24,6 +26,8 @@
 - [ ] **APR-08 / ARV-065 — Evidence Copilot (P1).** Только procurement-scoped Q&A/расчёты/объяснения с цитатами; не generic chatbot и не authoritative legal approval.
 - [ ] **APR-09 / ARV-023/024/025/026/027 — Supplier → RFQ → TKP (P1, trigger).** Запускать после >=2 платных кейсов, где sourcing/TKP реально является bottleneck; внешняя отправка остаётся HUMAN/REVIEW.
 - [ ] **APR-10 / ARV-004 — Feedback Learning Loop (P2, trigger).** Human correction → regression → reviewed candidate → controlled promotion. Не раньше достаточного корпуса (ориентир >=30 useful corrections в >=3 customer/pilot contexts).
+- [ ] **PROC-LLM-TRAIN-02 (P2, deferred)** — отдельная будущая Arvectum Procurement LLM (4–12B и LoRA/QLoRA) только после юридически разрешённого curated corpus, реальных human-corrections, frozen independent eval, Owner review. Сейчас **только сбор и provenance**, никакого model training и model promotion.
+
 
 ### Что сознательно снято с активной продуктовой очереди
 
