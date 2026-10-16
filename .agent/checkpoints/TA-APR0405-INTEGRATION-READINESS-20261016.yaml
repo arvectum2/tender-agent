@@ -1,0 +1,23 @@
+task_id: TA-APR0405-INTEGRATION-READINESS-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: Test and document isolated Git branch integration compatibility of already accepted APR03B, APR04, APR05 development PRs before any
+  owner-authorized main merge.
+definition_of_done:
+- Isolated branch from exact main SHA, no merge into main, private SaaS runtime, ETP, bids, signatures or payments.
+- Dry-integrate 433 then 434 then 435 and resolve conflicts only inside review branch; preserve original developer commits and source evidence.
+- Run targeted auth isolation/company profile/archived source tests, full local regression if feasible; check exact CI for review branch.
+- Record differences between DEV E2E vs production/legal/commercial owner gates and safe merge order as evidence.
+- Close child completed for integration readiness only; no production GO or owner consent inferred.
+completed:
+- 2026-10-16 GitHub PR433/434/435 each draft/open, PR checks 18/18 successful, no owner review approval; base main verified and review worktree
+  created.
+current_stage: independent_no_main_mutation_branch_merge_simulation
+remaining:
+- Simulate source merges 433 ->434 ->435 in isolated worktree
+- Targeted tests and full suite
+- CI and evidence/owner gate report
+last_verified_commit: bc98bd397bbd91186dd08e1e611d972077c4ab74
+last_tests: 'Source PRs #433/434/435 green, isolated integration not yet tested.'
+resume_instruction: Review branch isolated from main. Do git merge 433 then 434 then 435 only in isolated worktree; never touch main. If conflict,
+  resolve locally and add regression test. Then test and create draft review PR; do not infer owner approval or legal SaaS consent.
