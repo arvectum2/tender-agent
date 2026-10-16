@@ -234,7 +234,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Owner delegates DEVELOPMENT E2E expert review to ChatGPT (2026-10-15). Verify a real-source stable authenticated workspace flow search/import, file integrity, local LLM, source-cited material report, history/read-only registry and archival export safety. No independent human gold required at this stage; legal GO and external actions remain separately gated.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
-      state: implementation_pr_open_not_merged
+      state: implementation_merged_owner_identity_development_e2e_accepted_business_document_gate_open
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'
