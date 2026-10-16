@@ -215,7 +215,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: 'Cases17/18 original-source true Gemma4 source-grounded DEVELOPMENT E2E accepted, 17:8/8 4 calls351.32s,18:12/12 4 calls346.49s, each EIS XML three cites/409 archive exports and substantive GitHub PR448 run38856008266 CI9/9 success. Case19 distinct AR-tour 0169300008226000225 now running in single serial PID33179; case20 remains fourth queued. No model reruns. Case13 old semantically wrong report/history remains in_progress after source-only fix, no hidden GO.'
+resume_instruction: 'Cases17/18/19 independently original EIS true Gemma4 model/provider accepted and exact substantive PR448 CI9/9 SUCCESS. Case17 8 originals/4 calls351.32s; case18 12 originals/4 calls346.49s interactive tour4m; case19 12 originals/4 calls351.99s AR tour2m. All three have 3 XML core cites/archive exports409. Final case20 0377100005726000128 last in serial PID33179 now running. After actual saved receipt, source expert review and cohort 20 metrics, close final children, but case13 old historical report remains semantically incorrect/unaccepted pending true republish. No model reruns or live bids.'
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -238,4 +238,4 @@ latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
 
 latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
 
-latest_active_distinct_e2e_child: TA-APR067-R4-NINETEENTH-ORIGINAL-20261016
+latest_active_distinct_e2e_child: TA-APR067-R4-TWENTIETH-ORIGINAL-20261016

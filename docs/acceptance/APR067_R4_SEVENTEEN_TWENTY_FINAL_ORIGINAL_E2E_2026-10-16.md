@@ -94,3 +94,23 @@ GitHub Actions CI run38856008266 on commit
 68879954bc33f7187aa082e952d50b9d158ae629 9/9 jobs SUCCESS.
 Local full regression 4272 PASS/238 SKIP and focused56 source PASS,
 Ruff PASS. Case17 and case18 child checkpoints COMPLETED.
+
+
+## Case 19 — authentic original AR case and source-backed decision
+
+Historical EZK 0169300008226000225: one genuine local Gemma4
+4 calls / 351.99 s HTTP200/no fallback; original-source file SHA
+12/12 including original XLSX price, DOCX draft/TZ and old DOC
+application requirements. Three source-linked original EIS XML citations:
+AR excursion multimedia and integration into the customer website
+in Troytsk, archived deadline 14.09.2026 09:00 +05, NMCK2m RUB.
+Saved original report HTML SHA
+e0d41bd555fb0f6f42a15ebeeac2449c89e2d1ad69b07c919374f6bc7a1f41c0.
+Separate registry ID, price and source binary SHA from case18.
+Actual original contract present; work-specific commercial workflow
+not externally validated; manual_review_required. Original
+report/history/reopen/registry200, unauth401, historical exports409.
+Full4272 local PASS/238SKIP/0fail and 56 source tests PASS;
+substantive code CI commit68879954 run38856008266 SUCCESS9/9 jobs.
+Case19 checkpoint COMPLETED. Case20 is the only remaining real
+model in the serial process.

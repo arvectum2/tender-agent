@@ -6,19 +6,22 @@ goal: First-party source-grounded real 44FZ Gemma4 local DEVELOPMENT E2E case 03
 definition_of_done:
 - Select exact archived EIS notice version and hash, individually bind original filestore UID/name/size/metadata/binary SHA including
   duplicated-archive first case
-- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP calls
+- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP
+  calls
 - One real Gemma4 provider run per unique case, preserve original output, verify original EIS XML three critical cites, report/history/auth
   and archived export409, semantic source-grounded expert review
 - Focused adversarial provenance tests and full local suite, substantive exact-head CI SUCCESS, docs report and checkpoint completed
   only for verified E2E
 completed:
-- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no other
-  model run repeated
+- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no
+  other model run repeated
 - 2026-10-16 frozen selected EIS original notice SHA, first-party metadata SHA, saved filestore UID/name/bytes/source slot SHA, native
-  EIS original stage toa-run-20261016052531-ca97b5 ready_to_analyze initial; 11/11 original SHA-protected inputs incl exactly four substantive
-  documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case
-  exits 0.
-current_stage: queued_for_previous_original_model_success
+  EIS original stage toa-run-20261016052531-ca97b5 ready_to_analyze initial; 11/11 original SHA-protected inputs incl exactly four
+  substantive documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after
+  previous case exits 0.
+- 2026-10-16 case19 AR original/source/real Gemma complete, serial PID33179 continued to case20 0377100005726000128 one last original
+  EF 11 SHA source including XLSX and DOCX, native ready_to_analyze, no concurrent Gemma.
+current_stage: twentieth_actual_Gemma4_eis_inference_running
 remaining:
 - Freeze selected original archived getDocsIP SHA and first-party filestore metadata including duplicate source choice
 - Original document extraction Data Platform and ready native ingestion
@@ -27,10 +30,9 @@ remaining:
 last_verified_commit: fa1356179da20a5f4de495616349fc768c8bc34c
 last_tests: 11/11 actual original saved source SHA and native EIS readiness, Data Platform 4/4 original binary text extraction; new
   model pending; no live EIS/ETP.
-resume_instruction: One serial local real Gemma PID33179, original 0377100005726000128 stage ta-apr067-r4-twentieth-ef-20261016, run
-  toa-run-20261016052531-ca97b5, 11/11 SHA. Cases17->18->19->20 only on previous success. Read private output receipt if exists, never
-  rerun completed Gemma. After model verify three original XML citations/history/export409 and tests/exact CI. Case13 old report remains
-  pending separately.
+resume_instruction: Case20 0377100005726000128 original EF, four first-party XLSX/DOCX sources, 11/11 SHA, serial model PID33179 after
+  case19 success. Inspect /tmp/ta-apr067-twentieth-model-20261016.log and output/apr067_r4_twentieth_ef_e2e.json. Never rerun completed
+  models; source-bound ChatGPT expert review and exact CI are required before 20th checkpoint completed.
 execution:
   branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
   stage_name: ta-apr067-r4-twentieth-ef-20261016

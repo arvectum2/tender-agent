@@ -1,37 +1,43 @@
 task_id: TA-APR067-R4-NINETEENTH-ORIGINAL-20261016
 repository: arvectum2/tender-agent
-status: in_progress
+status: completed
 goal: First-party source-grounded real 44FZ Gemma4 local DEVELOPMENT E2E case 0169300008226000225; last four distinct cases for first
   20 real original EIS cohort.
 definition_of_done:
 - Select exact archived EIS notice version and hash, individually bind original filestore UID/name/size/metadata/binary SHA including
   duplicated-archive first case
-- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP calls
+- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP
+  calls
 - One real Gemma4 provider run per unique case, preserve original output, verify original EIS XML three critical cites, report/history/auth
   and archived export409, semantic source-grounded expert review
 - Focused adversarial provenance tests and full local suite, substantive exact-head CI SUCCESS, docs report and checkpoint completed
   only for verified E2E
 completed:
-- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no other
-  model run repeated
+- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no
+  other model run repeated
 - 2026-10-16 frozen selected EIS original notice SHA, first-party metadata SHA, saved filestore UID/name/bytes/source slot SHA, native
-  EIS original stage toa-run-20261016052531-e9600f ready_to_analyze initial; 12/12 original SHA-protected inputs incl exactly four substantive
-  documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case
-  exits 0.
-- 2026-10-16 case18 original source/model exited zero, actual report/source/historical export verified; serial PID33179 now running distinct
-  case19 original 0169300008226000225 with 12/12 SHA and 2m RUB source NMCK, not reusing 4m case18.
-current_stage: nineteenth_true_gemma_running_distinct_AR_source
+  EIS original stage toa-run-20261016052531-e9600f ready_to_analyze initial; 12/12 original SHA-protected inputs incl exactly four
+  substantive documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after
+  previous case exits 0.
+- 2026-10-16 case18 original source/model exited zero, actual report/source/historical export verified; serial PID33179 now running
+  distinct case19 original 0169300008226000225 with 12/12 SHA and 2m RUB source NMCK, not reusing 4m case18.
+- '2026-10-16 real original EZK #19 0169300008226000225 saved distinct source-bound Gemma4 4 calls351.99s, no fallback, HTTP200, 12/12
+  original source SHA/text, three EIS XML citations on AR-excursion Troytsk integration, NMCK2,000,000 RUB and archived deadline2026-09-14T09:00+05:00;
+  differs from case18 interactive general tourist tour 4m. HTML SHA e0d41bd555fb0f6f42a15ebeeac2449c89e2d1ad69b07c919374f6bc7a1f41c0;
+  work-specific automation honestly unvalidated, manual_review_required, actual contract found, original history/report200, unsigned401,
+  PDF/DOCX archived exports409. Substantive code GitHub 68879954bc33f7187aa082e952d50b9d158ae629 CI run38856008266 completed 9/9 SUCCESS;
+  full4272 local/238skip,56 source adverse PASS.'
+current_stage: nineteenth_original_AR_source_model_CI_completed
 remaining:
-- Freeze selected original archived getDocsIP SHA and first-party filestore metadata including duplicate source choice
-- Original document extraction Data Platform and ready native ingestion
-- One serial local Gemma4 source E2E
-- Expert review tests full suite GitHub CI checkpoint close
-last_verified_commit: fa1356179da20a5f4de495616349fc768c8bc34c
-last_tests: 12/12 actual original saved source SHA and native EIS readiness, Data Platform 4/4 original binary text extraction; new model
-  pending; no live EIS/ETP.
-resume_instruction: Case19 0169300008226000225 original AR-excursion Troytsk, source SHA12/12, native ready_to_analyze. Running third
-  serial Gemma PID33179, inspect /tmp/ta-apr067-nineteenth-model-20261016.log and original saved receipt; do not repeat. Case18 similar
-  title 4m != case19 2m, keep sources and IDs distinct.
+- Final distinct 20th source/model and exact downstream proof
+- Draft PR448 unmerged, no ETP signing payment production
+- Prior source/model-pass case13 report republishing debt remains
+last_verified_commit: 68879954bc33f7187aa082e952d50b9d158ae629
+last_tests: 4 real Gemma4 calls351.99s,12/12 original SHA and 3 EIS XML citations, original report 200, export409; CI9/9 substantive
+  commit68879954 success, full4272PASS/238SKIP, focused56pass/Ruff.
+resume_instruction: COMPLETED 19th original source/model and exact code CI. One actual Gemma4 4calls351.99s 12 original sha, 3 XML
+  cites, AR/Troytsk 2m; do not rerun. Case20 original EF 0377100005726000128 last in serial PID33179 and own output private, inspect
+  receipt, then cohort 20 actual and 19 semantically accepted due case13.
 execution:
   branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
   stage_name: ta-apr067-r4-nineteenth-ezk-20261016
