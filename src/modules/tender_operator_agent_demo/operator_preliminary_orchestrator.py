@@ -69,10 +69,23 @@ def project_build_preliminary_procurement_analysis(
         preliminary["procurement_kind"] = procurement_kind
         preliminary["scope"] = scope
         return preliminary
-    training_markers = ("обучени", "слушател", "учебн", "повышени[яе] квалификац")
-    is_training_service = any(
-        re.search(marker, combined, re.IGNORECASE) for marker in training_markers
+    # Incidental requirements to train the customer's technical staff are
+    # common in hosting, maintenance and IT contracts. They must not switch
+    # the whole tender to education and turn "24 hours per day" uptime into
+    # "24 hours of training" or require lecturers and classrooms.
+    tender_title = str(metadata.get("tender_title") or "")
+    training_title = bool(
+        re.search(
+            r"обучени|образовательн|повышени[яе] квалификац|подготовк[ауи] специалист|курсы?\b",
+            tender_title,
+            re.IGNORECASE,
+        )
     )
+    training_tz = bool(
+        re.search(r"слушател", tz_text, re.IGNORECASE)
+        and re.search(r"обучени|учебн|повышени[яе] квалификац", tz_text, re.IGNORECASE)
+    )
+    is_training_service = training_title or training_tz
     if procurement_kind == "services" and (not is_training_service):
         return _build_services_preliminary_analysis(
             metadata=metadata,

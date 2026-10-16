@@ -6,38 +6,38 @@ status: in_progress
 goal: Original-source 44FZ independent E2E thirteenth case 0349100009326000005; official saved selected XML, 5 filestore originals recovered
   from independent first-party receipts; EOK competition with two old binary DOCs and evaluation rules; one real local Gemma4 only.
 definition_of_done:
-- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without
-  mixing editions or overwriting originals
+- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without mixing
+  editions or overwriting originals
 - Native offline EIS stage ready_to_analyze without bypass; local Data Platform original DOC/DOCX content verified
-- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked
-  archived export
-- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model
-  timing
-- Full local suite and exact substantive GitHub CI, Draft PR, final immutable source/analysis checkpoint completed only when evidence
-  exists
+- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked archived
+  export
+- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model timing
+- Full local suite and exact substantive GitHub CI, Draft PR, final immutable source/analysis checkpoint completed only when evidence exists
 completed:
-- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases 10/20
-  minimum, originals preserved.
-- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources with
-  exact UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214554-288eac 0349100009326000005: 4 archived
-  original XML + 5 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
-- 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder, all
-  extracted with text, 2 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process
-  PID6706 starts order 3, no concurrent models.
-- 2026-10-16 eleventh and twelfth genuine Gemma4 source E2Es exited zero, original source/three XML citations and archival exports409
-  validated, serial PID6706 started THIRTEENTH source run toa-run-20261015214554-288eac. No concurrent model analysis.
-current_stage: thirteenth_actual_local_Gemma4_processing
+- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases 10/20 minimum,
+  originals preserved.
+- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources with exact
+  UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214554-288eac 0349100009326000005: 4 archived original
+  XML + 5 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
+- 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder, all extracted
+  with text, 2 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process PID6706
+  starts order 3, no concurrent models.
+- 2026-10-16 eleventh and twelfth genuine Gemma4 source E2Es exited zero, original source/three XML citations and archival exports409 validated,
+  serial PID6706 started THIRTEENTH source run toa-run-20261015214554-288eac. No concurrent model analysis.
+- 2026-10-16 third original EOK real Gemma4 completed once 4 calls366.21s HTTP200 no fallback, 9/9 SHA originals and 3 EIS XML citations;
+  real original independent 32150-character evaluation order DOCX in 9-file model trace. Expert found wrong education/vehicle repair templates
+  in historical report, source-only private projection v2 corrected all source documents with no model replay, original old report preserved.
+current_stage: model_source_verified_domain_fix_code_and_report_republication_pending
 remaining:
-- Freeze split Oct14 first-party 11-recovered and 4-older originals under selected official notice SHA and UID
-- Isolated original source stage and local Data Platform preflight
-- Single serial Gemma E2E and expert fact check
-- Full tests/PR/exact substantive CI and completion
+- Verify full after bugfix and exact CI
+- Republish corrected report/history source-only without modifying original LLM audit
+- Complete after corrected persisted report verified
 last_verified_commit: ba55a7ead0fbffe07378893d01756762ac547cca
-last_tests: Original firstparty SHA verified, 5 actual substantive original DOC/DOCX Data Platform text extractions PASS; native ready_to_analyze,
-  selected original notice and official kind pinned; full regression pending.
-resume_instruction: Third case original EOK 0349100009326000005 model running as last step PID6706; saved 4 XML+5 original attachments
-  SHA pinned, Data Platform five substantive original doc texts available. Read /tmp/ta-apr067-thirteenth-real-gemma-20261016.log and
-  private E2E receipt; do not rerun if receipt exists. Full local4214 PASS/238 SKIP, CI pending.
+last_tests: Gemma 4 calls366.21sec no fallback, 9/9 original SHA, 3 XML citations; fixed old UNKNOWN test and focused tests green; full pending.
+  Old model report still wrong.
+resume_instruction: Case13 0349100009326000005 model/source accepted, original report remains wrong education+vehicle. Correct source-only
+  projection stored privately, must republish corrected report/history without model rerun before marking complete. Full CI pending, next
+  untouched cases14-16 can proceed separately.
 execution:
   branch: feature/apr067-r4-eleven-thirteen-original-e2e-20261016
   stage_name: ta-apr067-r4-thirteenth-eok-20261016

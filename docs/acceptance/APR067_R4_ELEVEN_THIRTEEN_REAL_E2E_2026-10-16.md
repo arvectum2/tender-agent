@@ -81,3 +81,17 @@ labeled `[Гипотеза LLM — проверить договор]`, **not le
 Report, history, read-only registry HTTP200; unauthorized access401;
 historical PDF/DOCX export409. Third case automatically started only
 after this result was saved and first code gate returned 0.
+
+
+## Case 13: model passed, old report still needs corrected publication
+
+Case 0349100009326000005 EOK real Gemma4: four calls 366.21s,
+9/9 original SHA/parsed texts, source-traced independent evaluation-order
+DOCX (32150 characters), three official XML citations and archived export409.
+Archived deadline 02.03.2026 +03:00, NMCK 130000 RUB, manual review.
+Saved old HTML SHA 20ee85843d42f47acab1dbced2c318aedc06aa8c431040bad6a47afcbfde80d3.
+Expert audit exposed wrong education and vehicle-maintenance templates;
+fixed deterministic classifier and general-services fallback. Source-only
+correction proof saved privately, no repeated model calls, original saved
+HTML preserved unchanged as known-bad audit artifact. Case13 remains
+in_progress until corrected report/history publication and exact CI pass.
