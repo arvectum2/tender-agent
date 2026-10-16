@@ -1,0 +1,22 @@
+task_id: TA-PROCUREMENT-LLM-SOURCE-RECOVERY-20261016
+repository: arvectum2/tender-agent
+status: in_progress
+goal: 'Find and reconcile existing full historical analysis reports and source-bound evidence for Arvectum bid participation, without regenerating or altering any original evidence.'
+definition_of_done:
+  - 'Audit missing 22 historical full report files against existing SSD paths, eligible backups and original immutable artifacts without changing existing records.'
+  - 'Find source receipts for four non-Aksay submitted claims across existing authorized storage; distinguish verified direct evidence from owner statements and undocumented recollection.'
+  - 'Write reproducible safe read-only locator, tests, risk-ranked report and updated roadmap/AGENTS documenting what is actually recoverable.'
+  - 'Checkpoint final exact commit+tests/CI and create Draft stacked PR if substantive code/docs changed; no new DB or model training.'
+completed:
+  - '2026-10-16 prior data source audit TA-PROCUREMENT-LLM-EVIDENCE-AUDIT-20261016 completed at 39ba0db5; corresponding PR453 prior exact head b8b326f2 CI success PR38885506816, push38885499630, GitVerse38885499742.'
+  - 'Read-only baseline PostgreSQL arvectum: 75 observations, 45 original run IDs, 43 report_path filled, 21 full files readable, 22 full files absent (all 22 have short DB previews). Five manual submitted claims: one Aksay protocol SHA primary verified, four other not yet proven.'
+  - '2026-10-16 searched existing ArvectumSSD data/archive/artifacts/private/runtime/repos/worktrees/backups, Documents/Downloads/Desktop, old runtime-data.tar.gz, and Time Machine local snapshots: no July 5-6 original full MD for single EIS 0323100010326000013 found. All 22 missing rows represent 20 unique report paths, preview only 925-1502 chars.'
+  - '2026-10-16 confirmed Kaluga official EIS ZIP source SHA6c2d812fd7148fa8dcf78cbccf62121c1bf731a067cc3031b5aa6c3679c9d7e3 and XML SHA109d434c739f512e777461389481b6ae5bca3920fc36be36336e284e061fa65c: application193 admitted true, final 449000 RUB, appRating26; owner attribution not independently verified. Standard manual event passed dry-run and queued private 0600, not written into PG.'
+  - '2026-10-16 new read-only source_recovery.py and 8 targeted tests PASS (21 combined with audit), full Mac mini regression 4039 PASS/239 SKIP/1 independent R9 DESELECTED/0 new fail in 134.78s, Ruff/YAML/diff PASS. No database modifications, copy or regenerations.'
+current_stage: 'Source recovery reconnaissance and tooling complete, waiting for Draft stacked PR CI.'
+remaining:
+  - 'Push read-only source-recovery script, 8 tests and signed-off evidence report in a new stacked Draft PR; validate CI+GitVerse mirror.'
+  - 'On green CI set child completed. Separately pending independent sources: old July external backups and ETP company-attribution receipts for Museum, Aksioma, Kaluga, RTS/Sber-AST.'
+last_verified_commit: 39ba0db5a7d26ffa0c4cd9832b35700e51c5288e
+last_tests: 'Mac mini full regression 4039 PASS, 239 skipped, 1 known unrelated baseline R9 deselected, zero unexpected failures, 134.78s. Focused source recovery+audit 21 PASS; Ruff clean, YAML valid, git diff check PASS. Live canonical PG still has 75 observations; pending Kaluga payload dry-run PASS.'
+resume_instruction: "Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/ta-procurement-llm-source-recovery-20261016, branch feature/procurement-llm-source-recovery-20261016 based on completed PR453 child (stacked over PR452/451). Search done, no original 22 full July 2026 reports, all are 0323100010326000013 and 20 unique paths; 22 retained DB previews. Kaluga app193 official EIS original ZIP+XML SHA exact, admitted 449000, attribution to Arvectum still owner-reported. Staged private intake in pending-manual-evidence/kaluga-app193-20261016.json validated dry-run only; existing PostgreSQL unchanged 75. Source-recovery tool and 8 tests pass, full suite 4039/239 skip/1 baseline R9 deselected. Next push Draft stacked PR and verify CI, set completed only if green; parent Tender Agent remains in_progress. Do not rerun destructive steps, no extra database, training, merge, production rollout or watchdog."
