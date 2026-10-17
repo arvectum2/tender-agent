@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-CORPORATE-QUALIFICATION-19042-19043-20261017
+status: in_progress
+goal: Compare original mandatory qualifications and requested commercial proposal fields of Workspace 19042 and 19043 with verifiable company proof, without claiming acceptance or sending bids.
+definition_of_done:
+  - Verify exact original two public Workspace URLs HTTP/identity/status/deadline and full source-based mandatory vs optional text.
+  - Preserve explicit three-year experience and completed project gates for 19042 and mandatory relevant realized project gate for 19043; two variants optional when possible.
+  - Create reproducible source timestamp/hash and machine + readable qualification matrix, fail-closed on changes.
+  - Keep proof of Arvectum-specific eligibility and PRO account unknown; no invented accepted portfolio or contract/profits.
+  - Run adversarial tests and relevant regressions, record commits/CI, preserve Owner/human gates.
+  - Complete child checkpoint and update parent canonical roadmap without repeating prior completed tasks.
+completed:
+  - Parent TA-ROADMAP-EXEC-20261012 restored. WordPress 19032 original scope child completed SHA0c003ba5, CI pending at latest b3e767d6.
+  - Both exact 19042 and 19043 original public URLs returned HTTP200 and PUBLIC_CANDIDATE_ONLY with exact 31 October date-only; original detailed source text inspected, qualification requirements separated from preferences.
+current: Implement bounded dual-source audit, report and regression.
+pending:
+  - Script and pinned source receipt.
+  - Manual qualification/proposal matrix and master roadmap.
+  - Test, commit, checkpoint closure, push to draft PR477; verify newest CI status.
+last_verified_commit: b3e767d64941c0e8a80d12a300bece0fb61b6bff
+test_results: Prior WordPress source child 181 B2B pytest pass; two new public HTTP200 observed; new task tests pending.
+resume_instruction: Continue with 19042/19043 original public source audits, do not assert 3 years or accepted real customer portfolio from Arvectum company age or apps. No submissions/payments or login changes. Do not merge draft PR without current authority.
