@@ -1,0 +1,23 @@
+task_id: TA-PROCUREMENT-LLM-BACKFILL-HOOK-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: 'Import previously captured 29 metadata observations into existing PostgreSQL arvectum, reconcile existing analysis runs and add bounded idempotent manual/automatic capture without creating another long-lived database.'
+definition_of_done:
+  - 'Add reviewed Alembic migration on main-compatible head and matching ORM model in existing Tender Agent PostgreSQL, preserving tenant and owner-internal boundaries.'
+  - 'Implement idempotent, source-bound, append-only candidate intake and manual CLI. Fail closed for blind/gold/unsupported participation.'
+  - 'Reconcile legacy 20 DEV E2E + 9 manual candidates, existing runs by immutable IDs, no duplicate source files, no inference that candidate is train-ready.'
+  - 'Prove focused tests, migration acceptance and real DB preflight/backups; apply only if safe on existing production revision 100.'
+  - 'Update README/roadmap checkpoints and CI/PR; preserve original SQLite until verified parity.'
+completed:
+  - '2026-10-16 policy-only PR451 at 7fd6b159c2792e404417c4099341791c132250a8 checked out clean in isolated worktree.'
+  - 'Read-only Docker PG17 arvectum has 20 procurements, 45 analysis runs, 95 document rows, Aksay 55 bidder offers; live Alembic version 100_add_daily_tender_runs, while repository head is 106_add_saas_foundation.'
+  - 'Legacy candidate-registry.sqlite3 has 29 candidate observations and 27 distinct procurement refs; preserve unmodified.'
+  - '2026-10-16 cloned actual Docker PostgreSQL arvectum backup into disposable acceptance DB; Alembic 100-105 succeeded, verified 9 existing SaaS tables against ORM, stamped already-existing migration106, then applied 107 and imported all 74 candidate observations. Idempotent replay tested; disposable clone removed.'
+  - '2026-10-16 backed up real existing PG arvectum (pg_dump -Fc 2MB SHA 730e33bdfcc9eb042b7ccf2b53318c4cfb2000aad45c27df34eb44b836c68593), upgraded live to 107 under same verified preflight, imported 20 development E2E + 9 historical manual + indexed 45 historical analysis runs in same DB; verified replay 29 existing/0 new, original 45 run rows and 55 offers unchanged.'
+  - '2026-10-16 full Mac mini full regression 4009 PASS, 239 skipped, 1 independent known R9 baseline failure deselected. Focused 28 PASS/1 skip, Ruff pass; disposable R8 PG migration up/down/up pass. PR451 exact-head 3c0c6e95 GitHub push and PR 9/9 green and GitVerse mirror success.'
+current_stage: 'completed_backfill_and_ci_verified'
+remaining: []
+next_task: 'TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016 — close customer_pilot run capture and structured ChatGPT/manual operator intake on same PostgreSQL.'
+last_verified_commit: 3c0c6e95e02679b547f0f0accee46bdb578b5b8a
+last_tests: 'Mac mini pytest full 4009 PASS/239 SKIP/1 DESELECTED (R9 baseline failure reproducible on unchanged PR450)/0 FAILED, 131.83s; focused new 28 PASS/1 SKIP and Ruff PASS; R8 disposable PostgreSQL full up/down/up migration chain EXIT0 after empty-only downgrade guard; live 74 inserted without duplicates; 45 original runs/55 offers unchanged.'
+resume_instruction: 'Completed. PR451 code-and-docs head 3c0c6e95 GitHub CI push 38877756147 and PR 38877764311 success; GitVerse mirror 38877756191 success. Existing PostgreSQL arvectum Alembic107 contains 74 unreviewed candidates 20+9+45 with idempotent replay. Frozen SQLite and private PG dump preserved, no model training. Do not repeat backfill. Next active child TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016 in separate worktree; manual chats require explicit CLI, not silent global subscription.'

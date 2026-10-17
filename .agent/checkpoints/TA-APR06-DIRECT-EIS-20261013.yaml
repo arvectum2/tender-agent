@@ -1,0 +1,42 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-DIRECT-EIS-20261013
+status: completed
+goal: Diagnose intermittent public EIS cached 404 from direct Russian egress, implement bounded source-specific recovery and verify current CZN v4 HTML evidence without procurement external actions.
+definition_of_done:
+  - Record direct vs default EIS HTTP status and Mac mini network settings.
+  - Validate public page facts and distinguish official GET from unsuccessful endpoints.
+  - Add bounded EIS Varnish HTML 404 retry only on official notice GET, fail closed on persistent 404/403/429/untrusted hosts; provenance of transient recovery.
+  - Create review-only draft PR with exact-head CI and checkpoint.
+completed:
+  - Inspected parent roadmap and prior PR402 exact-head CI SUCCESS.
+  - Mac mini internet egress confirmed RU/Moscow via independent IP-geolocation result.
+  - macOS PAC present at localhost port 8082, process proxy environment absent.
+  - Confirmed user report: exact CZN official ok20 URL intermittently 200/404 through same direct RU IP. Eight HTTP/1.1 same-URL runs yielded six 200 on eis-varnish-pub02, two 404 on eis-varnish-pub01. 404 is 146-byte nginx stub; not procurement status.
+  - Official CZN common-info HTML 200 contains Подача заявок, updated 12.10.2026 and new deadline 23.10.2026 10:00 MSK.
+  - Official documents.html 200 identifies active revision 4, published 12.10.2026 22:24 MSK, revision 3 inactive; event-journal.html 200 confirms change event and clarifications. Historical v3 19 Oct deadline is superseded.
+  - Existing official docs tab names updated 12 Oct contract and ООЗ ИТОГ, so do not download missing old v3 appendix before official v4 UID inventory.
+  - Public EIS home via HTTPS direct GET 200; museum common-info GET 200, status Подача заявок and deadline 2026-10-16 10:00 MSK.
+  - CZN archived official URL returns nginx 404 via direct GET; no status inferred.
+  - Current public HTML Museum contains Подача заявок, deadline 2026-10-16 10:00 MSK, last updated 08.10; not an XML edition/UID freshness assertion.
+  - Public status report docs/acceptance/APR06_DIRECT_EIS_HTTPS_2026-10-13.md committed. Two regression tests verify source_direct_connection=True creates explicit empty ProxyHandler even with environment proxy variables.
+  - Draft PR404 opened against APR06 parent branch, no ETP action.
+  - Inspected Python urllib: ProxyHandler({}) suppresses default environment proxy handler without registering any protocol handler itself. Corrected positive regression expectation in b4c9f9d.
+  - Source adapter _fetch_page and operator fallback _extract_public_page_context now bounded retry only on 146-byte EIS pub01 Varnish/nginx HTTP404; 403,429,host lookalikes and persistent 404 fail closed.
+  - Found and fixed dangerous secondary operator deadline UTC 07:00 shown without timezone instead of official 10:00 MSK. Real direct operator CZN fetch now returns 23.10.2026 10:00 (МСК).
+  - Public official documents HTML shows CZN active v4, seven current UID attachments. Three unchanged UID original archived files rehashed against previous corpus, four changed UID files fetched directly read-only, ZIP/PDF magic and SHA-256 verified; binaries private Mac mini only.
+  - Evidence in docs/acceptance/APR06_DIRECT_EIS_HTTPS_2026-10-13.md and 7-case JSON source receipts. 160 targeted pytest PASS + Ruff PASS + JSON validation + git diff --check on code/report head 01ee6851.
+  - Read-only original EIS SOAP getDocsIP PRIZ authenticated token request succeeded: one official HTTPS ZIP, 76,759 bytes SHA256 dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908, 4 versions epNotificationEOK2020 + 4 epClarificationDoc stored securely on SSD.
+  - Original v4 XML 106,471 bytes SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 23 Oct 10:00 MSK, published 12 Oct 22:24:55 MSK, 7/7 UID/file names/fileSize matches validated to SHA-hashed local originals. Digital signature NOT VERIFIED.
+  - Hardened read-only offline SOAP v4 verification script plus eight negative tests for original checksum/host/deadline/UID/traversal/duplicated version, all 8 PASS; overall 168 focused tests PASS, Ruff PASS, and real archived SOAP verifier PASS at head ac972df99.
+  - Four new current v4 attachment bytes persisted in protected Mac mini ArvectumSSD runtime/source-files-v4, 4/4 SHA rechecked. Three ZIP internal CRC and path-safety checks PASS; two DOCX and one PDF nested, no execution or macros. Original PDF retained.
+current: 'Technical direct EIS read-only source proof complete; PR404 exact-head CI SUCCESS. Separate expert content review remains pending.'
+pending: []
+last_verified_commit: 'PR404 code/head a076c8c89da1c7eb2a4c40377facc349e25a0666 verified PR run 38401431113 SUCCESS, push runs 38401426507 and 38401426493 SUCCESS; checkpoint metadata change follows.'
+test_results:
+  - 'Mac mini direct HTTPS curl: EIS home HTTP200 and Museum official notice HTTP200; CZN official notice HTTP404; RU/Moscow egress, macOS PAC present. Default/direct GET to exact routes agree.'
+  - 'On PR404 head 01ee6851 Mac mini 160 focused pytest PASS, Ruff PASS, JSON validation and git diff --check PASS.'
+  - 'Live Public44FzSearchProvider.fetch_detail: CZN source success, active v4, seven links, 23 Oct 10:00 MSK; live secondary operator context after fix also 23 Oct 10:00 (МСК).'
+  - 'Four new current v4 files downloaded read-only under /tmp/ta-apr06-czn-v4-originals-20261013, 4/4 SHA256 and ZIP/PDF signatures verified; three prior UID files rehashed under existing RO Docker corpus; no original v4 epNotification XML yet.'
+  - 'PR404 code/report head ac972df99: 168 focused pytest PASS/Ruff PASS/diff; official original SOAP archive and epNotificationEOK2020 v4 exact UID/name/size binding 7/7 PASS, signature validation NOT RUN. Exact PR CI 38399459148 queued, push 38399452112 queued and 38399452256 SUCCESS.'
+resume_instruction: 'TECHNICAL CHILD COMPLETED. Original EIS SOAP v4 XML and 7/7 UID/name/size to local SHA verified. CZN content and legal expert review is a separate pending APR06 task; signature and human gold not verified. Keep PR404 draft and no bids/production.'

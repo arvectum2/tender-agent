@@ -1,0 +1,80 @@
+{
+  "bids_signed_submitted": 0,
+  "captured_at": "2026-10-09T05:42:26.099341+00:00",
+  "human_reviews": 0,
+  "items": [
+    {
+      "downloaded": 2,
+      "files": [
+        {
+          "bytes": 810348,
+          "extension": ".pdf",
+          "inspection": null,
+          "sha256": "318da95293de2e771584a06eef86e12c7414365552cc6f73b555f95837f2615f"
+        },
+        {
+          "bytes": 492826,
+          "extension": ".pdf",
+          "inspection": null,
+          "sha256": "b5e238def3c51b3fef28efdc5cd11c11cb651d853e5231336dedd74189158d4f"
+        }
+      ],
+      "reg_number": "32616416057",
+      "skipped": [
+        {
+          "extension": ".pdf",
+          "reason": "file_too_large"
+        }
+      ],
+      "source_links": 3,
+      "status": "DOWNLOAD_FILES_PRESENT_NEEDS_PROVENANCE_AND_HUMAN_REVIEW"
+    },
+    {
+      "downloaded": 1,
+      "files": [
+        {
+          "bytes": 574538,
+          "extension": ".pdf",
+          "inspection": null,
+          "sha256": "ca1d422f8707eeade65e169a246aa7dd2fae91e2f43b7bed23b6fa30c513d4fe"
+        }
+      ],
+      "reg_number": "32616412768",
+      "skipped": [],
+      "source_links": 1,
+      "status": "DOWNLOAD_FILES_PRESENT_NEEDS_PROVENANCE_AND_HUMAN_REVIEW"
+    },
+    {
+      "downloaded": 1,
+      "files": [
+        {
+          "bytes": 156793,
+          "extension": ".html",
+          "inspection": null,
+          "sha256": "65ef39395b49dc79ff02c717cf7c303b013cf3c6dd1f8d0c46dd8cd59b945f03"
+        }
+      ],
+      "reg_number": "32616369437",
+      "skipped": [],
+      "source_links": 1,
+      "status": "DOWNLOAD_FILES_PRESENT_NEEDS_PROVENANCE_AND_HUMAN_REVIEW"
+    },
+    {
+      "downloaded": 1,
+      "files": [
+        {
+          "bytes": 40210,
+          "extension": ".docx",
+          "inspection": null,
+          "sha256": "d6d33d78ce1f310a2a74de899da375901357ecca79cb1dbf15ba62ea17e06fdc"
+        }
+      ],
+      "reg_number": "32616045143",
+      "skipped": [],
+      "source_links": 1,
+      "status": "DOWNLOAD_FILES_PRESENT_NEEDS_PROVENANCE_AND_HUMAN_REVIEW"
+    }
+  ],
+  "public_docs_only": true,
+  "schema_version": "apr06-223fz-public-docs-v1"
+}

@@ -4,13 +4,30 @@ task_id: TA-ROADMAP-EXEC-20261012
 status: in_progress
 goal: 'Execute owner-ordered Tender Agent product roadmap after TA/DP engineering refactor.'
 definition_of_done:
-  - 'APR-03B: reproduce a real authorized read-only 44-FZ workspace flow, verify source integrity, report and citations, fix reproducible code defects and collect owner browser/legal acceptance where required.'
+  - 'APR-03B development E2E: accept an Owner-delegated source-grounded AI expert evaluation instead of human gold for this stage; verify actual workspace workflow and citations; preserve independent legal/commercial approval for later stages.'
   - 'APR-04: reconcile, verify and safely merge versioned onboarding PR on current main with real-company profile eligibility and protected private data.'
   - 'B2B discovery: verify authorized public procurement-source access and deliver 15-20 source-grounded IT opportunities before deciding on connector scope.'
   - 'APR-06/07: reconcile and run official-source commercial/LLM quality benchmark without inventing human-gold or legal GO.'
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 PROC-LLM-DATA-09/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016 completed: PR458 EIS Aksay original ZIP/XML SHA audit and 9 targeted tests; Mac mini 4069 PASS/239 SKIP/1 unrelated R9 deselected. Exact code+checkpoint SHA261c4583 CI PR38922501705/push38922492055/mirror38922492028 all SUCCESS. Later epNoticeApplicationCancel targets OTHER app122034518, NOT Arvectum app122031738 nor proof of global cancel/revised rank. PG77 unreviewed preserved; nine ETP metadata events only private dry-run, apply blocked; Museum result due 20Oct. Draft PR unmerged."
+  - "2026-10-16 corporate source ETP review (read only): operator notices explicitly identify ООО Арвектум as RTS bidder Museum Bread (12 &15 Oct), Roseltorg Aksioma submission app ordinal3630084, Sber-AST Kaluga app193 admitted and separate app206 processing/withdrawal without app number. Six candidate metadata events staged private/validated but apply blocked by tool; PostgreSQL remains77. Owner-source and legal gold not auto-promoted."
+  - "2026-10-16 PROC-LLM-DATA-05: 2 original unlinked legacy report files from old MacBook SHA verified and indexed in existing PG arvectum, 77 unreviewed candidates total (45 runs,20 Gemma E2E,10 manual,2 legacy artifacts), zero duplicate inserts on replay; no full text copied or trained. New child checkpoint TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016 records tests/CI."
+  - "2026-10-16 PROC-LLM-DATA-04: 22 missing full July analysis report rows all belong to one procurement 0323100010326000013 and represent 20 unique paths; 22 DB previews retained; no original located on available SSD/backup paths. Official Kaluga final protocol ZIP+XML SHA verified app193 admitted price449000, Arvectum ownership unproven. Private follow-up candidate queued but NOT inserted (live PG 75); 4039 full tests pass with baseline R9 deselected. Source-recovery child checkpoint tracks stacked PR CI."
+  - "2026-10-16 PROC-LLM-DATA-01: existing PostgreSQL arvectum migration 107 live; verified 20 DEV E2E + 9 historical manual + 45 existing run observations (74), 29 replay existing/0 new; 45 original analysis rows and 55 Aksay offers preserved. Canonical storage ArvectumSSD/data/tenders; 2 MB verified pg_dump SHA730e33bdfc preserved. PR451 code head 5c647072 in CI. Full 4009 PASS/239 SKIP/1 baseline R9 deselected; 27 targeted PASS; Ruff/YAML PASS. Separate child checkpoint TA-PROCUREMENT-LLM-BACKFILL-HOOK-20261016.yaml."
+  - "2026-10-16 PROC-LLM-DATA-01: read-only existing PG17 arvectum (20 tenders/45 runs/95 docs/1 bid result/55 offers) and SSD data/tenders (15 EIS folders/142 files) reconciled; storage policy and roadmap updated on isolated branch. Experimental SQLite 29 observations frozen, not canonical. Child checkpoint TA-PROCUREMENT-LLM-STORAGE-UNIFICATION-20261016 tracks policy-only review; no production writes and no model train."
+  - "2026-10-15 eighth historic 44FZ real-source legacy DOC case 0127100008626000013: six source XML+four first-party archived .docx/.doc docs pinned UID+SHA, two old DOC texts Data Platform extracted 50612/7682 characters, source stage ready, 21 focused tests PASS, one real Gemma PID62278 in progress."
+  - "2026-10-15 seventh distinct EOK original case 0348100024426000039: selected archived EOK2020 revision3 XML and 7 original filestore files exact source UID/bytes/SHA pinned, one independently recovered ZIP matched first-party receipt; local source stage 4 XML+7 official attachments, 5 nested texts, real Gemma PID54222 in progress; 20 source adversarial tests pass."
+  - "2026-10-15 sixth distinct historical EIS case 0348100024426000021 source QA: 8 XML+6 official attachments SHA verified, four signed ZIPs yield 5 substantive DP PDF/DOCX, signing HTML and .sign excluded, NMCK PDF not treated as draft contract; 4151 full PASS/238 SKIP, genuine Gemma4 E2E PID16155 IN_PROGRESS. Not counted as sixth completed yet."
+  - "2026-10-15 fifth distinct official 44FZ archived E2E 0152200004026000069: 7/7 SHA-pinned original XML/DOCX sources, real Gemma4 four calls348.24s, 3 source XML citations, archived exports409. Expert report caught false missing contract for software scope; source-bound present/parse_failed/absent/unknown fixed, private corrected reprojection without LLM; 4149 full tests passed/238 skipped."
+  - "2026-10-15 APR067 fourth independent historical EIS development E2E 0151600003226000011: 5 original SHA-pinned files, source-bound official XML docKindInfo CP/MRJ/POD/CAR, Gemma4 4 calls 403.23s,5/5 extracted, 3 original XML citations, archived exports409, NEEDS_REVIEW. AI expert accepted for DEVELOPMENT E2E; current live EIS/bid GO separate."
+  - "2026-10-15 APR067 third historical firstparty 44FZ offline-source Gemma E2E 0162200011826003089: SHA-verified ZIP and 17 originals; four archived notice revisions including original v4, first model run 350.92sec 16/17 extraction due unsupported ODT, fixed Data Platform PR125, second real Gemma4 four calls150.08sec, 17/17 sources extracted, 3 pinned XML citations, historic archive exports 409, no original SHA mutation, old unsupported literal absent, 51 focus PASS/4104 full PASS/238 SKIP. DEVELOPMENT ChatGPT-expert acceptance, not current legal/bid GO."
+  - "2026-10-15 APR067 second real R4 historical E2E on 0376300000126000193: 8/8 original saved SHA and extraction, Gemma4 four calls 358.92 sec, unsupported old literal not repeated; found and fixed notice XML mistaken for protocol/results duplicate, recovered exact original XML subject/deadline/NMCK citations, archived export 409, source model report NEEDS_REVIEW. 4093 full pytest PASS/238 SKIP/0 FAIL, targeted46 PASS Ruff. Draft PR pending; not 20 full E2E nor Owner commercial/legal GO."
+  - "APR067 R4 development source QA 2026-10-15: 20 ZIP and 20 XML verified; original R4 96 attachments verified; 47 model snippets categorized 42 exact,3 formatted,2 unsupported; full 4074 PASS,238 SKIP. Commercial and independent legal gold open."
+  - "2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts 3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured."
+  - "2026-10-15 APR03B DEVELOPMENT E2E ACCEPTED on original archived EIS 0372200172326000015: 6/6 extracted, Gemma4 12B 4 calls/138.79s, 3 HTML citations from original XML, 8/8 source-quality workflow gates, auth401, archived PDF/DOCX409; real original/read-only 4031 full pytest PASS/238 SKIP, Ruff clean. Owner-designated AI expert accepted for dev only; commercial/current-EIS/prod and independent human gold not claimed. Draft PR433 remains unmerged; next APR04 onboarding."
+  - '2026-10-15 new Owner E2E decision: source-grounded ChatGPT assessment accepted as expert for development stage; human legal-gold removed as APR03B blocking prerequisite. New 8-step acceptance gate with 21 new tests, 45 combined focused PASS, authenticated current full LLM E2E still open; roadmap/owner policy updated.'
   - "2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini exact full 4119 pytest PASS/242 SKIP/0 failed,146.20s, Github three workflows SUCCESS. Selected archival original 96/96 EIS attachment SHA+size, nonempty source texts and first material clause citations; runtime fail-closed when XML lists missing appendix; client report regenerated SHA6e4461f6. Child checkpoint latest02cfe0218c2977f4a82319d6ca5c2f7c886a7872 still in_progress because full material 96-document legal/suitability review/20 signed gold and latest live official EIS revisions not attested. All drafts unmerged."
   - "2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 GitHub 3/3 exact CI SUCCESS (PR38580994393 push38580983108 push38580983130). Complete selected historical official archive attachment source 96/96 firstparty original SHA:50 prior verified TLS,21 additional files,25 fresh verified TLS. Source-level normalized nonempty text and sampled clause provenance added; production pipeline now fail-closed if ANY official listed attachment absent, even if contract+TZ exist. Independent 14 model-run 47 quotes (42 exact,3 whitespace,2 inaccurate),2 persisted stale deadlines/8 unapproved hard-blocker recommendations; human legal-gold0/20. Local exact head 11 original target tests PASS/Ruff and client report reproducibly identical SHA6e4461f6. Mac mini full pytest exact head PID69735 still running, CI checkpoint metadata-only branch78e9fcf0. Draft PR432 unmerged, no owner/ETP/prod actions."
   - "2026-10-14 active TA-R4-20-COMPETITIVE-SEMANTIC-20261014 draft PR432: 20 verified historical competitive +4 noncompetitive negative, firstparty 21 official ZIP/XML verified. Independently reconciled all 96 original documents linked in selected archived EIS notice editions: 50 older verified-TLS receipts of72, 21 previously recovered new competitors,25 FRESH firstparty verified-TLS official binary retrieval Oct14 with SHA+size exact, hashes privately stored. 47 saved LLM cited claims from 14 runs:42 exact/3 layout spacing/2 unsupported literal wording;3 overlong quotes,3 batches > claim cap,2 stale historic report deadlines,8 unapproved old model hard blocker decisions. Client report docs/acceptance/TDP_R4_20_TRUE_COMPETITIVE_INDEPENDENT_CLIENT_REVIEW_2026-10-14.md no technical messages and machine source proof JSON published in draft PR432. Mac mini exact code/report head780ebd1139e05cb1e6b0edc6a55a355bd9474948 FULL 4106 passed/242 skipped/0 fails 149.74s; Ruff and ten focused PASS. Latest checkpoint branch df06e432 GitHub full PR/push CI queued/in_progress, quick push SUCCESS, all drafts unmerged. Full 96-document semantic/legal expert signoffs0/20, current EIS revision, right to bid/Owner GO still OPEN."
@@ -204,7 +221,70 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "Active parent child TA-R4-20-COMPETITIVE-SEMANTIC-20261014 on draft PR432 research/r4-20-competitive-semantic-20261014. Substantive source2c40b4bf85b4941aec4eb81107ecdb32946486a9 latest Mac mini FULL 4119 pytest PASS/242 SKIP/0 FAILED/146.20s, GitHub exact three CI 3/3 SUCCESS. Child checkpoint02cfe021 keeps in_progress (full material legal document and owner signoff not complete). 20 historically confirmed competitive 44-FZ notices,4 noncompetitive controls, all96 original selected XML listed attachments SHA/size and nonempty text confirmed via 50 prior verified TLS+21 earlier originals+25 new originals (re-fetched Oct14). First sampling of material legal clauses grounded with original filename+paragraph/table and original SHA; saved LLM 47 citation checks42 literal/3 layout/2 bad,2 archived stale filing dates,8 unapproved hard-blocker verdicts, report human user language and technical JSON separated. Fail closed if any original EIS appendix not fetched; 11 private original target test PASS/Ruff. Next stage must independently assess legal/content meaning and material contract requirements across remaining 96 original documents/cases with specific page or table and evidence, human golden legal approvals 0/20, current official EIS revisions/Owner bid GO NOT VERIFIED. No need to redownload already reverified 96 original bytes. All PRs draft unmerged, watchdog disabled/manual_override true, no ETP, submissions, prod, signing, payments or buyer contact."
+resume_instruction: '2026-10-16 APR03B/APR04/APR05 isolated integration readiness PR450 source head a88af427 passed exact GitHub 3/3 workflow (PR CI 9/9); full Mac mini 4033 PASS/238 SKIP, targeted 63 PASS/Ruff. Readiness child checkpoint completed in review branch only; all source PR433/434/435 and PR450 remain Draft/unmerged with no main merge/production authorization. Separately PR449 reports 20/20 original archival 44-FZ Gemma4 DEVELOPMENT E2E cases with 210 original files/80 model calls/60 EIS citations and CI 3/3 green; legal independent gold remains 0/15 and blind SUT not run. Next safe parent stages: source-grounded current B2B legal-entity opportunity research (nine older candidates, required 15-20 current), reconcile draft stacks and stage non-production checks; owner browser/real-company commercial eligibility and SaaS terms require explicit decisions. Disabled watchdog/manual_override true. Do not merge main, bid, sign, pay, change production, fabricate legal gold or enable watchdog.'
 execution:
-  branch: feature/ta-roadmap-exec-20261012
+  branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
+
+owner_e2e_ai_acceptance_2026_10_15:
+  accepted_as_expert_for: DEVELOPMENT_E2E_ONLY
+  reviewer: owner_delegated_chatgpt
+  not_required_for_this_stage: [signed_external_human_gold, twenty_independent_legal_reviews]
+  still_required: [real_source_integrity, reproducible_functional_e2e, cited_claims, error_safety, unknown_handling]
+  never_authorizes: [legal_bid_go, bid_submission, e_signature, production_deploy, payments, signed_human_gold_fabrication]
+  post_stabilization: owner_expert_corrections_and_calibration
+
+latest_completed_quality_child: TA-APR067-GROUNDED-QUALITY-20261015
+
+latest_verified_quality_code_commit: b1b87e8554602c66d8a3065f225793cc1652e729
+
+latest_completed_r4_quality_child: TA-APR067-R4-20-QUALITY-20261015
+
+latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
+
+latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
+
+latest_active_distinct_e2e_child: TA-APR067-R4-THIRTEENTH-ORIGINAL-20261016
+
+procurement_llm_capture_2026_10_16:
+  child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-BACKFILL-HOOK-20261016.yaml
+  draft_pr: 451
+  last_code_commit: 5c647072aa96a8c7a8b9d3e52d71b82e75d28c04
+  data_rows_in_existing_postgres: 77
+  current_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-ETP-EMAIL-20261016.yaml
+  completed_eis_chronology_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016.yaml
+  last_source_verified_commit: 261c45839891fb9351aa839b1729b4f6b22a0e5a
+  last_source_verified_tests: '4069 PASS; 239 SKIP; 1 known unrelated R9 DESELECTED; GitHub CI PR and push SUCCESS'
+  museum_bread_next_official_result_check_not_before: '2026-10-20'
+  next_action: 'Resolve blocked source-bound ETP metadata import through permitted means only; otherwise await official museum final or progress other parent roadmap tasks.'
+  completed_primary_source_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OFFICIAL-FINAL-20261016.yaml
+  postfinal_chronology_report: docs/roadmap/PROCUREMENT_LLM_EIS_EVENT_CHRONOLOGY_2026-10-16.md
+  completed_outcomes_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-OUTCOMES-20261016.yaml
+  primary_eis_source_report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_EIS_FINAL_PROTOCOLS_2026-10-16.md
+  completed_legacy_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016.yaml
+  official_outcomes_evidence_report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_OUTCOMES_2026-10-16.md
+  official_outcomes_review_no_training: true
+  blocked_etp_email_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-ETP-EMAIL-20261016.yaml
+  pending_etp_operator_candidate_events: 9
+  pending_etp_import_is_blocked: true
+  independently_verified_aksay_rts_receipt_dates: [2026-10-05, 2026-10-06]
+  etp_private_source_batch_validated_only: true
+  source_recovery_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-SOURCE-RECOVERY-20261016.yaml
+  prior_source_audit_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-EVIDENCE-AUDIT-20261016.yaml
+  pending_kaluga_record_dry_run_only: true
+  latest_provenance_findings: docs/roadmap/PROCUREMENT_LLM_SOURCE_RECOVERY_2026-10-16.md
+  additional_historical_reports_imported_from_old_macbook: 2
+  additional_report_sha_verified_on_both_devices: true
+  former_missing_report_rows_remaining: 22
+  previous_child_checkpoint: .agent/checkpoints/TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016.yaml
+  latest_manual_observation: manual-aksay-protocol-20261014-v1
+  alembic_revision: 107_add_procurement_learning_observations
+  model_training: deferred
+
+main_consolidation_2026_10_17:
+  child_checkpoint: .agent/checkpoints/TA-MAIN-CONSOLIDATION-20261017.yaml
+  integration_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-main-consolidation-20261017
+  sources: 60 open PR heads / 13 origin-main rooted stacks
+  stage: full_test_pending_no_main_mutation
+  manual_override_preserved: true
+  resume_instruction: 'Run integrated tests, exact-head GitHub CI and PR merge if safe; never falsify legal/human acceptance.'

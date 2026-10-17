@@ -383,6 +383,7 @@ def project_build_output_payloads(
         supplier_questions_payload=supplier_questions_payload,
         risks_payload=risks_payload,
         economics_payload=economics_payload,
+        contract_draft_status=contract_draft_status,
     )
     trace = build_operator_analysis_trace(
         documents=documents,

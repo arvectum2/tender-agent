@@ -1,0 +1,50 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-EIGHTH-LEGACY-DOC-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Validate eighth independent saved official EIS 44FZ case 0127100008626000013 with original v1 XML and four original contract/spec/requirements
+  documents including two genuine legacy Word .doc files, using a single real local Gemma4 E2E.
+definition_of_done:
+- Source SHA-bind original getDocsIP ZIP and selected epNotificationEF2020 v1 XML, four first-party recovered official DOC/DOCX bytes
+  with exact EIS UID, official name and size.
+- Isolated native EIS intake and all original files extracted through real local Data Platform with .doc converter (not fabricated/reformatted
+  content); contract and technical specification recognized and no bypass of document-set gate.
+- Genuine local Gemma4 analysis, source-verified critical facts and citations, authenticated report/history, archival PDF/DOCX export
+  denied; preserve raw proof and real model timing.
+- Run focused adversarial/provenance and full regression tests, stacked Draft PR and exact-head CI, mark completed after verified.
+- No live EIS, ETP, real bids, signatures, payments or production changes.
+completed:
+- 2026-10-15 seventh distinct EOK v3 real source+model E2E completed, 4164 local tests PASS and exact code head PR443 CI run38790430326
+  SUCCESS.
+- 2026-10-15 next frozen R4 case 0127100008626000013 original 44FZ EF2020 notice v1, four firstparty original restored attachments including
+  two .doc Word97 files; old Word preflight real Data Platform extractor returned status=extracted, 50612 and 7682 chars.
+- 2026-10-15 case original Oct09 source archived getDocsIP ZIP and selected epNotificationEF2020 v1 XML SHA verified to frozen 20-case
+  manifest; four original v1 filestore attachment UID+name+bytes bound to individually verified Oct14 restored source receipt. Separate
+  pinned E8 JSON manifests SHA for .docx/.doc/.doc/.docx.
+- '2026-10-15 original native archived EIS intake source-only stage toa-run-20261015191113-6a3adc: six original EIS XML and four real
+  DOC/DOCX (10 original inputs), ready_to_analyze via real completeness gate, zero blind file substitutions.'
+- '2026-10-15 DP genuine Mac mini legacy Word .doc preflight on both recovered originals: 50612 and 7682 chars, extracted status; 21
+  portable adverse source/tamper and prior regression tests passed, Ruff clean.'
+- 2026-10-15 single real Gemma4 run started process PID62278 on isolated original source ten files; no duplicate local LLM run.
+- 2026-10-15 genuine eighth archived original EIS Gemma4 4 calls349.03 seconds API200, no fallback, 10/10 original source SHA/text extraction
+  including two legacy DOC, 3 exact EIS XML facts with citations, saved HTML SHA a3e45cf26abc89409b25ed49d4b6ff37b3409b9ceef669d31216ab2558ab1de1,
+  history/report200 archive exports409, manual_review.
+- '2026-10-15 owner-approved development ChatGPT source report audit: contract present, original title deadline2026-09-30 and NMCK76800
+  preserved, five English LLM hypotheses clearly unverified. Local 4173 pass/238 skip/0 fail, 21 original-source adverse tests pass,
+  Ruff PASS.'
+- GitHub PR444 substantive code head 891d9449427bb08c78bf699acce97ba3a469f7b2 exact CI run38793390664 run3507 completed SUCCESS; 4173
+  local tests passed/238 skipped/0 failed; 4 real Gemma4 349.03s, 10 source docs, 3 XML citations, historical export409.
+current_stage: eighth_original_legacy_word_source_gemma_expert_full_regression_and_ci_verified
+remaining:
+- PR444 remains Draft, no merge or deploy under this development acceptance
+- Child nine/ten continuing on independent branch with two true new original-source cases
+last_verified_commit: 891d9449427bb08c78bf699acce97ba3a469f7b2
+last_tests: PR444 code head891d9449 GitHub run3507 exact CI SUCCESS; full 4173 pass/238 skip/0 fail, 21 focused pass, Ruff PASS; actual
+  Gemma4 349.03s and 10/10 SHA sources, 3 XML citations, archival exports409.
+resume_instruction: COMPLETED eighth original legacy DOC/DOCX 44FZ development E2E. Exact code CI for PR444 SUCCESS. Do NOT rerun. Ninth
+  and tenth genuine EIS original cases are sequential in separate worktree, check PID69976 and private receipts, then child checkpoints
+  and draft PR.
+execution:
+  branch: feature/apr067-r4-eighth-legacy-doc-20261015
+  manual_override: true

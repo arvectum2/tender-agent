@@ -251,3 +251,63 @@ def test_customer_pilot_router_is_inside_existing_operator_auth_boundary():
     assert _is_protected_path("/api/operator/pilot/summary", ("/api",), ("/health",))
     assert "/api" in Settings().pilot_auth_protected_prefixes.split(",")
     assert "/customers" in Settings().pilot_auth_protected_prefixes.split(",")
+
+
+def test_completed_pilot_run_captures_tenant_candidate_only_after_completion(
+    client, session, tmp_path, monkeypatch
+):
+    from src.modules.procurement_learning_corpus.models import (
+        ProcurementLearningObservation,
+    )
+
+    monkeypatch.setenv("TENDER_LEARNING_CAPTURE_ENABLED", "1")
+    _customer(session, "CORP-CAPTURE")
+    _trusted_analysis(monkeypatch, tmp_path, session)
+    case = _case(client, "CORP-CAPTURE")
+    url = f"/api/operator/pilot/customers/CORP-CAPTURE/cases/{case['id']}/runs"
+    started = client.post(url, json={}, headers={"Idempotency-Key": "corpus-test"})
+    assert started.status_code == 201
+    run_id = started.json()["id"]
+    assert session.query(ProcurementLearningObservation).count() == 0
+
+    completed = client.post(
+        f"/api/operator/pilot/customers/CORP-CAPTURE/cases/{case['id']}/runs/{run_id}/complete"
+    )
+    assert completed.status_code == 200, completed.text
+    recorded = session.scalars(select(ProcurementLearningObservation)).all()
+    assert len(recorded) == 1
+    candidate = recorded[0]
+    assert candidate.customer_id == "CORP-CAPTURE"
+    assert candidate.visibility_scope == "tenant"
+    assert candidate.event_kind == "analysis_run"
+    assert candidate.training_status == "candidate_unreviewed"
+    assert candidate.payload_json["status"] == "completed"
+    assert candidate.payload_json["run_id"] == run_id
+
+    repeated = client.post(
+        f"/api/operator/pilot/customers/CORP-CAPTURE/cases/{case['id']}/runs/{run_id}/complete"
+    )
+    assert repeated.status_code == 200
+    assert repeated.json()["idempotent"] is True
+    assert session.query(ProcurementLearningObservation).count() == 1
+
+
+def test_completed_pilot_run_capture_off_does_not_write(
+    client, session, tmp_path, monkeypatch
+):
+    from src.modules.procurement_learning_corpus.models import (
+        ProcurementLearningObservation,
+    )
+
+    monkeypatch.delenv("TENDER_LEARNING_CAPTURE_ENABLED", raising=False)
+    _customer(session, "CORP-NO-CAPTURE")
+    _trusted_analysis(monkeypatch, tmp_path, session)
+    case = _case(client, "CORP-NO-CAPTURE")
+    url = f"/api/operator/pilot/customers/CORP-NO-CAPTURE/cases/{case['id']}/runs"
+    started = client.post(url, json={}, headers={"Idempotency-Key": "no-capture"})
+    assert started.status_code == 201
+    completed = client.post(
+        f"{url}/{started.json()['id']}/complete"
+    )
+    assert completed.status_code == 200
+    assert session.query(ProcurementLearningObservation).count() == 0

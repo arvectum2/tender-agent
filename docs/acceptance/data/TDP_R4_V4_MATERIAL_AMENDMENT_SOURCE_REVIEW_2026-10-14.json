@@ -1,0 +1,219 @@
+{
+  "review_state": "SOURCE_ATTESTED_UNSIGNED_LEXICAL_CHANGE_LEADS",
+  "paired_distinct_originals": 3,
+  "pairs": [
+    {
+      "source_pair_label": "Основной проект контракта",
+      "previous_official_filename": "Проект контракта, сост. 08.10.2026.zip",
+      "current_official_filename": "Проект контракта, сост. 12.10.2026.zip",
+      "previous_original_binary_sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185",
+      "current_original_binary_sha256": "f103990c2b84353b962768b6d2ff52398304faf056e0499256f237cf03fa7b0c",
+      "previous_extracted_text_sha256": "784d0838134ef42f32fb2e6a535e1fba56c0fa338c491c0cd98d450c244140cf",
+      "current_extracted_text_sha256": "6a501c3b3cf887e31f727b1f28a83f58782d2f699f606c8817c4ed5c49c47250",
+      "old_text_lines": 286,
+      "current_text_lines": 286,
+      "textual_sequence_similarity": 1.0,
+      "diff_blocks_by_kind": {},
+      "unmatched_old_lines": 0,
+      "unmatched_current_lines": 0,
+      "topic_line_counts_old": {
+        "Обеспечение заявки/контракта": 14,
+        "Права на ПО и результаты": 8,
+        "Лицензирование/квалификация": 2,
+        "Персональные данные и ИБ": 2,
+        "Сроки исполнения": 7,
+        "Приёмка результата": 3,
+        "Оплата и аванс": 0,
+        "Гарантийные обязательства": 20
+      },
+      "topic_line_counts_current": {
+        "Обеспечение заявки/контракта": 14,
+        "Права на ПО и результаты": 8,
+        "Лицензирование/квалификация": 2,
+        "Персональные данные и ИБ": 2,
+        "Сроки исполнения": 7,
+        "Приёмка результата": 3,
+        "Оплата и аванс": 0,
+        "Гарантийные обязательства": 20
+      },
+      "changed_new_text_topical_leads": [],
+      "legal_meaning_verified": false,
+      "independent_legal_expert_signed": false,
+      "source_text_extraction_complete": false,
+      "scope_notice": "Case-independent text-layer diff only: extractor/format/layout differences can produce misleading changes. New textual matches are questions for human review, not proven duties or bid GO."
+    },
+    {
+      "source_pair_label": "Описание объекта закупки — ТЗ",
+      "previous_official_filename": "Другое приложение, сост. 08.10.2026.zip",
+      "current_official_filename": "ООЗ ИТОГ.pdf",
+      "previous_original_binary_sha256": "4d67941f0a8acdc9922e005f157f41937d4f0fef7a59fbe77065577d14f18143",
+      "current_original_binary_sha256": "3a668cd9140770851920d4a6b99ea0568f129a7eba0496ad63e1254d619b8364",
+      "previous_extracted_text_sha256": "a1f7e9d086dceeb4041489efac2c1f06794b6c40f30906cdebe21143287f3cfd",
+      "current_extracted_text_sha256": "5ecbedd115549c587cb6cfef6725cfcd79b7594c462dab1f711994f17fbffd17",
+      "old_text_lines": 2961,
+      "current_text_lines": 3188,
+      "textual_sequence_similarity": 0.7761,
+      "diff_blocks_by_kind": {
+        "delete": 45,
+        "insert": 46,
+        "replace": 102
+      },
+      "unmatched_old_lines": 575,
+      "unmatched_current_lines": 802,
+      "topic_line_counts_old": {
+        "Обеспечение заявки/контракта": 0,
+        "Права на ПО и результаты": 0,
+        "Лицензирование/квалификация": 0,
+        "Персональные данные и ИБ": 8,
+        "Сроки исполнения": 3,
+        "Приёмка результата": 5,
+        "Оплата и аванс": 0,
+        "Гарантийные обязательства": 12
+      },
+      "topic_line_counts_current": {
+        "Обеспечение заявки/контракта": 0,
+        "Права на ПО и результаты": 0,
+        "Лицензирование/квалификация": 0,
+        "Персональные данные и ИБ": 8,
+        "Сроки исполнения": 5,
+        "Приёмка результата": 5,
+        "Оплата и аванс": 0,
+        "Гарантийные обязательства": 16
+      },
+      "changed_new_text_topical_leads": [
+        {
+          "topic": "Сроки исполнения",
+          "changed_current_lines_with_topic": 3,
+          "table_of_contents_hits_excluded": 1,
+          "bounded_source_leads": [
+            {
+              "source_locator": "LINE-3237",
+              "source_line_sha256": "750ae14454a4f19fb4cca638c8c8c1f88081f02643c23504866bfcd2eac9b968",
+              "matched_literal": "срок выполнения работ",
+              "short_source_excerpt": "Доступы предоставляются на срок выполнения работ и пр екращаются после",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            },
+            {
+              "source_locator": "LINE-3285",
+              "source_line_sha256": "d9bf51709bfddce8d245fd7f560034fbef472eac65234fbccc240294a03df718",
+              "matched_literal": "сроки выполнения работ",
+              "short_source_excerpt": "Исполнителя, сроки выполнения работ продлеваются на период такой",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            },
+            {
+              "source_locator": "LINE-3294",
+              "source_line_sha256": "8ffd8169a57b0a80763edf01c4057e0c208798db00e719fb8a3e39d43275c6de",
+              "matched_literal": "календарных дней",
+              "short_source_excerpt": "не должен превышать 5 (пяти) календарных дней с момента направления",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            }
+          ]
+        },
+        {
+          "topic": "Приёмка результата",
+          "changed_current_lines_with_topic": 4,
+          "table_of_contents_hits_excluded": 0,
+          "bounded_source_leads": [
+            {
+              "source_locator": "LINE-3229",
+              "source_line_sha256": "23b234e6aea702bb4a455bb667fbff8a3955a9532def09ccba112c7dc1ec1445",
+              "matched_literal": "актов сдачи",
+              "short_source_excerpt": "актов сдачи-приёмки выполненных работ.",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            },
+            {
+              "source_locator": "LINE-3238",
+              "source_line_sha256": "c3db34ea41f4c15aa1c0b98b06615b026cfef20bb249e1993c27b1469d475b07",
+              "matched_literal": "акта сдачи",
+              "short_source_excerpt": "подписания итогового акта сдачи-приёмки. Передача доступов оформляется актом",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            },
+            {
+              "source_locator": "LINE-3338",
+              "source_line_sha256": "f7625ec5a87d359e230da64a327514e283632097bf5869ed36c244bbf7e9ac0c",
+              "matched_literal": "акт сдачи",
+              "short_source_excerpt": "Оформленный акт сдачи-приёмки по",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            }
+          ]
+        },
+        {
+          "topic": "Гарантийные обязательства",
+          "changed_current_lines_with_topic": 7,
+          "table_of_contents_hits_excluded": 2,
+          "bounded_source_leads": [
+            {
+              "source_locator": "LINE-1241",
+              "source_line_sha256": "4df7baa974e10ee8a85e457df20979cb738240539ab4fc90cc41e4cb42a22eb3",
+              "matched_literal": "гарантийного срок",
+              "short_source_excerpt": "течение гарантийного срока, установленного разделом 6 настоящего",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            },
+            {
+              "source_locator": "LINE-1244",
+              "source_line_sha256": "15e6cd7cf721cc3e8371455c1fe18d202c57d4fb4dacbde8b9e8c63daf3524b3",
+              "matched_literal": "гарантийного срок",
+              "short_source_excerpt": "изменениями, в течение гарантийного срока, установленного разделом",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            },
+            {
+              "source_locator": "LINE-3585",
+              "source_line_sha256": "ec4ce2efa45893a8b418be0eb3f109306d7eb0cdf9ebbcbbd249120f79f90b8d",
+              "matched_literal": "Гарантийные обязательств",
+              "short_source_excerpt": "контракта. Гарантийные обязательства распространяются на доработанные",
+              "interpretation_status": "UNVERIFIED_LEXICAL_LEAD_REVIEW_REQUIRED"
+            }
+          ]
+        }
+      ],
+      "legal_meaning_verified": false,
+      "independent_legal_expert_signed": false,
+      "source_text_extraction_complete": false,
+      "scope_notice": "Case-independent text-layer diff only: extractor/format/layout differences can produce misleading changes. New textual matches are questions for human review, not proven duties or bid GO."
+    },
+    {
+      "source_pair_label": "Приложение ПИК к контракту",
+      "previous_official_filename": "Приложение к проекту контракта, сост. 08.10.2026.zip",
+      "current_official_filename": "Приложение к проекту контракта, сост. 12.10.2026.zip",
+      "previous_original_binary_sha256": "5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9",
+      "current_original_binary_sha256": "4b92d5979d57e1e064493364a00b3ce8c52281697cd298adce84cd100d68c002",
+      "previous_extracted_text_sha256": "d2bcc7494e7e727012766e5abf56ed10952fd3a3e993fa5ce0242d10ce5f6cef",
+      "current_extracted_text_sha256": "abdf13fd40d8014e5534828b779b5c38d5d512cb752b310322d4c0cc2d658a65",
+      "old_text_lines": 487,
+      "current_text_lines": 487,
+      "textual_sequence_similarity": 0.9795,
+      "diff_blocks_by_kind": {
+        "replace": 10
+      },
+      "unmatched_old_lines": 10,
+      "unmatched_current_lines": 10,
+      "topic_line_counts_old": {
+        "Обеспечение заявки/контракта": 7,
+        "Права на ПО и результаты": 0,
+        "Лицензирование/квалификация": 0,
+        "Персональные данные и ИБ": 2,
+        "Сроки исполнения": 5,
+        "Приёмка результата": 1,
+        "Оплата и аванс": 0,
+        "Гарантийные обязательства": 4
+      },
+      "topic_line_counts_current": {
+        "Обеспечение заявки/контракта": 7,
+        "Права на ПО и результаты": 0,
+        "Лицензирование/квалификация": 0,
+        "Персональные данные и ИБ": 2,
+        "Сроки исполнения": 5,
+        "Приёмка результата": 1,
+        "Оплата и аванс": 0,
+        "Гарантийные обязательства": 4
+      },
+      "changed_new_text_topical_leads": [],
+      "legal_meaning_verified": false,
+      "independent_legal_expert_signed": false,
+      "source_text_extraction_complete": false,
+      "scope_notice": "Case-independent text-layer diff only: extractor/format/layout differences can produce misleading changes. New textual matches are questions for human review, not proven duties or bid GO."
+    }
+  ],
+  "human_legal_expert_signed": false,
+  "bid_ready": false
+}

@@ -36,6 +36,23 @@ def project_build_services_preliminary_analysis(
     )
     initial_price = _extract_notice_price(metadata, notice_text, contract_draft_text)
     contract_missing = not bool(contract_draft_text.strip())
+    # Distinguish failure to EXTRACT a structured service row from an
+    # affirmative source claim that the customer has not specified volume.
+    # Historical portal support TЗ can state an explicit 50-hour volume even
+    # when the table parser finds zero line items.
+    has_service_rows = bool(service_items)
+    all_quantities_parsed = has_service_rows and all(
+        item.quantity is not None for item in service_items
+    )
+    has_unit_prices = any(item.unit_price is not None for item in service_items)
+    quantity_note = (
+        "Структурированные позиции услуг автоматически не извлечены; объём и расценки "
+        "необходимо сверить непосредственно с ТЗ и проектом контракта."
+        if not has_service_rows else
+        "Количество по структурированным позициям извлечено и требует сверки с ТЗ."
+        if all_quantities_parsed else
+        "По части структурированных позиций количество не подтверждено; проверьте исходные таблицы."
+    )
     rows = [
         {
             "№": str(index),
@@ -53,6 +70,37 @@ def project_build_services_preliminary_analysis(
         }
         for (index, item) in enumerate(service_items, start=1)
     ]
+    if profile == "vehicle_maintenance_services":
+        compliance_actions = [
+            "Необходимо подтвердить наличие специалистов, оборудования и ремонтной базы для перечня услуг до решения об участии."
+        ]
+        pricing_action = (
+            "Сопоставить извлечённые единичные расценки с внутренней стоимостью нормо-часа."
+            if has_unit_prices else
+            "Проверить исходное обоснование НМЦК и ставки нормо-часа; "
+            "структурированные расценки автоматически не выделены."
+        )
+        resource_actions = [
+            "Подтвердить возможность выполнения полного перечня услуг: специалистов, оборудование и ремонтную базу.",
+            "Уточнить порядок учета запасных частей и материалов, если он не раскрыт первичными документами.",
+        ]
+    else:
+        # A general website, cloud or professional service does NOT require
+        # a vehicle repair shop, spare parts, or a mechanic hourly rate.
+        compliance_actions = [
+            ("INSUFFICIENT_EVIDENCE: обязательные квалификации и ресурсы исполнителя — "
+             "требования должны быть сверены с исходными ТЗ и проектом контракта.")
+        ]
+        pricing_action = (
+            "Сопоставить извлечённые единичные расценки с внутренней себестоимостью услуг."
+            if has_unit_prices else
+            "Проверить исходное обоснование НМЦК и модель стоимости услуг; "
+            "структурированные расценки автоматически не выделены."
+        )
+        resource_actions = [
+            "Сверить объём, сроки и требования к исполнителю по исходным документам.",
+            "Проверить условия качества, результата услуг и приёмки по ТЗ и проекту контракта.",
+        ]
     coverage = {
         "extracted_item_count": len(service_items),
         "analyzed_item_count": len(service_items),
@@ -70,31 +118,31 @@ def project_build_services_preliminary_analysis(
             if initial_price
             else "НМЦК не извлечена — требуется проверка.",
             f"Извлечено и проанализировано позиций услуг: {len(service_items)}.",
-            "В документации указаны единичные расценки; фиксированный объём отдельных услуг не определён.",
+            quantity_note,
         ],
-        "compliance_highlights": [
-            "Необходимо подтвердить наличие специалистов, оборудования и ремонтной базы для перечня услуг до решения об участии."
-        ],
-        "delivery_model": [
-            "Объём услуг определяется потребностью заказчика; единичные расценки не образуют подтверждённую сумму по каждой операции."
-        ],
+        "compliance_highlights": compliance_actions,
+        "delivery_model": [quantity_note],
         "contract_highlights": [
             "Проект контракта отсутствует в доступном наборе документов; оплата, приемка, ответственность и обеспечение не оценены."
         ]
         if contract_missing
         else ["Проект контракта доступен и требует отдельной документальной проверки."],
         "next_actions": [
-            "Получить проект контракта и проверить оплату, приемку, ответственность, обеспечение и сроки.",
-            "Сопоставить единичные расценки с внутренней стоимостью нормо-часа и иными подтверждёнными затратами.",
-            "Подтвердить возможность выполнения полного перечня услуг: специалистов, оборудование и ремонтную базу.",
-            "Уточнить порядок учета запасных частей и материалов, если он не раскрыт первичными документами.",
+            (
+                "Получить проект контракта и проверить оплату, приёмку, ответственность, обеспечение и сроки."
+                if contract_missing else
+                "Проверить имеющийся проект контракта: оплату, приёмку, ответственность, обеспечение и сроки."
+            ),
+            pricing_action,
+            *resource_actions,
         ],
         "extracted_fields": [
             "предмет закупки",
             "ОКПД2" if okpd2 else "",
             "НМЦК" if initial_price else "",
-            "единичные расценки",
-            "объём услуг не определён",
+            "единичные расценки" if has_unit_prices else "",
+            "объём по строкам извлечён" if all_quantities_parsed else
+            "объём по структурированным строкам не подтверждён",
         ],
         "procurement_kind": "services",
         "domain_profile": profile,
@@ -102,7 +150,13 @@ def project_build_services_preliminary_analysis(
         "item_coverage": coverage,
         "source_completeness": "partial" if contract_missing else "partial",  # noqa: RUF034
         "missing_documents": ["draft_contract"] if contract_missing else [],
-        "supply_section_note": "Перечень услуг и единичные расценки собраны из таблицы обоснования НМЦК; фиксированный объём по строкам не заявлен.",
+        "contract_draft_available": not contract_missing,
+        "supply_section_note": (
+            "По извлечённым позициям проверьте соответствие количества и расценок исходному НМЦК."
+            if has_service_rows else
+            "Строки услуг и расценки автоматически не выделены; нельзя утверждать, "
+            "что исходное ТЗ не задаёт объём."
+        ),
         "spec_table": {
             "columns": [
                 "№",

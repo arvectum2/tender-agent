@@ -131,6 +131,49 @@ def test_zip_keeps_bounded_decoder_results_and_single_warning(tmp_path: Path):
     assert docs == [doc]
     assert metadata["files"][0]["warnings"] == ["other", "ZIP archive inspected in safe local mode."]
     assert "data_platform_source" not in metadata["files"][0]
+    assert metadata["files"][0]["extracted_text_available"] is True
+    assert metadata["files"][0]["text_extraction_status"] == "archive_extracted"
+    assert metadata["files"][0]["nested_document_count"] == 1
+    assert metadata["files"][0]["nested_extracted_text_count"] == 1
+    assert metadata["files"][0]["nested_failed_text_count"] == 0
+
+
+def test_zip_archive_metadata_records_partial_and_unreadable_without_claiming_success(tmp_path: Path):
+    folder = tmp_path / "input"
+    folder.mkdir()
+    (folder / "signed.zip").write_bytes(b"unchanged archive")
+    text_document = AnalyzedDocument(
+        display_name="signed.zip :: Проект контракта.docx", extension=".docx",
+        role="contract_draft", text="Подлинный текст", extracted_text_available=True,
+        warnings=[], source="zip", file_id="FILE-01-ZIP-01",
+    )
+    unreadable_document = AnalyzedDocument(
+        display_name="signed.zip :: unreadable.pdf", extension=".pdf",
+        role="supporting", text=None, extracted_text_available=False,
+        warnings=["cannot extract"], source="zip", file_id="FILE-01-ZIP-02",
+    )
+    for docs, expected, extracted, failed in (
+        ([text_document, unreadable_document], "archive_partial", 1, 1),
+        ([unreadable_document], "archive_unreadable", 0, 1),
+        ([], "archive_unreadable", 0, 0),
+    ):
+        item = {
+            "file_id": "FILE-01", "stored_name": "signed.zip",
+            "display_name": "Оригинал ЕИС.zip", "warnings": [],
+        }
+        metadata = {"files": [item]}
+        observed = _collect(
+            tmp_path, metadata,
+            extract_archive=lambda path, file_id, d=docs: d,
+        )
+        assert observed == docs
+        assert item["text_extraction_status"] == expected
+        assert item["extracted_text_available"] == bool(extracted)
+        assert item["nested_document_count"] == len(docs)
+        assert item["nested_extracted_text_count"] == extracted
+        assert item["nested_failed_text_count"] == failed
+        assert "data_platform_source" not in item
+        assert (folder / "signed.zip").read_bytes() == b"unchanged archive"
 
 
 def test_quote_paths_and_spreadsheets_are_source_preserving(tmp_path: Path):
@@ -163,3 +206,34 @@ def test_legacy_role_and_sheet_facade_preserved():
     )
     assert legacy._collect_role_text([doc], "technical_spec") == "Данные"
     assert legacy._collect_spreadsheet_sources([doc]) == collect_operator_spreadsheet_sources([doc])
+
+
+def test_eis_nmck_estimate_spreadsheet_is_not_supplier_tkp():
+    from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
+
+    nmck = AnalyzedDocument(
+        display_name="Приложение 2 Обоснование НМЦК.xls", extension=".xls",
+        role="supporting", text="НМЦК 1000000", extracted_text_available=True,
+        warnings=[], source="upload", file_id="FILE-02", raw_content=b"xls-original",
+    )
+    spec = AnalyzedDocument(
+        display_name="Спецификация.xlsx", extension=".xlsx", role="technical_spec",
+        text="Требования", extracted_text_available=True, warnings=[],
+        source="upload", file_id="FILE-03", raw_content=b"xlsx-original",
+    )
+    quote = AnalyzedDocument(
+        display_name="quote-supplier.xlsx", extension=".xlsx", role="tkp",
+        text="Коммерческое предложение", extracted_text_available=True,
+        warnings=[], source="upload", file_id="FILE-04", raw_content=b"real-offer",
+    )
+    sources = collect_operator_spreadsheet_sources([nmck, spec, quote])
+    assert [source.file_id for source in sources] == ["FILE-04"]
+    assert sources[0].raw_content == b"real-offer"
+
+
+def test_cyrillic_tkp_filename_is_classified_as_supplier_quote():
+    from src.modules.procurement_analysis.document_roles import detect_document_role
+
+    assert detect_document_role("ТКП_ПоставщикА.xlsx") == "tkp"
+    assert detect_document_role("quotes_bundle.zip :: ТКП_ПоставщикА.xlsx") == "tkp"
+    assert detect_document_role("Приложение_2_Расчет_и_обоснование_НМЦК_сайт.xls") != "tkp"

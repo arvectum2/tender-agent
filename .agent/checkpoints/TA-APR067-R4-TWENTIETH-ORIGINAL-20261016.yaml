@@ -1,0 +1,47 @@
+task_id: TA-APR067-R4-TWENTIETH-ORIGINAL-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: First-party source-grounded real 44FZ Gemma4 local DEVELOPMENT E2E case 0377100005726000128; last four distinct cases for first
+  20 real original EIS cohort.
+definition_of_done:
+- Select exact archived EIS notice version and hash, individually bind original filestore UID/name/size/metadata/binary SHA including
+  duplicated-archive first case
+- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP calls
+- One real Gemma4 provider run per unique case, preserve original output, verify original EIS XML three critical cites, report/history/auth
+  and archived export409, semantic source-grounded expert review
+- Focused adversarial provenance tests and full local suite, substantive exact-head CI SUCCESS, docs report and checkpoint completed only
+  for verified E2E
+completed:
+- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no other
+  model run repeated
+- 2026-10-16 frozen selected EIS original notice SHA, first-party metadata SHA, saved filestore UID/name/bytes/source slot SHA, native
+  EIS original stage toa-run-20261016052531-ca97b5 ready_to_analyze initial; 11/11 original SHA-protected inputs incl exactly four substantive
+  documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case exits
+  0.
+- 2026-10-16 case19 AR original/source/real Gemma complete, serial PID33179 continued to case20 0377100005726000128 one last original
+  EF 11 SHA source including XLSX and DOCX, native ready_to_analyze, no concurrent Gemma.
+- 2026-10-16 authentic final original EF 0377100005726000128 one true local Gemma4 four calls366.03s no fallback HTTP200; all11 original
+  source XML+XLSX/DOCX SHA and texts extracted, three original EIS XML citations on official website developed on 1C-Bitrix, original
+  deadline2026-08-13T08:00+07:00, NMCK135,083.33 RUB. HTML sha a394a3d40d6c9bd9749ea13d4bc4c97c3b1cfa72fdb731aa7178b8a85033994a. Project
+  contract found, general_services not polluted by education or automotive service templates, report/history/reopen/registry200, unauth401,
+  archived PDF/DOCX409, manual_review_required. Full local4272PASS/238SKIP, 56 source-adversarial PASS, Ruff PASS. Exact substantive code
+  GitHub Actions run38856008266 all9 SUCCESS on commit68879954bc33f7187aa082e952d50b9d158ae629. No live EIS/ETP/bids/production. Fully
+  accepted by owner-delegated source-grounded ChatGPT DEVELOPMENT review.
+current_stage: final_twentieth_firstparty_source_gemma_expert_full_tests_exact_ci_completed
+remaining:
+- No unrun cases in original 20-case frozen corpus
+- Prior case13 old persisted report/history semantic correction still independently open; technical actual Gemma completed, development
+  semantic cohort 19/20
+- Draft stacked PR448 remains unmerged; production/legal/financial/ETP gates remain open separately
+last_verified_commit: 68879954bc33f7187aa082e952d50b9d158ae629
+last_tests: Final true Gemma4 4 calls366.03s, original11/11 SHA/extracted text, three source XML citations, HTML sha a394a3d4, no false
+  training/vehicle, report/history200, export409, unauth401. Full4272 passed/238 skipped/0 errors, 56 firstparty focused PASS, Ruff PASS.
+  Substantive PR448 commit68879954 CI run38856008266 SUCCESS9/9.
+resume_instruction: COMPLETED final distinct original case20 0377100005726000128, one true local Gemma 4 calls366.03s, 11/11 source SHA/3
+  original XML cites, exact code CI9/9 SUCCESS. Do not rerun. All 20 different original-source true provider model E2Es now done, 210
+  original SHA,80 actual calls,60 original XML cites; DEVELOPMENT semantically accepted 19/20 because case13 original saved report/history
+  still wrong, must publish corrected report without changing immutable original LLM history. Parent current-task points case13.
+execution:
+  branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
+  stage_name: ta-apr067-r4-twentieth-ef-20261016
+  manual_override: true

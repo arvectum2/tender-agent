@@ -1,0 +1,24 @@
+{
+  "bid_ready": false,
+  "eligibility": "44-FZ as attached to same procurement card; official EIS getDocsIP XML must confirm competitive procurement; all first-party original binary attachments SHA/size verified; exclude development corpus and all prior blind locks for notice/ZIP/XML/binary overlap.",
+  "fail_closed": "If a source page is TLS blocked, anti-bot, obfuscated, missing provenance, ambiguous row identity, wrong law, not competitive, or not fully verified against EIS originals, exclude and record reason; do NOT cherry pick replacements or modify the original registered source plan.",
+  "goal": "Diversify sources for up to 8 NEW unseen 44-FZ software procurements; not a retroactive adjustment of immutable stage2 plan",
+  "gold_labels_authorized": false,
+  "historical_scope_warning": "Source vendors may prioritize popular, regional, stale, or non-service software procurements: no population-level accuracy claim from this sample; balance/diversity must be examined after expert gold without tuning to evaluation output.",
+  "immutable_intent_sha256": "9fb08aa6bf0ffe0ce418e596fc0d3afc370b5d95662b20f8f95b21168fd1b2a2",
+  "prior_immutable_blind_lock_sha256": [
+    "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+    "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a"
+  ],
+  "protocol_id": "R4-STAGE3-ADDITIONAL-EIGHT-SOURCE-ONLY-20261015",
+  "registered_at_utc": "2026-10-15T06:35:14+00:00",
+  "selection_method": "FIRST_SOURCE_ORDER_VISIBLE_UNIQUE_44FZ_19_DIGIT_EIS_NOTICE_NUMBERS_WITH_RECORDED_SOURCE_RANK",
+  "source_category": "SOFTWARE_DEVELOPMENT_IT_PROCUREMENT_DIRECTORY",
+  "source_page_order": [
+    "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-programmnogo-obespecheniya",
+    "https://mos-tenders.ru/aukcioni-goszakupki-konkursi/tendery-programmnogo-obespecheniya"
+  ],
+  "source_rank_rule": "Use website's public physical top-level procurement cards on first listed page (not arbitrary DOM regex match or ads); stable DOM order; one notice number per card, deduplicate repeated product lines while preserving earliest rank.",
+  "sut_inference_authorized": false,
+  "target_new_cases": 8
+}

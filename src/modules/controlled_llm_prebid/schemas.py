@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field
 
-from src.modules.quote_repository.tkp_normalization_schemas import NormalizedTKPQuoteBatch
+from src.modules.quote_repository.tkp_normalization_schemas import (
+    NormalizedTKPQuoteBatch,
+)
 
 
 class LLMTenderSummaryDraft(BaseModel):
@@ -28,11 +30,13 @@ class LLMBidDecisionDraft(BaseModel):
 
 class LLMTenderOperatorRequirementsDraft(BaseModel):
     tender_summary: str = Field(min_length=1)
-    technical_requirements: list[str] = Field(min_length=1)
-    qualification_requirements: list[str] = Field(min_length=1)
-    document_requirements: list[str] = Field(min_length=1)
-    evaluation_criteria: list[str] = Field(min_length=1)
-    procurement_categories: list[str] = Field(min_length=1)
+    # Unknown/absent requirements are valid empty sets. Forcing min_length=1
+    # makes the model fabricate bid criteria and qualifications from TЗ prose.
+    technical_requirements: list[str] = Field()
+    qualification_requirements: list[str] = Field()
+    document_requirements: list[str] = Field()
+    evaluation_criteria: list[str] = Field()
+    procurement_categories: list[str] = Field()
 
 
 class LLMSupplierQuestionDraft(BaseModel):
@@ -66,7 +70,8 @@ class LLMContractRiskItemDraft(BaseModel):
 
 
 class LLMTenderOperatorContractRiskMemoDraft(BaseModel):
-    contract_risks: list[LLMContractRiskItemDraft] = Field(min_length=1)
+    # The model must be free to abstain when it finds no verified risk clause.
+    contract_risks: list[LLMContractRiskItemDraft] = Field()
 
 
 class LLMQuoteNormalizationDraft(NormalizedTKPQuoteBatch):

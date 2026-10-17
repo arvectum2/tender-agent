@@ -361,12 +361,18 @@
   const validCitations = values => Array.isArray(values)
     ? values.filter(c => c && c.source_ref && c.document && c.locator)
     : [];
-  function renderCitations(container, citations) {
-    const trusted = validCitations(citations);
-    if (!trusted.length) return paragraph(container, 'UNKNOWN · Нет подтверждённой цитаты', 'unknown');
-    for (const c of trusted.slice(0,8)) {
+  function renderCitations(container, citations, {originalVerified = false} = {}) {
+    // Shape-only source_ref/document/locator in a report is NOT a source check.
+    // Only the independently extracted, notice-matched XML fact endpoint may
+    // render as source-verified. A report citation stays a human review pointer.
+    const shaped = validCitations(citations);
+    if (!shaped.length) return paragraph(container, 'UNKNOWN · Нет атрибутированной цитаты', 'unknown');
+    const label = originalVerified
+      ? 'Проверенный оригинал XML ЕИС: '
+      : 'Указанный в отчёте источник (НЕ сверено с оригиналом): ';
+    for (const c of shaped.slice(0,8)) {
       const text = [c.document,c.locator,c.excerpt].filter(Boolean).join(' · ');
-      paragraph(container, 'Источник: ' + text, 'citation');
+      paragraph(container, label + text, originalVerified ? 'citation' : 'unknown');
     }
   }
   function renderEvidence(report, verifiedEvidence) {
@@ -384,7 +390,7 @@
       const block = node('div','evidence-item');
       const verified = f.status === 'KNOWN' && validCitations(f.evidence).length > 0;
       block.append(node('strong','',field + ' · ' + (verified ? String(f.value) : 'UNKNOWN')));
-      renderCitations(block, verified ? f.evidence : []);
+      renderCitations(block, verified ? f.evidence : [], {originalVerified: verified});
       section.append(block);
     }
     root.append(section);
@@ -395,8 +401,18 @@
       sub.append(node('h3','',({blockers:'Блокирующие риски',unknowns:'Неизвестные сведения',readiness:'Проверка готовности'})[key]));
       for (const item of core[key].slice(0,25)) {
         const block = node('div','evidence-item');
-        const grounded = validCitations(item.evidence).length > 0;
-        paragraph(block, (item.summary || item.label || item.code || 'Риск') + ' · ' + (grounded ? item.status : 'UNKNOWN · требуется подтверждение'));
+        const hasClaimedCitation = validCitations(item.evidence).length > 0;
+        // A source reference emitted by the report has NOT been independently
+        // checked against the original; never promote risk/readiness status.
+        const reportedStatus = typeof item.status === 'string' && item.status.trim()
+          ? item.status.trim() : 'UNKNOWN';
+        paragraph(block,
+          (item.summary || item.label || item.code || 'Риск') + ' · ' +
+          (hasClaimedCitation
+            ? 'Статус отчёта: ' + reportedStatus + ' · НЕ подтверждено оригиналом'
+            : 'UNKNOWN · нет подтверждения по оригиналу'),
+          'unknown'
+        );
         renderCitations(block, item.evidence);
         sub.append(block);
       }

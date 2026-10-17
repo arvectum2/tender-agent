@@ -1,0 +1,54 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-AI-E2E-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Accept Tender Agent development-stage operator E2E using Owner-delegated source-grounded ChatGPT expert evaluation,
+  then advance roadmap without requiring independent human gold for this developmental stage.
+definition_of_done:
+- Record the explicit Owner 2026-10-15 delegation and scope, separating E2E technical/product acceptance from legal GO, qualified
+  human gold, future production and commercial decisions.
+- Create automated development E2E acceptance criteria: real original sources, reproducible UI/workflow, source-cited material
+    facts, safe UNKNOWN, persistence and safe export rules.
+- Check current main/isolated Mac mini E2E evidence and regressions; report unmet functional criteria precisely rather than
+  claiming a passing report from schema-only or old runtime.
+- Update the canonical roadmap and current-task continuation to prioritize E2E instead of completing 20 human-gold reviews
+  first.
+- Run targeted tests, Ruff, exact-source check, commit and push review-ready change with checkpoint.
+completed:
+- 2026-10-15 owner explicitly delegated ChatGPT source-grounded analysis as EXPERT E2E DEVELOPMENT review, not external human
+  legal-gold or bid GO; owner directive, roadmap YAML/MD and policy documented.
+- '2026-10-15 isolated original-main development E2E gate implemented: 8 mandatory source/report/UI steps, official source
+  SHA declarations, cited material facts, local LLM, archival 409 and six prohibited-action negative checks. 21 new pytest
+  pass and Ruff pass.'
+- 2026-10-15 combined 45 APR03B operator/frontend/AI-stage tests PASS, 1 existing Starlette deprecation warning. Current private
+  main image 18087 and old image 18083 both health200 and unauthenticated workspace/evidence401; authorized full fresh model
+  and source-citation replay remain unverified.
+- 2026-10-15 six EIS originals and XML copied read-only into isolated Mac mini runtime with same original SHA; Gemma 12B health200,
+  isolated FastAPI authenticated workspace200/anonymous401, real LLM API replay PID69899 started using private SQLite, no
+  production, ETP or credentials.
+- '2026-10-15 private authentic EIS archived six-source local Gemma 12B 4-call full E2E PASS: all6 original files extracted,
+  0 warnings, 138.79s, auth UI/history/registry/report HTTP200, unauth 401, archived PDF/DOCX409; original source SHA preserved.'
+- 2026-10-15 verified three official purchase-title, NMCK, deadline XML source facts and actual persisted model report; discovered
+  and corrected canonical output HTML missing citations, guessed subject heading, NMCK XLS miscounted as supplier TKP and
+  Cyrillic ТКП quote recognition. Re-render of actual saved model output has 3 exact XML citations; latest report SHA 9d3c82bd72b37d6a3305aac1343517d55f71434ac8c7c07f84ca6f14519c7444.
+- '2026-10-15 private development E2E gate receipt with source-original SHA matches, all eight checks, and 0 legal/bid permissions:
+  accepted=true; private path runtime/ta-apr03b-e2e-20261015/output/development_e2e_gate_result.json.'
+- 2026-10-15 full Mac mini regression 4031 passed,238 skipped,0 failures,328 existing warnings after fixing two genuine Cyrillic-TKP
+  regressions and ensuring Python venv PATH; focused 63 passed, Ruff clean. GitHub draft PR433 implementation delivery pending
+  exact-head CI.
+current_stage: completed_development_e2e_accepted
+remaining:
+- exact_PR_433_CI_review_before_merge
+- APR04_company_onboarding_follow_up_as_next_separate_child
+- current_live_EIS_revision_and_production_scope_outside_development_e2e
+last_verified_commit: 1ae35740815334a7a2ef9e9e56ae84b0733baf3b (previous pushed checkpoint; current branch implementation
+  uncommitted until next commit)
+last_tests: Mac-mini full 4031 PASS / 238 SKIP /0 FAIL/328 existing warnings 152.19s; 63 focused PASS; Ruff PASS; original
+  six SHA, LLM4, explicit 3 HTML XML citations, archived export409
+resume_instruction: Bounded APR03B DEVELOPMENT E2E accepted in private stage; do not repeat. Check PR433 exact commit/CI after
+  changes; no automatic merge without Company gate. Advance separate APR04 company onboarding with real company profile review
+  in isolated staging, no prod/ETP/payment/signature. Current EIS revision and real commercial signoff remain separately gated.
+execution:
+  branch: feature/apr03b-ai-e2e-acceptance-20261015
+  manual_override: true

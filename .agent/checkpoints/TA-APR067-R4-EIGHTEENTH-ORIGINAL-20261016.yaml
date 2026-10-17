@@ -1,0 +1,43 @@
+task_id: TA-APR067-R4-EIGHTEENTH-ORIGINAL-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: First-party source-grounded real 44FZ Gemma4 local DEVELOPMENT E2E case 0169300008226000223; last four distinct cases for first
+  20 real original EIS cohort.
+definition_of_done:
+- Select exact archived EIS notice version and hash, individually bind original filestore UID/name/size/metadata/binary SHA including
+  duplicated-archive first case
+- Native offline EIS intake without bypass, actual original content Data Platform5/5 or exact source count, zero external EIS/ETP calls
+- One real Gemma4 provider run per unique case, preserve original output, verify original EIS XML three critical cites, report/history/auth
+  and archived export409, semantic source-grounded expert review
+- Focused adversarial provenance tests and full local suite, substantive exact-head CI SUCCESS, docs report and checkpoint completed
+  only for verified E2E
+completed:
+- 2026-10-16 unique frozen original ID selected as unprocessed in corpus; isolated worktree from verified previous group PR447, no other
+  model run repeated
+- 2026-10-16 frozen selected EIS original notice SHA, first-party metadata SHA, saved filestore UID/name/bytes/source slot SHA, native
+  EIS original stage toa-run-20261016052530-467820 ready_to_analyze initial; 12/12 original SHA-protected inputs incl exactly four substantive
+  documents, Data Platform actual original DOC/DOCX/XLSX text 4/4 extracted. Single serial model PID33179 starts after previous case
+  exits 0.
+- '2026-10-16 preceding #17 true model source/HTML receipt fully saved and serial PID33179 started authentic original #18 0169300008226000223
+  with 12 verified original SHA source documents. No simultaneous models.'
+- 2026-10-16 authentic first-party EZK 0169300008226000223 one original source Gemma4 4 calls346.49s, HTTP200 no fallback, all12/12 saved
+  official XML+XLSX/DOCX/DOC SHA and Data Platform text, 3 original EIS XML cites on multimedia interactive Troytsk tour tourist website,
+  archived deadline2026-09-14T09:00+05:00, NMCK4,000,000 RUB. Report HTML sha8de3c8a59e8655b500856dcfb17126db8b1961b5a63f1c6d770002f5f7cfa036,
+  project contract present; scope works with unapproved specialized workflow properly guarded, manual_review_required. History/report/reopen/registry200,
+  unauth401, archival PDF/DOCX409. 56 focused source PASS and full4272 local pass/238 skip, exact PR448 source code commit 68879954bc33f7187aa082e952d50b9d158ae629
+  CI run38856008266 SUCCESS9/9.
+current_stage: case18_real_source_gemma_grounded_workflow_full_tests_exact_ci_completed
+remaining:
+- Case19 and 20 true original EIS Gemma source evidence not yet checked
+- PR448 draft unmerged, zero live bids
+- Historical case13 old report republish still separately open
+last_verified_commit: 68879954bc33f7187aa082e952d50b9d158ae629
+last_tests: GitHub source commit68879954 CI9/9 run38856008266, 4272 pass/238 skipped/56 focused PASS/Ruff; actual local Gemma4 4calls346.49s,12/12
+  source SHA/3 XML cite/history200/exports409.
+resume_instruction: COMPLETED separate original case18 0169300008226000223, real Gemma4 4 calls346.49s,12/12 SHA,3 EIS original citations
+  and exact source code GitHub CI9/9 SUCCESS. Do NOT rerun. Similar case19 is distinct AR project original source and now running in
+  serial PID33179; case20 queued.
+execution:
+  branch: feature/apr067-r4-seventeen-twenty-original-e2e-20261016
+  stage_name: ta-apr067-r4-eighteenth-ezk-20261016
+  manual_override: true

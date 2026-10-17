@@ -1,0 +1,32 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Exercise real Bearer-authenticated SaaS qualification/report HTTP endpoints, customer ownership and viewer redaction with the source-bound alternate 44-FZ 1C evaluation PDF; replay original private Mac mini bytes in test-only isolated DB without production tenant creation.
+definition_of_done:
+  - Real HTTP endpoints /api/saas/runs/{run_id}/qualification and /report verified through existing TestClient with temporary test DB, owner, second tenant and viewer; legal acceptance not bypassed.
+  - Use pinned actual ZIP/PDF 0173300009226000009 in optional local acceptance mode, CI synthetic source-bound fixture; never commit original data.
+  - Verify 60/40 and nested contracts5/specialists95 => NOT_ASSESSED; expired/mismatched PDF => NOT_ASSESSED and source invalid.
+  - Verify cross-tenant 404, unauthenticated 401 and viewer no private criterion/contract details; no auto-charge or production access.
+  - Document difference between isolated HTTP acceptance and owner live browser/production/cryptographic acceptance, run tests Ruff and exact GitHub CI.
+completed:
+  - 'PR416 exact implementation/doc source head fc24201c737e29c6d89e0587fa5d758c1e770785 GitHub pull_request38453272162 and pushes38453265878/38453266119 all completed SUCCESS. Engineering child completed, draft unmerged.'
+  - Added two parameterized TestClient scenarios for authenticated owner, second tenant and viewer using actual existing SaaS legal acceptance and owned_run DB checks. CI synthetic source fixture plus opt-in actual private EIS original ZIP+PDF on Mac mini.
+  - Real HTTP GET /qualification owner 200 original verified 60/40, within qualification 5 prior contracts and 95 specialists, NOT_ASSESSED; unauthenticated 401, cross-tenant 404, viewer 403.
+  - Real HTTP GET /report owner 200 confirmed original criteria, viewer privacy status REFERENCE_ACCESS_RESTRICTED and no private criterion_source/qualifying_contracts, cross-tenant 404.
+  - Temporary original PDF bit-flip returns ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED and NOT_ASSESSED; actual Mac mini private source PDF hash unchanged.
+  - Mac mini head 9f488a487e1566cf280227905a9ef15feca7ee03: 67 focused pytest PASS including both synthetic and actual official EIS original sources, Ruff PASS, git diff --check PASS.
+  - Russian acceptance report and roadmap source note committed, stacked draft PR416 opened on PR415, no prod tenant, live browser, ETP, paid action or signature.
+  - PR415 exact source head 054c5e21 full GitHub PR+2 push CI 3/3 SUCCESS, child checkpoint completed.
+  - Canonical active roadmap has 59 completed and 76 open Markdown checkboxes; genuine P0 gates APR-03/03B/04/05/06/07 remain open, legacy ARV duplicates not new release blockers.
+current: Completed bounded source-bound HTTP SaaS testing in isolated DB; PR416 implementation/doc head fc24201c737e29c6d89e0587fa5d758c1e770785 GitHub PR+push 3/3 SUCCESS. Draft remains unmerged, no live tenant or production.
+pending: []
+last_verified_commit: 'PR416 exact implementation/doc head fc24201c737e29c6d89e0587fa5d758c1e770785, GitHub PR38453272162 and push38453265878/push38453266119 three SUCCESS. Mac mini private original source HTTP API 67 focused tests PASS, Ruff PASS, git diff clean. Checkpoint status commit is documentation-only, implementation source verified.'
+test_results:
+  - 'PR416 implementation source fc24201c737e29c6d89e0587fa5d758c1e770785 all GitHub PR38453272162 and both pushes38453265878/38453266119 completed SUCCESS.'
+  - 'Mac mini test source head 9f488a4 67 pytest PASS, Ruff PASS, git diff --check PASS; optional actual ZIP/PDF scenario passed with explicit TA_TEST_ORIGINAL_EIS_44_CASE_DIR.'
+  - 'FastAPI real HTTP test owner 200 and NOT_ASSESSED 60/40/5/95; cross-tenant 404; viewer redact and qualification 403; no-auth 401; tampered copy denied.'
+  - 'Exact PR416 source head 6f8f3e7 GitHub PR/push workflow CI pending.'
+
+resume_instruction: 'TA-SAAS-ORIGINAL-EIS-API-ACCEPTANCE-20261013 COMPLETED. PR416 implementation source head fc24201c737e29c6d89e0587fa5d758c1e770785 exact PR38453272162 and pushes38453265878/38453266119 all SUCCESS. Mac mini authentic original 1C 44-FZ ZIP/PDF HTTP SaaS TestClient isolated DB owner 200 60/40/5/95 NOT_ASSESSED, foreign tenant 404, anonymous401, viewer qualification403/redacted report, modified TEMP PDF source rejected; 67 focused pytest PASS and Ruff PASS. Draft PR416 and all parent qualification PRs remain UNMERGED; SaaS production remains disabled, no live owner business acceptance. Next read canonical main .agent/current-task.yaml and updated top docs/roadmap/MASTER_ROADMAP.md (135 boxes, 59 checked /76 unchecked historical mixed). P0 gates APR03/03B/04/05/06/07 still OPEN, no artificial human gold/commercial or live SLO. Preserve execution.manual_override true/watchdog disabled, no bids/ETP/payment/sign/prod or unauthorized merge.'

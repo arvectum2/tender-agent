@@ -85,6 +85,91 @@ def test_duplicate_notice_revision_fails_closed(source):
     assert all(f["status"] == "UNKNOWN" for f in evidence.get_operator_source_evidence("existing-run")["facts"].values())
 
 
+def test_official_eis_notice_with_protocol_and_results_is_not_revision_ambiguity(source):
+    directory, metadata = source
+    # The same 19-digit registry number occurs in protocol and result XML.
+    # Their top-level EIS document types are NOT notice revisions.
+    for filename, role in (
+        ("notice.xml", "epNotificationEZK2020"),
+        ("protocol.xml", "epProtocolEZK2020Final"),
+        ("placement.xml", "fcsPlacementResult"),
+        ("proposals.xml", "fcsProposalsResult"),
+    ):
+        xml = GOOD_XML.replace("<notice>", f"<export><{role}>").replace(
+            "</notice>", f"</{role}></export>"
+        )
+        (directory / filename).write_text(xml, encoding="utf-8")
+        if filename != "notice.xml":
+            metadata["files"].append({
+                "file_id": f"FILE-{len(metadata['files']) + 1:02d}",
+                "stored_name": filename,
+                "display_name": filename,
+                "extension": ".xml",
+            })
+    result = evidence.get_operator_source_evidence("existing-run")
+    assert result["source_candidate_count"] == 1
+    assert result["source_selection"] == "single_registry_matched_xml"
+    assert result["warnings"] == []
+    assert all(fact["status"] == "KNOWN" for fact in result["facts"].values())
+    assert result["facts"]["nmck"]["value"] == 1000000.0
+
+
+@pytest.mark.parametrize("notice_type", [
+    "epNotificationEF2020", "epNotificationEZK2020", "epNotificationEOK2020",
+])
+def test_supported_44fz_original_notice_types_all_have_unique_selection(source, notice_type):
+    directory, _metadata = source
+    xml = GOOD_XML.replace("<notice>", f"<export><{notice_type}>").replace(
+        "</notice>", f"</{notice_type}></export>"
+    )
+    (directory / "notice.xml").write_text(xml, encoding="utf-8")
+    packet = evidence.get_operator_source_evidence("existing-run")
+    assert packet["source_selection"] == "single_registry_matched_xml"
+    assert packet["source_candidate_count"] == 1
+    assert all(v["status"] == "KNOWN" for v in packet["facts"].values())
+
+
+def test_protocol_cannot_launder_nested_notice_like_element(source):
+    directory, _metadata = source
+    xml = GOOD_XML.replace(
+        "<notice>", "<export><epProtocolEZK2020Final><epNotificationEZK2020>"
+    ).replace(
+        "</notice>", "</epNotificationEZK2020></epProtocolEZK2020Final></export>"
+    )
+    (directory / "notice.xml").write_text(xml, encoding="utf-8")
+    packet = evidence.get_operator_source_evidence("existing-run")
+    assert packet["source_selection"] == "no_unique_registry_matched_xml"
+    assert all(f["status"] == "UNKNOWN" for f in packet["facts"].values())
+
+
+def test_two_different_true_epnotifications_remain_ambiguous(source):
+    directory, metadata = source
+    notice = GOOD_XML.replace("<notice>", "<export><epNotificationEZK2020>").replace(
+        "</notice>", "</epNotificationEZK2020></export>"
+    )
+    for filename in ("notice.xml", "notice_v2.xml"):
+        (directory / filename).write_text(notice, encoding="utf-8")
+    metadata["files"].append({
+        "file_id": "FILE-02", "stored_name": "notice_v2.xml",
+        "display_name": "notice_v2.xml", "extension": ".xml",
+    })
+    result = evidence.get_operator_source_evidence("existing-run")
+    assert result["source_selection"] == "ambiguous_notice_revisions"
+    assert result["source_candidate_count"] == 2
+    assert all(fact["status"] == "UNKNOWN" for fact in result["facts"].values())
+
+
+def test_protocol_only_cannot_attest_notice_facts(source):
+    directory, _metadata = source
+    other = GOOD_XML.replace("<notice>", "<export><epProtocolEZK2020Final>").replace(
+        "</notice>", "</epProtocolEZK2020Final></export>"
+    )
+    (directory / "notice.xml").write_text(other, encoding="utf-8")
+    result = evidence.get_operator_source_evidence("existing-run")
+    assert result["source_selection"] == "no_unique_registry_matched_xml"
+    assert all(fact["status"] == "UNKNOWN" for fact in result["facts"].values())
+
+
 def test_conflicting_prices_degrade_only_nmck(source):
     directory, _metadata = source
     (directory / "notice.xml").write_text(GOOD_XML.replace(

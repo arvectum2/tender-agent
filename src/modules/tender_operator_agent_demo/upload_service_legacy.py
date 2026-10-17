@@ -684,6 +684,7 @@ def _try_run_llm_workflow(
     contract_draft_text: str | None,
     quote_paths: list[Path],
     provider_mode: str = "llm",
+    source_research: dict[str, Any] | None = None,
 ) -> dict[str, Any] | None:
     """Legacy compatibility shim; no other source of controlled workflow logic."""
     from src.modules.tender_operator_agent_demo.operator_llm_workflow import (
@@ -699,6 +700,7 @@ def _try_run_llm_workflow(
         provider_mode=provider_mode,
         emit_event=append_demo_run_event,
         settings_getter=get_settings,
+        source_research=source_research,
     )
 
 
@@ -1551,6 +1553,19 @@ def _persist_outputs(run_id: str, metadata: dict[str, Any], outputs: dict[str, d
     )
     renderer = _render_customer_report_html if metadata.get("analysis_mode") == "production_llm_r10_1" else _render_canonical_report_html
     persist_frozen_r7_outputs(output_dir=_output_dir(run_id), run_id=run_id, metadata=metadata, outputs=outputs, steps=steps, render_html=renderer, now_factory=_safe_datetime)
+    if metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip":
+        from src.modules.tender_operator_agent_demo.operator_eis_report_citations import (
+            append_official_eis_citations,
+        )
+
+        try:
+            append_official_eis_citations(
+                report_path=_report_html_path(run_id), run_id=run_id, metadata=metadata
+            )
+        except (OSError, ValueError):
+            # Do not invent a citation if a saved original is unreadable.
+            # Existing source-evidence quality gate stays closed independently.
+            pass
 
 
 def _render_procurement_blocked_report_html(metadata: dict[str, Any]) -> str:
@@ -1575,8 +1590,12 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
     from src.modules.tender_operator_agent_demo.operator_analyze_run import (
         analyze_uploaded_demo_run as _analyze_run,
     )
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
 
-    return _analyze_run(
+    return run_with_full_corpus_research(
+        _analyze_run,
         run_id,
         _load_metadata=_load_metadata,
         TenderOperatorUploadedRunStatus=TenderOperatorUploadedRunStatus,
@@ -1622,8 +1641,41 @@ def _report_html_path(run_id: str) -> Path:
     return _output_dir(run_id) / "report.html"
 
 
+def _read_json_for_published_steps(path: Path) -> dict[str, Any]:
+    """Only operator history step cards get the corrected report projection."""
+    if path.name != "steps.json" or not (path.parent / "report-revision.json").is_file():
+        return _read_json(path)
+    report = _load_report_json(path.parent.parent.name)
+    steps = []
+    for index, section in enumerate(report.get("sections", []), start=1):
+        title = section["title"]
+        steps.append({
+            "key": f"section-{index}", "order": index,
+            "title": title, "short_title": title,
+            "status": DemoStepStatus.DONE, "description": title,
+            "agent_action": title, "result_summary": title,
+            "findings": section.get("items", []), "human_review": [],
+            "trace": "Published append-only source-only correction", "result_sections": [],
+        })
+    return {"steps": steps}
+
+
+def _published_report_html_path(run_id: str) -> Path:
+    from src.modules.tender_operator_agent_demo.operator_report_revision import (
+        published_report_path,
+    )
+    output_dir = _output_dir(run_id)
+    if not (output_dir / "report-revision.json").is_file():
+        # Preserve the existing public/legacy report hook for ordinary runs.
+        return _report_html_path(run_id)
+    return published_report_path(output_dir, run_id, "html")
+
+
 def _load_report_json(run_id: str) -> dict[str, Any]:
-    path = _report_json_path(run_id)
+    from src.modules.tender_operator_agent_demo.operator_report_revision import (
+        published_report_path,
+    )
+    path = published_report_path(_output_dir(run_id), run_id, "json")
     if not path.is_file():
         raise HTTPException(status_code=404, detail="Report is not available yet")
     return _read_json(path)
@@ -1641,13 +1693,13 @@ def get_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunResponse:
         DemoStep=DemoStep,
         DemoFinalRecommendation=DemoFinalRecommendation,
         _output_dir=_output_dir,
-        _read_json=_read_json,
+        _read_json=_read_json_for_published_steps,
         _build_final_recommendation=_build_final_recommendation,
         _load_report_json=_load_report_json,
         DemoStepStatus=DemoStepStatus,
         _coerce_quote_comparison_payload=_coerce_quote_comparison_payload,
         _coerce_economics_summary_payload=_coerce_economics_summary_payload,
-        _report_html_path=_report_html_path,
+        _report_html_path=_published_report_html_path,
         _ensure_procurement_blocked_report_html=_ensure_procurement_blocked_report_html,
         TenderOperatorUploadedRunResponse=TenderOperatorUploadedRunResponse,
         datetime=datetime,
@@ -1701,8 +1753,10 @@ def get_uploaded_demo_report_download(run_id: str) -> FileResponse | Response:
         review_annotated_html,
     )
 
-    path = _ensure_procurement_blocked_report_html(run_id) or _report_html_path(run_id)
+    path = _published_report_html_path(run_id)
     if not path.is_file():
+        path = _ensure_procurement_blocked_report_html(run_id)
+    if path is None or not path.is_file():
         raise HTTPException(status_code=404, detail="Report HTML is not available yet")
     metadata = _load_metadata(run_id)
     if needs_live_eis_revision_review(metadata):
@@ -1722,8 +1776,10 @@ def get_uploaded_demo_report_html(run_id: str) -> str:
         review_annotated_html,
     )
 
-    path = _ensure_procurement_blocked_report_html(run_id) or _report_html_path(run_id)
+    path = _published_report_html_path(run_id)
     if not path.is_file():
+        path = _ensure_procurement_blocked_report_html(run_id)
+    if path is None or not path.is_file():
         raise HTTPException(status_code=404, detail="Report HTML is not available yet")
     return review_annotated_html(_load_metadata(run_id), path.read_text(encoding="utf-8"))
 

@@ -12,7 +12,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.modules.agent_registry.models import AgentRegistryRecord
-from src.modules.agent_registry.schemas import BuildAgentRegistryEntryInput, BuildAgentRegistryRequest
+from src.modules.agent_registry.schemas import (
+    BuildAgentRegistryEntryInput,
+    BuildAgentRegistryRequest,
+)
 from src.modules.agent_registry.service import build_agent_registry
 from src.modules.controlled_llm_prebid.schemas import (
     LLMBidDecisionDraft,
@@ -28,7 +31,10 @@ from src.modules.controlled_llm_prebid.schemas import (
     LLMTenderSummaryDraft,
 )
 from src.modules.prompt_schema_library.models import PromptSchemaRecord
-from src.modules.prompt_schema_library.schemas import BuildPromptSchemaAssetInput, BuildPromptSchemaLibraryRequest
+from src.modules.prompt_schema_library.schemas import (
+    BuildPromptSchemaAssetInput,
+    BuildPromptSchemaLibraryRequest,
+)
 from src.modules.prompt_schema_library.service import build_prompt_schema_library
 from src.modules.runtime_control_traces.schemas import CreateRuntimeControlTraceRequest
 from src.modules.runtime_control_traces.service import create_runtime_control_trace
@@ -46,7 +52,6 @@ from src.shared.enums import (
     RuntimeTraceValidationStatus,
 )
 from src.shared.errors import ValidationError
-
 
 PROMPT_VERSION = "v1"
 
@@ -137,13 +142,24 @@ COMMERCIAL_PREBID_BUNDLE = _PromptBundle(
 
 TENDER_OPERATOR_PROMPT_SPECS = {
     "requirements": _PromptSpec(
-        asset_key="tender-operator-requirements",
-        purpose="Extract structured RFQ-first requirements from tender documents.",
+        # Versioned asset key avoids accidentally reusing an existing v1
+        # stored prompt/schema compiled with minItems=1 for every field.
+        asset_key="tender-operator-requirements-source-v2",
+        purpose="Extract source-grounded requirements, abstaining on unproven bid scoring and eligibility.",
         output_schema_ref="LLMTenderOperatorRequirementsDraft",
         template=(
             "Return JSON with keys tender_summary, technical_requirements, qualification_requirements, "
             "document_requirements, evaluation_criteria, and procurement_categories. "
-            "Keep each list concise and operator-friendly."
+            "Read original EIS XML facts and retrieved source snippets; do not treat retrieved words as "
+            "verified meaning. Use empty JSON arrays [] for any requirement class lacking an explicit "
+            "source clause. NEVER fill evaluation_criteria with website technical specifications: only "
+            "include official BID SCORING criteria explicitly stated in the tender procedure, otherwise []. "
+            "Eligibility distinctions are material: 'участниками могут быть только СМП/СОНКО' means "
+            "ONLY SMP/SONKO may participate, not a mere preference. Do not invent quotas, dates, prices, "
+            "qualifications, exceptions or submission rules. Include source-defined NMCK and submission "
+            "deadline in summary when uniquely present but explicitly label historical EIS revisions as "
+            "not reverified current. Output concise lists, and explicitly say UNKNOWN if a material "
+            "original is missing or conflicting."
         ),
     ),
     "supplier_questions": _PromptSpec(
@@ -168,13 +184,18 @@ TENDER_OPERATOR_PROMPT_SPECS = {
         ),
     ),
     "contract_risk_memo": _PromptSpec(
-        asset_key="tender-operator-contract-risk-memo",
-        purpose="Draft a calibrated contract risk memo for internal operator review.",
+        asset_key="tender-operator-contract-risk-source-v2",
+        purpose="Draft risks only after checking full original clauses and exceptions.",
         output_schema_ref="LLMTenderOperatorContractRiskMemoDraft",
         template=(
-            "Return JSON with key contract_risks. Each item must contain clause, description, "
+            "Return JSON with key contract_risks. Each item contains clause, description, "
             "classification, impact, mitigation, and operator_decision_required. "
-            "Use only these classifications: market_standard_harsh_term, commercially_material_risk, deal_breaker_candidate."
+            "Use only market_standard_harsh_term, commercially_material_risk or deal_breaker_candidate. "
+            "For each numbered clause, locate the exact original paragraph AND its exceptions, and "
+            "never assert price is fixed if section 3.8 or another term permits adjustment. "
+            "Do not confuse a restriction on fines with a restriction on the change of contract price. "
+            "Use [] when no attributable risk clause is found; no invented or guessed clause numbers. "
+            "Every item stays subject to independent human review."
         ),
     ),
     "quote_normalization": _PromptSpec(
@@ -299,7 +320,7 @@ def _ensure_metadata(session: Session, bundle: _PromptBundle) -> tuple[AgentRegi
         agent_records = session.scalars(
             select(AgentRegistryRecord).where(AgentRegistryRecord.agent_registry_set_id == registry_set.agent_registry_set_id)
         ).all()
-        agent = list(agent_records)[0]
+        agent = next(iter(agent_records))
 
     prompts: dict[str, PromptSchemaRecord] = {}
     missing_sections: list[str] = []
@@ -1034,7 +1055,7 @@ def _run_controlled_sections(
             review_status = HumanReviewStatus.NEEDS_HUMAN_REVIEW
             disposition = RuntimeTraceDisposition.NEEDS_HUMAN_REVIEW
             working_context["_validated_sections"][section] = validated_output
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - provider/runtime failure must fail closed
             raw_output = {"error": str(exc)}
             validated_output = None
             validation_status = RuntimeTraceValidationStatus.FAILED

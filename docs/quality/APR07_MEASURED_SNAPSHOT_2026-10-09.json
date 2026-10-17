@@ -1,0 +1,192 @@
+{
+  "commercial_acceptance_approved": false,
+  "data_platform": {
+    "downloads_performed_by_tender_agent": false,
+    "embedding_scope": "45 Arvectum website pages; 12 Search Console queries, not procurement documents",
+    "embeddings": {
+      "embedding-0.6b.json": {
+        "documents": 45,
+        "model": "Qwen3-Embedding-0.6B-Q8_0.gguf",
+        "mrr": 0.725926,
+        "ndcg_at5": 0.741066,
+        "queries": 12,
+        "recall_at5": 0.833333,
+        "top1": 0.583333
+      },
+      "embedding-4b.json": {
+        "documents": 45,
+        "model": "Qwen3-Embedding-4B-Q8_0.gguf",
+        "mrr": 0.784722,
+        "ndcg_at5": 0.807711,
+        "queries": 12,
+        "recall_at5": 0.916667,
+        "top1": 0.666667
+      },
+      "embedding-8b.json": {
+        "documents": 45,
+        "model": "Qwen3-Embedding-8B-Q4_K_M.gguf",
+        "mrr": 0.731944,
+        "ndcg_at5": 0.798282,
+        "queries": 12,
+        "recall_at5": 1.0,
+        "top1": 0.583333
+      }
+    },
+    "model_promotion": "BLOCKED_PENDING_FROZEN_PROCUREMENT_GOLD",
+    "ocr": {
+      "qwen3vl": {
+        "cases": 2,
+        "mean_cer": 0.154462,
+        "mean_wer": 0.229342
+      },
+      "tesseract": {
+        "cases": 2,
+        "mean_cer": 0.214025,
+        "mean_wer": 0.29748
+      }
+    },
+    "reasoning": {
+      "reasoning-qwen35-4b.json": {
+        "cases": 5,
+        "lexical_smoke_pass_rate": 1.0,
+        "model": "Qwen3.5-4b-MLX-4bit"
+      },
+      "reasoning-qwen35-9b.json": {
+        "cases": 5,
+        "lexical_smoke_pass_rate": 1.0,
+        "model": "Qwen3.5-9b-MLX-4bit"
+      }
+    },
+    "reranker_results_sha256": "a47daaf18b3854d30e411d04df53566d15176eab3eb675feab27683bc02ee555",
+    "source_result_sha256": {
+      "embedding-0.6b.json": "d3f3083a1c33237dec5aedcaaca16180955fb228d97b6f07aeb45dfe2154a776",
+      "embedding-4b.json": "06b487e8531acbcd0d38da3861083be69a5f3bc7a6fcb1262391217bbcee4774",
+      "embedding-8b.json": "6a818b71d19feb70c0b40c500875a7e529f1a568bb3ae5030e8364a1559727fa",
+      "ocr-qwen3vl4b-vs-tesseract.json": "b5f23274238ce5c4f10fb2a1c6b2cc7eb969db5b23088e363626ad9779c18e40",
+      "reasoning-qwen35-4b.json": "f987842da910785edf8fd20377067d2a46faaab2e3944191eecdb86e3bf28b9f",
+      "reasoning-qwen35-9b.json": "e53fdfc947f51a3e6c64803f6a6fa4d5511c6a108c65d4412791cc5958f6f3fe",
+      "reranker-qwen3-0.6b-vs-bge.json": "a47daaf18b3854d30e411d04df53566d15176eab3eb675feab27683bc02ee555"
+    },
+    "status": "EXPLORATORY_SITE_BENCHMARK_NOT_PROCUREMENT_GOLD"
+  },
+  "external_actions_performed": false,
+  "human_quality_approved": false,
+  "latency_observation": {
+    "log_sha256": "2806bdd54d849114c7220bad1c42fc65ed2d077b9f944c2c41fe32dfb9c01d11",
+    "maximum_seconds": 11.96,
+    "p50_seconds_nearest_rank": 1.23,
+    "p95_seconds_nearest_rank": 11.96,
+    "run_count": 9,
+    "scope": "local_analysis_function_call_only_not_ingest_to_human_decision",
+    "state": "OBSERVED_UNREVIEWED"
+  },
+  "models_downloaded": false,
+  "models_promoted": false,
+  "procurement": {
+    "analyzed_runs": 9,
+    "attributed_human_reviews": 0,
+    "cases": 20,
+    "gpt6_flagged_stale_notice_cases": 2,
+    "machine_run_ids": [
+      "toa-run-20261009051803-7193b2",
+      "toa-run-20261009052409-9c4515",
+      "toa-run-20261009052412-d5b9df",
+      "toa-run-20261009052414-56bbe6",
+      "toa-run-20261009052416-d4b7e8",
+      "toa-run-20261009052417-622fa8",
+      "toa-run-20261009052419-3f3f00",
+      "toa-run-20261009052421-b81ea5",
+      "toa-run-20261009052425-d20f58"
+    ],
+    "machine_unknown_flags": 11,
+    "metrics": {
+      "analyzable_intakes": {
+        "basis": "44fz_intakes",
+        "denominator": 20,
+        "numerator": 9,
+        "state": "OBSERVED_UNREVIEWED",
+        "value": 0.45
+      },
+      "document_acquisition_any_file": {
+        "basis": "44fz_intakes",
+        "denominator": 20,
+        "numerator": 17,
+        "state": "OBSERVED_UNREVIEWED",
+        "value": 0.85
+      },
+      "file_text_available_flag": {
+        "basis": "machine_file_metadata",
+        "denominator": 118,
+        "numerator": 109,
+        "state": "OBSERVED_UNREVIEWED",
+        "value": 0.923729
+      },
+      "human_override_rate": {
+        "basis": "no_human_or_page_level_truth",
+        "denominator": null,
+        "numerator": null,
+        "state": "NOT_MEASURED",
+        "value": null
+      },
+      "human_verified_citation_accuracy": {
+        "basis": "no_human_or_page_level_truth",
+        "denominator": null,
+        "numerator": null,
+        "state": "NOT_MEASURED",
+        "value": null
+      },
+      "machine_decision_citation_presence": {
+        "basis": "machine_reports",
+        "denominator": 9,
+        "numerator": 9,
+        "state": "OBSERVED_UNREVIEWED",
+        "value": 1.0
+      },
+      "machine_report_generated": {
+        "basis": "ready_runs",
+        "denominator": 9,
+        "numerator": 9,
+        "state": "OBSERVED_UNREVIEWED",
+        "value": 1.0
+      },
+      "ocr_fallback_rate": {
+        "basis": "no_human_or_page_level_truth",
+        "denominator": null,
+        "numerator": null,
+        "state": "NOT_MEASURED",
+        "value": null
+      },
+      "p95_analysis_latency": {
+        "basis": "no_human_or_page_level_truth",
+        "denominator": null,
+        "numerator": null,
+        "state": "NOT_MEASURED",
+        "value": null
+      },
+      "unsupported_document_rate": {
+        "basis": "no_human_or_page_level_truth",
+        "denominator": null,
+        "numerator": null,
+        "state": "NOT_MEASURED",
+        "value": null
+      },
+      "validated_unknown_rate": {
+        "basis": "no_human_or_page_level_truth",
+        "denominator": null,
+        "numerator": null,
+        "state": "NOT_MEASURED",
+        "value": null
+      }
+    },
+    "scope": "APR06_historical_44fz_intake_not_live_production",
+    "source_files": 168
+  },
+  "schema_version": "apr07-quality-snapshot-v1",
+  "snapshot_sha256": "e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38",
+  "snapshot_type": "bounded_historical_sample_NOT_production_SLO",
+  "sources_sha256": {
+    "apr06_independent_gpt6_audit_2026-10-09.json": "e18faf50253bbe4b58a2d7e38cff44203f2f346d935258f3774d5ac75142afe6",
+    "apr06_machine_prefill_2026-10-09.json": "ae68fd0efd76445765d09cd5ed0774116b80de8713d68aa98a079b0112d539c9",
+    "apr06_real_probe_receipts_2026-10-09.json": "37dab8d0afab10484905c382c2a3f12e76263f140f8897d6207a8ff30d233863"
+  }
+}

@@ -144,3 +144,13 @@ am4_owner_renewal_2026_10_08_r2:
     merge_commit: 44cc5d93ac18260bca5998eaa2d040daabf86891
 
 revocation: Owner may revoke or supersede this directive at any time.
+
+owner_delegated_ai_e2e_acceptance_2026_10_15:
+  status: active
+  source: 'Owner explicitly accepts ChatGPT source-grounded procurement reviews as expert-equivalent for first DEVELOPMENT E2E stage on 2026-10-15; domain corrections follow after stable workflow.'
+  applies_only_to: [APR-03B-development-E2E, development-operator-reports]
+  reviewer_kind: owner_delegated_chatgpt
+  independent_human_gold_required_for_this_stage: false
+  required: [real_originals, working_end_to_end_ui, local_model_analysis, exact_material_citations, safe_unknown, export_guard, regression_tests]
+  deferred: [independent_legal_gold, owner_final_calibration]
+  not_authorized: [human_gold_fabrication, legal_bid_GO, ETP_mutation, digital_signature, payments, production_deploy, supplier_contacts]

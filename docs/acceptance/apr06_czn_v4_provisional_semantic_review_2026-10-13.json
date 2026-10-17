@@ -1,0 +1,158 @@
+{
+  "schema_version": "apr06-czn-v4-ai-source-review-v1",
+  "task_id": "TA-APR06-CZN-V4-SEMANTIC-20261013",
+  "reg_number": "0348100024426000039",
+  "reviewed_on": "2026-10-13",
+  "review_type": "PROVISIONAL_AI_SOURCE_GROUNDED_NOT_HUMAN_GOLD",
+  "primary_source": {
+    "notice_version": 4,
+    "original_soap_eok_xml_sha256": "bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c",
+    "original_soap_archive_sha256": "dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908",
+    "notice_deadline_msk": "2026-10-23T10:00:00+03:00",
+    "development_deadline": "2026-12-15",
+    "notice_uid_filename_size_sha_matches": 7,
+    "original_xml_digital_signature_validated": false,
+    "citations_private_local_source": true
+  },
+  "document_inventory": [
+    {
+      "key": "technical_spec",
+      "document": "ООЗ ИТОГ.pdf",
+      "original_sha256": "3a668cd9140770851920d4a6b99ea0568f129a7eba0496ad63e1254d619b8364",
+      "pages": 95,
+      "source_uid": "01A13177D99776D8A5158380BC40BB5A",
+      "duplicated_in_other_zip": true,
+      "provenance": "current v4 EIS document UID+SHA; identical PDF also nested in v4-3.zip"
+    },
+    {
+      "key": "contract",
+      "document": "Проект государственного контракта, внутри ZIP от 12.10.2026",
+      "inner_sha256": "0cb74f5cbdda06ce49943e5676a456528930e7a3652e92f6f8679628e82e936e",
+      "source_uid": "01A13177E846790D939258D0B9723EE6",
+      "provenance": "current v4 EIS ZIP, nested DOCX read without executing macros"
+    },
+    {
+      "key": "contract_appendix",
+      "document": "Приложение ПИК к проекту контракта 12.10.2026",
+      "inner_sha256": "3dc2efc7a753faf62a17c274e6257cf0cb115903b6fc443653bfba5140e5e78c",
+      "source_uid": "01A13177DF59719F89C5E8A0DBBC7BA2",
+      "provenance": "current v4 EIS ZIP, nested DOCX"
+    },
+    {
+      "key": "nmck_calculation",
+      "document": "Расчёт и обоснование НМЦК от 28.09.2026, два PDF внутри неизменившегося UID ZIP",
+      "source_uid": "01A0F1061E81747BAB5A3EAEB3760D5F",
+      "provenance": "reused original UID v3/v4, original outer ZIP SHA verified"
+    },
+    {
+      "key": "application_requirements",
+      "document": "Требования к содержанию заявки №060577-26",
+      "source_uid": "01A0F106511B706C844790906683531B",
+      "provenance": "reused original UID v3/v4, DOCX"
+    },
+    {
+      "key": "scoring",
+      "document": "Порядок рассмотрения и оценки заявок №060577-26",
+      "source_uid": "01A0F10655C27A35B5A5A70090D2BB1A",
+      "provenance": "reused original UID v3/v4, DOCX"
+    }
+  ],
+  "primary_confirmed": {
+    "nmck_rub": 1245000,
+    "items": [
+      {
+        "name": "Доработка модуля «Чат-бот»",
+        "nmck_rub": 685000,
+        "source": "НМЦК расчёт PDF, строка 1"
+      },
+      {
+        "name": "Доработка страницы «Для молодёжи»",
+        "nmck_rub": 315000,
+        "source": "НМЦК расчёт PDF, строка 2"
+      },
+      {
+        "name": "Доработка страницы «Программы тренингов 2026 года»",
+        "nmck_rub": 245000,
+        "source": "НМЦК расчёт PDF, строка 3"
+      }
+    ],
+    "award_scoring": {
+      "price_weight_percent": 30,
+      "qualification_weight_percent": 70,
+      "qualifying_evidence": "исполненные договоры 44-ФЗ/223-ФЗ по разработке/модернизации сайтов или ИС с чат-ботом в составе; подписанный последний акт не ранее 5 лет",
+      "qualification_basis": "количество исполненных договоров, единица штука",
+      "qualifying_contracts_user_confirmed": 0,
+      "basis_document": "Порядок рассмотрения и оценки заявок, раздел II/III, показатель 4.1.1",
+      "user_reference_statement_as_of": "2026-10-13",
+      "user_reference_statement_source": "OWNER_USER_CHAT_STATEMENT_ZERO_COMPLETED_CONTRACTS",
+      "user_reference_independently_verified": false
+    },
+    "architecture": {
+      "business_logic": "PHP",
+      "frontend": "JavaScript",
+      "queries": "SQL",
+      "cms": "custom-built without ready-made CMS/framework",
+      "database": "PostgreSQL 9.4+ or MySQL 5.5+",
+      "hosting_requirement": "adapt to existing customer platform architecture",
+      "source": "ООЗ, pages 31-32, 36"
+    },
+    "work": {
+      "chatbot": "existing chatbot: multi-level knowledge base tree, admin editing, multiple links, text search/ranking, session context, basic event analytics, data migration, compatibility",
+      "youth": "four age trackbar positions, three dynamic cards, CMS editor, Figma prototype, three visual alternatives and three animations",
+      "training": "three audience toggles/overlapping badges, hover explanations, mobile legend, interactive cards/modals and CMS settings on two pages",
+      "embedding_conditional": "local embedding semantic search only with customer separate agreement; no public generative AI and no freeform generated consultations",
+      "sources": "ООЗ pages 37-57, 58-66, 66-72, 80-91"
+    },
+    "deadlines": {
+      "youth_and_training_implementation": "2026-12-02",
+      "youth_and_training_testing": "2026-12-03..2026-12-04",
+      "youth_and_training_go_live": "2026-12-07",
+      "chatbot_implementation": "2026-12-10",
+      "chatbot_testing": "2026-12-11..2026-12-14",
+      "chatbot_go_live": "2026-12-15",
+      "source": "ООЗ table 13, pages 86-91"
+    },
+    "contract": {
+      "advance": false,
+      "source_code_and_build_process_transfer": true,
+      "exclusive_rights_transfer": true,
+      "test_environment_in_Russia_if_contractor_hosted": true,
+      "customer_access_due_workdays_after_contract": 3,
+      "customer_material_reply_workdays": 3,
+      "customer_approval_workdays": 5,
+      "warranty_months": 12,
+      "critical_defect_remedy_workdays": 1,
+      "noncritical_defect_remedy_workdays": 5,
+      "warranty_consultation_cap": 10,
+      "warranty_consultation_reply_workdays": 3,
+      "source": "Проект контракта clauses 2.10,3.4-3.5; ООЗ pages 84-85, 92-95"
+    },
+    "user_limitations": {
+      "visitors_minimum": 6000,
+      "employees_minimum": 300,
+      "admins_minimum": 6,
+      "concurrency_ambiguous": true,
+      "source": "ООЗ table 2 and preceding text, page 10"
+    }
+  },
+  "provisional_analysis": {
+    "technical_feasibility": "CONDITIONAL_REQUIRES_CUSTOMER_CUSTOM_PHP_REPOSITORY_AND_TEST_ACCESS",
+    "competitive_score_risk": "VERY_HIGH_IF_NO_COMPLETED_QUALIFYING_44FZ_223FZ_CONTRACTS",
+    "scoping_risk": "HIGH_LEGACY_CUSTOM_PLATFORM_AND_CMS_MIGRATION",
+    "schedule_risk": "HIGH_PARALLEL_DELIVERABLES_BY_DECEMBER",
+    "cash_flow_risk": "HIGH_NO_ADVANCE_WITH_WARRANTY",
+    "recommendation": "NO_GO_QUALIFICATION_COMPETITIVENESS",
+    "requested_user_confirmation": [
+      "Owner confirmed no completed contracts on 2026-10-13. Ask owner to update reference list when first eligible fully accepted 44/223 contract appears.",
+      "Can a verified PHP/SQL/JavaScript implementation and Russian test environment be delivered within original fixed timeline?",
+      "What actual stage-wise payments and security/guarantee amounts are specified in full operative contract notice and bank documentation?"
+    ],
+    "human_gold_label": false,
+    "owner_commercial_approval": false,
+    "bid_submitted": false,
+    "cost_estimate_rub": null,
+    "legal_opinion_final": false,
+    "user_should_not_auto_bid": true,
+    "competitive_no_go_owner_reference_zero": true
+  }
+}

@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-SBER-ZVUK-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Verify a newly listed corporate IT request ООО Звук SBR028-2610130033 against the public primary Sberbank-AST platform, and distinguish secondary-only data from source-attested and currently eligible opportunities.
+definition_of_done:
+  - Seek official public platform card by exact tender ID without authentication or circumvention; verify source protocol/site access on Russian Mac mini with no_proxy.
+  - Preserve aggregator details solely as secondary and mark deadline, price, bid eligibility and live status not source-verified until original evidence.
+  - Check the updated Workspace official tender listings for additional unique current corporate software candidates, not bulk scrape.
+  - Record bounded dated read-only evidence with exact links and source confidence; keep 15-20 actionable leads acceptance OPEN unless actually verified.
+  - Run source artifact checks; draft PR and full CI if changes committed, complete checkpoint or specify objective source blocker.
+completed:
+  - 'Original host and current Workspace index checked via Mac mini no-proxy; secondary-only tender gated; 33 local pytest PASS and Ruff PASS; PR418 opened as draft.'
+  - PR417 original Workspace 19023 and aggregator conflict gate GitHub PR38455956035 and two push workflows all SUCCESS; bounded child completed at 4a0b5c09bccc7b60fb509a2ed777f69133dd3913.
+  - Direct HTTPS without proxy on Mac mini 2026-10-13 22:54 MSK: Workspace public /tenders index HTTP200 with 127077 bytes, official categories web-development/apps-development/crm HTTP200. Listing currently shows 19026 marketplace sales (noncore), 19027 English presentation/one-pager/landing (not yet verified corporate software), and previously known 19023/19019/19012.
+  - External aggregator Kontur indicates ООО Звук SBR028-2610130033, dated Oct13, original platform Sberbank-AST, stated estimate 12204855.60 RUB and Oct21 11:00 MSK date. This is SECONDARY ONLY, no original platform notice or live deadline verified.
+  - Direct Mac mini no-proxy HTTPS official https://www.sberbank-ast.ru/ HTTP200, https://utp.sberbank-ast.ru/ redirects to official HTTPS200. Direct Kontur aggregator specific page HTTP403, cannot count it as original.
+current: 'Completed PR418 source gate: no official notice match, secondary-only REVIEW_REQUIRED; exact PR/push GitHub CI 3/3 SUCCESS at 587a755abd26f8854121b7c0259b535ae1f2116c.'
+pending: []
+last_verified_commit: '587a755abd26f8854121b7c0259b535ae1f2116c — GitHub PR38460471608 and push38460463687/38460463649 all completed SUCCESS; source code 090ec838 local 33 pytest PASS/Ruff PASS.'
+test_results:
+  - 'Final exact-head PR418 GitHub PR/push 3/3 SUCCESS at 587a755abd26f8854121b7c0259b535ae1f2116c (2026-10-13).'
+  - 'Latest exact tested PR418 source 090ec83: Mac mini 33 pytest PASS, Ruff PASS, public-source JSON negative-evidence guard PASS, git diff --check PASS.'
+  - '33 pytest PASS, Ruff PASS and JSON check PASS on isolated Mac mini.'
+resume_instruction: 'Completed PR418: no further same-source public search retries without new evidence. Continue parent roadmap from active PR419 exact-card URL guard; 15-20 presently qualified originals and APR03-07 human gates remain OPEN. No bids, account/payments, merges, production or watchdog.'

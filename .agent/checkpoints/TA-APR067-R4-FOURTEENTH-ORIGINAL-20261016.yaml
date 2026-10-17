@@ -1,0 +1,45 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-FOURTEENTH-ORIGINAL-20261016
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Independent 44FZ historic first-party actual local Gemma E2E, registry 0158300034526000388, focus quotation original archived
+  v5, no real EIS or bids.
+definition_of_done:
+- Frozen saved original EIS archive and latest selected notice revision SHA, exact original file UID/name/bytes/SHA bound to first-party
+  saved-run metadata
+- One native EIS offline run ready_to_analyze, Data Platform document extraction with original first-party binaries; fail closed on
+  source gaps
+- One real local Gemma4 analysis 4-provider calls with source-grounded ChatGPT expert review and persisted report/history/3 XML fact
+  citations, archival export409
+- Adversarial/provenance tests and full suite pass, exact CI for Draft PR, status completed only on full verified evidence
+completed:
+- 2026-10-16 separate isolated worktree created for case 0158300034526000388, old 13 distinct runs unmodified; no prior model invocation
+  for this case.
+- 2026-10-16 original EIS native source stage toa-run-20261016044741-99dfa3 initially READY_NO_BYPASS; selected archived notice and
+  original metadata SHA-pinned, all 10/10 source XML+original files match SHA, all five substantive binaries extracted via real Data
+  Platform DOC/DOCX/legacy XLS/XLSX formats; no live EIS. First case already analyzing due serial PID14368.
+- '2026-10-16 authentic first-party saved EIS EZK latest archived revision v5 original-source Gemma4 E2E verified: 4 calls339.21sec
+  HTTP200, no fallback, 10/10 SHA original XML/DOCX extracted, v1/v2/v3/v4/v5 differing archived deadlines verified as 09/12/13/12/12
+  October; current selected v5 2026-10-12T08:00+03:00, NMCK152,033.33rub, source title website development, original 3 XML EIS cites;
+  HTML SHA178e09813c6ccc5e70e0e2c57417a186f438a80b02f566347e68162820e82639; report/history200, unsigned401, archive exports409, manual_review_required.
+  Specialist MIXED analysis deliberately unverified.'
+- 2026-10-16 original source 0158300034526000388 exact code CI run38852794273 9/9 jobs SUCCESS on substantive commit 3141d97bf8b6a826688cfbe7fbc209ea7d011a8a,
+  local4240 pass/238 skip/0fail,51 focused source PASS, Ruff PASS; real Gemma4 four calls339.21sec HTTP200 no fallback, 10/10 original
+  source SHA/text, three original XML cites, NMCK152033.33 RUB and archived deadline2026-10-12T08:00+03:00; report HTML sha178e09813c6ccc5e70e0e2c57417a186f438a80b02f566347e68162820e82639,
+  history/registry200 unauth401 archival PDF/DOCX409, manual_review_required, no ETP/GO.
+current_stage: verified_original_source_real_llm_expert_full_regression_and_exact_ci_completed
+remaining:
+- Draft PR447 still unmerged; no production / legal commercial GO
+- Finish separate case16 real model/source expert and checkpoint
+- Case13 prior cohort remains independently in_progress for historical report re-publication
+last_verified_commit: 3141d97bf8b6a826688cfbe7fbc209ea7d011a8a
+last_tests: PR447 substantive code SHA3141d97b GitHub CI run38852794273 9/9 SUCCESS, local4240 pass/238skip, source51PASS; Gemma4
+  four calls339.21s 10/10 SHA 3 original XML cites archived export409.
+resume_instruction: COMPLETED real original EIS E2E case 0158300034526000388 source/model/CI. Do NOT rerun. Case16 original 0169300003326000181
+  now the third model running in serial process PID14368, check its own private receipt and final CI; unrelated case13 report-history
+  republish remains open.
+execution:
+  branch: feature/apr067-r4-fourteen-sixteen-original-e2e-20261016
+  stage_name: ta-apr067-r4-fourteenth-ezk-five-revisions-20261016
+  manual_override: true

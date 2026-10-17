@@ -232,3 +232,18 @@ def test_macmini_override_is_loopback_and_has_verified_storage_mount():
     assert compose.count('ARVECTUM_STORAGE_ROOT: /app/data') == 2
     assert compose.count('AI_CORP_RAG_DATA_PLATFORM_BASE_URL: http://host.docker.internal:8094') == 2
     assert '0.0.0.0:18082' not in compose
+
+
+def test_no_operator_price_policy_cannot_be_marked_within_bounds():
+    """Missing commercial preferences are unknown, not permission to bid."""
+    payload = sample()
+    payload["criteria"]["price_min"] = None
+    payload["criteria"]["price_max"] = None
+    profile = module.OnboardingProfile.model_validate({
+        k: v for k, v in payload.items()
+        if k not in ("legal_name", "inn", "kpp")
+    })
+    score = module.compare_profile_price(profile, source_card(1_000_000))
+    assert score["status"] == "UNKNOWN"
+    assert score["citations"]
+    assert "not been configured" in score["reason"]

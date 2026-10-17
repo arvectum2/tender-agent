@@ -1,0 +1,217 @@
+{
+  "bid_ready": false,
+  "cases": [
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "1e6c59497e31ab6fb05ea13eee90eff19745e35b92c47be3405920414f484597",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0127100008626000013",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "4a046442328e9917a49dbafdad9712600ecd51f0b709b5224fad28f947f6d6a6",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "6c2d812fd7148fa8dcf78cbccf62121c1bf731a067cc3031b5aa6c3679c9d7e3",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0137200001226007700",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "ae2ff6b5a68999ffb7c70cc8c762f101ffb70363b0b913e0e5c5475bea2ac26d",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "2eff3fedb8bef1a7945bc7938a353a9e0c07a3f7bd2195bdec798426e7040f44",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0148200000526000028",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "d78c77d484130e004c6678b0e41608c847487f462da873fd226d8a5b3b20a3ce",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "672e0091b35aff92afabfdaf62a55c8a3b57ac6be0eb08266d4ec8cbfc84992b",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0149200002326001555",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "4d204d076a2386adc1c94db8299b1ffa7a6dcff9b4163126c3097d2594af1d1a",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "cfa1c3fca71761f5de9395b885985fbcf76f88239fa08882d4dee907fbd93c5f",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0151600003226000011",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "8e35b7f24d4059f9f2b6bf490afccd0ba8346a926cc95d2e0365c0a5bf799611",
+      "source_role": "NEW_OFFICIAL_POSITIVE_REPLACEMENT"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "8b9bec4e0bf171579edbd18fcbeec481533fa99bbb79f6fe6a079548062fa2c5",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0152200004026000069",
+      "selected_xml_attachment_references": 6,
+      "selected_xml_sha256": "67daa28bbbc539b07afc18808959a27c78706feef27c94aba2b2be5bbb363029",
+      "source_role": "NEW_OFFICIAL_POSITIVE_REPLACEMENT"
+    },
+    {
+      "archived_version": 5,
+      "archived_zip_sha256": "d7ed9c567890f2f11733e7985bede528e2593505a9c04db3fbf3d4ad0842c74a",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0158300034526000388",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 4,
+      "archived_zip_sha256": "3daf341cee2e26c670ccd1b6101105ce21706497b38cd15989ff9db3a4708ded",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0162200011826003089",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "6712bf2058e7f7d047d6fb15467b7d173de48e06dbd82fff6295e8f69f6b6b20",
+      "source_role": "NEW_OFFICIAL_POSITIVE_REPLACEMENT"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "445edafcd5ea57ece3e2e74de7a3bb2e84470fea0fc5709e16433a3817502d6d",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0162300005826000156",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "3812536483e483cff866bebbb63f4b750c6b6a88e2b9537a013faaada0fa6a8b",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0169300003326000181",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "6ce89c873764e01a00f1d3d92001cbf19a8b1ec5d84769316d86df1ae92d606e",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0169300008226000223",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "4f52bad007ffbfcbfec08c10db43983a6c0991c93b33b4346a4d1400f8cdbc3e",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0169300008226000225",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "bbaaece40c884873819b406310c09b14a543eef39873e6f8a3265af8df7945bd",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0348100024426000021",
+      "selected_xml_attachment_references": 6,
+      "selected_xml_sha256": "e52bb5a8cea4160987bd9a77f79a62bca3530410ca227e6ca3dde2d71a0d1f57",
+      "source_role": "NEW_OFFICIAL_POSITIVE_REPLACEMENT"
+    },
+    {
+      "archived_version": 3,
+      "archived_zip_sha256": "af61797c60db6a9054380b052c495deacb62c0be5813fe3a78bb07c648dcde1e",
+      "competitive_method": "COMPETITIVE_OPEN_ELECTRONIC_COMPETITION",
+      "notice_type": "epNotificationEOK2020",
+      "registry_number": "0348100024426000039",
+      "selected_xml_attachment_references": 7,
+      "selected_xml_sha256": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "47010a0f889a13b6caf78371254d5b0130ae73b7ef58c23a409c422c1cbe1b54",
+      "competitive_method": "COMPETITIVE_OPEN_ELECTRONIC_COMPETITION",
+      "notice_type": "epNotificationEOK2020",
+      "registry_number": "0349100009326000005",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "02fb7a3e0bb7297417f715e2cae144d8a96dddfcfc5a4ec512a0fdd042213adf",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 2,
+      "archived_zip_sha256": "54824559f800e0382650140620b796482740ac5b5d3936223f99620043b238ae",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0360600005326000018",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "0e4b65ba36fad901856783aa2c1903ed9a70eae98966c663bc67e16565826db8",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "35978ce41fc87955491cc53705b0bd126c6d8217b82134e640eed1d78ed9e500",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0372200172326000015",
+      "selected_xml_attachment_references": 5,
+      "selected_xml_sha256": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "467c0f69024305162c2af2fafd21d579a32d41700b84455bdf8971279da7a29a",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_QUOTATIONS",
+      "notice_type": "epNotificationEZK2020",
+      "registry_number": "0376300000126000193",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "8df59538a21209e6505961f09f8afd97646c6533aba67af05eb67bbc4dd4c69a",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0377100005726000128",
+      "selected_xml_attachment_references": 4,
+      "selected_xml_sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777",
+      "source_role": "ORIGINAL_20_CORPUS"
+    },
+    {
+      "archived_version": 1,
+      "archived_zip_sha256": "1b18e3231d1b06f4373dd66633ac4496cf7a4309d0cf97cc072d0c73174f3968",
+      "competitive_method": "COMPETITIVE_ELECTRONIC_AUCTION",
+      "notice_type": "epNotificationEF2020",
+      "registry_number": "0895100000126000897",
+      "selected_xml_attachment_references": 6,
+      "selected_xml_sha256": "d0a17037e52e9ae7a0ef374241bf865a0efaf2a9db7cdfc278f36b720a7b0f04",
+      "source_role": "ORIGINAL_20_CORPUS"
+    }
+  ],
+  "legal_gold_signed": false,
+  "official_current_edition_asserted": false,
+  "r4_audit_sha256": "707e5bbb3ab5c18c8b42f2cfda89e6ae3770a2a0c4b41978969905c9d8652e0d",
+  "sample_denominators": {
+    "competitive_cases": 20,
+    "noncompetitive_negative_controls": 4,
+    "saved_model_snippets": 47,
+    "source_attachment_references": 96
+  },
+  "schema_version": "apr067-r4-historic-development-source-v1",
+  "scope": "R4_20_HISTORICAL_DEVELOPMENT_COMPETITIVE_44FZ_ONLY",
+  "source_selection_sha256": "93f72ba5127f21c9b7744688da2b375d80779a49d64243155e6657ff4d436da1"
+}

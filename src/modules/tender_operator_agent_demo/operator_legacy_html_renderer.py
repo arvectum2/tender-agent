@@ -9,6 +9,12 @@ import html
 from collections.abc import Callable
 from typing import Any
 
+from src.modules.tender_operator_agent_demo.operator_customer_report_language import (
+    customer_narrative,
+    readable_document_origin,
+    readable_document_text_state,
+)
+
 
 def render_legacy_report_html(
     metadata: dict[str, Any],
@@ -38,7 +44,25 @@ def render_legacy_report_html(
     final_recommendation = outputs["final_recommendation"]
     trace = outputs["trace"]
     preliminary_analysis = requirements.get("preliminary_analysis", {})
-    downloaded_docs = inventory_builder(metadata)
+    downloaded_docs = [
+        {
+            **entry,
+            "download_status": (
+                "Получен" if entry.get("download_status") == "downloaded"
+                else "Наличие документа требует уточнения"
+            ),
+            "text_status": readable_document_text_state(entry.get("text_status")),
+            "source": readable_document_origin(entry.get("source")),
+        }
+        for entry in inventory_builder(metadata)
+    ]
+    trace = {
+        **trace,
+        "overall_explanation": customer_narrative(trace.get("overall_explanation")),
+        "limitations": [
+            customer_narrative(value) for value in trace.get("limitations", [])
+        ],
+    }
     files = metadata.get("files", [])
     procurement = metadata.get("procurement", {})
     procurement_manual_required = bool(metadata.get("manual_upload_required") or metadata.get("attachments_status") == "manual_upload_required" or not files)
@@ -65,7 +89,7 @@ def render_legacy_report_html(
         render_operator_html_layout,
     )
 
-    return render_operator_html_layout(
+    html_document = render_operator_html_layout(
         archive_button_html=archive_button_html,
         deadline_ru=deadline_ru,
         delivery_term_ru=delivery_term_ru,
@@ -93,4 +117,14 @@ def render_legacy_report_html(
         risks=risks,
         supply_section_title=supply_section_title,
         trace=trace,
+    )
+    # Client-only phrasing happens after the frozen layout is rendered.
+    # Keeping the original HTML interpolation AST intact avoids changes to
+    # the archived report provenance and its long-standing compatibility gate.
+    return (
+        html_document
+        .replace("Трассировка и обоснование", "Основания выводов и ограничения")
+        .replace("Статус скачивания", "Наличие документа")
+        .replace("Статус текста", "Содержание документа")
+        .replace("Статус подключения", "Наличие документов")
     )

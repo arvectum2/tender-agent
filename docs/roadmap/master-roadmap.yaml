@@ -225,23 +225,23 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Documented production deployment passes restore, restart/resume, observability and controlled failure drills without relying on Mac mini as the only runtime.'
     - id: APR-03B-OPERATOR-WORKSPACE
       priority: P0
-      state: unified_search_and_real_eis_analysis_merged_owner_browser_acceptance_pending
+      state: archived_originals_development_e2e_accepted_owner_delegated_chatgpt_live_current_notice_and_production_separate
       depends_on: [APR-02-223FZ-BREADTH, APR-03-PRODUCTION-RUNTIME]
       legacy_mapping: [ARV-019, ARV-061, ARV-064, ARV-066]
       outcome: 'Authenticated browser workspace for live EIS number/URL request, status, cited results, report and read-only canonical procurement database.'
       why_now: 'Owner wants to personally use the product immediately after production runtime, before SaaS expansion.'
       scope: [request_panel_44fz_223fz, analysis_status, cited_results_and_unknowns, documents_and_report_export, read_only_canonical_database_explorer]
-      done_gate: 'Owner signs in by browser, submits supported live procurement, observes progress, inspects evidence-bound requirements/risks/economics, source documents and report, finds saved procurement/history without terminal/Swagger; no arbitrary SQL, mock-only UI or external consequential actions.'
+      done_gate: 'Owner delegates DEVELOPMENT E2E expert review to ChatGPT (2026-10-15). Verify a real-source stable authenticated workspace flow search/import, file integrity, local LLM, source-cited material report, history/read-only registry and archival export safety. No independent human gold required at this stage; legal GO and external actions remain separately gated.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
-      state: implementation_pr_open_not_merged
+      state: implementation_merged_owner_identity_development_e2e_accepted_business_document_gate_open
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'
       done_gate: 'A new tenant can configure the minimum supplier/company profile and run its first personalized analysis without developer intervention.'
     - id: APR-05-PAID-PILOT-SAAS
       priority: P0
-      state: integration_review_in_progress
+      state: implementation_merged_private_owner_tenant_e2e_pass_paid_production_gate_open
       deployment: disabled_by_default
       external_payments: false
       real_ru_vps: deferred_pending_owner_decision
@@ -251,7 +251,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'A controlled paid pilot can be onboarded, metered, packaged and supported with legal/HUMAN gates explicit and no bespoke operator intervention for routine setup.'
     - id: APR-06-COMMERCIAL-ACCEPTANCE
       priority: P0
-      state: implementation_pr_open_not_merged
+      state: development_20_of_20_real_source_e2e_pass_independent_human_gold_pending
       legacy_mapping: [ARV-005, ARV-072]
       outcome: '20-30 real procurements through the full workflow with measured operator usefulness, not just technical completion.'
       why_now: 'Validates that the system saves time and improves decisions before broad feature expansion.'
@@ -259,7 +259,7 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Frozen acceptance report demonstrates agreed thresholds and records every confirmed failure as a regression.'
     - id: APR-07-QUALITY-MODEL-EVAL
       priority: P0
-      state: continuous_pr_open_not_merged
+      state: real_source_development_evidence_pass_rolling_slo_and_independent_gold_pending
       legacy_mapping: [ARV-010, ARV-039, ARV-067, ARV-072]
       outcome: 'Product SLO/quality dashboard plus Russian procurement benchmark for LLM/VLM/OCR/embeddings and vertical extraction.'
       why_now: 'Prevents cosmetic model churn and makes quality decisions evidence-based.'
@@ -286,6 +286,42 @@ active_product_roadmap_2026_10_08:
       outcome: 'Human correction -> regression case -> reviewed rule/model candidate -> controlled promotion.'
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
+
+roadmap_verified_progress_2026_10_16:
+  as_of: '2026-10-16'
+  baseline_main: bc98bd397bbd91186dd08e1e611d972077c4ab74
+  qa_development:
+    history: '20/20 original archival 44-FZ E2E cases, 210 original SHA files, 80 Gemma4 model calls, 60 EIS XML citations'
+    evidence_pr: 449
+    draft_unmerged: true
+    exact_pr_ci: SUCCESS
+    full_local_pytest: '4286 passed, 238 skipped, 0 failed'
+    independent_human_gold: '0/15'
+    blind_sut: 0
+    semantic_precision_recall: NOT_MEASURED
+    owner_bid_go: false
+  integrated_workspace_onboarding_saas:
+    evidence_pr: 450
+    source_prs: [433, 434, 435]
+    draft_unmerged: true
+    isolated_merge_conflicts: 0
+    full_local_pytest: '4033 passed, 238 skipped, 0 failed'
+    focused_pytest: '63 passed'
+    exact_review_code_ci: SUCCESS
+    verified_review_code_commit: a88af4279e0e13c9a9dd2cf463219c9e9700c7dd
+    child_integration_readiness: completed
+    owner_merge_approval: false
+    production_deployment: false
+    legal_and_eligibility_acceptance: false
+  b2b_discovery:
+    source_snapshot_date: '2026-10-12/13'
+    historical_corporate_candidates: 9
+    accepted_current_qualified_count: NOT_ATTESTED
+    target: '15-20 current unique IT opportunities'
+  watchdog:
+    enabled: false
+    manual_override: true
+  provenance: 'Verification overlay: green development tests and draft PR do not satisfy external owner/human/production/legal gates.'
 
 b2b_procurement_source_discovery_2026_10_12:
   id: B2B-SOURCE-DISCOVERY-2026-10-12
@@ -3481,3 +3517,244 @@ legacy_registry:
     verified_at: null
     evidence: []
     notes: null
+
+procurement_llm_data_collection_2026_10_16:
+  id: PROC-LLM-DATA-01
+  priority: P0
+  state: existing_postgres107_75_candidates_source_provenance_audit_review
+  active_scope: candidate_data_capture_only_no_model_training
+  owner_directive_date: '2026-10-16'
+  policy: docs/roadmap/PROCUREMENT_LLM_STORAGE_POLICY_2026-10-16.md
+  canonical_structured_store: 'Mac mini: Docker PostgreSQL 17 arvectum-postgres, database arvectum'
+  canonical_originals_path: /Volumes/ArvectumSSD/Arvectum/data/tenders/eis
+  canonical_results_path: /Volumes/ArvectumSSD/Arvectum/data/tenders/results
+  existing_report_path: /Volumes/ArvectumSSD/Arvectum/data/rag/reports
+  verified_live_inventory:
+    procurement_tenders: 20
+    tender_analysis_runs: 45
+    procurement_tender_documents: 95
+    tender_bid_result_snapshots: 1
+    tender_bid_result_offers: 55
+    eis_document_folders: 15
+    eis_document_files: 142
+    first_real_protocol: '0158300034526000388'
+  experimental_sqlite:
+    canonical: false
+    write_enabled: false
+    location: /Volumes/ArvectumSSD/Arvectum/private/procurement-llm/corpus-v1/candidate-registry.sqlite3
+    observations: 29
+    status: frozen_archival_backup_29_of_29_reconciled_to_pg
+  capture_sources: [every_future_manual_tender_review, tender_agent_real_llm_runs, tender_agent_prior_runs, owner_participated_tenders, changes_and_bid_protocols, attributable_owner_corrections]
+  protected_blind_holdout: 'R4 15 cases/73 originals excluded from future train exports'
+  data_gate: 'Idempotent existing-schema reuse or reviewed additive Alembic in same arvectum DB, verified originals/hashes, no duplicate DB or source copy, no cross-tenant permissions.'
+  pending: [verify_historical_owner_participation, enable_deployed_run_capture_after_review, connect_manual_chat_intake_and_other_runtime_entrypoints, preserve_backup_pending_final_deletion_review]
+  verified_pg_backfill_2026_10_16:
+    alembic_revision: 107_add_procurement_learning_observations
+    legacy_development_e2e: 20
+    legacy_manual_reviews: 9
+    existing_analysis_run_indexes: 45
+    total_unreviewed_candidates: 74
+    replay_existing: 29
+    replay_new: 0
+    original_tender_analysis_run_rows_preserved: 45
+    original_bid_offers_preserved: 55
+    backup_sha256: 730e33bdfcc9eb042b7ccf2b53318c4cfb2000aad45c27df34eb44b836c68593
+    migration_rationale: 'SaaS schema existed on live 100, 9 SaaS tables matched ORM; upgrade 100-105, stamp existing 106, upgrade 107. Clone rehearsal and import PASS.'
+    result: docs/roadmap/PROCUREMENT_LLM_BACKFILL_2026-10-16.md
+  future_manual_and_pilot_intake:
+    id: PROC-LLM-DATA-02
+    state: code_ci_verified_stacked_draft_unmerged_not_deployed
+    policy: docs/roadmap/PROCUREMENT_LLM_CONTINUOUS_INTAKE_2026-10-16.md
+    same_database: arvectum
+    sources: [manual_chat_structured_cli, customer_pilot_completed_run, history_service_saved_analysis]
+    manual_global_chat_subscription: not_available
+    deploy_feature_flag: TENDER_LEARNING_CAPTURE_ENABLED
+    training_or_promotion: deferred
+    verified_live_manual_capture_2026_10_16:
+      observation_id: manual-aksay-protocol-20261014-v1
+      procurement_ref: '0158300034526000388'
+      source_sha256: 8f5c776a269f8a4ca0363bc1537f7d95651f62e67ed964f9e42a94bce1868e8c
+      inserted: 1
+      total_live_candidates: 75
+      original_source_copied: false
+  source_provenance_audit_2026_10_16:
+    id: PROC-LLM-DATA-03
+    state: read_only_audit_implemented_gaps_identified
+    report: docs/roadmap/PROCUREMENT_LLM_PROVENANCE_AUDIT_2026-10-16.md
+    live_observations: 75
+    unique_procurement_and_external_refs: 36
+    saved_analysis_run_links: 45
+    gemma_development_manifest_sha_verified: 20
+    gemma_metrics_manifest_sha_verified: 20
+    directly_checked_archived_zip_files: 0
+    manual_reviews: 10
+    manual_submitted_claims: 5
+    manual_primary_sha_verified: 1
+    missing_manual_sha_receipts: 9
+    report_paths_present: 43
+    report_paths_readable: 21
+    report_paths_missing: 22
+    missing_full_reports_with_database_preview_only: 22
+    protected_blind_train_rows: 0
+    training_ready_rows: 0
+    pending: [restore_22_missing_report_receipts, get_primary_bid_participation_receipts, verify_archived_zip_files, owner_legal_gold_and_data_use_review]
+  source_recovery_2026_10_16:
+    id: PROC-LLM-DATA-04
+    state: searched_local_sources_reports_unrecovered_kaluga_source_verified_pending_intake
+    report: docs/roadmap/PROCUREMENT_LLM_SOURCE_RECOVERY_2026-10-16.md
+    missing_full_report_rows: 22
+    unique_missing_full_report_paths: 20
+    missing_full_report_only_procurement: '0323100010326000013'
+    missing_report_preview_rows: 22
+    checked_local_roots: [data, archive, backups, artifacts, runtime, private, repos, worktrees, user_documents_downloads_desktop]
+    original_reports_recovered_among_22_missing: 0
+    additional_historical_full_reports_found_on_old_macbook: 2
+    additional_historical_originals_copied_into_existing_rag_reports_with_sha_match: 2
+    existing_canonical_rag_report_file_count_after_copy: 26
+    canonical_older_report_sha256:
+      analyze_tender_0323100010326000013_20260705T195400298896Z_09d21c02.md: a8285a58b68f2fda893312efbd81069a1fb174f79986195c4efd4011bfb03774
+      analyze_tender_0323100010326000013_20260705T195559914662Z_acbcfb55.md: b66ffb4fd4cb57a2a5224583f72fe89bc6ec865792fafdcd5df483ab6c5d8f38
+    historical_model_run_identity_verified_for_two_new_files: false
+    old_macbook_legacy_sqlite_read_only_reviewed: true
+    old_macbook_legacy_sqlite_tender_analysis_rows: 0
+    old_macbook_legacy_sqlite_submitted_receipts: 0
+    kaluga_ref: '0137200001226007700'
+    kaluga_official_application: '193'
+    kaluga_eis_zip_sha256: 6c2d812fd7148fa8dcf78cbccf62121c1bf731a067cc3031b5aa6c3679c9d7e3
+    kaluga_eis_protocol_xml_sha256: 109d434c739f512e777461389481b6ae5bca3920fc36be36336e284e061fa65c
+    kaluga_admitted: true
+    kaluga_final_price_rub: 449000
+    participant_attribution_verified: false
+    pending_manual_private_record: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/pending-manual-evidence/kaluga-app193-20261016.json
+    pending_manual_dry_run: pass
+    canonical_postgres_observation_count: 75
+    new_canonical_records_from_this_child: 0
+    training_ready_rows: 0
+  legacy_unlinked_report_artifacts_2026_10_16:
+    id: PROC-LLM-DATA-05
+    state: same_postgresql_indexed_2_unlinked_sha_receipts_not_training_ready
+    evidence: docs/roadmap/PROCUREMENT_LLM_LEGACY_REPORT_ARTIFACTS_2026-10-16.md
+    existing_postgres_database: arvectum
+    candidate_table: procurement_learning_observations
+    legacy_report_artifacts_appended: 2
+    duplicate_replay_new_rows: 0
+    current_live_candidates: 77
+    original_run_id_claim: not_available
+    full_report_copied_into_db: false
+    missing_historical_22_paths_resolved: false
+    pending_kaluga_manual_receipt_counted: false
+    train_ready: 0
+  etp_email_evidence_2026_10_16:
+    id: PROC-LLM-DATA-06
+    state: primary_operator_notifications_verified_private_batch_dryrun_apply_blocked
+    report: docs/roadmap/PROCUREMENT_LLM_ETP_EMAIL_EVIDENCE_2026-10-16.md
+    corporate_etp_emails_reviewed: 15
+    private_source_bound_candidate_events: 8
+    private_batch_dry_run: pass
+    insert_status: blocked_by_tool_execution
+    expected_live_new_rows_before_apply: 0
+    unchanged_postgresql_observation_count: 77
+    aksay_rts_received_events: 2
+    museum_rts_received_events: 2
+    aksioma_roseltorg_successful_submission_application_ordinal: '3630084'
+    kaluga_sberast_app193_admitted: true
+    kaluga_earlier_app206_processing: true
+    kaluga_withdrawal_application_number: unknown
+    kaluga_193_linked_to_arvectum_via_etp: true
+    model_training: deferred
+  official_outcomes_evidence_2026_10_16:
+    id: PROC-LLM-DATA-07
+    state: four_cases_crosschecked_originals_and_limits_no_gold
+    report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_OUTCOMES_2026-10-16.md
+    canonical_postgres_observations: 77
+    pending_blocked_etp_evidence_events: 8
+    procurement_cases_checked: 4
+    aksay_archived_derived_rank: 38
+    aksay_archived_derived_bid_rub: 119000
+    aksay_archived_derived_winner_rub: 28400
+    aksay_original_final_protocol_docx_reverified: false
+    kaluga_official_eis_xml_sha_verified: true
+    kaluga_app193_admitted: true
+    kaluga_app193_price_rub: 449000
+    kaluga_app_rating_raw_value: '26'
+    kaluga_withdrawal_application_number: unknown
+    aksioma_operator_application_ordinal: '3630084'
+    aksioma_our_bid_rank_primary_proven: false
+    aksioma_winner_price_secondary_rub: 119000
+    museum_bread_result_scheduled: '2026-10-20'
+    museum_bread_final_outcome_verified: false
+    read_only_tool: scripts/procurement_llm/audit_outcomes.py
+    train_ready_rows: 0
+  primary_official_final_eis_protocols_2026_10_16:
+    id: PROC-LLM-DATA-08
+    state: real_official_eis_getdocs_zip_xml_sha_verified
+    report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_EIS_FINAL_PROTOCOLS_2026-10-16.md
+    canonical_original_storage: /Volumes/ArvectumSSD/Arvectum/data/tenders/eis
+    aksioma:
+      procurement_ref: '0187200001726001304'
+      company_application: '3630084'
+      admitted: true
+      price_rub: 399000
+      app_rating_raw: '6'
+      total: 17
+      admitted_count: 12
+      winner_price_rub: 119000
+      zip_sha256: 39fef1af482907b2c2382518d339d932e09197c2e36e68a6134fc5910ff7dd18
+      xml_sha256: 183023905c0af4bca1f1468ea09837e7c85a86068a48f71f87db2b908da70ec4
+    aksay:
+      procurement_ref: '0158300034526000388'
+      company_application: '122031738'
+      admitted: true
+      price_rub: 119000
+      app_rating_raw: '38'
+      total: 55
+      admitted_count: 45
+      winner_price_rub: 28400
+      zip_sha256: d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8
+      xml_sha256: 2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5
+    source_validator: scripts/procurement_llm/audit_official_finals.py
+    pending_private_etp_events: 9
+    postgres_observations_unchanged: 77
+    approved_gold: 0
+  eis_postfinal_event_chronology_2026_10_16:
+    id: PROC-LLM-DATA-09
+    state: source_sha_bound_different_app_notice_no_global_cancel_inference
+    report: docs/roadmap/PROCUREMENT_LLM_EIS_EVENT_CHRONOLOGY_2026-10-16.md
+    procurement_ref: '0158300034526000388'
+    original_zip_sha256: d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8
+    final_xml_sha256: 2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5
+    final_published_at: '2026-10-14T11:26:58+03:00'
+    notice_xml_sha256: 915b237acdaeeee201b445d6ba3a77ec5bb7520ecafe7038d9753529c2aba4f5
+    notice_published_at: '2026-10-14T11:54:29.086+03:00'
+    notice_application: '122034518'
+    notice_original_rating: '14'
+    notice_original_price_rub: 57000
+    our_company_application: '122031738'
+    our_original_rating: '38'
+    our_original_price_rub: 119000
+    company_application_targeted_by_notice: false
+    entire_tender_cancellation_verified: false
+    revised_winner_rating_verified: false
+    read_only_audit: scripts/procurement_llm/audit_eis_chronology.py
+    existing_postgres_unreviewed_count: 77
+    pending_private_etp_events: 9
+    approved_human_gold: 0
+  model_training: deferred_no_weights_no_training_now
+
+roadmap_consolidation_2026_10_17:
+  task_id: TA-MAIN-CONSOLIDATION-20261017
+  status: integration_worktree_only_ci_pending
+  main_before: bc98bd397bbd91186dd08e1e611d972077c4ab74
+  included_pr_head_count: 60
+  source_stacks: 13
+  reconciliation: 'Only shared checkpoint/roadmap conflicts required handling; exact historical ARV registry, frozen human-gold and production gates preserved.'
+  branch_protection: none
+  rulesets: none
+  source_grade: development_only_not_commercially_accepted
+  owner_browser_approval: pending
+  human_gold: 0
+  train_ready: 0
+  procurement_llm_candidates: 77
+  etp_metadata_intake: dry_run_only_apply_blocked
+  paid_production_approval: not_granted
+  next_stage: full_integrated_tests_then_exact_head_github_ci_then_merge

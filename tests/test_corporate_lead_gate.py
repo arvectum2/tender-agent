@@ -89,6 +89,34 @@ def test_only_exact_original_https_hosts_accepted(url):
     assert result.reason == "unsupported_original_platform_url"
 
 
+
+@pytest.mark.parametrize("url", [
+    "https://workspace.ru/tenders/",
+    "https://workspace.ru/tenders/web-development/",
+    "https://workspace.ru/tenders/arbitrary/page/",
+    "https://workspace.ru/tenders/internet-portal/",
+    "https://www.b2b-center.ru/market/",
+    "https://www.b2b-center.ru/market/skvoznaia-analitika/",
+    "https://www.b2b-center.ru/market/skvoznaia-analitika/tender-something/",
+])
+def test_catalog_homepage_and_non_notice_urls_never_pass_original_gate(url):
+    result = triage_corporate_card(card(source_url=url), checked_at=NOW)
+    assert (result.state, result.reason, result.bid_ready) == (
+        "REVIEW_REQUIRED", "unsupported_original_platform_url", False,
+    )
+
+
+@pytest.mark.parametrize("url", [
+    "https://workspace.ru/tenders/integraciya-gotovogo-frontend-v-deystvuyuschiy-1s-bitriks-aspro-19023/",
+    "https://www.b2b-center.ru/market/skvoznaia-analitika/tender-4637497/",
+    "https://b2b-center.ru/market/okazanie-uslug/tender-4628040/",
+])
+def test_real_original_notice_url_shapes_remain_provisional_candidates(url):
+    result = triage_corporate_card(card(source_url=url), checked_at=NOW)
+    assert result.state == "PUBLIC_CANDIDATE_ONLY"
+    assert result.bid_ready is False
+
+
 def test_naive_check_time_rejected():
     with pytest.raises(ValueError, match="timezone"):
         triage_corporate_card(card(), checked_at=datetime.fromisoformat("2026-10-13T09:17:00"))

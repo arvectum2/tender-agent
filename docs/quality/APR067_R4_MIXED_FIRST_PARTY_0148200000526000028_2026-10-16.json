@@ -1,0 +1,56 @@
+{
+  "registry_number": "0148200000526000028",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052431-628ea8",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052431-628ea8/input/documentation-archive.zip",
+  "archive_sha256": "2eff3fedb8bef1a7945bc7938a353a9e0c07a3f7bd2195bdec798426e7040f44",
+  "selected_xml_sha256": "d78c77d484130e004c6678b0e41608c847487f462da873fd226d8a5b3b20a3ce",
+  "selected_notice_version": 1,
+  "selected_notice_type": "epNotificationEF2020",
+  "missing11_receipt_relative_path": "competitive-missing-11-originals-20261014/private-source-receipt.json",
+  "missing11_receipt_sha256": "ba641df2f40f480aa0b42166bcf6f2b429bcec31089530fa8f979478fadd2700",
+  "older4_receipt_relative_path": "competitive-older-missing-4-originals-20261014/four-older-contract-originals-private.json",
+  "older4_receipt_sha256": "6cf03e5fb6e6e64b27228a158a57c7fddebfa75dc90166d1ea48e5789c93c019",
+  "attachments": [
+    {
+      "source_uid": "01A08B4FE139768DA6ADEDCB584A90BB",
+      "official_name": "1_Обоснование НМЦК.docx",
+      "bytes": 26075,
+      "sha256": "f000205e0c0bb7c1166fdc0272fabfd592d4060a5c32f8d7e52f8e1490c39f05",
+      "source_root_relative_path": "competitive-older-missing-4-originals-20261014/0148200000526000028/slot-01.docx",
+      "file_extension": ".docx",
+      "source_role": "older4",
+      "slot": 1
+    },
+    {
+      "source_uid": "01A08B507E1B780EAAD19C65CAA9DA9C",
+      "official_name": "2_Проект государственного контракта.docx",
+      "bytes": 62751,
+      "sha256": "918ebcea3930147b45d4125497ac8d36eeb20f2109fc5e368e01c79aa5df6d71",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0148200000526000028/attachment-02.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 2
+    },
+    {
+      "source_uid": "01A08B5092C771B7AFBCCEE1FD031747",
+      "official_name": "3_Описание объекта закупки.docx",
+      "bytes": 53190,
+      "sha256": "8142d03a12475aa5ab382286d654ad694f0408ea69c7c4c5aa59f1a81dc5c455",
+      "source_root_relative_path": "competitive-older-missing-4-originals-20261014/0148200000526000028/slot-03.docx",
+      "file_extension": ".docx",
+      "source_role": "older4",
+      "slot": 3
+    },
+    {
+      "source_uid": "01A08B50AE38723098FCAE51A817886B",
+      "official_name": "4_Требования к содержанию, составу заявки.docx",
+      "bytes": 32762,
+      "sha256": "b98dd0a2a09ad857f277b9d6da7858d873ee5d6216d66954fb0fb45575416860",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0148200000526000028/attachment-04.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 4
+    }
+  ]
+}

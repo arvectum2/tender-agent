@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-REFERENCE-EDITOR-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Build secure first-party SaaS UX for reviewing and versioning owner-attested completed contract reference list, without silently treating missing as zero or leaking across tenants.
+definition_of_done:
+  - Show current owner reference snapshot and version in SaaS with UNKNOWN clearly distinct from confirmed zero.
+  - Allow owner/admin to append a new immutable version, including signed-act document references, chatbot scope, law and subject; don't edit older version.
+  - Apply explicit owner confirmation for COMPLETE and prevent accidental empty/partial conflation; preserve client role boundary.
+  - Prevent accidental lost updates from concurrent editors with expected version check.
+  - Validate semantics through FastAPI tests and client JS syntax, Ruff and exact GitHub PR CI.
+  - Preserve SaaS disabled by default, no production customer writes and no ETP/bids/merges/watchdog.
+completed:
+  - 'PR410 exact source head 8da48571d9d50b5345b8373b7385ef7d0e5c129e GitHub PR38433181463/push38433171288/push38433171386 all SUCCESS. Engineering child closed.'
+  - Added version-aware owner/admin SaaS reference-list editor in /saas with initial UNKNOWN state, explicit PARTIAL vs owner-confirmed COMPLETE, selectable 44/223-FZ contract subject/chatbot/completed and signed act source refs.
+  - UI only uses createElement, textContent and value for user content, no risky HTML insertion or local credential persistence.
+  - Added required expected_version optimistic concurrency guard to POST /api/saas/qualification/references, stale edits HTTP409; DB unique-version IntegrityError maps to HTTP409 and rolls back.
+  - Tests check no list UNKNOWN; initial PARTIAL; stale HTTP409; complete zero only owner-confirmed; source refs and signed final act for completed contracts required (422); existing auth/tenant tests retained.
+  - Mac mini isolated feature code head e985a11 pytest 77 PASS/8 SKIP, Ruff PASS, node --check on embedded SaaS JS PASS, git diff --check PASS.
+  - Updated canonical roadmap and Russian runbook, opened stacked draft PR410 on PR409, no live customer writes or SaaS/prod activation.
+  - PR409 exact head 4c0fdeb full PR and two push workflows SUCCESS, source-run orchestration checkpoint marked COMPLETED.
+current: Engineering child COMPLETED. PR410 exact source head 8da48571d9d50b5345b8373b7385ef7d0e5c129e, GitHub PR38433181463 + push38433171288 + push38433171386 all SUCCESS. Draft remains unmerged and SaaS disabled.
+pending: []
+last_verified_commit: 'PR410 exact source head 8da48571d9d50b5345b8373b7385ef7d0e5c129e, PR38433181463 SUCCESS, push38433171288 and push38433171386 SUCCESS. Mac mini code e985a11 77 focused PASS/8 SKIP, Ruff PASS, Node UI JS PASS.'
+test_results:
+  - 'Exact PR410 GitHub PR38433181463 and two pushes38433171288/38433171386 all completed SUCCESS at source head 8da48571.'
+  - 'Mac mini source e985a11: 77 pytest PASS, 8 SKIP; Ruff PASS and node --check SaaS UI script PASS; git diff --check PASS.'
+  - 'Real tenant integration tests: missing UNKNOWN, partial vs complete zero, stale 409, signed act 422, owner/admin only, cross tenant excluded.'
+  - 'PR410 GitHub full PR/push CI pending on latest roadmap head 0ab41a29.'
+resume_instruction: 'Engineering child TA-QUALIFICATION-REFERENCE-EDITOR-20261013 COMPLETED. PR410 exact source head 8da48571d9d50b5345b8373b7385ef7d0e5c129e GitHub PR+2 push all SUCCESS, local 77 focused tests PASS/8 SKIP Ruff+Node PASS. Keep PR410 draft unmerged, SaaS off; now next task requires real original distinct 44/223-FZ scoring DOCX/PDF evidence before generalizing parser, else NOT_ASSESSED. Product owner zero references self statement not independent human gold; no prod tenant, ETP, signatures, payment, deployment or watchdog. Parent APR06/07 owner/human/SLO gates remain OPEN.'

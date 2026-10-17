@@ -1,0 +1,41 @@
+{
+  "bid_ready": false,
+  "blind_cohorts_case_counts": [
+    3,
+    4,
+    4
+  ],
+  "development_notice_numbers_excluded": 20,
+  "development_original_sha_excluded": 96,
+  "first_pilot_blind_case_count": 3,
+  "human_gold_cases": 0,
+  "independent_expert_signatures": 0,
+  "new_cases_stage2_plus_stage3_locked": 8,
+  "original_html_receipt_sha256": "fb4d26b65f0388f59cc675ffdb55cdd0a034499333c57ec835bc8a0f9d10140f",
+  "originally_targeted_new_cases_over_two_new_source_plans": 12,
+  "precision_recall": "NOT_MEASURED",
+  "protected_firstparty_original_sha_including_development": 152,
+  "protected_notice_numbers_including_development": 31,
+  "stage3_binary_duplicate_excluded": 2,
+  "stage3_captured_source_pages": 2,
+  "stage3_immutable_blind_lock_sha256": "66545450de466dc742d7525a8f7a539644784f4e98696e63edce6cf5da00937e",
+  "stage3_immutable_intent_sha256": "9fb08aa6bf0ffe0ce418e596fc0d3afc370b5d95662b20f8f95b21168fd1b2a2",
+  "stage3_independence_audit_sha256": "0471976707ba2303f5a4c94892414dd0fc7aef46090fbd1182fce8916ad8fdc5",
+  "stage3_official_eis_zip_xml_and_all_originals_verified_before_overlap_check": 6,
+  "stage3_official_source_unattested": 2,
+  "stage3_original_binary_documents_final": 19,
+  "stage3_preregistration_commit": "814928eaed257df9ff1bff35d25d95df58401e68",
+  "stage3_rejection_reasons": {
+    "REPEATED_ORIGINAL_BINARY_WITH_PREVIOUS_OR_EARLIER_CASE": 2,
+    "UNATTESTED_OFFICIAL_EIS_ORIGINALS": 2
+  },
+  "stage3_selected_and_locked_independent_cases": 4,
+  "stage3_selection_receipt_sha256": "ed4f32ef55268ad9f7d8bb77d759935f2bc9decd6451e5f8df9cee0753e9a121",
+  "stage3_source_only_discovery_candidates": 8,
+  "status": "THREE_DISJOINT_BLIND_COHORTS_SOURCE_ONLY_NO_HUMAN_GOLD",
+  "still_needed_for_original_new_case_target": 4,
+  "sut_ran_on_blind": false,
+  "total_blind_cases": 11,
+  "total_original_source_documents": 56,
+  "total_source_only_offline_reviewer_archives": 11
+}

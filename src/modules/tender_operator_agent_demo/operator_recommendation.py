@@ -21,6 +21,7 @@ def build_provisional_operator_recommendation(
     supplier_questions_payload: dict[str, Any],
     risks_payload: dict[str, Any],
     economics_payload: dict[str, Any],
+    contract_draft_status: str | None = None,
 ) -> tuple[dict[str, Any], list[str]]:
     economics_ready = bool(economics and economics.get("economics_status") in {"conditionally_viable", "viable"})
     service_contract_missing = procurement_kind == "services" and bool(preliminary_analysis.get("missing_documents"))
@@ -46,10 +47,57 @@ def build_provisional_operator_recommendation(
     else:
         recommendation = DemoRecommendationCode.MANUAL_REVIEW_REQUIRED
         label = "нужна ручная проверка"
+        # The output orchestrator derives this status from REAL extracted
+        # contract-role documents (not a model sentence). Apply it to ALL
+        # procurement scopes: services, software, works and generic.
+        contract_attested = contract_draft_status == "present" or (
+            contract_draft_status in {None, "unknown"}
+            and preliminary_analysis.get("contract_draft_available") is True
+        )
+        contract_unparsed = contract_draft_status == "parse_failed"
+        contract_absent = contract_draft_status == "absent" or (
+            contract_draft_status in {None, "unknown"}
+            and preliminary_analysis.get("contract_draft_available") is False
+        )
+        if contract_attested:
+            contract_rationale = (
+                "Проект контракта найден в сохранённых исходных документах; условия оплаты, "
+                "приёмки, ответственности и обеспечения ещё требуют проверки."
+            )
+            next_action = (
+                "Следующее действие должен подтвердить оператор после изучения имеющегося "
+                "проекта контракта и внутренней оценки исполнения."
+            )
+        elif contract_unparsed:
+            contract_rationale = (
+                "Файл проекта контракта получен, но его текст не удалось автоматически разобрать; "
+                "нужна повторная обработка исходного документа."
+            )
+            next_action = (
+                "Следующее действие должен подтвердить оператор после повторного разбора "
+                "проекта контракта и внутренней оценки исполнения."
+            )
+        elif contract_absent:
+            contract_rationale = (
+                "Проект контракта отсутствует среди подтверждённых файлов; коммерческие "
+                "данные и условия исполнения требуют дополнительной проверки."
+            )
+            next_action = (
+                "Следующее действие должен подтвердить оператор после получения проекта "
+                "контракта и внутренней оценки исполнения."
+            )
+        else:
+            contract_rationale = (
+                "Наличие и условия проекта контракта не подтверждены исходными материалами."
+            )
+            next_action = (
+                "Следующее действие должен подтвердить оператор после проверки наличия "
+                "проекта контракта и внутренней оценки исполнения."
+            )
         rationale = [
             "Документы извлечены и дают предметное понимание закупки, но ценовая модель и подтверждение ресурсов отсутствуют.",
-            "Проект контракта, коммерческие входы и подтверждение ресурсов отсутствуют или требуют проверки.",
-            "Следующее действие должен подтвердить оператор после получения проекта контракта и внутренней оценки исполнения.",
+            contract_rationale,
+            next_action,
         ]
 
     final_recommendation = {

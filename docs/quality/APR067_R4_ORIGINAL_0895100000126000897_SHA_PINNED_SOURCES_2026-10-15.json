@@ -1,0 +1,68 @@
+{
+  "registry_number": "0895100000126000897",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052442-bd0c0b",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052442-bd0c0b/input/documentation-archive.zip",
+  "archive_sha256": "1b18e3231d1b06f4373dd66633ac4496cf7a4309d0cf97cc072d0c73174f3968",
+  "selected_xml_sha256": "d0a17037e52e9ae7a0ef374241bf865a0efaf2a9db7cdfc278f36b720a7b0f04",
+  "selected_notice_version": 1,
+  "selected_notice_type": "epNotificationEF2020",
+  "recovery_receipt_relative_path": "competitive-missing-14-originals-20261014/private-originals-receipt.json",
+  "recovery_receipt_sha256": "5f78318e75344020cfd9a035531178e2befbebcaefcaeee0c80a61c1c561876f",
+  "attachments": [
+    {
+      "source_uid": "4E7CCB5D7B49480AB36A1654FCB0F2DA",
+      "official_name": "1 Обоснование НМЦК ОАЭФ-098.docx",
+      "bytes": 33813,
+      "sha256": "9b84ce642892ae13083ea92f6fc3bdd3ad0b2c550c4e45b68b7b1dbccd6c19c9",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0895100000126000897/attachment-01.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "AE44E8CEFF4A48C99C19D2463FF49891",
+      "official_name": "2 Проект контракта ОАЭФ-098.docx",
+      "bytes": 134395,
+      "sha256": "cf0453e8a18887c57b4129e92fb5155a0242760f3733a65cddd6de20337bcf50",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0895100000126000897/attachment-02.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "CACB4EDE71D94B2EA4F3C154784B2BCC",
+      "official_name": "3 Описание объекта закупки ОАЭФ-098.docx",
+      "bytes": 121495,
+      "sha256": "98ff84b5bef505ed34b19da501f8901e00ba6b4a90bac239fb35d0c9683c60d3",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0895100000126000897/attachment-03.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "F2E3C62239004CA9BFF2A448301C8013",
+      "official_name": "3.1 Обоснование неприменения запрета ПП РФ 1875 ПР ВП ФК.docx",
+      "bytes": 43123,
+      "sha256": "3b4c4887f370eea9de83be2ad176e71f61e4579fca46ca57e0a07cf24b0b243c",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0895100000126000897/attachment-04.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "9BB2B49637F248E09F2F6B06EC8F3F13",
+      "official_name": "4 Требования к содержанию, составу заявки ОАЭФ-098.docx",
+      "bytes": 30020,
+      "sha256": "8f75485f0d7c8f316177733f6b3cb6553e26c3b486c5bbf47763759c2eb36335",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0895100000126000897/attachment-05.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "98F149258EED4A4B8BE11DF490A2E2AA",
+      "official_name": "5 Реквизиты счета для перечисления обеспечения.docx",
+      "bytes": 16432,
+      "sha256": "8de3a1f957c408296f583963cc9735b3f1547ae4e6977fd229d50cb8724c04db",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0895100000126000897/attachment-06.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    }
+  ]
+}

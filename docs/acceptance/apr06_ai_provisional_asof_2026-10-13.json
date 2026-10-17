@@ -1,0 +1,793 @@
+{
+  "schema_version": "apr06-ai-provisional-asof-v1",
+  "as_of": "2026-10-13T12:33:00+03:00",
+  "provenance": {
+    "candidate_manifest": "apr06_candidate_pool_2026-10-09.json",
+    "prior_ai_audit": "apr06_independent_gpt6_audit_2026-10-09.json",
+    "machine_prefill": "apr06_machine_prefill_2026-10-09.json",
+    "new_eis_downloads": 0,
+    "new_primary_bytes_verified": 0,
+    "source_hashes_recomputed": 0
+  },
+  "authority": {
+    "reviewer_type": "AI_RETROSPECTIVE_PROVISIONAL",
+    "human_signed_decisions": 0,
+    "legal_acceptance": false,
+    "commercial_acceptance": false,
+    "owner_thresholds_approved": false,
+    "bid_submissions_authorized": false
+  },
+  "summary": {
+    "candidate_ids": 28,
+    "prior_source_read_ai_cases": 9,
+    "no_prior_primary_source_review": 19,
+    "archived_deadlines_passed_as_of_date": 7,
+    "archived_deadlines_future_as_of_date": 2,
+    "prior_partial_text_extraction_cases": 1,
+    "live_eis_verified_cases_today": 0,
+    "actual_human_gold_cases": 0,
+    "kpi_acceptance": "NOT_MEASURED"
+  },
+  "previously_known_defects_not_newly_verified": [
+    {
+      "expected_v": 5,
+      "reg_number": "0158300034526000388",
+      "reported_v": 1,
+      "type": "INCORRECT_NO_GO_FROM_STALE_V1"
+    },
+    {
+      "expected_v": 3,
+      "reg_number": "0348100024426000039",
+      "reported_v": 1,
+      "type": "STALE_DEADLINE_CURRENT_V3"
+    }
+  ],
+  "cases": [
+    {
+      "reg_number": "0372200172326000015",
+      "law": "44fz",
+      "subject_candidate_only": "Создание сайта Музея хлеба",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category/sozdanie-internet-sajtov-portalov-web-dizajn",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-10-16T10:00:00+03:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_IN_FUTURE",
+      "advisory": "DEFER_RECHECK_LIVE_EIS_AND_SPECIFICATIONS",
+      "previous_machine_decision": "NEEDS_REVIEW",
+      "previous_ai_decision_at_original_audit_date": "DEFER",
+      "previous_audit_comparison": "CONDITIONAL_REVIEW_AGREES",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 6,
+      "previously_text_available_files": 6,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "TЗ requires 3 visual brand concepts, numerous printed collateral mockups, 2-server isolated CMS/read-only frontend and external penetration test.",
+        "Clarify whether customer's secure servers, protected networking and pentest resources are provided; total NMCK RUB 1m, delivery by 2026-12-07."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0137200001226007700",
+      "law": "44fz",
+      "subject_candidate_only": "Доработка туристического сайта «Калужское гостеприимство»",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/centralnyj-federalnyj-okrug",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0158300034526000388",
+      "law": "44fz",
+      "subject_candidate_only": "Разработка веб-сайта для МБУ Аксайского района",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 5,
+        "deadline": "2026-10-12T08:00:00+03:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "DEFER",
+      "previous_audit_comparison": "INVALID_HARD_NO_GO_STALE_NOTICE_REVISION",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 14,
+      "previously_text_available_files": 14,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "Reconcile Tilda v1 vs registered Russian CMS v5 technical specifications.",
+        "Confirm Russian CMS registry entry, 12-month licence/hosting costs, feasibility of 14 working days."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0377100005726000128",
+      "law": "44fz",
+      "subject_candidate_only": "Веб-сайт на базе 1С-Битрикс, санаторий «Чемал»",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://www.b2b-center.ru/search/respublika-altay/razrabotka-sajtov/",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-08-13T08:00:00+07:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "NO_GO",
+      "previous_audit_comparison": "DEADLINE_VERIFIED",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 13,
+      "previously_text_available_files": 13,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "Retrospective 1C-Bitrix website at 135083.33 RUB; no bid action as of 2026-10-09."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0376300000126000193",
+      "law": "44fz",
+      "subject_candidate_only": "Разработка и сопровождение туристического сайта Майкопа",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://www.b2b-center.ru/search/respublika-adygeya/razrabotka-sajtov/",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-06-02T07:00:00+03:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "NO_GO",
+      "previous_audit_comparison": "DEADLINE_VERIFIED",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 8,
+      "previously_text_available_files": 8,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "Retrospective development plus tourism portal technical support at 251200 RUB."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0169300008226000225",
+      "law": "44fz",
+      "subject_candidate_only": "AR-экскурсия с интеграцией в сайт Троицка",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/chelyabinskaya-oblast",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-09-14T09:00:00+05:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "NO_GO",
+      "previous_audit_comparison": "DEADLINE_VERIFIED",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 12,
+      "previously_text_available_files": 12,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "AR-tour media production and integration, 2000000 RUB; epNoticeApplicationCancel is application cancellation data, NOT conclusive procurement cancellation."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0169300008226000223",
+      "law": "44fz",
+      "subject_candidate_only": "Мультимедийный контент для туристического портала Троицка",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/chelyabinskaya-oblast",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-09-14T09:00:00+05:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "NO_GO",
+      "previous_audit_comparison": "DEADLINE_VERIFIED",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 12,
+      "previously_text_available_files": 12,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "Interactive tourist media production, 4000000 RUB; do not mistake application cancellation events for overall notice cancellation."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0169300003326000181",
+      "law": "44fz",
+      "subject_candidate_only": "Сопровождение официального сайта Златоуста",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/chelyabinskaya-oblast",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-07-27T07:00:00+05:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "NO_GO",
+      "previous_audit_comparison": "DEADLINE_VERIFIED",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 16,
+      "previously_text_available_files": 16,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "Official municipal website support, 226938.66 RUB."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0162300005826000156",
+      "law": "44fz",
+      "subject_candidate_only": "Личный кабинет и ЕСИА на сайте Верхней Пышмы",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/verhnjaja-pyshma",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 1,
+        "deadline": "2026-06-17T07:00:00+05:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_PASSED",
+      "advisory": "NO_ACTION_ON_EXPIRED_ARCHIVED_DEADLINE_RECHECK_LIVE_EIS",
+      "previous_machine_decision": "NO_GO",
+      "previous_ai_decision_at_original_audit_date": "NO_GO",
+      "previous_audit_comparison": "DEADLINE_VERIFIED",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 18,
+      "previously_text_available_files": 18,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "ESIA citizen cabinet integration, 495000 RUB. This decision is deadline-only; engineering feasibility not established."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0348100024426000039",
+      "law": "44fz",
+      "subject_candidate_only": "Развитие платформы типовых сайтов ЦЗН Московской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "evidence_tier": "PREVIOUSLY_SOURCE_READ_AI_AUDIT_NOT_REVALIDATED_TODAY",
+      "archived_notice": {
+        "revision": 3,
+        "deadline": "2026-10-19T10:00:00+03:00",
+        "sha256_recorded_by_previous_audit_not_rehashed": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d"
+      },
+      "archive_deadline_status": "ARCHIVED_DEADLINE_IN_FUTURE",
+      "advisory": "DEFER_RECHECK_LIVE_EIS_AND_SPECIFICATIONS",
+      "previous_machine_decision": "NEEDS_REVIEW",
+      "previous_ai_decision_at_original_audit_date": "DEFER",
+      "previous_audit_comparison": "STALE_NOTICE_REVISION_NON_BLOCKING",
+      "previous_audit_source_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "archived_source_files": 19,
+      "previously_text_available_files": 10,
+      "independent_document_review": "PREVIOUS_MODEL_PARTIAL_REVIEW_ONLY",
+      "previously_identified_conditions": [
+        "84-page v3 PDF requires modernization of existing custom non-CMS platform serving up to 6000 visitors and 300 staff concurrently.",
+        "Customer server resources for commissioning; supplier-operated Russian test hosting, NDA, source transfer, 2026-12-15 end. Obtain code and integration access before priced GO.",
+        "Only 10/19 source files had text extracted in the existing run."
+      ],
+      "reasons": [
+        "Archived notice and limited document findings sourced from 2026-10-09 AI audit",
+        "Original EIS bytes and attachment-revision binding not rechecked in this run"
+      ]
+    },
+    {
+      "reg_number": "0348100024426000052",
+      "law": "44fz",
+      "subject_candidate_only": "Модернизация платформы сайтов ЦЗН Московской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0148300050426000047",
+      "law": "44fz",
+      "subject_candidate_only": "Поддержка и модернизация сайта Лосино-Петровского",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0148200000526000028",
+      "law": "44fz",
+      "subject_candidate_only": "Техническая поддержка сайта Московской областной Думы",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/moskovskaja-oblast",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0149200002326001555",
+      "law": "44fz",
+      "subject_candidate_only": "Инвестиционный портал и интерактивная карта Мурманской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0349500000226000003",
+      "law": "44fz",
+      "subject_candidate_only": "Сервисы инвестиционного портала Мурманской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0349100009326000005",
+      "law": "44fz",
+      "subject_candidate_only": "Поддержка и размещение сайта Роспотребнадзора по Мурманской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0127100008626000013",
+      "law": "44fz",
+      "subject_candidate_only": "Поддержка сайта Роспотребнадзора по Брянской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/briansk",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0318200087026000163",
+      "law": "44fz",
+      "subject_candidate_only": "Модернизация сайта городского спорта Краснодарского края",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/saratovskaya-oblast",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0360600005326000018",
+      "law": "44fz",
+      "subject_candidate_only": "VR-контент для экспозиции краеведческого музея",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/saratovskaya-oblast",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "0895100000126000897",
+      "law": "44fz",
+      "subject_candidate_only": "Развитие системы «Ведомственный портал Федерального казначейства»",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/razrabotka-programmnogo-obespecheniya/dubna",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616197376",
+      "law": "223fz",
+      "subject_candidate_only": "Разработка и модернизация сайта заказчика",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://www.b2b-center.ru/search/pskovskaya-oblast/razrabotka-sajtov/",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616263956",
+      "law": "223fz",
+      "subject_candidate_only": "Разработка сайта АО «Инвест Проект»",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616416057",
+      "law": "223fz",
+      "subject_candidate_only": "Разработка интернет-проекта сайта Плёсского музея",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616412768",
+      "law": "223fz",
+      "subject_candidate_only": "Сайт Бурятского государственного драматического театра",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616401070",
+      "law": "223fz",
+      "subject_candidate_only": "Официальный сайт яхтенного порта",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-sajta",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616369437",
+      "law": "223fz",
+      "subject_candidate_only": "Официальный сайт молодёжного центра Черняховска",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://synapsenet.ru/search/populyarnie-zaprosi/sozdanie-sajta",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32616045143",
+      "law": "223fz",
+      "subject_candidate_only": "Информационный сайт о колледжах Мурманской области",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    },
+    {
+      "reg_number": "32615850735",
+      "law": "223fz",
+      "subject_candidate_only": "Сайт АО «Мурманский морской рыбный порт»",
+      "as_of": "2026-10-13T12:33:00+03:00",
+      "current_eis_revision_verified": false,
+      "current_eis_status_verified": false,
+      "company_eligibility_verified": false,
+      "human_reviewed": false,
+      "bid_or_payment_authorized": false,
+      "commercial_go": false,
+      "model_review_not_human_truth": true,
+      "listing_hint_not_original_eis": "https://zakupki.kontur.ru/category-region/sozdanie-internet-sajtov-portalov-web-dizajn/murmansk",
+      "evidence_tier": "AGGREGATOR_CANDIDATE_NO_ORIGINALS_IN_THIS_AUDIT",
+      "advisory": "DEFER_INSUFFICIENT_PRIMARY_EIS_EVIDENCE",
+      "archive_deadline_status": "NOT_MEASURED",
+      "independent_document_review": "NOT_PERFORMED",
+      "reasons": [
+        "No earlier source-read AI audit for this case",
+        "Original notice/attachment bytes and active revision have not been revalidated"
+      ]
+    }
+  ]
+}

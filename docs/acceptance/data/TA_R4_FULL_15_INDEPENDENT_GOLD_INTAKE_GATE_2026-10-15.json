@@ -1,0 +1,33 @@
+{
+  "all_or_none_freeze_required": true,
+  "as_of": "2026-10-15",
+  "automatic_owner_legal_go": false,
+  "bid_ready": false,
+  "blank_manifest_fail_closed_no_frozen_output": true,
+  "case_count": 15,
+  "cohort_sizes": [
+    3,
+    4,
+    4,
+    4
+  ],
+  "externally_signed_qualified_human_gold_cases": 0,
+  "full_pytest_failed": 0,
+  "full_pytest_log_sha256": "6d3a686159bafbcba09325f0f0f7cd47fbd4d94812e27f64b4b920e7f0c04543",
+  "full_pytest_passed": 4317,
+  "full_pytest_skipped": 242,
+  "full_pytest_storage": "PRIVATE_ARVECTUMSSD",
+  "independent_signed_submission_private_retention_tested": true,
+  "lock_sha256": [
+    "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+    "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a",
+    "66545450de466dc742d7525a8f7a539644784f4e98696e63edce6cf5da00937e",
+    "e13b4238056f527a75f82d9d9dbf6603c125aec3a9a6498ac6dcbfbd4e6c983c"
+  ],
+  "original_firstparty_document_count": 73,
+  "precision_recall": "NOT_MEASURED",
+  "private_empty_intake_receipt_sha256": "e8a35e8488bb2dc3ed03f608de2a142721a11355aaf54668168001e2e9b78d5c",
+  "status": "ATOMIC_COHORT_GOLD_INTAKE_READY_BUT_AWAITING_EXTERNAL_QUALIFIED_REVIEW",
+  "sut_run_authorized_by_intake": false,
+  "trusted_owner_vetted_reviewer_key_roster_exists": false
+}

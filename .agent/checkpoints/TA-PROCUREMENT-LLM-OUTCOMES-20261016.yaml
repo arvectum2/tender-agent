@@ -1,0 +1,23 @@
+task_id: TA-PROCUREMENT-LLM-OUTCOMES-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: 'Verify outcomes and operator submission provenance for four Arvectum procurement cases without synthesizing ranks, withdrawing claims or promoting training data.'
+definition_of_done:
+  - 'Read-only EIS protocol/Aksay original source crosscheck with SHA, distinguishing admitted/price/app rating from company identity evidence.'
+  - 'Determine which original-source outcomes are proven, which are only secondary public website metadata, and which are future pending.'
+  - 'Build a small reproducible read-only outcome audit with tests and no database writes.'
+  - 'Document distinctions in AGENTS, master roadmap and task checkpoint; Draft stacked GitHub PR, run CI.'
+completed:
+  - '2026-10-16 previous PR455 legacy source-only artifact child completed with 77 unreviewed observations in canonical PG arvectum; 8 corporate ETP operator email metadata events dry-run only, import blocked separately.'
+  - '2026-10-16 corporate operator emails already verified for Aksay, Museum Bread, Aksioma, Kaluga. EIS Kaluga original ZIP+XML SHA checked; Aksay saved original bid protocol statistics exists. Aksioma secondary Contour shows winning price 119000 rub; rank of Arvectum not validated. Museum Bread outcome scheduled 20 October, not yet known.'
+  - '2026-10-16 read-only scripts/procurement_llm/audit_outcomes.py verified actual SSD source SHA: Kaluga EIS ZIP and XML app193 admitted true price449000; Aksay *derived* stats SHA55/45, rank38 our119000 winner28400. Operator private ETP metadata eight consistent, unknown withdrawal kept unknown. Aksioma app3630084 operator receipt and secondary winner119000 but own rank/price not proven; Museum Bread final due20 October, unknown. Zero DB changes or labels.'
+  - '2026-10-16 seven focused tests PASS incl unknown withdrawal, ZIP SHA mismatch, derived stats tamper, unauthorized gold, missing ETP event, private path safety; Ruff PASS.'
+  - '2026-10-16 Mac mini full regression 4052 PASS /239 SKIP /1 known unrelated R9 DESELECTED, zero unexpected failures; focused outcome unit tests7 PASS, Ruff/YAML/diff clean, real 4-case source audit successful.'
+  - '2026-10-16 code/docs committed as 09e2647666ef1c673772cf27e42d88eef5a7d84c, stacked Draft PR456 above PR455 opened; GitVerse mirror run38900826100 SUCCESS, GitHub PR CI run38900990331/push run38900826162 with 8/9 jobs green, quality running. Worktree synced, canonical PostgreSQL77 candidate_unreviewed unchanged.'
+  - '2026-10-16 CI verified exact-head16a845a68156ff5d095acac1f43c42a30d0352f7 GitHub PR38901659439 SUCCESS, push38901653449 SUCCESS, GitVerse mirror38901653204 SUCCESS. Read-only four-case outcome audit DoD complete. Original Aksioma/Aksay EIS source retrieval separately started as new child.'
+current_stage: 'completed_ci_green_evidence_audit'
+remaining: []
+next_phase: 'Use newly retrieved EIS official final XML archives for Aksioma/Aksay in separately tracked source-validation child; do not train or auto-promote gold.'
+last_verified_commit: 16a845a68156ff5d095acac1f43c42a30d0352f7
+last_tests: 'Mac mini full 4052 PASS/239 SKIP/1 known unrelated R9 DESELECTED in 132.91s, no unexpected failures; focused outcome7 PASS; Ruff/YAML/git diff clean. Actual Kaluga original EIS ZIP+XML source SHA and Aksay archived derived JSON source SHA verified. GitHub PR/push CI8/9 jobs passed, quality in progress; mirror SUCCESS.'
+resume_instruction: 'Completed PR456 read-only outcome evidence gate, exact-head16a845a6 CI PR38901659439/push38901653449 and mirror38901653204 ALL GREEN. Existing PG arvectum 77 unreviewed, 8 private ETP email source events blocked from apply. Subsequent independent official EIS getDocsIP downloads now found for both Aksioma 0187200001726001304 and Aksay 0158300034526000388; this source-validation work belongs to NEXT child checkpoint, not this completed evidence task. No merged PR/production deploy/training.'

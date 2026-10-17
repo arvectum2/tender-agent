@@ -1,0 +1,77 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: APR-07-QUALITY-SLO-EVIDENCE-001
+status: completed
+goal: Provide a reproducible read-only quality/SLO evidence bridge using existing
+  APR-06 Russian EIS case receipts and Data Platform benchmark outputs, with explicit
+  denominators and evidence gaps, no model acquisition/serving changes.
+definition_of_done:
+- Reuse existing observability metrics and build offline source-hash-bound APR-07
+  quality snapshot.
+- Measure document acquisition, analysis/readiness and citation-presence without falsely
+  claiming verified citations, OCR or human quality.
+- Ingest existing Data Platform benchmark JSON evidence with SHA256 and strict provenance;
+  no downloads, model promotion or API provider calls.
+- Publish versioned machine-readable reproducible snapshot and human-readable operator
+  runbook.
+- Test corrupt input, missing denominators, no human labels, no automatic GO or promotion,
+  and compare actual local evidence.
+- Run targeted and broad tests, commit changes and checkpoint.
+completed:
+- Confirmed APR-06 blocked pending human acceptance, baseline branch clean c6c5fe9f.
+- Found existing 28-case EIS candidate corpus, 20 real 44-FZ receipts and nine machine
+  reports, plus existing ops_observability subsystem.
+- Located Data Platform comparison JSON; leave downloads and candidate model lifecycle
+  to Data Platform.
+- 'Added 44-FZ historical quality aggregator: strict run/evidence/source hash checks
+  and NOT_MEASURED semantics for unknown human/OCR denominators.'
+- Measured actual 20 procurements, 17 with documents, 9 analyzable, 109/118 file text
+  availability flags, 9 machine reports with citation presence.
+- Computed analysis-only nearest-rank latency p50 1.23s and p95 11.96s from nine exact-matched
+  local run IDs; not end-to-end.
+- Imported seven pre-existing Data Platform benchmark result JSONs by SHA256 with
+  matching site/reasoning suite checks. No models downloaded or run.
+- Generated deterministic SHA256 quality snapshot docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json.
+- Created source-bound nine-case candidate procurement roster; every label AI_CURATED_SILVER_NOT_HUMAN_GOLD,
+  none promoted to frozen truth.
+- Created Russian operator runbook, proposed unapproved SLO, exact evidence boundaries,
+  and owner-reported Aksay submitted/awaiting-results note.
+- Ruff clean, 17 targeted tests pass, full local pytest 3351 pass 238 skipped, make
+  check pass; regenerated both checked-in manifests byte-identically.
+- Committed implementation 627ae480cc87b882d096585b472955ac7c7d720e.
+current: Bounded APR-07 offline quality and existing Data Platform evidence bridge
+  completed; broader continuous SLO/gold benchmarks gated.
+pending:
+- 'APR-07 continuous: obtain independently human-labelled frozen Russian procurement
+  truth and run comparable model benchmark after Data Platform finishes its own downloads.'
+- 'APR-07 continuous: observe rolling live operator and page-level OCR metrics with
+  sufficient denominators before declaring SLO achieved.'
+- APR-06 parent remains blocked pending 20-30 verified human-reviewed acceptance,
+  commercial thresholds and EIS attachment revision checks.
+last_verified_commit: 627ae480cc87b882d096585b472955ac7c7d720e
+test_results:
+- 17 focused APR-07 pytest passed (1 inherited warning); strict Ruff checks passed.
+- Full suite 3351 passed, 238 skipped, 329 warnings before the two added roster tests;
+  subsequent focused 17 passed.
+- make check success after final source changes; both generated snapshot and source
+  roster reproduce exactly.
+- Real historical sample denominators 17/20 downloaded, 9/20 analyzed, 109/118 text
+  flagged, 9/9 cited presence; no human truth.
+- Data Platform 7 pre-existing quality output hashes imported; model downloads/inference
+  by Tender Agent zero.
+- Snapshot digest e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38.
+resume_instruction: APR-07 bounded offline baseline completed. Do not re-download
+  Russian models; separate Data Platform is performing that work. Check docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
+  and measured snapshot. Next continue independent human procurement truth/provenance
+  and live rolling SLO only when evidence is available; APR-06 acceptance remains
+  blocked, do not invent human reviews or overwrite Aksay bid. APR-03 public Russian
+  VPS, ETP, payments and model promotion remain gated; watchdog disabled.
+execution:
+  branch: feature/apr07-quality-slo-evidence
+  predecessor: feature/apr06-commercial-acceptance
+  data_platform_repo: /Volumes/ArvectumSSD/Arvectum/repos/data-platform
+  local_runtime: http://127.0.0.1:18082
+  snapshot: docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json
+  source_roster: docs/quality/APR07_PROCUREMENT_SOURCE_ROSTER_2026-10-09.json
+  operator_runbook: docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
+  model_downloads_performed: false

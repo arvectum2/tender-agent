@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-15",
+  "gate": "APR06_DEV_E2E_ACCEPTED_HUMAN_EXPERT_EQUIVALENT_BY_OWNER_POLICY",
+  "sampling_note": "10 distinct historical source-offline procurement IDs; not 10 currently biddable tenders",
+  "case_count_actual_true_llm": 10,
+  "original_sha_protected_file_count": 103,
+  "real_local_gemma4_calls_recorded": 40,
+  "three_core_original_xml_facts_cited_per_case": true,
+  "total_core_source_xml_facts_attested": 30,
+  "analysis_model_only_seconds": {
+    "min": 138.79,
+    "median": 348.635,
+    "mean": 324.66,
+    "max": 457.9,
+    "sample_nearest_rank_p90": 403.23
+  },
+  "not_measured": [
+    "full operator time-to-decision",
+    "claim-level citations coverage beyond three official XML fields",
+    "missed legal blockers",
+    "false positive/negative GO",
+    "rolling p95 staging SLO",
+    "current EIS availability",
+    "validated signer trust"
+  ],
+  "commit_ci_note": "All ten distinct source+model proofs and exact substantive stacked code CI verified; PR445 original code SHA bd8414bd52ed539c76ef38780fbc317efeb7b873 run38795527804 SUCCESS 9/9. Draft PRs unmerged, commercial quality and SLO not accepted.",
+  "cases": [
+    {
+      "registry_number": "0372200172326000015",
+      "original_sha_file_count": 6,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 138.79,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0376300000126000193",
+      "original_sha_file_count": 8,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 358.92,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0162200011826003089",
+      "original_sha_file_count": 17,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 150.08,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0151600003226000011",
+      "original_sha_file_count": 5,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 403.23,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0152200004026000069",
+      "original_sha_file_count": 7,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 348.24,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0348100024426000021",
+      "original_sha_file_count": 14,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 368.53,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0348100024426000039",
+      "original_sha_file_count": 11,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 333.22,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0127100008626000013",
+      "original_sha_file_count": 10,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 349.03,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_and_model_accepted"
+    },
+    {
+      "registry_number": "0360600005326000018",
+      "original_sha_file_count": 12,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 457.9,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_model_and_code_ci_accepted"
+    },
+    {
+      "registry_number": "0895100000126000897",
+      "original_sha_file_count": 13,
+      "gemma4_calls": 4,
+      "model_analysis_seconds": 338.62,
+      "original_xml_core_fact_citations": 3,
+      "development_recommendation": "manual_review_required",
+      "status": "original_source_model_and_code_ci_accepted"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": "qualification-company-reference-input-2026-10-13-v1",
+  "company": "ООО «Арвектум»",
+  "input_source": "OWNER_USER_STATEMENT_IN_CHAT_2026-10-13",
+  "not_cryptographically_signed": true,
+  "reference_fact_key": "completed_contract_reference_list",
+  "reference_fact_group": "EXPERIENCE",
+  "reference_fact_source_type": "CUSTOMER_PROVIDED",
+  "reference_fact_source_ref": "OWNER_USER_STATEMENT_2026-10-13_ZERO_COMPLETED_CONTRACTS",
+  "reference_fact_value": {
+    "schema_version": "completed-contract-references-v1",
+    "as_of_date": "2026-10-13",
+    "completeness": "COMPLETE",
+    "owner_confirmed": true,
+    "contracts": []
+  },
+  "czn_source_bound_criterion": {
+    "procurement_number": "0348100024426000039",
+    "procurement_law": "44fz",
+    "procurement_notice_version": 4,
+    "source_document_uid": "01A0F10655C27A35B5A5A70090D2BB1A",
+    "source_document_sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+    "qualification_weight_percent": 70,
+    "price_weight_percent": 30,
+    "metric": "completed_contract_count",
+    "accepted_contract_laws": [
+      "44fz",
+      "223fz"
+    ],
+    "accepted_subjects": [
+      "website",
+      "web_portal",
+      "information_system",
+      "module"
+    ],
+    "requires_chatbot": true,
+    "lookback_years": 5,
+    "analysis_date": "2026-10-13",
+    "application_deadline_date": "2026-10-23"
+  },
+  "expected_no_go_qualification": "NO_GO_QUALIFICATION_COMPETITIVENESS",
+  "legal_eligibility_remains": "NOT_ASSESSED",
+  "human_gold": false,
+  "owner_bid_permission": false
+}

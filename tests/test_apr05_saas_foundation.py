@@ -437,3 +437,496 @@ def test_operator_and_tenant_ui_cover_invite_workflows_without_public_auth(clien
     assert 'id="revoke-member"' in customer
     assert 'localStorage' not in customer
     assert 'sessionStorage' not in customer
+
+
+def test_saas_qualification_uses_signed_tenant_identity_and_zero_references(client):
+    import json
+    from pathlib import Path
+
+    case = json.loads((
+        Path(__file__).resolve().parents[1]
+        / "docs/acceptance/arvectum_owner_reference_list_and_czn_2026-10-13.json"
+    ).read_text(encoding="utf-8"))
+    a, owner_a = _seed(client, "ООО Саас Квалификация А")
+    b, owner_b = _seed(client, "ООО Саас Квалификация Б")
+    base = "/api/saas/qualification"
+    criterion = case["czn_source_bound_criterion"]
+
+    # No inferred customer and no unauthenticated reads.
+    assert client.post(f"{base}/assess", json=criterion).status_code == 401
+    assert client.post(f"{base}/assess", headers=_auth(owner_a), json=criterion).status_code == 428
+    _legal(client, owner_a)
+    _legal(client, owner_b)
+    missing = client.get(f"{base}/references", headers=_auth(owner_a))
+    assert missing.status_code == 200
+    assert missing.json()["state"] == "UNKNOWN"
+
+    saved = client.post(
+        f"{base}/references", headers=_auth(owner_a),
+        json={
+            "snapshot": case["reference_fact_value"],
+            "source_ref": case["reference_fact_source_ref"],
+            "expected_version": 0,
+        },
+    )
+    assert saved.status_code == 201, saved.text
+    assert saved.json()["customer_id"] == a["customer_id"]
+    assert saved.json()["fact_version"] == 1
+    assert saved.json()["external_action_allowed"] is False
+
+    result = client.post(f"{base}/assess", headers=_auth(owner_a), json=criterion)
+    assert result.status_code == 200, result.text
+    assert result.json()["customer_id"] == a["customer_id"]
+    assert result.json()["recommendation"] == "NO_GO_QUALIFICATION_COMPETITIVENESS"
+    assert result.json()["qualifying_contracts"] == 0
+
+    # Different tenant is not affected by first tenant's confirmed zero.
+    other = client.post(f"{base}/assess", headers=_auth(owner_b), json=criterion)
+    assert other.status_code == 200, other.text
+    assert other.json()["customer_id"] == b["customer_id"]
+    assert other.json()["recommendation"] == "QUALIFICATION_EVIDENCE_UNKNOWN"
+    assert client.get(f"{base}/references", headers=_auth(owner_b)).json()["state"] == "UNKNOWN"
+
+    core_payload = {
+        "criterion": criterion,
+        "source_binding": {
+            "procurement_number": criterion["procurement_number"],
+            "notice_version": criterion["procurement_notice_version"],
+            "document_uid": criterion["source_document_uid"],
+            "document_sha256": criterion["source_document_sha256"],
+            "application_deadline_date": criterion["application_deadline_date"],
+        },
+        "procurement_model": {
+            "procurement_number": criterion["procurement_number"],
+            "procurement_law": "44fz",
+        },
+    }
+    core = client.post(f"{base}/decision-core", headers=_auth(owner_a), json=core_payload)
+    assert core.status_code == 200, core.text
+    assert core.json()["competitive_recommendation"] == "NO_GO"
+    assert core.json()["decision_core"]["decision"]["status"] == "NEEDS_REVIEW"
+    assert core.json()["external_action_allowed"] is False
+
+
+def test_saas_qualification_viewer_cannot_write_reference_list(client):
+    import json
+    from pathlib import Path
+
+    case = json.loads((
+        Path(__file__).resolve().parents[1]
+        / "docs/acceptance/arvectum_owner_reference_list_and_czn_2026-10-13.json"
+    ).read_text(encoding="utf-8"))
+    _tenant, owner = _seed(client, "ООО Чтение референсов")
+    _legal(client, owner)
+    invite = client.post(
+        "/api/saas/invitations", headers=_auth(owner),
+        json={"role": "viewer", "acquisition_channel": "referral"},
+    ).json()
+    viewer = client.post(
+        "/api/saas/invitations/redeem",
+        json={"invitation_code": invite["invitation_code"], "display_name": "Viewer"},
+    ).json()["access_token"]
+    _legal(client, viewer)
+    result = client.post(
+        "/api/saas/qualification/references",
+        headers=_auth(viewer),
+        json={
+            "snapshot": case["reference_fact_value"],
+            "source_ref": case["reference_fact_source_ref"],
+            "expected_version": 0,
+        },
+    )
+    assert result.status_code == 403
+    denied = client.get("/api/saas/qualification/references", headers=_auth(viewer))
+    assert denied.status_code == 403
+
+
+def test_saas_auto_qualification_only_for_owned_run_without_request_scores(
+    client, monkeypatch,
+):
+    from types import SimpleNamespace
+
+    from src.modules.saas_foundation import router as saas
+
+    tenant_a, token_a = _seed(client, "ООО Авторизованный EIS")
+    _, token_b = _seed(client, "ООО Другая компания")
+    _legal(client, token_a)
+    _legal(client, token_b)
+    upload = client.post(
+        "/api/saas/runs",
+        headers=_auth(token_a),
+        data={
+            "tender_title": "Тестовый конкурc",
+            "procurement_customer_name": "Публичный заказчик",
+        },
+        files=[("files", ("contract.txt", b"test tender reference", "text/plain"))],
+    )
+    assert upload.status_code == 201, upload.text
+    run_id = upload.json()["run_id"]
+    observed = []
+
+    def fake_qualification(session, *, run_id, customer_id, as_of):
+        observed.append((run_id, customer_id))
+        return {
+            "source_status": "ORIGINAL_EIS_TRANSPORT_CORRELATED_SIGNATURE_NOT_VERIFIED",
+            "competitive_recommendation": "NO_GO",
+            "qualifying_contracts": 0,
+            "external_action_allowed": False,
+        }
+
+    monkeypatch.setattr(saas, "assess_owned_run_qualification", fake_qualification)
+    path = f"/api/saas/runs/{run_id}/qualification"
+    no_auth = client.get(path)
+    assert no_auth.status_code == 401
+    other_tenant = client.get(path, headers=_auth(token_b))
+    assert other_tenant.status_code in (403, 404)
+    assert not observed
+    owned = client.get(path, headers=_auth(token_a))
+    assert owned.status_code == 200, owned.text
+    assert owned.json()["competitive_recommendation"] == "NO_GO"
+    assert observed == [(run_id, tenant_a["customer_id"])]
+
+    monkeypatch.setattr(
+        saas, "get_uploaded_demo_report",
+        lambda _: SimpleNamespace(
+            run_id=run_id, report_title="Тендер", recommendation="NEEDS_REVIEW",
+            manual_checks=["Проверить ТЗ"], executive_summary="Обзор",
+            sections=[],
+        ),
+    )
+    report = client.get(f"/api/saas/runs/{run_id}/report", headers=_auth(token_a))
+    assert report.status_code == 200, report.text
+    assert report.json()["qualification"]["competitive_recommendation"] == "NO_GO"
+    assert report.json()["recommendation"] == "NEEDS_REVIEW"
+    assert report.json()["external_action_allowed"] is False
+    foreign = client.get(f"/api/saas/runs/{run_id}/report", headers=_auth(token_b))
+    assert foreign.status_code in (403, 404)
+    assert len(observed) == 2
+
+
+def test_saas_viewer_report_does_not_expose_private_reference_list(client, monkeypatch):
+    from types import SimpleNamespace
+
+    from src.modules.saas_foundation import router as saas
+
+    _tenant, owner = _seed(client, "ООО Приватность референсов")
+    _legal(client, owner)
+    upload = client.post(
+        "/api/saas/runs",
+        headers=_auth(owner),
+        data={"tender_title": "Аудит", "procurement_customer_name": "Заказчик"},
+        files=[("files", ("contract.txt", b"test contract", "text/plain"))],
+    )
+    assert upload.status_code == 201, upload.text
+    run_id = upload.json()["run_id"]
+    invitation = client.post(
+        "/api/saas/invitations", headers=_auth(owner),
+        json={"role": "viewer", "acquisition_channel": "referral"},
+    )
+    assert invitation.status_code == 200, invitation.text
+    viewer_token = client.post(
+        "/api/saas/invitations/redeem",
+        json={
+            "invitation_code": invitation.json()["invitation_code"],
+            "display_name": "Viewer",
+        },
+    ).json()["access_token"]
+    _legal(client, viewer_token)
+    monkeypatch.setattr(
+        saas, "assess_owned_run_qualification",
+        lambda *args, **kwargs: (_ for _ in ()).throw(
+            AssertionError("private reference list must not be loaded for viewer")
+        ),
+    )
+    monkeypatch.setattr(
+        saas, "get_uploaded_demo_report",
+        lambda _: SimpleNamespace(
+            run_id=run_id, report_title="Тендер", recommendation="NEEDS_REVIEW",
+            manual_checks=[], executive_summary="Описание", sections=[],
+        ),
+    )
+    assert client.get(
+        f"/api/saas/runs/{run_id}/qualification",
+        headers=_auth(viewer_token),
+    ).status_code == 403
+    report = client.get(f"/api/saas/runs/{run_id}/report", headers=_auth(viewer_token))
+    assert report.status_code == 200, report.text
+    assert report.json()["qualification"]["source_status"] == "REFERENCE_ACCESS_RESTRICTED"
+    assert "qualifying_contracts" not in report.json()["qualification"]
+
+
+def test_owner_reference_list_optimistic_version_and_explicit_zero(client):
+    """Missing != complete zero, stale edit is 409; previous version remains immutable."""
+    _tenant, owner = _seed(client, "ООО Версионированные референсы")
+    _legal(client, owner)
+    endpoint = "/api/saas/qualification/references"
+    unseen = client.get(endpoint, headers=_auth(owner))
+    assert unseen.status_code == 200
+    assert unseen.json()["state"] == "UNKNOWN"
+    assert unseen.json()["fact_version"] is None
+
+    snapshot = {
+        "schema_version": "completed-contract-references-v1",
+        "as_of_date": "2026-10-13",
+        "completeness": "PARTIAL",
+        "owner_confirmed": False,
+        "contracts": [],
+    }
+    payload = {
+        "source_ref": "OWNER_DRAFT_ZERO_NOT_CONFIRMED",
+        "snapshot": snapshot,
+        "expected_version": 0,
+    }
+    incomplete = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert incomplete.status_code == 201, incomplete.text
+    assert incomplete.json()["fact_version"] == 1
+
+    payload["snapshot"] = {
+        **snapshot, "completeness": "COMPLETE", "owner_confirmed": True,
+    }
+    payload["source_ref"] = "OWNER_CONFIRMED_ZERO_2026-10-13"
+    stale = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert stale.status_code == 409, stale.text
+    assert client.get(endpoint, headers=_auth(owner)).json()["snapshot"]["completeness"] == "PARTIAL"
+
+    payload["expected_version"] = 1
+    second = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert second.status_code == 201, second.text
+    assert second.json()["fact_version"] == 2
+    current = client.get(endpoint, headers=_auth(owner))
+    assert current.json()["fact_version"] == 2
+    assert current.json()["snapshot"]["completeness"] == "COMPLETE"
+    assert current.json()["snapshot"]["contracts"] == []
+
+    # An out-of-date browser cannot change an owner-confirmed current list.
+    again = client.post(endpoint, headers=_auth(owner), json=payload)
+    assert again.status_code == 409
+    invalid = client.post(endpoint, headers=_auth(owner), json={
+        "source_ref": "IMPROPER_UNCONFIRMED_ZERO",
+        "expected_version": 2,
+        "snapshot": {**snapshot, "completeness": "COMPLETE", "owner_confirmed": False},
+    })
+    assert invalid.status_code == 422
+    assert client.get(endpoint, headers=_auth(owner)).json()["fact_version"] == 2
+
+
+def test_completed_contract_entry_requires_signed_act_and_document_refs(client):
+    _tenant, owner = _seed(client, "ООО Верификация актов")
+    _legal(client, owner)
+    ep = "/api/saas/qualification/references"
+    base = {
+        "source_ref": "OWNER_COMPLETED_CONTRACTS",
+        "expected_version": 0,
+        "snapshot": {
+            "schema_version": "completed-contract-references-v1",
+            "as_of_date": "2026-10-13",
+            "completeness": "COMPLETE",
+            "owner_confirmed": True,
+            "contracts": [{
+                "law": "44fz", "contract_number": "КТ-001", "subject": "website",
+                "chatbot_in_scope": True, "completed": True,
+                "acceptance_signed_at": "2026-08-01",
+                "contract_document_ref": "COMPANY_DOC_CONTRACT_KT001",
+                "signed_final_act_ref": "COMPANY_DOC_FINAL_ACT_KT001",
+            }],
+        },
+    }
+    good = client.post(ep, headers=_auth(owner), json=base)
+    assert good.status_code == 201, good.text
+    assert client.get(ep, headers=_auth(owner)).json()["snapshot"]["contracts"][0]["completed"]
+    # A contract marked complete cannot be saved without the signed final act.
+    base["expected_version"] = 1
+    base["snapshot"]["contracts"][0]["signed_final_act_ref"] = None
+    bad = client.post(ep, headers=_auth(owner), json=base)
+    assert bad.status_code == 422
+    assert client.get(ep, headers=_auth(owner)).json()["fact_version"] == 1
+
+
+@pytest.mark.parametrize("real_private_original", [False, True])
+def test_http_source_bound_1c_qualification_through_tenant_roles(
+    client, monkeypatch, tmp_path, real_private_original,
+):
+    """Real HTTP auth/owned_run with original 44-FZ sources; never production DB."""
+    import hashlib
+    import io
+    import json
+    import os
+    import shutil
+    import types
+    import zipfile
+    from pathlib import Path
+
+    from src.modules.company_profile_store import (
+        qualification_run_composite_pdf as pdf_observer,
+    )
+    from src.modules.company_profile_store import (
+        qualification_run_service as qualification,
+    )
+    from src.modules.saas_foundation import router as saas
+
+    private_root = os.environ.get("TA_TEST_ORIGINAL_EIS_44_CASE_DIR", "")
+    if real_private_original and not private_root:
+        pytest.skip("Private original EIS source not present in CI; Mac mini only")
+    receipt_path = (
+        Path(__file__).resolve().parents[1]
+        / "docs/acceptance/alternate_44_1c_scoring_original_receipt_2026-10-13.json"
+    )
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    number = receipt["procurement_number"]
+    uid = receipt["scoring_document_uid"]
+    url = (
+        "https://zakupki.gov.ru/44fz/filestore/public/1.0/"
+        f"download/priz/file.html?uid={uid}"
+    )
+    filename = receipt["scoring_document_name"]
+    run_folder = tmp_path / "source-pinned-run"
+    run_folder.mkdir()
+    if real_private_original:
+        source = Path(private_root)
+        soap_source = source / "documentation-archive.zip"
+        pdf_source = next((source / "evaluation").glob("*.pdf"))
+        assert hashlib.sha256(soap_source.read_bytes()).hexdigest() == (
+            receipt["original_soap_archive_sha256"]
+        )
+        assert hashlib.sha256(pdf_source.read_bytes()).hexdigest() == (
+            receipt["scoring_document_sha256"]
+        )
+        shutil.copyfile(soap_source, run_folder / "original-soap.zip")
+        shutil.copyfile(pdf_source, run_folder / "evaluation.pdf")
+    else:
+        pdf_bytes = b"%PDF-1.7\nsynthetic-bound-test-source\n"
+        xml = (
+            "<root><epNotificationEOK2020>"
+            f"<purchaseNumber>{number}</purchaseNumber>"
+            "<versionNumber>2</versionNumber>"
+            "<endDT>2026-10-22T08:00:00+03:00</endDT>"
+            "<attachmentInfo>"
+            f"<publishedContentId>{uid}</publishedContentId>"
+            f"<fileName>{filename}</fileName>"
+            f"<fileSize>{len(pdf_bytes)}</fileSize>"
+            f"<url>{url}</url>"
+            "</attachmentInfo></epNotificationEOK2020></root>"
+        ).encode()
+        archive_bytes = io.BytesIO()
+        with zipfile.ZipFile(archive_bytes, "w") as z:
+            z.writestr(f"epNotificationEOK2020_{number}_2.xml", xml)
+        (run_folder / "original-soap.zip").write_bytes(archive_bytes.getvalue())
+        (run_folder / "evaluation.pdf").write_bytes(pdf_bytes)
+    soap_bytes = (run_folder / "original-soap.zip").read_bytes()
+    pdf_bytes = (run_folder / "evaluation.pdf").read_bytes()
+    metadata = {
+        "procurement_source": "zakupki_gov_ru_getdocs_ip",
+        "reestr_number": number,
+        "archive_downloaded": True,
+        "getdocs_status": "completed",
+        "subsystem_type": "PRIZ",
+        "token_owner": "individual",
+        "archive_source_host": "int.zakupki.gov.ru",
+        "archive_stored_name": "original-soap.zip",
+        "original_getdocs_archive_sha256": hashlib.sha256(soap_bytes).hexdigest(),
+        "files": [{
+            "source_type": "notice_xml_attachments",
+            "original_name": filename,
+            "stored_name": "evaluation.pdf",
+            "source_download_sha256": hashlib.sha256(pdf_bytes).hexdigest(),
+            "source_url": url,
+        }],
+    }
+    tenant, owner = _seed(client, "ООО Изолированная экспертиза 1С")
+    _, outsider = _seed(client, "ООО Чужой клиент 1С")
+    _legal(client, owner)
+    _legal(client, outsider)
+    upload = client.post(
+        "/api/saas/runs", headers=_auth(owner),
+        data={"tender_title": "Исходная закупка 1С", "procurement_customer_name": "Заказчик"},
+        files=[("files", ("initial.txt", b"test-only synthetic placeholder", "text/plain"))],
+    )
+    assert upload.status_code == 201, upload.text
+    run_id = upload.json()["run_id"]
+    invitation = client.post("/api/saas/invitations", headers=_auth(owner), json={
+        "role": "viewer", "acquisition_channel": "referral",
+    })
+    assert invitation.status_code == 200, invitation.text
+    viewer = client.post("/api/saas/invitations/redeem", json={
+        "invitation_code": invitation.json()["invitation_code"],
+        "display_name": "Read-only viewer",
+    })
+    assert viewer.status_code == 201, viewer.text
+    viewer_token = viewer.json()["access_token"]
+    _legal(client, viewer_token)
+
+    monkeypatch.setattr(qualification, "load_demo_run_metadata", lambda _: metadata)
+    monkeypatch.setattr(qualification, "get_demo_run_input_dir", lambda _: run_folder)
+    if not real_private_original:
+        fake_text = """ПОРЯДОК
+Рассмотрения и оценки заявок на участие в конкурсе
+1. Цена контракта, 60 100
+4. Квалификация 40 100
+    контракта 5 характеристика
+    наличие у 95 характеристика
+количество исполненных Контрактов (договоров)
+перечень специалистов и иных работников
+"""
+        monkeypatch.setattr(
+            pdf_observer.subprocess, "run",
+            lambda *_args, **_kwargs: types.SimpleNamespace(
+                stdout=fake_text.encode("utf-8"),
+            ),
+        )
+    monkeypatch.setattr(
+        saas, "get_uploaded_demo_report",
+        lambda _: types.SimpleNamespace(
+            run_id=run_id,
+            report_title="Подтверждённый оригинал 1С",
+            recommendation="NEEDS_REVIEW",
+            manual_checks=["Проверить сведения о специалистах"],
+            executive_summary="Составные критерии оценки", sections=[],
+        ),
+    )
+    ep = f"/api/saas/runs/{run_id}/qualification"
+    report_ep = f"/api/saas/runs/{run_id}/report"
+    assert client.get(ep).status_code == 401
+    assert client.get(ep, headers=_auth(outsider)).status_code == 404
+    assert client.get(report_ep, headers=_auth(outsider)).status_code == 404
+    assert client.get(ep, headers=_auth(viewer_token)).status_code == 403
+
+    owner_result = client.get(ep, headers=_auth(owner))
+    assert owner_result.status_code == 200, owner_result.text
+    q = owner_result.json()
+    assert q["competitive_recommendation"] == "NOT_ASSESSED"
+    assert q["qualifying_contracts"] is None
+    assert q["criterion_source"]["price_weight_percent"] == 60
+    assert q["criterion_source"]["qualification_weight_percent"] == 40
+    assert q["criterion_source"]["qualification_subweights_percent"] == {
+        "completed_contract_count": 5, "specialists": 95,
+    }
+    assert q["external_action_allowed"] is False
+    report = client.get(report_ep, headers=_auth(owner))
+    assert report.status_code == 200, report.text
+    assert report.json()["qualification"]["competitive_recommendation"] == "NOT_ASSESSED"
+    assert report.json()["human_control_required"] is True
+    assert report.json()["external_action_allowed"] is False
+    viewer_report = client.get(report_ep, headers=_auth(viewer_token))
+    assert viewer_report.status_code == 200, viewer_report.text
+    assert viewer_report.json()["qualification"]["source_status"] == (
+        "REFERENCE_ACCESS_RESTRICTED"
+    )
+    assert "criterion_source" not in viewer_report.json()["qualification"]
+    assert "qualifying_contracts" not in viewer_report.json()["qualification"]
+
+    # Only the temporary copy is damaged, after the successful owner report.
+    pdf_copy = run_folder / "evaluation.pdf"
+    content = pdf_copy.read_bytes()
+    pdf_copy.write_bytes(content[:-1] + bytes([content[-1] ^ 1]))
+    changed = client.get(ep, headers=_auth(owner))
+    assert changed.status_code == 200
+    assert changed.json()["competitive_recommendation"] == "NOT_ASSESSED"
+    assert changed.json()["source_status"] == "ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED"
+    assert "criterion_source" not in changed.json()
+    assert tenant["customer_id"] != client.get(
+        "/api/saas/profile", headers=_auth(outsider)
+    ).json()["customer_id"]
+    if real_private_original:
+        assert hashlib.sha256(pdf_source.read_bytes()).hexdigest() == (
+            receipt["scoring_document_sha256"]
+        )

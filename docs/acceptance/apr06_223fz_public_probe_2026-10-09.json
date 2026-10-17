@@ -1,0 +1,81 @@
+{
+  "cases": [
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616197376",
+      "run_id": "toa-run-20261009053155-d27877",
+      "seconds": 0.35,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616263956",
+      "run_id": "toa-run-20261009053156-d998cc",
+      "seconds": 0.8,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616416057",
+      "run_id": "toa-run-20261009053157-3df6b1",
+      "seconds": 0.37,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616412768",
+      "run_id": "toa-run-20261009053157-f90ce9",
+      "seconds": 0.35,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616401070",
+      "run_id": "toa-run-20261009053157-59c31f",
+      "seconds": 0.35,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616369437",
+      "run_id": "toa-run-20261009053158-39e423",
+      "seconds": 0.38,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32616045143",
+      "run_id": "toa-run-20261009053158-fd30ec",
+      "seconds": 0.33,
+      "status": "docs_required"
+    },
+    {
+      "documents_extracted_count": 0,
+      "read_only": true,
+      "reg_number": "32615850735",
+      "run_id": "toa-run-20261009053158-2b0b98",
+      "seconds": 0.39,
+      "status": "docs_required"
+    }
+  ],
+  "confirmed_eis_files": 0,
+  "date": "2026-10-09",
+  "human_reviews_completed": 0,
+  "limitations": [
+    "Public source route returned docs_required for all eight examples; none had downloadable documents.",
+    "No official source version or content file hashes available; nothing can be frozen/accepted.",
+    "Do not assume each case exists/has expected proposed procedure until EIS verified."
+  ],
+  "method": "Existing public_eis_html_223fz handoff; public read-only HTML; no 44FZ SOAP",
+  "schema_version": "apr06-223fz-public-probe-v1",
+  "source_url_pattern": "https://zakupki.gov.ru/223/purchase/public/purchase/info/documents.html?regNumber={REG_NUMBER}",
+  "status": "UNSUPPORTED_DOCUMENT_COVERAGE_NOT_COMMERCIAL_ACCEPTANCE",
+  "submission_or_payment": false
+}

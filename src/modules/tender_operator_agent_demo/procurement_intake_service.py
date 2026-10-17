@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import html
 import io
 import json
@@ -9,6 +10,7 @@ import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError
 from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request
 
@@ -78,11 +80,15 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 from src.shared.network.http_client import create_urllib_opener
 from src.tender_research.providers.public_44fz_search import (
+    EIS_NOTICE_EDGE_404_RETRIES,
+    EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS,
     Public44FzSearchProvider,
     PublicDocumentLink,
+    _intermittent_eis_notice_edge_404,
     _parse_detail_metadata,
     _select_current_revision_document_links,
 )
+from src.tender_research.providers.public_223fz_search import Public223FzSearchProvider
 
 ARCHIVE_DOWNLOAD_RETRY_ATTEMPTS = 5
 ARCHIVE_DOWNLOAD_RETRY_DELAY_SECONDS = 10
@@ -354,9 +360,17 @@ def _build_getdocs_result(reestr_number: str, archive_result: DocsArchiveResult)
         attachments_status="downloadable" if archive_result.archive_url else "manual_upload_required",
         attachments_count=1 if archive_result.archive_url else 0,
         available_attachments_count=1 if archive_result.archive_url else 0,
-        summary=archive_result.raw_summary or f"Статус getDocsIP: {archive_result.status}",
+        summary=(
+            archive_result.raw_summary
+            if archive_result.status == "completed" and archive_result.raw_summary
+            else (
+                "В этом разделе ЕИС архив конкурсной документации не получен. "
+                "Это не подтверждает отсутствие самой записи или документов "
+                "в других официальных разделах."
+            )
+        ),
         attachment_names=["documentation-archive.zip"] if archive_result.archive_url else [],
-        source_note="Read-only getDocsIP intake для токена физлица.",
+        source_note="Проверка официальной документации ЕИС без подачи заявки.",
     )
 
 
@@ -384,16 +398,28 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
     hostname = (parsed.hostname or "").lower()
     if parsed.scheme not in {"http", "https"}:
         return {}
-    if not hostname.endswith("zakupki.gov.ru"):
+    if not (hostname == "zakupki.gov.ru" or hostname.endswith(".zakupki.gov.ru")):
         return {}
 
     opener = create_urllib_opener(source_url, source_direct_connection=True)
     request = Request(source_url, headers={"User-Agent": PUBLIC_EIS_USER_AGENT}, method="GET")
-    try:
-        with opener.open(request, timeout=20) as response:
-            page_html = response.read(PUBLIC_EIS_MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
-    except (OSError, ValueError):
-        return {}
+    for attempt in range(EIS_NOTICE_EDGE_404_RETRIES + 1):
+        try:
+            with opener.open(request, timeout=20) as response:
+                page_html = response.read(PUBLIC_EIS_MAX_RESPONSE_BYTES + 1).decode(
+                    "utf-8", errors="replace"
+                )
+            break
+        except HTTPError as exc:
+            if (
+                attempt < EIS_NOTICE_EDGE_404_RETRIES
+                and _intermittent_eis_notice_edge_404(source_url, exc)
+            ):
+                time.sleep(EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {}
+        except (OSError, ValueError):
+            return {}
     if len(page_html) > PUBLIC_EIS_MAX_RESPONSE_BYTES:
         return {}
 
@@ -413,19 +439,28 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
         title_class="cardMainInfo__title",
         content_class="cardMainInfo__content",
     )
-    publication_date = _format_public_context_datetime(parsed_metadata.get("publication_date")) or _extract_card_value(
+    # The detailed public EIS HTML shows the local organizational time with
+    # its displayed timezone. The parsed metadata is normalized to UTC.
+    # Formatting that UTC instant as an unlabeled HH:MM previously shifted
+    # a real 10:00 MSK deadline to an incorrect 07:00 in the operator UI.
+    publication_date = _extract_card_value(
         page_html,
         "Размещено",
         title_class="cardMainInfo__title",
         content_class="cardMainInfo__content",
-    )
+    ) or _format_public_context_datetime(parsed_metadata.get("publication_date"))
     updated_date = _extract_card_value(page_html, "Обновлено", title_class="cardMainInfo__title", content_class="cardMainInfo__content")
-    deadline = _format_public_context_datetime(parsed_metadata.get("application_deadline")) or _extract_card_value(
+    deadline = _extract_card_value(
         page_html,
         "Дата и время окончания срока подачи заявок",
         title_class="section__title",
         content_class="section__info",
-    ) or _extract_card_value(page_html, "Окончание подачи заявок", title_class="cardMainInfo__title", content_class="cardMainInfo__content")
+    ) or _extract_card_value(
+        page_html,
+        "Окончание подачи заявок",
+        title_class="cardMainInfo__title",
+        content_class="cardMainInfo__content",
+    ) or _format_public_context_datetime(parsed_metadata.get("application_deadline"))
     initial_price_raw = _extract_card_value(
         page_html,
         "Начальная (максимальная) цена контракта",
@@ -465,7 +500,7 @@ def _infer_public_documents_url(source_url: str) -> str | None:
     hostname = (parsed.hostname or "").lower()
     if parsed.scheme not in {"http", "https"}:
         return None
-    if not hostname.endswith("zakupki.gov.ru"):
+    if not (hostname == "zakupki.gov.ru" or hostname.endswith(".zakupki.gov.ru")):
         return None
     if parsed.path.endswith("/documents.html"):
         return source_url
@@ -477,6 +512,10 @@ def _infer_public_documents_url(source_url: str) -> str | None:
 def _format_public_context_datetime(value: Any) -> str | None:
     if not isinstance(value, datetime):
         return None
+    # This fallback receives normalized UTC timestamps; NEVER display HH:MM
+    # without an explicit zone when the primary local-time HTML field is absent.
+    if value.tzinfo is not None and value.utcoffset() is not None:
+        return value.astimezone(UTC).strftime("%d.%m.%Y %H:%M UTC")
     if value.hour == 0 and value.minute == 0 and value.second == 0:
         return value.strftime("%d.%m.%Y")
     return value.strftime("%d.%m.%Y %H:%M")
@@ -530,9 +569,105 @@ def _parse_public_notice_attachments(page_html: str, *, page_url: str) -> list[P
     return attachments
 
 
+def _extract_223fz_documents_navigation_url(
+    common_info_html: str,
+    *,
+    notice_number: str,
+) -> str | None:
+    """Resolve only same-number EIS documents links with official notice GUID.
+
+    EIS 223-FZ documents endpoints require a notice GUID in addition to the
+    public procurement number. Never guess it or use 44-FZ document routes.
+    """
+    if not re.fullmatch(r"\d{11}", notice_number):
+        return None
+    paths = {
+        "/epz/order/notice/notice223/documents.html",
+        "/223/purchase/public/purchase/info/documents.html",
+    }
+    choices: set[str] = set()
+    for match in re.finditer(r"""href\s*=\s*["']([^"']+)["']""", common_info_html, re.IGNORECASE):
+        # Decode only ampersands to preserve literal &noticeGuid, which
+        # html.unescape incorrectly turns into a named HTML entity prefix.
+        href = re.sub(r"&(?:amp;|#38;|#x26;)", "&", match.group(1), flags=re.IGNORECASE)
+        link = urljoin("https://zakupki.gov.ru", href)
+        parsed = urlparse(link)
+        if parsed.scheme != "https" or parsed.hostname != "zakupki.gov.ru" or parsed.path not in paths:
+            continue
+        query = parse_qs(parsed.query)
+        guid = (query.get("noticeGuid") or query.get("purchaseNoticeGuid") or [""])[0]
+        number = (query.get("purchaseNoticeNumber") or query.get("regNumber") or [""])[0]
+        if number == notice_number and re.fullmatch(r"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}", guid):
+            choices.add(link)
+    if len(choices) > 1:
+        raise PublicRevisionBindingError({
+            "source_regime": "223fz", "requires_review": True,
+            "reason": "multiple official 223-FZ document navigation targets",
+        })
+    return next(iter(choices)) if choices else None
+
+
+def _resolve_223fz_documents_url(source_url: str) -> str:
+    """Navigate read-only via EIS common-info; fail closed if GUID unavailable."""
+    parsed = urlparse(source_url)
+    query = parse_qs(parsed.query)
+    notice_number = (query.get("purchaseNoticeNumber") or query.get("regNumber") or [""])[0]
+    if parsed.scheme != "https" or parsed.hostname != "zakupki.gov.ru":
+        raise PublicRevisionBindingError({"requires_review": True, "reason": "invalid EIS host"})
+    direct_guid = (query.get("noticeGuid") or query.get("purchaseNoticeGuid") or [""])[0]
+    allowed_document_paths = {
+        "/223/purchase/public/purchase/info/documents.html",
+        "/epz/order/notice/notice223/documents.html",
+    }
+    if direct_guid:
+        if (
+            parsed.path not in allowed_document_paths
+            or not re.fullmatch(r"\d{11}", notice_number)
+            or not re.fullmatch(
+                r"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}",
+                direct_guid,
+            )
+        ):
+            raise PublicRevisionBindingError({
+                "requires_review": True, "reason": "invalid 223-FZ official notice GUID or path",
+            })
+        return source_url
+    if parsed.path.startswith("/223/purchase/public/purchase/info/"):
+        common_path = "/223/purchase/public/purchase/info/common-info.html"
+    else:
+        common_path = "/epz/order/notice/notice223/common-info.html"
+    if not re.fullmatch(r"\d{11}", notice_number):
+        raise PublicRevisionBindingError({"requires_review": True, "reason": "invalid 223-FZ registry number"})
+    common_url = f"https://zakupki.gov.ru{common_path}?regNumber={notice_number}"
+    result = Public223FzSearchProvider(bypass_proxy=True).fetch_detail(card_url=common_url)
+    url = _extract_223fz_documents_navigation_url(
+        result.common_info_html or "", notice_number=notice_number
+    )
+    if not url:
+        raise PublicRevisionBindingError({
+            "source_regime": "223fz", "requires_review": True,
+            "reason": "223-FZ official document link with noticeGuid not found",
+        })
+    return url
+
+
 def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachment]:
-    detail = Public44FzSearchProvider(bypass_proxy=True).fetch_detail(card_url=source_url)
-    selection = (getattr(detail, "raw", {}) or {}).get("document_revision_selection") or {}
+    # 223-FZ public HTML must never be parsed by the 44-FZ provider.
+    # Source-specific document revision/customer trust gates also stay separate.
+    path = urlparse(source_url).path.lower()
+    is_223fz = path.startswith("/223/") or "/notice223/" in path
+    provider = Public223FzSearchProvider if is_223fz else Public44FzSearchProvider
+    detail_url = _resolve_223fz_documents_url(source_url) if is_223fz else source_url
+    detail = provider(bypass_proxy=True).fetch_detail(card_url=detail_url)
+    raw = getattr(detail, "raw", {}) or {}
+    if is_223fz:
+        selection = {
+            "source_regime": "223fz",
+            "reason": "; ".join(raw.get("review_reasons", [])) or "223-FZ provenance requires review",
+            "requires_review": bool(raw.get("requires_review")),
+        }
+    else:
+        selection = raw.get("document_revision_selection") or {}
     if selection.get("requires_review"):
         raise PublicRevisionBindingError(selection)
     if not detail.document_links:
@@ -543,6 +678,17 @@ def _fetch_public_notice_attachments(source_url: str) -> list[ProcurementAttachm
         name = item.file_name or item.title
         if not name or not item.url:
             continue
+        if is_223fz:
+            # Some EIS 223-FZ anchors expose an unquoted title attribute as
+            # "...pdf ' > <link label>". Keep only the extension-terminated
+            # official filename; the attachment downloader still enforces its
+            # file-format allowlist and content/URL safety checks.
+            recovered = re.match(
+                r"""^(.+?\.(?:pdf|docx?|xlsx?|xml|txt|zip|csv|html?))\s*["\x27]\s*>""",
+                name, re.IGNORECASE,
+            )
+            if recovered:
+                name = recovered.group(1)
         parsed_url = urlparse(item.url)
         attachment_id = item.raw.get("uid") or parse_qs(parsed_url.query).get(
             "uid", [Path(parsed_url.path).name or name]
@@ -691,9 +837,13 @@ def _dedupe_procurement_attachments(
     for item in attachments:
         name_key = str(item.name or "").strip().lower()
         url_key = str(item.url or "").strip()
-        if name_key in existing_names or (url_key and url_key in existing_urls):
+        # Different official files can share the same display name. Identity
+        # follows the exact source URL; name is a fallback only without URL.
+        if (url_key and url_key in existing_urls) or (
+            not url_key and name_key in existing_names
+        ):
             continue
-        key = (name_key, url_key)
+        key = ("url", url_key) if url_key else ("name", name_key)
         if key in seen:
             continue
         seen.add(key)
@@ -754,6 +904,8 @@ def _supplement_run_with_discovered_attachments(
         )
         if item.provenance:
             descriptor["source_provenance"] = item.provenance
+        if item.sha256:
+            descriptor["source_download_sha256"] = item.sha256
         existing_files.append(descriptor)
         append_demo_run_event(
             run_id,
@@ -878,6 +1030,15 @@ def _supplement_run_with_public_notice_attachments(run_id: str, source_url: str 
 def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
     metadata = load_demo_run_metadata(run_id)
     attachments = _discover_notice_xml_attachments(run_id, metadata)
+    if attachments:
+        from src.modules.tender_operator_agent_demo.eis_original_attachment_completeness import (
+            expected_eis_notice_attachments,
+        )
+
+        metadata["official_xml_attachment_inventory"] = (
+            expected_eis_notice_attachments(attachments)
+        )
+        save_demo_run_metadata(run_id, metadata)
     return _supplement_run_with_discovered_attachments(
         run_id,
         attachments=attachments,
@@ -890,11 +1051,23 @@ def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
 def _apply_document_set_completeness(run_id: str) -> dict[str, Any]:
     metadata = load_demo_run_metadata(run_id)
     summary = apply_document_set_summary(metadata)
-    limitation = (
-        "Комплект документов неполон: до анализа необходимо получить проект "
-        "контракта и техническое задание или описание объекта закупки."
-    )
-    limitations = list(metadata.get("limitations") or [])
+    official_set = summary.get("official_original_attachments") or {}
+    if official_set.get("official_original_attachments_missing", 0) > 0:
+        limitation = (
+            "Не все приложения исходного извещения ЕИС получены: "
+            f"{official_set['official_original_attachments_downloaded']} из "
+            f"{official_set['official_original_attachments_announced']}. "
+            "Нужна догрузка и проверка недостающих документов."
+        )
+    else:
+        limitation = (
+            "Комплект документов неполон: до анализа необходимо получить проект "
+            "контракта и техническое задание или описание объекта закупки."
+        )
+    limitations = [
+        x for x in list(metadata.get("limitations") or [])
+        if not x.startswith("Не все приложения исходного извещения ЕИС получены:")
+    ]
     if summary["analysis_allowed"]:
         if metadata.get("files"):
             metadata["status"] = TenderOperatorUploadedRunStatus.READY_TO_ANALYZE.value
@@ -1339,13 +1512,19 @@ def analyze_eis_archive_run(run_id: str):
         )
     summary = _apply_document_set_completeness(run_id)
     if not summary["analysis_allowed"]:
-        raise HTTPException(
-            status_code=409,
-            detail=(
+        original_set = summary.get("official_original_attachments") or {}
+        if original_set.get("official_original_attachments_missing", 0) > 0:
+            message = (
+                "Не все приложения, перечисленные в исходном извещении ЕИС, "
+                "получены. Автоматический анализ остановлен до догрузки "
+                "недостающих документов."
+            )
+        else:
+            message = (
                 "Комплект документов неполон. До анализа получите проект "
                 "контракта и техническое задание или описание объекта закупки."
-            ),
-        )
+            )
+        raise HTTPException(status_code=409, detail=message)
     return analyze_uploaded_demo_run(run_id)
 
 
@@ -1633,6 +1812,28 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
 
     client = ZakupkiSoapClient(settings)
     archive_result = client.get_docs_by_reestr_number(request.reestr_number, subsystem_type=request.subsystem_type)
+    if archive_result.status == "no_data":
+        from src.modules.tender_operator_agent_demo.eis_price_request_source_probe import (
+            probe_exact_eis_price_request,
+        )
+
+        official = probe_exact_eis_price_request(request.reestr_number)
+        if official is not None:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "code": "MARKET_RESEARCH_PRICE_REQUEST_ONLY",
+                    "record_type": "price_information_request",
+                    "official_source_url": official["official_source_url"],
+                    "source_document_sha256": official["source_document_sha256"],
+                    "message": (
+                        "Запись найдена в официальном реестре запросов ценовой "
+                        "информации ЕИС. Это сбор рыночных предложений, а не "
+                        "конкурентная закупка для подачи заявки. "
+                        "Исходные документы следует изучать в разделе запросов цен."
+                    ),
+                },
+            )
     selected = _build_getdocs_result(request.reestr_number, archive_result)
     archive_summary = _sanitize_archive_url_summary(archive_result.archive_url)
 
@@ -1659,6 +1860,7 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
     documents_extracted_count = 0
     archive_extraction_complete: bool | None = None
     archive_stored_name: str | None = None
+    original_getdocs_archive_sha256: str | None = None
     official_eis_procedure: dict[str, Any] = {
         "status": "UNKNOWN",
         "reason": "OFFICIAL_ARCHIVE_NOT_DOWNLOADED",
@@ -1733,6 +1935,11 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
         else:
             archive_downloaded = True
             archive_stored_name = downloaded.stored_name
+            # Pin transport-received bytes NOW, before any later local workspace
+            # mutation. This is a receipt, not an EIS e-signature verification.
+            original_getdocs_archive_sha256 = hashlib.sha256(
+                (get_demo_run_input_dir(run_id) / archive_stored_name).read_bytes()
+            ).hexdigest()
             official_eis_procedure = classify_official_eis_archive(
                 get_demo_run_input_dir(run_id) / downloaded.stored_name,
                 request.reestr_number,
@@ -1854,6 +2061,7 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
         "documents_extracted_count": documents_extracted_count,
         "archive_extraction_complete": archive_extraction_complete,
         "archive_stored_name": archive_stored_name,
+        "original_getdocs_archive_sha256": original_getdocs_archive_sha256,
         "official_eis_procedure": official_eis_procedure,
         "getdocs_status": archive_result.status,
         "getdocs_request_id": archive_result.request_id,
