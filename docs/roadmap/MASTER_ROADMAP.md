@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B original Workspace four-card qualification (Oct17) IN_PROGRESS:** four exact original public corporate pages 19030, 19032, 19042, 19043 checked with source HTML SHA and printed dates. All public accepting, actual bidder admissibility/PRO not confirmed. 19030 50SKU/200orders-day staged AI material/warehouse/production pilot with detailed gated spec; 19032 WordPress SLA/security/backup support; 19042 vendor experience 3years+portfolio demanded; 19043 relevant completed portfolio mandatory and two SEO-conscious site proposals requested. [Original four comparison](B2B_WORKSPACE_FOUR_SOURCE_FIT_2026-10-17.md) and [machine source SHA](b2b_workspace_four_original_fit_2026-10-17.json). GO 0/4, parent 15–20 eligible target OPEN.
+
+
+
 **B2B official EIS public printable source bounded observation COMPLETE PR471 c719e1c091:** 10 exact first-party HTTPS URL HTTP200, 6 printForm source HTML identities, 5 local printed dates match pinned official original getDocsIP notice XML. Remaining 4 HTTP only; prior common-info HTTP404 does not imply cancellation. NO source proves latest legal stage/revision or company bid right, 0/10 current status GO. 5 focused PASS, Mac full 5036 PASS/285 SKIP, exact-head GitHub CI green. [Dated original-page evidence](B2B_EIS_PUBLIC_PRINTFORM_OBSERVATIONS_2026-10-17.md) and [10-card machine receipt](b2b_44fz_official_printform_observations_2026-10-17.json). Parent 15-20 truly current qualified IT procedures remains OPEN.
 
 
