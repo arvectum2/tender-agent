@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-WORDPRESS-19032-20261017
+status: in_progress
+goal: Convert the exact first-party Workspace 19032 WordPress public SOW into a source-cited, reproducible qualification/response-readiness packet for Arvectum LLC, without submission, payment, or invented portfolio.
+definition_of_done:
+  - Read only exact public first-party URL and validate live source status, deadline and budget without inferring date clock or monthly billing from total budget.
+  - Capture source proof for recurring operations, optional change requests, pricing, incident response and proposed reporting structure.
+  - Preserve no claimed real WordPress portfolio or customer-approved SLA without documentary proof; list crisp remaining Owner questions.
+  - Persist current evidence SHA and structured source-level receipt, generate human report and update master roadmap.
+  - Add adversarial offline regression tests and relevant checks.
+  - Commit/push to isolated PR, record CI/PR review state and close this child while preserving parent in_progress.
+completed:
+  - Reconciled parent TA-ROADMAP-EXEC-20261012 and last child 2026-10-17 source refresh completed.
+  - PR477 latest head 06f901977bfffbde7c079fe1868d6cde86bfc4a6 CI SUCCESS, still DRAFT unmerged.
+  - Read original public 19032 HTML: WordPress monthly support, security, backups, incident response, optional development, quote split, public budget 100k-400k, calendar-only 21.10; login/registration shown, but LLC account entitlement unknown.
+current: Implement source-cited 19032 scope extraction and safe qualification evidence.
+pending:
+  - Publish source-cited machine and operator reports.
+  - Tests and checks.
+  - Close checkpoint and push PR for review.
+last_verified_commit: 06f901977bfffbde7c079fe1868d6cde86bfc4a6
+test_results: Previous B2B live-source child 167 focused PASS, latest CI SUCCESS; current task not tested yet.
+resume_instruction: Implement only first-party exact Workspace 19032 public WordPress requirements audit and separate unknown company qualification/PRO/economics; never contact buyer, log into new account, pay PRO, or promise SLA.

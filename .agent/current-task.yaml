@@ -610,3 +610,9 @@ active_child_live_source_refresh_2026_10_17:
   tests: 167_passed
   source_platform: workspace.ru
   external_action: false
+
+active_child_wordpress_19032_2026_10_17:
+  task_id: TA-B2B-WORDPRESS-19032-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-WORDPRESS-19032-20261017.yaml
+  status: in_progress
+  external_action: false
