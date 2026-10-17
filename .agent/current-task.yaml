@@ -335,3 +335,13 @@ single_operator_ui_owner_directive_2026_10_17:
   no_duplicate_frontends_or_new_stands: true
   child_checkpoint: .agent/checkpoints/TA-ONE-OPERATOR-UI-20261017.yaml
   owner_browser_acceptance: pending
+
+real_eis_review_2026_10_17:
+  checkpoint: .agent/checkpoints/TA-APR03B-REAL-EIS-OWNER-HANDOFF-20261017.yaml
+  one_ui_runtime_port: 18082
+  saved_runs: 12
+  canonical_registry_rows: 0
+  archived_museum_file_descriptors: 6
+  source_binary_integrity_today: blocked_unverified
+  owner_acceptance: pending
+  no_new_interface_or_stand: true
