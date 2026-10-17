@@ -406,6 +406,22 @@
         '). Статус актуального извещения, юридическая готовность и допуск к участию НЕ подтверждены.',
         'citation');
     }
+    const archivedCutoff = verifiedEvidence?.archived_submission_deadline_status;
+    if (archivedCutoff?.relation_to_archived_deadline === 'ARCHIVED_CUTOFF_REACHED') {
+      const originalDeadline = new Date(archivedCutoff.archived_deadline);
+      const deadlineLabel = Number.isNaN(originalDeadline.getTime()) ? 'UNKNOWN'
+        : new Intl.DateTimeFormat('ru-RU', {
+            timeZone:'Europe/Moscow',dateStyle:'short',timeStyle:'short'
+          }).format(originalDeadline);
+      paragraph(root,
+        '⚠ Срок подачи в архивной редакции извещения истёк: ' + deadlineLabel +
+        ' МСК. Это НЕ подтверждение текущего юридического статуса ЕИС, отсутствия изменений, ' +
+        'итогов закупки или разрешения на подачу заявки.', 'unknown');
+    } else if (archivedCutoff?.relation_to_archived_deadline === 'ARCHIVED_CUTOFF_NOT_YET_REACHED') {
+      paragraph(root,
+        'Срок, указанный в архивном извещении, ещё не наступил; ' +
+        'возможность подачи по действующей редакции ЕИС НЕ подтверждена.', 'unknown');
+    }
     for (const warning of verifiedEvidence?.warnings || []) paragraph(root, '⚠ ' + warning, 'unknown');
     for (const key of ['blockers','unknowns','readiness']) {
       if (!Array.isArray(core[key]) || !core[key].length) continue;

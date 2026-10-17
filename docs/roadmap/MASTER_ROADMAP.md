@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**APR03B 17.10 archival cutoff vs LIVE EIS:** official original archived notice v1 XML endDT 16.10 10:00 Moscow has elapsed. Live public legal status/award/cancellation UNVERIFIED (legacy read-only details failed, public 404 not cancellation); secondary planned result Oct20. Existing Operator Workspace saved evidence dynamically displays archival cutoff and warnings, no new interface/stand. [Proof](../acceptance/APR03B_ARCHIVED_DEADLINE_VS_LIVE_LEGAL_STATUS_2026-10-17.md).
+
+
+
 **APR-03B six EIS archived original source receipts — COMPLETED, 17.10.2026:** PR #464 merged code d8d8ff0b after Mac mini 4961 passed/285 skipped and exact-head GitHub CI PASS. Existing Mac mini Operator Workspace 18082 updated *in place* (1165 source files match image SHA, health200), original saved run now holds a mode-0600, timestamped source receipt containing only official ZIP SHA and 5 exact-match filestore binary SHA, no duplicate original files/signed URLs. Chrome History report shows 5/5 fresh official file origin confirmation, archived notice v1, explicit lack of PUBLIC LIVE legal EIS status, PDF/DOCX409 and 0 JS errors. Old technical external-attachment source blocker CLOSED; owner/legal public-procedure-status review remains OPEN. [Actual proof](../acceptance/APR03B_EIS_SIX_ORIGINALS_FRESH_VERIFICATION_2026-10-17.md).
 
 

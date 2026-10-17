@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 APR03B source-only archive cutoff: official original pinned v1 endDT 16.10.2026 10:00 Moscow expired on Oct17; current public EIS status and protocols UNKNOWN (read-only legacy details RuntimeError, public EIS common-info HTTP404, not evidence of cancellation). Add dynamic source-backed archival deadline notice to existing 18082; child TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017 in progress; no new stand/ETP."
   - "2026-10-17 APR03B first-party six originals source v1 verified (PR464 d8d8ff0b63e2568aff91eec862566637340a92af): today same getDocsIP 17041B XML ZIP SHA35978ce4, five official filestore bytes SHA 5/5 exact. Existing 18082 now shows safe timestamped receipt, archives v1, current legal notice status UNKNOWN, human GO false. 4961 local PASS/285 SKIP, GitHub CI all green, no new stand."
   - "2026-10-17 APR03B fresh official getDocsIP read-only Oct17 returned source ZIP exactly same SHA35978ce4 as old Oct12 archived notice v1; all five original URLs in source XML crossmatch saved files and 5 live filestore GET byte-for-byte full SHA match. Current public live notice/owner GO remains UNVERIFIED. Existing one Operator Workspace evidence receipt code pending full regression/CI and safe in-place update, no new UI/stand."
   - "2026-10-17 APR03B original saved getDocsIP ZIP v1 historical provenance repaired: PR463 7c192c383a5e1d3b9ba813c9b27536bef15f6030 CI green, Mac mini 4945 PASS/285 SKIP. Existing Museum Bread run recovered 17041B original download from historical getDocs event, XML ed5c742b byte-identical to FILE-01; external SSD backup saved; metadata pinned retrospectively with exact two-hash gate and original 18082 only. Existing six file SHA, report 200, PDF/DOCX409, Chrome history and safe archive warning verified. Important: ZIP contains only XML, not other five files; latest LIVE EIS edition and legal GO UNKNOWN."
@@ -231,7 +232,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 APR03B historical archived v1 source integrity COMPLETE PR464 d8d8ff0b63e2568aff91eec862566637340a92af. Current Mac mini original 18082 Operator Workspace has archived XML ZIP v1 SHA35978ce4 and five separate linked official EIS filestore binaries freshly re-downloaded read-only and full SHA equal 5/5; receipt only SHA/time saved inside ORIGINAL existing run, no duplicate files/new UI/staging/database. Real Chrome report shows source confirmation and prominently warns PUBLIC LIVE LEGAL NOTICE STATUS IS UNVERIFIED; old archived report PDF/DOCX HTTP409, human/legal GO not granted. 4961 local tests PASS/285 SKIP, GitHub CI green. Parent in_progress: next independent official registry protocol/award/cancellation status or owner legal/economic evaluation, APR06/07 gold/quality and current B2B 15-20 opportunities; no ETP, signature, production deploy, payment or user mail; manual_override true."
+resume_instruction: "2026-10-17 current child TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-eis-public-status-20261017. Official archived EIS v1 XML endDT Oct16 10:00 MSK expired as of Oct17. Current live/public EIS legal status and cancellation/award UNKNOWN. Official legacy read-only details unavailable; public card HTTP404 not proof of cancellation. Source evidence/UI archived cutoff code + 49 tests and Node UI passing; finish full tests/CI then merge and update single existing Mac mini 18082. Do not claim results scheduled Oct20 as published now; no ETP/signature/payment/public deployment; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -387,3 +388,14 @@ eis_five_attachments_revalidation_2026_10_17:
   private_receipt_saved_in_original_runtime: true
   source_validation_code_merge: d8d8ff0b63e2568aff91eec862566637340a92af
   owner_legal_go: pending
+
+eis_archived_deadline_observation_2026_10_17:
+  task_id: TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017
+  checkpoint: .agent/checkpoints/TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017.yaml
+  archived_notice_end_dt: '2026-10-16T10:00:00+03:00'
+  archived_notice_cutoff_passed_oct17: true
+  current_public_eis_procedure_status: UNKNOWN
+  live_legal_status_readonly_probe: unavailable
+  award_or_cancellation_verified: false
+  single_operator_ui_only: true
+  cutoff_status_ui_delivery: pending_ci

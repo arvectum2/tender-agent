@@ -281,6 +281,16 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
         )
         source_revalidation = verified_saved_observation(run_id)
 
+    from src.modules.tender_operator_agent_demo.eis_archived_deadline_status import (
+        archived_notice_deadline_observation,
+    )
+    submission_cutoff = archived_notice_deadline_observation(
+        facts["application_deadline"]
+        if source == "zakupki_gov_ru_getdocs_ip"
+        and source_selection == "pinned_latest_archived_notice_revision"
+        else None
+    )
+
     # Do not use the old report's claimed status to prove the content of EIS XML.
     return {
         "contract_version": "operator-eis-source-evidence-v1",
@@ -290,6 +300,7 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
         "source_selection": source_selection,
         "source_candidate_count": source_candidate_count,
         "source_revalidation": source_revalidation,
+        "archived_submission_deadline_status": submission_cutoff,
         "facts": facts,
         "warnings": warnings,
         "human_control_required": True,

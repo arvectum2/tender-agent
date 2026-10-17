@@ -1,0 +1,40 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017
+status: in_progress
+goal: Expose a source-backed archived EIS submission cutoff in existing Operator Workspace without claiming current legal
+  procurement status, with full tests and a single original 18082 UI.
+definition_of_done:
+- Check existing original XML, previously verified ZIP/5 official filestore sources, and source-evidence/report deadline logic
+  before coding.
+- Distinguish archived application deadline passed from independent live official procurement status (cancellation, award,
+  protocols, amendments) with explicit UNKNOWN on the latter.
+- Add minimal fail-closed saved source deadline projection and clear warning in same existing Operator Workspace, no new tabs,
+  UI, API, stand, database or ETP action.
+- Cover past, future, invalid, tampered and other-source cases in tests; run local full suite and exact-head CI, reconcile
+  checkpoint and main.
+completed:
+- Verified current origin main 1323a54de55eceb2e4d534aca3ecbe2fcb0084bc, GitHub CI SUCCESS, existing 18082 healthy; full original
+  v1/5 binary source recheck child COMPLETE.
+- Official archived notice XML has endDT 2026-10-16T10:00:00+03:00; on Oct17 deadline already past; 20 Oct planned result
+  is not award evidence. Public listings are secondary and cannot independently confirm live legal status.
+- Existing operator_report_model_builder already computes deadline_status in new report; archived saved source-evidence UI
+  does not explicitly show passed cutoff.
+- getDocsIP official archived notice endDT=2026-10-16T10:00:00+03:00, passed as of Oct17. Expected result Oct20 from secondary
+  listings not official award.
+- Read-only official legacy getProcurementDetails returned RuntimeError; public notice 404, both remain inconclusive on live
+  legal status, so UNKNOWN.
+- Added pure fail-closed archived cutoff now-UTC clock, requiring pinned original EIS ZIP and unique exact XML:endDT evidence;
+  no legal status/award/eligibility inference.
+- Existing single Operator Workspace shows archived cutoff and a clear no-live-status warning. 49 targeted pytest and Node
+  simulated saved-history UI PASS. Full tests and CI next.
+current_stage: Source-backed original archived deadline projection ready for full regression/CI and existing 18082.
+remaining:
+- Add pure deadline validator + source-evidence integration and JS display without promoting live state.
+- Run targeted/full tests, exact-head GitHub CI; merge and update existing 18082 only.
+- Document which actual public legal status/owner signoff remains unknown, update canonical parent and child.
+last_verified_commit: 1323a54de55eceb2e4d534aca3ecbe2fcb0084bc
+last_tests: 49 focused pytest PASS; existing Node saved history UI PASS; Ruff and JS syntax PASS; full suite pending.
+resume_instruction: Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-eis-public-status-20261017. Full test +
+  GitHub exact-head CI and merge, then upgrade original 18082 and real Chrome, retain archived 409. Live procedure cancellation/award/current
+  legal status UNKNOWN; no ETP or UI duplication.
