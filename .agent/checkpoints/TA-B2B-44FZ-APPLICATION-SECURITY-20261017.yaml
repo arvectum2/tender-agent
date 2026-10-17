@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-44FZ-APPLICATION-SECURITY-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: 'Verify 44FZ archive-original application guarantees for museum exposition 0161600001326000063 and Yakutia GIS 0816500000626015655 from the exact original EIS XML field, and correct cash-liquidity scenario so distinct bid/performance/warranty securities are never combined into phantom economic expense.'
+definition_of_done:
+  - 'Read-only original getDocsIP ZIP original XML pinned version and SHA, exact original EIS applicationGuarantee/amount/part, not aggregator; no ETP action.'
+  - 'Safe machine receipt exact official notice SHA, NMC, 1% bid security if attested, independent cash phase vs already sourced 5% contract execution and Yakutia warranty requirements.'
+  - 'Conservatively extend earlier museum cost sensitivity data to show 16k application cash phase separately, without adding it to expense or claiming security mechanisms are identical.'
+  - 'Tests for original notice ambiguity, no double counting and source attestation; Russian report with owner cash-flow gates.'
+  - 'Exact CI/merge and checkpoint after PR469 owner cost scenario merged and canonical parent state restored.'
+completed:
+  - 'Mac mini read-only official getDocsIP confirmed museum EF2020 v1 0161600001326000063 exact applicationGuarantee/amount 16000.00, Yakutia EOK2020 v1 0816500000626015655 exact applicationGuarantee/amount 45500.00 (matching 1% each), not taken from aggregator.'
+  - 'Based isolated SSD worktree on PR469 cost scenario commit b9f19cc8f6f4cbe8cb5f396de403e038c962c574 pending its required quality CI.'
+current_stage: 'Implement tiny bounded read-only source verifier and original bid-liquidity obligations without touching live Operator Workspace.'
+remaining:
+  - 'Build original field receipt and revalidatable source assurance.'
+  - 'Update museum cost planning staged liquidity, not expense; Yakutia separate owner gate.'
+  - 'Full tests and exact-head CI after original parent PR469 merges, final completed checkpoint.'
+last_verified_commit: b9f19cc8f6f4cbe8cb5f396de403e038c962c574
+last_tests: 'PR469 local 5019 passed/285 skipped, GitHub quality running; child pending.'
+resume_instruction: 'SSD isolated tender-agent-44fz-bid-security-20261017. No direct work in dirty root checkout and no extra UI/DB/ETP; use official read-only SOAP ZIP/XML exact applicationGuarantee amount. Wait PR469 exact source head CI/merge and parent checkpoint, then rebase safely before preparing merge of new child. Do not double charge application cash as cost or assume app+performance+12mo warranty all blocked concurrently.'

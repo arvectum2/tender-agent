@@ -1,0 +1,42 @@
+{
+  "schema_version": "b2b-original-44fz-two-application-guarantees-v1",
+  "as_of": "2026-10-17",
+  "reviewed_original_procurements": 2,
+  "public_44fz_application_securities": [
+    {
+      "source_xml_exact_path": "export/epNotificationEF2020/notificationInfo/customerRequirementsInfo/customerRequirementInfo/applicationGuarantee/{amount,part}",
+      "application_security_amount_rub": "16000.00",
+      "application_security_part_percent": "1.00",
+      "source_reg_number": "0161600001326000063",
+      "source_kind": "ORIGINAL_EIS_GETDOCSIP_ARCHIVED_XML",
+      "source_archived_revision": 1,
+      "source_archive_sha256": "cb5ce3f2bd07bf4e6210e6d960c663730b8097dc40cf831af0ca77efd0452a2c",
+      "source_original_notice_sha256": "f40f20f3add1994e6d930b9b663f370d5af758ece680deadc4047810a8d1c87c",
+      "source_original_nmck_rub": "1600000.00",
+      "checked_at_utc": "2026-10-17T13:07:52.348097+00:00",
+      "current_legal_bidding_status_verified": false,
+      "eligible_to_bid": false,
+      "cash_security_is_not_economic_expense": true,
+      "guarantee_or_cash_method_is_owner_decision": true
+    },
+    {
+      "source_xml_exact_path": "export/epNotificationEOK2020/notificationInfo/customerRequirementsInfo/customerRequirementInfo/applicationGuarantee/{amount,part}",
+      "application_security_amount_rub": "45500.00",
+      "application_security_part_percent": "1.00",
+      "source_reg_number": "0816500000626015655",
+      "source_kind": "ORIGINAL_EIS_GETDOCSIP_ARCHIVED_XML",
+      "source_archived_revision": 1,
+      "source_archive_sha256": "1a9b334270ef80be0b2e7251aaa710c9aba40e82d0641ae134dc2059b85f1750",
+      "source_original_notice_sha256": "661abad2253c297b6a9055dbcb2d84402c23eb4e9c1c15c8dff2878d1654f6bb",
+      "source_original_nmck_rub": "4550000.00",
+      "checked_at_utc": "2026-10-17T13:07:53.321852+00:00",
+      "current_legal_bidding_status_verified": false,
+      "eligible_to_bid": false,
+      "cash_security_is_not_economic_expense": true,
+      "guarantee_or_cash_method_is_owner_decision": true
+    }
+  ],
+  "all_official_sources_historical_archive_only": true,
+  "no_etp_action_or_payment": true,
+  "company_bid_ready": false
+}
