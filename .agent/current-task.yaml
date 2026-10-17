@@ -600,3 +600,10 @@ active_child_2026_10_17:
   implementation_commit: 217c9d02c4732ede86c460dd76e23ce2954f09e5
   tests: 159_passed
   next_parent_action: Refresh live original stage, verify LLC eligibility and account access; obtain Owner decision before any external response.
+
+active_child_live_source_refresh_2026_10_17:
+  task_id: TA-B2B-LIVE-SOURCE-REFRESH-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-LIVE-SOURCE-REFRESH-20261017.yaml
+  status: in_progress
+  source_platform: workspace.ru
+  external_action: false

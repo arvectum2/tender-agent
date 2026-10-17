@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-LIVE-SOURCE-REFRESH-20261017
+status: in_progress
+goal: Recheck the five existing original corporate Workspace cards and publish source-hash-bound fresh status, mandatory requirements, and still-unproven Arvectum LLC response gates.
+definition_of_done:
+  - Verify exact original public URLs and saved source commitments without authenticated account actions.
+  - Extract source status, legal organizer type, published day-only cutoff and pinned requirement anchors, fail closed if ambiguous.
+  - Capture new original body SHA and observation times without claiming hash differences imply material changes.
+  - Keep evidence of company-specific legal eligibility, qualified portfolio, PRO/invitation and Owner GO explicitly UNKNOWN or false.
+  - Publish a dated machine record and human roadmap status; add offline regression tests and run tests/quality checks.
+  - Commit, push to reviewed branch and record actual CI/review state; do not merge without authority.
+completed:
+  - Parent main confirmed d2a927ec; prior child completed commit 25f93179, PR477 draft CI success.
+  - On 2026-10-17 21:56 MSK all five exact original public Workspace URLs gave HTTP 200 with unique source status "Идет прием заявок", legal entity organizer and unchanged printed deadline dates.
+current: Implement reusable fail-closed bounded original-source repeat check and snapshot.
+pending:
+  - Generate and test first-party source snapshot.
+  - Update master roadmap and canonical parent checkpoint.
+  - Commit, push, verify review gate.
+last_verified_commit: 25f931799239e1aa5650b8e10a99ba355bc11e15
+test_results: CI PR477 SUCCESS, live five source reads status 200; no new local tests yet.
+resume_instruction: Implement a distinct source-only refresh on existing PR477 branch, preserve first-batch checkpoint completed. Never submit or pay; PR is draft. Parent goal remains OPEN.
