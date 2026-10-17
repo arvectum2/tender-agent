@@ -121,6 +121,7 @@ def test_actual_browser_javascript_one_click_analysis_and_missing_doc_fails_clos
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "UNIFIED_UI_E2E_SIMULATION_PASS" in result.stdout
+    assert "HISTORICAL_SAVED_RUN_UI_NO_REANALYSIS_ARCHIVED_EXPORT_GATE_PASS" in result.stdout
 
 
 def test_legacy_eis_parser_only_accepts_unique_registry_identity():

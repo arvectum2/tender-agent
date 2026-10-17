@@ -33,7 +33,7 @@ class Element {
   scrollIntoView() {}
 }
 
-async function scenario({withFiles, allowExports=false}) {
+async function scenario({withFiles, allowExports=false, viaHistory=false}) {
   let downloadClicks = 0;
   const ids = new Map();
   const get = id => {
@@ -46,7 +46,7 @@ async function scenario({withFiles, allowExports=false}) {
     button.setAttribute = () => {};
     return button;
   });
-  let analyzed = false;
+  let analyzed = viaHistory && withFiles;
   const calls = [];
   const file = {
     file_id:'FILE-01', original_name:'real.docx', display_name:'real.docx',
@@ -75,6 +75,8 @@ async function scenario({withFiles, allowExports=false}) {
       assert.deepEqual(JSON.parse(opts.body),{reference:'0372200172326000015'});
       value={run_id:'run-1',status:withFiles?'ready_to_analyze':'docs_required'};
     }
+    else if(route.endsWith('/runs')&&method==='GET') value={runs:[run()]};
+    else if(route.includes('/tender-research/analyze/history?limit=30')) value={items:[]};
     else if(route.endsWith('/runs/run-1/analyze')&&method==='POST'){
       analyzed=true;value={status:'completed_with_warnings'};
     }
@@ -129,14 +131,26 @@ async function scenario({withFiles, allowExports=false}) {
     FormData,console
   };
   vm.runInNewContext(source,ctx,{filename:'operator_workspace.js'});
-  get('search-query').value='сайт';
-  get('search-law').value='44fz';
-  await get('eis-search-form').events.submit({preventDefault() {}});
-  assert.equal(get('search-results').children.length,1,'Expected one grounded search card');
-  const card=get('search-results').children[0];
-  const submitButton=card.children[1];
-  assert.equal(submitButton.disabled,false);
-  submitButton.events.click();
+  if (viaHistory) {
+    // Reopen the already archived real-source run. No import/re-analysis should occur.
+    // This simulated browser test does NOT attest any private EIS originals.
+    buttons[1].events.click();
+    for (let i=0;i<60 && !get('operator-history').children.some(c=>c.className==='history-item');i++) {
+      await new Promise(resolve=>setTimeout(resolve,5));
+    }
+    const historyCard=get('operator-history').children.find(c=>c.className==='history-item');
+    assert(historyCard, 'Existing history must be shown in the ONE operator UI');
+    await historyCard.children[1].events.click();
+  } else {
+    get('search-query').value='сайт';
+    get('search-law').value='44fz';
+    await get('eis-search-form').events.submit({preventDefault() {}});
+    assert.equal(get('search-results').children.length,1,'Expected one grounded search card');
+    const card=get('search-results').children[0];
+    const submitButton=card.children[1];
+    assert.equal(submitButton.disabled,false);
+    submitButton.events.click();
+  }
   for(let i=0;i<70;i++){
     if(calls.includes('GET /api/demo/tender-agent/runs/run-1/report') || (!withFiles && calls.includes('GET /api/demo/tender-agent/runs/run-1/events'))){
       await new Promise(resolve=>setTimeout(resolve,6));
@@ -144,12 +158,21 @@ async function scenario({withFiles, allowExports=false}) {
     }
     await new Promise(resolve=>setTimeout(resolve,6));
   }
-  assert(calls.some(c=>c.startsWith('POST /api/demo/tender-agent/procurement/public-44fz-search?')));
-  assert(calls.includes('POST /api/demo/tender-agent/workspace/import'));
+  if (viaHistory) {
+    assert(calls.includes('GET /api/demo/tender-agent/runs'));
+    assert(!calls.some(c=>c.startsWith('POST ')), 'History reopen must not repeat source import or analysis');
+  } else {
+    assert(calls.some(c=>c.startsWith('POST /api/demo/tender-agent/procurement/public-44fz-search?')));
+    assert(calls.includes('POST /api/demo/tender-agent/workspace/import'));
+  }
   assert.equal(get('run-empty').hidden,true);
   assert.equal(get('run-section').hidden,false);
   if(withFiles){
-    assert(calls.includes('POST /api/demo/tender-agent/runs/run-1/analyze'),'One-click flow MUST analyze real files');
+    if (viaHistory) {
+      assert(!calls.some(c=>c.startsWith('POST ') && c.includes('/analyze')), 'Saved source evidence must load without re-running analysis');
+    } else {
+      assert(calls.includes('POST /api/demo/tender-agent/runs/run-1/analyze'),'One-click flow MUST analyze real files');
+    }
     assert(calls.includes('GET /api/demo/tender-agent/runs/run-1/report'));
     assert.equal(get('report-panel').hidden,false);
     assert(get('report-analysis-mode').textContent.includes('без LLM'), 'Degraded model mode must be visible');
@@ -200,5 +223,7 @@ async function scenario({withFiles, allowExports=false}) {
   const complete = await scenario({withFiles:true});
   const validExport = await scenario({withFiles:true,allowExports:true});
   const missing = await scenario({withFiles:false});
-  console.log('UNIFIED_UI_E2E_SIMULATION_PASS',complete,validExport,missing);
+  const historical = await scenario({withFiles:true,viaHistory:true});
+  console.log('UNIFIED_UI_E2E_SIMULATION_PASS',complete,validExport,missing,historical);
+  console.log('HISTORICAL_SAVED_RUN_UI_NO_REANALYSIS_ARCHIVED_EXPORT_GATE_PASS',historical);
 })().catch(error=>{console.error(error);process.exitCode=1;});
