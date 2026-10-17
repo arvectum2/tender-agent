@@ -234,14 +234,14 @@ active_product_roadmap_2026_10_08:
       done_gate: 'Owner signs in by browser, submits supported live procurement, observes progress, inspects evidence-bound requirements/risks/economics, source documents and report, finds saved procurement/history without terminal/Swagger; no arbitrary SQL, mock-only UI or external consequential actions.'
     - id: APR-04-CUSTOMER-ONBOARDING
       priority: P0
-      state: implementation_pr_open_not_merged
+      state: implementation_merged_owner_identity_development_e2e_accepted_business_document_gate_open
       legacy_mapping: [ARV-015, ARV-064]
       outcome: 'Single onboarding flow for company requisites, documents, licenses/SRO, regions, categories, NMCK, margin/risk constraints and reusable evidence.'
       why_now: 'Turns existing profile/document primitives into an operable customer setup instead of hidden backend capability.'
       done_gate: 'A new tenant can configure the minimum supplier/company profile and run its first personalized analysis without developer intervention.'
     - id: APR-05-PAID-PILOT-SAAS
       priority: P0
-      state: integration_review_in_progress
+      state: implementation_merged_private_owner_tenant_e2e_pass_paid_production_gate_open
       deployment: disabled_by_default
       external_payments: false
       real_ru_vps: deferred_pending_owner_decision

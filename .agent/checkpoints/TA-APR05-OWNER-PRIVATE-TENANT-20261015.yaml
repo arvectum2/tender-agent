@@ -1,0 +1,39 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR05-OWNER-PRIVATE-TENANT-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Verify that privately staged actual Arvectum identity can be tenant-bound without payment, owner legal consent, production
+  or public networking.
+definition_of_done:
+- Revalidate current-main tenant role, quota, isolation and migration behavior in the relevant tests.
+- Bootstrap existing private APR04 Arvectum test company as an internal tenant with one-time test invite and revocable token.
+- Prove real-company legal gate blocks protected actions until actual consent, without fabricating owner approval.
+- Verify no payment evidence/provider call, no prod/ETP external action, and record private evidence.
+- Update roadmap checkpoint, commit and push review-ready evidence or explain block.
+completed:
+- '2026-10-15 current main APR05 and migration tests: 21 passed, 0 failed; existing warnings only.'
+- 2026-10-15 copied APR04 private owner-company test SQLite to NEW isolated APR05 staging DB; verified original SHA unchanged
+  after all mutations; no production or external service.
+- 2026-10-15 actual saved corporate identity provisioned as test-only SaaS tenant HTTP201, anonymous operator401, duplicate409,
+  owner test-only invite redeem201/replay410, packages200 online_checkout=false/public_offer=false, legal docs read-only.
+- '2026-10-15 legally fail-closed: without explicit Owner terms acceptance profile GET428 and PUT428; synthetic token revoked
+  then401, zero persisted actual-company legal acceptances, zero payment evidence, no raw token; all invitations handled in
+  test process, no ETP/email/signatures.'
+- 2026-10-15 current-main APR05 tests 21 PASS, stacked APR04+APR05 31 focused PASS, targeted Ruff clean, recorded isolated
+  private HTTP/SQLite acceptance receipt; source prod and APR04 DB unchanged.
+current_stage: bounded_private_tenant_legal_hold_verified
+remaining:
+- real_owner_terms_privacy_acceptance_and_external_legal_review_separate
+- actual_payment_provider_billing_and_public_pricing_not_authorized
+- real_ru_vps_tls_production_iam_backup_and_external_SLA_deferred
+last_verified_commit: 7388a1fa87ee35eadd8f1e98e129753bd12586a7
+last_tests: Main APR05+alembic 21 PASS; stacked APR04+APR05 31 PASS/0 FAIL; Ruff PASS; staged internal SaaS tenant HTTP receipts
+  legal gate 428 twice and no payments/terms.
+resume_instruction: Bounded APR05 private company tenant staging accepted, do not redo. Next permitted engineering track APR06/07
+  source-bound development metrics/reproducible gated evaluations without requiring qualified legal human gold for the OWNER-DELEGATED
+  *development E2E* stage. Actual paid pilots, legal consent, owner live GO and production/ETP still require explicit decisions.
+  Parent current-task.yaml on main tracks a separate active R4 child; leave it unchanged.
+execution:
+  branch: feature/apr05-staged-isolation-e2e-20261015
+  manual_override: true

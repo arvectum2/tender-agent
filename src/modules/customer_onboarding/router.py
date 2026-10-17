@@ -320,6 +320,11 @@ def compare_profile_price(profile: OnboardingProfile, screening: dict) -> dict:
     if price is None:
         return {"status": "UNKNOWN", "reason": "Tender price cannot be parsed", "citations": []}
     low, high = profile.criteria.price_min, profile.criteria.price_max
+    if low is None and high is None:
+        return {
+            "status": "UNKNOWN", "reason": "NMCK limits have not been configured by the operator",
+            "citations": price_fact["citations"],
+        }
     within = (low is None or price >= Decimal(str(low))) and (high is None or price <= Decimal(str(high)))
     return {"status": "WITHIN_BOUNDS" if within else "OUTSIDE_BOUNDS",
             "price_rub": str(price), "citations": price_fact["citations"],
