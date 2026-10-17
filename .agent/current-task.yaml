@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 corrected APR03B local source gate: direct existing Mac mini 18082 container verified saved Museum Bread original files 6/6 size + full SHA256 identical to authenticated HTTP downloads, report/evidence 200, three XML facts title/deadline/NMCK independently parsed, archived PDF+DOCX 409 and actual Chrome Headless history/report/two errors 0 JS exceptions. Earlier blocked-access report was invocation-only and corrected. Official signed ZIP/latest EIS source not pinned in saved run; human legal/economic GO pending. No new UI or stand."
   - "2026-10-17 TA-ONE-OPERATOR-UI COMPLETED PR461 66f7521f6ea572f634954be350cbd6c11c540f9b: existing 18082 single Operator Workspace, original 5 mounts, database106->107 after SHA-verified backup, 1162 code source parity, Chrome no JS errors, preview18083 stopped; main CI and local 4936 PASS/285 SKIP. No new stand. Owner real EIS browser/legal acceptance OPEN."
   - '2026-10-17 Owner instructed ONE existing Tender Agent operator UI. Audit: 18082 runs old pilot wizard, 18083 runs separate operator workspace. Preserve current Compose DB/volumes/auth, upgrade 18082 to existing workspace, then retire duplicate 18083.'
   - "2026-10-17 PR460 APR03B safe DB-unavailable fix merged to main b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d; 4937 tests pass, 285 skip, source parity 1163, 18/18 HTTP, Chrome UI DOM 0 JS exceptions. Existing preview 18083 remains stale and unmodified; owner real EIS/readonly canonical DB/legal acceptance still open."
@@ -226,7 +227,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 APR03B existing Operator Workspace on 18082: PR462 tests and source-limits docs merged 5cd3b95d8b8748efa67905543d81404d209be971, Mac mini 4936 tests PASS/285 SKIP with matching PG16, Node history/reopen mocked archived export 409 PASS, GitHub CI green. Existing 12 saved runs incl Museum Bread 6 archival descriptors deterministic fallback, 223-FZ 2 NEEDS_REVIEW; canonical procurement registry 0. Full original SHA/current EIS revision/browser live report and PDF/DOCX unverified because access blocked; child task BLOCKED; never bypass or claim owner/legal GO. No new UI/stand. Continue independently with APR06/07 original-source/human review and current B2B research while owner authorized real-source inspection waits. Do not deploy, bid, sign, pay or train Procurement LLM; manual_override true."
+resume_instruction: "2026-10-17 direct existing Mac mini 18082 ONE Operator Workspace read-only QA DONE: Museum Bread preserved originals 6/6 exact full SHA256 vs authenticated downloads; report/evidence200, independent local XML literal title/endDT/maxPrice 3/3, archival pdf/docx actual HTTP409; real Chrome History 12, Museum 6 documents, report fallback and both download denials shown, 0 JS errors. Prior tool access blocked only an earlier invocation, not files; corrected APR03B checkpoint and docs. Remaining independent official getDocsIP ZIP/latest revision attestation cannot be claimed (no archive_stored_name/official_eis_procedure/current_live_eis_verified in saved run), owner legal/economic 5 manual-check review pending. No new UI/stand; only 18082. Parallel APR06/07, B2B safe research; no ETP/sign/production/payment/model training; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -342,8 +343,14 @@ real_eis_review_2026_10_17:
   saved_runs: 12
   canonical_registry_rows: 0
   archived_museum_file_descriptors: 6
-  source_binary_integrity_today: blocked_unverified
+  source_binary_integrity_today: verified_6_of_6_local_vs_private_http_full_sha256
   test_pr_merged: 462
   test_merge_commit: 5cd3b95d8b8748efa67905543d81404d209be971
   owner_acceptance: pending
+  live_real_chrome_history_report_pdf_docx_denials: pass
+  saved_xml_literal_title_deadline_nmck: pass_3_of_3
+  official_original_zip_reverified: false
+  official_latest_eis_revision: unknown
+  original_snapshot_report_http: 200
+  archived_binary_exports_http: 409
   no_new_interface_or_stand: true

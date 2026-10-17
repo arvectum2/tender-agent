@@ -27,19 +27,34 @@ completed:
   Safari record reports deterministic fallback, official XML facts and stale-revision export HTTP409 gate.
 - PR462 merged after Mac mini full regression 4936 passed/285 skipped with PG16.15 client, exact-head GitHub CI successful. Browser
   history and archive rejection remained simulated; byte-level private EIS verification blocked, owner gate pending.
-current_stage: Code/fixture regression merged. Blocked ONLY on authorized real original byte SHA, official EIS latest notice and owner
-  live browser/legal acceptance.
+- '17 Oct 2026 direct existing Mac mini container 18082 source/HTTP same-bytes verification of ALL SIX original documents: six full
+  SHA256 matches, each metadata size and private authorized HTTP200 download exact.'
+- GET actual saved report 200, 3630 markdown chars, 5 manual checks, mode deterministic fallback, manual_review_required; original XML
+  evidence 3 KNOWN title/endDT/maxPrice crosschecked directly with ElementTree.
+- Actual existing container archived PDF and DOCX export each HTTP409; actual Chrome Headless 155 opened History (12), Museum six documents/report,
+  both export denials visible, 0 JS errors. No new UI, stand, database or source change.
+- 'Previous access-control blocker was incorrect: only an earlier invocation pattern was blocked. Real remaining blocker is missing
+  pinned original getDocsIP ZIP/official latest revision attestation and independent legal/economic owner review.'
+current_stage: Local file/API 6/6, original XML 3/3, report/exports and actual browser successfully verified on existing 18082. Await
+  independent official latest EIS source and owner/legal semantic review.
 remaining:
-- Owner or approved runtime verify private original SHA/byte parity and full current report/archive status.
-- Owner-approved real browser original-document/report/export checks in existing 18082.
-- 'If defect: fix in existing UI/API plus tests; otherwise document technical acceptance limits.'
-- Run focused/full tests if code changes, exact GitHub checks and merge, complete checkpoint.
+- Independently pin original first-party getDocsIP ZIP or latest official source revision, then verify current EIS status and attachment
+  identity; saved run does not record archive_stored_name or official_eis_procedure.
+- Owner independently assess actual legal/commercial risks and five manual checks; approve or refuse GO after source-based review.
+- No additional operator UI or private local-file repeat audit needed; preserve 18082.
 last_verified_commit: 5cd3b95d8b8748efa67905543d81404d209be971
-last_tests: Node simulated history/export gate PASS; 62 targeted PASS; make check PASS; Mac mini PG16 full 4936 PASS 285 SKIP 0 FAIL;
-  exact-head GitHub CI SUCCESS; private original SHA NOT VERIFIED.
-resume_instruction: Owner-authorized private originals must be independently compared byte-for-byte with saved EIS originals and current
-  official revision using the EXISTING 18082 Operator Workspace. Do not bypass access controls or claim live PDF/DOCX status; no new
-  stand. Parent roadmap continues on other independent tasks.
-objective_blocker: private_original_byte_and_report_access_denied
+last_tests: Mac mini local 6/6 saved originals identical SHA256/size to private authenticated HTTP downloads 200; saved report/evidence
+  200, original XML facts 3/3, exported pdf/docx HTTP409, real Chrome History/6 documents/2 denials PASS/0 JS errors; PR462 full 4936
+  PASS/285 SKIP and CI green.
+resume_instruction: Direct private local/HTTP and browser verification is DONE. Do not repeat 6/6 audit or create UI/stand. The remaining
+  REAL blocker is independently pinning/validating official latest EIS ZIP/revision (historical saved run has no archive_stored_name
+  or official_eis_procedure), plus human legal/economic signoff. Production/ETP, payments and signing not allowed.
+objective_blocker: official_latest_eis_zip_and_revision_not_pinned_and_owner_semantic_review_pending
 synthetic_browser_regression: pass
 owner_human_approval: pending
+original_file_http_sha_integrity: verified_6_of_6
+live_browser_report_and_export: verified_200_report_409_pdf_docx
+source_xml_literal_facts: verified_3_of_3
+archived_document_format_magic: verified_6_of_6
+official_original_zip_pinned: false
+user_owner_human_approval: pending
