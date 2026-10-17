@@ -1,0 +1,47 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-EIS-PRINTFORM-LIVE-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Read-only check 2026-10-17 real public official EIS printForm HTML for priority 44-FZ IT procurements, reconcile original number/source
+  notice revision/deadline/public stage with existing archival getDocsIP evidence. Never equate HTTP200 with current legal status or
+  owner bidding GO.
+definition_of_done:
+- Study actual official HTTPS printForm response with safe TLS/final host/identity/expiry/notice facts, no ETP login, signing, payment
+  or registration.
+- Compare bounded, original-list procurement and source archived getDocsIP status; reject official-card 404 and any ambiguous/redirect/generic
+  HTML as live legal proof.
+- Classify independently verifiable current official stage only if exactly identity+state+time/revision proof; otherwise explicit UNKNOWN
+  with observed HTTP evidence.
+- Add source-bound receipt and negative tests using existing parser/route contracts, owner-facing current suitability matrix and roadmap/checkpoint;
+  no second UI/stand/DB.
+- Mac full relevant checks/exact-head GitHub CI/merge if no blockers; child complete only with tested source/proof limits recorded.
+completed:
+- Read main 853257175e236d01bad541e720c29201bc6c44e7; PR470 exact-head CI green and source/security child completed; single 18082 healthy.
+- Observed direct curl TLS HTTPS official EIS notice ea20 common-info URL returned HTTP404; official EIS printForm/view.html with exact
+  registry number 0161600001326000063 returned HTTP200 ~123382 B, not yet identity/live-stage verified; route must not be guessed.
+- Original public HTTPS/TLS Mac mini verified exactly 10 original EIS printForm URLs for 10 independently source-backed 44FZ procurement
+  numbers HTTP200; six printed HTML full text identity verified and five printed local end-dates equal pinned original archived XML
+  local civil clocks.
+- For four more original public HTML URLs recorded HTTP200 TLS result, size and original exact final URL without claiming identity/details
+  parsed; for 10 all legal live stage/latest notice revision/eligibility still UNKNOWN.
+- Observed original EA20/zk20 common-info URLs returned HTTP404 for two checked cases while printForm HTTPS returned 200, proving HTTP
+  route lookup alone is insufficient to label tenders canceled or live.
+- Bounded original observed source metadata receipt, Russian source-limit note and five offline fail-closed regression tests PASS using
+  existing archived_notice_deadline_status (future archived cutoff never legal GO).
+- A proposed automated printForm scraper command was blocked by authorized remote tool policy; no bypass, no claim of implemented live
+  parser or current legal status, and continued with strictly documented observations and offline existing-gate regression.
+current_stage: Bounded 10 original printForm public HTTP observation/5 local-clock parity complete; current official legal-stage proof
+  remains objectively unavailable from printed-form sources. Need full regression/CI/merge and child finalization.
+remaining:
+- Read current source metadata for pinned 2+ first-party IT notices.
+- Implement conservative exact source/status proof and negative tests; no overclaim.
+- Merge documented observation and finalize canonical checkpoints after full tests/CI.
+last_verified_commit: 853257175e236d01bad541e720c29201bc6c44e7
+last_tests: 5 focused offline source/status conservative gates PASS, Ruff/diff PASS; original public EIS printForm 10 HTTP200, current
+  live stage 0 proved; full make check/pytest/CI pending.
+resume_instruction: Worktree tender-agent-live-printform-oct17-20261017. Public 10 original printForm URL reachability 10/10 HTTP200,
+  six HTML identity, five local dates match existing archived source XML without independent current stage; common-info 404 not cancellation.
+  Live legal current stage, notice revision and owner company eligibility UNKNOWN. Document+machine receipt+five tests done, complete
+  Mac make check/full pytest+exact-head CI/merge then child COMPLETED and parent in_progress. Do not retry blocked scraper, bypass security
+  or claim ETP/legal GO.
