@@ -41,20 +41,22 @@ completed:
 - Successor original EIS first-party v1 source proof TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017 completed (fresh Oct17 5/5 official binary
   GET SHA matches plus getDocsIP ZIP). Its source completeness blocker is now RESOLVED; current public registry legal status and owner
   acceptance still blocked.
+- 2026-10-17 successor archived EIS pinned deadline clock (PR465) safely confirms archive v1 endDT October16 10:00 MSK elapsed as of
+  October17; current public procurement status/award/cancellation/protocol still not independently attested, no owner GO.
 current_stage: Local file/API 6/6, original XML 3/3, report/exports and actual browser successfully verified on existing 18082. Await
   independent official latest EIS source and owner/legal semantic review.
 remaining:
-- Independently verify current legal/public EIS status including amendments/cancellation/award protocols and whether bidding is still
-  permitted; getDocsIP archived v1 does not attest these.
-- Owner independently assess legal/economic terms and manual checks; issue human acceptance or refusal. Never use archived deterministic
-  report as GO.
+- Confirm actual public official EIS legal current status/amendments/cancel and final result protocols after official publication; Oct20
+  planned outcomes date is secondary only.
+- Perform independent human owner legal and economic assessment of saved Museum Bread case / document obligations and procurement decision;
+  no automatic GO.
 last_verified_commit: 5cd3b95d8b8748efa67905543d81404d209be971
 last_tests: Mac mini local 6/6 saved originals identical SHA256/size to private authenticated HTTP downloads 200; saved report/evidence
   200, original XML facts 3/3, exported pdf/docx HTTP409, real Chrome History/6 documents/2 denials PASS/0 JS errors; PR462 full 4936
   PASS/285 SKIP and CI green.
-resume_instruction: Archived original ZIP v1 and five separate official XML-linked binaries now conclusively re-fetched and verified
-  as snapshot (PR464). No further local document source work needed. Check external actual public procurement legal status separately
-  and obtain owner substantive acceptance; existing 18082 only.
+resume_instruction: Archived original ZIP, 5 official filestore originals (5/5), and archived EIS deadline clock Oct16 10 MSK are now
+  verified/displayed in same 18082. Do not repeat original downloads or add a stand. Remaining blocker public legal current status and
+  owner/legal approval.
 objective_blocker: current_public_eis_procedure_status_and_owner_legal_commercial_review_pending
 synthetic_browser_regression: pass
 owner_human_approval: pending
@@ -68,3 +70,5 @@ archived_original_zip_retrospective_pin: completed_successor_TA-APR03B-EIS-ORIGI
 latest_official_live_notice_verified: false
 five_external_original_binary_source_integrity: verified_5_of_5_oct17_official_fresh
 public_live_eis_procedure_status_verified: false
+archive_deadline_elapsed_verified_oct17: true
+public_legal_status_verified: false

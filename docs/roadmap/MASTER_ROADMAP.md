@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**APR03B archived submission cutoff in original Operator Workspace — COMPLETED (PR465 code 89d4bb433e285af165f58596a89dfe0cdcb8d01a):** real pinned original XML endDT 16.10 10:00 Moscow is dynamically marked elapsed for archived v1 on Oct17. Legal live status UNKNOWN; no award/cancel GO. Original Mac mini 18082 verified, real Chrome, no new UI/stand, source 5/5 unchanged, historical PDF/DOCX409. [Acceptance](../acceptance/APR03B_ARCHIVED_DEADLINE_VS_LIVE_LEGAL_STATUS_2026-10-17.md).
+
+
+
 **APR03B 17.10 archival cutoff vs LIVE EIS:** official original archived notice v1 XML endDT 16.10 10:00 Moscow has elapsed. Live public legal status/award/cancellation UNVERIFIED (legacy read-only details failed, public 404 not cancellation); secondary planned result Oct20. Existing Operator Workspace saved evidence dynamically displays archival cutoff and warnings, no new interface/stand. [Proof](../acceptance/APR03B_ARCHIVED_DEADLINE_VS_LIVE_LEGAL_STATUS_2026-10-17.md).
 
 

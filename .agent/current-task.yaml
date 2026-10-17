@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 APR03B original archived source deadline v1 expired Oct16 10 MSK safely shown in single Operator Workspace history (PR465 merge 89d4bb433e285af165f58596a89dfe0cdcb8d01a). Only pinned source v1 exact XML:endDT evidence, no current legal EIS/award/cancel status or GO. User's six original source 5/5 official recheck receipt unchanged; real Chrome and archived 409 PASS. Next independent source status on/after planned Oct20 and owner APR06/07 gold/legal."
   - "2026-10-17 APR03B source-only archive cutoff: official original pinned v1 endDT 16.10.2026 10:00 Moscow expired on Oct17; current public EIS status and protocols UNKNOWN (read-only legacy details RuntimeError, public EIS common-info HTTP404, not evidence of cancellation). Add dynamic source-backed archival deadline notice to existing 18082; child TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017 in progress; no new stand/ETP."
   - "2026-10-17 APR03B first-party six originals source v1 verified (PR464 d8d8ff0b63e2568aff91eec862566637340a92af): today same getDocsIP 17041B XML ZIP SHA35978ce4, five official filestore bytes SHA 5/5 exact. Existing 18082 now shows safe timestamped receipt, archives v1, current legal notice status UNKNOWN, human GO false. 4961 local PASS/285 SKIP, GitHub CI all green, no new stand."
   - "2026-10-17 APR03B fresh official getDocsIP read-only Oct17 returned source ZIP exactly same SHA35978ce4 as old Oct12 archived notice v1; all five original URLs in source XML crossmatch saved files and 5 live filestore GET byte-for-byte full SHA match. Current public live notice/owner GO remains UNVERIFIED. Existing one Operator Workspace evidence receipt code pending full regression/CI and safe in-place update, no new UI/stand."
@@ -232,7 +233,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 current child TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017 worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-eis-public-status-20261017. Official archived EIS v1 XML endDT Oct16 10:00 MSK expired as of Oct17. Current live/public EIS legal status and cancellation/award UNKNOWN. Official legacy read-only details unavailable; public card HTTP404 not proof of cancellation. Source evidence/UI archived cutoff code + 49 tests and Node UI passing; finish full tests/CI then merge and update single existing Mac mini 18082. Do not claim results scheduled Oct20 as published now; no ETP/signature/payment/public deployment; manual_override true."
+resume_instruction: "2026-10-17 APR03B pinned archived EIS cutoff dynamic warning task completed, PR465 89d4bb433e285af165f58596a89dfe0cdcb8d01a. Existing Mac mini one Operator Workspace on 18082 upgraded in place, shows archived v1 endDT 16.10.2026 10:00 MSK elapsed and NO current public EIS legal status attestation, still 5/5 official archived original files SHA and report/409. Official current award/cancellation/amendments unknown: separate read-only legacy details returned RuntimeError; public URL 404 not proof of cancellation. Expected result Oct20 based secondary sources ONLY; check official protocols later without inventing winner. Parent goal independent APR06/07 owner gold and commercial review, B2B current 15-20 opportunities; no production, ETP sign, payments or new UI; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -398,4 +399,5 @@ eis_archived_deadline_observation_2026_10_17:
   live_legal_status_readonly_probe: unavailable
   award_or_cancellation_verified: false
   single_operator_ui_only: true
-  cutoff_status_ui_delivery: pending_ci
+  cutoff_status_ui_delivery: completed_original_18082
+  merge_commit: 89d4bb433e285af165f58596a89dfe0cdcb8d01a
