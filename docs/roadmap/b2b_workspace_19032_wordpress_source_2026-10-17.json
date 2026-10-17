@@ -1,0 +1,81 @@
+{
+  "schema_version": "ta-b2b-wordpress-original-19032-v1",
+  "procurement_card_id": "19032",
+  "source_url": "https://workspace.ru/tenders/teh-obsluzhivanie-i-dorabotka-korporativnogo-sayta-19032/",
+  "source_observed_at_utc": "2026-10-17T19:13:43.688758+00:00",
+  "original_http_status": 200,
+  "original_html_sha256": "3d7f4bb8cd448bb0dcb969d8d61a085ae93735a8b1238675c86fbda0fed97728",
+  "original_html_size": 61353,
+  "original_public_status": "Идет прием заявок",
+  "original_organizer_type": "Юридическое лицо",
+  "source_deadline_date": "2026-10-21",
+  "source_deadline_time": "UNKNOWN",
+  "source_budget_rub_low": 100000,
+  "source_budget_rub_high": 400000,
+  "budget_is_monthly_recurring_fee": "UNKNOWN",
+  "source_buyer_business_area": "контейнерные перевозки",
+  "source_cms": "WordPress",
+  "source_scope_anchor_counts": {
+    "recurring_maintenance": 10,
+    "separately_ordered_changes": 6,
+    "requested_quote_fields": 6,
+    "additional_questions": 1
+  },
+  "source_scope_anchors": {
+    "recurring_maintenance": [
+      "контроль технического состояния сайта: доступность, скорость, ошибки",
+      "обновление WordPress, плагинов и темы",
+      "проверка совместимости после обновлений",
+      "мониторинг на вредоносный код, подозрительные файлы, несанкционированные изменения",
+      "настройка и контроль резервного копирования",
+      "мониторинг доступности сайта, SSL, домена",
+      "формы, меню, ссылки, отправка писем с сайта",
+      "оперативное подключение при сбоях",
+      "краткий отчёт о состоянии сайта и выполненных работах раз в месяц",
+      "консультации по техническим вопросам"
+    ],
+    "separately_ordered_changes": [
+      "доработка архитектуры сайта",
+      "доработка отдельных страниц (формы, блоки, вёрстка)",
+      "скорость загрузки и оптимизация",
+      "интеграции (возможно)",
+      "доработки по SEO-части (возможно)",
+      "мелкие правки по мере необходимости"
+    ],
+    "requested_quote_fields": [
+      "краткое описание вашего опыта и примеры",
+      "за регулярное сопровождение (в месяц / в час)",
+      "за разовые доработки (в час / по задаче)",
+      "срок реакции на сбои",
+      "есть ли опыт с WordPress-сайтами корпоративного уровня",
+      "постановка задач, канал связи, отчётность"
+    ],
+    "additional_questions": [
+      "Какая у вас система оплаты и отчетность?"
+    ]
+  },
+  "public_page_requests_agency_or_specialist_login": true,
+  "current_company_account_registered_verified": false,
+  "current_company_reply_entitlement_verified": false,
+  "company_wordpress_commercial_references_verified": false,
+  "owner_sla_and_quote_approved": false,
+  "company_eligibility_state": "LLC_REVIEW_REQUIRED",
+  "unresolved_llc_gates": [
+    "company_legal_eligibility_unverified",
+    "mandatory_qualifications_unverified",
+    "company_reply_channel_unverified",
+    "commercial_terms_owner_review"
+  ],
+  "draft_quote_not_yet_authorized": {
+    "monthly_support_rub": null,
+    "support_hourly_rub": null,
+    "change_hourly_rub": null,
+    "change_fixed_per_task_rub": null,
+    "incident_response_time_hours": null,
+    "service_coverage_schedule": null
+  },
+  "owner_bid_go": false,
+  "external_messages_sent": 0,
+  "paid_actions": 0,
+  "signed_bids": 0
+}

@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-WORDPRESS-19032-20261017
+status: completed
+goal: Convert the exact first-party Workspace 19032 WordPress public SOW into a source-cited, reproducible qualification/response-readiness packet for Arvectum LLC, without submission, payment, or invented portfolio.
+definition_of_done:
+  - Read only exact public first-party URL and validate live source status, deadline and budget without inferring date clock or monthly billing from total budget.
+  - Capture source proof for recurring operations, optional change requests, pricing, incident response and proposed reporting structure.
+  - Preserve no claimed real WordPress portfolio or customer-approved SLA without documentary proof; list crisp remaining Owner questions.
+  - Persist current evidence SHA and structured source-level receipt, generate human report and update master roadmap.
+  - Add adversarial offline regression tests and relevant checks.
+  - Commit/push to isolated PR, record CI/PR review state and close this child while preserving parent in_progress.
+completed:
+  - Reconciled parent TA-ROADMAP-EXEC-20261012 and last child 2026-10-17 source refresh completed.
+  - PR477 latest head 06f901977bfffbde7c079fe1868d6cde86bfc4a6 CI SUCCESS, still DRAFT unmerged.
+  - Read original public 19032 HTML: WordPress monthly support, security, backups, incident response, optional development, quote split, public budget 100k-400k, calendar-only 21.10; login/registration shown, but LLC account entitlement unknown.
+current: Completed 23/23 original source anchors, scope/quote requirements, company bid gate and operator report.
+pending: []
+last_verified_commit: 0c003ba5ddfaea5404a04f9a5cca2b5b48de7065
+test_results:
+  - Original public exact Workspace 19032 HTTP 200, SHA 3d7f4bb8cd448bb0dcb969d8d61a085ae93735a8b1238675c86fbda0fed97728, observed 2026-10-17T19:13:43.688758+00:00.
+  - 23/23 requirement phrase anchors validated; 10 recurring, 6 optional changes, 6 response fields, 1 payment question.
+  - 181 B2B-focused pytest passed, 1 inherited warning; Ruff and staged git diff checks passed.
+  - Implementation commit 0c003ba5ddfaea5404a04f9a5cca2b5b48de7065; exact-head GitHub CI requires independent confirmation after push.
+  - No owner GO, subscription, response, signed bid or unsupported corporate WordPress references.
+resume_instruction: >-
+  TA-B2B-WORDPRESS-19032-20261017 is completed at implementation commit 0c003ba5.
+  Do not repeat source audit. Its LLC portfolio, authenticated account access and
+  commercial terms are still UNKNOWN and require actual proof and Owner decision.
+  Continue parent TA-ROADMAP-EXEC-20261012 via independent 19042/19043 genuine
+  mandatory qualification proof and/or 15-20 present distinct qualified B2B
+  opportunities. No auto-paid PRO, external contact or bids. PR477 remains
+  draft pending exact-head CI and current Company AM-4 review authority.

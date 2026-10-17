@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-CORPORATE-QUALIFICATION-19042-19043-20261017
+status: completed
+goal: Compare original mandatory qualifications and requested commercial proposal fields of Workspace 19042 and 19043 with verifiable company proof, without claiming acceptance or sending bids.
+definition_of_done:
+  - Verify exact original two public Workspace URLs HTTP/identity/status/deadline and full source-based mandatory vs optional text.
+  - Preserve explicit three-year experience and completed project gates for 19042 and mandatory relevant realized project gate for 19043; two variants optional when possible.
+  - Create reproducible source timestamp/hash and machine + readable qualification matrix, fail-closed on changes.
+  - Keep proof of Arvectum-specific eligibility and PRO account unknown; no invented accepted portfolio or contract/profits.
+  - Run adversarial tests and relevant regressions, record commits/CI, preserve Owner/human gates.
+  - Complete child checkpoint and update parent canonical roadmap without repeating prior completed tasks.
+completed:
+  - Parent TA-ROADMAP-EXEC-20261012 restored. WordPress 19032 original scope child completed SHA0c003ba5, CI pending at latest b3e767d6.
+  - Both exact 19042 and 19043 original public URLs returned HTTP200 and PUBLIC_CANDIDATE_ONLY with exact 31 October date-only; original detailed source text inspected, qualification requirements separated from preferences.
+current: Completed and independently retested two exact original qualifications, machine report, and roadmap status.
+pending: []
+last_verified_commit: c9621c1f7b887b22b93524a91eda8782dd1de250
+test_results:
+  - Exact 2/2 first-party Workspace 19042 and 19043 HTTP200, source SHA256, source quotations and literal public status captured around 2026-10-17T19:19:56Z.
+  - 19042 four mandatory qualifications include >=3y commercial experience and completed projects; desired ERP/CMMS separately.
+  - 19043 one explicit mandatory relevant realized portfolio clause; two option designs optional on if possible.
+  - 199 focused B2B + corporate lead regression tests PASS, 1 inherited warning; Ruff PASS; staged diff check PASS.
+  - Implementation code commit c9621c1f7b887b22b93524a91eda8782dd1de250, latest CI remains to verify after push.
+  - LLC company references/account/paid access GO 0/2 confirmed; 0 external actions.
+resume_instruction: >-
+  TA-B2B-CORPORATE-QUALIFICATION-19042-19043-20261017 is complete on code SHA c9621c1f.
+  Do not re-audit or imply portfolio accepted. Parent TA-ROADMAP-EXEC-20261012
+  remains in_progress. Next source-bound 19006 Schlam already prepared demo: do
+  only incremental company reply channel verification and scenario pricing/risk;
+  avoid duplicating existing original Schlam and PRO price evidence. Then 19030
+  hidden attachment access/limited MVP. B2B target 15-20 still unmet. No bid,
+  payment, outreach or commercial/owner GO without explicit authorization.
+  Do not merge draft PR477 without current owner/Company authority and CI.

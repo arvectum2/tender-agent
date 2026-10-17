@@ -128,3 +128,54 @@ def triage_corporate_card(
             return CorporateLeadDecision("REVIEW_REQUIRED", "same_day_cutoff_time_unknown")
 
     return CorporateLeadDecision("PUBLIC_CANDIDATE_ONLY", "requires_fresh_platform_and_eligibility_check")
+
+
+@dataclass(frozen=True)
+class CorporateLLCEligibilityDecision:
+    """Read-only screening: never permission to bid, message, pay or sign."""
+
+    state: str
+    blockers: tuple[str, ...]
+    response_authorized: bool = False
+
+
+def qualify_llc_response(
+    card: Mapping[str, object],
+    *,
+    checked_at: datetime,
+    source_sha256: str | None,
+    source_http_status: int | None,
+    company_legal_eligibility_verified: bool = False,
+    mandatory_qualification_verified: bool = False,
+    company_reply_channel_verified: bool = False,
+    commercial_terms_approved: bool = False,
+) -> CorporateLLCEligibilityDecision:
+    """Add legal/commercial gates *after* original-platform public triage.
+
+    Caller-supplied positive flags only indicate that independent human evidence
+    exists elsewhere. Even when all are true, final owner GO remains mandatory.
+    This function never authorizes an external action.
+    """
+    source = triage_corporate_card(card, checked_at=checked_at)
+    if source.state == "CLOSED":
+        return CorporateLLCEligibilityDecision("CLOSED", (source.reason,))
+    if source.state != "PUBLIC_CANDIDATE_ONLY":
+        return CorporateLLCEligibilityDecision("SOURCE_REVIEW_REQUIRED", (source.reason,))
+    blockers: list[str] = []
+    if (
+        source_http_status != 200
+        or not isinstance(source_sha256, str)
+        or re.fullmatch(r"[a-f0-9]{64}", source_sha256) is None
+    ):
+        blockers.append("original_source_integrity_unverified")
+    if company_legal_eligibility_verified is not True:
+        blockers.append("company_legal_eligibility_unverified")
+    if mandatory_qualification_verified is not True:
+        blockers.append("mandatory_qualifications_unverified")
+    if company_reply_channel_verified is not True:
+        blockers.append("company_reply_channel_unverified")
+    if commercial_terms_approved is not True:
+        blockers.append("commercial_terms_owner_review")
+    if blockers:
+        return CorporateLLCEligibilityDecision("LLC_REVIEW_REQUIRED", tuple(blockers))
+    return CorporateLLCEligibilityDecision("HUMAN_GO_REQUIRED", ("owner_response_go_required",))

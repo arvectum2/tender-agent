@@ -1,0 +1,30 @@
+{
+  "schema_version": "workspace-19030-first-party-attachment-gate-v1",
+  "source_url": "https://workspace.ru/tenders/vnedrenie-ii-sistemy-ucheta-syrya-sklada-i-proizvodstva-dlya-proizvoditelya-sellera-wb-i-ozon-19030/",
+  "original_source_http": 200,
+  "observed_at_utc": "2026-10-17T19:26:50.143559+00:00",
+  "source_html_sha256": "955719e90ba7a218da7d0101fe36fd77c9afd974d867d970d00119a8d984ca7b",
+  "source_html_bytes": 65245,
+  "public_status": "Идет прием заявок",
+  "public_organizer": "Юридическое лицо",
+  "printed_deadline_date": "2026-11-13",
+  "printed_deadline_clock": "UNKNOWN",
+  "original_attachment_listed_name": "TZ_.pdf",
+  "original_access_rule": "PRO_ACCOUNT_OR_CUSTOMER_INVITATION",
+  "public_unauthenticated_direct_attachment_href_in_panel": false,
+  "pdf_downloaded": false,
+  "pdf_bytes_verified": false,
+  "detailed_tz_text_read": false,
+  "company_workspace_pro_or_invitation_verified": false,
+  "company_bid_eligibility_state": "LLC_REVIEW_REQUIRED",
+  "llc_unresolved_gates": [
+    "company_legal_eligibility_unverified",
+    "mandatory_qualifications_unverified",
+    "company_reply_channel_unverified",
+    "commercial_terms_owner_review"
+  ],
+  "technical_scope_complete": false,
+  "pilot_quote_authorized": false,
+  "owner_bid_go": false,
+  "outbound_actions_or_payments": 0
+}
