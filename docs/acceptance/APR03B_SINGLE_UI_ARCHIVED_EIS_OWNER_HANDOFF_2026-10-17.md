@@ -1,5 +1,7 @@
 # APR-03B — единый Operator Workspace: сохранённые оригиналы ЕИС, история и экспорт
 
+**Дополнение 17.10.2026 (после PR #463):** прежнее замечание о незакреплённом ZIP УСТАРЕЛО. Найденный в том же запуске documentation-archive.zip (17041 B, SHA35978ce4) сверили с историческим getDocsIP download-event; original archived epNotificationEZK2020 v1 XML SHAed5c742b идентичен FILE-01. Source metadata и архивная v1 восстановлены в существующем 18082, Chrome и PDF/DOCX409 перепроверены. Последняя LIVE редакция ЕИС и официальное подтверждение пяти файлов вне ZIP по-прежнему UNKNOWN. Подробности — APR03B_LEGACY_GETDOCS_ORIGINAL_ZIP_RECONCILIATION_2026-10-17.md.
+
 Дата 17.10.2026. Канонический runtime: существующий Mac mini API на 127.0.0.1:18082, единственный Operator Workspace по /pilot/tender-agent/workspace; новых UI, БД, контейнеров или постоянных стендов не создавалось.
 
 ## Проверено напрямую только чтением

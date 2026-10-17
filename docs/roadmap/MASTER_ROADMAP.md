@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**APR-03B original ZIP metadata — COMPLETED, 17.10.2026:** PR #463 merged 7c192c38 after 4945 local tests PASS/285 SKIP and GitHub CI all green. Existing Mac mini 18082 upgraded in place, 1163 source files SHA match. Original archive in saved Museum Bread run linked retrospectively after two exact SHA checks with external ArvectumSSD backup; source-selection pinned archived v1, verified six local-vs-HTTP originals, real Chrome shows archived v1 and warns live source not verified; report200, PDF/DOCX409. Child task complete. Live ЕИС revision, five attachments outside ZIP and owner semantic GO still open. See acceptance APR03B_LEGACY_GETDOCS_ORIGINAL_ZIP_RECONCILIATION_2026-10-17.md.
+
+
+
 **APR-03B official archived ZIP found, 17.10.2026:** Museum Bread run has original 17041-byte ZIP SHA256 35978ce4, recorded EIS download event host and bytes match. Original archived epNotificationEZK2020 version1 XML SHA ed5c742b is byte-identical to FILE-01. The other 5 files are OUTSIDE this ZIP. Current live EIS revision not proven; implement safe fail-closed legacy metadata source binding in same Operator Workspace, without new UI, database, stand. See docs/acceptance/APR03B_LEGACY_GETDOCS_ORIGINAL_ZIP_RECONCILIATION_2026-10-17.md.
 
 

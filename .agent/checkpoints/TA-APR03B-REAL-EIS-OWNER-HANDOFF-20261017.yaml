@@ -35,21 +35,25 @@ completed:
   both export denials visible, 0 JS errors. No new UI, stand, database or source change.
 - 'Previous access-control blocker was incorrect: only an earlier invocation pattern was blocked. Real remaining blocker is missing
   pinned original getDocsIP ZIP/official latest revision attestation and independent legal/economic owner review.'
+- '2026-10-17 successor TA-APR03B-EIS-ORIGINAL-ZIP-20261017 COMPLETED: original 17041B getDocsIP ZIP was already saved, source receipt
+  matched and retrospective archive SHA/v1 source metadata safely pinned in existing 18082; no second stand, six originals unchanged,
+  export409 preserved.'
 current_stage: Local file/API 6/6, original XML 3/3, report/exports and actual browser successfully verified on existing 18082. Await
   independent official latest EIS source and owner/legal semantic review.
 remaining:
-- Independently pin original first-party getDocsIP ZIP or latest official source revision, then verify current EIS status and attachment
-  identity; saved run does not record archive_stored_name or official_eis_procedure.
-- Owner independently assess actual legal/commercial risks and five manual checks; approve or refuse GO after source-based review.
-- No additional operator UI or private local-file repeat audit needed; preserve 18082.
+- Independently verify latest official EIS published revision/status and authenticate official transport/archive historical provenance
+  beyond the retrospective saved receipt.
+- Independently check provenance/completeness of five attachments outside the single-XML original ZIP and obtain human legal/commercial
+  review of risks.
+- Owner confirms acceptance/denies GO; no other user interface or local archive file audit required.
 last_verified_commit: 5cd3b95d8b8748efa67905543d81404d209be971
 last_tests: Mac mini local 6/6 saved originals identical SHA256/size to private authenticated HTTP downloads 200; saved report/evidence
   200, original XML facts 3/3, exported pdf/docx HTTP409, real Chrome History/6 documents/2 denials PASS/0 JS errors; PR462 full 4936
   PASS/285 SKIP and CI green.
-resume_instruction: Direct private local/HTTP and browser verification is DONE. Do not repeat 6/6 audit or create UI/stand. The remaining
-  REAL blocker is independently pinning/validating official latest EIS ZIP/revision (historical saved run has no archive_stored_name
-  or official_eis_procedure), plus human legal/economic signoff. Production/ETP, payments and signing not allowed.
-objective_blocker: official_latest_eis_zip_and_revision_not_pinned_and_owner_semantic_review_pending
+resume_instruction: Original ZIP and archived version1 metadata pin ARE DONE through successor child TA-APR03B-EIS-ORIGINAL-ZIP-20261017.
+  Do not repeat source pin. Only live current official EIS revision, five external attachments source chain and owner legal/economic
+  signoff remain blocked; no additional UI/stand; ETP not authorized.
+objective_blocker: latest_live_eis_revision_unverified_and_owner_legal_commercial_review_pending
 synthetic_browser_regression: pass
 owner_human_approval: pending
 original_file_http_sha_integrity: verified_6_of_6
@@ -58,3 +62,5 @@ source_xml_literal_facts: verified_3_of_3
 archived_document_format_magic: verified_6_of_6
 official_original_zip_pinned: false
 user_owner_human_approval: pending
+archived_original_zip_retrospective_pin: completed_successor_TA-APR03B-EIS-ORIGINAL-ZIP-20261017
+latest_official_live_notice_verified: false
