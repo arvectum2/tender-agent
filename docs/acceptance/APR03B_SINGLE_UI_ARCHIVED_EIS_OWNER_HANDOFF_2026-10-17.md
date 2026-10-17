@@ -37,3 +37,7 @@
 - проверить в том же кабинете live 44-ФЗ/223-ФЗ поиск/импорт лишь после owner-approved source access.
 
 Owner/legal GO остаётся незакрытым; R4 external human gold 0/15 и R5 owner review 0/20. Никаких действий ЭТП, заявок, подписей, платежей, внешних писем, продакшен-деплоя или LLM training.
+
+## Завершение тестов и интеграция
+
+Профильные тесты: 62 PASS; existing Node fake-browser история/409 PASS. На Mac mini полный pytest: 4936 PASS / 285 SKIP / 0 FAIL при PostgreSQL client pg_restore 16.15; исходный запуск с Homebrew 18.6 дал посторонний R9 pg_restore failure, отдельный R9 и полный повтор с PG16 успешны. CI GitHub на exact-head PR #462 — SUCCESS, код включён в main commit 5cd3b95d8b8748efa67905543d81404d209be971. Источники ЕИС не были повторно прочитаны; source-level/human gate BLOCKED.

@@ -226,7 +226,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 ONE EXISTING Tender Agent Operator Workspace complete via PR461 66f7521f6ea572f634954be350cbd6c11c540f9b. Existing Mac mini 18082 /pilot/tender-agent/workspace canonical; /pilot/tender-agent identical, old demo wizard redirects 307; 18083 preview stopped, shared volumes retained, PostgreSQL migrated to107 after private backup; 4936 tests PASS/285 SKIP, CI success, real Chrome DOM success. NEVER create another pilot or workspace UI, a new stand, duplicate database. Next: Owner private browser acceptance of REAL EIS original documents, citations, report/export in existing 18082; APR06/07 original-source R4 15 external human gold reviews/R5 20 owner reviews and B2B 15-20 current qualified leads. Human/legal/production/ETP/payment/signature gates stay closed; manual_override true."
+resume_instruction: "2026-10-17 APR03B existing Operator Workspace on 18082: PR462 tests and source-limits docs merged 5cd3b95d8b8748efa67905543d81404d209be971, Mac mini 4936 tests PASS/285 SKIP with matching PG16, Node history/reopen mocked archived export 409 PASS, GitHub CI green. Existing 12 saved runs incl Museum Bread 6 archival descriptors deterministic fallback, 223-FZ 2 NEEDS_REVIEW; canonical procurement registry 0. Full original SHA/current EIS revision/browser live report and PDF/DOCX unverified because access blocked; child task BLOCKED; never bypass or claim owner/legal GO. No new UI/stand. Continue independently with APR06/07 original-source/human review and current B2B research while owner authorized real-source inspection waits. Do not deploy, bid, sign, pay or train Procurement LLM; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -343,5 +343,7 @@ real_eis_review_2026_10_17:
   canonical_registry_rows: 0
   archived_museum_file_descriptors: 6
   source_binary_integrity_today: blocked_unverified
+  test_pr_merged: 462
+  test_merge_commit: 5cd3b95d8b8748efa67905543d81404d209be971
   owner_acceptance: pending
   no_new_interface_or_stand: true
