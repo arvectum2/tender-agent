@@ -199,6 +199,29 @@ def test_readonly_registry_search_detail_and_scoped_download(fake_db, client, au
     assert client.get("/api/demo/tender-agent/workspace/registry?limit=999", headers=auth).status_code == 422
 
 
+
+def test_registry_missing_schema_is_unavailable_not_empty_or_500(client, auth, monkeypatch, tmp_path):
+    # Fresh isolated staging intentionally has no migrated canonical tables.
+    # Never turn a broken registry into zero search results or a raw SQL 500.
+    empty_db = tmp_path / "unmigrated.sqlite"
+    monkeypatch.setattr(
+        service, "get_settings",
+        lambda: Settings(database_url=f"sqlite:///{empty_db}"),
+    )
+    tender_id = "31d2bc23-a5ba-4c09-9c9e-f6ae1c6c5db5"
+    document_id = "57869227-eccc-4529-9a44-e68b0a65b37b"
+    for path in (
+        "/api/demo/tender-agent/workspace/registry",
+        f"/api/demo/tender-agent/workspace/registry/{tender_id}",
+        f"/api/demo/tender-agent/workspace/registry/{tender_id}/documents/{document_id}/download",
+    ):
+        assert client.get(path).status_code == 401
+        response = client.get(path, headers=auth)
+        assert response.status_code == 503
+        assert response.json() == {"detail": "База закупок временно недоступна"}
+        assert "sql" not in response.text.lower()
+
+
 def test_duplicate_sql_wildcards_are_treated_as_literal(fake_db):
     assert service.registry_records(query="%")["total"] == 0
     assert service.registry_records(query="_")["total"] == 0

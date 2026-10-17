@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - '2026-10-17 APR03B post-merge read-only private staging: old preview 18083 a9f3bce has source drift from main; isolated localhost 18087 fixed-build verifies 1163 SHA source files, 18 safe auth/HTTP checks; missing canonical DB 500 fixed to 503 for registry list/detail/download; no production data mounts or human/legal acceptance.'
   - '2026-10-17 PR459 consolidated all 60 former draft/open PR heads into main commit 259257126461dafee3438c3d3e074fa2a73e27fd; 4936 full tests passed/285 skipped, required CI green. No human gold, browser/commercial/production signoff. Next: APR03B/06/07, B2B and SaaS safe staging.'
   - "2026-10-17 PROC-LLM-DATA-09/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016 completed: PR458 EIS Aksay original ZIP/XML SHA audit and 9 targeted tests; Mac mini 4069 PASS/239 SKIP/1 unrelated R9 deselected. Exact code+checkpoint SHA261c4583 CI PR38922501705/push38922492055/mirror38922492028 all SUCCESS. Later epNoticeApplicationCancel targets OTHER app122034518, NOT Arvectum app122031738 nor proof of global cancel/revised rank. PG77 unreviewed preserved; nine ETP metadata events only private dry-run, apply blocked; Museum result due 20Oct. Draft PR unmerged."
   - "2026-10-16 corporate source ETP review (read only): operator notices explicitly identify ООО Арвектум as RTS bidder Museum Bread (12 &15 Oct), Roseltorg Aksioma submission app ordinal3630084, Sber-AST Kaluga app193 admitted and separate app206 processing/withdrawal without app number. Six candidate metadata events staged private/validated but apply blocked by tool; PostgreSQL remains77. Owner-source and legal gold not auto-promoted."
@@ -297,3 +298,14 @@ main_integration_result_2026_10_17:
   parent_status: in_progress
   official_human_gold: 0
   owner_commercial_production_gate: open
+
+apr03b_postmerge_readiness_2026_10_17:
+  child_checkpoint: .agent/checkpoints/TA-APR03B-POSTMERGE-PREVIEW-20261017.yaml
+  report: docs/acceptance/APR03B_POSTMERGE_PRIVATE_STAGING_2026-10-17.md
+  original_private_preview_image: a9f3bce914afc33347c9af0e6098849531011591
+  original_preview_main_parity: false
+  separate_isolated_staging_source_sha: 4699a93edc13997e1c4edb64d3882ef7bfb1c054
+  source_files_verified: 1163
+  qa_http_assertions: 18
+  owner_browser_acceptance: pending
+  production_runtime_changed: false
