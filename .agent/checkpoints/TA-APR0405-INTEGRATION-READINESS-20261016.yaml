@@ -1,0 +1,32 @@
+task_id: TA-APR0405-INTEGRATION-READINESS-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: Test and document isolated Git branch integration compatibility of already accepted APR03B, APR04, APR05 development PRs before any
+  owner-authorized main merge.
+definition_of_done:
+- Isolated branch from exact main SHA, no merge into main, private SaaS runtime, ETP, bids, signatures or payments.
+- Dry-integrate 433 then 434 then 435 and resolve conflicts only inside review branch; preserve original developer commits and source evidence.
+- Run targeted auth isolation/company profile/archived source tests, full local regression if feasible; check exact CI for review branch.
+- Record differences between DEV E2E vs production/legal/commercial owner gates and safe merge order as evidence.
+- Close child completed for integration readiness only; no production GO or owner consent inferred.
+completed:
+- 2026-10-16 GitHub PR433/434/435 each draft/open, PR checks 18/18 successful, no owner review approval; base main verified and review worktree
+  created.
+- 2026-10-16 local main-based dry integration of PR433 -> PR434 -> PR435 completed with ZERO merge conflicts; isolated HEAD04837411, main
+  origin/main bc98bd39 untouched; 63 focused combined APR03B/APR04/APR05/company tests PASS, Ruff PASS. Full merged-suite regression running
+  and exact review branch GitHub CI not yet created.
+- 2026-10-16 FULL dry merged code local pytest4033 PASS/238 skipped/0 fail,329 warnings,154.85s with all APR03B/04/05 changes coinstalled,
+  63 focused PASS/Ruff PASS. Integration PR450 Draft opened based on real main bc98, head5f283a71 GitHub checks in progress; no authority
+  to merge main.
+- 2026-10-16 PR450 integrated review code+docs head a88af427: GitHub exact pull-request CI run38864770614 SUCCESS 9/9, push CI run38864764384 SUCCESS and GitVerse mirror38864764390 SUCCESS. Prior local full4033 PASS/238 SKIP/0 FAIL and 63 focused PASS/Ruff; main untouched. Roadmap snapshot reconciled with separate PR449 20/20 developmental evidence. Readiness child completed without production, human-gold, ETP, legal, or approval effect.
+current_stage: completed_isolated_code_integration_only
+# 2026-10-16 roadmap status reconciled with PR449 and PR450 in the isolated review branch; final CI/owner gates still open.
+remaining: []
+external_gates_outside_child:
+- Human/Owner explicit review and merge permission for stacked drafts
+- Current EIS legal acceptance, company eligibility and financial limits
+- SaaS legal consent, Russian VPS/production and paid pilot authorization
+last_verified_commit: a88af4279e0e13c9a9dd2cf463219c9e9700c7dd
+last_tests: Combined source PR433/434/435 local merge without conflicts. Focused63 PASS+Ruff. Full4033 PASS/238 SKIP/0 fail,329 warnings154.85
+  sec. Source PRs individually18/18 checks green, PR450 exact-head CI ongoing.
+resume_instruction: 'This isolated APR03B/04/05 code-integration readiness child is completed against exact source head a88af427 (PR450 CI 9/9 PASS; push+mirror PASS; full local4033 PASS). Any later documentation-only completion commit receives independent exact-head CI. Parent TA-ROADMAP-EXEC-20261012 stays in_progress: choose next independent B2B source research or human-gated business/browser review; no merge into main, ETP, signing, production, billing or legal GO.'

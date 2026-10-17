@@ -774,6 +774,20 @@ def _persist_outputs(
         render_html=renderer,
         now_factory=_legacy._safe_datetime,
     )
+    if metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip":
+        from src.modules.tender_operator_agent_demo.operator_eis_report_citations import (
+            append_official_eis_citations,
+        )
+
+        try:
+            append_official_eis_citations(
+                report_path=_legacy._report_html_path(run_id),
+                run_id=run_id,
+                metadata=metadata,
+            )
+        except (OSError, ValueError):
+            # Never invent or surface a citation if an original cannot be read.
+            pass
 
 
 _legacy._render_customer_report_html = _render_customer_report_html

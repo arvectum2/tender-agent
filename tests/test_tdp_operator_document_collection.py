@@ -163,3 +163,34 @@ def test_legacy_role_and_sheet_facade_preserved():
     )
     assert legacy._collect_role_text([doc], "technical_spec") == "Данные"
     assert legacy._collect_spreadsheet_sources([doc]) == collect_operator_spreadsheet_sources([doc])
+
+
+def test_eis_nmck_estimate_spreadsheet_is_not_supplier_tkp():
+    from src.modules.procurement_analysis.frozen_types import AnalyzedDocument
+
+    nmck = AnalyzedDocument(
+        display_name="Приложение 2 Обоснование НМЦК.xls", extension=".xls",
+        role="supporting", text="НМЦК 1000000", extracted_text_available=True,
+        warnings=[], source="upload", file_id="FILE-02", raw_content=b"xls-original",
+    )
+    spec = AnalyzedDocument(
+        display_name="Спецификация.xlsx", extension=".xlsx", role="technical_spec",
+        text="Требования", extracted_text_available=True, warnings=[],
+        source="upload", file_id="FILE-03", raw_content=b"xlsx-original",
+    )
+    quote = AnalyzedDocument(
+        display_name="quote-supplier.xlsx", extension=".xlsx", role="tkp",
+        text="Коммерческое предложение", extracted_text_available=True,
+        warnings=[], source="upload", file_id="FILE-04", raw_content=b"real-offer",
+    )
+    sources = collect_operator_spreadsheet_sources([nmck, spec, quote])
+    assert [source.file_id for source in sources] == ["FILE-04"]
+    assert sources[0].raw_content == b"real-offer"
+
+
+def test_cyrillic_tkp_filename_is_classified_as_supplier_quote():
+    from src.modules.procurement_analysis.document_roles import detect_document_role
+
+    assert detect_document_role("ТКП_ПоставщикА.xlsx") == "tkp"
+    assert detect_document_role("quotes_bundle.zip :: ТКП_ПоставщикА.xlsx") == "tkp"
+    assert detect_document_role("Приложение_2_Расчет_и_обоснование_НМЦК_сайт.xls") != "tkp"
