@@ -15,11 +15,21 @@ def test_acceptance_console_page_200_and_russian(client):
         assert tab in text
 
 
-def test_acceptance_wizard_page_contains_demo_procurement_fallback(client):
-    page = client.get("/demo/tender-agent/wizard")
-    assert page.status_code == 200
-    text = page.text
-    assert "Открыть демо-закупку 0323100010326000013" in text
+def test_legacy_demo_wizard_uses_canonical_private_workspace(client, monkeypatch):
+    from src.modules.tender_operator_agent_demo import router
+    from src.shared.config.settings import Settings
+
+    monkeypatch.setattr(
+        router, "get_settings",
+        lambda: Settings(
+            pilot_auth_enabled=True,
+            pilot_auth_username="test-operator",
+            pilot_auth_password="private-test-password-2026",
+        ),
+    )
+    response = client.get("/demo/tender-agent/wizard", follow_redirects=False)
+    assert response.status_code == 307
+    assert response.headers["location"] == "/pilot/tender-agent/workspace"
 
 
 def test_acceptance_supplier_profile_endpoint(client):

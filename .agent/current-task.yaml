@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - '2026-10-17 Owner instructed ONE existing Tender Agent operator UI. Audit: 18082 runs old pilot wizard, 18083 runs separate operator workspace. Preserve current Compose DB/volumes/auth, upgrade 18082 to existing workspace, then retire duplicate 18083.'
   - "2026-10-17 PR460 APR03B safe DB-unavailable fix merged to main b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d; 4937 tests pass, 285 skip, source parity 1163, 18/18 HTTP, Chrome UI DOM 0 JS exceptions. Existing preview 18083 remains stale and unmodified; owner real EIS/readonly canonical DB/legal acceptance still open."
   - '2026-10-17 APR03B post-merge read-only private staging: old preview 18083 a9f3bce has source drift from main; isolated localhost 18087 fixed-build verifies 1163 SHA source files, 18 safe auth/HTTP checks; missing canonical DB 500 fixed to 503 for registry list/detail/download; no production data mounts or human/legal acceptance.'
   - '2026-10-17 PR459 consolidated all 60 former draft/open PR heads into main commit 259257126461dafee3438c3d3e074fa2a73e27fd; 4936 full tests passed/285 skipped, required CI green. No human gold, browser/commercial/production signoff. Next: APR03B/06/07, B2B and SaaS safe staging.'
@@ -314,3 +315,15 @@ apr03b_postmerge_readiness_2026_10_17:
   qa_browser_chrome_headless_pass: true
   qa_container_stopped_ephemeral_auth_deleted: true
   production_runtime_changed: false
+
+single_operator_ui_owner_directive_2026_10_17:
+  status: in_progress
+  canonical_ui: src/modules/tender_operator_agent_demo/assets/operator_workspace.html
+  canonical_url_path: /pilot/tender-agent/workspace
+  existing_local_compose_project: arvectum-local-e2e
+  existing_local_api_port: 18082
+  redundant_preview_port: 18083
+  preserve_shared_data_and_volumes: true
+  no_duplicate_frontends_or_new_stands: true
+  child_checkpoint: .agent/checkpoints/TA-ONE-OPERATOR-UI-20261017.yaml
+  owner_browser_acceptance: pending
