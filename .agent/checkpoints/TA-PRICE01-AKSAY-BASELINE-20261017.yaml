@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-AKSAY-BASELINE-20261017
+status: completed
+goal: Implement read-only source-validated Aksay 0158300034526000388 per-procedure admitted-bid price evidence and owner-supplied break-even scenario math without bids or arbitrary cost assumptions.
+definition_of_done:
+  - Reuse verified local existing Aksay official ZIP, JSON statistics and CSV rather than create parallel storage or copy private bidder data into Git.
+  - Validate precise original SHA/registry, 55 rows, distinct bidder IDs, admitted ranking, rejected causes and matching CSV/JSON fail closed.
+  - Produce aggregate admitted-only distribution, independent rejected-risk counts, our confirmed rank 38, winning price 28400 and 119000 own bid with original evidence refs.
+  - Expose pure owner-supplied cost inputs and explainable cash/full/commercial break-even thresholds, never auto-set costs/rates or issue a bid recommendation.
+  - Publish a reproducible source-hash-bound first baseline for one procurement with insufficient cross-procurement comparison state.
+  - Add adversarial unit tests, run Ruff and relevant suites, commit/push separate review PR and record CI status.
+completed:
+  - Existing ARV-057 historical NMCK normalization/analogue retrieval is already done in main; do not duplicate.
+  - Original official Aksay ZIP SHA d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8 verified on ArvectumSSD, CSV and JSON all 55 bid rows and fields matched; official original rank 38 and 28400 winner confirmed.
+current: Completed code, original-source 55-row verification, three explicit-cost break-even thresholds, tests, roadmap, report, awaiting PR CI/review.
+pending: []
+last_verified_commit: 94908b758885af18de4d6c6acdd1699328a20aec
+test_results:
+  - Existing original official EIS ZIP sha d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8 checked; original XML sha 2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5.
+  - All 55 JSON+CSV bids crosschecked individually against exact official EIS XML by ID, price, admission and rank; originally accepted 45 rejected 10, winner 28400, Arvectum 119000 position38.
+  - Local relevant 58 pytest passed with 6 warnings (historical tests included), Ruff clean and git diff checks pass.
+  - Cost scenarios require explicit inputs and returned null in original report; no financial effects, no ETP writes.
+  - Implementation code committed 94908b758885af18de4d6c6acdd1699328a20aec; exact-head GitHub CI pending after push.
+resume_instruction: >-
+  TA-PRICE01-AKSAY-BASELINE-20261017 completed on code SHA94908b75. Keep
+  separate draft PRICE-01 PR from B2B draft PR477. Parent TA-ROADMAP-EXEC-20261012
+  still in_progress. Next PRICE-01 phase: independent comparable completed
+  protocols and volume/equivalence normalization; attach read-only evidence
+  to existing ARV-057/Operator Workspace only after user-approved data scope.
+  Input real own labor, external costs, tax/ETP rates and targets before any
+  price scenario. Never guess buyer profit/acceptance or submit/offfer bids.
+  Monitor exact-head CI and Company review; do not auto-merge without current
+  authority. B2B 15-20 company-qualified goal still unfulfilled.

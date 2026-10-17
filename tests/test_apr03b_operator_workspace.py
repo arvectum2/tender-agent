@@ -236,3 +236,94 @@ def test_document_path_cannot_escape_data_root(tmp_path, monkeypatch):
     monkeypatch.setattr(service, "get_settings", lambda: Settings(arvectum_data_dir=str(root)))
     assert service._allowed_document_path(str(outside)) is None
     assert service._allowed_document_path(str(root / "shortcut.pdf")) is None
+
+
+def test_price01_private_readonly_archive_price_projection(client, auth):
+    url = "/api/demo/tender-agent/workspace/competitive-prices/0158300034526000388"
+    assert client.get(url).status_code == 401
+    result = client.get(url, headers=auth)
+    assert result.status_code == 200
+    assert "no-store" in result.headers.get("cache-control", "")
+    payload = result.json()
+    assert payload["state"] == "VERIFIED_ARCHIVED_SINGLE_PROCEDURE"
+    assert payload["admitted_count"] == 45
+    assert payload["rejected_count"] == 10
+    assert payload["winner_price_rub"] == "28400.0"
+    assert payload["company_price_rub"] == "119000.0"
+    assert payload["company_rank_admitted"] == 38
+    assert payload["admitted_only_prices_rub"]["median"] == "74000.0"
+    assert payload["evidence"]["bid_rows_crosschecked_with_original"] == 55
+    assert len(payload["evidence"]["eis_original_zip_sha256"]) == 64
+    assert payload["cross_procurement_comparison_state"] == "INSUFFICIENT_EVIDENCE"
+    assert payload["cost_scenarios"] is None
+    assert payload["company_go"] is False
+    assert payload["forecast_or_bid_recommendation"] is False
+    assert "bids" not in payload
+    assert "application_id" not in result.text
+    assert "rejection_reason_original" not in result.text
+
+
+@pytest.mark.parametrize("number", [
+    "0187200001726001304",  # another original procurement is NOT comparable automatically
+    "0372200172326000015",  # Museum Bread was not given source-verified final prices
+    "0000000000000000000",
+    "0158300034526000389",
+    "01",
+    "0158300034526000388%2Fother",
+])
+def test_price01_missing_priced_protocol_fails_closed_without_aksay_substitution(
+    client, auth, number,
+):
+    url = "/api/demo/tender-agent/workspace/competitive-prices/" + number
+    assert client.get(url).status_code == 401
+    result = client.get(url, headers=auth)
+    assert result.status_code in {404, 405}
+    assert "28400" not in result.text
+    assert "74000" not in result.text
+
+
+def test_price01_tampered_or_missing_aggregate_does_not_create_fake_pricing(
+    client, auth, tmp_path, monkeypatch,
+):
+    import json
+
+    from src.modules.tender_operator_agent_demo import (
+        operator_price_context as price_context,
+    )
+
+    url = "/api/demo/tender-agent/workspace/competitive-prices/0158300034526000388"
+    original = json.loads(price_context._AGGREGATE_PATH.read_text())
+    p = tmp_path / "price.json"
+    monkeypatch.setattr(price_context, "_AGGREGATE_PATH", p)
+
+    p.write_text("not json")
+    assert client.get(url, headers=auth).status_code == 503
+    p.write_text(json.dumps({**original, "original_eis_zip_sha256": "0" * 64}))
+    assert client.get(url, headers=auth).status_code == 503
+    p.write_text(json.dumps({**original, "winner": {**original["winner"], "price_rub": "1"}}))
+    assert client.get(url, headers=auth).status_code == 503
+    p.write_text(json.dumps(original))
+    response = client.get(url, headers=auth)
+    assert response.status_code == 200
+
+    p.unlink()
+    assert client.get(url, headers=auth).status_code == 503
+
+
+def test_price01_operator_tab_link_to_existing_arv057_without_auto_bid(client, auth):
+    res = client.get("/pilot/tender-agent/workspace", headers=auth)
+    assert res.status_code == 200
+    html = res.text
+    assert 'id="pane-prices"' in html
+    assert 'id="price-registry"' in html
+    assert 'id="price-historical-btn"' in html
+    assert 'data-tab="prices"' in html
+    assert "Конкурентная ставка не равна себестоимости" in html
+    js = client.get("/pilot/tender-agent/workspace/assets/workspace.js", headers=auth).text
+    assert "/workspace/competitive-prices/" in js
+    assert "/api/tender-research/historical-prices/" in js
+    assert "cross_procurement_comparison_state!=='INSUFFICIENT_EVIDENCE'" in js
+    assert "data.forecast_or_bid_recommendation!==false" in js
+    assert "data.company_go!==false" in js
+    assert "НМЦК не являются ценами победителей" in html
+    assert "fetch('/api/demo/tender-agent/workspace/bid" not in js
