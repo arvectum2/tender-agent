@@ -1,0 +1,46 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-SCHLAM-ORIGINAL-OFFER-QA-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Reuse already published Arvectum /schlam/ six-page proposal and verify read-only first-party Workspace 19006 demand, noindex,
+  internal resource health and commercial bounds, without creating duplicate website or sending unsolicited bids.
+definition_of_done:
+- Independently verify original 19006 public Workspace legal-entity status, budget 130-400k, printed deadline Nov1 and source contents/requirements;
+  point-in-time original SHA, no claim paid eligibility.
+- Audit existing published /schlam six URLs for HTTP200, noindex and bounded exact first-party internal links, no modification/redeploy
+  of site.
+- Confirm existing offer 89k RUB/4-6 weeks and its scope/disclaimers; source report must separate preexisting client-specific demo/market
+  hypotheses from confirmed facts and warn below stated budget floor.
+- Create machine source receipt, conservative owner handoff with remaining business/contract/legal gates and offline tests.
+- Run make check, Mac full relevant test suite and GitHub exact-head CI, merge, completed child checkpoint; keep parent 15–20 legally
+  qualified target open.
+completed:
+- Verified previous first-party source original 19006 legal-entity publicly accepting to 2026-11-01, full specialty waterworks/brackish-site
+  lead research requested; no new submission.
+- Found real company site repo arvectum2/arvectum-site and six existing /schlam/ public pages, all HTTP200 and robots noindex; 23 internal
+  original resources responded successfully, no broken links in bounded sample.
+- Verified existing first-party /schlam/offer/ visible starting price 89000 RUB with 4-6 week approximate schedule, no invented guarantees;
+  original Workspace public budget 130000-400000 RUB.
+- Exact original public Workspace19006 original source URL reread on Oct17, card public accepting organizer legal entity, budget130-400k
+  RUB and printed Nov1 deadline; original HTML SHA stored and literal first-party niche and request requirements attested.
+- Six preexisting https://arvectum.com/schlam/ pages all real HTTP200 and exact single robots noindex metadata, linked 23 internal same-domain
+  source assets HTTP200; ZERO site edits/deploys/new interfaces.
+- Original preexisting offer https://arvectum.com/schlam/offer/ confirms preliminary start price89000 RUB, approximate4-6weeks, customer
+  source/engineering fact disclaimers. Market page existing bounded review seven organizations, two source cases and eight intent clusters,
+  with explicit no independent SEO measurement.
+- Dated owner report and source-only machine SHA receipt, six offline tests PASS; real Workspace PRO/agency eligibility, contract scope,
+  costs and legal acceptance remain UNVERIFIED.
+current_stage: Bounded authentic Workspace19006 and preexisting six-page published demo QA complete; make check/full regression/PR exact-head
+  CI pending before done.
+remaining:
+- Original source HTML hash, six existing site page hashes/noindex and internal link attestations.
+- Owner business handoff and tests separating original public request vs existing demonstration vs unknown acceptance.
+- Full local regression, GitHub CI/merge, canonical checkpoint completion; no new page or external bid.
+last_verified_commit: 8e35fb11ca7110d51ecac63919989e644d28685e
+last_tests: Six focused source/meta-robots/links/no-submission tests PASS, Ruff/diff PASS; full make check and pytest/CI pending.
+resume_instruction: Isolated SSD tender-agent-schlam-reuse-handoff-20261017. Source original Workspace19006 snapshot legally unverified
+  but public status accepting, legal entity organizer, Nov1 deadline no clock, budget130-400k; existing arvectum.com/schlam 6 noindex
+  pages and 23 internal links healthy, starting offer89k/4-6w. Owner/source human report and source SHA receipt done, 6 focused PASS.
+  Run full make check/pytest+GitHub exact-head CI, merge only then complete child; parent 15-20 actually eligible target still OPEN,
+  no new site/ETP/PRO/bid.
