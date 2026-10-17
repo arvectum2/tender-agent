@@ -53,6 +53,8 @@
 - [ ] **APR-08 / ARV-065 — Evidence Copilot (P1).** Только procurement-scoped Q&A/расчёты/объяснения с цитатами; не generic chatbot и не authoritative legal approval.
 - [ ] **APR-09 / ARV-023/024/025/026/027 — Supplier → RFQ → TKP (P1, trigger).** Запускать после >=2 платных кейсов, где sourcing/TKP реально является bottleneck; внешняя отправка остаётся HUMAN/REVIEW.
 - [ ] **APR-10 / ARV-004 — Feedback Learning Loop (P2, trigger).** Human correction → regression → reviewed candidate → controlled promotion. Не раньше достаточного корпуса (ориентир >=30 useful corrections в >=3 customer/pilot contexts).
+- [ ] **PROC-LLM-TRAIN-02 (P2, deferred)** — отдельная будущая Arvectum Procurement LLM (4–12B и LoRA/QLoRA) только после юридически разрешённого curated corpus, реальных human-corrections, frozen independent eval, Owner review. Сейчас **только сбор и provenance**, никакого model training и model promotion.
+
 
 ### Подтверждённый бэклог — ценовая аналитика по реальным протоколам
 

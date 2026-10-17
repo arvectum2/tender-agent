@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -145,6 +146,14 @@ def record_analysis_run(
         updated_at=now,
     )
     session.add(run)
+    if os.environ.get("TENDER_LEARNING_CAPTURE_ENABLED") == "1":
+        from src.modules.procurement_learning_corpus.service import (
+            append_candidate,
+            make_analysis_candidate,
+        )
+
+        session.flush()
+        append_candidate(session, make_analysis_candidate(run))
     session.commit()
     return run
 
