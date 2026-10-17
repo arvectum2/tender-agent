@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-OCT17-EXPANDED-SOURCES-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Expand Tender Agent current IT opportunity selection beyond five new Oct17 primary Workspace corporate pages, validating
   new public mobile/enterprise IT cards and original 44-FZ EIS getDocsIP ZIP/XML, without false bid-ready or legal status
   claims.
@@ -31,15 +31,22 @@ completed:
   not grant eligibility/PRO access; archived official XML is not current live legal status; all bid-ready false.'
 - Added data receipts, safe bounded read-only scripts reusing existing CorporateLeadDecision, and focused source/negative/timezone
   regression tests (24 PASS).
-current_stage: Expanded original-source mobile and 44-FZ receipt/report/tests complete; run Mac mini full regression and exact-head
-  PR CI, then mark bounded task completed.
-remaining:
-- Validate fresh mobile opportunity cards and exclude false positives.
-- Verify 44FZ original competitive XML facts and shortlist without reconstructing unavailable official LIVE status.
-- Commit source-derived report/json/test, Mac regression, GitHub CI, merge and checkpoint.
-last_verified_commit: b1fa5860744eeae3815af32cba0fe43b1d330b5d
-last_tests: 24 focused pytest PASS, Ruff and diff PASS. Original Workspace 10 HTTP200 and 8 original EIS ZIP/XML SHA audits;
-  full suite/CI pending.
-resume_instruction: Worktree tender-agent-b2b-expanded-oct17-20261017. Finish make check + full pytest and exact-head GitHub
-  CI/merge, then child COMPLETED, parent in_progress. Next examine official entire TЗ/eligibility/commercial on 0161600001326000063,
-  19041, 0816500000626015655 with owner approval. No ETP/pay/PRO/new UI/stand.
+- PR467 merged after all required exact-head GitHub CI successful; isolated Mac mini full regression 5003 PASS/285 SKIP, make
+  check PASS, focused24 PASS.
+- '10 first-party Workspace mobile exact HTML SHA/UTC receipts: two NEW corporate public accepting (19041,18939); 19041 possible
+  overlap buyer with 19042, 18998 historical not incremented, 19010 same-day cutoff UNKNOWN, six distinct excluded/private/terminal.'
+- '8 first-party official 44FZ getDocsIP original archive SHA + selected XML SHA, exact revision and UTC zoned deadline: six
+  conditional IT development/mixed implementation, two license-rights exclusions. No newer official live status, complete
+  owner eligibility or source document package attested.'
+- Original one Operator Workspace Mac mini 18082 was neither rebuilt nor modified in this research slice; existing DB and
+  sources unchanged.
+current_stage: Bounded original-source two-mobile/six-development-EIS discovery and safe machine receipts completed; continued
+  parent goal original contemporary legally qualifying source coverage and owner decisions remain open.
+remaining: []
+last_verified_commit: 5eecb16fc4a4804e84e12465dad4ccd3719f52b6
+last_tests: Mac mini full 5003 passed/285 skipped; 24 focused PASS; make check/Ruff/diff PASS; exact-head PR467 GitHub CI
+  SUCCESS; verified original Workspace public receipt 10 and EIS original ZIP/XML 8.
+resume_instruction: Child COMPLETE. Resume parent source-grounded company procurement selection/official live revisions, independent
+  ETP/legal eligibility and complete original attachments on candidates 0161600001326000063, 19041, 0816500000626015655. Do
+  not repeat the 8 original archives or 10 exact mobile cards without freshness or material revision. No new operator UI/stand,
+  ETP actions, PRO payments or owner signing.

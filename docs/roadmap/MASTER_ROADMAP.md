@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B original-source expansion COMPLETED (PR467 5eecb16fc4):** two new Workspace corporate current receiving original-card snapshots 19041/18939; 19041 possible same buyer as older19042, prior18998 not recounted, same-day19010 unknown, six other closed/private; 8 official first-party getDocsIP pinned original 44FZ SHA-backed notice archives, 6 potential development/mixed and 2 license exclusions. 24 focused PASS, Mac full 5003 PASS / 285 SKIP, exact-head GH CI green. Bid readiness and legal eligibility STILL UNKNOWN; original 15-20 company-qualified current acceptance OPEN. [Report](B2B_OCT17_EXPANDED_ORIGINALS.md).
+
+
+
 **B2B incremental original expansion 17.10:** 10 original Workspace mobile card SHA/time/source status read-only; NEW future original corporate mobile candidates 19041 & 18939 (19041 possible shared buyer/project with former 19042), prior18998 not double counted, same-day19010 UNKNOWN, private19007 and five terminal excluded. Eight NEW independent official EIS getDocsIP SHA verified competitive notice archives, six potential IT development, two predominantly license resale exclusions. No complete attached-doc/ETP/legal participation proof, GO zero; full goal 15–20 CURRENT qualified still OPEN. [Expanded report](B2B_OCT17_EXPANDED_ORIGINALS.md) / [Workspace receipts](b2b_workspace_mobile_original_2026-10-17.json) / [official EIS receipts](b2b_eis_original_more_2026-10-17.json).
 
 
