@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from pydantic import BaseModel, Field
 
 from src.modules.commercial_core.run_service import (
@@ -23,9 +23,6 @@ from src.modules.tender_operator_agent_demo.operator_workspace_service import (
     parse_eis_reference,
     registry_detail,
     registry_records,
-)
-from src.modules.tender_operator_agent_demo.pilot_wizard_ui import (
-    render_tender_operator_pilot_wizard_html,
 )
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     build_public_search_url,
@@ -215,9 +212,15 @@ def tender_operator_pilot_wizard_page() -> FileResponse:
     return operator_workspace_page()
 
 
-@router.get("/demo/tender-agent/wizard", response_class=HTMLResponse)
-def tender_operator_pilot_wizard_demo_alias_page() -> str:
-    return render_tender_operator_pilot_wizard_html()
+@router.get(
+    "/demo/tender-agent/wizard",
+    response_class=RedirectResponse,
+    dependencies=[Depends(require_private_workspace)],
+    include_in_schema=False,
+)
+def tender_operator_pilot_wizard_demo_alias_page() -> RedirectResponse:
+    """One product UI: retire the old wizard without breaking bookmarked URLs."""
+    return RedirectResponse(url="/pilot/tender-agent/workspace", status_code=307)
 
 
 @router.get("/demo/tender-agent/runs/{run_id}", response_class=HTMLResponse)

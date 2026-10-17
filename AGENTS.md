@@ -113,3 +113,13 @@ Review changes for:
 - duplicated business logic or accidental divergence from canonical modules.
 
 Prioritize concrete defects and regressions over style preferences.
+## Owner directive 2026-10-17 — ONE existing Tender Agent operator interface
+The operator UI ALREADY EXISTS: canonical source is
+src/modules/tender_operator_agent_demo/assets/operator_workspace.{html,js,css}.
+Use the existing Mac mini Compose API 127.0.0.1:18082,
+route /pilot/tender-agent/workspace. /pilot/tender-agent is an identical HTML
+alias; old /demo/tender-agent/wizard redirects there. NEVER create another
+pilot wizard/operator workspace frontend or parallel permanent stand.
+Inspect/reuse the existing routes, auth, original data and volumes.
+Historical /demo/tender-agent is a non-product compatibility fixture.
+Read docs/architecture/TENDER_AGENT_SINGLE_OPERATOR_UI.md before UI tasks.
