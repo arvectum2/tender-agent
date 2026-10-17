@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B source-traceable financial scenario for museum three interactive programs (0161600001326000063) in progress:** strictly illustrative rates not quotes, offline transparent 3 cash/labor shadow scenarios × 0/10/20/25% auction cuts, provisional USN6%, source 5% final-price performance bond as liquidity not operating expense. At 1.6m RUB NMC, economic lean +609k RUB, baseline -101k, stress -1346k; baseline economic break-even 1.707m > NMC. No company GO, invoice, tender action or new UI. [Planning report](B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md) + [reproducible scenarios](b2b_museum_three_exhibits_cost_sensitivity_2026-10-17.json).
+
+
+
 **B2B three original full TZ cases REVIEW COMPLETED (PR468 3acc139476):** Museum 0161600001326000063 7/7 official Annex SHA from original EIS filestore, 3 themed Windows sensory multimedia apps Electron20 React17 TS4+ content/IP, guarantee12mo/5% bond due Dec20. Yakutia 0816500000626015655 7/7 original Annex SHA, MANDATORY GeoPrime rights contract 1.7 and 70% qualification/30% price, separate warranty security 227500 rub; no direct bid without rights/owner. Workspace19041 original public card SHA confirms 3+ years mobile commercial experience and portfolio, PRO access and company/team acceptance unknown. Full Mac 5007 PASS/285 SKIP + GitHub exact-head CI green. **ALL three BID_READY=false and current legal EIS status not attested**, parent 15-20 company qualified current goal remains OPEN. [Case matrix](B2B_PRIORITY_THREE_FULL_TZ_2026-10-17.md), [14 source SHA](b2b_priority_eis_documents_2026-10-17.json).
 
 
