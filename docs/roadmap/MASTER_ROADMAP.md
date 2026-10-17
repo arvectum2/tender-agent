@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B original-source incremental slice COMPLETE (PR466 169ed9143):** 5 new Workspace ORIGINAL legal entity accepting-source public cards 19043/19042/19034/19032/19030 SHA/timestamp attested and 3 exclusions (private 19035/19052, old terminal 19023). Full 4993 PASS/285 SKIP, GitHub CI green; 2 additional independent EIS 44FZ original ZIP/XML snapshots Smolensk 0163200000326005243 v2, Kaliningrad GIS 0335200014926003900 v1 archived deadlines, all OWNER/LEGAL/ELIGIBILITY UNKNOWN. Never count historical or gov cards as 15–20 fully qualified current B2B; goal remains OPEN. [B2B Workspace originals](B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md), [44FZ originals](B2B_OCT17_OFFICIAL_44FZ_SNAPSHOTS.md).
+
+
+
 B2B primary original public Workspace source pass 17 Oct: 5 previously unlisted legal-entity open-status snapshot candidates 19043,19042,19034,19032,19030, Mac mini direct TLS HTTPS HTML SHA/time original source; 2 private-person organizer cards 19052/19035 and old terminal 19023 excluded. All PUBLIC_CANDIDATE_ONLY, no bid-ready/PRO/eligibility approval; historical 9+ not all currently open, goal 15-20 CURRENT qualified remains OPEN. [Original source receipts](B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md), [machine-readable full SHA](b2b_workspace_original_2026-10-17.json).
 
 
