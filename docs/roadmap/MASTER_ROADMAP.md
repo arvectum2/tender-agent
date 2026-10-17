@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B 19006 original Workspace Schlam offer and site reuse QA (Oct17) IN_PROGRESS:** original source public accepting legal-entity card to Nov1 and published budget130-400k RUB, existing company arvectum2/arvectum-site six /schlam pages HTTP200 with robots noindex, 23 existing internal source assets HTTP200, not created anew. Preexisting personalized offer 89000 RUB/4-6 weeks under public buyer budget floor and research openly distinguishes market hypotheses from source facts. Source-proven original SHA receipt and [owner reuse/handoff](B2B_SCHLAM_19006_OFFER_REUSE_QA_2026-10-17.md) / [machine first-party + site QA](b2b_schlam_19006_original_offer_qa_2026-10-17.json), owner paid PRO/legal bidder GO0, 15-20 qualified B2B parent still OPEN.
+
+
+
 **B2B FOUR Workspace public-original qualification COMPLETE PR472 f16510b5bb:** original four corporate Workspace19030 AI materials/warehouse pilot with hidden spec,19032 WordPress ongoing SLA,19042 CMMS hard developer >=3year exp,19043 B2B site mandatory realized portfolio; printed open 4/4, confirmed owner bidder eligibility 0/4. 19003 current original terminal despite future printed cutoff; 19006 Schlam waterworks site currently public-open to Nov1, revisit existing proposal without duplication. Mac full 5042 PASS/285 SKIP, six focused + GH exact-head CI green. [Owner source analysis](B2B_WORKSPACE_FOUR_SOURCE_FIT_2026-10-17.md) / [4 exact original SHA](b2b_workspace_four_original_fit_2026-10-17.json). GO0, target15–20 STILL OPEN.
 
 
