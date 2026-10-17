@@ -38,22 +38,24 @@ completed:
 - '2026-10-17 successor TA-APR03B-EIS-ORIGINAL-ZIP-20261017 COMPLETED: original 17041B getDocsIP ZIP was already saved, source receipt
   matched and retrospective archive SHA/v1 source metadata safely pinned in existing 18082; no second stand, six originals unchanged,
   export409 preserved.'
+- Successor original EIS first-party v1 source proof TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017 completed (fresh Oct17 5/5 official binary
+  GET SHA matches plus getDocsIP ZIP). Its source completeness blocker is now RESOLVED; current public registry legal status and owner
+  acceptance still blocked.
 current_stage: Local file/API 6/6, original XML 3/3, report/exports and actual browser successfully verified on existing 18082. Await
   independent official latest EIS source and owner/legal semantic review.
 remaining:
-- Independently verify latest official EIS published revision/status and authenticate official transport/archive historical provenance
-  beyond the retrospective saved receipt.
-- Independently check provenance/completeness of five attachments outside the single-XML original ZIP and obtain human legal/commercial
-  review of risks.
-- Owner confirms acceptance/denies GO; no other user interface or local archive file audit required.
+- Independently verify current legal/public EIS status including amendments/cancellation/award protocols and whether bidding is still
+  permitted; getDocsIP archived v1 does not attest these.
+- Owner independently assess legal/economic terms and manual checks; issue human acceptance or refusal. Never use archived deterministic
+  report as GO.
 last_verified_commit: 5cd3b95d8b8748efa67905543d81404d209be971
 last_tests: Mac mini local 6/6 saved originals identical SHA256/size to private authenticated HTTP downloads 200; saved report/evidence
   200, original XML facts 3/3, exported pdf/docx HTTP409, real Chrome History/6 documents/2 denials PASS/0 JS errors; PR462 full 4936
   PASS/285 SKIP and CI green.
-resume_instruction: Original ZIP and archived version1 metadata pin ARE DONE through successor child TA-APR03B-EIS-ORIGINAL-ZIP-20261017.
-  Do not repeat source pin. Only live current official EIS revision, five external attachments source chain and owner legal/economic
-  signoff remain blocked; no additional UI/stand; ETP not authorized.
-objective_blocker: latest_live_eis_revision_unverified_and_owner_legal_commercial_review_pending
+resume_instruction: Archived original ZIP v1 and five separate official XML-linked binaries now conclusively re-fetched and verified
+  as snapshot (PR464). No further local document source work needed. Check external actual public procurement legal status separately
+  and obtain owner substantive acceptance; existing 18082 only.
+objective_blocker: current_public_eis_procedure_status_and_owner_legal_commercial_review_pending
 synthetic_browser_regression: pass
 owner_human_approval: pending
 original_file_http_sha_integrity: verified_6_of_6
@@ -64,3 +66,5 @@ official_original_zip_pinned: false
 user_owner_human_approval: pending
 archived_original_zip_retrospective_pin: completed_successor_TA-APR03B-EIS-ORIGINAL-ZIP-20261017
 latest_official_live_notice_verified: false
+five_external_original_binary_source_integrity: verified_5_of_5_oct17_official_fresh
+public_live_eis_procedure_status_verified: false
