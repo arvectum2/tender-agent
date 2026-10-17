@@ -611,3 +611,9 @@ active_price01_operator_readonly_2026_10_18:
   implementation_commit: ee83c93ab7473d4a3f16fd473dc5c8865f6609e3
   tests: 92_passed_10_skipped_6_warnings
   external_action: false
+
+active_price01_source_comparability_2026_10_18:
+  task_id: TA-PRICE01-SOURCE-COMPARABILITY-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-SOURCE-COMPARABILITY-20261018.yaml
+  status: in_progress
+  external_action: false

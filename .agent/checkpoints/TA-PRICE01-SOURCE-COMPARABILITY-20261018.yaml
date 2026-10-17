@@ -1,0 +1,20 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-SOURCE-COMPARABILITY-20261018
+status: in_progress
+goal: Check whether the independently verified second official final protocol (Aksioma) can serve as a comparable procurement for Aksay web-site pricing using first-party original notice subject, without treating different IT sectors as identical.
+definition_of_done:
+  - Verify both archived original EIS ZIP SHA and extract exact current/latest notice subject from each pinned ZIP without external write.
+  - Identify Aksay website creation vs Aksioma GIS legal/forest-parcel module scope as noncomparable for Aksay website benchmark, preserve source member SHA.
+  - Keep Aksay price sample 1 cross-procurement, excluded candidate not counted as price evidence; no fabricated comparable prices.
+  - Publish machine+human source report and backlog note; unit tests fail closed on changed source and same-subject hypothetical.
+  - Commit to PR478, rerun relevant checks, status completed with accurate CI and resume.
+completed:
+  - Both local exact archived official ZIPs exist and have previously verified SHA. First-party notification XML shows distinct procurement objects in purchaseObjectInfo: website vs land-parcel forest boundaries GIS module.
+current: Implement strictly bounded immutable two-source negative-comparability audit.
+pending:
+  - Source SHA report and tests.
+  - Roadmap update, checkpoint closure and push/CI.
+last_verified_commit: 710f771ad5887233139f5948a146cafe6e0f8831
+test_results: Previous PRICE-01 UI integration 92 passed/10 skipped/6 warnings, code SHA ee83c93a; CI on final head pending.
+resume_instruction: Do not mix Aksioma geospatial forest module prices with Aksay website prices. Verified outcome is exclusion only. Continue looking for truly comparable completed websites using full EIS original notices and scope if accessible; no new generic false-positive pricing benchmark.
