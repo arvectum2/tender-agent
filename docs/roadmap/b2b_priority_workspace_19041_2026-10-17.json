@@ -1,0 +1,30 @@
+{
+  "schema_version": "b2b-priority-workspace-card-19041-v1",
+  "tender_id": "workspace-19041",
+  "source_url": "https://workspace.ru/tenders/sozdanie-mobilnogo-prilozheniya-dlya-myasokombinata-19041/",
+  "retrieved_at_utc": "2026-10-17T12:34:23.486022+00:00",
+  "http_status": 200,
+  "bytes": 66465,
+  "sha256": "ba9ca616f4b440f8192a455a4aa17d7fec768498c510d116ad3524c09b5d8bbb",
+  "platform_status": "Идет прием заявок",
+  "organizer_type": "Юридическое лицо",
+  "published_deadline": "2026-10-31",
+  "published_deadline_hour": "UNKNOWN",
+  "published_budget_rub_min": 250000,
+  "published_budget_rub_max": 1000000,
+  "source_backed_requirements": {
+    "android_ios": "Разработка мобильного приложения для Android и iOS.",
+    "backend": "Разработка и интеграция серверной части (Backend) и API.",
+    "experience": "Коммерческий опыт разработки мобильных приложений от 3 лет.",
+    "portfolio": "Наличие портфолио с завершёнными и действующими проектами.",
+    "support": "Информацию о предоставляемой гарантии и технической поддержке.",
+    "price_scope": "Важно: при отклике обязательно укажите предварительный бюджет разработки",
+    "stage_pay": "Поэтапная оплата по согласованным результатам работ.",
+    "source_code": "Передача исходного кода, документации и необходимых доступов заказчику"
+  },
+  "application_pro_access_required": "UNVERIFIED",
+  "company_three_year_portfolio_verified": false,
+  "bid_ready": false,
+  "same_customer_as_workspace_19042": "UNVERIFIED",
+  "no_external_action": true
+}
