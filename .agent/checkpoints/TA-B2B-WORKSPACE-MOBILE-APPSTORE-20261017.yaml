@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-WORKSPACE-MOBILE-APPSTORE-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Verify first-party Workspace mobile-app PRO category price and original current mobile tender requirements; link actual LLC
   ARVECTUM-owned published Apple App Store product portfolio via official Apple source, distinguish iOS product publication from
   past 3 years multi-platform contracts, and update owner B2B outreach cost matrix without PRO payment.
@@ -39,18 +39,27 @@ completed:
   hard gates.
 - Owner source-bounded report and machine first-party Apple/Workspace source receipt; 12 focused false-product/eligibility/owner
   buy safeguards PASS and Ruff PASS. No PRO purchase/ETP registration/proposal or new Operator Workspace.
-current_stage: Source-first exact mobile tariff and 3 Apple LLC app references plus 3 real mobile original tender cards report
-  complete, awaiting Mac full make check and pytest, GitHub exact-head CI and merge.
-remaining:
-- Original mobile first-party source byte hashes and owner fit/scope/price matrix.
-- Focused source gate tests, make check/full regression/exact-head GitHub CI.
-- Merge and finalize checkpoint while preserving owner external eligibility/PRO payment and bidder consent.
-last_verified_commit: cba5875d28314b917e70454ce0efe8059c5ba286
-last_tests: 12 focused PASS, Ruff PASS, original Apple3/3 first-party, Workspace mobile cards3/3 statuses verified, full suite/CI
-  pending.
-resume_instruction: SSD clean tender-agent-workspace-mobile-appstore-reference-20261017 branch. Exact Workspace original mobile
-  MOB PRO16900/45630/86190/152100 for1/3/6/12 mo. First party Apple lookup seller LLC ARVECTUM verified ChickMark6818711298, Photo/PDF6816346084,
-  APL6816013574 (iOS and Watch only). Original Workspace corporate mobile 19041 demands Android+iOS 3yrs exp, 18998 Android8.1
-  Google-free real child watch hardware + GigaChat safety; 19007 personal organizer excludes strict B2B. No qualified mobile bid
-  GO and no checkout. Machine report+source receipts+12 focused tests PASS. Run make check full Mac pytest, PR exact-head CI, merge
-  then mark child COMPLETED. One UI18082, no payments, bids, new DB.
+- PR475 exact source-head GitHub CI all SUCCESS, Mac mini full 5069 PASS/285 SKIP, 12 focused PASS, Ruff/make check PASS.
+- Merged first-party Workspace MOB category PRO prices 16900/45630/86190/152100 RUB 1/3/6/12mo and 3 original Apple iTunes current
+  public products with exact sellerName LLC ARVECTUM, without false claims of 3y commercial Android+iOS contracts.
+- Original Workspace corporate mobile tender 19041 demands >=3 years commercial Android+iOS experience, Apple iOS publications
+  alone not sufficient; 18998 childrens Google-free Android8.1 + system firmware real hardware child-safety requirements not proven
+  by our consumer app products. Original 19007 organizer explicitly private person, excluded from strict ООО B2B.
+- Protected owner/PRO gate NO_AUTO_BUY, zero externally submitted/procured/paid, one Operator Workspace 18082 unchanged.
+current_stage: Exact first-party Workspace mobile PRO 4 plans, official published 3 LLC ARVECTUM Apple products and three original
+  mobile Workspace lead hard-qualification gates merged, full CI green. Owner paid access/bid eligibility and iOS-only future qualified
+  leads remain parent open.
+remaining: []
+last_verified_commit: 9b894bb383576499679faa7de909f2e963d7f8ee
+last_tests: Mac mini full 5069 PASS/285 SKIP; 12 focused source/negative tests PASS, Ruff/make check PASS, exact-head GitHub PR475
+  all CI green.
+resume_instruction: Child COMPLETED. Confirmed App Store seller LLC ARVECTUM 3 iOS products IDs ChickMark6818711298, PhotoPDF6816346084,
+  APL6816013574; first party Workspace MOB mobile PRO16900 one month or45630/3mo, 86190/6mo, 152100/12mo. Two original corporate
+  mobile cards public 19041 (3 years commercial Android+iOS hard gate unproven) and 18998 (Android8.1 no Google real 4G watch kid
+  safety), one personal organizer19007 excluded. Next parent search real current iOS-only App Store release/support/watchOS short
+  scopes, no false Android client references or 3yr history, then check live account category/PRO only after owner approval. Parent
+  15–20 live independently company-eligible B2B OPEN.
+verified_apple_apps_under_llc_arvectum: 3
+verified_public_mobile_pro_one_month_rub: 16900
+pro_purchase_executed: false
+arvectum_mobile_qualified_bids: 0

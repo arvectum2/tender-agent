@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B Workspace MOB mobile PRO + verifiable LLC ARVECTUM App Store portfolio COMPLETE PR475 9b894bb383:** original MOB PRO16900/45630/86190/152100 RUB for 1/3/6/12mo, generic cheapest CONTENT2900 unrelated; official Apple three LLC ARVECTUM iOS products ChickMark/PhotoPDF/Arvectum Proxy Launcher with sellerName verified and exact AppStore links. Original mobile corporate public cards 19041 requiring >=3yr commercial Android+iOS, 18998 child Android8.1 noGMS watch real device + safety, capabilities not proved by our iOS apps; original 19007 organizer PERSON, excluded strict LLC B2B. 5069 PASS/285 SKIP local, 12 focused, GitHub CI all green. Owner bid GO0/PRO purchase0; next specifically iOS-only AppStore publishing/support scopes. [Human source report](B2B_WORKSPACE_MOBILE_APPSTORE_LLC_REFERENCES_2026-10-17.md) / [original Apple/Workspace SHA receipt](b2b_workspace_mobile_appstore_original_2026-10-17.json). Overall 15–20 company qualified sources OPEN.
+
+
+
 **B2B mobile Workspace original MOB PRO category and LLC App Store actual portfolio (Oct17) IN_PROGRESS:** official Workspace mobile PRO 16900 RUB/month, 45630/3mo, 86190/6mo, 152100/12mo, no fake generic from2900 site pricing. Verified actual official Apple seller LLC ARVECTUM 3 published iOS apps [ChickMark](https://apps.apple.com/ru/app/id6818711298), [Фото и PDF под размер](https://apps.apple.com/ru/app/id6816346084), [Arvectum Proxy Launcher](https://apps.apple.com/ru/app/id6816013574), evidence iOS product publication NOT 3y paid client Android+iOS record. Original current corporate public cards 19041 (requires>=3y commercial mobile Android+iOS) and 18998 (GMS-free Android kid 4G watch embedded physical acceptance), NOT company ready; 19007 organizer personal, excluded from corporate leads. No owner mobile GO/PRO paid approval. [Owner mobile report](B2B_WORKSPACE_MOBILE_APPSTORE_LLC_REFERENCES_2026-10-17.md), [first-party source SHA](b2b_workspace_mobile_appstore_original_2026-10-17.json), 12 focused PASS full CI pending; parent goal15-20 eligible OPEN.
 
 
