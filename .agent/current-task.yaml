@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 original Workspace Mac mini first-party eight exact public source cards HTTP200/TLS SHA/time: five NEW company public receiving status candidates 19043/19042/19034/19032/19030; exclude 2 individual-person buyers 19052/19035 and terminal older 19023 despite printed Oct20. No paid PRO, bid, legal eligibility; current source-qualified 15–20 goal NOT met. Child B2B original lead receipt in progress, 17 focused PASS."
   - "2026-10-17 APR03B original archived source deadline v1 expired Oct16 10 MSK safely shown in single Operator Workspace history (PR465 merge 89d4bb433e285af165f58596a89dfe0cdcb8d01a). Only pinned source v1 exact XML:endDT evidence, no current legal EIS/award/cancel status or GO. User's six original source 5/5 official recheck receipt unchanged; real Chrome and archived 409 PASS. Next independent source status on/after planned Oct20 and owner APR06/07 gold/legal."
   - "2026-10-17 APR03B source-only archive cutoff: official original pinned v1 endDT 16.10.2026 10:00 Moscow expired on Oct17; current public EIS status and protocols UNKNOWN (read-only legacy details RuntimeError, public EIS common-info HTTP404, not evidence of cancellation). Add dynamic source-backed archival deadline notice to existing 18082; child TA-APR03B-ARCHIVED-DEADLINE-STATUS-20261017 in progress; no new stand/ETP."
   - "2026-10-17 APR03B first-party six originals source v1 verified (PR464 d8d8ff0b63e2568aff91eec862566637340a92af): today same getDocsIP 17041B XML ZIP SHA35978ce4, five official filestore bytes SHA 5/5 exact. Existing 18082 now shows safe timestamped receipt, archives v1, current legal notice status UNKNOWN, human GO false. 4961 local PASS/285 SKIP, GitHub CI all green, no new stand."
@@ -233,7 +234,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 APR03B pinned archived EIS cutoff dynamic warning task completed, PR465 89d4bb433e285af165f58596a89dfe0cdcb8d01a. Existing Mac mini one Operator Workspace on 18082 upgraded in place, shows archived v1 endDT 16.10.2026 10:00 MSK elapsed and NO current public EIS legal status attestation, still 5/5 official archived original files SHA and report/409. Official current award/cancellation/amendments unknown: separate read-only legacy details returned RuntimeError; public URL 404 not proof of cancellation. Expected result Oct20 based secondary sources ONLY; check official protocols later without inventing winner. Parent goal independent APR06/07 owner gold and commercial review, B2B current 15-20 opportunities; no production, ETP sign, payments or new UI; manual_override true."
+resume_instruction: "2026-10-17 new B2B source task .agent/checkpoints/TA-B2B-OCT17-ORIGINAL-LEADS-20261017.yaml, isolated SSD worktree tender-agent-b2b-oct17-source-20261017. Five new original public Workspace company accepting cards 19043/19042/19034/19032/19030 with real HTTPS200 HTML SHA/time; 19035+19052 organizer private person excluded, old 19023 terminal excluded despite deadline. Report docs/roadmap/B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md, receipt JSON original-source 8. 17 focused PASS, full regression/CI remaining. No PRO pay/registration/ETP/bids, status first, goal 15–20 simultaneously legal qualified remains OPEN. APR04 real owner rules, APR06/07 gold remain open; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -401,3 +402,15 @@ eis_archived_deadline_observation_2026_10_17:
   single_operator_ui_only: true
   cutoff_status_ui_delivery: completed_original_18082
   merge_commit: 89d4bb433e285af165f58596a89dfe0cdcb8d01a
+
+b2b_oct17_original_corporate_cards_2026_10_17:
+  task_id: TA-B2B-OCT17-ORIGINAL-LEADS-20261017
+  child_checkpoint: .agent/checkpoints/TA-B2B-OCT17-ORIGINAL-LEADS-20261017.yaml
+  audit_report: docs/roadmap/B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md
+  receipt: docs/roadmap/b2b_workspace_original_2026-10-17.json
+  five_original_public_corporate_ids: [19043, 19042, 19034, 19032, 19030]
+  two_private_persons_excluded: [19052, 19035]
+  terminal_prior_tender_excluded: 19023
+  legal_or_paid_eligibility_verified: false
+  current_15_20_qualified_goal_met: false
+  source_task_stage: pending_full_ci

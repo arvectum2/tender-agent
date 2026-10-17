@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+B2B primary original public Workspace source pass 17 Oct: 5 previously unlisted legal-entity open-status snapshot candidates 19043,19042,19034,19032,19030, Mac mini direct TLS HTTPS HTML SHA/time original source; 2 private-person organizer cards 19052/19035 and old terminal 19023 excluded. All PUBLIC_CANDIDATE_ONLY, no bid-ready/PRO/eligibility approval; historical 9+ not all currently open, goal 15-20 CURRENT qualified remains OPEN. [Original source receipts](B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md), [machine-readable full SHA](b2b_workspace_original_2026-10-17.json).
+
+
+
 **APR03B archived submission cutoff in original Operator Workspace — COMPLETED (PR465 code 89d4bb433e285af165f58596a89dfe0cdcb8d01a):** real pinned original XML endDT 16.10 10:00 Moscow is dynamically marked elapsed for archived v1 on Oct17. Legal live status UNKNOWN; no award/cancel GO. Original Mac mini 18082 verified, real Chrome, no new UI/stand, source 5/5 unchanged, historical PDF/DOCX409. [Acceptance](../acceptance/APR03B_ARCHIVED_DEADLINE_VS_LIVE_LEGAL_STATUS_2026-10-17.md).
 
 
