@@ -54,7 +54,7 @@
     $('quote-verify-button').disabled = value;
   }
   function tab(name) {
-    const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок'};
+    const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
     if (!(name in labels)) return;
     for (const key of Object.keys(labels)) show('pane-' + key, key === name);
     for (const button of document.querySelectorAll('.nav-btn')) {
@@ -625,8 +625,100 @@
         root.append(line);
       }
       if (!data.documents?.length) paragraph(root,'Документы не сохранены в канонической базе.','empty-state');
+      if (/^\d{19}$/.test(data.registry_number||'')) {
+        const button=node('button','button button-secondary','Ценовой контекст ↗');
+        button.type='button';
+        button.addEventListener('click',()=>{
+          $('price-registry').value=data.registry_number;
+          tab('prices');
+          void loadCompetitivePrice();
+        });
+        root.append(button);
+      }
       $('registry-detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
     } catch(error) {msg('Не удалось открыть запись: '+error.message);}
+  }
+  function validatePriceRegistry() {
+    const value = $('price-registry').value.trim();
+    if (!/^\d{19}$/.test(value)) throw new Error('Введите реестровый номер 44-ФЗ из 19 цифр.');
+    return value;
+  }
+  async function loadCompetitivePrice(event) {
+    if (event) event.preventDefault();
+    const target = $('price-evidence');
+    wipe(target);
+    let registry;
+    try { registry = validatePriceRegistry(); }
+    catch (error) { paragraph(target,error.message,'empty-state');return; }
+    paragraph(target,'Проверяем исторический доказательный агрегат…','empty-state');
+    try {
+      const data = await json(api+'/workspace/competitive-prices/'+encodeURIComponent(registry));
+      wipe(target);
+      if(data.state!=='VERIFIED_ARCHIVED_SINGLE_PROCEDURE'||data.registry_number!==registry
+          ||data.forecast_or_bid_recommendation!==false||data.company_go!==false
+          ||data.cross_procurement_comparison_state!=='INSUFFICIENT_EVIDENCE'
+          ||data.cost_scenarios!==null) {
+        throw new Error('Неполное доказательство протокола: проверка человеком обязательна.');
+      }
+      target.append(node('h3','','Протокол от '+data.protocol_date+' · №'+registry));
+      paragraph(target,'Проверенный архив одного конкурса: не предложение цены и не прогноз победителя.','help-text');
+      const facts=node('div','facts');
+      for(const [title,value] of [
+        ['НМЦК (не выигравшая ставка)',money(data.nmck_rub)],
+        ['Допущено',data.admitted_count],
+        ['Отклонено',data.rejected_count],
+        ['Минимальная допущенная цена',money(data.admitted_only_prices_rub.min)],
+        ['Квартиль 25% (по порядку)',money(data.admitted_only_prices_rub.q1_nearest_rank)],
+        ['Медиана допущенных',money(data.admitted_only_prices_rub.median)],
+        ['Квартиль 75% (по порядку)',money(data.admitted_only_prices_rub.q3_nearest_rank)],
+        ['Максимальная допущенная цена',money(data.admitted_only_prices_rub.max)],
+        ['Цена победителя',money(data.winner_price_rub)],
+        ['Предложение Арвектум (историческое)',money(data.company_price_rub)],
+        ['Место нашей допущенной заявки',data.company_rank_admitted]]) appendFact(facts,title,value);
+      target.append(facts);
+      const causes=node('section','report-section');
+      causes.append(node('h3','','Отклонённые заявки · отдельный риск допуска'));
+      paragraph(causes,'Нет документа реестра ПО / старая редакция: '
+        +data.rejected_reason_counts.missing_software_registry_document_old_notice
+        +'; неприменимая запись в реестре: '
+        +data.rejected_reason_counts.inapplicable_software_registry_entry+'.');
+      target.append(causes);
+      const evidence=node('section','report-section');
+      evidence.append(node('h3','','Контрольные суммы оригиналов'));
+      paragraph(evidence,'Оригинальный ZIP ЕИС: '+data.evidence.eis_original_zip_sha256);
+      paragraph(evidence,'Итоговый XML ЕИС: '+data.evidence.eis_original_xml_sha256);
+      paragraph(evidence,'Сверено строк с первоисточником: '+data.evidence.bid_rows_crosschecked_with_original);
+      paragraph(evidence,'Достаточность сопоставимых закупок: НЕТ · всего одна. '
+        +'Себестоимость: НЕ ПРЕДОСТАВЛЕНА; ставка к подаче: НЕ РЕКОМЕНДУЕТСЯ.','help-text');
+      target.append(evidence);
+    } catch(error) {wipe(target);paragraph(target,'Проверенные ставки недоступны: '+error.message,'empty-state');}
+  }
+  async function loadHistoricalPrice() {
+    const target=$('price-historical');
+    wipe(target);
+    let registry;
+    try { registry=validatePriceRegistry(); }
+    catch(error) {paragraph(target,error.message,'empty-state');return;}
+    paragraph(target,'Запрашиваем исторические НМЦК отдельно от итоговых ставок…','empty-state');
+    try {
+      const data=await json('/api/tender-research/historical-prices/'+encodeURIComponent(registry));
+      wipe(target);
+      target.append(node('h3','','ARV-057 · '+(data.state||'UNKNOWN')));
+      if(data.state!=='AVAILABLE'||!data.range) {
+        paragraph(target,'Сопоставимая источниковая выборка не подтверждена: недостаточно независимых наблюдений. Не использовать цену Аксая вместо аналога.','empty-state');
+        return;
+      }
+      const facts=node('div','facts');
+      for(const [title,value] of [
+        ['Сопоставимых наблюдений',data.range.sample_count],
+        ['Диапазон исторических НМЦК — минимум',money(data.range.minimum,data.range.currency)],
+        ['Медиана исторических НМЦК',money(data.range.median,data.range.currency)],
+        ['Максимум исторических НМЦК',money(data.range.maximum,data.range.currency)],
+        ['База нормализации',data.range.basis],
+        ['Единица',data.range.unit||'корзина']]) appendFact(facts,title,value);
+      target.append(facts);
+      paragraph(target,'ARV-057 проверяет предмет/объём/валюту/хронологию и сообщает НМЦК, НЕ допущенные конечные предложения. Никакой вероятности победы или автоматической цены.','help-text');
+    } catch(error) {wipe(target);paragraph(target,'Исторический диапазон недоступен: '+error.message,'empty-state');}
   }
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
   $('import-form').addEventListener('submit',importRequest);
@@ -645,11 +737,13 @@
   $('analyze-btn').addEventListener('click',()=>void analyze());
   $('refresh-run').addEventListener('click',()=>void loadRun().catch(e=>msg(e.message)));
   $('refresh-history').addEventListener('click',()=>void loadHistory());
+  $('price-form').addEventListener('submit',event=>void loadCompetitivePrice(event));
+  $('price-historical-btn').addEventListener('click',()=>void loadHistoricalPrice());
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});
   const hash=location.hash.replace('#','');
-  if (hash==='history'||hash==='registry') tab(hash);
+  if (hash==='history'||hash==='registry'||hash==='prices') tab(hash);
   const urlRun=new URLSearchParams(location.search).get('run');
   if(urlRun && /^[a-zA-Z0-9-]{1,64}$/.test(urlRun)){state.runId=urlRun;tab('new');void loadRun().catch(e=>msg(e.message));}
 })();

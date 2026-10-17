@@ -602,3 +602,9 @@ active_price01_aksay_2026_10_17:
   prior_b2b_pr: 477
   source_storage: ArvectumSSD_only
   external_action: false
+
+active_price01_operator_readonly_2026_10_18:
+  task_id: TA-PRICE01-OPERATOR-READONLY-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-OPERATOR-READONLY-20261018.yaml
+  status: in_progress
+  external_action: false

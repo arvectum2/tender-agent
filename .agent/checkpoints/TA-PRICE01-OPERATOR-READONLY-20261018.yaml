@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-OPERATOR-READONLY-20261018
+status: in_progress
+goal: Make PRICE-01 verified Aksay first-party source-bound archived competitive price context available read-only inside existing protected Operator Workspace without pretending another tender is comparable or predicting bids.
+definition_of_done:
+  - Reuse existing private workspace routes and static source-bound Aksay aggregate (already verified against actual official EIS source and tests) without parallel DB.
+  - Strictly return only the verified registry number, otherwise unknown/no evidence and never substitute Aksay results for other tenders.
+  - Display historic admitted-only distribution, rejected counts/causes, source SHA, one-procedure comparability warning and Owner quote gates in actual operator UI.
+  - Link existing ARV-057 historical NMCK comparison as separate optional read-only action; do not conflate NMCK with admitted final bids.
+  - Guard private access and integrity/source redaction; regression and UI/API smoke tests, relevant test suite, Ruff.
+  - Update canonical roadmaps/checkpoints, push to draft PR478 and verify exact-head CI; no auto-merge or external ETP actions.
+completed:
+  - Resumed parent and previous completed child; PR478 final head 8fafed5c CI SUCCESS, DRAFT unmerged, main unchanged.
+  - Found protected operator workspace assets/routes and existing historical NMCK endpoint; repository already has pinned official EIS/CSV/JSON Aksay 55-row source evidence.
+current: Implement source-bound private archived price projection and operator UI.
+pending:
+  - Write service/route and true UI integration.
+  - Adversarial tests and regression.
+  - Roadmap and canonical completion checkpoint, push/CI.
+last_verified_commit: 8fafed5cad9ea2afaacf22bb3b55541fd3ad465d
+test_results: Prior child 58 targeted pytest PASS + 6 warnings; new integration tests pending.
+resume_instruction: Continue SOURCE-BOUND existing Aksay pricing report only. Do not expose bidder row IDs/list or unverified prices. No repo duplicate/DB or PRO purchase, no external bidding; draft PR478 review gate. Unknown tender is 404 no pricing, not inferred comparable.

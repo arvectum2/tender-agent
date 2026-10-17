@@ -14,6 +14,9 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
+from src.modules.tender_operator_agent_demo.operator_price_context import (
+    archived_competitive_price_context,
+)
 from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
     get_operator_source_evidence,
 )
@@ -180,6 +183,15 @@ def operator_workspace_verify_quote(
     return verify_operator_run_quote(
         run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
     )
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/competitive-prices/{registry_number}",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_competitive_prices(registry_number: str) -> dict:
+    """Read-only independently checked archived one-procedure price evidence."""
+    return archived_competitive_price_context(registry_number)
 
 
 @router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
