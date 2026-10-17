@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B incremental original expansion 17.10:** 10 original Workspace mobile card SHA/time/source status read-only; NEW future original corporate mobile candidates 19041 & 18939 (19041 possible shared buyer/project with former 19042), prior18998 not double counted, same-day19010 UNKNOWN, private19007 and five terminal excluded. Eight NEW independent official EIS getDocsIP SHA verified competitive notice archives, six potential IT development, two predominantly license resale exclusions. No complete attached-doc/ETP/legal participation proof, GO zero; full goal 15–20 CURRENT qualified still OPEN. [Expanded report](B2B_OCT17_EXPANDED_ORIGINALS.md) / [Workspace receipts](b2b_workspace_mobile_original_2026-10-17.json) / [official EIS receipts](b2b_eis_original_more_2026-10-17.json).
+
+
+
 **B2B original-source incremental slice COMPLETE (PR466 169ed9143):** 5 new Workspace ORIGINAL legal entity accepting-source public cards 19043/19042/19034/19032/19030 SHA/timestamp attested and 3 exclusions (private 19035/19052, old terminal 19023). Full 4993 PASS/285 SKIP, GitHub CI green; 2 additional independent EIS 44FZ original ZIP/XML snapshots Smolensk 0163200000326005243 v2, Kaliningrad GIS 0335200014926003900 v1 archived deadlines, all OWNER/LEGAL/ELIGIBILITY UNKNOWN. Never count historical or gov cards as 15–20 fully qualified current B2B; goal remains OPEN. [B2B Workspace originals](B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md), [44FZ originals](B2B_OCT17_OFFICIAL_44FZ_SNAPSHOTS.md).
 
 

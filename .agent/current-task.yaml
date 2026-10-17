@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 B2B ongoing sources: new child TA-B2B-OCT17-EXPANDED-SOURCES-20261017 IN_PROGRESS, 10 original Workspace mobile public HTML SHA; two new corporate future-dated cards 19041/18939, prior 18998 not double counted, 19010 same day no cutoff time, 19007 individual, five other terminals. Original eight new 44FZ getDocsIP ZIP/revision XML SHA/dated metadata verified; 6 potential development, 2 mostly licenses excluded. Full current legally qualified 15-20 goal OPEN, no bids/PRO. Focused24 PASS; full and CI pending."
   - "2026-10-17 B2B bounded original-source research PR466 169ed9143cbc0f5ce8f43993e5e9d19408c88072: five new source-attested original corporate Workspace cards 19043,19042,19034,19032,19030, all public receiving-at-observation snapshots; 19035 and19052 private buyer excluded and older terminal19023 excluded. Mac original HTTP200/full HTML SHA receipts, 4993 local PASS/285 SKIP and exact-head GitHub CI green. Separately official read-only getDocsIP ZIP + notice XML 2 original 44-FZ cases 0163200000326005243 Smolensk EOKv2 and 0335200014926003900 Kaliningrad EFv1. No actual bid GO, 15–20 current legally qualified not reached."
   - "2026-10-17 original Workspace Mac mini first-party eight exact public source cards HTTP200/TLS SHA/time: five NEW company public receiving status candidates 19043/19042/19034/19032/19030; exclude 2 individual-person buyers 19052/19035 and terminal older 19023 despite printed Oct20. No paid PRO, bid, legal eligibility; current source-qualified 15–20 goal NOT met. Child B2B original lead receipt in progress, 17 focused PASS."
   - "2026-10-17 APR03B original archived source deadline v1 expired Oct16 10 MSK safely shown in single Operator Workspace history (PR465 merge 89d4bb433e285af165f58596a89dfe0cdcb8d01a). Only pinned source v1 exact XML:endDT evidence, no current legal EIS/award/cancel status or GO. User's six original source 5/5 official recheck receipt unchanged; real Chrome and archived 409 PASS. Next independent source status on/after planned Oct20 and owner APR06/07 gold/legal."
@@ -235,7 +236,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 bounded B2B first-party source ledger task COMPLETE PR466 169ed9143cbc0f5ce8f43993e5e9d19408c88072. Existing single Operator Workspace on 18082 intact. Five new publicly accepting corporate original Workspace cards 19043,19042,19034,19032,19030, 2 private-person cards19052/19035 and previously old terminal19023 excluded; original page SHA/timestamps and source status saved. Additional two original official EIS 44FZ ZIP/XML snapshots 0163200000326005243 site Smolensk (v2, 497178.33 RUB, Oct30 archived deadline), 0335200014926003900 Kaliningrad GIS Education (v1, 5736250 RUB, Oct22 archived deadline) — status/participant eligibility UNKNOWN. Goal 15-20 distinct simultaneously CURRENT fit and legally admissible corporate IT tenders NOT met. Continue additional independent original-source discovery, no paid PRO or actions. APR04 owner business/legal acceptance and APR06/07 independent human gold remain open; no ETP/signing/payment/new interface or stand, manual_override true."
+resume_instruction: "2026-10-17 B2B original source expanded child .agent/checkpoints/TA-B2B-OCT17-EXPANDED-SOURCES-20261017.yaml IN_PROGRESS, branch feat/b2b-oct17-expanded-source-ledger Mac SSD worktree. 10 original Workspace mobile public cards sha; new corporate 19041 (possible shared buyer 19042) and18939; historical18998 not recounted; 19010 SAME_DAY time UNKNOWN; private19007 and five other terminal excluded. 8 original competitive official 44FZ getDocsIP SHA-verified ZIP/XML with timezone-aware archive deadlines; 6 potential dev scope, 2 primarily licenses excluded. Reports receipts docs/roadmap/B2B_OCT17_EXPANDED_ORIGINALS.md and 2 JSON files; 24 focused PASS. Next Mac make check/full pytest, exact-head GitHub CI/merge then close child; no current live legal status or owner eligibility attested, goal15-20 CURRENT company qualified NOT met, no ETP/PRO/bids/new UI/stand. Existing 18082 left unchanged; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -418,3 +419,18 @@ b2b_oct17_original_corporate_cards_2026_10_17:
   code_merge_sha: 169ed9143cbc0f5ce8f43993e5e9d19408c88072
   additional_official_44fz_original_source_candidates: [0163200000326005243, 0335200014926003900]
   additional_44fz_owner_eligibility: UNVERIFIED
+
+b2b_oct17_expanded_mobile_and_44fz_2026_10_17:
+  task_id: TA-B2B-OCT17-EXPANDED-SOURCES-20261017
+  child_checkpoint: .agent/checkpoints/TA-B2B-OCT17-EXPANDED-SOURCES-20261017.yaml
+  report: docs/roadmap/B2B_OCT17_EXPANDED_ORIGINALS.md
+  verified_workspace_mobile_original_count: 10
+  new_workspace_original_corporate_cards: [19041, 18939]
+  historical_duplicate_not_counted: 18998
+  same_day_cutoff_unknown: 19010
+  verified_new_official_44fz_original_archives: 8
+  conditional_development_scope_originals: 6
+  licensing_only_archive_exclusions: 2
+  qualified_bid_go_count: 0
+  full_15_20_current_eligible_goal_met: false
+  stage: awaiting_ci

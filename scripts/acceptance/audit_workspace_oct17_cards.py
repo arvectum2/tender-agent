@@ -63,9 +63,12 @@ def _date(text: str, expected: str) -> str:
     return got
 
 
-def extract_public_card(source: bytes, *, key: str, observed: datetime) -> dict:
+def extract_public_card(
+    source: bytes, *, key: str, observed: datetime, allowed_cards: dict | None = None,
+) -> dict:
     """Parse only the original card's anchored status/organizer fields."""
-    if key not in _CARDS or len(source) > _BODY_BYTES:
+    cards = _CARDS if allowed_cards is None else allowed_cards
+    if key not in cards or len(source) > _BODY_BYTES:
         raise ValueError("unexpected source/size")
     content = source.decode("utf-8", "strict")
     status = _single(
@@ -81,12 +84,12 @@ def extract_public_card(source: bytes, *, key: str, observed: datetime) -> dict:
         raise ValueError("original organizer label ambiguous")
     block = re.sub(r"<[^>]+>", " ", content.split(marker, 1)[1][:480])
     organizer = _single(block, r"\b(Юридическое лицо|Частное лицо)\b", "organizer type")
-    deadline = _date(content, _CARDS[key][1])
+    deadline = _date(content, cards[key][1])
     title_html = _single(content, r"<h1[^>]*>\s*(.*?)\s*</h1>", "card title")
     title = " ".join(html.unescape(re.sub(r"<[^>]+>", " ", title_html)).split())
     if "<" in title or ">" in title or not 5 < len(title) < 400:
         raise ValueError("original card title unexpectedly contains markup")
-    url = f"https://workspace.ru/tenders/{_CARDS[key][0]}-{key}/"
+    url = f"https://workspace.ru/tenders/{cards[key][0]}-{key}/"
     if urlsplit(url).hostname != "workspace.ru":
         raise ValueError("unexpected source")
     source_evidence = {
@@ -99,9 +102,9 @@ def extract_public_card(source: bytes, *, key: str, observed: datetime) -> dict:
     result = triage_corporate_card(source_evidence, checked_at=observed)
     if visibility != "public" and result.state == "PUBLIC_CANDIDATE_ONLY":
         raise ValueError("private card cannot count as public candidate")
-    if _CARDS[key][2].startswith("EXCLUDE") and result.state == "PUBLIC_CANDIDATE_ONLY":
+    if cards[key][2].startswith("EXCLUDE") and result.state == "PUBLIC_CANDIDATE_ONLY":
         raise ValueError("expected excluded card was unexpectedly promoted")
-    if not _CARDS[key][2].startswith("EXCLUDE") and result.state != "PUBLIC_CANDIDATE_ONLY":
+    if not cards[key][2].startswith("EXCLUDE") and result.state != "PUBLIC_CANDIDATE_ONLY":
         raise ValueError("previously corporate original card no longer currently accepting")
     return {
         "id": "workspace-" + key,
@@ -117,7 +120,7 @@ def extract_public_card(source: bytes, *, key: str, observed: datetime) -> dict:
         "source_http_status": 200,
         "original_source_html_size": len(source),
         "original_source_html_sha256": hashlib.sha256(source).hexdigest(),
-        "competitive_fit": _CARDS[key][2],
+        "competitive_fit": cards[key][2],
         "source_status_gate": result.state,
         "source_status_reason": result.reason,
         "bid_ready": False,
