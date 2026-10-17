@@ -3563,7 +3563,7 @@ procurement_llm_data_collection_2026_10_16:
     result: docs/roadmap/PROCUREMENT_LLM_BACKFILL_2026-10-16.md
   future_manual_and_pilot_intake:
     id: PROC-LLM-DATA-02
-    state: code_ci_verified_stacked_draft_unmerged_not_deployed
+    state: code_merged_not_deployed_training_deferred
     policy: docs/roadmap/PROCUREMENT_LLM_CONTINUOUS_INTAKE_2026-10-16.md
     same_database: arvectum
     sources: [manual_chat_structured_cli, customer_pilot_completed_run, history_service_saved_analysis]
@@ -3743,8 +3743,12 @@ procurement_llm_data_collection_2026_10_16:
 
 roadmap_consolidation_2026_10_17:
   task_id: TA-MAIN-CONSOLIDATION-20261017
-  status: integration_worktree_only_ci_pending
+  status: code_merged_to_main_human_gates_open
   main_before: bc98bd397bbd91186dd08e1e611d972077c4ab74
+  main_merge_commit: 259257126461dafee3438c3d3e074fa2a73e27fd
+  merged_pr: 459
+  integrated_local_pytest_pass: 4936
+  integrated_local_pytest_skip: 285
   included_pr_head_count: 60
   source_stacks: 13
   reconciliation: 'Only shared checkpoint/roadmap conflicts required handling; exact historical ARV registry, frozen human-gold and production gates preserved.'
@@ -3757,4 +3761,4 @@ roadmap_consolidation_2026_10_17:
   procurement_llm_candidates: 77
   etp_metadata_intake: dry_run_only_apply_blocked
   paid_production_approval: not_granted
-  next_stage: full_integrated_tests_then_exact_head_github_ci_then_merge
+  next_stage: owner_browser_acceptance_independent_human_gold_staging

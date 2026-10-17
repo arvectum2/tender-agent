@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - '2026-10-17 PR459 consolidated all 60 former draft/open PR heads into main commit 259257126461dafee3438c3d3e074fa2a73e27fd; 4936 full tests passed/285 skipped, required CI green. No human gold, browser/commercial/production signoff. Next: APR03B/06/07, B2B and SaaS safe staging.'
   - "2026-10-17 PROC-LLM-DATA-09/TA-PROCUREMENT-LLM-EIS-CHRONOLOGY-20261016 completed: PR458 EIS Aksay original ZIP/XML SHA audit and 9 targeted tests; Mac mini 4069 PASS/239 SKIP/1 unrelated R9 deselected. Exact code+checkpoint SHA261c4583 CI PR38922501705/push38922492055/mirror38922492028 all SUCCESS. Later epNoticeApplicationCancel targets OTHER app122034518, NOT Arvectum app122031738 nor proof of global cancel/revised rank. PG77 unreviewed preserved; nine ETP metadata events only private dry-run, apply blocked; Museum result due 20Oct. Draft PR unmerged."
   - "2026-10-16 corporate source ETP review (read only): operator notices explicitly identify ООО Арвектум as RTS bidder Museum Bread (12 &15 Oct), Roseltorg Aksioma submission app ordinal3630084, Sber-AST Kaluga app193 admitted and separate app206 processing/withdrawal without app number. Six candidate metadata events staged private/validated but apply blocked by tool; PostgreSQL remains77. Owner-source and legal gold not auto-promoted."
   - "2026-10-16 PROC-LLM-DATA-05: 2 original unlinked legacy report files from old MacBook SHA verified and indexed in existing PG arvectum, 77 unreviewed candidates total (45 runs,20 Gemma E2E,10 manual,2 legacy artifacts), zero duplicate inserts on replay; no full text copied or trained. New child checkpoint TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016 records tests/CI."
@@ -285,6 +286,14 @@ main_consolidation_2026_10_17:
   child_checkpoint: .agent/checkpoints/TA-MAIN-CONSOLIDATION-20261017.yaml
   integration_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-main-consolidation-20261017
   sources: 60 open PR heads / 13 origin-main rooted stacks
-  stage: full_test_pending_no_main_mutation
+  stage: merged_code_only_human_acceptance_pending
   manual_override_preserved: true
   resume_instruction: 'Run integrated tests, exact-head GitHub CI and PR merge if safe; never falsify legal/human acceptance.'
+
+main_integration_result_2026_10_17:
+  merged_pr: 459
+  merged_commit: 259257126461dafee3438c3d3e074fa2a73e27fd
+  code_status: merged_to_main
+  parent_status: in_progress
+  official_human_gold: 0
+  owner_commercial_production_gate: open
