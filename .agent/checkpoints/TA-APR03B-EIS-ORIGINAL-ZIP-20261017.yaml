@@ -1,0 +1,37 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-EIS-ORIGINAL-ZIP-20261017
+status: in_progress
+goal: Bind an authentic original getDocsIP ZIP and archived EIS notice revision to the existing Museum Bread saved Operator Workspace
+  run without inventing EIS currency or creating another UI/stand.
+definition_of_done:
+- Locate any existing first-party ZIP/official EIS source in Tender Agent/Data Platform before considering official read-only refetch.
+- Verify exact original archive bytes, source notice number/version, zip membership, six existing saved documents vs official source
+  evidence; distinguish recorded archive from current live official revision.
+- Implement minimal fail-closed provenance repair or general workflow inside the existing intake/evidence modules, with no new UI/stand/database
+  and no destructive existing run mutation.
+- Pass targeted/full tests, exact-head CI, preserve original data and document audit receipts in repo and canonical checkpoint.
+completed:
+- Read origin/main ae9ac3f9401fc3af56b370b722c9b9d517715131; prior real UI/archive six-file SHA and real browser tests verified, main
+  CI success.
+- Created clean isolated SSD worktree; no changes to dirty primary checkout or existing 18082 runtime.
+- 'Located original ZIP already in historic Museum run input: documentation-archive.zip 17041B SHA256 35978ce4; no refetch needed.'
+- Historic getDocs events uniquely name ZIP and size from official int.zakupki.gov.ru; original XML inside ZIP 102910B SHA ed5c742b
+  matches FILE-01, classification epNotificationEZK2020 archived v1, no current-live claim.
+- Read-only dry-run inside same 18082 container PASS; missing fields are legacy metadata linkage problem.
+- Prepared safe retrospective attestation script with explicit two-hash apply gate, source evidence single pinned revision change; 59
+  focused pytest PASS.
+- Backed up original metadata.json, events.jsonl and documentation-archive.zip to external ArvectumSSD backup directory with mode 0600,
+  metadata SHA 608359b6, events SHA dea31264 and original ZIP SHA 35978ce4 verified; live metadata still unmodified.
+current_stage: Safe pre-apply external backup verified, code and tests prepared; waiting full suite and GitHub exact-head CI prior to
+  metadata correction.
+remaining:
+- Search existing authorized official-original archives and manifests.
+- Verify official ZIP matches saved run and notice XML; safely bind/protect source provenance, or record objective blocker if no verifiable
+  official source.
+- Run regression and exact-head GitHub CI; update roadmap and parent checkpoint.
+last_verified_commit: ae9ac3f9401fc3af56b370b722c9b9d517715131
+last_tests: 59 focused pytest PASS/0 failed, Ruff and make check PASS; dry-run existing 18082 PASS; whole test suite in progress.
+resume_instruction: Complete tests and CI, merge, then BACKUP original run metadata/events externally to ArvectumSSD, apply source pin
+  inside ORIGINAL 18082 API only with exact SHA pair, recheck pinned source selection and archived HTTP409; no new UI/stand/live EIS
+  assertion.

@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 APR03B historic getDocsIP original ZIP FOUND within Museum Bread saved run 17041B SHA 35978ce4, unique official event receipt matched, archived v1 source XML SHA ed5c742b matches FILE-01. Missing metadata pin rather than file. Safe dry-run reconciliation and tests ongoing; latest live EIS and owner legal GO unknown."
   - "2026-10-17 corrected APR03B local source gate: direct existing Mac mini 18082 container verified saved Museum Bread original files 6/6 size + full SHA256 identical to authenticated HTTP downloads, report/evidence 200, three XML facts title/deadline/NMCK independently parsed, archived PDF+DOCX 409 and actual Chrome Headless history/report/two errors 0 JS exceptions. Earlier blocked-access report was invocation-only and corrected. Official signed ZIP/latest EIS source not pinned in saved run; human legal/economic GO pending. No new UI or stand."
   - "2026-10-17 TA-ONE-OPERATOR-UI COMPLETED PR461 66f7521f6ea572f634954be350cbd6c11c540f9b: existing 18082 single Operator Workspace, original 5 mounts, database106->107 after SHA-verified backup, 1162 code source parity, Chrome no JS errors, preview18083 stopped; main CI and local 4936 PASS/285 SKIP. No new stand. Owner real EIS browser/legal acceptance OPEN."
   - '2026-10-17 Owner instructed ONE existing Tender Agent operator UI. Audit: 18082 runs old pilot wizard, 18083 runs separate operator workspace. Preserve current Compose DB/volumes/auth, upgrade 18082 to existing workspace, then retire duplicate 18083.'
@@ -354,3 +355,17 @@ real_eis_review_2026_10_17:
   original_snapshot_report_http: 200
   archived_binary_exports_http: 409
   no_new_interface_or_stand: true
+
+eis_archive_provenance_recovery_2026_10_17:
+  child_checkpoint: .agent/checkpoints/TA-APR03B-EIS-ORIGINAL-ZIP-20261017.yaml
+  report: docs/acceptance/APR03B_LEGACY_GETDOCS_ORIGINAL_ZIP_RECONCILIATION_2026-10-17.md
+  source_run: toa-run-20261012200402-7249ed
+  original_getdocs_zip_present: true
+  archive_sha256: 35978ce41fc87955491cc53705b0bd126c6d8217b82134e640eed1d78ed9e500
+  original_notice_xml_sha256: ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba
+  first_party_receipt_events_matched: true
+  highest_archived_notice_version: 1
+  official_latest_eis_revision_verified: false
+  legacy_metadata_repaired: false
+  owner_legal_semantic_approval: pending
+  one_existing_ui_only: true

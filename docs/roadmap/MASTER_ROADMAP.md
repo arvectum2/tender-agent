@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**APR-03B official archived ZIP found, 17.10.2026:** Museum Bread run has original 17041-byte ZIP SHA256 35978ce4, recorded EIS download event host and bytes match. Original archived epNotificationEZK2020 version1 XML SHA ed5c742b is byte-identical to FILE-01. The other 5 files are OUTSIDE this ZIP. Current live EIS revision not proven; implement safe fail-closed legacy metadata source binding in same Operator Workspace, without new UI, database, stand. See docs/acceptance/APR03B_LEGACY_GETDOCS_ORIGINAL_ZIP_RECONCILIATION_2026-10-17.md.
+
+
+
 **APR-03B корректировка аудита 17.10.2026:** проблема предыдущего доступа была лишь в форме вызова инструмента. В одном существующем Operator Workspace :18082 подтверждены реальные 6/6 файлов Музея хлеба через полное побайтовое совпадение с авторизованной HTTP-выдачей (размер+SHA256), отчет/evidence 200, XML 3/3 KNOWN с прямой проверкой значений, архивные PDF/DOCX HTTP409, настоящий Chrome History→6 документов→отчет→оба отказа без JS ошибок. **Остаются не подтверждены:** исходный официальный getDocsIP ZIP и актуальная редакция ЕИС, семантическая юридико-экономическая оценка человеком. [Актуализированный протокол](../acceptance/APR03B_SINGLE_UI_ARCHIVED_EIS_OWNER_HANDOFF_2026-10-17.md).
 
 
