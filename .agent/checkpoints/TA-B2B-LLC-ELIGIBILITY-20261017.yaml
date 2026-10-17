@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-LLC-ELIGIBILITY-20261017
+status: in_progress
+goal: Qualify source-bound existing corporate B2B leads against verifiable LLC response access and participation requirements, without contacting customers or paying for access.
+definition_of_done:
+  - Preserve existing public source URLs, observation times, original hash evidence and explicit unknowns.
+  - Reuse existing fail-closed corporate source triage, add a narrow separate company eligibility gate.
+  - Produce a reproducible source-bound dated shortlist with blockers and prioritized operator next checks.
+  - Test terminal/stale/expired/partial-data, missing LLC entitlement, strict human GO, and real original cases.
+  - Run focused tests and quality checks, record commit and follow-up in canonical parent.
+completed:
+  - Reconciled current main d2a927ec and parent TA-ROADMAP-EXEC-20261012; old feature checkout has unrelated local changes and remains untouched.
+  - Confirmed source-grounded Workspace original cards and policy/pricing; company account reply entitlement and human authorization are unverified.
+current: Implement deterministic read-only LLC qualification gate and source-bound original-card shortlist.
+pending:
+  - Implement and test.
+  - Update master roadmap and parent checkpoint.
+  - Commit/push isolated branch and verify; preserve REVIEW/HUMAN gates.
+last_verified_commit: d2a927ecebc9222bb3b38b47aa14c7024ccec4f0
+test_results: Not run yet.
+resume_instruction: Read source modules/cases; implement first bounded original-source LLC eligibility checks without external replies, paid access or bid GO. Check original statuses with source times, not assumed live legal statuses. Never modify other worktrees.

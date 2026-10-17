@@ -591,3 +591,9 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+active_child_2026_10_17:
+  task_id: TA-B2B-LLC-ELIGIBILITY-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-LLC-ELIGIBILITY-20261017.yaml
+  status: in_progress
+  action: Source-bound LLC eligibility triage and first reproducible operator shortlist only; no response, paid access or procurement submission.
