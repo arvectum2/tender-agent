@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B two original 44FZ application guarantees COMPLETED (PR470 1fb27d98a7):** official original pinned EF2020v1 museum 0161600001326000063 bid cash security16000 RUB=1% NMC and EOK2020v1 Yakutia0816500000626015655 45500 RUB=1%; source strict original SHA verified. Separate from contract execution 5% final price and Yakutia 227500 RUB warranty security, phases not automatically simultaneous or economic expense. 24 focused PASS, Mac full 5031 PASS/285 SKIP, exact-head CI green. No legal owner GO or company accepted bidder authorization, broader 15–20 qualified current goal OPEN. [Report](B2B_44FZ_APPLICATION_SECURITIES_ORIGINAL_2026-10-17.md) / [source receipt](b2b_44fz_two_original_bid_securities_2026-10-17.json).
+
+
+
 **B2B original official 44FZ bid guarantees (Oct17) next gate IN_PROGRESS:** actual pinned EIS EF2020v1 museum 0161600001326000063 applicationGuarantee.amount **16000 RUB 1pct NMC**, and EOK2020v1 Yakutia 0816500000626015655 **45500 RUB 1pct NMC**, compared to original source SHA, not aggregate. Updated museum illustrative cash planning for separately staged bid 16k vs execution 5% bond (cash tie-up not economic expense); actual bank guarantees and waivers require legal/owner review. Full source evidence [bid security original report](B2B_44FZ_APPLICATION_SECURITIES_ORIGINAL_2026-10-17.md), [machine SHA](b2b_44fz_two_original_bid_securities_2026-10-17.json). NO GO.
 
 

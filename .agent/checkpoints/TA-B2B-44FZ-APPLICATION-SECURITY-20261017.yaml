@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-44FZ-APPLICATION-SECURITY-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Verify 44FZ archive-original application guarantees for museum exposition 0161600001326000063 and Yakutia GIS 0816500000626015655
   from the exact original EIS XML field, and correct cash-liquidity scenario so distinct bid/performance/warranty securities are
   never combined into phantom economic expense.
@@ -31,16 +31,25 @@ completed:
   phase; never sum it automatically with final contract performance security and never count as economic expense. Existing 3 scenarios
   and economic margins unchanged.
 - 24 focused negative-source, security staging, tax/cost safety and original case tests PASS; Ruff PASS.
-current_stage: Two original-source bid guarantee receipts, cash-phase safeguards and 24 tests done; pending full regression and
-  exact-head GitHub CI/merge.
-remaining:
-- Build original field receipt and revalidatable source assurance.
-- Update museum cost planning staged liquidity, not expense; Yakutia separate owner gate.
-- Full tests and exact-head CI after original parent PR469 merges, final completed checkpoint.
-last_verified_commit: 2ab92644efad840dc16ce6ff57e1597510959656
-last_tests: 24 focused PASS, Ruff, original direct EIS 2/2 source ZIP/XML SHA with exact application security parent XML fields;
-  full make check/pytest+GitHub CI pending.
-resume_instruction: Worktree tender-agent-44fz-bid-security-20261017 at canonical main 2ab92644; two exact original bid security
-  amounts 16000 and45500 RUB verified with 1pct EIS XML. Need full regression, exact-head CI+merge and child COMPLETE; no GO, guarantee
-  alternative/settlement/refund and live legal status owner checks remain open. Don’t double-expense security or sum different
-  cash phases as simultaneously held without proof.
+- PR470 exact-head GitHub CI SUCCESS and full Mac mini tests 5031 PASS/285 SKIP, make check/Ruff PASS, 24 focused PASS.
+- Merged official original EIS SOAP getDocsIP EF2020 v1 museum 0161600001326000063 bid application guarantee 16000 RUB and EOK2020
+  v1 Yakutia 0816500000626015655 45500 RUB, both exact 1% from pinned original ZIP and notice XML SHA.
+- Strict first-party source archived XML exact-path parser rejects number/source version/original digest conflicts and incomplete/ambiguous/negative
+  amounts, with a 2-case source-only machine receipt no signed URLs or original binary files.
+- Extended already existing original 3-museum-program cost scenario budget with separate 16000 RUB application-stage cash liquidity,
+  no presumed temporal overlap and no economic expensing of cash/guarantee with prior 5% execution bond, preserving earlier hypothetical
+  profit/margin sensitivity.
+- No new frontend/stand/DB, ETP registration, paid action, external correspondence, legal owner GO or tender bid.
+current_stage: Bounded original 2-EIS first-party application guarantees, financial phases and test gates delivered in main; owner/legal
+  actual qualifications and current official status remain open.
+remaining: []
+last_verified_commit: 1fb27d98a73ada16447235ba11364e1459b01059
+last_tests: Mac mini full 5031 PASS/285 SKIP, 24 focused PASS, make check/Ruff PASS, exact-head GitHub PR470 full CI SUCCESS.
+resume_instruction: 'Child COMPLETED. Parent target: 15-20 independently current legally qualified original-source B2B procurement
+  opportunities; original 44FZ museum 0161600001326000063 app security 16000+5% of final price execution, Yakutia0816500000626015655
+  app security45500, warranty bond227500 and execution security5%. Application, execution and warranty cash phases NOT necessarily
+  concurrent and none are economic expense; never infer bid approval from liquidity. Check owner/ETP/certified legal status/partner
+  rights separately; one UI 18082 only.'
+two_first_party_original_application_guarantee_receipts: 2
+cash_execution_and_application_phases_distinguished: true
+all_case_owner_bid_go: false
