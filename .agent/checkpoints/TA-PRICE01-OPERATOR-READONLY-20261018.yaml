@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-PRICE01-OPERATOR-READONLY-20261018
-status: in_progress
+status: completed
 goal: Make PRICE-01 verified Aksay first-party source-bound archived competitive price context available read-only inside existing protected Operator Workspace without pretending another tender is comparable or predicting bids.
 definition_of_done:
   - Reuse existing private workspace routes and static source-bound Aksay aggregate (already verified against actual official EIS source and tests) without parallel DB.
@@ -13,11 +13,23 @@ definition_of_done:
 completed:
   - Resumed parent and previous completed child; PR478 final head 8fafed5c CI SUCCESS, DRAFT unmerged, main unchanged.
   - Found protected operator workspace assets/routes and existing historical NMCK endpoint; repository already has pinned official EIS/CSV/JSON Aksay 55-row source evidence.
-current: Implement source-bound private archived price projection and operator UI.
-pending:
-  - Write service/route and true UI integration.
-  - Adversarial tests and regression.
-  - Roadmap and canonical completion checkpoint, push/CI.
-last_verified_commit: 8fafed5cad9ea2afaacf22bb3b55541fd3ad465d
-test_results: Prior child 58 targeted pytest PASS + 6 warnings; new integration tests pending.
-resume_instruction: Continue SOURCE-BOUND existing Aksay pricing report only. Do not expose bidder row IDs/list or unverified prices. No repo duplicate/DB or PRO purchase, no external bidding; draft PR478 review gate. Unknown tender is 404 no pricing, not inferred comparable.
+current: Completed read-only secured archived prices endpoint and single cabinet UI with historical NMCK separate.
+pending: []
+last_verified_commit: ee83c93ab7473d4a3f16fd473dc5c8865f6609e3
+test_results:
+  - Prior PRICE-01 original ZIP+XML 55 bid verified archived Aksay only, preserved source SHA and no full private bids exposure.
+  - New private operator REST endpoint 401 unauth, 404 unknown registry, 503 unavailable or corrupt source, 200 only original pin verified.
+  - Real workspace has Price tab + registry card action and separate historical NMCK ARV-057 opt-in.
+  - 92 relevant pytest PASS, 10 SKIP, 6 previous warnings; Ruff, Node JS syntax, git diff checks PASS.
+  - Implementation commit ee83c93ab7473d4a3f16fd473dc5c8865f6609e3; exact-head CI pending after push.
+  - No production DB/ETP mutation, bid recommendation, cost invention, private bidder source copied, or external contact.
+resume_instruction: >-
+  TA-PRICE01-OPERATOR-READONLY-20261018 completed at ee83c93a. Draft PR478
+  still requires latest exact-head CI and review. Parent TA-ROADMAP-EXEC-20261012
+  remains in_progress. Continue PRICE-01 on genuinely comparable independently
+  sourced completed IT procurements with evidence of subject, technical scope,
+  unit/basket, relevant dates and normalized acceptance. Do not import
+  Akсиома/other unrelated procedure bids merely because final XML available.
+  Preserve 404 for unproven registry, separate ARV-057 NMCK comparisons, and
+  explicit independent Owner cost inputs before any commercial thresholds.
+  No bid/paid action or auto-merge; APR/15-20 B2B gates remain open.
