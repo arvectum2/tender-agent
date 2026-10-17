@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 from zipfile import ZipFile
@@ -110,6 +111,10 @@ def test_getdocs_archive_endpoint_creates_run_with_archive_metadata(client, monk
     assert metadata["token_owner"] == "individual"
     assert metadata["archive_url_present"] is True
     assert metadata["archive_downloaded"] is True
+    assert metadata["archive_stored_name"] == "documentation-archive.zip"
+    assert metadata["original_getdocs_archive_sha256"] == hashlib.sha256(
+        b"PK\x03\x04demo"
+    ).hexdigest()
     assert metadata["documents_extracted_count"] == 1
     assert metadata["soap_method"] == "getDocsByReestrNumber"
     assert metadata["archive_source_host"] == "int44.zakupki.gov.ru"

@@ -8,8 +8,9 @@ from __future__ import annotations
 import base64
 import binascii
 import hmac
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Annotated, Literal
+from zoneinfo import ZoneInfo
 
 from fastapi import (
     APIRouter,
@@ -24,7 +25,28 @@ from fastapi import (
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
+from src.modules.company_profile_store.qualification_decision import (
+    QualificationAwareDecisionRequest,
+    QualificationAwareDecisionResponse,
+    build_qualification_aware_decision,
+)
+from src.modules.company_profile_store.qualification_references import (
+    REFERENCE_FACT_KEY,
+    CompletedContractReferenceSnapshot,
+    QualificationAssessment,
+    QualificationCriterion,
+    assess_company_qualification,
+)
+from src.modules.company_profile_store.qualification_run_service import (
+    assess_owned_run_qualification,
+)
+from src.modules.company_profile_store.schemas import AppendCompanyProfileFactRequest
+from src.modules.company_profile_store.service import (
+    append_company_profile_fact,
+    get_company_profile_fact_history,
+)
 from src.modules.customer_onboarding.router import (
     OnboardingProfile,
     TenderScreenRequest,
@@ -517,7 +539,21 @@ def report(run_id: str, principal: Member, session: DBSession) -> dict:
     legal_required(session, principal)
     owned_run(session, principal, run_id)
     r = get_uploaded_demo_report(run_id)
+    qualification = (
+        assess_owned_run_qualification(
+            session, run_id=run_id, customer_id=principal.customer_id,
+            as_of=datetime.now(ZoneInfo("Europe/Moscow")).date(),
+        )
+        if principal.role in {"owner", "admin", "analyst"}
+        else {
+            "source_status": "REFERENCE_ACCESS_RESTRICTED",
+            "competitive_recommendation": "NOT_ASSESSED",
+            "human_gold": False,
+            "external_action_allowed": False,
+        }
+    )
     return {
+        "qualification": qualification,
         "run_id": r.run_id, "report_title": r.report_title,
         "recommendation": r.recommendation,
         "manual_checks": r.manual_checks,
@@ -525,6 +561,18 @@ def report(run_id: str, principal: Member, session: DBSession) -> dict:
         "sections": [section.model_dump(mode="json") for section in r.sections],
         "human_control_required": True, "external_action_allowed": False,
     }
+
+
+@router.get("/api/saas/runs/{run_id}/qualification")
+def owned_run_qualification(run_id: str, principal: Member, session: DBSession) -> dict:
+    """Zero input scoring weights/UID; supplier tenant from authenticated session."""
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    owned_run(session, principal, run_id)
+    return assess_owned_run_qualification(
+        session, run_id=run_id, customer_id=principal.customer_id,
+        as_of=datetime.now(ZoneInfo("Europe/Moscow")).date(),
+    )
 
 
 @router.post("/api/saas/runs/{run_id}/screen")
@@ -539,6 +587,111 @@ def screen_run(run_id: str, principal: Member, session: DBSession) -> dict:
         session.rollback()
         refund(session, principal, "screens")
         raise
+
+
+class OwnerReferencesRequest(BaseModel):
+    snapshot: CompletedContractReferenceSnapshot
+    source_ref: str = Field(min_length=1, max_length=512)
+    expected_version: int = Field(ge=0)
+    expires_at: datetime | None = None
+
+
+@router.get("/api/saas/qualification/references")
+def saas_company_references(principal: Member, session: DBSession) -> dict:
+    """Current private reference-list version for bearer-authenticated owner tenant."""
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    from src.shared.errors import NotFoundError
+
+    try:
+        history = get_company_profile_fact_history(
+            session, customer_id=principal.customer_id, fact_key=REFERENCE_FACT_KEY,
+        )
+    except NotFoundError:
+        return {"state": "UNKNOWN", "fact_version": None, "snapshot": None}
+    record = history[-1]
+    return {
+        "state": "STORED",
+        "fact_version": record.version_no,
+        "source_type": record.source_type,
+        "source_ref": record.source_ref,
+        "expires_at": record.expires_at,
+        "snapshot": record.value_json,
+    }
+
+
+@router.post("/api/saas/qualification/references", status_code=201)
+def saas_record_company_references(
+    payload: OwnerReferencesRequest, principal: Member, session: DBSession,
+) -> dict:
+    """An authorized owner/admin appends a new immutable company fact version."""
+    role_required(principal, "owner", "admin")
+    legal_required(session, principal)
+    from src.shared.errors import NotFoundError
+
+    try:
+        history = get_company_profile_fact_history(
+            session, customer_id=principal.customer_id, fact_key=REFERENCE_FACT_KEY,
+        )
+        latest = history[-1].version_no
+    except NotFoundError:
+        latest = 0
+    if payload.expected_version != latest:
+        raise HTTPException(
+            409, "Reference list was updated by another editor; reload before saving",
+        )
+    try:
+        record = append_company_profile_fact(
+            session,
+            customer_id=principal.customer_id,
+            fact_key=REFERENCE_FACT_KEY,
+            payload=AppendCompanyProfileFactRequest(
+                fact_group="EXPERIENCE",
+                value=payload.snapshot.model_dump(mode="json"),
+                source_type="CUSTOMER_PROVIDED",
+                source_ref=payload.source_ref,
+                expires_at=payload.expires_at,
+            ),
+        )
+    except IntegrityError as exc:
+        session.rollback()
+        raise HTTPException(
+            409, "Concurrent reference-list version write; reload before saving",
+        ) from exc
+    return {
+        "customer_id": principal.customer_id,
+        "fact_version": record.version_no,
+        "fact_id": record.id,
+        "source_type": record.source_type,
+        "human_gold": False,
+        "external_action_allowed": False,
+    }
+
+
+@router.post("/api/saas/qualification/assess", response_model=QualificationAssessment)
+def saas_qualify_company(
+    payload: QualificationCriterion, principal: Member, session: DBSession,
+) -> QualificationAssessment:
+    """Tenant identity comes only from authenticated Bearer principal."""
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    return assess_company_qualification(
+        session, customer_id=principal.customer_id, criterion=payload,
+    )
+
+
+@router.post(
+    "/api/saas/qualification/decision-core",
+    response_model=QualificationAwareDecisionResponse,
+)
+def saas_qualification_decision(
+    payload: QualificationAwareDecisionRequest, principal: Member, session: DBSession,
+) -> QualificationAwareDecisionResponse:
+    role_required(principal, "owner", "admin", "analyst")
+    legal_required(session, principal)
+    return build_qualification_aware_decision(
+        session, customer_id=principal.customer_id, request=payload,
+    )
 
 
 @router.get("/saas", response_class=HTMLResponse)

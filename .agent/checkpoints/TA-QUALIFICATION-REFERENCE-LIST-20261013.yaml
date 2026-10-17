@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-REFERENCE-LIST-20261013
+status: completed
+goal: Implement original-source-bound competitive qualification decision using a tenant-scoped versioned reference list of completed company contracts.
+definition_of_done:
+  - Versioned tenant-scoped company reference-list snapshot distinguishes verified empty list from unknown/missing data; source reference and freshness preserved.
+  - Independent deterministic 44-FZ/223-FZ contract matching against an evidence-bound criterion (regime, subject including chatbot, completion act recency); do not assert legal ineligibility from zero score.
+  - CZN 0348100024426000039 yields competitive NO_GO because owner confirms Arvectum has zero executed contracts, with source 70% qualification/30% price, unchanged legal eligibility.
+  - Expose usable read-only assessment path from company profile store; integrate risk decision into operator Decision Core only when explicit source-bound criterion + same tenant snapshot present; no global demo profile assumptions.
+  - Include negative tests for tenant isolation, unknown/expired list, nonqualifying 44/223 or incomplete contracts, fabricated source and wrong version; pass local and exact-head CI.
+  - Document how to update reference list after first signed contract and how evaluation reacts.
+completed:
+  - 'Final verified source head a400d8fd3332412543079f72d4b2ab5e3937046f, PR 38415954750, push 38415943973/38415943861 all SUCCESS. Child status completed; PR left draft.'
+  - Reused existing immutable tenant-scoped CompanyProfileFactVersion for fact key completed_contract_reference_list, group EXPERIENCE; latest active fact only and owner-provided source.
+  - Explicit owner-confirmed complete zero != absent/partial/expired/untrusted/stale list. 90-day freshness window and source provenance retained.
+  - Implemented completed 44-FZ/223-FZ contract matching, signed final act reference/date and requirement of chatbot; lookback measured from official bid deadline, not analysis run date.
+  - Pinned original CZN EOK2020 v4 source UID/SHA and 70/30 evaluation weights in owner-statement example, competitive no-go (not legal ineligibility).
+  - Added read-only GET-dependent POST /qualification/assess and /qualification/decision-core, with exact original notice version+UID+checksum+deadline binding and no cross-tenant data.
+  - Tested source mismatch/future act/owner unknown/tenant isolation/superseded fact/nonlegal core status. Mac mini 50 focused pytest PASS, 8 skipped, Ruff PASS, JSON validation PASS, git diff --check PASS on b129b2f.
+  - Draft main-based PR407 created, no production or ETP changes.
+  - Added authenticated SaaS Bearer Member routes /api/saas/qualification/references (GET and owner/admin write), /assess and /decision-core using principal.customer_id from actual tenant token; legal entitlement and roles enforced, no user-supplied customer id. SaaS remains disabled by default.
+  - New SaaS tests enforce no anonymous reads, terms acceptance, cross-tenant separation and viewer write denial. Mac mini b3e3174 code 71 pytest PASS/8 SKIP, Ruff PASS, git diff --check PASS; final docs head 3c8b7290.
+current: Engineering/research child complete after exact-head GitHub CI SUCCESS. PR407 draft and unmerged; remaining parent/unrelated tasks tracked separately.
+pending: []
+last_verified_commit: 'PR407 exact-head a400d8fd3332412543079f72d4b2ab5e3937046f, PR 38415954750, push 38415943973/38415943861 all SUCCESS; local: SaaS bearer identity, owner/admin versioned reference list, source-bound Decision Core (read-only); 71 PASS / 8 SKIP, Ruff PASS; checkpoint-only final commit after green head.'
+test_results:
+  - 'PR407 exact-head a400d8fd3332412543079f72d4b2ab5e3937046f, PR 38415954750, push 38415943973/38415943861 all SUCCESS.'
+  - 'PR407 actual SaaS-Bearer path on Mac mini code head b3e3174: 71 focused pytest PASS/8 SKIP (10+ unrelated warnings), Ruff PASS. Signed tenant principal ensures company customer_id, viewer POST denied 403, no auth 401, no legal 428, separate tenants no cross data. JSON/diff PASS.'
+  - 'Mac mini checkout b129b2f: 50 pytest PASS/8 SKIP, unrelated warnings 10, Ruff PASS, owner-zero JSON valid and git diff --check PASS.'
+  - 'Synthetic multi-tenant FastAPI test: Arvectum complete 0 references + original CZN v4 evaluation document 70/30 -> competitive NO_GO, legal Decision Core remains NEEDS_REVIEW, no bids allowed. Other tenant returns UNKNOWN. Exact 5-year deadline-based act cutoff tested.'
+  - 'Exact-head GitHub PR407 CI not yet confirmed.'
+resume_instruction: 'Child completed with PR407 exact-head 3 green workflows. Continue new roadmap task: authenticated end-to-end official EIS scoring criterion extraction and automatic report/UI orchestration, without assuming trusted user-supplied source_binding. Never write to unknown live Arvectum tenant; owner says zero completed contracts, CZN competitive NO_GO only, legal status unchanged.'
