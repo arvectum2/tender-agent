@@ -96,6 +96,16 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     };
     else if(route.endsWith('/workspace/runs/run-1/evidence')) value={
       facts:{},warnings:[],
+      archived_submission_deadline_status: viaHistory ? {
+        contract:'original_archived_notice_deadline_observation_v1',
+        as_of_utc:'2026-10-17T09:17:06+00:00',
+        archived_deadline:'2026-10-16T10:00:00+03:00',
+        relation_to_archived_deadline:'ARCHIVED_CUTOFF_REACHED',
+        source_fact_status:'KNOWN',
+        current_public_eis_procedure_status:'UNKNOWN',
+        live_submission_eligibility_verified:false,
+        authorized_to_submit:false
+      } : null,
       source_revalidation: viaHistory ? {
         state:'archived_originals_retrieved_byte_identical',
         verified_at_utc:'2026-10-17T09:17:06+00:00',
@@ -195,6 +205,11 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
         'Fresh EIS attachment comparison is displayed INSIDE existing report');
       assert(get('evidence-facts').children.some(x=>x.textContent.includes('НЕ подтверждены')),
         'Archived source cannot suggest legal current GO');
+      assert(get('evidence-facts').children.some(x=>x.textContent.includes('Срок подачи в архивной редакции извещения истёк')),
+        'Historical source deadline must be prominently shown in same Operator Workspace');
+      assert(get('evidence-facts').children.some(x=>x.textContent.includes('Это НЕ подтверждение текущего юридического статуса')),
+        'No status/award/eligibility may be inferred from historical deadline');
+
     }
 
     let prevented = false;
