@@ -8,6 +8,9 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**APR-03B read-only smoke после merge, 17.10.2026:** существующий private preview Mac mini :18083 вернул health HTTP 200, неавторизованный workspace и /api/tenders — HTTP 401 (ожидаемая защита); временный :18087 не запущен. Это **не** установка нового main в runtime, **не** authenticated browser acceptance владельца. Переход к пользовательской приёмке остаётся открытым.
+
+
 В отдельном чистом ArvectumSSD worktree собраны все **60 open PR heads** (13 корневых стеков) с сохранением git-ancestry и их исходных кодовых изменений. Проверка GitHub: main не имеет branch protection или rulesets; ничего отключать не требуется. Все 60 PR-heads включены в main через **PR #459** после полного integrated-test/CI; это **не** означает производственного развёртывания. Сложные конфликты возникали лишь в общих .agent/current-task.yaml и двух master-roadmap файлах; консолидированные значения и новые DATA-01…09 возвращены отдельно без изменения frozen truth. Отдельный integrated HEAD выдержал полную Mac mini регрессию (4936 passed/285 skipped) и exact-head GitHub CI.
 
 Остаются неизменны: **R4 human gold 0/15; R5 owner 0/20; 77 unreviewed corpus candidates/0 train-ready; 9 ETP metadata событий только в PRIVATE dry-run очереди; 22 полноценных исторических MD по прежним путям отсутствуют; производственные/торговые/юридические действия не разрешены**. Следующие шаги после интеграции — APR-03B живая browser acceptance, APR-06/07 независимая юридическая/смысловая оценка, staging SaaS security, актуальный B2B corpus. Результат Музея хлеба проверять по официальному первоисточнику не ранее публикации 20.10.2026. Никаких ложных GO или продвижения train-ready.
