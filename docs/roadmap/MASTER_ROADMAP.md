@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B original official 44FZ bid guarantees (Oct17) next gate IN_PROGRESS:** actual pinned EIS EF2020v1 museum 0161600001326000063 applicationGuarantee.amount **16000 RUB 1pct NMC**, and EOK2020v1 Yakutia 0816500000626015655 **45500 RUB 1pct NMC**, compared to original source SHA, not aggregate. Updated museum illustrative cash planning for separately staged bid 16k vs execution 5% bond (cash tie-up not economic expense); actual bank guarantees and waivers require legal/owner review. Full source evidence [bid security original report](B2B_44FZ_APPLICATION_SECURITIES_ORIGINAL_2026-10-17.md), [machine SHA](b2b_44fz_two_original_bid_securities_2026-10-17.json). NO GO.
+
+
+
 **B2B museum three-complex illustrative economic sensitivity COMPLETED PR469 64a7b586ef:** 3 transparently hypothetical scenario costs (not provider quotes) x four 0/10/20/25pct pricing cuts, own shadow labor vs cash, planning USN6% of revenue and 5% performance-security liquidity not deducted as expense. At original 1.6m NMC profit hypothetical lean +609k/baseline -101k/stress -1346k, base economic breakeven RUB 1.707m above NMC. 12 focused PASS, Mac full 5019 PASS/285 SKIP and exact-head CI SUCCESS. No owner GO, vendor quote, official live status or legal admissibility proven; 15–20 qualified current B2B goal remains OPEN. [Owner sheet](B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md) / [machine sensitivity](b2b_museum_three_exhibits_cost_sensitivity_2026-10-17.json).
 
 
