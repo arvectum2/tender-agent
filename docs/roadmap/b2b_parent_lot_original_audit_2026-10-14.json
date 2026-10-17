@@ -1,0 +1,83 @@
+{
+  "schema_version": "b2b-original-lot-dedup-audit-v1",
+  "observed_at_msk": "2026-10-14T00:26:00+03:00",
+  "origin": "Russian Mac mini direct no-proxy read-only official public cards, curl HTTP and raw HTML SHA-256. Binary content locally retained only in /tmp and not committed.",
+  "original_pages": [
+    {
+      "source_url": "https://www.b2b-center.ru/market/otbor-dlia-uchastiia-v-konkursakh-na-razrabotku-i-redizain-brend-saitov/tender-4632699/",
+      "card_number": "4632699",
+      "parent_procedure_number": "4632682",
+      "lot_number": "1",
+      "source_type": "PARENT_PREQUALIFICATION_LOT",
+      "parent_explicit_in_original_html": true,
+      "buyer_original": "АО «Логика молока»",
+      "direct_http_status": 200,
+      "retrieved_bytes": 59762,
+      "html_sha256": "01edb692f47941e297ff7ef4a0db28eb7c2b4ed512c0975f91e0a2174e49838d",
+      "source_status": "ACTIVE_DISPLAYED",
+      "bid_ready": false,
+      "new_unique_qualified_leads_added": 0,
+      "reason": "Same parent prequalification #4632682 already included historically; original lot page is a different card ID, not a new procurement procedure; participation eligibility unknown."
+    },
+    {
+      "source_url": "https://www.b2b-center.ru/market/tender-na-uslugi-razrabotki-saita-transportno-servisnoi-kompanii-v/tender-4616411/",
+      "card_number": "4616411",
+      "source_type": "ORIGINAL_TENDER",
+      "direct_http_status": 200,
+      "retrieved_bytes": 72968,
+      "html_sha256": "f47132823d4dd81abe035042d0bdc8b6d47138811d6d8b24b1c31ed603ec96b4",
+      "buyer_original": "ООО «ТК «Мираторг»",
+      "source_status": "ARCHIVED",
+      "deadline_original_msk": "2026-10-09T18:08:00+03:00",
+      "bid_ready": false,
+      "new_unique_qualified_leads_added": 0,
+      "reason": "Archived original notice and submission deadline has passed."
+    },
+    {
+      "source_url": "https://www.rosatom.rts-tender.ru/market/vypolnenie-rabot-po-razrabotke-i-adaptatsii-baz-dannykh/tender-4638345/",
+      "card_number": "4638345",
+      "source_type": "ORIGINAL_PUBLIC_MARKET_RESEARCH",
+      "direct_http_status": 200,
+      "retrieved_bytes": 52395,
+      "html_sha256": "5d1b0b435675b6ee330abafa0e8ba2dfcb7935962c60667f054caeff838b1d34",
+      "buyer_original_displayed": "Ленинградская АЭС",
+      "procedure_type": "PRICE_MONITORING",
+      "source_status": "ACTIVE_DISPLAYED",
+      "deadline_original_msk": "2026-10-22T23:59:00+03:00",
+      "subject": "Nuclear power unit SAKOR-491 specific software configuration and research; not a general product development order.",
+      "bid_ready": false,
+      "new_unique_qualified_leads_added": 0,
+      "reason": "Price monitoring, not a validated tender for awarded IT development; specialized nuclear industrial systems not proven feasible."
+    }
+  ],
+  "historic_distinct_original_procedure_count_before": 11,
+  "historic_distinct_original_procedure_count_after": 11,
+  "new_countable_procedures": 0,
+  "goal_15_to_20_simultaneously_qualified_live_software_leads_met": false,
+  "constraints": {
+    "no_etp_mutation": true,
+    "no_registration": true,
+    "no_paid_access": true,
+    "no_bids": true,
+    "no_outreach": true,
+    "no_production": true,
+    "no_merge": true
+  },
+  "verified_parent_original_notice": {
+    "source_url": "https://www.b2b-center.ru/market/otbor-dlia-uchastiia-v-konkursakh-na-sozdanie-i-redizain-brend-saitov/tender-4632682/",
+    "card_number": "4632682",
+    "direct_http_status": 200,
+    "retrieved_bytes": 64714,
+    "html_sha256": "4af001503f0725b6b99464043bee984ec8026e817330808aec866bbe9d2d1d04",
+    "observed_at_msk": "2026-10-14T00:34:39+03:00",
+    "buyer": "АО «Логика молока»",
+    "original_deadline_msk": "2026-10-14T16:00:00+03:00",
+    "original_status": "ACTIVE_DISPLAYED",
+    "lot_count": 1,
+    "linked_lot_card_number": "4632699",
+    "unique_procedure_key": "b2b-center:4632682",
+    "participation_terms_verified": false,
+    "bid_ready": false,
+    "new_unique_qualified_leads_added": 0
+  }
+}

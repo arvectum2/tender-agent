@@ -5,6 +5,7 @@ card metadata is provisional, not a live authenticated platform check.
 """
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
@@ -27,10 +28,12 @@ _RECEIVING = frozenset({
     "идет прием заявок", "прием заявок", "accepting applications",
 })
 _LEGAL_ENTITY = frozenset({"юридическое лицо", "legal entity", "company"})
-_ALLOWED = {
-    "workspace.ru": "/tenders/",
-    "www.b2b-center.ru": "/market/",
-    "b2b-center.ru": "/market/",
+# A platform's landing page, search result or category page is not a
+# procurement notice. This is only a URL-shape check, NOT source attestation.
+_ORIGINAL_CARD_PATHS = {
+    "workspace.ru": r"/tenders/[a-z0-9][a-z0-9-]*-\d{5}/?",
+    "www.b2b-center.ru": r"/market/[a-z0-9][a-z0-9-]*/tender-\d+/?",
+    "b2b-center.ru": r"/market/[a-z0-9][a-z0-9-]*/tender-\d+/?",
 }
 
 
@@ -88,8 +91,8 @@ def triage_corporate_card(
     if (
         parts.scheme != "https"
         or parts.username or parts.password or port is not None
-        or _ALLOWED.get(parts.hostname or "") is None
-        or not parts.path.startswith(_ALLOWED[parts.hostname or ""])
+        or parts.hostname not in _ORIGINAL_CARD_PATHS
+        or re.fullmatch(_ORIGINAL_CARD_PATHS[parts.hostname], parts.path) is None
     ):
         return CorporateLeadDecision("REVIEW_REQUIRED", "unsupported_original_platform_url")
 
