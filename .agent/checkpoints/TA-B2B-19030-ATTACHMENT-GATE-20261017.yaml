@@ -1,0 +1,20 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-19030-ATTACHMENT-GATE-20261017
+status: in_progress
+goal: Establish whether the exact Workspace 19030 public original exposes the detailed TZ_.pdf and prevent false pilot quoting when the official attachment is PRO/invitation-restricted.
+definition_of_done:
+  - Reuse exact original public source validation and observe publicly printed attachment name/access wording.
+  - Distinguish existence/listing of TZ_.pdf from access to authenticated full PDF bytes and inspected scope.
+  - Record source hash and time with safe company-specific UNKNOWN / no paid or external actions.
+  - Add fail-closed regression and source-cited operator roadmap item.
+  - Commit, test, push draft PR, close checkpoint; parent stays open.
+completed:
+  - Original public HTML of Workspace19030 fetched HTTP200; page names TZ_.pdf in file panel and states downloads available to PRO or buyer-invited performers; no clickable public attachment href inside panel.
+current: Implement first-party read-only access gate report and tests.
+pending:
+  - Script, source receipt, tests and roadmap update.
+  - Complete canonical checkpoint, push to review, check CI.
+last_verified_commit: 2aaf94866e5b98b7f0a5e482a56100ee34199887
+test_results: 199 B2B tests PASS for last sibling task; new task not yet tested.
+resume_instruction: Only original public source and attach-eligibility test; do not bypass PRO/private PDF, speculate on contained TZ, pay, log in, or contact customer.
