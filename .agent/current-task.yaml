@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 five original Workspace current public statuses source-refreshed, 5/5 HTTP200 and literal accepting labels with exact source SHA, original requirement anchors verified, new read-only reusable source verifier on code SHA541f9f85, 167 B2B tests pass/Ruff PASS. 0/5 LLC account/portfolio paid response GO verified, 0 submissions or purchases. Child TA-B2B-LIVE-SOURCE-REFRESH-20261017 COMPLETE, PR477 draft; 15-20 qualified target remains OPEN."
   - "2026-10-17 original five Workspace corporate source cards LLC eligibility gate implemented in child TA-B2B-LLC-ELIGIBILITY-20261017 on code SHA217c9d02: 159 B2B regression tests passed, deterministic source-SHA snapshot; 0/5 LLC response channel and legal qualification proven, no messages/purchases/bids. Parent 15-20 target OPEN, roadmap refreshed."
   - "2026-10-17 FREE first contact IT platform sources original PR476 merge c97e186c8c6f8289613c49769a1398119f5455a4, Mac 5074 pass/285 skip, 5 focused PASS/CI green. Four first-party policy page SHA and three actual original order HTML SHA; Pchel direct intermittent marked unavailable not invented, official FAQ nonetheless confirms standard studio100 replies/mo <=$1000; FL free for all/vacancies/contests, CodeLance unlimited advertiser claim but contains seller self-adverts, CONTRACTIS limited free count unknown. Original 3 project candidates Contractis PythonAI170k, construction landing90-150k 34 competitors, CodeLance data catalog import budget negotiable. 0 account LLC free replies verified, no outreach. Separate official Moscow supplier portal free LLC registration with УКЭП for governed supplier offer not free messaging. 15-20 real qualified client target remains OPEN."
   - "2026-10-17 mobile Workspace PRO first party Apple LLC ARVECTUM portfolio PR475 merged 9b894bb383576499679faa7de909f2e963d7f8ee; Mac mini 5069 PASS/285 SKIP, 12 focused+Ruff/make check/GH CI all green. Mobile MOB official PRO price1mo16900,3mo45630,6mo86190,12mo152100 RUB; cheapest 2900 generic CONTNT not mobile. Apple official three published LLC ARVECTUM iOS seller products ChickMark id6818711298, PhotoPDF6816346084, APL6816013574 (verified Apple versions and SHA). Original Workspace19041 corporate needs3y commercial Android+iOS, unproven; 18998 corporate Android8.1 no-GMS real kid watch and child safety, unproven; 19007 personal organizer Kazakh legal platform, not strict corporate B2B. No actual mobile qualified bid GO or PRO purchase. Future focus iOS-only support/App Store/watchOS tasks, not falsely declaring 3yr Android contracts."
@@ -604,6 +605,8 @@ active_child_2026_10_17:
 active_child_live_source_refresh_2026_10_17:
   task_id: TA-B2B-LIVE-SOURCE-REFRESH-20261017
   checkpoint: .agent/checkpoints/TA-B2B-LIVE-SOURCE-REFRESH-20261017.yaml
-  status: in_progress
+  status: completed
+  implementation_commit: 541f9f8593024afd26b28fc9346e7e60c008109d
+  tests: 167_passed
   source_platform: workspace.ru
   external_action: false
