@@ -13,12 +13,13 @@ completed:
   - '2026-10-17 checked GitHub API: main branch is not protected; active rulesets [] (no technical restriction to remove).'
   - 'Verified 60 open PRs, 13 main-rooted stacks, PR #254 presently conflicting, other PRs report combined green; many DRAFT and require actual integration checks.'
   - 'Created isolated, clean worktree from main bc98bd397bbd91186dd08e1e611d972077c4ab74; original dirty worktree not modified.'
-current_stage: 'Group PR changes by dependency; audit and merge in isolated branch.'
+  - 'Combined all 60 source PR heads from 13 root stacks; only shared roadmap/checkpoint conflicts, reconciled 17 Oct source-only LLM and historical statuses. Original working tree untouched.'
+current_stage: 'All 60 source heads integrated in isolated worktree; shared roadmap/canonical task safely reconciled; run tests.'
 remaining:
-  - 'Review affected paths and try safe ordered merges without touching main.'
+  - 'Review exact integrated-head source files, tests and hard stops.'
   - 'Run source and security checks; resolve conflicts.'
   - 'Push integration branch/CI and merge only approved fully verified changes.'
   - 'Complete checkpoint or detail objective blocker.'
 last_verified_commit: bc98bd397bbd91186dd08e1e611d972077c4ab74
-last_tests: 'Previously reported PR branch CI green. No integrated regression yet.'
+last_tests: 'Individual PR branch CI green; YAML syntax and 60/60 source ancestry PASS; integrated regression pending.'
 resume_instruction: 'Use clean worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-main-consolidation-20261017, current branch integration/main-consolidation-20261017. Inspect /tmp/ta-open-prs-20261017.json. Integrate defensibly by stack and verify; do not bypass CI or human/legal/prod gates. Parent .agent/current-task.yaml remains in_progress/manual_override true until clear completion.'
