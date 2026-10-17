@@ -8,7 +8,11 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
-**Решение Owner 17.10.2026: только ОДИН существующий UI Tender Agent.** Operator Workspace (operator_workspace.html/js/css) — единственная рабочая панель; существующий Mac mini Pilot 18082 должен показывать эту панель по /pilot/tender-agent/workspace; /pilot/tender-agent отдаёт тот же HTML, старый demo wizard переадресует. Preview 18083 после безопасной замены дубликат и подлежит остановке. Не создавать других фронтендов, баз или стендов. [Источник истины](../architecture/TENDER_AGENT_SINGLE_OPERATOR_UI.md).
+**ЗАВЕРШЕНО: единый Operator Workspace на действующем Pilot Mac mini (17.10.2026).** PR #461 merged, existing API 127.0.0.1:18082 обновлён, исходники Docker 1162 файлов и SHA совпадают, старый Pilot — byte-identical alias, demo wizard — HTTP 307. Авторизация/реестр/история проверены, Google Chrome без ошибок JS, 4936 локальных тестов и GitHub CI PASS. PostgreSQL existing rev106→107 после SHA-verified backup, пять томов сохранены. Дублирующий preview 18083 остановлен. **Личная приёмка владельца на настоящих исходниках ЕИС по-прежнему открыта**. [Протокол](../operations/TENDER_AGENT_SINGLE_OPERATOR_RUNTIME_2026-10-17.md).
+
+
+
+**Решение Owner 17.10.2026: только ОДИН существующий UI Tender Agent.** Operator Workspace (operator_workspace.html/js/css) — единственная рабочая панель; существующий Mac mini Pilot 18082 уже показывает эту панель по /pilot/tender-agent/workspace; /pilot/tender-agent отдаёт тот же HTML, старый demo wizard переадресует. Дублирующий preview 18083 остановлен после успешной проверки действующего Pilot без удаления томов. Не создавать других фронтендов, баз или стендов. [Источник истины](../architecture/TENDER_AGENT_SINGLE_OPERATOR_UI.md).
 
 
 

@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 TA-ONE-OPERATOR-UI COMPLETED PR461 66f7521f6ea572f634954be350cbd6c11c540f9b: existing 18082 single Operator Workspace, original 5 mounts, database106->107 after SHA-verified backup, 1162 code source parity, Chrome no JS errors, preview18083 stopped; main CI and local 4936 PASS/285 SKIP. No new stand. Owner real EIS browser/legal acceptance OPEN."
   - '2026-10-17 Owner instructed ONE existing Tender Agent operator UI. Audit: 18082 runs old pilot wizard, 18083 runs separate operator workspace. Preserve current Compose DB/volumes/auth, upgrade 18082 to existing workspace, then retire duplicate 18083.'
   - "2026-10-17 PR460 APR03B safe DB-unavailable fix merged to main b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d; 4937 tests pass, 285 skip, source parity 1163, 18/18 HTTP, Chrome UI DOM 0 JS exceptions. Existing preview 18083 remains stale and unmodified; owner real EIS/readonly canonical DB/legal acceptance still open."
   - '2026-10-17 APR03B post-merge read-only private staging: old preview 18083 a9f3bce has source drift from main; isolated localhost 18087 fixed-build verifies 1163 SHA source files, 18 safe auth/HTTP checks; missing canonical DB 500 fixed to 503 for registry list/detail/download; no production data mounts or human/legal acceptance.'
@@ -138,7 +139,7 @@ pending:
   - 'APR-06: original CZN 0348100024426000039 v4 SOAP XML/7 UID SHA binding and public status 23 Oct 10 MSK verified; PR404 bounded EIS cache retry, fixed timezone and exact-head CI SUCCESS. PR405 source-grounded AI-only doc review: official NMCK 685k/315k/245k, experience 70% and price 30%; if no qualifying completed 44/223 chatbot contracts, commercial win chance likely low; keep DEFER conditional, not legal denial. Need company reference confirmation, economic/security cost, owner KPI, actual human gold 20-30 independent cases, cryptographic signature if needed; PR254/PR255 do not merge.'
   - 'APR-07: exact-head PR+push CI green on draft stacked PR255; bounded reproducible offline snapshot tested but rolling production SLO and human procurement model comparison NOT_MEASURED, no promotion.'
   - 'B2B discovery: nine historically source-attested corporate IT/digital cards, NOT nine presently open: Workspace19004 terminal despite future printed deadline, official Workspace PRO needed for self-initiated bids. Bounded status-first library PR392 merged, discovery source connectivity and 15-20 qualified original-platform leads still open; no purchases or ETP submissions.'
-last_verified_commit: "Main merge PR460 b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d, local 4937 passed/285 skip, GitHub CI all required green, Chrome browser source parity passed."
+last_verified_commit: "PR461 main 66f7521f6ea572f634954be350cbd6c11c540f9b; original 18082 updated, source parity1162, Mac mini 4936 PASS/285 SKIP and CI green; 18083 stopped."
 
 test_results:
   - "PR432 Mac mini FULL source780ebd11 4106 pytest PASS,242 SKIP,0 failed,329 warnings,149.74s; ten focused tests PASS, Ruff PASS, original 96/96 EIS archive attachment provenance checked and 47 quote classification reproducible."
@@ -225,7 +226,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 APR03B private main-source postmerge QA PR460 merged b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d, full 4937 PASS/285 SKIP, 18/18 staging HTTP PASS, 1163 source SHA and Chrome headless DOM 0 JS errors. Original preview 18083 remains a9f3bce (stale), not redeployed; new qa container stopped/test creds removed. Parent roadmap is in_progress. Owner browser acceptance requires controlled staging connected to permitted canonical procurement originals/history with safe isolation, owner auth and genuine 44/223-FZ evidence; no owner signoff claimed. APR04 owner company profile/eligibility and APR05 SaaS legal/staging production remain gated. APR06/07 R4 human gold 0/15, R5 owner 0/20, no train-ready Procurement LLM data; next independent source-grounded expert review packet or current corporate B2B 15–20 source-qualified leads. ETP/production/signature/payments/off-platform contact not authorized; manual_override true."
+resume_instruction: "2026-10-17 ONE EXISTING Tender Agent Operator Workspace complete via PR461 66f7521f6ea572f634954be350cbd6c11c540f9b. Existing Mac mini 18082 /pilot/tender-agent/workspace canonical; /pilot/tender-agent identical, old demo wizard redirects 307; 18083 preview stopped, shared volumes retained, PostgreSQL migrated to107 after private backup; 4936 tests PASS/285 SKIP, CI success, real Chrome DOM success. NEVER create another pilot or workspace UI, a new stand, duplicate database. Next: Owner private browser acceptance of REAL EIS original documents, citations, report/export in existing 18082; APR06/07 original-source R4 15 external human gold reviews/R5 20 owner reviews and B2B 15-20 current qualified leads. Human/legal/production/ETP/payment/signature gates stay closed; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -310,6 +311,13 @@ apr03b_postmerge_readiness_2026_10_17:
   source_files_verified: 1163
   qa_http_assertions: 18
   owner_browser_acceptance: pending
+  code_merge_commit: 66f7521f6ea572f634954be350cbd6c11c540f9b
+  existing_api_18082_upgraded: true
+  source_parity_files: 1162
+  postgres_original_revision: 107_add_procurement_learning_observations
+  old_preview_18083_stopped: true
+  original_data_volumes_preserved: true
+  private_backup_sha256: ed2d813f2816e357bcaa7b0d893585a6551f1d1a620e9bce02d8d3573c7d81d2
   merged_pr: 460
   merged_main_commit: b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d
   qa_browser_chrome_headless_pass: true
@@ -317,7 +325,7 @@ apr03b_postmerge_readiness_2026_10_17:
   production_runtime_changed: false
 
 single_operator_ui_owner_directive_2026_10_17:
-  status: in_progress
+  status: completed
   canonical_ui: src/modules/tender_operator_agent_demo/assets/operator_workspace.html
   canonical_url_path: /pilot/tender-agent/workspace
   existing_local_compose_project: arvectum-local-e2e
