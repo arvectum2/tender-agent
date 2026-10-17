@@ -1,0 +1,56 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-WORKSPACE-MOBILE-APPSTORE-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Verify first-party Workspace mobile-app PRO category price and original current mobile tender requirements; link actual LLC
+  ARVECTUM-owned published Apple App Store product portfolio via official Apple source, distinguish iOS product publication from
+  past 3 years multi-platform contracts, and update owner B2B outreach cost matrix without PRO payment.
+definition_of_done:
+- Confirm original Workspace advertising calculator mobile category MOB public price for 1/3/6/12 months, source SHA; do not confuse
+  with generic PRO 2900 or web category 25500.
+- Verify exact official Apple iTunes app records (title, version, ID, sellerName LLC ARVECTUM) for existing 3 company apps, usable
+  live App Store URLs; record unsupported Android/enterprise case experience accurately.
+- Verify original direct current public Workspace mobile tender cards 19041,19007,18998 with source SHA/status/entity/date/ranges
+  and literal hard gates, including hidden PRO spec and Android GMS-free real hardware conditions, and exclude stale/unsupported
+  other cards.
+- Create source-only machine receipt and Russian owner report with fee vs commercial risk and safe portfolio wording. Do not purchase,
+  register, pay, message, bid or produce invented customer/client app references.
+- Fail-closed offline regression tests, Mac full make check/pytest, exact-head GitHub CI, merge and child completed, parent 15-20
+  truly qualified remains open.
+completed:
+- Canonical main cba5875d... and prior first-party Workspace PRO child COMPLETED; original 18082 healthy; no open PRs.
+- Verified original Apple iTunes lookup sellerName LLC ARVECTUM on ChickMark id6818711298 iOS/Watch version1.4.1; Фото и PDF под
+  размер id6816346084 iOS version1.0.1; Arvectum Proxy Launcher id6816013574 iOS version0.1.37. All first-party Apple App Store
+  pages are public; no third party reference invented.
+- Prior official Workspace advertising HTML source original MOB 16900 RUB 1 month, 45630/3mo, 86190/6mo, 152100/12mo, site WEB_DEV25500/mo
+  and AI/CRM6900/mo.
+- 'Verified original public mobile Workspace #19041 status accepting Android+iOS 3yrs commercial experience hard gate, #19007 complex
+  legal platform iOS/Android/Web and PRO-locked spec, #18998 Android8.1 no GMS physical prototype and hosted child-safety speech
+  + NDA/rights source. Public status does not prove paid bidder GO.'
+- Original Workspace first-party category MOB PRO tariff 16900 RUB one month, 45630 three months, 86190 six months, 152100 twelve
+  months verified via exact HTML SHA, separate from sites25500 and generic cheapest content2900.
+- 'Official Apple iTunes first-party three LLC ARVECTUM sellerName app records verified: ChickMark: трекер привычек id6818711298
+  ver1.4.1, Фото и PDF под размер id6816346084 ver1.0.1, Arvectum Proxy Launcher id6816013574 ver0.1.37, authentic public App Store
+  URLs and source SHA. iOS App Store product delivery confirmed, not client 3yr contracts nor Android publishing history.'
+- Original mobile Workspace first-party direct public cards 19041 (corporate, 3yr commercial Android+iOS mandatory, 250k-1m RUB),
+  18998 (corporate, Android8.1 without Google services, real 4G hardware acceptance, child safety/AI, 240k-1m), 19007 (PERSONAL
+  organizer legal-help platform >=1.5m and hidden PRO-attested doc, excluded from strict ООО B2B), all public source SHA and literal
+  hard gates.
+- Owner source-bounded report and machine first-party Apple/Workspace source receipt; 12 focused false-product/eligibility/owner
+  buy safeguards PASS and Ruff PASS. No PRO purchase/ETP registration/proposal or new Operator Workspace.
+current_stage: Source-first exact mobile tariff and 3 Apple LLC app references plus 3 real mobile original tender cards report
+  complete, awaiting Mac full make check and pytest, GitHub exact-head CI and merge.
+remaining:
+- Original mobile first-party source byte hashes and owner fit/scope/price matrix.
+- Focused source gate tests, make check/full regression/exact-head GitHub CI.
+- Merge and finalize checkpoint while preserving owner external eligibility/PRO payment and bidder consent.
+last_verified_commit: cba5875d28314b917e70454ce0efe8059c5ba286
+last_tests: 12 focused PASS, Ruff PASS, original Apple3/3 first-party, Workspace mobile cards3/3 statuses verified, full suite/CI
+  pending.
+resume_instruction: SSD clean tender-agent-workspace-mobile-appstore-reference-20261017 branch. Exact Workspace original mobile
+  MOB PRO16900/45630/86190/152100 for1/3/6/12 mo. First party Apple lookup seller LLC ARVECTUM verified ChickMark6818711298, Photo/PDF6816346084,
+  APL6816013574 (iOS and Watch only). Original Workspace corporate mobile 19041 demands Android+iOS 3yrs exp, 18998 Android8.1
+  Google-free real child watch hardware + GigaChat safety; 19007 personal organizer excludes strict B2B. No qualified mobile bid
+  GO and no checkout. Machine report+source receipts+12 focused tests PASS. Run make check full Mac pytest, PR exact-head CI, merge
+  then mark child COMPLETED. One UI18082, no payments, bids, new DB.
