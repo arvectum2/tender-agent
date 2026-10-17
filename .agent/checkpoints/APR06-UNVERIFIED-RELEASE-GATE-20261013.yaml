@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: APR06-UNVERIFIED-RELEASE-GATE-20261013
+status: in_progress
+goal: Block misleading commercial ACCEPTED on self-attested notice hashes and owner approval data.
+definition_of_done:
+  - APR06 metric evaluator distinguishes computational metric pass from independently proven commercial acceptance.
+  - CLI never exits success for synthetic approved corpus lacking trusted original EIS and owner verification.
+  - Include regression tests and source-bounded independent risk report.
+  - Exact-head GitHub CI green and safely integrate into APR06 draft branch, restack APR07 afterwards.
+completed:
+  - Reviewed source-derived APR06 and APR07 evidence, PR394 and PR396 code and published exact-green CI.
+  - APR06 PR394 18b626e0 merged code-only e5af parent at 5d2b7f0b after exact CI green.
+  - APR06 PR396 e59eaa82 merged code-only at e5af3c29 after exact CI green.
+  - New source gate in separate branch now returns PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION rather than ACCEPTED on synthetically approved and source-verified-shaped records.
+  - Added negative unit + CLI tests and independent evidence limitations document.
+current: 'Await exact-head GitHub CI and repair any regressions.'
+pending:
+  - Publish isolated PR for code/test/review and verify exact-head CI.
+  - Merge code-only fix into APR06 draft after green CI, restack APR07 and run its new head CI.
+  - Keep official EIS attestation and 20-30 real human-reviewed corpus / owner KPI approvals open.
+last_verified_commit: 'Parent APR06 e5af3c2984308a4b2365afa1c3d5779a4e94c8b7, tests in PR394/396 exact-head CI success; new independent release fix unverified CI.'
+test_results: []
+resume_instruction: 'Continue fix/apr06-block-self-attested-acceptance-20261013 from APR06 e5af3c29: acceptance.py now cannot emit ACCEPTED from self-attested JSON, requires external proof work under issue #395. tests/test_apr06_commercial_acceptance.py has negative synthetic approval and CLI tests. Open PR and await exact-head GitHub CI, repair if needed, integrate safe code into APR06 DRAFT and then update APR07 DRAFT. Do not claim official EIS provenance, human decisions (0/28), legally binding owner approvals, production SLO or business readiness; no bids, signing, paid API or public VPS.'

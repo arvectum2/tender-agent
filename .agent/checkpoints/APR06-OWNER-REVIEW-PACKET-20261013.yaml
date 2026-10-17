@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: APR06-OWNER-REVIEW-PACKET-20261013
+status: completed
+goal: Prepare a safe, private, actionable human evaluation queue for APR-06 without fabricating expert results.
+definition_of_done:
+  - Build read-only private HTML from 28 candidate registry numbers and 9 available machine prefill cases.
+  - Never invent reviewer, EIS current revision or document SHA; expose 0 verified human decisions.
+  - Verify local-only protected report navigation and HTML injection handling.
+  - Generate private Mac mini queue with permissions 0600, do not commit sensitive user observations to GitHub.
+  - Pass focused and full regression, static checks, and publish reviewable code PR on APR-06.
+completed:
+  - Generator scripts/acceptance/apr06_review_packet.py implemented in isolated feature branch based on APR06 4d0e96c8.
+  - Private offline HTML generated at /Users/master/arvectum-runtime/private-operator-acceptance/apr06-review-queue-20261013.html.
+  - Generated inventory 28 candidates, 9 machine report links, 20 source-incomplete cases and 0 human decisions.
+  - 14 focused pytest PASS with XSS, local base URL, unsafe run ID, duplicate candidate, read-only output/overwrite prevention.
+  - Full PostgreSQL16/Docker regression 4028 PASS, 238 SKIP, 0 FAIL in 183.69 seconds.
+  - Ruff and make check PASS.
+  - macOS Safari open request sent, not an independent visual approval.
+  - PR393 exact tested tree SHA 5255ccc1 successfully published, both GitHub push and PR CI runs 9/9 SUCCESS, merged code-only into APR06 draft branch at 6c433bf6.
+current: Review-packet engineering completed; private Mac mini HTML operational. Parent APR06 expert acceptance not completed.
+pending: []
+last_verified_commit: 'PR393 exact tested Git tree 5255ccc1, head 988ef6cca798370ef7e7ea247ca889d6066e8237, merged into APR06 branch at 6c433bf67ae6f7d9f6ff0a4c9d616460a8f69802.'
+test_results:
+  - '14/14 focused pass, full 4028 pass/238 skip, Ruff pass, make check pass.'
+resume_instruction: 'SUBTASK COMPLETED: PR393 code-only merged into APR06 development draft branch at 6c433bf6 after exact-head GitHub CI 9/9 push+PR; local private review queue file mode 0600 on Mac mini has 28 candidates, 9 saved machine reports, 20 incomplete sources, 0 human decisions. DO NOT rerun implementation or pretend experts signed off. Canonical roadmap remains blocked pending actual expert review of 20-30 verified primary-source procurement files and owner-approved thresholds, APR07 rolling SLO, APR03B authenticated semantic approval and B2B active original-site opportunities. No bids, payments, signatures, VPS or watchdog.'

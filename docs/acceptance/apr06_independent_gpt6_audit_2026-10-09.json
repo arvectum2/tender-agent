@@ -1,0 +1,454 @@
+{
+  "cases": [
+    {
+      "comparison": "INVALID_HARD_NO_GO_STALE_NOTICE_REVISION",
+      "external_action_allowed": false,
+      "finding": "Current archived EIS notice v5 extends deadline to 2026-10-12 08:00+03; report used v1 2026-10-09 08:00+03 and incorrectly blocked participation.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "Reconcile Tilda v1 vs registered Russian CMS v5 technical specifications.",
+        "Confirm Russian CMS registry entry, 12-month licence/hosting costs, feasibility of 14 working days."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-05",
+        "publication": "2026-10-07T08:43:12.441+03:00",
+        "source_deadline": "2026-10-12T08:00:00+03:00",
+        "source_nmck_rub": "152033.33",
+        "source_sha256": "2fe41acb72bc73d3f165829aa06ecc43cffc225e5de0ef333c20ba51fd2ecc4b",
+        "version": 5
+      },
+      "machine_deadline": "09.10.2026 08:00:00 +03:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "DEFER",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0158300034526000388",
+      "run_id": "toa-run-20261009051803-7193b2",
+      "source_files_total": 14,
+      "source_notice_revision_count": 5,
+      "source_text_flagged_available": 14,
+      "source_title": "Услуга по разработке веб сайта",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-08",
+          "original_name": "Описание объекта закупки.docx",
+          "role": "technical_spec",
+          "sha256": "cb33334a6d519924c82e26e1f1c404f4161496909aa67a49cc54375327d78e6d"
+        },
+        {
+          "file_id": "FILE-10",
+          "original_name": "описание объекта закупки 2.docx",
+          "role": "technical_spec",
+          "sha256": "7b18abc086bf4ba0c3f1c4f22fd3f04f674e52e3c25ff14346d978a103a5123c"
+        },
+        {
+          "file_id": "FILE-14",
+          "original_name": "описание объекта закупки 2.docx",
+          "role": "technical_spec",
+          "sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a"
+        }
+      ]
+    },
+    {
+      "comparison": "CONDITIONAL_REVIEW_AGREES",
+      "external_action_allowed": false,
+      "finding": "Application window open; report decision NEEDS_REVIEW is appropriately cautious but under-specifies deliverables.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "TЗ requires 3 visual brand concepts, numerous printed collateral mockups, 2-server isolated CMS/read-only frontend and external penetration test.",
+        "Clarify whether customer's secure servers, protected networking and pentest resources are provided; total NMCK RUB 1m, delivery by 2026-12-07."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-10-08T10:53:46.320+03:00",
+        "source_deadline": "2026-10-16T10:00:00+03:00",
+        "source_nmck_rub": "1000000.00",
+        "source_sha256": "ed5c742b554913c65d9001b658aa23619df418b2d19e6f6d6754a1bc70141bba",
+        "version": 1
+      },
+      "machine_deadline": "16.10.2026 10:00:00 +03:00",
+      "machine_decision": "NEEDS_REVIEW",
+      "machine_hard_blocker_codes": [],
+      "model_independent_recommendation": "DEFER",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0372200172326000015",
+      "run_id": "toa-run-20261009052409-9c4515",
+      "source_files_total": 6,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 6,
+      "source_title": "Оказание услуг по разработке сайта СПб ГБУК «Санкт-Петербургский музей Хлеба» с элементами фирменного стиля",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-03",
+          "original_name": "Приложение_1_Проект_контракта.doc",
+          "role": "contract_draft",
+          "sha256": "9294908cc3aec0bda85c84d41cd19b80fe1e5ddebd1b386b4830466d64eca091"
+        },
+        {
+          "file_id": "FILE-04",
+          "original_name": "Приложение_3_Описание_объекта_закупки_сайт.docx",
+          "role": "technical_spec",
+          "sha256": "3e029344d179742632d519d4e425e6f8e9f757ce4df23e0419aa4302d4068536"
+        }
+      ]
+    },
+    {
+      "comparison": "DEADLINE_VERIFIED",
+      "external_action_allowed": false,
+      "finding": "Official original EIS notice end of submission 2026-08-13 08:00+07 already passed.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "Retrospective 1C-Bitrix website at 135083.33 RUB; no bid action as of 2026-10-09."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-08-04T08:10:29.130+07:00",
+        "source_deadline": "2026-08-13T08:00:00+07:00",
+        "source_nmck_rub": "135083.33",
+        "source_sha256": "3bb0c7f143df7a71cafd4b4fcaa336f0e197bafbac30590178da70887c9dc777",
+        "version": 1
+      },
+      "machine_deadline": "13.08.2026 08:00:00 +07:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "NO_GO",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0377100005726000128",
+      "run_id": "toa-run-20261009052412-d5b9df",
+      "source_files_total": 13,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 13,
+      "source_title": "Оказание услуг по разработке официального веб-сайта на базе \"1С-Битрикс:Управление сайтом\"",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-10",
+          "original_name": "Приложение № 3 Описание объекта закупки.docx",
+          "role": "technical_spec",
+          "sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd"
+        }
+      ]
+    },
+    {
+      "comparison": "DEADLINE_VERIFIED",
+      "external_action_allowed": false,
+      "finding": "Original EIS notice submission deadline 2026-06-02 07:00+03 already passed.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "Retrospective development plus tourism portal technical support at 251200 RUB."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-05-25T16:25:06.370+03:00",
+        "source_deadline": "2026-06-02T07:00:00+03:00",
+        "source_nmck_rub": "251200",
+        "source_sha256": "9709b7c86856fe8f1f53e0a090e1a0094bc3a03dd7e15da98e571a6126dd505d",
+        "version": 1
+      },
+      "machine_deadline": "02.06.2026 07:00:00 +03:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "NO_GO",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0376300000126000193",
+      "run_id": "toa-run-20261009052414-56bbe6",
+      "source_files_total": 8,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 8,
+      "source_title": "Оказание услуг по разработке, технической поддержке и обслуживанию туристско-информационного сайта",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-06",
+          "original_name": "Пр 4. Проект контракта. Создание сайта и ТП.docx",
+          "role": "contract_draft",
+          "sha256": "01710aa6addbea66d1bdff43891fc2f98cfb503dc29b2247455c5338ee6209c8"
+        },
+        {
+          "file_id": "FILE-07",
+          "original_name": "Пр 1. Описание объекта закупки.  Создание сайта и ТП..docx",
+          "role": "technical_spec",
+          "sha256": "6a408d91d6148e2c6a88c1b087ed7ad1601910d0ca99d921a73acdbd49e77edc"
+        }
+      ]
+    },
+    {
+      "comparison": "DEADLINE_VERIFIED",
+      "external_action_allowed": false,
+      "finding": "EIS original submission deadline 2026-09-14 09:00+05 already passed.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "AR-tour media production and integration, 2000000 RUB; epNoticeApplicationCancel is application cancellation data, NOT conclusive procurement cancellation."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-09-07T17:09:38.422+05:00",
+        "source_deadline": "2026-09-14T09:00:00+05:00",
+        "source_nmck_rub": "2000000.00",
+        "source_sha256": "12533a5fb07fe6152310fbaf1f636b99b538d72ac1ceeb9c6cd0673e0aa09f12",
+        "version": 1
+      },
+      "machine_deadline": "14.09.2026 09:00:00 +05:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "NO_GO",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0169300008226000225",
+      "run_id": "toa-run-20261009052416-d4b7e8",
+      "source_files_total": 12,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 12,
+      "source_title": "Выполнение работ по созданию мультимедийного контента для AR-экскурсии по туристскому коду центра города Троицка и его интеграции в существующий сайт Заказчика",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-10",
+          "original_name": "Проект контракта.docx",
+          "role": "contract_draft",
+          "sha256": "704a9fc8ba767767060267795795a3a1960e5a6843c68a50127d538005a0c4e4"
+        },
+        {
+          "file_id": "FILE-11",
+          "original_name": "Приложение 1 - Описание объекта закупки.docx",
+          "role": "technical_spec",
+          "sha256": "762a0ea182ac4ae7a7f7ec922c089fe1d44bad096348517b4abf995bce409935"
+        }
+      ]
+    },
+    {
+      "comparison": "DEADLINE_VERIFIED",
+      "external_action_allowed": false,
+      "finding": "EIS original submission deadline 2026-09-14 09:00+05 already passed.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "Interactive tourist media production, 4000000 RUB; do not mistake application cancellation events for overall notice cancellation."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-09-07T16:51:25.478+05:00",
+        "source_deadline": "2026-09-14T09:00:00+05:00",
+        "source_nmck_rub": "4000000.00",
+        "source_sha256": "498ee1b2f907b263cd946949ca343972758b70f9334c5dacafad370b512265a6",
+        "version": 1
+      },
+      "machine_deadline": "14.09.2026 09:00:00 +05:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "NO_GO",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0169300008226000223",
+      "run_id": "toa-run-20261009052417-622fa8",
+      "source_files_total": 12,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 12,
+      "source_title": "Выполнение работ по созданию мультимедийного контента для интерактивной экскурсии по достопримечательностям города Троицка для туристического портала «Троицк-туристический»",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-10",
+          "original_name": "Проект контракта.docx",
+          "role": "contract_draft",
+          "sha256": "d4793e94b272b1f06a79e75600c2f01481a219799b211ac5ca0b692d14107b02"
+        },
+        {
+          "file_id": "FILE-11",
+          "original_name": "Приложение 1 - Описание объекта закупки.docx",
+          "role": "technical_spec",
+          "sha256": "b2af61e3c9ea8bbea3e0cf72f3b7e8f4fb23d1c3e9c2f4bef4c9e9ad955b8f9d"
+        }
+      ]
+    },
+    {
+      "comparison": "DEADLINE_VERIFIED",
+      "external_action_allowed": false,
+      "finding": "EIS original submission deadline 2026-07-27 07:00+05 already passed.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "Official municipal website support, 226938.66 RUB."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-07-17T10:45:28.611+05:00",
+        "source_deadline": "2026-07-27T07:00:00+05:00",
+        "source_nmck_rub": "226938.66",
+        "source_sha256": "04b3a50909decfd6d0a431b466a0359001ad124f58c648b86948328490b05298",
+        "version": 1
+      },
+      "machine_deadline": "27.07.2026 07:00:00 +05:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "NO_GO",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0169300003326000181",
+      "run_id": "toa-run-20261009052419-3f3f00",
+      "source_files_total": 16,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 16,
+      "source_title": "Оказание услуг по сопровождению официального сайта Администрации Златоустовского городского округа",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-10",
+          "original_name": "Приложение 2 Проект контракта (с приложениями).docx",
+          "role": "contract_draft",
+          "sha256": "27fe6bfa83e6bf497a6678218b32a7ba984de8b9b5f260e5526f92774f6d3ed5"
+        },
+        {
+          "file_id": "FILE-11",
+          "original_name": "Приложение 3 Техническое задание (Описание объекта закупки).docx",
+          "role": "technical_spec",
+          "sha256": "2aaf7f8d4377d941c94fdbcca329b3cc7f90639fed23697940f7811f91dc0c7c"
+        }
+      ]
+    },
+    {
+      "comparison": "DEADLINE_VERIFIED",
+      "external_action_allowed": false,
+      "finding": "EIS original submission deadline 2026-06-17 07:00+05 already passed.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "ESIA citizen cabinet integration, 495000 RUB. This decision is deadline-only; engineering feasibility not established."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-01",
+        "publication": "2026-06-09T15:12:06.401+05:00",
+        "source_deadline": "2026-06-17T07:00:00+05:00",
+        "source_nmck_rub": "495000",
+        "source_sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614",
+        "version": 1
+      },
+      "machine_deadline": "17.06.2026 07:00:00 +05:00",
+      "machine_decision": "NO_GO",
+      "machine_hard_blocker_codes": [
+        "APPLICATION_DEADLINE_EXPIRED"
+      ],
+      "model_independent_recommendation": "NO_GO",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0162300005826000156",
+      "run_id": "toa-run-20261009052421-b81ea5",
+      "source_files_total": 18,
+      "source_notice_revision_count": 1,
+      "source_text_flagged_available": 18,
+      "source_title": "Оказание услуг по настройке личного кабинета гражданина и сервиса авторизации посредством Единой системы идентификации и аутентификации на официальном сайте городского округа Верхняя Пышма",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-11",
+          "original_name": "Проект контракта.docx",
+          "role": "contract_draft",
+          "sha256": "64f1dd988630665dbca3f28ca8516408fccfe4cd6e40b76536b1175300783ce8"
+        },
+        {
+          "file_id": "FILE-12",
+          "original_name": "Описание объекта закупки.doc",
+          "role": "technical_spec",
+          "sha256": "84752ad82bec1c16106f04ec398584f81f1fc05ae314d34fa280d00a0525f78a"
+        }
+      ]
+    },
+    {
+      "comparison": "STALE_NOTICE_REVISION_NON_BLOCKING",
+      "external_action_allowed": false,
+      "finding": "Application window currently open through 2026-10-19 10:00+03 in notice v3; machine report showed superseded v1 2026-10-16 deadline.",
+      "human_confirmed": false,
+      "key_conditions_and_unknowns": [
+        "84-page v3 PDF requires modernization of existing custom non-CMS platform serving up to 6000 visitors and 300 staff concurrently.",
+        "Customer server resources for commissioning; supplier-operated Russian test hosting, NDA, source transfer, 2026-12-15 end. Obtain code and integration access before priced GO.",
+        "Only 10/19 source files had text extracted in the existing run."
+      ],
+      "latest_archived_notice": {
+        "file_id": "FILE-04",
+        "publication": "2026-10-08T11:39:10.670+03:00",
+        "source_deadline": "2026-10-19T10:00:00+03:00",
+        "source_nmck_rub": "1245000.00",
+        "source_sha256": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d",
+        "version": 3
+      },
+      "machine_deadline": "16.10.2026 10:00:00 +03:00",
+      "machine_decision": "NEEDS_REVIEW",
+      "machine_hard_blocker_codes": [],
+      "model_independent_recommendation": "DEFER",
+      "model_review_only": true,
+      "model_source_read_scope": "Primary EIS XML for every case; risk-bearing specification excerpts for three currently open cases; not a full legal/commercial package examination.",
+      "reg_number": "0348100024426000039",
+      "run_id": "toa-run-20261009052425-d20f58",
+      "source_files_total": 19,
+      "source_notice_revision_count": 3,
+      "source_text_flagged_available": 10,
+      "source_title": "Выполнение работ по развитию и модернизации платформы управления типовым сайтом Государственного казенного учреждения «Центр занятости населения Московской области» (в сфере ИКТ)",
+      "spec_and_contract_source_hashes": [
+        {
+          "file_id": "FILE-06",
+          "original_name": "Проект контракта, сост. 28.09.2026.zip",
+          "role": "contract_draft",
+          "sha256": "f7f93fe9d93d95e4138e03c4e891563e7e23f4b64cfb86062d4838068a4fb9d2"
+        },
+        {
+          "file_id": "FILE-07",
+          "original_name": "ООЗ ДОРАБОТКА САЙТА.pdf",
+          "role": "technical_spec",
+          "sha256": "830a4517c8a6b27b4c0759e20b4e80aed398c5ba6514d7cdeda0f10ea2320169"
+        },
+        {
+          "file_id": "FILE-12",
+          "original_name": "Проект контракта, сост. 05.10.2026.zip",
+          "role": "contract_draft",
+          "sha256": "3953b56d87d97e4d9ee20e853392c317346ee255450b016a7ce86e4ee827dee2"
+        },
+        {
+          "file_id": "FILE-13",
+          "original_name": "ООЗ ДОРАБОТКА САЙТА.pdf",
+          "role": "technical_spec",
+          "sha256": "321a0e939ec4a8b61f617f9650a6c93a17a4b3de4cd8a6f0298bcb48b541c0e7"
+        },
+        {
+          "file_id": "FILE-17",
+          "original_name": "Проект контракта, сост. 08.10.2026.zip",
+          "role": "contract_draft",
+          "sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185"
+        },
+        {
+          "file_id": "FILE-18",
+          "original_name": "ООЗ ДОРАБОТКА САЙТА.pdf",
+          "role": "technical_spec",
+          "sha256": "901c0b7607c71673f592df8f2e4a40d3a0d1a4b26521765652017240d7dc93f4"
+        }
+      ]
+    }
+  ],
+  "critical_mismatches": [
+    {
+      "expected_v": 5,
+      "reg_number": "0158300034526000388",
+      "reported_v": 1,
+      "type": "INCORRECT_NO_GO_FROM_STALE_V1"
+    },
+    {
+      "expected_v": 3,
+      "reg_number": "0348100024426000039",
+      "reported_v": 1,
+      "type": "STALE_DEADLINE_CURRENT_V3"
+    }
+  ],
+  "evidence_scope": "Existing on-disk primary EIS XML and selected TЗ/contract source bytes; no source intake repeated.",
+  "final_commercial_acceptance": false,
+  "human_operator_review": false,
+  "human_signed_decisions": 0,
+  "reviewer_type": "separate_gpt6_model_assessment_over_rdc",
+  "schema_version": "apr06-independent-gpt6-audit-v1",
+  "timestamp_utc": "2026-10-09T06:10:36.907315+00:00"
+}

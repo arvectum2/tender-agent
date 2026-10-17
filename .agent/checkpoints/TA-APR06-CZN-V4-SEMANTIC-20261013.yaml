@@ -1,0 +1,35 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-CZN-V4-SEMANTIC-20261013
+status: completed
+parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+goal: Inspect contents of current original CZN EIS notice revision 4 document set and give source-grounded, clearly provisional engineering/commercial assessment.
+definition_of_done:
+  - Verify exact currently stored 7 original EIS document receipts and four newly downloaded files with prior source SHA-256, without relocating binary files to GitHub.
+  - Safely inspect nested two DOCX and two PDF, check actual business requirements, document quality and traceability; differentiate original language from AI interpretation.
+  - Record feasible deliverables, unknowns, prices and contract risks only when documented in source; no invented legal facts/estimates.
+  - Publish traceable review-only report and focused tests, validate locally and exact-head CI.
+  - Leave independent human-gold, e-signature and owner approvals unclaimed, PR draft.
+completed:
+  - 'Final verified source head a8c69c28f9bb1aecf0c947d24ed3fc3272a6f53d, PR 38414910423, push 38414902253/38414901761 all SUCCESS. Child status completed; PR left draft.'
+  - Previous PR404 archived/public CZN v4 EIS proof exact-head CI push/PR SUCCESS (a076c8c8).
+  - Official original SOAP EOK2020 v4 XML plus 7 UID and exact file byte receipts are preserved on authorized Mac mini ArvectumSSD.
+  - Safely inspected original v4 current OOЗ ИТОГ 95-page PDF, nested state-contract DOCX and PIK appendix DOCX, plus unchanged tender application/scoring DOCX and two original NMCK calculation PDFs from saved unchanged UID ZIP. One OOЗ PDF occurs twice identically; never double counted.
+  - Verified primary source NMCK: 685000 chatbot, 315000 youth and 245000 training/events = 1245000 ₽, not aggregator-derived.
+  - Verified original evaluation weights: 70% qualifying completed 44-FZ/223-FZ web/IS contracts with chatbot, 30% price; prior last acceptance act <= 5 years, unfinished excluded. Conditional DEFER/competitive NO_GO if no qualifying references, not legally ineligible.
+  - Confirmed current custom PHP/JS/SQL platform, mandated reverse-compatible modules and CMS, local semantic embeddings only on explicit agreement, project milestones 2/7/10/15 December 2026, no advance, 12-month warranty, 1/5 business-day defect fixes.
+  - Private document text kept only on ArvectumSSD, nested ZIP CRC and size checked; no original binary/source personal data committed.
+  - Added detailed Russian original-document/page-anchored report and JSON separated from human-gold; four artifact regression tests committed; Mac mini APR06/public provider targeted 172 PASS, Ruff PASS, original SOAP v4 offline UID verifier PASS.
+  - Draft stacked PR405 opened against research/apr06-eis-direct-20261013, no ETP actions.
+  - PR405 original head a15c68e2 PR38407699617/push38407689429 SUCCESS; the owner subsequently confirmed Arvectum has no completed contracts. Updated source review and JSON from conditional DEFER to actual owner-informed qualification COMPETITIVE NO_GO (not ineligibility), code head 64c8ffe. Local 100 APR06 tests PASS, Ruff PASS and JSON valid; new exact CI queued.
+current: Engineering/research child complete after exact-head GitHub CI SUCCESS. PR405 draft and unmerged; remaining parent/unrelated tasks tracked separately.
+pending: []
+last_verified_commit: 'PR405 exact-head a8c69c28f9bb1aecf0c947d24ed3fc3272a6f53d, PR 38414910423, push 38414902253/38414901761 all SUCCESS; local: Original v4 source-based semantic research + owner zero contracts NO_GO, Mac mini 100 APR06 tests PASS and Ruff PASS; checkpoint-only final commit after green head.'
+test_results:
+  - 'PR405 exact-head a8c69c28f9bb1aecf0c947d24ed3fc3272a6f53d, PR 38414910423, push 38414902253/38414901761 all SUCCESS.'
+  - 'PR405 owner reference correction head 64c8ffe Mac mini 100 APR06 tests PASS/Ruff PASS/JSON valid; original source weight 70% completed 44/223 chatbot contracts and owner declares zero, therefore competitive qualification NO_GO without legal-bar claim.'
+  - 'Current v4 95p PDF source duplicate exact SHA within current documents ZIP. Two new DOCX and two unchanged bid/score DOCX parsed locally, no source binary added to Git.'
+  - 'Original NMCK PDF 685000+315000+245000=1245000 and score DOCX 70% qualification completed 44-FZ/223-FZ incl chatbot, 30% price.'
+  - 'Mac mini exact tested head ff76cc3 targeted pytest 172 PASS/10 unrelated warnings, Ruff PASS, JSON syntax PASS, git diff --check PASS; real original SOAP EIS EOK v4 7 UID PASS.'
+  - 'Exact-head GitHub PR/push CI PR405 pending.'
+resume_instruction: 'Child completed with PR405 exact-head 3 green workflows, draft remains unmerged; full 44-FZ original document source reviewed, owner-confirmed zero references => qualification competitive NO_GO (not legal inability). Future parent APR06 human-gold, commercial security and owner legal acceptance still blocked.'
