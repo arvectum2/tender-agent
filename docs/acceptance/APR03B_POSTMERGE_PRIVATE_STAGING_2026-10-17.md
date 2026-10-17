@@ -38,3 +38,10 @@ All **18** HTTP status assertions PASS. Original source parity after code fix: *
 4. R4 independent 15-case source-only external human review and R5 20 dated owner reviews remain unaccepted; do not claim independent gold or commercial accuracy.
 
 No existing preview was replaced; the QA container is disposable. The source verification and 503 behavior were verified without mounting any private production volumes.
+
+## Browser and completion update
+
+- Google Chrome **155.0.8059.80**, using native Chrome DevTools Protocol (no mocked DOM), loaded the authenticated localhost-only workspace on the corrected staging image. **PASS**: page title `Operator Workspace · Arvectum Tender Agent`, search/history/registry controls present, rendered body 1,282 characters, `document.readyState=complete`, one external JS asset and **zero uncaught JavaScript exceptions**.
+- The browser probe did **not** import or analyze a live tender, access real customer documents, or imply owner's subjective browser/legal approval.
+- The disposable staging container was stopped and the generated test-only auth file deleted after the checks. Old private preview **18083 remains unchanged**, still on stale image `a9f3bce`.
+- Source merged via PR **#460** into main `b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d`; full local suite **4937 passed, 285 skipped, zero failed**; final exact-head GitHub CI passed. All 18 staging HTTP probes, 1,163 Docker source SHAs, and 31 targeted tests passed.
