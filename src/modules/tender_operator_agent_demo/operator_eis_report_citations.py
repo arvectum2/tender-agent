@@ -31,7 +31,10 @@ def append_official_eis_citations(
 
     # Source evidence re-reads the saved, registry-matched, unique XML bytes.
     proof = get_operator_source_evidence(run_id)
-    if proof.get("source_selection") != "single_registry_matched_xml":
+    if proof.get("source_selection") not in {
+        "single_registry_matched_xml",
+        "pinned_latest_archived_notice_revision",
+    }:
         return 0
     rows: list[str] = []
     facts = proof.get("facts")

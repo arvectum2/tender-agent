@@ -1,0 +1,50 @@
+{
+  "registry_number": "0360600005326000018",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052440-f104ec",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052440-f104ec/input/documentation-archive.zip",
+  "archive_sha256": "54824559f800e0382650140620b796482740ac5b5d3936223f99620043b238ae",
+  "selected_xml_sha256": "0e4b65ba36fad901856783aa2c1903ed9a70eae98966c663bc67e16565826db8",
+  "selected_notice_version": 2,
+  "selected_notice_type": "epNotificationEF2020",
+  "recovery_receipt_relative_path": "competitive-missing-14-originals-20261014/private-originals-receipt.json",
+  "recovery_receipt_sha256": "5f78318e75344020cfd9a035531178e2befbebcaefcaeee0c80a61c1c561876f",
+  "attachments": [
+    {
+      "source_uid": "0F2E78184DAA4C82BAED65B62111D124",
+      "official_name": "ПРИЛОЖЕНИЕ № 2 Обоснование начальной (максимальной) цены контракта (3).docx",
+      "bytes": 131334,
+      "sha256": "849201361c9b2545a09e21b60ed814ca8b6f59675e8447917f0c19f8e8e65ee6",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0360600005326000018/attachment-01.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "DC3C45D65F8A403BBFFE3310F9382B88",
+      "official_name": "Проект контракта.docx",
+      "bytes": 110560,
+      "sha256": "e8082053921f097d1d735b11d44918a651599ded5b2544a5ac024f543b8adc56",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0360600005326000018/attachment-02.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "3A2929E59AE9400B81480DF85C81B0FC",
+      "official_name": "Техническое задание и технические характеристики.doc",
+      "bytes": 179712,
+      "sha256": "431daee8d0870540aedd2520652ed879061d7e9c90e92c591d1664cf26b008b3",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0360600005326000018/attachment-03.doc",
+      "file_extension": ".doc",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "D0D60EA6897C479B90F92234C78D6456",
+      "official_name": "Требования к содержанию, составу заявки на участие в закупке и инструкция по ее заполнению.docx",
+      "bytes": 40850,
+      "sha256": "c88ac15de17a96a3a5513e10b55c192ee65fe662f33630d72db41afb27a4bb92",
+      "source_root_relative_path": "competitive-missing-14-originals-20261014/0360600005326000018/attachment-04.docx",
+      "file_extension": ".docx",
+      "source_role": "oct14_recovered_first_party_receipt"
+    }
+  ]
+}

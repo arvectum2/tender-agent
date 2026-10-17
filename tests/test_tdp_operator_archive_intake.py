@@ -90,3 +90,31 @@ def test_nested_zip_is_ignored_not_recursively_expanded(tmp_path):
         z.writestr("hidden.txt", "private")
     path = _archive(tmp_path / "nested.zip", [("nested.zip", nested.getvalue())])
     assert _run(path) == []
+
+
+def test_signed_archive_excludes_signing_html_but_keeps_official_pdf(tmp_path):
+    path = _archive(tmp_path / "source.zip", [
+        ("Обоснование начальной цены контракта.pdf", b"original-nmck"),
+        ("Лист подписания условий контракта.html", b"non-substantive-signing-receipt"),
+        ("Подпись_ведомства.sign", b"detached-sign"),
+        ("Технические условия.html", b"official-document"),
+    ])
+    docs = read_operator_zip_documents(
+        path, "FILE-17", allowed_extensions={".pdf", ".html", ".sign"},
+        max_entries=8, max_total_bytes=1024,
+        extract_text=lambda name, raw: (raw.decode(), [], "extracted"),
+        detect_role=lambda name: "supporting",
+    )
+    assert [v.display_name.split(" :: ")[-1] for v in docs] == [
+        "Обоснование начальной цены контракта.pdf",
+        "Технические условия.html",
+    ]
+
+
+def test_genuine_signed_eis_document_roles_keep_nmck_and_security_out_of_draft():
+    from src.modules.procurement_analysis.document_roles import detect_document_role
+    assert detect_document_role("Обоснование начальной (максимальной) цены контракта от 30.03.2026.pdf") == "supporting"
+    assert detect_document_role("Определение начальной (максимальной) цены контракта (Расчет).pdf") == "supporting"
+    assert detect_document_role("Обеспечение исполнения государственного контракта.docx") == "supporting"
+    assert detect_document_role("Умный контракт_создание и развитие информационных систем.docx") == "contract_draft"
+    assert detect_document_role("САЙТ_ТЗ_на_ДОРАБОТКУ_2026 ИТОГ.docx") == "technical_spec"

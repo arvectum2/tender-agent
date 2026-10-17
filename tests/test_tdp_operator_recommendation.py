@@ -69,3 +69,41 @@ def test_empty_requirement_input_does_not_invent_specific_requirement():
     assert report["key_requirements"] == ["Проверка комплектности документов"]
     assert report["open_questions"] == []
     assert report["risks"] == []
+
+
+def test_software_project_contract_present_source_gated_not_missing() -> None:
+    report, rationale = base(
+        procurement_kind="software",
+        contract_draft_status="present",
+        preliminary_analysis={},
+    )
+    assert report["recommendation"] == DemoRecommendationCode.MANUAL_REVIEW_REQUIRED.value
+    assert "Проект контракта найден" in " ".join(rationale)
+    assert "получения проекта контракта" not in " ".join(rationale)
+
+
+def test_contract_file_parse_failed_is_not_missing_file() -> None:
+    report, rationale = base(
+        procurement_kind="software", contract_draft_status="parse_failed",
+    )
+    assert report["recommendation"] == DemoRecommendationCode.MANUAL_REVIEW_REQUIRED.value
+    assert "Файл проекта контракта получен" in " ".join(rationale)
+    assert "повторного разбора" in " ".join(rationale)
+    assert "после получения проекта контракта" not in " ".join(rationale)
+
+
+def test_software_absent_contract_stays_review_only() -> None:
+    report, rationale = base(procurement_kind="software", contract_draft_status="absent")
+    assert report["recommendation"] == DemoRecommendationCode.MANUAL_REVIEW_REQUIRED.value
+    assert "Проект контракта отсутствует" in " ".join(rationale)
+
+
+def test_unsupported_contract_provenance_does_not_claim_present() -> None:
+    report, rationale = base(
+        procurement_kind="software",
+        contract_draft_status="unknown",
+        preliminary_analysis={},
+    )
+    assert report["recommendation"] == DemoRecommendationCode.MANUAL_REVIEW_REQUIRED.value
+    assert "Наличие и условия проекта контракта не подтверждены" in " ".join(rationale)
+    assert "Проект контракта найден" not in " ".join(rationale)

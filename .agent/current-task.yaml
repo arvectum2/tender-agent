@@ -11,6 +11,15 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-15 eighth historic 44FZ real-source legacy DOC case 0127100008626000013: six source XML+four first-party archived .docx/.doc docs pinned UID+SHA, two old DOC texts Data Platform extracted 50612/7682 characters, source stage ready, 21 focused tests PASS, one real Gemma PID62278 in progress."
+  - "2026-10-15 seventh distinct EOK original case 0348100024426000039: selected archived EOK2020 revision3 XML and 7 original filestore files exact source UID/bytes/SHA pinned, one independently recovered ZIP matched first-party receipt; local source stage 4 XML+7 official attachments, 5 nested texts, real Gemma PID54222 in progress; 20 source adversarial tests pass."
+  - "2026-10-15 sixth distinct historical EIS case 0348100024426000021 source QA: 8 XML+6 official attachments SHA verified, four signed ZIPs yield 5 substantive DP PDF/DOCX, signing HTML and .sign excluded, NMCK PDF not treated as draft contract; 4151 full PASS/238 SKIP, genuine Gemma4 E2E PID16155 IN_PROGRESS. Not counted as sixth completed yet."
+  - "2026-10-15 fifth distinct official 44FZ archived E2E 0152200004026000069: 7/7 SHA-pinned original XML/DOCX sources, real Gemma4 four calls348.24s, 3 source XML citations, archived exports409. Expert report caught false missing contract for software scope; source-bound present/parse_failed/absent/unknown fixed, private corrected reprojection without LLM; 4149 full tests passed/238 skipped."
+  - "2026-10-15 APR067 fourth independent historical EIS development E2E 0151600003226000011: 5 original SHA-pinned files, source-bound official XML docKindInfo CP/MRJ/POD/CAR, Gemma4 4 calls 403.23s,5/5 extracted, 3 original XML citations, archived exports409, NEEDS_REVIEW. AI expert accepted for DEVELOPMENT E2E; current live EIS/bid GO separate."
+  - "2026-10-15 APR067 third historical firstparty 44FZ offline-source Gemma E2E 0162200011826003089: SHA-verified ZIP and 17 originals; four archived notice revisions including original v4, first model run 350.92sec 16/17 extraction due unsupported ODT, fixed Data Platform PR125, second real Gemma4 four calls150.08sec, 17/17 sources extracted, 3 pinned XML citations, historic archive exports 409, no original SHA mutation, old unsupported literal absent, 51 focus PASS/4104 full PASS/238 SKIP. DEVELOPMENT ChatGPT-expert acceptance, not current legal/bid GO."
+  - "2026-10-15 APR067 second real R4 historical E2E on 0376300000126000193: 8/8 original saved SHA and extraction, Gemma4 four calls 358.92 sec, unsupported old literal not repeated; found and fixed notice XML mistaken for protocol/results duplicate, recovered exact original XML subject/deadline/NMCK citations, archived export 409, source model report NEEDS_REVIEW. 4093 full pytest PASS/238 SKIP/0 FAIL, targeted46 PASS Ruff. Draft PR pending; not 20 full E2E nor Owner commercial/legal GO."
+  - "APR067 R4 development source QA 2026-10-15: 20 ZIP and 20 XML verified; original R4 96 attachments verified; 47 model snippets categorized 42 exact,3 formatted,2 unsupported; full 4074 PASS,238 SKIP. Commercial and independent legal gold open."
+  - "2026-10-15 APR067 verified archived EIS quality slice: one case, original SHA 6/6, extraction flags 6/6, cited XML selected facts 3/3; local model 4 calls, 138.79s analysis; full 4055 PASS / 238 SKIP, 52 focused PASS. Broad legal/commercial/model quality not measured."
   - "2026-10-15 APR03B DEVELOPMENT E2E ACCEPTED on original archived EIS 0372200172326000015: 6/6 extracted, Gemma4 12B 4 calls/138.79s, 3 HTML citations from original XML, 8/8 source-quality workflow gates, auth401, archived PDF/DOCX409; real original/read-only 4031 full pytest PASS/238 SKIP, Ruff clean. Owner-designated AI expert accepted for dev only; commercial/current-EIS/prod and independent human gold not claimed. Draft PR433 remains unmerged; next APR04 onboarding."
   - '2026-10-15 new Owner E2E decision: source-grounded ChatGPT assessment accepted as expert for development stage; human legal-gold removed as APR03B blocking prerequisite. New 8-step acceptance gate with 21 new tests, 45 combined focused PASS, authenticated current full LLM E2E still open; roadmap/owner policy updated.'
   - "2026-10-14 PR432 source2c40b4bf85b4941aec4eb81107ecdb32946486a9 Mac mini exact full 4119 pytest PASS/242 SKIP/0 failed,146.20s, Github three workflows SUCCESS. Selected archival original 96/96 EIS attachment SHA+size, nonempty source texts and first material clause citations; runtime fail-closed when XML lists missing appendix; client report regenerated SHA6e4461f6. Child checkpoint latest02cfe0218c2977f4a82319d6ca5c2f7c886a7872 still in_progress because full material 96-document legal/suitability review/20 signed gold and latest live official EIS revisions not attested. All drafts unmerged."
@@ -218,3 +227,15 @@ owner_e2e_ai_acceptance_2026_10_15:
   still_required: [real_source_integrity, reproducible_functional_e2e, cited_claims, error_safety, unknown_handling]
   never_authorizes: [legal_bid_go, bid_submission, e_signature, production_deploy, payments, signed_human_gold_fabrication]
   post_stabilization: owner_expert_corrections_and_calibration
+
+latest_completed_quality_child: TA-APR067-GROUNDED-QUALITY-20261015
+
+latest_verified_quality_code_commit: b1b87e8554602c66d8a3065f225793cc1652e729
+
+latest_completed_r4_quality_child: TA-APR067-R4-20-QUALITY-20261015
+
+latest_completed_r4_llm_replay_child: TA-APR067-R4-CURRENT-LLM-REPLAY-20261015
+
+latest_completed_four_revision_quality_child: TA-APR067-R4-FOUR-REVISIONS-20261015
+
+latest_active_distinct_e2e_child: TA-APR067-R4-THIRTEENTH-ORIGINAL-20261016

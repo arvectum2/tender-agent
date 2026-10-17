@@ -1,0 +1,77 @@
+{
+  "registry_number": "0348100024426000039",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052425-d20f58",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/documentation-archive.zip",
+  "archive_sha256": "af61797c60db6a9054380b052c495deacb62c0be5813fe3a78bb07c648dcde1e",
+  "selected_xml_sha256": "2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d",
+  "selected_notice_version": 3,
+  "selected_notice_type": "epNotificationEOK2020",
+  "recovery_receipt_relative_path": "competitive-missing-11-originals-20261014/private-source-receipt.json",
+  "recovery_receipt_sha256": "ba641df2f40f480aa0b42166bcf6f2b429bcec31089530fa8f979478fadd2700",
+  "attachments": [
+    {
+      "source_uid": "01A0F1061E81747BAB5A3EAEB3760D5F",
+      "official_name": "Обоснование НМЦК.zip",
+      "bytes": 135528,
+      "sha256": "fb3be0c95f7f9cd48cb41188cfe5da6336dd0f382a8834bd47710b8ae5fb7d8d",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/01-attachment-1.zip",
+      "file_extension": ".zip",
+      "source_role": "oct09_first_party_saved_run"
+    },
+    {
+      "source_uid": "01A11A79FFC070E382D241730B6256CD",
+      "official_name": "Проект контракта, сост. 08.10.2026.zip",
+      "bytes": 52073,
+      "sha256": "32937d17caa22051df72bc5002f4af6bb15d23d76c638e573b2702094c698185",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/13-08.10.2026.zip",
+      "file_extension": ".zip",
+      "source_role": "oct09_first_party_saved_run"
+    },
+    {
+      "source_uid": "01A11A79F8957B4D9A6316E35BD4CD75",
+      "official_name": "ООЗ ДОРАБОТКА САЙТА.pdf",
+      "bytes": 1778149,
+      "sha256": "901c0b7607c71673f592df8f2e4a40d3a0d1a4b26521765652017240d7dc93f4",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/14-attachment-14.pdf",
+      "file_extension": ".pdf",
+      "source_role": "oct09_first_party_saved_run"
+    },
+    {
+      "source_uid": "01A0F106511B706C844790906683531B",
+      "official_name": "Требование к содержанию, составу заявки на участие в закупке закупка №060577-26.docx",
+      "bytes": 35558,
+      "sha256": "6c0d6fd49a8698a72ef9c6fd654cbcbc9671b23948699dad58004210bf9aec40",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/04-060577-26.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run"
+    },
+    {
+      "source_uid": "01A11A7A02087A14BFAA6CD967CB7DD2",
+      "official_name": "Приложение к проекту контракта, сост. 08.10.2026.zip",
+      "bytes": 499446,
+      "sha256": "5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0348100024426000039/attachment-05.zip",
+      "file_extension": ".zip",
+      "source_role": "oct14_recovered_first_party_receipt"
+    },
+    {
+      "source_uid": "01A11A7A05E474FC8E0F45B143A9F7C5",
+      "official_name": "Другое приложение, сост. 08.10.2026.zip",
+      "bytes": 1348706,
+      "sha256": "4d67941f0a8acdc9922e005f157f41937d4f0fef7a59fbe77065577d14f18143",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/16-08.10.2026.zip",
+      "file_extension": ".zip",
+      "source_role": "oct09_first_party_saved_run"
+    },
+    {
+      "source_uid": "01A0F10655C27A35B5A5A70090D2BB1A",
+      "official_name": "Порядок рассмотрения и оценки заявок на участие в конкурсах закупка №060577-26.docx",
+      "bytes": 22427,
+      "sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052425-d20f58/input/07-060577-26.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run"
+    }
+  ]
+}

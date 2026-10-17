@@ -1,0 +1,38 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-20-QUALITY-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Expand APR067 source-quality sample from one original EIS E2E to 20 historical competitive development cases, independently
+  verifying ZIP/XML and preserving R4 original 96 source and saved 47 quote breakdown without pretending another E2E.
+definition_of_done:
+- Read only historical DEVELOPMENT corpus source; leave blind source locks, frozen benchmark, commercial legal gold untouched.
+- Cross-verify all 20 pinned original EIS ZIP and notice XML digests with private first-party source bytes and procurement
+  registry ids.
+- Compute source-referenced 96 attachment and 47 saved-claim breakdown from independently rerun R4 audit with distinct exact,
+  normalized and unsupported counts, plus risk backlog.
+- Reproducible CLI with private output only and tests on tampered ZIP/XML, duplicate notice, forged audit totals, path traversal,
+  fake SLO/legal GO.
+- Relevant tests and CI, checkpoint completed if source-bound development metrics pass; no production, bids, payment or external
+  contact.
+completed:
+- 'Original R4 source auditor rerun on private original bytes: 20 historical procurement sources and 96 archived attachment
+  receipts, byte-identical published result.'
+- 'New independent case-level rehash: 20/20 original ZIP and 20/20 selected XML match original procurement registry and 96
+  attachment references.'
+- '47 saved model snippets: 42 exact, 3 layout variants, 2 literal unsupported. Historical prior report 2/10 stale dates,
+  8/10 strong blocker statements without business approval.'
+- Full Mac mini regression 4074 PASS / 238 SKIP / 0 FAIL. Fifty focused tests and Ruff PASS. Private report saved without
+  original bytes in repository.
+current_stage: twenty_archived_source_and_selected_quotes_checked
+remaining:
+- Review PR and CI
+- Fix unsupported literal citations and unsafe stale report assertions in next engineering child
+- Current EIS versions, live operator E2E across 20, legal and commercial acceptance not measured
+last_verified_commit: 7ab81dcf2196a5df4668040b756c12ddc7f07053
+last_tests: Full 4074 passed / 238 skipped; 50 focused passed; Ruff passed; real 20 ZIP and XML checks passed
+resume_instruction: Historical R4 source/quote measurement completed; verify new PR CI. Next child correct unsupported literal
+  citations and stale decision wording. Do not repeat verified source acquisition.
+execution:
+  branch: feature/apr067-r4-development-cohort-evidence-20261015
+  manual_override: true

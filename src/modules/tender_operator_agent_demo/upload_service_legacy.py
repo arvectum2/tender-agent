@@ -1641,8 +1641,41 @@ def _report_html_path(run_id: str) -> Path:
     return _output_dir(run_id) / "report.html"
 
 
+def _read_json_for_published_steps(path: Path) -> dict[str, Any]:
+    """Only operator history step cards get the corrected report projection."""
+    if path.name != "steps.json" or not (path.parent / "report-revision.json").is_file():
+        return _read_json(path)
+    report = _load_report_json(path.parent.parent.name)
+    steps = []
+    for index, section in enumerate(report.get("sections", []), start=1):
+        title = section["title"]
+        steps.append({
+            "key": f"section-{index}", "order": index,
+            "title": title, "short_title": title,
+            "status": DemoStepStatus.DONE, "description": title,
+            "agent_action": title, "result_summary": title,
+            "findings": section.get("items", []), "human_review": [],
+            "trace": "Published append-only source-only correction", "result_sections": [],
+        })
+    return {"steps": steps}
+
+
+def _published_report_html_path(run_id: str) -> Path:
+    from src.modules.tender_operator_agent_demo.operator_report_revision import (
+        published_report_path,
+    )
+    output_dir = _output_dir(run_id)
+    if not (output_dir / "report-revision.json").is_file():
+        # Preserve the existing public/legacy report hook for ordinary runs.
+        return _report_html_path(run_id)
+    return published_report_path(output_dir, run_id, "html")
+
+
 def _load_report_json(run_id: str) -> dict[str, Any]:
-    path = _report_json_path(run_id)
+    from src.modules.tender_operator_agent_demo.operator_report_revision import (
+        published_report_path,
+    )
+    path = published_report_path(_output_dir(run_id), run_id, "json")
     if not path.is_file():
         raise HTTPException(status_code=404, detail="Report is not available yet")
     return _read_json(path)
@@ -1660,13 +1693,13 @@ def get_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunResponse:
         DemoStep=DemoStep,
         DemoFinalRecommendation=DemoFinalRecommendation,
         _output_dir=_output_dir,
-        _read_json=_read_json,
+        _read_json=_read_json_for_published_steps,
         _build_final_recommendation=_build_final_recommendation,
         _load_report_json=_load_report_json,
         DemoStepStatus=DemoStepStatus,
         _coerce_quote_comparison_payload=_coerce_quote_comparison_payload,
         _coerce_economics_summary_payload=_coerce_economics_summary_payload,
-        _report_html_path=_report_html_path,
+        _report_html_path=_published_report_html_path,
         _ensure_procurement_blocked_report_html=_ensure_procurement_blocked_report_html,
         TenderOperatorUploadedRunResponse=TenderOperatorUploadedRunResponse,
         datetime=datetime,
@@ -1720,8 +1753,10 @@ def get_uploaded_demo_report_download(run_id: str) -> FileResponse | Response:
         review_annotated_html,
     )
 
-    path = _ensure_procurement_blocked_report_html(run_id) or _report_html_path(run_id)
+    path = _published_report_html_path(run_id)
     if not path.is_file():
+        path = _ensure_procurement_blocked_report_html(run_id)
+    if path is None or not path.is_file():
         raise HTTPException(status_code=404, detail="Report HTML is not available yet")
     metadata = _load_metadata(run_id)
     if needs_live_eis_revision_review(metadata):
@@ -1741,8 +1776,10 @@ def get_uploaded_demo_report_html(run_id: str) -> str:
         review_annotated_html,
     )
 
-    path = _ensure_procurement_blocked_report_html(run_id) or _report_html_path(run_id)
+    path = _published_report_html_path(run_id)
     if not path.is_file():
+        path = _ensure_procurement_blocked_report_html(run_id)
+    if path is None or not path.is_file():
         raise HTTPException(status_code=404, detail="Report HTML is not available yet")
     return review_annotated_html(_load_metadata(run_id), path.read_text(encoding="utf-8"))
 
