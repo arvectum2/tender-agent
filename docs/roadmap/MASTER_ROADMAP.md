@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B official EIS public printable source bounded observation COMPLETE PR471 c719e1c091:** 10 exact first-party HTTPS URL HTTP200, 6 printForm source HTML identities, 5 local printed dates match pinned official original getDocsIP notice XML. Remaining 4 HTTP only; prior common-info HTTP404 does not imply cancellation. NO source proves latest legal stage/revision or company bid right, 0/10 current status GO. 5 focused PASS, Mac full 5036 PASS/285 SKIP, exact-head GitHub CI green. [Dated original-page evidence](B2B_EIS_PUBLIC_PRINTFORM_OBSERVATIONS_2026-10-17.md) and [10-card machine receipt](b2b_44fz_official_printform_observations_2026-10-17.json). Parent 15-20 truly current qualified IT procedures remains OPEN.
+
+
+
 **B2B OFFICIAL EIS public printForm original status cap (17.10):** 10 exact original first-party HTTPS printForm URL returned HTTP200, 6 checked original HTML official tender number identity, 5 local deadline labels match independently SHA-pinned getDocsIP archive XML local offset clocks; old ea20/zk20 common-info URLs returned 404 for two exact numbers, NOT proof of cancellation. CRITICAL stage UNKNOWN for all10, no current legal version/eligibility/bid GO confirmed. [Public original URL report](B2B_EIS_PUBLIC_PRINTFORM_OBSERVATIONS_2026-10-17.md) and [machine 10 observation receipt](b2b_44fz_official_printform_observations_2026-10-17.json). No changes to Operator Workspace and no ETP actions.
 
 

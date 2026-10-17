@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-EIS-PRINTFORM-LIVE-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Read-only check 2026-10-17 real public official EIS printForm HTML for priority 44-FZ IT procurements, reconcile original number/source
   notice revision/deadline/public stage with existing archival getDocsIP evidence. Never equate HTTP200 with current legal status or
   owner bidding GO.
@@ -31,17 +31,27 @@ completed:
   existing archived_notice_deadline_status (future archived cutoff never legal GO).
 - A proposed automated printForm scraper command was blocked by authorized remote tool policy; no bypass, no claim of implemented live
   parser or current legal status, and continued with strictly documented observations and offline existing-gate regression.
-current_stage: Bounded 10 original printForm public HTTP observation/5 local-clock parity complete; current official legal-stage proof
-  remains objectively unavailable from printed-form sources. Need full regression/CI/merge and child finalization.
-remaining:
-- Read current source metadata for pinned 2+ first-party IT notices.
-- Implement conservative exact source/status proof and negative tests; no overclaim.
-- Merge documented observation and finalize canonical checkpoints after full tests/CI.
-last_verified_commit: 853257175e236d01bad541e720c29201bc6c44e7
-last_tests: 5 focused offline source/status conservative gates PASS, Ruff/diff PASS; original public EIS printForm 10 HTTP200, current
-  live stage 0 proved; full make check/pytest/CI pending.
-resume_instruction: Worktree tender-agent-live-printform-oct17-20261017. Public 10 original printForm URL reachability 10/10 HTTP200,
-  six HTML identity, five local dates match existing archived source XML without independent current stage; common-info 404 not cancellation.
-  Live legal current stage, notice revision and owner company eligibility UNKNOWN. Document+machine receipt+five tests done, complete
-  Mac make check/full pytest+exact-head CI/merge then child COMPLETED and parent in_progress. Do not retry blocked scraper, bypass security
-  or claim ETP/legal GO.
+- Bounded first-party official public EIS printForm 10/10 exact TLS HTTPS HTTP200 URLs, 6 actual source HTML notice identities, 5 exact
+  local civil published cutoff times matching first-party SHA-pinned getDocsIP notice XML; the four remaining URLs were only HTTP/TLS
+  checked and not falsely counted as verified HTML identity.
+- 'Two common-info route 404 responses for checked official 44FZ numbers did not imply canceled tenders. PrintForm response HTTP200
+  did not certify current public legal stage or current latest notice revision: all 10 marked UNKNOWN, owner bidder admission zero.'
+- Published one dated human observation report, 10-record machine source metadata receipt, and 5 fail-closed offline original/archive
+  deadline tests.
+- PR471 source exact-head GitHub CI PASS; Mac mini full pytest 5036 PASS/285 SKIP, make check and Ruff PASS. No current-stage parser
+  claimed implemented; proposed source automation request was tool-blocked and not bypassed.
+- No new UI, secondary stand, database, ETP account, signing, payment, notification or bid; original 18082 Operator Workspace intact.
+current_stage: Ten original EIS printable source reachability and limited public date parity documented and tested. Independent official
+  current legal-stage/revision/eligibility proof is not possible from the observed printForm alone; remains owner/source external gate
+  in parent.
+remaining: []
+last_verified_commit: c719e1c09134d7e9c18ce4bad97aa15681eb68b5
+last_tests: Mac mini full pytest 5036 PASS/285 SKIP; 5 focused PASS; make check+Ruff PASS; PR471 exact-head GitHub CI SUCCESS.
+resume_instruction: Child COMPLETE (bounded printForm source observations, not legal status). Parent still requires official current
+  EIS stage and latest revision evidence from authorized suitable source/ETP, plus owner validation of ООО bidder eligibility. Do not
+  reclassify 10 HTTP200 as 10 legally current procedures, nor repeat the tool-blocked parser call. Only one Operator Workspace 18082.
+public_eis_printform_200_count: 10
+printed_html_identity_verified_count: 6
+printed_local_date_matches_original_archived_xml_count: 5
+current_public_legal_stage_attested: 0
+owner_bid_ready: false
