@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**FREE FIRST IT B2B customer initiative sources COMPLETED PR476 c97e186c8c:** official FL free for-all, Pchel studio100/mo <=USD1000 with stale duplicate risk, CodeLance free unlimited advertised but mixed self-promotion, CONTRACTIS monthly free limited cap unknown, Weblancer only10day trial/HTTP403, ITsNEW free reply unknown. First-party 4 policy page SHA + 3 original actual customer page SHA; 0 authenticated LLC corporate bids, 0 paid purchases. Current source project three candidates Contractis Python AI170k, landing90-150k 34 responses, CodeLance catalog import budget TBD. Official Moscow Portal suppliers free company enrollment with UKЭП is REGULATED offer not private chat. 5074 Mac PASS/285 SKIP+5 focused+GH green. [owner decision](B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md) [machine source](b2b_free_first_outreach_sources_2026-10-17.json). Parent 15-20 truly qualified open.
+
+
+
 **B2B FREE first proactive client response platform audit (Oct17) IN_PROGRESS:** FL free only for-all/vacancies/contests, Pchel studio 100 free monthly requests <=USD1000 and old mirrored fake-fresh lead risk, CodeLance unlimited free advertised but original live real client catalog imports147 mixed with provider advertisements, CONTRACTIS monthly capped free reply/agent chat with unknown quota and real original Python AI170k, construction landing90-150k (already34 applicants). Weblancer trial10 days and Mac HTTP403; ITsNEW original board but free reply NOT proved. Seven original HTTP200 source SHA, Pchel intermittent fetch marked unavailable rather than invented source; zero actual authenticated LLC first contact GO. [Owner ranking](B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md) and [machine source receipts](b2b_free_first_outreach_sources_2026-10-17.json). Keep qualified15-20 goal OPEN.
 
 
