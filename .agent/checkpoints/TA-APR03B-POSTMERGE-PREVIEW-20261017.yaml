@@ -10,15 +10,18 @@ definition_of_done:
   - 'Run source parity, unauth/auth HTTP checks, safe read-only workspace route and cite/report controls; assert no ETP, signature, payment or production writes.'
   - 'Run focused checks, record SHA and nonproduction owner-handoff; update parent checkpoint and roadmap; merge only after exact-head CI.'
 completed:
+  - 'Corrected Docker built from 4699a93edc1: all 1163 source bytes match; no mounted data volumes and loopback port 18087 only.'
+  - '18/18 authenticated/unauthenticated smoke checks PASS, including missing canonical-schema error 503 on list/detail/download, never 500 or empty success.'
+  - 'Documented read-only technical acceptance and remaining owner/production gates in docs/acceptance/APR03B_POSTMERGE_PRIVATE_STAGING_2026-10-17.md.'
   - 'Current main 3b899de CI succeeded; original 18083 preview a9f3bce parity FAILED and must not be used for current owner acceptance.'
   - 'Source checksum parity proved on isolated staging from 3b899de: 1163 source files SHA match, localhost-only port 18087, zero external source mounts.'
   - 'Reproduced authenticated registry SQLAlchemy missing table error 500 on fresh uninitialized staging DB; patched read-only service to return HTTP 503 without leaking SQL/credentials or falsely returning empty results.'
   - '31 focused operator workspace and image parity tests PASS; Ruff PASS.'
-current_stage: 'Rebuild corrected isolated image and run integrated regression.'
+current_stage: 'Docker verification and 31 targeted tests complete; full pytest/GitHub exact-head CI pending.'
 remaining:
-  - 'Rebuild image with fix and smoke isolated main-source preview.'
+  - 'Wait for full regression and exact-head CI, reconcile any defects.'
   - 'Validate and document evidence.'
   - 'Commit and pass exact-head CI, merge code/docs/checkpoint; parent remains in_progress.'
-last_verified_commit: 3b899de42c50f7cc95d16e506ae2740597ba2256
-last_tests: 'Original main CI SUCCESS; old preview parity FAIL (expected); isolated 3b899de source parity PASS 1163 files, unauth auth and assets PASS, registry 500 reproducible; source fix 31 focused pytest PASS and Ruff PASS.'
-resume_instruction: 'Use worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-apr03b-postmerge-20261017. Build from deploy/pilot/Dockerfile.operator-workspace-preview using separate tag and staging-only isolated Docker app; never reuse existing Arvectum pilot volumes/secrets; save source/HTTP evidence, run focused tests, update parent+checkpoint.'
+last_verified_commit: 4699a93edc13997e1c4edb64d3882ef7bfb1c054
+last_tests: '31 focused pytest PASS/Ruff PASS; corrected isolated Docker container SHA 4699a93edc, 1163 full source SHA PASS; 18/18 HTTP checks PASS (unauth 401/auth 200/missing DB safe 503); full suite running.'
+resume_instruction: 'Current branch qa/apr03b-postmerge-smoke-20261017 has source code SHA 4699a93edc and staging read-only proof, report and parent roadmap edits. Full local pytest and exact-head GitHub CI pending. Use worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-apr03b-postmerge-20261017. Build from deploy/pilot/Dockerfile.operator-workspace-preview using separate tag and staging-only isolated Docker app; never reuse existing Arvectum pilot volumes/secrets; save source/HTTP evidence, run focused tests, update parent+checkpoint.'
