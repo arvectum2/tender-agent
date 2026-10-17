@@ -591,3 +591,11 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+active_price01_aksay_2026_10_17:
+  task_id: TA-PRICE01-AKSAY-BASELINE-20261017
+  checkpoint: .agent/checkpoints/TA-PRICE01-AKSAY-BASELINE-20261017.yaml
+  status: in_progress
+  prior_b2b_pr: 477
+  source_storage: ArvectumSSD_only
+  external_action: false

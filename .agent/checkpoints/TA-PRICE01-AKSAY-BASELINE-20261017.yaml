@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-AKSAY-BASELINE-20261017
+status: in_progress
+goal: Implement read-only source-validated Aksay 0158300034526000388 per-procedure admitted-bid price evidence and owner-supplied break-even scenario math without bids or arbitrary cost assumptions.
+definition_of_done:
+  - Reuse verified local existing Aksay official ZIP, JSON statistics and CSV rather than create parallel storage or copy private bidder data into Git.
+  - Validate precise original SHA/registry, 55 rows, distinct bidder IDs, admitted ranking, rejected causes and matching CSV/JSON fail closed.
+  - Produce aggregate admitted-only distribution, independent rejected-risk counts, our confirmed rank 38, winning price 28400 and 119000 own bid with original evidence refs.
+  - Expose pure owner-supplied cost inputs and explainable cash/full/commercial break-even thresholds, never auto-set costs/rates or issue a bid recommendation.
+  - Publish a reproducible source-hash-bound first baseline for one procurement with insufficient cross-procurement comparison state.
+  - Add adversarial unit tests, run Ruff and relevant suites, commit/push separate review PR and record CI status.
+completed:
+  - Existing ARV-057 historical NMCK normalization/analogue retrieval is already done in main; do not duplicate.
+  - Original official Aksay ZIP SHA d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8 verified on ArvectumSSD, CSV and JSON all 55 bid rows and fields matched; official original rank 38 and 28400 winner confirmed.
+current: Implement pure validator and break-even scenarios plus original-backed read-only CLI receipt.
+pending:
+  - Implement and test.
+  - Update master roadmap and checkpoint; commit/push to isolated PR.
+  - Check exact-head CI and preserve no-financial-commitment gates.
+last_verified_commit: d2a927ecebc9222bb3b38b47aa14c7024ccec4f0
+test_results: Initial Mac original 55 JSON/CSV consistency and official ZIP SHA verified, code tests pending.
+resume_instruction: Use independent isolated PRICE-01 branch; never repeat finished ARV-057 NMCK adapter. Validate original files and cost assumptions; no quote without Owner values. Previous B2B source PR477 draft at ecdb5ae6 separate.

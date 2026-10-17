@@ -1,0 +1,46 @@
+{
+  "schema_version": "ta-price01-protocol-one-procedure-v1",
+  "procurement_number": "0158300034526000388",
+  "protocol_date": "2026-10-14",
+  "original_eis_zip_sha256": "d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8",
+  "statistics_json_sha256": "8f5c776a269f8a4ca0363bc1537f7d95651f62e67ed964f9e42a94bce1868e8c",
+  "bids_csv_sha256": "264b4a16a149eaeb4fdd76adb03931a4e54c958e8b30212227f05200714638b0",
+  "original_records_consistent": true,
+  "currency": "RUB",
+  "nmck_rub": "152033.33",
+  "bids_total": 55,
+  "admitted_count": 45,
+  "rejected_count": 10,
+  "rejection_reason_counts": {
+    "inapplicable_software_registry_entry": 1,
+    "missing_software_registry_document_old_notice": 9
+  },
+  "admitted_bid_prices_rub": {
+    "min": "28400.0",
+    "q1_nearest_rank": "54900.0",
+    "median": "74000.0",
+    "q3_nearest_rank": "110000.0",
+    "max": "150000.0"
+  },
+  "winner": {
+    "application_id": "122023425",
+    "rank": 1,
+    "price_rub": "28400.0"
+  },
+  "arvectum_bid": {
+    "application_id": "122031738",
+    "rank": 38,
+    "price_rub": "119000.0",
+    "admitted": true,
+    "admitted_offers_with_lower_price": 37
+  },
+  "comparable_distinct_procurements": 1,
+  "cross_procurement_price_evidence": "INSUFFICIENT_EVIDENCE",
+  "cost_break_even_scenarios": null,
+  "cost_inputs_required": true,
+  "is_win_probability_forecast": false,
+  "is_bid_recommendation": false,
+  "submission_or_payment_performed": false,
+  "official_protocol_xml_sha256": "2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5",
+  "original_bid_rows_individually_cross_checked": 55
+}
