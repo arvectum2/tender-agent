@@ -1,0 +1,398 @@
+{
+  "schema_version": "arvectum-44fz-original-attachments-source-review-v1",
+  "reviewed_at_utc": "2026-10-17T12:27:55.571600+00:00",
+  "read_only": true,
+  "official_original_binary_files_persisted": false,
+  "legal_go": false,
+  "procedures": [
+    {
+      "procurement_number": "0161600001326000063",
+      "original_archive_status": "GETDOCSIP_COMPLETED",
+      "zip_sha256": "cb5ce3f2bd07bf4e6210e6d960c663730b8097dc40cf831af0ca77efd0452a2c",
+      "notice_xml_sha256": "f40f20f3add1994e6d930b9b663f370d5af758ece680deadc4047810a8d1c87c",
+      "selected_archived_version": 1,
+      "original_published_attachment_count": 7,
+      "successfully_retrieved_attachment_count": 7,
+      "official_live_procedure_status_verified": false,
+      "owner_bid_eligibility_verified": false,
+      "observed_at_utc": "2026-10-17T12:27:48.966423+00:00",
+      "original_files": [
+        {
+          "file_id": "FILE-01",
+          "original_name": "НМЦК.xlsx",
+          "extension": ".xlsx",
+          "official_source_url_sha256": "c1210e991e9de3f78ec942f3e6915c851bc666e836209c8de45620919d8c0c9b",
+          "retrieved": true,
+          "sha256": "3652c01b1e19e7dd340298c4b51466d541776387fbb53c6dca81a533ced20189",
+          "original_bytes": 12053,
+          "separately_retrieved_verified": true,
+          "text_lines_extracted": 0,
+          "matching_evidence_line_count": 0,
+          "sampled_evidence": [],
+          "parsed_text_status": "FILE_BYTES_VERIFIED_AFTER_RETRY_TEXT_NOT_PARSED"
+        },
+        {
+          "file_id": "FILE-02",
+          "original_name": "Проект МК.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "8f13211b4863454b4203b16a00aada8cd42c3f61ee8b9368770d9d512fb8a7f8",
+          "retrieved": true,
+          "sha256": "d4e47aba6e0a96ab07e404e941a7494edb5b1db9a1fa9fb586695351698a3f43",
+          "original_bytes": 150517,
+          "content_type": "application/download",
+          "text_lines_extracted": 229,
+          "text_chars_extracted": 51087,
+          "matching_evidence_line_count": 67,
+          "sampled_evidence": [
+            {
+              "line": 6,
+              "excerpt": "1.1. Заказчик поручает, а Исполнитель принимает на себя обязательства оказать услуги по разработке интерактивного программного обеспечения для мультимедийных экспозиций краеведческ"
+            },
+            {
+              "line": 7,
+              "excerpt": "1.2. Услуги (работы) оказываются (выполняются) Исполнителем в соответствии с национальными стандартами и государственными стандартами в части требований к проектированию, стадиям с"
+            },
+            {
+              "line": 13,
+              "excerpt": "2.3. Цена Контракта является твердой и определяется на весь срок исполнения Контракта, а также не может изменяться в процессе его исполнения, за исключением случаев, предусмотренны"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-03",
+          "original_name": "Дополнительная информация к извещению_ЭА12553697.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "2c6c21f97a76f8049b998a0f3ab5fd22be54c058ae9c150b9195feb16db21d51",
+          "retrieved": true,
+          "sha256": "27368adb1e3375f9694ec7c4327092c3ccb79e5328049078fd3d8412882d5435",
+          "original_bytes": 79906,
+          "content_type": "application/download",
+          "text_lines_extracted": 93,
+          "text_chars_extracted": 39623,
+          "matching_evidence_line_count": 20,
+          "sampled_evidence": [
+            {
+              "line": 8,
+              "excerpt": "Объект закупки: Разработка интерактивного программного обеспечения для мультимедийных экспозиций"
+            },
+            {
+              "line": 19,
+              "excerpt": "Участник закупки заполняет заявку на участие в соответствии с порядком (регламентом) и требованиями, установленными оператором электронной площадки и/или порядком (регламентом) и т"
+            },
+            {
+              "line": 26,
+              "excerpt": "- номер реестровой записи из реестра российской промышленной продукции, предусмотренного Федеральным законом «О промышленной политике в Российской Федерации», в отношении товара (в"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-04",
+          "original_name": "Приложение к обоснованию.xlsx",
+          "extension": ".xlsx",
+          "official_source_url_sha256": "666dd43cf1bb7294d4e092916814c5b5300c816c73360fb12a4f04d9d67256cd",
+          "retrieved": true,
+          "sha256": "d3bef6b341e286e0943560de350c15b20c2d79dfff231e2734535caa0d0c531e",
+          "original_bytes": 15314,
+          "content_type": "application/download",
+          "text_lines_extracted": 42,
+          "text_chars_extracted": 8363,
+          "matching_evidence_line_count": 16,
+          "sampled_evidence": [
+            {
+              "line": 1,
+              "excerpt": "Приложение № 1 к Обоснованию невозможности соблюдения запрета на допуск программного обеспечения, происходящего из иностранных государств, для целей осуществления закупок для обесп"
+            },
+            {
+              "line": 6,
+              "excerpt": "2 | Вид лицензии | Исключительная | нет | нет | нет | нет | нет | нет"
+            },
+            {
+              "line": 7,
+              "excerpt": "3 | Класс программ для электронных вычислительных машин и баз данных | (05.01) Мультимедийное программное обеспечение | да | да | да | да | да | да"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-05",
+          "original_name": "Приложение к ООЗ.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "453711f844df094a5751e6b29130a740ce5578f0d4cdad446568061a802c9aad",
+          "retrieved": true,
+          "sha256": "619a6ab497ce099fa7a54df486117f229dd4774876576dcbd561ca70ca3ca006",
+          "original_bytes": 37463,
+          "content_type": "application/download",
+          "text_lines_extracted": 59,
+          "text_chars_extracted": 12314,
+          "matching_evidence_line_count": 25,
+          "sampled_evidence": [
+            {
+              "line": 2,
+              "excerpt": "ТЕХНИЧЕСКОЕ ЗАДАНИЕ"
+            },
+            {
+              "line": 3,
+              "excerpt": "на оказание услуг по разработке интерактивного программного обеспечения для мультимедийных экспозиций краеведческого музея"
+            },
+            {
+              "line": 6,
+              "excerpt": "1.1. Наименование объекта закупки: Оказание услуг по разработке интерактивного программного обеспечения для мультимедийных экспозиций краеведческого музея."
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-06",
+          "original_name": "Спецификация заявки на закупку (структурированный вид).xlsx",
+          "extension": ".xlsx",
+          "official_source_url_sha256": "6e06b37e57831ca0376be8953815cd2b335be2a982fe52267fdc6ec628d7c634",
+          "retrieved": true,
+          "sha256": "a06d98a96b9a759fe480f5530b05c6367fc723b632479581e99b2eab1b2cfbab",
+          "original_bytes": 16079,
+          "content_type": "application/download",
+          "text_lines_extracted": 40,
+          "text_chars_extracted": 19096,
+          "matching_evidence_line_count": 31,
+          "sampled_evidence": [
+            {
+              "line": 4,
+              "excerpt": "1 | Программное обеспечение Код: 58.29.11.000-00000003; Наименование: Программное обеспечение; Версия: 5 | | | Способ предоставления | Копия электронного экземпляра | Используется "
+            },
+            {
+              "line": 5,
+              "excerpt": "Вид лицензии | Исключительная | Используется справочник КТРУ ЕИС | Значение характеристики не может изменяться участником закупки"
+            },
+            {
+              "line": 6,
+              "excerpt": "Класс программ для электронных вычислительных машин и баз данных | (05.01) Мультимедийное программное обеспечение | Используется справочник КТРУ ЕИС | Значение характеристики не мо"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-07",
+          "original_name": "обоснование о невозможности соблюдения запрета 3.pdf",
+          "extension": ".pdf",
+          "official_source_url_sha256": "3a66787d48889682b454ba437e9cfad8e1e4c792ce53a0c5ebdd21d8ca85cfcf",
+          "retrieved": true,
+          "sha256": "249315c3607e3a20c44089c55bf89402d87ba53b1549a0583d2d1ee773c6c956",
+          "original_bytes": 2179643,
+          "content_type": "application/download",
+          "text_lines_extracted": 0,
+          "text_chars_extracted": 0,
+          "matching_evidence_line_count": 0,
+          "sampled_evidence": [],
+          "parsed_text_status": "OCRLESS_TEXT_SEPARATELY_REVIEWED_PDFTOTEXT_NATIONAL_REGIME_JUSTIFICATION"
+        }
+      ]
+    },
+    {
+      "procurement_number": "0816500000626015655",
+      "original_archive_status": "GETDOCSIP_COMPLETED",
+      "zip_sha256": "1a9b334270ef80be0b2e7251aaa710c9aba40e82d0641ae134dc2059b85f1750",
+      "notice_xml_sha256": "661abad2253c297b6a9055dbcb2d84402c23eb4e9c1c15c8dff2878d1654f6bb",
+      "selected_archived_version": 1,
+      "original_published_attachment_count": 7,
+      "successfully_retrieved_attachment_count": 7,
+      "official_live_procedure_status_verified": false,
+      "owner_bid_eligibility_verified": false,
+      "observed_at_utc": "2026-10-17T12:27:55.571494+00:00",
+      "original_files": [
+        {
+          "file_id": "FILE-01",
+          "original_name": "Приложение №2. ОНМЦК.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "bab3d3bc4fb8aa9bac5b2d347b2fc6f63892d605c835701326d7c24fdece9dd1",
+          "retrieved": true,
+          "sha256": "9239f129f5cbe5d2bb818162cb1216cb9924f3e5993297754027bdb13f2fe92d",
+          "original_bytes": 18717,
+          "content_type": "application/download",
+          "text_lines_extracted": 11,
+          "text_chars_extracted": 2163,
+          "matching_evidence_line_count": 2,
+          "sampled_evidence": [
+            {
+              "line": 2,
+              "excerpt": "Объект закупки: Оказание услуг по модернизации государственной информационной системы обеспечения градостроительной деятельности Республики Саха (Якутия) в части реализации витрины"
+            },
+            {
+              "line": 10,
+              "excerpt": "1. | Оказание услуг по модернизации государственной информационной системы обеспечения градостроительной деятельности Республики Саха (Якутия) в части реализации витрины данных | У"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-02",
+          "original_name": "Приложение №4. Проект контракта.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "6bf238df65ca65800863c15488dfd55f794947a0da41ffebc2dbd0db7893d61d",
+          "retrieved": true,
+          "sha256": "efb75e41139ef08f8f059078921bb333c71348ab2dca09953e0a19a144181494",
+          "original_bytes": 59721,
+          "content_type": "application/download",
+          "text_lines_extracted": 245,
+          "text_chars_extracted": 51028,
+          "matching_evidence_line_count": 57,
+          "sampled_evidence": [
+            {
+              "line": 3,
+              "excerpt": "на оказание услуг по модернизации государственной информационной системы обеспечения градостроительной деятельности Республики Саха (Якутия) в части реализации витрины данных"
+            },
+            {
+              "line": 7,
+              "excerpt": "1.1. В сроки, установленные настоящим Контрактом, Исполнитель обязуется оказать Заказчику услуги по модернизации государственной информационной системы обеспечения градостроительно"
+            },
+            {
+              "line": 10,
+              "excerpt": "1.4. Цена Контракта составляет ___________ (_____________) рублей ___ копеек. Цена Контракта является твердой и определяется на весь срок исполнения Контракта, за исключением случа"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-03",
+          "original_name": "Приложение №1. ООЗ.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "c32f7c8105f78ded9d51c71c2a8751b1014e4bdcc952db3f456074ad2d85b4a2",
+          "retrieved": true,
+          "sha256": "861a40628354cac98e2782dfaf8311fffd3435ef0d6dfd176652368e55fc2f92",
+          "original_bytes": 29233,
+          "content_type": "application/download",
+          "text_lines_extracted": 5,
+          "text_chars_extracted": 1883,
+          "matching_evidence_line_count": 2,
+          "sampled_evidence": [
+            {
+              "line": 4,
+              "excerpt": "Ссылка на технические регламенты, принятые в соответствии с законодательством РФ о техническом регулировании, документами, разрабатываемыми и применяемыми в национальной системе ст"
+            },
+            {
+              "line": 5,
+              "excerpt": "Спецификации, планы, чертежи, эскизы, фотографии, результаты работы, тестирования, требования, в том числе в отношении проведения испытаний, методов испытаний, упаковки в соответст"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-04",
+          "original_name": "Приложение №3. Требования к содержанию и составу заявки на участие в закупке16911743.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "108a46d67cca2503f7633da2c32086961f706ac82d355b38ada8a9f958370f3b",
+          "retrieved": true,
+          "sha256": "4a17f28f3e68cafafbe9dc39a65a493849d4304fa9050e5901cc89c3e6922b08",
+          "original_bytes": 40538,
+          "content_type": "application/download",
+          "text_lines_extracted": 166,
+          "text_chars_extracted": 71482,
+          "matching_evidence_line_count": 25,
+          "sampled_evidence": [
+            {
+              "line": 39,
+              "excerpt": "1) решение о согласии на совершение или о последующем одобрении крупной сделки, если требование о наличии такого решения установлено законодательством РФ, учредительными документам"
+            },
+            {
+              "line": 43,
+              "excerpt": "5) в случае установления критерия, предусмотренного пунктом 4 части 1 статьи 32 Закона №44-ФЗ, заявка на участие в закупке может содержать информацию и документы, которые подтвержд"
+            },
+            {
+              "line": 45,
+              "excerpt": "7) информация и документы, определенные в соответствии с пунктом 2 части 2 статьи 14 Закона №44-ФЗ (в случае, если в извещении установлены предусмотренные указанной статьей запрет,"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-05",
+          "original_name": "Приложение №1. к ООЗ.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "9dd34c6b2c09509c6d222e2f452cecd7dd7d5b0117a95b5ac5e6783da8be5587",
+          "retrieved": true,
+          "sha256": "d53e400c835495ceadb6828af265afffc6db147f797134356160cefaea92e35d",
+          "original_bytes": 36121,
+          "content_type": "application/download",
+          "text_lines_extracted": 184,
+          "text_chars_extracted": 23003,
+          "matching_evidence_line_count": 39,
+          "sampled_evidence": [
+            {
+              "line": 3,
+              "excerpt": "Оказание услуг по модернизации государственной информационной системы обеспечения градостроительной деятельности Республики Саха (Якутия) в части реализации витрины данных"
+            },
+            {
+              "line": 16,
+              "excerpt": "3.3 Комплекс технических средств 7"
+            },
+            {
+              "line": 25,
+              "excerpt": "9 Требования к гарантии качества услуг 11"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-06",
+          "original_name": "Информационная карта16911743.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "8426a75a97b97353da88a2aee2c7f32a415e353d672a3a248b439e26480be178",
+          "retrieved": true,
+          "sha256": "079622a98d3e9e0baec576c46682f62a7131870f9a6d28f7045b847458497470",
+          "original_bytes": 28015,
+          "content_type": "application/download",
+          "text_lines_extracted": 41,
+          "text_chars_extracted": 33488,
+          "matching_evidence_line_count": 6,
+          "sampled_evidence": [
+            {
+              "line": 17,
+              "excerpt": "Приложение №5. Критерии и их величины значимости. Порядок рассмотрения и оценки заявок на участие в конкурсах (при наличии)."
+            },
+            {
+              "line": 33,
+              "excerpt": " | Требования, предъявляемые к участникам закупки в соответствии с пунктом 1 части 1 статьи 31 Закона №44-ФЗ и исчерпывающий перечень документов, подтверждающих соответствие участн"
+            },
+            {
+              "line": 37,
+              "excerpt": " | Требования к участникам закупки в соответствии с пунктами 3-5, 7-11 части 1 статьи 31 Закона №44-ФЗ | 3) непроведение ликвидации участника закупки - юридического лица и отсутств"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        },
+        {
+          "file_id": "FILE-07",
+          "original_name": "Приложение №5. Порядок рассмотрения и оценки заявок на участие в конкурсе.docx",
+          "extension": ".docx",
+          "official_source_url_sha256": "744a82c8aa9ff36d6fb352a564d5d527d07064336817c56981951db7089cb08a",
+          "retrieved": true,
+          "sha256": "4722734a2de4f77ba7098dcfe9e7dd8ff010067b0a8561cf86619c9268f617a5",
+          "original_bytes": 57361,
+          "content_type": "application/download",
+          "text_lines_extracted": 38,
+          "text_chars_extracted": 24454,
+          "matching_evidence_line_count": 15,
+          "sampled_evidence": [
+            {
+              "line": 2,
+              "excerpt": "рассмотрения и оценки заявок на участие в конкурсе"
+            },
+            {
+              "line": 5,
+              "excerpt": "II. Критерии и показатели оценки заявок на участие в закупке"
+            },
+            {
+              "line": 21,
+              "excerpt": "Наименование объекта закупки | Оказание услуг по модернизации государственной информационной системы обеспечения градостроительной деятельности Республики Саха (Якутия) в части реа"
+            }
+          ],
+          "parsed_text_status": "DOCX_OR_XLSX_TEXT_EXTRACTED"
+        }
+      ]
+    }
+  ],
+  "total_originals_verified_by_live_readonly": 14,
+  "official_live_legal_status_verified": false,
+  "all_originals_text_fully_verified": false,
+  "provenance_limit": "Original ZIP and filestore read-only, no public LIVE legal status or all-binary-text semantic completion"
+}

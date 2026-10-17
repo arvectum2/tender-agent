@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B 3 priority ORIGINAL TЗ reviewed 17.10:** official getDocsIP archived 44FZ 0161600001326000063 (museum interactive) and 0816500000626015655 (Yakutia GIS), 7/7 original external binary SHA for each, plus re-read original Workspace19041 public requirements. Museum 3 programs Electron20/React17 TS4+, warranty 12mo, Dec20 and 5% contract security; Yakutia requires hard GeoPrime rights under contract1.7, qualification70% price30%, 5% performance and 227500 RUB warranty security, strong partner/experience gate; Workspace19041 demands 3+ commercial mobile years/portfolio, PRO rights unknown. All BID_READY false, current public EIS status and company admissibility unknown; goal 15–20 owner-qualified still open. [Detailed triage](B2B_PRIORITY_THREE_FULL_TZ_2026-10-17.md) / [official 14 original SHA](b2b_priority_eis_documents_2026-10-17.json) / [conservative 3-case decision matrix](b2b_priority_three_matrix_2026-10-17.json).
+
+
+
 **B2B original-source expansion COMPLETED (PR467 5eecb16fc4):** two new Workspace corporate current receiving original-card snapshots 19041/18939; 19041 possible same buyer as older19042, prior18998 not recounted, same-day19010 unknown, six other closed/private; 8 official first-party getDocsIP pinned original 44FZ SHA-backed notice archives, 6 potential development/mixed and 2 license exclusions. 24 focused PASS, Mac full 5003 PASS / 285 SKIP, exact-head GH CI green. Bid readiness and legal eligibility STILL UNKNOWN; original 15-20 company-qualified current acceptance OPEN. [Report](B2B_OCT17_EXPANDED_ORIGINALS.md).
 
 

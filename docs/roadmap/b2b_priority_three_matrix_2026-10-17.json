@@ -1,0 +1,171 @@
+{
+  "schema_version": "b2b-priority-three-conservative-triage-20261017-v1",
+  "inspection_date": "2026-10-17",
+  "source_domains": [
+    "zakupki.gov.ru",
+    "int.zakupki.gov.ru",
+    "workspace.ru"
+  ],
+  "original_getdocs_archival_status_only": true,
+  "all_official_external_originals_retrieved": 14,
+  "distinct_original_priority_cases": 3,
+  "real_bid_go_count": 0,
+  "owner_eligibility_approvals": 0,
+  "new_workspace_or_stand_created": false,
+  "cases": [
+    {
+      "id": "0161600001326000063",
+      "kind": "44FZ_ARCHIVED_OFFICIAL_ORIGINAL",
+      "nmck_rub": 1600000,
+      "preliminary_priority": "CONDITIONAL_GO_AFTER_SOW_AND_ECONOMICS",
+      "technical_delivery": "Windows sensory multimedia / 3 thematic applications / Electron20 React17 TS4+ / local CMS / content migration",
+      "required_contract_finish": "2026-12-20",
+      "contract_warranty_months": 12,
+      "contract_performance_security_percent_of_final_price": 5,
+      "source_based_deliverables": [
+        {
+          "file_id": "FILE-05",
+          "original_name": "Приложение к ООЗ.docx",
+          "sha256": "619a6ab497ce099fa7a54df486117f229dd4774876576dcbd561ca70ca3ca006",
+          "source_procedure": "0161600001326000063",
+          "original_zip_sha256": "cb5ce3f2bd07bf4e6210e6d960c663730b8097dc40cf831af0ca77efd0452a2c",
+          "notice_xml_sha256": "f40f20f3add1994e6d930b9b663f370d5af758ece680deadc4047810a8d1c87c"
+        },
+        {
+          "file_id": "FILE-06",
+          "original_name": "Спецификация заявки на закупку (структурированный вид).xlsx",
+          "sha256": "a06d98a96b9a759fe480f5530b05c6367fc723b632479581e99b2eab1b2cfbab",
+          "source_procedure": "0161600001326000063",
+          "original_zip_sha256": "cb5ce3f2bd07bf4e6210e6d960c663730b8097dc40cf831af0ca77efd0452a2c",
+          "notice_xml_sha256": "f40f20f3add1994e6d930b9b663f370d5af758ece680deadc4047810a8d1c87c"
+        },
+        {
+          "file_id": "FILE-02",
+          "original_name": "Проект МК.docx",
+          "sha256": "d4e47aba6e0a96ab07e404e941a7494edb5b1db9a1fa9fb586695351698a3f43",
+          "source_procedure": "0161600001326000063",
+          "original_zip_sha256": "cb5ce3f2bd07bf4e6210e6d960c663730b8097dc40cf831af0ca77efd0452a2c",
+          "notice_xml_sha256": "f40f20f3add1994e6d930b9b663f370d5af758ece680deadc4047810a8d1c87c"
+        },
+        {
+          "file_id": "FILE-07",
+          "original_name": "обоснование о невозможности соблюдения запрета 3.pdf",
+          "sha256": "249315c3607e3a20c44089c55bf89402d87ba53b1549a0583d2d1ee773c6c956",
+          "source_procedure": "0161600001326000063",
+          "original_zip_sha256": "cb5ce3f2bd07bf4e6210e6d960c663730b8097dc40cf831af0ca77efd0452a2c",
+          "notice_xml_sha256": "f40f20f3add1994e6d930b9b663f370d5af758ece680deadc4047810a8d1c87c"
+        }
+      ],
+      "risk_codes": [
+        "THREE_DISTINCT_EXHIBITS",
+        "FIXED_LEGACY_STACK",
+        "CONTENT_IP",
+        "SENSORY_HARDWARE_ACCEPTANCE",
+        "REGIONAL_TRAVEL",
+        "NATIONAL_REGIME_REQUIRES_LEGAL_REVIEW"
+      ],
+      "blocking_owner_checks": [
+        "Estimate design and multimedia content creation",
+        "Obtain exact hardware test/visit acceptance method",
+        "Check IP and national regime with legal counsel",
+        "Confirm operating cost of 12-month warranty"
+      ],
+      "bid_ready": false,
+      "live_legal_status_verified": false,
+      "participant_qualification_verified": false
+    },
+    {
+      "id": "0816500000626015655",
+      "kind": "44FZ_ARCHIVED_OFFICIAL_ORIGINAL",
+      "nmck_rub": 4550000,
+      "preliminary_priority": "DO_NOT_BID_DIRECT_WITHOUT_GEOPRIME_RIGHTS_AND_EXPERIENCE",
+      "technical_delivery": "GeoPrime regional GIS data showcase, SMEV4/agent PODD/CryptoPro CSP, protected customer environment",
+      "contract_warranty_months": 12,
+      "contract_performance_security_percent_of_final_price": 5,
+      "additional_warranty_security_rub": 227500,
+      "price_score_weight_percent": 30,
+      "qualification_score_weight_percent": 70,
+      "hard_rights_dependency": "GeoPrime",
+      "source_based_deliverables": [
+        {
+          "file_id": "FILE-02",
+          "original_name": "Приложение №4. Проект контракта.docx",
+          "sha256": "efb75e41139ef08f8f059078921bb333c71348ab2dca09953e0a19a144181494",
+          "source_procedure": "0816500000626015655",
+          "original_zip_sha256": "1a9b334270ef80be0b2e7251aaa710c9aba40e82d0641ae134dc2059b85f1750",
+          "notice_xml_sha256": "661abad2253c297b6a9055dbcb2d84402c23eb4e9c1c15c8dff2878d1654f6bb"
+        },
+        {
+          "file_id": "FILE-05",
+          "original_name": "Приложение №1. к ООЗ.docx",
+          "sha256": "d53e400c835495ceadb6828af265afffc6db147f797134356160cefaea92e35d",
+          "source_procedure": "0816500000626015655",
+          "original_zip_sha256": "1a9b334270ef80be0b2e7251aaa710c9aba40e82d0641ae134dc2059b85f1750",
+          "notice_xml_sha256": "661abad2253c297b6a9055dbcb2d84402c23eb4e9c1c15c8dff2878d1654f6bb"
+        },
+        {
+          "file_id": "FILE-06",
+          "original_name": "Информационная карта16911743.docx",
+          "sha256": "079622a98d3e9e0baec576c46682f62a7131870f9a6d28f7045b847458497470",
+          "source_procedure": "0816500000626015655",
+          "original_zip_sha256": "1a9b334270ef80be0b2e7251aaa710c9aba40e82d0641ae134dc2059b85f1750",
+          "notice_xml_sha256": "661abad2253c297b6a9055dbcb2d84402c23eb4e9c1c15c8dff2878d1654f6bb"
+        },
+        {
+          "file_id": "FILE-07",
+          "original_name": "Приложение №5. Порядок рассмотрения и оценки заявок на участие в конкурсе.docx",
+          "sha256": "4722734a2de4f77ba7098dcfe9e7dd8ff010067b0a8561cf86619c9268f617a5",
+          "source_procedure": "0816500000626015655",
+          "original_zip_sha256": "1a9b334270ef80be0b2e7251aaa710c9aba40e82d0641ae134dc2059b85f1750",
+          "notice_xml_sha256": "661abad2253c297b6a9055dbcb2d84402c23eb4e9c1c15c8dff2878d1654f6bb"
+        }
+      ],
+      "risk_codes": [
+        "THIRD_PARTY_SOFTWARE_RIGHTS_GUARANTEE",
+        "70_PERCENT_QUALIFICATION_WEIGHT",
+        "PAST_SIMILAR_PERFORMANCE",
+        "CRYPTO_AND_SMEV4",
+        "PERFORMANCE_AND_WARRANTY_SECURITIES"
+      ],
+      "blocking_owner_checks": [
+        "Verify owner/licensor GeoPrime legal written permissions",
+        "Determine lawful prime bidder and whose past contracts can be scored",
+        "Confirm partner integration legal route and information security authorizations",
+        "Verify cash/security amounts and anti-dumping risk"
+      ],
+      "bid_ready": false,
+      "live_legal_status_verified": false,
+      "participant_qualification_verified": false
+    },
+    {
+      "id": "workspace-19041",
+      "kind": "WORKSPACE_PUBLIC_ORIGINAL_SNAPSHOT",
+      "source_url": "https://workspace.ru/tenders/sozdanie-mobilnogo-prilozheniya-dlya-myasokombinata-19041/",
+      "observed_original_html_sha256": "ba9ca616f4b440f8192a455a4aa17d7fec768498c510d116ad3524c09b5d8bbb",
+      "public_budget_rub_min": 250000,
+      "public_budget_rub_max": 1000000,
+      "public_deadline_day": "2026-10-31",
+      "public_deadline_hour": "UNKNOWN",
+      "preliminary_priority": "CONDITIONAL_AFTER_THREE_YEARS_PORTFOLIO_AND_PRO_GATE",
+      "technical_delivery": "Mobile Android+iOS/backend/API/UIUX/testing/transfer of sources",
+      "minimum_commercial_mobile_experience_years": 3,
+      "risk_codes": [
+        "THREE_YEAR_PORTFOLIO_MUST_BE_REAL",
+        "LEGAL_ENTITY_YOUNG",
+        "PAID_PRO_UNKNOWN",
+        "SPEC_NOT_FINAL",
+        "POSSIBLE_SINGLE_BUYER_WITH_19042"
+      ],
+      "blocking_owner_checks": [
+        "Verify whether organizer accepts documented team experience instead of ООО years",
+        "Identify qualifying real cases/portfolio without inventing corporate reference",
+        "Verify Workspace PRO response cost and permission",
+        "Agree scope MVP, backend integrations, warranty, IP transfer and phases"
+      ],
+      "bid_ready": false,
+      "live_legal_status_verified": false,
+      "participant_qualification_verified": false,
+      "workspace_platform_open_snapshot_only": true
+    }
+  ]
+}
