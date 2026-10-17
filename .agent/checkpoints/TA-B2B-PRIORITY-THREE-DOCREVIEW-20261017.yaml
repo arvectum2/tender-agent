@@ -2,46 +2,58 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-PRIORITY-THREE-DOCREVIEW-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
-goal: 'Investigate three priority original-source IT procurements in the B2B shortlist: 44FZ 0161600001326000063 (exposition software), 44FZ
-  0816500000626015655 (GIS data), Workspace 19041 (meat plant mobile app). Establish original documents, actual requirements, company eligibility
-  evidence gaps, economics and no-go conditions without unauthorized ETP activity.'
+status: completed
+goal: 'Investigate three priority original-source IT procurements in the B2B shortlist: 44FZ 0161600001326000063 (exposition software),
+  44FZ 0816500000626015655 (GIS data), Workspace 19041 (meat plant mobile app). Establish original documents, actual requirements, company
+  eligibility evidence gaps, economics and no-go conditions without unauthorized ETP activity.'
 definition_of_done:
 - Confirm each existing source receipt, revision, original exact status and date; do not reuse secondary data as legal live proof.
 - Read actual official EIS documents and original public Workspace card through authorized read-only channels; separately label unverifiable
   paid or absent files.
 - Extract grounded customer expectations, SOW, required licenses and experience, financial security/bonds/deadlines when directly supported,
   plus exact unanswered checks.
-- Produce date-stamped comparative decision matrix and machine-readable source receipts, tests/checks, retain no binary duplicate files or
-  tokenized URLs, original Operator Workspace only.
+- Produce date-stamped comparative decision matrix and machine-readable source receipts, tests/checks, retain no binary duplicate files
+  or tokenized URLs, original Operator Workspace only.
 - Merge tested evidence to canonical main, update parent and child checkpoints; no tender submission, signatures, payment or messaging.
 completed:
-- Restored origin/main e1a9696185214706b2e491c4c006fb4d60904546; prior source expansion task TA-B2B-OCT17-EXPANDED-SOURCES-20261017 completed,
-  CI green; single existing 18082 healthy.
+- Restored origin/main e1a9696185214706b2e491c4c006fb4d60904546; prior source expansion task TA-B2B-OCT17-EXPANDED-SOURCES-20261017
+  completed, CI green; single existing 18082 healthy.
 - Known prior source IDs 0161600001326000063 EF2020 v1, 0816500000626015655 EOK2020 v1 and Workspace 19041 platform public open-snapshot
   as of Oct17; not yet proof of all attachments or legal/eligibility current status.
-- Read-only official getDocsIP EF2020 v1 for 0161600001326000063 and EOK2020 v1 for 0816500000626015655, verified archival ZIP/XML SHA and
-  14 published filestore URLs; 13 original files direct first try and museum NMCK.xlsx separately after timeout, full 14/14 source SHA.
+- Read-only official getDocsIP EF2020 v1 for 0161600001326000063 and EOK2020 v1 for 0816500000626015655, verified archival ZIP/XML SHA
+  and 14 published filestore URLs; 13 original files direct first try and museum NMCK.xlsx separately after timeout, full 14/14 source
+  SHA.
 - Actually parsed original museum technical assignment, project contract, application specification, DOCX/XLSX tables and original 2.18MB
-  national-regime justification PDF via temporary pdftotext without OCR; exact Windows/Electron20 React17 TypeScript4, three multimedia themes,
-  12mo warranty, Dec20 delivery, 5% performance security and 7 working days payment after acceptance.
-- 'Actually parsed Yakutia original project contract, procurement information card, technical annex and scoring rules: GeoPrime rights hard
-  dependency 1.7, 30% price/70% qualification (past experience/reputation), data showcase SMEV4/CryptoPro, 5% price performance security,
-  227500 RUB 5% NMCK warranty security, 12mo warranty.'
+  national-regime justification PDF via temporary pdftotext without OCR; exact Windows/Electron20 React17 TypeScript4, three multimedia
+  themes, 12mo warranty, Dec20 delivery, 5% performance security and 7 working days payment after acceptance.
+- 'Actually parsed Yakutia original project contract, procurement information card, technical annex and scoring rules: GeoPrime rights
+  hard dependency 1.7, 30% price/70% qualification (past experience/reputation), data showcase SMEV4/CryptoPro, 5% price performance
+  security, 227500 RUB 5% NMCK warranty security, 12mo warranty.'
 - 'Re-read original Workspace 19041 publicly on Oct17: company organizer public open snapshot, Oct31 printed deadline, requires 3+ years
   commercial mobile experience/portfolio, Android+iOS/backend/API/source transfer, stage payments; current PRO/login eligibility unknown,
   possible same buyer as 19042 unknown.'
-- Created date-stamped detailed traceable 3-case decision matrix/shortlist, SHA-only original 14 EIS document receipt and Workspace live
-  HTML receipt, no binary files/URLs with signed queries, direct live legal status UNKNOWN; 4 focused fail-closed regression tests PASS.
-current_stage: Source-grounded 3-case engineering/commercial triage and source SHA receipts complete; run full tests, exact-head CI/merge
-  and canonical finish.
-remaining:
-- Extract official original ZIP XML docs metadata and, if safely accessible, actual attachment bytes read-only.
-- Review Workspace original page and available public scope; do not bypass PRO.
-- Prepare source-grounded qualification and economics matrix with strict UNKNOWN and owner decision gates.
-- Automated tests, full regression, exact-head CI/merge/checkpoint.
-last_verified_commit: e1a9696185214706b2e491c4c006fb4d60904546
-last_tests: 4 focused new original-source receipt/gate tests PASS, Ruff PASS; full suite/CI pending.
-resume_instruction: Worktree tender-agent-priority-tz-review-20261017. Test/run full suite, PR exact-head CI and merge original-source decision
-  docs+matrix+SHA receipt. Preserve no source binaries/new UI and no ETP action; after merge close child, keep parent in_progress with owner
-  hard GeoPrime rights and Workspace3y portfolio gates.
+- Created date-stamped detailed traceable 3-case decision matrix/shortlist, SHA-only original 14 EIS document receipt and Workspace
+  live HTML receipt, no binary files/URLs with signed queries, direct live legal status UNKNOWN; 4 focused fail-closed regression tests
+  PASS.
+- PR468 exact-head CI green, full Mac mini 5007 PASS/285 SKIP; make check and source/offline test PASS.
+- Merged detailed 3-case original-source TЗ review, 14 official EIS attachment file hashes and 19041 original public card proof; no
+  binary copies, signed URL data or new UI.
+- 'Critical factual risk: Yakutia 0816500000626015655 contract 1.7 rights to GeoPrime, qualification score70%, security/warranty; do
+  not recommend independent direct bid without rights and past-experience review.'
+- Museum 0161600001326000063 3 interactive thematic packages source Electron20/React17/TS4, installation on sensory equipment, content/IP
+  and 5% bond; commercially conditional, not owner-approved.
+- Workspace19041 mobile 3+ commercial years + portfolio, exact company/team eligibility and PRO fees still unverified; no external proposal
+  submitted.
+current_stage: Technically source-verified 14/14 original EIS annexes and Workspace public detailed requirements with conservative triage;
+  3 owner/legal/eligibility gates remain open in parent.
+remaining: []
+last_verified_commit: 3acc139476d3cbecc54553cbbe14b7b32cbb07cd
+last_tests: Mac full 5007 PASS/285 SKIP, 4 focused PASS; make check/Ruff PASS, GitHub PR468 exact-head all checks SUCCESS; existing
+  one Operator Workspace preserved.
+resume_instruction: Child completed. Continue parent with legally current EIS status check + owner review of museum content cost/IP/test
+  equipment and Yakutia GeoPrime rights/70% qualification/partner route, Workspace real 3-year portfolio and PRO access; prospective
+  quotes/ETP/paid actions require explicit owner decision. No new UI or stand.
+source_verified_original_44fz_documents: 14
+workspace_live_original_public_page_attested: true
+all_three_bid_ready: false
+independent_current_eis_legal_status_verified: false

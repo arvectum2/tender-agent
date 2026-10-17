@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B three original full TZ cases REVIEW COMPLETED (PR468 3acc139476):** Museum 0161600001326000063 7/7 official Annex SHA from original EIS filestore, 3 themed Windows sensory multimedia apps Electron20 React17 TS4+ content/IP, guarantee12mo/5% bond due Dec20. Yakutia 0816500000626015655 7/7 original Annex SHA, MANDATORY GeoPrime rights contract 1.7 and 70% qualification/30% price, separate warranty security 227500 rub; no direct bid without rights/owner. Workspace19041 original public card SHA confirms 3+ years mobile commercial experience and portfolio, PRO access and company/team acceptance unknown. Full Mac 5007 PASS/285 SKIP + GitHub exact-head CI green. **ALL three BID_READY=false and current legal EIS status not attested**, parent 15-20 company qualified current goal remains OPEN. [Case matrix](B2B_PRIORITY_THREE_FULL_TZ_2026-10-17.md), [14 source SHA](b2b_priority_eis_documents_2026-10-17.json).
+
+
+
 **B2B 3 priority ORIGINAL TЗ reviewed 17.10:** official getDocsIP archived 44FZ 0161600001326000063 (museum interactive) and 0816500000626015655 (Yakutia GIS), 7/7 original external binary SHA for each, plus re-read original Workspace19041 public requirements. Museum 3 programs Electron20/React17 TS4+, warranty 12mo, Dec20 and 5% contract security; Yakutia requires hard GeoPrime rights under contract1.7, qualification70% price30%, 5% performance and 227500 RUB warranty security, strong partner/experience gate; Workspace19041 demands 3+ commercial mobile years/portfolio, PRO rights unknown. All BID_READY false, current public EIS status and company admissibility unknown; goal 15–20 owner-qualified still open. [Detailed triage](B2B_PRIORITY_THREE_FULL_TZ_2026-10-17.md) / [official 14 original SHA](b2b_priority_eis_documents_2026-10-17.json) / [conservative 3-case decision matrix](b2b_priority_three_matrix_2026-10-17.json).
 
 
