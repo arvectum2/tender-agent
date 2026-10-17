@@ -1,0 +1,41 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-MUSEUM-SOW-ECON-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Build a transparent source-traceable cost/cash-flow sensitivity gate for the three multimedia museum complexes (44FZ 0161600001326000063),
+  explicitly distinguishing signed source facts from hypothetical planning costs. No owner GO or bidding actions.
+definition_of_done:
+- Use previous 14-file authentic EIS original source review and contract 5%/12mo/Dec20/7d conditions; verify signed source and cite
+  provenance.
+- Create deterministic offline multiple-scenario financial calculation without inventing market quotes; cash vs shadow labor, USN 6%
+  planning tax, contract security liquidity vs economic expense, no false net profit.
+- Include price-cut sensitivity, break-even bounds and fail-closed recommendations for unverified equipment/content travel/rights/experience/legal
+  status.
+- Source-grounded dated Russian owner worksheet, machine scenario results, tests; no new UI/stand/DB, no external bidding or payment.
+- After upstream PR468 and its canonical parent checkpoint close, merge checked change exact-head GH CI and mark task complete; keep
+  parent in_progress.
+completed:
+- Confirmed previous original source PR468 branch head 8926696c562136f7ea2b30cc5ef36458501a88cf contains museum 7/7 EIS file SHA, all
+  three software deliverables and contract conditions; PR468 exact-head CI quality still running at task start.
+- Safely restored isolated SSD worktree onto canonical main 6fc80afac65fc1db4eb3776f269fbe7829a4fd0b following PR468 confirmed merged
+  and parent source review child completed.
+- Built fully deterministic 3-scenario *hypothetical* museum program economics from original 3-theme Windows interactive 44FZ SOW and
+  security/warranty/payment facts; separates cash vendor-like outlays, internal labor opportunity cost, provisional USN6 tax and performance-security
+  liquidity rather than expensing bond.
+- Calculated 0%/10%/20%/25% price markdown sensitivity with anti-dumping review required at >=25%; at NMC 1.6m lean +609k economic,
+  baseline -101k, stress -1346k RUB. Baseline economic break-even 1707446.81 RUB > NMC. Zero bid approvals in all variants.
+- Created strict owner worksheet docs/roadmap/B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md and machine scenario data; 12 focused finance
+  consistency/safety tests and Ruff PASS.
+current_stage: Owner scenario cost+cash liquidity and source/provenance review complete; full regression and exact-head CI required
+  before child completed.
+remaining:
+- Build deterministic scenario calculator and test it without DB/network.
+- Prepare owner evaluation with unverified assumptions labelled; strict no GO.
+- Finish after PR468 merged, rebase on actual main/checkpoints, full CI merge and checkpoint.
+last_verified_commit: 6fc80afac65fc1db4eb3776f269fbe7829a4fd0b
+last_tests: 12 focused scenario/anti-dumping/source provenance PASS; Ruff PASS; full make check/pytest/CI pending.
+resume_instruction: Source-based cost scenario implemented in isolated SSD worktree tender-agent-museum-three-complex-cost-20261017
+  at main 6fc80afa. Need make check/full pytest and exact-head CI/merge, child status completed only once merged. Parent in_progress.
+  Model is explicitly hypothetical not market/source quotes, no owner commercial GO, no ETP/bids/PRO, no UI/DB or guarantee cash expensed
+  as cost.
