@@ -254,7 +254,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 B2B Workspace mobile first-party PRO and verified LLC ARVECTUM published Apple references child TA-B2B-WORKSPACE-MOBILE-APPSTORE-20261017.yaml COMPLETED PR475 9b894bb383576499679faa7de909f2e963d7f8ee, Mac full 5069 PASS/285 SKIP and exact-head GitHub CI green. Official original Workspace advertising product MOB mobile development fee RUB16900/1mo,45630/3mo,86190/6mo,152100/12mo; generic from2900 is content tier not mobile and website WEB_DEV25500/mo separate. Official Apple iTunes seller LLC ARVECTUM 3 published iOS products: ChickMark: трекер привычек id6818711298 appStore1.4.1 iPhone/Watch, Фото и PDF под размер id6816346084 ver1.0.1 iPhone, Arvectum Proxy Launcher id6816013574 ver0.1.37 iPhone, exact App Store URLs and original source SHA in docs/roadmap/b2b_workspace_mobile_appstore_original_2026-10-17.json. These prove shipped company iOS products, NOT three years commercial client Android+iOS work, completed customer projects or hardware child-safety experience. First-party public corporate mobile tenders 19041 Android+iOS meatprocessor 250k-1m requires 3yr commercial development and portfolio; 18998 Android8.1 noGoogle children 4G voice AI real hardware 240k-1m, unproven hard skill. 19007 Kazakhstan legal app >=1.5m organizer PRIVATE person and hidden PRO spec, excluded strict B2B; owner mobile bid READY0, authentic LLC cart/PRO/category entitlement unverified. Owner report docs/roadmap/B2B_WORKSPACE_MOBILE_APPSTORE_LLC_REFERENCES_2026-10-17.md; 12 focused PASS. Main parent 15–20 CURRENT real eligible IT B2B candidates OPEN, next search source verified iOS-only support, App Store publishing, watchOS small scopes and assess no-3year clauses. Smolensk original child separately blocked, do not bypass. Single Operator Workspace18082 untouched, no paid PRO or bids/signatures, manual_override true."
+resume_instruction: "2026-10-17 task TA-B2B-FREE-FIRST-OUTREACH-20261017.yaml IN_PROGRESS in SSD worktree tender-agent-free-outbound-platforms-20261017, first party 7 sources HTTP200 SHA and 1 Pchel intermittent download unsuccessful marked unknown (official public FAQ supports 100 free studio proposals monthly <=1000 USD). FL free only for all/vacancies/contests; CodeLance advertises unlimited free proposals but offers self-promotion in feed, original current CodeLance147 feeds imports open; CONTRACTIS limited monthly free replies exact limit unknown, 2 real originals Python AI170k 60d and construction landing90-150k 34 responses, not verified real legal corporate payers. ITsNEW public tasks but free first reply unknown; Weblancer 10day trial and Mac HTTP403, not long-term free. Only THREE CANDIDATE orders and actual company free proposal eligibility zero verified, no customer outreach. Report docs/roadmap/B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md JSON receipt in same roadmap, 5 focused tests pass, next make check full pytest, PR exact-head CI/merge, status completed child; parent 15-20 truly qualified B2B cases still OPEN, manual_override true and one Operator Workspace18082."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -578,3 +578,14 @@ b2b_workspace_mobile_real_appstore_llc_2026_10_17:
   owner_paid_access_authorized: false
   stage: completed_mobile_tariff_and_llc_portfolio
   pr_merge_sha: 9b894bb383576499679faa7de909f2e963d7f8ee
+
+b2b_free_first_outreach_sources_2026_10_17:
+  task_id: TA-B2B-FREE-FIRST-OUTREACH-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-FREE-FIRST-OUTREACH-20261017.yaml
+  source_receipt: docs/roadmap/b2b_free_first_outreach_sources_2026-10-17.json
+  owner_report: docs/roadmap/B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md
+  first_party_source_http200_count: 7
+  three_potential_source_customer_orders: 3
+  company_first_free_bid_eligibility_confirmed: false
+  owner_paid_or_outreach_authorized: false
+  stage: awaiting_ci

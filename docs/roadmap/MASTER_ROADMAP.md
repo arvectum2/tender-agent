@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B FREE first proactive client response platform audit (Oct17) IN_PROGRESS:** FL free only for-all/vacancies/contests, Pchel studio 100 free monthly requests <=USD1000 and old mirrored fake-fresh lead risk, CodeLance unlimited free advertised but original live real client catalog imports147 mixed with provider advertisements, CONTRACTIS monthly capped free reply/agent chat with unknown quota and real original Python AI170k, construction landing90-150k (already34 applicants). Weblancer trial10 days and Mac HTTP403; ITsNEW original board but free reply NOT proved. Seven original HTTP200 source SHA, Pchel intermittent fetch marked unavailable rather than invented source; zero actual authenticated LLC first contact GO. [Owner ranking](B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md) and [machine source receipts](b2b_free_first_outreach_sources_2026-10-17.json). Keep qualified15-20 goal OPEN.
+
+
+
 **B2B Workspace MOB mobile PRO + verifiable LLC ARVECTUM App Store portfolio COMPLETE PR475 9b894bb383:** original MOB PRO16900/45630/86190/152100 RUB for 1/3/6/12mo, generic cheapest CONTENT2900 unrelated; official Apple three LLC ARVECTUM iOS products ChickMark/PhotoPDF/Arvectum Proxy Launcher with sellerName verified and exact AppStore links. Original mobile corporate public cards 19041 requiring >=3yr commercial Android+iOS, 18998 child Android8.1 noGMS watch real device + safety, capabilities not proved by our iOS apps; original 19007 organizer PERSON, excluded strict LLC B2B. 5069 PASS/285 SKIP local, 12 focused, GitHub CI all green. Owner bid GO0/PRO purchase0; next specifically iOS-only AppStore publishing/support scopes. [Human source report](B2B_WORKSPACE_MOBILE_APPSTORE_LLC_REFERENCES_2026-10-17.md) / [original Apple/Workspace SHA receipt](b2b_workspace_mobile_appstore_original_2026-10-17.json). Overall 15–20 company qualified sources OPEN.
 
 

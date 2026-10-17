@@ -1,0 +1,169 @@
+{
+  "schema_version": "arvectum-b2b-free-first-outreach-original-source-20261017-v1",
+  "observed_date": "2026-10-17",
+  "first_party_policy_count": 4,
+  "first_party_example_order_count": 3,
+  "independently_proven_llc_first_bid_entitlement_count": 0,
+  "source_count_requested": 8,
+  "authenticated_reply_success_count": 0,
+  "paid_actions_or_messages_sent": 0,
+  "is_published_no_reply_needed_for_customer_chat": false,
+  "entries": [
+    {
+      "id": "fl",
+      "source_type": "platform_policy",
+      "source_url": "https://www.fl.ru/",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:36:52.568867+00:00",
+      "http_status": 200,
+      "source_sha256": "2650b524e59828ddb19195e16a27586b49e26542a20667b8cb730a4e90a5de31",
+      "source_bytes": 286944,
+      "source_literal_requirement_excerpts": [
+        "для всех",
+        "пакет откликов"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false,
+      "advertised_or_documented_free_entry_rule": "FREE_ONLY_FOR_ALL_AND_VACANCIES_CONTESTS",
+      "actual_final_zero_cost_for_our_llc_account": "UNKNOWN"
+    },
+    {
+      "id": "pchel",
+      "source_type": "platform_policy",
+      "source_url": "https://pchel.net/help/projects/",
+      "verified_this_run": false,
+      "fetch_problem": "CalledProcessError",
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false
+    },
+    {
+      "id": "codelance",
+      "source_type": "platform_policy",
+      "source_url": "https://www.codelance.ru/site/razrabotchikam",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:37:04.752927+00:00",
+      "http_status": 200,
+      "source_sha256": "c37e1c1b4d1b30731d2303283ec67ac16d4dc1c82e46490f3d558f7c6144674c",
+      "source_bytes": 94400,
+      "source_literal_requirement_excerpts": [
+        "бесплатно",
+        "отклик"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false,
+      "advertised_or_documented_free_entry_rule": "ADVERTISED_UNLIMITED_FREE_REPLIES",
+      "actual_final_zero_cost_for_our_llc_account": "UNKNOWN"
+    },
+    {
+      "id": "contractis",
+      "source_type": "platform_policy",
+      "source_url": "https://contractis.ru/remote/zakazy-dlya-mobilnyh-razrabotchikov",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:37:05.486441+00:00",
+      "http_status": 200,
+      "source_sha256": "0d016ccf7adac92f07473c690e161238c4fd850476fb13e5463a2ec35e24c778",
+      "source_bytes": 303973,
+      "source_literal_requirement_excerpts": [
+        "бесплатн",
+        "PRO",
+        "лимит"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false,
+      "advertised_or_documented_free_entry_rule": "FREE_MONTHLY_CAPPED_CHATS_CONTACTS_PRO_ONLY",
+      "actual_final_zero_cost_for_our_llc_account": "UNKNOWN"
+    },
+    {
+      "id": "itsnew",
+      "source_type": "platform_policy",
+      "source_url": "https://itsnew.ru/board",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:37:05.822808+00:00",
+      "http_status": 200,
+      "source_sha256": "5ac26b450163d42f69351b80a9fc2e958ac0bf4cf46e12daa4ba08ea4fddc788",
+      "source_bytes": 249595,
+      "source_literal_requirement_excerpts": [
+        "Задания"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false,
+      "advertised_or_documented_free_entry_rule": "VISIBLE_TASKS_FREE_REPLY_TERMS_NOT_ATTESTED",
+      "actual_final_zero_cost_for_our_llc_account": "UNKNOWN"
+    },
+    {
+      "id": "contractis_python_ai",
+      "source_type": "example_original_customer_order",
+      "source_url": "https://contractis.ru/order/ishchu-podryadchika-na-razrabotku-po-na-python-rabota-s-ii",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:37:06.052055+00:00",
+      "http_status": 200,
+      "source_sha256": "7aa1bb93982feb6dd4431cad5c54006e1d45a1786fc8ff5cdc6868929ff8e0bc",
+      "source_bytes": 132211,
+      "source_literal_requirement_excerpts": [
+        "170 000",
+        "Python",
+        "Windows",
+        "Linux"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false
+    },
+    {
+      "id": "contractis_landing",
+      "source_type": "example_original_customer_order",
+      "source_url": "https://contractis.ru/order/razrabotka-lendinga",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:37:06.279373+00:00",
+      "http_status": 200,
+      "source_sha256": "04e16c804f44dcae64a35a239f22fa27ee4d29ab2dfeb89913e4cffe3d4de4d8",
+      "source_bytes": 126857,
+      "source_literal_requirement_excerpts": [
+        "90 000",
+        "150 000",
+        "строительной компании"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false
+    },
+    {
+      "id": "codelance_catalog_integration",
+      "source_type": "example_original_customer_order",
+      "source_url": "https://www.codelance.ru/orders/view?id=147",
+      "verified_this_run": true,
+      "observed_at_utc": "2026-10-17T17:37:06.530302+00:00",
+      "http_status": 200,
+      "source_sha256": "640f6898a7dfe9c5bbadb61227ed1a6ddd07e0563f80271e66dd70cc7628e661",
+      "source_bytes": 46912,
+      "source_literal_requirement_excerpts": [
+        "Парсинг на сайт",
+        "XML",
+        "JSON"
+      ],
+      "company_account_reply_tested": false,
+      "contract_with_russian_llc_accepted": false,
+      "message_submitted": false,
+      "paid_action_executed": false,
+      "original_customer_verification_complete": false
+    }
+  ]
+}

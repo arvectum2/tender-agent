@@ -1,0 +1,39 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FREE-FIRST-OUTREACH-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Verify free-first-reply IT acquisition platforms for LLC Arvectum via original terms and customer demand, no messages
+  or payments
+definition_of_done:
+- Verify official free-response limitations and LLC unknowns for at least FL Pchel CodeLance CONTRACTIS and comparator channels
+- Review original actual client orders versus platform advertising, duplicates or stale content
+- Source-backed dated owner decision matrix and tests
+- GitHub merge and checkpoint status with remaining legal gates
+completed:
+- Checked origin/main d876d3874a2422357a8fbdf597390ada61c5b728 and existing 18082 health200
+- Read official FL Pchel CodeLance CONTRACTIS public free-first response rules, LLC acceptance unverified
+- Collected public policy/source original direct URLs, seven verified SHA/HTTP200 snapshots of which 4 platform pages and
+  3 actual original project pages; fifth Pchel page direct access inconsistent during final receipt collection, represented
+  as source fetch unknown; FAQ separately available from official web source.
+- Exact official FL free only marked for all/vacancies/contests, Pchel studio standard 100 replies/month <=USD1000, CodeLance
+  advertised unlimited, CONTRACTIS free monthly capped with unknown specific quota, Weblancer free 10-day introduction but
+  direct HTTP403, ITsNEW open board free reply not attested.
+- Original actual CONTRACTIS Python AI 170k/60 days and landing 90-150k/34 replies, CodeLance feed import original open 2026Oct7,
+  no company eligibility or customer INN attested. Old Pchel 4y/6y results excluded from current active candidate count.
+- Created owner research report and machine source receipt, 5 negative/offline tests PASS, Ruff PASS, no account or messages
+  or payments.
+current_stage: First-party channel/rules and three actual order original SHA documentation ready; awaiting full check and
+  exact-head GitHub CI/merge.
+remaining:
+- Original source tests, owner report and source receipt
+- CI and merge/final checkpoint
+last_verified_commit: d876d3874a2422357a8fbdf597390ada61c5b728
+last_tests: 5 source/negative tests PASS, Ruff PASS. Full make check+pytest+GH CI pending.
+resume_instruction: Isolated SSD tender-agent-free-outbound-platforms-20261017; source receipt 8 requested, 7 HTTP200 verified
+  originals (FL, CodeLance, CONTRACTIS, ITsNew, Contractis Python AI+landing, CodeLance catalog import), Pchel direct retrieval
+  timeout so no fabricated hash, original FAQ official browser. FL for all, Pchel studio 100/month <=USD1000, CodeLance advertised
+  unlimited but seller ads mixed, CONTRACTIS capped free with quota unknown and direct original order 170k Python AI/90-150k
+  landing; Weblancer trial10d but direct403; ITsNEW free reply unknown. Three candidate orders NOT qualified legally from
+  LLC. Report+JSON and 5 focused green; next full make check/pytest, exact-head PR/merge then child completed, parent active.
+  No new UI or paid actions.
