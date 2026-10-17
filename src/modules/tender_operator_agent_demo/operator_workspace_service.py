@@ -11,6 +11,7 @@ from uuid import UUID
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
 from sqlalchemy import func, or_
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from src.modules.tender_operator_agent_demo.procurement_intake_service import (
@@ -84,13 +85,22 @@ def read_session():
     # Uses the existing canonical database, never creates tables or runs migrations.
     from sqlalchemy import create_engine
 
-    engine = create_engine(get_settings().database_url)
+    engine = None
     try:
+        engine = create_engine(get_settings().database_url)
         with Session(engine, autoflush=False) as session:
             yield session
             session.rollback()
+    except SQLAlchemyError as exc:
+        # An uninitialized/unavailable canonical DB is not an empty registry.
+        # Fail closed without revealing connection strings or SQL errors.
+        raise HTTPException(
+            status_code=503,
+            detail="База закупок временно недоступна",
+        ) from exc
     finally:
-        engine.dispose()
+        if engine is not None:
+            engine.dispose()
 
 
 def registry_records(*, query: str = "", limit: int = 25, offset: int = 0) -> dict:

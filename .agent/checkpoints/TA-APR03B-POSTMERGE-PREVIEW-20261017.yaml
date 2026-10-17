@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-POSTMERGE-PREVIEW-20261017
+status: in_progress
+goal: 'Verify that the private APR-03B browser-preview uses the merged main source and pass a non-production authenticated readiness smoke without touching current operator data.'
+definition_of_done:
+  - 'Prove current preview/main source revision parity or explicitly report drift.'
+  - 'Build a separate whole-source private staging image from latest main, with image SHA label.'
+  - 'Start an isolated localhost-only preview with independent ephemeral test credentials and zero mounts into existing operator/production volumes.'
+  - 'Run source parity, unauth/auth HTTP checks, safe read-only workspace route and cite/report controls; assert no ETP, signature, payment or production writes.'
+  - 'Run focused checks, record SHA and nonproduction owner-handoff; update parent checkpoint and roadmap; merge only after exact-head CI.'
+completed:
+  - 'Current main 3b899de CI succeeded; original 18083 preview a9f3bce parity FAILED and must not be used for current owner acceptance.'
+  - 'Source checksum parity proved on isolated staging from 3b899de: 1163 source files SHA match, localhost-only port 18087, zero external source mounts.'
+  - 'Reproduced authenticated registry SQLAlchemy missing table error 500 on fresh uninitialized staging DB; patched read-only service to return HTTP 503 without leaking SQL/credentials or falsely returning empty results.'
+  - '31 focused operator workspace and image parity tests PASS; Ruff PASS.'
+current_stage: 'Rebuild corrected isolated image and run integrated regression.'
+remaining:
+  - 'Rebuild image with fix and smoke isolated main-source preview.'
+  - 'Validate and document evidence.'
+  - 'Commit and pass exact-head CI, merge code/docs/checkpoint; parent remains in_progress.'
+last_verified_commit: 3b899de42c50f7cc95d16e506ae2740597ba2256
+last_tests: 'Original main CI SUCCESS; old preview parity FAIL (expected); isolated 3b899de source parity PASS 1163 files, unauth auth and assets PASS, registry 500 reproducible; source fix 31 focused pytest PASS and Ruff PASS.'
+resume_instruction: 'Use worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-apr03b-postmerge-20261017. Build from deploy/pilot/Dockerfile.operator-workspace-preview using separate tag and staging-only isolated Docker app; never reuse existing Arvectum pilot volumes/secrets; save source/HTTP evidence, run focused tests, update parent+checkpoint.'
