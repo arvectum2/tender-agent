@@ -243,7 +243,7 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
                 "Сохранённый XML не совпадает с выбранной архивной редакцией "
                 "оригинального ZIP ЕИС; поля остаются UNKNOWN."
             )
-        elif len(candidates) > 1 and pinned_revision is not None:
+        elif pinned_revision is not None:
             xml, item, selected_version = pinned_revision
             source_selection = "pinned_latest_archived_notice_revision"
             for field in facts:
