@@ -272,6 +272,15 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
             if any(value["status"] != "KNOWN" for value in facts.values()):
                 warnings.append("Часть полей XML неоднозначна или отсутствует; требуется проверка.")
 
+    # A separately timestamped, source-rechecked archive observation is not
+    # a live EIS legal status and must never upgrade GO or archived XML facts.
+    source_revalidation = None
+    if source == "zakupki_gov_ru_getdocs_ip":
+        from src.modules.tender_operator_agent_demo.eis_archived_source_integrity import (
+            verified_saved_observation,
+        )
+        source_revalidation = verified_saved_observation(run_id)
+
     # Do not use the old report's claimed status to prove the content of EIS XML.
     return {
         "contract_version": "operator-eis-source-evidence-v1",
@@ -280,6 +289,7 @@ def get_operator_source_evidence(run_id: str) -> dict[str, Any]:
         "source": source,
         "source_selection": source_selection,
         "source_candidate_count": source_candidate_count,
+        "source_revalidation": source_revalidation,
         "facts": facts,
         "warnings": warnings,
         "human_control_required": True,

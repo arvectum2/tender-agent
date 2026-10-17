@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**APR-03B EIS six original sources verified 17.10:** fresh official getDocsIP ZIP original is byte-identical SHA35978ce4 archived v1 and 5 independent official filestore GETs matched XLS/DOC/DOCX/DOCX/PDF original bytes 5/5 SHA. Source completeness confirmed for ARCHIVED version1, not current public/legal status. Existing Operator Workspace evidence panel gets explicit timestamp and warning, no second interface/stand. [Audit](../acceptance/APR03B_EIS_SIX_ORIGINALS_FRESH_VERIFICATION_2026-10-17.md).
+
+
+
 **APR-03B original ZIP metadata — COMPLETED, 17.10.2026:** PR #463 merged 7c192c38 after 4945 local tests PASS/285 SKIP and GitHub CI all green. Existing Mac mini 18082 upgraded in place, 1163 source files SHA match. Original archive in saved Museum Bread run linked retrospectively after two exact SHA checks with external ArvectumSSD backup; source-selection pinned archived v1, verified six local-vs-HTTP originals, real Chrome shows archived v1 and warns live source not verified; report200, PDF/DOCX409. Child task complete. Live ЕИС revision, five attachments outside ZIP and owner semantic GO still open. See acceptance APR03B_LEGACY_GETDOCS_ORIGINAL_ZIP_RECONCILIATION_2026-10-17.md.
 
 
