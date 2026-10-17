@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 APR03B fresh official getDocsIP read-only Oct17 returned source ZIP exactly same SHA35978ce4 as old Oct12 archived notice v1; all five original URLs in source XML crossmatch saved files and 5 live filestore GET byte-for-byte full SHA match. Current public live notice/owner GO remains UNVERIFIED. Existing one Operator Workspace evidence receipt code pending full regression/CI and safe in-place update, no new UI/stand."
   - "2026-10-17 APR03B original saved getDocsIP ZIP v1 historical provenance repaired: PR463 7c192c383a5e1d3b9ba813c9b27536bef15f6030 CI green, Mac mini 4945 PASS/285 SKIP. Existing Museum Bread run recovered 17041B original download from historical getDocs event, XML ed5c742b byte-identical to FILE-01; external SSD backup saved; metadata pinned retrospectively with exact two-hash gate and original 18082 only. Existing six file SHA, report 200, PDF/DOCX409, Chrome history and safe archive warning verified. Important: ZIP contains only XML, not other five files; latest LIVE EIS edition and legal GO UNKNOWN."
   - "2026-10-17 APR03B historic getDocsIP original ZIP FOUND within Museum Bread saved run 17041B SHA 35978ce4, unique official event receipt matched, archived v1 source XML SHA ed5c742b matches FILE-01. Missing metadata pin rather than file. Safe dry-run reconciliation and tests ongoing; latest live EIS and owner legal GO unknown."
   - "2026-10-17 corrected APR03B local source gate: direct existing Mac mini 18082 container verified saved Museum Bread original files 6/6 size + full SHA256 identical to authenticated HTTP downloads, report/evidence 200, three XML facts title/deadline/NMCK independently parsed, archived PDF+DOCX 409 and actual Chrome Headless history/report/two errors 0 JS exceptions. Earlier blocked-access report was invocation-only and corrected. Official signed ZIP/latest EIS source not pinned in saved run; human legal/economic GO pending. No new UI or stand."
@@ -229,7 +230,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 original archived getDocsIP ZIP metadata recovery completed via PR463 merged 7c192c383a5e1d3b9ba813c9b27536bef15f6030 in SAME existing Operator Workspace on 18082, no new UI/stand/DB. Original ZIP SHA35978ce4 source-reconciled by historical getDocs receipt, only epNotificationEZK2020 version1 notice XML SHAed5c742b bound to saved FILE-01; metadata dry-run then two-hash apply with SSD backup. Current live EIS is explicitly NOT verified and original transport-time SHA was not originally pinned. Five other attachments outside ZIP need independent primary source completeness/authority; owner legal/economic review remains. Existing six original downloads, report/evidence and archived export409 plus Chrome passed. Next independent APR06/07 human reviews and current B2B procurement discovery; ETP, payment, signature, deploy, external messages forbidden; manual_override true."
+resume_instruction: "17 Oct 2026 APR03B first-party source verification: fresh getDocsIP same archival v1 XML ZIP, 5/5 original filestore bytes freshly verified exact SHA. Worktree /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-eis-five-docs-20261017, child .agent/checkpoints/TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017.yaml IN_PROGRESS, audit docs/acceptance/APR03B_EIS_SIX_ORIGINALS_FRESH_VERIFICATION_2026-10-17.md. Next: full Mac mini make check/pytest, GitHub exact-head CI and merge safe offline-first integrity audit and original Operator Workspace receipt display. After merge upgrade SAME existing 18082 and perform --live --save-receipt once, re-check real Chrome and archived 409; no second stand. Current live legal/public notice status NOT verified, business GO false; five source binary retrieval does not permit ETP, signature, payment or submission; manual_override true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -373,3 +374,14 @@ eis_archive_provenance_recovery_2026_10_17:
   legacy_metadata_repaired: true
   owner_legal_semantic_approval: pending
   one_existing_ui_only: true
+
+eis_five_attachments_revalidation_2026_10_17:
+  task_id: TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017
+  checkpoint: .agent/checkpoints/TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017.yaml
+  audit_report: docs/acceptance/APR03B_EIS_SIX_ORIGINALS_FRESH_VERIFICATION_2026-10-17.md
+  five_original_filestore_saved_bytes_sha_match: verified_5_of_5_fresh_oct17
+  archived_original_zip_retrieved_again: verified_same_hash_oct17
+  current_official_public_notice_status: unknown
+  operator_ui_second_stand_created: false
+  private_receipt_saved_in_original_runtime: pending_ci
+  owner_legal_go: pending

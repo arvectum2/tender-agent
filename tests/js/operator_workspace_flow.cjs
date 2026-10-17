@@ -94,7 +94,18 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
       report_markdown:'Реальный отчёт',recommendation_label:'Проверка человеком',
       sections:[{title:'Требования',items:['Перепроверить документы']}],executive_summary:['Только оценка'],decision_core:{facts:{}}
     };
-    else if(route.endsWith('/workspace/runs/run-1/evidence')) value={facts:{},warnings:[]};
+    else if(route.endsWith('/workspace/runs/run-1/evidence')) value={
+      facts:{},warnings:[],
+      source_revalidation: viaHistory ? {
+        state:'archived_originals_retrieved_byte_identical',
+        verified_at_utc:'2026-10-17T09:17:06+00:00',
+        archived_notice_version:1,
+        official_binary_match_count:5,
+        official_attachment_count:5,
+        current_live_notice_status_verified:false,
+        owner_legal_go:false
+      } : null
+    };
     else if(route.endsWith('/workspace/runs/run-1/verify-quote') && method==='POST') {
       const body=JSON.parse(opts.body);
       assert.equal(body.file_id,'FILE-01');
@@ -176,6 +187,16 @@ async function scenario({withFiles, allowExports=false, viaHistory=false}) {
     assert(calls.includes('GET /api/demo/tender-agent/runs/run-1/report'));
     assert.equal(get('report-panel').hidden,false);
     assert(get('report-analysis-mode').textContent.includes('без LLM'), 'Degraded model mode must be visible');
+    if (viaHistory) {
+      for (let i=0;i<50 && !get('evidence-facts').children.some(x=>x.textContent.includes('5/5 внешних приложений'));i++) {
+        await new Promise(resolve=>setTimeout(resolve,5));
+      }
+      assert(get('evidence-facts').children.some(x=>x.textContent.includes('5/5 внешних приложений')),
+        'Fresh EIS attachment comparison is displayed INSIDE existing report');
+      assert(get('evidence-facts').children.some(x=>x.textContent.includes('НЕ подтверждены')),
+        'Archived source cannot suggest legal current GO');
+    }
+
     let prevented = false;
     get('download-pdf').events.click({preventDefault() {prevented=true;}});
     for(let i=0;i<50 && !(allowExports ? downloadClicks >= 1 : get('toast').textContent.includes('Экспорт PDF недоступен'));i++){

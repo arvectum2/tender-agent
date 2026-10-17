@@ -394,6 +394,18 @@
       section.append(block);
     }
     root.append(section);
+    const archivedSourceCheck = verifiedEvidence?.source_revalidation;
+    if (archivedSourceCheck?.state === 'archived_originals_retrieved_byte_identical') {
+      paragraph(root,
+        'Проверка исходников ЕИС: архивная редакция № ' +
+        archivedSourceCheck.archived_notice_version + ', ' +
+        archivedSourceCheck.official_binary_match_count + '/' +
+        archivedSourceCheck.official_attachment_count +
+        ' внешних приложений побайтово повторно получены с ЕИС (' +
+        archivedSourceCheck.verified_at_utc +
+        '). Статус актуального извещения, юридическая готовность и допуск к участию НЕ подтверждены.',
+        'citation');
+    }
     for (const warning of verifiedEvidence?.warnings || []) paragraph(root, '⚠ ' + warning, 'unknown');
     for (const key of ['blockers','unknowns','readiness']) {
       if (!Array.isArray(core[key]) || !core[key].length) continue;

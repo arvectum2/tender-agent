@@ -1,0 +1,40 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017
+status: in_progress
+goal: Independently verify official EIS current notice status and provenance/completeness of the five non-ZIP Museum Bread documents,
+  in the existing 18082 workspace, without inventing source authority.
+definition_of_done:
+- Read latest parent checkpoint and actual git main/runtime; use single existing 18082 UI, isolated SSD worktree, no duplicate service.
+- Trace each saved external attachment to original first-party source evidence where available, preserving SHA, name, event and revision
+  with UNKNOWN on missing proof.
+- Check live official notice revision/status through authorized read-only channels; never infer live from historical ZIP or third-party
+  listings.
+- Implement any safe source-bounded ingestion/provenance gap and targeted tests without rewriting original files or old evidence.
+- Run relevant/full tests and exact-head CI, merge safe code, update canonical parent/checkpoint; note any true source/legal blocker
+  precisely.
+completed:
+- Read main 87ca50a84f5d148b6751e0d9ac9757dd7c4b71e7, CI green; former child original archive pin completed; existing 18082 API and
+  worker healthy.
+- Found prior 17041-byte original getDocsIP ZIP contains ONE official notice XML v1 and explicitly does NOT contain five separately
+  retained project documents.
+- Read-only official getDocsIP on Oct17 09:17 UTC again returned exact archived ZIP SHA35978ce4 from official host; does not prove independent
+  public legal status.
+- Archived notice XML references 5 official zakupki.gov.ru filestore attachments; all 5 full source URLs/names matched existing descriptors
+  and fresh byte-limited HTTP GET matched all 5 saved full SHA256.
+- Implemented bounded offline-first archived EIS source revalidation, optional live-only explicit operation and checksum receipt in
+  EXISTING run; existing evidence endpoint and single UI display date/count with legal current GO false.
+- 45 targeted pytest, existing Node simulated history UI, Ruff PASS. Full regression/CI pending.
+- Canonical parent .agent/current-task.yaml now links current child and accurately says archived six-file source integrity 6/6, live
+  public legal notice unknown; original 18082 receipt pending CI.
+current_stage: 5/5 official external attachment binary GETs confirmed; build and test one existing UI receipt projection, then CI and
+  existing 18082 apply.
+remaining:
+- Verify 5 external-file hashes, filenames, events and available manifest/origin chain from existing data only.
+- Obtain official live notice proof or explicit diagnostic blocker, no external write.
+- Add fail-closed source-lineage audit/tests/documentation as justified; finalize canonical checkpoint.
+last_verified_commit: 87ca50a84f5d148b6751e0d9ac9757dd7c4b71e7
+last_tests: 45 targeted PASS, Node history receipt UI PASS, Ruff/make check PASS; full suite running.
+resume_instruction: Finish make check/full pytest/PR CI. Upgrade existing Mac mini 18082 only after main merge, run scripts/ops/verify_eis_archive_sources.py
+  --live --save-receipt once and verify real Chrome report label; live public legal notice status remains unknown, no GO and no new
+  UI/stand.
