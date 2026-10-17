@@ -1,0 +1,44 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-WORKSPACE-ORIGINAL-PRO-TARIFF-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Use only original Workspace public PRO advertising calculator category prices to derive conservative stage-1 acquisition
+  cost gate for existing Workspace19006 Schlam offer and other original public corporate IT leads; no payment/account changes.
+definition_of_done:
+- Read exact first-party Workspace PRO public advertising page and pin HTML SHA/UTC, source category-specific month/3month/6month/year
+  values without confusing generic 2900 teaser with web/AI category.
+- Explicitly distinguish site category 25500/month vs CRM/AI 6900/month if exact source data supports; owner actual account/cart/product
+  eligibility and promos NOT verified.
+- Show hypothetical single-award source offer 89000RUB/130000 buyer budget floor fee burden separate from USN6% preliminary planning,
+  vendor and labor costs UNKNOWN. Explain break-even and paid access decision to owner without claiming a won bid.
+- Source receipt, Russian owner report, regression tests ensuring no misleading lowest overall PRO price, then Mac make check/full
+  pytest, GitHub exact-head CI/merge and completed child checkpoint.
+completed:
+- Prior original Workspace19006 Schlam precontract site source QA child completed and PR473 merged main bacd835330a8c54830b54dd8e9aff7d1409a4279,
+  5048 Mac tests PASS; one Operator Workspace18082 healthy.
+- Observed official https://workspace.ru/advertising/ HTTP200 public HTML SHA 566e4a02e4bf4bc52a024cc6711e40af9277d45e1d49ad2b07606c9b5405bae9,
+  with original PRO advertising teaser 2900/mo and category WEB_DEV_1_MON 25500/mo, CRM_1_MON 6900/mo.
+- Read exact public original https://workspace.ru/advertising/ source HTML 163124B, SHA566e4a..., and cross-check original PRO
+  advertising input product codes and adjacent source price spans for 4 categories x 4 durations, no checkout/login.
+- Confirmed generic advertising from2900 RUB/month is category CNTNT, while exact original category site WEB_DEV 25500/68850/130050/229500
+  RUB for 1/3/6/12mo and CRM_AI category CRM 6900/18630/35190/62100 RUB for those durations. App category MOB 16900/45630/86190/152100.
+- Recorded existing Schlam published preliminary price89000 RUB vs public buyer budget floor130000, single month website PRO would
+  be 28.65pct of 89000; hypothetical 6pct gross USN and 25500 RUB leaves 58160 RUB BEFORE own labor and all other costs, no contract
+  win or profit promised.
+- First-party source JSON exact original SHA/UTC and failclosed parsing, owner price/authorization gate report, 9 focused tests
+  PASS and Ruff PASS; all cases owner PRO purchase/ETP bid false.
+current_stage: First-party Workspace PRO category price source and Schlam one-month expense gate documented/tested, awaiting full
+  regression/GH exact-head CI/merge.
+remaining:
+- Exact public PRO category pricing first-party receipt with fail-closed parse.
+- Schlam economics/decision note for user without promising margin or bid eligibility.
+- Offline tests, full regression/CI, merge and complete canonical child checkpoint; parent remains open.
+last_verified_commit: bacd835330a8c54830b54dd8e9aff7d1409a4279
+last_tests: 9 focused source price/zero GO tests PASS; Ruff pass, full make check/pytest and GH CI pending.
+resume_instruction: Worktree tender-agent-workspace-pro-official-tariff-20261017. Original workspace.ru/advertising public source
+  SHA checked, 4 categories x4 duration values; site WEB_DEV one month25500, CRM_AI 6900, cheap CNTNT teaser2900 NOT site fee.
+  Schlam existing89k initial offer and buyer budget130-400k, if one site PRO month25500 + illustrative 6pct on89k tax5340 leaves58160
+  RUB before all other costs; this is not margin/profit. Owner paid checkout cost/actual tender category and eligibility unknown,
+  NO_AUTO_BUY. Tests9 PASS, run full pytest+make check, PR exact-head GitHub CI, merge then complete child and parent still in
+  progress.

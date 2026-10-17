@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B Workspace OFFICIAL first-party public PRO costs (Oct17) IN_PROGRESS:** original official workspace.ru/advertising HTML exact SHA/category code, cheapest from2900 RUB/mo applies to CONTENT, not site website development. Official public site WEB_DEV=25500 RUB/month, APP=16900, CRM/AI=6900; personal account final price/tender category and ООО paid eligibility unknown. Existing Schlam 19006 owner preoffer89000 gross would spend28.65pct on one one-month site PRO, leaving58160 after site PRO+illustrative USN6pct gross BEFORE development/support/rights; zero won => 25500 out-of-pocket cash. [Owner original-source economics](B2B_WORKSPACE_PRO_REAL_SOURCE_COST_GATE_2026-10-17.md), [source 16 price rows and SHA](b2b_workspace_original_pro_prices_2026-10-17.json). NO_AUTO_BUY, owner/legal GO false.
+
+
+
 **B2B original Workspace19006 Schlam prepared-site reuse QA COMPLETED PR473 5ccc922e22:** original corporate legal-entity public tender card publicly accepting to Nov1, advertised130–400k RUB, pre-existing personalized company offer starting89k RUB/4–6 weeks; no bidder paid PRO/company eligibility or cost margin attested. Kept six existing /schlam pages HTTP200/robots noindex, 23 first-party intra-demo links healthy, no site modifications; review of niche demand distinguishes original sourced research from 8 intent hypotheses, no invented search volume. 5048 Mac PASS/285 SKIP and GitHub CI green. [Source report](B2B_SCHLAM_19006_OFFER_REUSE_QA_2026-10-17.md) / [original card+site SHA](b2b_schlam_19006_original_offer_qa_2026-10-17.json). Owner GO false; broader 15–20 qualified B2B target OPEN.
 
 
