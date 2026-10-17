@@ -1,0 +1,45 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-OCT17-EXPANDED-SOURCES-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Expand Tender Agent current IT opportunity selection beyond five new Oct17 primary Workspace corporate pages, validating
+  new public mobile/enterprise IT cards and original 44-FZ EIS getDocsIP ZIP/XML, without false bid-ready or legal status
+  claims.
+definition_of_done:
+- Source-grounded dated exact public-source receipts for additional distinct IT opportunities, deduping previous 5 Workspace
+  and two official 44FZ.
+- Inspect real platform status and organizer for new public Workspace categories; mark terminal, private and non-core exclusions.
+- Read-only original EIS SOAP ZIP/XML for candidate 44-FZ IT notices, keep exact notice revision, archive checksum, deadline
+  and NMCK with no unverified live status claims.
+- Distinguish current first-party open snapshot from actual company qualified and bidding authority; do not overcount the
+  target 15–20.
+- Publish machine receipt and Russian shortlist, update roadmap and canonical parent/child checkpoint, tests and exact-head
+  CI; no new UI/stand or ETP actions.
+completed:
+- Verified main b1fa5860744eeae3815af32cba0fe43b1d330b5d, preceding TA-B2B-OCT17-ORIGINAL-LEADS-20261017 completed and PR466
+  CI green. Existing 18082 health 200.
+- 'Primary read-only Workspace category discovery: CRM list mostly terminal; original old 19003 has Завершён despite printed
+  Oct21, 19019 private buyer, 19012 corporate design only; apps-development exposes newer 19041 and previous 18998 plus multiple
+  historical.'
+- Direct Mac mini HTTPS/TLS bounded 10 mobile public Workspace exact originals source hash/UTC time; 2 new primary corporate
+  open snapshot card IDs 19041 and 18939; historical 18998 not counted twice; 19010 same-day cutoff time unknown REVIEW_REQUIRED;
+  19007 personal buyer and five others terminal excluded.
+- Eight additional distinct competitive 44-FZ first-party getDocsIP original ZIP and pinned revision XML SHA verified, all
+  deadline timezone aware; six potentially development or mixed IT, two primarily rights/license excluded.
+- 'Inlined owner safety: corporate 19041 may share buyer/business project with earlier meat plant 19042; source status does
+  not grant eligibility/PRO access; archived official XML is not current live legal status; all bid-ready false.'
+- Added data receipts, safe bounded read-only scripts reusing existing CorporateLeadDecision, and focused source/negative/timezone
+  regression tests (24 PASS).
+current_stage: Expanded original-source mobile and 44-FZ receipt/report/tests complete; run Mac mini full regression and exact-head
+  PR CI, then mark bounded task completed.
+remaining:
+- Validate fresh mobile opportunity cards and exclude false positives.
+- Verify 44FZ original competitive XML facts and shortlist without reconstructing unavailable official LIVE status.
+- Commit source-derived report/json/test, Mac regression, GitHub CI, merge and checkpoint.
+last_verified_commit: b1fa5860744eeae3815af32cba0fe43b1d330b5d
+last_tests: 24 focused pytest PASS, Ruff and diff PASS. Original Workspace 10 HTTP200 and 8 original EIS ZIP/XML SHA audits;
+  full suite/CI pending.
+resume_instruction: Worktree tender-agent-b2b-expanded-oct17-20261017. Finish make check + full pytest and exact-head GitHub
+  CI/merge, then child COMPLETED, parent in_progress. Next examine official entire TЗ/eligibility/commercial on 0161600001326000063,
+  19041, 0816500000626015655 with owner approval. No ETP/pay/PRO/new UI/stand.
