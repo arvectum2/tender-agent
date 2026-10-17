@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B Workspace original PRO public category and Schlam cash gate COMPLETE PR474 38efe8a4c7:** exact first-party advertising price WEB_DEV25500 rub/month for website development, CRM/AI6900 RUB/month, apps16900 and cheap generic CONTENT2900 RUB/month; personal final LLC cart/category unknown. Site Schlam existing preoffer89k vs public buyer budget130-400k, site PRO consumes28.65% of preoffer; illustrative USN6% of gross leaves58160 after PRO before own labor/all other expenses (NOT profit) and 0 wins => potential25500 RUB cash loss. 9 focused PASS, Mac full 5057 PASS/285 SKIP, exact-head GH CI green, NO_AUTO_BUY without owner/contract/PRO eligibility. [Owner fee gate](B2B_WORKSPACE_PRO_REAL_SOURCE_COST_GATE_2026-10-17.md) / [machine 16 original prices](b2b_workspace_original_pro_prices_2026-10-17.json). Target15-20 true qualified B2B sources remains OPEN.
+
+
+
 **B2B Workspace OFFICIAL first-party public PRO costs (Oct17) IN_PROGRESS:** original official workspace.ru/advertising HTML exact SHA/category code, cheapest from2900 RUB/mo applies to CONTENT, not site website development. Official public site WEB_DEV=25500 RUB/month, APP=16900, CRM/AI=6900; personal account final price/tender category and ООО paid eligibility unknown. Existing Schlam 19006 owner preoffer89000 gross would spend28.65pct on one one-month site PRO, leaving58160 after site PRO+illustrative USN6pct gross BEFORE development/support/rights; zero won => 25500 out-of-pocket cash. [Owner original-source economics](B2B_WORKSPACE_PRO_REAL_SOURCE_COST_GATE_2026-10-17.md), [source 16 price rows and SHA](b2b_workspace_original_pro_prices_2026-10-17.json). NO_AUTO_BUY, owner/legal GO false.
 
 

@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-WORKSPACE-ORIGINAL-PRO-TARIFF-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Use only original Workspace public PRO advertising calculator category prices to derive conservative stage-1 acquisition
   cost gate for existing Workspace19006 Schlam offer and other original public corporate IT leads; no payment/account changes.
 definition_of_done:
@@ -28,17 +28,26 @@ completed:
   win or profit promised.
 - First-party source JSON exact original SHA/UTC and failclosed parsing, owner price/authorization gate report, 9 focused tests
   PASS and Ruff PASS; all cases owner PRO purchase/ETP bid false.
-current_stage: First-party Workspace PRO category price source and Schlam one-month expense gate documented/tested, awaiting full
-  regression/GH exact-head CI/merge.
-remaining:
-- Exact public PRO category pricing first-party receipt with fail-closed parse.
-- Schlam economics/decision note for user without promising margin or bid eligibility.
-- Offline tests, full regression/CI, merge and complete canonical child checkpoint; parent remains open.
-last_verified_commit: bacd835330a8c54830b54dd8e9aff7d1409a4279
-last_tests: 9 focused source price/zero GO tests PASS; Ruff pass, full make check/pytest and GH CI pending.
-resume_instruction: Worktree tender-agent-workspace-pro-official-tariff-20261017. Original workspace.ru/advertising public source
-  SHA checked, 4 categories x4 duration values; site WEB_DEV one month25500, CRM_AI 6900, cheap CNTNT teaser2900 NOT site fee.
-  Schlam existing89k initial offer and buyer budget130-400k, if one site PRO month25500 + illustrative 6pct on89k tax5340 leaves58160
-  RUB before all other costs; this is not margin/profit. Owner paid checkout cost/actual tender category and eligibility unknown,
-  NO_AUTO_BUY. Tests9 PASS, run full pytest+make check, PR exact-head GitHub CI, merge then complete child and parent still in
-  progress.
+- PR474 exact-head all GitHub CI SUCCESS; Mac full pytest 5057 PASS/285 SKIP, nine focused PASS and make check/Ruff green.
+- Exact official original public advertisement source SHA verifies CONTENT teaser2900 RUB/mo and separate website siteWEB_DEV25500
+  RUB/mo, CRM/AI6900 RUB/mo and MOBILE16900 RUB/mo, full 1/3/6/12 month original calculator values.
+- Schlam existing89k RUB pre-offer and only hypothetical single one-month WEB_DEV 25500 expense + 6% gross tax planning 5340 leaves58160
+  before ALL labor/other expenses; 0 won contracts means possible25500 out-of-pocket fee with no customer revenue. Not a real margin,
+  cart fee, purchase or bidder GO.
+- Current price terms / eligible actual LLC login/tender product may change. No external paid action, login, PRO subscription or
+  ETP signature or new website/Operator UI.
+current_stage: Original published Workspace advertising product-category PRO prices and conservative project cash gate delivered
+  in main with full CI; no actual account invoice, company authorization or winning bid verified.
+remaining: []
+last_verified_commit: 38efe8a4c72a023b7c8e49b4c7b67a16f7bb3afd
+last_tests: Mac full 5057 PASS/285 SKIP; 9 focused PASS, Ruff/make check PASS, GitHub PR474 exact-head all CI green.
+resume_instruction: Child completed. Original Workspace public advertising price source site WEB_DEV25500 RUB/mo, CRM/AI6900/mo,
+  CONTENT teaser 2900/mo; no final authorized cart. Owner next evaluate Schlam site existing prequote89k against buyer public130-400k,
+  25500 one-month PRO cost and illustrative 6pct of gross tax =>58160 remainder BEFORE any labor/expenses and not profit; 0 wins
+  => potential25500 fee loss. Actual PRO category/availability, owner permission and contract economics unverified. Parent target15-20
+  live legally qualified original sources OPEN; do not purchase/submit.
+verified_public_site_PRO_one_month_rub: 25500
+verified_public_ai_crm_PRO_one_month_rub: 6900
+advertised_cheapest_non_site_content_rub: 2900
+company_final_authenticated_cart_price_verified: false
+owner_payment_go: false
