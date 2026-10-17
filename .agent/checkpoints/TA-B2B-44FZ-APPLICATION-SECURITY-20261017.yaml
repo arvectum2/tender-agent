@@ -1,0 +1,46 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-44FZ-APPLICATION-SECURITY-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: in_progress
+goal: Verify 44FZ archive-original application guarantees for museum exposition 0161600001326000063 and Yakutia GIS 0816500000626015655
+  from the exact original EIS XML field, and correct cash-liquidity scenario so distinct bid/performance/warranty securities are
+  never combined into phantom economic expense.
+definition_of_done:
+- Read-only original getDocsIP ZIP original XML pinned version and SHA, exact original EIS applicationGuarantee/amount/part, not
+  aggregator; no ETP action.
+- Safe machine receipt exact official notice SHA, NMC, 1% bid security if attested, independent cash phase vs already sourced 5%
+  contract execution and Yakutia warranty requirements.
+- Conservatively extend earlier museum cost sensitivity data to show 16k application cash phase separately, without adding it to
+  expense or claiming security mechanisms are identical.
+- Tests for original notice ambiguity, no double counting and source attestation; Russian report with owner cash-flow gates.
+- Exact CI/merge and checkpoint after PR469 owner cost scenario merged and canonical parent state restored.
+completed:
+- Mac mini read-only official getDocsIP confirmed museum EF2020 v1 0161600001326000063 exact applicationGuarantee/amount 16000.00,
+  Yakutia EOK2020 v1 0816500000626015655 exact applicationGuarantee/amount 45500.00 (matching 1% each), not taken from aggregator.
+- Based isolated SSD worktree on PR469 cost scenario commit b9f19cc8f6f4cbe8cb5f396de403e038c962c574 pending its required quality
+  CI.
+- 'PR469 now MERGED code 64a7b586efa6c42b3f4bf95328199b28a1ecdd20 and final checkpoint main 2ab92644efad840dc16ce6ff57e1597510959656:
+  rebase onto canonical main safely; all previous checked stages preserved.'
+- Official read-only original getDocsIP EF2020 v1 0161600001326000063 exact notice XML applicationGuarantee/amount=16000.00 RUB
+  and part=1.00% of 1600000.00 NMC, SHA pinned to 14-source snapshot; separate EOK2020 v1 0816500000626015655 amount=45500.00 RUB
+  and part=1.00% of 4550000.00 RUB.
+- Added reusable strict source security verifier refusing changed archive SHA/revision/number/ambiguous/malformed XML/negative
+  guarantees, machine receipts with original SHA but no source bytes or signed links; no legal GO.
+- Updated existing museum standalone illustrative cashflow model to disclose 16000 RUB bid-security liquidity in distinct application
+  phase; never sum it automatically with final contract performance security and never count as economic expense. Existing 3 scenarios
+  and economic margins unchanged.
+- 24 focused negative-source, security staging, tax/cost safety and original case tests PASS; Ruff PASS.
+current_stage: Two original-source bid guarantee receipts, cash-phase safeguards and 24 tests done; pending full regression and
+  exact-head GitHub CI/merge.
+remaining:
+- Build original field receipt and revalidatable source assurance.
+- Update museum cost planning staged liquidity, not expense; Yakutia separate owner gate.
+- Full tests and exact-head CI after original parent PR469 merges, final completed checkpoint.
+last_verified_commit: 2ab92644efad840dc16ce6ff57e1597510959656
+last_tests: 24 focused PASS, Ruff, original direct EIS 2/2 source ZIP/XML SHA with exact application security parent XML fields;
+  full make check/pytest+GitHub CI pending.
+resume_instruction: Worktree tender-agent-44fz-bid-security-20261017 at canonical main 2ab92644; two exact original bid security
+  amounts 16000 and45500 RUB verified with 1pct EIS XML. Need full regression, exact-head CI+merge and child COMPLETE; no GO, guarantee
+  alternative/settlement/refund and live legal status owner checks remain open. Don’t double-expense security or sum different
+  cash phases as simultaneously held without proof.

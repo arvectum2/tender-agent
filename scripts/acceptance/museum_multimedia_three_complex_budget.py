@@ -16,6 +16,9 @@ SOURCE_NUMBER = "0161600001326000063"
 NMC_RUB = Decimal(1600000)
 ASSUMED_USN_REVENUE_RATE = Decimal("0.06")
 PERFORMANCE_SECURITY_CONTRACT_RATE = Decimal("0.05")
+# Original EIS EF2020 v1 XML applicationGuarantee/amount: separate from performance.
+# Receipt docs/roadmap/b2b_44fz_two_original_bid_securities_2026-10-17.json
+SOURCE_ORIGINAL_BID_APPLICATION_GUARANTEE_RUB = Decimal("16000.00")
 PRICE_DISCOUNTS = ("0", "0.10", "0.20", "0.25")
 _SCENARIOS = (
     ("lean_remote_unconfirmed", {
@@ -70,6 +73,8 @@ class CostScenario:
         economic_profit = bid - cash - shadow - tax
         cash_left_before_shadow = bid - cash - tax
         assumed_liquidity = cash + security
+        bid_phase_liquidity = SOURCE_ORIGINAL_BID_APPLICATION_GUARANTEE_RUB
+        # Distinct phases: security cannot be counted as economic cash expense.
         breakeven = (cash + shadow) / (Decimal(1) - ASSUMED_USN_REVENUE_RATE)
         # Never infer statutory GO from illustrative positive margin.
         return {
@@ -81,6 +86,8 @@ class CostScenario:
             "shadow_own_labor_economic_cost_rub": rub(shadow),
             "usn_six_percent_gross_planning_tax_rub": rub(tax),
             "liquidity_performance_security_5pct_rub": rub(security),
+            "source_application_security_bid_phase_rub": rub(bid_phase_liquidity),
+            "different_security_phases_not_summed_as_cost_or_required_concurrent_cash": True,
             "approx_upfront_cash_plus_security_upper_bound_rub": rub(assumed_liquidity),
             "cash_after_illustrative_external_cost_and_usn_before_labor_rub": rub(cash_left_before_shadow),
             "economic_profit_after_shadow_labor_and_usn_rub": rub(economic_profit),
@@ -115,6 +122,9 @@ def build() -> dict[str, object]:
         "source_contract_completion_by": "2026-12-20",
         "source_warranty_months": 12,
         "source_execution_security_percent_of_FINAL_CONTRACT_PRICE": rub(PERFORMANCE_SECURITY_CONTRACT_RATE * 100),
+        "source_official_original_application_security_rub": rub(SOURCE_ORIGINAL_BID_APPLICATION_GUARANTEE_RUB),
+        "application_security_is_not_expense_and_may_have_independent_guarantee_option": True,
+        "security_instruments_timings_require_owner_review": True,
         "source_payout_terms": "within 7 working days after signed acceptance (per archived contract)",
         "source_contract_status": "ARCHIVED_EF2020_V1_NOT_CURRENT_LEGAL_STATUS",
         "source_original_attachment_sha_verified": True,

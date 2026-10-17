@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-17 official EIS 44FZ first party getDocsIP archived EF2020 v1 museum 0161600001326000063 original XML applicationGuarantee amount 16000 RUB 1pct NMC and Yakutia EOK2020 v1 0816500000626015655 45500 RUB 1pct NMC independently SHA pinned; separate from 5pct execution bonds, Yakutia 227500 warranty bond and hypothetical business costs. Added fail-closed strict source amount parser, JSON receipts, new distinct bid-liquidity phase to museum scenario; no sum security as simultaneous spent cost, owner bid GO zero. Child TA-B2B-44FZ-APPLICATION-SECURITY-20261017 in progress, 24 focused PASS full CI pending."
   - "2026-10-17 museum three interactive programs cash/shadow labor economic scenario PR469 merged 64a7b586efa6c42b3f4bf95328199b28a1ecdd20, 12 focused PASS, Mac full 5019 PASS/285 SKIP, CI green. 3 hypothetical non-supplier-cost scenarios vs 0/10/20/25 pct discounts, income USN6% planning, cash security 5% of final contract as liquidity not expense. At 1.6m RUB original NMC lean +609k, base -101k, stress -1346k economic; baseline break-even 1.707m above NMC. No owner commercial GO or legal bid eligibility, actual travel/test equipment/content/IP and legal status unknown."
   - "2026-10-17 44FZ museum 0161600001326000063 three original exhibit SOW source review finished PR468, separately launched child TA-B2B-MUSEUM-SOW-ECON-20261017 IN_PROGRESS for budget sensitivity. 3 explicit hypothetical not vendor-cost scenarios and 0/10/20/25 pct price cuts, USN6 income tax planning, own labor shadow separately, refundable 5% performance cash security as liquidity not expense, 12mo warranty provision. At 1.6m RUB NMCK economic modeled lean +609k, base -101k, stress -1.346m RUB; base break-even 1,707,446.81 RUB higher than NMC. No owner GO or bid, 12 focused tests PASS; full suite/CI pending."
   - "2026-10-17 3 original-source priority TЗ reviews PR468 3acc139476d3cbecc54553cbbe14b7b32cbb07cd COMPLETE: official EIS museum and Yakutia 14/14 binary annexes source SHA, Workspace19041 public SHA; Mac 5007 PASS/285 SKIP and exact-head GH CI green. Museum 3 sensory software deliverables Electron20 React17 TS4, Dec20/12mo warranty/5% performance guarantee, content/travel/equipment commercial risk; Yakutia GeoPrime rights HARD contract clause1.7, qualification70 price30, 5% bond and 227500 RUB warranty security, current bid NO-GO pending owner rights; Workspace commercial experience 3y and portfolio, company/team acceptance and PRO gate UNKNOWN. All 3 bid_ready false."
@@ -241,7 +242,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 B2B museum three-exhibition economic scenario child TA-B2B-MUSEUM-SOW-ECON-20261017.yaml COMPLETED PR469 64a7b586efa6c42b3f4bf95328199b28a1ecdd20 Mac full 5019 PASS/285 SKIP and CI exact-head all green. Original EIS 44FZ 0161600001326000063 seven source-verified attachments EF2020v1: 3 themed Windows sensory multimedia apps, Electron20 React17 TS4+, Dec20 2026 delivery, warranty12mo and performance security5% of final price, postacceptance payment <=7 working days. New purely hypothetical (NOT vendor quote, NOT source cost) lean/base/stress own labor shadow & cash & USN6 income tax scenario 0/10/20/25% discounted bid; 1.6m RUB NMC economics +609k/-101k/-1346k, base break-even 1707446.81 above NMC, separate refundable 5% security tied-up cash not expense. Real supplier costs, museum hardware remote installation rules, copyright/IP, travel, tax/VAT, official live status and owner commercial GO are not verified; do NOT send external bid or certify profitability. Existing 18082 single Operator Workspace intact. Continue parent 15–20 CURRENT legally eligible B2B opportunities and independent original documentation, APR04 owner acceptance and APR06/07 human gold open; no ETP, payments, emails, signatures or new stands, manual_override true."
+resume_instruction: "2026-10-17 original EIS application security child TA-B2B-44FZ-APPLICATION-SECURITY-20261017.yaml IN_PROGRESS at /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-44fz-bid-security-20261017 rebased on main 2ab92644. Original direct getDocsIP archived pinned EF2020v1 museum 0161600001326000063 16000 RUB/1% NMC and Yakutia EOK2020v1 0816500000626015655 45500 RUB/1% NMC, SHA matched prior original source 14 documents. Museum cost scenario updated for 16k bid cash guarantee separately from 5% final performance bond, Yakutia separate 227500 warranty guarantee; do not sum as economic expenses or presume same-date cash obligations. 24 focused tests PASS, Ruff PASS; full regression/exact-head PR GitHub CI and merge then child completed. Existing main prior cost PR469 merged and child completed; one UI 18082 untouched. No live legal status, owner GO or ETP actions; manual_override true. Parent target15-20 qualified current B2B still OPEN."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -469,3 +470,17 @@ b2b_museum_three_complex_cost_2026_10_17:
   owner_commercial_go: false
   status_stage: completed_full_ci
   code_merge_sha: 64a7b586efa6c42b3f4bf95328199b28a1ecdd20
+
+b2b_official_application_security_stage_2026_10_17:
+  task_id: TA-B2B-44FZ-APPLICATION-SECURITY-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-44FZ-APPLICATION-SECURITY-20261017.yaml
+  first_party_receipt: docs/roadmap/b2b_44fz_two_original_bid_securities_2026-10-17.json
+  human_report: docs/roadmap/B2B_44FZ_APPLICATION_SECURITIES_ORIGINAL_2026-10-17.md
+  museum_eis_notice: "0161600001326000063"
+  museum_original_bid_security_rub: 16000
+  yakutia_eis_notice: "0816500000626015655"
+  yakutia_original_bid_security_rub: 45500
+  source_rev_both: 1
+  cash_phases_cannot_be_summed_as_cost: true
+  current_legal_participant_go: false
+  current_stage: awaiting_full_ci
