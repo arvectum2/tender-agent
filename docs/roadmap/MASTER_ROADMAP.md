@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B museum three-complex illustrative economic sensitivity COMPLETED PR469 64a7b586ef:** 3 transparently hypothetical scenario costs (not provider quotes) x four 0/10/20/25pct pricing cuts, own shadow labor vs cash, planning USN6% of revenue and 5% performance-security liquidity not deducted as expense. At original 1.6m NMC profit hypothetical lean +609k/baseline -101k/stress -1346k, base economic breakeven RUB 1.707m above NMC. 12 focused PASS, Mac full 5019 PASS/285 SKIP and exact-head CI SUCCESS. No owner GO, vendor quote, official live status or legal admissibility proven; 15–20 qualified current B2B goal remains OPEN. [Owner sheet](B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md) / [machine sensitivity](b2b_museum_three_exhibits_cost_sensitivity_2026-10-17.json).
+
+
+
 **B2B source-traceable financial scenario for museum three interactive programs (0161600001326000063) in progress:** strictly illustrative rates not quotes, offline transparent 3 cash/labor shadow scenarios × 0/10/20/25% auction cuts, provisional USN6%, source 5% final-price performance bond as liquidity not operating expense. At 1.6m RUB NMC, economic lean +609k RUB, baseline -101k, stress -1346k; baseline economic break-even 1.707m > NMC. No company GO, invoice, tender action or new UI. [Planning report](B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md) + [reproducible scenarios](b2b_museum_three_exhibits_cost_sensitivity_2026-10-17.json).
 
 

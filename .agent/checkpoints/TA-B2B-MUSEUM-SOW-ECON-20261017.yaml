@@ -2,40 +2,56 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-MUSEUM-SOW-ECON-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Build a transparent source-traceable cost/cash-flow sensitivity gate for the three multimedia museum complexes (44FZ 0161600001326000063),
   explicitly distinguishing signed source facts from hypothetical planning costs. No owner GO or bidding actions.
 definition_of_done:
-- Use previous 14-file authentic EIS original source review and contract 5%/12mo/Dec20/7d conditions; verify signed source and cite
-  provenance.
-- Create deterministic offline multiple-scenario financial calculation without inventing market quotes; cash vs shadow labor, USN 6%
-  planning tax, contract security liquidity vs economic expense, no false net profit.
+- Use previous 14-file authentic EIS original source review and contract 5%/12mo/Dec20/7d conditions; verify signed source and
+  cite provenance.
+- Create deterministic offline multiple-scenario financial calculation without inventing market quotes; cash vs shadow labor, USN
+  6% planning tax, contract security liquidity vs economic expense, no false net profit.
 - Include price-cut sensitivity, break-even bounds and fail-closed recommendations for unverified equipment/content travel/rights/experience/legal
   status.
 - Source-grounded dated Russian owner worksheet, machine scenario results, tests; no new UI/stand/DB, no external bidding or payment.
-- After upstream PR468 and its canonical parent checkpoint close, merge checked change exact-head GH CI and mark task complete; keep
-  parent in_progress.
+- After upstream PR468 and its canonical parent checkpoint close, merge checked change exact-head GH CI and mark task complete;
+  keep parent in_progress.
 completed:
-- Confirmed previous original source PR468 branch head 8926696c562136f7ea2b30cc5ef36458501a88cf contains museum 7/7 EIS file SHA, all
-  three software deliverables and contract conditions; PR468 exact-head CI quality still running at task start.
-- Safely restored isolated SSD worktree onto canonical main 6fc80afac65fc1db4eb3776f269fbe7829a4fd0b following PR468 confirmed merged
-  and parent source review child completed.
-- Built fully deterministic 3-scenario *hypothetical* museum program economics from original 3-theme Windows interactive 44FZ SOW and
-  security/warranty/payment facts; separates cash vendor-like outlays, internal labor opportunity cost, provisional USN6 tax and performance-security
-  liquidity rather than expensing bond.
+- Confirmed previous original source PR468 branch head 8926696c562136f7ea2b30cc5ef36458501a88cf contains museum 7/7 EIS file SHA,
+  all three software deliverables and contract conditions; PR468 exact-head CI quality still running at task start.
+- Safely restored isolated SSD worktree onto canonical main 6fc80afac65fc1db4eb3776f269fbe7829a4fd0b following PR468 confirmed
+  merged and parent source review child completed.
+- Built fully deterministic 3-scenario *hypothetical* museum program economics from original 3-theme Windows interactive 44FZ SOW
+  and security/warranty/payment facts; separates cash vendor-like outlays, internal labor opportunity cost, provisional USN6 tax
+  and performance-security liquidity rather than expensing bond.
 - Calculated 0%/10%/20%/25% price markdown sensitivity with anti-dumping review required at >=25%; at NMC 1.6m lean +609k economic,
   baseline -101k, stress -1346k RUB. Baseline economic break-even 1707446.81 RUB > NMC. Zero bid approvals in all variants.
-- Created strict owner worksheet docs/roadmap/B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md and machine scenario data; 12 focused finance
-  consistency/safety tests and Ruff PASS.
-current_stage: Owner scenario cost+cash liquidity and source/provenance review complete; full regression and exact-head CI required
-  before child completed.
-remaining:
-- Build deterministic scenario calculator and test it without DB/network.
-- Prepare owner evaluation with unverified assumptions labelled; strict no GO.
-- Finish after PR468 merged, rebase on actual main/checkpoints, full CI merge and checkpoint.
-last_verified_commit: 6fc80afac65fc1db4eb3776f269fbe7829a4fd0b
-last_tests: 12 focused scenario/anti-dumping/source provenance PASS; Ruff PASS; full make check/pytest/CI pending.
-resume_instruction: Source-based cost scenario implemented in isolated SSD worktree tender-agent-museum-three-complex-cost-20261017
-  at main 6fc80afa. Need make check/full pytest and exact-head CI/merge, child status completed only once merged. Parent in_progress.
-  Model is explicitly hypothetical not market/source quotes, no owner commercial GO, no ETP/bids/PRO, no UI/DB or guarantee cash expensed
-  as cost.
+- Created strict owner worksheet docs/roadmap/B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md and machine scenario data; 12 focused
+  finance consistency/safety tests and Ruff PASS.
+- PR469 exact-head GitHub quality/integration CI all SUCCESS and Mac full 5019 PASS/285 SKIP; make check PASS; 12 focused tests
+  PASS.
+- 'Merged reproducible hypothetical three exhibition-source-scope cost sensitivity model and owner-reviewed scenario framework:
+  3 scenarios x 4 bid discount 0/10/20/25, cash vs own shadow labor, provisional income USN6%, performance-security liquidity segregated
+  from cost.'
+- At 1.6m RUB maximum source NMC, illustrative economic lean +609000/base -101000/stress -1346000 RUB; illustrative baseline break
+  even RUB 1707446.81 exceeds NMC; does NOT warrant commercial bid GO.
+- Recorded mandatory actual supplier-quote/travel/testing/content/IP/legal/experience checks and 25pct+ additional antidumping
+  review; no new UI/stand/DB, no ETP, PRO payment, external communication or signatures.
+current_stage: Owner-facing source-bounded financial hypothesis, 0-25pct price sensitivity, upfront liquidity and no-bid gate fully
+  delivered in main; external quotation and owner approval remain blockers in parent.
+remaining: []
+last_verified_commit: 64a7b586efa6c42b3f4bf95328199b28a1ecdd20
+last_tests: Full Mac pytest 5019 PASS/285 SKIP; make check PASS; 12 focused PASS; exact-head PR469 GitHub CI GREEN. Original Operator
+  Workspace 18082 unchanged.
+resume_instruction: 'Child completed. Resume TA-ROADMAP-EXEC-20261012 parent: for museum source original 44FZ0161600001326000063
+  get real supplier costs/approved owner budget and travel/equipment/content/IP/legal confirmations; cost numbers in docs/roadmap/B2B_MUSEUM_3_COMPLEXES_ECONOMICS_2026-10-17.md
+  are NON-SOURCE hypothetical planning examples, not quotes. Live EIS status/owner GO remain unverified. Explore other current
+  B2B original sources without duplicate UI/stand or ETP submissions.'
+model_scenarios: 3
+tested_price_discount_points_percent:
+- 0
+- 10
+- 20
+- 25
+baseline_economic_profit_at_original_nmc_rub: -101000
+baseline_break_even_above_nmck: true
+owner_bid_authorized: false
