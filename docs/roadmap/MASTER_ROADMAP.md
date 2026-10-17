@@ -8,6 +8,10 @@
 
 ### Сводка интеграции PR — 17.10.2026 (main)
 
+**B2B FOUR Workspace public-original qualification COMPLETE PR472 f16510b5bb:** original four corporate Workspace19030 AI materials/warehouse pilot with hidden spec,19032 WordPress ongoing SLA,19042 CMMS hard developer >=3year exp,19043 B2B site mandatory realized portfolio; printed open 4/4, confirmed owner bidder eligibility 0/4. 19003 current original terminal despite future printed cutoff; 19006 Schlam waterworks site currently public-open to Nov1, revisit existing proposal without duplication. Mac full 5042 PASS/285 SKIP, six focused + GH exact-head CI green. [Owner source analysis](B2B_WORKSPACE_FOUR_SOURCE_FIT_2026-10-17.md) / [4 exact original SHA](b2b_workspace_four_original_fit_2026-10-17.json). GO0, target15–20 STILL OPEN.
+
+
+
 **B2B original Workspace four-card qualification (Oct17) IN_PROGRESS:** four exact original public corporate pages 19030, 19032, 19042, 19043 checked with source HTML SHA and printed dates. All public accepting, actual bidder admissibility/PRO not confirmed. 19030 50SKU/200orders-day staged AI material/warehouse/production pilot with detailed gated spec; 19032 WordPress SLA/security/backup support; 19042 vendor experience 3years+portfolio demanded; 19043 relevant completed portfolio mandatory and two SEO-conscious site proposals requested. [Original four comparison](B2B_WORKSPACE_FOUR_SOURCE_FIT_2026-10-17.md) and [machine source SHA](b2b_workspace_four_original_fit_2026-10-17.json). GO 0/4, parent 15–20 eligible target OPEN.
 
 

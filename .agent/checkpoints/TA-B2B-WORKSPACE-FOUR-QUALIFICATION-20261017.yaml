@@ -2,45 +2,50 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-WORKSPACE-FOUR-QUALIFICATION-20261017
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
-goal: 'Improve actual Arvectum B2B qualification by rereading original public Workspace legal-entity opportunities #19030
-  #19042 #19043 #19032, prioritize feasible small projects over unverified qualification-heavy 44-FZ, and record exact platform/portfolio/legal/paid
+status: completed
+goal: 'Improve actual Arvectum B2B qualification by rereading original public Workspace legal-entity opportunities #19030 #19042
+  #19043 #19032, prioritize feasible small projects over unverified qualification-heavy 44-FZ, and record exact platform/portfolio/legal/paid
   gates.'
 definition_of_done:
-- Verify real original public source card status/owner kind/deadline/full publicly visible SOW across four known legal-entity
-  opportunities; use only original direct URLs and bounded HTTPS read-only.
+- Verify real original public source card status/owner kind/deadline/full publicly visible SOW across four known legal-entity opportunities;
+  use only original direct URLs and bounded HTTPS read-only.
 - Create machine original HTML SHA/source-aware public qualification matrix; keep legal corporate eligibility and PRO/portfolio
   requirements as unverified unless directly confirmed.
 - Make owner-facing ranked 4-case action roadmap including independent work scopes, realistic refusal conditions and duplicate
   customer ambiguity.
-- Implement conservative source receipt tests; run relevant full regression, exact-head GitHub CI, merge and close child;
-  parent target 15-20 eligible stays open.
+- Implement conservative source receipt tests; run relevant full regression, exact-head GitHub CI, merge and close child; parent
+  target 15-20 eligible stays open.
 completed:
-- PR471 official 10 public EIS printed forms committed and child complete, and Smolensk EOKv2 first-party contract source
-  studied but full report write tool access blocked; checkpoint remains blocked.
-- Prior source docs docs/roadmap/B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md independently pin Workspace 19030,19042,19043,19032,
-  legal-entity originals with historic Oct17 public status; refresh now required.
-- Independently reread all four original current Workspace public corporate cards 19030, 19032, 19042, 19043 via exact HTTPS
-  URLs, 200 responses, visible public status and legal-entity organizer. Original body SHA256 and UTC timestamp recorded,
-  with literal quotes from each source.
+- PR471 official 10 public EIS printed forms committed and child complete, and Smolensk EOKv2 first-party contract source studied
+  but full report write tool access blocked; checkpoint remains blocked.
+- Prior source docs docs/roadmap/B2B_OCT17_ORIGINAL_CORPORATE_CARDS.md independently pin Workspace 19030,19042,19043,19032, legal-entity
+  originals with historic Oct17 public status; refresh now required.
+- Independently reread all four original current Workspace public corporate cards 19030, 19032, 19042, 19043 via exact HTTPS URLs,
+  200 responses, visible public status and legal-entity organizer. Original body SHA256 and UTC timestamp recorded, with literal
+  quotes from each source.
 - 19030 nuts/dried fruit seller with 50 SKU, ~200 daily orders, phased pilot material warehouse manufacturing, WB/Ozon connections;
   hidden detailed spec unreviewed, no complete ERP feasibility promised. 19032 WordPress recurring SLA/backup/update monitoring
   and separate hourly dev price; no proven contractor capabilities.
-- 19042 original demands commercial developer experience >=3 years plus portfolio, customer rights/code transfer; new LLC
-  owner experience unverified. 19043 original demands actual relevant portfolio and two site update option proposals and SEO
-  preservation; no false site audit.
+- 19042 original demands commercial developer experience >=3 years plus portfolio, customer rights/code transfer; new LLC owner
+  experience unverified. 19043 original demands actual relevant portfolio and two site update option proposals and SEO preservation;
+  no false site audit.
 - Created bounded offline four original HTML SHA source receipt and owner decision matrix with 0/4 company bidder eligibility,
   0/4 paid PRO access, 0/4 legal GO. Six focused tests PASS, Ruff PASS, no external actions.
-current_stage: Four first-party source qualification and human report/machine receipt complete, awaiting full regression/CI/merge
-  and checkpoint finalization.
-remaining:
-- Public four original source card content/sha/eligibility audit.
-- Conservative four-case source and owner analysis.
-- Tests, CI, merge, final canonical checkpoints.
-last_verified_commit: 6ce825f9e719cccf704770ef211ab5634ff993e9
-last_tests: 6 focused original-source/legibility/provenance tests PASS; Ruff PASS; full make check and pytest/CI pending.
-resume_instruction: Isolated SSD worktree tender-agent-workspace-four-fit-20261017. Four Workspace originals 19030 19032 19042
-  19043 read via exact HTTPS, original HTML hash and source literal requirement proofs captured. Public open 4, legal bid
-  eligible0, PRO0; 19042 3year hard contractor req, 19043 case portfolio mandatory, 19030 hidden spec and phased pilot, 19032
-  WordPress SLA. Run make check + full suite and GH exact-head CI; merge and complete child only afterward. Keep Smolensk
-  child BLOCKED, existing 18082 one UI, no bids/payments.
+- PR472 exact-head GitHub CI all SUCCESS; Mac mini full regression 5042 PASS / 285 SKIP, make check/Ruff and six focused tests
+  PASS.
+- Merged original four public corporate source-card HTML SHA/UTC receipts and source-bound owner ranking for 19030 19032 19042
+  19043 with 0/4 proven corporate qualification or paid access. No external bids, signatures, emails or PRO subscription.
+- Separately verified 19003 public source label TERMINAL ('Завершён') despite future printed 21 Oct date; 19006 original B2B waterworks
+  site remains public accepting for legal entity to printed 1 Nov, not independently owner/PRO-approved. Neither counts as bidder-GO.
+current_stage: Four first-party Workspace public source contents, exact SHA and conservative portfolio/PRO/hidden-spec gates merged
+  and tested. Owner company bid eligibility remains unverified; parent target remains open.
+remaining: []
+last_verified_commit: f16510b5bb3d8794fe0b1b270612b030fc105998
+last_tests: Full Mac mini 5042 PASS/285 SKIP; six focused PASS; make check/Ruff PASS; GH PR472 exact-head CI green.
+resume_instruction: 'Child COMPLETE. Parent next: inspect workspace19006 original waterworks specialized site, reuse existing Schlam
+  concept without creating duplicate website; 19003 is terminal despite Oct21 printed deadline and must be excluded. Priority 19030
+  hidden spec scoped pilot, 19032 WordPress SLA 21Oct, 19043 portfolio and 19042 3yr commercial exp; all company bid GO unverified
+  and PRO cost owner-only. Smolensk first-party child still blocked.'
+public_original_corporate_cards: 4
+current_company_bid_eligibility_attested: 0
+owner_bid_go: false
