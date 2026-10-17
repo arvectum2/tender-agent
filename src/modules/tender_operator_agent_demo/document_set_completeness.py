@@ -269,6 +269,20 @@ def build_document_set_summary(files: list[dict[str, Any]]) -> dict[str, Any]:
 
 def apply_document_set_summary(metadata: dict[str, Any]) -> dict[str, Any]:
     summary = build_document_set_summary(list(metadata.get("files") or []))
+    original_inventory = metadata.get("official_xml_attachment_inventory")
+    if isinstance(original_inventory, dict):
+        from src.modules.tender_operator_agent_demo.eis_original_attachment_completeness import (
+            check_eis_attachment_completeness,
+        )
+
+        original = check_eis_attachment_completeness(
+            original_inventory, list(metadata.get("files") or [])
+        )
+        summary = dict(summary)
+        summary["official_original_attachments"] = original
+        if not original["all_original_attachments_ready_for_analysis"]:
+            summary["status"] = "incomplete_original_attachments"
+            summary["analysis_allowed"] = False
     if metadata.get("archive_extraction_complete") is False:
         summary = dict(summary)
         summary["status"] = "incomplete_archive"

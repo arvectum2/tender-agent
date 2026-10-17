@@ -1,0 +1,25 @@
+{
+  "bid_ready": false,
+  "external_contact_done": false,
+  "groups": [
+    {
+      "cases": 3,
+      "original_binary_documents": 16,
+      "private_handoff_receipt_sha256": "1bf7a200019f57d627ec36f87491e988b952776fefb82b999a9a774d7630e8db"
+    },
+    {
+      "cases": 4,
+      "original_binary_documents": 21,
+      "private_handoff_receipt_sha256": "17ef23c46b2794c2e0c19f7607adb78284f080d0ff962e8c17608c427ee7b1be"
+    }
+  ],
+  "pilot_immutable_blind_lock_sha256": "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+  "precision_recall": "NOT_MEASURED",
+  "signed_independent_human_gold": 0,
+  "stage2_partial_immutable_blind_lock_sha256": "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a",
+  "status": "SOURCE_ONLY_OFFLINE_REVIEWER_PACKAGES_BUILT_NOT_DELIVERED",
+  "sut_inference_permitted": false,
+  "total_blind_cases": 7,
+  "total_original_documents": 37,
+  "total_private_human_handoff_archives": 7
+}

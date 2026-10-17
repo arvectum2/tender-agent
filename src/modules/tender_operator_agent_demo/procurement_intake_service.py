@@ -355,9 +355,17 @@ def _build_getdocs_result(reestr_number: str, archive_result: DocsArchiveResult)
         attachments_status="downloadable" if archive_result.archive_url else "manual_upload_required",
         attachments_count=1 if archive_result.archive_url else 0,
         available_attachments_count=1 if archive_result.archive_url else 0,
-        summary=archive_result.raw_summary or f"Статус getDocsIP: {archive_result.status}",
+        summary=(
+            archive_result.raw_summary
+            if archive_result.status == "completed" and archive_result.raw_summary
+            else (
+                "В этом разделе ЕИС архив конкурсной документации не получен. "
+                "Это не подтверждает отсутствие самой записи или документов "
+                "в других официальных разделах."
+            )
+        ),
         attachment_names=["documentation-archive.zip"] if archive_result.archive_url else [],
-        source_note="Read-only getDocsIP intake для токена физлица.",
+        source_note="Проверка официальной документации ЕИС без подачи заявки.",
     )
 
 
@@ -692,9 +700,13 @@ def _dedupe_procurement_attachments(
     for item in attachments:
         name_key = str(item.name or "").strip().lower()
         url_key = str(item.url or "").strip()
-        if name_key in existing_names or (url_key and url_key in existing_urls):
+        # Different official files can share the same display name. Identity
+        # follows the exact source URL; name is a fallback only without URL.
+        if (url_key and url_key in existing_urls) or (
+            not url_key and name_key in existing_names
+        ):
             continue
-        key = (name_key, url_key)
+        key = ("url", url_key) if url_key else ("name", name_key)
         if key in seen:
             continue
         seen.add(key)
@@ -881,6 +893,15 @@ def _supplement_run_with_public_notice_attachments(run_id: str, source_url: str 
 def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
     metadata = load_demo_run_metadata(run_id)
     attachments = _discover_notice_xml_attachments(run_id, metadata)
+    if attachments:
+        from src.modules.tender_operator_agent_demo.eis_original_attachment_completeness import (
+            expected_eis_notice_attachments,
+        )
+
+        metadata["official_xml_attachment_inventory"] = (
+            expected_eis_notice_attachments(attachments)
+        )
+        save_demo_run_metadata(run_id, metadata)
     return _supplement_run_with_discovered_attachments(
         run_id,
         attachments=attachments,
@@ -893,11 +914,23 @@ def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
 def _apply_document_set_completeness(run_id: str) -> dict[str, Any]:
     metadata = load_demo_run_metadata(run_id)
     summary = apply_document_set_summary(metadata)
-    limitation = (
-        "Комплект документов неполон: до анализа необходимо получить проект "
-        "контракта и техническое задание или описание объекта закупки."
-    )
-    limitations = list(metadata.get("limitations") or [])
+    official_set = summary.get("official_original_attachments") or {}
+    if official_set.get("official_original_attachments_missing", 0) > 0:
+        limitation = (
+            "Не все приложения исходного извещения ЕИС получены: "
+            f"{official_set['official_original_attachments_downloaded']} из "
+            f"{official_set['official_original_attachments_announced']}. "
+            "Нужна догрузка и проверка недостающих документов."
+        )
+    else:
+        limitation = (
+            "Комплект документов неполон: до анализа необходимо получить проект "
+            "контракта и техническое задание или описание объекта закупки."
+        )
+    limitations = [
+        x for x in list(metadata.get("limitations") or [])
+        if not x.startswith("Не все приложения исходного извещения ЕИС получены:")
+    ]
     if summary["analysis_allowed"]:
         if metadata.get("files"):
             metadata["status"] = TenderOperatorUploadedRunStatus.READY_TO_ANALYZE.value
@@ -1342,13 +1375,19 @@ def analyze_eis_archive_run(run_id: str):
         )
     summary = _apply_document_set_completeness(run_id)
     if not summary["analysis_allowed"]:
-        raise HTTPException(
-            status_code=409,
-            detail=(
+        original_set = summary.get("official_original_attachments") or {}
+        if original_set.get("official_original_attachments_missing", 0) > 0:
+            message = (
+                "Не все приложения, перечисленные в исходном извещении ЕИС, "
+                "получены. Автоматический анализ остановлен до догрузки "
+                "недостающих документов."
+            )
+        else:
+            message = (
                 "Комплект документов неполон. До анализа получите проект "
                 "контракта и техническое задание или описание объекта закупки."
-            ),
-        )
+            )
+        raise HTTPException(status_code=409, detail=message)
     return analyze_uploaded_demo_run(run_id)
 
 
@@ -1636,6 +1675,28 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
 
     client = ZakupkiSoapClient(settings)
     archive_result = client.get_docs_by_reestr_number(request.reestr_number, subsystem_type=request.subsystem_type)
+    if archive_result.status == "no_data":
+        from src.modules.tender_operator_agent_demo.eis_price_request_source_probe import (
+            probe_exact_eis_price_request,
+        )
+
+        official = probe_exact_eis_price_request(request.reestr_number)
+        if official is not None:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "code": "MARKET_RESEARCH_PRICE_REQUEST_ONLY",
+                    "record_type": "price_information_request",
+                    "official_source_url": official["official_source_url"],
+                    "source_document_sha256": official["source_document_sha256"],
+                    "message": (
+                        "Запись найдена в официальном реестре запросов ценовой "
+                        "информации ЕИС. Это сбор рыночных предложений, а не "
+                        "конкурентная закупка для подачи заявки. "
+                        "Исходные документы следует изучать в разделе запросов цен."
+                    ),
+                },
+            )
     selected = _build_getdocs_result(request.reestr_number, archive_result)
     archive_summary = _sanitize_archive_url_summary(archive_result.archive_url)
 

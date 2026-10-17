@@ -684,6 +684,7 @@ def _try_run_llm_workflow(
     contract_draft_text: str | None,
     quote_paths: list[Path],
     provider_mode: str = "llm",
+    source_research: dict[str, Any] | None = None,
 ) -> dict[str, Any] | None:
     """Legacy compatibility shim; no other source of controlled workflow logic."""
     from src.modules.tender_operator_agent_demo.operator_llm_workflow import (
@@ -699,6 +700,7 @@ def _try_run_llm_workflow(
         provider_mode=provider_mode,
         emit_event=append_demo_run_event,
         settings_getter=get_settings,
+        source_research=source_research,
     )
 
 
@@ -1588,8 +1590,12 @@ def analyze_uploaded_demo_run(run_id: str) -> TenderOperatorUploadedRunAnalyzeRe
     from src.modules.tender_operator_agent_demo.operator_analyze_run import (
         analyze_uploaded_demo_run as _analyze_run,
     )
+    from src.modules.tender_operator_agent_demo.operator_full_corpus_runtime import (
+        run_with_full_corpus_research,
+    )
 
-    return _analyze_run(
+    return run_with_full_corpus_research(
+        _analyze_run,
         run_id,
         _load_metadata=_load_metadata,
         TenderOperatorUploadedRunStatus=TenderOperatorUploadedRunStatus,

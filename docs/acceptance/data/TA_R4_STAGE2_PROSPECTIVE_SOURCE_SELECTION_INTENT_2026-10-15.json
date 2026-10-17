@@ -1,0 +1,16 @@
+{
+  "candidate_sources_only": true,
+  "fail_policy": "Record incomplete/404/undocumented sources as UNAVAILABLE; exclude prior development and blind cases; official getDocsIP and all raw binaries SHA verified before declaring real cohort; no backfill outside preregistered page/rank order.",
+  "gold_labels_authorized": false,
+  "immutable_intent_sha256": "8c7cd8ae0b916a277fb97949f66f6b891a6f73d7601f1f2b48b3063c838792c5",
+  "page_order": [
+    "https://tendigo.ru/tenders/razrabotka-po/",
+    "https://tendigo.ru/tenders/razrabotka-saytov/"
+  ],
+  "prior_blind_lock_sha256": "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+  "registered_at_utc": "2026-10-14T21:37:05+00:00",
+  "selection_method": "FIRST_VISIBLE_44FZ_19_DIGIT_UNSEEN_BY_SOURCE_PAGE_AND_RANK",
+  "source_scope": "IT_SERVICE_DEVELOPMENT_DISCOVERY_ONLY_NOT_OFFICIAL_EIS",
+  "sut_inference_authorized": false,
+  "target_new_cases": 12
+}

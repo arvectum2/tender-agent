@@ -1,0 +1,26 @@
+{
+  "bias_warning": "Mixed national search relevance rankings and Moscow-specific page ranking; sample not population representative, no model-based selection.",
+  "bid_ready": false,
+  "eligibility": "Notice number, official getDocsIP latest competitive XML and ALL raw originals with UID/size/SHA; no overlap with development20 and locked blind11 by notice/ZIP/XML/binary SHA.",
+  "failure_handling": "Reject incomplete official records, ambiguous XML versions, and cross-case repeated binary originals; no SUT output used; do not replace failed earlier choices with later records beyond the first preregistered 12 IDs.",
+  "fixed_order_source_urls": [
+    "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-programmnogo-obespecheniya?page=2",
+    "https://synapsenet.ru/search/populyarnie-zaprosi/razrabotka-programmnogo-obespecheniya?page=3",
+    "https://mos-tenders.ru/aukcioni-goszakupki-konkursi/tendery-programmnogo-obespecheniya?page=2",
+    "https://mos-tenders.ru/aukcioni-goszakupki-konkursi/tendery-programmnogo-obespecheniya?page=3"
+  ],
+  "gold_labels_authorized": false,
+  "immutable_intent_sha256": "f5a6d9ae991cd1dfee1a04c483c5abe89c46615a3b607efb67d58077f9cd9163",
+  "initial_source_metadata_basis": "Page 2 and 3 links verified in HTML navigation of already archived stage3 page1; NO stage4 source body obtained before registering this immutable plan.",
+  "planned_max_source_candidate_ids": 12,
+  "predecessor_blind_source_lock_shas": [
+    "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+    "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a",
+    "66545450de466dc742d7525a8f7a539644784f4e98696e63edce6cf5da00937e"
+  ],
+  "protocol_id": "R4_STAGE4_FINAL_FOUR_PROSPECTIVE_EIS_SOURCE_20261015",
+  "registered_at_utc": "2026-10-15T06:53:36+00:00",
+  "source_discovery_rule": "Read-only physical card ranks in each original HTTPS/SHA-verified HTML page, same two previously validated structurally-anchored parsers; 44FZ EIS-linked 19-digit purchase IDs only, dedup by first source-card position.",
+  "sut_inference_authorized": false,
+  "target_new_verified_cases": 4
+}
