@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-18 B2B Workspace source discovery: read-only exact three primary category indexes WEB/APPS/CRM, 31 deduplicated original source cards HTTP200 with original status/deadline/legal buyer SHA. 10 public corporate still receiving candidates, 21 terminal/personal/expired filtered; 0 verified actual ООО access or owner GO. New urgent19012 design dueOct19, 19034 WordPress+SEO dueOct31, 18939 HealthTech OCR dueDec15 original source text anchored; 227 B2B regression tests PASS one warning, Ruff clean. Child TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018 completed on dbc98553, draft PR477; true 15-20 eligible B2B goal OPEN."
   - "2026-10-17 original Workspace19030 restricted spec access bound: public HTML explicitly lists TZ_.pdf but restricts file downloads to PRO or buyer-invited contractors. Private PDF bytes/text NOT retrieved, MVP pricing unknown, no payment/bid. New fail-closed source verifier code26721b59, 207 B2B focused tests pass, Ruff clean. Child TA-B2B-19030-ATTACHMENT-GATE-20261017 completed, parent 15-20 accessible qualified source target open."
   - "2026-10-17 original Workspace 19042/19043 qualification child completed: 2/2 first-party original HTML verified SHA/status/date, 19042 mandatory >=3y commercial and completed project portfolio; 19043 mandatory relevant realized portfolio, 2 design options requested if possible not hard gate; 199 B2B tests pass Ruff PASS. Implementation c9621c1f, 0 company bid-ready GO. Parent 15-20 eligible sources OPEN."
   - "2026-10-17 WordPress B2B19032 first-party strict 23/23 source obligations verified at code SHA0c003ba5; 10 recurring + 6 optional + 6 offer requirements + payment question, original 100-400k budget period UNKNOWN and time on Oct21 UNKNOWN; original real HTML SHA source-bound. Mac mini 181 B2B-focused tests PASS/one inherited warning, Ruff PASS. 0 signed bids/paid subscriptions/outbound replies, company WP references/Workspace account entitlement/Owner SLA remain NOT VERIFIED. Child TA-B2B-WORDPRESS-19032-20261017 COMPLETED; parent source acquisition still OPEN."
@@ -260,7 +261,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 child TA-B2B-LLC-ELIGIBILITY-20261017 first five original corporate cards screened with 0 verified company bid/response entitlements and 0 owner GO; 159 focused B2B regressions pass. Next within existing Owner workstream: refresh original live source/current legal stage, verify LLC qualification and free/paid response account entitlement 19032 then 19042/19043/19006/19030, continue independent 15-20 present eligible B2B opportunities. Do not send responses, subscribe/pay, sign or bid without Owner. APR03/04/05/06/07 reserved acceptance gates still open."
+resume_instruction: "2026-10-18 B2B PR477 draft now has original category WEB/APP/CRM discovery: 31 unique official card sources, 10 publicly accepting corporate buyer candidates, 21 correctly filtered and new source-grounded scope priority for urgent Oct19 design 19012, Oct21 WordPress19032. Zero authenticated Russian LLC bids/account rights/paid PRO or mandatory portfolio confirmed. Complete child TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018, next autonomously find further fresh source-eligible IT procurements in free first channels or official small purchases without conflating personal/closed/old. Human owner must approve response, costs or bidding, no auto merge. PRICE01 PR478 separately draft with cost inputs unverified. Canonical TA-ROADMAP-EXEC-20261012 remains in_progress."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -641,5 +642,7 @@ active_child_19030_attachment_2026_10_17:
 active_workspace_category_discovery_2026_10_18:
   task_id: TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018
   checkpoint: .agent/checkpoints/TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018.yaml
-  status: in_progress
+  status: completed
+  implementation_commit: dbc98553bd8bf15021ca0665c48bb6cd252633cc
+  tests: 227_passed_1_warning
   external_action: false
