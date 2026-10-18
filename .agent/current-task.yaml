@@ -591,3 +591,11 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+roadmap_sync_2026_10_18:
+  checkpoint: .agent/checkpoints/TA-ROADMAP-SYNC-20261018.yaml
+  source_main_at_start: d2a927ecebc9222bb3b38b47aa14c7024ccec4f0
+  branch: docs/tender-roadmap-status-2026-10-18
+  scope: documentation_reconciliation_no_external_actions
+  stage: roadmap_snapshot_review_pending
+  note: 'Parent goal/resume_instruction and manual_override remain unchanged; do not interpret as commercial or legal GO.'
