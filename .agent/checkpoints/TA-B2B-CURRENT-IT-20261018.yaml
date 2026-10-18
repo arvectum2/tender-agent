@@ -14,7 +14,7 @@ completed:
   - "Reviewed prior B2B source evidence, verified public Workspace web-development listing shows newer October 15-16 IT entries; external Evotor Sber-AST React/Figma lead appeared on aggregator but original primary platform check pending."
 current: Completed bounded primary-source public-card refresh, report and regression safety checks.
 remaining: []
-last_verified_commit: d2a927ecebc9222bb3b38b47aa14c7024ccec4f0
+last_verified_commit: 777ec231c655d163c242614bb4c4722ebed04701
 test_results:
   - "21/21 original Workspace cards HTTP200 and sha256 collected; 9 public corporate candidates, 5 private, 7 terminal corporate; 0 owner-authorized eligible bids."
   - "23 offline focused pytest PASS, Ruff PASS, git diff --check PASS."
