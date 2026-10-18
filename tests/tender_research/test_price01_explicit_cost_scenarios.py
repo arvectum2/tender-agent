@@ -69,6 +69,25 @@ def test_zero_expenses_is_not_a_viable_commercial_scenario():
     assert exc.value.status_code == 422
 
 
+def test_labor_only_cost_is_valid_even_with_zero_cash_outlays():
+    """Explicit owner labor is a real economic cost; no external fee is required."""
+    values = {
+        **SAMPLE,
+        "external_direct_rub": "0",
+        "reserve_rub": "0",
+        "fixed_platform_fees_rub": "0",
+        "labor_rub": "200",
+        "revenue_tax_percent": "0",
+        "variable_platform_fee_percent": "0",
+        "target_profit_rub": "0",
+    }
+    result = calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**values))
+    assert result["cash_break_even_rub"] == "0.00"
+    assert result["full_economic_break_even_rub"] == "200.00"
+    assert result["full_cost_plus_explicit_target_rub"] == "200.00"
+    assert result["is_procurement_bid_recommendation"] is False
+
+
 def test_zero_explicit_labor_stays_hypothetical_not_a_bid():
     values = {**SAMPLE, "labor_rub": "0", "target_profit_rub": "0"}
     result = calculate_explicit_cost_thresholds(ExplicitCostScenarioRequest(**values))
