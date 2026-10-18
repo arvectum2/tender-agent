@@ -691,3 +691,9 @@ active_moscow_public_chrome_original_2026_10_18:
   implementation_commit: 980e1fd942da8aa34388f8b3052a531f674b6c15
   tests: 263_passed_1_warning
   external_action: false
+
+active_moscow_it_public_filter_2026_10_18:
+  task_id: TA-B2G-MOSCOW-IT-FILTER-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-IT-FILTER-20261018.yaml
+  status: in_progress
+  external_action: false

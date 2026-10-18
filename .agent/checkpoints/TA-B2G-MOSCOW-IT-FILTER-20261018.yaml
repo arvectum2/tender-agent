@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-IT-FILTER-20261018
+status: in_progress
+goal: Read-only navigate official public Moscow supplier quote registry and filter for active IT service sessions, inspect source details, no buyer company authentication and no B2B count inflation.
+definition_of_done:
+  - Use disposable headless Chrome browser on ArvectumSSD, no credentials, actual public registry UI (not guessed API).
+  - Inspect available first-party filter controls, apply IT terms and identify original current quote session IDs, subject, buyer INN, exact Moscow deadline, budget and original link where possible.
+  - Inspect accessible original detail and attached technical terms only via public access, no paywall circumvention.
+  - Correctly exclude non-IT, duplicates, private/closed/expired and unverifiable, and B2G from B2B count.
+  - Add bounded repeatable source evidence, offline negative tests, roadmap/checkpoint and commit/push draft PR477 after targeted regressions and CI.
+  - No registrations, bids, payments, signatures, actual company account actions or production changes.
+completed:
+  - Read parent and previous completed child; Git clean SHA31af33e0, PR477 draft and CI in progress.
+  - Disposable Chrome public registry navigation source script shows actual numbered quotes with exact buyer INN/deadline; prior non-IT №10321388 correctly excluded.
+current: Inspect official source UI filters and find current IT session originals.
+pending:
+  - Public UI exact filter observation and IT search.
+  - Original IT detail verification, dedup and classification.
+  - Source-safe scripts/reports/tests and Git checkpoint completion.
+last_verified_commit: 31af33e014c1a024fa338621b7b4880ce7c2b09d
+test_results: Previous 263 B2B/B2G pytest PASS and 1 inherited warning; new filters regression pending.
+resume_instruction: Open exact official public /purchase/list via observed UI button; inspect existing filters without inventing selectors or undocumented APIs, source-check actual IT cards and exact timestamps. Do not count B2G in corporate B2B or claim ООО access. Finish and push checkpoint with no external financial/commercial actions.

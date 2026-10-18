@@ -1,0 +1,198 @@
+{
+  "schema_version": "ta-b2g-moscow-public-original-it-keyword-filter-2026-10-18-v1",
+  "checked_at_utc": "2026-10-18T08:14:09.316708+00:00",
+  "official_source": "https://zakupki.mos.ru/",
+  "public_registry_real_ui_filters_applied": true,
+  "public_auction_active_state_code_from_visible_page": 19000002,
+  "search_result_filters": [
+    {
+      "exact_public_term": "программного обеспечения",
+      "source_first_page_only": true,
+      "state_gate_active_public": true,
+      "original_card_ids_with_visible_links": [
+        "10321203",
+        "10321182",
+        "10321235",
+        "10321163",
+        "10321292",
+        "10321145",
+        "10321118",
+        "10321268",
+        "10320988",
+        "10321025"
+      ],
+      "original_card_links_with_source_confirmation": 10,
+      "explicit_no_results_page": false,
+      "has_source_original_public_listing": true
+    },
+    {
+      "exact_public_term": "создание сайта",
+      "source_first_page_only": true,
+      "state_gate_active_public": true,
+      "original_card_ids_with_visible_links": [],
+      "original_card_links_with_source_confirmation": 0,
+      "explicit_no_results_page": true,
+      "has_source_original_public_listing": false
+    },
+    {
+      "exact_public_term": "информационной системы",
+      "source_first_page_only": true,
+      "state_gate_active_public": true,
+      "original_card_ids_with_visible_links": [
+        "10321276",
+        "10321123",
+        "10321156",
+        "10321012",
+        "10321182",
+        "10320988",
+        "10321203",
+        "10321268",
+        "10321235",
+        "10321163"
+      ],
+      "original_card_links_with_source_confirmation": 10,
+      "explicit_no_results_page": false,
+      "has_source_original_public_listing": true
+    },
+    {
+      "exact_public_term": "сопровождение",
+      "source_first_page_only": true,
+      "state_gate_active_public": true,
+      "original_card_ids_with_visible_links": [
+        "10321228",
+        "10321218"
+      ],
+      "original_card_links_with_source_confirmation": 2,
+      "explicit_no_results_page": false,
+      "has_source_original_public_listing": true
+    },
+    {
+      "exact_public_term": "разработка сайта",
+      "source_first_page_only": true,
+      "state_gate_active_public": true,
+      "original_card_ids_with_visible_links": [
+        "10321027",
+        "10321183",
+        "10320696",
+        "10321190"
+      ],
+      "original_card_links_with_source_confirmation": 4,
+      "explicit_no_results_page": false,
+      "has_source_original_public_listing": true
+    },
+    {
+      "exact_public_term": "программирование",
+      "source_first_page_only": true,
+      "state_gate_active_public": true,
+      "original_card_ids_with_visible_links": [],
+      "original_card_links_with_source_confirmation": 0,
+      "explicit_no_results_page": true,
+      "has_source_original_public_listing": false
+    }
+  ],
+  "query_count": 6,
+  "original_detail_pages_verified": 3,
+  "original_details": [
+    {
+      "id": "10321203",
+      "exact_original_url": "https://zakupki.mos.ru/auction/10321203",
+      "original_rendered_html_sha256": "6edc5489183f136e7402c610a19e442840bfbeac674e1cb69f57e637a1d3b41b",
+      "observed_at_utc": "2026-10-18T08:14:01.793223+00:00",
+      "source_detail_title": "Котировочная сессия 10321203 «ТОВАРЫ ИНФОРМАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ, СРЕДСТВА СВЯЗИ, ОРГТЕХНИКА, ЭЛЕКТРОНИКА...» на Портале поставщиков - г. г Москва.",
+      "listed_buyer_inn_not_reverified_inside_detail": "7727841506",
+      "source_buyer_name_in_detail": "АКЦИОНЕРНОЕ ОБЩЕСТВО \"ГОСТИНИЧНЫЙ КОМПЛЕКС \"БЕРЛИН\"",
+      "listed_starting_price_rub": "671557.00",
+      "source_deadline_day_msk": "19.10.2026",
+      "source_scope_classification": "COMPUTERS_SSD_MONITORS_GOODS_NOT_SOFTWARE_DEVELOPMENT",
+      "original_product_line_proofs": [
+        "Системный блок BigTech PC S5006",
+        "SSD накопитель AMD Radeon"
+      ],
+      "original_visible_document_labels": [
+        {
+          "display_label": "Проект договора.pdf",
+          "public_attachment_link_visible": true
+        },
+        {
+          "display_label": "Договор - поставка информационно-технологического оборудования.doc",
+          "public_attachment_link_visible": true
+        }
+      ],
+      "company_bidding_requires_authorization_in_source": true,
+      "is_custom_software_development_contract": false,
+      "verified_company_can_respond": false,
+      "original_attached_files_downloaded": false
+    },
+    {
+      "id": "10321182",
+      "exact_original_url": "https://zakupki.mos.ru/auction/10321182",
+      "original_rendered_html_sha256": "53cfb548d3e23426e5c0a62a3404d830e11624b292ef8835e38849f2d467c6da",
+      "observed_at_utc": "2026-10-18T08:14:05.459459+00:00",
+      "source_detail_title": "Котировочная сессия 10321182 «ТОВАРЫ ИНФОРМАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ, СРЕДСТВА СВЯЗИ, ОРГТЕХНИКА, ЭЛЕКТРОНИКА...» на Портале поставщиков - г. г Москва.",
+      "listed_buyer_inn_not_reverified_inside_detail": "7707086767",
+      "source_buyer_name_in_detail": "МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ АКАДЕМИЧЕСКИЙ ТЕАТР ОПЕРЕТТЫ",
+      "listed_starting_price_rub": "215576.34",
+      "source_deadline_day_msk": "19.10.2026",
+      "source_scope_classification": "PHOTOGRAPHIC_EQUIPMENT_NOT_SOFTWARE_DEVELOPMENT",
+      "original_product_line_proofs": [
+        "Объектив OM SYSTEM M.Zuiko",
+        "Manfrotto MVKBFRL-LIVE"
+      ],
+      "original_visible_document_labels": [
+        {
+          "display_label": "НМЦК фототехника.xlsx",
+          "public_attachment_link_visible": true
+        },
+        {
+          "display_label": "Проект договора.pdf",
+          "public_attachment_link_visible": true
+        },
+        {
+          "display_label": "ТЗ фототехника.pdf",
+          "public_attachment_link_visible": true
+        }
+      ],
+      "company_bidding_requires_authorization_in_source": true,
+      "is_custom_software_development_contract": false,
+      "verified_company_can_respond": false,
+      "original_attached_files_downloaded": false
+    },
+    {
+      "id": "10321235",
+      "exact_original_url": "https://zakupki.mos.ru/auction/10321235",
+      "original_rendered_html_sha256": "cd88161ad74e3856b59fd4d019dfb658bdaf3b85d8e1a086211157ded159dc42",
+      "observed_at_utc": "2026-10-18T08:14:09.254611+00:00",
+      "source_detail_title": "Котировочная сессия 10321235 «ТОВАРЫ ИНФОРМАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ, СРЕДСТВА СВЯЗИ, ОРГТЕХНИКА, ЭЛЕКТРОНИКА...» на Портале поставщиков - г. г Москва.",
+      "listed_buyer_inn_not_reverified_inside_detail": "7717067481",
+      "source_buyer_name_in_detail": "Школа-интернат № 1 для обучения и реабилитации слепых",
+      "listed_starting_price_rub": "183600.00",
+      "source_deadline_day_msk": "19.10.2026",
+      "source_scope_classification": "HEADPHONES_SPEAKERS_POWERBANKS_NOT_SOFTWARE_DEVELOPMENT",
+      "original_product_line_proofs": [
+        "Наушники Яндекс Дропс с Алисой",
+        "Колонка портативная COMMO STAGE"
+      ],
+      "original_visible_document_labels": [
+        {
+          "display_label": "Техническое задание.docx",
+          "public_attachment_link_visible": true
+        },
+        {
+          "display_label": "Проект контракта.pdf",
+          "public_attachment_link_visible": true
+        }
+      ],
+      "company_bidding_requires_authorization_in_source": true,
+      "is_custom_software_development_contract": false,
+      "verified_company_can_respond": false,
+      "original_attached_files_downloaded": false
+    }
+  ],
+  "current_it_custom_development_scope_originals_verified": 0,
+  "claim_that_no_more_it_auctions_exist": false,
+  "company_full_registration_or_ukep_tested": false,
+  "company_able_to_bid_verified": false,
+  "current_eligible_b2b_increment": 0,
+  "outgoing_actions_or_payments": 0,
+  "disposable_browser_profile_saved": false
+}
