@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-PUBLIC-CHROME-20261018
+status: in_progress
+goal: Check with isolated unauthenticated Chrome whether official Moscow supplier portal JS-rendered public view exposes original active IT quote-session identifiers, not backend HTML shell, and verify any source original before counting.
+definition_of_done:
+  - Use temporary disposable browser profile entirely on ArvectumSSD, no account/credentials/paid/prod writes; exact first-party URL allowlist.
+  - Capture browser-visible semantic content and evidence of real original quote session IDs/status/time from a bounded public browse; no autoguessing unsupported API or legal-access assumptions.
+  - If original sessions inaccessible, report specific public UI blocker with no fabricated auctions or B2G/B2B count change.
+  - Record tested runtime and date plus short evidence snapshot without full third-party HTML/credentials; offline tests for classification if script added, update roadmap and checkpoint.
+  - Run relevant tests, push draft PR477 and check CI, no auto merge.
+completed:
+  - Previous TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018 completed on 5a591410, official five policy source SHA verified, 259 focused B2B/B2G pytest PASS, PR477 draft.
+  - Isolated Chrome on Mac mini with fresh temporary profile on ArvectumSSD rendered original https://zakupki.mos.ru/ HTML ~12 MB, title shows portal site, but original session IDs and status not yet established.
+current: Safely inspect rendered first-party DOM for actual active session cards and their original URLs; not shell metadata.
+pending:
+  - Identify public original card/navigation or explicit blocker.
+  - Write small source evidence and guarded tests.
+  - Finalize checkpoint, roadmap, draft PR and CI.
+last_verified_commit: 5a591410bd5b30ae756d53859578b14fb8fbed0f
+test_results: Prior source gate 259 PASS/Ruff clean. Browser rendering only verified JS evaluated, not quote data.
+resume_instruction: Do not guess undocumented API, trust no auto-login, never count quote from a title or page source alone. Disposable browser profile; source original ID+deadline+status required. Preserve B2G vs B2B and zero verified LLC bids. Stop safely if public quote listings require authentication or scripts fail.

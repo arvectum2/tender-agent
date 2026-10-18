@@ -682,3 +682,9 @@ active_moscow_supplier_b2g_entry_2026_10_18:
   implementation_commit: 5a667ab619e6b018847e984d411674a1aaf2238d
   tests: 259_passed_1_warning
   external_action: false
+
+active_moscow_public_chrome_original_2026_10_18:
+  task_id: TA-B2G-MOSCOW-PUBLIC-CHROME-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-PUBLIC-CHROME-20261018.yaml
+  status: in_progress
+  external_action: false
