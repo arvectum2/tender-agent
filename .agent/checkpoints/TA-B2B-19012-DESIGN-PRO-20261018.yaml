@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-19012-DESIGN-PRO-20261018
-status: in_progress
+status: completed
 goal: Prevent mistaken Workspace website-development PRO purchase for original urgent design-only project 19012; independently verify first-party Design&Branding monthly tariff and activation delay, and keep real LLC checkout and Owner GO unknown.
 definition_of_done:
   - Read only pinned original public 19012 card and official Workspace advertising policy; verify exact source SHA/status/buyer/date, three literal bid description scope and 100-400k budget.
@@ -12,10 +12,8 @@ definition_of_done:
 completed:
   - Category source discovery 31 official original cards/10 public corporate/21 filtered completed code dbc98553, checkpoint PR head 81109f86; 227 tests passed.
   - First-party advertising page read-only HTTP200 shows distinct monthly prices design6900 vs website25500 and delayed activation; original 19012 public accepting/buyer legal, budget100-400k, deadline19Oct.
-current: Implement pinned source tariff-versus-urgent-original access gate.
-pending:
-  - Source checks and tests.
-  - Roadmap and PR/checkpoint completion.
-last_verified_commit: 81109f86cab52593d9fcf324de7e3dbf72d6f6af
-test_results: Previous 227 B2B tests PASS and Ruff clean, new tariff tests pending.
-resume_instruction: Do not buy any PRO category, do not conflate Design and Website tariff; actual ООО company login, category checkout and invitation still unknown. Prioritize owner timing before 19012 printed Oct19 deadline. Maintain no bids or outreach without GO.
+current: Completed exact two-source official tariff and original 19012 verified cost/access read-only gate.
+pending: []
+last_verified_commit: 7b9980a83943afa15d8542e9afdfa6f160d474a7
+test_results: New 2 official source SHA receipts, DesignBrand PRO monthly6900 vs Web25500 vs Content2900 RUB, activation within one business day. 236 B2B pytest PASS, 1 inherited warning and Ruff PASS; code 7b9980a8. Exact-head CI pending after push.
+resume_instruction: "Child completed code 7b9980a8. PR477 CI/review pending. Public design PRO monthly6900 and one-business-day activation verified, but Oct19 deadline clock, actual LLC checkout and invitation, portfolio and owner authorization unknown. No subscription, bid or outreach. Parent remains in_progress; continue source-grounded free-first leads and do not misstate company eligibility."
