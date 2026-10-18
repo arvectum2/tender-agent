@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-URGENT-REAL-LEAD-GATE-20261018
+status: in_progress
+goal: Verify urgent October 19-21 and free-first corporate IT original leads and create honest zero-spend acquisition go/no-go queue for LLC Arvectum based on first-party source facts, not B2G.
+definition_of_done:
+  - Re-fetch exact first-party Workspace 19012/19032/19034 originals and selected free-first Contractis/CodeLance original IT demand cards with bounded read-only GET; source SHA and dated status, buyer type, scope and deadline if original provides.
+  - Distinguish deadline date vs clock time and content/source change, and purchaser legal identity vs bidder access and PRO category/cost in authorized LLC cart.
+  - Produce executable operator decision priority for 0-cost actions, proof of skills (published iOS != completed paid design/WordPress), and blockers requiring owner authorization.
+  - Provide synthetic fail-closed tests, update docs/roadmap and parent checkpoint; run focused B2B regression and Ruff, publish draft PR477 but no merge.
+  - No external outreach, account login, registration, proposal, subscription, production edit, payments or signing.
+completed:
+  - Resumed clean feature tree head 8ce2c0a6 and parent TA-ROADMAP-EXEC-20261012 in_progress; previous B2G source UI child completed, final CI in_progress.
+  - Read 2026-10-18 first-party prior 31 Workspace source corpus and original PRO official tariff evidence, 19012 due October19 design pro monthly 6900 if eligible, 19032 due October21 unknown actual category.
+current: Re-fetch urgent and free-first originals to build first-client source-grounded actionable queue.
+pending:
+  - Collect bounded original source snapshots and independent requirements.
+  - Classify zero-spend preparation vs authenticated owner gate and portfolio/contract risk.
+  - Regression, docs, checkpoint final SHA and push PR477.
+last_verified_commit: 8ce2c0a668062a562ed84fab43c1e349c5170b9e
+test_results: Prior 300 focused B2G/B2B pytest PASS; latest CI pending. New audit tests pending.
+resume_instruction: Urgent source verification 19012 due Oct19, 19032 Oct21; prioritize actual owner company bidder access and non-invented portfolio; never buy Workspace PRO, sign or send replies without Owner GO. Free-first Contractis/CodeLance may be source-only not contract-ready. Maintain parent canonical checkpoint and draft PR477.

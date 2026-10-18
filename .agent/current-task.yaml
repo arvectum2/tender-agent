@@ -718,3 +718,9 @@ active_moscow_structured_ktru_2026_10_18:
   implementation_commit: 764e06870c50bbc1f28b9ade0e0175c036a7489b
   tests: 300_passed_1_warning
   external_action: false
+
+active_b2b_urgent_first_client_2026_10_18:
+  task_id: TA-B2B-URGENT-REAL-LEAD-GATE-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-URGENT-REAL-LEAD-GATE-20261018.yaml
+  status: in_progress
+  external_action: false
