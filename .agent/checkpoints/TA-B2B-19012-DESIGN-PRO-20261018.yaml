@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-19012-DESIGN-PRO-20261018
+status: in_progress
+goal: Prevent mistaken Workspace website-development PRO purchase for original urgent design-only project 19012; independently verify first-party Design&Branding monthly tariff and activation delay, and keep real LLC checkout and Owner GO unknown.
+definition_of_done:
+  - Read only pinned original public 19012 card and official Workspace advertising policy; verify exact source SHA/status/buyer/date, three literal bid description scope and 100-400k budget.
+  - Distinguish first-party Design&Branding 6900 RUB/month, Websites 25500 RUB/month, cheapest Content 2900 RUB/month; do not claim final company cart category or account entitlement.
+  - Record official within-one-working-day after payment activation and deadline Oct19 as a blocker, not make a payment.
+  - Produce machine provenance JSON, human risk/owner decision note, offline adversarial tests and roadmap.
+  - Run relevant tests, commit/push draft PR477, exact-head CI, no ETP action.
+completed:
+  - Category source discovery 31 official original cards/10 public corporate/21 filtered completed code dbc98553, checkpoint PR head 81109f86; 227 tests passed.
+  - First-party advertising page read-only HTTP200 shows distinct monthly prices design6900 vs website25500 and delayed activation; original 19012 public accepting/buyer legal, budget100-400k, deadline19Oct.
+current: Implement pinned source tariff-versus-urgent-original access gate.
+pending:
+  - Source checks and tests.
+  - Roadmap and PR/checkpoint completion.
+last_verified_commit: 81109f86cab52593d9fcf324de7e3dbf72d6f6af
+test_results: Previous 227 B2B tests PASS and Ruff clean, new tariff tests pending.
+resume_instruction: Do not buy any PRO category, do not conflate Design and Website tariff; actual ООО company login, category checkout and invitation still unknown. Prioritize owner timing before 19012 printed Oct19 deadline. Maintain no bids or outreach without GO.
