@@ -217,3 +217,41 @@ def test_forged_current_status_and_extra_file_block_projection(case):
     assert verified_saved_observation(RUN) is None
     with pytest.raises(ValueError):
         cli.save_receipt(RUN, forged)
+
+
+@pytest.mark.parametrize("bad_timestamp", [
+    "2099-01-01T00:00:00+00:00",
+    "2026-10-17T09:20:00",
+    "not-a-timestamp",
+    "2026-10-17T09:20:00+00:00" + "x" * 200,
+])
+def test_untrusted_observation_clock_cannot_claim_verified_freshness(case, bad_timestamp):
+    root, _ = case
+    original = fetch_current_getdocs_and_binaries(
+        RUN, client=FakeEIS(root),
+        observed_at=datetime(2026, 10, 17, 9, 20, tzinfo=UTC),
+    )
+    assert cli.save_receipt(RUN, original)
+    receipt_path = root / "procurement/archived_eis_source_integrity_receipt.json"
+    forged = json.loads(receipt_path.read_text())
+    forged["fresh_observation_utc"] = bad_timestamp
+    receipt_path.write_text(json.dumps(forged))
+    assert verified_saved_observation(RUN) is None
+
+
+
+@pytest.mark.parametrize("bad_timestamp", [
+    "2099-01-01T00:00:00+00:00",
+    "2026-10-17T09:20:00",
+    "unparseable"
+])
+def test_untrusted_timestamp_cannot_be_persisted_as_official_retrieval(case, bad_timestamp):
+    root, _ = case
+    original = fetch_current_getdocs_and_binaries(
+        RUN, client=FakeEIS(root),
+        observed_at=datetime(2026, 10, 17, 9, 20, tzinfo=UTC),
+    )
+    original["fresh_observation_utc"] = bad_timestamp
+    with pytest.raises(ValueError, match="retrieval observation time"):
+        cli.save_receipt(RUN, original)
+    assert not (root / "procurement/archived_eis_source_integrity_receipt.json").exists()

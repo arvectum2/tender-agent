@@ -11,7 +11,7 @@ import json
 import re
 import tempfile
 import zipfile
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin, urlsplit
@@ -223,6 +223,26 @@ def fetch_current_getdocs_and_binaries(
     return receipt
 
 
+
+def valid_original_retrieval_timestamp(raw: object, *, now: datetime | None = None) -> bool:
+    """Accept only a bounded, timezone-aware observation not in the future.
+
+    This checks timestamp plausibility, NOT authenticity: a local unsigned
+    receipt remains a source audit observation, never independent legal proof.
+    """
+    if not isinstance(raw, str) or not 1 <= len(raw) <= 64:
+        return False
+    try:
+        parsed = datetime.fromisoformat(raw)
+    except ValueError:
+        return False
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return False
+    reference = datetime.now(UTC) if now is None else now
+    if reference.tzinfo is None or reference.utcoffset() is None:
+        raise ValueError("reference time must include a timezone")
+    return parsed.astimezone(UTC) <= reference.astimezone(UTC) + timedelta(minutes=5)
+
 def verified_saved_observation(run_id: str) -> dict[str, Any] | None:
     """Project saved transport observation only while local source bytes still match."""
     target = get_demo_run_procurement_dir(run_id) / RECEIPT_NAME
@@ -237,9 +257,8 @@ def verified_saved_observation(run_id: str) -> dict[str, Any] | None:
                 or raw.get("fresh_official_filestore_bytes_match") != known["published_links"]
                 or raw.get("current_live_notice_status_verified") is not False
                 or raw.get("owner_legal_go") is not False
-                or not isinstance(raw.get("fresh_observation_utc"), str)):
+                or not valid_original_retrieval_timestamp(raw.get("fresh_observation_utc"))):
             return None
-        datetime.fromisoformat(raw["fresh_observation_utc"])
     except (OSError, ValueError, TypeError, KeyError, SourceIntegrityError):
         return None
     return {
