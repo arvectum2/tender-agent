@@ -13,7 +13,7 @@ completed:
   - "2026-10-18: isolated ArvectumSSD worktree created; protected API credential inspection was blocked, not bypassed."
 current: Completed source-clock guarded original source audit.
 remaining: []
-last_verified_commit: pending_final_commit
+last_verified_commit: ca1389f39247fbafd125f40d916a6573772bf85e
 test_results:
   - "Two FAIL reproduced before patch for future and naive timestamps."
   - "86 focused pytest PASS, Ruff PASS and diff check PASS."
