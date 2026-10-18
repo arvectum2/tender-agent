@@ -1,0 +1,44 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-LLM-31-IMPORT-DUAL-REVIEW-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Owner-authorized canonical import of 31 source-metadata-only tender research observations into existing PostgreSQL arvectum with backup and idempotence proof; codify enduring capture and independent future ChatGPT/Tender Agent evaluation comparison workflow.
+definition_of_done:
+  - Verify current canonical checkpoint, PR488 exact-head CI, actual migration/schema, private file hash/permission/count and pre-existing DB counts.
+  - Create private recoverable pg_dump backup, verify archive listing/restorability metadata before any DB mutation.
+  - Using existing guarded importer, apply exactly 31 prevalidated candidates in one transaction and verify 31 inserted or explicitly reconcile prior existing; confirm no duplicate on repeat authorized apply.
+  - Audit read-only database totals, source kinds, candidate statuses and restricted blind/gold/external claims.
+  - Document binding roadmap rule for ALL future analyses to single DB and post-acceptance independent dual review, comparison, adjudication, learning-split policy and acceptance gates.
+  - Implement bounded safety controls/tests where feasible; update parent and child checkpoint, push code/review PR without unauthorized merge or ETP/bid/payment/production UI deployment.
+completed:
+  - "2026-10-18 20:33 MSK verified immutable private batch sha256=7903f638ebb07ca26ecbdb80afd6cbc0a708f6dc50bec249ab20d4e50e38c551; owner-only 0600, dry-run 31/31, original PostgreSQL 77 rows, host read-only SQL batch prior-existing 0."
+  - "2026-10-18 20:34 MSK full recoverable PostgreSQL custom-format pg_dump privately saved (0600), SHA256 f6bb234508164db57a92e2933baeb2fdc8b0bdd9c8db07f9c5fb6b46ae871bdd, pg_restore catalog validated 308 data-table entries; no restore operation on live DB."
+  - "2026-10-18 20:35 MSK official guarded importer --apply --confirm-database arvectum inserted 31 and existing 0; exact authorized replay inserted 0 existing 31. Independent PostgreSQL read-only counts total 108 and source_ref manual:ta-research 31, without modifying training labels."
+  - "2026-10-18 20:32 MSK verified PR488 19/19 checks PASS, open, exact head 04fd6390a73cd32eb07986ceb38c05ee8191768b; main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0."
+  - "PostgreSQL arvectum alembic 107 installed, read-only learning rows 77 and database estimated 32 MB; authorized owner explicitly approved 31-row DB import and mandatory capture/dual review."
+current: "Completed authorized import, canonical verification, dual-review offline protocol, capture-by-default review-code and tests."
+remaining: []
+last_verified_commit: 286c2f5ca6eb7ba22c8ba58ec3277290a9156236
+test_results:
+  - "Mac mini local pytest 265 PASS / 4 SKIP across procurement learning, customer pilot, EIS source and B2B regression; Ruff PASS, git diff --check PASS, YAML parse PASS."
+  - "Existing 108 PostgreSQL learning observations verified post-transaction; new 31 owner-internal and candidate_unreviewed, all 45 saved Tender Agent run IDs captured, no missing analysis."
+  - "Authorized apply 31 inserted/0 existing; exact replay 0 inserted/31 existing, pg_dump SHA and pg_restore catalog validated before write."
+  - "No real post-acceptance 2-model runs or gold, no production application redeploy or merge, no ETP/customer external actions."
+resume_instruction: "31 live DB observations already imported and idempotence confirmed; do not repeat live import as new work. Confirm stacked PR exact-head CI, AM-4/owner merge authority, then controlled deployment and read-only audit. Follow roadmap with transactional automatic intake of every new Workspace/B2B/ChatGPT search; wait for actual product acceptance and two independent real source-equal review artifacts before dual compare/training corrections."
+private_preimport_backup: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/backups/arvectum-before-research-31-20261018-2034.dump
+private_backup_sha256: f6bb234508164db57a92e2933baeb2fdc8b0bdd9c8db07f9c5fb6b46ae871bdd
+source_batch_sha256: 7903f638ebb07ca26ecbdb80afd6cbc0a708f6dc50bec249ab20d4e50e38c551
+original_db_learning_rows: 77
+new_db_learning_rows: 108
+authorized_transaction_inserted: 31
+authorized_transaction_replay_existing: 31
+new_source_research_rows: 31
+new_source_research_owner_internal_count: 31
+canonical_saved_analysis_runs_captured: 45
+canonical_saved_analysis_runs_missing: 0
+training_labels_promoted: 0
+new_review_code_deployed: false
+post_acceptance_dual_real_runs_executed: 0
+source_report: docs/roadmap/PROCUREMENT_LEARNING_IMPORT_AND_DUAL_REVIEW_2026-10-18.md
+review_gate: stacked_pr_exact_head_ci_and_authorized_merge_pending

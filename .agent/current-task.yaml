@@ -665,3 +665,24 @@ b2b_research_learning_bridge_2026_10_18:
   training_promotions_or_gold_labels_created: 0
   stage: source_to_existing_candidate_import_adapter_completed_pr_review_pending
   next_step: Owner-authorized canonical import and full provider collector integration without any parallel DB.
+
+mandatory_learning_capture_dual_review_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-LLM-31-IMPORT-DUAL-REVIEW-20261018.yaml
+  code_verified_commit: 286c2f5ca6eb7ba22c8ba58ec3277290a9156236
+  canonical_db: arvectum
+  canonical_table: procurement_learning_observations
+  owner_authorized_import_completed: true
+  preimport_rows: 77
+  new_total_rows: 108
+  imported_research_source_observations: 31
+  duplicate_replay_inserted: 0
+  duplicate_replay_existing: 31
+  all_saved_tender_analysis_runs_captured: 45
+  saved_runs_missing_capture: 0
+  model_gold_promotions: 0
+  current_production_deploy_completed: false
+  post_acceptance_parallel_reviews_executed: false
+  review_code_capture_default_on: true
+  source_report: docs/roadmap/PROCUREMENT_LEARNING_IMPORT_AND_DUAL_REVIEW_2026-10-18.md
+  stage: authorized_db_import_completed_code_review_pending
+  next_stage: After approved PR merge and deploy verify runtime capture; integrate all external search providers into existing one DB; after formal product acceptance compare actual two independent ChatGPT/Tender Agent reviews and human adjudicate.
