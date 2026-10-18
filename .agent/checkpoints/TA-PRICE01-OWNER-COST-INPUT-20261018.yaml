@@ -24,6 +24,7 @@ test_results:
   - Full relevant regression 162 tests passed, 10 skipped and 6 previous warnings; Ruff clean; JavaScript syntax and git diff checks pass.
   - Code commit eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6. Exact-head CI pending after checkpoint push.
   - 2026-10-18 follow-up bugfix: positive labor with all cash-outlay fields zero was erroneously rejected. Gate now includes explicit labor; zero all expenses still 422. 99 focused tests PASS, 1 inherited warning, targeted diff clean, tested at 4b551993e82519542190f73c875dd7978528e05e; fresh exact-head CI pending.
+  - 2026-10-18 exact branch checkpoint head 4de61e145f2efb4037556fa5f7255c38d531ed42 independently rechecked on Mac mini: 91 focused PASS, 1 inherited deprecation warning, diff check clean; GitHub CI 17 successful, 2 quality pending at observation; no failed jobs.
 resume_instruction: >-
   Child TA-PRICE01-OWNER-COST-INPUT-20261018 completed at code SHA
   eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6, pending exact-head CI
