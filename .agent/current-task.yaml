@@ -653,6 +653,8 @@ active_price01_owner_cost_scenario_2026_10_18:
   task_id: TA-PRICE01-OWNER-COST-INPUT-20261018
   checkpoint: .agent/checkpoints/TA-PRICE01-OWNER-COST-INPUT-20261018.yaml
   status: completed
-  implementation_commit: eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6
-  tests: 162_passed_10_skipped_6_warnings
+  implementation_commit: 4b551993e82519542190f73c875dd7978528e05e
+  tests: 162_previous_passed_10_skipped;_latest_regression_99_passed_1_inherited_warning
+  labor_only_regression: fixed_explicit_labor_only_nonzero_expense_gate
+  latest_source_commit: 4b551993e82519542190f73c875dd7978528e05e
   external_action: false
