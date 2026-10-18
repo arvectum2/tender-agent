@@ -6,6 +6,8 @@
 
 Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
 
+**B2B 18.10.2026 (review-ветка):** дополнительно 3 первичных архивных 44-ФЗ ZIP/XML (Смоленск 0163200000326005243 v2, НГТУ 0332100025426000039 v1, госИС МО 0148200002426000013 v1), 17/17 оригинальных приложений с SHA; 1 оригинальная карточка B2B-Center №4643484 (АО «Тех Взрыв Инвест»). Смоленск: 1С-Битрикс, 70% опыта и 30% цены, до 08.12 с 12 месяцами гарантии. **0 новых legal BID_GO; цель 15–20 не достигнута**. [Протокол](B2B_OCT18_EIS_AND_COMMERCIAL_PRIMARY_SHORTLIST.md).
+
 ### Сводка интеграции PR — 17.10.2026 (main)
 
 **FREE FIRST IT B2B customer initiative sources COMPLETED PR476 c97e186c8c:** official FL free for-all, Pchel studio100/mo <=USD1000 with stale duplicate risk, CodeLance free unlimited advertised but mixed self-promotion, CONTRACTIS monthly free limited cap unknown, Weblancer only10day trial/HTTP403, ITsNEW free reply unknown. First-party 4 policy page SHA + 3 original actual customer page SHA; 0 authenticated LLC corporate bids, 0 paid purchases. Current source project three candidates Contractis Python AI170k, landing90-150k 34 responses, CodeLance catalog import budget TBD. Official Moscow Portal suppliers free company enrollment with UKЭП is REGULATED offer not private chat. 5074 Mac PASS/285 SKIP+5 focused+GH green. [owner decision](B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md) [machine source](b2b_free_first_outreach_sources_2026-10-17.json). Parent 15-20 truly qualified open.
