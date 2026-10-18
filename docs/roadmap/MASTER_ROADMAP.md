@@ -6,6 +6,13 @@
 
 Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
 
+### Повторная проверка B2B-источников — 18.10.2026 (review-ветка)
+
+- [x] **21/21 оригинальных публичных Workspace-карточек повторно проверены read-only**; сохранены фактические HTTP200, SHA256 HTML и UTC-время. **9** публично открытых корпоративных кандидатов, **5** частных организаторов, **7** корпоративных терминальных карточек; свежий платный/юридический допуск и итоговая пригодность для ООО не установлены. [Светофор с первоисточниками](B2B_ORIGINAL_PUBLIC_CURRENT_STATUS_2026-10-18.md) · [Машинная квитанция](b2b_workspace_original_current_2026-10-18.json).
+- [x] Статус площадки имеет приоритет над печатным дедлайном: №19003 уже **«Завершён»**, хотя печатный срок 21 октября; №19010 тоже закрыт. Частные 19035/19052 не считать B2B ООО. Безопасный read-only collection path снабжён тестами.
+- [ ] **Новая коммерческая находка:** ООО «Эвотор», Сбербанк-АСТ SBR028-2610150013, Figma и React/TypeScript, по вторичным независимым агрегаторам срок 22 октября 11:00 МСК; оригинальная карточка ЭТП/допуск **НЕ проверены**. Не прибавлять к проверенным оригиналам.
+- [ ] **15–20 действительно пригодных и разрешённых ООО сделок** — не достигнуто: подтверждённых legal/owner BID_GO = **0**. PRO, требуемый опыт, полные ТЗ, стоимость, оригинальная актуальность и коммерческие решения остаются gate.
+
 ### Сводка интеграции PR — 17.10.2026 (main)
 
 **FREE FIRST IT B2B customer initiative sources COMPLETED PR476 c97e186c8c:** official FL free for-all, Pchel studio100/mo <=USD1000 with stale duplicate risk, CodeLance free unlimited advertised but mixed self-promotion, CONTRACTIS monthly free limited cap unknown, Weblancer only10day trial/HTTP403, ITsNEW free reply unknown. First-party 4 policy page SHA + 3 original actual customer page SHA; 0 authenticated LLC corporate bids, 0 paid purchases. Current source project three candidates Contractis Python AI170k, landing90-150k 34 responses, CodeLance catalog import budget TBD. Official Moscow Portal suppliers free company enrollment with UKЭП is REGULATED offer not private chat. 5074 Mac PASS/285 SKIP+5 focused+GH green. [owner decision](B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md) [machine source](b2b_free_first_outreach_sources_2026-10-17.json). Parent 15-20 truly qualified open.

@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-CURRENT-IT-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Extend first-party currently advertised corporate IT opportunities without falsely promoting paid, legally gated or stale public notices to confirmed qualified bids.
+definition_of_done:
+  - Recheck canonical roadmap and prior sources, deduplicate known tender IDs and distinguish corporate/public/open vs candidate vs blocked/expired.
+  - Verify new official platform procurement cards and at least one distinct external commercial channel by directly checking public official evidence when available; preserve HTTP/content SHA and UTC observation.
+  - Deliver source-grounded triage with budget, requirements, stated public deadline/status, source confidence and explicit legal/account/competence gates; never invent 15-20 qualified.
+  - Run deterministic evidence/schema and summary tests, update canonical task pointer, create review-ready PR without external outreach, signature or production deployment.
+completed:
+  - "2026-10-18 verified main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0; preceding APR-06/07 PR482 GitHub 19/19 green, not merged."
+  - "Reviewed prior B2B source evidence, verified public Workspace web-development listing shows newer October 15-16 IT entries; external Evotor Sber-AST React/Figma lead appeared on aggregator but original primary platform check pending."
+current: Completed bounded primary-source public-card refresh, report and regression safety checks.
+remaining: []
+last_verified_commit: 777ec231c655d163c242614bb4c4722ebed04701
+test_results:
+  - "21/21 original Workspace cards HTTP200 and sha256 collected; 9 public corporate candidates, 5 private, 7 terminal corporate; 0 owner-authorized eligible bids."
+  - "23 offline focused pytest PASS, Ruff PASS, git diff --check PASS."
+  - "External Sberbank-AST Evotor SBR028-2610150013 secondary corroboration only; original tender document not independently accessible from primary platform."
+resume_instruction: "B2B 21-card original refresh finished. Check review PR and exact-head CI; parent target 15–20 truly qualified OPEN. Find further current original B2B channels with eligibility/fees and Owner gates; no submission, purchase, contact, or speculative company experience."
+review_gate: pull_request_and_exact_head_ci_pending
+external_actions: false

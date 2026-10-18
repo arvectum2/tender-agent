@@ -591,3 +591,15 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+b2b_firstparty_public_refresh_2026_10_18:
+  code_verified_commit: 777ec231c655d163c242614bb4c4722ebed04701
+  child_checkpoint: .agent/checkpoints/TA-B2B-CURRENT-IT-20261018.yaml
+  report: docs/roadmap/B2B_ORIGINAL_PUBLIC_CURRENT_STATUS_2026-10-18.md
+  firstparty_public_cards_reviewed: 21
+  firstparty_public_corporate_candidates: 9
+  agency_authorized_bid_go: 0
+  target_15_to_20_qualified_opportunities_met: false
+  source_levels: [first_party_workspace, secondary_evotor_unconfirmed]
+  stage: code_evidence_review_pr_pending
+  next: Collect additional first-party eligible opportunities or real client/owner eligibility evidence, before external contact.
