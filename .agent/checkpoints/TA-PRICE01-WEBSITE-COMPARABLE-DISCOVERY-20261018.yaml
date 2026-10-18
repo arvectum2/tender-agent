@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018
-status: in_progress
+status: completed
 goal: Discover bounded public completed 44-FZ website-development procurement candidates and verify exact first-party EIS original notice/final-protocol plus actual SOW comparability before admitting their bids to PRICE-01.
 definition_of_done:
   - Search official/public sources for completed website development scopes with real 19-digit procurement IDs and dates.
@@ -13,11 +13,25 @@ definition_of_done:
 completed:
   - Previous PRICE01 UI and negative Aksioma comparability child complete; current draft PR478 head acb38903 CI SUCCESS, main still d2a927ec.
   - Local canonical EIS original ZIPs only two (Aksay website, Aksioma GIS module), second correctly excluded. Existing Public44FzSearchProvider keyword search and ZakupkiSoapClient read-only getDocsIP available.
-current: Discover official finished website procurement candidates and acquire original evidence.
-pending:
-  - Source candidate discovery and legally accessible original documents.
-  - Admitted-only comparability decision and tests.
-  - Update docs/roadmap and complete/push child checkpoint.
-last_verified_commit: acb38903f914b1187f03feafd29b0c51aa5ca146
-test_results: Earlier price01 101 pytest passed / 10 skipped / 6 inherited warnings, full previous exact-head CI SUCCESS.
-resume_instruction: Search first-party original EIS for completed public website development; verify exact originals then normalize separately. Do not add noncomparable GIS or fabricated tender evidence. Do not buy/submit or merge draft PRs without owner-authority. Parent TA-ROADMAP-EXEC-20261012 remains in_progress.
+current: Completed six exact EIS finished website scope/official final verification and original PDF-free DOCX TЗ source-based comparison.
+pending: []
+last_verified_commit: eb8a8f3123cbfc782e39f20a79d1f2e501e3bfd4
+test_results:
+  - Original first-party EIS getDocsIP ZIP archives for 6 finished website procedures, including 4 new source archives saved only to ArvectumSSD; pinned SHA of ZIP, latest notice XML, final XML and public TLS-verified technical DOCX of all six.
+  - Individual applicationInfo final admission/rank/price source checked: totals 140 applications, admitted 124, rejected 16; 5 protocol cases have admitted finalPrice, 1 EOK20 case lacks comparable finalPrice.
+  - 2 adjacent work scopes Krasnoyarsk/Chemal require normalization, 3 unlike work scopes Dzerzhinsk/SPB/Nenets excluded; 0 newly admitted equivalent website projects; Aksay basket remains 1.
+  - 0.01 RUB real Krasnoyarsk bid preserved as extreme source fact, not market quote; no guessed SPB final prices.
+  - Relevant 85 focused/regression tests PASS, 6 existing warnings, Ruff PASS, staged git diff check PASS.
+  - Implementation commit eb8a8f3123cbfc782e39f20a79d1f2e501e3bfd4; exact-head CI pending after final checkpoint push.
+  - No external bidder/ETP actions, DB changes, cost assumptions or original documents in Git.
+resume_instruction: >-
+  TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018 completed on code SHA eb8a8f31.
+  Do not repeat first-party source collection. Price01 independent original cohort
+  has 6 finished websites, 5 final-price-bearing procedures, but none of the
+  extra 5 is proven equivalent to Aksay. Next phase: independently normalize
+  original Krasnoyarsk and Chemal technical workloads (design, CMS, licensing,
+  number of pages, content, integrations, support) and obtain enough source cost
+  data before any cross-tender price distribution. Operator Workspace price
+  response must remain Aksay-only until further grounded admission. PR478 is
+  DRAFT pending exact latest head CI/human review and authorization. Parent
+  TA-ROADMAP-EXEC-20261012 remains in_progress, no external bid or payment.
