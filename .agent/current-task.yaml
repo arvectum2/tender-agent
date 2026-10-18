@@ -812,3 +812,37 @@ source_bound_real_analysis_worker_2026_10_18:
   regressions_skipped: 4
   stage: source_sha_gated_analysis_worker_review_only_complete
   next_step: Implement source-bound EIS original XML/filestore attachment SHA and Tender Research + Data Platform indexing before the first real qwen3:4b Tender Agent analysis, then verify exact source-version completion in canonical DB. AM-4 review gate remains.
+
+first_real_source_bound_gemma_4_12b_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-EIS-SOURCE-BOUND-GEMMA-20261018.yaml
+  completed_code_commit: 0f473a4231287866053be9622c74fad43a42a3f7
+  report: docs/roadmap/TENDER_AGENT_EIS_ORIGINAL_GEMMA_FIRST_REAL_RUN_2026-10-18.md
+  actual_llm_backend: llama.cpp
+  actual_llm_model: arvectum-gemma4-12b-it-qat-q4_0
+  actual_llm_url: http://127.0.0.1:8081/v1
+  actual_model_loaded_and_http_200: true
+  ollama_not_used_for_generation: true
+  smolensk_notice_number: "0163200000326005243"
+  official_archived_notice_version: 2
+  original_filestore_documents_saved: 6
+  data_platform_original_docx_processed: 5
+  data_platform_chunks_and_embeddings: 72
+  actual_real_gemma_run_id: ee8b1140-1cc6-46ef-b1db-661931fac69a
+  actual_run_status: completed
+  actual_run_completed_sections: 10
+  actual_run_unique_sources: 19
+  actual_report_source_sha_and_private_0600_verified: true
+  canonical_learning_rows_before: 119
+  canonical_learning_rows_after: 121
+  canonical_analysis_runs_before: 45
+  canonical_analysis_runs_after: 46
+  pending_source_version_analysis_count: 9
+  human_gold_created: 0
+  current_legal_bid_go_issued: false
+  external_bids_payments_outreach: false
+  new_backend_runtime_deployed: false
+  source_scheduler_installed: false
+  regression_passed: 885
+  regression_skipped: 4
+  stage: real_source_bound_gemma_12b_first_eis_run_review_only_complete
+  next_step: Prepare official original attachments and indexing for NGTU and Moscow Region EIS, rerun genuine Gemma quality evaluations where ready, update legal/qualification evidence separately; AM-4 review and release required for automatic scheduler activation.
