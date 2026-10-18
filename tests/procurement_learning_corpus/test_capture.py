@@ -110,13 +110,41 @@ def test_legacy_id_validation_and_payload_preserved(session):
         make_legacy_candidate(wrong)
 
 
-def test_saved_analysis_run_hook_disabled_by_default(session, monkeypatch):
-    monkeypatch.delenv("TENDER_LEARNING_CAPTURE_ENABLED", raising=False)
+def test_saved_analysis_run_hook_explicitly_disabled(session, monkeypatch):
+    monkeypatch.setenv("TENDER_LEARNING_CAPTURE_ENABLED", "0")
     result = record_analysis_run(
         session, registry_number="0123456789012345678", status="completed",
         used_llm=True, llm_model="gemma4", source="local",
     )
     assert result.id
+    assert session.query(ProcurementLearningObservation).count() == 0
+
+
+def test_owner_authorized_future_capture_defaults_on(session, monkeypatch):
+    from src.modules.procurement_learning_corpus.service import learning_capture_enabled
+
+    monkeypatch.delenv("TENDER_LEARNING_CAPTURE_ENABLED", raising=False)
+    assert learning_capture_enabled() is True
+    run = record_analysis_run(
+        session, registry_number="0123456789012345678",
+        status="completed", used_llm=True, llm_model="gemma4", source="local",
+    )
+    assert session.query(ProcurementLearningObservation).count() == 1
+    assert session.query(ProcurementLearningObservation).one().payload_json["run_id"] == run.id
+
+
+def test_invalid_capture_env_cannot_silently_suppress_db_ingestion(session, monkeypatch):
+    from src.modules.procurement_learning_corpus.service import learning_capture_enabled
+
+    monkeypatch.setenv("TENDER_LEARNING_CAPTURE_ENABLED", "off")
+    with pytest.raises(ValueError, match="must be 0 or 1"):
+        learning_capture_enabled()
+    with pytest.raises(ValueError, match="must be 0 or 1"):
+        record_analysis_run(
+            session, registry_number="0123456789012345678",
+            status="completed", used_llm=True, llm_model="gemma4", source="local",
+        )
+    session.rollback()
     assert session.query(ProcurementLearningObservation).count() == 0
 
 
