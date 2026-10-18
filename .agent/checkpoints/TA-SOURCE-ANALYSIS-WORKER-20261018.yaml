@@ -1,0 +1,50 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-SOURCE-ANALYSIS-WORKER-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Connect canonical source SHA/version queue to actual Tender Agent Data Platform and LLM analysis via safe preflight and explicit owner-approved apply; never mark an unready source analyzed.
+definition_of_done:
+  - Check prior completed checkpoint, exact-head upstream CI, current canonical database and read-only source matching; no repeated historical imports.
+  - Implement bounded source-manifest based queue worker using existing analysis_service.analyze_tender, with strictly SHA-verified owner-private originals, database tender context, indexed chunks, Data Platform index readiness, local LLM health and no missing prerequisites silently bypassed.
+  - After genuinely successful LLM output, verify saved run/provenance and append unreviewed source-version-bound analysis completion candidate in same canonical database; unknown/fallback/no-context statuses never considered success or gold.
+  - Idempotent queue across process restarts and changed source versions; marketplace HTML without prepared documents remains blocked, no fabricated EIS/legal GO.
+  - Unit/adversarial tests for blockers, exact-source SHA, DB rollback/insertion, replay and no fake LLM; run relevant regression and safe read-only actual queue preflight.
+  - Document verified readiness, checkpoints, PR and CI; no production backend/launchd deployment, signed bids, payments or postacceptance dual ChatGPT inference without accepted state.
+completed:
+  - "2026-10-18 22:54 MSK previous pipeline PR494 OPEN (17/19 PASS at last check) exact head fa6dc1f8fc95bd7b65db6010fdea4c03b127465a, canonical DB 119, API 200."
+  - "Read-only production SQL: procurement_tenders=20, tender_analysis_runs=45, document_chunks=1533, and three saved original EIS archive notice numbers are not in tender_research procurement_tenders (0/3 prepared)."
+current: "Completed source-SHA-bound real LLM worker code, protected runtime hook and canonical DB no-write live preflight; no real model inference executed because all existing sources lacked prepared corresponding indexed documents."
+remaining: []
+last_verified_commit: add0acc13f807342fe4559b53cfbfb9cd1dd86b7
+test_results:
+  - "2026-10-18 full regression 873 pytest PASS / 4 SKIP, 83 warnings, Ruff PASS, bash -n PASS, git diff --check PASS, YAML parse PASS."
+  - "20 initial targeted worker tests PASS; expanded source/LLM index binding, false-completion, 0600 report, restart/version and localhost override tests PASS."
+  - "Production read-only check: canonical learning rows 119 and historical analysis_runs 45 unchanged, exact 10 source refs pending; 7 marketplace HTML-only and 3 official EIS ZIPs not in Tender Research tables. No actual new LLM run, training gold or legal BID GO."
+  - "Configured 127.0.0.1:8088 unavailable; local Ollama 127.0.0.1:11434/v1/models HTTP200 shows qwen3:4b and other models; explicit override checked. Data Platform health HTTP200; no index/bytes SHA matching for 10 source refs."
+  - "PR494 previous source pipeline exact-head 19/19 green, remains OPEN review-only; this worker code not merged or deployed, local six-hour job still not installed."
+
+resume_instruction: "Real source-version-bound local LLM worker code finished in review-only branch with 873/4 checks. Current production queue 10 refs all blocked on source documents/index: 7 Workspace/B2B HTML-only, 3 EIS originals absent in TenderResearch. Continue next engineering child by safely building official getDocsIP original XML -> exact official filestore attachment SHA manifest -> TenderResearch documents -> Data Platform chunks/embeddings with source archive SHA attested; only then execute ONE actual local Ollama qwen3:4b source-bound run with guarded backup and verify report/new SQL evidence, no fake completion. Check stacked PR exact-head CI, no merges/deploy until AM-4."
+code_commit: add0acc13f807342fe4559b53cfbfb9cd1dd86b7
+report: docs/roadmap/TENDER_AGENT_SOURCE_BOUND_ANALYSIS_WORKER_2026-10-18.md
+entrypoint: scripts/procurement_llm/analysis_queue_worker.py
+source_collector_hook: scripts/runtime/run_source_intake.sh
+canonical_db: arvectum
+canonical_learning_observations: 119
+canonical_historical_analysis_runs: 45
+source_version_queue_pending: 10
+source_version_queue_ready_for_model: 0
+marketplace_html_only_without_prepared_tz: 7
+eis_originals_missing_tender_research_preparation: 3
+model_current_local_openai_compatible_qwen3_4b_available: true
+old_configured_8088_llm_endpoint_available: false
+data_platform_health_http_200: true
+actual_new_llm_inference_calls_this_stage: 0
+actual_new_saved_analysis_runs_this_stage: 0
+review_bound_completion_events_created: 0
+training_gold_promoted: 0
+new_source_analysis_autorun_installed: false
+new_source_analysis_worker_release_deployed: false
+worker_runtime_flag_default: off
+owner_bid_go: false
+next_gate: official_filestore_document_sha_manifest_and_data_platform_preparation
