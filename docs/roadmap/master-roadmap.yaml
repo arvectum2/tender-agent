@@ -287,6 +287,49 @@ active_product_roadmap_2026_10_08:
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
 
+roadmap_status_snapshot_2026_10_18:
+  as_of: '2026-10-18'
+  base_main_commit: 'd2a927ecebc9222bb3b38b47aa14c7024ccec4f0'
+  nature: read_only_checkpoint_and_merged_pr_reconciliation
+  not_new_runtime_e2e: true
+  current_task: TA-ROADMAP-EXEC-20261012
+  subtask_checkpoint: .agent/checkpoints/TA-ROADMAP-SYNC-20261018.yaml
+  watchdog:
+    count: 1
+    scheduled_task_enabled: false
+    manual_override: true
+  finished_outcomes: [APR-01-FAST-CITED-PREANALYSIS, APR-02-223FZ-BREADTH]
+  engineering_present_but_acceptance_open:
+    - APR-03-PRODUCTION-RUNTIME
+    - APR-03B-OPERATOR-WORKSPACE
+    - APR-04-CUSTOMER-ONBOARDING
+    - APR-05-PAID-PILOT-SAAS
+    - APR-06-COMMERCIAL-ACCEPTANCE
+    - APR-07-QUALITY-MODEL-EVAL
+  development_e2e_archived_real_case_count: 20
+  independently_reviewed_r4_cases: 0
+  r4_holdout_required_cases: 15
+  verified_current_company_bid_go_count: 0
+  b2b_goal: 15_to_20_current_unique_source_qualified_it_opportunities
+  b2b_goal_met: false
+  available_without_owner_external_actions:
+    - 'APR-03B existing Operator Workspace source-locked live-revision/model/citation/extraction safety validation'
+    - 'APR-04 protected company profile document and eligibility acceptance preparation'
+    - 'APR-05 private staging tenant and entitlements isolation rehearsal'
+    - 'APR-06/07 replay verified sources and compute development quality without legal gold promotion'
+    - 'B2B read-only current source, deadline, bidder eligibility and fit qualification'
+  owner_separately_authorized:
+    - 'Real Russian VPS deployment and paid access'
+    - 'Paid SaaS launch, payments and customer commitments'
+    - 'Electronic signature and procurement submissions / financial securities'
+    - 'Legal or commercial bid GO and human independent gold sign-off'
+  deferred_until_trigger: [APR-08-EVIDENCE-COPILOT, APR-09-SUPPLIER-RFQ-TKP, APR-10-FEEDBACK-LEARNING]
+  latest_recorded_regression:
+    source_pr: 476
+    passed: 5074
+    skipped: 285
+    exact_current_main_tested_in_this_reconciliation: false
+
 roadmap_verified_progress_2026_10_16:
   as_of: '2026-10-16'
   baseline_main: bc98bd397bbd91186dd08e1e611d972077c4ab74
