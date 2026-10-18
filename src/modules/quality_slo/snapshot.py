@@ -213,7 +213,15 @@ def include_bounded_analysis_latency(snapshot: dict, logfile: Path) -> dict:
         if not line.strip():
             continue
         try:
-            item = json.loads(line)
+            def reject_duplicate_keys(pairs):
+                item = {}
+                for key, value in pairs:
+                    if key in item:
+                        raise ValueError("duplicate JSON timing field")
+                    item[key] = value
+                return item
+
+            item = json.loads(line, object_pairs_hook=reject_duplicate_keys)
         except (UnicodeError, ValueError) as exc:
             raise QualityEvidenceError("invalid JSONL timing log") from exc
         if not isinstance(item, dict):

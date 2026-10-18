@@ -190,3 +190,17 @@ def test_source_roster_rejects_unbound_notice(tmp_path):
     (base / "apr06_independent_gpt6_audit_2026-10-09.json").write_text(json.dumps(audit))
     with pytest.raises(QualityEvidenceError, match="notice hash"):
         build_candidate_roster(tmp_path)
+
+
+@pytest.mark.parametrize("line", [
+    '{"run_id":"legit","run_id":"forged","elapsed_seconds":1,"external_actions":false,"human_review_completed":false}',
+    '{"run_id":"legit","elapsed_seconds":1,"external_actions":true,"external_actions":false,"human_review_completed":false}',
+    '{"run_id":"legit","elapsed_seconds":1,"external_actions":false,"human_review_completed":true,"human_review_completed":false}',
+])
+def test_apr07_timing_duplicate_json_fields_fail_closed(tmp_path, line):
+    from src.modules.quality_slo.snapshot import include_bounded_analysis_latency
+
+    path = tmp_path / "timings.jsonl"
+    path.write_text(line + "\n")
+    with pytest.raises(QualityEvidenceError, match="invalid JSONL timing log"):
+        include_bounded_analysis_latency(build_snapshot(ROOT), path)
