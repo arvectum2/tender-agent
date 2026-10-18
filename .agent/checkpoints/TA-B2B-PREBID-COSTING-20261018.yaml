@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-PREBID-COSTING-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Produce source-traceable, testable pre-bid technical requirement matrix and internal scenario cost for Smolensk regional Duma 44-FZ 0163200000326005243 and AО Tech Vzryv Invest B2B-Center 4643484, without submitting anything.
+definition_of_done:
+  - Confirm parent branch 4 original notices/17 binaries and exact-source provenance; no rescraping or promoting stale status.
+  - Extract concrete requirements, contract/scope/qualification obligations and document provenance from first-party Smolensk DOCX and B2B-Center original HTML, no unsupported claims.
+  - Build defensible role-hour and support/warranty costing scenarios, parameterized assumptions and exclusions, with economics/competitiveness gating vs published NMCK only where applicable.
+  - Test arithmetic, sensitivity, provenance references, scope boundaries and no-bid statuses; save report and completed checkpoint.
+  - Push reviewable stacked PR without merging any prior PR, registering, paying, contacting, signing, running ETP bid or production changes.
+completed:
+  - "2026-10-18: verified current main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0, PR483 all 19 green; prior original-source PR484 17 PASS and 2 PENDING."
+  - "2026-10-18: last original-source child completed, source technical baseline f26ac392c3943cfa317f5a6600c69fde57055917, immutable first-party SHA receipt available in parent branch."
+current: "Completed source-traced technical/supplier qualification matrix, reproducible economic valuation scenarios and no-submit controls."
+remaining: []
+last_verified_commit: f8ab4e4a0a59e1dc7caf4a5a6a5a134dfdc021dc
+test_results:
+  - "98 related pytest PASS, 3 SKIP; Ruff PASS, YAML parse PASS, git diff --check PASS."
+  - "Internal JSON output byte-reproduced from source-pinned input; first-party 4 DOCX source SHA verified against parent original filestore receipts."
+  - "Smolensk: 20 TZ blocks + 6 contract/evaluation controls, low/base/high 252/592/1086 hours, economic modeled cost 574200/1516149/3121000 RUB."
+  - "B2B-Center 4643484 buyer budget UNKNOWN, internal scoped service scenarios 140/298/575 hours only, no external bid/price/communications."
+resume_instruction: "This bounded prebid model and source matrix are complete. Check stacked PR exact-head CI and base PR484 merge status. Next child: verify latest live EIS/legal notice edition, qualifications and account rights where authorized; expand 15-20 *qualified* unique IT opportunities. Do not apply, send proposal, pay or deploy without Owner GO."
+source_report: docs/roadmap/B2B_SMOLENSK_AND_B2BCENTER_PRESALE_MATRIX_2026-10-18.md
+source_input: docs/roadmap/b2b_prebid_cost_assumptions_2026-10-18.json
+source_result: docs/roadmap/b2b_prebid_cost_result_2026-10-18.json
+review_gate: stacked_pull_request_ci_and_authorized_merge_pending
+external_actions: false

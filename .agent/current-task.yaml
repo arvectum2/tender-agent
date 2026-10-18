@@ -601,3 +601,17 @@ b2b_four_originals_2026_10_18:
   fully_qualified_bid_go_count: 0
   target_15_to_20_met: false
   next_step: Verify current source status and supplier capability before any external participation.
+
+b2b_prebid_costing_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-B2B-PREBID-COSTING-20261018.yaml
+  code_verified_commit: f8ab4e4a0a59e1dc7caf4a5a6a5a134dfdc021dc
+  source_smolensk_number: 0163200000326005243
+  source_b2bcenter_number: 4643484
+  actual_confirmed_buyer_budget_b2bcenter: UNKNOWN
+  reviewed_smolensk_tz_group_count: 20
+  reviewed_contract_qualification_group_count: 6
+  imputed_economic_cost_hypotheses_not_offer: true
+  bid_go_count: 0
+  company_qualification_15_20_goal_met: false
+  stage: cost_assumptions_and_source_matrix_complete_stacked_pr_review_pending
+  next: Continue independent live-status and legal qualification checks before Owner review.

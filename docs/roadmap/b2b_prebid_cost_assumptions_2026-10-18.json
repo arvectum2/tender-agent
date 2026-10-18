@@ -1,0 +1,328 @@
+{
+  "schema_version": "b2b_prebid_internal_cost_assumptions_v1",
+  "snapshot_date": "2026-10-18",
+  "pricing_model": "INTERNAL_OPPORTUNITY_COST_NOT_QUOTE",
+  "assumptions_not_from_buyer": {
+    "tax_fraction_of_collected_revenue": "0.06",
+    "tax_status": "hypothetical scenario only; validate actual contract/accounting treatment",
+    "role_rates": "internal imputed opportunity-cost valuation, not market facts or payroll or outsourcing commitments",
+    "travel": "not priced; potentially required only if buyer changes remote-access provision",
+    "paid_licenses": "not priced; require confirmation of existing Bitrix licenses and any new customer required license",
+    "platform_fees": "not priced; tender-specific account fee/approval unknown",
+    "contract_performance_security": "not included in cost; security may tie up working capital; separate gate",
+    "all_hours": "unverified planning scenarios, not extracted from source or promised to buyer"
+  },
+  "scenario_contingency_fraction": {
+    "low": "0.10",
+    "base": "0.22",
+    "high": "0.35"
+  },
+  "scenario_other_cash_cost_rub": {
+    "low": "0",
+    "base": "15000",
+    "high": "70000"
+  },
+  "roles": {
+    "bitrix_engineer": {
+      "scenario_rate_rub_per_hour": "2300"
+    },
+    "ux_designer": {
+      "scenario_rate_rub_per_hour": "1650"
+    },
+    "qa_accessibility": {
+      "scenario_rate_rub_per_hour": "1450"
+    },
+    "pm_analyst": {
+      "scenario_rate_rub_per_hour": "1750"
+    },
+    "frontend_cms_engineer": {
+      "scenario_rate_rub_per_hour": "2250"
+    }
+  },
+  "cases": [
+    {
+      "id": "0163200000326005243",
+      "source_kind": "official_EIS_getDocsIP_archived_notice_v2",
+      "source_zip_sha256": "4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d",
+      "source_notice_xml_sha256": "36556189a1bb0aeead937e06e9c4186206a465ba139fc09023b4c1d08e7cb719",
+      "source_tz_docx_sha256": "6b5e4d967de9050f43bb3fa876f11eb116a52d9078b59edd50f818a50a6bc9a4",
+      "source_evaluation_docx_sha256": "a712e03f43f5967a9bf42e1c0589b670769af352aea3a32e18c96d416724583d",
+      "source_contract_docx_sha256": "9f8b8fb416bb35853d6b169be4b0fdff8cfdb2730c03adefe3be85ff5c2e27b4",
+      "source_application_docx_sha256": "f1358e7f73fe66966844bf38a653808d20ebd8434ee5693ca620c10527cf50be",
+      "public_budget_ceiling_rub": "497178.33",
+      "source_contract_deadline": "2026-12-08",
+      "source_warranty_months": 12,
+      "source_archived_application_deadline": "2026-10-30T11:00:00+03:00",
+      "source_qualification_weight_percent": 70,
+      "source_price_weight_percent": 30,
+      "tasks": [
+        {
+          "id": "S01",
+          "deliverable": "Аудит текущего dev/prod сайта, версия Битрикс, доступ, бэкапы",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 12,
+            "base": 22,
+            "high": 40
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "006-012"
+        },
+        {
+          "id": "S02",
+          "deliverable": "Миграция контента и URL, корректные редиректы",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 18,
+            "base": 38,
+            "high": 75
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "006,195-202"
+        },
+        {
+          "id": "S03",
+          "deliverable": "Устранение сервисных PHP-фрагментов, прокрутки, зарубежных зависимостей",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 18,
+            "base": 40,
+            "high": 75
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "013-018,028-052"
+        },
+        {
+          "id": "S04",
+          "deliverable": "Макеты согласования, стили и единая система иконок",
+          "role": "ux_designer",
+          "hours": {
+            "low": 25,
+            "base": 55,
+            "high": 92
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "011-012,059-065,237-253"
+        },
+        {
+          "id": "S05",
+          "deliverable": "Главная, состояния мероприятий и перестановка блоков",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 24,
+            "base": 50,
+            "high": 88
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "053-073"
+        },
+        {
+          "id": "S06",
+          "deliverable": "Поиск депутатов: 4 вкладки, адреса, роли, сортировки и карточки",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 40,
+            "base": 108,
+            "high": 200
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "074-135"
+        },
+        {
+          "id": "S07",
+          "deliverable": "Новости, Метрika, карта и поиск по сайту",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 20,
+            "base": 43,
+            "high": 80
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "137-148,158-169"
+        },
+        {
+          "id": "S08",
+          "deliverable": "Единые шаблоны и навигация, сетки, списки, таблицы, ссылки на файлы",
+          "role": "frontend_cms_engineer",
+          "hours": {
+            "low": 27,
+            "base": 70,
+            "high": 120
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "149-157,170-236"
+        },
+        {
+          "id": "S09",
+          "deliverable": "Адаптивность и версия для слабовидящих, проверка на основных устройствах",
+          "role": "qa_accessibility",
+          "hours": {
+            "low": 18,
+            "base": 45,
+            "high": 85
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "010,019-027,254-272"
+        },
+        {
+          "id": "S10",
+          "deliverable": "Регрессионное тестирование, деплой, верификация миграции/редиректов",
+          "role": "qa_accessibility",
+          "hours": {
+            "low": 20,
+            "base": 45,
+            "high": 85
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "006,195-202,254-272"
+        },
+        {
+          "id": "S11",
+          "deliverable": "Согласования дизайна, подготовка документов приемки и передача результатов",
+          "role": "pm_analyst",
+          "hours": {
+            "low": 14,
+            "base": 28,
+            "high": 50
+          },
+          "source_scope": "source_tz",
+          "tz_paragraph_refs": "011,237-253"
+        },
+        {
+          "id": "S12",
+          "deliverable": "Резерв на исправление дефектов в 12-месячной гарантии",
+          "role": "bitrix_engineer",
+          "hours": {
+            "low": 16,
+            "base": 48,
+            "high": 96
+          },
+          "source_scope": "source_contract_5_1",
+          "tz_paragraph_refs": null
+        }
+      ],
+      "blocking_unknowns": [
+        "actual current EIS edition/status",
+        "Bitrix deployed edition and developer access",
+        "verified team or company Bitrix experience",
+        "documented comparable fulfilled contracts and exact scorer",
+        "migration volume and content quality",
+        "guarantee defects frequency",
+        "non-cash surety and bid security",
+        "acceptance timing and VAT/tax treatment"
+      ],
+      "owner_bid_ready": false
+    },
+    {
+      "id": "4643484",
+      "source_kind": "b2b_center_primary_public_card",
+      "source_detail_html_sha256": "5c39875a52d008b6339dab8112dbc076b03576c9aedd2cfba9af04cadadca757",
+      "source_index_html_sha256": "d51d03b3f114b07d35f99c489a08f50c58521e2a17557458c959aa21b2ad131f",
+      "original_public_deadline": "2026-10-21T06:00:00+03:00",
+      "public_budget_ceiling_rub": null,
+      "source_confirmed_only": [
+        "corporate site turnkey",
+        "preliminary commercial offer and realized cases requested",
+        "no confirmed price"
+      ],
+      "tasks": [
+        {
+          "id": "B01",
+          "deliverable": "Discovery и фиксация подтверждаемого scope, контента, сроков",
+          "role": "pm_analyst",
+          "hours": {
+            "low": 12,
+            "base": 24,
+            "high": 45
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        },
+        {
+          "id": "B02",
+          "deliverable": "Информационная архитектура, UX-прототипы",
+          "role": "ux_designer",
+          "hours": {
+            "low": 18,
+            "base": 40,
+            "high": 75
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        },
+        {
+          "id": "B03",
+          "deliverable": "Адаптивные макеты и дизайн-система",
+          "role": "ux_designer",
+          "hours": {
+            "low": 25,
+            "base": 60,
+            "high": 100
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        },
+        {
+          "id": "B04",
+          "deliverable": "Корпоративные страницы, frontend и CMS",
+          "role": "frontend_cms_engineer",
+          "hours": {
+            "low": 45,
+            "base": 90,
+            "high": 175
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        },
+        {
+          "id": "B05",
+          "deliverable": "Контактные формы, политика данных, базовая аналитика и интеграции",
+          "role": "frontend_cms_engineer",
+          "hours": {
+            "low": 16,
+            "base": 36,
+            "high": 85
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        },
+        {
+          "id": "B06",
+          "deliverable": "Тесты и приемка на устройствах",
+          "role": "qa_accessibility",
+          "hours": {
+            "low": 16,
+            "base": 32,
+            "high": 65
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        },
+        {
+          "id": "B07",
+          "deliverable": "Передача исходников и инструкции после согласования формата",
+          "role": "pm_analyst",
+          "hours": {
+            "low": 8,
+            "base": 16,
+            "high": 30
+          },
+          "source_scope": "assumption_unprovided_scope",
+          "tz_paragraph_refs": null
+        }
+      ],
+      "blocking_unknowns": [
+        "actual requested pages and functions unknown",
+        "content volume and copywriting unknown",
+        "CMS/hosting/brand requirements unknown",
+        "security and personal data obligations unknown",
+        "revisions and acceptance stages unknown",
+        "warranty term unknown",
+        "customer budget unknown",
+        "documented comparable portfolio for proposed bidder unknown",
+        "platform membership entitlement and paid fee unknown"
+      ],
+      "owner_bid_ready": false
+    }
+  ]
+}
