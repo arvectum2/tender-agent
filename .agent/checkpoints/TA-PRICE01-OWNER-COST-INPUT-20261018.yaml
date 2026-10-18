@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-PRICE01-OWNER-COST-INPUT-20261018
-status: in_progress
+status: completed
 goal: Make existing pure PRICE-01 owner-input break-even function accessible as an explicit stateless protected what-if form in the existing Operator Workspace; no implicit financial assumptions, no bid action.
 definition_of_done:
   - Seven independently required user supplied fields, currency in RUB and percentage rates explicitly labelled; no filled defaults; no private persisted inputs and no bidder/ETP writes.
@@ -13,11 +13,26 @@ definition_of_done:
 completed:
   - Previous PRICE01 original three-TZ workload normalization and private matrix UI completed code 70aaec82, pushed checkpoint b77cb379, latest CI currently active.
   - Existing exact-Decimal pure function compute_owner_supplied_break_even accepts explicit direct/labor/reserve/fixed fees, tax fraction, variable platform fee fraction, explicit profit; calculates three ceilings.
-current: Implement stateless exact owner cost request and existing UI form.
-pending:
-  - Secure stateless endpoint and explicit validation.
-  - UI action and adversarial tests.
-  - Roadmap + checkpoint, push and CI.
-last_verified_commit: b77cb37985a5b8569d07340371f167290439af5a
-test_results: Prior PRICE01 stage 128 pytest passed / 10 skipped / 6 inherited warnings, Ruff JS clean; new tests pending.
-resume_instruction: Do not invent default tax/license or hourly rate; protect endpoint and reject incomplete costs. Existing source-bound Aksay prices and related-workload catalogs are not cost recommendations. No auto-merge, payment, bid submission or persistence of confidential inputs.
+current: Completed seven-input stateless protected calculator reusing existing Decimal break-even function; no actual cost input provided.
+pending: []
+last_verified_commit: eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6
+test_results:
+  - Private POST /api/demo/tender-agent/workspace/price-scenario/calculate accepts only seven individually required explicit owner assumptions, plus explicit non-binding confirmation; 401 for unauthorized, 422 malformed, extra, empty or impossible rate scenarios.
+  - Uses preexisting pure Decimal compute_owner_supplied_break_even, no formula duplication; tests exact synthetic 100 external/200 labor/20 reserve/5 fixed/6 percent tax/2 percent platform/50 profit => cash135.87,full353.27,target407.61 RUB thresholds, not actual Arvectum costs.
+  - Input data not stored, no DB writes, no outbound ETP, no new quotes, false for recommendation/forecast/commercial Owner GO.
+  - Existing protected Operator Workspace form has seven required blank inputs, explicit confirmation and clear action; browser no-JS fallback method POST (never sensitive values in URL).
+  - Full relevant regression 162 tests passed, 10 skipped and 6 previous warnings; Ruff clean; JavaScript syntax and git diff checks pass.
+  - Code commit eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6. Exact-head CI pending after checkpoint push.
+resume_instruction: >-
+  Child TA-PRICE01-OWNER-COST-INPUT-20261018 completed at code SHA
+  eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6, pending exact-head CI
+  and review in draft PR478. Owner can enter seven explicit hypothetical
+  inputs in existing private workspace, but NO factual company cost inputs
+  or actual commercial quotation have been verified or saved. Next roadmap
+  tasks: gather documented cost line items for one real tender via Owner,
+  establish truly equivalent finished website contract scopes, stage E2E UI
+  acceptance; or switch to unmet priority 15-20 genuinely eligible B2B live
+  leads and APR quality/acceptance if cost evidence remains unavailable.
+  Do not invent cost values, merge without authority, submit bids, spend
+  money, contact buyers or modify production. Canonical parent remains
+  TA-ROADMAP-EXEC-20261012 in_progress.
