@@ -1,0 +1,55 @@
+{
+  "schema_version": "ta-b2g-moscow-public-structured-ktru-ui-v1",
+  "official_first_party_source": "https://zakupki.mos.ru/",
+  "observation_at_utc": "2026-10-18T09:27:43.157Z",
+  "real_ui_registry_navigated": true,
+  "real_ui_basic_filters_opened": true,
+  "real_ui_extended_filters_opened": true,
+  "source_exact_field_observations": [
+    {
+      "label": "КТРУ",
+      "sourceBefore": {
+        "has_exact_public_label": true,
+        "has_real_dropdown": true,
+        "placeholder": "Выберите КТРУ",
+        "role": "listbox"
+      },
+      "clicked": true,
+      "after": {
+        "aria_expanded": "false",
+        "aria_busy": "false",
+        "visible_options": [],
+        "dropdown_has_search_input": false,
+        "placeholder": "Выберите КТРУ"
+      },
+      "observed_at_utc": "2026-10-18T09:27:41.322Z"
+    },
+    {
+      "label": "Вид продукции",
+      "sourceBefore": {
+        "has_exact_public_label": true,
+        "has_real_dropdown": true,
+        "placeholder": "Выберите вид продукции",
+        "role": "listbox"
+      },
+      "clicked": true,
+      "after": {
+        "aria_expanded": "false",
+        "aria_busy": "false",
+        "visible_options": [],
+        "dropdown_has_search_input": false,
+        "placeholder": "Выберите вид продукции"
+      },
+      "observed_at_utc": "2026-10-18T09:27:43.157Z"
+    }
+  ],
+  "availability_of_classification_choices_verified": false,
+  "class_62_code_selected": false,
+  "submitted_structured_ktru_query": false,
+  "lack_of_options_does_not_prove_no_live_IT_auctions": true,
+  "company_authenticated": false,
+  "company_bids_submitted": 0,
+  "owner_go": false,
+  "verified_corporate_b2b_leads": 0,
+  "disposable_browser_profile_saved": false
+}

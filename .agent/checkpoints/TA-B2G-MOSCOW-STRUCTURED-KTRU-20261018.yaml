@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018
+status: in_progress
+goal: Determine whether an officially exposed structured OKPD2/KTRU filter exists in the Moscow quote registry UI and what it can actually attest, without confusing full text 62.01 or guessing backend APIs.
+definition_of_done:
+  - Check actual publicly rendered first-party advanced filter UI controls with isolated read-only disposable Chrome on ArvectumSSD.
+  - Verify if the filter is genuinely structured KTRU/OKPD2, and whether it supports software development class 62; never invent available options or source URLs.
+  - If first-party control exists and works, filter current sessions by observed UI, inspect original source IDs/status/deadline/document where possible.
+  - If no public usable structured control, record exact blocker and do not misstate zero matches as no market.
+  - Persist minimal UI evidence, tests, checkpoint status, roadmap, Git PR477 draft, run B2B/B2G regressions and check CI.
+  - No company account, UKЭP, registration, document submission, money, signatures, emails, production or auto-merge.
+completed:
+  - Prior TA-B2G-MOSCOW-NARROW-SEARCH-20261018 completed source-backed at 08871f72; 297 tests PASS, latest exact CI pending.
+  - Original text field 62.01 gave 2 product-model false positives, so cannot stand in for structured OKPD2.
+current: Inspect actual official public advanced-filter control and identify legitimate structured catalog affordances.
+pending:
+  - Original public expanded filter DOM observation and control semantics.
+  - Conditional user interface structured source search if available.
+  - Add tests/roadmap and complete checkpoint/push/CI.
+last_verified_commit: 08871f72f65aeef594ccca42dfeadbe26eff0933
+test_results: Prior 297 focused tests PASS, one inherited warning; Ruff/Node syntax PASS. Structured filter not yet tested.
+resume_instruction: Read only real public UI. Before using any structured KTRU/OKPD2 filter, verify its actual observed label and widget behavior. Avoid undocumented APIs, arbitrary backend IDs, source guessing and claims about all active IT bids. B2G not B2B. Parent roadmap in_progress.

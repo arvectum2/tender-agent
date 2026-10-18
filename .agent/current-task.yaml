@@ -709,3 +709,9 @@ active_moscow_narrow_public_it_search_2026_10_18:
   implementation_commit: 0cc67c5835f1d1080f0892ccc1fad35caa4ede9c
   tests: 297_passed_1_warning
   external_action: false
+
+active_moscow_structured_ktru_2026_10_18:
+  task_id: TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018.yaml
+  status: in_progress
+  external_action: false
