@@ -648,3 +648,20 @@ b2bcenter_six_originals_2026_10_18:
   owner_goal_15_to_20_qualified_met: false
   stage: bounded_source_check_completed_pr_review_pending
   next_step: Continue new official firstparty source search and verify commercial/legal prerequisites before external participation.
+
+b2b_research_learning_bridge_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-B2B-RESEARCH-LEARNING-BRIDGE-20261018.yaml
+  code_verified_commit: 5cff75a20fc47e3bed2b507a1e8e6ccc2777457c
+  source_report: docs/roadmap/B2B_RESEARCH_TO_PROCUREMENT_LLM_INTAKE_2026-10-18.md
+  canonical_existing_database: arvectum
+  canonical_existing_learning_table: procurement_learning_observations
+  observed_existing_learning_rows: 77
+  observed_existing_recent_external_ta_research_rows: 0
+  prepared_private_metadata_intake_candidates: 31
+  importer_dry_run: 31_of_31_pass
+  private_intake_mode: 0600
+  production_database_modified: false
+  automatic_all_sources_through_tender_agent_completed: false
+  training_promotions_or_gold_labels_created: 0
+  stage: source_to_existing_candidate_import_adapter_completed_pr_review_pending
+  next_step: Owner-authorized canonical import and full provider collector integration without any parallel DB.
