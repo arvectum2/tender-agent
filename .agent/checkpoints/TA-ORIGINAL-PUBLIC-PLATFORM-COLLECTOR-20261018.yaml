@@ -1,0 +1,43 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-ORIGINAL-PUBLIC-PLATFORM-COLLECTOR-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Add first-party read-only Workspace and B2B-Center original-card collector with content-verifiable source snapshots and owner-approved append-only metadata into existing PostgreSQL procurement learning DB (no second corpus).
+definition_of_done:
+  - Confirm prior checkpoints and exact CI; do not repeat completed historic import.
+  - Add bounded read-only provider collector for public exact original URLs + primary page identity, refuse redirects/opaque/private query/incorrect original identity, mark legal GO unknown.
+  - Freeze actual original HTML SHA evidence on ArvectumSSD owner-private, write metadata-only unreviewed same PostgreSQL on explicit owner-authorized apply; idempotent same origin and content; history on changed original versions.
+  - Add offline adversarial unit tests with fake fetch and temporary filesystem+database; validate no private data/gold and snapshot SHA.
+  - Run small actual current first-party source pilot, confirm before/after read-only PostgreSQL and private snapshots without inventing legal availability.
+  - Final relevant tests, document remaining EIS SOAP and genuine ChatGPT integration, checkpoint and PR; no unauthorized merge, deploy, ETP bid or payment.
+completed:
+  - "2026-10-18 21:32 MSK preceding PR489 and PR490 exact-head 19/19 PASS, PR491 18/19 CI PASS 1 pending, all remain OPEN and unmerged, canonical PG 108 and previous 31 source observations not replayed."
+  - "Verified Workspace19043 original 200 exact URL, canonical and og:url identical and HTML SHA; B2B4632891 original 200 exact URL and title tender number."
+current: "Verified first-party Workspace and B2B-Center original collector, actual two source snapshots stored owner-private and canonical SQL +2, frozen-byte replay idempotent."
+remaining: []
+last_verified_commit: 0bb7cc465faec889dd8ebe9b893ed948294570c6
+test_results:
+  - "21 targeted source identity, URL and transaction adversarial pytest PASS, 761 broader TenderResearch/learning/CustomerPilot pytest PASS and 2 SKIP; Ruff PASS, git diff --check PASS, YAML PASS."
+  - "Read-only original HTML pilot 2/2 Workspace19043 and B2B4632891 returned HTTP200 with original canonical/og URL/title identity and 350490 raw response bytes; no legal bid GO."
+  - "Full existing PostgreSQL arvectum before-write pg_dump custom archive 0600 and pg_restore catalogue checked, SHA256 06ae3a975d081fb749d44693de8dc39f36640add860cea24c59b56765e76d75d; original DB 108."
+  - "Owner-approved 2 first-party immutable HTML source snapshots 0600 and 2 unreviewed owner-internal metadata observations successfully added; PostgreSQL 108 -> 110, exactly 2 pilot source refs."
+  - "First attempted replay exposed strict immutable timestamp conflict; fail closed with no SQL mutation; fixed replay to retain original first observed time without mutation. Frozen exact sources replay: 0 inserted, 2 existing, 0 new snapshots, SQL stays 110."
+resume_instruction: "First-party Workspace+B2B snapshot collector completed and two real observations are already in production PostgreSQL (110 total); do not replay historic 31 or invent new cards. Verify dependent stacked PR exact-head CI, no merge without Company AM-4. Next develop official EIS SOAP XML/ZIP archived-original collector in same data platform with no current-legal-status inference; then unified source ingestion and postacceptance real independent dual LLM review."
+source_report: docs/roadmap/PROCUREMENT_LLM_FIRSTPARTY_MARKET_COLLECTOR_2026-10-18.md
+source_code: scripts/procurement_llm/collect_public_market_originals.py
+source_watchlist: docs/roadmap/public_market_collector_pilot_oct18.json
+code_commit: 0bb7cc465faec889dd8ebe9b893ed948294570c6
+private_backup: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/backups/arvectum-before-public-original-pilot-20261018-2140.dump
+private_backup_sha256: 06ae3a975d081fb749d44693de8dc39f36640add860cea24c59b56765e76d75d
+canonical_pg_rows_before: 108
+canonical_pg_rows_after: 110
+pilot_firstparty_source_observation_count: 2
+pilot_snapshots_stored_privately: 2
+replay_inserted: 0
+replay_existing: 2
+training_promotions: 0
+new_product_runtime_code_deployed: false
+all_providers_auto_ingested: false
+external_submission_or_payment: false
+review_gate: stacked_pr_exact_head_ci_and_am4_release_authority_pending
