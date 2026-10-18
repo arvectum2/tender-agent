@@ -206,6 +206,8 @@ B2B primary original public Workspace source pass 17 Oct: 5 previously unlisted 
 
 **Для APR-03B DEVELOPMENT E2E разборы ChatGPT считаются экспертными оценками.** Не ждём 20 независимых подписанных human-gold разборов: сначала доказываем реальный путь поиска → оригиналы ЕИС → извлечение → LLM-анализ → цитируемый отчёт → историю/БД → безопасные экспорты. Исправления Owner и юридическая/коммерческая калибровка идут после стабилизации workflow; не разрешены ставки, подпись, платежи и production. До реального успешного end-to-end прогонa APR-03B остаётся OPEN. [Новая приёмка](../acceptance/APR03B_DEVELOPMENT_AI_E2E_POLICY_2026-10-15.md).
 
+**APR-06/07 · 18.10.2026 — дополнительная проверка целостности опубликованных результатов DEVELOPMENT.** Офлайн сопоставлены неизменные SHA двух реестров 20 архивных закупок: 19/20 до исправления отчёта кейса 13, 20/20 после source-only исправления, 80 исторических вызовов Gemma4, 210 SHA-записей источников и 60 критических XML-меток; модельный p90 nearest-rank 389,27 с — НЕ сквозной time-to-decision и НЕ rolling SLO. Новый guard проверяет неизменность остальных кейсов и расчётов, не заменяет human legal gold, текущую редакцию ЕИС или Owner GO. [Протокол](../quality/APR067_CORRECTED_20_COHORT_INTEGRITY_2026-10-18.md) / [машинный результат](../quality/APR067_CORRECTED_20_COHORT_INTEGRITY_2026-10-18.json). Статус: код в review-ветке, main до merge без изменений.
+
 ### P1/P2 — после P0 или при подтверждённом спросе
 
 - [ ] **APR-08 / ARV-065 — Evidence Copilot (P1).** Только procurement-scoped Q&A/расчёты/объяснения с цитатами; не generic chatbot и не authoritative legal approval.
