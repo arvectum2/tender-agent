@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-10-17T21:22:00+03:00",
+  "scope": "original_public_snapshots_not_authenticated_company_bid_access",
+  "source_status_freshness_hours": 48,
+  "original_case_count": 5,
+  "company_qualified_to_respond_count": 0,
+  "actual_replies_or_paid_actions": 0,
+  "cases": [
+    {
+      "id": "19032",
+      "source_url": "https://workspace.ru/tenders/teh-obsluzhivanie-i-dorabotka-korporativnogo-sayta-19032/",
+      "public_deadline_date_only": "2026-10-21",
+      "source_observed_at": "2026-10-17T14:19:58.746881+00:00",
+      "source_html_sha256": "355e2595622fb88a7a7089c584ddbc6dacb712dad613b813fb33f2f05ba02b75",
+      "receipt_file": "b2b_workspace_four_original_fit_2026-10-17.json",
+      "source_requirement_gate": "CONDITIONAL_WORDPRESS_MONTHLY_SLA_AND_PORTFOLIO",
+      "eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_gates": [
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "response_authorized": false
+    },
+    {
+      "id": "19042",
+      "source_url": "https://workspace.ru/tenders/sistema-avtomatizacii-i-ucheta-oborudovaniya-dlya-myasokombinata-19042/",
+      "public_deadline_date_only": "2026-10-31",
+      "source_observed_at": "2026-10-17T14:19:58.836450+00:00",
+      "source_html_sha256": "e9b913b3f2b18cdc5e62d95bb8d714a05d0d82a801b84859507465e79b971cea",
+      "receipt_file": "b2b_workspace_four_original_fit_2026-10-17.json",
+      "source_requirement_gate": "THREE_YEAR_COMMERCIAL_EXPERIENCE_GATE",
+      "eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_gates": [
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "response_authorized": false
+    },
+    {
+      "id": "19043",
+      "source_url": "https://workspace.ru/tenders/obnovlenie-sayta-digital-agentstva-audit-redizayn-ili-razrabotka-novogo-korporativnogo-sayta-19043/",
+      "public_deadline_date_only": "2026-10-31",
+      "source_observed_at": "2026-10-17T14:19:58.919801+00:00",
+      "source_html_sha256": "96873c3029274b78aebad939a7d9c1fc81b855dc7e6cdefc23224d92ab040385",
+      "receipt_file": "b2b_workspace_four_original_fit_2026-10-17.json",
+      "source_requirement_gate": "MANDATORY_RELEVANT_PORTFOLIO_AND_DISCOVERY_GATE",
+      "eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_gates": [
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "response_authorized": false
+    },
+    {
+      "id": "19006",
+      "source_url": "https://workspace.ru/tenders/sozdanie-i-dalneyshee-razvitie-sayta-specializirovannoy-kompanii-po-rabotam-na-vode-i-trudnodostupnyh-obektah-19006/",
+      "public_deadline_date_only": "2026-11-01",
+      "source_observed_at": "2026-10-17T14:36:55.446018+00:00",
+      "source_html_sha256": "58ca1afd39e8fd26b6ab02bd88c8ba3ec9e647a05f742d1094cc2dfd99210081",
+      "receipt_file": "b2b_schlam_19006_original_offer_qa_2026-10-17.json",
+      "source_requirement_gate": "PREPARED_OFFER_ONLY_ELIGIBILITY_AND_PAID_ACCESS_UNKNOWN",
+      "eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_gates": [
+        "original_source_integrity_unverified",
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "response_authorized": false
+    },
+    {
+      "id": "19030",
+      "source_url": "https://workspace.ru/tenders/vnedrenie-ii-sistemy-ucheta-syrya-sklada-i-proizvodstva-dlya-proizvoditelya-sellera-wb-i-ozon-19030/",
+      "public_deadline_date_only": "2026-11-13",
+      "source_observed_at": "2026-10-17T14:19:58.648921+00:00",
+      "source_html_sha256": "f1c77a5f210f82f80fdbe24d5eb7f195b524215034f42b4ae21ac1902492255a",
+      "receipt_file": "b2b_workspace_four_original_fit_2026-10-17.json",
+      "source_requirement_gate": "CONDITIONAL_AI_PILOT_SPEC_ATTACHMENT_GATED",
+      "eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_gates": [
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "response_authorized": false
+    }
+  ]
+}

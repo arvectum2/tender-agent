@@ -1,0 +1,41 @@
+{
+  "schema_version": "ta-b2b-workspace-19012-design-pro-public-price-gate-v1",
+  "observed_at_utc": "2026-10-18T06:30:12.565156+00:00",
+  "original_card": {
+    "original_card_url": "https://workspace.ru/tenders/novyy-dizayn-sayta-detskih-tovarov-19012/",
+    "source_html_sha256": "4dc7521f58d1f3f8b6b02547c38d0071b9db6033cacec2e6cb1e0579cba07d51",
+    "checked_at_utc": "2026-10-18T06:30:12.479904+00:00",
+    "public_source_state": "PUBLIC_CANDIDATE_ONLY",
+    "printed_deadline_day": "2026-10-19",
+    "deadline_clock_time": "UNKNOWN",
+    "source_budget_floor_rub": 100000,
+    "source_budget_ceiling_rub": 400000,
+    "advertised_service": "Дизайн сайта",
+    "original_critical_requirement_excerpts": [
+      "Дизайн главной страницы сайта детских товаров",
+      "Материалы: ТЗ, прототип, мудборд.",
+      "Бюджет: 100 000 - 400 000 рублей"
+    ],
+    "company_portfolio_proven": false,
+    "response_access_from_company_account_proven": false
+  },
+  "original_official_pro_policy_url": "https://workspace.ru/advertising/",
+  "original_official_pro_policy": {
+    "advertising_source_html_sha256": "26cdcccd08c04c3bad89036b4fc9b3b86af086ce7950da022dc9578044dca616",
+    "public_design_branding_pro_1mo_rub": 6900,
+    "public_website_development_pro_1mo_rub": 25500,
+    "public_content_pro_1mo_rub": 2900,
+    "design_vs_website_pro_price_difference_rub": 18600,
+    "published_activation": "Опция будет подключена в течение одного рабочего дня после оплаты.",
+    "is_user_company_checkout_price_verified": false,
+    "is_design_19012_pro_category_binding_confirmed_in_account": false,
+    "owner_purchased_subscription": false
+  },
+  "design_pro_monthly_fee_to_public_budget_floor_pct_if_applicable": "6.9",
+  "actual_fee_or_ability_to_reply_from_arvectum_llc_account": "NOT_VERIFIED",
+  "activation_before_printed_deadline": "NOT_VERIFIED",
+  "cash_cost_if_no_wins": "UNKNOWN_UNTIL_OWNER_DECIDES_TO_BUY",
+  "no_paid_subscription_or_reply_executed": true,
+  "company_owner_go": false,
+  "eligible_tender_bids_confirmed": 0
+}

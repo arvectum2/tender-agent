@@ -1,0 +1,32 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-LIVE-SOURCE-REFRESH-20261017
+status: completed
+goal: Recheck the five existing original corporate Workspace cards and publish source-hash-bound fresh status, mandatory requirements, and still-unproven Arvectum LLC response gates.
+definition_of_done:
+  - Verify exact original public URLs and saved source commitments without authenticated account actions.
+  - Extract source status, legal organizer type, published day-only cutoff and pinned requirement anchors, fail closed if ambiguous.
+  - Capture new original body SHA and observation times without claiming hash differences imply material changes.
+  - Keep evidence of company-specific legal eligibility, qualified portfolio, PRO/invitation and Owner GO explicitly UNKNOWN or false.
+  - Publish a dated machine record and human roadmap status; add offline regression tests and run tests/quality checks.
+  - Commit, push to reviewed branch and record actual CI/review state; do not merge without authority.
+completed:
+  - Parent main confirmed d2a927ec; prior child completed commit 25f93179, PR477 draft CI success.
+  - On 2026-10-17 21:56 MSK all five exact original public Workspace URLs gave HTTP 200 with unique source status "Идет прием заявок", legal entity organizer and unchanged printed deadline dates.
+current: Completed one bounded live read-only original-source refresh for all five cases on 17 October.
+pending: []
+last_verified_commit: 541f9f8593024afd26b28fc9346e7e60c008109d
+test_results:
+  - 5/5 exact first-party original URLs HTTP 200 on 2026-10-17 around 21:59 Europe/Moscow; all source requirements and literal public status matched.
+  - 5/5 original HTML SHA256 recorded, previous SHA changed but not treated as material notice revision.
+  - Confirmed corporate reply eligibility 0/5; no external contacts, payments or applications.
+  - Focused 51 passed; broader B2B regression 167 passed / 1 inherited warning; Ruff and git diff checks passed.
+  - Implementation committed at 541f9f8593024afd26b28fc9346e7e60c008109d.
+resume_instruction: >-
+  This bounded 2026-10-17 five-original-source recheck is completed; do not replay as new freshness.
+  Parent TA-ROADMAP-EXEC-20261012 remains in_progress. Next validate actual LLC account
+  invitation/PRO access and relevant qualifications for 19032 (21 Oct), then 19042/19043
+  (31 Oct), 19006 (1 Nov), 19030 (13 Nov), or independently source 15-20 verified
+  distinct present corporate IT opportunities. Keep Owner commercial and legal GO reserved.
+  PR477 remains draft until latest exact-head CI and current Company authority reviewed;
+  never auto-merge on stale approval.

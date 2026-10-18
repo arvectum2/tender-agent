@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FL-CROSSPOST-20261018
+status: completed
+goal: Verify first-party FL.ru original AI project cards, filter vacancies and personal-device offers, prove shared unusual scope evidence with Workspace19030 so FL5525297 is not counted as a second lead, and assess publicly linked TЗ without bypassing attachment permissions.
+definition_of_done:
+  - Bound original first-party FL AI category and 6 exact original project pages; source HTML SHA and dated copied literal proof, reject source layout changes.
+  - Source-state job/project classification; no silent label free for all or buyer legal entity without original proof; recognize job-as-vacancy and personal workstation as weak company fit.
+  - Explicitly source-match FL5525297 with official Workspace19030 via several distinctive text anchors; count as probable same business request, not two independent leads.
+  - Public attachment link evidence on FL; do not bypass login/paywall/guess hidden URLs; private TЗ remains unknown if absent from HTML.
+  - Tests for crosspost/duplicate, unknown free access/LLC contracts, source changes; report/roadmap and canonical child checkpoint commit/push PR477, CI.
+  - No purchases/submissions/authorizations/production writes.
+completed:
+  - Prior CONTRACTIS/CodeLance source role child completed with 244 B2B regression PASS on c9fcff50; current exact CI pending.
+  - Verified official FL5525297 and Workspace19030 share original distinctive text 200 orders/day, 50 SKU, three WB/Ozon seller accounts, AI warehouse/production system; source likely cross-post same client request.
+  - Public FL original HTML does not expose clear customer TЗ.pdf href for 5525297, only platform rules/cookie PDFs; cannot claim attachment downloaded.
+current: Completed six FL original source and unique cross-post Workspace19030 evidence verification; no gated attachment retrieved.
+pending: []
+last_verified_commit: a80e49343e23fdaf32121db64cd6bd040de78609
+test_results: >-
+  Original FL AI index6 + exact FL six pages and Workspace19030 source hash: six identical distinctive scope anchors strongly indicate shared business request and not second independent bid. 3 additional FL IT descriptions, one vacancy, one personal PC without verified B2B contract. No customer TЗ PDF/DOC link in publicly retrieved FL HTML, no Workspace PRO file downloaded. 250 B2B pytest PASS/one inherited warning, Ruff/diff check PASS. Code a80e4934, exact CI after push pending.
+resume_instruction: "FL crosspost stage completed at code a80e4934: six first-party FL AI cards, three source-only new IT tasks, one is strongly duplicate Workspace19030, one is vacancy, one personal-PC not confirmed corporate; original public attachment href absent so PDF not acquired, access and company buyer INN unknown. Next independent first-party public eligibility verification, not inflate lead count; aim 15-20 legally qualified LLC opportunities, no replies/purchases or PR merge without Owner GO. PR477 exact-head CI pending, parent roadmap remains in_progress."

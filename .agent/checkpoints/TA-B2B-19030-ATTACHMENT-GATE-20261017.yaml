@@ -1,0 +1,32 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-19030-ATTACHMENT-GATE-20261017
+status: completed
+goal: Establish whether the exact Workspace 19030 public original exposes the detailed TZ_.pdf and prevent false pilot quoting when the official attachment is PRO/invitation-restricted.
+definition_of_done:
+  - Reuse exact original public source validation and observe publicly printed attachment name/access wording.
+  - Distinguish existence/listing of TZ_.pdf from access to authenticated full PDF bytes and inspected scope.
+  - Record source hash and time with safe company-specific UNKNOWN / no paid or external actions.
+  - Add fail-closed regression and source-cited operator roadmap item.
+  - Commit, test, push draft PR, close checkpoint; parent stays open.
+completed:
+  - Original public HTML of Workspace19030 fetched HTTP200; page names TZ_.pdf in file panel and states downloads available to PRO or buyer-invited performers; no clickable public attachment href inside panel.
+current: Completed original 19030 PRO/invitation access gate with exact source proof; private PDF unread.
+pending: []
+last_verified_commit: 26721b598fc45befc0837a1685ddce928440227a
+test_results:
+  - Original Workspace19030 HTTP200 source URL and anchored file block, PDF name TZ_.pdf and PRO or invited-only literal demonstrated.
+  - Source HTML SHA/time captured; no public attachment href in file panel, no PDF bytes accessed.
+  - 207 B2B + corporate lead tests PASS, 1 inherited warning, Ruff PASS, git diff checks PASS.
+  - Implementation committed at 26721b598fc45befc0837a1685ddce928440227a; exact-head GitHub CI to verify after push.
+  - Buyer/customer contact/payments/downloads/owner bid GO all zero or false.
+resume_instruction: >-
+  TA-B2B-19030-ATTACHMENT-GATE-20261017 is completed on code SHA26721b59.
+  Original TZ_.pdf public name confirmed, private PDF bytes NOT read; do not repeat
+  or claim TZ scope. Parent task TA-ROADMAP-EXEC-20261012 remains in_progress.
+  Next: bounded independent Schlam19006 company reply/account gate if authorized
+  access exists; avoid repeating finished Schlam public economics/source QA.
+  Otherwise continue 15-20 verified original distinct B2B client discovery
+  or approved PRICE-01 engineering. Legal/company eligibility and any PRO
+  purchase or bid response remain reserved for Owner. PR477 draft until
+  current Company authority and exact-head CI/review confirmed.

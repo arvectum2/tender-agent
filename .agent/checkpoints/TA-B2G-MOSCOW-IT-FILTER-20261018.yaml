@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-IT-FILTER-20261018
+status: completed
+goal: Read-only navigate official public Moscow supplier quote registry and filter for active IT service sessions, inspect source details, no buyer company authentication and no B2B count inflation.
+definition_of_done:
+  - Use disposable headless Chrome browser on ArvectumSSD, no credentials, actual public registry UI (not guessed API).
+  - Inspect available first-party filter controls, apply IT terms and identify original current quote session IDs, subject, buyer INN, exact Moscow deadline, budget and original link where possible.
+  - Inspect accessible original detail and attached technical terms only via public access, no paywall circumvention.
+  - Correctly exclude non-IT, duplicates, private/closed/expired and unverifiable, and B2G from B2B count.
+  - Add bounded repeatable source evidence, offline negative tests, roadmap/checkpoint and commit/push draft PR477 after targeted regressions and CI.
+  - No registrations, bids, payments, signatures, actual company account actions or production changes.
+completed:
+  - Read parent and previous completed child; Git clean SHA31af33e0, PR477 draft and CI in progress.
+  - Disposable Chrome public registry navigation source script shows actual numbered quotes with exact buyer INN/deadline; prior non-IT №10321388 correctly excluded.
+current: Completed six exact official active UI keyword searches and three original IT-looking goods details, no bespoke development.
+pending: []
+last_verified_commit: a1635c7c77729f6dce204761d941c04623d8b135
+test_results:
+  - Six official public React-UI searches with exact applied keyword and active-state filter, first page only.
+  - Verified source six term counts 10,0,10,2,4,0. All misleading common IT-goods, unrelated other work or no matches; do not infer no IT sessions exist beyond tested queries.
+  - Three original detailed source cards 10321203 computers/SSD 671557 RUB, 10321182 photography 215576.34 RUB, 10321235 headphones 183600 RUB, with original visible line items, document names and rendered HTML SHA.
+  - All three original source deadlines October19, require login to bid, attachments only listed not downloaded, actual Arvectum admission unknown.
+  - 278 B2G/B2B pytest PASS/one inherited warning, Ruff/Node JS syntax/git diff clean. Implementation code a1635c7c; exact CI pending after push.
+resume_instruction: "Child TA-B2G-MOSCOW-IT-FILTER-20261018 completed at source code a1635c7c. Six exact original public UI keyword searches, first page only, verified active status. Original three goods details are NOT custom software development. No original dev bids or LLC permissions proven. Next autonomously expand to narrower terms site/integration/IT support/OKPD62, inspect original detail/document and verify company access before any Owner GO. Avoid mixing B2G with B2B 15-20 and do not submit, sign, pay or auto merge draft PR477. Parent TA-ROADMAP-EXEC-20261012 remains in_progress."

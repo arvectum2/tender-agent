@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-PUBLIC-CHROME-20261018
+status: completed
+goal: Check with isolated unauthenticated Chrome whether official Moscow supplier portal JS-rendered public view exposes original active IT quote-session identifiers, not backend HTML shell, and verify any source original before counting.
+definition_of_done:
+  - Use temporary disposable browser profile entirely on ArvectumSSD, no account/credentials/paid/prod writes; exact first-party URL allowlist.
+  - Capture browser-visible semantic content and evidence of real original quote session IDs/status/time from a bounded public browse; no autoguessing unsupported API or legal-access assumptions.
+  - If original sessions inaccessible, report specific public UI blocker with no fabricated auctions or B2G/B2B count change.
+  - Record tested runtime and date plus short evidence snapshot without full third-party HTML/credentials; offline tests for classification if script added, update roadmap and checkpoint.
+  - Run relevant tests, push draft PR477 and check CI, no auto merge.
+completed:
+  - Previous TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018 completed on 5a591410, official five policy source SHA verified, 259 focused B2B/B2G pytest PASS, PR477 draft.
+  - Isolated Chrome on Mac mini with fresh temporary profile on ArvectumSSD rendered original https://zakupki.mos.ru/ HTML ~12 MB, title shows portal site, but original session IDs and status not yet established.
+current: Completed isolated unauthenticated original public Chrome navigation to /purchase/list; one non-IT visible quote example and read-only test, no account or real IT bid.
+pending: []
+last_verified_commit: 980e1fd942da8aa34388f8b3052a531f674b6c15
+test_results:
+  - Unauthenticated disposable headless Chrome profile entirely on ArvectumSSD, removed, first-party UI button Реестр котировочных сессий clicked, actual /purchase/list listing loaded.
+  - First visible official public entry №10321388 active, Московский театр на Таганке buyer INN 7709010548, solvents not IT, 44700 RUB, original visible deadline 20 Oct 2026 10:00 MSK; excluded from IT and B2B leads.
+  - Public original list displays exact numbered status/INN/amount/deadline for several active items; original procurement detail-card/document and company actual bid entitlement NOT inspected.
+  - Public UI filter automation was not continued; 0 qualified public IT cards in this stage does not assert there are no live IT bids.
+  - 263 relevant B2B/B2G pytest PASS, 1 inherited warning, Ruff/Node syntax/git diff checks clean.
+  - Browser script/read-only source receipt implementation SHA 980e1fd942da8aa34388f8b3052a531f674b6c15; exact GitHub CI pending after push. No bids, registration, UKЭP or payment.
+resume_instruction: "Child TA-B2G-MOSCOW-PUBLIC-CHROME-20261018 completed at code SHA980e1fd9. Isolated local Chrome on ArvectumSSD with no login opened official zakupki.mos.ru public React UI and after 15 sec clicked original button Реестр котировочных сессий to show public route /purchase/list. Example live public 10321388 is solvents 44700 RUB, ends Oct20 10MSK, not IT, buyer INN7709010548. Do not count as IT or corporate B2B. NEXT source verified search IT filters in a supported non-authenticated public browser, inspect each original actual session TЗ/status/time/ИНН and evaluate official signature/account rights BEFORE any action; do not assume no IT bids. Repo PR477 draft CI/review pending; no merging, registering, paying, signing or sending without Owner GO. Parent TA-ROADMAP-EXEC-20261012 in_progress, PRICE01 PR478 separate draft."

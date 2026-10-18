@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-URGENT-REAL-LEAD-GATE-20261018
+status: completed
+goal: Verify urgent October 19-21 and free-first corporate IT original leads and create honest zero-spend acquisition go/no-go queue for LLC Arvectum based on first-party source facts, not B2G.
+definition_of_done:
+  - Re-fetch exact first-party Workspace 19012/19032/19034 originals and selected free-first Contractis/CodeLance original IT demand cards with bounded read-only GET; source SHA and dated status, buyer type, scope and deadline if original provides.
+  - Distinguish deadline date vs clock time and content/source change, and purchaser legal identity vs bidder access and PRO category/cost in authorized LLC cart.
+  - Produce executable operator decision priority for 0-cost actions, proof of skills (published iOS != completed paid design/WordPress), and blockers requiring owner authorization.
+  - Provide synthetic fail-closed tests, update docs/roadmap and parent checkpoint; run focused B2B regression and Ruff, publish draft PR477 but no merge.
+  - No external outreach, account login, registration, proposal, subscription, production edit, payments or signing.
+completed:
+  - Resumed clean feature tree head 8ce2c0a6 and parent TA-ROADMAP-EXEC-20261012 in_progress; previous B2G source UI child completed, final CI in_progress.
+  - Read 2026-10-18 first-party prior 31 Workspace source corpus and original PRO official tariff evidence, 19012 due October19 design pro monthly 6900 if eligible, 19032 due October21 unknown actual category.
+current: Completed seven exact source original freshness checks, zero-spend first-client lead queue and guarded negative tests.
+pending: []
+last_verified_commit: 453c03f5aead3d31fbf1226d5acc22b303ec500e
+test_results:
+  - Fresh exact first-party source HTTP200+SHA and UTC for Workspace 19012 design due19Oct, 19032 WP maintenance due21Oct, 19034 WP cleaning site due31Oct, Contractis C6 Python AI and C12 booking landing, CodeLance CL147 OPEN product feed integration, and Workspace official PRO price.
+  - Workspace 3 public corporate organizer candidates but not authenticated Arvectum LLC bidder; free-first C6/C12 exact live reply status unproven, CodeLance original OPEN unproven company contract. No double count with previous source corpus.
+  - Public design PRO 6900 RUB/mo and WEB_DEV PRO 25500 RUB/mo are source advertising, NOT own cart/PRO category, purchase or right to bid. WordPress support category/budget month unknown.
+  - Six source candidates, 0 company full bid-ready, 0 signed or sent commercial actions.
+  - 311 focused B2G/B2B pytest PASS, 1 inherited warning; Ruff and git diff check PASS.
+  - Implementation 453c03f5aead3d31fbf1226d5acc22b303ec500e; exact GitHub CI pending after push.
+resume_instruction: "Child TA-B2B-URGENT-REAL-LEAD-GATE-20261018 completed at 453c03f5. Fresh urgent original Workspace19012 due Oct19 design PRO public 6900 RUB/mo if correct category and account, Workspace19032 WP/SLA due Oct21 support PRO unknown, and 19034 WP cleaning site due Oct31 gated DOCX and advertised WEB DEV 25500; Contractis C6 Python AI/C12 padel booking source task descriptions and CodeLance147 OPEN product feed integration checked. Zero LLC reply/contract authorization, zero purchases, all were already source-known so do not add to 15-20 unique corporate B2B. NEXT investigate available read-only corporate/LLC account status via authorized connector only or owner decision, and build truthful proof of completed client work; avoid buying PRO for single speculative order, especially Oct19. Parent TA-ROADMAP-EXEC-20261012 in_progress, PR477 draft exact-head CI pending, PRICE01 PR478 separate; no bids, payments, signatures, unsolicited contact or auto merge."

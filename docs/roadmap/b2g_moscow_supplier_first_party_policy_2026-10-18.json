@@ -1,0 +1,135 @@
+{
+  "schema_version": "ta-b2g-moscow-portal-original-registration-policy-2026-10-18-v1",
+  "observed_at_utc": "2026-10-18T07:41:41.854719+00:00",
+  "source_kind": "FIRST_PARTY_OFFICIAL_PLATFORM_POLICY_NOT_LIVE_TENDER",
+  "official_source_count": 5,
+  "public_company_supplier_category_allowed": true,
+  "free_initial_registration_claim_attested": true,
+  "email_only_registration_authorizes_bidding": false,
+  "electronic_signature_for_legally_binding_actions_required": true,
+  "company_ukep_current_portal_linkage_verified": false,
+  "company_full_supplier_registration_completed_verified": false,
+  "quoted_optional_training_rub": 7000,
+  "quoted_optional_priority_support_one_month_from_rub": 10000,
+  "optional_services_are_compulsory_auction_fees": false,
+  "platform_auction_operational_duration_hours": [
+    3,
+    6,
+    24
+  ],
+  "buyer_channel_category": "B2G_SMALL_PURCHASES_NOT_CORPORATE_B2B",
+  "verified_live_it_quote_session_count": 0,
+  "verified_live_quote_session_search_performed": false,
+  "no_new_qualified_corporate_b2b_leads": true,
+  "company_authorized_bid_go": false,
+  "registrations_money_signatures_or_bids_executed": 0,
+  "sources": [
+    {
+      "policy_kind": "registration",
+      "exact_official_url": "https://moszakupki.mos.ru/novosti/vse-novosti/obem-zakupok-moskvy-u-regionalnykh-predprinimateley-na-portale-postavshchikov-za-polgoda-sostavil-10/",
+      "original_html_sha256": "ca268f7461ab856756337df83768e25547ee07455b4f6e17123c0f648e2df328",
+      "original_html_bytes": 31438,
+      "original_http_status": 200,
+      "attested_clauses": [
+        {
+          "original_source_fragment": "Это бесплатно.",
+          "fragment_sha256": "62cc683998fbd01cfafe0f5664df1908013fb1dde8520b6e174d76a371ef638b",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "Упрощенная регистрация через почту позволяет просматривать информацию на портале, но не дает возможности участвовать в закупках.",
+          "fragment_sha256": "ea2f948df328dbc0c818db3cd1c8826e0fce7b3c1c94a43f77e68b7109c9628e",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "Для юридически значимых действий (подписание оферты, контракта и других) потребуется электронная подпись.",
+          "fragment_sha256": "a372e9db16ad8ef9b7fb1cb2f78815d7a133adcac90b74c410350e1748611498",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        }
+      ],
+      "company_session_authenticated": false
+    },
+    {
+      "policy_kind": "commercial_supplier",
+      "exact_official_url": "https://moszakupki.mos.ru/novosti/vse-novosti/bystro-i-udobno-podpisat-kontrakt-na-portale-postavshchikov-teper-mozhno-s-pomoshchyu-qr-koda-i-prya/",
+      "original_html_sha256": "c41511824268b36fee984a9af7813212f410f57ae292531dca2021cfa2f786eb",
+      "original_html_bytes": 32967,
+      "original_http_status": 200,
+      "attested_clauses": [
+        {
+          "original_source_fragment": "поставщиками на ресурсе могут выступать коммерческие организации, индивидуальные предприниматели, самозанятые и физические лица",
+          "fragment_sha256": "8202959797c2f543bc29ae026779011529726ee621c495992f4d0a562548ac72",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "Пока сервисом могут воспользоваться только региональные заказчики",
+          "fragment_sha256": "db6c03bb4d127c1cc67e03cdd68c7f5b024ecfbbea4976087a94e85dc633a968",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "направляет ему приглашение на подписание в виде QR-кода или прямой ссылки",
+          "fragment_sha256": "fc90321c9bac445049cb0bb1488527470124a11ab488e7102fbee32e5e9d506c",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        }
+      ],
+      "company_session_authenticated": false
+    },
+    {
+      "policy_kind": "optional_services",
+      "exact_official_url": "https://moszakupki.mos.ru/uslugi/rabota-s-portalom-postavshchikov/",
+      "original_html_sha256": "21dda56cbcc951faf1f21a963b6345b07d825e3eda34f0f8b87303a373393131",
+      "original_html_bytes": 49505,
+      "original_http_status": 200,
+      "attested_clauses": [
+        {
+          "original_source_fragment": "Обучение работе в АИС «Портал поставщиков» (Индивидуальное), 7 000 рублей",
+          "fragment_sha256": "97f61a80416bbf0106582ad05506e45c9be114e7b0a703a3f3ac9d31e8e80c3e",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "Работа с запросами в АИС «Портал поставщиков» (Период 1 месяц), от 10 000 рублей",
+          "fragment_sha256": "f3c34867de1097dc5b2208fbeed0ada456b80551705b4bb9f94ceb1e78653f90",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "платные услуги по организационно-методическому и информационному сопровождению поставщиков",
+          "fragment_sha256": "5a0473c38b96392cc817143d4f313798ab32ddc01cf6907b2c635d83b4892310",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        }
+      ],
+      "company_session_authenticated": false
+    },
+    {
+      "policy_kind": "short_quote_sessions",
+      "exact_official_url": "https://tender.mos.ru/news/v-pervom-polugodii-2026-goda-stolichnye-zakazchiki-proveli-bolee-116-tysyach-kotirovochnykh-sessiy-n/",
+      "original_html_sha256": "e0c786b9002baaac5f966b244d2a881fd0de07bb5e6e3fb442639078750f0882",
+      "original_html_bytes": 302839,
+      "original_http_status": 200,
+      "attested_clauses": [
+        {
+          "original_source_fragment": "мини-аукционах продолжительностью три, шесть или 24 часа",
+          "fragment_sha256": "5d54c4835fefe18e77ff45b27c10a9996987e772ad3a02f20b768905b19e64f4",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        },
+        {
+          "original_source_fragment": "могут все предприниматели, зарегистрированные на Портале поставщиков",
+          "fragment_sha256": "e3842be10ba36c5ac773df62121bc220755d8157e1d81f7c49da38ac5f51002b",
+          "source_evidence_state": "LITERAL_ORIGINAL_POLICY_ATTESTED"
+        }
+      ],
+      "company_session_authenticated": false
+    },
+    {
+      "policy_kind": "supplier_portal_shell",
+      "exact_official_url": "https://zakupki.mos.ru/",
+      "original_html_sha256": "ec4ee857e320cfed26be656e91e4b63e3e27e2817e92083fe8618a273b574dcb",
+      "original_http_status": 200,
+      "public_response_is_client_side_javascript_application": true,
+      "live_quote_sessions_parsed_from_actual_original_cards": 0,
+      "live_quote_session_cards_checked": false,
+      "live_it_quote_session_eligibility_verified": false,
+      "do_not_claim_no_real_it_auctions": true,
+      "company_session_authenticated": false
+    }
+  ]
+}

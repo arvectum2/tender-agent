@@ -1,0 +1,39 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018
+status: completed
+goal: Bounded discovery of fresh original corporate IT tender cards via Workspace official public WEB/APP/CRM indexes. Ground each candidate in first-party status, buyer organization, deadline and actual scope; exclude private/terminal/stale and unknown identity; never assume free LLC response entitlement.
+definition_of_done:
+  - Discover only canonical URLs from three explicit first-party category landing pages, deduplicate across categories and previous five original cases.
+  - Read only original public exact card HTML with 200/no redirects/size guards, parse source status buyer type public-vs-private and printed deadline; independently fail closed for malformed originals.
+  - Distinguish public accepting legal-entity candidate vs personal buyer/expired/terminal/private or unverifiable; record original SHA/time/title/category and missing company portfolio/access/licensing proof.
+  - Produce machine receipt and human operator shortlist with count to 15-20 goal while clearly marking zero authenticated LLC-ready and owner GO false; advise before Oct21 urgent WordPress original 19032.
+  - Deterministic offline negative/duplicate/time deadline tests; update roadmap and checkpoint, push existing PR477 draft, run relevant tests and CI.
+  - No login/paid/submit/production actions; do not touch old dirty checkout.
+completed:
+  - Resumed parent TA-ROADMAP-EXEC-20261012 and independently confirmed PRICE01 PR478 CI still in progress, untouched; B2B PR477 draft head ecdb5ae.
+  - Official Workspace original index first-party page 200; category WEB/APP/CRM indexes each expose distinct current public card URL candidates including earlier originals. Need full original-card qualification.
+current: Completed bounded source discovery, deep original anchors for three new high-priority original cards, offline tests and first-party report.
+pending: []
+last_verified_commit: dbc98553bd8bf15021ca0665c48bb6cd252633cc
+test_results:
+  - Source original three Workspace category HTTP200 indexes and 31 unique original first-party card HTTP200/SHA/source time, no original raw card HTML in Git.
+  - 10 current corporate buyer public accepting candidates, 21 original cards filtered closed/deadline elapsed/personal buyer, no private or terminal promoted; 0 authenticated Russian LLC entitlement verified.
+  - Three newly examined anchored scope original IDs19012 due Oct19 design 100-400k, 19034 due Oct31 WordPress+SEO 100-200k/pro attachment, 18939 due Dec15 HealthTech OCR 250k-1m/152-FZ; fail closed if anchor changed.
+  - 227 focused B2B+corporate pytest PASS, 1 inherited warning; Ruff and git diff checks PASS.
+  - Implementation commit dbc98553bd8bf15021ca0665c48bb6cd252633cc. Exact-head CI pending push.
+  - No paid PRO account, no first reply, no production, client messaging or speculative LLC authority.
+resume_instruction: >-
+  TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018 completed at code
+  dbc98553bd8bf15021ca0665c48bb6cd252633cc and in PR477 draft.
+  Existing 31 original cards were checked October18, with exactly 10 public
+  accepting corporate buyers and 21 filtered. 10 NOT equal to 10 eligible
+  paid or free replies; independent LLC-account PRO/free rules, completed
+  portfolio and buyer legal identity still unknown. 19012 due October19,
+  19032 due October21: ask Owner for actual account entitlement and
+  WordPress/design portfolio, do not send without permission. Next autonomously
+  discover more fresh company-qualifying original IT opportunities on free
+  channels or official regional supplier procurement, retaining source age
+  and strict terminal/private/person filters. Parent 15-20 company-eligible
+  still OPEN. Do not rerun completed steps, merge draft PRs, bid, pay, or
+  modify production.

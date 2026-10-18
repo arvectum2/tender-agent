@@ -1,0 +1,155 @@
+{
+  "schema_version": "workspace-19042-19043-first-party-qualification-v1",
+  "as_of_utc": "2026-10-17T19:19:56.994482+00:00",
+  "original_verified_cards": 2,
+  "company_realized_portfolio_accepted_count": 0,
+  "company_confirmed_reply_access_count": 0,
+  "bid_ready_count": 0,
+  "paid_actions_or_messages_sent": 0,
+  "cases": [
+    {
+      "id": "19042",
+      "source_url": "https://workspace.ru/tenders/sistema-avtomatizacii-i-ucheta-oborudovaniya-dlya-myasokombinata-19042/",
+      "original_http_status": 200,
+      "observed_at_utc": "2026-10-17T19:19:56.872951+00:00",
+      "original_html_sha256": "f6784c8e575cefcee6bb7af0d64ccb6c9ffe90dbb425f25b40f94aed15acf547",
+      "original_html_bytes": 66943,
+      "source_receiving_status": "Идет прием заявок",
+      "source_organizer_type": "Юридическое лицо",
+      "source_deadline_date": "2026-10-31",
+      "source_deadline_hour": "UNKNOWN",
+      "source_budget_rub_min": 300000,
+      "source_budget_rub_max": 900000,
+      "budget_is_contractually_fixed": false,
+      "source_clause_groups": {
+        "hard_qualification": [
+          "Коммерческий опыт разработки от 3 лет.",
+          "Наличие портфолио завершённых проектов.",
+          "Опыт разработки веб-приложений и баз данных.",
+          "Понимание архитектуры клиент-серверных систем."
+        ],
+        "preferred_qualification": [
+          "Желателен опыт разработки ERP, CMMS или систем автоматизации предприятий."
+        ],
+        "source_scope": [
+          "Создание единой базы оборудования.",
+          "Учёт местоположения, состояния и перемещения техники.",
+          "Присвоение инвентарных номеров и использование QR-кодов.",
+          "Учёт ремонтов, технического обслуживания и неисправностей.",
+          "Разработка системы заявок и уведомлений.",
+          "Разграничение прав доступа сотрудников.",
+          "Формирование отчётов и аналитики.",
+          "Адаптация интерфейса под ПК и смартфоны.",
+          "Передача исходного кода, базы данных и технической документации заказчику.",
+          "Гарантийное исправление выявленных ошибок на согласованных условиях."
+        ],
+        "requested_quote": [
+          "Предварительную стоимость разработки системы в рублях",
+          "Ориентировочные сроки выполнения проекта.",
+          "Предлагаемые этапы разработки и условия оплаты.",
+          "Информацию о предоставляемой гарантии и технической поддержке.",
+          "перечень работ, входящих в указанную стоимость."
+        ],
+        "optional_requested": [],
+        "other": [
+          "Поэтапная оплата по согласованным результатам работ.",
+          "Окончательная стоимость и сроки могут быть скорректированы",
+          "Бюджет: 300 000 - 900 000 рублей"
+        ]
+      },
+      "hard_qualification_clauses": 4,
+      "requested_two_site_options_is_mandatory": null,
+      "required_commercial_experience_years": 3,
+      "buyer_accepts_employee_or_partner_references": "UNKNOWN",
+      "company_mandatory_experience_proven": false,
+      "company_accepted_realized_portfolio_proven": false,
+      "company_account_pro_access_verified": false,
+      "customer_existing_site_url_verified": null,
+      "owner_approved_price_rub": null,
+      "owner_approved_delivery_deadline": null,
+      "owner_approved_warranty": null,
+      "company_eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_company_gates": [
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "bid_ready": false,
+      "owner_go": false,
+      "external_messages_or_paid_actions": 0
+    },
+    {
+      "id": "19043",
+      "source_url": "https://workspace.ru/tenders/obnovlenie-sayta-digital-agentstva-audit-redizayn-ili-razrabotka-novogo-korporativnogo-sayta-19043/",
+      "original_http_status": 200,
+      "observed_at_utc": "2026-10-17T19:19:56.985711+00:00",
+      "original_html_sha256": "8dcfe137294548ba79d7715cc58b23b63f204eb1e40900dc8d33dc6de9c75728",
+      "original_html_bytes": 66959,
+      "source_receiving_status": "Идет прием заявок",
+      "source_organizer_type": "Юридическое лицо",
+      "source_deadline_date": "2026-10-31",
+      "source_deadline_hour": "UNKNOWN",
+      "source_budget_rub_min": 200000,
+      "source_budget_rub_max": 800000,
+      "budget_is_contractually_fixed": false,
+      "source_clause_groups": {
+        "hard_qualification": [
+          "Наличие релевантных реализованных проектов обязательно."
+        ],
+        "preferred_qualification": [
+          "Предпочтение отдадим командам с сильной экспертизой в UX/UI"
+        ],
+        "source_scope": [
+          "Редизайн существующего сайта с улучшением структуры",
+          "Более глубокую переработку сайта",
+          "Полноценную разработку нового сайта с переносом необходимых материалов",
+          "Сохранить накопленный SEO-потенциал сайта",
+          "Краткий анализ текущего сайта и его основных недостатков.",
+          "Рекомендации по оптимальному масштабу изменений.",
+          "Предлагаемые технологии и CMS с обоснованием выбора.",
+          "Этапы реализации и ориентировочные сроки.",
+          "Предварительную стоимость работ с разбивкой по основным этапам.",
+          "Подход к переносу контента и сохранению SEO.",
+          "Тестирование и запуск.",
+          "Последующую техническую поддержку."
+        ],
+        "requested_quote": [
+          "предварительно ознакомиться с действующим сайтом",
+          "Аналитику, проектирование и дизайн.",
+          "Разработку и внедрение.",
+          "Перенос и переработку контента.",
+          "Работы по сохранению SEO."
+        ],
+        "optional_requested": [
+          "Если возможно, просим предложить 2 варианта реализации"
+        ],
+        "other": [
+          "Окончательный объём работ и функциональность готовы согласовать",
+          "Бюджет: 200 000 - 800 000 рублей"
+        ]
+      },
+      "hard_qualification_clauses": 1,
+      "requested_two_site_options_is_mandatory": false,
+      "required_commercial_experience_years": null,
+      "buyer_accepts_employee_or_partner_references": "UNKNOWN",
+      "company_mandatory_experience_proven": false,
+      "company_accepted_realized_portfolio_proven": false,
+      "company_account_pro_access_verified": false,
+      "customer_existing_site_url_verified": false,
+      "owner_approved_price_rub": null,
+      "owner_approved_delivery_deadline": null,
+      "owner_approved_warranty": null,
+      "company_eligibility_state": "LLC_REVIEW_REQUIRED",
+      "unresolved_company_gates": [
+        "company_legal_eligibility_unverified",
+        "mandatory_qualifications_unverified",
+        "company_reply_channel_unverified",
+        "commercial_terms_owner_review"
+      ],
+      "bid_ready": false,
+      "owner_go": false,
+      "external_messages_or_paid_actions": 0
+    }
+  ]
+}

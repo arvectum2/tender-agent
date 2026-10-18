@@ -11,6 +11,22 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-18 B2B LLC platform gate exact 9 first-party policy HTML/PDF sources with SHA, official Workspace terms latest 06.07.2026 legal-entity agency explicit clause 2.4.2, authorized rep clause 4.4, self reply PRO and invited no-cost exception; Contractis START advertised 5 monthly replies (test 5 may be provided), PRO499/999, direct customer contracts; CodeLance advertised free, first signup person fields but no explicit LLC business form, cannot infer rejection. No real Arvectum authenticated bidder account/right on any of three, no new distinct leads. 332 B2B/B2G focused tests pass/Ruff clean, code07794c7b; child TA-B2B-LLC-PLATFORM-RULES-20261018 completed, parent still OPEN."
+  - "2026-10-18 urgent zero-spend B2B first-client queue: 7 exact first-party refreshed original HTTP200+SHA (Workspace19012 Oct19, 19032 Oct21, 19034 Oct31, ContractisC6/C12, CodeLance147, Workspace official PRO). Source-only 3 public corporate organizer cards plus 3 free-first source tasks, 0 authenticated Arvectum LLC bid-ready; all previously known, no 15-20 lead count increment. Public category price design PRO6900 and website PRO25500 RUB/mo conditional, not LLC cart. 311 focused B2B/B2G tests PASS/Ruff clean, code453c03f5. Child TA-B2B-URGENT-REAL-LEAD-GATE-20261018 completed, parent remains OPEN."
+  - "2026-10-18 B2G Moscow official public expanded React UI exposes separate KTRU and Вид продукции listboxes. Both clicked but did not expand or show any options in anonymous session; class62/OKPD2 not selected, no structured search and no evidence no live IT auctions. Source receipt and 300 B2B/B2G tests PASS, Ruff/Node clean. Child TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018 completed at code 764e0687, parent strict corporate LLC lead goal remains open."
+  - "2026-10-18 B2G Moscow narrow original UI 10 queries first-page-only with active URL filter (counts 0/0/0/0/0/0/10/10/9/2, 25 dedup), proved 62.01 text search yields stove/couch item codes not OKPD2. Original 10321173 InfoSec implementation/license supplies/Perm 65092.56 RUB, deadline Oct19 12:58MSK, scope not bespoke dev; original 10314722 active list but Not Held original deadline Oct9, unit sum100 RUB vs 50000 RUB max contract. 297 focused tests pass/Ruff+Node clean. Child TA-B2G-MOSCOW-NARROW-SEARCH-20261018 completed at code 0cc67c58, no external paid/signature/bid actions; B2B true 15-20 target still open."
+  - "2026-10-18 B2G Moscow official six live UI first-page active searches (10/0/10/2/4/0 source matches), only hardware and irrelevant services, verified three original detailed scopes 10321203 computers 671557 RUB, 10321182 photo 215576.34 RUB, 10321235 audio 183600 RUB by SHA and original source line items, no custom software dev. 278 B2G/B2B tests PASS, Ruff/JS clean. Code a1635c7c, child TA-B2G-MOSCOW-IT-FILTER-20261018 completed; no bids/fees. Parent B2B true LLC 15-20 goal still OPEN."
+  - "2026-10-18 B2G real public JS quote-session registry navigated on Mac mini via isolated unauthenticated disposable headless Chrome, no user browser cookie. First-party UI button opens original /purchase/list with public numbers, buyer INN, status, amount and exact Moscow deadline. Source real example10321388 solvents Taganka theatre INN7709010548 for44700 RUB dueOct20 10MSK; EXCLUDED nonIT/nonB2B. Public IT filters/original document still not inspected, 0 company-eligible bids. Browser code980e1fd9, source receipt, 263 relevant pytest PASS, Node/Ruff clean; child TA-B2G-MOSCOW-PUBLIC-CHROME-20261018 completed, parent in_progress, PR477 draft."
+  - "2026-10-18 Moscow official supplier B2G entry gate: 5 direct first-party SHA200 sources attest free registration but email-only VIEW not supplier participation, legal actions electronic signature, general commercial supplier classification, QR-direct buyer limited regional scope, quote duration3/6/24h, paid individual education7000 RUB + priority support from10000 RUB are OPTIONAL not portal participation fee. Public portal original HTML only JS app no live IT quote, renderer timed out, 0 B2B lead/0 company bids, no payment. 259 combined tests PASS/Ruff clean, code5a667ab6, child TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018 completed; strict corporate 15-20 target still OPEN."
+  - "2026-10-18 B2B FL AI source six originals and Workspace19030 crosspost verified via exact 6 distinctive shared literal source requirements (200 orders/day, 50 SKU, 3 market accounts, AI warehouse/production, technological cards and barcodes): FL5525297 NOT a second lead. 3 newly described FL IT needs but not proven company-eligible; one FL vacancy and one personal RAG PC excluded from strict B2B. Public FL HTML did not reveal buyer technical PDF link; none downloaded. 250 focused B2B tests PASS/Ruff clean, code a80e4934, child TA-B2B-FL-CROSSPOST-20261018 completed; parent still OPEN."
+  - "2026-10-18 B2B FREE-first CONTRACTIS7 and CodeLance12 original sources checked: 19 exact HTML SHA, 7 buyer-described IT tasks (3 previously known and 4 newly described CONTRACTIS 12,4,2,5); 9 CodeLance OPEN seller adverts filtered, 2 non-IT, 1 high-risk excluded. Source customer role not proof of current reply/LLC account, actual eligible 0. 244 B2B pytest PASS / one warning, Ruff+diff pass. Child TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018 completed on code9311ddc4; canonical parent ongoing, no external actions."
+  - "2026-10-18 original design 19012 first-party category PRO 6900 RUB/month vs WEB 25500, activation within one business day before unknown clock Oct19 deadline. Source SHA and 236 B2B regression tests PASS, no bids/paid actions, child TA-B2B-19012-DESIGN-PRO-20261018 completed at code7b9980a8; main B2B 15-20 eligible goal OPEN."
+  - "2026-10-18 B2B Workspace source discovery: read-only exact three primary category indexes WEB/APPS/CRM, 31 deduplicated original source cards HTTP200 with original status/deadline/legal buyer SHA. 10 public corporate still receiving candidates, 21 terminal/personal/expired filtered; 0 verified actual ООО access or owner GO. New urgent19012 design dueOct19, 19034 WordPress+SEO dueOct31, 18939 HealthTech OCR dueDec15 original source text anchored; 227 B2B regression tests PASS one warning, Ruff clean. Child TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018 completed on dbc98553, draft PR477; true 15-20 eligible B2B goal OPEN."
+  - "2026-10-17 original Workspace19030 restricted spec access bound: public HTML explicitly lists TZ_.pdf but restricts file downloads to PRO or buyer-invited contractors. Private PDF bytes/text NOT retrieved, MVP pricing unknown, no payment/bid. New fail-closed source verifier code26721b59, 207 B2B focused tests pass, Ruff clean. Child TA-B2B-19030-ATTACHMENT-GATE-20261017 completed, parent 15-20 accessible qualified source target open."
+  - "2026-10-17 original Workspace 19042/19043 qualification child completed: 2/2 first-party original HTML verified SHA/status/date, 19042 mandatory >=3y commercial and completed project portfolio; 19043 mandatory relevant realized portfolio, 2 design options requested if possible not hard gate; 199 B2B tests pass Ruff PASS. Implementation c9621c1f, 0 company bid-ready GO. Parent 15-20 eligible sources OPEN."
+  - "2026-10-17 WordPress B2B19032 first-party strict 23/23 source obligations verified at code SHA0c003ba5; 10 recurring + 6 optional + 6 offer requirements + payment question, original 100-400k budget period UNKNOWN and time on Oct21 UNKNOWN; original real HTML SHA source-bound. Mac mini 181 B2B-focused tests PASS/one inherited warning, Ruff PASS. 0 signed bids/paid subscriptions/outbound replies, company WP references/Workspace account entitlement/Owner SLA remain NOT VERIFIED. Child TA-B2B-WORDPRESS-19032-20261017 COMPLETED; parent source acquisition still OPEN."
+  - "2026-10-17 five original Workspace current public statuses source-refreshed, 5/5 HTTP200 and literal accepting labels with exact source SHA, original requirement anchors verified, new read-only reusable source verifier on code SHA541f9f85, 167 B2B tests pass/Ruff PASS. 0/5 LLC account/portfolio paid response GO verified, 0 submissions or purchases. Child TA-B2B-LIVE-SOURCE-REFRESH-20261017 COMPLETE, PR477 draft; 15-20 qualified target remains OPEN."
+  - "2026-10-17 original five Workspace corporate source cards LLC eligibility gate implemented in child TA-B2B-LLC-ELIGIBILITY-20261017 on code SHA217c9d02: 159 B2B regression tests passed, deterministic source-SHA snapshot; 0/5 LLC response channel and legal qualification proven, no messages/purchases/bids. Parent 15-20 target OPEN, roadmap refreshed."
   - "2026-10-17 FREE first contact IT platform sources original PR476 merge c97e186c8c6f8289613c49769a1398119f5455a4, Mac 5074 pass/285 skip, 5 focused PASS/CI green. Four first-party policy page SHA and three actual original order HTML SHA; Pchel direct intermittent marked unavailable not invented, official FAQ nonetheless confirms standard studio100 replies/mo <=$1000; FL free for all/vacancies/contests, CodeLance unlimited advertiser claim but contains seller self-adverts, CONTRACTIS limited free count unknown. Original 3 project candidates Contractis PythonAI170k, construction landing90-150k 34 competitors, CodeLance data catalog import budget negotiable. 0 account LLC free replies verified, no outreach. Separate official Moscow supplier portal free LLC registration with УКЭП for governed supplier offer not free messaging. 15-20 real qualified client target remains OPEN."
   - "2026-10-17 mobile Workspace PRO first party Apple LLC ARVECTUM portfolio PR475 merged 9b894bb383576499679faa7de909f2e963d7f8ee; Mac mini 5069 PASS/285 SKIP, 12 focused+Ruff/make check/GH CI all green. Mobile MOB official PRO price1mo16900,3mo45630,6mo86190,12mo152100 RUB; cheapest 2900 generic CONTNT not mobile. Apple official three published LLC ARVECTUM iOS seller products ChickMark id6818711298, PhotoPDF6816346084, APL6816013574 (verified Apple versions and SHA). Original Workspace19041 corporate needs3y commercial Android+iOS, unproven; 18998 corporate Android8.1 no-GMS real kid watch and child safety, unproven; 19007 personal organizer Kazakh legal platform, not strict corporate B2B. No actual mobile qualified bid GO or PRO purchase. Future focus iOS-only support/App Store/watchOS tasks, not falsely declaring 3yr Android contracts."
   - "2026-10-17 mobile App Store verified real LLC ARVECTUM seller three published iOS products original official Apple iTunes lookup (ChickMark 1.4.1, Photo and PDF under size1.0.1, APL0.1.37) with first-party SHA. Original official Workspace MOB app developer PRO16900/month, 3month45630, 6month86190, 12month152100; generic from2900 applies content not mobile. Original 19041 corporate meatprocessor 250k-1m Android+iOS 3y commercial requirement NOT proven by LLC Apple apps; 18998 corporate Android8.1 no GMS kid smart watch real hardware and child safety230? budget 240k-1m, not our iOS portfolio; 19007 Kazakh legal platform organizer marked private person, excluded strict ООО B2B. Original public sources3, company legal bid GO0. Child TA-B2B-WORKSPACE-MOBILE-APPSTORE-20261017 IN_PROGRESS, 12 focused PASS, full CI pending, no paid purchase."
@@ -157,7 +173,7 @@ completed:
   - '2026-10-13 CZN EIS restored via direct RU HTTPS: intermittent pub01 146-byte nginx404 vs pub02 HTTP200; PR404 bounded 404-only retry implemented in two adapters, plus corrected operator UTC 07:00 vs official 10:00 MSK. Official current v4 EOK 12 Oct 22:24, deadline 23 Oct 10:00, 7 original UID. Real read-only getDocsIP PRIZ SOAP from int.zakupki.gov.ru returned archive ZIP 76759 bytes SHA256 dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908, original v4 XML SHA256 bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c; exact 7/7 UID+name+size crosscheck against three archived SHA originals and four newly downloaded verified files. Four new files moved to restricted ArvectumSSD local evidence and three ZIP CRC PASS (2 nested DOCX, 1 PDF). Offline verifier/negative tests in draft PR404 head ac972df99: 168 pytest PASS, Ruff PASS, original offline source test PASS; exact PR/push CI queued. DIGITAL SIGNATURE, ZIP CONTENT EXPERT REVIEW AND HUMAN GOLD NOT COMPLETED.'
   - '2026-10-13 PR404 exact tested checkpoint a076c8c8: GitHub PR38401431113 and push38401426507/38401426493 all SUCCESS; local 168 APR06 tests PASS/Ruff PASS; child direct-EIS checkpoint completed. New CZN v4 semantic review PR405 source report/test head ff76cc3 independently reads original 95p OОЗ, v4 nested contract/PIK DOCX, unchanged 44-FZ application/evaluation DOCX and two NMCK PDFs; official primary NMCK 685000 chatbot + 315000 youth + 245000 trainings = 1245000 RUB, tender evaluation 70% completed 44-FZ/223-FZ contracts incl chatbot, 30% price. Custom PHP/JS/SQL, 2/7/10/15 December deadlines, no advance, 12-month warranty. Original source-linked private binary bytes stay on Mac mini. Mac mini 172 tests PASS/Ruff PASS/real v4 SOAP 7/7 UID PASS; draft PR405 CI pending. Provisional DEFER conditional on qualifying references, NOT human gold or legal acceptance.'
   - '2026-10-13 CZN v4 source assessment follow-up: draft PR405 checkpoint latest head a15c68e2937f2225fb0e57189f306fba5415c6b1, source report/code head ff76cc3; Mac mini 172 focused pytest PASS, Ruff PASS, original EIS v4 UID verifier PASS. GitHub PR38407699617 and push38407689429 quality job make test still in progress, fast push38407689203 SUCCESS, other 8 PR jobs SUCCESS. New roadmap issue #406 tracks future general source-bound qualification-weight competitive-risk feature; no code implemented for it. PR405 do not merge, human-gold unapproved.'
-current: "TA-R4-20-COMPETITIVE-SEMANTIC-20261014 PR432 verified source2c40b4bf Mac mini FULL 4119 PASS/242 SKIP, exact GitHub 3/3 SUCCESS, 96/96 selected archived EIS original attachment SHA and texts, fail-closed runtime missing appendix, 47 historical LLM quotes checked. Canonical child checkpoint02cfe021; technical foundation green, FULL human legally grounded semantics across96 original documents and current EIS/Owner signoff0/20 still in progress. Other APR03B/APR04-07/B2B roadmap gates remain."
+current: "2026-10-17 first five original B2B cards screened for LLC eligibility, response authorization 0/5; 15-20 verified current client requests target remains OPEN."
 
 pending:
   - 'PR407: verify exact-head GitHub push and PR CI; repair verified failures and complete TA-QUALIFICATION-REFERENCE-LIST-20261013 child. Report UI automatic integration, authorized known Arvectum customer_id fact seeding and strict original EIS criterion hash crosscheck are separate remaining roadmap tasks; do not pretend done.'
@@ -255,7 +271,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 original free-first-outbound platform discovery child TA-B2B-FREE-FIRST-OUTREACH-20261017.yaml COMPLETED PR476 c97e186c8c6f8289613c49769a1398119f5455a4 Mac full 5074 PASS/285 SKIP and exact-head CI. Source original 4 platform policies (FL, CONTRACTIS, CodeLance, ITsNEW) + 3 original real customer project pages SHA; Pchel official FAQ supported standard studio100/mo <=USD1000 but Mac direct transient omitted from SHA; Weblancer intro10days HTTP403; ITsNEW free reply unknown. Real source Contractis Python AI 170k/60d and 90-150k landing 34 applications, CodeLance feed import open Oct7 budget unknown, not verified company eligibility/verified buyer/contracts. Fl only free for-all/vacancies/contests, Contractis free monthly quota unspecified, CodeLance free unlimited advertised but seller self-promotion mixed. Moscow Portal suppliers https://tender.mos.ru/suppliers/ independent official free LLC supplier registration with UKЭП for regulated quotation NOT free interpersonal contact; no relevant currently eligible IT procedures checked. Source report docs/roadmap/B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md and machine receipt b2b_free_first_outreach_sources_2026-10-17.json; no actual account LLC bid, no subscription/signup/outbound message. Next parent qualify existing original leads with LLC acceptance then only owner-approved manual first responses and continue 15-20 verified active; other parent APR04 APR06/07 gates open, manual_override true and sole Operator Workspace18082 untouched."
+resume_instruction: "Parent TA-ROADMAP-EXEC-20261012 in_progress. Child TA-B2B-LLC-PLATFORM-RULES-20261018 completed at code 07794c7b after 332 PASS. Workspace legal company role Agency explicitly permitted (PDF edition 06.07.2026) and invitation makes response free but all self-initiated replies require PRO in right category; real account and buyer invite unverified, Workspace19012 due Oct19/19032 Oct21. Contractis START first 5 replies monthly in public terms with test allowance conditional; paid PRO499/999, deals direct, no verified Russian LLC account or buyer contract. CodeLance public developer replies free, first signup only person contacts and no visible LLC fields, not definitive about eligibility; actual legal payment account unknown. Priority next is authorized read-only company account role/response rights and real client references, or blocker until Owner approval to create/connect one; do not invent accounts, credentials or spend. PR477 draft exact-head CI/review pending, PRICE01 PR478 separate, no sends/payments/signatures/auto merges."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -591,3 +607,132 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+active_child_2026_10_17:
+  task_id: TA-B2B-LLC-ELIGIBILITY-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-LLC-ELIGIBILITY-20261017.yaml
+  status: completed
+  implementation_commit: 217c9d02c4732ede86c460dd76e23ce2954f09e5
+  tests: 159_passed
+  next_parent_action: Refresh live original stage, verify LLC eligibility and account access; obtain Owner decision before any external response.
+
+active_child_live_source_refresh_2026_10_17:
+  task_id: TA-B2B-LIVE-SOURCE-REFRESH-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-LIVE-SOURCE-REFRESH-20261017.yaml
+  status: completed
+  implementation_commit: 541f9f8593024afd26b28fc9346e7e60c008109d
+  tests: 167_passed
+  source_platform: workspace.ru
+  external_action: false
+
+active_child_wordpress_19032_2026_10_17:
+  task_id: TA-B2B-WORDPRESS-19032-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-WORDPRESS-19032-20261017.yaml
+  status: completed
+  implementation_commit: 0c003ba5ddfaea5404a04f9a5cca2b5b48de7065
+  tests: 181_passed
+  external_action: false
+
+active_child_19042_19043_2026_10_17:
+  task_id: TA-B2B-CORPORATE-QUALIFICATION-19042-19043-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-CORPORATE-QUALIFICATION-19042-19043-20261017.yaml
+  status: completed
+  implementation_commit: c9621c1f7b887b22b93524a91eda8782dd1de250
+  tests: 199_passed
+  external_action: false
+
+active_child_19030_attachment_2026_10_17:
+  task_id: TA-B2B-19030-ATTACHMENT-GATE-20261017
+  checkpoint: .agent/checkpoints/TA-B2B-19030-ATTACHMENT-GATE-20261017.yaml
+  status: completed
+  implementation_commit: 26721b598fc45befc0837a1685ddce928440227a
+  tests: 207_passed
+  external_action: false
+
+active_workspace_category_discovery_2026_10_18:
+  task_id: TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018.yaml
+  status: completed
+  implementation_commit: dbc98553bd8bf15021ca0665c48bb6cd252633cc
+  tests: 227_passed_1_warning
+  external_action: false
+
+active_workspace_design_pro_19012_2026_10_18:
+  task_id: TA-B2B-19012-DESIGN-PRO-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-19012-DESIGN-PRO-20261018.yaml
+  status: completed
+  implementation_commit: 7b9980a83943afa15d8542e9afdfa6f160d474a7
+  tests: 236_passed_1_warning
+  external_action: false
+
+active_b2b_free_first_customer_role_2026_10_18:
+  task_id: TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018.yaml
+  status: completed
+  implementation_commit: 9311ddc4e828c7ae497ee0679332fbc3daa50308
+  tests: 244_passed_1_warning
+  external_action: false
+
+active_fl_crosspost_original_2026_10_18:
+  task_id: TA-B2B-FL-CROSSPOST-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-FL-CROSSPOST-20261018.yaml
+  status: completed
+  implementation_commit: a80e49343e23fdaf32121db64cd6bd040de78609
+  tests: 250_passed_1_warning
+  external_action: false
+
+active_moscow_supplier_b2g_entry_2026_10_18:
+  task_id: TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018.yaml
+  status: completed
+  implementation_commit: 5a667ab619e6b018847e984d411674a1aaf2238d
+  tests: 259_passed_1_warning
+  external_action: false
+
+active_moscow_public_chrome_original_2026_10_18:
+  task_id: TA-B2G-MOSCOW-PUBLIC-CHROME-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-PUBLIC-CHROME-20261018.yaml
+  status: completed
+  implementation_commit: 980e1fd942da8aa34388f8b3052a531f674b6c15
+  tests: 263_passed_1_warning
+  external_action: false
+
+active_moscow_it_public_filter_2026_10_18:
+  task_id: TA-B2G-MOSCOW-IT-FILTER-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-IT-FILTER-20261018.yaml
+  status: completed
+  implementation_commit: a1635c7c77729f6dce204761d941c04623d8b135
+  tests: 278_passed_1_warning
+  external_action: false
+
+active_moscow_narrow_public_it_search_2026_10_18:
+  task_id: TA-B2G-MOSCOW-NARROW-SEARCH-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-NARROW-SEARCH-20261018.yaml
+  status: completed
+  implementation_commit: 0cc67c5835f1d1080f0892ccc1fad35caa4ede9c
+  tests: 297_passed_1_warning
+  external_action: false
+
+active_moscow_structured_ktru_2026_10_18:
+  task_id: TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018.yaml
+  status: completed
+  implementation_commit: 764e06870c50bbc1f28b9ade0e0175c036a7489b
+  tests: 300_passed_1_warning
+  external_action: false
+
+active_b2b_urgent_first_client_2026_10_18:
+  task_id: TA-B2B-URGENT-REAL-LEAD-GATE-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-URGENT-REAL-LEAD-GATE-20261018.yaml
+  status: completed
+  implementation_commit: 453c03f5aead3d31fbf1226d5acc22b303ec500e
+  tests: 311_passed_1_warning
+  external_action: false
+
+active_b2b_llc_platform_rules_2026_10_18:
+  task_id: TA-B2B-LLC-PLATFORM-RULES-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-LLC-PLATFORM-RULES-20261018.yaml
+  status: completed
+  implementation_commit: 07794c7b845b2d4946d8da7993395da90feff13e
+  tests: 332_passed_1_warning
+  external_action: false

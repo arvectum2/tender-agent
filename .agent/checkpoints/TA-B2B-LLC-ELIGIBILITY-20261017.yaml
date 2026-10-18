@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-LLC-ELIGIBILITY-20261017
+status: completed
+goal: Qualify source-bound existing corporate B2B leads against verifiable LLC response access and participation requirements, without contacting customers or paying for access.
+definition_of_done:
+  - Preserve existing public source URLs, observation times, original hash evidence and explicit unknowns.
+  - Reuse existing fail-closed corporate source triage, add a narrow separate company eligibility gate.
+  - Produce a reproducible source-bound dated shortlist with blockers and prioritized operator next checks.
+  - Test terminal/stale/expired/partial-data, missing LLC entitlement, strict human GO, and real original cases.
+  - Run focused tests and quality checks, record commit and follow-up in canonical parent.
+completed:
+  - Reconciled current main d2a927ec and parent TA-ROADMAP-EXEC-20261012; old feature checkout has unrelated local changes and remains untouched.
+  - Confirmed source-grounded Workspace original cards and policy/pricing; company account reply entitlement and human authorization are unverified.
+current: Completed deterministic read-only five-card original source and LLC eligibility audit, no external actions.
+pending: []
+last_verified_commit: 217c9d02c4732ede86c460dd76e23ce2954f09e5
+test_results:
+  - 159 B2B and corporate-card regression tests passed; 1 inherited warning.
+  - 43 new+existing gate tests passed; Ruff clean; git diff --check clean.
+  - Generated five-case snapshot reproduced byte-identically; 0 company authorized responses; 0 external actions.
+  - Implementation commit 217c9d02c4732ede86c460dd76e23ce2954f09e5 tested locally on Mac mini.
+resume_instruction: >-
+  Bounded LLC first-batch source audit DONE on implementation commit 217c9d02. Do not repeat. Parent TA-ROADMAP-EXEC-20261012 remains in_progress: next original-platform/legal-company proof 19032 then 19042/19043, 19006, 19030 plus truly current 15-20 independent source-qualified opportunities. Any first LLC response, subscription, procurement participation and economic/legal GO require Owner. PR merge remains subject to review and current Company AM-4 authority; no automatic merge.
