@@ -22,7 +22,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from lxml import html
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
 from scripts.procurement_llm import collect_eis_official_archives as eis
@@ -32,9 +32,6 @@ from scripts.procurement_llm.source_pipeline_runtime import (
     fresh_pg_backup,
     save_private_receipt,
     single_runner,
-)
-from src.modules.procurement_learning_corpus.models import (
-    ProcurementLearningObservation,
 )
 from src.tender_research.config import TenderResearchConfig
 from src.tender_research.registry_discovery import RegistryNumberDiscovery, SourceType
@@ -282,26 +279,25 @@ def discover_public_eis_numbers(*, days_back: int, sample_limit: int) -> tuple[l
 
 
 def recorded_source_refs(session: Session) -> tuple[set[str], set[str]]:
-    # Read only existing learning observations; no new source queue database.
-    source = session.scalars(select(ProcurementLearningObservation).where(
-        ProcurementLearningObservation.event_kind == "manual_review",
-        ProcurementLearningObservation.visibility_scope == "owner_internal",
-    )).all()
-    known = {
-        row.procurement_ref
-        for row in source
-        if (
-            row.source_ref.startswith("manual:ta-firstparty:")
-            or row.source_ref.startswith("manual:ta-eis-zip:")
-        )
-    }
-    analyzed = {
-        row.procurement_ref
-        for row in session.scalars(select(ProcurementLearningObservation).where(
-            ProcurementLearningObservation.event_kind == "analysis_run",
-        ))
-    }
-    return known, analyzed
+    """A generic historical analysis_run never closes a specific source SHA.
+
+    Completion must be signed by our actual-worker verified persisted run,
+    matching latest original bytes and its report. No second database.
+    """
+    from scripts.procurement_llm.analysis_queue_worker import (
+        completed_source_versions,
+        source_rows,
+    )
+
+    originals = source_rows(session)
+    linked = completed_source_versions(session)
+    return (
+        {item.procurement_ref for item in originals},
+        {
+            item.procurement_ref for item in originals
+            if item.observation_id in linked
+        },
+    )
 
 
 def plan(cards: list[dict], *, known: set[str], analyzed: set[str],

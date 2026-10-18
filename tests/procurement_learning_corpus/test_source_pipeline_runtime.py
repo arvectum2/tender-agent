@@ -125,3 +125,7 @@ def test_macmini_six_hour_launchd_template_is_not_self_activated():
     assert 'TENDER_SOURCE_INTAKE_APPLY:-0' in runner
     assert 'args=(--apply --confirm-database arvectum)' in runner
     assert "scripts.procurement_llm.unified_source_pipeline" in runner
+    assert "TENDER_QUEUE_ANALYZE_APPLY:-0" in runner
+    assert "scripts.procurement_llm.analysis_queue_worker" in runner
+    assert "--max-actual 1" in runner
+    assert "TENDER_QUEUE_LLM_MODEL" in runner
