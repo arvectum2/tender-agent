@@ -15,7 +15,7 @@ completed:
   - Existing exact-Decimal pure function compute_owner_supplied_break_even accepts explicit direct/labor/reserve/fixed fees, tax fraction, variable platform fee fraction, explicit profit; calculates three ceilings.
 current: Completed seven-input stateless protected calculator reusing existing Decimal break-even function; no actual cost input provided.
 pending: []
-last_verified_commit: 4b551993e82519542190f73c875dd7978528e05e
+last_verified_commit: 117d866182e3c3ce9c4aef32b452e36a8803ab41
 test_results:
   - Private POST /api/demo/tender-agent/workspace/price-scenario/calculate accepts only seven individually required explicit owner assumptions, plus explicit non-binding confirmation; 401 for unauthorized, 422 malformed, extra, empty or impossible rate scenarios.
   - Uses preexisting pure Decimal compute_owner_supplied_break_even, no formula duplication; tests exact synthetic 100 external/200 labor/20 reserve/5 fixed/6 percent tax/2 percent platform/50 profit => cash135.87,full353.27,target407.61 RUB thresholds, not actual Arvectum costs.
@@ -25,10 +25,12 @@ test_results:
   - Code commit eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6. Exact-head CI pending after checkpoint push.
   - 2026-10-18 follow-up bugfix: positive labor with all cash-outlay fields zero was erroneously rejected. Gate now includes explicit labor; zero all expenses still 422. 99 focused tests PASS, 1 inherited warning, targeted diff clean, tested at 4b551993e82519542190f73c875dd7978528e05e; fresh exact-head CI pending.
   - 2026-10-18 exact branch checkpoint head 4de61e145f2efb4037556fa5f7255c38d531ed42 independently rechecked on Mac mini: 91 focused PASS, 1 inherited deprecation warning, diff check clean; GitHub CI 17 successful, 2 quality pending at observation; no failed jobs.
+  - 2026-10-18 independent follow-up: 19/19 exact-head GitHub CI successful, 128 Mac mini focused tests PASS, one inherited Starlette warning, clean diff. No merge or production actions.
 resume_instruction: >-
-  Child TA-PRICE01-OWNER-COST-INPUT-20261018 completed at code SHA
-  eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6, pending exact-head CI
-  and review in draft PR478. Owner can enter seven explicit hypothetical
+  Child TA-PRICE01-OWNER-COST-INPUT-20261018 is completed. Prior exact head
+  117d866182e3c3ce9c4aef32b452e36a8803ab41 passed GitHub CI 19/19
+  and Mac mini focused regression 128/128; draft PR478 still requires review
+  and separate merge authorization. Owner can enter seven explicit hypothetical
   inputs in existing private workspace, but NO factual company cost inputs
   or actual commercial quotation have been verified or saved. Next roadmap
   tasks: gather documented cost line items for one real tender via Owner,
