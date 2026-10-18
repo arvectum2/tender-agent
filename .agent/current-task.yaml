@@ -744,3 +744,24 @@ firstparty_workspace_b2b_collector_2026_10_18:
   regression_tests_skipped: 2
   stage: firstparty_marketplace_collector_complete_review_only
   next_step: Build official EIS SOAP original ZIP/XML source capture with original version proof in same database, source-to-LLM training human review only after product acceptance, no automatic bid or unapproved merge.
+
+eis_official_archived_learning_capture_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-EIS-SOAP-ARCHIVE-LEARNING-20261018.yaml
+  verified_code_commit: 7d4ed38341d16005c6d55ce3e434d88f73be2dea
+  source_report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_EIS_SOAP_ARCHIVE_CAPTURE_2026-10-18.md
+  canonical_db: arvectum
+  total_learning_rows_before: 110
+  total_learning_rows_after: 113
+  original_eis_official_archived_soap_captures: 3
+  owner_private_original_eis_zip_archive_count: 3
+  original_classification_is_not_current_legal_status: true
+  frozen_replay_inserted: 0
+  frozen_replay_existing: 3
+  model_gold_promotions: 0
+  actual_etp_bids: 0
+  automated_all_eis_original_discovery_implemented: false
+  source_code_live_backend_deployed: false
+  tests_passed: 812
+  tests_skipped: 4
+  stage: official_eis_soap_archive_capture_review_only_complete
+  next_step: Expand to protected continuous source discovery across EIS and marketplaces, true canonical analysis persistence and after product acceptance two genuine independently executed ChatGPT/Tender Agent evaluations with human correction.
