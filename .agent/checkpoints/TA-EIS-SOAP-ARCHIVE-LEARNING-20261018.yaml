@@ -1,0 +1,42 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EIS-SOAP-ARCHIVE-LEARNING-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Reuse actual official getDocsIP EIS SOAP, version classifier and canonical learning DB to capture immutable source archive ZIP with owner-private original and source XML SHA/notice version, without legal-BID_GO or second corpus.
+definition_of_done:
+  - Verify previous completed checkpoints and canonical live DB total 110, do not reimport earlier observations.
+  - Add explicit read-only EIS archive collector using existing approved ZakupkiSoapClient and classify_official_eis_archive, no fresh SOAP implementation or confidential output.
+  - Save attested original ZIP under ArvectumSSD private snapshots mode 0600 and append-only metadata to existing arvectum via guarded apply; reject unknown/conflicting notice and wrong ID/version.
+  - Add offline adversarial tests and original SHA/replay checks, run broad relevant tests.
+  - With owner continuing authorization, perform small real EIS original capture only after prewrite backup and read-only count, no submission/ETP/auth changes.
+  - Update master roadmap, canonical child, push review-only PR and verify checks.
+completed:
+  - "Prior TA-ORIGINAL-PUBLIC-PLATFORM-COLLECTOR-20261018 completed code commit 0bb7cc465faec889dd8ebe9b893ed948294570c6, checkpoint HEAD 37f728cd4002b8e985add725db9bf1a5af8b12bf."
+  - "Prior original marketplace 2 new observations from 108 to 110, frozen source replay 0 inserted/2 existing; no duplicate existing 31."
+current: "Completed SHA-verified official getDocsIP archival original collector, 3 real ZIP/private snapshots and canonical metadata insertions, idempotent frozen replay."
+remaining: []
+last_verified_commit: 7d4ed38341d16005c6d55ce3e434d88f73be2dea
+test_results:
+  - "17 new targeted EIS archived original SHA/version+transaction/security tests PASS, 812 relevant Tender Research / Procurement Learning / EIS regressions PASS / 4 SKIP, Ruff PASS, git diff check PASS."
+  - "Actual official getDocsIP 3/3 source archives verified SHA and purchaseNumber inside epNotification XML, 82367 bytes, original archive/notice versions only; dry-run 0 writes."
+  - "Prewrite complete PostgreSQL backup mode 0600 verified pg_restore archive catalogue, SHA256 045a382f79cf0d156e92527998764043b0ef8339f3216ef65f01c34c35000add. User-authorized original capture inserted 3 source metadata to existing DB: 110 -> 113."
+  - "Three raw EIS ZIPs privately stored mode 0600; exact frozen replay 0 inserted/3 existing, 0 new original ZIP, no training/legal GO; original first observed timestamp immutable."
+resume_instruction: "Official EIS SOAP original archived ZIP collector completed, 3 new canonical observations and private originals stored, PostgreSQL 113. Verify this exact-head stacked PR CI; no merge/deploy absent Company AM-4. Next integrate scheduled read-only original EIS source discovery with safe dedupe and provider source registry, then direct Workspace/B2B original collectors, metadata+analysis capture for all future real cases; postacceptance genuine dual-review with human correction. Never treat archived source as live legal status."
+report: docs/roadmap/PROCUREMENT_LLM_OFFICIAL_EIS_SOAP_ARCHIVE_CAPTURE_2026-10-18.md
+source_code: scripts/procurement_llm/collect_eis_official_archives.py
+verified_code_commit: 7d4ed38341d16005c6d55ce3e434d88f73be2dea
+private_prewrite_backup: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/backups/arvectum-before-official-eis-3-20261018-2155.dump
+private_backup_sha256: 045a382f79cf0d156e92527998764043b0ef8339f3216ef65f01c34c35000add
+canonical_pg_prior_rows: 110
+canonical_pg_total_rows: 113
+new_official_archived_original_events: 3
+new_owner_private_zip_originals: 3
+replay_inserted: 0
+replay_existing: 3
+new_current_legal_bid_eligibility_claims: 0
+training_gold_promoted: 0
+all_new_eis_procurements_autodiscovery_complete: false
+new_runtime_source_collector_deployed: false
+external_etp_or_customer_actions: false
+review_gate: stacked_pr_exact_head_ci_and_am4_release_authority_pending
