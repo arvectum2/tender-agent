@@ -595,9 +595,10 @@ b2b_free_first_outreach_sources_2026_10_17:
 b2b_four_originals_2026_10_18:
   child_checkpoint: .agent/checkpoints/TA-B2B-EIS-COMMERCIAL-20261018.yaml
   code_verified_commit: f26ac392c3943cfa317f5a6600c69fde57055917
-  firstparty_new_eis_notices: 3
+  firstparty_eis_originals_refetched: 3
+  firstparty_new_unique_eis_vs_oct17: 2
   firstparty_original_attachments: 17
-  firstparty_new_commercial_cards: 1
+  firstparty_new_commercial_primary_attestations: 1
   fully_qualified_bid_go_count: 0
   target_15_to_20_met: false
   next_step: Verify current source status and supplier capability before any external participation.
@@ -615,3 +616,19 @@ b2b_prebid_costing_2026_10_18:
   company_qualification_15_20_goal_met: false
   stage: cost_assumptions_and_source_matrix_complete_stacked_pr_review_pending
   next: Continue independent live-status and legal qualification checks before Owner review.
+
+b2b_current_public_stage_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-B2B-LIVE-STATUS-GATES-20261018.yaml
+  code_verified_commit: 98930db852b8e9f7b53f333ff11c90d32f68b6d8
+  source_receipt: docs/roadmap/b2b_oct18_current_public_display_check.json
+  source_report: docs/roadmap/B2B_OCT18_PUBLIC_STAGE_AND_DEDUPE_AUDIT.md
+  firstparty_eis_exact_page_http404_count: 6
+  latest_current_official_eis_status_verified_count: 0
+  firstparty_b2bcenter_public_stage_observed_count: 1
+  new_distinct_primary_eis_ids_vs_oct17: 2
+  already_verified_smolensk_oct17_duplicate: true
+  new_commercial_primary_attestations: 1
+  confirmed_owner_legal_and_commercial_bid_go: 0
+  company_goal_15_to_20_qualified_met: false
+  stage: verified_public_stage_snapshot_review_pending
+  next_step: Verify current legal status through a reliable accessible official source, owner eligibility and discover truly qualified new IT opportunities.

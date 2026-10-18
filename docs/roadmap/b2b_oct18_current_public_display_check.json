@@ -1,0 +1,117 @@
+{
+  "contract_version": "b2b_oct18_3eis_1b2b_firstparty_display_check_v1",
+  "checked_at_utc": "2026-10-18T16:15:30.012395+00:00",
+  "archival_eis_source_dedupe": {
+    "eis_originals_refetched_count": 3,
+    "previously_firstparty_seen_original_ids": [
+      "0163200000326005243"
+    ],
+    "net_new_distinct_eis_44fz_original_ids_vs_17_oct": [
+      "0148200002426000013",
+      "0332100025426000039"
+    ],
+    "net_new_eis_44fz_original_count_vs_17_oct": 2
+  },
+  "net_new_unique_b2bcenter_primary_original_ids": [
+    "4643484"
+  ],
+  "new_distinct_primary_source_attestations_vs_17_oct": 3,
+  "eis_live_notice_pages_parsed": 0,
+  "eis_current_legal_notice_status_verified_count": 0,
+  "company_confirmed_bid_eligible_count": 0,
+  "goal_15_20_strictly_qualified_met": false,
+  "source_only_no_authenticated_actions": true,
+  "eis_host_control": {
+    "official_home_url": "https://zakupki.gov.ru/epz/main/public/home.html",
+    "http_state": "HTTP200_BODY_NOT_ATTESTED",
+    "proves_specific_notice_stage": false,
+    "source_body_attested": false
+  },
+  "eis_rows": [
+    {
+      "number": "0163200000326005243",
+      "archived_notice_sha256": "36556189a1bb0aeead937e06e9c4186206a465ba139fc09023b4c1d08e7cb719",
+      "archived_notice_version": 2,
+      "original_archived_end_dt": "2026-10-30T11:00:00+03:00",
+      "checked_at_utc": "2026-10-18T16:15:30.012395+00:00",
+      "request_live_info_url": "https://zakupki.gov.ru/epz/order/notice/ok20/view/common-info.html?regNumber=0163200000326005243",
+      "request_printform_url": "https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0163200000326005243",
+      "current_legal_stage_verified": false,
+      "current_official_xml_latest_edition_verified": false,
+      "authenticated_bidder_eligibility_verified": false,
+      "bid_ready": false,
+      "live_common_info": {
+        "http_state": "HTTP_404",
+        "firstparty_displayed_stage": "UNKNOWN",
+        "archive_deadline_comparison": "UNKNOWN"
+      },
+      "public_printform": {
+        "http_state": "HTTP_404",
+        "firstparty_displayed_stage": "UNKNOWN",
+        "archive_deadline_comparison": "UNKNOWN"
+      }
+    },
+    {
+      "number": "0332100025426000039",
+      "archived_notice_sha256": "542c3f184b2f5acad379909638f399272015d81f7b214ac60cdf598a5f3b8455",
+      "archived_notice_version": 1,
+      "original_archived_end_dt": "2026-10-21T10:00:00+03:00",
+      "checked_at_utc": "2026-10-18T16:15:30.012395+00:00",
+      "request_live_info_url": "https://zakupki.gov.ru/epz/order/notice/zk20/view/common-info.html?regNumber=0332100025426000039",
+      "request_printform_url": "https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0332100025426000039",
+      "current_legal_stage_verified": false,
+      "current_official_xml_latest_edition_verified": false,
+      "authenticated_bidder_eligibility_verified": false,
+      "bid_ready": false,
+      "live_common_info": {
+        "http_state": "HTTP_404",
+        "firstparty_displayed_stage": "UNKNOWN",
+        "archive_deadline_comparison": "UNKNOWN"
+      },
+      "public_printform": {
+        "http_state": "HTTP_404",
+        "firstparty_displayed_stage": "UNKNOWN",
+        "archive_deadline_comparison": "UNKNOWN"
+      }
+    },
+    {
+      "number": "0148200002426000013",
+      "archived_notice_sha256": "0c10e5578b0f0ef908a421bc2c6a8b85d0e106b9f3a008d42d61d1506fff16de",
+      "archived_notice_version": 1,
+      "original_archived_end_dt": "2026-10-23T10:00:00+03:00",
+      "checked_at_utc": "2026-10-18T16:15:30.012395+00:00",
+      "request_live_info_url": "https://zakupki.gov.ru/epz/order/notice/ea20/view/common-info.html?regNumber=0148200002426000013",
+      "request_printform_url": "https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0148200002426000013",
+      "current_legal_stage_verified": false,
+      "current_official_xml_latest_edition_verified": false,
+      "authenticated_bidder_eligibility_verified": false,
+      "bid_ready": false,
+      "live_common_info": {
+        "http_state": "HTTP_404",
+        "firstparty_displayed_stage": "UNKNOWN",
+        "archive_deadline_comparison": "UNKNOWN"
+      },
+      "public_printform": {
+        "http_state": "HTTP_404",
+        "firstparty_displayed_stage": "UNKNOWN",
+        "archive_deadline_comparison": "UNKNOWN"
+      }
+    }
+  ],
+  "commercial_primary": {
+    "number": "4643484",
+    "original_public_url": "https://www.b2b-center.ru/app/market-next/razrabotka-korporativnogo-saita-pod-kliuch-s-obiazatelnym/tender-4643484/",
+    "checked_at_utc": "2026-10-18T16:15:30.012395+00:00",
+    "http_state": "HTTP_200",
+    "platform_displayed_stage": "Приём заявок",
+    "platform_displayed_deadline": "2026-10-21T06:00:00+03:00",
+    "full_sow_confirmed": false,
+    "buyer_budget_confirmed": false,
+    "vendor_account_entitlement_confirmed": false,
+    "documented_comparable_completed_cases_confirmed": false,
+    "bid_ready": false,
+    "html_sha256": "5d87f73dddd5aa5bc98b5ca6bd5337ffe9b11ecfeffc372f32aaf1094718ddd6",
+    "html_bytes": 286414,
+    "source_parse_state": "FIRST_PARTY_PUBLIC_STAGE_AT_CAPTURE_ONLY"
+  }
+}
