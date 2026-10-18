@@ -765,3 +765,27 @@ eis_official_archived_learning_capture_2026_10_18:
   tests_skipped: 4
   stage: official_eis_soap_archive_capture_review_only_complete
   next_step: Expand to protected continuous source discovery across EIS and marketplaces, true canonical analysis persistence and after product acceptance two genuine independently executed ChatGPT/Tender Agent evaluations with human correction.
+
+unified_source_discovery_learning_pipeline_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-UNIFIED-SOURCE-PIPELINE-20261018.yaml
+  completed_code_commit: 87118b6d2d4d614fc41c2081cfee61c223fb3722
+  report: docs/roadmap/TENDER_AGENT_UNIFIED_SOURCE_PIPELINE_2026-10-18.md
+  stages: Workspace RSS, B2B Center exact indices, public sampled EIS 44-FZ search, official getDocsIP original verification, private originals, canonical PostgreSQL source candidate, pending-analysis queue
+  canonical_db: arvectum
+  learning_rows_prior: 113
+  learning_rows_after_real_first_cycle: 119
+  real_first_cycle_new_source_versions: 6
+  first_cycle_failure_count: 0
+  first_cycle_pending_actual_analyses: 10
+  backup_sha256: bed6cd2987b248b50f3e0ac80c3e494e49d677195fde956f5e7288d465932801
+  original_snapshot_sha_privacy_audit_pass: true
+  real_eis_44fz_sampled_search_verified: true
+  six_hour_scheduler_template_ready: true
+  production_scheduler_enabled: false
+  production_backend_code_deployed: false
+  actual_analytical_worker_wired: false
+  model_gold_promoted: false
+  final_regression_tests_passed: 848
+  final_regression_tests_skipped: 4
+  stage: review_only_single_daily_source_cycle_complete
+  next_stage: exact-head PR CI and AM-4 release authority; after release activate guarded six-hour Mac mini source intake, then build actual Tender Agent automatic worker and postacceptance source-equal dual evaluation.
