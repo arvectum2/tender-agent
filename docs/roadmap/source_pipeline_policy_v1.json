@@ -1,0 +1,21 @@
+{
+  "schema": "arvectum_source_pipeline_v1",
+  "b2b_categories": [
+    "razrabotka-sajtov",
+    "crm-sistemy",
+    "razrabotka-mobilnogo-prilozheniya"
+  ],
+  "max_index_items": 25,
+  "max_market_new_per_run": 5,
+  "max_existing_refresh": 1,
+  "eis_known_numbers_refresh": [
+    "0163200000326005243",
+    "0332100025426000039",
+    "0148200002426000013"
+  ],
+  "fail_if_source_unavailable": false,
+  "eis_public_44fz_discovery_enabled": true,
+  "eis_public_days_back": 3,
+  "eis_public_sample_limit": 30,
+  "eis_public_new_max": 2
+}
