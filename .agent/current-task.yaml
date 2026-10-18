@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-18 PRICE01 read-only 6 historical website original EIS bid cohorts are now shown in EXISTING protected Operator Workspace separate cards. Exact aggregate SHA pinned, no bidder rows, 401 auth, 503 corrupted receipt, Aksay-only endpoint remains 404 for other website registries, 0.01 RUB flagged source extreme, one EOK20 finalPrice UNKNOWN. 119 relevant pytest PASS/10 SKIP/6 warnings, Ruff and JS syntax PASS; child TA-PRICE01-WEBSITE-COHORT-UI-20261018 completed code264d34fe. PRICE01 cross-contract normalization/cost and Owner GO still OPEN; production & ETP unchanged."
   - "2026-10-18 PRICE-01 source cohort verified 6 official EIS completed website ZIPs, 6 original notice+final XML, 6 public DOCX TЗ SHA (originals retained only ArvectumSSD). Combined 140 bids of which 124 admitted/16 rejected; 5 protocols carry admitted finalPrice, one EOK20 lacks finalPrice; no guessed prices. Krasnoyarsk and Chemal adjacent but workload/licensing different, Dz/SPB/Nenets excluded. ZERO new equivalent Aksay price observations, baseline still 1. Source report+adversarial regression 85 PASS/6 historical warnings, Ruff PASS, child TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018 completed on code eb8a8f31. PRICE-01 commercial scenario/human GO and B2B 15-20 remain OPEN."
   - "2026-10-18 PRICE-01 second EIS original Aksioma 0187200001726001304 compared to Aksay website: exact first-party original ZIP sha & purchaseObjectInfo names show GIS forest parcel boundary module vs website; classified EXCLUDED_SCOPE_MISMATCH, not counted as comparable nor mixed into admitted website pricing. Offline auditable source SHA report, 101 relevant pytest PASS/10 SKIP/6 warnings, Ruff & Node check PASS. Child TA-PRICE01-SOURCE-COMPARABILITY-20261018 completed on code bc579cef; search for genuinely comparable independent finished website procurements and real company costs remains OPEN."
   - "2026-10-18 PRICE-01 Operator Workspace integrated private historical-source-verified Aksay one-procedure aggregate via exact URL 0158300034526000388, no new database. New Price tab with strict 404 unknown registry/503 corrupted digest and separate existing ARV-057 historic NMCK context. No priced bid or forecast, no client data leak. 92 relevant tests passed, 10 skipped, 6 inherited warnings, Ruff and JS syntax pass; child TA-PRICE01-OPERATOR-READONLY-20261018 completed on code ee83c93a and PR478 draft. PRICE01 multiple source comparable procedures and actual Owner costs remain OPEN."
@@ -259,7 +260,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-18 source-verified PRICE01 original website cohort 6 finished procurements and original 6 DOCX scope evidence is complete on draft PR478. Next source-cost normalization for Krasnoyarsk and Chemal, but do not add price to Aksay basket until independently verified comparable units and actual company costs. Latest exact-head CI/review still required; no merge without owner authority. B2B PR477 draft separate; parent TA-ROADMAP-EXEC-20261012 in_progress and 15-20 true B2B lead target still OPEN."
+resume_instruction: "2026-10-18 PRICE01 original EIS 6 archived website scope and prices source checked, separate read-only 6 case cards now in existing Operator Workspace, PR478 draft. Next compare quantifiable work units/conditions for Krasnoyarsk and Chemal against Aksay, no arbitrary cross-procurement median or recommended bid, company expense inputs must be explicit. Maintain 401/503/404 gates and exact-head CI/human review before any merge. B2B PR477 draft separate, canonical parent TA-ROADMAP-EXEC-20261012 in_progress and true 15-20 B2B opportunities still open."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -633,5 +634,7 @@ active_price01_website_comparables_2026_10_18:
 active_price01_website_cohort_ui_2026_10_18:
   task_id: TA-PRICE01-WEBSITE-COHORT-UI-20261018
   checkpoint: .agent/checkpoints/TA-PRICE01-WEBSITE-COHORT-UI-20261018.yaml
-  status: in_progress
+  status: completed
+  implementation_commit: 264d34fe88d3093e749e09f04a4ec6decf27a7b4
+  tests: 119_passed_10_skipped_6_warnings
   external_action: false
