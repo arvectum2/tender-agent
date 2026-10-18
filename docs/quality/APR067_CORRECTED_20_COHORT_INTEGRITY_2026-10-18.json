@@ -1,0 +1,26 @@
+{
+  "commercial_bid_go": false,
+  "contract_version": "apr067_corrected_20_development_consistency_v1",
+  "corrected_snapshot_sha256": "4242037c650db5be8ca860d2517d43ab9a0ad919a2d985a6fd9a4f149f8acaae",
+  "critical_eis_xml_citation_records": 60,
+  "current_official_eis_revision_verified": false,
+  "distinct_archived_original_case_ids": 20,
+  "independent_legal_human_gold": null,
+  "model_only_seconds": {
+    "maximum": 457.9,
+    "median": 351.655,
+    "minimum": 138.79,
+    "p90_nearest_rank": 389.27
+  },
+  "model_promotion_authorized": false,
+  "model_provider_calls_recorded": 80,
+  "new_llm_calls_for_source_correction": 0,
+  "original_file_sha_records": 210,
+  "original_snapshot_sha256": "8d3b22e7635413253f51d48610f87e14ae0c80abf6415df6c5dd9b81ffc8df51",
+  "rolling_production_slo": null,
+  "source_only_semantic_corrections": [
+    "0349100009326000005"
+  ],
+  "state": "CHECKED_SAVED_DEV_METADATA_NOT_CURRENT_EIS",
+  "true_operator_time_to_decision": null
+}

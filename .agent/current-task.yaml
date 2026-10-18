@@ -591,3 +591,14 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+apr067_corrected_cohort_integrity_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-APR067-COHORT-INTEGRITY-20261018.yaml
+  code_verified_commit: a17c96ba00ad6468402c1036e1e64c37ccc78901
+  stage: focused_technical_evidence_complete_pr_review_pending
+  recorded_original_e2e_case_count: 20
+  model_only_latency_p90_seconds: 389.27
+  independent_legal_gold: pending
+  rolling_production_slo: not_measured
+  current_eis_revision: UNKNOWN
+  note: Original and corrected frozen corpus untouched; no model promotions or external actions.
