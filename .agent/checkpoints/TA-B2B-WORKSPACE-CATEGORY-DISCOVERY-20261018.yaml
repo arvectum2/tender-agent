@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018
+status: in_progress
+goal: Bounded discovery of fresh original corporate IT tender cards via Workspace official public WEB/APP/CRM indexes. Ground each candidate in first-party status, buyer organization, deadline and actual scope; exclude private/terminal/stale and unknown identity; never assume free LLC response entitlement.
+definition_of_done:
+  - Discover only canonical URLs from three explicit first-party category landing pages, deduplicate across categories and previous five original cases.
+  - Read only original public exact card HTML with 200/no redirects/size guards, parse source status buyer type public-vs-private and printed deadline; independently fail closed for malformed originals.
+  - Distinguish public accepting legal-entity candidate vs personal buyer/expired/terminal/private or unverifiable; record original SHA/time/title/category and missing company portfolio/access/licensing proof.
+  - Produce machine receipt and human operator shortlist with count to 15-20 goal while clearly marking zero authenticated LLC-ready and owner GO false; advise before Oct21 urgent WordPress original 19032.
+  - Deterministic offline negative/duplicate/time deadline tests; update roadmap and checkpoint, push existing PR477 draft, run relevant tests and CI.
+  - No login/paid/submit/production actions; do not touch old dirty checkout.
+completed:
+  - Resumed parent TA-ROADMAP-EXEC-20261012 and independently confirmed PRICE01 PR478 CI still in progress, untouched; B2B PR477 draft head ecdb5ae.
+  - Official Workspace original index first-party page 200; category WEB/APP/CRM indexes each expose distinct current public card URL candidates including earlier originals. Need full original-card qualification.
+current: Implement bounded first-party category discovery and original card classification.
+pending:
+  - Source parser, live candidate receipts, classification.
+  - Negative tests and a useful shortlist.
+  - Roadmap/checkpoint finalize, commit, push and exact CI.
+last_verified_commit: ecdb5ae626431dcfdab7d7f305816d92da3e7286
+test_results: Prior B2B five source original refresh complete; new tests pending.
+resume_instruction: Start with bounded original WEB/APP/CRM Workspace page discovery and original source proof, not the search-snippet count. Only PUBLIC_CANDIDATE_ONLY status for legal buyer with current original accepting and future deadline, but not bid-ready. 15-20 truly LLC-eligible goal remains open until account-level entitlements and Owner GO. No payment/outreach or auto-merge.
