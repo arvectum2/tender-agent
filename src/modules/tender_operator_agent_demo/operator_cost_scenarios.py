@@ -42,6 +42,7 @@ def calculate_explicit_cost_thresholds(request: ExplicitCostScenarioRequest) -> 
         Decimal(request.labor_rub),
         Decimal(request.reserve_rub),
         Decimal(request.fixed_platform_fees_rub),
+        Decimal(request.labor_rub),
     )) <= 0:
         raise HTTPException(status_code=422, detail="Укажите хотя бы одну ненулевую статью расходов")
     try:
