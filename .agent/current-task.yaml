@@ -687,3 +687,20 @@ mandatory_learning_capture_dual_review_2026_10_18:
   source_report: docs/roadmap/PROCUREMENT_LEARNING_IMPORT_AND_DUAL_REVIEW_2026-10-18.md
   stage: authorized_db_import_completed_code_review_pending
   next_stage: After approved PR merge and deploy verify runtime capture; integrate all external search providers into existing one DB; after formal product acceptance compare actual two independent ChatGPT/Tender Agent reviews and human adjudicate.
+
+public_web_source_learning_capture_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-WEB-SOURCE-LEARNING-CAPTURE-20261018.yaml
+  code_verified_commit: 20bdea4f5b3fcc3c2ccaee5c397fa7e0142160e4
+  report: docs/roadmap/PROCUREMENT_LLM_AUTO_PUBLIC_WEB_CAPTURE_2026-10-18.md
+  current_live_existing_database: arvectum
+  current_live_learning_rows_before_new_code: 108
+  captured_in_this_task_into_live_db: 0
+  future_public_fetched_web_evidence_transactional: true
+  future_source_hash_is_decoded_html_not_raw_original: true
+  future_source_without_verified_legal_go: true
+  future_all_external_chatgpt_collectors_complete: false
+  code_production_deploy_complete: false
+  tests_passed: 712
+  tests_skipped: 2
+  stage: review_only_internal_web_source_capture_code_complete
+  next_step: Follow Company release governance for stacked PR and install unified external provider collector + captured comparison of independent ChatGPT/Tender Agent actual reviews after acceptance.
