@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018
-status: in_progress
+status: completed
 goal: Source-verify first-party actual customer IT requests from free-first CONTRACTIS and CodeLance and reject open seller self-advertisement and suspicious out-of-scope CodeLance cards; no inferred Russian LLC contract eligibility.
 definition_of_done:
   - Discover exact first-party IT category list of customer tasks from CONTRACTIS and ordered original CodeLance cards, bounded <= 7+12, no following contacts/external sources.
@@ -13,11 +13,8 @@ completed:
   - Resumed source-attested prior B2B PR477 head92a907b0 with exact-head CI SUCCESS.
   - Public first-party CONTRACTIS Programming/IT index HTTP200 links seven actual customer original card urls, several already seen previous audit; CodeLance order index HTTP200 links twelve.
   - Original CodeLance cards show many "Открыт" seller advertisements as false lead positives; original Contractis card descriptions show buyer request language but no authenticated LLC account permission.
-current: Implement bounded exact-source customer-vs-seller separation without invented company eligibility.
-pending:
-  - Original-source SHA receipt and strict classifications.
-  - Adversarial tests, source-based shortlist, canonical roadmap/checkpoint.
-  - Git commit, push draft PR477 and CI check.
-last_verified_commit: 92a907b061ed2b10882ffc9eedb02384355ce071
-test_results: Previous source discovery 236 B2B relevant pytest PASS and exact-head CI SUCCESS, new current focused tests pending.
-resume_instruction: Never promote open CodeLance self-advertisements into valid customer demand, exclude suspicious virtual-token request; CONTRACTIS source order buyer identity and formal status unknown. Do not make offers/payments, register or merge. Parent TA-ROADMAP-EXEC-20261012 remains in_progress.
+current: Completed source-bound first-party 19 originals, role classification and QA, no company replies.
+pending: []
+last_verified_commit: 9311ddc4e828c7ae497ee0679332fbc3daa50308
+test_results: 19 exact first-party original HTML with SHA and UTC; 7 buyer-described IT scopes (3 previously known, 4 new), nine CodeLance seller promos correctly excluded, two non-IT and one risk excluded. 244 B2B pytest PASS and 1 inherited warning, Ruff and git diff check PASS. Implementation 9311ddc4. Latest CI pending after push. Zero authenticated LLC reply permissions and no outgoing actions.
+resume_instruction: "Child TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018 completed at 9311ddc4. Original read-only Contractis7+CodeLance12: 7 buyer task descriptions, only 4 net new source scope, not confirmed current company offers; nine open seller self-adverts correctly filtered. Next check fresh FL free-for-all originals and official Russian LLC supplier quote sources, strict live original and no double-count with Workspace crossposts. B2B 15-20 genuinely eligible target remains open, company account and buyer legal contracts unknown. PR477 exact-head CI/review pending, no external paid/submitted actions and no auto merge."

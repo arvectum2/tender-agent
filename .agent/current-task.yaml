@@ -11,6 +11,7 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-18 B2B FREE-first CONTRACTIS7 and CodeLance12 original sources checked: 19 exact HTML SHA, 7 buyer-described IT tasks (3 previously known and 4 newly described CONTRACTIS 12,4,2,5); 9 CodeLance OPEN seller adverts filtered, 2 non-IT, 1 high-risk excluded. Source customer role not proof of current reply/LLC account, actual eligible 0. 244 B2B pytest PASS / one warning, Ruff+diff pass. Child TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018 completed on code9311ddc4; canonical parent ongoing, no external actions."
   - "2026-10-18 original design 19012 first-party category PRO 6900 RUB/month vs WEB 25500, activation within one business day before unknown clock Oct19 deadline. Source SHA and 236 B2B regression tests PASS, no bids/paid actions, child TA-B2B-19012-DESIGN-PRO-20261018 completed at code7b9980a8; main B2B 15-20 eligible goal OPEN."
   - "2026-10-18 B2B Workspace source discovery: read-only exact three primary category indexes WEB/APPS/CRM, 31 deduplicated original source cards HTTP200 with original status/deadline/legal buyer SHA. 10 public corporate still receiving candidates, 21 terminal/personal/expired filtered; 0 verified actual ООО access or owner GO. New urgent19012 design dueOct19, 19034 WordPress+SEO dueOct31, 18939 HealthTech OCR dueDec15 original source text anchored; 227 B2B regression tests PASS one warning, Ruff clean. Child TA-B2B-WORKSPACE-CATEGORY-DISCOVERY-20261018 completed on dbc98553, draft PR477; true 15-20 eligible B2B goal OPEN."
   - "2026-10-17 original Workspace19030 restricted spec access bound: public HTML explicitly lists TZ_.pdf but restricts file downloads to PRO or buyer-invited contractors. Private PDF bytes/text NOT retrieved, MVP pricing unknown, no payment/bid. New fail-closed source verifier code26721b59, 207 B2B focused tests pass, Ruff clean. Child TA-B2B-19030-ATTACHMENT-GATE-20261017 completed, parent 15-20 accessible qualified source target open."
@@ -262,7 +263,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "B2B PR477: original category 31 cards, 10 publicly accepting corporate but 0 actual LLC bidding rights; new urgent 19012 design original PRO price6900 rub/month activation up to one business day against Oct19 deadline, no proof account access or Owner GO. Continue 15-20 genuinely eligible free-first sources, not personal or closed. PRICE01 PR478 separate draft; exact CI/review before merge. Parent TA-ROADMAP-EXEC-20261012 remains in_progress."
+resume_instruction: "2026-10-18 B2B PR477 new verified read-only free-first originals CONTRACTIS7+CodeLance12, 7 buyer IT scope descriptions (4 new without current/LLC permission proof), 9 open CodeLance self promotion excluded. Prior category Workspace31 contained 10 publicly accepting legal-buyer but zero ООО reply rights. Next original FL free-for-all IT projects, check exact freshness/individual vs legal buyer and crosspost dedup. No actor may spend/send/subscribe or merge without Owner authority; PR477 CI/review pending and separate PRICE01 PR478 draft with actual company costs absent. Parent TA-ROADMAP-EXEC-20261012 in_progress until DoD."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -659,5 +660,7 @@ active_workspace_design_pro_19012_2026_10_18:
 active_b2b_free_first_customer_role_2026_10_18:
   task_id: TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018
   checkpoint: .agent/checkpoints/TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018.yaml
-  status: in_progress
+  status: completed
+  implementation_commit: 9311ddc4e828c7ae497ee0679332fbc3daa50308
+  tests: 244_passed_1_warning
   external_action: false
