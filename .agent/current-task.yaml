@@ -704,3 +704,21 @@ public_web_source_learning_capture_2026_10_18:
   tests_skipped: 2
   stage: review_only_internal_web_source_capture_code_complete
   next_step: Follow Company release governance for stacked PR and install unified external provider collector + captured comparison of independent ChatGPT/Tender Agent actual reviews after acceptance.
+
+external_chatgpt_learning_intake_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-EXTERNAL-RESEARCH-LEARNING-INTAKE-20261018.yaml
+  verified_code_commit: e353ab98942eaadd299359bb02224dfa49fa7ed2
+  report: docs/roadmap/PROCUREMENT_LLM_EXTERNAL_CHATGPT_CAPTURE_2026-10-18.md
+  existing_canonical_db: arvectum
+  current_learning_rows_at_start: 108
+  new_real_procurement_analysis_imported: 0
+  provenance_gate_verified_original_or_url_only: true
+  owner_private_artifact_dir_exists: true
+  helper_dry_run_by_default: true
+  helper_explicit_apply_uses_existing_db: true
+  all_future_chats_automatically_ingested: false
+  source_code_deployed: false
+  tests_passed: 740
+  tests_skipped: 2
+  stage: guarded_external_chatgpt_research_intake_review_only_completed
+  next_step: Use new artifact+source-hash intake on the next real owner procurement research; expand EIS/Workspace/B2B automatic first-party collectors; after product acceptance run two genuine independent reviews.
