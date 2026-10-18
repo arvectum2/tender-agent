@@ -1,4 +1,4 @@
-"""Three newly discovered October 18 original EIS SOAP getDocsIP read-only checks; outputs metadata only.
+"""Three source-attested October 18 EIS checks (one repeated Oct17 source ID); outputs metadata only.
 
 No ETP mutations, no authenticated bids, no registered customer profile,
 original ZIP and XML binaries are handled in ephemeral tempdir and discarded.
