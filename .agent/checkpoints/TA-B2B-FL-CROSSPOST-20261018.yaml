@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FL-CROSSPOST-20261018
+status: in_progress
+goal: Verify first-party FL.ru original AI project cards, filter vacancies and personal-device offers, prove shared unusual scope evidence with Workspace19030 so FL5525297 is not counted as a second lead, and assess publicly linked TЗ without bypassing attachment permissions.
+definition_of_done:
+  - Bound original first-party FL AI category and 6 exact original project pages; source HTML SHA and dated copied literal proof, reject source layout changes.
+  - Source-state job/project classification; no silent label free for all or buyer legal entity without original proof; recognize job-as-vacancy and personal workstation as weak company fit.
+  - Explicitly source-match FL5525297 with official Workspace19030 via several distinctive text anchors; count as probable same business request, not two independent leads.
+  - Public attachment link evidence on FL; do not bypass login/paywall/guess hidden URLs; private TЗ remains unknown if absent from HTML.
+  - Tests for crosspost/duplicate, unknown free access/LLC contracts, source changes; report/roadmap and canonical child checkpoint commit/push PR477, CI.
+  - No purchases/submissions/authorizations/production writes.
+completed:
+  - Prior CONTRACTIS/CodeLance source role child completed with 244 B2B regression PASS on c9fcff50; current exact CI pending.
+  - Verified official FL5525297 and Workspace19030 share original distinctive text 200 orders/day, 50 SKU, three WB/Ozon seller accounts, AI warehouse/production system; source likely cross-post same client request.
+  - Public FL original HTML does not expose clear customer TЗ.pdf href for 5525297, only platform rules/cookie PDFs; cannot claim attachment downloaded.
+current: Pin six exact first-party FL source cards and first-party cross-post equivalence, no buyer legal entitlement assumptions.
+pending:
+  - Machine original source receipt and tests.
+  - Human dedup and cost/permission warnings.
+  - Commit/push, CI, checkpoint complete.
+last_verified_commit: c9fcff50c30bfd3c113907173857209e69a027c1
+test_results: Previous child 244 focused B2B test PASS, 1 inherited warning, Ruff clean. FL source test pending.
+resume_instruction: FL published source original versus Workspace19030 likely cross-post same scope; do not count 5525297 separately without independent buyer evidence. No original publicly linked TЗ on FL read-only HTML, don't bypass access or invent hidden file URL. Parent goal 15-20 actually company-eligible remains open and all external commercial actions prohibited without Owner GO.

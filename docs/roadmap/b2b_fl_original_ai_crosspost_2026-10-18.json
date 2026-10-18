@@ -1,0 +1,163 @@
+{
+  "schema_version": "ta-b2b-first-party-fl-ai-crosspost-2026-10-18-v1",
+  "observed_at_utc": "2026-10-18T07:34:01.909220+00:00",
+  "source_index": {
+    "original_index_url": "https://www.fl.ru/projects/category/ai-iskusstvenniy-intellekt/",
+    "source_index_html_sha256": "262968bdc56357f6a234f3b08864c0a2ca34298923d934b4066a9b3c4f8f4794",
+    "explicit_exact_card_urls_verified": 6
+  },
+  "reviewed_fl_original_card_count": 6,
+  "distinct_fl_customer_it_descriptions_requiring_legal_review": 3,
+  "crossposted_existing_workspace19030_count_not_new": 1,
+  "vacancy_and_personal_scope_not_counted_as_b2b": 2,
+  "verified_company_open_free_replies": 0,
+  "verified_legal_company_eligible_contracts": 0,
+  "user_company_paid_or_sent_actions": 0,
+  "crosspost": {
+    "fl_original_id": "5525297",
+    "workspace_original_id": "19030",
+    "shared_distinct_original_scope_fragments": [
+      "Продаём на Wildberries и Ozon (по 3 кабинета)",
+      "около 200 заказов в день, 50 SKU",
+      "Систему учёта с ИИ-агентами",
+      "сырьё и упаковка по техкартам",
+      "склад со сканером штрихкодов",
+      "расчёт отгрузок на маркетплейсы"
+    ],
+    "fl_original_html_sha256": "7b6747dea7a0e5e45cc66c5453a09e511165165e48c5e02b576ea6f0b2ab438c",
+    "workspace_original_html_sha256": "b497c0d507c80f66b51d3aa9cc75bc0c282d7e2eefe668e0fbc5f3956025dc35",
+    "deduplication_state": "HIGH_CONFIDENCE_SAME_SCOPE_CROSSPOST_NOT_NEW_INDEPENDENT_LEAD",
+    "legal_buyer_inn_confirmed_same": false,
+    "full_tz_pdf_original_downloaded": false,
+    "independent_buyer_verification_required": true
+  },
+  "cards": [
+    {
+      "id": "5525620",
+      "original_url": "https://www.fl.ru/projects/5525620/dorabotat-ai-poisk-i-ai-matching-promyishlennogo-oborudovaniya-.html",
+      "original_source_html_sha256": "0733e6b70653caa04dc5a68b3ae5d9f8f2acc2855c516af5b0f05a7688f8c0bd",
+      "original_source_bytes": 178359,
+      "reviewed_original_scope_fragments": [
+        "Развиваем маркетплейс промышленного оборудования",
+        "Бюджет: 2 000 ₽"
+      ],
+      "original_type": "Ссылка на заказ",
+      "source_classification": "SOURCE_IT_CUSTOMER_TASK_BUDGET_REVIEW",
+      "fl_html_customer_tz_attachment_href_state": "NO_PUBLIC_TZ_ATTACHMENT_HREF_IN_RETRIEVED_HTML",
+      "is_verified_buyer_russian_llc": false,
+      "is_original_free_for_all_reply_confirmed": false,
+      "is_company_account_contract_accepted": false,
+      "is_current_authenticated_reply_open_confirmed": false,
+      "is_new_unique_b2b_customer_contract": false,
+      "bid_or_reply_sent": false,
+      "paid_action": false,
+      "observed_at_utc": "2026-10-18T07:33:59.761068+00:00"
+    },
+    {
+      "id": "5525491",
+      "original_url": "https://www.fl.ru/projects/5525491/sozdat-tsentralizovannuyu-ai-platformu-.html",
+      "original_source_html_sha256": "7b52e3d71b12084e5f3af7674323c477844e155b6d7838e9b4e42c3bab9a78c6",
+      "original_source_bytes": 171244,
+      "reviewed_original_scope_fragments": [
+        "Создать централизованную AI платформу",
+        "ТЗ в приложенном файле"
+      ],
+      "original_type": "Ссылка на заказ",
+      "source_classification": "SOURCE_IT_CUSTOMER_TASK_NO_PUBLIC_TZ_LINK",
+      "fl_html_customer_tz_attachment_href_state": "NO_PUBLIC_TZ_ATTACHMENT_HREF_IN_RETRIEVED_HTML",
+      "is_verified_buyer_russian_llc": false,
+      "is_original_free_for_all_reply_confirmed": false,
+      "is_company_account_contract_accepted": false,
+      "is_current_authenticated_reply_open_confirmed": false,
+      "is_new_unique_b2b_customer_contract": false,
+      "bid_or_reply_sent": false,
+      "paid_action": false,
+      "observed_at_utc": "2026-10-18T07:34:00.128876+00:00"
+    },
+    {
+      "id": "5525426",
+      "original_url": "https://www.fl.ru/projects/5525426/sozdanie-ii-agentov-dlya-rabotyi-s-marketplesami.html",
+      "original_source_html_sha256": "62f9496964e18bb99a94457e7c169a9b61cd2c392b44a40c107b568b7a8407f1",
+      "original_source_bytes": 174262,
+      "reviewed_original_scope_fragments": [
+        "ИИ агентов для работы с маркетплесами",
+        "Бюджет: 50 000 ₽",
+        "ТЗ пришлем подробнее по запросу"
+      ],
+      "original_type": "Ссылка на заказ",
+      "source_classification": "SOURCE_IT_CUSTOMER_TASK_SCOPE_UNSPECIFIED",
+      "fl_html_customer_tz_attachment_href_state": "NO_PUBLIC_TZ_ATTACHMENT_HREF_IN_RETRIEVED_HTML",
+      "is_verified_buyer_russian_llc": false,
+      "is_original_free_for_all_reply_confirmed": false,
+      "is_company_account_contract_accepted": false,
+      "is_current_authenticated_reply_open_confirmed": false,
+      "is_new_unique_b2b_customer_contract": false,
+      "bid_or_reply_sent": false,
+      "paid_action": false,
+      "observed_at_utc": "2026-10-18T07:34:00.483366+00:00"
+    },
+    {
+      "id": "5525297",
+      "original_url": "https://www.fl.ru/projects/5525297/vnedrenie-ii-sistemyi-uchta-syirya-sklada-i-proizvodstva-dlya-sellera-wb-i-ozon.html",
+      "original_source_html_sha256": "7b6747dea7a0e5e45cc66c5453a09e511165165e48c5e02b576ea6f0b2ab438c",
+      "original_source_bytes": 174438,
+      "reviewed_original_scope_fragments": [
+        "Производитель орехов и сухофруктов",
+        "около 200 заказов в день, 50 SKU"
+      ],
+      "original_type": "Ссылка на заказ",
+      "source_classification": "DUPLICATE_BUSINESS_SCOPE_WORKSPACE19030",
+      "fl_html_customer_tz_attachment_href_state": "NO_PUBLIC_TZ_ATTACHMENT_HREF_IN_RETRIEVED_HTML",
+      "is_verified_buyer_russian_llc": false,
+      "is_original_free_for_all_reply_confirmed": false,
+      "is_company_account_contract_accepted": false,
+      "is_current_authenticated_reply_open_confirmed": false,
+      "is_new_unique_b2b_customer_contract": false,
+      "bid_or_reply_sent": false,
+      "paid_action": false,
+      "observed_at_utc": "2026-10-18T07:34:00.869034+00:00"
+    },
+    {
+      "id": "5524917",
+      "original_url": "https://www.fl.ru/projects/5524917/nastroit-lokalnyiy-ai-pomoschnik-rag-na-mom-pk.html",
+      "original_source_html_sha256": "ee3af9605b2f903cf825d0596ddd368ff6a987362293027e126774acbc93f59b",
+      "original_source_bytes": 175905,
+      "reviewed_original_scope_fragments": [
+        "Настроить локальный AI-помощник (RAG) на моём ПК",
+        "Ollama"
+      ],
+      "original_type": "Ссылка на заказ",
+      "source_classification": "PERSONAL_PC_CLIENT_LEGAL_B2B_UNVERIFIED",
+      "fl_html_customer_tz_attachment_href_state": "NO_PUBLIC_TZ_ATTACHMENT_HREF_IN_RETRIEVED_HTML",
+      "is_verified_buyer_russian_llc": false,
+      "is_original_free_for_all_reply_confirmed": false,
+      "is_company_account_contract_accepted": false,
+      "is_current_authenticated_reply_open_confirmed": false,
+      "is_new_unique_b2b_customer_contract": false,
+      "bid_or_reply_sent": false,
+      "paid_action": false,
+      "observed_at_utc": "2026-10-18T07:34:01.250031+00:00"
+    },
+    {
+      "id": "5525421",
+      "original_url": "https://www.fl.ru/projects/5525421/nujno-sozdat-ii-agenta-v-kompaniyu.html",
+      "original_source_html_sha256": "29a2c7ddf596abbb954f5eacfacbd2b4eb84376495550cca947ba11bdf78cf46",
+      "original_source_bytes": 171271,
+      "reviewed_original_scope_fragments": [
+        "Нужно создать ИИ агента в компанию",
+        "Ссылка на вакансию"
+      ],
+      "original_type": "Ссылка на вакансию",
+      "source_classification": "VACANCY_NOT_SUPPLIER_TENDER",
+      "fl_html_customer_tz_attachment_href_state": "NO_PUBLIC_TZ_ATTACHMENT_HREF_IN_RETRIEVED_HTML",
+      "is_verified_buyer_russian_llc": false,
+      "is_original_free_for_all_reply_confirmed": false,
+      "is_company_account_contract_accepted": false,
+      "is_current_authenticated_reply_open_confirmed": false,
+      "is_new_unique_b2b_customer_contract": false,
+      "bid_or_reply_sent": false,
+      "paid_action": false,
+      "observed_at_utc": "2026-10-18T07:34:01.789297+00:00"
+    }
+  ]
+}
