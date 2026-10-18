@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FREE-FIRST-CUSTOMER-ROLE-20261018
+status: in_progress
+goal: Source-verify first-party actual customer IT requests from free-first CONTRACTIS and CodeLance and reject open seller self-advertisement and suspicious out-of-scope CodeLance cards; no inferred Russian LLC contract eligibility.
+definition_of_done:
+  - Discover exact first-party IT category list of customer tasks from CONTRACTIS and ordered original CodeLance cards, bounded <= 7+12, no following contacts/external sources.
+  - Capture each original source URL/SHA/observation time and literal current status if present; do not substitute listing visibility or registration for authenticated free first response.
+  - Classify only source-attested request vs self-promotion vs out-of-scope/ambiguous using reviewed anchored originals; do not count generic "Open" as IT demand and never double count previous orders.
+  - Human readable shortlist highlights source-qualified business work but company buyer INN, age/status and LLC response permissions remain unverified; count current *authenticated company-eligible* stays zero.
+  - Deterministic offline negative-source and duplicate filter tests, all B2B regression, Ruff, checkpoint and PR477 draft push/CI.
+completed:
+  - Resumed source-attested prior B2B PR477 head92a907b0 with exact-head CI SUCCESS.
+  - Public first-party CONTRACTIS Programming/IT index HTTP200 links seven actual customer original card urls, several already seen previous audit; CodeLance order index HTTP200 links twelve.
+  - Original CodeLance cards show many "Открыт" seller advertisements as false lead positives; original Contractis card descriptions show buyer request language but no authenticated LLC account permission.
+current: Implement bounded exact-source customer-vs-seller separation without invented company eligibility.
+pending:
+  - Original-source SHA receipt and strict classifications.
+  - Adversarial tests, source-based shortlist, canonical roadmap/checkpoint.
+  - Git commit, push draft PR477 and CI check.
+last_verified_commit: 92a907b061ed2b10882ffc9eedb02384355ce071
+test_results: Previous source discovery 236 B2B relevant pytest PASS and exact-head CI SUCCESS, new current focused tests pending.
+resume_instruction: Never promote open CodeLance self-advertisements into valid customer demand, exclude suspicious virtual-token request; CONTRACTIS source order buyer identity and formal status unknown. Do not make offers/payments, register or merge. Parent TA-ROADMAP-EXEC-20261012 remains in_progress.
