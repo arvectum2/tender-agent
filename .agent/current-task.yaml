@@ -11,6 +11,13 @@ definition_of_done:
   - 'APR-05: reconcile pilot/SaaS PR, validate isolation and entitlement in staging, leave actual production/paid pilot to separately authorized owner decision.'
   - 'Final CI, risk review, exact commit and checkpoint status for all completed stages.'
 completed:
+  - "2026-10-18 PRICE-01 explicit Owner what-if break-even calculator completed: 7 individually required empty cost/rate fields plus non-binding confirmation in existing private Operator Workspace. Stateless auth-gated POST reuses exact Decimal function for cash/full/target cost thresholds, no DB persistence or user/company implicit defaults, all-zero costs/fees sum >=100 rejected. 162 relevant tests PASS/10 SKIP/6 inherited warnings, Ruff JS syntax clean. Child TA-PRICE01-OWNER-COST-INPUT-20261018 completed at code eb8ef306; still NO real Arvectum documented costs and NO authorized quotes. PR478 draft; B2B 15-20 and parent roadmap remain OPEN."
+  - "2026-10-18 PRICE-01 workload normalization child completed. SHA-pinned original 3 EIS DOCX TЗ: Aksay 14 days/cms choice/excluded routine support, Krasnoyarsk 10 days/Figma/12m support SLA, Chemal 21 days/Bitrix Standard/40 text-page cap/12m defect warranty; 26 literal source anchors, paragraph position SHA and measured explicit values with UNKNOWN cost/person-hours. Separate existing protected Operator Workspace read-only workload tab/endpoint 401 unauth/503 corrupt, no cost multipliers or pooled prices. 128 relevant pytest PASS, 10 SKIP, 6 warnings, Ruff and JS syntax PASS. Implementation commit 70aaec82, child TA-PRICE01-WORKLOAD-NORMALIZATION-20261018 completed; parent still in_progress, PR478 remains draft pending CI/review."
+  - "2026-10-18 PRICE01 read-only 6 historical website original EIS bid cohorts are now shown in EXISTING protected Operator Workspace separate cards. Exact aggregate SHA pinned, no bidder rows, 401 auth, 503 corrupted receipt, Aksay-only endpoint remains 404 for other website registries, 0.01 RUB flagged source extreme, one EOK20 finalPrice UNKNOWN. 119 relevant pytest PASS/10 SKIP/6 warnings, Ruff and JS syntax PASS; child TA-PRICE01-WEBSITE-COHORT-UI-20261018 completed code264d34fe. PRICE01 cross-contract normalization/cost and Owner GO still OPEN; production & ETP unchanged."
+  - "2026-10-18 PRICE-01 source cohort verified 6 official EIS completed website ZIPs, 6 original notice+final XML, 6 public DOCX TЗ SHA (originals retained only ArvectumSSD). Combined 140 bids of which 124 admitted/16 rejected; 5 protocols carry admitted finalPrice, one EOK20 lacks finalPrice; no guessed prices. Krasnoyarsk and Chemal adjacent but workload/licensing different, Dz/SPB/Nenets excluded. ZERO new equivalent Aksay price observations, baseline still 1. Source report+adversarial regression 85 PASS/6 historical warnings, Ruff PASS, child TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018 completed on code eb8a8f31. PRICE-01 commercial scenario/human GO and B2B 15-20 remain OPEN."
+  - "2026-10-18 PRICE-01 second EIS original Aksioma 0187200001726001304 compared to Aksay website: exact first-party original ZIP sha & purchaseObjectInfo names show GIS forest parcel boundary module vs website; classified EXCLUDED_SCOPE_MISMATCH, not counted as comparable nor mixed into admitted website pricing. Offline auditable source SHA report, 101 relevant pytest PASS/10 SKIP/6 warnings, Ruff & Node check PASS. Child TA-PRICE01-SOURCE-COMPARABILITY-20261018 completed on code bc579cef; search for genuinely comparable independent finished website procurements and real company costs remains OPEN."
+  - "2026-10-18 PRICE-01 Operator Workspace integrated private historical-source-verified Aksay one-procedure aggregate via exact URL 0158300034526000388, no new database. New Price tab with strict 404 unknown registry/503 corrupted digest and separate existing ARV-057 historic NMCK context. No priced bid or forecast, no client data leak. 92 relevant tests passed, 10 skipped, 6 inherited warnings, Ruff and JS syntax pass; child TA-PRICE01-OPERATOR-READONLY-20261018 completed on code ee83c93a and PR478 draft. PRICE01 multiple source comparable procedures and actual Owner costs remain OPEN."
+  - "2026-10-17 PRICE-01 Aksay source-level independent phase completed code94908b75: exact original EIS ZIP/XML SHA + all 55 normalized JSON/CSV bids per-row source-checked, 45 admitted/10 rejected, winner28400 RUB, company119000 RUB rank38, median74000, 3 pure explicitly supplied cost threshold formulas with cost scenario null until real inputs. Relevant 58 tests PASS with 6 historical warnings and Ruff PASS; no payments/bids/production DB mutations. Child TA-PRICE01-AKSAY-BASELINE-20261017 completed; PRICE-01 multi-procurement comparator/UI and B2B 15-20 remain OPEN, B2B PR477 separate DRAFT."
   - "2026-10-17 FREE first contact IT platform sources original PR476 merge c97e186c8c6f8289613c49769a1398119f5455a4, Mac 5074 pass/285 skip, 5 focused PASS/CI green. Four first-party policy page SHA and three actual original order HTML SHA; Pchel direct intermittent marked unavailable not invented, official FAQ nonetheless confirms standard studio100 replies/mo <=$1000; FL free for all/vacancies/contests, CodeLance unlimited advertiser claim but contains seller self-adverts, CONTRACTIS limited free count unknown. Original 3 project candidates Contractis PythonAI170k, construction landing90-150k 34 competitors, CodeLance data catalog import budget negotiable. 0 account LLC free replies verified, no outreach. Separate official Moscow supplier portal free LLC registration with УКЭП for governed supplier offer not free messaging. 15-20 real qualified client target remains OPEN."
   - "2026-10-17 mobile Workspace PRO first party Apple LLC ARVECTUM portfolio PR475 merged 9b894bb383576499679faa7de909f2e963d7f8ee; Mac mini 5069 PASS/285 SKIP, 12 focused+Ruff/make check/GH CI all green. Mobile MOB official PRO price1mo16900,3mo45630,6mo86190,12mo152100 RUB; cheapest 2900 generic CONTNT not mobile. Apple official three published LLC ARVECTUM iOS seller products ChickMark id6818711298, PhotoPDF6816346084, APL6816013574 (verified Apple versions and SHA). Original Workspace19041 corporate needs3y commercial Android+iOS, unproven; 18998 corporate Android8.1 no-GMS real kid watch and child safety, unproven; 19007 personal organizer Kazakh legal platform, not strict corporate B2B. No actual mobile qualified bid GO or PRO purchase. Future focus iOS-only support/App Store/watchOS tasks, not falsely declaring 3yr Android contracts."
   - "2026-10-17 mobile App Store verified real LLC ARVECTUM seller three published iOS products original official Apple iTunes lookup (ChickMark 1.4.1, Photo and PDF under size1.0.1, APL0.1.37) with first-party SHA. Original official Workspace MOB app developer PRO16900/month, 3month45630, 6month86190, 12month152100; generic from2900 applies content not mobile. Original 19041 corporate meatprocessor 250k-1m Android+iOS 3y commercial requirement NOT proven by LLC Apple apps; 18998 corporate Android8.1 no GMS kid smart watch real hardware and child safety230? budget 240k-1m, not our iOS portfolio; 19007 Kazakh legal platform organizer marked private person, excluded strict ООО B2B. Original public sources3, company legal bid GO0. Child TA-B2B-WORKSPACE-MOBILE-APPSTORE-20261017 IN_PROGRESS, 12 focused PASS, full CI pending, no paid purchase."
@@ -255,7 +262,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-17 original free-first-outbound platform discovery child TA-B2B-FREE-FIRST-OUTREACH-20261017.yaml COMPLETED PR476 c97e186c8c6f8289613c49769a1398119f5455a4 Mac full 5074 PASS/285 SKIP and exact-head CI. Source original 4 platform policies (FL, CONTRACTIS, CodeLance, ITsNEW) + 3 original real customer project pages SHA; Pchel official FAQ supported standard studio100/mo <=USD1000 but Mac direct transient omitted from SHA; Weblancer intro10days HTTP403; ITsNEW free reply unknown. Real source Contractis Python AI 170k/60d and 90-150k landing 34 applications, CodeLance feed import open Oct7 budget unknown, not verified company eligibility/verified buyer/contracts. Fl only free for-all/vacancies/contests, Contractis free monthly quota unspecified, CodeLance free unlimited advertised but seller self-promotion mixed. Moscow Portal suppliers https://tender.mos.ru/suppliers/ independent official free LLC supplier registration with UKЭП for regulated quotation NOT free interpersonal contact; no relevant currently eligible IT procedures checked. Source report docs/roadmap/B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md and machine receipt b2b_free_first_outreach_sources_2026-10-17.json; no actual account LLC bid, no subscription/signup/outbound message. Next parent qualify existing original leads with LLC acceptance then only owner-approved manual first responses and continue 15-20 verified active; other parent APR04 APR06/07 gates open, manual_override true and sole Operator Workspace18082 untouched."
+resume_instruction: "2026-10-18 PRICE01 original EIS website historical bid/cohort (6), three source-bound workload normalizations and explicit seven-input stateless what-if break-even calculator in existing protected Operator Workspace completed on draft PR478; next exact-head CI/review and then either obtain actual documented company labor/licensing/domain/hosting/ETP costs and truly equivalent contract scopes before price recommendations, OR autonomously resume unmet B2B 15-20 truly company-eligible live IT leads/other APR gates. No invented expenses, unsafe pooling, DB writes, ETP bids, spending, or automatic merges. Canonical parent TA-ROADMAP-EXEC-20261012 in_progress; PR477 draft separate."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -591,3 +598,63 @@ b2b_free_first_outreach_sources_2026_10_17:
   owner_paid_or_outreach_authorized: false
   stage: completed_original_free_first_contact_discovery
   source_merge_sha: c97e186c8c6f8289613c49769a1398119f5455a4
+
+active_price01_aksay_2026_10_17:
+  task_id: TA-PRICE01-AKSAY-BASELINE-20261017
+  checkpoint: .agent/checkpoints/TA-PRICE01-AKSAY-BASELINE-20261017.yaml
+  status: completed
+  implementation_commit: 94908b758885af18de4d6c6acdd1699328a20aec
+  tests: 58_passed_6_warnings
+  prior_b2b_pr: 477
+  source_storage: ArvectumSSD_only
+  external_action: false
+
+active_price01_operator_readonly_2026_10_18:
+  task_id: TA-PRICE01-OPERATOR-READONLY-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-OPERATOR-READONLY-20261018.yaml
+  status: completed
+  implementation_commit: ee83c93ab7473d4a3f16fd473dc5c8865f6609e3
+  tests: 92_passed_10_skipped_6_warnings
+  external_action: false
+
+active_price01_source_comparability_2026_10_18:
+  task_id: TA-PRICE01-SOURCE-COMPARABILITY-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-SOURCE-COMPARABILITY-20261018.yaml
+  status: completed
+  implementation_commit: bc579cef3742d6766f4ec2da9a88bc1de4f4f127
+  tests: 101_passed_10_skipped_6_warnings
+  external_action: false
+
+active_price01_website_comparables_2026_10_18:
+  task_id: TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018.yaml
+  status: completed
+  implementation_commit: eb8a8f3123cbfc782e39f20a79d1f2e501e3bfd4
+  tests: 85_passed_6_warnings
+  external_action: false
+
+active_price01_website_cohort_ui_2026_10_18:
+  task_id: TA-PRICE01-WEBSITE-COHORT-UI-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-WEBSITE-COHORT-UI-20261018.yaml
+  status: completed
+  implementation_commit: 264d34fe88d3093e749e09f04a4ec6decf27a7b4
+  tests: 119_passed_10_skipped_6_warnings
+  external_action: false
+
+active_price01_workload_normalization_2026_10_18:
+  task_id: TA-PRICE01-WORKLOAD-NORMALIZATION-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-WORKLOAD-NORMALIZATION-20261018.yaml
+  status: completed
+  implementation_commit: 70aaec824ab927f8b76cd2482c5b02a38c76bfca
+  tests: 128_passed_10_skipped_6_warnings
+  external_action: false
+
+active_price01_owner_cost_scenario_2026_10_18:
+  task_id: TA-PRICE01-OWNER-COST-INPUT-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-OWNER-COST-INPUT-20261018.yaml
+  status: completed
+  implementation_commit: 4b551993e82519542190f73c875dd7978528e05e
+  tests: 162_previous_passed_10_skipped;_latest_regression_99_passed_1_inherited_warning
+  labor_only_regression: fixed_explicit_labor_only_nonzero_expense_gate
+  latest_source_commit: 4b551993e82519542190f73c875dd7978528e05e
+  external_action: false

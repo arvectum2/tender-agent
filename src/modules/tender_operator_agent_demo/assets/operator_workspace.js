@@ -54,7 +54,7 @@
     $('quote-verify-button').disabled = value;
   }
   function tab(name) {
-    const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок'};
+    const labels = {new:'Новый анализ',history:'История анализов',registry:'База закупок',prices:'Цены и протоколы'};
     if (!(name in labels)) return;
     for (const key of Object.keys(labels)) show('pane-' + key, key === name);
     for (const button of document.querySelectorAll('.nav-btn')) {
@@ -625,8 +625,285 @@
         root.append(line);
       }
       if (!data.documents?.length) paragraph(root,'Документы не сохранены в канонической базе.','empty-state');
+      if (/^\d{19}$/.test(data.registry_number||'')) {
+        const button=node('button','button button-secondary','Ценовой контекст ↗');
+        button.type='button';
+        button.addEventListener('click',()=>{
+          $('price-registry').value=data.registry_number;
+          tab('prices');
+          void loadCompetitivePrice();
+        });
+        root.append(button);
+      }
       $('registry-detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
     } catch(error) {msg('Не удалось открыть запись: '+error.message);}
+  }
+  function validatePriceRegistry() {
+    const value = $('price-registry').value.trim();
+    if (!/^\d{19}$/.test(value)) throw new Error('Введите реестровый номер 44-ФЗ из 19 цифр.');
+    return value;
+  }
+  async function loadCompetitivePrice(event) {
+    if (event) event.preventDefault();
+    const target = $('price-evidence');
+    wipe(target);
+    let registry;
+    try { registry = validatePriceRegistry(); }
+    catch (error) { paragraph(target,error.message,'empty-state');return; }
+    paragraph(target,'Проверяем исторический доказательный агрегат…','empty-state');
+    try {
+      const data = await json(api+'/workspace/competitive-prices/'+encodeURIComponent(registry));
+      wipe(target);
+      if(data.state!=='VERIFIED_ARCHIVED_SINGLE_PROCEDURE'||data.registry_number!==registry
+          ||data.forecast_or_bid_recommendation!==false||data.company_go!==false
+          ||data.cross_procurement_comparison_state!=='INSUFFICIENT_EVIDENCE'
+          ||data.cost_scenarios!==null) {
+        throw new Error('Неполное доказательство протокола: проверка человеком обязательна.');
+      }
+      target.append(node('h3','','Протокол от '+data.protocol_date+' · №'+registry));
+      paragraph(target,'Проверенный архив одного конкурса: не предложение цены и не прогноз победителя.','help-text');
+      const facts=node('div','facts');
+      for(const [title,value] of [
+        ['НМЦК (не выигравшая ставка)',money(data.nmck_rub)],
+        ['Допущено',data.admitted_count],
+        ['Отклонено',data.rejected_count],
+        ['Минимальная допущенная цена',money(data.admitted_only_prices_rub.min)],
+        ['Квартиль 25% (по порядку)',money(data.admitted_only_prices_rub.q1_nearest_rank)],
+        ['Медиана допущенных',money(data.admitted_only_prices_rub.median)],
+        ['Квартиль 75% (по порядку)',money(data.admitted_only_prices_rub.q3_nearest_rank)],
+        ['Максимальная допущенная цена',money(data.admitted_only_prices_rub.max)],
+        ['Цена победителя',money(data.winner_price_rub)],
+        ['Предложение Арвектум (историческое)',money(data.company_price_rub)],
+        ['Место нашей допущенной заявки',data.company_rank_admitted]]) appendFact(facts,title,value);
+      target.append(facts);
+      const causes=node('section','report-section');
+      causes.append(node('h3','','Отклонённые заявки · отдельный риск допуска'));
+      paragraph(causes,'Нет документа реестра ПО / старая редакция: '
+        +data.rejected_reason_counts.missing_software_registry_document_old_notice
+        +'; неприменимая запись в реестре: '
+        +data.rejected_reason_counts.inapplicable_software_registry_entry+'.');
+      target.append(causes);
+      const evidence=node('section','report-section');
+      evidence.append(node('h3','','Контрольные суммы оригиналов'));
+      paragraph(evidence,'Оригинальный ZIP ЕИС: '+data.evidence.eis_original_zip_sha256);
+      paragraph(evidence,'Итоговый XML ЕИС: '+data.evidence.eis_original_xml_sha256);
+      paragraph(evidence,'Сверено строк с первоисточником: '+data.evidence.bid_rows_crosschecked_with_original);
+      paragraph(evidence,'Достаточность сопоставимых закупок: НЕТ · всего одна. '
+        +'Себестоимость: НЕ ПРЕДОСТАВЛЕНА; ставка к подаче: НЕ РЕКОМЕНДУЕТСЯ.','help-text');
+      target.append(evidence);
+    } catch(error) {wipe(target);paragraph(target,'Проверенные ставки недоступны: '+error.message,'empty-state');}
+  }
+  async function loadWebsiteCohort() {
+    const target = $('price-cohort');
+    wipe(target);
+    paragraph(target,'Проверяем первичные доказательства независимых исторических сайтов…','empty-state');
+    try {
+      const data=await json(api+'/workspace/website-price-cohort');
+      if(data.state!=='INDEPENDENT_HISTORICAL_WEBSITE_CASES_NOT_POOLED'
+          ||data.verified_original_procedures!==6
+          ||data.same_basket_procurements_as_aksay!==1
+          ||data.additional_equivalent_procurements!==0
+          ||data.market_aggregated_price_rub!==null
+          ||data.forecast_or_bid_recommendation!==false
+          ||data.owner_commercial_go!==false
+          ||!Array.isArray(data.cases)||data.cases.length!==6) {
+        throw new Error('Нельзя объединять неподтверждённо сопоставимые цены сайтов.');
+      }
+      wipe(target);
+      paragraph(target,'6 отдельных официальных протоколов. Общей медианы нет: сопоставимость объёма и затрат ещё не доказана.','help-text');
+      for(const c of data.cases) {
+        const section=node('section','report-section');
+        section.append(node('h3','',c.original_notice_subject));
+        paragraph(section,'ЕИС №'+c.registry_number+' · заявок '+c.total
+          +' · допущено '+c.admitted+' · отклонено '+c.rejected+'.');
+        if(c.admitted_price_status==='VERIFIED_ADMITTED_FINAL_PRICE') {
+          const facts=node('div','facts');
+          const rubExact=value => value===null ? 'НЕИЗВЕСТНО' : String(value).replace('.',',')+' ₽';
+          for(const [label,value] of [
+            ['Мин. допущенная цена',rubExact(c.admitted_price_low_rub)],
+            ['Медиана по одной процедуре',rubExact(c.admitted_price_median_rub)],
+            ['Макс. допущенная цена',rubExact(c.admitted_price_high_rub)]]) appendFact(facts,label,value);
+          section.append(facts);
+          if(c.sub_ruble_source_bid_observed===true) {
+            paragraph(section,'Источниковая аномалия: ставка менее 1 ₽. Это не стоимость исполнения и не рекомендуемая ставка.','help-text');
+          }
+        } else {
+          paragraph(section,'В этом официальном итоговом протоколе нет конечных цен допущенных. НМЦК не подставляется.','empty-state');
+        }
+        paragraph(section,'Сопоставимость: '+c.original_scope_comparison_state);
+        paragraph(section,c.original_scope_comparison_reason,'help-text');
+        paragraph(section,'Основания в ТЗ: '+(c.scope_original_anchors||[]).join('; ')+'.','help-text');
+        const proof=node('details','');
+        proof.append(node('summary','','SHA-256 исходных документов'));
+        paragraph(proof,'ЕИС ZIP: '+c.eis_original_zip_sha256);
+        paragraph(proof,'Итоговый XML: '+c.original_final_xml_sha256);
+        paragraph(proof,'Оригинальное ТЗ DOCX: '+c.original_tz_docx_sha256);
+        section.append(proof);
+        target.append(section);
+      }
+    } catch(error) {wipe(target);paragraph(target,'Проверенные архивы сайтов недоступны: '+error.message,'empty-state');}
+  }
+  async function loadWorkloadNormalization() {
+    const target=$('price-workload');
+    wipe(target);
+    paragraph(target,'Проверяем контрольные суммы исходных технических заданий…','empty-state');
+    try {
+      const data=await json(api+'/workspace/website-workload-normalization');
+      if(data.state!=='ATTESTED_CONTRACT_WORKLOAD_NOT_PRICE_NORMALIZATION'
+          ||data.source_cases_count!==3||data.comparable_basket_procurements_count!==1
+          ||data.additional_equivalent_projects!==0||data.work_unit_rate_rub!==null
+          ||data.cross_tender_normalized_price_rub!==null
+          ||data.estimated_company_labor_hours!==null
+          ||data.bid_recommendation!==false||data.owner_approved!==false
+          ||!Array.isArray(data.cases)||data.cases.length!==3) {
+        throw new Error('Нет доказательств для пересчёта стоимости между разными ТЗ.');
+      }
+      const captions={
+        AKSAY:'Аксай — Молодёжный центр',
+        KRASNOYARSK:'Красноярск — государственное юрбюро',
+        CHEMAL:'«Чемал» — санаторий',
+      };
+      const dimensions={
+        delivery_working_days:'Срок по контракту',
+        cms_platform:'CMS и лицензирование',
+        design_basis:'Источник дизайна и макеты',
+        initial_content_origin:'Источник контента',
+        initial_content_pages_max:'Максимум наполнения',
+        postacceptance_obligation:'Гарантия или сопровождение',
+        support_critical_reaction_hours:'SLA критических инцидентов',
+        hosting_payment:'Хостинг и домен',
+        knowledge_transfer:'Обучение и передача знаний',
+        site_purpose:'Функции и назначение',
+        feedback_form:'Форма обратной связи',
+        speech_accessibility:'Озвучивание и доступность',
+      };
+      wipe(target);
+      paragraph(target,'Три проверенных договора, одна базовая закупка. Неизвестные величины оставлены неизвестными; пересчёта конкурентных цен нет.','help-text');
+      const order=['AKSAY','KRASNOYARSK','CHEMAL'];
+      for(const key of order) {
+        const c=data.cases.find(x=>x.case_key===key);
+        if(!c||!Array.isArray(c.verified_dimensions)||!c.original_technical_scope_docx_sha256
+            ||c.costs_or_labor_hours_known!==false||c.actual_content_pages_known!==false) {
+          throw new Error('Неполное документальное подтверждение одного из ТЗ.');
+        }
+        const section=node('section','report-section');
+        section.append(node('h3','',captions[key]));
+        paragraph(section,'Официальная закупка №'+c.registry_number+'. Лицензии и человеко-часы неизвестны.','help-text');
+        const facts=node('div','facts');
+        for(const d of c.verified_dimensions) {
+          const label=dimensions[d.dimension]||'Проверенное обязательство';
+          const numeric=(typeof d.source_value==='number')
+            ? ' — '+d.source_value+' '+(d.unit==='working_days'?'раб. дней':d.unit==='text_pages'?'стр.':'часов')
+            : '';
+          appendFact(facts,label+numeric,d.reviewed_interpretation);
+        }
+        if(c.initial_content_pages_cap===null) {
+          appendFact(facts,'Количество страниц','НЕ УСТАНОВЛЕНО В ПРОВЕРЕННОМ ТЗ');
+        } else {
+          appendFact(facts,'Число страниц','Не более '+c.initial_content_pages_cap+' по договору; фактическое неизвестно');
+        }
+        section.append(facts);
+        const original=node('details','');
+        original.append(node('summary','','Первоисточники и фрагменты требований'));
+        paragraph(original,'Исходный DOCX SHA-256: '+c.original_technical_scope_docx_sha256);
+        for(const d of c.verified_dimensions) {
+          paragraph(original,(dimensions[d.dimension]||d.dimension)+': «'+d.source_quote
+            +'» · позиция '+d.source_line_ordinal+' · SHA строки '+d.source_line_sha256+'.');
+        }
+        section.append(original);
+        target.append(section);
+      }
+      paragraph(target,'Нормализация рублёвой цены НЕ ВЫПОЛНЕНА. Требуются подтверждённые человеко-часы, затраты лицензий/домена/хостинга, расходы на сопровождение и объём фактического контента.','help-text');
+    } catch(error) {
+      wipe(target);
+      paragraph(target,'Проверенная матрица ТЗ недоступна: '+error.message,'empty-state');
+    }
+  }
+  async function calculateExplicitPriceCostScenario(event) {
+    event.preventDefault();
+    const target=$('price-cost-result');
+    wipe(target);
+    const monetary=/^\d{1,12}(?:[.,]\d{1,2})?$/;
+    const percentage=/^\d{1,3}(?:[.,]\d{1,4})?$/;
+    const fields=[
+      ['external_direct_rub','cost-external',monetary],
+      ['labor_rub','cost-labor',monetary],
+      ['reserve_rub','cost-reserve',monetary],
+      ['fixed_platform_fees_rub','cost-fixed',monetary],
+      ['revenue_tax_percent','cost-tax',percentage],
+      ['variable_platform_fee_percent','cost-variable',percentage],
+      ['target_profit_rub','cost-target',monetary],
+    ];
+    const payload={accept_hypothetical_assumptions_only:$('cost-scenario-confirm').checked};
+    if(payload.accept_hypothetical_assumptions_only!==true) {
+      paragraph(target,'Подтвердите, что это гипотетический расчёт, а не ставка для торгов.','empty-state');
+      return;
+    }
+    for(const [field,id,pattern] of fields) {
+      const entered=$(id).value.trim();
+      if(!pattern.test(entered)) {
+        paragraph(target,'Каждая сумма и процент должны быть явно введены и иметь допустимую точность: '+id+'.','empty-state');
+        return;
+      }
+      payload[field]=entered.replace(',','.');
+    }
+    paragraph(target,'Вычисляем пороги на основе семи введённых величин…','empty-state');
+    try {
+      const result=await json(api+'/workspace/price-scenario/calculate',{
+        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
+      });
+      if(result.state!=='EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY'
+          ||result.inputs_stored!==false||result.assumptions_independently_verified!==false
+          ||result.is_procurement_bid_recommendation!==false
+          ||result.probability_of_winning_estimated!==false||result.commercial_owner_go!==false
+          ||result.automatic_submission_or_payment!==false) {
+        throw new Error('Расчёт не прошёл защитные проверки и не может быть использован.');
+      }
+      wipe(target);
+      const facts=node('div','facts');
+      for(const [label,value] of [
+        ['Денежный порог безубыточности',result.cash_break_even_rub],
+        ['Полный порог с учётом труда',result.full_economic_break_even_rub],
+        ['Порог с отдельно желаемой прибылью',result.full_cost_plus_explicit_target_rub],
+      ]) {
+        if(typeof value!=='string'||!/^\d{1,22}\.\d{2}$/.test(value)) {
+          throw new Error('Нет валидных денежных порогов.');
+        }
+        appendFact(facts,label,value.replace('.',',')+' ₽');
+      }
+      target.append(facts);
+      paragraph(target,'Это сценарные минимальные пороги при ваших вводных. Фактические расходы, налоговые обязательства, конкурентная цена и вероятность выигрыша не проверены. Автоматической подачи нет.','help-text');
+    } catch(error) {
+      wipe(target);
+      paragraph(target,'Не удалось рассчитать сценарий: '+error.message,'empty-state');
+    }
+  }
+  async function loadHistoricalPrice() {
+    const target=$('price-historical');
+    wipe(target);
+    let registry;
+    try { registry=validatePriceRegistry(); }
+    catch(error) {paragraph(target,error.message,'empty-state');return;}
+    paragraph(target,'Запрашиваем исторические НМЦК отдельно от итоговых ставок…','empty-state');
+    try {
+      const data=await json('/api/tender-research/historical-prices/'+encodeURIComponent(registry));
+      wipe(target);
+      target.append(node('h3','','ARV-057 · '+(data.state||'UNKNOWN')));
+      if(data.state!=='AVAILABLE'||!data.range) {
+        paragraph(target,'Сопоставимая источниковая выборка не подтверждена: недостаточно независимых наблюдений. Не использовать цену Аксая вместо аналога.','empty-state');
+        return;
+      }
+      const facts=node('div','facts');
+      for(const [title,value] of [
+        ['Сопоставимых наблюдений',data.range.sample_count],
+        ['Диапазон исторических НМЦК — минимум',money(data.range.minimum,data.range.currency)],
+        ['Медиана исторических НМЦК',money(data.range.median,data.range.currency)],
+        ['Максимум исторических НМЦК',money(data.range.maximum,data.range.currency)],
+        ['База нормализации',data.range.basis],
+        ['Единица',data.range.unit||'корзина']]) appendFact(facts,title,value);
+      target.append(facts);
+      paragraph(target,'ARV-057 проверяет предмет/объём/валюту/хронологию и сообщает НМЦК, НЕ допущенные конечные предложения. Никакой вероятности победы или автоматической цены.','help-text');
+    } catch(error) {wipe(target);paragraph(target,'Исторический диапазон недоступен: '+error.message,'empty-state');}
   }
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
   $('import-form').addEventListener('submit',importRequest);
@@ -645,11 +922,17 @@
   $('analyze-btn').addEventListener('click',()=>void analyze());
   $('refresh-run').addEventListener('click',()=>void loadRun().catch(e=>msg(e.message)));
   $('refresh-history').addEventListener('click',()=>void loadHistory());
+  $('price-form').addEventListener('submit',event=>void loadCompetitivePrice(event));
+  $('price-historical-btn').addEventListener('click',()=>void loadHistoricalPrice());
+  $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
+  $('price-workload-btn').addEventListener('click',()=>void loadWorkloadNormalization());
+  $('price-cost-form').addEventListener('submit',event=>void calculateExplicitPriceCostScenario(event));
+  $('cost-clear-btn').addEventListener('click',()=>{ $('price-cost-form').reset();wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});
   const hash=location.hash.replace('#','');
-  if (hash==='history'||hash==='registry') tab(hash);
+  if (hash==='history'||hash==='registry'||hash==='prices') tab(hash);
   const urlRun=new URLSearchParams(location.search).get('run');
   if(urlRun && /^[a-zA-Z0-9-]{1,64}$/.test(urlRun)){state.runId=urlRun;tab('new');void loadRun().catch(e=>msg(e.message));}
 })();

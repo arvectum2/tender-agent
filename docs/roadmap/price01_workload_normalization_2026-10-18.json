@@ -1,0 +1,361 @@
+{
+  "schema_version": "ta-price01-verified-workload-no-financial-coefficients-v1",
+  "comparison_scope": "THREE_REVIEWED_ORIGINAL_TZ_WEBSITE_PROJECTS",
+  "baseline_aksay_contracts_count": 1,
+  "new_equivalent_website_contracts": 0,
+  "other_related_site_contracts_requiring_cost_normalization": 2,
+  "labor_hours_comparable": false,
+  "scope_normalization_adjustment_rub": null,
+  "cross_tender_market_price_rub": null,
+  "bid_recommendation_rub": null,
+  "company_costs_user_supplied": false,
+  "monetary_multiplier_per_working_day": null,
+  "cases": [
+    {
+      "registry_number": "0158300034526000388",
+      "case_key": "AKSAY",
+      "original_technical_scope_docx_sha256": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a",
+      "verified_dimensions": [
+        {
+          "dimension": "delivery_working_days",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "UP_TO",
+          "source_value": 14,
+          "unit": "working_days",
+          "source_quote": "в течение 14 рабочих дней с момента заключения Контракта",
+          "source_line_ordinal": 5,
+          "source_line_sha256": "bbbe36d330f84ff5cbc834fcc02768e14da6761e613131720b3dddc81a8f5fb0",
+          "reviewed_interpretation": "Договорный срок выполнения; не означает количество человеко-дней."
+        },
+        {
+          "dimension": "cms_platform",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "RUSSIAN_REGISTRY_CMS_CONTRACTOR_CHOICE",
+          "unit": "category",
+          "source_quote": "Конкретное наименование CMS Заказчиком не устанавливается",
+          "source_line_ordinal": 9,
+          "source_line_sha256": "a9849571b2de1af90d38734a04776ec99ab5500d9c70153c9e5e64c8dac707a9",
+          "reviewed_interpretation": "Российская CMS из реестра; конкретный продукт выбирает исполнитель."
+        },
+        {
+          "dimension": "design_basis",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "CLIENT_PROVIDED_MOCKUP_ADAPTED",
+          "unit": "category",
+          "source_quote": "основе предоставленного тёмного макета сайта Молодёжного центра",
+          "source_line_ordinal": 67,
+          "source_line_sha256": "4b08d9a78e350d2d7acffb24c6fc2defb3f8a4de48de480912b263ae67a4bc35",
+          "reviewed_interpretation": "Доработка по предоставленному макету; число итераций согласовывается отдельно."
+        },
+        {
+          "dimension": "initial_content_origin",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "CUSTOMER_PROVIDED",
+          "unit": "category",
+          "source_quote": "Заказчик предоставляет окончательные тексты, изображения",
+          "source_line_ordinal": 86,
+          "source_line_sha256": "a69b7f0a4a1cb53e6291b79cfa746938660f43c82035f541678ae9e7e4785c48",
+          "reviewed_interpretation": "Исходный контент предоставляет заказчик; точное количество страниц в ТЗ не установлено."
+        },
+        {
+          "dimension": "postacceptance_obligation",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "ROUTINE_SUPPORT_EXCLUDED",
+          "unit": "category",
+          "source_quote": "дальнейшее сопровождение после приёмки в предмет работ не входят",
+          "source_line_ordinal": 133,
+          "source_line_sha256": "78e268cdc5fef0dbcbd947cd29a19d99d8c20f144d86c38ac1fb47879a3b8568",
+          "reviewed_interpretation": "Регулярное сопровождение после приёмки исключено; это не доказательство отсутствия гарантий."
+        },
+        {
+          "dimension": "hosting_payment",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "CONDITIONAL",
+          "source_value": "CONTRACTOR_IF_REQUIRED_12_MONTHS",
+          "unit": "category",
+          "source_quote": "хостинг сроком на 12 месяцев, если они требуются",
+          "source_line_ordinal": 53,
+          "source_line_sha256": "6b3f26fde94a9b75861ed3d7965a2f075cc422028c67c7aa2ae86c205ce12521",
+          "reviewed_interpretation": "Лицензию CMS и хостинг на год при необходимости оплачивает исполнитель; стоимость не указана."
+        },
+        {
+          "dimension": "knowledge_transfer",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "AT_LEAST",
+          "source_value": 2,
+          "unit": "hours",
+          "source_quote": "не менее 2 часов с ответами на вопросы",
+          "source_line_ordinal": 65,
+          "source_line_sha256": "2ea59e41b474da0677aaaca5b194ba8593c4fabcb2c5478a3747bff9d01d4e81",
+          "reviewed_interpretation": "Одна демонстрация и передача знаний продолжительностью не менее 2 часов."
+        },
+        {
+          "dimension": "site_purpose",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "CONTENT_AND_EVENTS_SITE",
+          "unit": "category",
+          "source_quote": "информирования посетителей о новостях, мероприятиях, пространствах и проектах",
+          "source_line_ordinal": 15,
+          "source_line_sha256": "1e5fe9e1b90747270d76be2fb925d50c2a8cb71a956e93a967b2f6a49b752f6d",
+          "reviewed_interpretation": "Сайт с новостями, событиями, каталогом проектов; чужие поисковые модули не приравниваются."
+        }
+      ],
+      "unknown_inputs": {
+        "actual_labor_hours": null,
+        "actual_labor_cost_rub": null,
+        "cms_license_cost_rub": null,
+        "hosting_and_domain_cost_rub": null,
+        "optional_integrations_cost_rub": null,
+        "actual_support_reserve_cost_rub": null,
+        "num_custom_site_page_templates": null,
+        "actual_initial_content_pages": null,
+        "initial_content_pages_cap": null,
+        "content_pages_scope": "NOT_QUANTIFIED_IN_REVIEWED_TZ"
+      },
+      "money_or_labor_conversion_estimated": false
+    },
+    {
+      "registry_number": "0119200000126013647",
+      "case_key": "KRASNOYARSK",
+      "original_technical_scope_docx_sha256": "35110af58a89e8d1c77ac6077d675e146af826269f149463d7f0a4b730fdaac4",
+      "verified_dimensions": [
+        {
+          "dimension": "delivery_working_days",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "UP_TO",
+          "source_value": 10,
+          "unit": "working_days",
+          "source_quote": "в течение 10 (десяти) рабочих дней с даты заключения контракта",
+          "source_line_ordinal": 8,
+          "source_line_sha256": "6e82fb8851bea1184b0e8a796bb63376d5aae353f2c5d13d83ffe37b8b87cbd3",
+          "reviewed_interpretation": "Срок договора; не определяет количество человеко-дней."
+        },
+        {
+          "dimension": "cms_platform",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "RUSSIAN_CMS_PRODUCT_NOT_PINNED",
+          "unit": "category",
+          "source_quote": "установка и настройка отечественной CMS",
+          "source_line_ordinal": 35,
+          "source_line_sha256": "ae13c413c13bcfae79090d2c4af55ea1f43b2e66866199d1e84efbe7d78df0c8",
+          "reviewed_interpretation": "Отечественная CMS обязательна, но точная лицензия и её цена неизвестны."
+        },
+        {
+          "dimension": "design_basis",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "NEW_FIGMA_CLICKABLE_ALL_PAGES",
+          "unit": "category",
+          "source_quote": "разработка интерактивного кликабельного прототипа всех страниц (Figma)",
+          "source_line_ordinal": 30,
+          "source_line_sha256": "f59c47cdc5104a3046c88ceeb871709b6422d4998f138f648c9cc79135842f4b",
+          "reviewed_interpretation": "Новый интерактивный Figma-прототип всех страниц и состояний ошибок, не готовый макет заказчика."
+        },
+        {
+          "dimension": "initial_content_origin",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "CUSTOMER_PROVIDED_PLUS_NEWS_AUTHORING",
+          "unit": "category",
+          "source_quote": "загрузка первичных текстов от Заказчика",
+          "source_line_ordinal": 42,
+          "source_line_sha256": "4e014a8ad9ea21f4cf2024327e60849703f555ddcba90ca30c7f82d4d0cc72e2",
+          "reviewed_interpretation": "Контент заказчика и дополнительная обязанность создавать реальные новости."
+        },
+        {
+          "dimension": "postacceptance_obligation",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "ONGOING_SUPPORT_12_MONTHS_WITH_SLA",
+          "unit": "category",
+          "source_quote": "Срок сопровождения: 12 месяцев с момента подписания",
+          "source_line_ordinal": 145,
+          "source_line_sha256": "9c6b9ed4aedbb11929afddaaf189ec7a86714ffebae3ec54d480ba2dc3312389",
+          "reviewed_interpretation": "12 месяцев технического сопровождения с SLA и мелкими правками; не только гарантия дефектов."
+        },
+        {
+          "dimension": "support_critical_reaction_hours",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "AT_MOST",
+          "source_value": 1,
+          "unit": "hours",
+          "source_quote": "Критический | Недоступность сайта, утечка данных | 1 час | 4 часа",
+          "source_line_ordinal": 150,
+          "source_line_sha256": "7c46ee7d9b1f4b2a70b5874ed8a5f9998845f8b7bb55b1a68e3a1604de7155fe",
+          "reviewed_interpretation": "SLA критических инцидентов: реакция 1 час, устранение 4 часа."
+        },
+        {
+          "dimension": "knowledge_transfer",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "UP_TO",
+          "source_value": 2,
+          "unit": "hours",
+          "source_quote": "семинара (до 2 часов) для сотрудников Заказчика",
+          "source_line_ordinal": 67,
+          "source_line_sha256": "311f819607d8e46c365668a7d686bbcea23b09cf14eb2845f4e8411420bdb427",
+          "reviewed_interpretation": "Обучающий семинар продолжительностью до 2 часов."
+        },
+        {
+          "dimension": "site_purpose",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "LEGAL_HELP_SEARCH_FORMS",
+          "unit": "category",
+          "source_quote": "Строка поиска в шапке или над основным контентом",
+          "source_line_ordinal": 85,
+          "source_line_sha256": "314e47f6c16b13db40e0153c63430f36466ab8577daf876ee876bf5ab2b9d59c",
+          "reviewed_interpretation": "Поиск по правовым материалам и новостям, отдельные формы обратной связи."
+        },
+        {
+          "dimension": "feedback_form",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "PERSONAL_DATA_CONTACT_FORM",
+          "unit": "category",
+          "source_quote": "поля: ФИО (Обязательное), Электронная почта (Обязательное)",
+          "source_line_ordinal": 132,
+          "source_line_sha256": "1558e6266d40ac5c13f7ce745aaf948d45ffd296cf97c7324cff1a41723db4a4",
+          "reviewed_interpretation": "Форма ФИО/email с согласием ПДн и капчей; трудозатраты неизвестны."
+        }
+      ],
+      "unknown_inputs": {
+        "actual_labor_hours": null,
+        "actual_labor_cost_rub": null,
+        "cms_license_cost_rub": null,
+        "hosting_and_domain_cost_rub": null,
+        "optional_integrations_cost_rub": null,
+        "actual_support_reserve_cost_rub": null,
+        "num_custom_site_page_templates": null,
+        "actual_initial_content_pages": null,
+        "initial_content_pages_cap": null,
+        "content_pages_scope": "NOT_QUANTIFIED_IN_REVIEWED_TZ"
+      },
+      "money_or_labor_conversion_estimated": false
+    },
+    {
+      "registry_number": "0377100005726000128",
+      "case_key": "CHEMAL",
+      "original_technical_scope_docx_sha256": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd",
+      "verified_dimensions": [
+        {
+          "dimension": "delivery_working_days",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "UP_TO",
+          "source_value": 21,
+          "unit": "working_days",
+          "source_quote": "не более 21 рабочего дня с даты подписания контракта",
+          "source_line_ordinal": 23,
+          "source_line_sha256": "3c1d9556d985a251675fad36f320d1550ef2ed82c7d80b8438e50e079e487135",
+          "reviewed_interpretation": "Contractual deadline, not labor input."
+        },
+        {
+          "dimension": "cms_platform",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "BITRIX_STANDARD_1_YEAR_PAID_BY_CONTRACTOR",
+          "unit": "category",
+          "source_quote": "«1С-Битрикс: Управление сайтом» в редакции «Стандарт» сроком действия не менее 1 (одного) года",
+          "source_line_ordinal": 9,
+          "source_line_sha256": "2e8efbfb104cb5cbb31ec6ca873db02b695b211ced733f50badd07d675a01e23",
+          "reviewed_interpretation": "Фиксирована лицензия «1С-Битрикс: Стандарт» минимум на год за счёт исполнителя; цена неизвестна."
+        },
+        {
+          "dimension": "design_basis",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "ONE_PREBUILT_TEMPLATE_CUSTOMIZATION",
+          "unit": "category",
+          "source_quote": "сайт разрабатывается на базе готового специализированного шаблона",
+          "source_line_ordinal": 35,
+          "source_line_sha256": "5939fc019343f22904e240ae3e9e267e156a93049d30e6f4344e35fae0118d0e",
+          "reviewed_interpretation": "Настройка готового шаблона и одного варианта дизайна; не индивидуальный Figma-прототип."
+        },
+        {
+          "dimension": "initial_content_origin",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "CUSTOMER_PROVIDED_UP_TO_40_PAGES",
+          "unit": "category",
+          "source_quote": "предоставленных Заказчиком",
+          "source_line_ordinal": 27,
+          "source_line_sha256": "0fc71e76f5cbadd5128bb49770eb4ed1c4512cc055ec071ef751bede53afcbf9",
+          "reviewed_interpretation": "Материалы предоставляет заказчик; максимальный объём страниц зафиксирован отдельно."
+        },
+        {
+          "dimension": "initial_content_pages_max",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "UP_TO",
+          "source_value": 40,
+          "unit": "text_pages",
+          "source_quote": "в объеме до 40 текстовых страниц",
+          "source_line_ordinal": 27,
+          "source_line_sha256": "0fc71e76f5cbadd5128bb49770eb4ed1c4512cc055ec071ef751bede53afcbf9",
+          "reviewed_interpretation": "Наполнение до 40 текстовых страниц заказчика, не 40 уникальных шаблонов."
+        },
+        {
+          "dimension": "postacceptance_obligation",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "DEFECT_WARRANTY_12_MONTHS",
+          "unit": "category",
+          "source_quote": "Гарантийный срок на разработанное программное обеспечение и выполненные работы составляет 12 (двенадцать) месяцев",
+          "source_line_ordinal": 42,
+          "source_line_sha256": "21f4531a6619549e232e749ee2fc9c35e94fa726686e949ebefb5e5e92d05f80",
+          "reviewed_interpretation": "Гарантия на исправление дефектов 12 месяцев; не равнозначна годовому сопровождению."
+        },
+        {
+          "dimension": "hosting_payment",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "CONTRACTOR_HOSTING_AND_NEW_DOMAIN_FIRST_YEAR",
+          "unit": "category",
+          "source_quote": "услуги хостинга на первый год обслуживания в полном объеме входят в цену контракта",
+          "source_line_ordinal": 33,
+          "source_line_sha256": "48bb304417b5bc5ee2176da875a881eece50ce96c1ffc7108a979e5587f00e7c",
+          "reviewed_interpretation": "Регистрация нового домена и первый год хостинга за счёт исполнителя; цены неизвестны."
+        },
+        {
+          "dimension": "site_purpose",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "LOCATION_MAP_AND_SPEECH_ACCESSIBILITY",
+          "unit": "category",
+          "source_quote": "Карта объектов» реализуется Исполнителем на базе бесплатного API сервиса Яндекс.Карты",
+          "source_line_ordinal": 21,
+          "source_line_sha256": "d493e0fe3c288da349b590d29a081a7490601afa505726278fb2fcdaa825872e",
+          "reviewed_interpretation": "Интерактивная Яндекс.Карта объектов и функции доступности/озвучивания."
+        },
+        {
+          "dimension": "speech_accessibility",
+          "source_state": "ATTESTED_FROM_EXACT_DOCX",
+          "constraint_kind": "SPECIFIED",
+          "source_value": "WEB_SPEECH_API_AND_LOW_VISION_MODE",
+          "unit": "category",
+          "source_quote": "через Web Speech API",
+          "source_line_ordinal": 16,
+          "source_line_sha256": "1df63ed7b6463f4b2f59f818b911c88b7700da9116a496d774b12c3915139260",
+          "reviewed_interpretation": "Озвучивание штатным Web Speech API и отдельные требования к версии для слабовидящих."
+        }
+      ],
+      "unknown_inputs": {
+        "actual_labor_hours": null,
+        "actual_labor_cost_rub": null,
+        "cms_license_cost_rub": null,
+        "hosting_and_domain_cost_rub": null,
+        "optional_integrations_cost_rub": null,
+        "actual_support_reserve_cost_rub": null,
+        "num_custom_site_page_templates": null,
+        "actual_initial_content_pages": null,
+        "initial_content_pages_cap": 40,
+        "content_pages_scope": "UP_TO"
+      },
+      "money_or_labor_conversion_estimated": false
+    }
+  ]
+}
