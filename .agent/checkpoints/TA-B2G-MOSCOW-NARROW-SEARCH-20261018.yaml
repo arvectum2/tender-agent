@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2G-MOSCOW-NARROW-SEARCH-20261018
-status: in_progress
+status: completed
 goal: Extend exact public React-UI original active quote search for software/services rather than category hardware; inspect real original development IT requests if discovered.
 definition_of_done:
   - Use isolated unauthenticated disposable Chrome entirely on ArvectumSSD and existing official filter UI (not guess hidden APIs).
@@ -11,11 +11,14 @@ definition_of_done:
   - Separate public B2G from target 15-20 corporate B2B; no registrations, bids, messages, payments, signatures, production changes or auto-merges.
 completed:
   - Resumed parent TA-ROADMAP-EXEC-20261012, clean worktree head 1949094c, prior child filter stage completed 278 tests and exact-head CI SUCCESS.
-current: Run narrowed first-party real public Chrome UI search and classify resulting original numbered cards.
-pending:
-  - Source observe narrowed public filters and cards.
-  - Review any potential original IT scopes and documents.
-  - Commit source/canonical reports/tests and mark checkpoint.
-last_verified_commit: 1949094cd85245b0f70936a72ae3efc6f098ac8e
-test_results: Previous 278 focused B2B/B2G test PASS, Ruff+Node JS syntax+Git clean, exact-head CI SUCCESS.
-resume_instruction: Preserve original source-only and legal-entity restrictions. Use only exact public /purchase/list real UI filtering and first-party original /auction/<number>; check source status/deadline and specific task. Do not count goods, vacancies, stale sources or B2G into B2B 15-20. Prior previous completed stages should not repeat.
+current: Completed 10 source-verified first-party public narrow searches and two original detail status reconciliation checks; no company bids.
+pending: []
+last_verified_commit: 0cc67c5835f1d1080f0892ccc1fad35caa4ede9c
+test_results:
+  - Ten original public Chrome UI first-page-only query terms active state 19000002 verified, counts 0,0,0,0,0,0,10,10,9,2, 25 unique original IDs from 31 appearances.
+  - Confirmed entering 62.01 in title input returns model codes of stove and medical couch, not structured OKPD2.
+  - Source original 10321173 active Oct18 deadline19Oct12:58MSK at 65092.56 RUB, security implementation and licensed Secret Net/ViPNet/Alt Education, Perma Krai location; not custom development, qualifications and original contract not read.
+  - Source original 10314722 filtered as active but detailed source Not Held, deadline Oct9, 100 RUB sum of unit prices versus 50000 RUB maximum unknown-volume contract, excluded by original status/deadline.
+  - Original rendered HTML SHA recorded, closed status/time and changed scope fail closed; source receipts include no credentials or full HTML and documents not downloaded.
+  - 297 focused B2B/B2G pytest PASS, 1 inherited warning, Ruff and Node syntax/git diff check PASS; code 0cc67c58, exact CI pending push.
+resume_instruction: "Child TA-B2G-MOSCOW-NARROW-SEARCH-20261018 completed at code 0cc67c58. Public Moscow SPA Chrome narrowed 10 exact active UI first-page queries, 25 deduped original IDs but 0 bespoke IT-development sourced; 62.01 is meaningless in text-name input. Original 10321173 is real adjacent InfoSec supplies/install/local Perm for 65092.56 RUB deadline Oct19 12:58 MSK, requires contract/license/site access and Owner GO; original 10314722 is Not Held/expired Oct9 despite active list. Next inspect true structured KTRU/OKPD2 expanded UI control only, not textual match or undocumented APIs, and if actual IT service original appears read full TЗ. Company legal right/signature and true corporate B2B 15-20 goal still open. No paid, bidding, signing, contacts, production or auto-merge PR477. Parent TA-ROADMAP-EXEC-20261012 in_progress."
