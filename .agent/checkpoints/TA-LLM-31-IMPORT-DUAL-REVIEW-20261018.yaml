@@ -12,6 +12,7 @@ definition_of_done:
   - Document binding roadmap rule for ALL future analyses to single DB and post-acceptance independent dual review, comparison, adjudication, learning-split policy and acceptance gates.
   - Implement bounded safety controls/tests where feasible; update parent and child checkpoint, push code/review PR without unauthorized merge or ETP/bid/payment/production UI deployment.
 completed:
+  - "2026-10-18 post-PR489 GitHub r8-postgres-integration detected expected mandatory-capture side effect on disposable migration-107 downgrade; fixed ONLY disposable R8 runner by explicit TENDER_LEARNING_CAPTURE_ENABLED=0. The populated-evidence migration guard and production default-on capture are unchanged. Local real disposable PostgreSQL R8 full cycle PASS 15s, volume/container cleaned up."
   - "2026-10-18 20:33 MSK verified immutable private batch sha256=7903f638ebb07ca26ecbdb80afd6cbc0a708f6dc50bec249ab20d4e50e38c551; owner-only 0600, dry-run 31/31, original PostgreSQL 77 rows, host read-only SQL batch prior-existing 0."
   - "2026-10-18 20:34 MSK full recoverable PostgreSQL custom-format pg_dump privately saved (0600), SHA256 f6bb234508164db57a92e2933baeb2fdc8b0bdd9c8db07f9c5fb6b46ae871bdd, pg_restore catalog validated 308 data-table entries; no restore operation on live DB."
   - "2026-10-18 20:35 MSK official guarded importer --apply --confirm-database arvectum inserted 31 and existing 0; exact authorized replay inserted 0 existing 31. Independent PostgreSQL read-only counts total 108 and source_ref manual:ta-research 31, without modifying training labels."
@@ -19,9 +20,9 @@ completed:
   - "PostgreSQL arvectum alembic 107 installed, read-only learning rows 77 and database estimated 32 MB; authorized owner explicitly approved 31-row DB import and mandatory capture/dual review."
 current: "Completed authorized import, canonical verification, dual-review offline protocol, capture-by-default review-code and tests."
 remaining: []
-last_verified_commit: 286c2f5ca6eb7ba22c8ba58ec3277290a9156236
+last_verified_commit: 7d8fd1dfce9fe1b1ffdc825a9c7597cc0d3bfcd3
 test_results:
-  - "Mac mini local pytest 265 PASS / 4 SKIP across procurement learning, customer pilot, EIS source and B2B regression; Ruff PASS, git diff --check PASS, YAML parse PASS."
+  - "Mac mini local pytest 265 PASS / 4 SKIP across procurement learning, customer pilot, EIS source and B2B regression; Ruff PASS, git diff --check PASS, YAML parse PASS; disposable PostgreSQL R8 schema upgrade/downgrade/reupgrade integration PASS."
   - "Existing 108 PostgreSQL learning observations verified post-transaction; new 31 owner-internal and candidate_unreviewed, all 45 saved Tender Agent run IDs captured, no missing analysis."
   - "Authorized apply 31 inserted/0 existing; exact replay 0 inserted/31 existing, pg_dump SHA and pg_restore catalog validated before write."
   - "No real post-acceptance 2-model runs or gold, no production application redeploy or merge, no ETP/customer external actions."
