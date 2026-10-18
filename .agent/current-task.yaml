@@ -722,3 +722,25 @@ external_chatgpt_learning_intake_2026_10_18:
   tests_skipped: 2
   stage: guarded_external_chatgpt_research_intake_review_only_completed
   next_step: Use new artifact+source-hash intake on the next real owner procurement research; expand EIS/Workspace/B2B automatic first-party collectors; after product acceptance run two genuine independent reviews.
+
+firstparty_workspace_b2b_collector_2026_10_18:
+  child_checkpoint: .agent/checkpoints/TA-ORIGINAL-PUBLIC-PLATFORM-COLLECTOR-20261018.yaml
+  verified_code_commit: 0bb7cc465faec889dd8ebe9b893ed948294570c6
+  report: docs/roadmap/PROCUREMENT_LLM_FIRSTPARTY_MARKET_COLLECTOR_2026-10-18.md
+  existing_canonical_db: arvectum
+  prior_learning_rows: 108
+  current_learning_rows: 110
+  original_workspace_source_newly_recorded: 1
+  original_b2bcenter_source_newly_recorded: 1
+  private_original_html_snapshots_saved: 2
+  replay_stable_same_html_new_rows: 0
+  original_event_first_observed_preserved: true
+  current_genuine_bids_eligible_from_new_pilot: 0
+  human_or_legal_training_gold_promoted: 0
+  new_source_provider_collector_code_deployed: false
+  remaining_official_eis_soap_collector: true
+  remaining_endtoend_all_external_chats: true
+  regression_tests_passed: 761
+  regression_tests_skipped: 2
+  stage: firstparty_marketplace_collector_complete_review_only
+  next_step: Build official EIS SOAP original ZIP/XML source capture with original version proof in same database, source-to-LLM training human review only after product acceptance, no automatic bid or unapproved merge.
