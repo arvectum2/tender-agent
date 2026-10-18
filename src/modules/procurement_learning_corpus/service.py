@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 from typing import Any
 
@@ -70,6 +71,19 @@ def validate_candidate(row: dict) -> None:
         raise ValueError("Submitted participation requires evidence status")
     if row["event_kind"] == "analysis_run" and not payload.get("run_id"):
         raise ValueError("Analysis run capture requires saved run ID")
+
+
+def learning_capture_enabled() -> bool:
+    """Owner-approved forward capture defaults ON for both saved-run workflows.
+
+    An explicit 0 disables in isolated tests / dedicated maintenance only.
+    Unexpected values fail closed so a typo cannot silently omit evidence.
+    Requires canonical Alembic 107; missing table rolls the run back.
+    """
+    setting = os.environ.get("TENDER_LEARNING_CAPTURE_ENABLED", "1")
+    if setting not in {"0", "1"}:
+        raise ValueError("TENDER_LEARNING_CAPTURE_ENABLED must be 0 or 1")
+    return setting == "1"
 
 
 def append_candidate(session: Session, row: dict) -> bool:
