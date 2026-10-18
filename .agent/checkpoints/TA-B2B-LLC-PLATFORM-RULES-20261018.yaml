@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-LLC-PLATFORM-RULES-20261018
+status: in_progress
+goal: Source-verify public official provider rules and first-party registration affordances for Russian LLC Arvectum on Workspace, Contractis and CodeLance, distinguish general free replies from verified company right, and avoid speculative subscription.
+definition_of_done:
+  - Verify literal first-party Workspace PRO invitation exception vs self-initiated mandatory PRO and legal entity digital agency classification (source URL/date/SHA).
+  - Verify Contractis and CodeLance first-party free reply terms and any legal-role rules without conflating team, sole proprietor, freelancer and registered Russian LLC.
+  - Inspect bounded public registration/user agreement links/UI affordances only if freely visible without credentials; classify LLC evidence as explicitly allowed, not established, or restricted.
+  - Update ranked first-customer queue for Workspace deadline Oct19 and Contractis/CodeLance first no-money reply, and explicitly state needed Owner GO/identity/corporate credentials.
+  - Deterministic fail-closed tests, roadmap, YAML state, commit/push draft PR477 after focused regression and CI.
+  - Do not create accounts, send proposals, spend money, use private credentials, signatures or production.
+completed:
+  - Resumed canonical roadmap parent in_progress, prior urgent 311-tests child completed at 415b4a6b, draft PR477 GitHub CI SUCCESS.
+  - Verified web-level initial public Workspace official PRO FAQ says free reply for invited agencies, PRO for independently initiated reply; Workspace terms indicate Digital-agency can be legal entity but actual company registration unknown.
+current: Verify exact official original policy pages, read-only legal role evidence, and isolate what bidder access remains unknowable without an account.
+pending:
+  - First-party public HTML/PDF statement evidence and registration type links.
+  - Source-conservative policy classifier and tests, operator decision matrix.
+  - QA and finish child checkpoint, push PR477 draft/CI.
+last_verified_commit: 415b4a6b9d83aed9a467eb02113d80d6a336dd22
+test_results: Previous child 311 B2B/B2G focused PASS; exact-head PR477 CI SUCCESS, new policy tests pending.
+resume_instruction: Continue exact first-party Workspace PRO invitation vs self-request claim, verify legal entity agent type in terms and read-only public Contractis/CodeLance role rules. No passwords/logins/registration/outreach/payments. Preserve distinction between conditional general rules and Arvectum actual bidder access. Child in_progress until tests and push.

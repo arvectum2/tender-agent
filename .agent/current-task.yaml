@@ -727,3 +727,9 @@ active_b2b_urgent_first_client_2026_10_18:
   implementation_commit: 453c03f5aead3d31fbf1226d5acc22b303ec500e
   tests: 311_passed_1_warning
   external_action: false
+
+active_b2b_llc_platform_rules_2026_10_18:
+  task_id: TA-B2B-LLC-PLATFORM-RULES-20261018
+  checkpoint: .agent/checkpoints/TA-B2B-LLC-PLATFORM-RULES-20261018.yaml
+  status: in_progress
+  external_action: false

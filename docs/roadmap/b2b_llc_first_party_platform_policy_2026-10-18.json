@@ -1,0 +1,193 @@
+{
+  "schema_version": "ta-b2b-first-party-llc-platform-policy-2026-10-18-v1",
+  "observed_at_utc": "2026-10-18T10:05:09.083326+00:00",
+  "first_party_policies_checked": 9,
+  "source_documents": [
+    {
+      "source": "workspace_terms",
+      "exact_url": "https://workspace.ru/upload/terms_of_use.pdf",
+      "html_or_pdf_sha256": "ec94d17ced9f5dc99ef76c17d09dd56b3afb31e1f3ad9c470d9a810bcc44263e",
+      "original_bytes": 207128,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "Редакция от 06.07.2026 г.",
+        "2.4.2. Группа специалистов, объединенная в юридическое лицо",
+        "4.4. При прохождении процедуры регистрации в качестве Агентства",
+        "уполномоченным сотрудником юридического лица",
+        "5.8.2. В случае если Агентство подходит под условия Тендера",
+        "5.8.3. Чтобы иметь возможность самостоятельно откликаться на Тендеры",
+        "Исполнителю необходимо приобрести платную опцию",
+        "8.4.1. Агентству доступны следующие способы оплаты:",
+        "по счету для оплаты платежным поручением"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "workspace_pro_faq",
+      "exact_url": "https://workspace.ru/advertising/",
+      "html_or_pdf_sha256": "4ba3e3e8da6b3df147efdd571b1c6ca70b1c206f36b11d46d02c74488256395c",
+      "original_bytes": 163124,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "Можно ли откликаться на тендеры бесплатно?",
+        "Да, если Заказчик сам приглашает digital-агентство",
+        "За отклик платить не потребуется.",
+        "Если Исполнитель планирует откликаться на тендеры самостоятельно",
+        "нужно приобрести PRO-аккаунт"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "contractis_home",
+      "exact_url": "https://contractis.ru/freelance",
+      "html_or_pdf_sha256": "c60a9f763e33a9cba6bcc71106c7e724430af9db30281458c3a1b626e297020b",
+      "original_bytes": 151507,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "Регистрация, профиль с портфолио",
+        "отклики в пределах месячного лимита бесплатны",
+        "Подписка PRO снимает лимит откликов",
+        "Самозанятые и ИП в каталоге выдают закрывающие документы"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "contractis_terms",
+      "exact_url": "https://contractis.ru/documentation/polzovatelskoe-soglashenie",
+      "html_or_pdf_sha256": "c0c69bacb17d4544974481915559bd860b29b5c95610c84178c1754147f07c49",
+      "original_bytes": 119924,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "Редакция от 10 августа 2026 г.",
+        "Пользователь любое лицо, зарегистрировавшееся или использующее сервис.",
+        "Contractis не является стороной договоров между заказчиками и исполнителями",
+        "При необходимости пользователи самостоятельно заключают договор, акт",
+        "Для доступа к отдельным функциям пользователь проходит регистрацию"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "contractis_rules",
+      "exact_url": "https://contractis.ru/documentation/pravila-servisa",
+      "html_or_pdf_sha256": "8abe6334aae975e86aeecf970635fb070f57f449635a05c83ff155b4e85831fd",
+      "original_bytes": 114869,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "В базовом доступе исполнитель получает ограниченный лимит откликов.",
+        "В стартовом доступе может быть доступно 5 тестовых откликов.",
+        "В PRO-подписке исполнитель получает безлимитные отклики"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "contractis_offer",
+      "exact_url": "https://contractis.ru/documentation/publichnaya-oferta",
+      "html_or_pdf_sha256": "c46e92ccef65010bf982957425b0c0db36111fc1b2ef1f70270a6b5294988661",
+      "original_bytes": 114010,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "START 0 ₽",
+        "5 откликов в месяц",
+        "PRO на месяц 499 ₽",
+        "PRO на квартал 999 ₽",
+        "При регистрации пользователь может получить 5 тестовых откликов",
+        "Платные функции Contractis не являются оплатой работ исполнителей"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "contractis_tariffs",
+      "exact_url": "https://contractis.ru/documentation/tarify",
+      "html_or_pdf_sha256": "31a2d966700fac0fc72ca9c3e9ba96a92c6d763aed6ae7979aa3411d812437a5",
+      "original_bytes": 96297,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "PRO-подписка исполнителя, 1 месяц",
+        "499 ₽",
+        "PRO-подписка исполнителя, квартал",
+        "999 ₽"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "codelance_developer",
+      "exact_url": "https://www.codelance.ru/site/razrabotchikam",
+      "html_or_pdf_sha256": "91e618d25b8aea04b72b78b56945b6d7becffc9ea63996a40c12d9d6ddd0a37f",
+      "original_bytes": 94400,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "Отклики — 0 ₽",
+        "Никаких платных подписок",
+        "Шаг 2. Откликнуться бесплатно"
+      ],
+      "is_authenticated_company_session": false
+    },
+    {
+      "source": "codelance_signup",
+      "exact_url": "https://www.codelance.ru/site/signup",
+      "html_or_pdf_sha256": "d8fb5f71c60d45f2c1cfe611b78782812683007d3e2b54d6e19992e50dbd50f0",
+      "original_bytes": 18351,
+      "original_status_http": 200,
+      "original_clause_fragments": [
+        "Регистрация на сайте",
+        "Логин (необязательно)",
+        "Email *",
+        "Имя *",
+        "Фамилия *",
+        "Пароль *",
+        "Зарегистрироваться"
+      ],
+      "is_authenticated_company_session": false
+    }
+  ],
+  "workspace": {
+    "legal_entity_as_agency_explicit_in_agreement": true,
+    "legal_agent_must_be_authorized_representative": true,
+    "default_self_initiated_tender_reply_requires_pro": true,
+    "invited_agency_reply_free_by_official_faq": true,
+    "published_company_invoice_payment_option": true,
+    "actual_llc_agency_profile_authenticated": false,
+    "specific_tender_invitation_verified": false,
+    "own_company_pro_category_and_price_verified": false,
+    "can_reply_to_19012_without_pro_verified": false,
+    "legal_entity_category_allowed_is_not_bid_ready": true
+  },
+  "contractis": {
+    "free_tier_public": true,
+    "published_start_free_replies_per_month": 5,
+    "five_test_replies_are_conditional_not_automatic": true,
+    "public_pro_month_rub": 499,
+    "public_pro_quarter_rub": 999,
+    "operator_party_to_customer_contract": false,
+    "customer_performer_contract_direct": true,
+    "explicit_verified_llc_registration_mode": false,
+    "specific_company_account_free_reply_quota_verified": false,
+    "actual_customer_legal_identity_verified": false,
+    "actual_contract_for_arvectum_verified": false
+  },
+  "codelance": {
+    "public_free_developer_replies": true,
+    "first_public_registration_form_fields": [
+      "login optional",
+      "email",
+      "given name",
+      "surname",
+      "phone optional",
+      "password",
+      "confirm password"
+    ],
+    "separate_legal_entity_fields_verified_in_first_form": false,
+    "explicit_verified_llc_registration_mode": false,
+    "subsequent_corporate_profile_options_inspected": false,
+    "actual_company_contract_and_payout_verified": false
+  },
+  "current_arvectum_llc_bid_authority_across_all_three": 0,
+  "registrations_bids_payments_emails_signatures_executed": 0,
+  "new_distinct_b2b_it_procurement_opportunities": 0,
+  "next_required_owner_evidence": [
+    "existing company agent account scope without disclosing credentials",
+    "authentically completed company portfolio or team contract references",
+    "contracting/payout to Russian LLC on Contractis and CodeLance",
+    "company invite for Workspace 19012 or authorized PRO category plus owner's budget GO"
+  ]
+}
