@@ -1,0 +1,23 @@
+{
+  "contract_version": "b2bcenter_4643484_first_party_readonly_v1",
+  "registry_number": "4643484",
+  "source": "B2B_CENTER_ORIGINAL_PUBLIC_PLATFORM_INDEX_AND_DIRECT_TENDER",
+  "official_category_index": "https://www.b2b-center.ru/search/industry/razrabotka-sajtov/",
+  "exact_platform_detail_url": "https://www.b2b-center.ru/app/market-next/razrabotka-korporativnogo-saita-pod-kliuch-s-obiazatelnym/tender-4643484/",
+  "index_html_sha256": "d51d03b3f114b07d35f99c489a08f50c58521e2a17557458c959aa21b2ad131f",
+  "index_html_bytes": 221683,
+  "detail_html_sha256": "5c39875a52d008b6339dab8112dbc076b03576c9aedd2cfba9af04cadadca757",
+  "detail_html_bytes": 286414,
+  "observed_at_utc": "2026-10-18T15:26:15.247377+00:00",
+  "original_organizer": "АО \"ТЕХ ВЗРЫВ ИНВЕСТ\"",
+  "original_subject": "Корпоративный сайт под ключ, с подтверждёнными кейсами и КП",
+  "original_printed_deadline_moscow": "2026-10-21T06:00:00+03:00",
+  "public_original_listing_seen": true,
+  "full_commercial_specification_verified": false,
+  "bidder_portfolio_acceptance_verified": false,
+  "platform_business_account_entitlement_verified": false,
+  "platform_fees_confirmed_for_this_bid": false,
+  "confirmed_initial_purchase_price": null,
+  "buyer_go_or_bid_ready": false,
+  "payment_or_external_message": false
+}
