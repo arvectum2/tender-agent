@@ -629,3 +629,9 @@ active_price01_website_comparables_2026_10_18:
   implementation_commit: eb8a8f3123cbfc782e39f20a79d1f2e501e3bfd4
   tests: 85_passed_6_warnings
   external_action: false
+
+active_price01_website_cohort_ui_2026_10_18:
+  task_id: TA-PRICE01-WEBSITE-COHORT-UI-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-WEBSITE-COHORT-UI-20261018.yaml
+  status: in_progress
+  external_action: false

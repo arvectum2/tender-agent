@@ -327,3 +327,102 @@ def test_price01_operator_tab_link_to_existing_arv057_without_auto_bid(client, a
     assert "data.company_go!==false" in js
     assert "НМЦК не являются ценами победителей" in html
     assert "fetch('/api/demo/tender-agent/workspace/bid" not in js
+
+
+def test_price01_six_original_website_history_is_private_not_a_single_pool(client, auth):
+    url = "/api/demo/tender-agent/workspace/website-price-cohort"
+    assert client.get(url).status_code == 401
+    result = client.get(url, headers=auth)
+    assert result.status_code == 200
+    data = result.json()
+    assert data["schema_version"] == "ta-price01-website-cohort-private-projection-v1"
+    assert data["state"] == "INDEPENDENT_HISTORICAL_WEBSITE_CASES_NOT_POOLED"
+    assert data["verified_original_procedures"] == 6
+    assert data["same_basket_procurements_as_aksay"] == 1
+    assert data["additional_equivalent_procurements"] == 0
+    assert data["market_aggregated_price_rub"] is None
+    assert data["owner_commercial_go"] is False
+    assert data["forecast_or_bid_recommendation"] is False
+    assert len(data["cases"]) == 6
+    assert sum(c["admitted"] for c in data["cases"]) == 124
+    assert sum(c["rejected"] for c in data["cases"]) == 16
+    assert "application_id" not in result.text
+    assert "appNumber" not in result.text
+    assert "rejection_reason_original" not in result.text
+    assert "company_price_rub" not in result.text
+    assert len(data["source_cohort_receipt_sha256"]) == 64
+    case = {x["registry_number"]: x for x in data["cases"]}
+    assert case["0119200000126013647"]["sub_ruble_source_bid_observed"] is True
+    assert case["0119200000126013647"]["admitted_price_low_rub"] == "0.01"
+    assert case["0132300001726000686"]["admitted"] == 1
+    assert case["0372200203126000012"]["admitted_price_status"] == (
+        "MISSING_FINAL_PRICE_IN_ORIGINAL_EOK_PROTOCOL"
+    )
+    assert case["0372200203126000012"]["admitted_price_low_rub"] is None
+    assert case["0372200203126000012"]["admitted_price_median_rub"] is None
+
+
+def test_price01_legacy_aksay_only_per_case_endpoint_does_not_auto_admit_other_websites(
+    client, auth,
+):
+    for number in (
+        "0132300001726000686",
+        "0119200000126013647",
+        "0377100005726000128",
+        "0372200203126000012",
+        "0884200000526000012",
+    ):
+        res = client.get(
+            f"/api/demo/tender-agent/workspace/competitive-prices/{number}",
+            headers=auth,
+        )
+        assert res.status_code == 404
+        assert "28400" not in res.text
+
+
+def test_price01_website_cohort_fails_closed_if_source_receipt_is_altered(
+    client, auth, monkeypatch, tmp_path,
+):
+    import json
+
+    from src.modules.tender_operator_agent_demo import (
+        operator_price_context as price_context,
+    )
+
+    original = price_context._COHORT_REPORT_PATH.read_bytes()
+    p = tmp_path / "original-price-cohort.json"
+    monkeypatch.setattr(price_context, "_COHORT_REPORT_PATH", p)
+    url = "/api/demo/tender-agent/workspace/website-price-cohort"
+
+    p.write_bytes(b'{"schema_version":"fake"}')
+    assert client.get(url, headers=auth).status_code == 503
+
+    altered = json.loads(original)
+    altered["new_admitted_same_basket_procurements"] = 5
+    p.write_text(json.dumps(altered))
+    assert client.get(url, headers=auth).status_code == 503
+
+    altered = json.loads(original)
+    altered["cases"][4]["admitted_price_low_rub"] = "0"
+    p.write_text(json.dumps(altered))
+    assert client.get(url, headers=auth).status_code == 503
+
+    p.write_bytes(original)
+    assert client.get(url, headers=auth).status_code == 200
+    p.unlink()
+    assert client.get(url, headers=auth).status_code == 503
+
+
+def test_price01_six_original_sites_render_only_inside_existing_prices_tab(client, auth):
+    html = client.get("/pilot/tender-agent/workspace", headers=auth).text
+    assert 'id="price-cohort-btn"' in html
+    assert 'id="price-cohort"' in html
+    assert "НЕЛЬЗЯ смешивать цены" in html
+    js = client.get("/pilot/tender-agent/workspace/assets/workspace.js", headers=auth).text
+    assert "/workspace/website-price-cohort" in js
+    assert "async function loadWebsiteCohort()" in js
+    assert "data.market_aggregated_price_rub!==null" in js
+    assert "data.additional_equivalent_procurements!==0" in js
+    assert "ставка менее 1 ₽" in js
+    assert "нет конечных цен допущенных" in js
+    assert "price-cohort-btn" in js

@@ -1,0 +1,22 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-WEBSITE-COHORT-UI-20261018
+status: in_progress
+goal: Add separately labeled source-hash pinned six historical website case cards to existing protected Operator Workspace, while leaving Aksay-only admitted-price API and cross-procurement NO-COMPARISON gates unchanged.
+definition_of_done:
+  - Expose a read-only authenticated endpoint serving allowlisted, independently SHA-pinned six-procedure aggregate with original source refs and exception labels.
+  - Show each case in existing Prices tab on explicit user action with readable exact price status and original scope comparison label; display 0.01 anomalies and unavailable prices transparently.
+  - Preserve 404 for non-Aksay original /competitive-prices endpoint, no blended market median and no private raw bidder rows.
+  - Test private auth, source tamper/no-file fail closed, no bidder IDs, UI wiring and price labels, relevant pytest and JS/Ruff.
+  - Commit, update roadmap/checkpoints, push draft PR478, check exact CI, leave production/legal GO false.
+completed:
+  - Previous six-source EIS original audit child completed at code eb8a8f31, latest branch head 74538941; original files retained outside Git on ArvectumSSD.
+  - Cohort aggregate JSON SHA pinned 65038a3e607bb2e2e51b1dffc05ee10c36a00b59e8817141a4c6be3146a9e963. Six original sources, 5 with final price, 1 EOK20 without; no comparable new Aksay basket.
+current: Implement private read-only projection and existing UI integration.
+pending:
+  - Service/route/UI.
+  - Integration tests/QA.
+  - Update roadmap; checkpoint complete and push.
+last_verified_commit: 7453894172767571c500519a9f07e97618da7a23
+test_results: Previous focused source cohort 85 passed / 6 warnings, Ruff clean; latest CI in progress.
+resume_instruction: Keep Aksay-only source-specific pricing API unchanged, add separately labeled historical cohorts only, no pooled prices or recommendations; no new database, business or external actions.

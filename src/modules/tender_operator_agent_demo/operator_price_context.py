@@ -5,6 +5,7 @@ protocol. No bidder-by-bidder rows, external contacts, DB or privileged file rea
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -107,4 +108,111 @@ def archived_competitive_price_context(registry_number: str) -> dict:
         "cost_scenarios": None,
         "forecast_or_bid_recommendation": False,
         "company_go": False,
+    }
+
+
+_COHORT_REPORT_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "docs/roadmap/price01_website_cohort_official_2026-10-18.json"
+)
+_COHORT_REPORT_SHA256 = "65038a3e607bb2e2e51b1dffc05ee10c36a00b59e8817141a4c6be3146a9e963"
+_COHORT_CASES = {
+    "0158300034526000388": ("BASELINE_ONLY", 55, 45),
+    "0132300001726000686": ("NOT_COMPARABLE_REGULATED_OFFICIAL_SITE", 6, 1),
+    "0119200000126013647": ("RELATED_SCOPE_REQUIRES_NORMALIZATION", 30, 30),
+    "0377100005726000128": ("RELATED_SCOPE_REQUIRES_NORMALIZATION", 28, 28),
+    "0372200203126000012": ("NOT_COMPARABLE_CUSTOM_CMS", 10, 9),
+    "0884200000526000012": ("NOT_COMPARABLE_COMPOUND_SUPPORT", 11, 11),
+}
+
+
+def archived_website_price_cohort() -> dict:
+    """Five separately sourced historical website cases + Aksay, NEVER a blend."""
+    try:
+        if (_COHORT_REPORT_PATH.is_symlink()
+                or not _COHORT_REPORT_PATH.is_file()
+                or _COHORT_REPORT_PATH.stat().st_size > 64_000):
+            raise ValueError("website cohort aggregate unavailable")
+        raw = _COHORT_REPORT_PATH.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != _COHORT_REPORT_SHA256:
+            raise ValueError("website source-bound receipt SHA mismatch")
+        report = json.loads(raw)
+        if (
+            report.get("schema_version") != "ta-price01-official-website-original-scope-cohort-v1"
+            or report.get("original_verified_procedures") != 6
+            or report.get("original_procedures_with_admitted_final_prices") != 5
+            or report.get("original_procedures_without_final_price") != 1
+            or report.get("new_admitted_same_basket_procurements") != 0
+            or report.get("aksay_website_same_basket_count") != 1
+            or report.get("profit_or_win_probability_forecast") is not False
+            or report.get("autonomous_bid_or_payment") is not False
+        ):
+            raise ValueError("unverified cohort schema or inappropriate recommendation")
+        cases = report["cases"]
+        if not isinstance(cases, list) or len(cases) != 6:
+            raise ValueError("historical cohort case count changed")
+        out = []
+        for case in cases:
+            num = case["registry_number"]
+            expected = _COHORT_CASES.get(num)
+            if expected is None or (case["scope_comparison_state"], case["total"], case["admitted"]) != expected:
+                raise ValueError("unknown/changed original cohort source")
+            if (
+                case["accepted_to_aksay_normalized_basket"] is not False
+                or case["total"] - case["admitted"] != case["rejected"]
+                or not all(len(case[k]) == 64 for k in (
+                    "official_zip_sha256", "original_final_xml_sha256",
+                    "original_technical_scope_docx_sha256", "original_notice_xml_sha256",
+                ))
+                or not case["source_scope_anchors_verified"]
+            ):
+                raise ValueError("source provenance or comparison integrity mismatch")
+            for field in ("admitted_price_low_rub", "admitted_price_median_rub", "admitted_price_high_rub"):
+                price = case[field]
+                if price is not None and (not isinstance(price, str) or re.fullmatch(r"\d{1,12}(?:\.\d{1,3})?", price) is None):
+                    raise ValueError("invalid original monetary evidence")
+            if case["source_price_field_state"] == "MISSING_FINAL_PRICE_IN_ORIGINAL_EOK_PROTOCOL":
+                if any(case[f] is not None for f in (
+                    "admitted_price_low_rub", "admitted_price_median_rub", "admitted_price_high_rub",
+                )):
+                    raise ValueError("missing final price replaced with unsupported amount")
+            elif case["source_price_field_state"] != "VERIFIED_ADMITTED_FINAL_PRICE":
+                raise ValueError("unverified original price status")
+            out.append({
+                "registry_number": num,
+                "original_notice_subject": case["original_notice_subject"],
+                "total": case["total"],
+                "admitted": case["admitted"],
+                "rejected": case["rejected"],
+                "admitted_price_status": case["source_price_field_state"],
+                "admitted_price_low_rub": case["admitted_price_low_rub"],
+                "admitted_price_median_rub": case["admitted_price_median_rub"],
+                "admitted_price_high_rub": case["admitted_price_high_rub"],
+                "sub_ruble_source_bid_observed": case["extreme_sub_ruble_bid_detected"],
+                "original_scope_comparison_state": case["scope_comparison_state"],
+                "original_scope_comparison_reason": case["scope_comparison_reason"],
+                "scope_original_anchors": list(case["source_scope_anchors_verified"]),
+                "eis_original_zip_sha256": case["official_zip_sha256"],
+                "original_final_xml_sha256": case["original_final_xml_sha256"],
+                "original_tz_docx_sha256": case["original_technical_scope_docx_sha256"],
+            })
+        if len({row["registry_number"] for row in out}) != 6:
+            raise ValueError("duplicate independent source cohort")
+    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Проверенный архив сайтов недоступен: показывать неподтверждённые цены запрещено",
+        ) from exc
+    return {
+        "schema_version": "ta-price01-website-cohort-private-projection-v1",
+        "state": "INDEPENDENT_HISTORICAL_WEBSITE_CASES_NOT_POOLED",
+        "source_cohort_receipt_sha256": _COHORT_REPORT_SHA256,
+        "verified_original_procedures": 6,
+        "same_basket_procurements_as_aksay": 1,
+        "additional_equivalent_procurements": 0,
+        "all_prices_are_individual_protocol_statistics": True,
+        "market_aggregated_price_rub": None,
+        "forecast_or_bid_recommendation": False,
+        "owner_commercial_go": False,
+        "cases": out,
     }

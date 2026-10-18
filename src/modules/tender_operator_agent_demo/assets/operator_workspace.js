@@ -693,6 +693,56 @@
       target.append(evidence);
     } catch(error) {wipe(target);paragraph(target,'Проверенные ставки недоступны: '+error.message,'empty-state');}
   }
+  async function loadWebsiteCohort() {
+    const target = $('price-cohort');
+    wipe(target);
+    paragraph(target,'Проверяем первичные доказательства независимых исторических сайтов…','empty-state');
+    try {
+      const data=await json(api+'/workspace/website-price-cohort');
+      if(data.state!=='INDEPENDENT_HISTORICAL_WEBSITE_CASES_NOT_POOLED'
+          ||data.verified_original_procedures!==6
+          ||data.same_basket_procurements_as_aksay!==1
+          ||data.additional_equivalent_procurements!==0
+          ||data.market_aggregated_price_rub!==null
+          ||data.forecast_or_bid_recommendation!==false
+          ||data.owner_commercial_go!==false
+          ||!Array.isArray(data.cases)||data.cases.length!==6) {
+        throw new Error('Нельзя объединять неподтверждённо сопоставимые цены сайтов.');
+      }
+      wipe(target);
+      paragraph(target,'6 отдельных официальных протоколов. Общей медианы нет: сопоставимость объёма и затрат ещё не доказана.','help-text');
+      for(const c of data.cases) {
+        const section=node('section','report-section');
+        section.append(node('h3','',c.original_notice_subject));
+        paragraph(section,'ЕИС №'+c.registry_number+' · заявок '+c.total
+          +' · допущено '+c.admitted+' · отклонено '+c.rejected+'.');
+        if(c.admitted_price_status==='VERIFIED_ADMITTED_FINAL_PRICE') {
+          const facts=node('div','facts');
+          const rubExact=value => value===null ? 'НЕИЗВЕСТНО' : String(value).replace('.',',')+' ₽';
+          for(const [label,value] of [
+            ['Мин. допущенная цена',rubExact(c.admitted_price_low_rub)],
+            ['Медиана по одной процедуре',rubExact(c.admitted_price_median_rub)],
+            ['Макс. допущенная цена',rubExact(c.admitted_price_high_rub)]]) appendFact(facts,label,value);
+          section.append(facts);
+          if(c.sub_ruble_source_bid_observed===true) {
+            paragraph(section,'Источниковая аномалия: ставка менее 1 ₽. Это не стоимость исполнения и не рекомендуемая ставка.','help-text');
+          }
+        } else {
+          paragraph(section,'В этом официальном итоговом протоколе нет конечных цен допущенных. НМЦК не подставляется.','empty-state');
+        }
+        paragraph(section,'Сопоставимость: '+c.original_scope_comparison_state);
+        paragraph(section,c.original_scope_comparison_reason,'help-text');
+        paragraph(section,'Основания в ТЗ: '+(c.scope_original_anchors||[]).join('; ')+'.','help-text');
+        const proof=node('details','');
+        proof.append(node('summary','','SHA-256 исходных документов'));
+        paragraph(proof,'ЕИС ZIP: '+c.eis_original_zip_sha256);
+        paragraph(proof,'Итоговый XML: '+c.original_final_xml_sha256);
+        paragraph(proof,'Оригинальное ТЗ DOCX: '+c.original_tz_docx_sha256);
+        section.append(proof);
+        target.append(section);
+      }
+    } catch(error) {wipe(target);paragraph(target,'Проверенные архивы сайтов недоступны: '+error.message,'empty-state');}
+  }
   async function loadHistoricalPrice() {
     const target=$('price-historical');
     wipe(target);
@@ -739,6 +789,7 @@
   $('refresh-history').addEventListener('click',()=>void loadHistory());
   $('price-form').addEventListener('submit',event=>void loadCompetitivePrice(event));
   $('price-historical-btn').addEventListener('click',()=>void loadHistoricalPrice());
+  $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});
