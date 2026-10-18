@@ -6,6 +6,8 @@
 
 Эта секция — **рабочая продуктовая очередь**. Полный ARV/BASE registry ниже остаётся историческим реестром, но открытый checkbox в legacy-реестре **не означает**, что задача автоматически должна быть реализована. Watchdog после исчерпания явной очереди идёт по этой секции; trigger-backlog не исполняется без подтверждённого trigger.
 
+**APR-03B квитанции архивных оригиналов (18.10, ветка до merge):** offline проверены 5/5 сохранённых приложений ЕИС 0372200172326000015; воспроизведено принятие недостоверной даты future/naive, исправлено в CLI и операторской проекции, 86 pytest PASS/Ruff PASS. Текущий публичный статус, свежий live-LLM и Owner/legal GO НЕ подтверждены. [Протокол](../acceptance/APR03B_ARCHIVED_SOURCE_TIMESTAMP_GUARD_2026-10-18.md).
+
 ### Сводка интеграции PR — 17.10.2026 (main)
 
 **FREE FIRST IT B2B customer initiative sources COMPLETED PR476 c97e186c8c:** official FL free for-all, Pchel studio100/mo <=USD1000 with stale duplicate risk, CodeLance free unlimited advertised but mixed self-promotion, CONTRACTIS monthly free limited cap unknown, Weblancer only10day trial/HTTP403, ITsNEW free reply unknown. First-party 4 policy page SHA + 3 original actual customer page SHA; 0 authenticated LLC corporate bids, 0 paid purchases. Current source project three candidates Contractis Python AI170k, landing90-150k 34 responses, CodeLance catalog import budget TBD. Official Moscow Portal suppliers free company enrollment with UKЭП is REGULATED offer not private chat. 5074 Mac PASS/285 SKIP+5 focused+GH green. [owner decision](B2B_FREE_FIRST_OUTREACH_CHANNELS_2026-10-17.md) [machine source](b2b_free_first_outreach_sources_2026-10-17.json). Parent 15-20 truly qualified open.

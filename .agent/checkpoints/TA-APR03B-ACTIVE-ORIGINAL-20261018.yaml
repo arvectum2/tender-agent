@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-ACTIVE-ORIGINAL-20261018
+status: completed
+goal: Verify APR-03B existing operator's source-evidence boundary; make the smallest verified fix or publish a fail-closed real-source acceptance receipt.
+definition_of_done:
+  - Reconcile prior accepted archived-source E2E and current single UI; do not repeat completed stages.
+  - Validate archived original source facts, current legal status UNKNOWN and report/export guard without accessing credentials.
+  - Fix any discovered source-safety defect with focused regressions or preserve a verified read-only receipt without code churn.
+  - Complete relevant tests and exact-commit evidence, update checkpoint, produce review-ready PR.
+completed:
+  - "2026-10-18: verified main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0 and existing runtime :18082 health 200/auth required."
+  - "2026-10-18: isolated ArvectumSSD worktree created; protected API credential inspection was blocked, not bypassed."
+current: Completed source-clock guarded original source audit.
+remaining: []
+last_verified_commit: ca1389f39247fbafd125f40d916a6573772bf85e
+test_results:
+  - "Two FAIL reproduced before patch for future and naive timestamps."
+  - "86 focused pytest PASS, Ruff PASS and diff check PASS."
+  - "Existing 18082 offline source: 5/5 attachments pass, current live legal status UNKNOWN."
+resume_instruction: Source timestamp fix complete; review exact-head CI and PR. Parent roadmap next APR-04 onboarding private company-profile acceptance with human gates.
