@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2B-LLC-PLATFORM-RULES-20261018
-status: in_progress
+status: completed
 goal: Source-verify public official provider rules and first-party registration affordances for Russian LLC Arvectum on Workspace, Contractis and CodeLance, distinguish general free replies from verified company right, and avoid speculative subscription.
 definition_of_done:
   - Verify literal first-party Workspace PRO invitation exception vs self-initiated mandatory PRO and legal entity digital agency classification (source URL/date/SHA).
@@ -13,11 +13,14 @@ definition_of_done:
 completed:
   - Resumed canonical roadmap parent in_progress, prior urgent 311-tests child completed at 415b4a6b, draft PR477 GitHub CI SUCCESS.
   - Verified web-level initial public Workspace official PRO FAQ says free reply for invited agencies, PRO for independently initiated reply; Workspace terms indicate Digital-agency can be legal entity but actual company registration unknown.
-current: Verify exact official original policy pages, read-only legal role evidence, and isolate what bidder access remains unknowable without an account.
-pending:
-  - First-party public HTML/PDF statement evidence and registration type links.
-  - Source-conservative policy classifier and tests, operator decision matrix.
-  - QA and finish child checkpoint, push PR477 draft/CI.
-last_verified_commit: 415b4a6b9d83aed9a467eb02113d80d6a336dd22
-test_results: Previous child 311 B2B/B2G focused PASS; exact-head PR477 CI SUCCESS, new policy tests pending.
-resume_instruction: Continue exact first-party Workspace PRO invitation vs self-request claim, verify legal entity agent type in terms and read-only public Contractis/CodeLance role rules. No passwords/logins/registration/outreach/payments. Preserve distinction between conditional general rules and Arvectum actual bidder access. Child in_progress until tests and push.
+current: Completed nine first-party official legal and free-reply policy receipts; verified Workspace juridical agent admission but zero authenticated LLC account rights.
+pending: []
+last_verified_commit: 07794c7b845b2d4946d8da7993395da90feff13e
+test_results:
+  - Nine exact public first-party HTTPS originals with SHA and UTC: Workspace latest native PDF edition 06.07.2026 (older indexed 2024 stale), official PRO FAQ, Contractis home+terms+rules+offer+tariff, CodeLance developers+first public signup.
+  - Workspace 2.4.2 legal-entity agency expressly allowed, 4.4 agency registration via authorized legal employee, 5.8.2/3 independent bid requires PRO in paid category, official invited agency reply free; invoice/company-card option published; actual LLC account, invitation and per-tender cart NOT verified.
+  - Contractis START advertised 5 replies/month; test five may be provided not guaranteed, PRO499 RUB/month or 999 RUB/quarter, marketplace NOT customer-performer contract party; LLC eligibility/account/receipt still unknown.
+  - CodeLance free replies general marketing; first public signup asks contact name/email/password only, no express separate LLC legal registration on first step; subsequent business profile and invoicing not tested.
+  - 332 focused B2B/B2G pytest PASS, one inherited warning, Ruff and git diff clean. Implementation SHA 07794c7b; exact final CI pending after push.
+  - 0 account logins, registrations, bidder responses, signed terms, money or customer outreach.
+resume_instruction: "Child TA-B2B-LLC-PLATFORM-RULES-20261018 completed at implementation SHA 07794c7b. Source-verified 9 official origins: latest Workspace PDF 06.07.2026 explicitly admits legal-entity Digital-agency registration through authorized representative, but independent tender response requires paid category PRO unless buyer invited agency, then free. Contractis START 5 replies/month publicly, 5 test conditional, paid PRO499/999 not needed for first trial; it is not party to customer contracts, specific Russian LLC signup/receipt unknown. CodeLance marketing replies free, first public signup personal name/email but no LLC form; not evidence LLC forbidden or accepted. Next user/authorized corporate account read-only evidence is required for Workspace invitations/PRO and Contractis/CodeLance LLC contracts; no passwords requested, no further SEO-only lead inflation. Parent TA-ROADMAP-EXEC-20261012 remains in_progress, PR477 draft code+checkpoint push/CI pending, PRICE01 PR478 separate. Never register/pay/send/sign/merge/prod absent Owner GO."
