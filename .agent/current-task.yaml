@@ -673,3 +673,9 @@ active_fl_crosspost_original_2026_10_18:
   implementation_commit: a80e49343e23fdaf32121db64cd6bd040de78609
   tests: 250_passed_1_warning
   external_action: false
+
+active_moscow_supplier_b2g_entry_2026_10_18:
+  task_id: TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018.yaml
+  status: in_progress
+  external_action: false

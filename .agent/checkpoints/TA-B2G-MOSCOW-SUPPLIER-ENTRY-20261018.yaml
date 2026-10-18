@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018
+status: in_progress
+goal: Verify official Moscow supplier portal's Russian legal-entity admission route, free initial registration versus optional paid training/support and mandatory signing/quote gates, without treating public SPA as a live IT auction or counting B2G as 15-20 B2B leads.
+definition_of_done:
+  - Pin bounded HTTP200 first-party regulator pages (registration, commercial organization direct invitation, optional support fees, short quote session); preserve URL/source SHA, reviewed quote fragments and time.
+  - Inspect exact public procurement SPA HTML and explicitly record absence of verified live quote session cards, not infer availability from index.
+  - Separate PUBLIC_PLATFORM_POLICY_VERIFIED from COMPANY_ACCOUNT_ELIGIBILITY_UNKNOWN and PROCUREMENT_BID_READY_FALSE; prohibit fake paid-required and fake zero company friction statements.
+  - Produce machine evidence report and human B2G channel decision with what owner must verify, keep current strict B2B target at zero eligible.
+  - Deterministic offline adversarial checks for changed/missing source anchors/false public SPA auction and no paid/registration actions.
+  - Run complete focused B2B regression/Ruff, update canonical roadmap/checkpoints, push PR477 draft, check exact-head CI; no merge or production.
+completed:
+  - Resumed canonical parent and FL crosspost child completed, clean PR477 head d47a7963; prior exact-head CI SUCCESS 92a907b0, d47 CI to check.
+  - Verified Moscow official registration free but email-only view access, business signing requires electronic signature, suppliers include commercial organizations.
+  - Official separate advisory paid training 7000 RUB and optional one-month priority support from 10000 RUB, not participation fees.
+  - Quotes 3/6/24h per official tenders site. Actual public supplier portal GET 200 is JS app shell only, no independently inspected open IT quote session.
+current: Implement exact source-bound operator decision gate (B2G not B2B).
+pending:
+  - Machine receipts, offline tests, source short report.
+  - Regression/roadmap and final commits/push/CI.
+last_verified_commit: d47a7963d637306654fc3bca1f47eb5aa6b519d9
+test_results: Prior B2B 250 PASS/1 inherited warning, Ruff clean; new tests pending.
+resume_instruction: Do NOT equate free email registration with right to bid, nor 7000 rub optional training with mandatory portal fee. Do NOT count Moscow government B2G as corporate B2B opportunity. No live IT session verified in JS-only public shell. Require company signature/session/access actual buyer scope and owner GO before applications or commercial payments. Preserve PR477 draft.
