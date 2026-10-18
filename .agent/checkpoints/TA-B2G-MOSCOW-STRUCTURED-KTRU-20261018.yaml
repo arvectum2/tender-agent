@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018
-status: in_progress
+status: completed
 goal: Determine whether an officially exposed structured OKPD2/KTRU filter exists in the Moscow quote registry UI and what it can actually attest, without confusing full text 62.01 or guessing backend APIs.
 definition_of_done:
   - Check actual publicly rendered first-party advanced filter UI controls with isolated read-only disposable Chrome on ArvectumSSD.
@@ -13,11 +13,13 @@ definition_of_done:
 completed:
   - Prior TA-B2G-MOSCOW-NARROW-SEARCH-20261018 completed source-backed at 08871f72; 297 tests PASS, latest exact CI pending.
   - Original text field 62.01 gave 2 product-model false positives, so cannot stand in for structured OKPD2.
-current: Inspect actual official public advanced-filter control and identify legitimate structured catalog affordances.
-pending:
-  - Original public expanded filter DOM observation and control semantics.
-  - Conditional user interface structured source search if available.
-  - Add tests/roadmap and complete checkpoint/push/CI.
-last_verified_commit: 08871f72f65aeef594ccca42dfeadbe26eff0933
-test_results: Prior 297 focused tests PASS, one inherited warning; Ruff/Node syntax PASS. Structured filter not yet tested.
-resume_instruction: Read only real public UI. Before using any structured KTRU/OKPD2 filter, verify its actual observed label and widget behavior. Avoid undocumented APIs, arbitrary backend IDs, source guessing and claims about all active IT bids. B2G not B2B. Parent roadmap in_progress.
+current: Completed original public KTRU and Product type UI audit; two real controls visible but zero populated options in anonymous Chrome.
+pending: []
+last_verified_commit: 764e06870c50bbc1f28b9ade0e0175c036a7489b
+test_results:
+  - Verified exact official public quote registry expanded UI contains two distinct original listboxes KTRU and Product type.
+  - Both listboxes clicked via observed first-party UI in disposable unauthenticated Chrome; original runtime 2026-10-18T09:27 UTC, aria-expanded false, no visible options/search input, no class62 selected, no structured query submitted.
+  - Do not infer zero market activity or zero live IT auctions from missing dropdown data.
+  - 300 focused B2B/B2G pytest PASS, one inherited warning; Ruff, Node JS syntax and git diff clean.
+  - Code commit 764e06870c50bbc1f28b9ade0e0175c036a7489b, GitHub exact-head CI pending after push; no company actions.
+resume_instruction: "Child TA-B2G-MOSCOW-STRUCTURED-KTRU-20261018 completed at code 764e0687. First-party anonymous public UI has separate KTRU and Product type listboxes, but both after click aria-expanded false and zero available options as observed Oct18 09:27 UTC. No structured code62 query submitted, not proof no IT auctions. Next seek official supported catalog documentation or permitted owner-approved supplier account access; independently source-verify corporate B2B buyer/reply eligibility. Parent TA-ROADMAP-EXEC-20261012 in_progress, draft PR477 CI/review pending. No bids, signatures, money, customer outreach, production or automatic merge."
