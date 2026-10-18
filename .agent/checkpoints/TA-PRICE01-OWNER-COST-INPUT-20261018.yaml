@@ -15,7 +15,7 @@ completed:
   - Existing exact-Decimal pure function compute_owner_supplied_break_even accepts explicit direct/labor/reserve/fixed fees, tax fraction, variable platform fee fraction, explicit profit; calculates three ceilings.
 current: Completed seven-input stateless protected calculator reusing existing Decimal break-even function; no actual cost input provided.
 pending: []
-last_verified_commit: eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6
+last_verified_commit: 4b551993e82519542190f73c875dd7978528e05e
 test_results:
   - Private POST /api/demo/tender-agent/workspace/price-scenario/calculate accepts only seven individually required explicit owner assumptions, plus explicit non-binding confirmation; 401 for unauthorized, 422 malformed, extra, empty or impossible rate scenarios.
   - Uses preexisting pure Decimal compute_owner_supplied_break_even, no formula duplication; tests exact synthetic 100 external/200 labor/20 reserve/5 fixed/6 percent tax/2 percent platform/50 profit => cash135.87,full353.27,target407.61 RUB thresholds, not actual Arvectum costs.
@@ -23,6 +23,7 @@ test_results:
   - Existing protected Operator Workspace form has seven required blank inputs, explicit confirmation and clear action; browser no-JS fallback method POST (never sensitive values in URL).
   - Full relevant regression 162 tests passed, 10 skipped and 6 previous warnings; Ruff clean; JavaScript syntax and git diff checks pass.
   - Code commit eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6. Exact-head CI pending after checkpoint push.
+  - 2026-10-18 follow-up bugfix: positive labor with all cash-outlay fields zero was erroneously rejected. Gate now includes explicit labor; zero all expenses still 422. 99 focused tests PASS, 1 inherited warning, targeted diff clean, tested at 4b551993e82519542190f73c875dd7978528e05e; fresh exact-head CI pending.
 resume_instruction: >-
   Child TA-PRICE01-OWNER-COST-INPUT-20261018 completed at code SHA
   eb8ef3066c4686738ebc7f8fcf8b3a928df1c7e6, pending exact-head CI
