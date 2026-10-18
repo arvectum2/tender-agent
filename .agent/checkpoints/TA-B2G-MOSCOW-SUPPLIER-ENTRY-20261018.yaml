@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018
-status: in_progress
+status: completed
 goal: Verify official Moscow supplier portal's Russian legal-entity admission route, free initial registration versus optional paid training/support and mandatory signing/quote gates, without treating public SPA as a live IT auction or counting B2G as 15-20 B2B leads.
 definition_of_done:
   - Pin bounded HTTP200 first-party regulator pages (registration, commercial organization direct invitation, optional support fees, short quote session); preserve URL/source SHA, reviewed quote fragments and time.
@@ -15,10 +15,15 @@ completed:
   - Verified Moscow official registration free but email-only view access, business signing requires electronic signature, suppliers include commercial organizations.
   - Official separate advisory paid training 7000 RUB and optional one-month priority support from 10000 RUB, not participation fees.
   - Quotes 3/6/24h per official tenders site. Actual public supplier portal GET 200 is JS app shell only, no independently inspected open IT quote session.
-current: Implement exact source-bound operator decision gate (B2G not B2B).
-pending:
-  - Machine receipts, offline tests, source short report.
-  - Regression/roadmap and final commits/push/CI.
-last_verified_commit: d47a7963d637306654fc3bca1f47eb5aa6b519d9
-test_results: Prior B2B 250 PASS/1 inherited warning, Ruff clean; new tests pending.
-resume_instruction: Do NOT equate free email registration with right to bid, nor 7000 rub optional training with mandatory portal fee. Do NOT count Moscow government B2G as corporate B2B opportunity. No live IT session verified in JS-only public shell. Require company signature/session/access actual buyer scope and owner GO before applications or commercial payments. Preserve PR477 draft.
+current: Completed exact original official 5-policy-sources attestation and safe B2G gate report; no live auction cards attested.
+pending: []
+last_verified_commit: 5a667ab619e6b018847e984d411674a1aaf2238d
+test_results:
+  - Five exact public official HTTP200 source pages with SHA, 11 reviewed official literal policy anchors, no original HTML dumps, no company credentials.
+  - Free email-only registration gives VIEW not bidding; commercial firms admitted generally; electronic signature required for legal actions and QR direct contract invitation restricted to eligible regional buyers.
+  - Official 3/6/24h quote duration; optional individual education 7000 RUB and optional priority support >=10000 RUB/mo not mandatory participation fee.
+  - Supplier portal public HTTP200 original is JavaScript shell, not an attested live IT quote; 0 actual bid-ready sessions, 0 additional B2B corporate opportunities.
+  - Public rendered page attempt also timed out, no original live lot documents obtained; never claim there are no auctions.
+  - 259 focused B2G/B2B pytest PASS / 1 inherited warning; Ruff and git diff clean.
+  - Implementation commit 5a667ab619e6b018847e984d411674a1aaf2238d; exact CI pending after push.
+resume_instruction: "Child TA-B2G-MOSCOW-SUPPLIER-ENTRY-20261018 completed on code SHA 5a667ab6. Public Moscow supplier register is free but email-only view not bidding; requires electronic signature for legal actions; optional trainings are not participation fees. Commercial organizations are eligible generally, but actual Arvectum account and UKЭP access, explicit original live IT session and precise clock-time have NOT been verified. Public procurement site returned JavaScript app shell; attempted public renderer also timed out. This is B2G not B2B; do not inflate B2B goal, avoid guessing endpoints/crawling authenticated content. Next inspect only original public quotes in a supported browser, then check owner account and GO. PR477 exact head CI/review pending; parent roadmap TA-ROADMAP-EXEC-20261012 remains in_progress, PR478 separate draft."
