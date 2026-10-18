@@ -426,3 +426,96 @@ def test_price01_six_original_sites_render_only_inside_existing_prices_tab(clien
     assert "ставка менее 1 ₽" in js
     assert "нет конечных цен допущенных" in js
     assert "price-cohort-btn" in js
+
+
+def test_price01_attested_three_original_tz_normalization_is_private_not_bid(client, auth):
+    uri = "/api/demo/tender-agent/workspace/website-workload-normalization"
+    assert client.get(uri).status_code == 401
+    r = client.get(uri, headers=auth)
+    assert r.status_code == 200
+    assert "no-store" in r.headers.get("cache-control", "")
+    data = r.json()
+    assert data["state"] == "ATTESTED_CONTRACT_WORKLOAD_NOT_PRICE_NORMALIZATION"
+    assert data["source_cases_count"] == 3
+    assert data["comparable_basket_procurements_count"] == 1
+    assert data["additional_equivalent_projects"] == 0
+    assert data["work_unit_rate_rub"] is None
+    assert data["cross_tender_normalized_price_rub"] is None
+    assert data["estimated_company_labor_hours"] is None
+    assert data["bid_recommendation"] is False
+    assert data["owner_approved"] is False
+    assert len(data["receipt_sha256"]) == 64
+    cases = {case["case_key"]: case for case in data["cases"]}
+    assert set(cases) == {"AKSAY", "KRASNOYARSK", "CHEMAL"}
+    for case in cases.values():
+        assert len(case["original_technical_scope_docx_sha256"]) == 64
+        assert case["costs_or_labor_hours_known"] is False
+        assert case["actual_content_pages_known"] is False
+        assert all(
+            len(d["source_line_sha256"]) == 64 and d["source_quote"] and d["reviewed_interpretation"]
+            for d in case["verified_dimensions"]
+        )
+
+    def get(case, dimension):
+        return next(
+            item["source_value"]
+            for item in cases[case]["verified_dimensions"]
+            if item["dimension"] == dimension
+        )
+
+    assert [get(key, "delivery_working_days") for key in ("AKSAY", "KRASNOYARSK", "CHEMAL")] == [
+        14, 10, 21,
+    ]
+    assert get("AKSAY", "postacceptance_obligation") == "ROUTINE_SUPPORT_EXCLUDED"
+    assert get("KRASNOYARSK", "postacceptance_obligation") == "ONGOING_SUPPORT_12_MONTHS_WITH_SLA"
+    assert get("CHEMAL", "postacceptance_obligation") == "DEFECT_WARRANTY_12_MONTHS"
+    assert cases["AKSAY"]["initial_content_pages_cap"] is None
+    assert cases["KRASNOYARSK"]["initial_content_pages_cap"] is None
+    assert cases["CHEMAL"]["initial_content_pages_cap"] == 40
+    assert "application_id" not in r.text
+    assert "appNumber" not in r.text
+    assert "28400" not in r.text
+
+
+def test_price01_workload_matrix_source_sha_alter_or_missing_is_503(client, auth, tmp_path, monkeypatch):
+    import json
+
+    from src.modules.tender_operator_agent_demo import operator_price_context as context
+
+    original = context._WORKLOAD_REPORT_PATH.read_bytes()
+    dest = tmp_path / "workload.json"
+    monkeypatch.setattr(context, "_WORKLOAD_REPORT_PATH", dest)
+    uri = "/api/demo/tender-agent/workspace/website-workload-normalization"
+
+    dest.write_bytes(b"{}")
+    assert client.get(uri, headers=auth).status_code == 503
+
+    altered = json.loads(original)
+    altered["new_equivalent_website_contracts"] = 2
+    dest.write_text(json.dumps(altered))
+    assert client.get(uri, headers=auth).status_code == 503
+
+    altered = json.loads(original)
+    altered["cases"][0]["unknown_inputs"]["actual_labor_cost_rub"] = 0
+    dest.write_text(json.dumps(altered))
+    assert client.get(uri, headers=auth).status_code == 503
+
+    dest.write_bytes(original)
+    assert client.get(uri, headers=auth).status_code == 200
+    dest.unlink()
+    assert client.get(uri, headers=auth).status_code == 503
+
+
+def test_price01_workload_matrix_button_is_real_ui_not_second_console(client, auth):
+    html = client.get("/pilot/tender-agent/workspace", headers=auth).text
+    js = client.get("/pilot/tender-agent/workspace/assets/workspace.js", headers=auth).text
+    assert 'id="price-workload-btn"' in html
+    assert 'id="price-workload"' in html
+    assert "НЕТ коэффициентов стоимости" in html
+    assert "website-workload-normalization" in js
+    assert "async function loadWorkloadNormalization()" in js
+    assert "work_unit_rate_rub!==null" in js
+    assert "additional_equivalent_projects!==0" in js
+    assert "loadWorkloadNormalization());" in js
+    assert "Нормализация рублёвой цены НЕ ВЫПОЛНЕНА" in js
+    assert "/workspace/competitive-prices/" in js  # Aksay still isolated

@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-WORKLOAD-NORMALIZATION-20261018
+status: in_progress
+goal: Verify the source-anchored measurable work components of Aksay, Krasnoyarsk and Chemal from 3 exact DOCX TЗ originals; present non-price workload differences and unknown cost inputs without arbitrary multipliers.
+definition_of_done:
+  - Use only SHA-pinned original filestore DOCX, exact distinct source quote anchors; no inferred man-hours, prices, market ratios or missing-fact substitutions.
+  - Model deadline in working days, CMS constraints, design/templating, quantified content pages where stated, post-acceptance maintenance vs warranty, domain/hosting/licenses, integrations and training.
+  - Emit machine original-SHA and evidence-text digests with per-case statuses and explicit unknowns; keep revenue/normalized_price/profit fields null and baseline single comparable.
+  - Expose authenticated read-only matrix in existing Price tab through pinned SHA-bound cohort receipt, still no comparable pooling or replacement for previously verified EIS prices.
+  - Adversarial offline tests for SHA/anchor drifts, null unknowns, unavailable/tampered API payload, UI and auth; run Ruff/JS+focused regression.
+  - Update canonical roadmap/checkpoints; commit/push PR478 as draft; verify CI latest head.
+completed:
+  - Resumed canonical parent, previous 6-source original comparison and UI children completed and CI success on head b70aa60d.
+  - Source documents on local ArvectumSSD independently matched original sha. Identified Aksay 14 days / Russian CMS / owner-provided design / regular support excluded, Krasnoyarsk 10 days / original Figma / 12-month service SLA, Chemal 21 days / specified Bitrix / up to 40 text pages / 12-month warranty.
+current: Build exact quote-bound dimensional normalization without monetary ratios.
+pending:
+  - Verify all quantitative and qualitative anchors and create independent machine receipt.
+  - Add protected source-bound matrix UI and tests.
+  - Regress, update roadmap and checkpoint, push CI.
+last_verified_commit: b70aa60d79f0cb2694d051c8a5ec413298128d9d
+test_results: Prior stage 119 relevant PASS, 10 SKIP and 6 inherited warnings; latest CI SUCCESS.
+resume_instruction: Validate exact source DOCX hashes for 3 cases; no arbitrary cost coefficients. Distinguish ongoing support and defect-only warranty. Original design and content pages have unknowns. Never modify old dirty checkout or production, retain draft PR478, no bids or commercial GO.

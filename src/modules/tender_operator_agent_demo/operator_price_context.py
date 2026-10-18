@@ -216,3 +216,129 @@ def archived_website_price_cohort() -> dict:
         "owner_commercial_go": False,
         "cases": out,
     }
+
+
+_WORKLOAD_REPORT_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "docs/roadmap/price01_workload_normalization_2026-10-18.json"
+)
+_WORKLOAD_REPORT_SHA256 = "fefb77d99df0999e626a916d3edc58a942a75cec894c7c56da309f1f6b0ce74f"
+_WORKLOAD_CASES = {
+    "0158300034526000388": ("AKSAY", 14, 8),
+    "0119200000126013647": ("KRASNOYARSK", 10, 9),
+    "0377100005726000128": ("CHEMAL", 21, 9),
+}
+_WORKLOAD_ORIGINAL_DOCX_SHA256 = {
+    "0158300034526000388": "0e40a162e85a69b496fb350e846a39c90695033fd5a46ebfb2683f9996132f7a",
+    "0119200000126013647": "35110af58a89e8d1c77ac6077d675e146af826269f149463d7f0a4b730fdaac4",
+    "0377100005726000128": "a099f70cda44c5cdd52fe5ddcab6c462d24a5222f167d97d88d7e47b6a2481cd",
+}
+
+
+def archived_website_workload_normalization() -> dict:
+    """Original SHA-attested workload facts, not a price estimate or cost ratio."""
+    try:
+        path = _WORKLOAD_REPORT_PATH
+        if path.is_symlink() or not path.is_file() or path.stat().st_size > 40_000:
+            raise ValueError("original workload report unavailable")
+        raw = path.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != _WORKLOAD_REPORT_SHA256:
+            raise ValueError("source workload report hash mismatch")
+        report = json.loads(raw)
+        if (
+            report.get("schema_version") != "ta-price01-verified-workload-no-financial-coefficients-v1"
+            or report.get("baseline_aksay_contracts_count") != 1
+            or report.get("new_equivalent_website_contracts") != 0
+            or report.get("other_related_site_contracts_requiring_cost_normalization") != 2
+            or report.get("labor_hours_comparable") is not False
+            or report.get("company_costs_user_supplied") is not False
+            or any(report.get(field) is not None for field in (
+                "scope_normalization_adjustment_rub",
+                "cross_tender_market_price_rub",
+                "bid_recommendation_rub",
+                "monetary_multiplier_per_working_day",
+            ))
+        ):
+            raise ValueError("invalid price normalization or commercial input")
+        cases = report["cases"]
+        if not isinstance(cases, list) or len(cases) != 3:
+            raise ValueError("invalid number of original reviewed TЗ")
+        projected = []
+        for case in cases:
+            number = case["registry_number"]
+            expected = _WORKLOAD_CASES.get(number)
+            if (
+                not expected
+                or case.get("case_key") != expected[0]
+                or case.get("original_technical_scope_docx_sha256")
+                != _WORKLOAD_ORIGINAL_DOCX_SHA256[number]
+                or case.get("money_or_labor_conversion_estimated") is not False
+                or len(case.get("verified_dimensions", [])) != expected[2]
+            ):
+                raise ValueError("unrecognized original workload source")
+            metrics = case["verified_dimensions"]
+            if len({d.get("dimension") for d in metrics}) != expected[2]:
+                raise ValueError("duplicate source dimension")
+            duration = [d for d in metrics if d.get("dimension") == "delivery_working_days"]
+            if len(duration) != 1 or duration[0].get("source_value") != expected[1]:
+                raise ValueError("unexpected attested original contractual deadline")
+            unknown = case["unknown_inputs"]
+            if (
+                any(unknown.get(f) is not None for f in (
+                    "actual_labor_hours", "actual_labor_cost_rub", "cms_license_cost_rub",
+                    "hosting_and_domain_cost_rub", "optional_integrations_cost_rub",
+                    "actual_support_reserve_cost_rub", "actual_initial_content_pages",
+                    "num_custom_site_page_templates",
+                ))
+                or unknown.get("initial_content_pages_cap")
+                != (40 if number == "0377100005726000128" else None)
+            ):
+                raise ValueError("unverified costing information in public history")
+            for metric in metrics:
+                if (
+                    metric.get("source_state") != "ATTESTED_FROM_EXACT_DOCX"
+                    or not metric.get("source_quote")
+                    or not metric.get("reviewed_interpretation")
+                    or len(metric.get("source_line_sha256", "")) != 64
+                    or not isinstance(metric.get("source_line_ordinal"), int)
+                    or metric["source_line_ordinal"] < 0
+                    or not isinstance(metric.get("unit"), str)
+                    or not isinstance(metric.get("constraint_kind"), str)
+                    or not isinstance(metric.get("source_value"), (int, str))
+                ):
+                    raise ValueError("unverifiable quoted requirement")
+            projected.append({
+                "registry_number": number,
+                "case_key": case["case_key"],
+                "original_technical_scope_docx_sha256": case["original_technical_scope_docx_sha256"],
+                "verified_dimensions": [
+                    {k: d[k] for k in (
+                        "dimension", "source_value", "unit", "constraint_kind",
+                        "reviewed_interpretation", "source_quote",
+                        "source_line_ordinal", "source_line_sha256",
+                    )} for d in metrics
+                ],
+                "costs_or_labor_hours_known": False,
+                "initial_content_pages_cap": unknown["initial_content_pages_cap"],
+                "actual_content_pages_known": False,
+            })
+        if {case["registry_number"] for case in projected} != set(_WORKLOAD_CASES):
+            raise ValueError("missing or duplicate original website requirements")
+    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="Исходная матрица технических заданий недоступна или не проверена",
+        ) from exc
+    return {
+        "state": "ATTESTED_CONTRACT_WORKLOAD_NOT_PRICE_NORMALIZATION",
+        "receipt_sha256": _WORKLOAD_REPORT_SHA256,
+        "source_cases_count": 3,
+        "comparable_basket_procurements_count": 1,
+        "additional_equivalent_projects": 0,
+        "work_unit_rate_rub": None,
+        "cross_tender_normalized_price_rub": None,
+        "estimated_company_labor_hours": None,
+        "bid_recommendation": False,
+        "owner_approved": False,
+        "cases": projected,
+    }

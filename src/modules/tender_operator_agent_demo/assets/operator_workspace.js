@@ -743,6 +743,82 @@
       }
     } catch(error) {wipe(target);paragraph(target,'Проверенные архивы сайтов недоступны: '+error.message,'empty-state');}
   }
+  async function loadWorkloadNormalization() {
+    const target=$('price-workload');
+    wipe(target);
+    paragraph(target,'Проверяем контрольные суммы исходных технических заданий…','empty-state');
+    try {
+      const data=await json(api+'/workspace/website-workload-normalization');
+      if(data.state!=='ATTESTED_CONTRACT_WORKLOAD_NOT_PRICE_NORMALIZATION'
+          ||data.source_cases_count!==3||data.comparable_basket_procurements_count!==1
+          ||data.additional_equivalent_projects!==0||data.work_unit_rate_rub!==null
+          ||data.cross_tender_normalized_price_rub!==null
+          ||data.estimated_company_labor_hours!==null
+          ||data.bid_recommendation!==false||data.owner_approved!==false
+          ||!Array.isArray(data.cases)||data.cases.length!==3) {
+        throw new Error('Нет доказательств для пересчёта стоимости между разными ТЗ.');
+      }
+      const captions={
+        AKSAY:'Аксай — Молодёжный центр',
+        KRASNOYARSK:'Красноярск — государственное юрбюро',
+        CHEMAL:'«Чемал» — санаторий',
+      };
+      const dimensions={
+        delivery_working_days:'Срок по контракту',
+        cms_platform:'CMS и лицензирование',
+        design_basis:'Источник дизайна и макеты',
+        initial_content_origin:'Источник контента',
+        initial_content_pages_max:'Максимум наполнения',
+        postacceptance_obligation:'Гарантия или сопровождение',
+        support_critical_reaction_hours:'SLA критических инцидентов',
+        hosting_payment:'Хостинг и домен',
+        knowledge_transfer:'Обучение и передача знаний',
+        site_purpose:'Функции и назначение',
+        feedback_form:'Форма обратной связи',
+        speech_accessibility:'Озвучивание и доступность',
+      };
+      wipe(target);
+      paragraph(target,'Три проверенных договора, одна базовая закупка. Неизвестные величины оставлены неизвестными; пересчёта конкурентных цен нет.','help-text');
+      const order=['AKSAY','KRASNOYARSK','CHEMAL'];
+      for(const key of order) {
+        const c=data.cases.find(x=>x.case_key===key);
+        if(!c||!Array.isArray(c.verified_dimensions)||!c.original_technical_scope_docx_sha256
+            ||c.costs_or_labor_hours_known!==false||c.actual_content_pages_known!==false) {
+          throw new Error('Неполное документальное подтверждение одного из ТЗ.');
+        }
+        const section=node('section','report-section');
+        section.append(node('h3','',captions[key]));
+        paragraph(section,'Официальная закупка №'+c.registry_number+'. Лицензии и человеко-часы неизвестны.','help-text');
+        const facts=node('div','facts');
+        for(const d of c.verified_dimensions) {
+          const label=dimensions[d.dimension]||'Проверенное обязательство';
+          const numeric=(typeof d.source_value==='number')
+            ? ' — '+d.source_value+' '+(d.unit==='working_days'?'раб. дней':d.unit==='text_pages'?'стр.':'часов')
+            : '';
+          appendFact(facts,label+numeric,d.reviewed_interpretation);
+        }
+        if(c.initial_content_pages_cap===null) {
+          appendFact(facts,'Количество страниц','НЕ УСТАНОВЛЕНО В ПРОВЕРЕННОМ ТЗ');
+        } else {
+          appendFact(facts,'Число страниц','Не более '+c.initial_content_pages_cap+' по договору; фактическое неизвестно');
+        }
+        section.append(facts);
+        const original=node('details','');
+        original.append(node('summary','','Первоисточники и фрагменты требований'));
+        paragraph(original,'Исходный DOCX SHA-256: '+c.original_technical_scope_docx_sha256);
+        for(const d of c.verified_dimensions) {
+          paragraph(original,(dimensions[d.dimension]||d.dimension)+': «'+d.source_quote
+            +'» · позиция '+d.source_line_ordinal+' · SHA строки '+d.source_line_sha256+'.');
+        }
+        section.append(original);
+        target.append(section);
+      }
+      paragraph(target,'Нормализация рублёвой цены НЕ ВЫПОЛНЕНА. Требуются подтверждённые человеко-часы, затраты лицензий/домена/хостинга, расходы на сопровождение и объём фактического контента.','help-text');
+    } catch(error) {
+      wipe(target);
+      paragraph(target,'Проверенная матрица ТЗ недоступна: '+error.message,'empty-state');
+    }
+  }
   async function loadHistoricalPrice() {
     const target=$('price-historical');
     wipe(target);
@@ -790,6 +866,7 @@
   $('price-form').addEventListener('submit',event=>void loadCompetitivePrice(event));
   $('price-historical-btn').addEventListener('click',()=>void loadHistoricalPrice());
   $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
+  $('price-workload-btn').addEventListener('click',()=>void loadWorkloadNormalization());
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});

@@ -17,6 +17,7 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
 from src.modules.tender_operator_agent_demo.operator_price_context import (
     archived_competitive_price_context,
     archived_website_price_cohort,
+    archived_website_workload_normalization,
 )
 from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
     get_operator_source_evidence,
@@ -184,6 +185,15 @@ def operator_workspace_verify_quote(
     return verify_operator_run_quote(
         run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
     )
+
+
+@router.get(
+    "/api/demo/tender-agent/workspace/website-workload-normalization",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_website_workload_normalization() -> dict:
+    """Workload differences from original attested TЗ, not monetary quotes."""
+    return archived_website_workload_normalization()
 
 
 @router.get(

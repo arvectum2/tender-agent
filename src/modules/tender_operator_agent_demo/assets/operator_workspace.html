@@ -155,6 +155,12 @@
           <p class="help-text">Каждая карточка привязана к оригинальному XML ЕИС и исходному ТЗ, не является универсальной рыночной оценкой. Два ТЗ требуют нормализации, три имеют отличающийся объём или режим. Отсутствующая finalPrice не заменяется НМЦК.</p>
           <div id="price-cohort" role="status" aria-live="polite" class="report-section"><p>Показ исторических данных выполняется только по запросу.</p></div>
         </section>
+        <section class="panel" aria-labelledby="workload-normalization-title">
+          <div class="panel-title"><h2 id="workload-normalization-title">Сопоставление работ по оригинальным ТЗ</h2><span class="tag">НЕТ коэффициентов стоимости</span></div>
+          <button id="price-workload-btn" class="button button-secondary" type="button">Сравнить Аксай, Красноярск и «Чемал»</button>
+          <p class="help-text">Сравниваются только дословно подтверждённые объёмы, ограничения и обязательства. Рабочие дни контракта не равны человеко-дням разработки; лицензии, сопровождение и гарантия не приравниваются. Стоимость и трудозатраты неизвестны.</p>
+          <div id="price-workload" role="status" aria-live="polite" class="report-section"><p>Нажмите кнопку для просмотра доказательной матрицы ТЗ.</p></div>
+        </section>
         <section class="panel" aria-labelledby="price-historical-title">
           <div class="panel-title"><h2 id="price-historical-title">Исторические НМЦК аналогов · ARV-057</h2><span class="tag">Отдельная выборка</span></div>
           <div id="price-historical" role="status" aria-live="polite" class="report-section"><p>Нажмите «Исторические НМЦК», чтобы запросить существующий API. НМЦК не являются ценами победителей.</p></div>
