@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-OWNER-COST-INPUT-20261018
+status: in_progress
+goal: Make existing pure PRICE-01 owner-input break-even function accessible as an explicit stateless protected what-if form in the existing Operator Workspace; no implicit financial assumptions, no bid action.
+definition_of_done:
+  - Seven independently required user supplied fields, currency in RUB and percentage rates explicitly labelled; no filled defaults; no private persisted inputs and no bidder/ETP writes.
+  - Reuse compute_owner_supplied_break_even server-side, no duplicate formulas/heuristic bid suggestions; reject bad monetary precision, zeros-only, non-finite, negative, bad tax/fees sum, extra properties.
+  - Protected POST returns only cash/full-economic/target-profit minimum thresholds; explicitly not a quotation, probability forecast or Owner GO; no stored payload.
+  - Existing Operator Workspace price tab includes optional form to calculate with exact inputs, clear results, warns that displayed costs are user assumptions, and does not send until explicit submit.
+  - Adversarial tests for 401 without auth, 422 invalid inputs, exact cents/rates, UI integration, no DB writes. Full focused regression and Ruff/JS checks pass.
+  - Update roadmap/checkpoints, commit/push draft PR478, check latest CI, no auto-merge or commercial ETP actions.
+completed:
+  - Previous PRICE01 original three-TZ workload normalization and private matrix UI completed code 70aaec82, pushed checkpoint b77cb379, latest CI currently active.
+  - Existing exact-Decimal pure function compute_owner_supplied_break_even accepts explicit direct/labor/reserve/fixed fees, tax fraction, variable platform fee fraction, explicit profit; calculates three ceilings.
+current: Implement stateless exact owner cost request and existing UI form.
+pending:
+  - Secure stateless endpoint and explicit validation.
+  - UI action and adversarial tests.
+  - Roadmap + checkpoint, push and CI.
+last_verified_commit: b77cb37985a5b8569d07340371f167290439af5a
+test_results: Prior PRICE01 stage 128 pytest passed / 10 skipped / 6 inherited warnings, Ruff JS clean; new tests pending.
+resume_instruction: Do not invent default tax/license or hourly rate; protect endpoint and reject incomplete costs. Existing source-bound Aksay prices and related-workload catalogs are not cost recommendations. No auto-merge, payment, bid submission or persistence of confidential inputs.

@@ -14,6 +14,10 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
+from src.modules.tender_operator_agent_demo.operator_cost_scenarios import (
+    ExplicitCostScenarioRequest,
+    calculate_explicit_cost_thresholds,
+)
 from src.modules.tender_operator_agent_demo.operator_price_context import (
     archived_competitive_price_context,
     archived_website_price_cohort,
@@ -185,6 +189,17 @@ def operator_workspace_verify_quote(
     return verify_operator_run_quote(
         run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
     )
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/price-scenario/calculate",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_explicit_price_scenario(
+    request: ExplicitCostScenarioRequest,
+) -> dict:
+    """Stateless what-if; no quote, company costs storage or ETP actions."""
+    return calculate_explicit_cost_thresholds(request)
 
 
 @router.get(

@@ -819,6 +819,65 @@
       paragraph(target,'Проверенная матрица ТЗ недоступна: '+error.message,'empty-state');
     }
   }
+  async function calculateExplicitPriceCostScenario(event) {
+    event.preventDefault();
+    const target=$('price-cost-result');
+    wipe(target);
+    const monetary=/^\d{1,12}(?:[.,]\d{1,2})?$/;
+    const percentage=/^\d{1,3}(?:[.,]\d{1,4})?$/;
+    const fields=[
+      ['external_direct_rub','cost-external',monetary],
+      ['labor_rub','cost-labor',monetary],
+      ['reserve_rub','cost-reserve',monetary],
+      ['fixed_platform_fees_rub','cost-fixed',monetary],
+      ['revenue_tax_percent','cost-tax',percentage],
+      ['variable_platform_fee_percent','cost-variable',percentage],
+      ['target_profit_rub','cost-target',monetary],
+    ];
+    const payload={accept_hypothetical_assumptions_only:$('cost-scenario-confirm').checked};
+    if(payload.accept_hypothetical_assumptions_only!==true) {
+      paragraph(target,'Подтвердите, что это гипотетический расчёт, а не ставка для торгов.','empty-state');
+      return;
+    }
+    for(const [field,id,pattern] of fields) {
+      const entered=$(id).value.trim();
+      if(!pattern.test(entered)) {
+        paragraph(target,'Каждая сумма и процент должны быть явно введены и иметь допустимую точность: '+id+'.','empty-state');
+        return;
+      }
+      payload[field]=entered.replace(',','.');
+    }
+    paragraph(target,'Вычисляем пороги на основе семи введённых величин…','empty-state');
+    try {
+      const result=await json(api+'/workspace/price-scenario/calculate',{
+        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),
+      });
+      if(result.state!=='EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY'
+          ||result.inputs_stored!==false||result.assumptions_independently_verified!==false
+          ||result.is_procurement_bid_recommendation!==false
+          ||result.probability_of_winning_estimated!==false||result.commercial_owner_go!==false
+          ||result.automatic_submission_or_payment!==false) {
+        throw new Error('Расчёт не прошёл защитные проверки и не может быть использован.');
+      }
+      wipe(target);
+      const facts=node('div','facts');
+      for(const [label,value] of [
+        ['Денежный порог безубыточности',result.cash_break_even_rub],
+        ['Полный порог с учётом труда',result.full_economic_break_even_rub],
+        ['Порог с отдельно желаемой прибылью',result.full_cost_plus_explicit_target_rub],
+      ]) {
+        if(typeof value!=='string'||!/^\d{1,22}\.\d{2}$/.test(value)) {
+          throw new Error('Нет валидных денежных порогов.');
+        }
+        appendFact(facts,label,value.replace('.',',')+' ₽');
+      }
+      target.append(facts);
+      paragraph(target,'Это сценарные минимальные пороги при ваших вводных. Фактические расходы, налоговые обязательства, конкурентная цена и вероятность выигрыша не проверены. Автоматической подачи нет.','help-text');
+    } catch(error) {
+      wipe(target);
+      paragraph(target,'Не удалось рассчитать сценарий: '+error.message,'empty-state');
+    }
+  }
   async function loadHistoricalPrice() {
     const target=$('price-historical');
     wipe(target);
@@ -867,6 +926,8 @@
   $('price-historical-btn').addEventListener('click',()=>void loadHistoricalPrice());
   $('price-cohort-btn').addEventListener('click',()=>void loadWebsiteCohort());
   $('price-workload-btn').addEventListener('click',()=>void loadWorkloadNormalization());
+  $('price-cost-form').addEventListener('submit',event=>void calculateExplicitPriceCostScenario(event));
+  $('cost-clear-btn').addEventListener('click',()=>{ $('price-cost-form').reset();wipe($('price-cost-result'));paragraph($('price-cost-result'),'Данные очищены в форме, на сервере ничего не сохранялось.','empty-state'); });
   $('registry-form').addEventListener('submit',event=>{ event.preventDefault();state.registryOffset=0;state.registryQuery=$('registry-search').value.trim();void loadRegistry(); });
   $('prev-registry').addEventListener('click',()=>{state.registryOffset=Math.max(0,state.registryOffset-25);void loadRegistry();});
   $('next-registry').addEventListener('click',()=>{ if (state.registryOffset+25<state.registryTotal) { state.registryOffset+=25;void loadRegistry();}});

@@ -92,7 +92,30 @@
           <section class="panel report-panel" id="report-panel" hidden>
             <div class="panel-title"><div><div class="eyebrow">РЕЗУЛЬТАТ АВТОМАТИЧЕСКОГО АНАЛИЗА · ПРОВЕРЬТЕ ИСТОЧНИКИ</div><h2>Результаты и доказательства</h2></div><div class="report-actions"><a id="download-pdf" class="button button-secondary" download>PDF ↓</a><a id="download-docx" class="button button-secondary" download>DOCX ↓</a></div></div>
             <p id="report-analysis-mode" role="status" class="muted"></p>
-            <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
+            <section class="panel" aria-labelledby="price-cost-scenario-title">
+          <div class="panel-title"><h2 id="price-cost-scenario-title">Сценарные пороги безубыточности</h2><span class="tag">ТОЛЬКО ЯВНЫЕ СУММЫ</span></div>
+          <p class="help-text">Все семь значений вводятся вручную, даже если это 0. Ставки налогов и ЭТП — только выбранные вами сценарные проценты, а не нормативная налоговая консультация. Данные не сохраняются. Результат не является ценой предложения или разрешением участвовать в торгах.</p>
+          <form id="price-cost-form" method="post" action="/api/demo/tender-agent/workspace/price-scenario/calculate" autocomplete="off">
+            <label for="cost-external">Прямые внешние затраты, ₽</label>
+            <input id="cost-external" name="external_direct_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-labor">Стоимость собственного труда, ₽</label>
+            <input id="cost-labor" name="labor_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-reserve">Резерв на риски, ₽</label>
+            <input id="cost-reserve" name="reserve_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-fixed">Фиксированные сборы ЭТП и прочие комиссии, ₽</label>
+            <input id="cost-fixed" name="fixed_platform_fees_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label for="cost-tax">Предполагаемый налог от выручки, %</label>
+            <input id="cost-tax" name="revenue_tax_percent" type="text" inputmode="decimal" maxlength="8" required autocomplete="off" placeholder="Введите процент">
+            <label for="cost-variable">Предполагаемая переменная комиссия от выручки, %</label>
+            <input id="cost-variable" name="variable_platform_fee_percent" type="text" inputmode="decimal" maxlength="8" required autocomplete="off" placeholder="Введите процент">
+            <label for="cost-target">Желаемая абсолютная прибыль, ₽</label>
+            <input id="cost-target" name="target_profit_rub" type="text" inputmode="decimal" maxlength="15" required autocomplete="off" placeholder="Укажите сумму, ₽">
+            <label><input id="cost-scenario-confirm" type="checkbox" required> Подтверждаю, что это гипотетический расчёт по введённым мной допущениям, а не согласованная коммерческая ставка.</label>
+            <div class="actions"><button class="button button-primary" type="submit">Рассчитать три порога — без сохранения</button><button class="button button-secondary" id="cost-clear-btn" type="button">Очистить введённые значения</button></div>
+          </form>
+          <div id="price-cost-result" role="status" aria-live="polite" class="report-section"><p>Без явно введённых сумм расчёт не выполняется.</p></div>
+        </section>
+        <div class="human-gate"><strong>Решение принимает человек.</strong> Модель не подписывает документы, не отправляет заявку и не подтверждает юридическую оценку. Неподтверждённые сведения обозначаются как UNKNOWN.</div>
             <h3 id="report-recommendation"></h3><div id="executive-summary"></div>
             <div id="evidence-facts"></div>
             <details class="quote-review" id="quote-check" hidden>

@@ -647,3 +647,9 @@ active_price01_workload_normalization_2026_10_18:
   implementation_commit: 70aaec824ab927f8b76cd2482c5b02a38c76bfca
   tests: 128_passed_10_skipped_6_warnings
   external_action: false
+
+active_price01_owner_cost_scenario_2026_10_18:
+  task_id: TA-PRICE01-OWNER-COST-INPUT-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-OWNER-COST-INPUT-20261018.yaml
+  status: in_progress
+  external_action: false

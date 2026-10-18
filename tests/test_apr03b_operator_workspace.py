@@ -519,3 +519,85 @@ def test_price01_workload_matrix_button_is_real_ui_not_second_console(client, au
     assert "loadWorkloadNormalization());" in js
     assert "Нормализация рублёвой цены НЕ ВЫПОЛНЕНА" in js
     assert "/workspace/competitive-prices/" in js  # Aksay still isolated
+
+
+_COST_SAMPLE = {
+    "external_direct_rub": "100.00",
+    "labor_rub": "200.00",
+    "reserve_rub": "20.00",
+    "fixed_platform_fees_rub": "5.00",
+    "revenue_tax_percent": "6",
+    "variable_platform_fee_percent": "2",
+    "target_profit_rub": "50",
+    "accept_hypothetical_assumptions_only": True,
+}
+
+
+def test_price01_private_explicit_cost_post_is_not_price_recommendation(client, auth):
+    url = "/api/demo/tender-agent/workspace/price-scenario/calculate"
+    assert client.post(url, json=_COST_SAMPLE).status_code == 401
+    result = client.post(url, json=_COST_SAMPLE, headers=auth)
+    assert result.status_code == 200, result.text
+    assert "no-store" in result.headers.get("cache-control", "")
+    data = result.json()
+    assert data["state"] == "EXPLICIT_USER_ASSUMPTION_BREAK_EVEN_ONLY"
+    assert (data["cash_break_even_rub"], data["full_economic_break_even_rub"],
+            data["full_cost_plus_explicit_target_rub"]) == ("135.87", "353.27", "407.61")
+    assert data["inputs_stored"] is False
+    assert data["assumptions_independently_verified"] is False
+    assert data["is_procurement_bid_recommendation"] is False
+    assert data["commercial_owner_go"] is False
+    assert data["automatic_submission_or_payment"] is False
+    assert "external_direct_rub" not in data
+    assert "revenue_tax_percent" not in data
+
+
+@pytest.mark.parametrize("change", [
+    {"revenue_tax_percent": "100"},
+    {"variable_platform_fee_percent": "94"},
+    {"external_direct_rub": "-1"},
+    {"external_direct_rub": "1.999"},
+    {"revenue_tax_percent": ""},
+    {"accept_hypothetical_assumptions_only": False},
+])
+def test_price01_protected_cost_post_invalid_scenarios_422(client, auth, change):
+    result = client.post(
+        "/api/demo/tender-agent/workspace/price-scenario/calculate",
+        headers=auth,
+        json={**_COST_SAMPLE, **change},
+    )
+    assert result.status_code == 422
+
+
+def test_price01_cost_request_explicit_inputs_required_and_no_extra_fields(client, auth):
+    url = "/api/demo/tender-agent/workspace/price-scenario/calculate"
+    for missing in _COST_SAMPLE:
+        payload = {k: v for k, v in _COST_SAMPLE.items() if k != missing}
+        assert client.post(url, json=payload, headers=auth).status_code == 422
+    assert client.post(
+        url, json={**_COST_SAMPLE, "company_inn": "0000000000"}, headers=auth,
+    ).status_code == 422
+    # POST does not store a durable historical quote: no GET view exists.
+    assert client.get(url, headers=auth).status_code == 405
+
+
+def test_price01_explicit_cost_form_no_default_values_or_automatic_submission(client, auth):
+    html = client.get("/pilot/tender-agent/workspace", headers=auth).text
+    assert 'id="price-cost-form" method="post"' in html
+    assert 'action="/api/demo/tender-agent/workspace/price-scenario/calculate"' in html
+    for element in (
+        "cost-external", "cost-labor", "cost-reserve", "cost-fixed",
+        "cost-tax", "cost-variable", "cost-target",
+    ):
+        assert f'id="{element}"' in html
+    assert 'id="cost-scenario-confirm"' in html
+    assert 'id="cost-clear-btn"' in html
+    assert "Данные не сохраняются" in html
+    js = client.get("/pilot/tender-agent/workspace/assets/workspace.js", headers=auth).text
+    assert "/workspace/price-scenario/calculate" in js
+    assert "async function calculateExplicitPriceCostScenario(event)" in js
+    assert "JSON.stringify(payload)" in js
+    assert "accept_hypothetical_assumptions_only" in js
+    assert "result.inputs_stored!==false" in js
+    assert "result.is_procurement_bid_recommendation!==false" in js
+    assert "Нормализация рублёвой цены НЕ ВЫПОЛНЕНА" in js
