@@ -1,0 +1,23 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018
+status: in_progress
+goal: Discover bounded public completed 44-FZ website-development procurement candidates and verify exact first-party EIS original notice/final-protocol plus actual SOW comparability before admitting their bids to PRICE-01.
+definition_of_done:
+  - Search official/public sources for completed website development scopes with real 19-digit procurement IDs and dates.
+  - Safely acquire bounded read-only original EIS getDocsIP archives for relevant IDs where permitted and available; keep originals only on ArvectumSSD, never in Git.
+  - Distinguish "same words website" from comparability of deliverables/technical scope, contract unit, deadline and acceptance.
+  - Verify original final protocol bid price/rank/admission, ZIP/XML SHA and exclude unproven or unrelated sources, never invent comparable cases.
+  - Add tested bounded repeatable source audit and machine/report receipt, update master roadmap and canonical checkpoint.
+  - Run tests, commit/push to PR478 with exact CI/review status, no production DB/ETP writes.
+completed:
+  - Previous PRICE01 UI and negative Aksioma comparability child complete; current draft PR478 head acb38903 CI SUCCESS, main still d2a927ec.
+  - Local canonical EIS original ZIPs only two (Aksay website, Aksioma GIS module), second correctly excluded. Existing Public44FzSearchProvider keyword search and ZakupkiSoapClient read-only getDocsIP available.
+current: Discover official finished website procurement candidates and acquire original evidence.
+pending:
+  - Source candidate discovery and legally accessible original documents.
+  - Admitted-only comparability decision and tests.
+  - Update docs/roadmap and complete/push child checkpoint.
+last_verified_commit: acb38903f914b1187f03feafd29b0c51aa5ca146
+test_results: Earlier price01 101 pytest passed / 10 skipped / 6 inherited warnings, full previous exact-head CI SUCCESS.
+resume_instruction: Search first-party original EIS for completed public website development; verify exact originals then normalize separately. Do not add noncomparable GIS or fabricated tender evidence. Do not buy/submit or merge draft PRs without owner-authority. Parent TA-ROADMAP-EXEC-20261012 remains in_progress.

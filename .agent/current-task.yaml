@@ -620,3 +620,9 @@ active_price01_source_comparability_2026_10_18:
   implementation_commit: bc579cef3742d6766f4ec2da9a88bc1de4f4f127
   tests: 101_passed_10_skipped_6_warnings
   external_action: false
+
+active_price01_website_comparables_2026_10_18:
+  task_id: TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018
+  checkpoint: .agent/checkpoints/TA-PRICE01-WEBSITE-COMPARABLE-DISCOVERY-20261018.yaml
+  status: in_progress
+  external_action: false
