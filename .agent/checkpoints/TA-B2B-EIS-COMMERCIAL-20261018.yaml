@@ -1,0 +1,24 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-EIS-COMMERCIAL-20261018
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Extend 18 October pre-bid B2B triage beyond 21 previous Workspace cards, with current independently selected new first-party 44-FZ original ZIP/XML and separate newly identified corporate B2B-Center opportunities, plus actionable no-send technical screening for Arvectum.
+definition_of_done:
+  - Reconcile current main, PR483 and previously inspected procurement numbers to avoid duplicate/historical counts.
+  - Inspect at least two new IT original EIS getDocsIP ZIPs where official read-only transport is available; record independently checked original hashes, version, deadline timezone, NMCK and uncertainty, never current legal status.
+  - Check at least one genuine external commercial primary procurement card or explicitly retain secondary-only if access is blocked; record qualification/fee and status unknowns.
+  - Record separate denominators with source lineage and fit/gates; prepare no-send recommendation and eliminate licenced/software-specific unsuitable opportunities.
+  - Run automated source evidence/schema checks, create review-ready PR and completed child checkpoint; preserve parent in_progress and no external action authority.
+completed:
+  - "2026-10-18 parent main d2a927ecebc9222bb3b38b47aa14c7024ccec4f0 verified; PR480-483 all 19/19 SUCCESS, open pending merge authority."
+  - "New secondary discovery: 44FZ Smolensk Duma 0163200000326005243 and Univuz-3 0332100025426000039, B2B-Center AО Tech Vzryv Invest 4643484; no original claim yet."
+current: Completed primary-source EIS and marketplace audit.
+remaining: []
+last_verified_commit: f26ac392c3943cfa317f5a6600c69fde57055917
+test_results:
+  - "3/3 official EIS ZIP+XML SHA; 17/17 official attachments SHA; primary commercial card 4643484 verified."
+  - "64 relevant pytest PASS, 3 SKIP, Ruff PASS and diff check PASS."
+resume_instruction: Check PR exact-head CI, then proceed next unfinished B2B source discovery and legal suitability review. Source originality does not authorize a bid.
+source_report: docs/roadmap/B2B_OCT18_EIS_AND_COMMERCIAL_PRIMARY_SHORTLIST.md
+review_gate: pr_merge_pending
