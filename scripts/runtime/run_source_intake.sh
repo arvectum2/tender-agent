@@ -19,7 +19,9 @@ export PYTHONPATH="$root"
 "$python_bin" -m scripts.procurement_llm.unified_source_pipeline "${args[@]}"
 
 # Source -> actual LLM worker is opt-in by a separately approved runtime flag.
-# The worker always checks private original SHA, tender documents, Data Platform,
+# The default model is the verified production-quality Gemma 4 12B QAT/Q4
+# served by llama.cpp on port 8081. Ollama port 11434 is a separate, nondefault
+# backend. The worker always checks private original SHA, tender documents, Data Platform,
 # exact archived-source binding and actual local model before generating outputs.
 case "${TENDER_QUEUE_ANALYZE_APPLY:-0}" in
   0) exit 0 ;;

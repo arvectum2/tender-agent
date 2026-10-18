@@ -52,6 +52,8 @@ COMPLETION_PREFIX = "manual:ta-ready-analysis:"
 NUMBER = re.compile(r"[0-9]{19}\Z")
 SHA = re.compile(r"[0-9a-f]{64}\Z")
 MAX_REPORT = 600_000
+QUALITY_GEMMA_LLAMA_BASE_URL = "http://127.0.0.1:8081/v1"
+QUALITY_GEMMA_LLAMA_MODEL = "arvectum-gemma4-12b-it-qat-q4_0"
 
 
 class WorkerGateError(ValueError):
@@ -489,10 +491,14 @@ def main() -> int:
     parser.add_argument("--max-actual", type=int, default=1)
     parser.add_argument("--probe-services", action="store_true",
                         help="Read-only check actual Data Platform + local model readiness")
-    parser.add_argument("--llm-base-url",
-                        help="Explicit localhost-only OpenAI model endpoint override")
-    parser.add_argument("--llm-model",
-                        help="Explicit local available LLM model override")
+    parser.add_argument(
+        "--llm-base-url", default=QUALITY_GEMMA_LLAMA_BASE_URL,
+        help="Quality default: live llama.cpp Gemma server 127.0.0.1:8081/v1",
+    )
+    parser.add_argument(
+        "--llm-model", default=QUALITY_GEMMA_LLAMA_MODEL,
+        help="Quality default: arvectum-gemma4-12b-it-qat-q4_0",
+    )
     args = parser.parse_args()
     if args.apply and args.confirm_database != "arvectum":
         parser.error("explicit canonical database authorization required")
