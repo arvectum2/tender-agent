@@ -700,3 +700,9 @@ active_moscow_it_public_filter_2026_10_18:
   implementation_commit: a1635c7c77729f6dce204761d941c04623d8b135
   tests: 278_passed_1_warning
   external_action: false
+
+active_moscow_narrow_public_it_search_2026_10_18:
+  task_id: TA-B2G-MOSCOW-NARROW-SEARCH-20261018
+  checkpoint: .agent/checkpoints/TA-B2G-MOSCOW-NARROW-SEARCH-20261018.yaml
+  status: in_progress
+  external_action: false

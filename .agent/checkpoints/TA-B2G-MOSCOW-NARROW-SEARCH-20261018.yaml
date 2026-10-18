@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2G-MOSCOW-NARROW-SEARCH-20261018
+status: in_progress
+goal: Extend exact public React-UI original active quote search for software/services rather than category hardware; inspect real original development IT requests if discovered.
+definition_of_done:
+  - Use isolated unauthenticated disposable Chrome entirely on ArvectumSSD and existing official filter UI (not guess hidden APIs).
+  - Search 9-10 narrower software service terms, fail closed on original applied query/state, record source IDs and source observation UTC, reject broad irrelevant items and duplicates.
+  - Open any truly relevant original session directly, inspect actual scope/spec/TZ document labels, buyer INN, price, exact Moscow clock deadline; do not claim a company eligible bid without authenticated account.
+  - Update roadmap and source-grounded receipt, regression tests, commit/push draft PR477 and report exact-head CI.
+  - Separate public B2G from target 15-20 corporate B2B; no registrations, bids, messages, payments, signatures, production changes or auto-merges.
+completed:
+  - Resumed parent TA-ROADMAP-EXEC-20261012, clean worktree head 1949094c, prior child filter stage completed 278 tests and exact-head CI SUCCESS.
+current: Run narrowed first-party real public Chrome UI search and classify resulting original numbered cards.
+pending:
+  - Source observe narrowed public filters and cards.
+  - Review any potential original IT scopes and documents.
+  - Commit source/canonical reports/tests and mark checkpoint.
+last_verified_commit: 1949094cd85245b0f70936a72ae3efc6f098ac8e
+test_results: Previous 278 focused B2B/B2G test PASS, Ruff+Node JS syntax+Git clean, exact-head CI SUCCESS.
+resume_instruction: Preserve original source-only and legal-entity restrictions. Use only exact public /purchase/list real UI filtering and first-party original /auction/<number>; check source status/deadline and specific task. Do not count goods, vacancies, stale sources or B2G into B2B 15-20. Prior previous completed stages should not repeat.
