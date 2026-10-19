@@ -1,0 +1,45 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019
+status: blocked
+goal: Reuse already configured EIS SOAP, Data Platform and PostgreSQL credentials in correct local Tender Agent processes; finish source-bound index and audited real Gemma rerun if authorized runtime permits.
+definition_of_done:
+  - Verify existing keys and distinguish SOAP from Data Platform internal API.
+  - Produce reusable guarded runtime bootstrap without exposing or duplicating secret values in files.
+  - Verify the runtime contract in tests and read-only service checks.
+  - Run source-bound XML/criteria indexing and a new real Gemma quality history entry if tools allow approved connection.
+  - Checkpoint any objective blocker and publish review-only PR; no gold/bid/main merge.
+completed:
+  - "Verified existing EIS SOAP token and Data Platform key are present; Data Platform key values in client and running service configurations match."
+  - "Standalone Tender Agent command sees default SQLite because AI_CORP_DATABASE_URL is absent; existing source intake runner expects .env.local, absent in base checkout."
+  - "Authorized existing Mac mini PostgreSQL itself has 8 Smolensk docs and 72 old chunks, 121 observations and 46 runs. Original file ZIP immutable."
+current: "Created secure in-memory runtime bootstrap, distinct actual Gemma quality rerun with source SHA and no gold; direct operator doctor invocation blocked by protected tool before execution."
+remaining:
+  - Execute existing runtime doctor in an authorized operator process, without exposing or copying credentials.
+  - Confirm canonical PostgreSQL and Data Platform healthy, run guarded index apply and verify original SHA and chunk/embedding parity.
+  - Run one genuine separate Gemma source_quality_rerun and compare quality/latency.
+  - Review PR and CI; no AM-4 main merge/ETP or training gold by default.
+last_verified_commit: fec52ac99adeb04056c1658adee81f474ce7b072
+test_results:
+  - "Local runtime bootstrap and quality-run tests 11 PASS, Ruff PASS. Existing previous source/criteria PR498 CI 19/19 PASS."
+  - "Real operator doctor attempt tool-blocked before program execution; no SQL or Data Platform changes."
+  - "Secrets were never printed, persisted in new env files or committed. Prior SQL count 121 learning, 46 real run, 72 old Smolensk index chunks."
+
+resume_instruction: Use existing approved Mac mini runtime configuration only; no new keys, no secret echo. Do not bypass tool authorization limitations. Build wrapper and tests then apply only if approved runtime executes safely.
+runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
+quality_rerun_entrypoint: scripts/procurement_llm/source_quality_rerun.py
+operator_instructions: docs/roadmap/GEMMA_EXISTING_RUNTIME_BOOTSTRAP_2026-10-19.md
+runtime_config_file_exists: true
+operator_soap_token_already_present: true
+operator_data_platform_keys_match: true
+standalone_ai_corp_database_url_configured: false
+existing_source_intake_expected_dotenv_local_missing: true
+actual_doctor_executed: false
+actual_index_rebuilt: false
+actual_new_quality_run_saved: false
+expected_canonical_db: arvectum
+observations_last_checked: 121
+actual_runs_last_checked: 46
+old_index_chunks_last_checked: 72
+training_gold_promoted: 0
+manual_intervention_required: authorized_operator_process_execution

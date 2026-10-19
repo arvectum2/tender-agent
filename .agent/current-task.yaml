@@ -896,3 +896,14 @@ gemma_criteria_xml_index_2026_10_19:
   regression_skipped: 4
   access_blocker: existing_operator_database_credentials_not_available_to_this_protected_executor
   next_step: Using an approved preconfigured operator runtime and full DB backup, complete guarded XML/criteria Data Platform indexing, then run one real separate quality Gemma review and compare with baseline. No source completion duplicate, owner gold or AM-4 merge.
+
+
+protected_runtime_bootstrap_2026_10_19:
+  checkpoint: .agent/checkpoints/TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019.yaml
+  status: blocked
+  goal: correct existing owner-local PostgreSQL/Data Platform environment, no new EIS SOAP or DP keys
+  runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
+  quality_rerun: scripts/procurement_llm/source_quality_rerun.py
+  actual_doctor_index_quality_run: false
+  blocked_on: remote operator tool denied runtime access to protected configuration
+  resume_instruction: Run already-created safe operator runtime doctor, then index, then quality sequentially only from authorized local environment; do not bypass safety gate, copy passwords or claim training gold.
