@@ -7,6 +7,7 @@ revision-crossing or permissive fallback if provenance cannot be proven.
 from __future__ import annotations
 
 import hashlib
+import os
 import stat
 from pathlib import Path
 
@@ -49,7 +50,8 @@ def _verified_document(document, *, tender_id: str, suffix: str) -> bool:
         return False
     if file.parent.resolve() != expected_parent.resolve():
         return False
-    if stat.S_IMODE(file.stat().st_mode) != 0o600:
+    if (stat.S_IMODE(file.stat().st_mode) != 0o600
+            or file.stat().st_uid != os.getuid()):
         return False
     return hashlib.sha256(file.read_bytes()).hexdigest() == document.sha256
 
@@ -72,7 +74,7 @@ def prioritize_original_eis_hits(
     max_chunks: int,
 ) -> list[RagSearchHit]:
     """Only elevate exact trusted source chunks; do not change evidence or accept claims."""
-    if registry_number != _PINNED_NUMBER or section_id not in _DOC_BY_SECTION:
+    if registry_number != _PINNED_NUMBER:
         return hits
     tender = repo.get_tender_by_registry_number(registry_number)
     if tender is None:
@@ -84,6 +86,8 @@ def prioritize_original_eis_hits(
         h for h in hits if h.registry_number == registry_number
         and str(h.tender_id) == tender_id
     ]
+    if section_id not in _DOC_BY_SECTION:
+        return scoped
     suffix = _DOC_BY_SECTION[section_id]
     documents = [doc for doc in tender.documents if
                  doc.source_document_id == f"eis-archived-v2{suffix}"]

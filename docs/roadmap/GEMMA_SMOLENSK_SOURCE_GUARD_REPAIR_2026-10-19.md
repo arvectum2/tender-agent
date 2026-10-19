@@ -18,4 +18,3 @@
 ## Следующий gate
 
 Дождаться результата ровно 4 вопросов Gemma в частном каталоге /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019, проверить фактическое время, accepted/rejected, доказательность цифр и цитат. Не запускать повторно PID 5363 при работе. Если 4/4 не доказаны, блокер остаётся; полный 26-минутный quality rerun не запускать. Если 4/4 доказаны, отдельно согласовать versioned full rerun с backup и жёсткими исходниковыми guard. Ни один результат не имеет человеческого gold.
-

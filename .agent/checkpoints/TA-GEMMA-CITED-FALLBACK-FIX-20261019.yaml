@@ -16,7 +16,7 @@ remaining:
   - Tests and safe bounded retry of failed citations/percentages.
   - Four-section targeted actual Gemma check; measure accepted vs rejected.
   - Report, final tests, checkpoint and PR.
-last_verified_commit: 6fd3a711
+last_verified_commit: c2f8483faadcfe21fd2fbc0246c073f9d337c436
 test_results: []
 resume_instruction: Source 86/86/86 ready; do not reindex. Implement evidence-specific routing anchored to owner EIS source and section with no cross-tender leaks, and single retry for failed numeric/source IDs. Validate with adversarial tests before model. Save four-question check privately. Do not alter original DB runs/learning-gold until fully verified.
 
@@ -38,3 +38,5 @@ verified_stage_2026_10_19:
   human_gold: false
   canonical_db_new_writes: 0
   report: docs/roadmap/GEMMA_SMOLENSK_SOURCE_GUARD_REPAIR_2026-10-19.md
+
+additional_security_gate: All pinned Smolensk sections filter foreign registry/tender hits, even if derived source document fails attestation.

@@ -161,3 +161,12 @@ def test_invalid_derived_source_does_not_allow_cross_tender_fallback(tmp_path,mo
         repo,[hit("own"),hit("cross",registry="other",tender="other")],
         registry_number=NUMBER,section_id="subject",max_chunks=5)
     assert [h.chunk_id for h in result]==["own"]
+
+
+def test_customer_contract_sections_never_receive_foreign_retrieval_hits(tmp_path,monkeypatch):
+    repo,_doc,_path,_context=repo_fixture(tmp_path,monkeypatch,suffix="-derived-full-xml")
+    for section_id in ("customer_requirements","contract_terms"):
+        result=priority.prioritize_original_eis_hits(
+            repo,[hit("good"),hit("other",registry="foreign",tender="x")],
+            registry_number=NUMBER,section_id=section_id,max_chunks=5)
+        assert [x.chunk_id for x in result]==["good"]
