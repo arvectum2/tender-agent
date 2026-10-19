@@ -497,27 +497,53 @@ def verify_registered_exact_source_set(
         or tender.raw_payload.get("source_observation_id") != src.observation_id
     ):
         raise SourcePreparationError("Tender Research tender not bound to same source ZIP/XML")
+    original_version = f"eis-archived-v{classified['source_version']}"
+    criteria_id = original_version + "-derived-criteria-percent"
     documents = [
         doc for doc in tender.documents
-        if not str(doc.source_document_id or "").endswith("-derived-full-xml")
+        if doc.source_document_id != criteria_id
+        and not str(doc.source_document_id or "").endswith("-derived-full-xml")
     ]
     derived = [
         doc for doc in tender.documents
         if str(doc.source_document_id or "").endswith("-derived-full-xml")
     ]
-    if len(documents) != len(refs) or len(derived) > 1:
+    criteria_derived = [
+        doc for doc in tender.documents if doc.source_document_id == criteria_id
+    ]
+    if len(documents) != len(refs) or len(derived) > 1 or len(criteria_derived) > 1:
         raise SourcePreparationError("Tender Research original document count differs from original")
+    if criteria_derived:
+        from scripts.procurement_llm.official_eis_criteria_percent import context_blob
+        from scripts.procurement_llm.source_derived_docx import same_docx_content
+
+        expected_binary, receipt = context_blob(src, root=root)
+        document = criteria_derived[0]
+        check = Path(document.local_path) if document.local_path else None
+        if (
+            check is None or check.is_symlink() or not check.is_file()
+            or not check.resolve().is_relative_to(root.resolve())
+            or stat.S_IMODE(check.stat().st_mode) != 0o600
+            or not same_docx_content(check.read_bytes(), expected_binary)
+            or document.sha256 != _digest(check.read_bytes())
+            or not isinstance(document.raw_meta, dict)
+            or document.raw_meta.get("source_original_archive_sha256") != src.original_sha256
+            or document.raw_meta.get("criteria_original_sha256") != receipt["criteria_original_sha256"]
+        ):
+            raise SourcePreparationError("derived criteria percent document stale or tampered")
     if derived:
         from scripts.procurement_llm.official_eis_xml_context import source_context_blob
-        expected_bytes, derived_receipt = source_context_blob(src, root=root)
+        from scripts.procurement_llm.source_derived_docx import same_docx_content
+
+        expected_bytes, _derived_receipt = source_context_blob(src, root=root)
         doc = derived[0]
         check = Path(doc.local_path) if doc.local_path else None
         if (
             check is None or check.is_symlink() or not check.is_file()
             or not check.resolve().is_relative_to(root.resolve())
             or stat.S_IMODE(check.stat().st_mode) != 0o600
-            or check.read_bytes() != expected_bytes
-            or doc.sha256 != derived_receipt["derived_docx_sha256"]
+            or not same_docx_content(check.read_bytes(), expected_bytes)
+            or doc.sha256 != _digest(check.read_bytes())
             or doc.raw_meta.get("source_original_zip_sha256") != src.original_sha256
             or doc.raw_meta.get("source_notice_xml_sha256") != classified["notice_xml_sha256"]
         ):
@@ -585,6 +611,17 @@ def index_existing_source_set(
     if len(sources) != 1 or sources[0].original_sha256 != evidence["original_archive_sha256"]:
         raise SourcePreparationError("source version changed before XML-derived ingest")
     derived = store_xml_derived_context(session, sources[0], root=root)
+    from scripts.procurement_llm.official_eis_criteria_percent import (
+        NUMBER as SMOLENSK_CRITERIA_NUMBER,
+    )
+    from scripts.procurement_llm.official_eis_criteria_percent import (
+        store_criteria_context,
+    )
+
+    criteria = (
+        store_criteria_context(session, sources[0], root=root)
+        if number == SMOLENSK_CRITERIA_NUMBER else None
+    )
     session.commit()
     evidence = verify_registered_exact_source_set(session, number, root=root)
     from src.tender_research.rag.prepare_service import prepare_tender_for_analysis
@@ -602,6 +639,15 @@ def index_existing_source_set(
         **evidence,
         "index_status": finished.status,
         "xml_context_indexed": True,
+        "criteria_source_percentages_verified": (
+            criteria["verified_percentages"] if criteria else None
+        ),
+        "criteria_original_docx_sha256": (
+            criteria["original_criteria_sha256"] if criteria else None
+        ),
+        "criteria_derived_docx_sha256": (
+            criteria["derived_sha256"] if criteria else None
+        ),
         "xml_original_sha256": derived["source_xml_sha256"],
         "xml_derived_docx_sha256": derived["docx_sha256"],
         "xml_technical_characteristics_included": derived["full_xml_characteristics"],
