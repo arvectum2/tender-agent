@@ -130,3 +130,13 @@ gemma_quality_result_2026_10_19:
     subject_retrieval_contains_original_evaluation_docx: true
     four_sections_reverted_to_retrieval_only: true
     conclusion: "Not missing source ingestion; investigate LLM numeric citation acceptance guard and section answer provenance before re-running."
+
+gemma_exact_guard_rejections_2026_10_19:
+  source: canonical_tender_analysis_runs_warnings_json
+  subject: "Model emitted unknown or modified source chunk identifier."
+  customer_requirements: "Model emitted unsupported explicit percent value."
+  evaluation_criteria: "Model emitted unsupported explicit percent value."
+  contract_terms: "Model emitted unsupported explicit percent value."
+  failure_mode: strict_citation_and_numeric_evidence_gate
+  correction_policy: "Do not loosen guards, do not accept claims without cited source value; separately diagnose context selection and exact generated values."
+  report_remains_unreviewed: true
