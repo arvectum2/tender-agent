@@ -25,6 +25,7 @@ from scripts.procurement_llm.prepare_eis_original_documents import (
     _selected_notice,
     verify_registered_exact_source_set,
 )
+from scripts.procurement_llm.source_derived_docx import canonical_docx_bytes
 from src.tender_research.repository import TenderRepository
 
 MAX_CONTEXT_CHARS = 80000
@@ -132,7 +133,7 @@ def source_context_blob(src: PinnedSource, *, root: Path = OWNER_PRIVATE) -> tup
             doc.add_paragraph(row)
     buffer = io.BytesIO()
     doc.save(buffer)
-    raw = buffer.getvalue()
+    raw = canonical_docx_bytes(buffer.getvalue())
     if not 0 < len(raw) <= 400000:
         raise SourcePreparationError("derived XML DOCX out of bound")
     return raw, {
