@@ -21,13 +21,13 @@ from src.tender_research.rag.data_platform import (
     retrieval_backend_name,
 )
 from src.tender_research.rag.history_service import record_analysis_run
-from src.tender_research.rag.ri223_document_dossier import (
-    build_ri223_document_dossier,
-    render_ri223_document_dossier,
-)
 from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
+)
+from src.tender_research.rag.ri223_document_dossier import (
+    build_ri223_document_dossier,
+    render_ri223_document_dossier,
 )
 from src.tender_research.rag.ri223_source_facts import (
     derive_ri223_review_flags,
@@ -90,12 +90,14 @@ _ANALYSIS_MODE_PRESETS: dict[str, AnalysisModeConfig] = {
     ),
     "detailed": AnalysisModeConfig(
         name="detailed",
-        retrieval_limit=8,
-        max_chunks_per_section=8,
-        max_context_chars_per_section=12_000,
+        # Procurement legal/document audits need broad evidence, unlike a
+        # fast answer from three snippets. Bounded below Gemma's 32k context.
+        retrieval_limit=18,
+        max_chunks_per_section=18,
+        max_context_chars_per_section=22_000,
         max_chunk_chars=2_500,
         max_preview_chars_per_source=1_200,
-        llm_timeout_seconds=300,
+        llm_timeout_seconds=420,
     ),
 }
 

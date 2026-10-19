@@ -846,3 +846,32 @@ first_real_source_bound_gemma_4_12b_2026_10_18:
   regression_skipped: 4
   stage: real_source_bound_gemma_12b_first_eis_run_review_only_complete
   next_step: Prepare official original attachments and indexing for NGTU and Moscow Region EIS, rerun genuine Gemma quality evaluations where ready, update legal/qualification evidence separately; AM-4 review and release required for automatic scheduler activation.
+
+gemma_xml_reasoning_benchmark_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-XML-REASONING-BENCHMARK-20261019.yaml
+  status: completed
+  tested_llm_backend: llama.cpp
+  tested_llm_model: arvectum-gemma4-12b-it-qat-q4_0
+  current_llama_reasoning_mode: on
+  current_llama_reasoning_token_budget: 1024
+  running_benchmark_pid: 62454
+  stored_private_progress: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-xml-reasoning-20261019/progress.json
+  verified_complete_sections: 4
+  expected_sections: 11
+  cumulative_llm_seconds_at_08_10_msk: 658.09
+  baseline_seconds: 249.97
+  canonical_db_benchmark_writes: 0
+  regression_passed: 904
+  regression_skipped: 4
+  current_stage: real_gemma_reasoning_comparison_running
+  resume_instruction: Check live PID 62454 and persisted 11-section private progress, do not redo completed sections, compare same original ZIP v2 and 249.97 sec baseline, finish PR/checkpoint. No main merge/autoscheduler.
+
+gemma_xml_reasoning_final_evidence_2026_10_19:
+  old_ten_seconds: 249.97
+  new_ten_seconds: 1367.88
+  new_eleven_seconds: 1610.40
+  strict_accepted_sections: 7
+  unverified_sections: 4
+  pytest_passed: 906
+  pytest_skipped: 4
+  production_index_still_pending: true

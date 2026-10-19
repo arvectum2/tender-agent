@@ -64,6 +64,7 @@ _CITED_UUID = re.compile(
     re.IGNORECASE,
 )
 _EXPLICIT_CHUNK_ID = re.compile(r"chunk_id\s*[:=]\s*([^\s,;]+)", re.IGNORECASE)
+_CITED_REGISTRY = re.compile(r"registry_number\s*[:=]\s*([0-9]{19,25})", re.IGNORECASE)
 
 
 def _validate_source_bound_completion(
@@ -92,6 +93,13 @@ def _validate_source_bound_completion(
         return "Local LLM answer has no verifiable source chunk citations."
     if any(item not in available for item in references):
         return "Local LLM answer cites unknown or modified source chunk identifiers."
+    known_registry_numbers = {
+        str(item.registry_number).strip()
+        for item in contexts if item.registry_number
+    }
+    cited_registry_numbers = _CITED_REGISTRY.findall(answer)
+    if any(item not in known_registry_numbers for item in cited_registry_numbers):
+        return "Local LLM answer cites unknown or modified procurement registry numbers."
     contradicted_field = contradicted_absence(answer, contexts)
     if contradicted_field:
         return (
@@ -435,7 +443,7 @@ def _extract_answer_text(payload: dict[str, Any]) -> str:
 def _read_http_error_body(exc: urllib.error.HTTPError) -> str:
     try:
         body = exc.read().decode("utf-8", errors="replace").strip()
-    except Exception:
+    except Exception:  # noqa: BLE001 - invalid remote HTTP error payload must not leak
         body = ""
     return body or exc.reason or "no details"
 

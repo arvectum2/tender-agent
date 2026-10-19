@@ -497,9 +497,31 @@ def verify_registered_exact_source_set(
         or tender.raw_payload.get("source_observation_id") != src.observation_id
     ):
         raise SourcePreparationError("Tender Research tender not bound to same source ZIP/XML")
-    documents = list(tender.documents)
-    if len(documents) != len(refs):
-        raise SourcePreparationError("Tender Research document count differs from original")
+    documents = [
+        doc for doc in tender.documents
+        if not str(doc.source_document_id or "").endswith("-derived-full-xml")
+    ]
+    derived = [
+        doc for doc in tender.documents
+        if str(doc.source_document_id or "").endswith("-derived-full-xml")
+    ]
+    if len(documents) != len(refs) or len(derived) > 1:
+        raise SourcePreparationError("Tender Research original document count differs from original")
+    if derived:
+        from scripts.procurement_llm.official_eis_xml_context import source_context_blob
+        expected_bytes, derived_receipt = source_context_blob(src, root=root)
+        doc = derived[0]
+        check = Path(doc.local_path) if doc.local_path else None
+        if (
+            check is None or check.is_symlink() or not check.is_file()
+            or not check.resolve().is_relative_to(root.resolve())
+            or stat.S_IMODE(check.stat().st_mode) != 0o600
+            or check.read_bytes() != expected_bytes
+            or doc.sha256 != derived_receipt["derived_docx_sha256"]
+            or doc.raw_meta.get("source_original_zip_sha256") != src.original_sha256
+            or doc.raw_meta.get("source_notice_xml_sha256") != classified["notice_xml_sha256"]
+        ):
+            raise SourcePreparationError("derived official XML document stale or tampered")
     indexed_roles = 0
     for idx, (ref, entry) in enumerate(zip(refs, manifest["attachments"], strict=True), 1):
         expected_name = _safe_name(ref["name"])
@@ -550,6 +572,21 @@ def index_existing_source_set(
     evidence = verify_registered_exact_source_set(session, number, root=root)
     if evidence["source_indexable_docx_count"] < 1:
         raise SourcePreparationError("no validated document available for Data Platform")
+    # The original EIS ZIP/XML is already privately stored; its typed notice
+    # fields and all technical object characteristics are a separately marked
+    # derived DOCX in the *same* source-SHA-bound TenderResearch collection.
+    from scripts.procurement_llm.official_eis_xml_context import (
+        store_xml_derived_context,
+    )
+    sources = [
+        item for item in source_rows(session)
+        if item.platform == "eis" and item.procurement_ref == number
+    ]
+    if len(sources) != 1 or sources[0].original_sha256 != evidence["original_archive_sha256"]:
+        raise SourcePreparationError("source version changed before XML-derived ingest")
+    derived = store_xml_derived_context(session, sources[0], root=root)
+    session.commit()
+    evidence = verify_registered_exact_source_set(session, number, root=root)
     from src.tender_research.rag.prepare_service import prepare_tender_for_analysis
 
     finished = prepare_tender_for_analysis(number, session=session)
@@ -564,6 +601,11 @@ def index_existing_source_set(
     return {
         **evidence,
         "index_status": finished.status,
+        "xml_context_indexed": True,
+        "xml_original_sha256": derived["source_xml_sha256"],
+        "xml_derived_docx_sha256": derived["docx_sha256"],
+        "xml_technical_characteristics_included": derived["full_xml_characteristics"],
+        "index_contains_exact_archival_nmc": derived["notice_nmck_rub"],
         "indexed_chunks": finished.chunks_total,
         "indexed_embeddings": finished.embeddings_total,
         "source_llm_ready_for_independent_check": True,
