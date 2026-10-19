@@ -938,3 +938,14 @@ gemma_full_rag_quality_comparison_2026_10_19:
   owner_model_quality_accepted: false
   training_gold: false
   next_step: source-attested retrieval routing for official XML/criteria chunks, then targeted verify of four fallback sections
+
+gemma_real_quality_oct19:
+  actual_result_saved: true
+  run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  status: completed_with_warnings
+  model_seconds: 1550.6728
+  source_cited_sections: 6
+  total_sections: 10
+  incomplete_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
+  canonical_index: 86
+  next: source first retrieval and citation fallback investigation, no gold, no new run until diagnosed

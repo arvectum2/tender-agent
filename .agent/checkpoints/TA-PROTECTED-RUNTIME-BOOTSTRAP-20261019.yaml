@@ -105,3 +105,21 @@ quality_run_verified_2026_10_19:
   actual_work_dod_done: true
   quality_acceptance_passed: false
   assessment_doc: docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md
+
+gemma_quality_result_2026_10_19:
+  status: completed_with_warnings
+  run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  duration_seconds: 1550.6728
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  llm_calls: 10
+  sections: 10
+  strictly_cited_sections: 6
+  fallback_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
+  report_sha256: 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7
+  prewrite_backup_sha256: 9c2afbe4555496bdf23791597a359712300eb86f9c0da1a9d193cb687a744874
+  source_86_chunks_86_resources_86_embeddings: true
+  baseline_wrong_15m_nmck_not_repeated: true
+  verified_real_497178_33_not_in_accepted_answers: true
+  training_gold: false
+  legal_bid_go: false
+  next_step: diagnose indexed XML/criteria retrieval and numeric claim fallback; no automatic re-run or gold
