@@ -161,6 +161,36 @@ def store_xml_derived_context(session: Session, src: PinnedSource,
     directory = root / "eis-source-documents" / src.procurement_ref / src.original_sha256
     if directory.is_symlink() or not directory.is_dir():
         raise SourcePreparationError("expected owned original folder missing")
+    repo = TenderRepository(session)
+    tender = repo.get_tender_by_registry_number(src.procurement_ref)
+    if tender is None:
+        raise SourcePreparationError("source-bound Tender Research row missing")
+    doc_id = (
+        "eis-archived-v" + str(receipt["archived_notice_revision"])
+        + "-derived-full-xml"
+    )
+    from scripts.procurement_llm.source_derived_docx import (
+        reuse_existing_verified_source_document,
+    )
+    try:
+        existing = reuse_existing_verified_source_document(
+            tender, doc_id, data, receipt, directory,
+        )
+    except ValueError as exc:
+        raise SourcePreparationError("registered XML derived source changed") from exc
+    if existing is not None:
+        return {
+            "source_archive_sha256": src.original_sha256,
+            "source_xml_sha256": receipt["source_notice_xml_sha256"],
+            "docx_sha256": existing[1],
+            "full_xml_characteristics": receipt["characteristics_included"],
+            "notice_nmck_rub": receipt["source_facts"]["НМЦК РУБ — сумма контракта, НЕ лимит квалификационного опыта"],
+            "notice_submission_end": receipt["source_facts"]["Окончание приёма заявок"],
+            "derived_source_document": existing[0],
+            "reused_legacy_derived_sha": True,
+            "no_new_original_facts_invented": True,
+            "current_legal_status_verified": False,
+        }
     dest = directory / ("derived-xml-v" + str(receipt["archived_notice_revision"])
                         + "-" + receipt["derived_docx_sha256"] + ".docx")
     if dest.is_symlink():
@@ -176,15 +206,9 @@ def store_xml_derived_context(session: Session, src: PinnedSource,
             f.write(data)
             f.flush()
             os.fsync(f.fileno())
-    repo = TenderRepository(session)
-    tender = repo.get_tender_by_registry_number(src.procurement_ref)
-    if tender is None:
-        raise SourcePreparationError("source-bound Tender Research row missing")
     repo.upsert_document({
         "tender_id": tender.id,
-        "source_document_id": (
-            "eis-archived-v" + str(receipt["archived_notice_revision"])
-            + "-derived-full-xml"),
+        "source_document_id": doc_id,
         "file_name": "Проверенные сведения XML ЕИС v"
                      + str(receipt["archived_notice_revision"]) + " (производный).docx",
         "file_url": None, "local_path": str(dest),

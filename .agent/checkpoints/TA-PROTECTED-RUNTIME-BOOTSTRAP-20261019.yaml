@@ -1,0 +1,142 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019
+status: completed
+goal: Reuse already configured EIS SOAP, Data Platform and PostgreSQL credentials in correct local Tender Agent processes; finish source-bound index and audited real Gemma rerun if authorized runtime permits.
+definition_of_done:
+  - Verify existing keys and distinguish SOAP from Data Platform internal API.
+  - Produce reusable guarded runtime bootstrap without exposing or duplicating secret values in files.
+  - Verify the runtime contract in tests and read-only service checks.
+  - Run source-bound XML/criteria indexing and a new real Gemma quality history entry if tools allow approved connection.
+  - Checkpoint any objective blocker and publish review-only PR; no gold/bid/main merge.
+completed:
+  - "Verified existing EIS SOAP token and Data Platform key are present; Data Platform key values in client and running service configurations match."
+  - "Standalone Tender Agent command sees default SQLite because AI_CORP_DATABASE_URL is absent; existing source intake runner expects .env.local, absent in base checkout."
+  - "Authorized existing Mac mini PostgreSQL itself has 8 Smolensk docs and 72 old chunks, 121 observations and 46 runs. Original file ZIP immutable."
+current: "COMPLETE: actual canonical PostgreSQL authentication, source-bound XML/DOCX RAG 86/86/86, one separate real Gemma quality run saved and manually audited against old fast and source-reviewed matrix."
+remaining: []
+completed_stages:
+  - "Owner-only canonical PostgreSQL read-only SQL doctor with unchanged SOAP and Data Platform service credentials."
+  - "Six original EIS binaries unchanged; derived official XML and criteria 30/70/80/20 provenance verified; legacy OOXML hash identities reused without overwriting."
+  - "Verified complete Data Platform index: 86 SQL chunks, 86 resources, 86 embeddings; local Gemma readiness no blockers."
+  - "One new real Gemma 4 12B detailed 10-section analysis in canonical PostgreSQL with 10 LLM calls, ID eeaed777-48ff-4e12-89fb-55eb01cb8e10, full run report SHA 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7, source_quality_rerun; 1550.6728 seconds, 6 accepted/4 fallback."
+  - "Compared to real 249.97s fast (6.20x slower), source-reviewed T01–T20/C01–C03/Q01–Q03 and original documentation; full correctness NOT accepted; next follow-up source-priority gate separately tracked."
+  - "No new API credentials, Gold, ETP bid, production merge, new scheduler or model download."
+last_verified_commit: dc8755637dcb4fd80939861501ab2f3bc9b974b8
+test_results:
+  - "2026-10-19 907 passed / 2 skipped across procurement_learning_corpus and tender_research; Ruff PASS, git diff --check PASS. Previous completed stage 901/2 and earlier targeted 25 passing."
+  - "Actual source-bound index 86/86/86 and readiness ready_for_actual_llm=true; six originals unchanged."
+  - "PostgreSQL real 47 runs, 122 candidate learning observations, one new source_quality_rerun, full report hash/permission verified; no source_queue duplicate or auto gold."
+  - "Quality: 10 attempted/6 accepted/4 fail-closed; missing correct NMC/deadline/weights in accepted answers, reviewed against earlier 20 technical groups."
+resume_instruction: "THIS CHILD TASK IS COMPLETED: canonical owner-only runtime corrected, XML+criteria index ready 86/86/86, actual detailed Gemma 4 12B source_quality_rerun saved as eeaed777-48ff-4e12-89fb-55eb01cb8e10 after 1550.6728 s with status completed_with_warnings; report SHA 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7. Do not repeat index or run. Continue separate source evidence routing task: ensure original XML/criteria DOCX exact chunk IDs are retrieved for notice/subject/deadlines/evaluation, with source ZIP+tenant checks, keep numeric and citation guards. Targeted 4 fallback sections before any 26min full rerun. Compare docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md. No merge/ETP/gold without owner AM-4."
+runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
+quality_rerun_entrypoint: scripts/procurement_llm/source_quality_rerun.py
+operator_instructions: docs/roadmap/GEMMA_EXISTING_RUNTIME_BOOTSTRAP_2026-10-19.md
+runtime_config_file_exists: true
+operator_soap_token_already_present: true
+operator_data_platform_keys_match: true
+standalone_ai_corp_database_url_configured: false
+existing_source_intake_expected_dotenv_local_missing: true
+actual_doctor_executed: false
+actual_index_rebuilt: false
+actual_new_quality_run_saved: false
+expected_canonical_db: arvectum
+observations_last_checked: 121
+actual_runs_last_checked: 46
+old_index_chunks_last_checked: 72
+training_gold_promoted: 0
+manual_intervention_required: authorized_operator_process_execution
+
+user_diagnostic_2026_10_19:
+  prod_db_user_present: true
+  prod_db_password_present: true
+  prod_db_name_present: true
+  prod_db_name_equals_arvectum: false
+  interpretation: bootstrap must not assume PROD_DB_NAME is the canonical Tender Agent database
+  next_step: distinguish PROD_DB_NAME from intended canonical DB, verify true connectivity with actual SELECT before declaring doctor ready; no changes to original PROD_DB_NAME or user secrets
+
+
+canonical_source_index_verified_2026_10_19:
+  original_zip_sha256: 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d
+  original_xml_sha256: 36556189a1bb0aeead937e06e9c4186206a465ba139fc09023b4c1d08e7cb719
+  original_binaries_verified: 6
+  original_docx_indexable: 5
+  derived_xml_source_verified: true
+  derived_criteria_percentages: [30, 70, 80, 20]
+  data_platform_resources: 86
+  data_platform_embeddings: 86
+  existing_canonical_sql_chunks: 86
+  readiness_for_actual_llm: true
+  readiness_blockers: []
+  full_prewrite_postgresql_backup_sha256: 163d3633fc5c8113a796e5f71b9256752bb979c0a2c41cc2b99f5f7e67dc8ad1
+  previous_source_queue_llm_run_preserved: true
+  installed_new_watchdog: false
+  human_gold_promoted: false
+  completed_stage: secure_canonical_db_connect_and_complete_data_platform_index
+  current_stage: real_gemma_quality_rerun_running_via_authorized_ssh
+  actual_gemma_quality_run_pid_at_start: 41097
+  actual_gemma_quality_run_started_utc_approx: "2026-10-19T09:32:54Z"
+  resume_instruction: Verify PID 41097 and private quality-ssh.log first; do not restart if still running. If complete read run receipt, DB TenderAnalysisRun.source=source_quality_rerun, mode/metadata/report SHA, compare baseline. Do not claim success before verifying saved run.
+
+
+quality_run_verified_2026_10_19:
+  canonical_database: arvectum
+  actual_run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  run_source: source_quality_rerun
+  run_status: completed_with_warnings
+  actual_model: arvectum-gemma4-12b-it-qat-q4_0
+  actual_llm_calls: 10
+  actual_sections: 10
+  accepted_llm_answers: 6
+  fail_closed_fallback_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
+  duration_seconds: 1550.6728
+  previous_fast_seconds: 249.97
+  new_vs_old_elapsed_multiplier: 6.20
+  report_sha256: 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7
+  report_private_permissions: "0600"
+  prewrite_backup_sha256: 9c2afbe4555496bdf23791597a359712300eb86f9c0da1a9d193cb687a744874
+  actual_learning_candidate_rows: 122
+  actual_analysis_runs: 47
+  original_nmck_correct_in_accepted_llm_answer: false
+  original_criteria_weights_correct_in_accepted_llm_answer: false
+  source_original_archive_verified: true
+  data_platform_index_parity: true
+  automatic_gold_promoted: 0
+  actual_work_dod_done: true
+  quality_acceptance_passed: false
+  assessment_doc: docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md
+
+gemma_quality_result_2026_10_19:
+  status: completed_with_warnings
+  run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  duration_seconds: 1550.6728
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  llm_calls: 10
+  sections: 10
+  strictly_cited_sections: 6
+  fallback_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
+  report_sha256: 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7
+  prewrite_backup_sha256: 9c2afbe4555496bdf23791597a359712300eb86f9c0da1a9d193cb687a744874
+  source_86_chunks_86_resources_86_embeddings: true
+  baseline_wrong_15m_nmck_not_repeated: true
+  verified_real_497178_33_not_in_accepted_answers: true
+  training_gold: false
+  legal_bid_go: false
+  next_step: diagnose indexed XML/criteria retrieval and numeric claim fallback; no automatic re-run or gold
+  fallback_diagnosis_2026_10_19:
+    xml_and_criteria_source_in_index: true
+    evaluation_criteria_retrieval_contains_derived_percent_docx: true
+    contract_terms_retrieval_contains_original_contract: true
+    subject_retrieval_contains_original_evaluation_docx: true
+    four_sections_reverted_to_retrieval_only: true
+    conclusion: "Not missing source ingestion; investigate LLM numeric citation acceptance guard and section answer provenance before re-running."
+
+gemma_exact_guard_rejections_2026_10_19:
+  source: canonical_tender_analysis_runs_warnings_json
+  subject: "Model emitted unknown or modified source chunk identifier."
+  customer_requirements: "Model emitted unsupported explicit percent value."
+  evaluation_criteria: "Model emitted unsupported explicit percent value."
+  contract_terms: "Model emitted unsupported explicit percent value."
+  failure_mode: strict_citation_and_numeric_evidence_gate
+  correction_policy: "Do not loosen guards, do not accept claims without cited source value; separately diagnose context selection and exact generated values."
+  report_remains_unreviewed: true

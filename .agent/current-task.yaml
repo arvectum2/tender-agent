@@ -896,3 +896,56 @@ gemma_criteria_xml_index_2026_10_19:
   regression_skipped: 4
   access_blocker: existing_operator_database_credentials_not_available_to_this_protected_executor
   next_step: Using an approved preconfigured operator runtime and full DB backup, complete guarded XML/criteria Data Platform indexing, then run one real separate quality Gemma review and compare with baseline. No source completion duplicate, owner gold or AM-4 merge.
+
+
+protected_runtime_bootstrap_2026_10_19:
+  checkpoint: .agent/checkpoints/TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019.yaml
+  status: completed
+  goal: correct existing owner-local PostgreSQL/Data Platform environment, no new EIS SOAP or DP keys
+  runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
+  quality_rerun: scripts/procurement_llm/source_quality_rerun.py
+  actual_doctor_index_quality_run: true
+  blocked_on: none
+  resume_instruction: Run already-created safe operator runtime doctor, then index, then quality sequentially only from authorized local environment; do not bypass safety gate, copy passwords or claim training gold.
+
+
+gemma_index_ready_2026_10_19:
+  source_44fz_number: "0163200000326005243"
+  source_original_count: 6
+  verified_source_derived_xml_and_criteria: true
+  data_platform_resources_and_embeddings: 86
+  actual_canonical_sql_chunks: 86
+  source_ready_for_llm: true
+  original_zip_sha256: 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d
+  full_prewrite_backup_sha256: 163d3633fc5c8113a796e5f71b9256752bb979c0a2c41cc2b99f5f7e67dc8ad1
+  quality_source_history_task: completed_with_warnings_saved
+  quality_run_pid: 41097
+  next_action: Read private quality-ssh.log and canonical new analysis row once process completes, compare original and deep source-only runs. No training gold, no bid action.
+
+
+gemma_full_rag_quality_comparison_2026_10_19:
+  status: completed
+  canonical_run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  real_llm_duration_seconds: 1550.6728
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  source_bound_data_platform_index: "86/86/86"
+  accepted_model_answers: 6
+  rejected_to_retrieval_fallback: 4
+  canonical_analysis_runs: 47
+  canonical_learning_observations: 122
+  report_sha256: 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7
+  comparison_doc: docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md
+  owner_model_quality_accepted: false
+  training_gold: false
+  next_step: source-attested retrieval routing for official XML/criteria chunks, then targeted verify of four fallback sections
+
+gemma_real_quality_oct19:
+  actual_result_saved: true
+  run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  status: completed_with_warnings
+  model_seconds: 1550.6728
+  source_cited_sections: 6
+  total_sections: 10
+  incomplete_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
+  canonical_index: 86
+  next: source first retrieval and citation fallback investigation, no gold, no new run until diagnosed
