@@ -70,3 +70,17 @@ def test_rejects_duplicate_or_missing_sections():
         evaluate_report(raw.replace("## deadlines.", "## subject."))
     with pytest.raises(ValueError, match="same ten"):
         evaluate_report(raw.replace("## documents_summary.", "### documents_summary."))
+
+
+
+def test_retrieval_only_source_text_is_never_credited_as_model_answer():
+    raw = sample(nmck="НМЦК 497 178,33 руб.")
+    raw = raw.replace(
+        "Сведения: НМЦК 497 178,33 руб.",
+        "Релевантные фрагменты из документов:\n[Фрагмент 1] "
+        "НМЦК 497 178,33 руб.",
+    )
+    result = evaluate_report(raw)
+    assert result["retrieval_fallback_section_ids"] == ["subject"]
+    assert result["accepted_model_sections"] == 9
+    assert result["lexical_hints"]["real_nmck_497178_33"] is False

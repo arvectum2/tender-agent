@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019
-status: in_progress
+status: completed
 goal: Reuse already configured EIS SOAP, Data Platform and PostgreSQL credentials in correct local Tender Agent processes; finish source-bound index and audited real Gemma rerun if authorized runtime permits.
 definition_of_done:
   - Verify existing keys and distinguish SOAP from Data Platform internal API.
@@ -13,19 +13,22 @@ completed:
   - "Verified existing EIS SOAP token and Data Platform key are present; Data Platform key values in client and running service configurations match."
   - "Standalone Tender Agent command sees default SQLite because AI_CORP_DATABASE_URL is absent; existing source intake runner expects .env.local, absent in base checkout."
   - "Authorized existing Mac mini PostgreSQL itself has 8 Smolensk docs and 72 old chunks, 121 observations and 46 runs. Original file ZIP immutable."
-current: "Created secure in-memory runtime bootstrap, distinct actual Gemma quality rerun with source SHA and no gold; direct operator doctor invocation blocked by protected tool before execution."
-remaining:
-  - Execute existing runtime doctor in an authorized operator process, without exposing or copying credentials.
-  - Confirm canonical PostgreSQL and Data Platform healthy, run guarded index apply and verify original SHA and chunk/embedding parity.
-  - Run one genuine separate Gemma source_quality_rerun and compare quality/latency.
-  - Review PR and CI; no AM-4 main merge/ETP or training gold by default.
+current: "COMPLETE: actual canonical PostgreSQL authentication, source-bound XML/DOCX RAG 86/86/86, one separate real Gemma quality run saved and manually audited against old fast and source-reviewed matrix."
+remaining: []
+completed_stages:
+  - "Owner-only canonical PostgreSQL read-only SQL doctor with unchanged SOAP and Data Platform service credentials."
+  - "Six original EIS binaries unchanged; derived official XML and criteria 30/70/80/20 provenance verified; legacy OOXML hash identities reused without overwriting."
+  - "Verified complete Data Platform index: 86 SQL chunks, 86 resources, 86 embeddings; local Gemma readiness no blockers."
+  - "One new real Gemma 4 12B detailed 10-section analysis in canonical PostgreSQL with 10 LLM calls, ID eeaed777-48ff-4e12-89fb-55eb01cb8e10, full run report SHA 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7, source_quality_rerun; 1550.6728 seconds, 6 accepted/4 fallback."
+  - "Compared to real 249.97s fast (6.20x slower), source-reviewed T01–T20/C01–C03/Q01–Q03 and original documentation; full correctness NOT accepted; next follow-up source-priority gate separately tracked."
+  - "No new API credentials, Gold, ETP bid, production merge, new scheduler or model download."
 last_verified_commit: 981761038b4543e2213cc1da65b0f5be6442d2a9
 test_results:
-  - "Local runtime bootstrap and quality-run tests 11 PASS, Ruff PASS. Existing previous source/criteria PR498 CI 19/19 PASS."
-  - "Real operator doctor attempt tool-blocked before program execution; no SQL or Data Platform changes."
-  - "Secrets were never printed, persisted in new env files or committed. Prior SQL count 121 learning, 46 real run, 72 old Smolensk index chunks."
-
-resume_instruction: "Canonical PostgreSQL arvectum successfully authenticated by existing owner-operated local Docker service without changing PROD_DB_NAME. Verified full source-bound EIS index complete: 86 SQL chunks, 86 Data Platform resources, 86 embeddings, six original SHA receipts verified, original XML plus criteria normalized 30/70 & 80/20, fresh restorable pg_dump sha 163d3633fc5c8113a796e5f71b9256752bb979c0a2c41cc2b99f5f7e67dc8ad1. One real separate Gemma quality analysis PID 41097 launched via authorized SSH from MacBook to Mac mini at 12:32:54 MSK in detached local process. FIRST check its state and protected log /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-rag-index-20261019/quality-ssh.log; do not relaunch if alive. When finished verify real source_quality_rerun history, saved report SHA, section citations, compare 249.97s fast and 1610.40s direct-original benchmark, persist checkpoint and review-only PR. No gold or ETP."
+  - "2026-10-19 907 passed / 2 skipped across procurement_learning_corpus and tender_research; Ruff PASS, git diff --check PASS. Previous completed stage 901/2 and earlier targeted 25 passing."
+  - "Actual source-bound index 86/86/86 and readiness ready_for_actual_llm=true; six originals unchanged."
+  - "PostgreSQL real 47 runs, 122 candidate learning observations, one new source_quality_rerun, full report hash/permission verified; no source_queue duplicate or auto gold."
+  - "Quality: 10 attempted/6 accepted/4 fail-closed; missing correct NMC/deadline/weights in accepted answers, reviewed against earlier 20 technical groups."
+resume_instruction: "THIS CHILD TASK IS COMPLETED: canonical owner-only runtime corrected, XML+criteria index ready 86/86/86, actual detailed Gemma 4 12B source_quality_rerun saved as eeaed777-48ff-4e12-89fb-55eb01cb8e10 after 1550.6728 s with status completed_with_warnings; report SHA 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7. Do not repeat index or run. Continue separate source evidence routing task: ensure original XML/criteria DOCX exact chunk IDs are retrieved for notice/subject/deadlines/evaluation, with source ZIP+tenant checks, keep numeric and citation guards. Targeted 4 fallback sections before any 26min full rerun. Compare docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md. No merge/ETP/gold without owner AM-4."
 runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
 quality_rerun_entrypoint: scripts/procurement_llm/source_quality_rerun.py
 operator_instructions: docs/roadmap/GEMMA_EXISTING_RUNTIME_BOOTSTRAP_2026-10-19.md
@@ -74,3 +77,31 @@ canonical_source_index_verified_2026_10_19:
   actual_gemma_quality_run_pid_at_start: 41097
   actual_gemma_quality_run_started_utc_approx: "2026-10-19T09:32:54Z"
   resume_instruction: Verify PID 41097 and private quality-ssh.log first; do not restart if still running. If complete read run receipt, DB TenderAnalysisRun.source=source_quality_rerun, mode/metadata/report SHA, compare baseline. Do not claim success before verifying saved run.
+
+
+quality_run_verified_2026_10_19:
+  canonical_database: arvectum
+  actual_run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  run_source: source_quality_rerun
+  run_status: completed_with_warnings
+  actual_model: arvectum-gemma4-12b-it-qat-q4_0
+  actual_llm_calls: 10
+  actual_sections: 10
+  accepted_llm_answers: 6
+  fail_closed_fallback_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
+  duration_seconds: 1550.6728
+  previous_fast_seconds: 249.97
+  new_vs_old_elapsed_multiplier: 6.20
+  report_sha256: 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7
+  report_private_permissions: "0600"
+  prewrite_backup_sha256: 9c2afbe4555496bdf23791597a359712300eb86f9c0da1a9d193cb687a744874
+  actual_learning_candidate_rows: 122
+  actual_analysis_runs: 47
+  original_nmck_correct_in_accepted_llm_answer: false
+  original_criteria_weights_correct_in_accepted_llm_answer: false
+  source_original_archive_verified: true
+  data_platform_index_parity: true
+  automatic_gold_promoted: 0
+  actual_work_dod_done: true
+  quality_acceptance_passed: false
+  assessment_doc: docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md

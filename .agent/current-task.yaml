@@ -900,12 +900,12 @@ gemma_criteria_xml_index_2026_10_19:
 
 protected_runtime_bootstrap_2026_10_19:
   checkpoint: .agent/checkpoints/TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019.yaml
-  status: blocked
+  status: completed
   goal: correct existing owner-local PostgreSQL/Data Platform environment, no new EIS SOAP or DP keys
   runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
   quality_rerun: scripts/procurement_llm/source_quality_rerun.py
-  actual_doctor_index_quality_run: false
-  blocked_on: remote operator tool denied runtime access to protected configuration
+  actual_doctor_index_quality_run: true
+  blocked_on: none
   resume_instruction: Run already-created safe operator runtime doctor, then index, then quality sequentially only from authorized local environment; do not bypass safety gate, copy passwords or claim training gold.
 
 
@@ -918,6 +918,23 @@ gemma_index_ready_2026_10_19:
   source_ready_for_llm: true
   original_zip_sha256: 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d
   full_prewrite_backup_sha256: 163d3633fc5c8113a796e5f71b9256752bb979c0a2c41cc2b99f5f7e67dc8ad1
-  quality_source_history_task: in_progress
+  quality_source_history_task: completed_with_warnings_saved
   quality_run_pid: 41097
   next_action: Read private quality-ssh.log and canonical new analysis row once process completes, compare original and deep source-only runs. No training gold, no bid action.
+
+
+gemma_full_rag_quality_comparison_2026_10_19:
+  status: completed
+  canonical_run_id: eeaed777-48ff-4e12-89fb-55eb01cb8e10
+  real_llm_duration_seconds: 1550.6728
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  source_bound_data_platform_index: "86/86/86"
+  accepted_model_answers: 6
+  rejected_to_retrieval_fallback: 4
+  canonical_analysis_runs: 47
+  canonical_learning_observations: 122
+  report_sha256: 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7
+  comparison_doc: docs/roadmap/GEMMA_SMOLENSK_CANONICAL_RAG_ACTUAL_COMPARE_2026-10-19.md
+  owner_model_quality_accepted: false
+  training_gold: false
+  next_step: source-attested retrieval routing for official XML/criteria chunks, then targeted verify of four fallback sections

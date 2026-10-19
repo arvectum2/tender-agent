@@ -60,23 +60,37 @@ def evaluate_report(markdown: str) -> dict:
         )]
         for idx, match in enumerate(sections)
     }
-    # Claims are source-review hints only. Text may itself be negated or quoted.
+    # A retrieval-only fallback is source text, NOT an accepted model answer.
+    analyzed: dict[str, str] = {}
+    fallback_ids: list[str] = []
+    for section_id, raw_section in fragments.items():
+        payload = raw_section.split("\n\n", 1)[-1].lstrip()
+        if payload.startswith("Релевантные фрагменты из документов:"):
+            fallback_ids.append(section_id)
+            analyzed[section_id] = ""
+        else:
+            analyzed[section_id] = raw_section.split("Источники:", 1)[0]
+    accepted_text = "\n".join(analyzed.values())
+    # Claims are hints in accepted generated answers only, not entailment.
     hints = {
-        name: bool(re.search(pattern, markdown, re.IGNORECASE))
+        name: bool(re.search(pattern, accepted_text, re.IGNORECASE))
         for name, pattern in CLAIMS.items()
     }
     mentioned_registry = CITED_REGISTRY.findall(markdown)
     malformed = sorted({
         number for number in mentioned_registry if number != NUMBER
     })
-    subject = fragments.get("subject", "")
+    subject = analyzed.get("subject", "")
     mistaken_nmck = bool(re.search(
-        r"нмцк[^\n]{0,100}15\s*000\s*000",
+        r"(?:нмцк|начальн.{0,50}цен[ауы])[^\n]{0,90}15\s*000\s*000",
         subject, re.IGNORECASE,
     ))
     return {
         "section_ids": section_ids,
         "section_count": len(sections),
+        "accepted_model_sections": len(sections) - len(fallback_ids),
+        "retrieval_fallback_section_ids": fallback_ids,
+        "lexical_hints_only_in_accepted_answers": True,
         "lexical_hints": hints,
         "lexical_hints_count": sum(hints.values()),
         "cited_registry_numbers_count": len(mentioned_registry),
