@@ -123,3 +123,10 @@ gemma_quality_result_2026_10_19:
   training_gold: false
   legal_bid_go: false
   next_step: diagnose indexed XML/criteria retrieval and numeric claim fallback; no automatic re-run or gold
+  fallback_diagnosis_2026_10_19:
+    xml_and_criteria_source_in_index: true
+    evaluation_criteria_retrieval_contains_derived_percent_docx: true
+    contract_terms_retrieval_contains_original_contract: true
+    subject_retrieval_contains_original_evaluation_docx: true
+    four_sections_reverted_to_retrieval_only: true
+    conclusion: "Not missing source ingestion; investigate LLM numeric citation acceptance guard and section answer provenance before re-running."
