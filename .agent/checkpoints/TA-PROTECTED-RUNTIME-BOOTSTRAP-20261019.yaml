@@ -19,7 +19,7 @@ remaining:
   - Confirm canonical PostgreSQL and Data Platform healthy, run guarded index apply and verify original SHA and chunk/embedding parity.
   - Run one genuine separate Gemma source_quality_rerun and compare quality/latency.
   - Review PR and CI; no AM-4 main merge/ETP or training gold by default.
-last_verified_commit: fec52ac99adeb04056c1658adee81f474ce7b072
+last_verified_commit: 981761038b4543e2213cc1da65b0f5be6442d2a9
 test_results:
   - "Local runtime bootstrap and quality-run tests 11 PASS, Ruff PASS. Existing previous source/criteria PR498 CI 19/19 PASS."
   - "Real operator doctor attempt tool-blocked before program execution; no SQL or Data Platform changes."
