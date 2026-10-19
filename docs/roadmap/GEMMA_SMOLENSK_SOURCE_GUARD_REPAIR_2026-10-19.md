@@ -18,3 +18,9 @@
 ## Следующий gate
 
 Дождаться результата ровно 4 вопросов Gemma в частном каталоге /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019, проверить фактическое время, accepted/rejected, доказательность цифр и цитат. Не запускать повторно PID 5363 при работе. Если 4/4 не доказаны, блокер остаётся; полный 26-минутный quality rerun не запускать. Если 4/4 доказаны, отдельно согласовать versioned full rerun с backup и жёсткими исходниковыми guard. Ни один результат не имеет человеческого gold.
+
+## Four-section experiment observed at 20:30 MSK
+
+Actual Gemma 4 12B / llama.cpp source-only read-only four-section probe completed with 2/4 accepted answers. Customer requirements (298.02 seconds, 2 attempts) and evaluation criteria (297.66 seconds, 2 attempts; explicit 30/70 and 80/20) passed strict evidence checks. Subject failed on unsupported rub amount (272.94 seconds, 2 attempts), and contract terms failed on unsupported percentage (351.01 seconds, 2 attempts). Total 1219.63 seconds, zero new TenderAnalysisRun and zero gold.
+
+An additional owner-private two-question experiment PID 39834 (subject, contract_terms only) was launched with stricter same-context repair lists of actual monetary and percent values; it writes ONLY retry2-result.json to private quality benchmarks, preserves first report. Broad regression 922 PASS/2 SKIP, targeted 15 PASS, Ruff PASS. If repeat still fails, do not claim overall 4/4 nor repeat full 10-question baseline. Final source semantic review remains separate from citation acceptance.

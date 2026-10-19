@@ -170,3 +170,31 @@ def test_customer_contract_sections_never_receive_foreign_retrieval_hits(tmp_pat
             repo,[hit("good"),hit("other",registry="foreign",tender="x")],
             registry_number=NUMBER,section_id=section_id,max_chunks=5)
         assert [x.chunk_id for x in result]==["good"]
+
+
+
+def test_retry_explicit_currency_and_percent_values_are_context_scoped():
+    doc=hit("original_xml_chunk")
+    doc=__import__("dataclasses").replace(
+        doc, text="НМЦК 497 178,33 руб. Цена критерия 30 %."
+    )
+    question=LocalChatLlmClient._evidence_repair_question(
+        "Назови настоящую НМЦК", [doc],
+        "Local LLM answer includes an unsupported explicit numeric value with unit rub",
+    )
+    assert "497178.33 руб." in question
+    assert "30%" in question
+    assert "original_xml_chunk" in question
+    assert "15 000 000" not in question
+
+
+def test_retry_absent_percent_and_rub_never_invents_values():
+    doc=__import__("dataclasses").replace(
+        hit("contract_chunk"), text="Срок исполнения договора до конца 2026 года."
+    )
+    question=LocalChatLlmClient._evidence_repair_question(
+        "Договор", [doc],
+        "Local LLM answer includes an unsupported explicit numeric value with unit percent",
+    )
+    assert "список явно присутствующих денежных значений: отсутствует" in question
+    assert "список явно присутствующих процентных значений: отсутствует" in question

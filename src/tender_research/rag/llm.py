@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any
 
 from src.tender_research.rag.numeric_absence_guard import contradicted_absence
 from src.tender_research.rag.numeric_claim_evidence import (
+    _observed_values,
     unsupported_explicit_numeric_claim,
 )
 from src.tender_research.rag.numeric_claim_guard import contradicted_cited_quantity
@@ -199,27 +200,34 @@ class LocalChatLlmClient:
 
     @staticmethod
     def _evidence_repair_question(question: str, contexts: Sequence[RagSearchHit], error: str) -> str:
-        # The allowed values are only an exact lexical inventory of what was
-        # actually passed to the model, not independent legal verification.
+        # An evidence-only lexical inventory. The number guard still checks
+        # every explicit unit value in the returned answer after both attempts.
         cited = list(dict.fromkeys(str(h.chunk_id) for h in contexts if h.chunk_id))
-        allowed_pct = sorted({
-            match.group().replace(" ", "")
-            for hit in contexts
-            for match in re.finditer(r"(?<!\d)\d{1,3}(?:[.,]\d+)?\s*%", hit.text)
+        observed = sorted({
+            (kind, value)
+            for hit in contexts for kind, value in _observed_values(hit.text)
+            if kind in {"rub", "percent"}
         })
+        currencies = [v + " руб." for kind, v in observed if kind == "rub"]
+        percentages = [v + "%" for kind, v in observed if kind == "percent"]
         return (
             question
             + "\n\nВАЖНО: Предыдущий ответ отклонён проверкой доказательств ("
-            + error + "). Напиши новый ответ ТОЛЬКО из приведённых ниже исходных "
-            "фрагментов. НЕ воспроизводи отклонённый текст и не придумывай числа. "
-            "Если нельзя доказать процент из источника, не называй его, "
-            "пиши 'не подтверждено фрагментами'. "
-            "В ответе могут быть проценты только из точных форм записи: "
-            + (", ".join(allowed_pct) if allowed_pct else "нет подтверждённых процентов")
-            + ". Каждую ссылку скопируй ПОСИМВОЛЬНО из списка chunk_id: "
+            + error + "). Напиши НОВЫЙ ответ только на основании тех же фрагментов. "
+            "НЕ воспроизводи отклонённый текст, НЕ рассчитывай числа, "
+            "НЕ выводи новые проценты или суммы в рублях из общих знаний. "
+            "Указывай денежную сумму или процент ТОЛЬКО если такое же число "
+            "с той же единицей явно приведено во входном контексте. "
+            "Иначе опускай величину и прямо укажи, что она не подтверждена "
+            "выбранными фрагментами. Полный список явно присутствующих денежных значений: "
+            + (", ".join(currencies) if currencies else "отсутствует")
+            + ". Полный список явно присутствующих процентных значений: "
+            + (", ".join(percentages) if percentages else "отсутствует")
+            + ". Не путай стоимость закупки с порогом опыта участника. "
+            "В каждой ссылке скопируй chunk_id ПОСИМВОЛЬНО из точного списка: "
             + ", ".join(cited)
-            + ". Не изменяй ни одной цифры идентификатора; "
-            "если доказательства не хватает, прямо скажи об этом."
+            + ". Не изменяй ни одного символа реестрового номера или chunk_id; "
+            "если доказательства не хватает, скажи это прямо."
         )
 
     def build_prompt_metrics(

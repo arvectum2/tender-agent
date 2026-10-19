@@ -10,7 +10,7 @@ definition_of_done:
 completed:
   - "Previously completed parent child TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019: 86/86/86 canonical source retrieval ready, Gemma detailed run eeaed777-48ff-4e12-89fb-55eb01cb8e10 (1550.6728s, six accepted, four rejected) already saved; do not repeat previous run."
   - "Real warnings_json: subject unknown/modified chunk id; customer_requirements, evaluation_criteria, contract_terms unsupported percent claims."
-current: Scoped EIS source route implemented; actual SQL/Data Platform source probe confirmed derived XML and criteria priority. One retry of rejected detailed LLM answers implemented, fail-closed. Full 918 passed/2 skipped and targeted 12 pass, Ruff clean. Real four-section Gemma read-only probe PID 5363 running.
+current: "Real four-section Gemma 2/4 accepted (customer_requirements and evaluation_criteria); subject rub and contract_terms percent rejected. Enhanced explicit in-context unit inventory. Two-question private retry PID 39834 running. Ruff clean, 922 PASS/2 SKIP broad, 15 targeted PASS; no canonical DB writes."
 remaining:
   - Strict source-aware routing plus tenant and source-hash checks.
   - Tests and safe bounded retry of failed citations/percentages.
@@ -18,7 +18,7 @@ remaining:
   - Report, final tests, checkpoint and PR.
 last_verified_commit: 9b23e31c
 test_results: []
-resume_instruction: Source 86/86/86 ready; do not reindex. Implement evidence-specific routing anchored to owner EIS source and section with no cross-tender leaks, and single retry for failed numeric/source IDs. Validate with adversarial tests before model. Save four-question check privately. Do not alter original DB runs/learning-gold until fully verified.
+resume_instruction: "First real four-question source-bound Gemma private probe completed 2 of 4: customer_requirements and evaluation_criteria accepted, subject rub and contract_terms percent rejected. DO NOT rerun original four questions or canonical full run. FIRST check PID 39834 and retry2-result.json in private quality-benchmarks/gemma-four-retry-20261019 folder. Second focused two-question exact-unit repair local probe read-only DB and no learning writes. Then assess source coverage and tests, checkpoint and PR. No gold, bid or merge."
 
 verified_stage_2026_10_19:
   relevant_tests_pass: 918
@@ -55,3 +55,29 @@ latest_tests_2026_10_19:
   github_push_denied_for_authenticated_ssh_identity: arutyunoveth
   github_state: local_commits_only_not_merged_or_deployed
 resume_after_interruption: "Inspect Mac mini PID 5363 and protected result.json/probe.log at /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019. Never restart while PID active. If JSON exists inspect each of four errors, attempts, source IDs, numeric claims. Benchmark is read-only; no new TenderAnalysisRun/gold. If model still active after expected bounded duration, keep in_progress and report measured time, no invented success. Local verified commits c2f8483f and 9b23e31c, 920 pytest PASS/2 SKIP, Ruff PASS. GitHub upload blocked by SSH principal arutyunoveth denied permission to arvectum2/tender-agent. No bypass or merge."
+
+first_real_four_question_probe:
+  completed: true
+  output: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/result.json
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  backend: llama.cpp
+  accepted: 2
+  total: 4
+  successful_sections: [customer_requirements, evaluation_criteria]
+  failed_sections: [subject, contract_terms]
+  failed_units: [rub, percent]
+  total_duration_seconds: 1219.63
+  model_attempts_each: 2
+  canonical_sql_modified: false
+  human_gold: false
+second_exact_units_repair_probe:
+  status: running
+  pid: 39834
+  focus: [subject, contract_terms]
+  result_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry2-result.json
+  canonical_sql_modified: false
+new_regression_results:
+  broad_passed: 922
+  broad_skipped: 2
+  targeted_passed: 15
+  ruff: PASS

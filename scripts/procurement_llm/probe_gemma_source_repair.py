@@ -44,7 +44,13 @@ def _save_once(payload: dict) -> Path:
     OUT.mkdir(parents=True, exist_ok=True, mode=0o700)
     if OUT.is_symlink() or stat.S_IMODE(OUT.stat().st_mode) != 0o700:
         raise ValueError("private output folder cannot be verified")
-    destination = OUT / ("result.json" if payload["mode"]=="source_only_local_gemma" else "evidence.json")
+    if payload["mode"] != "source_only_local_gemma":
+        name = "evidence.json"
+    elif tuple(payload["selected_section_ids"]) == IDS:
+        name = "result.json"
+    else:
+        name = "retry2-result.json"
+    destination = OUT / name
     descriptor = os.open(destination, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
     with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
         json.dump(payload, stream, ensure_ascii=False, indent=2)
@@ -53,7 +59,9 @@ def _save_once(payload: dict) -> Path:
     return destination
 
 
-def actual_probe(*, invoke_llm: bool) -> dict:
+def actual_probe(*, invoke_llm: bool, selected_section_ids: tuple[str, ...] = IDS) -> dict:
+    if not selected_section_ids or any(i not in IDS for i in selected_section_ids):
+        raise ValueError("only supported pinned four sections")
     engine = create_engine(_engine_url())
     result = {
         "schema": "smolensk_original_eis_four_section_repair_v1",
@@ -67,6 +75,7 @@ def actual_probe(*, invoke_llm: bool) -> dict:
         "legal_bid_go": False,
         "timestamp_utc": datetime.now(UTC).isoformat(),
         "sections": [],
+        "selected_section_ids": list(selected_section_ids),
     }
     try:
         with Session(engine) as session:
@@ -94,7 +103,7 @@ def actual_probe(*, invoke_llm: bool) -> dict:
                     section["id"]: section
                     for section in analysis_sections_for_regime(tender.law_type)
                 }
-                for section_id in IDS:
+                for section_id in selected_section_ids:
                     section = available[section_id]
                     started = time.perf_counter()
                     hits = DataPlatformRagRetriever(repo, client).search_documents(
@@ -158,8 +167,12 @@ def actual_probe(*, invoke_llm: bool) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--llm", action="store_true")
+    parser.add_argument("--only", nargs="+", choices=IDS)
     args = parser.parse_args()
-    outcome = actual_probe(invoke_llm=args.llm)
+    outcome = actual_probe(
+        invoke_llm=args.llm,
+        selected_section_ids=tuple(args.only) if args.only else IDS,
+    )
     destination = _save_once(outcome)
     print(json.dumps({
         "status": "completed", "result_path": str(destination),

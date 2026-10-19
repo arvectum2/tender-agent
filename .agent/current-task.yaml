@@ -957,7 +957,7 @@ gemma_cited_source_fallback_fix_2026_10_19:
   source_evidence_routing_verified: true
   guarded_single_retry_added: true
   four_question_gemma_probe_pid: 5363
-  next_step: Inspect actual private four-question probe output, accept/reject by source IDs and numeric guards, finalize checkpoint. No full rerun until probe verified.
+  next_step: Read-only four-question Gemma completed 2/4. Second only subject and contract_terms PID39834 running. Review retry2-result.json, no full rerun or gold.
 
 gemma_source_repair_verified_stage_2026_10_19:
   child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
@@ -969,3 +969,15 @@ gemma_source_repair_verified_stage_2026_10_19:
   git_push_permission_blocker: arvectum2/tender-agent denies git_ssh_principal_arutyunoveth
   four_question_local_gemma_pid: 5363
   reason_for_remaining_stage: awaiting_actual_four_question_llm_probe_report
+
+gemma_source_repair_second_probe_2026_10_19:
+  first_probe_accepted: 2
+  first_probe_total: 4
+  accepted_sections: [customer_requirements, evaluation_criteria]
+  failed_sections: [subject, contract_terms]
+  failure_kinds: [rub, percent]
+  focused_second_probe_pid: 39834
+  result_path: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry2-result.json
+  canonical_db_writes: 0
+  gold_promoted: 0
+  resume_instruction: Check second process and private JSON before relaunching; compare strict source evidence and verified numbers.
