@@ -4,7 +4,7 @@ import json
 import re
 import urllib.error
 import urllib.request
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 from src.tender_research.rag.numeric_absence_guard import contradicted_absence
@@ -38,6 +38,7 @@ class RagAnswer:
     used_chunks_count: int
     model: str
     error: str | None = None
+    attempt_count: int = 1
 
 
 def build_source_citations(contexts: Sequence[RagSearchHit]) -> list[SourceCitation]:
@@ -165,11 +166,60 @@ class LocalChatLlmClient:
                 ),
             )
 
-        return self._generate_with_retry(
-            question,
-            selected_contexts,
+        initial = self._generate_with_retry(
+            question, selected_contexts,
             registry_number=registry_number,
             analysis_mode=analysis_mode,
+        )
+        if (
+            analysis_mode != "detailed" or not initial.error
+            or not self._is_repairable_evidence_error(initial.error)
+        ):
+            return initial
+        # A second call uses the SAME received evidence: never import a
+        # fabricated claim from the failed answer, and never disable guards.
+        repaired_question = self._evidence_repair_question(
+            question, selected_contexts, initial.error
+        )
+        corrected = self._generate_with_retry(
+            repaired_question, selected_contexts,
+            registry_number=registry_number,
+            analysis_mode=analysis_mode,
+        )
+        return replace(corrected, attempt_count=2)
+
+    @staticmethod
+    def _is_repairable_evidence_error(error: str) -> bool:
+        return any(marker in error for marker in (
+            "unknown or modified source chunk identifiers",
+            "no verifiable source chunk citations",
+            "unsupported explicit numeric value",
+            "unknown or modified procurement registry numbers",
+        ))
+
+    @staticmethod
+    def _evidence_repair_question(question: str, contexts: Sequence[RagSearchHit], error: str) -> str:
+        # The allowed values are only an exact lexical inventory of what was
+        # actually passed to the model, not independent legal verification.
+        cited = list(dict.fromkeys(str(h.chunk_id) for h in contexts if h.chunk_id))
+        allowed_pct = sorted({
+            match.group().replace(" ", "")
+            for hit in contexts
+            for match in re.finditer(r"(?<!\d)\d{1,3}(?:[.,]\d+)?\s*%", hit.text)
+        })
+        return (
+            question
+            + "\n\nВАЖНО: Предыдущий ответ отклонён проверкой доказательств ("
+            + error + "). Напиши новый ответ ТОЛЬКО из приведённых ниже исходных "
+            "фрагментов. НЕ воспроизводи отклонённый текст и не придумывай числа. "
+            "Если нельзя доказать процент из источника, не называй его, "
+            "пиши 'не подтверждено фрагментами'. "
+            "В ответе могут быть проценты только из точных форм записи: "
+            + (", ".join(allowed_pct) if allowed_pct else "нет подтверждённых процентов")
+            + ". Каждую ссылку скопируй ПОСИМВОЛЬНО из списка chunk_id: "
+            + ", ".join(cited)
+            + ". Не изменяй ни одной цифры идентификатора; "
+            "если доказательства не хватает, прямо скажи об этом."
         )
 
     def build_prompt_metrics(

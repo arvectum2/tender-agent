@@ -25,6 +25,12 @@ TENDER_ENV = HOME / ".config/arvectum/apr04-local.env"
 PLATFORM_ENV = HOME / "Library/Application Support/Arvectum/data-platform/runtime.env"
 
 OPERATIONS = {
+    "evidence": (
+        "scripts.procurement_llm.probe_gemma_source_repair",
+    ),
+    "probe": (
+        "scripts.procurement_llm.probe_gemma_source_repair", "--llm",
+    ),
     "ready": (
         "scripts.procurement_llm.source_quality_rerun",
         "--number", "0163200000326005243",

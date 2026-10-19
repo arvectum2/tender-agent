@@ -949,3 +949,12 @@ gemma_real_quality_oct19:
   incomplete_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
   canonical_index: 86
   next: source first retrieval and citation fallback investigation, no gold, no new run until diagnosed
+
+gemma_cited_source_fallback_fix_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  original_canonical_source_index_chunks: 86
+  source_evidence_routing_verified: true
+  guarded_single_retry_added: true
+  four_question_gemma_probe_pid: 5363
+  next_step: Inspect actual private four-question probe output, accept/reject by source IDs and numeric guards, finalize checkpoint. No full rerun until probe verified.

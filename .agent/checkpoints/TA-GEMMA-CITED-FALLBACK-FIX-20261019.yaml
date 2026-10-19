@@ -1,0 +1,40 @@
+task_id: TA-GEMMA-CITED-FALLBACK-FIX-20261019
+status: in_progress
+goal: Repair the four archived Smolensk Gemma 4 12B source-quote/numeric fallback sections without weakening numeric or citation safety; focus on the existing canonical PostgreSQL and indexed EIS XML/DOCX.
+definition_of_done:
+  - Pin priority evidence to attested source ZIP/criteria hash and the exact requested registry + tender before adding retrieved chunks.
+  - Correct source selection for subject and evaluation (and notice/deadlines), while ensuring other tenders and users cannot access this case via cross-scope routing.
+  - Add bounded retry of rejected answers with exact citation/percentage instructions, rejecting all remaining unsupported values; no fabricated evidence or silently accepted failed sections.
+  - Relevant targeted/adversarial tests, Ruff and full relevant test suite pass; run four question model probe on original indexed data only after tests.
+  - If all four targeted sources/answers pass, consider one uniquely versioned subsequent real canonical quality run with full backup; otherwise keep stage blocked and diagnose. No new Gold, bid action, Qwen or auto merge.
+completed:
+  - "Previously completed parent child TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019: 86/86/86 canonical source retrieval ready, Gemma detailed run eeaed777-48ff-4e12-89fb-55eb01cb8e10 (1550.6728s, six accepted, four rejected) already saved; do not repeat previous run."
+  - "Real warnings_json: subject unknown/modified chunk id; customer_requirements, evaluation_criteria, contract_terms unsupported percent claims."
+current: Scoped EIS source route implemented; actual SQL/Data Platform source probe confirmed derived XML and criteria priority. One retry of rejected detailed LLM answers implemented, fail-closed. Full 918 passed/2 skipped and targeted 12 pass, Ruff clean. Real four-section Gemma read-only probe PID 5363 running.
+remaining:
+  - Strict source-aware routing plus tenant and source-hash checks.
+  - Tests and safe bounded retry of failed citations/percentages.
+  - Four-section targeted actual Gemma check; measure accepted vs rejected.
+  - Report, final tests, checkpoint and PR.
+last_verified_commit: 6fd3a711
+test_results: []
+resume_instruction: Source 86/86/86 ready; do not reindex. Implement evidence-specific routing anchored to owner EIS source and section with no cross-tender leaks, and single retry for failed numeric/source IDs. Validate with adversarial tests before model. Save four-question check privately. Do not alter original DB runs/learning-gold until fully verified.
+
+verified_stage_2026_10_19:
+  relevant_tests_pass: 918
+  relevant_tests_skip: 2
+  targeted_adversarial_tests_pass: 12
+  ruff: PASS
+  canonical_index_sql_dp_embeddings: [86, 86, 86]
+  original_sha_retained: true
+  read_only_original_evidence_probe: true
+  subject_first_sources: [official_xml, official_xml]
+  criteria_first_source: verified_percent_docx
+  customer_first_source: original_application_docx
+  contract_first_source: original_contract_docx
+  live_gemma_probe_pid: 5363
+  live_gemma_probe_destination: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/result.json
+  live_gemma_probe_status: running
+  human_gold: false
+  canonical_db_new_writes: 0
+  report: docs/roadmap/GEMMA_SMOLENSK_SOURCE_GUARD_REPAIR_2026-10-19.md

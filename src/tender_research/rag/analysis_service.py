@@ -25,6 +25,7 @@ from src.tender_research.rag.llm import (
     LocalChatLlmClient,
     build_source_citations,
 )
+from src.tender_research.rag.official_eis_priority import prioritize_original_eis_hits
 from src.tender_research.rag.ri223_document_dossier import (
     build_ri223_document_dossier,
     render_ri223_document_dossier,
@@ -612,6 +613,11 @@ def analyze_tender(
                 registry_number=registry_number,
                 limit=mode_config.retrieval_limit,
             )
+            if analysis_mode == "detailed" and registry_number == "0163200000326005243":
+                hits = prioritize_original_eis_hits(
+                    repo, hits, registry_number=registry_number,
+                    section_id=sec_def["id"], max_chunks=mode_config.retrieval_limit,
+                )
             retrieval_seconds = time.perf_counter() - retrieval_started_at
             retrieval_seconds_total += retrieval_seconds
             sources = build_source_citations(hits)
@@ -713,7 +719,7 @@ def analyze_tender(
                     analysis_mode=analysis_mode,
                 )
                 llm_seconds = time.perf_counter() - llm_started_at
-                llm_calls_count += 1
+                llm_calls_count += getattr(answer, "attempt_count", 1)
                 llm_durations.append(llm_seconds)
                 if answer.error:
                     answer_text = _retrieval_only_answer(hits)
