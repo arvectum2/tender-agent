@@ -16,7 +16,7 @@ remaining:
   - Tests and safe bounded retry of failed citations/percentages.
   - Four-section targeted actual Gemma check; measure accepted vs rejected.
   - Report, final tests, checkpoint and PR.
-last_verified_commit: c2f8483faadcfe21fd2fbc0246c073f9d337c436
+last_verified_commit: 9b23e31c
 test_results: []
 resume_instruction: Source 86/86/86 ready; do not reindex. Implement evidence-specific routing anchored to owner EIS source and section with no cross-tender leaks, and single retry for failed numeric/source IDs. Validate with adversarial tests before model. Save four-question check privately. Do not alter original DB runs/learning-gold until fully verified.
 
@@ -40,3 +40,18 @@ verified_stage_2026_10_19:
   report: docs/roadmap/GEMMA_SMOLENSK_SOURCE_GUARD_REPAIR_2026-10-19.md
 
 additional_security_gate: All pinned Smolensk sections filter foreign registry/tender hits, even if derived source document fails attestation.
+
+latest_tests_2026_10_19:
+  relevant_pytest_pass: 920
+  relevant_pytest_skip: 2
+  ruff: PASS
+  git_diff_check: PASS
+  actual_index_originals_unmodified: true
+  pinned_xml_first_chunk_contains_nmck_497178_33: true
+  pinned_xml_first_chunk_contains_submission_2026_10_30_1100: true
+  probe_pid: 5363
+  result_json_present_at_19_34_msk: false
+  github_pr_base_branch_push_attempted: true
+  github_push_denied_for_authenticated_ssh_identity: arutyunoveth
+  github_state: local_commits_only_not_merged_or_deployed
+resume_after_interruption: "Inspect Mac mini PID 5363 and protected result.json/probe.log at /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019. Never restart while PID active. If JSON exists inspect each of four errors, attempts, source IDs, numeric claims. Benchmark is read-only; no new TenderAnalysisRun/gold. If model still active after expected bounded duration, keep in_progress and report measured time, no invented success. Local verified commits c2f8483f and 9b23e31c, 920 pytest PASS/2 SKIP, Ruff PASS. GitHub upload blocked by SSH principal arutyunoveth denied permission to arvectum2/tender-agent. No bypass or merge."
