@@ -92,3 +92,17 @@ def test_short_source_identifiers_pass_explicit_citation_guard():
     assert _validate_source_bound_completion(
         response,"НМЦК 497178.33; источник chunk_id=src-faked00000000000",[item]
     ) is not None
+
+
+
+def test_cited_registry_must_match_actual_original_number():
+    from src.tender_research.rag.llm import _validate_source_bound_completion
+
+    source=hit("XML ЕИС","НМЦК 497178.33",0)
+    response={"choices":[{"finish_reason":"stop"}]}
+    good=f"Подтверждено: chunk_id={source.chunk_id}, registry_number={b.NUMBER}"
+    bad=f"Подтверждено: chunk_id={source.chunk_id}, registry_number=01632000003260005243"
+    assert _validate_source_bound_completion(response,good,[source]) is None
+    assert "registry numbers" in (
+        _validate_source_bound_completion(response,bad,[source]) or ""
+    )

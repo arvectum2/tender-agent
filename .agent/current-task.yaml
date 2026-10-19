@@ -849,7 +849,7 @@ first_real_source_bound_gemma_4_12b_2026_10_18:
 
 gemma_xml_reasoning_benchmark_2026_10_19:
   child_checkpoint: .agent/checkpoints/TA-GEMMA-XML-REASONING-BENCHMARK-20261019.yaml
-  status: in_progress
+  status: completed
   tested_llm_backend: llama.cpp
   tested_llm_model: arvectum-gemma4-12b-it-qat-q4_0
   current_llama_reasoning_mode: on
@@ -865,3 +865,13 @@ gemma_xml_reasoning_benchmark_2026_10_19:
   regression_skipped: 4
   current_stage: real_gemma_reasoning_comparison_running
   resume_instruction: Check live PID 62454 and persisted 11-section private progress, do not redo completed sections, compare same original ZIP v2 and 249.97 sec baseline, finish PR/checkpoint. No main merge/autoscheduler.
+
+gemma_xml_reasoning_final_evidence_2026_10_19:
+  old_ten_seconds: 249.97
+  new_ten_seconds: 1367.88
+  new_eleven_seconds: 1610.40
+  strict_accepted_sections: 7
+  unverified_sections: 4
+  pytest_passed: 906
+  pytest_skipped: 4
+  production_index_still_pending: true

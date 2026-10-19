@@ -49,6 +49,15 @@ def _old_sections(markdown: str) -> dict[str,str]:
     return result
 
 
+def _known_registry_ids(answer: str) -> list[str]:
+    return re.findall(r"registry_number\s*[:=]\s*([0-9]{19,25})", answer, re.IGNORECASE)
+
+
+def _registry_citations_exact(answer: str) -> bool:
+    found = _known_registry_ids(answer)
+    return bool(found) and all(value == "0163200000326005243" for value in found)
+
+
 def compare(old_markdown: str, new_report: dict) -> dict:
     if (
         new_report.get("schema")!="gemma_12b_reasoning_xml_full_source_benchmark_v1"
@@ -59,6 +68,14 @@ def compare(old_markdown: str, new_report: dict) -> dict:
     original=_old_sections(old_markdown)
     enhanced={r["id"]:r["answer"] for r in new_report["sections"]
               if r["status"]=="completed"}
+    fully_cited = {
+        sec:answer for sec,answer in enhanced.items()
+        if _registry_citations_exact(answer)
+    }
+    invalid_registry_sections=[
+        sec for sec,answer in enhanced.items()
+        if not _registry_citations_exact(answer)
+    ]
     checks=[]
     for label,scope,regex in FACT_CHECKS:
         checks.append({
@@ -66,6 +83,7 @@ def compare(old_markdown: str, new_report: dict) -> dict:
             "section":scope,
             "prior_found":bool(re.search(regex,original.get(scope,""),re.IGNORECASE)),
             "new_found":bool(re.search(regex,enhanced.get(scope,""),re.IGNORECASE)),
+            "new_strictly_cited":bool(re.search(regex,fully_cited.get(scope,""),re.IGNORECASE)),
             "available_in_new_report":scope in enhanced,
         })
     subject_old=original.get("subject","")
@@ -91,6 +109,8 @@ def compare(old_markdown: str, new_report: dict) -> dict:
             max(0, x.get("attempt_count", 1)-1) for x in new_report["sections"]
         ),
         "enhanced_completed_sections":len(enhanced),
+        "enhanced_strictly_validated_sections":len(fully_cited),
+        "sections_rejected_by_extra_registry_number_audit":invalid_registry_sections,
         "previous_claimed_15m_nmc":bool(re.search(r"15\s*000\s*000",subject_old)),
         "enhanced_subject_mentions_15m_without_semantic_verdict":bool(
             re.search(r"15\s*000\s*000", subject_new)
@@ -98,6 +118,7 @@ def compare(old_markdown: str, new_report: dict) -> dict:
         "mechanical_checks":checks,
         "prior_matched_checks":sum(c["prior_found"] for c in checks),
         "enhanced_matched_checks":sum(c["new_found"] for c in checks),
+        "enhanced_strictly_cited_matched_checks":sum(c["new_strictly_cited"] for c in checks),
         "known_limitation":"String matching is not semantic accuracy or legal GO; manual compare necessary.",
         "not_independent_chatgpt_dual_eval":True,
         "not_production_pg_analysis_record":True,

@@ -2,7 +2,7 @@ version: 1
 repository: arvectum2/tender-agent
 task_id: TA-GEMMA-XML-REASONING-BENCHMARK-20261019
 parent_task_id: TA-ROADMAP-EXEC-20261012
-status: in_progress
+status: completed
 goal: Improve same Gemma 4 12B llama.cpp Tender Agent analysis with source-verified official XML, full-original document context and measured reasoning; compare quality and latency against prior fast no-reasoning original run.
 definition_of_done:
   - Read prior checkpoints and exact source facts/results, preserve baseline report 249.97 sec and run ID, compare original detailed source matrix 20 technical + 6 contractual items.
@@ -13,13 +13,9 @@ definition_of_done:
   - Document measured results and comparison incl misses and blockers; PR/review CI and completed checkpoint. No merge/deploy to main or auto-scheduler without AM-4.
 completed:
   - "2026-10-19 00:33 MSK prior b42fb0cb213701572f27f5304f07b2b304d74575 on clean worktree, upstream PR496 19/19 CI, canonical 121 observation/46 runs, active llama-server Gemma QAT 12B PID 53560 on 8081 reasoning off budget 0; launchd local.llama-server-8081."
-current: "Real Gemma 4 12B llama.cpp reasoning-on budget 1024 8081 benchmark running PID 62454, checkpoints every section at private progress.json; 4/11 sections verified after one provenance-citation retry, 658.09 total LLM seconds including failed attempt. Extend exact source XML into Tender Research Data Platform after reviewing source-doc orchestration, full results then compare."
+current: "11-section Gemma same-original benchmark measured 1610.40 seconds; 7 strictly cited, 4 need review. Source-only audit complete; production Data Platform XML index still pending."
 
-remaining:
-  - Implement source-bound structured XML and comprehensive doc mode
-  - Enable reasoning with reversible safe quality profile
-  - Tests and measured real enhanced Gemma pilot
-  - Compare to old Gemma and own 20+6 source matrix, save report/checkpoint/PR
+remaining: []
 last_verified_commit: b42fb0cb213701572f27f5304f07b2b304d74575
 test_results:
   - "2026-10-19 08:10 MSK verified actual llama-server process 90906 Gemma GGUF on 8081 with --reasoning on --reasoning-budget 1024; real POST /v1/chat/completions response 42 had reasoning_content; HTTP health 200."
@@ -30,7 +26,7 @@ test_results:
   - "Initial citation failure customer_requirements used untrusted UUID and was NOT counted; short deterministic SHA-derived source ID fixed and retried with failed attempt time included; 4 of 11 verified, new NMC 497178.33 and real opening text facts confirmed."
   - "2026-10-19 08:10 MSK Ruff PASS, 904 relevant pytest PASS / 4 SKIP, git diff --check PASS."
 
-resume_instruction: "At 2026-10-19 08:10 MSK real live PID 62454 running Gemma quality with reasoning on, already 4/11 verified saved at /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-xml-reasoning-20261019/progress.json, 658.09s including one failed citation and retry. Check PID/progress FIRST before any new Gemma request. Save exact source, elapsed, compare to old baseline report at worktree ta-eis-source-bound-gemma-20261018/data/rag/reports/analyze_tender_0163200000326005243_20261018T205926192341Z_54902934.md. All 904 tests PASS/4 SKIP and Ruff; PR not yet created. Do not kill/restart Gemma or re-run completed sections. Implement source-bound XML DOCX indexing only if safe canonical DB operation, otherwise distinguish offline 123518-char benchmark from production Data Platform RAG; report fact-gated final. No Qwen, no merge, no training gold."
+resume_instruction: "Bench completed. Old 10 sections 249.97s, new same 10 1367.88s (5.47x), plus technical 242.52s, 11 total 1610.40s. Real Gemma 4 12B llama.cpp reasoning on 1024, EIS original v2 and 5 DOCX; 7/11 strictly validated, 4 need review, no gold. Full outcome in docs/roadmap/GEMMA_4_12B_XML_REASONING_VS_FAST_SMOLENSK_2026-10-19.md. Source code changed but canonical PostgreSQL XML indexing NOT deployed; follow-up stage normalize table percentages, bind XML into Data Platform via sanctioned DB workflow and run new source-bound canonical DB analysis. No Qwen download, no merges/ETP actions."
 benchmark_progress_owner_private: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-xml-reasoning-20261019/progress.json
 benchmark_running_pid_at_08_10_msk: 62454
 benchmark_section_progress_at_08_10_msk: 4
@@ -41,3 +37,12 @@ baseline_seconds: 249.97
 enhanced_seconds_at_08_10_msk: 658.09
 regression_passed: 904
 regression_skipped: 4
+
+final_report: docs/roadmap/GEMMA_4_12B_XML_REASONING_VS_FAST_SMOLENSK_2026-10-19.md
+final_seconds_ten_sections: 1367.88
+final_seconds_eleven_sections: 1610.40
+strict_source_validated_sections: 7
+sections_requiring_manual_review: 4
+final_regression_passed: 906
+final_regression_skipped: 4
+production_rag_xml_index_applied: false
