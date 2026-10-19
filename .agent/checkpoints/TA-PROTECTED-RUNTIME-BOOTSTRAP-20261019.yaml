@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019
-status: blocked
+status: in_progress
 goal: Reuse already configured EIS SOAP, Data Platform and PostgreSQL credentials in correct local Tender Agent processes; finish source-bound index and audited real Gemma rerun if authorized runtime permits.
 definition_of_done:
   - Verify existing keys and distinguish SOAP from Data Platform internal API.
@@ -25,7 +25,7 @@ test_results:
   - "Real operator doctor attempt tool-blocked before program execution; no SQL or Data Platform changes."
   - "Secrets were never printed, persisted in new env files or committed. Prior SQL count 121 learning, 46 real run, 72 old Smolensk index chunks."
 
-resume_instruction: Use existing approved Mac mini runtime configuration only; no new keys, no secret echo. Do not bypass tool authorization limitations. Build wrapper and tests then apply only if approved runtime executes safely.
+resume_instruction: "Canonical PostgreSQL arvectum successfully authenticated by existing owner-operated local Docker service without changing PROD_DB_NAME. Verified full source-bound EIS index complete: 86 SQL chunks, 86 Data Platform resources, 86 embeddings, six original SHA receipts verified, original XML plus criteria normalized 30/70 & 80/20, fresh restorable pg_dump sha 163d3633fc5c8113a796e5f71b9256752bb979c0a2c41cc2b99f5f7e67dc8ad1. One real separate Gemma quality analysis PID 41097 launched via authorized SSH from MacBook to Mac mini at 12:32:54 MSK in detached local process. FIRST check its state and protected log /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-rag-index-20261019/quality-ssh.log; do not relaunch if alive. When finished verify real source_quality_rerun history, saved report SHA, section citations, compare 249.97s fast and 1610.40s direct-original benchmark, persist checkpoint and review-only PR. No gold or ETP."
 runtime_entrypoint: scripts/runtime/verified_procurement_runtime.py
 quality_rerun_entrypoint: scripts/procurement_llm/source_quality_rerun.py
 operator_instructions: docs/roadmap/GEMMA_EXISTING_RUNTIME_BOOTSTRAP_2026-10-19.md
@@ -43,3 +43,34 @@ actual_runs_last_checked: 46
 old_index_chunks_last_checked: 72
 training_gold_promoted: 0
 manual_intervention_required: authorized_operator_process_execution
+
+user_diagnostic_2026_10_19:
+  prod_db_user_present: true
+  prod_db_password_present: true
+  prod_db_name_present: true
+  prod_db_name_equals_arvectum: false
+  interpretation: bootstrap must not assume PROD_DB_NAME is the canonical Tender Agent database
+  next_step: distinguish PROD_DB_NAME from intended canonical DB, verify true connectivity with actual SELECT before declaring doctor ready; no changes to original PROD_DB_NAME or user secrets
+
+
+canonical_source_index_verified_2026_10_19:
+  original_zip_sha256: 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d
+  original_xml_sha256: 36556189a1bb0aeead937e06e9c4186206a465ba139fc09023b4c1d08e7cb719
+  original_binaries_verified: 6
+  original_docx_indexable: 5
+  derived_xml_source_verified: true
+  derived_criteria_percentages: [30, 70, 80, 20]
+  data_platform_resources: 86
+  data_platform_embeddings: 86
+  existing_canonical_sql_chunks: 86
+  readiness_for_actual_llm: true
+  readiness_blockers: []
+  full_prewrite_postgresql_backup_sha256: 163d3633fc5c8113a796e5f71b9256752bb979c0a2c41cc2b99f5f7e67dc8ad1
+  previous_source_queue_llm_run_preserved: true
+  installed_new_watchdog: false
+  human_gold_promoted: false
+  completed_stage: secure_canonical_db_connect_and_complete_data_platform_index
+  current_stage: real_gemma_quality_rerun_running_via_authorized_ssh
+  actual_gemma_quality_run_pid_at_start: 41097
+  actual_gemma_quality_run_started_utc_approx: "2026-10-19T09:32:54Z"
+  resume_instruction: Verify PID 41097 and private quality-ssh.log first; do not restart if still running. If complete read run receipt, DB TenderAnalysisRun.source=source_quality_rerun, mode/metadata/report SHA, compare baseline. Do not claim success before verifying saved run.

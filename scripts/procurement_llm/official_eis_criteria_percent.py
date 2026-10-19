@@ -138,6 +138,27 @@ def store_criteria_context(session: Session, src: PinnedSource,
         raise SourcePreparationError("registry source changed")
     binary, receipt = context_blob(src, root=root)
     folder = root / "eis-source-documents" / src.procurement_ref / src.original_sha256
+    repo = TenderRepository(session)
+    tender = repo.get_tender_by_registry_number(src.procurement_ref)
+    if tender is None:
+        raise SourcePreparationError("registered original tender missing")
+    stable_id = f"eis-archived-v2{SUFFIX}"
+    from scripts.procurement_llm.source_derived_docx import (
+        reuse_existing_verified_source_document,
+    )
+    try:
+        existing = reuse_existing_verified_source_document(
+            tender, stable_id, binary, receipt, folder,
+        )
+    except ValueError as exc:
+        raise SourcePreparationError("registered criteria source changed") from exc
+    if existing is not None:
+        return {
+            "derived_sha256": existing[1],
+            "original_criteria_sha256": receipt["criteria_original_sha256"],
+            "verified_percentages": [f["value_percent"] for f in receipt["facts"]],
+            "reused_legacy_derived_sha": True,
+        }
     path = folder / ("derived-criteria-" + sha(binary) + ".docx")
     if path.is_symlink():
         raise SourcePreparationError("criteria output symlink")
@@ -149,12 +170,9 @@ def store_criteria_context(session: Session, src: PinnedSource,
         fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         with os.fdopen(fd, "wb") as stream:
             stream.write(binary);stream.flush();os.fsync(stream.fileno())
-    tender = TenderRepository(session).get_tender_by_registry_number(src.procurement_ref)
-    if tender is None:
-        raise SourcePreparationError("registered original tender missing")
-    TenderRepository(session).upsert_document({
+    repo.upsert_document({
         "tender_id": tender.id,
-        "source_document_id": f"eis-archived-v2{SUFFIX}",
+        "source_document_id": stable_id,
         "file_name": "Подтверждённые веса критериев ЕИС (производный).docx",
         "file_url": None, "local_path": str(path),
         "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

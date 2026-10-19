@@ -34,6 +34,11 @@ from scripts.procurement_llm.source_pipeline_runtime import (
 from src.tender_research.config import load_config
 from src.tender_research.models import TenderAnalysisRun
 from src.tender_research.rag.analysis_service import analyze_tender
+from src.tender_research.rag.data_platform import (
+    build_data_platform_client,
+    build_tender_collection_id,
+)
+from src.tender_research.repository import TenderRepository
 
 NUMBER = "0163200000326005243"
 SOURCE = "source_quality_rerun"
@@ -201,13 +206,40 @@ def main() -> int:
                     }))
                     return 0
                 if not args.apply:
+                    gates = readiness(
+                        session, src, require_services=True,
+                        llm_base_url=QUALITY_GEMMA_LLAMA_BASE_URL,
+                        llm_model=QUALITY_GEMMA_LLAMA_MODEL,
+                    )
+                    ready = gates.get("ready_for_actual_llm") is True
+                    repo = TenderRepository(session)
+                    tender = repo.get_tender_by_registry_number(src.procurement_ref)
+                    diagnostics = {}
+                    if tender is not None:
+                        diagnostics["registered_sql_chunks"] = repo.count_chunks_by_tender(tender.id)
+                        collection = build_tender_collection_id(repo, tender.id)
+                        if collection:
+                            client = None
+                            try:
+                                client = build_data_platform_client(load_config())
+                                stats = client.collection_stats(collection)
+                                diagnostics["data_platform_resources"] = stats.get("resources")
+                                diagnostics["data_platform_embeddings"] = stats.get("embeddings")
+                            except Exception:  # noqa: BLE001 - do not leak service credentials
+                                diagnostics["data_platform_stats_unavailable"] = True
+                            finally:
+                                if client is not None:
+                                    client.close()
                     print(json.dumps({
                         "status": "read_only_quality_preflight",
                         "ref": src.procurement_ref,
                         "source_archive_sha256": src.original_sha256,
+                        "ready_for_actual_llm": ready,
+                        "blockers": gates.get("blockers", []),
+                        "index_diagnostics": diagnostics,
                         "will_create_new_source_completion": False,
-                    }))
-                    return 0
+                    }, ensure_ascii=False, sort_keys=True))
+                    return 0 if ready else 2
             backup = fresh_pg_backup()
             with Session(engine) as session:
                 result = run_quality_once(session, number=args.number)

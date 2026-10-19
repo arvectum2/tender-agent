@@ -1,7 +1,10 @@
 """Reproducible, content-verified DOCX derived from pinned procurement originals."""
 from __future__ import annotations
 
+import hashlib
 import io
+import stat
+from pathlib import Path
 from zipfile import BadZipFile, ZipFile, ZipInfo
 
 MAX_DERIVED_DOCX = 450_000
@@ -58,3 +61,45 @@ def same_docx_content(left: bytes, right: bytes) -> bool:
     ] == [
         (info.filename, data) for info, data in _payload(right)
     ]
+
+
+
+def reuse_existing_verified_source_document(
+    tender, document_id: str, expected_binary: bytes,
+    expected_receipt: dict, private_directory: Path,
+) -> tuple[str, str] | None:
+    """Strictly reuse legacy DOCX physical SHA where packaging alone changed.
+
+    The row's immutable source identity and actual SHA stay unchanged. Never
+    mutate document rows, silently replace provenance or rewrite a real file.
+    """
+    matches = [
+        doc for doc in tender.documents
+        if doc.source_document_id == document_id
+    ]
+    if len(matches) > 1:
+        raise ValueError("duplicate stable derived document identity")
+    if not matches:
+        return None
+    doc = matches[0]
+    source = Path(doc.local_path) if doc.local_path else None
+    if (
+        source is None or source.is_symlink() or not source.is_file()
+        or source.parent.resolve() != private_directory.resolve()
+        or stat.S_IMODE(source.stat().st_mode) != 0o600
+        or not isinstance(doc.raw_meta, dict)
+    ):
+        raise ValueError("existing derived source document path unsafe")
+    existing = source.read_bytes()
+    original_sha = hashlib.sha256(existing).hexdigest()
+    if (
+        doc.sha256 != original_sha
+        or doc.raw_meta.get("derived_docx_sha256") != original_sha
+        or not same_docx_content(existing, expected_binary)
+        or any(
+            key != "derived_docx_sha256" and doc.raw_meta.get(key) != value
+            for key, value in expected_receipt.items()
+        )
+    ):
+        raise ValueError("existing source derived document provenance or content conflict")
+    return str(source), original_sha
