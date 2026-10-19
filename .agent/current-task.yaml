@@ -875,3 +875,24 @@ gemma_xml_reasoning_final_evidence_2026_10_19:
   pytest_passed: 906
   pytest_skipped: 4
   production_index_still_pending: true
+
+
+gemma_criteria_xml_index_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-XML-INDEX-PERCENT-20261019.yaml
+  status: blocked
+  code_commit: 67b83421933ac94dd77d70d517d45af28abf75a7
+  report: docs/roadmap/GEMMA_XML_CRITERIA_CANONICAL_RAG_GATE_2026-10-19.md
+  original_smolenks_eis_docs: 6
+  criteria_source_percentages_verified: [30, 70, 80, 20]
+  canonical_registered_documents: 8
+  canonical_data_platform_chunks: 72
+  canonical_xml_criteria_index_updated: false
+  gemma_llama_cpp_one_question_probe_seconds: 77.8
+  gemma_one_question_valid_source_and_percentages: true
+  model_new_canonical_run_created: false
+  canonical_learning_rows: 121
+  canonical_analysis_runs: 46
+  regression_passed: 922
+  regression_skipped: 4
+  access_blocker: existing_operator_database_credentials_not_available_to_this_protected_executor
+  next_step: Using an approved preconfigured operator runtime and full DB backup, complete guarded XML/criteria Data Platform indexing, then run one real separate quality Gemma review and compare with baseline. No source completion duplicate, owner gold or AM-4 merge.

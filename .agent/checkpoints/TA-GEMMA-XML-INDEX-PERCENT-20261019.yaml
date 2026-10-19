@@ -1,0 +1,56 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-GEMMA-XML-INDEX-PERCENT-20261019
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: blocked
+goal: Normalize only source-provable criteria weights in DOCX, attach exact official EIS notice XML facts and complete original source set to canonical Tender Research/Data Platform, then benchmark real Gemma 4 12B llama.cpp reasoning via existing source-version worker with factual score gates.
+definition_of_done:
+  - Source-only deterministic extraction of evaluation table 30/70 and detailed 80/20 with exact original filename/SHA/row/column proofs; no guesses.
+  - Index pinned original XML derived DOCX in canonical Data Platform without altering six original SHA receipts or legal status; prove source attestation and run readonly state queries.
+  - Add explicit first-party numeric fact and cited registry gates; never silently promote a fabricated result to complete/human gold.
+  - Complete one bounded actual Gemma 4 12B llama.cpp reasoning 1024 canonical DB RAG run if ready and backed up; record real elapsed, section validity and compare against baseline; no duplicate source completion misattribution.
+  - Relevant/adversarial tests pass, roadmap/report/checkpoint complete, separate stacked review-only PR; no main merge/ETP action/auto scheduler.
+completed:
+  - "At task start 2026-10-19 08:59 MSK PR497 19/19 CI PASS, exact clean branch head a931accd8dd37250ce1d21647506d90491d1560e; existing canonical DB 121 observation, 46 real runs; Gemma llama.cpp 8081 reasoning on 1024 healthy; Data Platform healthy; base repo dirty untouched."
+current: "Verified first-party Smolensk 30/70, 80/20 source-derived criteria cells, strict source identity and canonical DOCX serializer; submitted code 67b8342... and all 922 relevant regression tests PASS. Production source-derived XML/criteria docs registered but Data Platform failed HTTP401; actual updated index and canonical Gemma rerun require authorized existing runtime database/service credentials; direct credential processing was tool-blocked."
+remaining:
+  - "Use existing authorized operator runtime to run full prewrite PostgreSQL backup and guarded --index-only --apply on original EIS v2; verify same 6 unchanged original SHA, plus 2 derived documents, complete Data Platform chunks and embeddings."
+  - "Prepare dedicated actual source-quality-rerun after prior source version has already been completed; record separate real Gemma 4 12B llama.cpp report/run without falsifying source completion or human gold."
+  - "Compare canonical production rerun to original 249.97s fast and 1610.40s direct-originals benchmark, score 20 technical + 6 contract groups, validate exact 497178.33 NMCK, 30/70 and 80/20, archive deadline, date/guarantee, all numeric/provenance gates."
+  - "Review stacked PR and carry through to owner AM-4 release gate; no merge/ETP/automatic model/gold by default."
+last_verified_commit: 67b83421933ac94dd77d70d517d45af28abf75a7
+test_results:
+  - "2026-10-19 final relevant 922 pytest PASS / 4 SKIP / 86 warnings, Ruff PASS, git diff --check PASS, YAML parse PASS."
+  - "Original criteria DOCX SHA a712e03f43f5967a9bf42e1c0589b670769af352aea3a32e18c96d416724583d verified against six-file original EIS XML manifest and source ZIP v2; original price 30%, qualification 70%, experience price 80%, experience count 20% normalized only with table exact headers/row/column and source identity."
+  - "Source-only true Gemma 4 12B llama.cpp reasoning/1024 one-question percent probe: 77.8s, no LLM error, 1 cited source, 30/70/80/20/100 all found, report private 0600, zero SQL writes and zero gold. Stable source-derived release code conservatively normalizes four percentages; 100 remains only in signed-original DOCX/experimental probe."
+  - "Original XML and existing criteria derived OOXML documents verified with same uncompressed ZIP-member contents as deterministic new canonical versions; new generated SHA repeat stable, hostile member/path and tampering tests PASS."
+  - "Full prewrite pg_dump catalog validated, SHA bb00d06129d68273018e1e23b32c996ea2ef87598fa7920bf678d4f638ed8d67. Canonical SQL docs 8 (six originals plus two derived) but existing Data Platform still 72 old chunks; first attempt failed HTTP401 stale client key."
+  - "Data Platform existing protected runtime API key authenticated in read-only test (test collection returned HTTP404, not 401). New direct canonical PostgreSQL credential-bound executor was rejected by tool safety; no credential workaround, new model call, legal bid, new DB user or second DB. DB learning observations unchanged at 121, actual runs 46."
+resume_instruction: "Blocker: source-bound original Smolensk v2 XML and criteria derived docs both in canonical Tender Research (8 docs), but updated Data Platform index NOT done (72 old chunks) because old internal key caused HTTP401 and direct credential-bound PostgreSQL operations are tool-restricted. Use an approved existing operator runtime with ALREADY configured DB URL + actual service key; do not retrieve/export credentials manually or bypass access. First restore/readiness check and full PostgreSQL backup, index --index-only --apply --confirm-database arvectum; verify 6 immutable originals, derived XML+criteria DOCX, chunks and embeddings. Then create a separate real source_quality_rerun Gemma 4 12B reasoning on llama.cpp 8081 because source_queue version already marked completed; no second completion event and no training gold. Compare against old 249.97s and source-only 1610.40s plus 77.8s criteria probe. Review PR, do not merge or launch ETP/scheduler without AM-4."
+code_commit: 67b83421933ac94dd77d70d517d45af28abf75a7
+report: docs/roadmap/GEMMA_XML_CRITERIA_CANONICAL_RAG_GATE_2026-10-19.md
+source_original_criteria_sha256: a712e03f43f5967a9bf42e1c0589b670769af352aea3a32e18c96d416724583d
+source_criteria_percentages_normalized: [30, 70, 80, 20]
+source_criteria_other_original_100_percent_present: true
+source_zip_originals_unchanged: true
+derived_docx_canonical_sha_stable: true
+legacy_derived_xml_uncompressed_sha_equivalent: true
+legacy_derived_criteria_uncompressed_sha_equivalent: true
+gemma_local_source_only_probe_seconds: 77.8
+gemma_local_probe_5_percentage_values_present: true
+gemma_local_probe_actual_llama_cpp: true
+gemma_local_probe_source_citation_valid: true
+data_platform_canonical_index_updated: false
+registered_documents_in_canonical_tender_research: 8
+old_data_platform_chunks: 72
+post_apply_new_data_platform_chunks: null
+canonical_learning_observations: 121
+canonical_analysis_runs: 46
+actual_canonical_quality_rerun_done: false
+human_gold_promoted: 0
+owner_bid_go: false
+new_job_scheduler_installed: false
+full_restorable_pg_backup_sha256: bb00d06129d68273018e1e23b32c996ea2ef87598fa7920bf678d4f638ed8d67
+regression_passed: 922
+regression_skipped: 4
+blocked_on: authorized_canonical_db_runtime_and_service_credentials
