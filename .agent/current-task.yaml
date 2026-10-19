@@ -981,3 +981,18 @@ gemma_source_repair_second_probe_2026_10_19:
   canonical_db_writes: 0
   gold_promoted: 0
   resume_instruction: Check second process and private JSON before relaunching; compare strict source evidence and verified numbers.
+
+gemma_source_exact_unit_repair_third_probe_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  first_four_question_probe_accepted: 2
+  second_two_question_formal_accepted: 1
+  second_subject_wrong_nmc_absence_detected: true
+  actual_wrong_nmc_answer_now_rejected_on_source_replay: true
+  official_xml_labelled_nmck_rub_value_supported: true
+  original_contract_written_percent_supported: true
+  canonical_index: 86
+  latest_pytest_passed: 930
+  latest_pytest_skipped: 2
+  third_focused_llm_pid: 48543
+  next_step: Examine private retry3-result.json before more model calls; verify actual source evidence and numeric correctness, no gold or canonical DB writes.

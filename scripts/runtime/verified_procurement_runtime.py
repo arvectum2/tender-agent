@@ -35,6 +35,10 @@ OPERATIONS = {
         "scripts.procurement_llm.probe_gemma_source_repair", "--llm",
         "--only", "subject", "contract_terms",
     ),
+    "probe_repair3": (
+        "scripts.procurement_llm.probe_gemma_source_repair", "--llm",
+        "--only", "subject", "contract_terms", "--variant", "repair3",
+    ),
     "ready": (
         "scripts.procurement_llm.source_quality_rerun",
         "--number", "0163200000326005243",

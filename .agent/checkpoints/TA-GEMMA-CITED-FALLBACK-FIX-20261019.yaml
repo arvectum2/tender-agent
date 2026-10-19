@@ -10,7 +10,7 @@ definition_of_done:
 completed:
   - "Previously completed parent child TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019: 86/86/86 canonical source retrieval ready, Gemma detailed run eeaed777-48ff-4e12-89fb-55eb01cb8e10 (1550.6728s, six accepted, four rejected) already saved; do not repeat previous run."
   - "Real warnings_json: subject unknown/modified chunk id; customer_requirements, evaluation_criteria, contract_terms unsupported percent claims."
-current: "Real four-section Gemma 2/4 accepted (customer_requirements and evaluation_criteria); subject rub and contract_terms percent rejected. Enhanced explicit in-context unit inventory. Two-question private retry PID 39834 running. Ruff clean, 922 PASS/2 SKIP broad, 15 targeted PASS; no canonical DB writes."
+current: "True-model second focused source-only experiment completed: 1/2 accepted (subject) but content incorrectly denied NMC, contract_terms rejected on percent. Replayed actual accepted answer through new source-specific NMC absence guard: now correctly REJECTED. Source numeric parser updated for NMC RUB label with value after colon and for 1 процента/10 процентов written units, no arbitrary other numeric permission. Ruff and 930 passed/2 skipped broad suite; 20+ targeted pass. Third read-only subject+contract_terms actual Gemma check PID 48543 running; no canonical DB writes."
 remaining:
   - Strict source-aware routing plus tenant and source-hash checks.
   - Tests and safe bounded retry of failed citations/percentages.
@@ -18,7 +18,7 @@ remaining:
   - Report, final tests, checkpoint and PR.
 last_verified_commit: 9b23e31c
 test_results: []
-resume_instruction: "First real four-question source-bound Gemma private probe completed 2 of 4: customer_requirements and evaluation_criteria accepted, subject rub and contract_terms percent rejected. DO NOT rerun original four questions or canonical full run. FIRST check PID 39834 and retry2-result.json in private quality-benchmarks/gemma-four-retry-20261019 folder. Second focused two-question exact-unit repair local probe read-only DB and no learning writes. Then assess source coverage and tests, checkpoint and PR. No gold, bid or merge."
+resume_instruction: "Start by checking PID 48543 and protected retry3-result.json under /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019. Do not restart if live. Earlier 4-question real probe 2/4 accepted. Second two-question probe accepted subject formally but wrongly said NMC not confirmed; contract percent rejected. Replayed real response against new guard: false NMC absence now rejected. New numeric parser recognizes exact NMC RUB:497178.33 source field and 1 процента/10 процентов written units; all other unsupported values remain blocked. Broad 930 PASS/2 SKIP, Ruff PASS, original 86/86/86 index unchanged, zero canonical SQL writes, zero gold. When third probe finishes verify strict citations, exact NMC and contract source statements, checkpoint and push draft PR500 via MacBook authorized github HTTPS; do not merge/deploy/bid or repeat full 10 question run until 4 target sections substantively pass."
 
 verified_stage_2026_10_19:
   relevant_tests_pass: 918
@@ -71,13 +71,39 @@ first_real_four_question_probe:
   canonical_sql_modified: false
   human_gold: false
 second_exact_units_repair_probe:
-  status: running
+  status: completed
   pid: 39834
   focus: [subject, contract_terms]
   result_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry2-result.json
+  formal_accepted: 1
+  total: 2
+  accepted_subject_semantically_correct: false
+  subject_wrong_claim: NMC not confirmed although original XML explicitly says 497178.33
+  contract_error: unsupported percent
+  duration_seconds: 635.73
   canonical_sql_modified: false
 new_regression_results:
   broad_passed: 922
   broad_skipped: 2
   targeted_passed: 15
   ruff: PASS
+
+source_exact_units_fix_2026_10_19:
+  official_eis_nmck_source_label: "НМЦК РУБ — сумма контракта, НЕ лимит квалификационного опыта: 497178.33"
+  contract_percent_words: [1_procenta, 10_procentov]
+  numeric_guard_labeled_nmck_source_value_supported: true
+  numeric_guard_percent_words_supported: true
+  actual_false_nmck_absence_answer_replayed: true
+  actual_false_nmck_absence_now_rejected_as_price: true
+  no_general_numeric_gate_bypass: true
+  latest_broad_pytest_passed: 930
+  latest_broad_pytest_skipped: 2
+  ruff: PASS
+third_focused_real_gemma_probe:
+  status: running
+  process_pid: 48543
+  focus: [subject, contract_terms]
+  real_source_index_chunks: 86
+  result_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry3-result.json
+  canonical_sql_write: false
+  gold_promoted: false

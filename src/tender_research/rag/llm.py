@@ -195,6 +195,8 @@ class LocalChatLlmClient:
             "unknown or modified source chunk identifiers",
             "no verifiable source chunk citations",
             "unsupported explicit numeric value",
+            "incorrectly claims missing numeric evidence",
+            "numeric claim conflicts with its explicitly cited",
             "unknown or modified procurement registry numbers",
         ))
 

@@ -13,9 +13,16 @@ from src.tender_research.rag.search_types import RagSearchHit
 _VALUE_UNIT = re.compile(
     r"(?<![\w.])(\d[\d \u00a0]*(?:[.,]\d+)?)\s*"
     r"(тонн(?:а|ы)?|т\b|килограмм[а-я]*|кг\b|литр[а-я]*|л\b|штук[а-я]*|шт\b|"
-    r"руб(?:лей|ля|ль|\.)?|₽|%)",
+    r"руб(?:лей|ля|ль|\.)?|₽|%|процент(?:ов|а)?\b)",
     re.IGNORECASE,
 )
+# Explicit official EIS label includes RUB unit BEFORE the value.
+# Do not apply this to generic purchase amounts or experience thresholds.
+_LABELED_NMCK_RUB = re.compile(
+    r"\bНМЦК\s+РУБ\b[^:]{0,180}:\s*(\d[\d \u00a0]*(?:[.,]\d+)?)",
+    re.IGNORECASE,
+)
+
 _UNIT_KIND = {
     "%": "percent",
     "₽": "rub",
@@ -36,6 +43,7 @@ def _kind(token: str) -> str:
         ("литр", "litres"),
         ("штук", "pieces"),
         ("руб", "rub"),
+        ("процент", "percent"),
     ):
         if low.startswith(name):
             return kind
@@ -51,6 +59,12 @@ def _observed_values(text: str) -> set[tuple[str, str]]:
         except ValueError:
             continue
         result.add((_kind(match.group(2)), numeric))
+    for match in _LABELED_NMCK_RUB.finditer(text):
+        raw = match.group(1).replace(" ", "").replace("\u00a0", "").replace(",", ".")
+        try:
+            result.add(("rub", format(float(raw), ".12g")))
+        except ValueError:
+            continue
     return result
 
 

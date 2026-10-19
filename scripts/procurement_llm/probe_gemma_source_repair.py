@@ -46,6 +46,8 @@ def _save_once(payload: dict) -> Path:
         raise ValueError("private output folder cannot be verified")
     if payload["mode"] != "source_only_local_gemma":
         name = "evidence.json"
+    elif payload.get("experiment_variant") == "repair3":
+        name = "retry3-result.json"
     elif tuple(payload["selected_section_ids"]) == IDS:
         name = "result.json"
     else:
@@ -59,7 +61,10 @@ def _save_once(payload: dict) -> Path:
     return destination
 
 
-def actual_probe(*, invoke_llm: bool, selected_section_ids: tuple[str, ...] = IDS) -> dict:
+def actual_probe(
+    *, invoke_llm: bool, selected_section_ids: tuple[str, ...] = IDS,
+    experiment_variant: str = "baseline",
+) -> dict:
     if not selected_section_ids or any(i not in IDS for i in selected_section_ids):
         raise ValueError("only supported pinned four sections")
     engine = create_engine(_engine_url())
@@ -76,6 +81,7 @@ def actual_probe(*, invoke_llm: bool, selected_section_ids: tuple[str, ...] = ID
         "timestamp_utc": datetime.now(UTC).isoformat(),
         "sections": [],
         "selected_section_ids": list(selected_section_ids),
+        "experiment_variant": experiment_variant,
     }
     try:
         with Session(engine) as session:
@@ -168,10 +174,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--llm", action="store_true")
     parser.add_argument("--only", nargs="+", choices=IDS)
+    parser.add_argument("--variant", choices=["baseline", "repair3"], default="baseline")
     args = parser.parse_args()
     outcome = actual_probe(
         invoke_llm=args.llm,
         selected_section_ids=tuple(args.only) if args.only else IDS,
+        experiment_variant=args.variant,
     )
     destination = _save_once(outcome)
     print(json.dumps({
