@@ -22,7 +22,7 @@ completed_stages:
   - "One new real Gemma 4 12B detailed 10-section analysis in canonical PostgreSQL with 10 LLM calls, ID eeaed777-48ff-4e12-89fb-55eb01cb8e10, full run report SHA 2c074f22a03c2e6e84517e88609876cf5d77b26ec0787fac393f0c62764883b7, source_quality_rerun; 1550.6728 seconds, 6 accepted/4 fallback."
   - "Compared to real 249.97s fast (6.20x slower), source-reviewed T01–T20/C01–C03/Q01–Q03 and original documentation; full correctness NOT accepted; next follow-up source-priority gate separately tracked."
   - "No new API credentials, Gold, ETP bid, production merge, new scheduler or model download."
-last_verified_commit: 981761038b4543e2213cc1da65b0f5be6442d2a9
+last_verified_commit: dc8755637dcb4fd80939861501ab2f3bc9b974b8
 test_results:
   - "2026-10-19 907 passed / 2 skipped across procurement_learning_corpus and tender_research; Ruff PASS, git diff --check PASS. Previous completed stage 901/2 and earlier targeted 25 passing."
   - "Actual source-bound index 86/86/86 and readiness ready_for_actual_llm=true; six originals unchanged."
