@@ -46,6 +46,8 @@ def _save_once(payload: dict) -> Path:
         raise ValueError("private output folder cannot be verified")
     if payload["mode"] != "source_only_local_gemma":
         name = "evidence.json"
+    elif payload.get("experiment_variant") == "final4":
+        name = "final4-result.json"
     elif payload.get("experiment_variant") == "repair3":
         name = "retry3-result.json"
     elif tuple(payload["selected_section_ids"]) == IDS:
@@ -174,7 +176,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--llm", action="store_true")
     parser.add_argument("--only", nargs="+", choices=IDS)
-    parser.add_argument("--variant", choices=["baseline", "repair3"], default="baseline")
+    parser.add_argument(
+        "--variant", choices=["baseline", "repair3", "final4"], default="baseline"
+    )
     args = parser.parse_args()
     outcome = actual_probe(
         invoke_llm=args.llm,

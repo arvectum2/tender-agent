@@ -996,3 +996,16 @@ gemma_source_exact_unit_repair_third_probe_2026_10_19:
   latest_pytest_skipped: 2
   third_focused_llm_pid: 48543
   next_step: Examine private retry3-result.json before more model calls; verify actual source evidence and numeric correctness, no gold or canonical DB writes.
+
+
+gemma_same_version_final4_2026_10_20:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  real_llama_cpp_model: arvectum-gemma4-12b-it-qat-q4_0
+  source_index_complete: 86
+  prior_two_runs_combined_four_target_accepted: true
+  combined_runs_not_same_code_revision: true
+  current_single_revision_probe_pid: 85359
+  result_json: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
+  no_training_gold: true
+  next_step: Check persisted PID/output first; avoid rerun. Final regression and source accuracy review before declaring DoD.

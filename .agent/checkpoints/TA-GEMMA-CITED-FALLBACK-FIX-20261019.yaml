@@ -18,7 +18,7 @@ remaining:
   - Report, final tests, checkpoint and PR.
 last_verified_commit: 9b23e31c
 test_results: []
-resume_instruction: "Start by checking PID 48543 and protected retry3-result.json under /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019. Do not restart if live. Earlier 4-question real probe 2/4 accepted. Second two-question probe accepted subject formally but wrongly said NMC not confirmed; contract percent rejected. Replayed real response against new guard: false NMC absence now rejected. New numeric parser recognizes exact NMC RUB:497178.33 source field and 1 процента/10 процентов written units; all other unsupported values remain blocked. Broad 930 PASS/2 SKIP, Ruff PASS, original 86/86/86 index unchanged, zero canonical SQL writes, zero gold. When third probe finishes verify strict citations, exact NMC and contract source statements, checkpoint and push draft PR500 via MacBook authorized github HTTPS; do not merge/deploy/bid or repeat full 10 question run until 4 target sections substantively pass."
+resume_instruction: "20.10.2026 MSK: third focused retry3 experiment completed and actual saved answer verified: subject 87.84s/1 attempt, accepted and correctly identifies real archived EIS NMC 497178.33 RUB with 2 correct original XML chunk IDs; contract_terms 326.39s/2 attempts, accepted with 11 original contract citations and 0.5% contract security. Previous initial four-question run only 2/4 accepted (customer_requirements/evaluation_criteria). Because these pass results span code revisions, started one reproducible SAME-code four-question read-only Gemma probe on current source/guards, Mac mini PID 85359 launched 20 Oct 2026 07:51:57 MSK, private log final4-v2.log, exclusive result final4-result.json, owner dir .../gemma-four-retry-20261019. FIRST check PID 85359 and final4-result.json, do not start new probe while live. Four questions typically 15-20 minutes, all model calls are real Gemma 4 12B llama.cpp, no SQL writes or gold. Meanwhile run relevant pytest+Ruff and update docs, then finalize checkpoint status based on result; if 4/4 source-valid and clinically grounded, consider an owner-approved uniquely versioned full canonical audit separately without modifying old source_queue run. Push review-only PR500, no merge/deploy, no Qwen/ETP."
 
 verified_stage_2026_10_19:
   relevant_tests_pass: 918
@@ -107,3 +107,36 @@ third_focused_real_gemma_probe:
   result_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry3-result.json
   canonical_sql_write: false
   gold_promoted: false
+
+
+continuation_2026_10_20_0747_msk:
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  third_focused_results_present: true
+  third_focused_subject_accepted: true
+  third_focused_subject_latency_seconds: 87.84
+  third_focused_subject_attempts: 1
+  third_focused_subject_true_nmck: 497178.33
+  third_focused_subject_cited_source_ids: 2
+  third_focused_contract_accepted: true
+  third_focused_contract_latency_seconds: 326.39
+  third_focused_contract_attempts: 2
+  third_focused_contract_cited_original_ids: 11
+  third_focused_contract_mentions_verified_execution_security_percent: 0.5
+  previous_first_four_probe_pass: 2
+  current_same_version_four_probe_status: in_progress
+  current_same_version_four_probe_pid: 85359
+  current_same_version_four_probe_output: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
+  current_same_version_four_probe_log: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-v2.log
+  current_same_version_four_probe_write_sql: false
+  source_index_sql_dp_embeddings_verified_before: [86, 86, 86]
+  training_gold_promoted: false
+
+regression_2026_10_20:
+  pytest_passed: 972
+  pytest_skipped: 4
+  ruff: PASS
+  diff_check: PASS
+  private_result_immutability_tests_passed: 5
+  same_revision_four_probe_pid: 85359
+  same_revision_probe_exclusive_path: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
+  training_gold: false
