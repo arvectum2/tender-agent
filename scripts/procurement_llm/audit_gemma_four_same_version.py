@@ -17,7 +17,7 @@ UUID = re.compile(
 )
 NMC = re.compile(r"(?<!\d)497\s*178[,.]33\s*(?:руб|₽)", re.IGNORECASE)
 WRONG_NMC = re.compile(r"(?:НМЦК|начальная\s+максимальная\s+цен[аы])[^.\n]{0,90}15\s*000\s*000", re.IGNORECASE)
-PERCENT = lambda value: re.compile(r"(?<!\d)" + str(value) + r"\s*%", re.IGNORECASE)
+PERCENT = lambda value: re.compile(r"(?<!\d)" + str(value) + r"\s*(?:%|процент(?:ов|а)?\b)", re.IGNORECASE)
 
 
 def audit(frozen: dict) -> dict:
@@ -55,7 +55,7 @@ def audit(frozen: dict) -> dict:
                 if s["id"] == "evaluation_criteria" else None
             ),
             "execution_security_0_5_percent": (
-                bool(re.search(r"(?<!\d)0[,.]5\s*%", answer))
+                bool(re.search(r"(?<!\d)0[,.]5\s*(?:%|процент(?:ов|а)?\b)", answer))
                 if s["id"] == "contract_terms" else None
             ),
         }

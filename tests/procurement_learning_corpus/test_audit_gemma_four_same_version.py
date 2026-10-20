@@ -84,3 +84,14 @@ def test_different_section_set_or_duplicate_rejected():
     raw["sections"][3]["id"] = "subject"
     with pytest.raises(ValueError, match="four"):
         audit(raw)
+
+def test_russian_percent_words_are_valid_literal_source_signals():
+    raw = _record()
+    raw["sections"][2]["answer"] = (
+        f"Критерии: 30 процентов цена, 70 процентов квалификация, "
+        f"80 процентов опыт, 20 процентов количество. {UUID}"
+    )
+    raw["sections"][3]["answer"] = f"Обеспечение исполнения 0,5 процента. {UUID}"
+    result = audit(raw)
+    assert result["all_four_key_fact_signals"]
+    assert result["all_four_mechanical_acceptance"]
