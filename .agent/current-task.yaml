@@ -949,3 +949,63 @@ gemma_real_quality_oct19:
   incomplete_sections: [subject, customer_requirements, evaluation_criteria, contract_terms]
   canonical_index: 86
   next: source first retrieval and citation fallback investigation, no gold, no new run until diagnosed
+
+gemma_cited_source_fallback_fix_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  original_canonical_source_index_chunks: 86
+  source_evidence_routing_verified: true
+  guarded_single_retry_added: true
+  four_question_gemma_probe_pid: 5363
+  next_step: Read-only four-question Gemma completed 2/4. Second only subject and contract_terms PID39834 running. Review retry2-result.json, no full rerun or gold.
+
+gemma_source_repair_verified_stage_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  frozen_archived_eis_originals: true
+  read_only_index: 86
+  latest_rag_relevant_pytest_passed: 920
+  latest_rag_relevant_pytest_skipped: 2
+  git_push_permission_blocker: arvectum2/tender-agent denies git_ssh_principal_arutyunoveth
+  four_question_local_gemma_pid: 5363
+  reason_for_remaining_stage: awaiting_actual_four_question_llm_probe_report
+
+gemma_source_repair_second_probe_2026_10_19:
+  first_probe_accepted: 2
+  first_probe_total: 4
+  accepted_sections: [customer_requirements, evaluation_criteria]
+  failed_sections: [subject, contract_terms]
+  failure_kinds: [rub, percent]
+  focused_second_probe_pid: 39834
+  result_path: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry2-result.json
+  canonical_db_writes: 0
+  gold_promoted: 0
+  resume_instruction: Check second process and private JSON before relaunching; compare strict source evidence and verified numbers.
+
+gemma_source_exact_unit_repair_third_probe_2026_10_19:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  first_four_question_probe_accepted: 2
+  second_two_question_formal_accepted: 1
+  second_subject_wrong_nmc_absence_detected: true
+  actual_wrong_nmc_answer_now_rejected_on_source_replay: true
+  official_xml_labelled_nmck_rub_value_supported: true
+  original_contract_written_percent_supported: true
+  canonical_index: 86
+  latest_pytest_passed: 930
+  latest_pytest_skipped: 2
+  third_focused_llm_pid: 48543
+  next_step: Examine private retry3-result.json before more model calls; verify actual source evidence and numeric correctness, no gold or canonical DB writes.
+
+
+gemma_same_version_final4_2026_10_20:
+  child_checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  status: in_progress
+  real_llama_cpp_model: arvectum-gemma4-12b-it-qat-q4_0
+  source_index_complete: 86
+  prior_two_runs_combined_four_target_accepted: true
+  combined_runs_not_same_code_revision: true
+  current_single_revision_probe_pid: 85359
+  result_json: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
+  no_training_gold: true
+  next_step: Check persisted PID/output first; avoid rerun. Final regression and source accuracy review before declaring DoD.

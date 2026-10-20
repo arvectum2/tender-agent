@@ -1,0 +1,200 @@
+task_id: TA-GEMMA-CITED-FALLBACK-FIX-20261019
+status: blocked
+goal: Repair the four archived Smolensk Gemma 4 12B source-quote/numeric fallback sections without weakening numeric or citation safety; focus on the existing canonical PostgreSQL and indexed EIS XML/DOCX.
+definition_of_done:
+  - Pin priority evidence to attested source ZIP/criteria hash and the exact requested registry + tender before adding retrieved chunks.
+  - Correct source selection for subject and evaluation (and notice/deadlines), while ensuring other tenders and users cannot access this case via cross-scope routing.
+  - Add bounded retry of rejected answers with exact citation/percentage instructions, rejecting all remaining unsupported values; no fabricated evidence or silently accepted failed sections.
+  - Relevant targeted/adversarial tests, Ruff and full relevant test suite pass; run four question model probe on original indexed data only after tests.
+  - If all four targeted sources/answers pass, consider one uniquely versioned subsequent real canonical quality run with full backup; otherwise keep stage blocked and diagnose. No new Gold, bid action, Qwen or auto merge.
+completed:
+  - "Previously completed parent child TA-PROTECTED-RUNTIME-BOOTSTRAP-20261019: 86/86/86 canonical source retrieval ready, Gemma detailed run eeaed777-48ff-4e12-89fb-55eb01cb8e10 (1550.6728s, six accepted, four rejected) already saved; do not repeat previous run."
+  - "Real warnings_json: subject unknown/modified chunk id; customer_requirements, evaluation_criteria, contract_terms unsupported percent claims."
+current: "True-model second focused source-only experiment completed: 1/2 accepted (subject) but content incorrectly denied NMC, contract_terms rejected on percent. Replayed actual accepted answer through new source-specific NMC absence guard: now correctly REJECTED. Source numeric parser updated for NMC RUB label with value after colon and for 1 процента/10 процентов written units, no arbitrary other numeric permission. Ruff and 930 passed/2 skipped broad suite; 20+ targeted pass. Third read-only subject+contract_terms actual Gemma check PID 48543 running; no canonical DB writes."
+remaining:
+  - Strict source-aware routing plus tenant and source-hash checks.
+  - Tests and safe bounded retry of failed citations/percentages.
+  - Four-section targeted actual Gemma check; measure accepted vs rejected.
+  - Report, final tests, checkpoint and PR.
+last_verified_commit: 9b23e31c
+test_results: []
+resume_instruction: '20 Oct 2026: evaluation_criteria model failure root cause proven from immutable evaltrace5-result.json: Gemma invented 100%, while source has only 20/30/70/80. In draft PR500 code ced7efdf forbids inferred totals; b9ca1f94 adds an exclusive criteria_only output file. Local ArvectumSSD worktree patched. New real one-section probe never reached LLM: first missing DB environment, corrected auth-safe invocation reached canonical read-only DB but readiness returned data_platform_index_unavailable. Independent read-only Data Platform collection_stats returned HTTP 401; process running, missing approved client API key (rag_data_platform_api_key false). Do not bypass auth or expose/rotate keys. Resume only after restoring existing authorized Data Platform client access via approved configuration; recheck 86 resource/embeddings, run once exclusive criteria_only read-only probe, then independently audit citations, weights and model answer. Existing final4=3/4, evaltrace5=0/1; do NOT claim 4/4, gold, bid GO, PR merge or production deployment.'
+
+verified_stage_2026_10_19:
+  relevant_tests_pass: 918
+  relevant_tests_skip: 2
+  targeted_adversarial_tests_pass: 12
+  ruff: PASS
+  canonical_index_sql_dp_embeddings: [86, 86, 86]
+  original_sha_retained: true
+  read_only_original_evidence_probe: true
+  subject_first_sources: [official_xml, official_xml]
+  criteria_first_source: verified_percent_docx
+  customer_first_source: original_application_docx
+  contract_first_source: original_contract_docx
+  live_gemma_probe_pid: 5363
+  live_gemma_probe_destination: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/result.json
+  live_gemma_probe_status: running
+  human_gold: false
+  canonical_db_new_writes: 0
+  report: docs/roadmap/GEMMA_SMOLENSK_SOURCE_GUARD_REPAIR_2026-10-19.md
+
+additional_security_gate: All pinned Smolensk sections filter foreign registry/tender hits, even if derived source document fails attestation.
+
+latest_tests_2026_10_19:
+  relevant_pytest_pass: 920
+  relevant_pytest_skip: 2
+  ruff: PASS
+  git_diff_check: PASS
+  actual_index_originals_unmodified: true
+  pinned_xml_first_chunk_contains_nmck_497178_33: true
+  pinned_xml_first_chunk_contains_submission_2026_10_30_1100: true
+  probe_pid: 5363
+  result_json_present_at_19_34_msk: false
+  github_pr_base_branch_push_attempted: true
+  github_push_denied_for_authenticated_ssh_identity: arutyunoveth
+  github_state: local_commits_only_not_merged_or_deployed
+resume_after_interruption: "Inspect Mac mini PID 5363 and protected result.json/probe.log at /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019. Never restart while PID active. If JSON exists inspect each of four errors, attempts, source IDs, numeric claims. Benchmark is read-only; no new TenderAnalysisRun/gold. If model still active after expected bounded duration, keep in_progress and report measured time, no invented success. Local verified commits c2f8483f and 9b23e31c, 920 pytest PASS/2 SKIP, Ruff PASS. GitHub upload blocked by SSH principal arutyunoveth denied permission to arvectum2/tender-agent. No bypass or merge."
+
+first_real_four_question_probe:
+  completed: true
+  output: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/result.json
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  backend: llama.cpp
+  accepted: 2
+  total: 4
+  successful_sections: [customer_requirements, evaluation_criteria]
+  failed_sections: [subject, contract_terms]
+  failed_units: [rub, percent]
+  total_duration_seconds: 1219.63
+  model_attempts_each: 2
+  canonical_sql_modified: false
+  human_gold: false
+second_exact_units_repair_probe:
+  status: completed
+  pid: 39834
+  focus: [subject, contract_terms]
+  result_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry2-result.json
+  formal_accepted: 1
+  total: 2
+  accepted_subject_semantically_correct: false
+  subject_wrong_claim: NMC not confirmed although original XML explicitly says 497178.33
+  contract_error: unsupported percent
+  duration_seconds: 635.73
+  canonical_sql_modified: false
+new_regression_results:
+  broad_passed: 922
+  broad_skipped: 2
+  targeted_passed: 15
+  ruff: PASS
+
+source_exact_units_fix_2026_10_19:
+  official_eis_nmck_source_label: "НМЦК РУБ — сумма контракта, НЕ лимит квалификационного опыта: 497178.33"
+  contract_percent_words: [1_procenta, 10_procentov]
+  numeric_guard_labeled_nmck_source_value_supported: true
+  numeric_guard_percent_words_supported: true
+  actual_false_nmck_absence_answer_replayed: true
+  actual_false_nmck_absence_now_rejected_as_price: true
+  no_general_numeric_gate_bypass: true
+  latest_broad_pytest_passed: 930
+  latest_broad_pytest_skipped: 2
+  ruff: PASS
+third_focused_real_gemma_probe:
+  status: running
+  process_pid: 48543
+  focus: [subject, contract_terms]
+  real_source_index_chunks: 86
+  result_file: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/retry3-result.json
+  canonical_sql_write: false
+  gold_promoted: false
+
+
+continuation_2026_10_20_0747_msk:
+  model: arvectum-gemma4-12b-it-qat-q4_0
+  third_focused_results_present: true
+  third_focused_subject_accepted: true
+  third_focused_subject_latency_seconds: 87.84
+  third_focused_subject_attempts: 1
+  third_focused_subject_true_nmck: 497178.33
+  third_focused_subject_cited_source_ids: 2
+  third_focused_contract_accepted: true
+  third_focused_contract_latency_seconds: 326.39
+  third_focused_contract_attempts: 2
+  third_focused_contract_cited_original_ids: 11
+  third_focused_contract_mentions_verified_execution_security_percent: 0.5
+  previous_first_four_probe_pass: 2
+  current_same_version_four_probe_status: in_progress
+  current_same_version_four_probe_pid: 85359
+  current_same_version_four_probe_output: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
+  current_same_version_four_probe_log: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-v2.log
+  current_same_version_four_probe_write_sql: false
+  source_index_sql_dp_embeddings_verified_before: [86, 86, 86]
+  training_gold_promoted: false
+
+regression_2026_10_20:
+  pytest_passed: 972
+  pytest_skipped: 4
+  ruff: PASS
+  diff_check: PASS
+  private_result_immutability_tests_passed: 5
+  same_revision_four_probe_pid: 85359
+  same_revision_probe_exclusive_path: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
+  training_gold: false
+
+semantic_evidence_audit_2026_10_20:
+  independent_code: scripts/procurement_llm/audit_gemma_four_same_version.py
+  target_original_run_count: 4
+  requires_real_cited_chunk_ids: true
+  requires_nmc_rub: 497178.33
+  requires_criteria_weights: [30, 70, 80, 20]
+  requires_execution_security_pct: 0.5
+  forbids_wrong_15m_nmck: true
+  does_not_award_training_gold_or_bid_go: true
+  adversarial_tests_pass: 10
+  latest_full_regression_pass: 987
+  latest_full_regression_skip: 4
+  ruff: PASS
+  same_version_probe_pid: 85359
+
+oct20_resume_update:
+  status: in_progress
+  prior_probe: 3_of_4_guard_accepted
+  blocked_section: evaluation_criteria
+  change_commit: ced7efdfd527c51afa5e0f433fc906800d06811a
+  scope: reject_inferred_percentages_without_changing_numeric_guard
+  current_result: model_rerun_not_yet_verified
+  review_pr: 500
+  merge_allowed: false
+
+
+corrective_evidence_gate_2026_10_20:
+  baseline_receipt: evaltrace5-result.json
+  baseline_eval_attempts: 2
+  unsupported_percent_each_attempt: ['100']
+  source_percent_values: ['20', '30', '70', '80']
+  failure_class: source_unsupported_derived_total
+  review_only_prompt_commit: ced7efdfd527c51afa5e0f433fc906800d06811a
+  exclusive_single_section_variant_commit: b9ca1f9478e8977ccfd8ff5eeee36f65d181d0a7
+  private_single_section_receipt: criteria-only-v2-result.json
+  original_receipts_immutable: true
+  initial_probe_attempt: failed_before_model_missing_database_config
+  second_probe_attempt: failed_before_model_readiness_false
+  canonical_db_connection_validated: true
+  canonical_database_modified: false
+  model_new_result_verified: false
+  latest_confirmed_four_section_result: 3_of_4
+  workflow: PR500_draft_no_merge
+
+technical_blocker_2026_10_20:
+  status: blocked
+  reason: data_platform_client_http_401
+  read_only_db_ok: true
+  data_platform_process_running: true
+  authorized_client_key_in_current_runtime_config: false
+  collection_stats_status: 401
+  model_called_in_latest_attempt: false
+  exclusive_criteria_result_created: false
+  source_originals_unchanged: true
+  guard_unchanged: true
+  required_next_action: restore_existing_authorized_data_platform_api_access_and_recheck_readiness
+  never_bypass_auth: true
