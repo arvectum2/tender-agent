@@ -11,8 +11,9 @@ definition_of_done:
 completed:
   - 'Read main d2a927e and current owner parent checkpoint; confirmed 24 open PR #477-500, and no code merges after 17 October.'
   - 'Inspected PR #480 prior doc delta/19 green checks and quality repair #500 distinct draft HEAD/19 green checks.'
-  - 'Identified 2/10 bounded APR done; others have business, quality, production or trigger gates.'
-current: 'Submit updated 20 October docs branch and validate exact latest head.'
+  - 'Identified 2/11 separately tracked APR outcomes done (APR-03B counted separately); others have business, quality, production or trigger gates.'
+  - '20 October Markdown and 3 YAML files validated using MacBook Ruby/Psych; first updated PR head 99b956b passed 19/19 checks.'
+current: 'Consistency correction submitted; complete exact-head CI before merge.'
 remaining:
   - 'Validate new Markdown/YAML files on branch and CI exact head.'
   - 'Merge documentation PR if governance and checks pass, and verify current main.'
