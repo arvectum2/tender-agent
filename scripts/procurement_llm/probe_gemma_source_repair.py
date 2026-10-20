@@ -48,6 +48,8 @@ def _save_once(payload: dict) -> Path:
         name = "evidence.json"
     elif payload.get("experiment_variant") == "final4":
         name = "final4-result.json"
+    elif payload.get("experiment_variant") == "criteria_only":
+        name = "criteria-only-v2-result.json"
     elif payload.get("experiment_variant") == "repair3":
         name = "retry3-result.json"
     elif tuple(payload["selected_section_ids"]) == IDS:
@@ -177,7 +179,7 @@ def main() -> int:
     parser.add_argument("--llm", action="store_true")
     parser.add_argument("--only", nargs="+", choices=IDS)
     parser.add_argument(
-        "--variant", choices=["baseline", "repair3", "final4"], default="baseline"
+        "--variant", choices=["baseline", "repair3", "final4", "criteria_only"], default="baseline"
     )
     args = parser.parse_args()
     outcome = actual_probe(
