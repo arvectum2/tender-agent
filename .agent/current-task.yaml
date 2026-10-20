@@ -255,7 +255,7 @@ test_results:
   - 'APR06 56 focused PASS, full 4014 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; GitHub tree 2384b2a3 exact local; head 4d0e96c8 push+PR CI 9/9 SUCCESS.'
   - 'APR07 17 focused PASS, full 4031 PASS/238 SKIP PG16/Docker, Ruff/make check PASS; byte-identical snapshot, tree 93045a20 exact local; head d7d2aa17 push+PR CI 9/9 SUCCESS.'
   - 'APR03B latest-main aa6709b3 temporary private QA 18086: health 200, unauth workspace/report/pdf 401, all five original volumes mounted RO. Authenticated archival report/source/export checks NOT executed due credential access restriction; old 18083 preview preserved HTTP200, temporary container removed, image kept local.'
-resume_instruction: "2026-10-20 roadmap sync PR #480 merged as 3819103c517b0686a7c412ced8bef3581b2f3d8b, exact-head CI 19/19 SUCCESS, YAML/Markdown validated; child TA-ROADMAP-SYNC-20261020 completed. Parent TA-ROADMAP-EXEC-20261012 remains in_progress. Next prioritize APR03B/07 original-source Gemma PR #500 review-only: Mac mini final4-result.json saved 20 Oct 3/4 accepted, evaluation_criteria rejected as unsupported percent; NEVER claim four-of-four/gold or weaken numeric guard; investigate verified percentages and model prompt/retrieval without re-running existing done jobs. Then evaluate staged original-source PR #489-499 dependencies and independent B2B opportunity eligibility to 15-20, while preserving AM4/HUMAN and prod/paid/ETP constraints. No auto merge/deploy/paid action without exact authorized gates."
+resume_instruction: "2026-10-20: APR03B/07 child TA-GEMMA-CITED-FALLBACK-FIX-20261019 reviewed original Smolensk data. Prior final4 actual Gemma 3/4; separate evaltrace5 0/1 with unsupported invented 100% twice, while pinned original percentages are 20/30/70/80. PR500 draft has prompt rule forbidding inferred percentages and new exclusive criteria_only receipt variant; code/guards remain review-only and unmerged. Read-only one-section rerun blocked BEFORE model by Data Platform collection_stats HTTP401 (existing local client credentials not configured; service process exists). Child checkpoint status BLOCKED; do not bypass authentication or claim 4/4. Restore existing authorized Data Platform client configuration (no secrets in Git/Chat), reverify index 86/86/86 and start a single read-only criteria_only probe with original SHA; audit citations/numeric facts before declaring acceptance. While blocked, continue independent approved parent tasks APR04/05/06 and B2B qualification without bid/ETP/payment/deploy or changing benchmark gold. Single manual_override remains true."
 execution:
   branch: feature/apr03b-ai-e2e-acceptance-20261015
   manual_override: true
@@ -612,3 +612,16 @@ roadmap_sync_2026_10_20:
   exact_pr_head_ci: 'd7ec0b62ceaf25adbd10ba1eb2df7ee2be9349ca 19/19 SUCCESS'
   postmerge_original_gemma_probe: 'Mac mini read-only original Smolensk final4 same-version 3/4 guard accepted; evaluation_criteria unsupported percent; no gold or legal bid GO'
   next_pending_gate: 'APR03B/07 model percent evidence repair; PR500 remains draft and unmerged'
+
+gemma_eval_criteria_oct20:
+  checkpoint: .agent/checkpoints/TA-GEMMA-CITED-FALLBACK-FIX-20261019.yaml
+  review_pr: 500
+  state: blocked_pending_authorized_data_platform_client_auth
+  prior_final4_accepted: 3
+  prior_final4_total: 4
+  actual_evaltrace_unsupported_percent: 100
+  original_percents: [20, 30, 70, 80]
+  source_sha_unchanged: true
+  criterion_single_section_rerun: not_started_due_to_http401
+  main_code_changed: false
+  owner_legal_bid_go: false
