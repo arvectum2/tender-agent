@@ -1,5 +1,5 @@
 task_id: TA-GEMMA-CITED-FALLBACK-FIX-20261019
-status: in_progress
+status: blocked
 goal: Repair the four archived Smolensk Gemma 4 12B source-quote/numeric fallback sections without weakening numeric or citation safety; focus on the existing canonical PostgreSQL and indexed EIS XML/DOCX.
 definition_of_done:
   - Pin priority evidence to attested source ZIP/criteria hash and the exact requested registry + tender before adding retrieved chunks.
@@ -18,7 +18,7 @@ remaining:
   - Report, final tests, checkpoint and PR.
 last_verified_commit: 9b23e31c
 test_results: []
-resume_instruction: '20 Oct 2026: Original read-only evaltrace5 receipt proves unsupported derived 100 percent in BOTH model attempts; only 20/30/70/80 are explicit source percentages. GitHub draft PR500 has prompt-only no-derived-percent change ced7efdf and exclusive new criteria_only receipt variant b9ca1f94; no numeric/citation guard relaxation or source/gold DB mutation. Local ArvectumSSD worktree source synced to these changes. New single-section probe was attempted: initial invocation lacked canonical DB settings; corrected private backend.env produced correct arvectum:55432 but readiness(require_services=true) returned not ready BEFORE contacting Gemma. No criteria-only-v2-result.json exists as of last check. Next check sanitized readiness blocker categories (source access, Data Platform index, Gemma model) using existing canonical read-only connection, restore only authorized local services, verify no concurrent run, then run once with variant criteria_only into exclusive private receipt; independently audit original weights/citations, update checkpoint. Never claim 4/4, merge, gold, bid, payment or production deployment without their separate gates.'
+resume_instruction: '20 Oct 2026: evaluation_criteria model failure root cause proven from immutable evaltrace5-result.json: Gemma invented 100%, while source has only 20/30/70/80. In draft PR500 code ced7efdf forbids inferred totals; b9ca1f94 adds an exclusive criteria_only output file. Local ArvectumSSD worktree patched. New real one-section probe never reached LLM: first missing DB environment, corrected auth-safe invocation reached canonical read-only DB but readiness returned data_platform_index_unavailable. Independent read-only Data Platform collection_stats returned HTTP 401; process running, missing approved client API key (rag_data_platform_api_key false). Do not bypass auth or expose/rotate keys. Resume only after restoring existing authorized Data Platform client access via approved configuration; recheck 86 resource/embeddings, run once exclusive criteria_only read-only probe, then independently audit citations, weights and model answer. Existing final4=3/4, evaltrace5=0/1; do NOT claim 4/4, gold, bid GO, PR merge or production deployment.'
 
 verified_stage_2026_10_19:
   relevant_tests_pass: 918
@@ -184,3 +184,17 @@ corrective_evidence_gate_2026_10_20:
   model_new_result_verified: false
   latest_confirmed_four_section_result: 3_of_4
   workflow: PR500_draft_no_merge
+
+technical_blocker_2026_10_20:
+  status: blocked
+  reason: data_platform_client_http_401
+  read_only_db_ok: true
+  data_platform_process_running: true
+  authorized_client_key_in_current_runtime_config: false
+  collection_stats_status: 401
+  model_called_in_latest_attempt: false
+  exclusive_criteria_result_created: false
+  source_originals_unchanged: true
+  guard_unchanged: true
+  required_next_action: restore_existing_authorized_data_platform_api_access_and_recheck_readiness
+  never_bypass_auth: true
