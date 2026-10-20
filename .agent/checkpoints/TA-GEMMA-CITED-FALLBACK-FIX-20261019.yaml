@@ -18,7 +18,7 @@ remaining:
   - Report, final tests, checkpoint and PR.
 last_verified_commit: 9b23e31c
 test_results: []
-resume_instruction: '2026-10-20: final4-result.json from the immutable read-only same-revision Gemma test completed with 3/4 accepted; evaluation_criteria failed unsupported percent after two attempts. PR #500 has a source-only prompt fix commit ced7efdf (no numeric/citation guard relaxation), checkpoint update b0a7a1a0; review-only draft. Verify exact-head CI; then on Mac mini make a separately versioned read-only single evaluation_criteria original-SHA probe with current branch code and independently audit percentage/citation semantics. Do not rerun final4 into its existing path, update training gold, submit a bid or merge/deploy PR without explicit gates. If the local runner cannot be safely synced, keep in_progress and document blocker.'
+resume_instruction: '20 Oct 2026: Original read-only evaltrace5 receipt proves unsupported derived 100 percent in BOTH model attempts; only 20/30/70/80 are explicit source percentages. GitHub draft PR500 has prompt-only no-derived-percent change ced7efdf and exclusive new criteria_only receipt variant b9ca1f94; no numeric/citation guard relaxation or source/gold DB mutation. Local ArvectumSSD worktree source synced to these changes. New single-section probe was attempted: initial invocation lacked canonical DB settings; corrected private backend.env produced correct arvectum:55432 but readiness(require_services=true) returned not ready BEFORE contacting Gemma. No criteria-only-v2-result.json exists as of last check. Next check sanitized readiness blocker categories (source access, Data Platform index, Gemma model) using existing canonical read-only connection, restore only authorized local services, verify no concurrent run, then run once with variant criteria_only into exclusive private receipt; independently audit original weights/citations, update checkpoint. Never claim 4/4, merge, gold, bid, payment or production deployment without their separate gates.'
 
 verified_stage_2026_10_19:
   relevant_tests_pass: 918
@@ -165,3 +165,22 @@ oct20_resume_update:
   current_result: model_rerun_not_yet_verified
   review_pr: 500
   merge_allowed: false
+
+
+corrective_evidence_gate_2026_10_20:
+  baseline_receipt: evaltrace5-result.json
+  baseline_eval_attempts: 2
+  unsupported_percent_each_attempt: ['100']
+  source_percent_values: ['20', '30', '70', '80']
+  failure_class: source_unsupported_derived_total
+  review_only_prompt_commit: ced7efdfd527c51afa5e0f433fc906800d06811a
+  exclusive_single_section_variant_commit: b9ca1f9478e8977ccfd8ff5eeee36f65d181d0a7
+  private_single_section_receipt: criteria-only-v2-result.json
+  original_receipts_immutable: true
+  initial_probe_attempt: failed_before_model_missing_database_config
+  second_probe_attempt: failed_before_model_readiness_false
+  canonical_db_connection_validated: true
+  canonical_database_modified: false
+  model_new_result_verified: false
+  latest_confirmed_four_section_result: 3_of_4
+  workflow: PR500_draft_no_merge
