@@ -140,3 +140,18 @@ regression_2026_10_20:
   same_revision_four_probe_pid: 85359
   same_revision_probe_exclusive_path: /Volumes/ArvectumSSD/Arvectum/private/tender-agent/quality-benchmarks/gemma-four-retry-20261019/final4-result.json
   training_gold: false
+
+semantic_evidence_audit_2026_10_20:
+  independent_code: scripts/procurement_llm/audit_gemma_four_same_version.py
+  target_original_run_count: 4
+  requires_real_cited_chunk_ids: true
+  requires_nmc_rub: 497178.33
+  requires_criteria_weights: [30, 70, 80, 20]
+  requires_execution_security_pct: 0.5
+  forbids_wrong_15m_nmck: true
+  does_not_award_training_gold_or_bid_go: true
+  adversarial_tests_pass: 10
+  latest_full_regression_pass: 987
+  latest_full_regression_skip: 4
+  ruff: PASS
+  same_version_probe_pid: 85359
