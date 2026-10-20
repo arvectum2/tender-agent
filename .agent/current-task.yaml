@@ -599,3 +599,12 @@ roadmap_sync_2026_10_18:
   scope: documentation_reconciliation_no_external_actions
   stage: roadmap_snapshot_review_pending
   note: 'Parent goal/resume_instruction and manual_override remain unchanged; do not interpret as commercial or legal GO.'
+
+roadmap_sync_2026_10_20:
+  checkpoint: .agent/checkpoints/TA-ROADMAP-SYNC-20261020.yaml
+  baseline_main: 'd2a927ecebc9222bb3b38b47aa14c7024ccec4f0'
+  review_branch: 'docs/tender-roadmap-status-2026-10-18'
+  review_pr: 480
+  pending_model_stack: 'PR 489-500 (unmerged as of 2026-10-20)'
+  gate: 'Documentation refresh only; owner parent task remains in_progress, no independent legal/commercial GO'
+  stage: roadmap_20_oct_refresh_review_pending

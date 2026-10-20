@@ -287,6 +287,54 @@ active_product_roadmap_2026_10_08:
       trigger: 'Attributable correction corpus is large enough to evaluate recurring failure patterns; target >=30 useful corrections across >=3 customer/pilot contexts.'
       done_gate: 'No autonomous self-training/promotion; every promoted change has frozen regression evidence and attributable review.'
 
+roadmap_status_snapshot_2026_10_20:
+  as_of: '2026-10-20'
+  base_main_commit: 'd2a927ecebc9222bb3b38b47aa14c7024ccec4f0'
+  nature: 'Read-only canonical main versus open PR reconciliation; no fresh product E2E in this update'
+  previous_snapshot: roadmap_status_snapshot_2026_10_18
+  owner_parent_checkpoint: .agent/current-task.yaml
+  refresh_checkpoint: .agent/checkpoints/TA-ROADMAP-SYNC-20261020.yaml
+  finished_outcomes: [APR-01-FAST-CITED-PREANALYSIS, APR-02-223FZ-BREADTH]
+  partial_with_external_or_quality_gate:
+    - APR-03-PRODUCTION-RUNTIME
+    - APR-03B-OPERATOR-WORKSPACE
+    - APR-04-CUSTOMER-ONBOARDING
+    - APR-05-PAID-PILOT-SAAS
+    - APR-06-COMMERCIAL-ACCEPTANCE
+    - APR-07-QUALITY-MODEL-EVAL
+  planned_not_immediate: [APR-08-EVIDENCE-COPILOT]
+  trigger_wait: [APR-09-SUPPLIER-RFQ-TKP, APR-10-FEEDBACK-LEARNING]
+  current_main_commit_date: '2026-10-17'
+  pr_477_through_500_not_merged: true
+  PR_480_docs_snapshot: 'open_with_19_prior_CI_success'
+  pending_review_order:
+    - 'APR-03B/07: source-SHA-grounded Gemma and citation repairs; stacked PR #497-500, #500 draft on #499'
+    - 'Original-corpus, intake, queue and model dependencies: PR #489-496, review only'
+    - 'B2B real-source and bidder fit: PR #477, #483-487'
+    - 'APR-04/05/06 company profile, tenant and model scoring; PRICE-01 PR #478 draft'
+  model_real_case_observation:
+    source: 'PR #500 existing Gemma Smolensk Duma source-bound run, not current main'
+    accepted: 6
+    rejected: 4
+    repair_verified_as_finished: false
+  development_e2e_archived_case_count: 20
+  independently_verified_human_gold_cases: 0
+  r4_human_holdout_target: 15
+  current_verified_company_bid_go_count: 0
+  b2b_goal: 15_to_20_unique_current_eligible_it_leads
+  b2b_goal_met: false
+  source_pr_476_full_mac_regression:
+    passed: 5074
+    skipped: 285
+    no_new_full_runtime_test_this_update: true
+  watchdog:
+    count: 1
+    last_reported_scheduled_task_enabled: false
+    parent_manual_override: true
+  explicit_owner_hard_gates: [ru_vps_and_production, payments_and_paid_pilot, legal_bid_GO, ETP_and_signature, commercial_communication, benchmark_gold_promotion]
+  admission_queue_unchanged: true
+  historical_registry_unchanged: true
+
 roadmap_status_snapshot_2026_10_18:
   as_of: '2026-10-18'
   base_main_commit: 'd2a927ecebc9222bb3b38b47aa14c7024ccec4f0'

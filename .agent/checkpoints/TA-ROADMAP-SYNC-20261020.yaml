@@ -1,0 +1,28 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-ROADMAP-SYNC-20261020
+status: in_progress
+goal: 'Synchronize the canonical Tender Agent roadmap with main and actual 18-20 October open PR state without asserting unmerged work.'
+definition_of_done:
+  - 'Keep historical master registry, priority order, execution queue and legal/HUMAN gates unchanged.'
+  - 'Publish 20 October source-separated human and machine snapshots: main vs PR vs external owner gate.'
+  - 'Verify Markdown/YAML changes and CI for the actual head, then merge docs PR #480 with explicit Owner update request.'
+  - 'Save final merge SHA, verification and completed checkpoint; preserve parent in_progress.'
+completed:
+  - 'Read main d2a927e and current owner parent checkpoint; confirmed 24 open PR #477-500, and no code merges after 17 October.'
+  - 'Inspected PR #480 prior doc delta/19 green checks and quality repair #500 distinct draft HEAD/19 green checks.'
+  - 'Identified 2/10 bounded APR done; others have business, quality, production or trigger gates.'
+current: 'Submit updated 20 October docs branch and validate exact latest head.'
+remaining:
+  - 'Validate new Markdown/YAML files on branch and CI exact head.'
+  - 'Merge documentation PR if governance and checks pass, and verify current main.'
+  - 'Finalize checkpoint with merge SHA and tests.'
+last_verified_commit: 'd2a927ecebc9222bb3b38b47aa14c7024ccec4f0'
+test_results:
+  - 'Existing PR #480 (before this update) had 19/19 successful GH CI checks; do not count as checks of new commit.'
+  - 'Existing PR #500 had 19/19 successful checks but remained draft/unmerged and model fix not accepted.'
+resume_instruction: 'Validate 20 October docs branch, then merge PR #480 only if checks/gates allow; otherwise preserve review pending and do not merge implementation PRs.'
+external_actions_taken: false
+parent_task_id: TA-ROADMAP-EXEC-20261012
+parent_status_preserved: in_progress
+pull_request: https://github.com/arvectum2/tender-agent/pull/480
