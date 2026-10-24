@@ -91,6 +91,9 @@ from src.modules.kpi_learning.router import router as kpi_learning_router
 from src.modules.launch_visibility.router import router as launch_visibility_router
 from src.modules.learning_automation.router import router as learning_automation_router
 from src.modules.logistics_tracking.router import router as logistics_tracking_router
+from src.modules.market_intelligence.report_router import (
+    router as market_intelligence_router,
+)
 from src.modules.mobile_api.router import router as mobile_api_router
 from src.modules.operator_sessions.router import router as operator_sessions_router
 from src.modules.ops_observability.router import router as ops_observability_router
@@ -185,6 +188,7 @@ APPLICATION_ROUTERS: tuple[APIRouter, ...] = (
     customer_registry_router,
     customer_onboarding_router,
     saas_foundation_router,
+    market_intelligence_router,
     counterparty_cards_router,
     customer_pilot_router,
     expert_review_router,
