@@ -1,69 +1,65 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: MI-003-PQ-20261024
+task_id: MI-004-PQ-20261024
 status: completed
-goal: Build a reusable supplier product portfolio intake + technical demand search + evidenced project chain
-  for Power Quality independent of current EIS SOAP outage.
+goal: Prevent project-stage/EPC duplicate financial counting and provide source-bound customer-readable report
+  artifacts independently of EIS SOAP.
 definition_of_done:
-- Safe tenant/collection-scoped portfolio ingestion contract for user text, public HTTPS website and uploaded
-  files via existing Data Platform SDK.
-- Detect equipment family aliases and characteristic constraints, distinguish product portfolio hypotheses
-  from confirmed technical demand.
-- Implement reproducible query expansion and hybrid search of source chunks (technical annexes/EPC), with mandatory
-  source URL/hash/locator and no promotion of candidate hits into contract facts.
-- Establish reviewed entity/project role edge input contract and report that does not invent designer/EPC/winner
-  or count full project capex as hardware turnover.
-- Use Power Quality as first evaluation set; run tests including misleading SVG/PQ, buried EPC need, missing
-  evidence and tenant isolation.
-- Preserve SOAP outage checkpoint separately, run lint/tests and produce PR without merging or live scraping.
+- Implement evidence-backed equipment spend ledger distinguishing end buyer, EPC full envelope, upstream subcontract
+  and PИР/service.
+- Prevent duplicate equipment count across project lifecycle/contract stages and mirrored award records; conflicts
+  quarantined.
+- Report observed confirmed lower bound only and require verified coverage before national market size, shares
+  or interval claims.
+- Build safe read-only HTML and CSV customer preview exports of the existing Power Quality pilot without claiming
+  current open availability or verified winners.
+- Add tests for role/price conflicts, unknown amounts, malicious HTML/CSV injection, duplicate contracts and reproducibility;
+  commit/push draft PR.
 completed:
-- Reviewed existing Data Platform SDK and document upload URL semantics, confirmed installed SDK lacks rerank
-  keyword and adjusted actual calls.
-- Added tenant/run-scoped supplier text/site/file intake using only Data Platform SDK and input size/type/HTTPS/local-network
-  gating; data writes are not performed in production.
-- Added pure RU/EN equipment lexical matcher, Power Quality family proposals with explicit candidate state,
-  expanded hybrid technical queries and protected source collection ACL allowlists.
-- Technical candidates carry original source URL/chunk/document identifier, optional reviewed-manifest SHA;
-  indexed hashes alone do not prove independent original source verification.
-- Implemented human-approved primary-document/contract/protocol project role graph with INN, SHA256, reviewer,
-  scope and quarantine; no unverified winners or EPC asserted.
-- Implemented 7-source × 37-month source coverage matrix with null expected/observed unknowns, a Power Quality
-  supplier market entry account qualification list (10 organizations) and JSON/Markdown report.
-- Measured 12/12 labelled families on existing selected public lead descriptions and 0/8 synthetic hard-negative
-  false positives; explicitly not full technical attachment/market recall.
-- Real installed Data Platform SDK tested using httpx.MockTransport for create collection/intake/hybrid search
-  without hitting production.
-- 'Ran 93 focused/integration tests (one unrelated inherited warning) and Ruff clean; independent Data Platform
-  PR #126 adds slide-ordered PPTX extraction, 30 tests clean.'
-current: Independent MI-003 bounded core completed, reviewed/source-limited offline pilot, no production deployment.
+- 'Designed source-reviewed legal contract fact contract: project/notice/lot/contract and supply-chain tiers,
+  explicit amount basis, contract document provenance, reviewer and original hash.'
+- Added latest-revision reconciliation, source-mirror dedup and quarantine for same-revision conflict or equipment
+  line amount exceeding contracted total.
+- Prevented false equipment TAM by separating priced hardware, total EPC contract envelopes, signed subcontract
+  flows, design/PИР services and published initial price ceiling.
+- Applied conservative maximum-contract amount per equipment family within project where multiple end-buyer contracts
+  may describe overlapping assets, with mandatory lifecycle-review warning.
+- National TAM/SAM/SOM always null pending actual registry/source completeness; observation refers to contracted
+  evidence, not paid or delivered volumes.
+- Added sanitized standalone static HTML customer preview, public HTTPS source links, 10 source-listed account
+  qualification hypotheses, CSV CRM precursor with spreadsheet formula guard.
+- Ran actual MI003 Power Quality source-limited report export, saved HTML and CSV, verified no unknown winner
+  or historical price promoted.
+- Ran 137 focused/integration tests PASS (1 conditional skip) and Ruff clean.
+current: MI004 bounded evidence-finance and static export complete; no production endpoint or customer portal,
+  historical SOAP remains blocked.
 pending:
-- 'MI-003 acceptance remainder: actual authorized Data Platform service/collection permissions and real customer
-  file/website ingestion after security/privacy checks; merge/deploy PPTX extraction PR #126.'
-- 'MI-003 search quality remainder: run held-out human-labelled real procurement technical attachments, including
-  buried EPC-only requirements, evaluate retrieval top-K recall and false positives.'
-- 'MI-004: audited organization/project graph on verified contracts/protocols, partial spend min/max based
-  on explicit equipment lines, audited TAM/SAM/SOM once official 36-month sources measured.'
-- 'MI-005: read-only tenant-authenticated portal, exports, privacy/security gates and second unrelated industry
-  pilot.'
-- 'EIS SOAP post-maintenance recovery stays in separate checkpoint MI-002-SOAP-RECOVERY-20261024 and PR #503;
-  user instructed no repeated requests during maintenance.'
-last_verified_commit: 5ad3576d610b56d8fb0cb7339d47c61992f2701d
+- 'MI-005: authenticated tenant-safe customer portal/download, request queue and actual end-to-end security/privacy/retrieval
+  review; static HTML is not an authenticated product.'
+- 'Data Platform PPTX PR #126 must be reviewed/merged/deployed before production PPTX feature or full customer
+  onboarding.'
+- Real EIS and commercial ETP historical source/contract/protocol collection with measured denominators, original
+  requirements, holdout EPC retrieval quality, cited winners and separate equipment line costs.
+- MI-004 true multi-year TAM/SAM/SOM bounds and industry shares require independently complete measured source
+  universe and signed contract pricing; current real market size still unknown.
+- 'EIS SOAP recovery status in isolated MI-002-SOAP-RECOVERY checkpoint PR #503; resume no sooner than after published
+  maintenance window.'
+last_verified_commit: 7fa9e195825904c0b9c0530c012f3170c2dd4cb8
 test_results:
-- 93 focused/integration Tender Agent tests PASS; Ruff check passed.
-- 'Data Platform PPTX PR #126: 30 document/sniffing/legacy tests PASS and Ruff passed.'
-- 'Power Quality selected 12-source descriptions: 12/12 family labels matched; 8/8 synthetic negative controls
-  rejected; not independent corpus recall.'
-- 10 customer organizations and 259 source-month slots in 2023-10..2026-10; 0 verified-complete slots, 0 original
-  winning EPC claims, TAM=null.
-- SDK real contract tested with mocked HTTP transport; no actual live Data Platform tenant or customer material
-  ingestion.
-resume_instruction: 'MI-003 bounded supplier intake/retrieval and role graph delivered independently from EIS
-  SOAP; see PR and report. Resume either MI-004 audited project & scenario reporting or finish MI-003 end-to-end
-  on authorized tenant after Data Platform PPTX PR #126. Maintain no national TAM/winners without primary protocols,
-  no user material uploads without security and permissions. EIS SOAP blocked in separate archival checkpoint
-  PR #503; retry only after announced maintenance window.'
+- 137 focused/integration pytest tests passed, 1 conditional skip, 1 inherited Starlette deprecation warning,
+  Ruff clean.
+- MI004 20 synthetic financial/security regression tests passed, no fictional amounts emitted as actual market
+  facts.
+- Real source-limited October 2026 pilot HTML+CSV export has 10 buyer orgs, 12 candidate procedures, 0 verified
+  winner figures and null national TAM.
+- All documentation, code, preview CSV/HTML are read-only and committed on isolated feature branch, no service
+  deployment.
+resume_instruction: MI004 deterministic finance and static client preview completed. Continue MI005 actual authenticated
+  portal/customer reports only after security, tenant rights, Data Platform live consumer acceptance and reviewed
+  PPTX deploy. EIS SOAP remains blocked during maintenance, do not retry until afterward. Maintain conservative
+  equipment line attribution and refuse to report Russian market TAM without official and ETP coverage measured.
 execution:
-  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi003-independent-20261024
-  branch: feature/mi003-power-quality-intake-20261024
-  base: feature/mi002-power-quality-pilot-20261024
-  code_commit: 5ad3576d610b56d8fb0cb7339d47c61992f2701d
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi004-20261024
+  branch: feature/mi004-power-quality-evidence-finance-export-20261024
+  base: feature/mi003-power-quality-intake-20261024
+  code_commit: 7fa9e195825904c0b9c0530c012f3170c2dd4cb8
