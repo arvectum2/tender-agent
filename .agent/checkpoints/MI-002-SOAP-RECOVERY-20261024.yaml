@@ -1,0 +1,50 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-002-SOAP-RECOVERY-20261024
+status: blocked
+goal: Diagnose authenticated EIS getDocsIP access; deliver resume-safe read-only regional/date SOAP discovery for
+  Power Quality with provenance and explicit outage handling.
+definition_of_done:
+- Run real SOAP requests against previously verified 223-FZ and current Power Quality notice IDs without disclosing
+  token.
+- Distinguish official EIS maintenance/TLS failure from token or SOAP logic errors using evidence from alternative
+  access route.
+- Implement bounded resumable region+date getDocsByOrgRegion loader and safe archived XML candidate extraction,
+  without fake winners or estimated TAM.
+- Validate offline with real previously archived EIS SOAP ZIP and deterministic synthetic fixtures.
+- Run focused tests and lint, commit findings and preserve temporary block as retryable.
+completed:
+- Secure token configured via mode-0600 file; existing PROD getDocsIP endpoint verified.
+- 'Three authentic SOAP retrieval calls for two RI223 and one PRIZ notices: all TLS connection reset before HTTP
+  response.'
+- TLS failure independently reproduced from Russian SSH hosting, no token transmitted.
+- 'EIS channel maintenance announcement: 24 Oct 20:00 to 25 Oct 01:00 MSK; integration host outage causation not
+  proven.'
+- Implemented bounded and resumable getDocsByOrgRegion reader with ZIP/XML SHA256, safe limits, candidate classification,
+  atomic receipts, and network circuit breaker.
+- Parsed cached authentic 2026-10-08 region 77 EIS SOAP ZIP with 100 XML notices, zero PQ matches in that bounded
+  archive.
+- Actual region 77 SOAP call recorded retryable_network_failure, archive_count=null outside Git.
+- 72 focused tests passed; 24 existing SOAP tests passed, 3 skipped; Ruff passed.
+current: Code/offline verification complete; live EIS post-maintenance SOAP acceptance externally blocked.
+pending:
+- After 2026-10-25 01:00 MSK retry known good RI223 number 32616447910 via authenticated getDocsByReestrNumber.
+- On success run one region77 2026-10-08 getDocsByOrgRegion with --force-retry --download-archives --execute and
+  compare archived evidence.
+- Then expand by region/month and reconcile protocols, contracts and EPC attachments with measured coverage.
+last_verified_commit: 1274a9e07913892556aa0946ee94e29eb8ee17dd
+test_results:
+- 72 focused tests PASS, Ruff PASS.
+- 24 legacy SOAP tests PASS, 3 SKIPPED.
+- 'Authentic SOAP: 3 known numbers TLS reset, one region/date TLS reset saved as retryable, null archive count.'
+- 'Cached authentic EIS ZIP: 100 XML notice documents inspected, 0 PQ candidates in this archive only.'
+resume_instruction: After 2026-10-25 01:00 MSK read branch and this checkpoint; retry getDocsByReestrNumber 32616447910
+  RI223 with direct HTTPS then region77 2026-10-08 getDocsByOrgRegion --force-retry --download-archives --execute.
+  Do not rotate token, disable TLS verification, fabricate winners, or interpret outage as zero. If still down,
+  persist exact failure.
+execution:
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-soap-recovery
+  branch: feature/mi002-eis-soap-recovery-20261024
+  base_commit: 266fff7ff35af4b6439454e608b64176e4ae9f17
+  downstream_pr: 502
+  runtime_receipt: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/eis/RI223/purchaseNotice/2026-10-08/region-77.json
