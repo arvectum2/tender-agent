@@ -1,77 +1,69 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: APR-07-QUALITY-SLO-EVIDENCE-001
+task_id: MI-003-PQ-20261024
 status: completed
-goal: Provide a reproducible read-only quality/SLO evidence bridge using existing
-  APR-06 Russian EIS case receipts and Data Platform benchmark outputs, with explicit
-  denominators and evidence gaps, no model acquisition/serving changes.
+goal: Build a reusable supplier product portfolio intake + technical demand search + evidenced project chain
+  for Power Quality independent of current EIS SOAP outage.
 definition_of_done:
-- Reuse existing observability metrics and build offline source-hash-bound APR-07
-  quality snapshot.
-- Measure document acquisition, analysis/readiness and citation-presence without falsely
-  claiming verified citations, OCR or human quality.
-- Ingest existing Data Platform benchmark JSON evidence with SHA256 and strict provenance;
-  no downloads, model promotion or API provider calls.
-- Publish versioned machine-readable reproducible snapshot and human-readable operator
-  runbook.
-- Test corrupt input, missing denominators, no human labels, no automatic GO or promotion,
-  and compare actual local evidence.
-- Run targeted and broad tests, commit changes and checkpoint.
+- Safe tenant/collection-scoped portfolio ingestion contract for user text, public HTTPS website and uploaded
+  files via existing Data Platform SDK.
+- Detect equipment family aliases and characteristic constraints, distinguish product portfolio hypotheses
+  from confirmed technical demand.
+- Implement reproducible query expansion and hybrid search of source chunks (technical annexes/EPC), with mandatory
+  source URL/hash/locator and no promotion of candidate hits into contract facts.
+- Establish reviewed entity/project role edge input contract and report that does not invent designer/EPC/winner
+  or count full project capex as hardware turnover.
+- Use Power Quality as first evaluation set; run tests including misleading SVG/PQ, buried EPC need, missing
+  evidence and tenant isolation.
+- Preserve SOAP outage checkpoint separately, run lint/tests and produce PR without merging or live scraping.
 completed:
-- Confirmed APR-06 blocked pending human acceptance, baseline branch clean c6c5fe9f.
-- Found existing 28-case EIS candidate corpus, 20 real 44-FZ receipts and nine machine
-  reports, plus existing ops_observability subsystem.
-- Located Data Platform comparison JSON; leave downloads and candidate model lifecycle
-  to Data Platform.
-- 'Added 44-FZ historical quality aggregator: strict run/evidence/source hash checks
-  and NOT_MEASURED semantics for unknown human/OCR denominators.'
-- Measured actual 20 procurements, 17 with documents, 9 analyzable, 109/118 file text
-  availability flags, 9 machine reports with citation presence.
-- Computed analysis-only nearest-rank latency p50 1.23s and p95 11.96s from nine exact-matched
-  local run IDs; not end-to-end.
-- Imported seven pre-existing Data Platform benchmark result JSONs by SHA256 with
-  matching site/reasoning suite checks. No models downloaded or run.
-- Generated deterministic SHA256 quality snapshot docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json.
-- Created source-bound nine-case candidate procurement roster; every label AI_CURATED_SILVER_NOT_HUMAN_GOLD,
-  none promoted to frozen truth.
-- Created Russian operator runbook, proposed unapproved SLO, exact evidence boundaries,
-  and owner-reported Aksay submitted/awaiting-results note.
-- Ruff clean, 17 targeted tests pass, full local pytest 3351 pass 238 skipped, make
-  check pass; regenerated both checked-in manifests byte-identically.
-- Committed implementation 627ae480cc87b882d096585b472955ac7c7d720e.
-current: Bounded APR-07 offline quality and existing Data Platform evidence bridge
-  completed; broader continuous SLO/gold benchmarks gated.
+- Reviewed existing Data Platform SDK and document upload URL semantics, confirmed installed SDK lacks rerank
+  keyword and adjusted actual calls.
+- Added tenant/run-scoped supplier text/site/file intake using only Data Platform SDK and input size/type/HTTPS/local-network
+  gating; data writes are not performed in production.
+- Added pure RU/EN equipment lexical matcher, Power Quality family proposals with explicit candidate state,
+  expanded hybrid technical queries and protected source collection ACL allowlists.
+- Technical candidates carry original source URL/chunk/document identifier, optional reviewed-manifest SHA;
+  indexed hashes alone do not prove independent original source verification.
+- Implemented human-approved primary-document/contract/protocol project role graph with INN, SHA256, reviewer,
+  scope and quarantine; no unverified winners or EPC asserted.
+- Implemented 7-source × 37-month source coverage matrix with null expected/observed unknowns, a Power Quality
+  supplier market entry account qualification list (10 organizations) and JSON/Markdown report.
+- Measured 12/12 labelled families on existing selected public lead descriptions and 0/8 synthetic hard-negative
+  false positives; explicitly not full technical attachment/market recall.
+- Real installed Data Platform SDK tested using httpx.MockTransport for create collection/intake/hybrid search
+  without hitting production.
+- 'Ran 93 focused/integration tests (one unrelated inherited warning) and Ruff clean; independent Data Platform
+  PR #126 adds slide-ordered PPTX extraction, 30 tests clean.'
+current: Independent MI-003 bounded core completed, reviewed/source-limited offline pilot, no production deployment.
 pending:
-- 'APR-07 continuous: obtain independently human-labelled frozen Russian procurement
-  truth and run comparable model benchmark after Data Platform finishes its own downloads.'
-- 'APR-07 continuous: observe rolling live operator and page-level OCR metrics with
-  sufficient denominators before declaring SLO achieved.'
-- APR-06 parent remains blocked pending 20-30 verified human-reviewed acceptance,
-  commercial thresholds and EIS attachment revision checks.
-last_verified_commit: 627ae480cc87b882d096585b472955ac7c7d720e
+- 'MI-003 acceptance remainder: actual authorized Data Platform service/collection permissions and real customer
+  file/website ingestion after security/privacy checks; merge/deploy PPTX extraction PR #126.'
+- 'MI-003 search quality remainder: run held-out human-labelled real procurement technical attachments, including
+  buried EPC-only requirements, evaluate retrieval top-K recall and false positives.'
+- 'MI-004: audited organization/project graph on verified contracts/protocols, partial spend min/max based
+  on explicit equipment lines, audited TAM/SAM/SOM once official 36-month sources measured.'
+- 'MI-005: read-only tenant-authenticated portal, exports, privacy/security gates and second unrelated industry
+  pilot.'
+- 'EIS SOAP post-maintenance recovery stays in separate checkpoint MI-002-SOAP-RECOVERY-20261024 and PR #503;
+  user instructed no repeated requests during maintenance.'
+last_verified_commit: 5ad3576d610b56d8fb0cb7339d47c61992f2701d
 test_results:
-- 17 focused APR-07 pytest passed (1 inherited warning); strict Ruff checks passed.
-- Full suite 3351 passed, 238 skipped, 329 warnings before the two added roster tests;
-  subsequent focused 17 passed.
-- make check success after final source changes; both generated snapshot and source
-  roster reproduce exactly.
-- Real historical sample denominators 17/20 downloaded, 9/20 analyzed, 109/118 text
-  flagged, 9/9 cited presence; no human truth.
-- Data Platform 7 pre-existing quality output hashes imported; model downloads/inference
-  by Tender Agent zero.
-- Snapshot digest e9ac579f0819335df4d93c7281fac6b06d9b7ef9bcbe1a3998f0a77a7ed63c38.
-resume_instruction: APR-07 bounded offline baseline completed. Do not re-download
-  Russian models; separate Data Platform is performing that work. Check docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
-  and measured snapshot. Next continue independent human procurement truth/provenance
-  and live rolling SLO only when evidence is available; APR-06 acceptance remains
-  blocked, do not invent human reviews or overwrite Aksay bid. APR-03 public Russian
-  VPS, ETP, payments and model promotion remain gated; watchdog disabled.
+- 93 focused/integration Tender Agent tests PASS; Ruff check passed.
+- 'Data Platform PPTX PR #126: 30 document/sniffing/legacy tests PASS and Ruff passed.'
+- 'Power Quality selected 12-source descriptions: 12/12 family labels matched; 8/8 synthetic negative controls
+  rejected; not independent corpus recall.'
+- 10 customer organizations and 259 source-month slots in 2023-10..2026-10; 0 verified-complete slots, 0 original
+  winning EPC claims, TAM=null.
+- SDK real contract tested with mocked HTTP transport; no actual live Data Platform tenant or customer material
+  ingestion.
+resume_instruction: 'MI-003 bounded supplier intake/retrieval and role graph delivered independently from EIS
+  SOAP; see PR and report. Resume either MI-004 audited project & scenario reporting or finish MI-003 end-to-end
+  on authorized tenant after Data Platform PPTX PR #126. Maintain no national TAM/winners without primary protocols,
+  no user material uploads without security and permissions. EIS SOAP blocked in separate archival checkpoint
+  PR #503; retry only after announced maintenance window.'
 execution:
-  branch: feature/apr07-quality-slo-evidence
-  predecessor: feature/apr06-commercial-acceptance
-  data_platform_repo: /Volumes/ArvectumSSD/Arvectum/repos/data-platform
-  local_runtime: http://127.0.0.1:18082
-  snapshot: docs/quality/APR07_MEASURED_SNAPSHOT_2026-10-09.json
-  source_roster: docs/quality/APR07_PROCUREMENT_SOURCE_ROSTER_2026-10-09.json
-  operator_runbook: docs/quality/APR07_QUALITY_SLO_AND_MODEL_EVIDENCE.md
-  model_downloads_performed: false
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi003-independent-20261024
+  branch: feature/mi003-power-quality-intake-20261024
+  base: feature/mi002-power-quality-pilot-20261024
+  code_commit: 5ad3576d610b56d8fb0cb7339d47c61992f2701d
