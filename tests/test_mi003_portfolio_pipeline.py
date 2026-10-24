@@ -25,6 +25,9 @@ def ontology():
 
 
 class FakePlatform:
+    def contract(self):
+        return {"version": "1.0", "capabilities": ["search", "terminology_search_v1"]}
+
     def __init__(self, hits=None):
         self.calls = []
         self.hits = hits or []
@@ -56,7 +59,12 @@ def _hit(text: str, **changes):
         "canonical_uri": "https://zakupki.gov.ru/notices/item",
         "title": "Строительство ПС 110 кВ", "text": text,
         "scores": {"fusion": 0.47}, "metadata": {
-            "source_sha256": "b" * 64
+            "source_sha256": "b" * 64,
+            # Simulates source-scoped annotation from Data Platform, not MI.
+            "terminology_matches": ([{
+                "id": "statcom", "terms": ["СТАТКОМ"],
+                "contexts": [], "classification": "explicit_technical_candidate",
+            }] if "СТАТКОМ" in text else []),
         },
     }
     row.update(changes)
@@ -143,6 +151,11 @@ def test_hybrid_search_finds_pq_in_embedded_epc_document(ontology):
     assert result["contract_and_market_facts_promoted"] == 0
     assert client.calls[0][1]["mode"] == "hybrid"
     assert client.calls[0][1]["collections"] == ["eis_223_tenant_01"]
+    assert client.calls[0][1]["terminology_groups"][0]["id"] == "statcom"
+    assert "SVG" in client.calls[0][1]["terminology_groups"][0]["ambiguous_aliases"]
+    assert "query_variants" not in client.calls[0][1]
+    assert result["queries"][0]["expansion_owner"] == "data_platform"
+    assert client.calls[0][1]["terminology_version"] == "power-quality-ontology/0.1"
 
 
 def test_vector_hit_without_technical_statement_is_unreviewed(ontology):
@@ -256,3 +269,55 @@ def test_can_not_claim_complete_without_independent_expected_count():
             receipts=[{"source": "EIS-223", "month": "2026-10",
                        "status": "verified_complete", "observed": 0, "expected": None}]
         )
+
+
+
+def test_old_sdk_rejected_without_silent_legacy_query_fallback(ontology):
+    class OldSdk:
+        def contract(self):
+            return {"version": "1.0", "capabilities": ["terminology_search_v1"]}
+
+        def search(self, *, query, collections, limit, mode="hybrid",
+                   query_variants=None):
+            return []
+
+    with pytest.raises(PortfolioInputError, match="SDK >=0.4"):
+        search_demand(
+            OldSdk(), tenant_id="tenant_01",
+            source_collections=["eis_223_tenant_01"],
+            authorized_collection_ids={"eis_223_tenant_01"},
+            families=["statcom"], ontology=ontology,
+        )
+
+
+def test_dp_tag_is_only_candidate_not_verified_purchase(ontology):
+    client = FakePlatform([_hit("Модернизация ПС 110 кВ, монтаж СТАТКОМ")])
+    report = search_demand(
+        client, tenant_id="tenant_01",
+        source_collections=["eis_223_tenant_01"],
+        authorized_collection_ids={"eis_223_tenant_01"},
+        families=["statcom"], ontology=ontology,
+    )
+    candidate = report["candidate_hits"][0]
+    assert candidate["classification"] == "explicit_technical_candidate"
+    assert candidate["winner"] is None
+    assert candidate["market_value_rub"] is None
+    assert candidate["award_verified"] is False
+    assert candidate["procurement_verified"] is False
+
+
+
+def test_legacy_dp_server_that_ignores_new_json_fields_fails_closed(ontology):
+    class OldServer(FakePlatform):
+        def contract(self):
+            return {"version": "1.0", "capabilities": ["search"]}
+
+    client = OldServer()
+    with pytest.raises(PortfolioInputError, match="terminology_search_v1"):
+        search_demand(
+            client, tenant_id="tenant_01",
+            source_collections=["eis_223_tenant_01"],
+            authorized_collection_ids={"eis_223_tenant_01"},
+            families=["statcom"], ontology=ontology,
+        )
+    assert not client.calls
