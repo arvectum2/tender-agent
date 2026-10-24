@@ -1,65 +1,53 @@
 version: 2
 repository: arvectum2/tender-agent
-task_id: MI-004-PQ-20261024
+task_id: MI-005-DELIVERY-20261024
 status: completed
-goal: Prevent project-stage/EPC duplicate financial counting and provide source-bound customer-readable report
-  artifacts independently of EIS SOAP.
+goal: Implement a disabled-by-existing-SaaS-gate tenant-authenticated read-only Market Intelligence report delivery
+  with bounded immutable files and source provenance, independent of EIS.
 definition_of_done:
-- Implement evidence-backed equipment spend ledger distinguishing end buyer, EPC full envelope, upstream subcontract
-  and PИР/service.
-- Prevent duplicate equipment count across project lifecycle/contract stages and mirrored award records; conflicts
-  quarantined.
-- Report observed confirmed lower bound only and require verified coverage before national market size, shares
-  or interval claims.
-- Build safe read-only HTML and CSV customer preview exports of the existing Power Quality pilot without claiming
-  current open availability or verified winners.
-- Add tests for role/price conflicts, unknown amounts, malicious HTML/CSV injection, duplicate contracts and reproducibility;
-  commit/push draft PR.
+- Internal publish helper stages report HTML, CSV, JSON under strictly tenant-bound path with versioned SHA manifest
+  and finite size caps; never endpoint for arbitrary file upload/publish.
+- SaaS Bearer/tenant principal + legal terms + role required on read-only report listing/download, 404 for cross-tenant
+  path, no in-browser HTML execution.
+- Prevent path traversal, symlink escape, corrupted content, MIME confusion, unsafe cache, forged source access.
+- Test ACL cross-tenant, missing terms, viewer role, hash tampering, route enablement, operator-only publishing,
+  regression alongside existing SaaS.
+- Commit and push draft PR, record checkpoint; do not deploy or publish actual customer data.
 completed:
-- 'Designed source-reviewed legal contract fact contract: project/notice/lot/contract and supply-chain tiers,
-  explicit amount basis, contract document provenance, reviewer and original hash.'
-- Added latest-revision reconciliation, source-mirror dedup and quarantine for same-revision conflict or equipment
-  line amount exceeding contracted total.
-- Prevented false equipment TAM by separating priced hardware, total EPC contract envelopes, signed subcontract
-  flows, design/PИР services and published initial price ceiling.
-- Applied conservative maximum-contract amount per equipment family within project where multiple end-buyer contracts
-  may describe overlapping assets, with mandatory lifecycle-review warning.
-- National TAM/SAM/SOM always null pending actual registry/source completeness; observation refers to contracted
-  evidence, not paid or delivered volumes.
-- Added sanitized standalone static HTML customer preview, public HTTPS source links, 10 source-listed account
-  qualification hypotheses, CSV CRM precursor with spreadsheet formula guard.
-- Ran actual MI003 Power Quality source-limited report export, saved HTML and CSV, verified no unknown winner
-  or historical price promoted.
-- Ran 137 focused/integration tests PASS (1 conditional skip) and Ruff clean.
-current: MI004 bounded evidence-finance and static export complete; no production endpoint or customer portal,
-  historical SOAP remains blocked.
+- Inspected and reused existing SaaS Foundation bearer tenant authentication, role and legal acceptance checks;
+  no new login.
+- Implemented tenant-scoped internally published immutable report bundles, SHA256 HTML/CSV/JSON, path and size
+  limits; no public publish API.
+- Added authenticated read-only tenant report listing and download to SaaS router registry, cross-tenant report
+  ID yields 404.
+- Added opt-in flag market_intelligence_report_delivery_enabled=False in addition to existing saas_foundation_enabled=False.
+- Set attachment/no-store/nosniff/CSP headers to prevent HTML executing inline on application origin.
+- Tested malicious paths, tampered hash/symlinks, fake TAM, tenant and viewer roles, auth 401, legal 428, cross-tenant
+  404, feature-off 404.
+- 165 tests passed, 1 conditional skipped, Ruff clean; real customer reports not published and service not deployed.
+- Code committed as d64e8da6245eea94666dff69c16e1d6398e722f1.
+current: Bounded MI005 internal tenant-authenticated download backend complete; disabled by default; production
+  portal and commercial data not live.
 pending:
-- 'MI-005: authenticated tenant-safe customer portal/download, request queue and actual end-to-end security/privacy/retrieval
-  review; static HTML is not an authenticated product.'
-- 'Data Platform PPTX PR #126 must be reviewed/merged/deployed before production PPTX feature or full customer
-  onboarding.'
-- Real EIS and commercial ETP historical source/contract/protocol collection with measured denominators, original
-  requirements, holdout EPC retrieval quality, cited winners and separate equipment line costs.
-- MI-004 true multi-year TAM/SAM/SOM bounds and industry shares require independently complete measured source
-  universe and signed contract pricing; current real market size still unknown.
-- 'EIS SOAP recovery status in isolated MI-002-SOAP-RECOVERY checkpoint PR #503; resume no sooner than after published
-  maintenance window.'
-last_verified_commit: 7fa9e195825904c0b9c0530c012f3170c2dd4cb8
+- Independent production security review, consent/privacy/retention, audit logging and authenticated supplier
+  upload UI.
+- Data Platform real production tenant ingestion with public URL SSRF/redirect/DNS rebinding acceptance and merge/release
+  PPTX support.
+- Held-out actual EPC technical annex retrieval evaluation and second industry pilot.
+- Real EIS 44/223 and commercial ETP 36 month source coverage, verified protocols/contracts/roles and only then
+  national market TAM.
+- EIS SOAP outage checkpoint MI-002-SOAP-RECOVERY-20261024 remains blocked until scheduled maintenance ends.
+last_verified_commit: d64e8da6245eea94666dff69c16e1d6398e722f1
 test_results:
-- 137 focused/integration pytest tests passed, 1 conditional skip, 1 inherited Starlette deprecation warning,
-  Ruff clean.
-- MI004 20 synthetic financial/security regression tests passed, no fictional amounts emitted as actual market
-  facts.
-- Real source-limited October 2026 pilot HTML+CSV export has 10 buyer orgs, 12 candidate procedures, 0 verified
-  winner figures and null national TAM.
-- All documentation, code, preview CSV/HTML are read-only and committed on isolated feature branch, no service
-  deployment.
-resume_instruction: MI004 deterministic finance and static client preview completed. Continue MI005 actual authenticated
-  portal/customer reports only after security, tenant rights, Data Platform live consumer acceptance and reviewed
-  PPTX deploy. EIS SOAP remains blocked during maintenance, do not retry until afterward. Maintain conservative
-  equipment line attribution and refuse to report Russian market TAM without official and ETP coverage measured.
+- 165 focused and SaaS integration tests PASS, 1 SKIPPED, 24 inherited Starlette/SQLAlchemy warnings; Ruff clean.
+- Nine MI005 security/role tests including real test SQLite SaaS tenant auth, legal acceptance, cross-tenant deny.
+- Feature off by default; no real end-user documents or live service changes.
+resume_instruction: MI005 bounded report delivery implementation completed. Keep flags disabled until production
+  security signoff, deploy/merge only after review. Do not retry SOAP before maintenance ending 2026-10-25 01:00
+  MSK; use separate MI002 checkpoint. Continue hosted UI and held-out EPC validation as future tasks; no fabricated
+  market size.
 execution:
-  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi004-20261024
-  branch: feature/mi004-power-quality-evidence-finance-export-20261024
-  base: feature/mi003-power-quality-intake-20261024
-  code_commit: 7fa9e195825904c0b9c0530c012f3170c2dd4cb8
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi005-20261024
+  branch: feature/mi005-market-intelligence-tenant-report-delivery-20261024
+  base: feature/mi004-power-quality-evidence-finance-export-20261024
+  code_commit: d64e8da6245eea94666dff69c16e1d6398e722f1
