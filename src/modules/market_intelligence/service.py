@@ -17,7 +17,7 @@ class MarketInputError(ValueError):
     """Source snapshot does not satisfy the bounded analytics contract."""
 
 
-_STAGES = {"planned", "open", "awarded", "completed", "cancelled"}
+_STAGES = {"planned", "open", "awarded", "completed", "cancelled", "unknown", "unsuccessful"}
 _SCOPES = {"epc", "design", "supply", "maintenance", "unknown"}
 _REGIMES = {"44-fz", "223-fz", "commercial", "other"}
 _ROLES = {"epc": "epc_contractor", "design": "designer", "supply": "supplier",

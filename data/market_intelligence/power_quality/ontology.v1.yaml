@@ -1,0 +1,53 @@
+schema_version: power-quality-ontology/0.1
+scope: Russian procurement nomenclature, 2023-10-24..2026-10-24
+purpose: Discovery and source-level classification; NOT proof of delivered equipment.
+families:
+  - id: statcom
+    label: Static synchronous compensators, SVG/STATCOM
+    positive:
+      - 'СТАТКОМ'
+      - 'STATCOM'
+      - 'static synchronous compensator'
+      - 'статический компенсатор реактивной мощности'
+      - 'статический генератор реактивной мощности'
+      - 'SVG'
+      - 'static var generator'
+    contexts: ['ПС 110 кВ', 'ПС 220 кВ', 'компенсация реактивной мощности', 'тяговая подстанция', 'динамическая компенсация', 'вольтодобавка', 'электропривод']
+    exclusions: ['SVG vector graphics', 'графические файлы SVG', 'статический сайт']
+  - id: ukrm
+    label: Capacitor based reactive power compensation equipment (УКРМ)
+    positive: ['УКРМ', 'установка компенсации реактивной мощности', 'компенсация реактивных мощностей', 'автоматическая конденсаторная установка', 'конденсаторная батарея', 'БСК', 'КРМ', 'УКМ', 'ККУ']
+    contexts: ['кВАр', 'кВ', 'cos φ', 'коэффициент мощности', 'КТП', 'КРУ', 'ПС']
+    exclusions: ['УКМ = universal cleaning machine', 'компенсация вреда', 'компенсационные выплаты']
+  - id: thyristor
+    label: Thyristor-controlled compensation
+    positive: ['тиристорный компенсатор', 'ТКРМ', 'TSC', 'TCR', 'SVC', 'статический тиристорный компенсатор', 'СТК']
+    contexts: ['тиристор', 'реактивная мощность', 'токоприемник', 'фликер', 'дуговая печь', 'печной трансформатор']
+    exclusions: ['TSC — unrelated abbreviations', 'SVC — IT/video codec']
+  - id: harmonic_filter
+    label: Active and passive harmonic filters
+    positive: ['фильтр гармоник', 'активный фильтр гармоник', 'фильтр высших гармоник', 'АФГ', 'АДФГ', 'ФВГ', 'АФГ-630', 'THD', 'THDi', 'пассивный фильтр', 'harmonic filter', 'active power filter', 'APF']
+    contexts: ['гармоники тока', 'нелинейная нагрузка', 'частотный привод', 'компенсация гармоник', 'электроснабжение']
+    exclusions: ['фильтрация звуковых гармоник', 'аудиофильтр', 'математические гармонические функции']
+  - id: power_quality_system
+    label: Complex PQ modernization and voltage stabilization
+    positive: ['качество электроэнергии', 'power quality', 'стабилизация напряжения', 'провалы напряжения', 'фликер', 'PQ', 'электромагнитная совместимость']
+    contexts: ['модернизация подстанции', 'проектирование электроснабжения', 'главная понизительная подстанция', 'непрерывное производство']
+    exclusions: ['PQ as a brand or unrelated abbreviation', 'power quality meter only unless scope needs compensator']
+discovery_layers:
+  - exact_primary_product
+  - expanded_technical_synonym
+  - functional_requirement_in_attachment
+  - project_wide_epc_bill_of_materials
+  - asset_service_aftermarket
+review_controls:
+  - 'Single ambiguous abbreviation without technical context yields candidate only.'
+  - 'EPC framework title without an extracted relevant equipment requirement is NOT a product-demand observation.'
+  - 'Manufacturer brand mention is not proof that this brand won supply.'
+  - 'Tender notice, contract award, component equipment purchase and operating installed base are separate observations.'
+query_groups:
+  - ['СТАТКОМ', 'статический компенсатор реактивной мощности', 'статический генератор реактивной мощности']
+  - ['УКРМ', 'установка компенсации реактивной мощности', 'конденсаторная батарея', 'БСК']
+  - ['тиристорный компенсатор', 'ТКРМ', 'SVC', 'тиристорная компенсация']
+  - ['активный фильтр гармоник', 'фильтр гармоник', 'АДФГ', 'THD']
+  - ['модернизация подстанции', 'поставка МТРиО', 'проектная документация электроснабжения', 'электроприводы', 'качество электроэнергии']
