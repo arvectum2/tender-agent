@@ -1,0 +1,23 @@
+task_id: MI-012-EIS-DP-INGEST-20261025
+status: in_progress
+goal: Securely connect MI-011 SHA-verified native EIS DOCX/PDF/XLSX and ZIP children to the existing tenant-scoped Data Platform SDK, preserving immutable source provenance and idempotent semantics.
+definition_of_done:
+  - Original source ZIP/XML SHA and actual saved file SHA, declared size and provenance are validated BEFORE creating DP collections or sending bytes.
+  - Only trusted caller-scoped tenant and explicitly authorized DP collection; fail closed on owner or access policy mismatch; dry-run default.
+  - Stable source-derived canonical URIs for dedup across replays; reject symlinks, ZIP paths, unsupported/opaque files and extraction failures.
+  - DP SDK ingest_document_bytes and hybrid synonym retrieval reuse existing Data Platform; no duplicate embedding or ontology implementation in MI.
+  - Tests for access control, offline dry-run, corrupted SHA, no network on invalid sources, idempotent URI, unsupported formats and DP error, plus full CI.
+  - Smoke against actual authenticated Mac mini DP service when healthy, else explicitly mark environment block without claiming production indexing.
+  - Separate PR, exact green CI and main merge when possible; maintain canonical checkpoint until completed.
+completed:
+  - Prior MI-011 PR #512 merged to main with CI 5272 passed and 9 jobs green, original EIS 44/223 files and ZIP members downloaded with SHA proofs.
+  - DP Python SDK already provides ensure_collection, ingest_document_bytes, search, contract and capability terminology_search_v1.
+  - Main Mac mini SSD file reads and local DP /health currently hanging; isolate development via GitHub and CI instead of changing dirty machine checkout.
+current: Implement offline-first ingestion adapter and tests with GitHub PR branch.
+pending:
+  - Add source-verifying ingestion adapter and mocked SDK security regression.
+  - Review true DP collection owner/access policy, live runtime if available.
+  - CI and PR then merge safely; restore unrelated main TA roadmap current-task checkpoint.
+last_verified_commit: 99ba85afe6ab23f96a1fdc812dddf537521b73ca
+test_results: pending
+resume_instruction: Continue feature/mi012-eis-source-to-data-platform-20261025, use GitHub file APIs while SSD unresponsive; do NOT modify real main TA-ROADMAP current-task. Reuse MI011 original downloaded files and DP SDK; no index-success claim without actual authenticated receipt. Restore branch .agent/current-task.yaml to original main before merge and keep this archived checkpoint.
