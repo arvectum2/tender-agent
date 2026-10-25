@@ -2,8 +2,8 @@ version: 2
 repository: arvectum2/tender-agent
 task_id: MI-002-SOAP-RECOVERY-20261024
 status: blocked
-goal: Diagnose authenticated EIS getDocsIP access; deliver resume-safe read-only regional/date SOAP discovery for
-  Power Quality with provenance and explicit outage handling.
+goal: Diagnose authenticated EIS getDocsIP access; deliver resume-safe read-only regional/date SOAP discovery
+  for Power Quality with provenance and explicit outage handling.
 definition_of_done:
 - Run real SOAP requests against previously verified 223-FZ and current Power Quality notice IDs without disclosing
   token.
@@ -15,36 +15,47 @@ definition_of_done:
 - Run focused tests and lint, commit findings and preserve temporary block as retryable.
 completed:
 - Secure token configured via mode-0600 file; existing PROD getDocsIP endpoint verified.
-- 'Three authentic SOAP retrieval calls for two RI223 and one PRIZ notices: all TLS connection reset before HTTP
-  response.'
+- 'Three authentic SOAP retrieval calls for two RI223 and one PRIZ notices: all TLS connection reset before
+  HTTP response.'
 - TLS failure independently reproduced from Russian SSH hosting, no token transmitted.
-- 'EIS channel maintenance announcement: 24 Oct 20:00 to 25 Oct 01:00 MSK; integration host outage causation not
-  proven.'
+- 'EIS channel maintenance announcement: 24 Oct 20:00 to 25 Oct 01:00 MSK; integration host outage causation
+  not proven.'
 - Implemented bounded and resumable getDocsByOrgRegion reader with ZIP/XML SHA256, safe limits, candidate classification,
   atomic receipts, and network circuit breaker.
 - Parsed cached authentic 2026-10-08 region 77 EIS SOAP ZIP with 100 XML notices, zero PQ matches in that bounded
   archive.
 - Actual region 77 SOAP call recorded retryable_network_failure, archive_count=null outside Git.
 - 72 focused tests passed; 24 existing SOAP tests passed, 3 skipped; Ruff passed.
-current: Code/offline verification complete; live EIS post-maintenance SOAP acceptance externally blocked.
+- 2026-10-25 Mac mini official EIS public home HTTPS GET/HEAD returned HTTP200; integration getDocsIP unauthenticated
+  diagnostic TLS failed (certificate chain validation or SSL_ERROR_SYSCALL), so live SOAP is NOT verified restored.
+- '2026-10-25 after DP #128 + TA #508 main merges, rebased this SOAP recovery feature via explicit main merge,
+  selecting main canonical TA-ROADMAP checkpoint without source code conflicts.'
+- '2026-10-25 PR #503 retargeted from obsolete MI002 base to current main; draft remains unmerged pending real
+  SOAP acceptance; five changed files only, 48 focused local tests passed, Ruff clean.'
+current: 'Ready against current main as draft PR #503; blocked only by external authenticated EIS SOAP access
+  + user review.'
 pending:
-- After 2026-10-25 01:00 MSK retry known good RI223 number 32616447910 via authenticated getDocsByReestrNumber.
-- On success run one region77 2026-10-08 getDocsByOrgRegion with --force-retry --download-archives --execute and
-  compare archived evidence.
-- Then expand by region/month and reconcile protocols, contracts and EPC attachments with measured coverage.
-last_verified_commit: 1274a9e07913892556aa0946ee94e29eb8ee17dd
+- On user-confirmed EIS service readiness, retry known working 223-FZ RI223 notice 32616447910 with valid TLS
+  chain and existing protected token, without exposing credential.
+- Only after authenticated SOAP success run bounded region77 2026-10-08 getDocsByOrgRegion with --force-retry
+  --download-archives --execute and compare SHA provenance; do not claim full 3-year corpus.
+- 'Require exact GitHub CI green and real SOAP acceptance before marking PR #503 ready for main merge.'
+last_verified_commit: cc4fb1c114cfbb5a1d48437ca87e5c49f8562a96
 test_results:
 - 72 focused tests PASS, Ruff PASS.
 - 24 legacy SOAP tests PASS, 3 SKIPPED.
 - 'Authentic SOAP: 3 known numbers TLS reset, one region/date TLS reset saved as retryable, null archive count.'
 - 'Cached authentic EIS ZIP: 100 XML notice documents inspected, 0 PQ candidates in this archive only.'
-resume_instruction: After 2026-10-25 01:00 MSK read branch and this checkpoint; retry getDocsByReestrNumber 32616447910
-  RI223 with direct HTTPS then region77 2026-10-08 getDocsByOrgRegion --force-retry --download-archives --execute.
-  Do not rotate token, disable TLS verification, fabricate winners, or interpret outage as zero. If still down,
-  persist exact failure.
+- '2026-10-25 main-based branch: 48 focused tests passed, Ruff clean, no code merge conflicts.'
+- 'Mac mini public ЕИС HTTPS HEAD: 200 at /epz/main/public/home.html; int SOAP HEAD: TLS chain verification
+  failed, optional no-auth diagnostic: SSL_ERROR_SYSCALL; not evidence authenticated SOAP works.'
+resume_instruction: 'From draft PR #503 on current main, read this checkpoint and public EIS outage status.
+  Retry protected-token authenticated RI223 number 32616447910 ONLY with TLS verification enabled; no secrets
+  in logs. If real SOAP succeeds, perform one bounded region/date backfill and source-hash tests, update status.
+  If TLS still fails persist blocked; do not fabricate winners or market totals.'
 execution:
   worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-soap-recovery
   branch: feature/mi002-eis-soap-recovery-20261024
-  base_commit: 266fff7ff35af4b6439454e608b64176e4ae9f17
-  downstream_pr: 502
+  base_commit: d3023531759dafea4c021822906f58d0315bfb15
+  downstream_pr: 503
   runtime_receipt: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/eis/RI223/purchaseNotice/2026-10-08/region-77.json
