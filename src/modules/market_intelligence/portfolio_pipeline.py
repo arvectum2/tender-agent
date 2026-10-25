@@ -125,7 +125,7 @@ def ingest_supplier(
     client.ensure_collection(
         collection_id=collection_id,
         name=f"Supplier intake {run_id}",
-        owner=f"tender-agent:{_slug(tenant_id, 'tenant_id')}",
+        owner=f"market-intelligence:{_slug(tenant_id, 'tenant_id')}",
     )
     receipts = []
     for index, (kind, value) in enumerate(sources):
