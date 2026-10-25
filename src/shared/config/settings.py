@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     pilot_auth_username: str | None = None
     pilot_auth_password: str | None = None
     saas_foundation_enabled: bool = False  # Opt-in internal pilot only, not public SaaS
+    market_intelligence_report_delivery_enabled: bool = False  # Additional opt-in gate
     pilot_auth_protected_prefixes: str = "/api,/demo,/pilot,/customers,/docs,/redoc,/openapi.json,/health/ready"
     pilot_auth_public_paths: str = "/health"
     mobile_auth_secret: str | None = None
