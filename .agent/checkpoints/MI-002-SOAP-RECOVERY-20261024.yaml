@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: MI-002-SOAP-RECOVERY-20261024
-status: in_progress
+status: completed
 goal: Diagnose authenticated EIS getDocsIP access; deliver resume-safe read-only regional/date SOAP discovery for Power
   Quality with provenance and explicit outage handling.
 definition_of_done:
@@ -14,6 +14,9 @@ definition_of_done:
 - Validate offline with real previously archived EIS SOAP ZIP and deterministic synthetic fixtures.
 - Run focused tests and lint, commit findings and preserve temporary block as retryable.
 completed:
+- '2026-10-25 source-verified PR #503 full GitHub CI green: 5208 tests passed / 285 skipped, all 9 jobs successful; merger 91994beb828ef4d7a559f1c1f3f013a57c9d2418.'
+- 'Refactored duplicate offline _matching_terms into canonical shared technical_matching.py; clone architectural regression 40 focused tests passed, Ruff clean.'
+- 'Real authenticated RI223 notice 32616447910 original ZIP inspected: purchaseNotice XML and purchaseProtocol XML both present; original source not claimed Power Quality.'
 - Secure token configured via mode-0600 file; existing PROD getDocsIP endpoint verified.
 - 'Three authentic SOAP retrieval calls for two RI223 and one PRIZ notices: all TLS connection reset before HTTP response.'
 - TLS failure independently reproduced from Russian SSH hosting, no token transmitted.
@@ -48,18 +51,17 @@ completed:
   report. Real XML extract locator samples confirm XML fields are parsed in both statutory subsystems.
 - '2026-10-25 focused source, regression, TLS diagnostics, market adapter, DP boundary tests: 82 passed, 2 skipped,
   Ruff clean; no production flags/bids/outreach.'
-current: Commit source verified fixes and submit PR#503 for GitHub CI, then merge into current main only after all CI
-  checks succeed.
-pending:
-- Commit and push real-source parser, region-isolated receipt auditor, safer route check, 10-row SHA-proof report and
-  tests.
-- Confirm exact PR#503 GitHub CI including full quality suite green; merge into main if no blocker; preserve TA-ROADMAP
-  current-task main.
-- Independently pursue full 36-month EIS/ETP market coverage, original EPC annex search through Data Platform, original
-  signed contracts, winners and verifiable finance. The ten sampled days are only technical acceptance, not the market
-  study.
-last_verified_commit: bf32f085dd89f771c1a54e48f7187c07b64901d1
+current: Verified SOAP recovery PR #503 merged into main after exact full CI; bounded source-integrity acceptance completed.
+pending: []
+follow_up_independent_tasks:
+- Build nationwide EIS source coverage matrix by day, region and regime for full 36-month time window, preserving missing dates.
+- Link original notices and protocols by procurement ID; extract reviewer-verifiable winners and original contract prices.
+- Parse real EPC technical attachments via Data Platform and apply per-tenant source-level evidence checks; no national TAM until coverage.
+- Evaluate commercial ETP sources independently of EIS; no invented entries.
+last_verified_commit: 91994beb828ef4d7a559f1c1f3f013a57c9d2418
 test_results:
+- 'Exact PR #503 head 047b42b297224359cb8a053df09ed5258c88c305 GitHub CI: 5208 passed, 285 skipped, 346 warnings; all 9 jobs green.'
+- 'Merged into main via GitHub PR #503 91994beb828ef4d7a559f1c1f3f013a57c9d2418; no production deployment/flags toggled.'
 - 72 focused tests PASS, Ruff PASS.
 - 24 legacy SOAP tests PASS, 3 SKIPPED.
 - 'Authentic SOAP: 3 known numbers TLS reset, one region/date TLS reset saved as retryable, null archive count.'
@@ -74,10 +76,7 @@ test_results:
   git diff --check pending.'
 - 'Production-equivalent TLS route diagnostic: DNS/TCP/TLS/XSD ok; original getDocsByReestrNumber completed over certificate-verifying
   direct connection.'
-resume_instruction: PR#503 draft on current main. Finish SHA audit/report commit, push and wait for exact GitHub CI
-  to pass; then merge code only, preserving existing TA-ROADMAP canonical current-task. Source runtime is /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/eis-region-isolated-v2.
-  OLD root /.../eis is quarantined and must not be reused. Next research task must obtain all original real EPC annexes/protocols,
-  verify winner and NMCK separately; 10 source-days/4440 XML is not full 2023-26 coverage.
+resume_instruction: 'MI-002 SOAP recovery completed. PR #503 merged at 91994beb828ef4d7a559f1c1f3f013a57c9d2418 after exact GitHub CI 5208 PASS / 285 SKIP and all nine green jobs. Next separate task: comprehensive regional and date coverage, original protocols and EPC annex indexing. Do NOT reuse the quarantined legacy runtime root or infer outcomes from candidate notices.'
 execution:
   worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-soap-recovery
   branch: feature/mi002-eis-soap-recovery-20261024
