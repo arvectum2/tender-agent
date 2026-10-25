@@ -43,3 +43,11 @@ The *code and tests* are ready for review. The actual production Data Platform s
 - MI-006 test adapter uses the new actual SDK via isolated SDK source path and `httpx.MockTransport`; other MI offline tests still use the already-installed SDK v0.3, where the new SDK-only contract test is explicitly skipped. It will run again once v0.4 is installed.
 - No EIS token or SOAP transport changes, no live site crawl, no customer PII ingestion, no contact outreach. SOAP recovery remains in independent PR #503; it does not block this architectural work.
 - Data Platform currently accepts **request-scoped versioned ontologies**. A server-persistent catalogue/ontology CRUD/editor is **not implemented**. Keeping domain vocabularies versioned in client repos is deliberate until a multi-tenant registry and authorization policy is designed.
+
+## SDK release integration (25 October 2026)
+
+The DP main integration PR #128 is **merged** as `d341731664bdc4bc6bb5e8fdeef3df00706c72bd`. Versioned Python wheel `arvectum_data_client-0.4.0-py3-none-any.whl` is published at `https://github.com/arvectum2/data-platform/releases/tag/consumer-sdk-v0.4.0`, verified SHA-256 `51906ad978023c9acdefd48eb68c658012d17c28dc31acb476c9cd1b2f835b67`.
+
+Tender Agent now pins the exact official wheel URL in `pyproject.toml` and locks its SHA in `requirements.lock`; the source branch and wheel-based independent acceptance have passed. **Merge to main != production service deployment:** DP live tenant/auth/RAG server still must advertise `terminology_search_v1` for MI search to execute, or MI will fail closed; do not disable this gate.
+
+SDK code is backward compatible with older consumers. Historical EIS source retrieval and real contractor/winner verification are not resolved by this release.

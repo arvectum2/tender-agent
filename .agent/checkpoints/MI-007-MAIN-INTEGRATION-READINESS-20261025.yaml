@@ -1,46 +1,52 @@
 task_id: MI-007-MAIN-INTEGRATION-READINESS-20261025
 status: in_progress
-goal: Resolve GitHub CI failures, conflicts and stack dependencies for Data Platform#126/#127 and Tender
-  Agent#501-#507; safely prepare main-merge and quality gates without EIS network dependency.
+goal: Resolve GitHub CI failures, conflicts and stack dependencies for Data Platform#126/#127 and Tender Agent#501-#507;
+  safely prepare main-merge and quality gates without EIS network dependency.
 definition_of_done:
 - Review CI, PR stack and any reviewer blockers for DP#126/#127 and TA#501-#507.
-- Fix identified failing CI boundary test without removing policy; run targeted tests and verify GitHub
-  CI success.
-- Determine whether DP#126/#127 and TA PR stack can safely merge into current main; resolve practical
-  conflicts and keep unrelated main code intact.
+- Fix identified failing CI boundary test without removing policy; run targeted tests and verify GitHub CI success.
+- Determine whether DP#126/#127 and TA PR stack can safely merge into current main; resolve practical conflicts
+  and keep unrelated main code intact.
 - Rebase/retarget or create reviewed integration PRs with transparent dependencies; avoid unreviewed production
   deployment, security bypass, or incorrect national data claims.
 - Verify EIS schedule official and report actual SOAP restoration independently of scheduled window.
 - Update checkpoint with final commit/tests/next action, PR readiness and objective blockers.
 completed:
-- Verified public EIS maintenance window ended as scheduled 01:00 Moscow 25.10.2026; no authoritative
-  completion yet.
+- Verified public EIS maintenance window ended as scheduled 01:00 Moscow 25.10.2026; no authoritative completion
+  yet.
 - 'Inspected PRs: DP#126/#127 and TA#501..507 are open draft, mergeable vs respective bases.'
-- 'GitHub CI DP#126/#127 succeeded. TA#507 quality job failed one of 3466 tests: legacy ''tender-agent:''
-  source literal in MI supplier-portfolio owner.'
-- 'Found TA PR#507 quality CI failed exactly one test: legacy forbidden tender-agent: owner prefix in
-  MI supplier DP collection.'
-- 'Fixed legacy owner prefix in earliest failing PR#504 branch (code+SDK contract test), tested 36 pytest
-  pass and Ruff, pushed 86bf3e3a; propagated via clean merges into #505/#506/#507.'
-- Replayed TA PR#501/#502/#504/#505/#506/#507 serially against actual origin/main (which had 1244 unrelated
-  commits); no source conflicts, only .agent/current-task.yaml conflict in downstream; audit integration
-  preserved original main canonical roadmap task to avoid losing external progress.
-- 'Constructed DP combined current-main integration branch feature/dp-main-ready-20261025 from #126+#127:
-  zero conflicts, Ruff pass and selected tests 101 pass; created GitHub PR#128 ready for review.'
-- Verified official EIS planned 24 Oct 20:00-25 Oct 01:00 Moscow window elapsed; Oct25 completion not
-  yet independently announced as of verification; separate actual SOAP test pending.
-current: Run integrated TA regression and publish review-ready main-based integration PR, preserving main's
-  canonical TA-ROADMAP-EXEC current checkpoint.
+- 'GitHub CI DP#126/#127 succeeded. TA#507 quality job failed one of 3466 tests: legacy ''tender-agent:'' source
+  literal in MI supplier-portfolio owner.'
+- 'Found TA PR#507 quality CI failed exactly one test: legacy forbidden tender-agent: owner prefix in MI supplier
+  DP collection.'
+- 'Fixed legacy owner prefix in earliest failing PR#504 branch (code+SDK contract test), tested 36 pytest pass and
+  Ruff, pushed 86bf3e3a; propagated via clean merges into #505/#506/#507.'
+- Replayed TA PR#501/#502/#504/#505/#506/#507 serially against actual origin/main (which had 1244 unrelated commits);
+  no source conflicts, only .agent/current-task.yaml conflict in downstream; audit integration preserved original
+  main canonical roadmap task to avoid losing external progress.
+- 'Constructed DP combined current-main integration branch feature/dp-main-ready-20261025 from #126+#127: zero conflicts,
+  Ruff pass and selected tests 101 pass; created GitHub PR#128 ready for review.'
+- Verified official EIS planned 24 Oct 20:00-25 Oct 01:00 Moscow window elapsed; Oct25 completion not yet independently
+  announced as of verification; separate actual SOAP test pending.
+- 'GitHub DP #128 exact CI data-platform-ci and GitVerse mirror health passed; merged into main as d341731664bdc4bc6bb5e8fdeef3df00706c72bd.'
+- Published DP SDK v0.4.0 official wheel SHA256 51906ad978023c9acdefd48eb68c658012d17c28dc31acb476c9cd1b2f835b67
+  from merged main commit; release URL https://github.com/arvectum2/data-platform/releases/tag/consumer-sdk-v0.4.0.
+- 'Prepared Tender Agent fresh-current-main review-ready integration PR #508 as one safe replacement for draft stack
+  #501/#502/#504/#505/#506/#507; 118 pass 1 skip focused, Ruff clean; 0 code conflicts against main.'
+- Updated Tender Agent pyproject.toml and requirements.lock from SDK 0.3 to exact published SDK 0.4 with package
+  digest; offline wheel loaded and accepted 68 pytest pass (no SDK contract skips).
+current: 'Await full GitHub CI for exact TA #508 head with SDK v0.4, then merge if green and permitted. Preserve
+  old main active canonical roadmap checkpoint.'
 pending:
-- Run full/focused CI on integration branch against current main; fix exact failures.
-- Create TA main-based integration PR, verify GitHub quality CI and readiness, and mark source PRs as
-  superseded without closing until accepted.
-- Confirm DP#128 CI; protect order DP server+SDK before TA integration production.
-- Do not claim EIS SOAP outage resolved solely from scheduled end, test separately after client/user approves/checks.
+- Verify complete GitHub CI on latest PR#508 HEAD and no reviewer/blocking check.
+- Optionally merge PR#508 in main once checks green; do not deploy feature flags.
+- Verify TA main after merge and GitVerse mirror; archived draft PRs can close automatically as ancestors.
+- Live Data Platform server/tenant ACL, original PQ hidden EPC annex recall and EIS SOAP tokenized probe separate
+  acceptance.
 last_verified_commit: cfa05c90134891e4845770031658c1dbe66903a4
 test_results:
 - DP#127 and DP#126 GitHub Actions green.
 - TA#507 3465 passed, 239 skipped, 1 failed, quality CI; other CI jobs successful.
-resume_instruction: Continue current-main TA integration branch at /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi-main-audit-20261025
-  now named feature/mi-main-ready-20261025. Run CI, open integration PR and verify checks. Preserve main
-  canonical TA-ROADMAP-EXEC in .agent/current-task.yaml; archive this MI007 checkpoint instead.
+resume_instruction: 'Latest TA integrated branch feature/mi-main-ready-20261025 in isolated worktree. Check GitHub
+  PR #508 latest CI exact SHA after v0.4 wheel lock and merge only when green; code gate before server deployment
+  remains closed. Main .agent/current-task.yaml is TA-ROADMAP-EXEC-20261012 and must NOT be overwritten.'
