@@ -1,0 +1,42 @@
+{
+  "observed_date": "2026-10-24",
+  "method": "project providers direct noproxy, bounded first-page",
+  "results": [
+    {
+      "law": "223fz",
+      "query": "УКРМ",
+      "status": "network_error",
+      "count": 0,
+      "error": "HTTP 434",
+      "duration_seconds": 0.06,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=15&publishDateFrom=01.01.2026&publishDateTo=24.10.2026&searchString=%D0%A3%D0%9A%D0%A0%D0%9C"
+    },
+    {
+      "law": "223fz",
+      "query": "СТАТКОМ",
+      "status": "network_error",
+      "count": 0,
+      "error": "HTTP 434",
+      "duration_seconds": 0.05,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?fz223=on&pageNumber=1&recordsPerPage=15&publishDateFrom=01.01.2026&publishDateTo=24.10.2026&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C"
+    },
+    {
+      "law": "44fz",
+      "query": "УКРМ",
+      "status": "network_error",
+      "count": 0,
+      "error": "HTTP 434",
+      "duration_seconds": 0.05,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.01.2026&publishDateTo=24.10.2026&pageNumber=1&recordsPerPage=15&searchString=%D0%A3%D0%9A%D0%A0%D0%9C"
+    },
+    {
+      "law": "44fz",
+      "query": "СТАТКОМ",
+      "status": "network_error",
+      "count": 0,
+      "error": "HTTP 434",
+      "duration_seconds": 0.05,
+      "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html?morphology=on&sortDirection=false&fz44=on&publishDateFrom=01.01.2026&publishDateTo=24.10.2026&pageNumber=1&recordsPerPage=15&searchString=%D0%A1%D0%A2%D0%90%D0%A2%D0%9A%D0%9E%D0%9C"
+    }
+  ]
+}

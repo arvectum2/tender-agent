@@ -1,0 +1,78 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-006-DP-TERMINOLOGY-20261025
+status: completed
+goal: Move reusable technical term expansion and matching to Data Platform engine and public Python SDK; keep
+  Power Quality domain schema and market evidence rules in MI.
+definition_of_done:
+- Data Platform accepts bounded versioned tenant-request terminology groups for /v1/search, without provider
+  LLM.
+- Data Platform does deterministic word-boundary synonym expansion, context/negative disambiguation and per-source-chunk
+  explainable match metadata, preserving existing rankings, provenance and ACL.
+- Reuse on any industry and keep cross-collection ACL enforced before retrieval.
+- Data Platform SDK supports terminology groups and query metadata with backward compatibility and tests.
+- Tender Agent MI only passes Power Quality domain terms and consumes Data Platform generic matching; no homegrown
+  query variants in MI.
+- Regression tests real SDK HTTP contract, buried EPC technical excerpt, ambiguous terms, negative snippets,
+  tenant isolation, source hashes.
+- Commit/test/push draft PRs in both repos and checkpoint completed or objective blockers.
+completed:
+- Used two isolated git worktrees, leaving existing Tender Agent, Data Platform main and dirty local checkouts
+  untouched.
+- Implemented generic Data Platform domain-neutral terminology group schema with aliases, contexts, exclusions,
+  ambiguity gates and versioned query annotations; no hard-coded Power Quality products.
+- Added provider-free deterministic synonym expansion to Data Platform existing hybrid search, bounded to
+  8 mixed variants, preserving original query constraints, lexical/vector/RRF source evidence and ranking.
+- Added Data Platform source-chunk terminology_matches, version and exact technical terms; searched source
+  collection ACL checked before actual retrieval.
+- Added Data Platform consumer contract capability terminology_search_v1 and Python SDK v0.4; old server capabilities
+  or old SDK fail closed in MI.
+- Data Platform tenant quota and execution mode expansion restrictions enforced, with generic medical imaging
+  and PQ negative-control tests.
+- MI domain adapter updated to pass Power Quality ontology as request-scoped group; removed MI-side production
+  search query expansion and own hit lexical classification; retains offline SOAP lexical archive support
+  only.
+- Ran Data Platform search/API/SDK/tenancy regression suite (99 PASS, inherited Starlette warning) and reran
+  contract capability subset after last commit, Ruff clean.
+- Ran Tender Agent MI-001..MI-005 + SaaS + source graph/legacy SOAP integration against new DP SDK (168 PASS,
+  1 SKIPPED; inherited warnings), plus installed old SDK compatibility tests (26 PASS, 1 SKIPPED).
+- Generic DP lexical matcher found expected Power Quality family in 12/12 pre-curated source descriptions,
+  not a true national or hidden EPC recall metric.
+- 'Published draft Data Platform PR #127 and dependent Tender Agent PR #507. No production deploy, EIS SOAP
+  calls, external customer data upload or unreviewed awards.'
+current: MI006 reusable Data Platform terminology semantics and MI adapter complete as reviewed draft code,
+  waiting on merge + SDK release/deploy + real-corpus validation.
+pending:
+- 'Review/merge/release Data Platform PR #127 (and separately PPTX PR #126); install SDK v0.4 and deploy compatible
+  server before deploying MI adapter PR #507.'
+- Run authorized production-like Data Platform tenant ACL and genuine supplier/EPC technical annex retrieval
+  top-K precision/recall evaluation; request-scoped terminology corpus currently tested with synthetic chunks
+  and selected public lead descriptions.
+- Eventually add a managed, versioned, multi-tenant ontology registry/editor with explicit ACL if shared persistent
+  profiles are needed. Current generic Data Platform accepts validated ontology on request, not persistent
+  server-side taxonomy.
+- 'Maintain separate SOAP recovery PR #503 and historical 44/223-FZ + commercial ETP procurement protocols/verified
+  awards after upstream EIS maintenance; do not infer market total/winners without original documents.'
+- No public customer rollout or feature-flag enablement before independent security/privacy/tenant acceptance.
+last_verified_commit: 9bea980b18684d50a65948773431e75b1fae18e4
+test_results:
+- 'Data Platform PR #127 source/API/SDK search regression: 99 focused tests passed, Ruff clean; latest /v1/contract
+  capability subset retested.'
+- 'Tender Agent with isolated DP Python SDK v0.4: 168 passed, 1 skipped, 24 pre-existing SQLAlchemy/Starlette
+  warnings.'
+- 'Tender Agent existing installed SDK v0.3: 26 passed, 1 skipped; missing v0.4 API fails explicitly.'
+- 12/12 pre-curated Power Quality descriptions recognized by Data Platform generic terminology matcher, 0
+  national market coverage claims.
+- Cross-repo PRs published as draft, no merge/deployment.
+resume_instruction: 'MI006 implementation completed. Review DP PR #127 and SDK v0.4.0, deploy compatible Data
+  Platform after production security/ACL acceptance, then merge/use Tender Agent PR #507; do not allow silent
+  API downgrade. Improve actual EPC hidden-TZ retrieval quality on verified public attachments. EIS SOAP incident
+  remains separately tracked in #503. Never treat candidate search matches as tender award/contracts or national
+  TAM.'
+execution:
+  tender_agent_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi006-20261025
+  data_platform_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/data-platform-terminology-20261025
+  tender_agent_code_commit: 9bea980b18684d50a65948773431e75b1fae18e4
+  data_platform_commit: 7a6cfa3fee7c209
+  data_platform_pr: https://github.com/arvectum2/data-platform/pull/127
+  tender_agent_pr: https://github.com/arvectum2/tender-agent/pull/507

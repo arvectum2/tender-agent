@@ -1,0 +1,57 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-001-20261024
+status: completed
+goal: Define and implement the first evidence-backed Market Intelligence vertical slice for inbound supplier
+  portfolio analysis and three-year procurement market research.
+definition_of_done:
+- Document end-to-end commercial UX, canonical procurement/project/role/evidence model and source-coverage
+  limits.
+- Implement a deterministic offline market-intelligence analyzer accepting normalized supplier portfolio and
+  verified procurement evidence payloads.
+- Separate confirmed component expenditure from full EPC/project values and unobservable volume.
+- Deduplicate mirrored procurement references without collapsing distinct lots/contracts, attribute role per
+  award/project with evidence, and rank actionable accounts.
+- Test technical-embedded-demand, multi-source duplicates, cancelled tenders, unknown winners and amounts,
+  provenance gaps and period boundaries.
+- Run focused tests and lint; record final commit, checks and remaining real-world ingestion blockers.
+completed:
+- Inspected Tender Agent/Data Platform repositories and identified reusable search, source graph and ontology
+  components.
+- Verified authoritative EIS/223-FZ access constraints and separation of public vs nonpublic procurement.
+- Preserved previous APR-07 completed checkpoint in .agent/checkpoints.
+- Documented target market-entry product architecture, sources, project/role ontology, risks and staged roadmap
+  in docs/product/MARKET_INTELLIGENCE_V0.md.
+- Implemented normalized source-proof-bound JSON analyzer, CLI and Markdown report with 3-year period, annual
+  observations, source-coverage disclaimers, mirror/lot dedup and account ranking.
+- Separated НМЦК, awarded total scope, EPC envelopes, dedicated supply and source-confirmed equipment line
+  price; unmatched money remains UNKNOWN.
+- Implemented proof-backed participant and winner reporting, per-contract EPC/design/supply role edges and
+  stale-open filtering.
+- Ran synthetic CLI end-to-end JSON and Markdown, verified 25M RUB observed component vs 300M RUB EPC and market_size_rub=null.
+- 43 focused and dependent tests passed, Ruff passed, git diff --check clean. No actual national 3-year census
+  claimed.
+current: MI-001 code+docs+tests completed on isolated branch; not deployed or merged.
+pending:
+- 'MI-002: source capability/coverage inventory, historical EIS 44/223 and ETP backfill with measured denominators
+  and licensed ingestion where required.'
+- 'MI-003: intake of supplier URLs, PDF/PPTX/XLSX via Data Platform; candidate semantic matching and independently
+  reviewed ontology recall.'
+- 'MI-004: project/network attribution and audited TAM/SAM/SOM scenarios; improved human-reviewed account targets.'
+- 'MI-005: customer-facing portal/export, 2-category real-world validation, security and commercial GO gate.'
+last_verified_commit: d6eecbe8496760838326d46e8badd629d0671823
+test_results:
+- Final 43 relevant pytest tests passed (one inherited Starlette/httpx deprecation warning).
+- Ruff src/modules/market_intelligence tests/test_market_intelligence.py passed.
+- CLI synthetic smoke wrote readable JSON/Markdown with distinct envelope/line spend and no market TAM.
+- No live data ingestion, paid API invocation, production mutation, tender submission, or outreach.
+resume_instruction: MI-001 completed. For next scope, perform MI-002 source-by-source historical EIS 44/223
+  and commercial ETP coverage audit and backfill in an isolated branch; persist measured completeness and source
+  rights. Do not declare a 3-year market size or use synthetic examples as evidence. Preserve dirty original
+  tender-agent checkout and archived APR-07 checkpoint. Tender Agent Watchdog exists but is disabled; do not
+  enable without Owner request.
+execution:
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-market-intelligence
+  branch: feature/market-intelligence-p0-20261024
+  data_platform_repo: /Volumes/ArvectumSSD/arvectum/repos/data-platform
+  code_commit: d6eecbe8496760838326d46e8badd629d0671823
