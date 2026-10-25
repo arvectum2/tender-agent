@@ -186,3 +186,72 @@ def test_classifies_auth_failure_separately():
     assert _classify_transport(RuntimeError("HTTP 401")) == "authentication_or_access_failure"
     assert _classify_transport(RuntimeError("HTTP 434")) == "provider_access_failure"
     assert _classify_transport(RuntimeError("HTTP 503")) == "retryable_network_failure"
+
+
+def test_accepts_actual_eis_sized_xml_up_to_40mib_without_relaxing_xml_safety(
+    tmp_path, ontology,
+):
+    """44-FZ real-world notices can exceed 32.8 MiB; hard cap remains."""
+    from src.modules.market_intelligence.eis_soap_backfill import MAX_XML_BYTES
+
+    assert MAX_XML_BYTES == 40 * 1024 * 1024
+    moderate_path = tmp_path / "large-legit-eis.zip"
+    padding = "z" * (33 * 1024 * 1024)
+    xml = (
+        "<root><purchaseName>Поставка СТАТКОМ 5 МВАр</purchaseName>"
+        f"<irrelevant>{padding}</irrelevant></root>"
+    ).encode()
+    with zipfile.ZipFile(moderate_path, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.writestr("actual-eis-sized.xml", xml)
+    report = scan_archive(moderate_path, ontology)
+    assert report["xml_documents_inspected"] == 1
+    assert any(m["family"] == "statcom" for m in report["matches"])
+
+    rejected = tmp_path / "too-large.zip"
+    with zipfile.ZipFile(rejected, "w", compression=zipfile.ZIP_DEFLATED) as z:
+        z.writestr("over-limit.xml", b"<x>" + b"z" * (40 * 1024 * 1024) + b"</x>")
+    with pytest.raises(ValueError, match="XML member exceeds size limit"):
+        scan_archive(rejected, ontology)
+
+
+def test_same_date_multiple_regions_cannot_overwrite_archive_evidence(
+    tmp_path, ontology,
+):
+    """Regression: two regional receipts used to share archive-001 directory."""
+    class RegionSpecific(FakeClient):
+        def get_docs_by_org_region(self, org_region, exact_date, document_type44,
+                                   subsystem_type="RI223"):
+            self.calls += 1
+            return SimpleNamespace(
+                status="completed",
+                archive_urls=[f"https://int.zakupki.gov.ru/region-{org_region}.zip"],
+            )
+
+        def download_archive(self, archive_url, target_dir):
+            self.download_calls += 1
+            target_dir.mkdir(parents=True, exist_ok=True)
+            region = "77" if "region-77.zip" in archive_url else "78"
+            _zip(
+                target_dir / "documentation-archive.zip",
+                [(f"region-{region}.xml", _xml(f"Поставка СТАТКОМ для региона {region}"))],
+            )
+            return SimpleNamespace(stored_name="documentation-archive.zip")
+
+    c = RegionSpecific(tmp_path)
+    rows = _collect(tmp_path, ontology, c, regions=["77", "78"], max_requests=2)
+    assert len(rows) == 2
+    assert all(r["status"] == "complete_with_archive_scan" for r in rows)
+    assert c.calls == c.download_calls == 2
+    first = (tmp_path / "RI223/purchaseNotice/2026-10-08/region-77"
+             / "archive-001/documentation-archive.zip")
+    second = (tmp_path / "RI223/purchaseNotice/2026-10-08/region-78"
+              / "archive-001/documentation-archive.zip")
+    assert first.is_file() and second.is_file()
+    assert first.read_bytes() != second.read_bytes()
+    assert rows[0]["archives"][0]["archive_sha256"] != rows[1]["archives"][0]["archive_sha256"]
+
+
+def test_legacy_collision_receipt_root_fails_closed(tmp_path, ontology):
+    (tmp_path / "UNTRUSTED_REGION_COLLISION.json").write_text('{"invalid":true}')
+    with pytest.raises(ValueError, match="unsafe legacy"):
+        _collect(tmp_path, ontology, FakeClient(tmp_path))

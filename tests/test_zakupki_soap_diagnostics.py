@@ -12,7 +12,6 @@ def _settings(token: str = "test-token-value-not-real") -> ZakupkiSoapSettings:
 def test_diagnostics_sanitizes_token_and_reports_no_archive(monkeypatch, tmp_path):
     from scripts import diagnose_zakupki_soap as module
 
-    diagnostics_root = tmp_path / "zakupki_soap_diagnostics"
     monkeypatch.chdir(tmp_path)
 
     class FakeClient:
@@ -170,7 +169,7 @@ def test_223fz_org_region_routes_ri223_and_date(monkeypatch):
         method="getDocsByOrgRegion", subsystem_type="RI223",
         org_region="77", exact_date="2026-10-07", document_type="purchaseNotice",
     )
-    assert seen == dict(region="77", exact_date="2026-10-07", document_type="purchaseNotice", subsystem_type="RI223")
+    assert seen == {"region": "77", "exact_date": "2026-10-07", "document_type": "purchaseNotice", "subsystem_type": "RI223"}
     assert result["selection"]["subsystem_type"] == "RI223"
 
 
@@ -244,4 +243,47 @@ def test_real_namespace_ri223_rar_is_source_bound_and_uninspected(monkeypatch, t
     assert result["content_analysis_complete"] is False
     assert observed[0].provenance["source_regime"] == "223fz"
     assert observed[0].provenance["archive_sha256"] == hashlib.sha256(archive.read_bytes()).hexdigest()
-    assert list(folder.iterdir())[0].read_bytes() == rar
+    assert next(iter(folder.iterdir())).read_bytes() == rar
+
+
+def test_route_tls_diagnostics_use_production_verified_ca_context(monkeypatch):
+    from scripts import diagnose_zakupki_soap as module
+
+    seen = []
+
+    class Connection:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+    class Context:
+        def wrap_socket(self, sock, *, server_hostname):
+            assert isinstance(sock, Connection)
+            seen.append(server_hostname)
+            return Connection()
+
+    class Client:
+        def __init__(self, settings):
+            assert settings.token_configured
+
+        def probe_xsd(self):
+            return {"status": "ok"}
+
+    monkeypatch.setattr(
+        module.socket, "getaddrinfo",
+        lambda *_args, **_kwargs: [(2, 1, 6, "", ("95.167.245.200", 443))],
+    )
+    monkeypatch.setattr(
+        module.socket, "create_connection", lambda *_args, **_kwargs: Connection()
+    )
+    monkeypatch.setattr(
+        module, "create_urllib_context",
+        lambda url: (Context(), False) if "int.zakupki.gov.ru" in url else None,
+    )
+    monkeypatch.setattr(module, "ZakupkiSoapClient", Client)
+    report = module._run_route_check(_settings())
+    assert report["tls_status"] == "ok"
+    assert report["http_get_status"] == "ok"
+    assert seen == ["int.zakupki.gov.ru"]

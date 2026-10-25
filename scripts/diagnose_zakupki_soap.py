@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import socket
-import ssl
 import sys
 import zipfile
 from dataclasses import replace
@@ -26,6 +25,7 @@ from src.modules.tender_operator_agent_demo.procurement_schemas import (
 )
 from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
+from src.shared.network.http_client import create_urllib_context
 
 
 def diagnostics_dir() -> Path:
@@ -141,10 +141,15 @@ def _run_route_check(settings: ZakupkiSoapSettings) -> dict[str, Any]:
         return payload
 
     try:
-        context = ssl.create_default_context()
-        with socket.create_connection((host, port), timeout=settings.timeout_seconds) as sock:
-            with context.wrap_socket(sock, server_hostname=host):
-                pass
+        # Match the production SOAP client's strict native-system trust policy.
+        # Bare ssl.create_default_context() differs on macOS and can report
+        # a false-negative for a certificate the verified SOAP client accepts.
+        context, _bypass = create_urllib_context(settings.individual_base_url)
+        with (
+            socket.create_connection((host, port), timeout=settings.timeout_seconds) as sock,
+            context.wrap_socket(sock, server_hostname=host),
+        ):
+            pass
         payload["tls_status"] = "ok"
     except Exception as exc:  # noqa: BLE001
         payload["tls_status"] = "error"

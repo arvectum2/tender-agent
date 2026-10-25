@@ -1,0 +1,114 @@
+{
+  "attempt_date": "2026-10-25",
+  "lexical_candidate_occurrences": 0,
+  "national_or_monthly_coverage_established": false,
+  "rows": [
+    {
+      "archives_sha256_verified": 7,
+      "complete_archive_scan": true,
+      "date": "2023-11-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "PRIZ",
+      "xml_documents_scanned": 656
+    },
+    {
+      "archives_sha256_verified": 5,
+      "complete_archive_scan": true,
+      "date": "2023-11-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "RI223",
+      "xml_documents_scanned": 451
+    },
+    {
+      "archives_sha256_verified": 6,
+      "complete_archive_scan": true,
+      "date": "2024-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "PRIZ",
+      "xml_documents_scanned": 594
+    },
+    {
+      "archives_sha256_verified": 5,
+      "complete_archive_scan": true,
+      "date": "2024-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "RI223",
+      "xml_documents_scanned": 427
+    },
+    {
+      "archives_sha256_verified": 7,
+      "complete_archive_scan": true,
+      "date": "2025-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "PRIZ",
+      "xml_documents_scanned": 627
+    },
+    {
+      "archives_sha256_verified": 4,
+      "complete_archive_scan": true,
+      "date": "2025-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "RI223",
+      "xml_documents_scanned": 357
+    },
+    {
+      "archives_sha256_verified": 6,
+      "complete_archive_scan": true,
+      "date": "2026-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "PRIZ",
+      "xml_documents_scanned": 549
+    },
+    {
+      "archives_sha256_verified": 3,
+      "complete_archive_scan": true,
+      "date": "2026-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "78",
+      "status": "complete_with_archive_scan",
+      "subsystem": "PRIZ",
+      "xml_documents_scanned": 294
+    },
+    {
+      "archives_sha256_verified": 5,
+      "complete_archive_scan": true,
+      "date": "2026-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "77",
+      "status": "complete_with_archive_scan",
+      "subsystem": "RI223",
+      "xml_documents_scanned": 414
+    },
+    {
+      "archives_sha256_verified": 1,
+      "complete_archive_scan": true,
+      "date": "2026-10-08",
+      "lexical_candidate_occurrences": 0,
+      "region": "78",
+      "status": "complete_with_archive_scan",
+      "subsystem": "RI223",
+      "xml_documents_scanned": 71
+    }
+  ],
+  "sampled_source_region_days": 10,
+  "schema_version": "mi-eis-source-sample-audit/0.1",
+  "source_level": "EIS getDocsIP original archives; single sampled calendar days",
+  "unique_procurements_established": false,
+  "verified_source_region_days": 10,
+  "verified_zip_archives": 49,
+  "xml_documents_scanned": 4440
+}

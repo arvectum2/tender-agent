@@ -27,7 +27,7 @@ from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSo
 
 MAX_ZIP_BYTES = 200 * 1024 * 1024
 MAX_MEMBERS = 10000
-MAX_XML_BYTES = 10 * 1024 * 1024
+MAX_XML_BYTES = 40 * 1024 * 1024  # Actual 44-FZ XML reaches 32.82 MiB; hard security cap.
 MAX_TOTAL_UNCOMPRESSED = 500 * 1024 * 1024
 AMBIGUOUS = frozenset({"SVG", "SVC", "PQ", "УКМ", "КРМ", "БСК", "СТК", "TSC", "TCR"})
 
@@ -196,6 +196,8 @@ def collect(
     """One bounded invocation: persist each task before advancing to next."""
     if subsystem not in {"RI223", "PRIZ"}:
         raise ValueError("unsupported EIS subsystem")
+    if (root / "UNTRUSTED_REGION_COLLISION.json").exists():
+        raise ValueError("unsafe legacy EIS archive root; use region-isolated root")
     if client is None:
         settings = replace(
             ZakupkiSoapSettings.from_env(),
@@ -238,7 +240,12 @@ def collect(
                 archives = []
                 for index, archive_url in enumerate(r.archive_urls, 1):
                     # The underlying client enforces the EIS archive host allowlist.
-                    archive_dir = receipt_path.parent / f"archive-{index:03d}"
+                    # Receipts are region-specific files, but both Moscow (77)
+                    # and St Petersburg (78) share a date directory. Archive
+                    # storage MUST also carry region to avoid silent overwrite.
+                    archive_dir = (
+                        receipt_path.parent / f"region-{region}" / f"archive-{index:03d}"
+                    )
                     downloaded = client.download_archive(archive_url, archive_dir)
                     zip_path = archive_dir / downloaded.stored_name
                     scan = scan_archive(zip_path, ontology)
