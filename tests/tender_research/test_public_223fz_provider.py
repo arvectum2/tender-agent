@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from src.tender_research.providers.public_44fz_search import PublicSearchStatus
 from src.tender_research.providers.public_223fz_search import (
     Public223FzSearchProvider,
     parse_223fz_detail,
     parse_223fz_search_results,
 )
-from src.tender_research.providers.public_44fz_search import PublicSearchStatus
 
 
 def _pair(label: str, value: str) -> str:
@@ -62,3 +62,23 @@ def test_223fz_document_navigation_is_not_a_download():
     detail = parse_223fz_detail(body, "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html", "123")
     assert len(detail.document_links) == 1
     assert "filestore" in detail.document_links[0].url
+
+
+def test_real_eis_tooltip_with_embedded_html_yields_safe_file_extension():
+    html = (
+        _pair("Заказчик", "АО Тест")
+        + '<a href="https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=ABCDEF1234567890ABCDEF1234567890" '
+        + """data-tooltip='<span class="custom-tooltiptext">26-004167 ЗД.zip</span>' >26-004167 ЗД</a>"""
+    )
+    detail = parse_223fz_detail(html, "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html", "32615969197")
+    assert len(detail.document_links) == 1
+    assert detail.document_links[0].file_name == "26-004167 ЗД.zip"
+    assert detail.document_links[0].raw["filename_from_official_tooltip"] is True
+
+
+def test_223fz_file_anchor_plain_text_fallback_without_tooltip():
+    html = _pair("Заказчик", "АО Тест") + (
+        '<a href="/223/purchase/public/download/download.html?id=1234">Документ.pdf</a>'
+    )
+    detail = parse_223fz_detail(html, "https://zakupki.gov.ru/notice/1", "32313008364")
+    assert [ref.file_name for ref in detail.document_links] == ["Документ.pdf"]

@@ -4,6 +4,7 @@ import html
 import re
 from datetime import date
 from decimal import Decimal
+from html.parser import HTMLParser
 from urllib.parse import urlencode, urljoin
 
 from src.tender_research.providers.public_44fz_search import (
@@ -122,6 +123,41 @@ def parse_223fz_search_results(html_str: str) -> list[PublicTenderSearchItem]:
     return items
 
 
+class _223FzDocumentAnchorParser(HTMLParser):
+    """Parse actual EIS 223 anchor attrs safely, including quoted HTML tooltips.
+
+    The historical regex parser truncated start tags when data-tooltip had
+    an embedded <span> tag; filenames then contained fragments of HTML and
+    files were incorrectly rejected by the download extension allowlist.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.links: list[tuple[str, str | None, str | None]] = []
+        self._current: tuple[str, str | None, list[str]] | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "a":
+            return
+        values = dict(attrs)
+        href = values.get("href")
+        if href:
+            self._current = (href, values.get("data-tooltip"), [])
+
+    def handle_data(self, data: str) -> None:
+        if self._current is not None:
+            self._current[2].append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag != "a" or self._current is None:
+            return
+        href, tooltip, label = self._current
+        # Tooltip carries the true extension even when visible label
+        # omits .zip, .pdf or .docx. No HTML tags enter the filename.
+        self.links.append((href, _clean_text(tooltip), _clean_text("".join(label))))
+        self._current = None
+
+
 def parse_223fz_detail(html_str: str, source_url: str, registry_number: str | None = None) -> PublicTenderDetail:
     pairs = _extract_label_value_pairs(html_str)
     resolved_registry = registry_number or _extract_number(html_str)
@@ -131,9 +167,9 @@ def parse_223fz_detail(html_str: str, source_url: str, registry_number: str | No
     deadline = _first_pair(pairs, ("окончание подачи", "дата окончания подачи"))
     links: list[PublicDocumentLink] = []
     seen: set[str] = set()
-    for match in re.finditer(r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', html_str, re.IGNORECASE | re.DOTALL):
-        href = html.unescape(match.group(1))
-        label = _clean_text(match.group(2))
+    parser = _223FzDocumentAnchorParser()
+    parser.feed(html_str)
+    for href, tooltip_filename, label in parser.links:
         lowered = href.lower()
         if not any(marker in lowered for marker in ("download", "file", "attachment")):
             continue
@@ -143,7 +179,12 @@ def parse_223fz_detail(html_str: str, source_url: str, registry_number: str | No
         if url in seen:
             continue
         seen.add(url)
-        links.append(PublicDocumentLink(title=label, file_name=label, url=url, raw={"source_regime": "223fz"}))
+        links.append(PublicDocumentLink(
+            title=label or tooltip_filename,
+            file_name=tooltip_filename or label,
+            url=url,
+            raw={"source_regime": "223fz", "filename_from_official_tooltip": bool(tooltip_filename)},
+        ))
     review_reasons: list[str] = []
     unsupported_layout = not any((title, customer, publication, deadline, links))
     if unsupported_layout:
