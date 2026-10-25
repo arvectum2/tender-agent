@@ -1,0 +1,48 @@
+task_id: MI-009-HISTORICAL-BACKFILL-20261025
+status: in_progress
+goal: Safely extend verified 44/223-FZ EIS source-day history using resumable quota-limited gap-first acquisition
+  planner and original ZIP SHA receipts.
+definition_of_done:
+- Generic planner enumerates missing/partial cells by day, region and 44/223 subsystem with strict max-call budget
+  and no implicit network.
+- Explicit execute-only bounded operation downloads original EIS ZIP through trusted client with verified TLS and
+  no log of credentials.
+- At least several genuine previously-missing historical EIS source-day cells are independently SHA verified and
+  coverage summary refreshed.
+- Tests for dry-run no calls, no overwrite of verified source, no retry of invalid evidence, month fairness, time
+  bounds and failure circuit breaker.
+- Publish reviewed PR, run exact CI and update checkpoint.
+completed:
+- MI008 PR
+- Canonical main TA-roadmap checkpoint preserved.
+- Implemented and tested generic source-day EIS historic gap planner; strict 12-call maximum, --execute gate, breadth-first
+  cross-year bisection, rotation across region/statutory subsystem, no silent retry for corrupt or incomplete originals.
+- 'Protected source files: quarantined-root reject, original ZIP SHA audit, orphaned archive staging reject, never
+  overwrite valid completed day, existing SOAP TLS and official host allowlist retained.'
+- 'Performed actual read-only authenticated EIS SOAP historic collection across 2023-2026, two regions 77/78 and
+  PRIZ+RI223: 11 new original source-day cells, 36 new official ZIP archives, 3027 additional original XML members.'
+- 'Independently audited entire Mac mini current region-isolated original source corpus: 21/4388 verified day cells,
+  4367 missing, 85 original ZIP SHA verified, 7467 XML; 0 invalid evidence cells.'
+- Added 14 new tests for budget, dry-run, year/geographic spread, invalid/orphan source, idempotent resume, transport
+  circuit breaker; 95 focused regression tests PASS and Ruff clean.
+- Added versioned non-sensitive evidence snapshot eis_coverage_20261025_extended.v2.json and full reproducibility/runbook;
+  no original ZIP, token, signed contract or bidder PII placed in Git.
+current: Source collection and deterministic tests done; publish PR and verify exact full GitHub CI; merge only
+  on green.
+pending:
+- Push feature branch; open PR against current main and verify exact-head GitHub CI/security and no comments.
+- After successful merge set canonical MI009 checkpoint completed in main while preserving TA-ROADMAP active current-task.
+- 'Next separate project stage: source-verified native EPC technical annex acquisition and Data Platform evidence
+  indexing, original award/contract proof, independent commercial ETP acquisition and exhaustive coverage.'
+last_verified_commit: 2fb0513ab2b5336c49ec1afd8d0686cfd8de2894
+test_results:
+- 95 passed (MI009, MI008, SOAP source/hash, duplicate prevention, Data Platform boundary), 1 existing Starlette
+  warning; Ruff check clean.
+- 'Live restored EIS SOAP original archive SHA replay: 21 verified cells in 4388 two-region/day/law slots, 85 official
+  ZIP SHA, 7467 original XML members.'
+- 'New MI009 contribution: 11 genuine source-day cells, 36 source ZIPs, 3027 XML members; no verified market price
+  or winner.'
+resume_instruction: 'PR for MI009 pending. Check GitHub CI for feature/mi009-historical-backfill-20261025 against
+  current main, merge only if all checks green. Preserve original main TA-ROADMAP-EXEC canonical current-task checkpoint.
+  Source runtime remains protected Mac mini region-isolated-v2, old common-region root remains quarantined. Next
+  step after MI009: source-hash-verified native EPC annex acquisition and Data Platform indexing.'

@@ -1,0 +1,1505 @@
+{
+  "schema_version": "mi-eis-source-coverage/0.1",
+  "date_from": "2023-10-25",
+  "date_to": "2026-10-25",
+  "regions": [
+    "77",
+    "78"
+  ],
+  "subsystems": [
+    "RI223",
+    "PRIZ"
+  ],
+  "source_kind": "EIS_getDocsIP_region_day_notice",
+  "total_source_day_slots": 4388,
+  "verified_day_slots": 21,
+  "missing_day_slots": 4367,
+  "incomplete_day_slots": 0,
+  "invalid_evidence_day_slots": 0,
+  "sha_verified_archives": 85,
+  "xml_documents_inspected_not_unique_tenders": 7467,
+  "historical_exhaustiveness_verified": false,
+  "winner_contracts_verified": false,
+  "monthly": [
+    {
+      "month": "2023-10",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 7,
+      "verified_days": 0,
+      "missing_days": 7,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-10",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 7,
+      "verified_days": 0,
+      "missing_days": 7,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-10",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 7,
+      "verified_days": 1,
+      "missing_days": 6,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-10",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 7,
+      "verified_days": 0,
+      "missing_days": 7,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-11",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 1,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-11",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-11",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 1,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-11",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-12",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-12",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-12",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2023-12",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-01",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-01",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-01",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-01",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-02",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 29,
+      "verified_days": 0,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-02",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 29,
+      "verified_days": 0,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-02",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 29,
+      "verified_days": 1,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-02",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 29,
+      "verified_days": 0,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-03",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-03",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-03",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-03",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-04",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-04",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-04",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-04",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-05",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-05",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-05",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-05",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-06",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-06",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-06",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-06",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-07",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-07",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-07",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-07",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-08",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-08",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-08",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-08",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-09",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-09",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-09",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-09",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-10",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-10",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-10",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-10",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-11",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-11",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-11",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-11",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-12",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-12",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-12",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2024-12",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-01",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-01",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-01",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-01",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-02",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-02",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-02",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-02",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-03",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-03",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-03",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-03",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-04",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-04",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-04",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-04",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 1,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-05",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-05",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-05",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-05",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-06",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-06",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-06",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-06",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-07",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-07",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-07",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-07",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-08",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-08",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-08",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-08",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-09",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-09",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 1,
+      "missing_days": 29,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-09",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-09",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-10",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-10",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-10",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-10",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-11",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-11",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-11",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-11",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-12",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-12",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-12",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2025-12",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-01",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-01",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-01",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-01",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-02",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-02",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-02",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 28,
+      "verified_days": 1,
+      "missing_days": 27,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-02",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 28,
+      "verified_days": 0,
+      "missing_days": 28,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-03",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-03",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-03",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-03",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-04",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-04",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-04",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-04",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-05",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-05",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-05",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-05",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-06",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-06",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-06",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-06",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-07",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 1,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-07",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-07",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-07",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-08",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-08",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-08",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-08",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 31,
+      "verified_days": 0,
+      "missing_days": 31,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-09",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-09",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-09",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-09",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 30,
+      "verified_days": 0,
+      "missing_days": 30,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-10",
+      "subsystem": "PRIZ",
+      "region": "77",
+      "requested_days": 25,
+      "verified_days": 1,
+      "missing_days": 24,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-10",
+      "subsystem": "PRIZ",
+      "region": "78",
+      "requested_days": 25,
+      "verified_days": 1,
+      "missing_days": 24,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-10",
+      "subsystem": "RI223",
+      "region": "77",
+      "requested_days": 25,
+      "verified_days": 1,
+      "missing_days": 24,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    },
+    {
+      "month": "2026-10",
+      "subsystem": "RI223",
+      "region": "78",
+      "requested_days": 25,
+      "verified_days": 1,
+      "missing_days": 24,
+      "incomplete_days": 0,
+      "invalid_evidence_days": 0
+    }
+  ]
+}
