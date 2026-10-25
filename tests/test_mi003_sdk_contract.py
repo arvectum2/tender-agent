@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import inspect
 import json
 from pathlib import Path
 
 import httpx
+import pytest
 import yaml
 from arvectum_data_client import DataPlatformClient
 
@@ -16,6 +18,8 @@ from src.modules.market_intelligence.portfolio_pipeline import (
 
 
 def test_real_sdk_collection_ingest_and_hybrid_query_contract():
+    if "terminology_groups" not in inspect.signature(DataPlatformClient.search).parameters:
+        pytest.skip("Requires Data Platform Python SDK >=0.4; use current DP SDK PYTHONPATH")
     calls = []
 
     def handle(request: httpx.Request) -> httpx.Response:
@@ -24,6 +28,12 @@ def test_real_sdk_collection_ingest_and_hybrid_query_contract():
             "path": request.url.path,
             "body": request.content,
         })
+        if request.method == "GET" and request.url.path == "/v1/contract":
+            return httpx.Response(200, json={
+                "name": "arvectum-data-consumer",
+                "version": "1.0",
+                "capabilities": ["search", "terminology_search_v1"],
+            })
         if request.method == "GET" and request.url.path.startswith("/v1/collections/"):
             return httpx.Response(404, json={"detail": "not found"})
         if request.method == "POST" and request.url.path == "/v1/collections":
@@ -42,6 +52,12 @@ def test_real_sdk_collection_ingest_and_hybrid_query_contract():
             assert body["collections"] == ["tenant_01_eis_223"]
             assert body["mode"] == "hybrid"
             assert body["query"]
+            assert body["query_variants"] == []
+            assert body["terminology_groups"][0]["id"] == "statcom"
+            assert body["terminology_groups"][0]["aliases"][:2] == ["СТАТКОМ", "STATCOM"]
+            assert "SVG" in body["terminology_groups"][0]["ambiguous_aliases"]
+            assert body["terminology_expansion_limit"] == 5
+            assert body["terminology_version"] == "power-quality-ontology/0.1"
             return httpx.Response(200, json={"hits": [{
                 "chunk_id": "eis-chunk", "document_id": "eis-doc",
                 "resource_id": "eis-resource",
@@ -50,7 +66,14 @@ def test_real_sdk_collection_ingest_and_hybrid_query_contract():
                 "preview": "Монтаж СТАТКОМ 5 МВАр",
                 "text": "Технические требования: монтаж СТАТКОМ 5 МВАр",
                 "scores": {"fusion": 0.2, "lexical": 0.4, "vector": 0.3},
-                "metadata": {"source_sha256": "c" * 64},
+                "metadata": {
+                    "source_sha256": "c" * 64,
+                    "terminology_version": "power-quality-ontology/0.1",
+                    "terminology_matches": [{
+                        "id": "statcom", "terms": ["СТАТКОМ"], "contexts": [],
+                        "classification": "explicit_technical_candidate",
+                    }],
+                },
                 "evidence": [],
             }]})
         raise AssertionError(f"unexpected request {request.method} {request.url}")
@@ -77,10 +100,13 @@ def test_real_sdk_collection_ingest_and_hybrid_query_contract():
     )
     assert len(search["candidate_hits"]) == 1
     assert search["candidate_hits"][0]["source_grade"] == "reviewed_source_manifest"
+    assert search["candidate_hits"][0]["classification"] == "explicit_technical_candidate"
+    assert search["candidate_hits"][0]["matched_terms"] == ["СТАТКОМ"]
+    assert search["candidate_hits"][0]["terminology_version"] == "power-quality-ontology/0.1"
     assert search["candidate_hits"][0]["award_verified"] is False
     assert [r["path"] for r in calls] == [
         f"/v1/collections/{intake['portfolio_collection']}",
-        "/v1/collections", "/v1/ingest/document", "/v1/search",
+        "/v1/collections", "/v1/ingest/document", "/v1/contract", "/v1/search",
     ]
     sdk.close()
     http.close()

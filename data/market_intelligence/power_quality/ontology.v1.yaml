@@ -14,16 +14,19 @@ families:
       - 'static var generator'
     contexts: ['ПС 110 кВ', 'ПС 220 кВ', 'компенсация реактивной мощности', 'тяговая подстанция', 'динамическая компенсация', 'вольтодобавка', 'электропривод']
     exclusions: ['SVG vector graphics', 'графические файлы SVG', 'статический сайт']
+    ambiguous_aliases: ['SVG']
   - id: ukrm
     label: Capacitor based reactive power compensation equipment (УКРМ)
     positive: ['УКРМ', 'установка компенсации реактивной мощности', 'компенсация реактивных мощностей', 'автоматическая конденсаторная установка', 'конденсаторная батарея', 'БСК', 'КРМ', 'УКМ', 'ККУ']
     contexts: ['кВАр', 'кВ', 'cos φ', 'коэффициент мощности', 'КТП', 'КРУ', 'ПС']
     exclusions: ['УКМ = universal cleaning machine', 'компенсация вреда', 'компенсационные выплаты']
+    ambiguous_aliases: ['БСК', 'КРМ', 'УКМ']
   - id: thyristor
     label: Thyristor-controlled compensation
     positive: ['тиристорный компенсатор', 'ТКРМ', 'TSC', 'TCR', 'SVC', 'статический тиристорный компенсатор', 'СТК']
     contexts: ['тиристор', 'реактивная мощность', 'токоприемник', 'фликер', 'дуговая печь', 'печной трансформатор']
     exclusions: ['TSC — unrelated abbreviations', 'SVC — IT/video codec']
+    ambiguous_aliases: ['TSC', 'TCR', 'SVC', 'СТК']
   - id: harmonic_filter
     label: Active and passive harmonic filters
     positive: ['фильтр гармоник', 'фильтром гармоник', 'фильтров гармоник', 'активный фильтр гармоник', 'фильтр высших гармоник', 'АФГ', 'АДФГ', 'ФВГ', 'АФГ-630', 'THD', 'THDi', 'пассивный фильтр', 'harmonic filter', 'active power filter', 'APF']
@@ -34,6 +37,7 @@ families:
     positive: ['качество электроэнергии', 'power quality', 'стабилизация напряжения', 'провалы напряжения', 'фликер', 'PQ', 'электромагнитная совместимость']
     contexts: ['модернизация подстанции', 'проектирование электроснабжения', 'главная понизительная подстанция', 'непрерывное производство']
     exclusions: ['PQ as a brand or unrelated abbreviation', 'power quality meter only unless scope needs compensator']
+    ambiguous_aliases: ['PQ']
 discovery_layers:
   - exact_primary_product
   - expanded_technical_synonym

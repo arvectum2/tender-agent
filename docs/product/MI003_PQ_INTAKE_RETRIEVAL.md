@@ -1,6 +1,6 @@
 # MI-003: Supplier portfolio → Power Quality technical demand candidates
 
-Snapshot date: 2026-10-24. Development status: **offline/SDK-contract validated, not deployed**.
+Snapshot date: 2026-10-24; terminology-search integration updated 2026-10-25 (MI-006). Development status: **offline/SDK-contract validated, not deployed**.
 Depends on Tender Agent MI-001 (#501), source-audited Power Quality MI-002 (#502). The EIS SOAP path is developed independently in PR #503 and remains blocked by upstream maintenance. Data Platform format enhancement: #126 (PPTX, not merged).
 
 ## Commercial job and boundary
@@ -11,9 +11,9 @@ A retrieved fragment, vector similarity or secondary procurement card alone does
 
 ## Existing functionality reused
 
-- Data Platform Python SDK `arvectum_data_client.DataPlatformClient`: `ensure_collection`, `ingest_document`, `ingest_document_bytes`, `ingest_url`, `search(mode="hybrid", query_variants=...)`. The test uses an actual installed SDK and `httpx.MockTransport`, not just an interface fake. The installed Mac mini SDK **does not support newer `rerank` kwarg**; calls are compatible with the installed signature.
+- Data Platform Python SDK `arvectum_data_client.DataPlatformClient`: `ensure_collection`, `ingest_document`, `ingest_document_bytes`, `ingest_url` and (MI-006) `search(mode="hybrid", terminology_groups=[...], terminology_version=...)`. The generic terminology implementation is in Data Platform PR #127 and SDK v0.4.0. Current installed SDK v0.3 is insufficient until reviewed/upgraded; it fails closed instead of falling back to MI-side query expansion.
 - Data Platform owns acquisition, extraction and chunked searchable corpus. Tender Agent does **not** maintain a competing search index.
-- Power Quality ontology families: `statcom`, `ukrm`, `thyristor`, `harmonic_filter`, `power_quality_system`; shared word-boundary/context-aware matcher detects equipment within broader EPC excerpts.
+- Power Quality ontology families: `statcom`, `ukrm`, `thyristor`, `harmonic_filter`, `power_quality_system`. They supply versioned aliases, contexts, exclusions and ambiguous terms as a plug-in **to the generic Data Platform matcher**. MI does not own query expansion or indexed chunk matching; legacy local lexical checks remain only for offline SOAP corpus scanning and supplier-hypothesis classification.
 - Source-bound, stable `chunk_id`/`document_id`/`canonical_uri` are retained from Data Platform search. An index-supplied hash by itself is `unverified_index_metadata`. `reviewed_source_manifest` requires a separately supplied approved canonical_uri→SHA-256 map and matching metadata hash. No automatic promotion into MI-001 revenue.
 - Project role assertions require an authorized project ID, legal entity INN, approved human reviewer, document SHA256, HTTP(S) HTTPS source, locator, original excerpt and source type `official_protocol`, `signed_contract` or `primary_project_document`. EPC/winning bidder additionally require original protocol or signed contract; all invalid entries quarantined. Secondary cards remain reported buyers, not EPC winners.
 - 7-source × 37-calendar-month coverage matrix (Oct 2023 and Oct 2026 are **partial boundary months**) with `not_checked`/ `failed` and unknown denominators. `verified_complete` requires external proof + measured expected/observed counts.
@@ -30,7 +30,7 @@ A retrieved fragment, vector similarity or secondary procurement card alone does
 
 ## Implementation and commands
 
-Files: `src/modules/market_intelligence/portfolio_pipeline.py` (ingestion, product proposals, hybrid retrieval, verified role graph, coverage); `src/modules/market_intelligence/technical_matching.py` (pure shared lexical candidate matcher, also used by EIS SOAP); `src/modules/market_intelligence/mi003_pq_evaluation.py` (audited Power Quality evaluation, buyer qualification plan).
+Files: `src/modules/market_intelligence/portfolio_pipeline.py` (ingestion, product proposals, **Data Platform terminology search client adapter**, verified role graph and coverage); `src/modules/market_intelligence/technical_matching.py` (legacy **offline** candidate matcher for SOAP corpus and supplier descriptions, **not search query expansion**); `src/modules/market_intelligence/mi003_pq_evaluation.py` (source-limited evaluation). New MI-006 integration runbook: `docs/product/MI006_DATA_PLATFORM_NATIVE_SEARCH.md`.
 
 From Tender Agent checkout with project Python environment:
 
@@ -76,13 +76,13 @@ intake = ingest_supplier(
 |---|---|
 | Intake interface for supplier text/files/URL via SDK | Code tested, live backend/ACL acceptance pending |
 | PPTX native text/slide/table extraction | Separate Data Platform PR #126; no service release |
-| PQ ontology and technical query expansion | Implemented; bounded manual sample |
+| PQ ontology and technical query expansion | Ontology owned by MI; generic expansion/matching in Data Platform PR #127, SDK v0.4 upgrade required before live execution |
 | Hybrid search against actual national attachment corpus | Not measured: source-month EIS/ETP ingestion missing |
 | Source hash/fragment binding | Implemented conditional reviewed SHA mapping; real manifest reconciliation pending |
 | Named customer/account action hypotheses | 10 accounts, source links, no verified EPC claims |
 | Role graph provenance | Quarantine/review contract implemented; 0 verified winners/designers in pilot |
 | Full market value, share and win-rate | Blocked by historical coverage and primary award/contract retrieval |
-| Customer-facing web portal and delivery | Not implemented/released; internal JSON + Markdown only |
+| Customer-facing web portal and delivery | Restricted report download API exists in MI-005 (disabled by default); full customer web UI not delivered |
 | Supplier uploads on production/real customer documents | Not tested; tenant/privacy/SSRF/end-to-end approval missing |
 
 Next step independent of EIS: document-format and semantic retrieval evaluation using legally accessible real EPC technical attachments from commercial portals, indexed through tenant-safe Data Platform corpus; test top-K recall/precision against independently labelled passages. Meanwhile advance official SOAP source backfill after maintenance, **not now**.

@@ -20,9 +20,8 @@ FILE_TYPES = {".txt", ".md", ".csv", ".html", ".htm", ".doc", ".docx",
               ".rtf", ".pdf", ".xls", ".xlsx", ".pptx"}
 MAX_FILE_BYTES = 20 * 1024 * 1024
 MAX_TEXT_CHARS = 120_000
-MAX_QUERY_VARIANTS = 5
 MAX_SEARCH_RESULTS = 30
-FAMILY_QUERY_TERMS = 6
+DP_TERMINOLOGY_EXPANSION_LIMIT = 5
 
 
 class PortfolioInputError(ValueError):
@@ -30,6 +29,7 @@ class PortfolioInputError(ValueError):
 
 
 class DataPlatformProtocol(Protocol):
+    def contract(self) -> dict[str, Any]: ...
     def ensure_collection(self, *, collection_id: str, name: str, owner: str,
                           default_language: str = "russian") -> dict[str, Any]: ...
     def ingest_document(self, *, collection_id: str, canonical_uri: str,
@@ -42,7 +42,10 @@ class DataPlatformProtocol(Protocol):
     def ingest_url(self, *, collection_id: str, url: str,
                    title: str | None = None) -> dict[str, Any]: ...
     def search(self, *, query: str, collections: list[str], limit: int,
-               mode: str = "hybrid", query_variants: list[str] | None = None,
+               mode: str = "hybrid",
+               terminology_groups: list[dict[str, Any]] | None = None,
+               terminology_expansion_limit: int = 5,
+               terminology_version: str | None = None,
                **kwargs: Any) -> list[dict[str, Any]]: ...
 
 
@@ -221,25 +224,58 @@ def search_demand(
     allowed = {r["id"]: r for r in ontology["families"]}
     if not families or any(f not in allowed for f in families):
         raise PortfolioInputError("must select known technical product families")
+    # Old servers may silently ignore unknown JSON fields. Require the
+    # advertised DP capability before returning ANY apparently-empty results.
+    if not callable(getattr(client, "contract", None)):
+        raise PortfolioInputError("Data Platform contract negotiation required")
+    contract = client.contract()
+    if not isinstance(contract, dict) or "terminology_search_v1" not in contract.get(
+        "capabilities", []
+    ):
+        raise PortfolioInputError(
+            "Data Platform server does not advertise terminology_search_v1"
+        )
     candidates: dict[tuple[str, str, str], dict[str, Any]] = {}
     queries = []
     for family in sorted(set(families)):
         record = allowed[family]
-        synonyms = [
-            t for t in record.get("positive", []) if len(t.strip()) >= 4
-        ][:FAMILY_QUERY_TERMS]
-        if not synonyms:
+        aliases = [str(term).strip() for term in record.get("positive", []) if str(term).strip()]
+        if not aliases:
             continue
-        # Specific queries first; broad modernization query catches buried needs
-        # but remains a review-only hit unless concrete equipment is in the chunk.
-        query = synonyms[0]
-        variants = synonyms[1:MAX_QUERY_VARIANTS + 1]
-        queries.append({"family": family, "query": query, "variants": variants})
-        hits = client.search(
-            query=query, collections=source_collections,
-            limit=max_candidates, mode="hybrid", query_variants=variants,
-            collapse_by_canonical_uri=False,
-        )
+        # Domain ontology remains in MI, but all actual synonym expansion and
+        # context-sensitive hit tagging is executed within Data Platform.
+        group = {
+            "id": family,
+            "aliases": aliases[:20],
+            "contexts": list(record.get("contexts", []))[:16],
+            "exclusions": list(record.get("exclusions", []))[:16],
+            "ambiguous_aliases": [
+                term for term in record.get("ambiguous_aliases", [])
+                if term in aliases
+            ][:16],
+        }
+        query = group["aliases"][0]
+        queries.append({
+            "family": family, "query": query,
+            "expansion_owner": "data_platform",
+            "terminology_group": group["id"],
+        })
+        try:
+            hits = client.search(
+                query=query, collections=source_collections,
+                limit=max_candidates, mode="hybrid",
+                terminology_groups=[group],
+                terminology_expansion_limit=DP_TERMINOLOGY_EXPANSION_LIMIT,
+                terminology_version=str(ontology.get("schema_version", "unknown/0.1")),
+                expand_query=False,  # optional model-based expansion remains off
+                collapse_by_canonical_uri=False,
+            )
+        except TypeError as exc:
+            if "terminology_" not in str(exc):
+                raise
+            raise PortfolioInputError(
+                "Data Platform Python SDK >=0.4 terminology contract is required"
+            ) from exc
         for hit in hits:
             if not isinstance(hit, dict):
                 continue
@@ -255,7 +291,17 @@ def search_demand(
             raw_text = hit.get("text") or hit.get("preview") or ""
             if not isinstance(raw_text, str) or not raw_text.strip():
                 continue
-            matched = {m["family"]: m for m in _matching_terms(raw_text[:50000], ontology)}
+            # These terms are resolved by Data Platform's generic retrieval
+            # engine and returned as chunk-scoped evidence annotations. MI
+            # does not reimplement query expansion or lexical hit matching.
+            dp_matches = metadata.get("terminology_matches")
+            if not isinstance(dp_matches, list):
+                dp_matches = []
+            matched = {
+                m.get("id"): m
+                for m in dp_matches
+                if isinstance(m, dict) and isinstance(m.get("id"), str)
+            }
             direct = family in matched
             parsed_uri = urlsplit(uri)
             source_url_public = parsed_uri.scheme in ("https", "http") and bool(parsed_uri.hostname)
@@ -280,6 +326,7 @@ def search_demand(
                 "source_locator": f"document:{doc_id}/chunk:{chunk_id}",
                 "source_sha256": source_sha if digest_ok else None,
                 "source_grade": source_grade,
+                "terminology_version": metadata.get("terminology_version"),
                 "matched_terms": matched.get(family, {}).get("terms", []),
                 "query_method": "hybrid",
                 "classification": (
