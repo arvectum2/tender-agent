@@ -1,0 +1,71 @@
+{
+  "schema_version": "mi-pq-primary-source-proofs/0.1",
+  "observed_at_date": "2026-10-25",
+  "scope": "two selected official EIS RI223 source notices with original protocol evidence, not market completeness",
+  "records": [
+    {
+      "registry_number": "32313008364",
+      "subsystem": "RI223",
+      "statutory_regime": "223-FZ",
+      "buyer_company_name": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"ФЕДЕРАЛЬНАЯ СЕТЕВАЯ КОМПАНИЯ - РОССЕТИ\"",
+      "buyer_inn": "4716016979",
+      "initial_lot_sum_text": "6795960",
+      "initial_lot_currency": "RUB",
+      "initial_price_source_field": "purchaseNotice*Data/lots/lot/lotData/initialSum",
+      "source_scope_variants": [
+        "Выполнение работ по сервисному обслуживанию системы охлаждения блоков СТАТКОМ на ПС 220 кВ Могоча для нужд Забайкальского ПМЭС"
+      ],
+      "official_archive_sha256": "8d6029082e09ed4cbf4df906bdca9156e65e6e5f4c60357df4ba81cbb2ee68b5",
+      "notice_source_xml_sha256": [
+        "eccaec4ed3d52976d6b66cad4a66c442b10e053ce673b3857373daae7a55874b",
+        "9fb865419fac1e16407eada0ad08f657fd2d2c9ea87b3be27ccdc75bb8688969"
+      ],
+      "protocol_source_xml_sha256": [
+        "09d044cfedd0847d783e949cf9c0240c52f0466860993ec8fbc76dacb2c2db50"
+      ],
+      "protocol_source_kind": [
+        "purchaseProtocolSummingupZKESMBO"
+      ],
+      "buyer_legal_identity_source": "customer/mainInfo",
+      "original_xml_revision_count": 2,
+      "original_protocol_doc_count": 1,
+      "winner_verified": false,
+      "contract_signed_price_verified": false,
+      "source_grade": "official_original_xml_sha_verified_not_legal_award"
+    },
+    {
+      "registry_number": "32615969197",
+      "subsystem": "RI223",
+      "statutory_regime": "223-FZ",
+      "buyer_company_name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"БАШКИРСКИЕ РАСПРЕДЕЛИТЕЛЬНЫЕ ЭЛЕКТРИЧЕСКИЕ СЕТИ\"",
+      "buyer_inn": "0277071467",
+      "initial_lot_sum_text": "518960",
+      "initial_lot_currency": "RUB",
+      "initial_price_source_field": "purchaseNotice*Data/lots/lot/lotData/initialSum",
+      "source_scope_variants": [
+        "26-004167 Выполнение ПИР на установку УКРМ 10кВ ПС 35кВ Пионерская для ПО НЭС ООО \"Башкирэнерго\"",
+        "Выполнение ПИР на установку УКРМ 10кВ ПС 35кВ Пионерская для ПО НЭС ООО \"Башкирэнерго\""
+      ],
+      "official_archive_sha256": "341a5a38b23e359969490f49085b2ca4a922fd237eab01dbdcdb9061b16771c6",
+      "notice_source_xml_sha256": [
+        "f26cb57cb915c10d7d79db896ce58c6ddfd9a499e9c2e48451e8dac1354b372e",
+        "f249b693dace286787a19c3e64752260d3d073de568a99e94563af9ed6046be5"
+      ],
+      "protocol_source_xml_sha256": [
+        "3c96283d71cf0a3a5ebf99626c8766b2158984801898bdfd6875b4c8c481363f"
+      ],
+      "protocol_source_kind": [
+        "purchaseProtocolRZ1ZPESMBO"
+      ],
+      "buyer_legal_identity_source": "customer/mainInfo",
+      "original_xml_revision_count": 2,
+      "original_protocol_doc_count": 1,
+      "winner_verified": false,
+      "contract_signed_price_verified": false,
+      "source_grade": "official_original_xml_sha_verified_not_legal_award"
+    }
+  ],
+  "unique_procurements": 2,
+  "winner_verified_count": 0,
+  "national_market_statistics_supported": false
+}

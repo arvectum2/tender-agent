@@ -1,0 +1,57 @@
+task_id: MI-010-PRIMARY-PQ-20261025
+status: in_progress
+goal: Normalize real variant 223-FZ primary EIS XML notices/protocols to source-bound Power Quality customers,
+  initial-lot prices, traceable document links and safe attachment manifests.
+definition_of_done:
+- Explicitly parse approved real 223-FZ purchaseNoticeZKESMBO/purchaseNoticeZPESMBO and related source protocol
+  variants with exact official number joins, buyer name/INN, initial lot prices and original SHA locator.
+- Preserve all revisions, forbid unverified winner/contract assertions; independent original award contract source
+  required.
+- Source-only attachment manifest validates official https host and fixed download path, with URL SHA rather than
+  leaking original download URLs or tokens.
+- Synthetic security/fixture tests and a read-only check against two real EIS Power Quality official primary ZIPs;
+  no unsupported fetched attachment claim.
+- Report genuine verified customer and initial-lot figures; note file download HTTP404 and need alternative official
+  data access.
+- Run Ruff and tests; push reviewed PR, exact CI before merge, update checkpoint and preserve main unrelated TA
+  roadmap.
+completed:
+- MI009 PR
+- Authenticated source ZIP for 32313008364 includes two purchaseNoticeZKESMBO plus purchaseProtocolSummingupZKESMBO;
+  for 32615969197 two purchaseNoticeZPESMBO and purchaseProtocolRZ1ZPESMBO.
+- Original source buyer and initialSum verified for both cases; direct public EIS filestore URL probes returned
+  HTTP404 with secure TLS.
+- Generalized source-authenticated EIS RI223 original notice/protocol parser to explicit actual ZKESMBO/ZPESMBO
+  variants with buyer legal names/INNs, raw initial lot RUB sums, source revision SHA; no award inference.
+- 'Verified two actual original statutory EIS archives #32313008364 and #32615969197: each contains 2 official
+  notice revisions and 1 source protocol linked by exact registry number; original declared lot sums 6795960 RUB
+  and 518960 RUB respectively.'
+- 'Built official attachment reference manifest from SHA-qualified 44/223 XML: strict HTTPS/host/path/opaque UID
+  or ID validation; raw download URLs never returned, only URL SHA and source XML locators.'
+- 'Source manifest test against real primary archives: 14 official references for #32313008364, 4 for #32615969197,
+  28 for 44-FZ format check #0373200026426000249; no document bytes downloaded or claimed indexed.'
+- HTTP 404 reproduced under verified TLS with direct public GET on several attachment links for both modern filestore
+  and older 223 download URLs; external blocker explicitly documented.
+- Published non-sensitive original SHA-linked customer/lot source proof JSON for two PQ real cases, buyer/company/INN
+  and initialSum confirmed; award winner and actual signed contract remain unverified.
+- 109 focused MI, EIS source, Data Platform boundary and clone tests PASS; Ruff PASS, original primary-source
+  live acceptance successful.
+current: MI010 implementation and original primary-source smoke complete; publish PR and require exact green full
+  CI, without enabling client live data service.
+pending:
+- Publish PR with exact base main, verify all CI and merge only if green.
+- Mark MI010 checkpoint completed in main without replacing unrelated TA-ROADMAP-EXEC current-task.
+- 'Next separate MI011: resolve original public EIS attachment 404 with official permitted access path; download/hash
+  real technical annex PDF/DOCX/XLSX and index into Data Platform, plus original award/contract registries and
+  commercial ETP corroboration.'
+last_verified_commit: 19224beb34aeeac9723a1f5630fb71a1751a03b1
+test_results:
+- 109 passed, one pre-existing StarletteDeprecationWarning; Ruff all changed source+tests passed.
+- Original RI223 32313008364 notice/protocol linked, official initial RUB 6795960; winner/contract unverified.
+- Original RI223 32615969197 notice/protocol linked, official initial RUB 518960; winner/contract unverified.
+- 'Attachment source references SHA-qualified: 14, 4, and 28 for three primary source archives; actual file download
+  unavailable HTTP 404.'
+resume_instruction: MI010 code ready on feature/mi010-pq-primary-source-proof-20261025. Verify exact GitHub CI,
+  merge if green, then complete archived checkpoint in main while preserving TA-ROADMAP global current-task. Main
+  future block is official attachment file downloads returning HTTP404; never assert they were indexed or invent
+  awards.
