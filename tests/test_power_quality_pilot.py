@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 12
+    assert result["distinct_procedure_lots"] == 17
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 1, "2025": 3, "2026": 7
+        "2023": 1, "2024": 1, "2025": 3, "2026": 12
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 6, "statcom": 5, "harmonic_filter": 1}
+    assert result["category_counts"] == {"ukrm": 10, "statcom": 5, "harmonic_filter": 2}
     assert result["work_package_counts"] == {
-        "supply": 7, "maintenance": 2, "epc": 2, "design": 1
+        "supply": 11, "maintenance": 2, "epc": 3, "design": 1
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 13
-    assert report["distinct_procedure_lots"] == 12
+    assert report["seed_records"] == 18
+    assert report["distinct_procedure_lots"] == 17
     assert report["mirror_duplicates_removed"] == 1
 
 
@@ -151,3 +151,27 @@ def test_markdown_has_no_market_claim(seed, ontology):
     assert "НЕ полный российский рынок" in md
     assert "COM16012600053" in md
     assert "не определён" in md
+
+
+def test_pq_addendum_keeps_mixed_lot_and_unverified_contract_out_of_tam(seed, ontology):
+    report = analyze_pilot(seed, ontology)
+    mixed = next(row for row in report["leads"] if row["procedure_id"] == "1221629")
+    assert mixed["family"] == "harmonic_filter"
+    assert mixed["quantity"] == 2
+    assert mixed["nmck_rub"] is None
+    reconstruction = next(row for row in report["leads"] if row["procedure_id"] == "32615614821")
+    assert reconstruction["scope"] == "epc"
+    assert reconstruction["nmck_rub"] == "1432983.66"
+    assert "1 833 358,30" in reconstruction["notes"]
+    assert report["verified_award_count"] == 0
+    assert report["market_size_rub"] is None
+
+
+def test_pq_current_commercial_leads_not_falsely_claimed_open_or_awarded(seed, ontology):
+    report = analyze_pilot(seed, ontology)
+    for number in ("РН61004155", "АП125337"):
+        row = next(r for r in report["leads"] if r["procedure_id"] == number)
+        assert row["status"] == "unknown"
+        assert row["nmck_rub"] is None
+        assert row.get("winner") is None
+    assert report["market_model"]["counts"]["open_opportunities"] == 0
