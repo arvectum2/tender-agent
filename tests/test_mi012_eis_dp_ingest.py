@@ -264,7 +264,7 @@ def _nested_zip_fixture(tmp_path: Path):
 
 
 def test_original_zip_child_is_source_verified_and_indexed(tmp_path: Path):
-    args, parent, child = _nested_zip_fixture(tmp_path)
+    args, _parent, child = _nested_zip_fixture(tmp_path)
     dp = StubDP()
     result = ingest_original_eis_documents(dp, **args, execute=True)
     assert result["validated_documents"] == 1
@@ -293,7 +293,7 @@ def test_original_zip_member_tamper_prevents_collection_creation(tmp_path: Path,
 
 
 def test_unknown_or_opaque_zip_member_never_promoted_to_text(tmp_path: Path):
-    args, parent, child = _nested_zip_fixture(tmp_path)
+    args, _parent, _child = _nested_zip_fixture(tmp_path)
     row = args["receipt"]["records"][0]["zip_children"]["records"][0]
     row["status"] = "opaque_unparsed"
     dp = StubDP()
