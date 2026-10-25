@@ -28,7 +28,7 @@ def test_real_sdk_collection_ingest_and_hybrid_query_contract():
             return httpx.Response(404, json={"detail": "not found"})
         if request.method == "POST" and request.url.path == "/v1/collections":
             payload = json.loads(request.content)
-            assert payload["owner"] == "tender-agent:tenant_01"
+            assert payload["owner"] == "market-intelligence:tenant_01"
             return httpx.Response(200, json=payload)
         if request.method == "POST" and request.url.path == "/v1/ingest/document":
             assert b"STATCOM" in request.content
