@@ -1,5 +1,5 @@
 task_id: MI-007-MAIN-INTEGRATION-READINESS-20261025
-status: in_progress
+status: completed
 goal: Resolve GitHub CI failures, conflicts and stack dependencies for Data Platform#126/#127 and Tender Agent#501-#507;
   safely prepare main-merge and quality gates without EIS network dependency.
 definition_of_done:
@@ -12,6 +12,9 @@ definition_of_done:
 - Verify EIS schedule official and report actual SOAP restoration independently of scheduled window.
 - Update checkpoint with final commit/tests/next action, PR readiness and objective blockers.
 completed:
+- '2026-10-25 DP current-main PR #128 merged d341731664bdc4bc6bb5e8fdeef3df00706c72bd; SDK 0.4.0 published and pinned by exact hash.'
+- '2026-10-25 TA current-main PR #508 full CI green 5188 PASS / 285 SKIP; all 9 jobs success; merged 23896a3a961855e8ca6f38266fbd3990c7ffb37b.'
+- 'Closed redundant stacked draft PR #502/#504/#505/#506/#507 after verifying every branch HEAD is in main; #503 SOAP recovery deliberately remains separate.'
 - Verified public EIS maintenance window ended as scheduled 01:00 Moscow 25.10.2026; no authoritative completion
   yet.
 - 'Inspected PRs: DP#126/#127 and TA#501..507 are open draft, mergeable vs respective bases.'
@@ -35,18 +38,17 @@ completed:
   #501/#502/#504/#505/#506/#507; 118 pass 1 skip focused, Ruff clean; 0 code conflicts against main.'
 - Updated Tender Agent pyproject.toml and requirements.lock from SDK 0.3 to exact published SDK 0.4 with package
   digest; offline wheel loaded and accepted 68 pytest pass (no SDK contract skips).
-current: 'Await full GitHub CI for exact TA #508 head with SDK v0.4, then merge if green and permitted. Preserve
-  old main active canonical roadmap checkpoint.'
-pending:
-- Verify complete GitHub CI on latest PR#508 HEAD and no reviewer/blocking check.
-- Optionally merge PR#508 in main once checks green; do not deploy feature flags.
-- Verify TA main after merge and GitVerse mirror; archived draft PRs can close automatically as ancestors.
-- Live Data Platform server/tenant ACL, original PQ hidden EPC annex recall and EIS SOAP tokenized probe separate
-  acceptance.
-last_verified_commit: cfa05c90134891e4845770031658c1dbe66903a4
+current: Main code integration completed with verified exact CI; production deployment and EIS SOAP remain independent acceptance gates.
+pending: []
+remaining_external_gates:
+- Deploy Data Platform server with terminology_search_v1 and validate real tenant ACL/privacy; publishing code and SDK did not deploy services.
+- Perform source-grounded real EPC technical-document recall evaluation and original protocols/awards verification before any comprehensive market report.
+- Retain independent draft EIS SOAP recovery PR #503 pending genuine post-maintenance TLS and tokenized getDocsIP acceptance.
+last_verified_commit: 23896a3a961855e8ca6f38266fbd3990c7ffb37b
 test_results:
-- DP#127 and DP#126 GitHub Actions green.
-- TA#507 3465 passed, 239 skipped, 1 failed, quality CI; other CI jobs successful.
-resume_instruction: 'Latest TA integrated branch feature/mi-main-ready-20261025 in isolated worktree. Check GitHub
-  PR #508 latest CI exact SHA after v0.4 wheel lock and merge only when green; code gate before server deployment
-  remains closed. Main .agent/current-task.yaml is TA-ROADMAP-EXEC-20261012 and must NOT be overwritten.'
+- Data Platform #128 all GitHub CI jobs green, merged main d341731664bdc4bc6bb5e8fdeef3df00706c72bd; SDK wheel v0.4.0 SHA256 51906ad978023c9acdefd48eb68c658012d17c28dc31acb476c9cd1b2f835b67 officially released.
+- Tender Agent #508 exact head e0e2804170b793c455a2f4a4ba08ae8f094150a6: all 9 GitHub CI jobs SUCCESS, full quality 5188 passed, 285 skipped, 346 warnings; merge commit 23896a3a961855e8ca6f38266fbd3990c7ffb37b.
+- MAC isolated current-main branch Ruff clean, selected suite 118 passed, 1 skipped; exact released SDK wheel integration 68 passed with no SDK contract skips.
+- Git ancestry verified PR #501/#502/#504/#505/#506/#507 source heads included in main; redundant draft PRs closed with superseded-by-#508 comment. SOAP #503 intentionally remains open.
+- Public official EIS page responded HTTP 200; unauthenticated int.zakupki.gov.ru SOAP probe still TLS/certificate errors, no authenticated SOAP success claimed.
+resume_instruction: 'MI-007 main merge completed. Preserve canonical main .agent/current-task.yaml for TA-ROADMAP-EXEC-20261012. Follow-up separately: check live DP server terminology_search_v1 capability and user acceptance, independently retry EIS SOAP via existing PR #503 after the upstream maintenance. Do not assume original award records, nationwide market completeness, or live SaaS activation.'
