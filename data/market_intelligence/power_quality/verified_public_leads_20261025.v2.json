@@ -1,0 +1,581 @@
+{
+  "schema_version": "power-quality-seed/0.1",
+  "as_of": "2026-10-25",
+  "window_from": "2023-10-24",
+  "window_to": "2026-10-25",
+  "seed_completeness": "discovered_examples_only_not_population",
+  "records": [
+    {
+      "id": "pq-2023-mogocha-service",
+      "canonical_id": "223fz:32313008364:lot1",
+      "publication_date": "2023-11-27",
+      "date_basis": "published",
+      "procedure_id": "32313008364",
+      "platform": "РТС-Тендер / ЕИС 223-ФЗ",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "ПАО «Россети» / Забайкальское ПМЭС",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": "ПС 220 кВ Могоча",
+      "family": "statcom",
+      "scope": "maintenance",
+      "description": "Сервисное обслуживание системы охлаждения блоков СТАТКОМ на ПС 220 кВ Могоча",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": "6795960",
+      "reported_price_kind": "initial_price",
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://www.dv-tender.ru/details/500280907",
+          "source_tier": "third_party",
+          "locator": "Название тендера, Начальная цена, Ссылки на источники",
+          "excerpt": "Выполнение работ по сервисному обслуживанию системы охлаждения блоков СТАТКОМ на ПС 220 кВ Могоча"
+        }
+      ],
+      "notes": "Цена 6 795 960 ₽ в агрегаторе — начальная, не сумма договора; победитель не подтверждён."
+    },
+    {
+      "id": "pq-2024-chirkheygestroy",
+      "canonical_id": "223fz:chges24621PR:lot1",
+      "publication_date": "2024-11-20",
+      "date_basis": "receiving_from",
+      "procedure_id": "chges24621PR",
+      "platform": "РАД / Lot-Online 223-ФЗ",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "АО «ЧиркейГЭСстрой»",
+        "inn": "0533001760"
+      },
+      "beneficiary": {
+        "name": "Реконструкция Федоровского подпорного гидроузла",
+        "inn": null
+      },
+      "project": "Гидроузел Федоровский / энергоснабжение стройплощадки",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка автоматических регулируемых конденсаторных установок УКРМ для КТП",
+      "quantity": 4,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://synapsenet.ru/zakupki/lotonline/chges24621pr--stavropolskij-kraj-postavka-4-chetireh-shtuk-avtomaticheskih",
+          "source_tier": "third_party",
+          "locator": "Заказчик, Описание, Позиции, период торгов",
+          "excerpt": "Поставка 4 (четырех) штук Автоматических регулируемых конденсаторных установок типа УКРМ"
+        }
+      ],
+      "notes": "Этап потребности — снабжение стройплощадки; победитель и цена договора не установлены."
+    },
+    {
+      "id": "pq-2025-suhodol",
+      "canonical_id": "commercial:unverified-suhodol-2025-07-17:lot1",
+      "publication_date": "2025-07-17",
+      "date_basis": "published",
+      "procedure_id": null,
+      "platform": "Росэлторг (коммерческая)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Морской порт «Суходол»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": "Морской порт Суходол / тяговые потребители",
+      "family": "statcom",
+      "scope": "epc",
+      "description": "Проектирование, изготовление, поставка, монтаж и ПНР СТАТКОМ с активной фильтрацией и стабилизацией напряжения",
+      "quantity": 1,
+      "quantity_unit": "усл. ед.",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://b2b.house/purchase/r805b9b2c-cd4d-4254-bba1-5deb6fd5d9bf_4b62e826/",
+          "source_tier": "third_party",
+          "locator": "Лот / Объект закупки / Дата публикации",
+          "excerpt": "Проектирование, изготовление, поставка, монтаж и пусконаладочные работы установки быстродействующего статического компенсатора реактивной мощности"
+        }
+      ],
+      "notes": "Номер на карточке агрегатора маскирован, не выдумывать реестровый номер. Канонический ID временно по заказчику и дате."
+    },
+    {
+      "id": "pq-2025-lukoil-ukrm1",
+      "canonical_id": "commercial:COM07102500074:lot1",
+      "publication_date": "2025-10-07",
+      "date_basis": "published",
+      "procedure_id": "COM07102500074",
+      "platform": "Росэлторг",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+        "inn": "8608048498"
+      },
+      "beneficiary": null,
+      "project": "ТПП ЛУКОЙЛ-Западная Сибирь / поставки 2026",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка установок УКРМ для территориально-производственных предприятий",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS54665725",
+          "source_tier": "third_party",
+          "locator": "Название, заказчик, дата публикации",
+          "excerpt": "Поставка установок компенсаций реактивных мощностей (УКРМ) для территориально-производственных предприятий ООО «ЛУКОЙЛ-Западная Сибирь»"
+        }
+      ],
+      "notes": "Есть следующая закупка с другой реестровой ссылкой в январе 2026; не считать зеркалом без протоколов."
+    },
+    {
+      "id": "pq-2025-kuzbass-statcom",
+      "canonical_id": "commercial:106044-ТТ:lot1",
+      "publication_date": "2025-10-28",
+      "date_basis": "published",
+      "procedure_id": "106044-ТТ",
+      "platform": "ЭТП Металл-ИТ",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "АО «УК «Кузбассразрезуголь»",
+        "inn": "4205049090"
+      },
+      "beneficiary": null,
+      "project": "Калтанский и Талдинский угольные разрезы",
+      "family": "statcom",
+      "scope": "supply",
+      "description": "СТАТКОМ для Калтанского угольного разреза (2 шт.) и Талдинского (1 шт.)",
+      "quantity": 3,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS55137357",
+          "source_tier": "third_party",
+          "locator": "Объекты закупки, заказчик, дата",
+          "excerpt": "Статический генератор реактивной мощности (СТАТКОМ) для Калтанского УР | 2,0 шт; для Талдинского УР | 1,0 шт"
+        }
+      ],
+      "notes": "ТЗ упомянуто на странице, документацию и итоговые протоколы требуется получить."
+    },
+    {
+      "id": "pq-2026-lukoil-ukrm2",
+      "canonical_id": "commercial:COM16012600053:lot1",
+      "publication_date": "2026-01-16",
+      "date_basis": "published",
+      "procedure_id": "COM16012600053",
+      "platform": "Росэлторг",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+        "inn": "8608048498"
+      },
+      "beneficiary": null,
+      "project": "ТПП ЛУКОЙЛ-Западная Сибирь / поставки 2026",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка УКРМ для территориально-производственных предприятий",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS56822445",
+          "source_tier": "third_party",
+          "locator": "Название процедуры, заказчик, дата",
+          "excerpt": "Поставка установок компенсаций реактивных мощностей (УКРМ) для территориально-производственных предприятий"
+        },
+        {
+          "url": "https://rostender.info/region/hanty-mansijskij-avtonomnyj-okrug---yugra-avtonomnyj-okrug/sovetskij/89285720-tender-postavka-ustanovok-kompensacij-reaktivnyh-moshchnostej-ukrm-dlya-territorialno",
+          "source_tier": "third_party",
+          "locator": "Документы, ссылки на источники / COM16012600053",
+          "excerpt": "Протокол допуска к переторжке [COM16012600053 Лот 1]"
+        }
+      ],
+      "notes": "Подтверждены несколько раундов переторжки в 2026; участники и победитель не извлечены из протоколов."
+    },
+    {
+      "id": "pq-2026-lebedinsky",
+      "canonical_id": "commercial:4302914:lot1",
+      "publication_date": "2026-01-29",
+      "date_basis": "reported_deadline_NOT_publication",
+      "procedure_id": "4302914",
+      "platform": "B2B-Center",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "АО «Лебединский ГОК»",
+        "inn": "3127000014"
+      },
+      "beneficiary": null,
+      "project": "ПС 3 Лебединского ГОКа",
+      "family": "statcom",
+      "scope": "maintenance",
+      "description": "ТО конденсаторной установки СТАТКОМ RU-DRIVE SVG 6,3/5-3 МВАр",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://synapsenet.ru/zakupki/b2b/4302914--belgorodskaya-obl-tehnicheskoe-obsluzhivanie-oborudovaniya",
+          "source_tier": "third_party",
+          "locator": "Название, Заказчик, дата окончания заявок",
+          "excerpt": "Техническое обслуживание оборудования конденсаторной установки «СТАТКОМ RU-DRIVE SVG 6,3/5-3 МВар» на ПС 3 в 2026 г."
+        }
+      ],
+      "notes": "В карточке агрегатора публикация и срок заявок хронологически противоречат друг другу: дата атрибутирована как claimed_deadline; не использовать для анализа даты публикации."
+    },
+    {
+      "id": "pq-2026-ngk",
+      "canonical_id": "commercial:4304120:lot1",
+      "publication_date": "2026-01-23",
+      "date_basis": "published",
+      "procedure_id": "4304120",
+      "platform": "B2B-Center",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «НГК Ресурс»",
+        "inn": "2721189780"
+      },
+      "beneficiary": null,
+      "project": "Поставка УКРМ 350 кВАр",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка двух УКРМ 350 кВАр",
+      "quantity": 2,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/4304120_458",
+          "source_tier": "third_party",
+          "locator": "Объекты закупки, дата 23.01.2026, заказчик",
+          "excerpt": "Установка компенсации реактивной мощности (УКРМ) 350 кВАр | 2 Штука"
+        }
+      ],
+      "notes": "Начальная сумма отсутствует; технический аналог зависит от сети напряжения и технических требований."
+    },
+    {
+      "id": "pq-2026-rusal-data",
+      "canonical_id": "commercial:1148520:lot1",
+      "publication_date": "2026-03-05",
+      "date_basis": "published_secondary",
+      "procedure_id": "1148520",
+      "platform": "коммерческая процедура",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Инженерно-Строительная Компания»",
+        "inn": "7709567459"
+      },
+      "beneficiary": {
+        "name": "РУСАЛ / Кандалакша",
+        "inn": null
+      },
+      "project": "ЦОД на территории РУСАЛ Кандалакша",
+      "family": "statcom",
+      "scope": "supply",
+      "description": "Статический компенсатор реактивной мощности для строительства ЦОД, 1 комплект, монтаж и ПНР",
+      "quantity": 1,
+      "quantity_unit": "компл",
+      "nmck_rub": null,
+      "reported_price_kind": "zero_placeholder",
+      "status": "third_party_reports_contract",
+      "evidence": [
+        {
+          "url": "https://zakupki.tochka.com/search/1084879614-3/",
+          "source_tier": "third_party",
+          "locator": "Предмет, заказчик, позиции, статус",
+          "excerpt": "Статический компенсатор реактивной мощности | 1 компл"
+        },
+        {
+          "url": "https://www.tenderguru.ru/tender/92618394",
+          "source_tier": "third_party",
+          "locator": "Краткая информация / 05.03.2026",
+          "excerpt": "Конкурсный отбор на поставку электротехнического оборудования (Статический компенсатор реактивной мощности)"
+        }
+      ],
+      "notes": "Агрегатор пишет «заключён договор», но ни идентификатор договора, ни победитель, ни сумма не подтверждены. Отображаемые 0 ₽ — плейсхолдер, не бесплатная поставка. Место выдачи карточки Бирюсинск не равно объекту ЦОД Кандалакша."
+    },
+    {
+      "id": "pq-2026-bashkirenergo-pir",
+      "canonical_id": "223fz:32615969197:lot1",
+      "publication_date": "2026-04-30",
+      "date_basis": "published",
+      "procedure_id": "32615969197",
+      "platform": "ZakazRF / ЕИС",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "ООО «Башкирские распределительные электрические сети»",
+        "inn": "0277071467"
+      },
+      "beneficiary": null,
+      "project": "ПС 35 кВ Пионерская / установка УКРМ 10 кВ",
+      "family": "ukrm",
+      "scope": "design",
+      "description": "ПИР на установку УКРМ 10 кВ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": "518960",
+      "reported_price_kind": "nmck",
+      "status": "no_bids_reported",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/32615969197",
+          "source_tier": "third_party",
+          "locator": "Начальная цена, протокол от 19.05.2026, условия",
+          "excerpt": "Запрос предложений в электронной форме признан несостоявшимся: не подано ни одной заявки на участие"
+        }
+      ],
+      "notes": "518 960 ₽ — НМЦД проектирования, не стоимость УКРМ. Нет допущенных участников по опубликованной карточке, оригинал протокола ЕИС нужно сверить."
+    },
+    {
+      "id": "pq-2026-rosseti-nw-epc",
+      "canonical_id": "223fz:26Т0110040.0017:lot1",
+      "publication_date": "2026-06-17",
+      "date_basis": "published_secondary",
+      "procedure_id": "26Т0110040.0017",
+      "platform": "ЕИС 223-ФЗ (через агрегатор)",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "ПАО «Россети Северо-Запад»",
+        "inn": null
+      },
+      "beneficiary": {
+        "name": "ООО «Прайм» (технологическое присоединение)",
+        "inn": null
+      },
+      "project": "Строительство ЛЭП 6 кВ и монтаж УКРМ в Карелии",
+      "family": "ukrm",
+      "scope": "epc",
+      "description": "Комплекс под ключ: ЛЭП 6 кВ, монтаж конденсаторной установки УКРМ 6 кВ, ПУ",
+      "quantity": 1,
+      "quantity_unit": "установка",
+      "nmck_rub": null,
+      "reported_price_kind": "third_party_final_total_unverified",
+      "reported_total_rub": "21120361.66",
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://vsem-podryad.ru/purchase/f088b62a-cca2-493e-b887-1653bae98839/?backUrl=%2Fnowinnerpurchases%2F%3FisSmbRequired%3D1%26purchaseFzs%3DFz223%2CFz615",
+          "source_tier": "third_party",
+          "locator": "Объект, даты, документы протокола",
+          "excerpt": "Строительство ЛЭП 6 кВ ... монтаж конденсаторной установки 6 кВ (УКРМ)"
+        },
+        {
+          "url": "https://energybase.ru/distribution/rosseti-sz/tenders/power-monitoring-systems",
+          "source_tier": "third_party",
+          "locator": "Проект 26Т0110040.0017",
+          "excerpt": "26Т0110040.0017. Выполнение полного комплекса работ под «ключ»"
+        }
+      ],
+      "notes": "21,12 млн ₽ агрегатор относит к полной закупке, НЕ к УКРМ; EPC/победитель не идентифицирован первичным протоколом."
+    },
+    {
+      "id": "pq-2026-bidzaar-filter",
+      "canonical_id": "commercial:358-830:lot1",
+      "publication_date": "2026-07-30",
+      "date_basis": "published",
+      "procedure_id": "358-830",
+      "platform": "Bidzaar",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "Не раскрыт на публичной карточке Bidzaar",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": "Екатеринбург / активные фильтры",
+      "family": "harmonic_filter",
+      "scope": "supply",
+      "description": "Поставка активных фильтров гармоник (3 штуки), возможны аналоги по ТЗ",
+      "quantity": 3,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://bidzaar.com/app/process/light/019fb323-f23b-7872-845e-ba2cb6b43355",
+          "source_tier": "primary_platform",
+          "locator": "Название, спецификация, даты",
+          "excerpt": "Поставка активных фильтров гармоник; 3 шт"
+        }
+      ],
+      "notes": "Виден первичный портал, но не раскрыты заказчик, победитель и цена; процедура завершена 06.10.2026."
+    },
+    {
+      "id": "pq-2026-bashkirenergo-nagornaya",
+      "canonical_id": "223fz:32615614821:lot1",
+      "publication_date": "2026-01-19",
+      "date_basis": "published",
+      "procedure_id": "32615614821",
+      "platform": "ЕИС 223-ФЗ / ZakazRF",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "ООО «Башкирские распределительные электрические сети»",
+        "inn": "0277071467"
+      },
+      "beneficiary": null,
+      "project": "Реконструкция ПС 110 кВ Нагорная",
+      "family": "ukrm",
+      "scope": "epc",
+      "description": "Реконструкция подстанции в части установки устройств компенсации реактивной мощности; оборудование входит в общестроительную работу.",
+      "quantity": 1,
+      "quantity_unit": "работа",
+      "nmck_rub": "1432983.66",
+      "reported_price_kind": "nmck",
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/32615614821",
+          "source_tier": "third_party",
+          "locator": "Предмет, опубликовано 19.01.2026, НМЦК, результаты и договор",
+          "excerpt": "26-002000 Реконструкция ПС 110кВ Нагорная в части установки устройств компенсации реактивной мощности. 1 заявка; запрос признан несостоявшимся."
+        }
+      ],
+      "notes": "Агрегатор сообщает договор 1 833 358,30 ₽ при начальной цене 1 432 983,66 ₽. Без первичного реестра договора и сверки объема/изменений не считать эту сумму подтвержденной ценой договора и не выделять стоимость устройств из общего EPC."
+    },
+    {
+      "id": "pq-2026-melcombinat-ukrm",
+      "canonical_id": "commercial:4526968:lot1",
+      "publication_date": "2026-07-16",
+      "date_basis": "published",
+      "procedure_id": "4526968",
+      "platform": "B2B-Center",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Мелькомбинат»",
+        "inn": "6900008846"
+      },
+      "beneficiary": null,
+      "project": "ООО «РЗК», Ржев",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Изготовление и поставка четырех установок УКРМ по опросному листу заказчика.",
+      "quantity": 4,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/4526968_4",
+          "source_tier": "third_party",
+          "locator": "Объект, заказчик, количество, дата публикации",
+          "excerpt": "Работы по изготовлению и поставке УКРМ (в кол-ве 4 шт.) для ООО РЗК г. Ржев."
+        }
+      ],
+      "notes": "Покупатель в карточке — Мелькомбинат, объект поставки — РЗК. Сумма и победитель не опубликованы."
+    },
+    {
+      "id": "pq-2026-iso-bratsk-mixed-harmonics",
+      "canonical_id": "commercial:1221629:lot1",
+      "publication_date": "2026-07-24",
+      "date_basis": "published",
+      "procedure_id": "1221629",
+      "platform": "Тендер.Про",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Исо» (филиал в Братске)",
+        "inn": "7730248021"
+      },
+      "beneficiary": null,
+      "project": "Братск, площадка БрАЗа",
+      "family": "harmonic_filter",
+      "scope": "supply",
+      "description": "Смешанный ТМЦ-лот с двумя фильтрами гармоник АФГ-0,4-150-1-Н У3 среди множества посторонних товарных позиций.",
+      "quantity": 2,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS67789174",
+          "source_tier": "third_party",
+          "locator": "Объекты закупки и публикация 24.07.2026",
+          "excerpt": "Фильтр гармоник АФГ-0,4-150-1-Н У3 — 2,0 шт; вместе с другими ТМЦ."
+        }
+      ],
+      "notes": "Нельзя оценивать весь смешанный лот как стоимость оборудования PQ, даже если будет опубликована совокупная цена. Сумма по фильтрам не указана."
+    },
+    {
+      "id": "pq-2026-bashneft-open-ukrm",
+      "canonical_id": "commercial:РН61004155:lot1",
+      "publication_date": "2026-10-19",
+      "date_basis": "published",
+      "procedure_id": "РН61004155",
+      "platform": "ТЭК-Торг",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Башнефть-Добыча»",
+        "inn": "0277106840"
+      },
+      "beneficiary": null,
+      "project": "Поставка установок компенсации реактивной мощности",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Коммерческий запрос оферт на поставку установок компенсации реактивной мощности.",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS82581020",
+          "source_tier": "third_party",
+          "locator": "Опубликовано 19.10.2026; прием предложений до 03.11.2026",
+          "excerpt": "Поставка установок компенсации реактивной мощности, запрос оферт РН61004155."
+        }
+      ],
+      "notes": "На 25.10.2026 срок приема заявок заявлен 03.11.2026 12:00 МСК; актуальный статус и доступ поставщика к ЭТП отдельно проверить. НМЦК не задана; никаких прав на участие не проверено."
+    },
+    {
+      "id": "pq-2026-gazpromdrilling-ukrm",
+      "canonical_id": "commercial:АП125337:lot1",
+      "publication_date": "2026-10-21",
+      "date_basis": "published",
+      "procedure_id": "АП125337",
+      "platform": "ЭТП ГПБ",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Газпром бурение»",
+        "inn": "5003026493"
+      },
+      "beneficiary": null,
+      "project": "Филиал «Оренбург бурение – Восточная Сибирь», Усть-Кут",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка двух УКРМ-6,3 (10,5)-3150-450 3х450ф+4х450р.",
+      "quantity": 2,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/AP125337",
+          "source_tier": "third_party",
+          "locator": "Объекты закупки, срок подачи 05.11.2026, заказчик",
+          "excerpt": "Установка конденсаторная компенсации реактивной мощности УКРМ-6,3 (10,5)-3150-450 3х450ф+4х450р — 2 шт."
+        }
+      ],
+      "notes": "На 25.10.2026 прием предложений заявлен до 05.11.2026 15:00 МСК; цена не задана. Площадка и допуск/аккредитация не проверены."
+    }
+  ]
+}
