@@ -26,7 +26,7 @@ families:
     exclusions: ['TSC — unrelated abbreviations', 'SVC — IT/video codec']
   - id: harmonic_filter
     label: Active and passive harmonic filters
-    positive: ['фильтр гармоник', 'активный фильтр гармоник', 'фильтр высших гармоник', 'АФГ', 'АДФГ', 'ФВГ', 'АФГ-630', 'THD', 'THDi', 'пассивный фильтр', 'harmonic filter', 'active power filter', 'APF']
+    positive: ['фильтр гармоник', 'фильтром гармоник', 'фильтров гармоник', 'активный фильтр гармоник', 'фильтр высших гармоник', 'АФГ', 'АДФГ', 'ФВГ', 'АФГ-630', 'THD', 'THDi', 'пассивный фильтр', 'harmonic filter', 'active power filter', 'APF']
     contexts: ['гармоники тока', 'нелинейная нагрузка', 'частотный привод', 'компенсация гармоник', 'электроснабжение']
     exclusions: ['фильтрация звуковых гармоник', 'аудиофильтр', 'математические гармонические функции']
   - id: power_quality_system
