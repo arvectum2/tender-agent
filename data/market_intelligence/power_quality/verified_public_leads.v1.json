@@ -1,8 +1,8 @@
 {
   "schema_version": "power-quality-seed/0.1",
-  "as_of": "2026-10-24",
+  "as_of": "2026-10-25",
   "window_from": "2023-10-24",
-  "window_to": "2026-10-24",
+  "window_to": "2026-10-25",
   "seed_completeness": "discovered_examples_only_not_population",
   "records": [
     {
@@ -416,6 +416,166 @@
         }
       ],
       "notes": "Виден первичный портал, но не раскрыты заказчик, победитель и цена; процедура завершена 06.10.2026."
+    },
+    {
+      "id": "pq-2026-bashkirenergo-nagornaya",
+      "canonical_id": "223fz:32615614821:lot1",
+      "publication_date": "2026-01-19",
+      "date_basis": "published",
+      "procedure_id": "32615614821",
+      "platform": "ЕИС 223-ФЗ / ZakazRF",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "ООО «Башкирские распределительные электрические сети»",
+        "inn": "0277071467"
+      },
+      "beneficiary": null,
+      "project": "Реконструкция ПС 110 кВ Нагорная",
+      "family": "ukrm",
+      "scope": "epc",
+      "description": "Реконструкция подстанции в части установки устройств компенсации реактивной мощности; оборудование входит в общестроительную работу.",
+      "quantity": 1,
+      "quantity_unit": "работа",
+      "nmck_rub": "1432983.66",
+      "reported_price_kind": "nmck",
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/32615614821",
+          "source_tier": "third_party",
+          "locator": "Предмет, опубликовано 19.01.2026, НМЦК, результаты и договор",
+          "excerpt": "26-002000 Реконструкция ПС 110кВ Нагорная в части установки устройств компенсации реактивной мощности. 1 заявка; запрос признан несостоявшимся."
+        }
+      ],
+      "notes": "Агрегатор сообщает договор 1 833 358,30 ₽ при начальной цене 1 432 983,66 ₽. Без первичного реестра договора и сверки объема/изменений не считать эту сумму подтвержденной ценой договора и не выделять стоимость устройств из общего EPC."
+    },
+    {
+      "id": "pq-2026-melcombinat-ukrm",
+      "canonical_id": "commercial:4526968:lot1",
+      "publication_date": "2026-07-16",
+      "date_basis": "published",
+      "procedure_id": "4526968",
+      "platform": "B2B-Center",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Мелькомбинат»",
+        "inn": "6900008846"
+      },
+      "beneficiary": null,
+      "project": "ООО «РЗК», Ржев",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Изготовление и поставка четырех установок УКРМ по опросному листу заказчика.",
+      "quantity": 4,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/4526968_4",
+          "source_tier": "third_party",
+          "locator": "Объект, заказчик, количество, дата публикации",
+          "excerpt": "Работы по изготовлению и поставке УКРМ (в кол-ве 4 шт.) для ООО РЗК г. Ржев."
+        }
+      ],
+      "notes": "Покупатель в карточке — Мелькомбинат, объект поставки — РЗК. Сумма и победитель не опубликованы."
+    },
+    {
+      "id": "pq-2026-iso-bratsk-mixed-harmonics",
+      "canonical_id": "commercial:1221629:lot1",
+      "publication_date": "2026-07-24",
+      "date_basis": "published",
+      "procedure_id": "1221629",
+      "platform": "Тендер.Про",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Исо» (филиал в Братске)",
+        "inn": "7730248021"
+      },
+      "beneficiary": null,
+      "project": "Братск, площадка БрАЗа",
+      "family": "harmonic_filter",
+      "scope": "supply",
+      "description": "Смешанный ТМЦ-лот с двумя фильтрами гармоник АФГ-0,4-150-1-Н У3 среди множества посторонних товарных позиций.",
+      "quantity": 2,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS67789174",
+          "source_tier": "third_party",
+          "locator": "Объекты закупки и публикация 24.07.2026",
+          "excerpt": "Фильтр гармоник АФГ-0,4-150-1-Н У3 — 2,0 шт; вместе с другими ТМЦ."
+        }
+      ],
+      "notes": "Нельзя оценивать весь смешанный лот как стоимость оборудования PQ, даже если будет опубликована совокупная цена. Сумма по фильтрам не указана."
+    },
+    {
+      "id": "pq-2026-bashneft-open-ukrm",
+      "canonical_id": "commercial:РН61004155:lot1",
+      "publication_date": "2026-10-19",
+      "date_basis": "published",
+      "procedure_id": "РН61004155",
+      "platform": "ТЭК-Торг",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Башнефть-Добыча»",
+        "inn": "0277106840"
+      },
+      "beneficiary": null,
+      "project": "Поставка установок компенсации реактивной мощности",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Коммерческий запрос оферт на поставку установок компенсации реактивной мощности.",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/IS82581020",
+          "source_tier": "third_party",
+          "locator": "Опубликовано 19.10.2026; прием предложений до 03.11.2026",
+          "excerpt": "Поставка установок компенсации реактивной мощности, запрос оферт РН61004155."
+        }
+      ],
+      "notes": "На 25.10.2026 срок приема заявок заявлен 03.11.2026 12:00 МСК; актуальный статус и доступ поставщика к ЭТП отдельно проверить. НМЦК не задана; никаких прав на участие не проверено."
+    },
+    {
+      "id": "pq-2026-gazpromdrilling-ukrm",
+      "canonical_id": "commercial:АП125337:lot1",
+      "publication_date": "2026-10-21",
+      "date_basis": "published",
+      "procedure_id": "АП125337",
+      "platform": "ЭТП ГПБ",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Газпром бурение»",
+        "inn": "5003026493"
+      },
+      "beneficiary": null,
+      "project": "Филиал «Оренбург бурение – Восточная Сибирь», Усть-Кут",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка двух УКРМ-6,3 (10,5)-3150-450 3х450ф+4х450р.",
+      "quantity": 2,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/AP125337",
+          "source_tier": "third_party",
+          "locator": "Объекты закупки, срок подачи 05.11.2026, заказчик",
+          "excerpt": "Установка конденсаторная компенсации реактивной мощности УКРМ-6,3 (10,5)-3150-450 3х450ф+4х450р — 2 шт."
+        }
+      ],
+      "notes": "На 25.10.2026 прием предложений заявлен до 05.11.2026 15:00 МСК; цена не задана. Площадка и допуск/аккредитация не проверены."
     }
   ]
 }
