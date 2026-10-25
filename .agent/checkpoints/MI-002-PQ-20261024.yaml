@@ -1,0 +1,54 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-002-PQ-20261024
+status: completed
+goal: Validate Power Quality pilot with an auditable actual-procurement seed, category ontology, source coverage
+  assessment, and read-only integration-ready ingestion contract.
+definition_of_done:
+- Build a versioned Power Quality category taxonomy with aliases, negative contexts and EPC embedded-equipment
+  search variants.
+- Curate real public procurement source records for 2023-10-24 through 2026-10-24, with literal source URLs, identity
+  and uncertainty; never fabricate winners/prices.
+- Derive a reproducible coverage audit that clearly distinguishes found/source-verified/primary-verified/awarded
+  and unknown coverage.
+- Implement source-bound importer or processing utility that connects real-seed source references to MI-001 report
+  semantics without fake award evidence.
+- Run focused tests, CLI smoke with real seed, lint; commit and push without affecting production or existing
+  work.
+completed:
+- Reviewed available public source cards and recorded 12 distinct Power Quality procurement leads with full URLs,
+  source tiers, timestamps, customer identities and exact documentary excerpts.
+- Created versioned Power Quality technical ontology for STATCOM, reactive compensation, thyristor compensation,
+  harmonic filters and embedded EPC needs.
+- 'Ran live no-proxy public EIS search probes for 44-FZ/223-FZ: 4 calls returned HTTP 434; stored immutable attempt
+  metadata; zero-finding is NOT implied.'
+- Built audited seed normalization with strict rejection of invented winner/contract, unsafe URLs, malformed prices,
+  unknown source and identity conflicts.
+- Integrated read-only seed with MI-001 analysis, preserving null national market size, 518960 RUB design НМЦ
+  and unknown EPC equipment value.
+- Produced reproducible JSON report and Russian Markdown overview including target companies and evidence-linked
+  procurement list.
+- 62 focused/integration tests pass, Ruff clean; no production mutation.
+current: Bounded real-source Power Quality discovery/provenance pilot completed; full MI-002 historical census
+  blocked by source acquisition and protocol/contract access.
+pending:
+- 'MI-002 full: obtain complete permitted historical feeds of EIS notice/protocol/contract data and commercial
+  ETPs for 36 months with measured source-month coverage.'
+- Extract and independently verify originals of tender attachments, participant lists, award protocols, contracts
+  and amounts for all priority Power Quality cases.
+- 'MI-003: classify uploaded supplier portfolio and run evidence-backed semantic search inside complex EPC attachments.'
+- 'MI-004/5: compute validated market size and prioritize specific open targets; expose customer portal.'
+last_verified_commit: d954493fdd4de92cfd394b7ed556fc184e793425
+test_results:
+- 62 tests passed (existing Starlette deprecation warning only), Ruff clean.
+- Synthetic MI-001 scenarios retained, actual Power Quality seed has 12 observations, 0 independently verified
+  award amounts and 4 HTTP 434 live EIS queries.
+- Generated JSON market_size_rub=null, verified_award_equipment_spend_rub=null, explicitly not zero-demand.
+resume_instruction: MI-002-PQ bounded pilot completed. Resume broader MI-002 with official EIS historical source
+  capabilities and real protocol/contract ingestion; do not confuse 12 sourced leads with population, no invented
+  winner/price or commercial commitments. Use isolated worktree, do not overwrite canonical main current-task
+  or enable paused Tender Agent Watchdog.
+execution:
+  branch: feature/mi002-power-quality-pilot-20261024
+  parent_pr: 501
+  window: 2023-10-24..2026-10-24
