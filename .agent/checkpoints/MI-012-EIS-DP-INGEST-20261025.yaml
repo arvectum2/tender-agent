@@ -1,5 +1,5 @@
 task_id: MI-012-EIS-DP-INGEST-20261025
-status: in_progress
+status: completed
 goal: Securely connect MI-011 SHA-verified native EIS DOCX/PDF/XLSX and ZIP children to the existing tenant-scoped Data Platform SDK, preserving immutable source provenance and idempotent semantics.
 definition_of_done:
   - Original source ZIP/XML SHA and actual saved file SHA, declared size and provenance are validated BEFORE creating DP collections or sending bytes.
@@ -13,11 +13,24 @@ completed:
   - Prior MI-011 PR #512 merged to main with CI 5272 passed and 9 jobs green, original EIS 44/223 files and ZIP members downloaded with SHA proofs.
   - DP Python SDK already provides ensure_collection, ingest_document_bytes, search, contract and capability terminology_search_v1.
   - Main Mac mini SSD file reads and local DP /health currently hanging; isolate development via GitHub and CI instead of changing dirty machine checkout.
-current: Implement offline-first ingestion adapter and tests with GitHub PR branch.
-pending:
-  - Add source-verifying ingestion adapter and mocked SDK security regression.
-  - Review true DP collection owner/access policy, live runtime if available.
-  - CI and PR then merge safely; restore unrelated main TA roadmap current-task checkpoint.
-last_verified_commit: 99ba85afe6ab23f96a1fdc812dddf537521b73ca
-test_results: pending
-resume_instruction: Continue feature/mi012-eis-source-to-data-platform-20261025, use GitHub file APIs while SSD unresponsive; do NOT modify real main TA-ROADMAP current-task. Reuse MI011 original downloaded files and DP SDK; no index-success claim without actual authenticated receipt. Restore branch .agent/current-task.yaml to original main before merge and keep this archived checkpoint.
+current: Completed MI-012 source-authenticated tenant-isolated DP ingestion SDK adapter, PR #513 merged to main after exact full CI; actual runtime indexing separately blocked.
+pending: []
+remaining_independent_work:
+  - Restore Mac mini filesystem read access to ArvectumSSD for the Desktop Commander Node and deployed Data Platform process, without force-remount or disabling access controls.
+  - Recheck actual Data Platform HTTP /health and authenticated collection access, then source-verified MI-011 44/223-FZ receipt dry-run and live original file ingestion with actual DP resource/document IDs; no ingestion success claimed until receipt verified.
+  - Diagnose Tailscale public TCP Funnel 443 TLS handshake for Arvectum Remote Cloud: local 127.0.0.1:8788 backend responds, plugin mac-mini offline and ping HTTP 525. Do not change 443 routes or broader device permissions without explicit scoped approval.
+  - Activate tenant-scoped hybrid terminology search against real indexed original EPC technical annex chunks, verify provenance and actual source role/award separately.
+last_verified_commit: 50b1f84b648bbfe58ab08f8eb0f3bb7ca4c4bf9a
+test_results:
+  - "Exact GitHub CI #40190538079 successful 9/9 jobs; 5292 passed, 285 skipped, 346 warnings; exact PR #513 head 8eebbf52d658183e39749e2d8342376c26b23db0."
+  - "RDC isolated Mac mini test runs 57 source/DP boundary tests passed, plus 20 MI-012 isolated tests passed; Ruff all changed source/CLI/tests passed after unused variable correction."
+  - "Arvectum Remote Cloud plugin devices_list mac-mini online=false; direct arvectum_ping HTTP 525, public Tailscale TLS handshake failed; local gateway port 8788 returned 404 not_found for /health."
+  - "Mac mini Data Platform port 8094 intermittently HTTP 200 v0.6.0 and timeouts; process sample PID 59962 repeatedly blocked in operating-system open syscall; repo .git/config intermittently Operation not permitted."
+  - "Real full Data Platform collection ingestion NOT performed; MI011 public original file SHA evidence previously tested, but MI012 end-to-end dry run blocked on source filesystem I/O."
+completed_additional:
+  - "Built EIS-to-DP adapter with original official SOAP ZIP/XML SHA, actual binary SHA, re-verification of ZIP parents/members, bounded uploads, canonical replay URIs and default dry-run."
+  - "Added caller-verified tenant+consumer ACL and existing Data Platform SDK ensure_collection/ingest_document_bytes interface; fail-closed on owner/ACL mismatch, extraction failure and uncertain notice revisions."
+  - "20 new MI-012 unit tests on isolated local checkout passed; 57 focus/regression tests passed; Ruff clean; full CI success."
+  - "Verified via RDC and Arvectum Remote Cloud; Tailscale Funnel HTTP525 and separate Mac mini original SSD file-open problem documented rather than weakening security."
+  - "Merged GitHub PR #513 into main at 50b1f84b648bbfe58ab08f8eb0f3bb7ca4c4bf9a after 9 green checks; existing unrelated TA-ROADMAP current-task preserved."
+resume_instruction: 'MI-012 software integration COMPLETED in main commit 50b1f84b648bbfe58ab08f8eb0f3bb7ca4c4bf9a, CI 5292 passed/285 skipped and 9 checks green. Do NOT redo. Next separate runtime acceptance: verify Mac mini GUI-scoped removable-volume permissions/SSD I/O and DP health before genuine MI011 receipt dry-run and tenant-scoped --execute; verify exact Data Platform IDs and query excerpts. ARC Mac mini TLS Funnel HTTP525 remains separate, do not modify port 443 without scoped approval. Preserve main TA-ROADMAP current-task.'
