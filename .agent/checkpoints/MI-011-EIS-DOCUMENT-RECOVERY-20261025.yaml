@@ -1,0 +1,69 @@
+task_id: MI-011-EIS-DOCUMENT-RECOVERY-20261025
+status: in_progress
+goal: Reuse proven Tender Operator EIS document-page and attachment downloader to recover official original 44/223-FZ
+  files for MI without 404-only XML-link failures, with safe SHA provenance and Data Platform ready manifest.
+definition_of_done:
+- Diagnose current source XML direct attachment 404 versus public EIS documents page and existing Tender Operator
+  verified downloading workflow.
+- Reuse existing public page provider and attachment_downloader, rather than adding a second network engine or insecure
+  fallback.
+- Prove official original attachment bytes downloaded + SHA against at least one real EIS Power Quality primary
+  source or state exact external blocker with bounded evidence.
+- Preserve exact procurement number and source XML/file provenance, restricted official domains and redirects, source
+  byte caps, failure statuses and dedup.
+- Test deterministic fallback and security negative cases, run Ruff + full GitHub CI, merge only when green.
+- Complete canonical archived checkpoint and preserve unrelated global main current-task.
+completed:
+- Recovered APR02 evidence: already proven in Tender Operator for four 223-FZ EIS procurements on Oct 8, 2026, 10
+    original attachments downloaded SHA with no proxy and public official documents pages.
+- Identified MI010 only retained URL digest and separately did bare direct GET 404; no reuse of public detail parser/downloader.
+- 'Identified actual cause of failed Market Intelligence retrieval: guessed bare regNumber public 223-FZ documents
+  route and stale SOAP/XML direct download IDs respond HTTP404; official working public documents URL requires purchaseNoticeNumber
+  and XML noticeGuid.'
+- 'Recovered exact real two prior PQ official 223-FZ document pages with original noticeGuid from verified SOAP
+  ZIP: 32313008364 HTTP200/14 links; 32615969197 HTTP200/4 links; existing Tender Operator acquisition pipeline
+  reused.'
+- 'Corrected existing shared Public223FzSearchProvider regex HTML parser bug: nested <span> markup inside data-tooltip
+  attribute previously corrupted ZIP filenames and extension recognition. HTMLParser now extracts true official
+  filename; added regressions.'
+- Implemented source-sha-qualified 223-FZ and 44-FZ native document acquisition adapters using existing Public223FzSearchProvider,
+  Public44FzSearchProvider and existing bounded/no-proxy/verified-TLS downloader; original source filename match
+  and strict official URL digest required. 44-FZ requires officially active revision, 223-FZ multiple revisions
+  flagged manual review.
+- 'Real procurement 32313008364: 3 DOC/DOCX original bytes downloaded, SHA captured; one .doc physically OOXML and
+  handled by Data Platform content sniff.'
+- 'Real procurement 32615969197: 2 genuine original ZIP plus HTML, SHA captured. Each ZIP independently SHA verified
+  and one-level staged into 5 files PDF/DOC/DOCX/XLSX and 2 opaque .7z attachments; no unsafe recursive unpack.'
+- 'Real procurement 0373200026426000249 44-FZ: original XML matched 13 active revision-2 linked filenames, 3 PDFs
+  downloaded with SHA via new adapter. Museum bread 0372200172326000015 active public page HTTP200 and 5 links,
+  no new MI download claimed.'
+- 'Actual local Data Platform extractor on source bytes: extracted 13535 characters from STATCOM DOCX, 76279 from
+  OOXML-disguised DOC, 3859 from UKRM XLSX and 3619 from UKRM DOCX, with real STАTCOM/УКРМ term occurrences; no
+  remote tenant indexing claimed.'
+- 'Security: official-only hostname/path/UID, source ZIP/XML provenance, SHA, total/individual limits, constrained
+  safe stored filenames, symlink/zip-slip/encrypted/archive bomb checks, no raw URL tokens serialized to result.
+  Tests include untrusted source/URL, invalid original SHA, revision uncertainty, ZIP bombs.'
+- Source and targeted existing Tender Operator/EIS procurement regressions all 148 passed, Ruff clean; uploaded
+  no raw original ZIP or secret to Git.
+current: Implementation tested and real source binaries acquired; prepare review PR and run complete GitHub CI before
+  merge, preserving separate main TA-ROADMAP task.
+pending:
+- Commit new branch and publish PR; verify exact GitHub CI (all 9 jobs) and merge only on green.
+- Mark MI011 archived checkpoint completed in main without replacing unrelated canonical current-task.
+- 'Independent follow-up: authorized Data Platform tenant-scoped ingestion of SHA-verified binary and extracted
+  texts for EPC technical semantic search; opaque .7z supported only after separately bounded parser; official contract
+  award evidence remains separate.'
+last_verified_commit: c842683e732c05dcf78238404cf4aae938f8fd06
+test_results:
+- 148 passed, Ruff clean, one pre-existing Starlette test-client deprecation.
+- 'Authenticated original source 223 pages 32313008364: 14 official links and 3 downloads; 32615969197: 4 links
+  and 3 downloads; 44 control 0373200026426000249: 13 active-revision links and 3 downloads. All SHA recorded in
+  protected Mac mini runtime, original files outside Git.'
+- 'Two original UKRM ZIPs separately unpacked under caps: 5 safely staged text-ready documents and 2 opaque 7z each;
+  private byte-provenance stored.'
+- Real local Data Platform extractor extracted 13535, 76279, 3859, 3619 chars from original STATCOM/UKRM files,
+  no production Data Platform ingestion asserted.
+resume_instruction: Continue isolated /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi011-attachments-20261025;
+  run GitHub CI on feature/mi011-reuse-eis-document-acquisition-20261025 and merge only if green. Main .agent/current-task.yaml
+  is unrelated active roadmap and must not be overwritten by MI011. Source PDFs/DOCX/ZIP remain on authorized Mac
+  mini private runtime.
