@@ -1,5 +1,5 @@
 task_id: MI-008-EIS-SOURCE-LEDGER-20261025
-status: in_progress
+status: completed
 goal: Convert source-verified EIS receipts and original 44/223-FZ XML documents into measurable historical coverage
   and provenance-linked notice/protocol facts, without inventing awards.
 definition_of_done:
@@ -14,6 +14,7 @@ definition_of_done:
   notice-protocol joins, plus genuine archived-source dry run.
 - Update docs and complete code in separate reviewed PR, CI green if available.
 completed:
+- '2026-10-25 GitHub CI exact head 3ea6813c574d61f72c2f337ff665fbca4f8dcea4 all nine jobs success; 5231 pass, 285 skip; PR #509 merged c8a08e43308092f148c771565d99a752ea85077c.'
 - MI-002 EIS SOAP recovery was merged in main
 - Independently confirmed source archive RI223 procurement 32616447910 contains one purchaseNotice and one purchaseProtocol
   XML.
@@ -40,16 +41,14 @@ completed:
   960 application rows, increased legitimate safe parser cap to 2000.
 - 'Extended synthetic regression and actual-data audit: 81+ focused tests expected, no raw bidder information
   or signed-contract interpretation in committed data.'
-current: Code and real source smoke complete; create draft or review PR and run full CI before merging to current
-  main.
-pending:
-- Commit and push isolated feature branch while leaving TA-ROADMAP-EXEC canonical main .agent/current-task.yaml
-  unchanged.
-- Run PR exact SHA full GitHub CI and resolve any security/lint/compat failures before main merge.
-- After merge close MI008 checkpoint in main without replacing the unrelated TA product roadmap canonical state.
-- 'Next independent MI source research: systematically acquire original EPC annexes, full 36-month day/region
-  coverage, verified procurement protocols and award/contract facts. No unsupported claims.'
-last_verified_commit: 91994beb828ef4d7a559f1c1f3f013a57c9d2418
+current: Completed source-ledger and 44/223-FZ primary protocol parser PR #509, successfully merged in main after exact full CI.
+pending: []
+remaining_independent_work:
+- Systematic 36-month region/day/subsystem collection with bounded EIS usage; 10/4388 day cells verified only for the initial two-region sample.
+- Original EPC technical attachments and authenticated Data Platform ingestion/search with source hashes.
+- Official winner/INN and signed contract price verification from primary award/contract records; do not infer from bids or raw flags.
+- Commercial ETP platform evidence and de-duplication independently of EIS.
+last_verified_commit: c8a08e43308092f148c771565d99a752ea85077c
 test_results:
 - 77 passed, 1 existing StarletteDeprecationWarning; Ruff clean; diff check clean.
 - 'Real Mac mini original 44/223 EIS archive receipt coverage: 10 of 4388 2-region/day/subsystem cells SHA verified;
@@ -60,6 +59,4 @@ test_results:
   or awarded contracts.'
 - 'Actual 44-FZ primary ZIP: 8 XML, 2 notice revisions, 3 linked protocol/result source documents; offer/application
   rows 13, 1, 960, NOT unique bidders or contracts.'
-resume_instruction: MI008 branch feature/mi008-eis-source-ledger-20261025. Review code-only PR after all CI green;
-  preserve main canonical TA-ROADMAP-EXEC in .agent/current-task.yaml when merging. Evidence snapshot 10/4388
-  source-day slots must never be presented as 36-month national EIS completeness, nor XML counts as unique tenders.
+resume_instruction: 'MI-008 complete. Check main merge c8a08e43308092f148c771565d99a752ea85077c, preserve current-task TA roadmap. Begin next independent MI-009 historical EIS source coverage and attachments ingestion in isolated worktree. Never equate 4,440 XML with unique tenders or 10 verified source-day cells with exhaustive history.'
