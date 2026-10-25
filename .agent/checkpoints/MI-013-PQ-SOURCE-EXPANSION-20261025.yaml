@@ -1,0 +1,22 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-013-PQ-SOURCE-EXPANSION-20261025
+status: in_progress
+goal: Extend source-bounded Power Quality tender research with five dated, deduplicated candidate tenders and fail-closed financial evidence.
+definition_of_done:
+  - Preserve 12 existing evidence leads and add five distinct externally traced cases for 2026.
+  - Keep signed price, winner, tender status and equipment-specific amount unverified without primary proof.
+  - Extend pure deterministic tests and publish source-bound research update.
+  - Verify exact branch with GitHub CI; record test evidence and commit SHA, without merging under stale or uncertain AM-4.
+completed:
+  - Confirmed Mac mini ARC online, isolated the dirty unrelated local APR-07 branch; repository main is the source of truth.
+  - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
+  - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
+current: Open review branch containing seed, tests and source report; exact-head CI not yet confirmed.
+pending:
+  - Verify branch exact-head CI and reproducible report/test results; resolve any failures.
+  - Acquire official originals and contract evidence under a separate read-only, source-bounded task.
+last_verified_commit: null
+test_results:
+  - New deterministic expected 17 records / 0 verified awards; GitHub CI pending.
+resume_instruction: Start with branch research/mi013-pq-source-expansion-20261025 and verify CI. Do not repeat discovery or overwrite the dirty local feature/apr07-quality-slo-evidence tree. Keep 2023 records outside 2024-2026 statistics and evidence gaps explicit. After CI passes, update checkpoint to completed or review-gated based on merge authority; then begin official source/contract validation and Data Platform attachment evidence retrieval.
