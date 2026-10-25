@@ -1,5 +1,5 @@
 task_id: MI-010-PRIMARY-PQ-20261025
-status: in_progress
+status: completed
 goal: Normalize real variant 223-FZ primary EIS XML notices/protocols to source-bound Power Quality customers,
   initial-lot prices, traceable document links and safe attachment manifests.
 definition_of_done:
@@ -16,6 +16,7 @@ definition_of_done:
 - Run Ruff and tests; push reviewed PR, exact CI before merge, update checkpoint and preserve main unrelated TA
   roadmap.
 completed:
+- '2026-10-25 GitHub CI exact PR #511 head 464f641058aad35ae91061d384793b9de9ac2dbb: 5259 passed, 285 skipped; all 9 jobs green; main merge fe3f77f8ba63b62bc5ff7d3f3570b25d968be1f7.'
 - MI009 PR
 - Authenticated source ZIP for 32313008364 includes two purchaseNoticeZKESMBO plus purchaseProtocolSummingupZKESMBO;
   for 32615969197 two purchaseNoticeZPESMBO and purchaseProtocolRZ1ZPESMBO.
@@ -36,22 +37,19 @@ completed:
   and initialSum confirmed; award winner and actual signed contract remain unverified.
 - 109 focused MI, EIS source, Data Platform boundary and clone tests PASS; Ruff PASS, original primary-source
   live acceptance successful.
-current: MI010 implementation and original primary-source smoke complete; publish PR and require exact green full
-  CI, without enabling client live data service.
-pending:
-- Publish PR with exact base main, verify all CI and merge only if green.
-- Mark MI010 checkpoint completed in main without replacing unrelated TA-ROADMAP-EXEC current-task.
-- 'Next separate MI011: resolve original public EIS attachment 404 with official permitted access path; download/hash
-  real technical annex PDF/DOCX/XLSX and index into Data Platform, plus original award/contract registries and
-  commercial ETP corroboration.'
-last_verified_commit: 19224beb34aeeac9723a1f5630fb71a1751a03b1
+current: Completed source-bound original 223-FZ PQ primary-source normalization, source SHA attachment manifest, and PR #511 merged to main after full CI.
+pending: []
+remaining_independent_work:
+- Resolve official EIS attachment download HTTP404 for native PDF/DOCX/XLSX technical specifications without bypassing TLS or guessing material.
+- Index original SHA-verified EIS attachment bytes through Data Platform and recover buried PQ scope within EPC modernization documents.
+- Prove award winners, winning INN, signed prices and EPC/project/designer roles via original official protocol/contract register rather than flags.
+- Systematically increase 36-month, nationwide 44/223-FZ source coverage beyond initial 21/4388 two-region/day cells; commercial ETP ingestion remains separate.
+last_verified_commit: fe3f77f8ba63b62bc5ff7d3f3570b25d968be1f7
 test_results:
+- 'Exact GitHub CI PR #511 5259 passed, 285 skipped; all 9 jobs success and Ruff passed.'
 - 109 passed, one pre-existing StarletteDeprecationWarning; Ruff all changed source+tests passed.
 - Original RI223 32313008364 notice/protocol linked, official initial RUB 6795960; winner/contract unverified.
 - Original RI223 32615969197 notice/protocol linked, official initial RUB 518960; winner/contract unverified.
 - 'Attachment source references SHA-qualified: 14, 4, and 28 for three primary source archives; actual file download
   unavailable HTTP 404.'
-resume_instruction: MI010 code ready on feature/mi010-pq-primary-source-proof-20261025. Verify exact GitHub CI,
-  merge if green, then complete archived checkpoint in main while preserving TA-ROADMAP global current-task. Main
-  future block is official attachment file downloads returning HTTP404; never assert they were indexed or invent
-  awards.
+resume_instruction: 'MI-010 completed: PR #511 merged at fe3f77f8ba63b62bc5ff7d3f3570b25d968be1f7, exact CI 5259 pass / 285 skip, all 9 jobs green. Preserve canonical main TA-ROADMAP current-task. Next separate MI-011: official EIS attachment HTTP404 resolution, secure download + SHA verification + Data Platform authorized indexing; verify original signed-contract awards/INN, expand national/ETP coverage. Do not misrepresent two examples as exhaustive national PQ market.'
