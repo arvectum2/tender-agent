@@ -145,3 +145,34 @@ def test_rejects_wrong_source_selector_and_sha(tmp_path: Path):
                         exact_date="2026-10-08")
     with pytest.raises(ValueError, match="Invalid source digest"):
         _extract(path, "not a sha")
+
+def test_real_44fz_export_wrapper_purchase_number(tmp_path: Path):
+    original = b"""<export><epNotificationEF2020><commonInfo>
+<purchaseNumber>0372200277526000545</purchaseNumber>
+<docNumber>ABC-ORDER</docNumber>
+</commonInfo></epNotificationEF2020></export>"""
+    path = tmp_path / "wrapped.zip"
+    sha = _archive(path, [("epNotificationEF2020_1.xml", original)])
+    docs = extract_archive(
+        path, official_archive_sha256=sha, subsystem="PRIZ",
+        region="78", exact_date="2026-10-08",
+    )
+    assert len(docs) == 1
+    assert docs[0]["xml_root"] == "epNotificationEF2020"
+    assert docs[0]["transport_root"] == "export"
+    assert docs[0]["notice_number"] == "0372200277526000545"
+    assert docs[0]["winner_verified"] is False
+
+
+def test_export_with_multiple_documents_does_not_guess_notice(tmp_path: Path):
+    path = tmp_path / "ambiguous.zip"
+    sha = _archive(path, [(
+        "multi.xml",
+        b"<export><epNotificationEF2020/><epNotificationEF2020/></export>",
+    )])
+    docs = extract_archive(
+        path, official_archive_sha256=sha, subsystem="PRIZ",
+        region="77", exact_date="2026-10-08",
+    )
+    assert docs[0]["record_kind"] == "other_primary_xml"
+    assert docs[0]["notice_number"] is None

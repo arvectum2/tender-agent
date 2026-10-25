@@ -171,12 +171,23 @@ def extract_archive(
                 continue
             seen.add(xml_sha)
             root = ET.fromstring(data)
-            fields = _document_fields(root)
+            document_root = root
+            if _local(root.tag) == "export":
+                # The actual EIS 44-FZ download format wraps epNotification
+                # in <export>. Never guess when multiple document children exist.
+                payload = [
+                    child for child in root
+                    if _local(child.tag).startswith("epNotification")
+                ]
+                if len(payload) == 1:
+                    document_root = payload[0]
+            fields = _document_fields(document_root)
             output.append({
                 "schema_version": "eis-primary-source-xml/0.1",
                 "subsystem": subsystem, "region": region,
                 "exact_date": exact_date,
-                "xml_root": _local(root.tag),
+                "xml_root": _local(document_root.tag),
+                "transport_root": _local(root.tag),
                 **fields,
                 "source": {
                     "official_archive_sha256": official_archive_sha256,

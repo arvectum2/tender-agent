@@ -30,6 +30,11 @@ Read-only authenticated `getDocsByReestrNumber` call for **RI223 procurement 326
 - `purchaseNotice` XML whose exact `registrationNumber` is the procurement number.
 - `purchaseProtocol` XML whose `purchaseInfo/purchaseNoticeNumber` matches the exact same procurement number; **one application** is present in the source protocol.
 
+
+### Real 44-FZ envelope acceptance
+
+On a distinct actual 44-FZ `PRIZ/epNotificationEF2020` archive for Moscow on 2026-10-08, **all 100 original XML members** had an explicit purchase number successfully extracted from `export/epNotificationEF2020/commonInfo/purchaseNumber`. The native `export` wrapper was discovered by examining the actual primary XML and is now supported. Zero winner or signed-contract claims were made. These 100 XML members may include revisions, so this is **not necessarily 100 unique tenders**.
+
 Both XMLs were parsed by `eis_source_ledger.extract_archive`, their own SHA-256 computed, and linked by `link_original_documents`. Exactly **one notice-protocol linkage**, zero unlinked numbers, **winner_verified=false**, **signed_contract_price_verified=false**. The protocol has typed application fields such as `price`, `accepted`, `rating`, `contractSigned`, but these alone **do not establish signed contracts, actual EPC roles or contract prices**. No personal bidder details were copied into tracked Git data.
 
 ## Technical and safety decisions
