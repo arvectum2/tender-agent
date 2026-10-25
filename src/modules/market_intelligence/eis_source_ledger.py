@@ -65,7 +65,11 @@ def _safe_decimal(value: str | None) -> str | None:
 
 def _applications(protocol: ET.Element) -> list[dict[str, Any]]:
     rows = []
-    data = _first(protocol, "body/item/purchaseProtocolData/lotApplicationsList")
+    # Approved original 223-FZ variants share lotApplicationsList shape
+    # but carry a document-type-specific *Data wrapper.
+    data = _first(
+        protocol, f"body/item/{_local(protocol.tag)}Data/lotApplicationsList",
+    )
     if data is None:
         return rows
     for lots in _named_children(data, "protocolLotApplications"):
@@ -127,20 +131,59 @@ def _applications_44(root: ET.Element) -> list[dict[str, Any]]:
 
 def _document_fields(root: ET.Element) -> dict[str, Any]:
     kind = _local(root.tag)
-    if kind == "purchaseNotice":
-        number = _clean_number(_text(root, "body/item/purchaseNoticeData/registrationNumber"))
+    if kind in ("purchaseNotice", "purchaseNoticeZKESMBO", "purchaseNoticeZPESMBO"):
+        original = _first(root, f"body/item/{kind}Data")
+        if original is None:
+            return {
+                "record_kind": "notice", "notice_number": None,
+                "protocol_number": None, "applications": [],
+                "customer_company_name": None, "customer_inn_evidence": None,
+                "initial_lots": [],
+            }
+        number = _clean_number(_text(original, "registrationNumber"))
+        customer_name = _text(original, "customer/mainInfo/fullName")
+        if customer_name:
+            customer_name = customer_name[:300]
+        customer_inn = _text(original, "customer/mainInfo/inn")
+        if customer_inn is not None and not re.fullmatch(r"[0-9]{10}|[0-9]{12}", customer_inn):
+            customer_inn = None
+        lots_node = _first(original, "lots")
+        original_lots = _named_children(lots_node, "lot") if lots_node is not None else []
+        if len(original_lots) > 500:
+            raise ValueError("Official notice lot count exceeds safe limit")
+        lots = []
+        for lot in original_lots:
+            # Original lotData/initialSum is a declared initial price, NOT
+            # actual winner bid, contract price or equipment turnover.
+            lots.append({
+                "lot_ordinal": _text(lot, "ordinalNumber"),
+                "subject_excerpt": (_text(lot, "lotData/subject") or "")[:300],
+                "initial_sum_text": _safe_decimal(_text(lot, "lotData/initialSum")),
+                "currency_code": _text(lot, "lotData/currency/code"),
+                "price_kind": "source_initial_lot_sum_not_contract",
+                "winner_verified": False,
+            })
         return {
             "record_kind": "notice",
             "notice_number": number,
             "protocol_number": None,
             "applications": [],
+            "customer_company_name": customer_name,
+            "customer_inn_evidence": customer_inn,
+            "initial_lots": lots,
         }
-    if kind == "purchaseProtocol":
+    if kind in (
+        "purchaseProtocol", "purchaseProtocolSummingupZKESMBO",
+        "purchaseProtocolRZ1ZPESMBO",
+    ):
+        original = _first(root, f"body/item/{kind}Data")
         return {
             "record_kind": "protocol",
-            "notice_number": _clean_number(_text(root, "body/item/purchaseProtocolData/purchaseInfo/purchaseNoticeNumber")),
-            "protocol_number": _text(root, "body/item/purchaseProtocolData/registrationNumber"),
+            "notice_number": _clean_number(_text(original, "purchaseInfo/purchaseNoticeNumber")) if original is not None else None,
+            "protocol_number": _text(original, "registrationNumber") if original is not None else None,
             "applications": _applications(root),
+            "winner_verified": False,
+            "signed_contract_price_verified": False,
         }
     if kind in ("epProtocolEF2020Final", "fcsPlacementResult", "fcsProposalsResult"):
         number = _clean_number(
