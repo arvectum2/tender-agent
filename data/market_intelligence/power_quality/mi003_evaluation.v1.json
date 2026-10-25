@@ -1,0 +1,2672 @@
+{
+  "schema_version": "mi003-power-quality-evaluation/0.1",
+  "window": [
+    "2023-10-24",
+    "2026-10-24"
+  ],
+  "source_seed_sha256": "347a97345a649df757c0c345dceed318b924cb020d58cf78ad1068cca3077b76",
+  "sample_type": "purposefully_discovered_public_leads_not_population",
+  "gold_label_method": "existing manually curated procurement card family",
+  "labelled_lead_count": 12,
+  "expected_family_found_count": 12,
+  "sample_description_label_recall": 1.0,
+  "negative_controls_count": 8,
+  "negative_control_false_positives": 0,
+  "negative_controls_are_synthetic": true,
+  "per_lead": [
+    {
+      "seed_id": "pq-2023-mogocha-service",
+      "labelled_family": "statcom",
+      "matched_families": [
+        "statcom"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "321275a91a1af56d7d605e7555abc1d70663cc52e5acd1f43a524d774bee12b1",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2024-chirkheygestroy",
+      "labelled_family": "ukrm",
+      "matched_families": [
+        "ukrm"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "92d34fc4c4bbf073dcb33163b42a3f8ea446c72af9393c0069baa4524355e6c4",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "receiving_from"
+    },
+    {
+      "seed_id": "pq-2025-suhodol",
+      "labelled_family": "statcom",
+      "matched_families": [
+        "statcom"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "fd0edbaefb73c04a277c578a9f7a89fba215e403d9ec599f7b82e0e3a3c45b1d",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2025-lukoil-ukrm1",
+      "labelled_family": "ukrm",
+      "matched_families": [
+        "ukrm"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "dc1d3c19e963a203ab2e5ed8419a88e5fdce27d1b6848312bd18cf77839f6828",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2025-kuzbass-statcom",
+      "labelled_family": "statcom",
+      "matched_families": [
+        "statcom"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "6464dea2a1b2cdd655c8febbef0ae31e9619268646a840aa42eba11b80c65e5e",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2026-lukoil-ukrm2",
+      "labelled_family": "ukrm",
+      "matched_families": [
+        "ukrm"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "194c374b132c6e78bd83ca8696452c7569ed50f356b4abc925cabd34d5863942",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2026-lebedinsky",
+      "labelled_family": "statcom",
+      "matched_families": [
+        "statcom"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "8410a31d99838b233c4cc4584e48cb9d6be51ca6a4a72ba36633871ca19d519e",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "reported_deadline_NOT_publication"
+    },
+    {
+      "seed_id": "pq-2026-ngk",
+      "labelled_family": "ukrm",
+      "matched_families": [
+        "ukrm"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "68dcbfce35ddbf9473047ce696f3ef5b5ded9cbb345743d3eb68179f47515abc",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2026-rusal-data",
+      "labelled_family": "statcom",
+      "matched_families": [
+        "statcom"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "bf4bb513a1775faeca1e30197b784d713c22288cf955d0154256823287c70c56",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published_secondary"
+    },
+    {
+      "seed_id": "pq-2026-bashkirenergo-pir",
+      "labelled_family": "ukrm",
+      "matched_families": [
+        "ukrm"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "b9ad3c92e6cc6c75859df25822cd6e51b58c4d10c35bc2c25a8a2fc04540cbee",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published"
+    },
+    {
+      "seed_id": "pq-2026-rosseti-nw-epc",
+      "labelled_family": "ukrm",
+      "matched_families": [
+        "ukrm"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "200c70dcc2a55063d926a5ecf54335a952ace6b2ab770fc4e887157f5c3d9aba",
+      "source_tier": "third_party_only",
+      "publication_date_basis": "published_secondary"
+    },
+    {
+      "seed_id": "pq-2026-bidzaar-filter",
+      "labelled_family": "harmonic_filter",
+      "matched_families": [
+        "harmonic_filter"
+      ],
+      "expected_label_found_in_description": true,
+      "description_sha256": "53dffb4a05324245f62f3b2858a92661a3def2b6cd79ee731d463f3fcfed116f",
+      "source_tier": "primary_platform",
+      "publication_date_basis": "published"
+    }
+  ],
+  "negative_controls": [
+    {
+      "control_index": 0,
+      "text": "Разработка SVG vector graphics файлов для корпоративного сайта",
+      "matched_families": []
+    },
+    {
+      "control_index": 1,
+      "text": "Поставка кондиционеров и средств защиты растений",
+      "matched_families": []
+    },
+    {
+      "control_index": 2,
+      "text": "Услуги компенсации вреда и компенсационные выплаты",
+      "matched_families": []
+    },
+    {
+      "control_index": 3,
+      "text": "Организация музыкального мероприятия, фильтр высоких частот звука",
+      "matched_families": []
+    },
+    {
+      "control_index": 4,
+      "text": "Услуги проектирования презентации PowerPoint и брендинга",
+      "matched_families": []
+    },
+    {
+      "control_index": 5,
+      "text": "Поставка кабельных наконечников и крепёжных изделий",
+      "matched_families": []
+    },
+    {
+      "control_index": 6,
+      "text": "Установка светильников на подстанции без оборудования PQ",
+      "matched_families": []
+    },
+    {
+      "control_index": 7,
+      "text": "Монтаж локальной сети и серверов, техника информационной безопасности",
+      "matched_families": []
+    }
+  ],
+  "coverage": {
+    "window_from": "2023-10-24",
+    "window_to": "2026-10-24",
+    "coverage_grid": [
+      {
+        "source": "B2B-Center",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "B2B-Center",
+        "month": "2026-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Bidzaar",
+        "month": "2026-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-223FZ",
+        "month": "2026-10",
+        "status": "failed",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "EIS-44FZ",
+        "month": "2026-10",
+        "status": "failed",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Metal-IT",
+        "month": "2026-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Other-commercial",
+        "month": "2026-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2023-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2023-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2023-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2024-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-11",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2025-12",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-01",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-02",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-03",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-04",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-05",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-06",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-07",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-08",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-09",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      },
+      {
+        "source": "Roseltorg",
+        "month": "2026-10",
+        "status": "not_checked",
+        "expected": null,
+        "observed": null,
+        "proof_url": null
+      }
+    ],
+    "source_month_slots": 259,
+    "verified_complete_slots": 0,
+    "full_market_census": false,
+    "national_tam_rub": null
+  },
+  "project_role_graph": {
+    "schema_version": "mi-project-role-graph/0.1",
+    "verified_edges": [],
+    "quarantined_assertions": [],
+    "unverified_role_count": 0,
+    "role_edges_claimed_from_search_only": 0
+  },
+  "reported_buyers_unverified": [
+    {
+      "name": "АО «Лебединский ГОК»",
+      "inn_reported": "3127000014",
+      "procedure_ids": [
+        "4302914"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "АО «УК «Кузбассразрезуголь»",
+      "inn_reported": "4205049090",
+      "procedure_ids": [
+        "106044-ТТ"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "АО «ЧиркейГЭСстрой»",
+      "inn_reported": "0533001760",
+      "procedure_ids": [
+        "chges24621PR"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ООО «Башкирские распределительные электрические сети»",
+      "inn_reported": "0277071467",
+      "procedure_ids": [
+        "32615969197"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ООО «Инженерно-Строительная Компания»",
+      "inn_reported": "7709567459",
+      "procedure_ids": [
+        "1148520"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "inn_reported": "8608048498",
+      "procedure_ids": [
+        "COM07102500074",
+        "COM16012600053"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ООО «Морской порт «Суходол»",
+      "inn_reported": null,
+      "procedure_ids": [
+        "pq-2025-suhodol"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ООО «НГК Ресурс»",
+      "inn_reported": "2721189780",
+      "procedure_ids": [
+        "4304120"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ПАО «Россети Северо-Запад»",
+      "inn_reported": null,
+      "procedure_ids": [
+        "26Т0110040.0017"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    },
+    {
+      "name": "ПАО «Россети» / Забайкальское ПМЭС",
+      "inn_reported": null,
+      "procedure_ids": [
+        "32313008364"
+      ],
+      "provenance": "secondary_or_platform_card",
+      "role_verified_from_official_protocol": false
+    }
+  ],
+  "account_playbook_unreviewed": [
+    {
+      "buyer_name_reported": "ООО «ЛУКОЙЛ-Западная Сибирь»",
+      "buyer_inn_reported": "8608048498",
+      "observed_procedures": 2,
+      "product_families": [
+        "ukrm"
+      ],
+      "work_packages": [
+        "supply"
+      ],
+      "period_observations_only": [
+        "2025-10-07",
+        "2026-01-16"
+      ],
+      "candidate_project_names": [
+        "ТПП ЛУКОЙЛ-Западная Сибирь / поставки 2026"
+      ],
+      "initial_priority_hypothesis": "P1",
+      "proposed_actions": [
+        "Запросить техническую спецификацию, напряжение, диапазон мощности, условия аналогов и план следующих закупок"
+      ],
+      "source_urls": [
+        "https://rostender.info/region/hanty-mansijskij-avtonomnyj-okrug---yugra-avtonomnyj-okrug/sovetskij/89285720-tender-postavka-ustanovok-kompensacij-reaktivnyh-moshchnostej-ukrm-dlya-territorialno",
+        "https://zakupki.kontur.ru/IS54665725",
+        "https://zakupki.kontur.ru/IS56822445"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "ООО «Морской порт «Суходол»",
+      "buyer_inn_reported": null,
+      "observed_procedures": 1,
+      "product_families": [
+        "statcom"
+      ],
+      "work_packages": [
+        "epc"
+      ],
+      "period_observations_only": [
+        "2025-07-17"
+      ],
+      "candidate_project_names": [
+        "Морской порт Суходол / тяговые потребители"
+      ],
+      "initial_priority_hypothesis": "P1",
+      "proposed_actions": [
+        "Выяснить действующего технического заказчика, проектировщика и EPC; предложить совместную комплектацию только после подтверждения ролей"
+      ],
+      "source_urls": [
+        "https://b2b.house/purchase/r805b9b2c-cd4d-4254-bba1-5deb6fd5d9bf_4b62e826/"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "ПАО «Россети Северо-Запад»",
+      "buyer_inn_reported": null,
+      "observed_procedures": 1,
+      "product_families": [
+        "ukrm"
+      ],
+      "work_packages": [
+        "epc"
+      ],
+      "period_observations_only": [
+        "2026-06-17"
+      ],
+      "candidate_project_names": [
+        "Строительство ЛЭП 6 кВ и монтаж УКРМ в Карелии"
+      ],
+      "initial_priority_hypothesis": "P1",
+      "proposed_actions": [
+        "Выяснить действующего технического заказчика, проектировщика и EPC; предложить совместную комплектацию только после подтверждения ролей"
+      ],
+      "source_urls": [
+        "https://energybase.ru/distribution/rosseti-sz/tenders/power-monitoring-systems",
+        "https://vsem-podryad.ru/purchase/f088b62a-cca2-493e-b887-1653bae98839/?backUrl=%2Fnowinnerpurchases%2F%3FisSmbRequired%3D1%26purchaseFzs%3DFz223%2CFz615"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "АО «Лебединский ГОК»",
+      "buyer_inn_reported": "3127000014",
+      "observed_procedures": 1,
+      "product_families": [
+        "statcom"
+      ],
+      "work_packages": [
+        "maintenance"
+      ],
+      "period_observations_only": [
+        "2026-01-29"
+      ],
+      "candidate_project_names": [
+        "ПС 3 Лебединского ГОКа"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Выяснить установленную базу, сервисные потребности и возможные планы модернизации, не считать обслуживание новой поставкой"
+      ],
+      "source_urls": [
+        "https://synapsenet.ru/zakupki/b2b/4302914--belgorodskaya-obl-tehnicheskoe-obsluzhivanie-oborudovaniya"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "АО «УК «Кузбассразрезуголь»",
+      "buyer_inn_reported": "4205049090",
+      "observed_procedures": 1,
+      "product_families": [
+        "statcom"
+      ],
+      "work_packages": [
+        "supply"
+      ],
+      "period_observations_only": [
+        "2025-10-28"
+      ],
+      "candidate_project_names": [
+        "Калтанский и Талдинский угольные разрезы"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Запросить техническую спецификацию, напряжение, диапазон мощности, условия аналогов и план следующих закупок"
+      ],
+      "source_urls": [
+        "https://zakupki.kontur.ru/IS55137357"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "АО «ЧиркейГЭСстрой»",
+      "buyer_inn_reported": "0533001760",
+      "observed_procedures": 1,
+      "product_families": [
+        "ukrm"
+      ],
+      "work_packages": [
+        "supply"
+      ],
+      "period_observations_only": [
+        "2024-11-20"
+      ],
+      "candidate_project_names": [
+        "Гидроузел Федоровский / энергоснабжение стройплощадки"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Запросить техническую спецификацию, напряжение, диапазон мощности, условия аналогов и план следующих закупок"
+      ],
+      "source_urls": [
+        "https://synapsenet.ru/zakupki/lotonline/chges24621pr--stavropolskij-kraj-postavka-4-chetireh-shtuk-avtomaticheskih"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "ООО «Башкирские распределительные электрические сети»",
+      "buyer_inn_reported": "0277071467",
+      "observed_procedures": 1,
+      "product_families": [
+        "ukrm"
+      ],
+      "work_packages": [
+        "design"
+      ],
+      "period_observations_only": [
+        "2026-04-30"
+      ],
+      "candidate_project_names": [
+        "ПС 35 кВ Пионерская / установка УКРМ 10 кВ"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Уточнить судьбу ПИР и график утверждения проектных решений; предложить проверку характеристик и допустимых аналогов"
+      ],
+      "source_urls": [
+        "https://zakupki.kontur.ru/32615969197"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "ООО «Инженерно-Строительная Компания»",
+      "buyer_inn_reported": "7709567459",
+      "observed_procedures": 1,
+      "product_families": [
+        "statcom"
+      ],
+      "work_packages": [
+        "supply"
+      ],
+      "period_observations_only": [
+        "2026-03-05"
+      ],
+      "candidate_project_names": [
+        "ЦОД на территории РУСАЛ Кандалакша"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Запросить техническую спецификацию, напряжение, диапазон мощности, условия аналогов и план следующих закупок"
+      ],
+      "source_urls": [
+        "https://www.tenderguru.ru/tender/92618394",
+        "https://zakupki.tochka.com/search/1084879614-3/"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "ООО «НГК Ресурс»",
+      "buyer_inn_reported": "2721189780",
+      "observed_procedures": 1,
+      "product_families": [
+        "ukrm"
+      ],
+      "work_packages": [
+        "supply"
+      ],
+      "period_observations_only": [
+        "2026-01-23"
+      ],
+      "candidate_project_names": [
+        "Поставка УКРМ 350 кВАр"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Запросить техническую спецификацию, напряжение, диапазон мощности, условия аналогов и план следующих закупок"
+      ],
+      "source_urls": [
+        "https://zakupki.kontur.ru/4304120_458"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    },
+    {
+      "buyer_name_reported": "ПАО «Россети» / Забайкальское ПМЭС",
+      "buyer_inn_reported": null,
+      "observed_procedures": 1,
+      "product_families": [
+        "statcom"
+      ],
+      "work_packages": [
+        "maintenance"
+      ],
+      "period_observations_only": [
+        "2023-11-27"
+      ],
+      "candidate_project_names": [
+        "ПС 220 кВ Могоча"
+      ],
+      "initial_priority_hypothesis": "P2",
+      "proposed_actions": [
+        "Выяснить установленную базу, сервисные потребности и возможные планы модернизации, не считать обслуживание новой поставкой"
+      ],
+      "source_urls": [
+        "https://www.dv-tender.ru/details/500280907"
+      ],
+      "verified_current_open_opportunity": false,
+      "verified_winning_supplier": null,
+      "legal_role_of_epc_verified": false,
+      "recommended_state": "manual_qualification_not_automated_outreach"
+    }
+  ],
+  "known_winning_epc": [],
+  "known_verified_designers": [],
+  "verified_hardware_market_size_rub": null,
+  "unpriced_relevant_procedures": 12,
+  "critical_caveats": [
+    "Description-level recall on purposefully discovered examples is not recall on hidden technical annexes or the Russian procurement population.",
+    "Synthetic negative controls are smoke/regression examples, not independently sampled false-positive prevalence.",
+    "Per-month official EIS/commercial coverage denominator is unknown, no national TAM or historical growth claims.",
+    "Buyer and engineering role from third-party procurement cards is unverified; no signed contract or winner inferred.",
+    "Two EIS October 2026 failures represent source access errors, not zero relevant tenders."
+  ]
+}

@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Annotated
 from uuid import uuid4
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 from fastapi.responses import FileResponse, HTMLResponse
 from pydantic import Field, model_validator
 from sqlalchemy import or_, select
@@ -50,10 +50,30 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     get_uploaded_demo_report,
 )
 from src.shared.api.dependencies import DBSession
+from src.shared.api.middleware import _is_protected_path
 from src.shared.config.settings import get_settings
 from src.shared.types.common import APIModel
 
-router = APIRouter(tags=["customer-onboarding"])
+
+def require_private_onboarding() -> None:
+    """Reject onboarding with absent or mis-scoped pilot authentication.
+
+    Route-level dependency prevents direct company/profile/document exposure if
+    the shared app runs with its optional auth middleware disabled or narrowed.
+    """
+    settings = get_settings()
+    protected = tuple(settings.pilot_auth_protected_prefixes.split(","))
+    public = tuple(settings.pilot_auth_public_paths.split(","))
+    paths = ("/pilot/onboarding", "/api/onboarding/customers")
+    if not (
+        settings.pilot_auth_is_enabled()
+        and settings.pilot_auth_password_safe()
+        and all(_is_protected_path(path, protected, public) for path in paths)
+    ):
+        raise HTTPException(status_code=503, detail="Private onboarding authentication must be configured")
+
+
+router = APIRouter(tags=["customer-onboarding"], dependencies=[Depends(require_private_onboarding)])
 FACT_KEY = "supplier_profile"
 MAX_PDF = 8 * 1024 * 1024
 DOC_KEY = re.compile(r"^[a-z0-9][a-z0-9_-]{2,63}$")
@@ -300,6 +320,11 @@ def compare_profile_price(profile: OnboardingProfile, screening: dict) -> dict:
     if price is None:
         return {"status": "UNKNOWN", "reason": "Tender price cannot be parsed", "citations": []}
     low, high = profile.criteria.price_min, profile.criteria.price_max
+    if low is None and high is None:
+        return {
+            "status": "UNKNOWN", "reason": "NMCK limits have not been configured by the operator",
+            "citations": price_fact["citations"],
+        }
     within = (low is None or price >= Decimal(str(low))) and (high is None or price <= Decimal(str(high)))
     return {"status": "WITHIN_BOUNDS" if within else "OUTSIDE_BOUNDS",
             "price_rub": str(price), "citations": price_fact["citations"],

@@ -1,0 +1,53 @@
+{
+  "schema_version": "workspace-firstparty-pro-advertising-category-price-v1",
+  "source_url": "https://workspace.ru/advertising/",
+  "checked_at_utc": "2026-10-17T15:02:49.467432+00:00",
+  "original_html_sha256": "797da2e39d3c484f0c23e60d7ac1b14d7912e2511aa62f08e2513d0511590a9b",
+  "original_html_length_bytes": 163124,
+  "original_http": 200,
+  "original_public_prices_rub_total": {
+    "site_development": {
+      "1_month": 25500,
+      "3_months": 68850,
+      "6_months": 130050,
+      "12_months": 229500
+    },
+    "app_development": {
+      "1_month": 16900,
+      "3_months": 45630,
+      "6_months": 86190,
+      "12_months": 152100
+    },
+    "crm_software_1c_ai": {
+      "1_month": 6900,
+      "3_months": 18630,
+      "6_months": 35190,
+      "12_months": 62100
+    },
+    "content_teaser_cheapest_category": {
+      "1_month": 2900,
+      "3_months": 7830,
+      "6_months": 14790,
+      "12_months": 26100
+    }
+  },
+  "generic_advertised_from_rub_per_month": 2900,
+  "site_one_month_price_rub": 25500,
+  "crm_ai_one_month_price_rub": 6900,
+  "offer_published_rub": 89000,
+  "owner_schlam_entrance_offer_less_site_one_month_PRO_rub": 63500,
+  "site_one_month_pro_share_of_offer_percent": "28.65",
+  "site_one_month_plus_illustrative_usn6pct_gross_on_offer_rub": 30840,
+  "offer_after_site_pro_and_illustrative_usn_before_any_other_cost_rub": 58160,
+  "buyer_public_budget_min_rub": 130000,
+  "buyer_budget_min_after_site_pro_and_illustrative_usn_before_cost_rub": 96700,
+  "source_prices_are_public_advertising_not_authenticated_cart": true,
+  "actual_company_plan_and_category_entitlement_unknown": true,
+  "pro_purchase_authorized": false,
+  "paid_no_win_cash_risk_site_month_rub": 25500,
+  "actual_invoice_or_vat_treatment_proven": false,
+  "usn6pct_illustration_not_verified_company_tax_or_vat_advice": true,
+  "gross_left_before_labor_hosting_ip_legal_support_and_all_other_expenses": true,
+  "owner_go": false,
+  "external_action_executed": false
+}

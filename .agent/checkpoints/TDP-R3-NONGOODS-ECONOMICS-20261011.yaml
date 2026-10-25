@@ -1,0 +1,48 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-NONGOODS-ECONOMICS-20261011
+status: completed
+goal: Extract economics-report projection for services and non-goods procurement from
+  legacy monolith, with original None/UNKNOWN margins and no fabricated supplier quotes.
+definition_of_done:
+- Move services-without-quote and generic-with/without supplied economics cases into
+  pure product-owned module and inject notice-price helper
+- Preserve input/output semantics, AST exact payload parity and original legacy call
+  route
+- Test missing supplier cost, manual review messages, supplied economic values and
+  notice informational metric
+- Run focused/full local pytest, Ruff/make check and exact-head CI; merge and mark
+  completed while parent TDP-REFACTOR remains active
+completed:
+- Identified 94-line services/non-goods economics projection in _build_output_payloads,
+  independent of already extracted goods case.
+- Extracted 92-line pure services/non-goods economics projection to operator_non_goods_economics.py,
+  preserving source-aware notice price helper injection and existing entrypoint.
+- AST compared whole original services and generic economics branches against extracted
+  function and found identical.
+- Ten new parameterized regression cases verify missing quotes and margin unknowns,
+  confirmed operator economics retained and manual review unchanged; 75 focused tests
+  passed.
+- Targeted Ruff and make check passed.
+- 'PR #321 full Python 3.12 local regression passed 3601 tests, 238 skipped and zero
+  failed after reconciling PR #320 risk-report merge.'
+- Both exact-head GitHub quality jobs (9m05s and 9m12s), dependency-lock, Docker,
+  Redis, Postgres, migrations, R8 acceptance, bridge and security passed.
+- 'PR #321 merged main d551552b16503c8e36d3fa35b4b1234337cf1496.'
+current: Completed and merged as d551552b16503c8e36d3fa35b4b1234337cf1496
+pending: []
+last_verified_commit: d551552b16503c8e36d3fa35b4b1234337cf1496
+test_results:
+- 75 focused tests passed, 21 warnings
+- AST both branches identity PASS
+- Targeted Ruff PASS
+- make check PASS
+- 'Reconciled full local pytest: 3601 passed, 238 skipped, 294 warnings; 0 failed'
+- make check and Ruff passed
+- All exact-head GitHub CI passed
+- Merged d551552b16503c8e36d3fa35b4b1234337cf1496
+resume_instruction: This R3 non-goods economics extraction slice is complete. Continue
+  overarching TDP-REFACTOR-20261009. Do not repeat goods, non-goods or risk-report
+  projection extraction. R2 authoritative original EIS hash/notice revision, R3 remaining
+  report modularization, R4 source-locked real benchmark, R5 >=20 independently reviewed
+  EIS cases and owner signoff remain. Owner-disabled watchdog stays disabled.

@@ -1,0 +1,57 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-SEVENTH-EOK-REVISIONS-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Verify seventh distinct real 44FZ historical EOK2020 development E2E 0348100024426000039 with 3 archived notice editions, 7 documents
+  in v3 including separately recovered first-party annex, and a single genuine local Gemma4 run.
+definition_of_done:
+- Bind original getDocsIP ZIP/selected v3 EOK XML to pinned SHA and each of seven referenced filenames, sizes and exact official source
+  UIDs; old-revision attachments must not leak to v3.
+- Verify first-party originally saved six attached files and separately restored seventh file bytes; freeze SHA manifest and fail closed
+  for missing/mismatching, corrupted, reused or ambiguous UID.
+- Stage one isolated authentic notice-to-operator flow, confirm completeness, local Gemma full analysis, XML source citations, persisted
+  report/history and archived export denied.
+- Record source-vs-LLM semantic findings, accurate ZIP nested metrics and limitations; no false current-state or signing claims.
+- Focused/adversarial tests, full local suite, Draft PR stacked on
+completed:
+- 2026-10-15 six historical independent cases accepted; sixth PR442 substantive exact CI run38781380860 SUCCESS and checkpoint completed.
+- '2026-10-15 selected next distinct EOK2020 v3 notice 0348100024426000039: original archive sha af61797c60db6a9054380b052c495deacb62c0be5813fe3a78bb07c648dcde1e,
+  selected v3 XML sha2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d; 7 v3 references. Old 2026-10-09 run has six source
+  matches, separately recovered source 2026-10-14 ZIP sha5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9 pins missing
+  seventh.'
+- 2026-10-15 selected historical archived EOK2020 revision3 matched original Oct09 getDocsIP ZIP SHA af61797c60db6a9054380b052c495deacb62c0be5813fe3a78bb07c648dcde1e
+  and XML SHA 2580e43ef01f2a3b57f6e690bc09572859eafb1b7c43243b511890c083182a9d; seven frozen exact UID/name/size/original SHA pins written
+  as committed source manifest. Six original files matched source_url UID in saved original run, seventh restored original from independent
+  first-party Oct14 receipt matching SHA 5d1411e9788212a7c7ef12ccc02d6182bf8ebf905e4a73acbb2d460c436ac8d9.
+- '2026-10-15 isolated native EIS getDocsIP original source stage completed run toa-run-20261015185058-9a58e4: 4 original XML including
+  3 EOK editions and clarification; selected EOK v3 seven official documents; document set ready_to_analyze without bypass, 11 original
+  source SHA exact.'
+- '2026-10-15 direct Data Platform ZIP precheck port18099: four ZIP yield five readable substantive nested PDF/DOCX, correct supporting/contract
+  kinds. 20 focused original-SHA/UID/revision/unsafe-path and prior regression tests PASS.'
+- 2026-10-15 one actual local Gemma4 E2E started PID54222; never rerun while active.
+- 2026-10-15 authentic original EOK v3 local Gemma4 E2E 4 calls333.22sec API200, 11/11 original SHA inputs (4 XML incl 3 EOK rev + 7
+  v3 attachments) text-enabled, ZIP4/4 five child texts; original trace 12 docs; original subject/NMCK 1,245,000 and selected revised
+  deadline 19Oct (old16Oct absent final); three exact original EIS XML citations, report/history/evidence HTTP200, historical export
+  PDF/DOCX409, NEEDS_REVIEW, no fallback. HTML SHA5d70b6230215b73290841c82f0689a8eaebc2f3791a632cf05e2ef0ccd7bee44.
+- '2026-10-15 full isolated Mac mini suite 4164 passed/238 skipped/0 failed/328 known warnings in189.66sec; 20 source/UID/revision/adversarial
+  focused tests PASS; Ruff PASS. Real saved report expert reviewed: contract correctly present, wrong old deadline absent; five English
+  LLM contract hypotheses remain explicitly unverified, no legal/GO claims.'
+- '2026-10-15 GitHub PR443 exact source head fe9f3c242ea91ddf6891b6e0623e93a73a409c8b CI #3503 run38790430326 completed SUCCESS; 4164
+  local PASS/238 SKIP/0 FAIL. Single real Gemma4 four calls333.22sec, original 11/11 exact UID/SHA including separately recovered ZIP,
+  4 archived XML and 5 nested substantial doc texts, 3 original latest v3 XML citations with deadline19Oct not old16Oct, report and
+  history200, archived exports409, manual_review_required.'
+current_stage: seventh_original_EOK_v3_11_source_gemma_and_exact_head_ci_verified
+remaining:
+- Draft PR443 and stacked parents remain for authorized review/merge, not automatically deployed
+- Next eighth distinct original EIS source .doc legacy case 0127100008626000013 tracked as separate child
+- Remaining APR-06 13 cases to numeric 20 minimum, APR-07 metrics and rolling SLO separate
+last_verified_commit: fe9f3c242ea91ddf6891b6e0623e93a73a409c8b
+last_tests: 'Exact-head GitHub PR443 CI run38790430326 #3503 SUCCESS; local 4164 passed/238 skipped/0 failed/328 known warnings, 20
+  focused source adversarial PASS and Ruff; true Gemma4 333.22 s source 11/11 cite3 and export409.'
+resume_instruction: COMPLETED seventh original 44FZ EOK2020 v3 source bound Gemma E2E. Verified code head fe9f3c24 GitHub CI run3503
+  SUCCESS. No rerun of accepted model. Continue new eighth case 0127100008626000013 with legacy DOC first-party original .doc/.docx,
+  own checkpoint; no current live EIS or legal GO.
+execution:
+  branch: feature/apr067-r4-seventh-eok-revisions-20261015
+  manual_override: true

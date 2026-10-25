@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-REPORT-CITATION-UI-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Prevent the operator report UI from claiming model/report citations or risk statuses are source-verified merely because source_ref, document and locator strings exist.
+definition_of_done:
+  - Keep server-verified original EIS XML facts marked KNOWN only when the existing original-source evidence endpoint provides attributable evidence.
+  - Distinguish unverified report-supplied citations from independently source-verified facts in the risk/readiness panels; never imply claim evidence authenticity based solely on field presence.
+  - Add reproducible HTML/JS regression tests for full- and partial-citation risk cases while preserving visible warnings.
+  - Test on isolated Mac mini checkout (focused pytest, JS syntax, Ruff), open draft PR and verify GitHub CI.
+  - Update canonical parent and child checkpoint without claiming owner semantic/legal/production acceptance.
+completed:
+  - '2026-10-14 draft PR422 exact source head f4a30654609f17b3fc4742af760ac03e93185028 full GitHub pull_request38501920875/push38501905613/push38501905695 all 3/3 SUCCESS. UI source-code 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb 53 local pytest PASS, Ruff PASS, node --check PASS; risk/report references never automatically marked verified.'
+  - 'Changed report-only risk/readiness/unknown statuses and citation text so shape-only source_ref/document/locator cannot appear independently verified; separately confirmed original XML facts retain KNOWN marker.'
+  - 'Mac mini isolated source 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb: 53 focused pytest PASS, 0 failed, 5 unrelated dependency warnings, Ruff PASS, Node JavaScript check PASS, diff check PASS.'
+  - 'Dated APR03B report citation trust acceptance note saved in docs/acceptance/APR03B_REPORT_CITATION_TRUST_2026-10-14.md.'
+  - '2026-10-14 read code: renderEvidence decision_core blockers/unknowns/readiness defines grounded = validCitations(item.evidence).length > 0, with validCitations only checking source_ref/document/locator existence. Current UI risks overclaims verification.'
+current: 'COMPLETED: source-only APR03B citation provenance display protection after exact PR422 CI 3/3 SUCCESS. Owner real-source semantic/legal/browser acceptance remains OPEN.'
+pending: []
+last_verified_commit: 'f4a30654609f17b3fc4742af760ac03e93185028 exact PR422 GitHub 3/3 CI SUCCESS, tested implementation 570909a46fbf3a1581d5a3a29f4df4a20de6fbbb 53 local pytest PASS/Ruff/Node syntax PASS.'
+test_results: []
+resume_instruction: 'Citation source-label PR422 bounded task completed, exact GitHub 3/3 CI passed on f4a30654609f17b3fc4742af760ac03e93185028. Do not repeat. Parent TA-ROADMAP-EXEC-20261012 active APR03B local original archived EIS replay and human Owner source acceptance pending. PR422 remains draft/unmerged, no production, ETP, payment, signature, buyer contact or watchdog.'
+execution:
+  branch: fix/apr03b-report-citation-verification-20261014
+  manual_override: true

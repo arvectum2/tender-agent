@@ -1,0 +1,74 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-REAL-EIS-OWNER-HANDOFF-20261017
+status: blocked
+goal: On the ONE existing private Mac mini Operator Workspace (18082), verify a real official EIS case through original-file evidence,
+  analysis, cite-bound report and PDF/DOCX handling without faking source currency or human acceptance.
+definition_of_done:
+- Confirm canonical current main and only original 18082 Operator Workspace; no new UI/stand/database.
+- Inventory original saved source-bound EIS runs, source file SHA/bytes, notice revision and actual analysis mode from the existing
+  private data volumes.
+- Verify private authenticated full browser and read-only API flow; assert official notice/revision gates and no stale or unverified
+  export is presented as accepted.
+- Reproduce and fix objective defects in the existing UI/API only, with focused/full regression and exact-head GitHub CI.
+- Record factual result in docs/acceptance, update parent checkpoint/roadmap and verified commit.
+- Maintain human/legal/commercial owner sign-off gates; no ETP, signing, payment, outreach or production deployment.
+completed:
+- Private 18082 read-only GET /runs 12, /workspace/registry total0 and /procurement/sources HTTP200; Museum six saved file descriptors
+  and deterministic fallback; RI223 two saved incomplete file descriptors.
+- Previously accepted 12 Oct Safari record verified historical XML & export409 but is NOT an Oct17 byte-level revalidation.
+- 'Extended existing simulated browser JS: saved history reopen without import/re-analyze; mocked archived PDF+DOCX 409 surfaced in
+  same Operator Workspace.'
+- Direct private binary integrity access was blocked; no workarounds, synthetic citations or fabricated hashes used.
+- Read canonical main 42a39af5b1a4ae9483b257402548c7d182bb4289, previous child single UI task completed and CI main green.
+- Existing Mac mini arvectum-local-e2e-api-1 at 127.0.0.1:18082 healthy, original Postgres/Redis/worker healthy; repository current
+  dirty checkout not modified; isolated clean worktree.
+- Historical real Museum of Bread 44-FZ 0372200172326000015 previously analyzed from six original documents; independent 2026-10-12
+  Safari record reports deterministic fallback, official XML facts and stale-revision export HTTP409 gate.
+- PR462 merged after Mac mini full regression 4936 passed/285 skipped with PG16.15 client, exact-head GitHub CI successful. Browser
+  history and archive rejection remained simulated; byte-level private EIS verification blocked, owner gate pending.
+- '17 Oct 2026 direct existing Mac mini container 18082 source/HTTP same-bytes verification of ALL SIX original documents: six full
+  SHA256 matches, each metadata size and private authorized HTTP200 download exact.'
+- GET actual saved report 200, 3630 markdown chars, 5 manual checks, mode deterministic fallback, manual_review_required; original XML
+  evidence 3 KNOWN title/endDT/maxPrice crosschecked directly with ElementTree.
+- Actual existing container archived PDF and DOCX export each HTTP409; actual Chrome Headless 155 opened History (12), Museum six documents/report,
+  both export denials visible, 0 JS errors. No new UI, stand, database or source change.
+- 'Previous access-control blocker was incorrect: only an earlier invocation pattern was blocked. Real remaining blocker is missing
+  pinned original getDocsIP ZIP/official latest revision attestation and independent legal/economic owner review.'
+- '2026-10-17 successor TA-APR03B-EIS-ORIGINAL-ZIP-20261017 COMPLETED: original 17041B getDocsIP ZIP was already saved, source receipt
+  matched and retrospective archive SHA/v1 source metadata safely pinned in existing 18082; no second stand, six originals unchanged,
+  export409 preserved.'
+- Successor original EIS first-party v1 source proof TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017 completed (fresh Oct17 5/5 official binary
+  GET SHA matches plus getDocsIP ZIP). Its source completeness blocker is now RESOLVED; current public registry legal status and owner
+  acceptance still blocked.
+- 2026-10-17 successor archived EIS pinned deadline clock (PR465) safely confirms archive v1 endDT October16 10:00 MSK elapsed as of
+  October17; current public procurement status/award/cancellation/protocol still not independently attested, no owner GO.
+current_stage: Local file/API 6/6, original XML 3/3, report/exports and actual browser successfully verified on existing 18082. Await
+  independent official latest EIS source and owner/legal semantic review.
+remaining:
+- Confirm actual public official EIS legal current status/amendments/cancel and final result protocols after official publication; Oct20
+  planned outcomes date is secondary only.
+- Perform independent human owner legal and economic assessment of saved Museum Bread case / document obligations and procurement decision;
+  no automatic GO.
+last_verified_commit: 5cd3b95d8b8748efa67905543d81404d209be971
+last_tests: Mac mini local 6/6 saved originals identical SHA256/size to private authenticated HTTP downloads 200; saved report/evidence
+  200, original XML facts 3/3, exported pdf/docx HTTP409, real Chrome History/6 documents/2 denials PASS/0 JS errors; PR462 full 4936
+  PASS/285 SKIP and CI green.
+resume_instruction: Archived original ZIP, 5 official filestore originals (5/5), and archived EIS deadline clock Oct16 10 MSK are now
+  verified/displayed in same 18082. Do not repeat original downloads or add a stand. Remaining blocker public legal current status and
+  owner/legal approval.
+objective_blocker: current_public_eis_procedure_status_and_owner_legal_commercial_review_pending
+synthetic_browser_regression: pass
+owner_human_approval: pending
+original_file_http_sha_integrity: verified_6_of_6
+live_browser_report_and_export: verified_200_report_409_pdf_docx
+source_xml_literal_facts: verified_3_of_3
+archived_document_format_magic: verified_6_of_6
+official_original_zip_pinned: false
+user_owner_human_approval: pending
+archived_original_zip_retrospective_pin: completed_successor_TA-APR03B-EIS-ORIGINAL-ZIP-20261017
+latest_official_live_notice_verified: false
+five_external_original_binary_source_integrity: verified_5_of_5_oct17_official_fresh
+public_live_eis_procedure_status_verified: false
+archive_deadline_elapsed_verified_oct17: true
+public_legal_status_verified: false

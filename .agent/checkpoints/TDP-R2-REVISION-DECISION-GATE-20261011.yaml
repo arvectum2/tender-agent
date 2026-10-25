@@ -1,0 +1,51 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R2-REVISION-DECISION-GATE-20261011
+status: completed
+goal: 'Fail-closed customer procurement GO/NO_GO when the latest archived EIS notice
+  cannot be verified current: an unresolved notice_revision_requires_review must make
+  Decision Core application-window UNKNOWN, not hard NO_GO or GO, until independent
+  current EIS source review.'
+definition_of_done:
+- Source metadata notice_revision_requires_review propagated to customer decision
+  model without changing source-visible archival date and provenance.
+- Decision Core treats application deadline currentness UNKNOWN instead of hard expired/open
+  when the official current edition is unverified; explicitly readable readiness/unknown
+  code and human review.
+- Focused tests demonstrate archived revision currentness blocks false hard NO_GO
+  and false GO, while grounded existing decisions and unrelated manual uploads preserve
+  semantics.
+- Ruff/make check/full Python3.12 pytest and GitHub exact-head CI green, merge, bounded
+  checkpoint completed, parent in_progress.
+completed:
+- 'Identified existing Decision Core hard expiry interpretation based on deadline_status
+  and source binding without checking notice_revision_requires_review (from #331).'
+- 'Verified #332 R5 review queue merged main 8588115a9b4f2ea4053fc2fb0e036075b0f11171
+  and owner disabled watchdog unchanged.'
+- Plumbed metadata.notice_revision_requires_review true into report_model before Decision
+  Core; archived date still shown in customer report and source evidence remains.
+- Decision Core marks APPLICATION_WINDOW UNKNOWN, facts.application_deadline UNKNOWN/no
+  current value, appends EIS_CURRENT_NOTICE_REVISION_UNVERIFIED unknown with explicit
+  official-edition proof requirement; unverified archived expiry no longer hard NO_GO
+  and unverified open deadline no longer GO.
+- Four new tests exercise false NO_GO, false GO, unchanged confirmed GO/NO_GO and
+  full customer decision projection; 62 focused tests pass, Ruff clean.
+- 'After #332 main reconciliation, final Python3.12 full pytest 3668 passed/238 skipped/296
+  warnings/zero failed (144.19s); make check and Ruff clean.'
+- 'PR #333 exact-head GitHub CI fully PASS: quality 9m34s and 6m48s, Docker/migrations/Postgres/Redis/integration/security/lock
+  all green.'
+- Merged main 6135bbda891acf6469feec96675c0f5ba28adca3.
+current: Completed, merged TA main 6135bbda891acf6469feec96675c0f5ba28adca3
+pending: []
+last_verified_commit: 6135bbda891acf6469feec96675c0f5ba28adca3
+test_results:
+- 62 focused PASS, 23 warnings
+- Target Ruff PASS
+- Final local 3668 passed /238 skipped /0 errors
+- Exact-head dual quality and all integration/security GitHub CI PASS
+- Merged 6135bbda891acf6469feec96675c0f5ba28adca3
+resume_instruction: 'R2 archive-revision Decision Core gate #333 completed, do not
+  repeat. This does not establish current live EIS version; continue parent independent
+  original file bytes/SHA, edition and resource/document/chunk source proof, real
+  R4 source gold comparative model benchmark and R5 >=20 independently human-reviewed
+  EIS procurements/owner signoff. Production and owner-disabled watchdog unchanged.'

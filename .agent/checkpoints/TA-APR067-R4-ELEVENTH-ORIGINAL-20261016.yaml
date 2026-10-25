@@ -1,0 +1,49 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-ELEVENTH-ORIGINAL-20261016
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Original-source 44FZ independent E2E eleventh case 0149200002326001555; official saved selected XML, 5 filestore originals recovered
+  from independent first-party receipts; quotation with real old DOC price justification; one real local Gemma4 only.
+definition_of_done:
+- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without
+  mixing editions or overwriting originals
+- Native offline EIS stage ready_to_analyze without bypass; local Data Platform original DOC/DOCX content verified
+- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked
+  archived export
+- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model
+  timing
+- Full local suite and exact substantive GitHub CI, Draft PR, final immutable source/analysis checkpoint completed only when evidence
+  exists
+completed:
+- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases 10/20
+  minimum, originals preserved.
+- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources with
+  exact UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214553-a71602 0149200002326001555: 4 archived
+  original XML + 5 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
+- 2026-10-16 independently preflight original five/document count 5 source files using real Data Platform legacy DOC/DOCX decoder, all
+  extracted with text, 1 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process
+  PID6706 starts order 1, no concurrent models.
+- '2026-10-16 authentic 11th historical EIS EZK real local Gemma4 one original-source E2E, 4 model calls379.06s HTTP200, provider mode
+  llm_tender_operator_provider no fallback, 9/9 SHA originals and text extracted, 3 EIS XML citations/KNOWN fields: subject Murmansk
+  Investment Portal services, application deadline 2026-04-07T07:00+03:00, NMCK1,201,200rub; HTML SHA 3870519c557b701c3e60da73a99f16cf683448fc71325261bf719b2e03f581e6;
+  report/history/registry HTTP200, unsigned401, export PDF/DOCX409, manual_review_required. Five risks explicit LLM hypotheses, MIXED
+  category unverified specialized model. ChatGPT developmental expert review accepted of verified facts only.'
+- '2026-10-16 verified exact code head 38b860dcf8599e78475bdbbbe5c50dfc560460bf Draft PR446 GitHub CI run38813189298 #3515 SUCCESS 9/9;
+  source-bound original 44FZ 0149200002326001555, four genuine Gemma4 calls 379.06sec, all 9 source SHA/extracted, 3 first-party original
+  EIS XML facts source-cited, original report archived export409 and needs_review. Full local4214/238skip, 50 focused PASS, Ruff PASS.'
+current_stage: original_firstparty_source_gemma_review_full_local_and_exact_code_ci_verified
+remaining:
+- Draft PR446 still unmerged, no production or live bid actions
+- Third EOK case source/model currently running and separate checkpoint
+- Extended corpus case count increases only for completed models, continue next unused saved-source originals
+last_verified_commit: 38b860dcf8599e78475bdbbbe5c50dfc560460bf
+last_tests: 'PR446 substantive code SHA 38b860dc CI #3515 SUCCESS 9/9, local4214 pass/238skip/0fail,50 source tests PASS, actual Gemma4
+  four calls379.06s, 9/9 original input SHA and 3 XML cites/export409.'
+resume_instruction: COMPLETED original source and real Gemma4 DEVELOPMENT E2E eleventh 0149200002326001555 with exact-substantive PR446
+  CI SUCCESS. Do NOT rerun. Third case 0349100009326000005 still active in process PID6706, inspect its private output/report before
+  completing its checkpoint.
+execution:
+  branch: feature/apr067-r4-eleven-thirteen-original-e2e-20261016
+  stage_name: ta-apr067-r4-eleventh-quotation-20261016
+  manual_override: true

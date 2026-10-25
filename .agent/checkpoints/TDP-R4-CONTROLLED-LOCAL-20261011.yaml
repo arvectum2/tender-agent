@@ -1,0 +1,63 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R4-CONTROLLED-LOCAL-20261011
+status: completed
+goal: Record actual local non-stub Tender Agent controlled-model workflows and a limited
+  synthetic same-prompt model smoke comparison, without claiming quality on true procurement
+  originals.
+definition_of_done:
+- One local controlled-provider transport with explicit synthetic known and unknown
+  facts and no production DB/credentials.
+- Four-section controlled TA workflow on isolated in-memory SQLite with schema/trace/guardrails
+  verified.
+- Same one-section synthetic context through all available selected locally installed
+  text models; report latency and schema pass/fail.
+- Never treat a single synthetic case as accuracy ranking or EIS/source-locked benchmark;
+  checkpoint bounded subset completed.
+completed:
+- Real TA OpenAI-compatible provider -> local Ollama qwen3:4b synthetic facts returned
+  valid JSON, NMCK500000 correct, unavailable deadline null, 17.28 sec.
+- Controlled _run_controlled_sections requirements on synthetic source and in-memory
+  SQLite qwen3:4b passed validation, 1 trace, needs_human_review, raw answer not retained,
+  26.21 sec.
+- Controlled run_controlled_tender_operator_workflow 4 sections requirements/supplier_questions/rfq_draft/contract_risk_memo
+  all validation PASSED on synthetic procurement and isolated in-memory SQLite, 4
+  traces, mandatory human review, no raw response retention, 252.43 sec.
+- 'Same one-section model comparison: qwen2.5:3b requirements PASSED 11.45sec, gemma4:12b
+  requirements PASSED 112.62sec. Source corpus/gold labels not exercised.'
+- 'Completed same-prompt synthetic requirements comparison via exact real TA controlled
+  LLM and isolated in-memory SQLite: qwen2.5:3b PASSED in 11.45sec, gemma4:12b PASSED
+  in 112.62sec.'
+- huihui-hermes:latest completed in 115.03sec but requirements validation FAILED;
+  structured output was not validated. No raw answer saved. Exact failure cause (e.g.
+  provider timeout vs schema) was not established by this fail-closed test.
+- Real qwen3:4b full 4-section TA workflow PASSED in 252.43sec, with requirements,
+  supplier_questions, rfq_draft, contract_risk_memo all validated, four trace IDs,
+  mandatory human review and zero raw response retention.
+- No customer data or production databases used; this experiment establishes technical
+  path/latency for one synthetic input, not EIS gold-label accuracy or reliable relative
+  performance.
+current: Bounded local synthetic-model technical smoke and four-model one-section
+  comparison completed; full R4 corpus benchmark remains pending under parent.
+pending: []
+last_verified_commit: a16412eec899c7a4ae2b040d45fd11c36256219f
+test_results:
+- TA real qwen3:4b adapter JSON smoke 17.28sec
+- TA controlled qwen3:4b requirements PASSED 26.21sec
+- TA controlled qwen3:4b 4/4 sections PASSED 252.43sec, four trace IDs, needs_human_review,
+  raw responses not retained
+- qwen2.5:3b same-section synthetic PASSED 11.45sec
+- gemma4:12b same-section synthetic PASSED 112.62sec
+- huihui-hermes:latest requirements FAILED in 115.03s, one safe trace, raw answer
+  not retained
+- Four locally installed text models tested via real product adapter, three PASS on
+  same one-section synthetic prompt and one FAILED
+- qwen3:4b controlled full 4 sections PASSED in 252.43s with 4 human-review trace
+  records
+- NO authoritative EIS source corpus/gold accuracy measured
+resume_instruction: Bounded TDP-R4-CONTROLLED-LOCAL-20261011 synthetic smoke is completed;
+  do not repeat. For real R4, build independently source-locked gold EIS procurement
+  set, evaluate source hallucination/UNKNOWN, schemas, risks and latency on actual
+  documents for candidate models including qwen2.5:3b/qwen3:4b/gemma4:12b; huihui-hermes
+  failed one section and should not be assumed usable without diagnosis. Preserve
+  live Mac mini/prod/secrets and disabled watchdog.

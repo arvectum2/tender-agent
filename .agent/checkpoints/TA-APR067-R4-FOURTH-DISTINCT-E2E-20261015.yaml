@@ -1,0 +1,61 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-FOURTH-DISTINCT-E2E-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Verify one new independently saved historical 44FZ development E2E case 0151600003226000011 through native intake, real Data
+  Platform, local Gemma4 12B, evidence citations and saved workflow using immutable original official EIS bytes.
+definition_of_done:
+- Verify all original official EIS archive and attachment binary SHA and selected XML UID list against firstparty development receipts.
+- Preserve original files only in private isolated Mac mini stage; no EIS network or external effects; do not rerun any of the three
+  accepted E2E cases.
+- Invoke genuine API intake + local DP + real Gemma4 model and check all original docs, provenance, citations, report/history/auth
+  and archived export 409; record exact exceptions without bluffing.
+- Add reusable configurable offline-source case harness with adversarial negative checks rather than copying an unverified fixture.
+- Run focused and whole relevant regression, commit/push PR and verify CI (no merge/deploy).
+completed:
+- 2026-10-15 fourth distinct official EIS 44FZ archive 0151600003226000011 ZIP SHA cfa1c3fca71761f5de9395b885985fbcf76f88239fa08882d4dee907fbd93c5f
+  and one original notice XML SHA 8e35b7f24d4059f9f2b6bf490afccd0ba8346a926cc95d2e0365c0a5bf799611 pinned to frozen 20-case private
+  manifest.
+- 2026-10-15 four genuine official DOCX attachment SHA and size verified against first-party filestore receipts and registry-matched
+  XML UID; 5 total original source SHA exact; no EIS/ETP, production or blind writes.
+- 2026-10-15 authentic initial document_set completeness blocked E2E because ПК.docx not recognized as contract and outer XML attachments
+  wrapped first НМЦК.docx; before-model blocker preserved in private runtime.
+- 2026-10-15 fixed real EIS document kind extraction via nested docKindInfo code+exact label CP/MRJ/POD/CAR, rejects forged/unknown
+  mappings; skips outer attachments collection, first attachment kind restored; 5-file document set complete without bypass.
+- 2026-10-15 real local Gemma4-12B through FastAPI operator endpoint, four calls/403.23sec, no fallback; 5/5 sources extracted, 0
+  unsupported, 3 original XML citations in actual report, report SHA f5f60619346c8f75652ba3399a141de9e3409ea46b3bfcae3098ffb073e56583;
+  saved report/history/steps/evidence/registry 200, historical PDF/DOCX 409 and NEEDS_REVIEW.
+- 2026-10-15 cloned case-specific offline runner replaced with generic two-case SHA-pinned source/replay acceptance modules, replay
+  on original case 0162200011826003089 source-only 12 XML+5 attachments ready_to_analyze without another model call; same generic
+  runner verified on fourth distinct new source 1 XML +4 DOCX.
+- 2026-10-15 63 focused original-source/role/SHA-adversarial tests PASS, Ruff PASS; full suite running.
+- 2026-10-15 exact updated source branch full Mac mini regression 4130 PASS / 238 SKIP / 0 FAIL / 328 known warnings in 161.42 s,
+  focused 63 PASS, Ruff and git diff --check PASS, private distinct R4 5/5 docs SHA pinned.
+- '2026-10-15 owner-delegated ChatGPT-expert semantic review of true saved report found contradictory old generic recommendation:
+  requests obtain contract while source-attested ПК.docx extracted. Fixed services preanalysis typed contract_draft_available and
+  source-conditioned next_actions/final rationale; real case five-SHA deterministic corrected reprojection in private stage with
+  no second Gemma run; original incorrect HTML untouched as evidence; 11 targeted recommendation/contract tests PASS.'
+- 2026-10-15 further ChatGPT expert reading of original ООЗ.docx confirmed 01.01.2027–31.12.2027 volume 50 hours, while previous
+  generic services analyzer made unsupported statement fixed volume absent with zero extracted structured items. Corrected overview/delivery
+  model/extracted_fields/next_actions/supply_section_note to avoid overclaim; negative and positive 50h-focused tests PASS, original
+  raw source SHA untouched.
+- '2026-10-15 full local test suite after both semantic patches and volume-correction tests: 4135 passed,238 skipped,0 failed,328
+  pre-existing warnings in149.73sec; Ruff clean; initial real E2E five originals unchanged and historical result preserved as separate
+  evidence.'
+- '2026-10-15 GitHub exact-head substantive commit 936477f577d91c9b094685addb20308fad9c048d PR440 CI run38770524215 #3485 completed
+  SUCCESS; 9 jobs succeeded. Two source-attested semantic report errors corrected, 4135 local tests passed. Never merged/deployed,
+  no live EIS/ETP.'
+current_stage: fourth_independent_eis_gemma_e2e_expert_semantics_and_ci_verified
+remaining:
+- Review/merge stacked PR440 and predecessors under proper authority only; no automatic production deployment
+- Fifth independent source-offline E2E continues in separate child TA-APR067-R4-FIFTH-DISTINCT-E2E-20261015
+last_verified_commit: 936477f577d91c9b094685addb20308fad9c048d
+last_tests: 'Exact GitHub PR440 head936477f5 CI #3485 SUCCESS all jobs; local 4135 passed/238 skipped/0 failed; Ruff PASS; real Gemma4
+  four calls403.23s/5 original files, three original XML facts, archive export409; report semantic correction source-reprojected.'
+resume_instruction: Fourth distinct source-offline E2E technical development acceptance complete at code commit 936477f5 with exact-head
+  CI SUCCESS. PR440 Draft not merged. Next child TA-APR067-R4-FIFTH-DISTINCT-E2E-20261015 active on separately isolated branch; do
+  not rerun prior model.
+execution:
+  branch: feature/apr067-r4-fourth-distinct-e2e-20261015
+  manual_override: true

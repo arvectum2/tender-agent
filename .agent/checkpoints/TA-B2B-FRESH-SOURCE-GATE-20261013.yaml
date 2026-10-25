@@ -1,0 +1,33 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FRESH-SOURCE-GATE-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Extend lawful read-only B2B corporate IT discovery with newly published original Workspace and strict aggregator deadline-disagreement exclusions, without fake currently-open/qualified opportunities.
+definition_of_done:
+  - Verify at least one unique new direct original corporate IT procurement with organizer status, deadline and commercial/qualification caveats.
+  - Distinguish original platform proof from secondary aggregators and do not imply bidding access or pricing rights.
+  - Document two identified corporate tender IDs with conflicting secondary advertised deadlines; never promote them to current actionable shortlist pending original.
+  - Produce dated evidence matrix, dedup against B2B existing nine historical cards, source URLs and status confidence.
+  - Validate report/guard tests and exact GitHub PR CI where applicable; update checkpoint completed or blocked with remaining 15-20 source-verified target.
+completed:
+  - 'PR417 exact source head 476aaa24f46238d2a9c990492e1077a138aecbc2: pull_request38455956035 + pushes38455950242/38455950124 3/3 GitHub workflows SUCCESS. Research child completed; B2B 15-20 currently qualified source gate remains OPEN.'
+  - Newly published Workspace #19023 source DIRECT verified 13.10.2026T22:30:24+03 on authorized Mac mini using HTTPS no system proxy, HTTP200, 61868-byte HTML SHA256 c94e9d7b70fdb21e0a2633f05e765e9050f02224a1da2a6eaaeed930ba4bb038.
+  - Original platform HTML confirms Идет прием заявок, organizer legal entity, date-only deadline Oct20, budget 100-400k RUB; explicit prior Bitrix/Aspro frontend implementation examples required, no verified Arvectum matching reference, FIT_CONDITIONAL/PUBLIC_CANDIDATE_ONLY, not BID_READY.
+  - Previous source-attested historical pool 10 different cards incl PR399; one new distinct direct card now 11 historical, explicitly NOT 11 currently eligible/active; original 15-20 current qualified target remains open.
+  - Identified two INK corporate IT tenders with aggregator deadline conflicts: SZ-356-26 Oct7 vs Oct14, SZ-371-26 Oct14 vs Oct21. No original updated notice verified, both REVIEW_REQUIRED. Fabrikant3502252 price monitoring and Workspace19020 marketing excluded from confirmed software-contract count.
+  - Added sanitized machine source receipt JSON, Russian public-source audit and linked B2B first report, no private source HTML stored in Git, only its SHA digest.
+  - Mac mini exact test-code head f81358c3a32ff7ad24afd362fd6156fcf2dd0bec: 29 targeted pytest PASS, Ruff PASS, JSON validation PASS, git diff --check PASS, no public-page bulk crawler.
+  - Draft PR417 opened stacked on research PR399, no paid ETP, registration, buyer contact, bids, production or watcher actions.
+  - PR416 original-EIS SaaS HTTP bearer role/source test exact source fc24201c GitHub three workflows SUCCESS, child checkpoint completed.
+  - Source report PR399 existing historical 9 corporate IT/digital public-card evidence but not 9 currently active, and original-status-first gate for Workspace #19004.
+current: PR417 bounded public B2B source verification COMPLETED, original source 476aaa24f46238d2a9c990492e1077a138aecbc2 three exact GitHub CI workflows SUCCESS. 11 distinct historical source-attested cards, not necessarily currently qualified.
+pending: []
+last_verified_commit: 'PR417 exact source 476aaa24f46238d2a9c990492e1077a138aecbc2 GitHub pull_request38455956035, push38455950242, push38455950124 completed SUCCESS; Mac mini targeted 29 PASS, Ruff PASS, original Workspace #19023 direct no-proxy 200 and saved SHA verified.'
+test_results:
+  - 'PR417 exact GitHub source 476aaa24f46238d2a9c990492e1077a138aecbc2 three workflows PR38455956035/push38455950242/push38455950124 all completed SUCCESS.'
+  - 'Original Workspace #19023 no-proxy Mac mini 2026-10-13 22:30:24 MSK 200, 61,868 bytes HTML SHA256 c94e9d7b70fdb21e0a2633f05e765e9050f02224a1da2a6eaaeed930ba4bb038; legal organizer/open public status/future date, no authenticated eligibility.'
+  - '29 pytest PASS / Ruff PASS on Mac mini head f81358c including original-host-only lead triage and secondary conflicting-deadline refusal; source JSON valid and diff clean.'
+  - 'GitHub PR417 exact source head 18e3771 full PR/push CI pending.'
+
+resume_instruction: 'TA-B2B-FRESH-SOURCE-GATE-20261013 COMPLETED, exact source PR417 head 476aaa24f46238d2a9c990492e1077a138aecbc2 GitHub PR/push 3/3 SUCCESS, 29 focused local PASS/Ruff PASS. B2B target 15-20 CURRENT verified qualified legal-entity IT opportunities still OPEN; original Workspace #19023 is only PUBLIC_CANDIDATE_ONLY due unverified Bitrix/Aspro portfolio. Do not repeat old audit; continue via separate bounded original-source read-only task if queue/Owner directive admits. Preserve direct no-proxy Russian IP source, distinguish platform-original vs secondary, avoid date-only open-now assumptions, no customer outreach, registration, paid ETP, actual bid, production, merging or watchdog. Keep main manual_override true.'

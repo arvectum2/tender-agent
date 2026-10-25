@@ -1,0 +1,40 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-GROUNDED-QUALITY-20261015
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Add reproducible source-bound APR06/07 technical quality measurements of the
+  accepted real original EIS Gemma-12B E2E without fabricated legal/human review or
+  broad-SLO acceptance.
+definition_of_done:
+- Verify actual archived 44-FZ original source hashes and saved run id against independent
+  private copied originals, not acceptance declarations alone.
+- Independently re-read saved original XML EIS facts and HTML citations, distinguish
+  checked subset from all model-generated claims.
+- Compute observed development metrics with exact denominators and explicitly NOT_MEASURED
+  larger benchmark, legal, SLO, commercial correctness.
+- Fail closed on tampered original, broken citations, wrong run/revision, fabricated
+  LLM provenance or false bid authority.
+- Run relevant source tests, full or relevant regression, record checkpoint, PR and
+  CI; do not merge/deploy/submit.
+completed:
+- 'One archived official EIS case: 6/6 original SHA matches, 6/6 extraction flags,
+  3/3 selected XML facts cited in HTML.'
+- 'Actual local LLM provenance: four calls; analysis-only 138.79 seconds.'
+- Adversarial source quality tests 52 PASS; full suite 4055 PASS / 238 SKIP / 0 FAIL;
+  Ruff PASS.
+- Original private observation saved with no public documents or credentials.
+current_stage: one_original_eis_case_source_quality_verified
+remaining:
+- PR CI/review and stack ordering after PR433.
+- Additional independently checked archived cases for broader quality statistics.
+- Owner commercial/legal decisions and production quality measurements remain separate.
+last_verified_commit: b1b87e8554602c66d8a3065f225793cc1652e729
+last_tests: 4055 passed / 238 skipped / 0 failed (153.85s); focused 52 passed; Ruff
+  passed; substantive source commit b1b87e85 verified locally
+resume_instruction: Bounded quality slice completed at tested source commit b1b87e85.
+  Check CI on PR436 and its metadata-only head, then expand real independent original-source
+  case sample. Maintain commercial and full legal accuracy NOT_MEASURED.
+execution:
+  branch: feature/apr067-grounded-e2e-quality-20261015
+  manual_override: true

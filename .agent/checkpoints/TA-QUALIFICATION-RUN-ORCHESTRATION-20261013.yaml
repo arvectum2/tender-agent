@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-RUN-ORCHESTRATION-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Attach original EIS scoring extraction and tenant-owned verified completed contracts to actual read-only Tender Agent run, report projection and user interface without manually supplying criterion or tenant ID.
+definition_of_done:
+  - Discover exact original scoring DOCX and original notice from existing run evidence using source binding and safe path rules, not hardcoded CZN weights.
+  - Authenticate supplier/tenant and read owner-confirmed reference list; avoid trusting arbitrary customer_id or source SHA in request.
+  - Return per-run qualification competitive assessment in report-ready format, never mutate legal eligibility, never invoke ETP.
+  - Expose clear states including missing original source and owner profile, and separate legal/source verification warning.
+  - Test CZN real original fixture, tenant isolation, malformed files, stale source, fake/supplied SHA, and report UX; local pytest+Ruff and exact GitHub CI.
+  - Leave PR draft and do not promote human gold or signed source.
+completed:
+  - 'PR409 final head 4c0fdeb exact PR38426317250 + push38426307140/38426307139 full SUCCESS; engineering child completed, draft remains pending review.'
+  - Parent PR408 exact-head 7f6024e1 official source scorer full PR/push CI SUCCESS, checkpoint completed.
+  - Implemented source-attested run discovery with current EIS notice version, attachment UID/name/size/official URL and exactly one valid scoring DOCX, no hardcoded weights or HTTP-supplied tenant ID.
+  - Preserved SHA-256 original getDocsIP archive at intake and SHA-256 downloaded document in run metadata; deny old/tampered saved bytes and suspicious or ambiguous origins.
+  - Authenticated SaaS run report and independent qualification endpoint now load principal.customer_id and owned_run before reading source or reference list. Viewer read-only existing report redacts private reference list.
+  - Added /saas panel for competitive qualification separate from legal readiness, with safe textContent and original-source disclaimer.
+  - Exact real CZN EIS SOAP v4 + UID-matched original DOCX replay with owner-zero snapshot returned 70/30 and competitive NO_GO; electronic signature/human-gold FALSE. Original source binaries never added to Git.
+  - Mac mini isolated source head 87e4160 tested 166 focused pytest PASS, 8 SKIP, Ruff PASS, git diff --check PASS (source, SaaS, getDocsIP import, archive/attachment/regression).
+  - Draft PR409 opened stacked on PR408, no live activation, signatures, bids, owner-profile DB changes or payments.
+  - Parent source extractor PR408 full PR/push CI SUCCESS at 7f6024e1 and child marked completed.
+  - Parent reference-list PR407 bearer-authenticated tenant scope and owner 0 contract CZN scoring verified.
+current: Completed original-run qualification integration and source-bound tenant SaaS report/UI. PR409 exact code/docs/roadmap head 4c0fdebfb280383cefcac8fe79f2189e72645628 GitHub PR/push 3/3 SUCCESS. PR remains draft/unmerged.
+pending: []
+last_verified_commit: 'PR409 exact source head 4c0fdebfb280383cefcac8fe79f2189e72645628, PR 38426317250 SUCCESS, push 38426307140 & 38426307139 SUCCESS. Mac mini 166 focused pytest PASS/8 SKIP, Ruff PASS, Node SaaS UI check PASS, real CZN source replay PASS.'
+test_results:
+  - 'PR409 final head 4c0fdeb exact 3 GitHub workflows green: PR38426317250, push38426307140, push38426307139.'
+  - 'Mac mini head 87e4160: 166 pytest PASS / 8 SKIP, Ruff PASS, git diff --check PASS (qualification/owner/bearer/auth/getDocsIP/archive/attachments/official EIS regression).'
+  - 'Real original EIS ZIP + current 22427-byte scoring DOCX via run-local auto discovery and pinned download-time SHA => CZN qualification 70/price 30, owner zero => NO_GO_QUALIFICATION_COMPETITIVENESS; no external action or signature/human-gold claim.'
+  - 'PR409 latest docs/source head 9b2140e8: exact GitHub PR+push CI in progress, fast push SUCCESS.'
+resume_instruction: 'This child COMPLETED at exact PR409 source head 4c0fdeb GitHub 3 workflows success. Do not reopen or rerun 166 verified focused tests. Next active task separate child: use source-attested real diverse 44/223-FZ awards to extend parser coverage incrementally; do not invent PDF/legal weights, and keep unsupported => NOT_ASSESSED. All PR405/407/408/409 remain draft, no production, ETP, bids, signatures, payments, watchdog. Human gold APR06, owner KPIs and APR07 SLO blocked.'

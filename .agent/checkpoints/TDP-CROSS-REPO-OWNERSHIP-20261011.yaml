@@ -1,0 +1,49 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-CROSS-REPO-OWNERSHIP-20261011
+status: completed
+goal: Reconcile stale 2026-10-04 Data Platform reuse audit against actual 2026-10-11
+  TA/DP repos; publish ownership, duplication, migration and acceptance gates without
+  inaccurately claiming live deployment.
+definition_of_done:
+- Evidence-backed current-state TA/DP repository ownership map at pinned SHAs
+- Explicitly mark stale "no hybrid/vector backend" claims resolved in code but production
+  source acceptance not proven
+- List real remaining duplication/adapter seams, anti-corruption contracts and ownership
+  rules
+- Prioritized bounded changes with evidence/unknown gates and test/CI expectations
+- Review doc against source paths, commit PR and merge after compatible exact-head
+  validation; complete bounded checkpoint while parent TDP-REFACTOR in_progress
+completed:
+- Opened clean docs worktree TA main 7c564070e3b830ca829b7ed48b7b39a153e8b170 and
+  DP main a8bcd59d9adf0f838a7771bc7d59f63a64512aef.
+- Verified DP source includes HybridSearchEngine, PostgresVectorIndex, lexical backend,
+  SearchHit contract, source models; old Oct4 reuse audit marked those features gaps.
+- Verified TA generic old tender_research.rag.{chunker,embeddings,vector_store,retriever,indexer}.py
+  removed; src/shared/document_processing delegates to DP HTTP SDK while TA browser
+  requests/playwright fetchers remain.
+- Published docs/00_architecture/TDP_Cross_Repo_Ownership_Audit_2026-10-11.md with
+  pinned TA/DP SHAs, current implementation ownership, stale Oct4 gaps corrected,
+  migration candidates, SDK isolation and source/human/rollout acceptance gates.
+- Validated all 16 TA and 22 DP cited code source paths against git origin/main trees;
+  38/38 paths matched.
+- Distinguished code-level HybridSearchEngine/PostgresVectorIndex/SearchHit implementation
+  from deployment/source-grade EIS acceptance; old TA chunker/embeddings/vector modules
+  confirmed absent, SDK-backed document adapter exists.
+- 'PR #328 exact-head all GitHub checks incl dual full quality 9m02s/7m15s, integrations
+  and security green; merged latest main 5becf69666583627d29420d41468b7daeb4e8b3f.'
+- 38 cited TA/DP code paths checked 16/16 and 22/22, historical Oct4 DP gap corrections
+  verified; no production/service change.
+current: Completed, merged TA main 5becf69666583627d29420d41468b7daeb4e8b3f
+pending: []
+last_verified_commit: 5becf69666583627d29420d41468b7daeb4e8b3f
+test_results:
+- Code existence checked against TA/DP main; no tests needed for doc-only initial
+  inventory.
+- TA git source path 16/16 PASS; DP git source path 22/22 PASS
+- Docs-only; no production or code behavior changed
+- 'PR #328 exact-head GitHub dual quality and all integration checks PASS'
+- Merged main 5becf69666583627d29420d41468b7daeb4e8b3f
+resume_instruction: 'Audit completed as docs-only #328. Do not repeat. Continue R3
+  requirements context #329 and original source-proof / LLM gold / human-review R2/R4/R5
+  in parent task. No production or watchdog actions.'

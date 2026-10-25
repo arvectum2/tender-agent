@@ -1,0 +1,44 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-FREE-FIRST-OUTREACH-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Verify free-first-reply IT acquisition platforms for LLC Arvectum via original terms and customer demand, no messages or payments
+definition_of_done:
+- Verify official free-response limitations and LLC unknowns for at least FL Pchel CodeLance CONTRACTIS and comparator channels
+- Review original actual client orders versus platform advertising, duplicates or stale content
+- Source-backed dated owner decision matrix and tests
+- GitHub merge and checkpoint status with remaining legal gates
+completed:
+- Checked origin/main d876d3874a2422357a8fbdf597390ada61c5b728 and existing 18082 health200
+- Read official FL Pchel CodeLance CONTRACTIS public free-first response rules, LLC acceptance unverified
+- Collected public policy/source original direct URLs, seven verified SHA/HTTP200 snapshots of which 4 platform pages and 3 actual original
+  project pages; fifth Pchel page direct access inconsistent during final receipt collection, represented as source fetch unknown; FAQ separately
+  available from official web source.
+- Exact official FL free only marked for all/vacancies/contests, Pchel studio standard 100 replies/month <=USD1000, CodeLance advertised
+  unlimited, CONTRACTIS free monthly capped with unknown specific quota, Weblancer free 10-day introduction but direct HTTP403, ITsNEW open
+  board free reply not attested.
+- Original actual CONTRACTIS Python AI 170k/60 days and landing 90-150k/34 replies, CodeLance feed import original open 2026Oct7, no company
+  eligibility or customer INN attested. Old Pchel 4y/6y results excluded from current active candidate count.
+- Created owner research report and machine source receipt, 5 negative/offline tests PASS, Ruff PASS, no account or messages or payments.
+- Original PR476 exact-head CI all SUCCESS and Mac mini full 5074 PASS/285 SKIP; Ruff/make check+5 source/negative focused PASS.
+- Verified 4 original first-party public provider rules and 3 actual original client cards HTTP200 with exact SHA, Pchel original FAQ direct
+  fetch intermittent and correctly marked unavailable for that source receipt. No false positive source count.
+- Capped platform scope FL public for all, Pchel standard studio 100/mo <=$1000, CodeLance unlimited advertising but seller ads mixed, CONTRACTIS
+  public free limited/no known exact quota and source original Python/AI 170k and landing 90-150k, Weblancer trial10 days/403, ITsNew free
+  reply not proven. No validated first bid by ООО.
+- Official city Portal suppliers Moscow is separate free supplier registration path with qualified electronic signature required for legally
+  binding quotation, NOT a free interpersonal messenger; no actual IT procedure verified.
+- No messages, bids, accounts, payments, signing, parallel Operator Workspace or database changes.
+current_stage: First-party-free-reply source investigation with bounded original HTTP receipts, 3 real unqualified leads, conservative company
+  legal gates delivered and merged. Source research complete; paid or authenticated LLC outreach still requires separate owner action.
+remaining: []
+last_verified_commit: c97e186c8c6f8289613c49769a1398119f5455a4
+last_tests: Mac mini 5074 PASS/285 SKIP, 5 focused source tests PASS, Ruff/make check PASS, exact-head GitHub PR476 all green.
+resume_instruction: 'Child COMPLETE. Market lead shortlist original Contractis Python AI170k, construction landing90-150k already34 responses,
+  CodeLance catalog data import147 budget by agreement; actual buyer company identity/contract eligibility, paid category, successful free
+  account-based reply ALL unverified. Free-first channels: FL for-all, Pchel standard studio <=100/mo projects <=$1000 (stale imported listings),
+  CodeLance unlimited public advertised but seller promotion mixed, CONTRACTIS monthly capped no exact count; Weblancer 10day trial/403,
+  ITsNew cost UNKNOWN. Free official Moscow supplier portal is separate regulated offer with УКЭП, not person-to-person. Next parent need
+  verified account LLC+buyer identity and source live status before owner-approved first personalised outreach. No paid or bulk unsolicited
+  messages.'

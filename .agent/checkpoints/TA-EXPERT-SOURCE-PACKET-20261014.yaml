@@ -1,0 +1,30 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-EXPERT-SOURCE-PACKET-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Bridge source-exact tender proofs into the existing R4/R5 20-case human-gold review protocol and ARV-001 quality gate without inventing expert signoff.
+definition_of_done:
+  - Emit a reproducible per-case reviewer packet with source-file SHA, provenance, unique source claims, typed EIS exceptions, missing documents, unresolved revisions and concrete human rubric fields.
+  - Never infer current EIS version, page/table coordinates, expert labels, signed GO or project release from machine output.
+  - Preserve machine verdicts separately from human labels; only explicitly entered independent reviewer evidence can eventually support ARV-001, and no auto-signoff action in this task.
+  - Integrate optional packet into operator report/API trace via frozen-AST compatible facade, privacy-safe and read-only.
+  - Test real original 44-FZ Museum source replay, synthetic 223-FZ and commercial B2B, tampered source, missing page, conflicting notice, unsupported model claims.
+  - Run isolated Mac mini targeted tests/Ruff plus exact GitHub draft stacked PR CI, record hash/status.
+completed:
+  - '2026-10-14 PR428 exact GitHub original code+checkpoint head bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 pull_request38530989343 SUCCESS, push38530983581 SUCCESS and push38530983873 SUCCESS: 3/3 workflow exact head green. Bound expert source packet stage technically COMPLETED; 4059 Mac mini full pytest PASS/238 SKIP, 58 focused PASS/Ruff, real six-source Museum replay16 R4 axes, 15 SHA exact reference proofs and one SMP-only contradiction. No human reviews or ARV001 release certified. Keep stacked draft PR428 unmerged.'
+  - '2026-10-14 new expert_source_review_packet source module, operator output trace/requirements integration, 6 negative/source tests: directly reuses existing R4/R5 twenty-case human gold rubric and ARV-001 policy, 16 reviewer categories, unique original registry and exact source SHA receipts, no invented human statuses, signoffs, approval or current EIS. Archived Museum full source six files/15 exact quote proofs, one detected SMP-only contradiction, reviewer signoffs zero, ARV-001 NOT_READY and bid_ready false. Source evidence prefill produces reproducible SHA manifest, source inventory, safe references and human fields None. Code head615d2bd6cc246b8d3e3e5eb7c189b6c061dd0c5d Mac mini 58 relevant pytest PASS/Ruff/diff PASS, FULL 4059 pytest PASS/238 SKIP/0 failed/328 warnings 153.18s with correct venv/PG16 path. Safe architecture note docs/acceptance/TENDER_R4_SOURCE_REVIEW_PREFILL_2026-10-14.md and draft PR428 head dc77d41269632d5afd118f9fff3fed6e29849617 CI in progress.'
+  - '2026-10-14 predecessor bounded PR427 source proof exact original head026355cedd9341d10f934e238123803f412ef4fe full PR/push GitHub CI 3/3 SUCCESS, child completed docs commit de8c8823597bea753f51a88b1900623a56b04da6, full Mac mini4053 PASS/Ruff; drafts unmerged.'
+  - '2026-10-14 prerequisite PR426 full-corpus source research code locally full pytest 4042 PASS/238 SKIP and original exact GitHub PR/push CI 3/3 SUCCESS; bounded child completed.'
+  - '2026-10-14 prerequisite PR427 source proof implemented code9f5d5c58b88c4261db2b9d1210c0a88a9f60af26 full Mac mini 4053 PASS/238 SKIP/0 FAIL, 75 relevant PASS/Ruff, six museum source/15 exact original quotes; GitHub final PR/push CI in_progress, keep draft unmerged.'
+current: 'COMPLETED bounded R4 machine-only expert source prefill after exact 3/3 GitHub CI, Mac mini 4059 pytest PASS/Ruff. Existing human-gold 20-case protocol still 0 independent signoffs and ARV-001 NOT_READY. Continue separate successor to audit availability and evidence completeness across 20 cases, no automatic GO.'
+pending: []
+last_verified_commit: 'PR428 original code+checkpoint head bd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 3/3 GitHub CI SUCCESS. Mac mini source615d2bd6cc246b8d3e3e5eb7c189b6c061dd0c5d 4059 full PASS/238 SKIP/0 FAIL, 58 focused/Ruff PASS.'
+test_results:
+  - 'Mac mini isolated PR428 full repository pytest 4059 PASS/238 SKIP/0 fail,328 warnings,153.18sec, venv/Pg16 PATH. Targeted 58 PASS/Ruff/diff PASS at code615d2bd6.'
+  - 'Real archive 0372200172326000015: source documents6, quote proofs15, reviewer rubric16 fields, machine detected false SMP-only preference1, human completed0, expert signed false, ARV-001 NOT_READY, bid_ready false.'
+  - 'Historical original source six Museum files and 15 explicit char span/source_sha quote verifications. R4 reviewer gold 20 cases 0/20 human acceptance per existing protocol.'
+resume_instruction: 'This bounded TA-EXPERT-SOURCE-PACKET-20261014 completed: PR428 original headbd40d59f810d8cf33ecd32fc3c0f7ae5876988c9 exact CI 3/3 SUCCESS, Mac mini 4059 full pytest PASS/238 SKIP and 58 focused/Ruff. Source packet machine-generated R4 review categories, 6 archived Museum documents and15 exact proofs, one model contradiction, human approvals0 and ARV001 NOT_READY. Do not rerun this stage or merge draft. Continue separately with R4 20-case original-evidence coverage audit and independent claim verification. Human R4 gold 0/20 must stay open, live official EIS and Owner APR03B/legal/economic/browser approval open. manual_override true, watchdog disabled, no ETP, bids, production, payments, signatures, buyer contact or merge.'
+execution:
+  branch: feature/expert-source-review-packet-20261014
+  manual_override: true

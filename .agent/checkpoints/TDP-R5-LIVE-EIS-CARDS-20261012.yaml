@@ -1,0 +1,20 @@
+task_id: TDP-R5-LIVE-EIS-CARDS-20261012
+status: in_progress
+goal: "Independently retrieve official live HTML cards for the 20 first-party attested competitive EIS cases on Mac mini via read-only HTTPS, verify exact procurement identity, official stage and deadline, and retain SHA receipts without pretending legal/owner bid GO."
+definition_of_done:
+  - "Visit only official zakupki.gov.ru 44-FZ notice EA/EZK/EOK URLs matching primary-type source XML in accepted R5 cohort."
+  - "For each of 20 pages, SHA-pin actual live HTML, strict 19-digit card ID match, explicit public procurement stage and announced submission deadline/timezone."
+  - "Fail closed on absent/mismatched official source or ambiguous/failed HTTP; preserve request time and factual distinction from 2026-10-11 ZIP snapshots."
+  - "Cross-check changed public stages/deadlines against baseline and independently audit high-priority open procurement states in this chat."
+  - "Publish factual GitHub evidence matrix and finish checkpoint; full current legal/bidder GO still requires complete contract review and last owner acceptance."
+completed:
+  - "2026-10-12: Real official public EIS HTML card for 0372200172326000015 returned 200 and matching ID; explicit cardMainInfo state and Etap Zakupki both say Подача заявок, official deadline 16.10.2026 10:00 (МСК)."
+current: "Batch read-only official EIS HTML status attestation for 20 positive source-bound cases, with bounded bytes and strict ID/type route provenance."
+remaining:
+  - "Retrieve 20 official page snapshots and verify exact identity/stage/deadlines."
+  - "Independently compare public stage to archived ZIP/protocol evidence, identify live exceptions."
+  - "Record SHA source receipts, public summary and current status limitations."
+  - "Mark child completed and update main task status/instruction without implying legal GO."
+last_verified_commit: e55e39a3dab386c9d3d545df08f5971e8541663d
+test_results: []
+resume_instruction: "Mac mini private evidence /Volumes/ArvectumSSD/Arvectum/evidence/tdp-r5/ai-expert-20261012/positive-eis-replacements-20261012/verified-competitive-20-plus-four-negative.json contains 20 official type- and SHA-verified EIS notices. For real public EIS card use EA20 for epNotificationEF2020, ZK20 for EZK, OK20 for EOK, https://zakupki.gov.ru/epz/order/notice/<route>/view/common-info.html?regNumber=<19 digits>. Only authenticated by official public domain HTTP 200 + matching card number; document stage must appear in source HTML, not fabricated. ChatGPT in this conversation reviews via RDC, no LLM API, production, bids or watchdog."

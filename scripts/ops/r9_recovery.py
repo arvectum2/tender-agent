@@ -133,9 +133,12 @@ def _database_is_empty(database_url: str) -> bool:
 
 
 def _run(command: list[str], env: dict[str, str]) -> None:
-    result = subprocess.run(command, env=env, text=True, capture_output=True)
+    result = subprocess.run(
+        command, env=env, text=True, capture_output=True, check=False
+    )
     if result.returncode:
         executable = Path(command[0]).name if command else "recovery tool"
+        # External tool output is not safe to surface to clients.
         raise RecoveryError(
             f"{executable} failed with exit code {result.returncode}"
         )

@@ -1,0 +1,162 @@
+{
+  "schema_version": "qualification-scoring-original-source-corpus-audit-v1",
+  "as_of_date": "2026-10-13",
+  "method": "read_only_original_getdocs_ip_metadata_inventory_on_authorized_mac_mini",
+  "source_boundary": "Docker volume arvectum-local-e2e_app-artifacts:/evidence/tender_operator_demo, metadata.json; only source=zakupki_gov_ru_getdocs_ip, unique 19-digit registry number; file names .docx/.pdf/.xlsx, not full content parsed",
+  "observed_metadata_records": 54,
+  "unique_44fz_registry_numbers": 20,
+  "scoring_document_title_candidate_count": 1,
+  "candidate_detection": "case insensitive filename regex оценк|критери|показател|порядок|сопоставлен; title-only, nonmatching filenames may still contain scoring rules",
+  "historical_runs_with_new_download_time_archive_digest": 0,
+  "independent_primary_scoring_evidence_count": 1,
+  "independent_primary_scoring_evidence_case": "0348100024426000039",
+  "independent_primary_source_status": "CZN original latest SOAP EOK2020 v4 and one award DOCX separately verified in PR408; not inferred from old metadata",
+  "independent_scoring_document_sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+  "other_19_scoring_rules": "NOT_VERIFIED",
+  "other_19_explicit_no_scoring_rules_confirmed": false,
+  "ri223_scoring_evidence": "NOT_AUDITED_IN_THIS_VOLUME_SCAN",
+  "recommended_new_parsers": "BLOCKED_PENDING_DISTINCT_PRIMARY_ORIGINAL_DOCUMENTS",
+  "no_go_generalization_authorized": false,
+  "cases": [
+    {
+      "procurement_number": "0372200172326000015",
+      "document_filename_count": 3,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0158300034526000388",
+      "document_filename_count": 9,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0137200001226007700",
+      "document_filename_count": 3,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0377100005726000128",
+      "document_filename_count": 6,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0376300000126000193",
+      "document_filename_count": 4,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0169300008226000225",
+      "document_filename_count": 3,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0169300008226000223",
+      "document_filename_count": 3,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0169300003326000181",
+      "document_filename_count": 6,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0162300005826000156",
+      "document_filename_count": 8,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0348100024426000039",
+      "document_filename_count": 6,
+      "scoring_title_candidate": true,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "SEPARATELY_ORIGINAL_VERIFIED_CZN_ONLY"
+    },
+    {
+      "procurement_number": "0148300050426000047",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0348100024426000052",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0148200000526000028",
+      "document_filename_count": 2,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0149200002326001555",
+      "document_filename_count": 1,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0349500000226000003",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0349100009326000005",
+      "document_filename_count": 1,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0127100008626000013",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0318200087026000163",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0360600005326000018",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    },
+    {
+      "procurement_number": "0895100000126000897",
+      "document_filename_count": 0,
+      "scoring_title_candidate": false,
+      "download_time_sha256_receipt": false,
+      "auto_score_status": "NOT_ASSESSED"
+    }
+  ]
+}

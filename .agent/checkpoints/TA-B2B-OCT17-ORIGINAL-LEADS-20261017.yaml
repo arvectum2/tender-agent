@@ -1,0 +1,55 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-OCT17-ORIGINAL-LEADS-20261017
+status: completed
+goal: Advance open Tender Agent B2B discovery toward 15-20 contemporaneous verified corporate IT opportunities using first-party
+  sources, deduped and status-first, without bidding or paywalls.
+definition_of_done:
+- Read and preserve old 9 historical lead evidence, dedupe parent/lot/failed status against current main.
+- Research and independently verify October17 candidates by exact first-party public cards or official archived EIS XML, not
+  aggregators alone; preserve source date, status and owner/eligibility uncertainty.
+- Separate CURRENT_STATUS_CONFIRMED from secondary-index candidate/unverified, private organizers and expired; do not call
+  acceptance 15-20 DONE prematurely.
+- Create a reusable fail-closed data contract validator and regression test for dated source receipts if needed; update source
+  ledger, parent roadmap and task checkpoint.
+- Full regression plus exact-head GitHub CI and merge safe evidence; no ETP actions, payments, new UI/stand or messages.
+completed:
+- Restored parent main c18df3ca; prior archived Museum EIS deadline safety child completed and main CI green. APR04 technical
+  E2E already passed but owner original PDF/business rules unknown; 9 B2B historical cards are NOT presently open.
+- Public category indexes Oct17 now present Workspace and Kontur candidate IT tenders after Oct17, but secondary indexed opportunities
+  are never primary-source accepted by deadline alone.
+- Reused current source-status CorporateLeadDecision URL allowlist and status-before-deadline fail-closed gating, no new B2B
+  engine/UI.
+- Mac mini direct TLS HTTPS fetched 8 exact original Workspace cards with original source HTML full SHA, size, UTC time, no
+  paid sites/account/cookies/HTML persisted.
+- 'Five previously untracked corporate public accepting-source snapshots: workspace-19043,19042,19034,19032,19030; PUBLIC_CANDIDATE_ONLY,
+  bid_ready false.'
+- 'Three excluded: private-person organizers 19052/19035 and historical known 19023 terminal Завершён despite future printed
+  deadline; no double count.'
+- 17 offline focused regression tests PASS, Ruff PASS; full suite and GitHub CI pending.
+- 'Full original-source JSON privacy/status/receipt verified: 8 distinct primary public cards with 8 full source SHA/size
+  and source observation timestamps, 5 corporate receiving / 2 private organizer excluded / 1 previous historical terminal
+  excluded, zero GO.'
+- PR466 exact-head GitHub CI all required jobs green; Mac mini full pytest 4993 PASS/285 SKIP, 17 focused PASS and make check
+  PASS.
+- Merged safe source ledger, test and bounded 8-page read-only research script to main, without second UI/stand/DB, no ETP
+  registration, PRO payment or message.
+- 'Independently received two additional original official 44FZ getDocsIP XML competitive snapshots: Smolensk site 0163200000326005243
+  v2 /497178.33 RUB/Oct30 cutoff and Kaliningrad GIS 0335200014926003900 v1 /5736250 RUB/Oct22 cutoff. Their current legal/eligibility
+  gate remains separate; do not count these in 5 corporate Workspace original cards.'
+current_stage: Completed bounded Oct17 5 original corporate B2B Workspace cards and 3 exclusions, separate 2 first-party 44FZ
+  research snapshots; broader 15–20 simultaneously legally qualified goal OPEN.
+remaining: []
+last_verified_commit: 169ed9143cbc0f5ce8f43993e5e9d19408c88072
+last_tests: Mac mini full pytest 4993 PASS/285 SKIP/0 FAIL; source receipt 17 focused PASS, Ruff/make check PASS; PR466 exact-head
+  all required CI PASS; 8 actual public Workspace exact HTTPS200/TLS source SHA and 2 EIS getDocsIP primary ZIP/notice SHA
+  verified.
+resume_instruction: 'Source-gated 5 NEW corporate Workspace first-party cards COMPLETE; do not repeat or merge old terminal
+  19023. Parent TA-ROADMAP-EXEC-20261012 still IN_PROGRESS: grow to 15–20 simultaneously OPEN primary-source and owner qualified
+  IT offers using EIS 44/223FZ + corporate platforms, verify platform participation/PRO fees and qualification only with owner;
+  no registration, purchase, bid, message, new UI/stand. APR04 owner legal/business review and APR06/07 human gold still open.'
+primary_source_corporate_snapshot_count: 5
+private_organizer_excluded: 2
+prior_terminal_excluded: 1
+additional_original_44fz_archives_verified: 2
+actual_current_b2b_qualified_15_20_goal_met: false

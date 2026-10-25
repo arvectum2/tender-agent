@@ -1,0 +1,131 @@
+{
+  "schema_version": "apr06-czn-v4-public-html-source-receipt-v1",
+  "reg_number": "0348100024426000039",
+  "checked_on": "2026-10-13",
+  "official_public_eis_page_urls": {
+    "common_info": "https://zakupki.gov.ru/epz/order/notice/ok20/view/common-info.html?regNumber=0348100024426000039",
+    "documents": "https://zakupki.gov.ru/epz/order/notice/ok20/view/documents.html?regNumber=0348100024426000039",
+    "event_journal": "https://zakupki.gov.ru/epz/order/notice/ok20/view/event-journal.html?regNumber=0348100024426000039"
+  },
+  "official_public_html_evidence": {
+    "official_page_readable_from_ru_direct_ip": true,
+    "procurement_stage": "Подача заявок",
+    "notice_version": 4,
+    "notice_version_state": "Действующая",
+    "notice_version_published_at_msk": "2026-10-12T22:24:00+03:00",
+    "previous_version": 3,
+    "previous_version_state": "Недействующая",
+    "last_html_update_date": "2026-10-12",
+    "application_deadline_msk": "2026-10-23T10:00:00+03:00",
+    "nmck_rub": 1245000
+  },
+  "source_evidence": {
+    "official_v4_html_document_uid_count": 7,
+    "official_v4_html_uids_with_matching_local_sha256_bytes": 7,
+    "reused_original_v3_uids": 3,
+    "new_direct_v4_uid_downloads": 4,
+    "unmatched_html_uid_count": 0,
+    "download_errors": 0,
+    "original_v4_epnotification_xml_acquired": true,
+    "original_v4_epnotification_xml_sha256_verified": true,
+    "official_v4_xml_attachment_size_binding_verified": true,
+    "zip_internal_document_review_completed": false,
+    "legal_or_commercial_acceptance": false,
+    "human_gold_labels": 0,
+    "official_v4_xml_UID_name_size_matches": 7,
+    "official_v4_xml_cryptographic_signature_validated": false
+  },
+  "files": [
+    {
+      "uid": "01A0F1061E81747BAB5A3EAEB3760D5F",
+      "file_name": "Обоснование НМЦК.zip",
+      "size_bytes": 135528,
+      "sha256": "fb3be0c95f7f9cd48cb41188cfe5da6336dd0f382a8834bd47710b8ae5fb7d8d",
+      "origin": "reused_archived_v3_UID_source_bytes_rehashed_2026-10-13",
+      "new_public_download": false,
+      "magic_signature_checked_in_this_run": false
+    },
+    {
+      "uid": "01A0F106511B706C844790906683531B",
+      "file_name": "Требование к содержанию, составу заявки на участие в закупке закупка №060577-26.docx",
+      "size_bytes": 35558,
+      "sha256": "6c0d6fd49a8698a72ef9c6fd654cbcbc9671b23948699dad58004210bf9aec40",
+      "origin": "reused_archived_v3_UID_source_bytes_rehashed_2026-10-13",
+      "new_public_download": false,
+      "magic_signature_checked_in_this_run": false
+    },
+    {
+      "uid": "01A0F10655C27A35B5A5A70090D2BB1A",
+      "file_name": "Порядок рассмотрения и оценки заявок на участие в конкурсах закупка №060577-26.docx",
+      "size_bytes": 22427,
+      "sha256": "bda1eff35bffda97f5a8e661f5d9fd5d221562e2b00e55feec28cb3fbd745dd8",
+      "origin": "reused_archived_v3_UID_source_bytes_rehashed_2026-10-13",
+      "new_public_download": false,
+      "magic_signature_checked_in_this_run": false
+    },
+    {
+      "uid": "01A13177E846790D939258D0B9723EE6",
+      "file_name": "Проект контракта, сост. 12.10.2026.zip",
+      "size_bytes": 52070,
+      "sha256": "f103990c2b84353b962768b6d2ff52398304faf056e0499256f237cf03fa7b0c",
+      "origin": "new_public_v4_UID_direct_EIS_read_only_download_2026-10-13",
+      "new_public_download": true,
+      "magic_signature_checked_in_this_run": true
+    },
+    {
+      "uid": "01A13177D99776D8A5158380BC40BB5A",
+      "file_name": "ООЗ ИТОГ.pdf",
+      "size_bytes": 984271,
+      "sha256": "3a668cd9140770851920d4a6b99ea0568f129a7eba0496ad63e1254d619b8364",
+      "origin": "new_public_v4_UID_direct_EIS_read_only_download_2026-10-13",
+      "new_public_download": true,
+      "magic_signature_checked_in_this_run": true
+    },
+    {
+      "uid": "01A13177E31E7843831BB35B2B827157",
+      "file_name": "Другое приложение, сост. 12.10.2026.zip",
+      "size_bytes": 864163,
+      "sha256": "a58a0b8906d8f7550035b17a2d7539246803b728511b00822661376c83dc4e60",
+      "origin": "new_public_v4_UID_direct_EIS_read_only_download_2026-10-13",
+      "new_public_download": true,
+      "magic_signature_checked_in_this_run": true
+    },
+    {
+      "uid": "01A13177DF59719F89C5E8A0DBBC7BA2",
+      "file_name": "Приложение к проекту контракта, сост. 12.10.2026.zip",
+      "size_bytes": 499471,
+      "sha256": "4b92d5979d57e1e064493364a00b3ce8c52281697cd298adce84cd100d68c002",
+      "origin": "new_public_v4_UID_direct_EIS_read_only_download_2026-10-13",
+      "new_public_download": true,
+      "magic_signature_checked_in_this_run": true
+    }
+  ],
+  "limitations": [
+    "Original EIS SOAP getDocsIP epNotification EOK2020 v4 XML now acquired; original archive/XML SHA256 and UID/name/size match verified. Digital signature cryptographic trust and interior ZIP content not validated.",
+    "7 UID-to-byte SHA-256 matches refer to HTML href UID and local bytes, not a signed live official XML archive/complete internal ZIP content or business eligibility.",
+    "Earlier archived revision 3 deadline 2026-10-19 and missing ZIP are superseded by revision 4 deadline 2026-10-23; no bid action authorized.",
+    "Four fresh files stored only under private Mac mini /tmp; original binary content is not in Git."
+  ],
+  "official_soap_original": {
+    "method": "official_getDocsIP_PRIZ_individual_read_only",
+    "host": "int.zakupki.gov.ru",
+    "archive_sha256": "dad574a4bd996a675645bdf538ed13201cc59983417d2c153467bb3f9d2d4908",
+    "archive_bytes": 76759,
+    "xml_members": 8,
+    "notice_versions": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "clarification_xml_count": 4,
+    "version_4_xml_sha256": "bd6a4261995882d42dfe37d3809a26c722ea771d782e5bac6be4b76675d5fb6c",
+    "version_4_xml_bytes": 106471,
+    "version_4_notice_type": "epNotificationEOK2020",
+    "version_4_published_at": "2026-10-12T22:24:55.431+03:00",
+    "version_4_deadline": "2026-10-23T10:00:00+03:00",
+    "version_4_original_UID_name_size_count": 7,
+    "digital_signature_validation": "NOT_PERFORMED",
+    "private_archive_location": "/Volumes/ArvectumSSD/Arvectum/runtime/ta-apr06-czn-v4-eis-official-20261013/documentation-archive.zip"
+  }
+}

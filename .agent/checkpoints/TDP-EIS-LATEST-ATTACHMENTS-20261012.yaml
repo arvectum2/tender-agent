@@ -1,0 +1,20 @@
+task_id: TDP-EIS-LATEST-ATTACHMENTS-20261012
+status: in_progress
+goal: "Prevent archived EIS notice attachment discovery from mixing v1/v2 original documents of a procurement; select latest verifiable archived notice version without claiming live EIS status."
+definition_of_done:
+  - "Reproduce on archived case 0360600005326000018: two notice XML revisions, same attachment names but different official UID and bytes."
+  - "Apply a bounded pure helper to select only highest archived epNotification/fcsNotification revision per registry number during attachment discovery, fail closed on ambiguous same-version conflicting notices."
+  - "Add unit/integration tests for real revision naming, duplicate canonical revisions, non-parseable legacy notices and source-selection correctness."
+  - "Run focused tests, Ruff, full no-exclusion regression and 9/9 exact-head CI; merge only on green."
+  - "Update primary and child checkpoints; no production, bid submissions, external ChatGPT API or watchdog."
+completed:
+  - "2026-10-12 independent ChatGPT code audit identified possible all-version attachment mixing at procurement_intake_service._discover_notice_xml_attachments; real verified official archive 0360600005326000018 includes v1 and v2 technical specification same title but different UID."
+current: "Create isolated branch/worktree and reproduce first, then pure latest-notice filter."
+remaining:
+  - "Test current all-revisions selection using real cached archive or synthetic paired notices."
+  - "Implement pure revision selector and fail-closed conflict policy."
+  - "Verify on actual private v1/v2 XML that only highest archive revision attachment UID is selected."
+  - "Run all tests, CI and merge; checkpoint completed if successful."
+last_verified_commit: a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e
+test_results: []
+resume_instruction: "Use separate Mac mini worktree from origin/main; inspect src/modules/tender_operator_agent_demo/procurement_intake_service.py around _discover_notice_xml_attachments and original private EIS archive 0360600005326000018 (v1 and v2). Preserve immutable R3 analyzer AST; only change attachment discovery with real source-revision evidence and fail-closed tests. No OpenAI API, production, bids/watchdog."

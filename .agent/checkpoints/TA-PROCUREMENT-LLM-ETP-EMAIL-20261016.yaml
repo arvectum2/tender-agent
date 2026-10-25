@@ -1,0 +1,22 @@
+task_id: TA-PROCUREMENT-LLM-ETP-EMAIL-20261016
+repository: arvectum2/tender-agent
+status: blocked
+goal: 'Source-bind historical Arvectum participation in Museum Bread, Aksioma and Kaluga to primary ETP operator confirmations in connected corporate mail, and append metadata into existing PostgreSQL arvectum when execution access permits.'
+definition_of_done:
+  - 'Obtain and review primary operator messages identifying legal company/procurement and actual application numbers for participation cases.'
+  - 'Represent distinct application actions, receipt and admission; do not invent final outcomes or equate unspecified withdrawal to app206.'
+  - 'Prepare privacy-safe idempotent candidate batch outside Git, validate dry run, append to existing same PG only via explicit guarded CLI.'
+  - 'Verify actual new DB counts and read-only source auditor, update roadmap/checkpoint; do not train LLM.'
+completed:
+  - '2026-10-16 corporate linked Gmail Arvectum: 11 emails selected (RTS 4, Roseltorg 2, Sberbank-AST 5), identifying LLC Arvectum and EIS numbers. RTS received Museum 12.10 13:13 MSK and 15.10 10:58 MSK. Roseltorg Aksioma successfully submitted app ordinal 3630084. Kaluga Sber AST app206 processed, one withdrawal application number unknown, app193 received and admitted, EIS original ZIP+XML confirms app193 final price449000 and appRating26.'
+  - '2026-10-16 six initial redacted metadata events prepared in existing private ArvectumSSD/tender-agent/pending-manual-evidence/etp-operator-receipts-20261016.json with 0600 permissions and stable IDs, full email bodies/attachments not copied. Existing importer dry-run PASS 6 candidates/6 IDs.'
+  - '2026-10-16 follow-up search of corporate RTS mails from 5–6 October established additional Aksay 0158300034526000388 LLC Arvectum application receipts 05.10 18:45 MSK and 06.10 16:26 MSK; two distinct redacted events appended to SAME private intake JSON. 8 event IDs now pass importer dry-run. No DB apply or second storage.'
+  - '2026-10-16 apply execution blocked by tool security restriction; no workaround attempted, no confirmed inserts; existing PostgreSQL at 77 candidate observations. Private file remains for safe future retry.'
+  - '2026-10-16 new separate operator RTS Aksay final decision email metadata source event app122031738 admitted/rank38 stored private 0600 and dry-run passed, 1 more event alongside earlier 8 = 9 total pending across 2 files, none imported due existing write block.'
+current_stage: 'BLOCKED: nine private ETP events pending across two files, no confirmed inserts.'
+remaining:
+  - 'When explicitly permitted by tool/access, use existing approved import_candidates --manual-file --apply --confirm-database arvectum, then replay and check DB/audit; never circumvent blocked tool.'
+  - 'Confirm missing official outcome ranks and unknown RTS/SberAST procurement ID before any gold or deduping.'
+last_verified_commit: 53646896a0e9492ffdd9acefe30d26b2010c2354
+last_tests: 'Dry-run existing importer 8 candidate/8 IDs PASS; canonical PG unchanged 77, all legacy SHA 2/2 verified; source records independently reviewed. No DB write accepted.'
+resume_instruction: 'Blocked intake from 2026-10-16 corporate Gmail evidence. Private JSON /Volumes/ArvectumSSD/Arvectum/private/tender-agent/pending-manual-evidence/etp-operator-receipts-20261016.json (0600) has eight source-bound metadata events from 15 inspected official operator emails for Aksay, Museum Bread, Aksioma, Kaluga; internal Gmail message IDs only in private file, NEVER commit raw email or IDs. Dry run passed for eight. Prior apply action was blocked by tool security, do not bypass. Live existing PG arvectum remains 77 (45+20+10+2), nine events NOT inserted. Separate rank/outcome/withdrawal-source issues outstanding; model training deferred. Keep parent roadmap in_progress. Resume only via authorized safe execution path.'

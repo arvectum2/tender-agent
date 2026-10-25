@@ -254,7 +254,14 @@ def _unsupported_domain_markers(source_text: str) -> tuple[str, ...]:
 
 def _contains_unsupported_marker(value: Any, markers: tuple[str, ...]) -> bool:
     text = str(value or "").lower()
-    return any(marker in text for marker in markers)
+    # Substring matching "ерн" incorrectly matched "черновик" and erased
+    # every LLM RFQ line headed "[Черновик LLM — согласовать]".
+    # Match word starts: medical stems still match медицинские, but ordinary
+    # unrelated words do not become false unsupported-domain indicators.
+    return any(
+        re.search(r"(?<!\w)" + re.escape(marker), text) is not None
+        for marker in markers
+    )
 
 
 def _filter_generated_list(value: Any, markers: tuple[str, ...]) -> Any:

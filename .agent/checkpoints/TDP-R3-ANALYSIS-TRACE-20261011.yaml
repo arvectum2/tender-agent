@@ -1,0 +1,40 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-ANALYSIS-TRACE-20261011
+status: completed
+goal: Extract 48-line analyst-facing source-analysis trace summary from monolithic
+  Tender Agent uploaded run builder, without changing risk provenance, document counts
+  or human-review policy.
+definition_of_done:
+- Move trace projection pure function to product-owned module, explicitly inject semantic
+  document role helper
+- AST equality source projection, no side effects nor extra trace claims
+- Tests for goods source facts and unknown services, document inventory/role, extraction
+  counts, limitations and no external actions
+- 'Ruff/make check/full Python3.12 local pytest, all exact-head GitHub CI; merge after
+  reconcile PR #326; mark bounded checkpoint completed while parent remains in_progress'
+completed:
+- Verified fresh main 7c564070 and independent original 48-line trace assignment,
+  source signals and human review invariant.
+- Extracted identical 48-line trace payload value into pure product-owned operator_analysis_trace.py
+  with explicit semantic role helper injection; AST equality verified.
+- Five direct synthetic source-role/fact, goods vs services source requirement counts,
+  empty text, human-review and limits tests added; 42 focused tests passed (21 warnings).
+- Targeted Ruff checked.
+- 'PR #327 combined post-#326 local Python3.12 full regression: 3628 passed, 238 skipped,
+  zero failures; make check green.'
+- 'PR #327 all exact-head GitHub CI green: two quality jobs 9m10s and 8m36s plus integration/security/lock.'
+- Merged main 368da8c874b11edf185e29c6d874f9202f70df87
+current: Completed and merged as 368da8c874b11edf185e29c6d874f9202f70df87
+pending: []
+last_verified_commit: 368da8c874b11edf185e29c6d874f9202f70df87
+test_results:
+- 42 focused tests PASS (21 warnings)
+- AST trace payload identity PASS
+- Ruff targeted PASS
+- 'Combined full local: 3628 passed/238 skipped, zero failures'
+- All exact-head GitHub quality and integration CI PASS
+- Merged 368da8c874b11edf185e29c6d874f9202f70df87
+resume_instruction: 'R3 source analysis trace extraction completed. Do not repeat.
+  Continue cross-repo ownership PR #328, and main open R2 original evidence, R4 gold
+  benchmark, R5 owner-reviewed acceptance. Watchdog remains disabled.'

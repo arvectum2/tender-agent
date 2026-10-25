@@ -1,0 +1,38 @@
+{
+  "all_archives_validated_count": 15,
+  "all_original_binaries_sha_validated_count": 73,
+  "as_of": "2026-10-15",
+  "bid_ready": false,
+  "cohort_case_counts": [
+    3,
+    4,
+    4,
+    4
+  ],
+  "cohort_original_binary_counts": [
+    16,
+    21,
+    19,
+    17
+  ],
+  "full_pytest_failed": 0,
+  "full_pytest_passed": 4299,
+  "full_pytest_report_sha256": "f401ce028df154fb92bd812c8648472439ed8824c75b3725dd010b1d5b8d6dc5",
+  "full_pytest_run_on": "ARVECTUMSSD",
+  "full_pytest_skipped": 242,
+  "independent_expert_contacted": false,
+  "independent_human_gold_signed_count": 0,
+  "original_immutable_blind_lock_sha256": [
+    "a5b1a7a164a163bf3c7042b9ace25c60b5fded1af680d7c48c99486110003501",
+    "e0f000916895b0f07f1603af8a448af5dc390ff228921053a3f02cc702303c5a",
+    "66545450de466dc742d7525a8f7a539644784f4e98696e63edce6cf5da00937e",
+    "e13b4238056f527a75f82d9d9dbf6603c125aec3a9a6498ac6dcbfbd4e6c983c"
+  ],
+  "original_sources_and_archives_publicly_released": false,
+  "prior_development_and_blind_source_identity_count": 35,
+  "prior_development_and_blind_unique_original_sha_count": 169,
+  "semantic_precision_recall": "NOT_MEASURED",
+  "separate_private_audit_receipt_sha256": "22f2270c9b6cb4a99e395d7a2b11c81d065bfd7ad2e0395eb26e9988596579ad",
+  "status": "OFFLINE_TRANSFER_SHA_AND_LOCK_VERIFICATION_PASSED_PRE_GOLD",
+  "sut_predictions_ever_exposed_to_blind_reviewer": false
+}

@@ -1,0 +1,19 @@
+task_id: TDP-LIVE-EIS-CARDS-20-20261012
+status: completed
+goal: "Attest official live card status for the verified 20 competitive cases, without inferring legal GO or weakening source integrity."
+definition_of_done:
+  - "Read official first-party live EIS HTML card for all 20 cases and require visible number/type plus matching stage, deadline and SHA."
+  - "If access unavailable, explicitly preserve all 20 SOURCE_UNAVAILABLE and avoid ungrounded live claims."
+  - "Use existing approved secure HTTPS route for a single bounded second pilot if possible; never disable TLS or invent official status."
+  - "Commit redacted evidence-only report and checkpoint; owner only final acceptance."
+completed:
+  - "2026-10-12 confirmed twenty positive competitive cases are already source-attested in latest repository work; no replacement work to repeat."
+  - "2026-10-12 strict direct HTTPS attempt across twenty first-party EIS common-info cards returned URLError 20/20; private JSON response receipts saved and 0 current live statuses attested."
+current: 'Twenty of twenty official public EIS live HTML cards obtained using system curl strict HTTPS and TLS verification. All 20 source number/title and duplicate stage fields matched. Five show Pодача заявок, one Работа комиссии, fourteen Определение поставщика завершено, with exact source deadline strings and private HTML SHA receipts saved. Report committed docs/acceptance/TDP_RDC_LIVE_OFFICIAL_EIS_20_2026-10-12.md. This attests displayed source status at fetch time, not legal/bidder GO.'
+remaining: []
+last_verified_commit: 672fe7266ecfef020574b87ea31482d84ca74627
+test_results:
+  - '20/20 official EIS pages fetched with curl strict TLS, verified host/status and visible notice number; 20/20 header stage equals section stage.'
+  - 'Five Pодача заявок, one Работа комиссии, fourteen Определение поставщика завершено.'
+  - 'Each official HTML page SHA and source deadline saved privately; no product code changes.'
+resume_instruction: 'Child live-card attestation completed. Read docs/acceptance/TDP_RDC_LIVE_OFFICIAL_EIS_20_2026-10-12.md and private live-eis-cards-20261012/official-live-20-curl-receipt.json. Next stage: review current full legal bid qualification and economics of five source-attested filing-open cases, without submitting bids or changing production; final user acceptance only. Recheck live cards if status expires; no external ChatGPT API or watchdog.'

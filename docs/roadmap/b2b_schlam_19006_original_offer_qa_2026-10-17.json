@@ -1,0 +1,198 @@
+{
+  "schema_version": "ta-schlam-original-19006-reuse-qa-v1",
+  "checked_at_utc": "2026-10-17T14:36:55.446018+00:00",
+  "original_workspace_card": {
+    "url": "https://workspace.ru/tenders/sozdanie-i-dalneyshee-razvitie-sayta-specializirovannoy-kompanii-po-rabotam-na-vode-i-trudnodostupnyh-obektah-19006/",
+    "original_html_sha256": "58ca1afd39e8fd26b6ab02bd88c8ba3ec9e647a05f742d1094cc2dfd99210081",
+    "original_html_bytes": 63665,
+    "status": "Идет прием заявок",
+    "organizer_type": "Юридическое лицо",
+    "deadline_date": "2026-11-01",
+    "deadline_clock": "UNKNOWN",
+    "source_budget_min_rub": 130000,
+    "source_budget_max_rub": 400000,
+    "original_literal_source_requirements": [
+      "Нужен специалист",
+      "кто наши реальные прямые и косвенные конкуренты",
+      "разобраться в теме и предложить",
+      "Подробное техническое задание намеренно пока не формируем.",
+      "Бюджет: 130 000 - 400 000 рублей"
+    ]
+  },
+  "published_demo_pages": [
+    {
+      "url": "https://arvectum.com/schlam/",
+      "html_sha256": "de6063aa709df5e58fad96f86178070b4f07ea5585083aed96d3d24f0f7ac563",
+      "size": 22306,
+      "http_status": 200,
+      "robots_noindex": true,
+      "existing_site_unchanged": true
+    },
+    {
+      "url": "https://arvectum.com/schlam/market/",
+      "html_sha256": "b7f99d2ee66341cf015cd3bbed67b7ef6717f2a902f90620dcb6aabf43a2bcdf",
+      "size": 39243,
+      "http_status": 200,
+      "robots_noindex": true,
+      "existing_site_unchanged": true
+    },
+    {
+      "url": "https://arvectum.com/schlam/offer/",
+      "html_sha256": "3c98aef30279acf9be4681b6c27d955a64165e184a861d881c4e980abcd4694c",
+      "size": 19775,
+      "http_status": 200,
+      "robots_noindex": true,
+      "existing_site_unchanged": true
+    },
+    {
+      "url": "https://arvectum.com/schlam/brief/",
+      "html_sha256": "9c091ab1e17323c56e18f6a3b6dad05f9860527f263a6413d040f2b93f068d69",
+      "size": 12781,
+      "http_status": 200,
+      "robots_noindex": true,
+      "existing_site_unchanged": true
+    },
+    {
+      "url": "https://arvectum.com/schlam/equipment/",
+      "html_sha256": "7ee259061d4819c04ccbf79bf67d02cee4a283a9bcff203ba7cc10f7d225659e",
+      "size": 5787,
+      "http_status": 200,
+      "robots_noindex": true,
+      "existing_site_unchanged": true
+    },
+    {
+      "url": "https://arvectum.com/schlam/crm/",
+      "html_sha256": "c5cc898beb68584151833758e2eb4afe4977a75db1ebb1b299721c2fc8ca1275",
+      "size": 3433,
+      "http_status": 200,
+      "robots_noindex": true,
+      "existing_site_unchanged": true
+    }
+  ],
+  "internal_link_checks": [
+    {
+      "url": "https://arvectum.com/schlam/",
+      "http_status": 200,
+      "bytes": 22306
+    },
+    {
+      "url": "https://arvectum.com/schlam/assets/site.css",
+      "http_status": 200,
+      "bytes": 33842
+    },
+    {
+      "url": "https://arvectum.com/schlam/assets/site.js",
+      "http_status": 200,
+      "bytes": 5371
+    },
+    {
+      "url": "https://arvectum.com/schlam/brief/",
+      "http_status": 200,
+      "bytes": 12781
+    },
+    {
+      "url": "https://arvectum.com/schlam/brief/brief.js",
+      "http_status": 200,
+      "bytes": 5427
+    },
+    {
+      "url": "https://arvectum.com/schlam/brief/pitch.css",
+      "http_status": 200,
+      "bytes": 34
+    },
+    {
+      "url": "https://arvectum.com/schlam/crm/",
+      "http_status": 200,
+      "bytes": 3433
+    },
+    {
+      "url": "https://arvectum.com/schlam/crm/crm.js",
+      "http_status": 200,
+      "bytes": 2414
+    },
+    {
+      "url": "https://arvectum.com/schlam/crm/module.css",
+      "http_status": 200,
+      "bytes": 3143
+    },
+    {
+      "url": "https://arvectum.com/schlam/equipment/",
+      "http_status": 200,
+      "bytes": 5787
+    },
+    {
+      "url": "https://arvectum.com/schlam/equipment/equipment.js",
+      "http_status": 200,
+      "bytes": 2047
+    },
+    {
+      "url": "https://arvectum.com/schlam/equipment/module.css",
+      "http_status": 200,
+      "bytes": 3143
+    },
+    {
+      "url": "https://arvectum.com/schlam/index.html",
+      "http_status": 200,
+      "bytes": 22306
+    },
+    {
+      "url": "https://arvectum.com/schlam/market/",
+      "http_status": 200,
+      "bytes": 39243
+    },
+    {
+      "url": "https://arvectum.com/schlam/market/report.css",
+      "http_status": 200,
+      "bytes": 9775
+    },
+    {
+      "url": "https://arvectum.com/schlam/offer/",
+      "http_status": 200,
+      "bytes": 19775
+    },
+    {
+      "url": "https://arvectum.com/schlam/offer/pitch.css",
+      "http_status": 200,
+      "bytes": 7854
+    },
+    {
+      "url": "https://arvectum.com/schlam/offer/pitch.js",
+      "http_status": 200,
+      "bytes": 380
+    },
+    {
+      "url": "https://arvectum.com/schlam/research.html",
+      "http_status": 200,
+      "bytes": 32342
+    },
+    {
+      "url": "https://arvectum.com/schlam/services/amphibious.html",
+      "http_status": 200,
+      "bytes": 19512
+    },
+    {
+      "url": "https://arvectum.com/schlam/services/dredging.html",
+      "http_status": 200,
+      "bytes": 19899
+    },
+    {
+      "url": "https://arvectum.com/schlam/services/piling.html",
+      "http_status": 200,
+      "bytes": 19756
+    },
+    {
+      "url": "https://arvectum.com/schlam/services/sludge.html",
+      "http_status": 200,
+      "bytes": 19978
+    }
+  ],
+  "existing_offer_start_price_rub": 89000,
+  "existing_offer_estimate_weeks": "4–6",
+  "existing_offer_below_public_budget_min_not_auto_bad_but_owner_cost_gate": true,
+  "site_repo_known": "arvectum2/arvectum-site",
+  "company_paid_workspace_access_or_invitation_verified": false,
+  "published_demo_not_real_customer_technical_facts": true,
+  "bid_ready": false,
+  "human_go": false,
+  "no_new_site_ui_or_external_action": true
+}

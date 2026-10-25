@@ -1,0 +1,51 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-EIS-ORIGINAL-ZIP-20261017
+status: completed
+goal: Bind an authentic original getDocsIP ZIP and archived EIS notice revision to the existing Museum Bread saved Operator
+  Workspace run without inventing EIS currency or creating another UI/stand.
+definition_of_done:
+- Locate any existing first-party ZIP/official EIS source in Tender Agent/Data Platform before considering official read-only
+  refetch.
+- Verify exact original archive bytes, source notice number/version, zip membership, six existing saved documents vs official
+  source evidence; distinguish recorded archive from current live official revision.
+- Implement minimal fail-closed provenance repair or general workflow inside the existing intake/evidence modules, with no
+  new UI/stand/database and no destructive existing run mutation.
+- Pass targeted/full tests, exact-head CI, preserve original data and document audit receipts in repo and canonical checkpoint.
+completed:
+- Read origin/main ae9ac3f9401fc3af56b370b722c9b9d517715131; prior real UI/archive six-file SHA and real browser tests verified,
+  main CI success.
+- Created clean isolated SSD worktree; no changes to dirty primary checkout or existing 18082 runtime.
+- 'Located original ZIP already in historic Museum run input: documentation-archive.zip 17041B SHA256 35978ce4; no refetch
+  needed.'
+- Historic getDocs events uniquely name ZIP and size from official int.zakupki.gov.ru; original XML inside ZIP 102910B SHA
+  ed5c742b matches FILE-01, classification epNotificationEZK2020 archived v1, no current-live claim.
+- Read-only dry-run inside same 18082 container PASS; missing fields are legacy metadata linkage problem.
+- Prepared safe retrospective attestation script with explicit two-hash apply gate, source evidence single pinned revision
+  change; 59 focused pytest PASS.
+- Backed up original metadata.json, events.jsonl and documentation-archive.zip to external ArvectumSSD backup directory with
+  mode 0600, metadata SHA 608359b6, events SHA dea31264 and original ZIP SHA 35978ce4 verified; live metadata still unmodified.
+- PR463 GitHub exact-head CI all green, Mac mini 4945 passed/285 skipped, make check and targeted 59 passed.
+- Original ZIP/metadata/events backed up on ArvectumSSD with SHA verified before applying; unchanged saved 18082 original
+  retained.
+- Updated existing 18082 container to merged main source with full tree SHA parity, retaining original Compose project/DB/volumes
+  and no new UI or stand.
+- Dry-run after merge confirmed saved source and metadata SHA; explicit two-SHA apply linked archive original 17041B ZIP and
+  archived epNotificationEZK2020 v1 XML; retrospective historical SHA flag true, live/current status remains false.
+- Repeated actual private saved six documents SHA parity and HTTP history/report; source selection pinned archived v1, report
+  manual_review_required, PDF/DOCX archive409; Chrome actual history and both denials JS=0.
+current_stage: Completed retrospective archived ZIP receipt repair on existing 18082; latest official EIS source remains separate
+  owner/legal gate.
+remaining: []
+last_verified_commit: 7c192c383a5e1d3b9ba813c9b27536bef15f6030
+last_tests: Mac mini 4945 pytest PASS/285 SKIP, 59 targeted PASS, GitHub PR463 CI SUCCESS; source parity original API, archived
+  v1 provenance, six original downloads, report and export409 verified.
+resume_instruction: Archived official getDocsIP ZIP and version1 have been linked; do NOT repeat or create new UI/stand. Source
+  is retrospective, not cryptographic transport timestamp, and latest live EIS edition is unknown. Continue parent with official
+  live notice status, completeness of five attachments outside this ZIP, independent legal/economic owner review; production/ETP/payment/signature
+  gates remain closed.
+eis_saved_metadata_repaired: true
+retrospective_original_zip_archived_version: 1
+original_zip_sha256: 35978ce41fc87955491cc53705b0bd126c6d8217b82134e640eed1d78ed9e500
+current_live_eis_verified: false
+business_go_eligible: false

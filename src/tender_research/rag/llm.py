@@ -8,6 +8,9 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from src.tender_research.rag.numeric_absence_guard import contradicted_absence
+from src.tender_research.rag.numeric_claim_evidence import (
+    unsupported_explicit_numeric_claim,
+)
 from src.tender_research.rag.numeric_claim_guard import contradicted_cited_quantity
 
 if TYPE_CHECKING:
@@ -100,6 +103,12 @@ def _validate_source_bound_completion(
         return (
             "Local LLM numeric claim conflicts with its explicitly cited "
             "source chunk; review original document before use."
+        )
+    unsupported_kind = unsupported_explicit_numeric_claim(answer, contexts)
+    if unsupported_kind:
+        return (
+            "Local LLM answer includes an unsupported explicit numeric value "
+            f"with unit {unsupported_kind}; review original cited source chunks."
         )
     return None
 

@@ -1,0 +1,18 @@
+{
+  "schema_version": "eis-original-composite-scoring-receipt-v1",
+  "procurement_number": "0173300009226000009",
+  "procurement_law": "44fz",
+  "procurement_notice_version": 2,
+  "original_soap_archive_sha256": "655a3014a9fac9df2228332a562e05c2e050afcac62a0a7ad2ab3d235f366a91",
+  "original_notice_xml_sha256": "c6805b5ff2618938c677a7754abe0cba0a8b1b446c0830ad8c47fc3dd2bead86",
+  "original_notice_xml_member": "epNotificationEOK2020_0173300009226000009_2_01A131581C907E0192EAF6BA6F607952.xml",
+  "scoring_document_uid": "01A0F69F0B337A1996519D98C9AA2046",
+  "scoring_document_sha256": "6b0eca7991118be9d0f6d8d213f8fb37d2b263c7d0e5aea1477e58e79692aa0f",
+  "scoring_document_name": "Приложение 5 Порядок оценки Зюзино 1С .pdf",
+  "scoring_document_size_bytes": 341407,
+  "original_application_deadline": "2026-10-22T08:00:00+03:00",
+  "source": "getDocsByReestrNumber(PRIZ) direct HTTPS no system proxy Russian IP",
+  "digital_signature_validated": false,
+  "supplier_eligibility_assessed": false,
+  "automatic_commercial_decision_authorized": false
+}

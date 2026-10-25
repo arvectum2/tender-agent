@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-POSTMERGE-PREVIEW-20261017
+status: completed
+goal: 'Verify that the private APR-03B browser-preview uses the merged main source and pass a non-production authenticated readiness smoke without touching current operator data.'
+definition_of_done:
+  - 'Prove current preview/main source revision parity or explicitly report drift.'
+  - 'Build a separate whole-source private staging image from latest main, with image SHA label.'
+  - 'Start an isolated localhost-only preview with independent ephemeral test credentials and zero mounts into existing operator/production volumes.'
+  - 'Run source parity, unauth/auth HTTP checks, safe read-only workspace route and cite/report controls; assert no ETP, signature, payment or production writes.'
+  - 'Run focused checks, record SHA and nonproduction owner-handoff; update parent checkpoint and roadmap; merge only after exact-head CI.'
+completed:
+  - 'PR #460 exact-head CI passed and source merged into main commit b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d; existing preview untouched, isolated QA container stopped and test-only auth file deleted.'
+  - 'Google Chrome 155 headless actual DOM loaded: search/history/registry elements, one JS asset, 1282 rendered text chars, 0 JS exceptions.'
+  - 'Corrected Docker built from 4699a93edc1: all 1163 source bytes match; no mounted data volumes and loopback port 18087 only.'
+  - '18/18 authenticated/unauthenticated smoke checks PASS, including missing canonical-schema error 503 on list/detail/download, never 500 or empty success.'
+  - 'Documented read-only technical acceptance and remaining owner/production gates in docs/acceptance/APR03B_POSTMERGE_PRIVATE_STAGING_2026-10-17.md.'
+  - 'Current main 3b899de CI succeeded; original 18083 preview a9f3bce parity FAILED and must not be used for current owner acceptance.'
+  - 'Source checksum parity proved on isolated staging from 3b899de: 1163 source files SHA match, localhost-only port 18087, zero external source mounts.'
+  - 'Reproduced authenticated registry SQLAlchemy missing table error 500 on fresh uninitialized staging DB; patched read-only service to return HTTP 503 without leaking SQL/credentials or falsely returning empty results.'
+  - '31 focused operator workspace and image parity tests PASS; Ruff PASS.'
+current_stage: 'Completed: staged main-source private shell, isolated auth, registry fail-closed fix, Mac mini full suite, GitHub CI and merge.'
+remaining: []
+last_verified_commit: b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d
+last_tests: 'Mac mini 4937 PASS /285 SKIP, 0 fail, 161.29s, Ruff/check PASS; 31 targeted PASS; Docker 1163 source SHA parity PASS; 18/18 HTTP PASS; headless real Chrome DOM PASS/0 JS exceptions; exact-head GitHub CI PASS.'
+resume_instruction: 'APR03B postmerge technical smoke complete. Parent TA-ROADMAP-EXEC-20261012 remains in_progress; next owner approval required for real authenticated browser EIS/documents/citations/readonly PostgreSQL with properly isolated controlled data; parallel source-only APR06/07 and B2B research are independently actionable.'
+
+merged_pr: 460
+main_merge_commit: b28f3b3da2fd9f4dfe6225eb4250f5f6c3ca090d

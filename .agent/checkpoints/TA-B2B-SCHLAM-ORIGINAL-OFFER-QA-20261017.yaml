@@ -1,0 +1,57 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-SCHLAM-ORIGINAL-OFFER-QA-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Reuse already published Arvectum /schlam/ six-page proposal and verify read-only first-party Workspace 19006 demand, noindex,
+  internal resource health and commercial bounds, without creating duplicate website or sending unsolicited bids.
+definition_of_done:
+- Independently verify original 19006 public Workspace legal-entity status, budget 130-400k, printed deadline Nov1 and source contents/requirements;
+  point-in-time original SHA, no claim paid eligibility.
+- Audit existing published /schlam six URLs for HTTP200, noindex and bounded exact first-party internal links, no modification/redeploy
+  of site.
+- Confirm existing offer 89k RUB/4-6 weeks and its scope/disclaimers; source report must separate preexisting client-specific demo/market
+  hypotheses from confirmed facts and warn below stated budget floor.
+- Create machine source receipt, conservative owner handoff with remaining business/contract/legal gates and offline tests.
+- Run make check, Mac full relevant test suite and GitHub exact-head CI, merge, completed child checkpoint; keep parent 15–20 legally
+  qualified target open.
+completed:
+- Verified previous first-party source original 19006 legal-entity publicly accepting to 2026-11-01, full specialty waterworks/brackish-site
+  lead research requested; no new submission.
+- Found real company site repo arvectum2/arvectum-site and six existing /schlam/ public pages, all HTTP200 and robots noindex; 23 internal
+  original resources responded successfully, no broken links in bounded sample.
+- Verified existing first-party /schlam/offer/ visible starting price 89000 RUB with 4-6 week approximate schedule, no invented guarantees;
+  original Workspace public budget 130000-400000 RUB.
+- Exact original public Workspace19006 original source URL reread on Oct17, card public accepting organizer legal entity, budget130-400k
+  RUB and printed Nov1 deadline; original HTML SHA stored and literal first-party niche and request requirements attested.
+- Six preexisting https://arvectum.com/schlam/ pages all real HTTP200 and exact single robots noindex metadata, linked 23 internal same-domain
+  source assets HTTP200; ZERO site edits/deploys/new interfaces.
+- Original preexisting offer https://arvectum.com/schlam/offer/ confirms preliminary start price89000 RUB, approximate4-6weeks, customer
+  source/engineering fact disclaimers. Market page existing bounded review seven organizations, two source cases and eight intent clusters,
+  with explicit no independent SEO measurement.
+- Dated owner report and source-only machine SHA receipt, six offline tests PASS; real Workspace PRO/agency eligibility, contract scope,
+  costs and legal acceptance remain UNVERIFIED.
+- PR473 merged exact-head all GitHub CI green, Mac full pytest 5048 PASS/285 SKIP, make check, Ruff and six focused tests PASS.
+- Original buyer Workspace 19006 public accepting legal-entity card to printed Nov1 deadline source SHA, public budget130-400k RUB,
+  available description demands independent niche and competitor intent analysis, no full fixed TZ. Company permitted paid agency PRO
+  or invite still not proven.
+- Reused preexisting arvectum2/arvectum-site /schlam six actual public HTTP200/noindex prototype pages, twenty-three existing intra-demo
+  assets/links original HTTP200 and source hashes; no new website UI, branches or deployment.
+- 'Confirmed preexisting client-specific preliminary starting offer89000rub estimate4-6weeks below public budget minimum, no automatic
+  margin/price or ownership claim. Bounded market study seven organizations, two sourced published cases, eight search-intent clusters:
+  original demo clearly separates hypothetical inferences, no independently measured search demand.'
+- No actual Workspace application, payment, message, contract signature or owner legal GO.
+current_stage: Original public buyer tender card and six preexisting source/private offer demo pages verified, source SHA and internal
+  HTTP/noindex QA merged; company live bidder/proposal authorization remains owner/PRO-dependent in parent.
+remaining: []
+last_verified_commit: 5ccc922e22d062b939f0e50b305657bcc3e3d933
+last_tests: Mac full 5048 PASS/285 SKIP; 6 focused PASS, Ruff/make check PASS; PR473 exact-head GitHub all green.
+resume_instruction: 'Child COMPLETED. Prioritize already public-prepared Schlam Workspace19006 source and existing site, don''t duplicate
+  it: original card public accepting legal entity to Nov1, budget130-400k; six /schlam pages noindex with 23 links healthy, client-specific
+  pre-offer89000 RUB 4-6w below buyer listed minimum; owner business pricing/profit/PRO/eligibility and company actual references still
+  unknown. Next parent continue prospect discovery for 15-20 truly eligible and qualify PRO/outreach only with owner authorization.
+  Smolensk full report child still blocked.'
+first_party_original_workspace_card_verified: true
+preexisting_published_pages_noindex_verified: 6
+internal_source_resources_http200_verified: 23
+company_bid_ready: false

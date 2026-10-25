@@ -11,7 +11,7 @@ applies to \`/pilot\`, \`/api\`, \`/customers\`. No public Caddy profile, no
 public 80/443. Storage uses isolated named Docker volumes and worker/container
 restart policies. Backup/restore restrictions from deploy/production stay in
 force. Frontend: \`http://127.0.0.1:18082/pilot/onboarding\`;
-product wizard: \`http://127.0.0.1:18082/pilot/tender-agent\`.
+ONE Operator Workspace: http://127.0.0.1:18082/pilot/tender-agent/workspace (old /pilot/tender-agent is the same HTML alias).
 
 Operator environment is at \`~/.config/arvectum/apr04-local.env\`, mode 0600,
 outside Git. Do not copy credentials into repository/logs. External trust policy
@@ -52,7 +52,7 @@ stack, use the same files and project: \`stop\` (not \`down -v\`).
 The operator can create a company, save versioned supplier criteria and
 commercial/risk settings, upload a real local PDF with SHA-256, reopen/download
 a customer-scoped document, run source-cited pre-analysis, and separately create
-and analyze an uploaded tender package through the existing pilot wizard. No
+and analyze an uploaded tender package through the existing Operator Workspace. No
 bid/application can be submitted automatically. Missing citations, mismatch,
 absence of qualification evidence → \`HUMAN_REVIEW_REQUIRED\`.
 
@@ -115,7 +115,7 @@ To avoid repeatedly downloading Debian and Python packages, the **local
 Compose override alone** uses `deploy/local/Dockerfile` as a thin layer
 over the previously verified local ARM64 image
 `arvectum/tender-agent:00df43958674a9eebee2bbd54e7f4116bb87173f`.
-It copies the latest `src` and `migrations` from the reviewed commit,
+It replaces the complete src, scripts and migrations source trees from the reviewed commit,
 sets exact revision/version OCI labels, and does not touch dependencies.
 
 Use it only while `pyproject.toml` and runtime dependency requirements are
@@ -123,3 +123,7 @@ unchanged. For a new dependency or for production, rebuild using the canonical
 `deploy/pilot/Dockerfile`. The local overlay has no effect on the APR-03
 production Compose package or public release Docker builds. It is not a
 signature/attestation substitute.
+
+## One operator interface (Owner directive, 17.10.2026)
+
+Existing local Pilot (18082) is the **only** permanent private operator runtime. Canonical UI: http://127.0.0.1:18082/pilot/tender-agent/workspace, with /pilot/tender-agent as the same HTML alias. No parallel Pilot Wizard, alternative Operator Workspace, or extra preview. Legacy demo wizard URL redirects to this UI. Preserve all original Compose DB/Redis and artifact volumes. See docs/architecture/TENDER_AGENT_SINGLE_OPERATOR_UI.md.

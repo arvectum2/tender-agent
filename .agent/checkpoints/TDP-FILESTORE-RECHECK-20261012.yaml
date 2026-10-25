@@ -1,0 +1,17 @@
+task_id: TDP-FILESTORE-RECHECK-20261012
+status: completed
+goal: 'Provide a safe read-only one-attachment EIS filestore recheck against the authenticated historic source receipt after 429 clears.'
+definition_of_done:
+  - 'CLI accepts private historic receipt and one index, validates official HTTPS URL/UID, bounds download and verifies sha256 and byte length.'
+  - 'Only one network GET per command invocation, fail-closed 429/404/TLS/redirect and no original writes or rate-limit circumvention.'
+  - 'Offline tests for success, mismatch, rate limiting and malicious input pass.'
+  - 'Quality, full tests and nine exact-head CI checks pass; code merged and checkpoints updated.'
+completed:
+  - 'One-file read-only HTTPS EIS filestore CLI built with official UID+URL, SHA256 and byte length bounds.'
+  - 'No-retry 429/404, tampered bytes and unsafe URL/size regression tests 15 PASS; Ruff PASS.'
+  - 'Recovery usage and current HTTP429 limitation documented.'
+current: 'COMPLETED PR #364 merged b195484f19984eeffa368309ce5eb5f437a96896; all nine exact-head CI green and 3828 local PASS.'
+remaining: []
+last_verified_commit: 'b195484f19984eeffa368309ce5eb5f437a96896'
+latest_checks: '15 targeted PASS; full 3828 PASS/238 skips/one known R9 restore excluded; Ruff/make check PASS; all 9 exact-head GitHub CI jobs green'
+resume_instruction: 'Child complete, merged PR #364 code b195484f19984eeffa368309ce5eb5f437a96896, verified exact-head CI green. Do not repeat. Parent TDP in_progress: official filestore last reported HTTP429; no 72-binary new source SHA proof. Re-use scripts/ops/recheck_eis_filestore_receipt.py only for one authorized read-only UID after rate limit clears; R2 production identity, R4 human gold and R5 20 owner signoffs remain open; watchdog off.'

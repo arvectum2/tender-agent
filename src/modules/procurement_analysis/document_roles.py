@@ -19,8 +19,25 @@ def detect_document_role(name: str) -> str:
         )
     ):
         return "notice"
-    if any(token in lowered for token in ("tkp", "quote", "kp", "коммер", "proposal")):
+    if any(token in lowered for token in ("tkp", "ткп", "quote", "kp", "коммер", "proposal")):
         return "tkp"
+    # A price justification or contract performance security document is not
+    # the contract draft merely because the filename contains "контракта".
+    # Actual contracts remain document_kind=CP (EIS) or recognized by name.
+    if any(
+        token in lowered
+        for token in (
+            "обоснование нмцк",
+            "обоснование начальной",
+            "определение начальной",
+            "расчет начальной",
+            "расчёт начальной",
+            "обеспечение исполнения контракта",
+            "обеспечение исполнения государственного контракта",
+            "гарантийных обязательств",
+        )
+    ):
+        return "supporting"
     if any(token in lowered for token in ("contract", "договор", "agreement", "проект гк", "гк.doc", "контракт")):
         return "contract_draft"
     if any(token in lowered for token in ("spec", "специф", "technical", "тз", "техничес", "описание объекта")):

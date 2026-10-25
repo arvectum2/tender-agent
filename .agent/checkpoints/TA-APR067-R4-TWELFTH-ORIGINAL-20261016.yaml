@@ -1,0 +1,50 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR067-R4-TWELFTH-ORIGINAL-20261016
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: completed
+goal: Original-source 44FZ independent E2E twelfth case 0148200000526000028; official saved selected XML, 4 filestore originals recovered
+  from independent first-party receipts; auction DOCX originals with split recovered provenance; one real local Gemma4 only.
+definition_of_done:
+- Exact original EIS archive and selected notice XML hashes pinned and full original filestore UID/name/size/slot/SHA bound without
+  mixing editions or overwriting originals
+- Native offline EIS stage ready_to_analyze without bypass; local Data Platform original DOC/DOCX content verified
+- One true local Gemma4 provider full authenticated E2E, original critical EIS facts citations, verified report/history and blocked
+  archived export
+- Source-grounded developmental ChatGPT expert audit, 3-source citation proof and all adversarial/source tests; separate real model
+  timing
+- Full local suite and exact substantive GitHub CI, Draft PR, final immutable source/analysis checkpoint completed only when evidence
+  exists
+completed:
+- 2026-10-16 new separate isolated worktree prepared from ten completed accepted historical original-source E2Es; previous cases 10/20
+  minimum, originals preserved.
+- '2026-10-16 verified selected archived EIS XML matched SHA, mixed Oct14 first-party older4/missing11 recovered filestore sources with
+  exact UID, slot, filename, length and binary SHA; native source-only stage toa-run-20261015214553-a75201 0148200000526000028: 5 archived
+  original XML + 4 attachments = 9 SHA-verifiable originals, real completeness ready_to_analyze, no live EIS and no bypass.'
+- 2026-10-16 independently preflight original five/document count 4 source files using real Data Platform legacy DOC/DOCX decoder, all
+  extracted with text, 0 original binary Word .doc; chosen official XML v1 + filestore source SHA validated. One serial real Gemma process
+  PID6706 starts order 2, no concurrent models.
+- 2026-10-16 case11 genuine source+model completed correctly; serial PID6706 started case12 original 9-source local Gemma4 E2E, not
+  running concurrently.
+- '2026-10-16 genuine 12th original historic EIS EF2020 local Gemma4 4 calls389.27s, HTTP200 full provider/no fallback, 9/9 original
+  SHA files extracted, 3 cited original EIS XML facts: site support, archived deadline 2026-09-18T07:00+03:00, NMCK3,393,000 RUB. Original
+  report HTML sha 2883659a2d5afbf2cdd00655313f06ae776023fa58e3da2d9d58560c4d81fd15; report/history/registry200, unauthorized401, archive
+  PDF/DOCX export409, manual_review_required, no false missing contract; five LLM hypotheses clearly unverified.'
+- '2026-10-16 verified exact code head 38b860dcf8599e78475bdbbbe5c50dfc560460bf Draft PR446 GitHub CI run38813189298 #3515 SUCCESS 9/9;
+  source-bound original 44FZ 0148200000526000028, four genuine Gemma4 calls 389.27sec, all 9 source SHA/extracted, 3 first-party original
+  EIS XML facts source-cited, original report archived export409 and needs_review. Full local4214/238skip, 50 focused PASS, Ruff PASS.'
+current_stage: original_firstparty_source_gemma_review_full_local_and_exact_code_ci_verified
+remaining:
+- Draft PR446 still unmerged, no production or live bid actions
+- Third EOK case source/model currently running and separate checkpoint
+- Extended corpus case count increases only for completed models, continue next unused saved-source originals
+last_verified_commit: 38b860dcf8599e78475bdbbbe5c50dfc560460bf
+last_tests: 'PR446 substantive code SHA 38b860dc CI #3515 SUCCESS 9/9, local4214 pass/238skip/0fail,50 source tests PASS, actual Gemma4
+  four calls389.27s, 9/9 original input SHA and 3 XML cites/export409.'
+resume_instruction: COMPLETED original source and real Gemma4 DEVELOPMENT E2E twelfth 0148200000526000028 with exact-substantive PR446
+  CI SUCCESS. Do NOT rerun. Third case 0349100009326000005 still active in process PID6706, inspect its private output/report before
+  completing its checkpoint.
+execution:
+  branch: feature/apr067-r4-eleven-thirteen-original-e2e-20261016
+  stage_name: ta-apr067-r4-twelfth-auction-20261016
+  manual_override: true

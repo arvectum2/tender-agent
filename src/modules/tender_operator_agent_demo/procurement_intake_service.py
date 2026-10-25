@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import html
 import io
 import json
@@ -9,6 +10,7 @@ import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError
 from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request
 
@@ -23,6 +25,15 @@ from src.modules.tender_operator_agent_demo.document_set_completeness import (
 )
 from src.modules.tender_operator_agent_demo.eis_notice_parser import (
     extract_notice_attachments,
+)
+from src.modules.tender_operator_agent_demo.eis_notice_revision_selector import (
+    select_latest_archived_notice_files,
+)
+from src.modules.tender_operator_agent_demo.eis_official_procedure import (
+    classify_official_eis_archive,
+)
+from src.modules.tender_operator_agent_demo.eis_price_request_guard import (
+    official_eis_price_request_source_error,
 )
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     get_demo_procurement,
@@ -69,8 +80,11 @@ from src.modules.tender_operator_agent_demo.upload_service import (
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 from src.shared.network.http_client import create_urllib_opener
 from src.tender_research.providers.public_44fz_search import (
+    EIS_NOTICE_EDGE_404_RETRIES,
+    EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS,
     Public44FzSearchProvider,
     PublicDocumentLink,
+    _intermittent_eis_notice_edge_404,
     _parse_detail_metadata,
     _select_current_revision_document_links,
 )
@@ -346,9 +360,17 @@ def _build_getdocs_result(reestr_number: str, archive_result: DocsArchiveResult)
         attachments_status="downloadable" if archive_result.archive_url else "manual_upload_required",
         attachments_count=1 if archive_result.archive_url else 0,
         available_attachments_count=1 if archive_result.archive_url else 0,
-        summary=archive_result.raw_summary or f"Статус getDocsIP: {archive_result.status}",
+        summary=(
+            archive_result.raw_summary
+            if archive_result.status == "completed" and archive_result.raw_summary
+            else (
+                "В этом разделе ЕИС архив конкурсной документации не получен. "
+                "Это не подтверждает отсутствие самой записи или документов "
+                "в других официальных разделах."
+            )
+        ),
         attachment_names=["documentation-archive.zip"] if archive_result.archive_url else [],
-        source_note="Read-only getDocsIP intake для токена физлица.",
+        source_note="Проверка официальной документации ЕИС без подачи заявки.",
     )
 
 
@@ -376,16 +398,28 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
     hostname = (parsed.hostname or "").lower()
     if parsed.scheme not in {"http", "https"}:
         return {}
-    if not hostname.endswith("zakupki.gov.ru"):
+    if not (hostname == "zakupki.gov.ru" or hostname.endswith(".zakupki.gov.ru")):
         return {}
 
     opener = create_urllib_opener(source_url, source_direct_connection=True)
     request = Request(source_url, headers={"User-Agent": PUBLIC_EIS_USER_AGENT}, method="GET")
-    try:
-        with opener.open(request, timeout=20) as response:
-            page_html = response.read(PUBLIC_EIS_MAX_RESPONSE_BYTES + 1).decode("utf-8", errors="replace")
-    except (OSError, ValueError):
-        return {}
+    for attempt in range(EIS_NOTICE_EDGE_404_RETRIES + 1):
+        try:
+            with opener.open(request, timeout=20) as response:
+                page_html = response.read(PUBLIC_EIS_MAX_RESPONSE_BYTES + 1).decode(
+                    "utf-8", errors="replace"
+                )
+            break
+        except HTTPError as exc:
+            if (
+                attempt < EIS_NOTICE_EDGE_404_RETRIES
+                and _intermittent_eis_notice_edge_404(source_url, exc)
+            ):
+                time.sleep(EIS_NOTICE_EDGE_RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {}
+        except (OSError, ValueError):
+            return {}
     if len(page_html) > PUBLIC_EIS_MAX_RESPONSE_BYTES:
         return {}
 
@@ -405,19 +439,28 @@ def _extract_public_page_context(source_url: str) -> dict[str, Any]:
         title_class="cardMainInfo__title",
         content_class="cardMainInfo__content",
     )
-    publication_date = _format_public_context_datetime(parsed_metadata.get("publication_date")) or _extract_card_value(
+    # The detailed public EIS HTML shows the local organizational time with
+    # its displayed timezone. The parsed metadata is normalized to UTC.
+    # Formatting that UTC instant as an unlabeled HH:MM previously shifted
+    # a real 10:00 MSK deadline to an incorrect 07:00 in the operator UI.
+    publication_date = _extract_card_value(
         page_html,
         "Размещено",
         title_class="cardMainInfo__title",
         content_class="cardMainInfo__content",
-    )
+    ) or _format_public_context_datetime(parsed_metadata.get("publication_date"))
     updated_date = _extract_card_value(page_html, "Обновлено", title_class="cardMainInfo__title", content_class="cardMainInfo__content")
-    deadline = _format_public_context_datetime(parsed_metadata.get("application_deadline")) or _extract_card_value(
+    deadline = _extract_card_value(
         page_html,
         "Дата и время окончания срока подачи заявок",
         title_class="section__title",
         content_class="section__info",
-    ) or _extract_card_value(page_html, "Окончание подачи заявок", title_class="cardMainInfo__title", content_class="cardMainInfo__content")
+    ) or _extract_card_value(
+        page_html,
+        "Окончание подачи заявок",
+        title_class="cardMainInfo__title",
+        content_class="cardMainInfo__content",
+    ) or _format_public_context_datetime(parsed_metadata.get("application_deadline"))
     initial_price_raw = _extract_card_value(
         page_html,
         "Начальная (максимальная) цена контракта",
@@ -457,7 +500,7 @@ def _infer_public_documents_url(source_url: str) -> str | None:
     hostname = (parsed.hostname or "").lower()
     if parsed.scheme not in {"http", "https"}:
         return None
-    if not hostname.endswith("zakupki.gov.ru"):
+    if not (hostname == "zakupki.gov.ru" or hostname.endswith(".zakupki.gov.ru")):
         return None
     if parsed.path.endswith("/documents.html"):
         return source_url
@@ -469,6 +512,10 @@ def _infer_public_documents_url(source_url: str) -> str | None:
 def _format_public_context_datetime(value: Any) -> str | None:
     if not isinstance(value, datetime):
         return None
+    # This fallback receives normalized UTC timestamps; NEVER display HH:MM
+    # without an explicit zone when the primary local-time HTML field is absent.
+    if value.tzinfo is not None and value.utcoffset() is not None:
+        return value.astimezone(UTC).strftime("%d.%m.%Y %H:%M UTC")
     if value.hour == 0 and value.minute == 0 and value.second == 0:
         return value.strftime("%d.%m.%Y")
     return value.strftime("%d.%m.%Y %H:%M")
@@ -730,7 +777,17 @@ def _document_kind_from_role_hint(role_hint: str | None) -> str:
 def _discover_notice_xml_attachments(run_id: str, metadata: dict[str, Any]) -> list[ProcurementAttachment]:
     attachments: list[ProcurementAttachment] = []
     seen: set[tuple[str, str]] = set()
-    for item in metadata.get("files", []):
+    identity = (
+        metadata.get("notice_number")
+        or metadata.get("registry_number")
+        or metadata.get("procurement_id")
+        or (metadata.get("procurement") or {}).get("registry_number")
+        or (metadata.get("procurement") or {}).get("procurement_number")
+    )
+    sources = select_latest_archived_notice_files(
+        metadata.get("files", []), expected_registry_number=str(identity or "")
+    )
+    for item in sources:
         ext = Path(str(item.get("stored_name") or "")).suffix.lower()
         role_hint = str(item.get("role_hint") or "")
         if ext != ".xml" and role_hint != "notice":
@@ -780,9 +837,13 @@ def _dedupe_procurement_attachments(
     for item in attachments:
         name_key = str(item.name or "").strip().lower()
         url_key = str(item.url or "").strip()
-        if name_key in existing_names or (url_key and url_key in existing_urls):
+        # Different official files can share the same display name. Identity
+        # follows the exact source URL; name is a fallback only without URL.
+        if (url_key and url_key in existing_urls) or (
+            not url_key and name_key in existing_names
+        ):
             continue
-        key = (name_key, url_key)
+        key = ("url", url_key) if url_key else ("name", name_key)
         if key in seen:
             continue
         seen.add(key)
@@ -843,6 +904,8 @@ def _supplement_run_with_discovered_attachments(
         )
         if item.provenance:
             descriptor["source_provenance"] = item.provenance
+        if item.sha256:
+            descriptor["source_download_sha256"] = item.sha256
         existing_files.append(descriptor)
         append_demo_run_event(
             run_id,
@@ -967,6 +1030,15 @@ def _supplement_run_with_public_notice_attachments(run_id: str, source_url: str 
 def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
     metadata = load_demo_run_metadata(run_id)
     attachments = _discover_notice_xml_attachments(run_id, metadata)
+    if attachments:
+        from src.modules.tender_operator_agent_demo.eis_original_attachment_completeness import (
+            expected_eis_notice_attachments,
+        )
+
+        metadata["official_xml_attachment_inventory"] = (
+            expected_eis_notice_attachments(attachments)
+        )
+        save_demo_run_metadata(run_id, metadata)
     return _supplement_run_with_discovered_attachments(
         run_id,
         attachments=attachments,
@@ -979,11 +1051,23 @@ def _supplement_run_with_notice_xml_attachments(run_id: str) -> int:
 def _apply_document_set_completeness(run_id: str) -> dict[str, Any]:
     metadata = load_demo_run_metadata(run_id)
     summary = apply_document_set_summary(metadata)
-    limitation = (
-        "Комплект документов неполон: до анализа необходимо получить проект "
-        "контракта и техническое задание или описание объекта закупки."
-    )
-    limitations = list(metadata.get("limitations") or [])
+    official_set = summary.get("official_original_attachments") or {}
+    if official_set.get("official_original_attachments_missing", 0) > 0:
+        limitation = (
+            "Не все приложения исходного извещения ЕИС получены: "
+            f"{official_set['official_original_attachments_downloaded']} из "
+            f"{official_set['official_original_attachments_announced']}. "
+            "Нужна догрузка и проверка недостающих документов."
+        )
+    else:
+        limitation = (
+            "Комплект документов неполон: до анализа необходимо получить проект "
+            "контракта и техническое задание или описание объекта закупки."
+        )
+    limitations = [
+        x for x in list(metadata.get("limitations") or [])
+        if not x.startswith("Не все приложения исходного извещения ЕИС получены:")
+    ]
     if summary["analysis_allowed"]:
         if metadata.get("files"):
             metadata["status"] = TenderOperatorUploadedRunStatus.READY_TO_ANALYZE.value
@@ -1341,19 +1425,106 @@ def _write_eis_procurement_artifacts(
     )
 
 
+def _apply_attested_special_procedure_status(run_id: str) -> None:
+    """Prevent auto-analysis of a source-attested special single-supplier run."""
+    metadata = load_demo_run_metadata(run_id)
+    original = metadata.get("official_eis_procedure") or {}
+    if (
+        metadata.get("procurement_source") != "zakupki_gov_ru_getdocs_ip"
+        or not isinstance(original, dict)
+        or original.get("status") != "ATTESTED_SPECIAL"
+        or original.get("procedure_kind") != "SINGLE_SUPPLIER_ART93_12"
+    ):
+        return
+    metadata["status"] = TenderOperatorUploadedRunStatus.NEEDS_REVIEW.value
+    metadata["analysis_status"] = "special_single_supplier_requires_separate_workflow"
+    metadata["manual_upload_required"] = False
+    limitations = list(metadata.get("limitations") or [])
+    note = (
+        "Официальное извещение ЕИС относится к специальной процедуре у "
+        "единственного поставщика по ч. 12 ст. 93 44-ФЗ. Обычный "
+        "конкурентный анализ заблокирован; нужна отдельная процедура."
+    )
+    if note not in limitations:
+        limitations.append(note)
+    metadata["limitations"] = limitations
+    save_demo_run_metadata(run_id, metadata)
+    append_demo_run_event(
+        run_id, "eis_special_procedure_review_required", note,
+        {"notice_type": original.get("notice_type"), "source_attested": True},
+    )
+
+
 def analyze_eis_archive_run(run_id: str):
     metadata = load_demo_run_metadata(run_id)
     if metadata.get("procurement_source") != "zakupki_gov_ru_getdocs_ip":
         raise HTTPException(status_code=400, detail="Run is not an EIS getDocsIP intake run")
-    summary = _apply_document_set_completeness(run_id)
-    if not summary["analysis_allowed"]:
+    # Existing stored runs may predate procedure classification: always re-read
+    # the original archive instead of trusting a mutable metadata label.
+    original_dir = get_demo_run_input_dir(run_id)
+    source_name = metadata.get("archive_stored_name")
+    candidates = (
+        [original_dir / source_name]
+        if isinstance(source_name, str) and source_name == Path(source_name).name
+        and source_name.lower().endswith(".zip")
+        else list(original_dir.glob("*.zip"))
+    )
+    if not candidates:
+        # Keep existing docs-required state transitions for notice-only runs.
+        # A missing official archive still must never authorize analysis.
+        _apply_document_set_completeness(run_id)
+    attested = (
+        classify_official_eis_archive(
+            candidates[0],
+            str(metadata.get("reestr_number") or metadata.get("procurement_id") or ""),
+        )
+        if len(candidates) == 1
+        else {"status": "UNKNOWN", "reason": "OFFICIAL_ARCHIVE_NOT_UNIQUE"}
+    )
+    prior = metadata.get("official_eis_procedure")
+    if (
+        isinstance(prior, dict)
+        and prior.get("archive_sha256")
+        and prior["archive_sha256"] != attested.get("archive_sha256")
+    ):
         raise HTTPException(
             status_code=409,
-            detail=(
+            detail={
+                "code": "OFFICIAL_EIS_ARCHIVE_HASH_CHANGED",
+                "message": "Оригинальный архив ЕИС отличается от сохранённого источника. Нужна повторная проверка.",
+            },
+        )
+    if attested.get("status") != "ATTESTED_COMPETITIVE":
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "OFFICIAL_EIS_PROCEDURE_REQUIRES_REVIEW",
+                "reason": attested.get("reason"),
+                "official_type": attested.get("notice_type"),
+                "procedure_kind": attested.get("procedure_kind", "UNKNOWN"),
+                "message": (
+                    "Это специальная закупка у единственного поставщика (ч. 12 ст. 93 44-ФЗ), "
+                    "не используйте обычный конкурентный анализ."
+                    if attested.get("status") == "ATTESTED_SPECIAL"
+                    else "Процедура не подтверждена по оригинальному извещению ЕИС."
+                ),
+            },
+        )
+    summary = _apply_document_set_completeness(run_id)
+    if not summary["analysis_allowed"]:
+        original_set = summary.get("official_original_attachments") or {}
+        if original_set.get("official_original_attachments_missing", 0) > 0:
+            message = (
+                "Не все приложения, перечисленные в исходном извещении ЕИС, "
+                "получены. Автоматический анализ остановлен до догрузки "
+                "недостающих документов."
+            )
+        else:
+            message = (
                 "Комплект документов неполон. До анализа получите проект "
                 "контракта и техническое задание или описание объекта закупки."
-            ),
-        )
+            )
+        raise HTTPException(status_code=409, detail=message)
     return analyze_uploaded_demo_run(run_id)
 
 
@@ -1641,6 +1812,28 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
 
     client = ZakupkiSoapClient(settings)
     archive_result = client.get_docs_by_reestr_number(request.reestr_number, subsystem_type=request.subsystem_type)
+    if archive_result.status == "no_data":
+        from src.modules.tender_operator_agent_demo.eis_price_request_source_probe import (
+            probe_exact_eis_price_request,
+        )
+
+        official = probe_exact_eis_price_request(request.reestr_number)
+        if official is not None:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "code": "MARKET_RESEARCH_PRICE_REQUEST_ONLY",
+                    "record_type": "price_information_request",
+                    "official_source_url": official["official_source_url"],
+                    "source_document_sha256": official["source_document_sha256"],
+                    "message": (
+                        "Запись найдена в официальном реестре запросов ценовой "
+                        "информации ЕИС. Это сбор рыночных предложений, а не "
+                        "конкурентная закупка для подачи заявки. "
+                        "Исходные документы следует изучать в разделе запросов цен."
+                    ),
+                },
+            )
     selected = _build_getdocs_result(request.reestr_number, archive_result)
     archive_summary = _sanitize_archive_url_summary(archive_result.archive_url)
 
@@ -1666,6 +1859,13 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
     archive_download_attempts = 0
     documents_extracted_count = 0
     archive_extraction_complete: bool | None = None
+    archive_stored_name: str | None = None
+    original_getdocs_archive_sha256: str | None = None
+    official_eis_procedure: dict[str, Any] = {
+        "status": "UNKNOWN",
+        "reason": "OFFICIAL_ARCHIVE_NOT_DOWNLOADED",
+        "business_go_eligible": False,
+    }
 
     archive_urls = archive_result.archive_urls or ([archive_result.archive_url] if archive_result.archive_url else [])
     if archive_urls:
@@ -1734,6 +1934,16 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
             status = TenderOperatorUploadedRunStatus.DOCS_REQUIRED
         else:
             archive_downloaded = True
+            archive_stored_name = downloaded.stored_name
+            # Pin transport-received bytes NOW, before any later local workspace
+            # mutation. This is a receipt, not an EIS e-signature verification.
+            original_getdocs_archive_sha256 = hashlib.sha256(
+                (get_demo_run_input_dir(run_id) / archive_stored_name).read_bytes()
+            ).hexdigest()
+            official_eis_procedure = classify_official_eis_archive(
+                get_demo_run_input_dir(run_id) / downloaded.stored_name,
+                request.reestr_number,
+            )
             append_demo_run_event(
                 run_id,
                 "eis_archive_downloaded",
@@ -1850,6 +2060,9 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
         "archive_download_attempts": archive_download_attempts,
         "documents_extracted_count": documents_extracted_count,
         "archive_extraction_complete": archive_extraction_complete,
+        "archive_stored_name": archive_stored_name,
+        "original_getdocs_archive_sha256": original_getdocs_archive_sha256,
+        "official_eis_procedure": official_eis_procedure,
         "getdocs_status": archive_result.status,
         "getdocs_request_id": archive_result.request_id,
         "getdocs_ref_id": archive_result.ref_id,
@@ -1868,6 +2081,7 @@ def create_run_from_eis_docs_archive(request: EisDocsArchiveRunRequest) -> Procu
     _write_procurement_artifacts(run_id, selected=selected, manifest=manifest)
     _supplement_run_with_notice_xml_attachments(run_id)
     _apply_document_set_completeness(run_id)
+    _apply_attested_special_procedure_status(run_id)
     append_demo_run_event(
         run_id,
         "run_created_from_eis_archive",
@@ -1918,6 +2132,22 @@ def create_run_from_search_result(
 ) -> tender_schemas.SearchResultHandoffResponse:
     if not request.reestr_number or not request.reestr_number.strip():
         raise HTTPException(status_code=400, detail="reestr_number обязателен для запуска getDocsIP.")
+    source_error = official_eis_price_request_source_error(
+        request.source_url, request.reestr_number
+    )
+    if source_error:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": source_error,
+                "record_type": "price_information_request",
+                "message": (
+                    "Официальный реестр запросов ценовой информации ЕИС не является "
+                    "конкурентной закупкой для подачи заявки. Используйте отдельный "
+                    "сценарий исследования рынка."
+                ),
+            },
+        )
     normalized_law = _normalize_search_result_law(request)
     settings = get_zakupki_soap_settings()
     use_getdocs = normalized_law == "44fz" and settings.configured
@@ -1937,6 +2167,7 @@ def create_run_from_search_result(
     _apply_search_result_context(result.run_id, request)
     _supplement_run_with_public_notice_attachments(result.run_id, request.source_url)
     _apply_document_set_completeness(result.run_id)
+    _apply_attested_special_procedure_status(result.run_id)
 
     status = result.status.value if hasattr(result.status, "value") else str(result.status)
     analysis_status = result.analysis_status

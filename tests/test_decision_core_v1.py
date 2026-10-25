@@ -802,3 +802,100 @@ def test_report_reconciles_complete_docset_contract_presence_when_text_parse_fai
         "проект контракта не найден" not in item.lower()
         for item in model["customer_decision"]["not_evaluated"]
     )
+
+
+def test_unverified_archived_notice_prevents_false_hard_expiry_no_go() -> None:
+    model = _grounded_model()
+    model["deadline_status"] = "expired"
+    model["notice_revision_requires_review"] = True
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert result["decision"]["external_action_allowed"] is False
+    assert result["facts"]["application_deadline"]["status"] == "UNKNOWN"
+    assert result["facts"]["application_deadline"]["value"] is None
+    assert not any(item["code"] == "APPLICATION_DEADLINE_EXPIRED" for item in result["blockers"])
+    assert any(
+        item["code"] == "EIS_CURRENT_NOTICE_REVISION_UNVERIFIED" for item in result["unknowns"]
+    )
+    application = next(
+        item for item in result["readiness"] if item["code"] == "APPLICATION_WINDOW"
+    )
+    assert application["status"] == "UNKNOWN"
+    assert application["evidence"]
+
+
+def test_unverified_archived_open_notice_cannot_automatically_go() -> None:
+    model = _grounded_model()
+    model["notice_revision_requires_review"] = True
+
+    result = build_decision_core(model, supplier_profile=_profile())
+
+    assert result["decision"]["status"] == "NEEDS_REVIEW"
+    assert result["facts"]["application_deadline"]["status"] == "UNKNOWN"
+    assert all(item["code"] != "APPLICATION_DEADLINE_EXPIRED" for item in result["blockers"])
+    assert result["safety"]["bid_submission_allowed"] is False
+
+
+def test_verified_source_semantics_unaffected_when_revision_review_flag_absent() -> None:
+    source = _grounded_model()
+    assert build_decision_core(source, supplier_profile=_profile())["decision"]["status"] == "GO"
+    source["deadline_status"] = "expired"
+    assert build_decision_core(source, supplier_profile=_profile())["decision"]["status"] == "NO_GO"
+
+
+def test_canonical_report_propagates_unverified_archived_revision_to_decision() -> None:
+    metadata = {
+        "run_id": "archived-version-proof",
+        "procurement_id": "0158300034526000388",
+        "procurement_title": "Тестовая закупка",
+        "files": [
+            {"display_name": "Извещение_v5.xml", "role_hint": "notice"},
+            {"display_name": "Проект контракта.docx", "role_hint": "contract_draft"},
+        ],
+        "_field_evidence": {
+            "procurement_title": "eis_notice:procurement_subject",
+            "application_deadline": "eis_notice:submission_deadline",
+            "nmck": "eis_notice:initial_price",
+        },
+        "deadline": "2026-10-12T08:00:00+03:00",
+        "analysis_completed_at": "2026-10-11T08:00:00+03:00",
+        "notice_revision_requires_review": True,
+        "notice_revision_selected": {
+            "version": 5,
+            "purchase_number": "0158300034526000388",
+            "current_live_eis_verified": False,
+        },
+    }
+    outputs = {
+        "requirements": {
+            "preliminary_analysis": {
+                "supply_items": [], "item_coverage": {}, "next_actions": [],
+            },
+            "analysis_context": {
+                "procurement_subject": "Тестовая закупка",
+                "nmck": 1_000_000,
+                "currency": "RUB",
+                "document_coverage": "complete",
+                "missing_documents": [],
+                "contract_draft_status": "present",
+                "contract_draft_documents": ["Проект контракта.docx"],
+                "contract_draft_evidence_ids": ["contract:contract-1"],
+                "supplier_profile": deepcopy(_profile()),
+            },
+        },
+        "final_recommendation": {"recommendation": "participate", "rationale": [], "manual_checks": []},
+        "contract_risks": {"risks": []},
+        "economics": {"metrics": [], "warnings": []},
+        "supplier_questions": {"questions": []},
+        "quotes_comparison": {"highlights": []},
+    }
+    model = build_procurement_report_model(metadata, outputs)
+    core = model["decision_core"]
+    assert core["decision"]["status"] == "NEEDS_REVIEW"
+    assert any(x["code"] == "EIS_CURRENT_NOTICE_REVISION_UNVERIFIED" for x in core["unknowns"])
+    assert model["customer_decision"]["recommendation"] == "Требуется проверка"
+    assert model["bid_decision"]["status"] == "needs_review"
+    assert model["application_deadline"]  # archived date remains visible as source record
+    assert not core["decision"]["external_action_allowed"]

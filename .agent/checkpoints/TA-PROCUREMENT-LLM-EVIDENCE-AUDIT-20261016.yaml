@@ -1,0 +1,23 @@
+task_id: TA-PROCUREMENT-LLM-EVIDENCE-AUDIT-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: 'Audit completeness and primary-source provenance of all existing Arvectum Procurement LLM candidate observations in the already existing PostgreSQL database without inventing gold or copying documents.'
+definition_of_done:
+  - 'Build safe read-only corpus auditor: tally development/model/manual candidates, source file receipts, stored run references and evidence confidence; output summary only by default.'
+  - 'Audit all existing manual participation cases, distinguish source_documented vs owner_reported vs unverified, flag missing/local originals and malformed receipts.'
+  - 'Validate tests for blind detection, source integrity, dedup and no DB writes, operate against actual 75-row PostgreSQL and existing ArvectumSSD.'
+  - 'Update roadmap+checkpoint, review CI in a new Draft stacked PR. No new DB, model training, ETP, live hook activation or PR merges.'
+completed:
+  - '2026-10-16 predecessor PR451 and stacked PR452 code verified CI, PR452 child checkpoint completed on b105c80d. Live PostgreSQL arvectum at Alembic107 with 75 candidates (45 analysis_run, 20 development_e2e, 10 manual_review).'
+  - 'Existing private source corpus: 15 numbered EIS directories (some empty), Aksay original protocol 0158300034526000388 with SHA match. Manual statuses: 1 source_documented submitted, 3 owner_reported submitted, 1 unverified_chat_recall submitted, 5 other owner/unverified manual reviews; cannot assume 10 confirmed bids.'
+  - '2026-10-16 read-only existing PostgreSQL arvectum audit of all 75 observations passed: 45/45 saved run ID links, 20/20 source manifest SHA and 20/20 metrics manifest SHA, 36 unique procurement/external refs. Manual 10: one primary protocol SHA verified, nine lack per-case SHA-bound primary artifacts; 5 submitted are claims only except Aksay source documented. 43 report paths: 21 readable absolute, 22 missing after canonical relative resolution, 2 not recorded. Protected/gold/train_ready zero. No DB mutations.'
+  - '2026-10-16 scripts/procurement_llm/audit_corpus.py + 12 focused new audit tests added; Ruff PASS, targeted 28 PASS; Mac mini full suite pre-final nested blind enhancement: 4029 PASS / 239 SKIP / 1 known unrelated R9 DESELECTED / 0 fail in 131.64s. YAML PASS, git diff check PASS.'
+  - '2026-10-16 code/docs committed 9e345517661e0ca92920cf2359e5549886b4f1fb, pushed and stacked Draft PR453 opened (base PR452); GitVerse mirror run38884581120 SUCCESS; PR CI run38884623102 and push CI38884580960 in progress.'
+  - '2026-10-16 last code a527b3f476200b45370ca313ff0eb5a474e0576d additionally verified all 22 missing full reports retain DB text previews; no originals reconstructed. Added explicit preview-only classification and test. Focused latest 29 PASS, live read-only audit 75 observations PASS, Ruff/YAML/diff PASS, GitVerse mirror38885061241 SUCCESS.'
+  - '2026-10-16 GitHub exact-head PR CI run38885506816 SUCCESS, push CI38885499630 SUCCESS, GitVerse mirror38885499742 SUCCESS for commit b8b326f2. Implementation verified. 22 missing report files have DB previews only; no model training or production actions.'
+current_stage: 'completed_verified_ci_green_no_merge_or_deploy'
+remaining: []
+next_phase: 'Separately tracked: recover missing full report receipts and independently source-bound bid participation; current parent roadmap stays in_progress.'
+last_verified_commit: b8b326f2d2218ce914788a7adabff37ca41e64cc
+last_tests: 'Auditor true live PostgreSQL 75-row read-only check PASS. Full Mac mini 4029 pass / 239 skip / 1 known baseline R9 deselected in 131.64s before two final coverage tests. Focused latest 29 pass / 9 warnings, Ruff PASS, YAML PASS, diff check PASS.'
+resume_instruction: 'Completed PR453 stacked on PR452/PR451. Last code a527b3f4, final checkpoint commit b8b326f2. Exact CI PR38885506816 and push38885499630 and mirror38885499742 all SUCCESS. Audit 75 candidates, source-bound original 1/10 manual, 22 missing full reports (all have DB previews), 20/20 DEV manifest SHA, 45/45 run links. No new DB, training, merge or runtime rollout. Next source recovery distinct child checkpoint; do not rerun read-only audit code task.'

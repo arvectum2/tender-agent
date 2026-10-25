@@ -1,0 +1,25 @@
+task_id: TA-PROCUREMENT-LLM-OFFICIAL-FINAL-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: 'Recover and independently verify authentic EIS final protocols for Aksioma and Aksay with guarded SHA and matching company ETP application identities; keep unified Procurement LLM corpus safe.'
+definition_of_done:
+  - 'Both original final EIS ZIP archives downloaded to existing canonical ArvectumSSD data/tenders/eis/<registry>/ from configured direct official getDocsIP.'
+  - 'SHA-bound original XML verification of tender application number, price, admission and official appRating, including total counts and winner, independently of old derived statistics.'
+  - 'Read-only reusable verification script with fail-closed tests against ZIP tampering, wrong application, contradictory award or missing receipts.'
+  - 'Update primary source policy, roadmap and canonical checkpoints; publish Draft stacked PR and verify CI; no new DB, training, active ETP action or merge.'
+completed:
+  - '2026-10-16 prior child PR456 read-only outcome evidence CI passed; its checkpoint marked completed on branch feature/procurement-llm-outcomes-20261016.'
+  - '2026-10-16 EIS getDocsIP TLS verified, token configured; both 44-FZ archives returned completed and downloaded into existing data/tenders/eis directories. Aksioma ZIP SHA39fef1af482907b2c2382518d339d932e09197c2e36e68a6134fc5910ff7dd18, final XML SHA183023905c0af4bca1f1468ea09837e7c85a86068a48f71f87db2b908da70ec4; source app3630084 admitted true 399000.00 rub appRating6, among17 submitted/12 admitted, winner119000.'
+  - '2026-10-16 Aksay EIS ZIP SHA d25187191599e705427676cc9de64ce665029381efa2490607d65ff237837bb8, final XML SHA2b9f510c48e7d828c432e32b4dca3a4fff8edb75c66c3da37d46a12af3456af5, source app122031738 admitted true 119000 rub appRating38 among55 submitted/45 admitted, winner28400.'
+  - '2026-10-16 operator emails source previously verified Aksioma Roseltorg app3630084; NEW RTS message 14.10 explicitly confirms Aksay app122031738 admitted and assigned rank38, matching original EIS XML.'
+  - '2026-10-16 source-only audit_official_finals.py verified original ZIP/XML SHA, admitted/price/appRating, total/admitted/winner. Aksioma app3630084 399000 rank6 winner119000 (17/12); Aksay app122031738 119000 rank38 winner28400 (55/45). Ruff and 8 unit tests passed.'
+  - '2026-10-16 corporate RTS operator decision 14.10 confirms app122031738 rank38; separate source-bound private metadata event created (0600) and dry-run PASS. Total ETP pending nine, PG77 unchanged.'
+  - '2026-10-16 Mac mini complete pytest: 4060 PASS/239 SKIP/1 known unrelated R9 DESELECTED, 0 failures in 128.00s. Focused 8 PASS, Ruff and YAML validation PASS, source ZIP/XML hashes independently verified. Existing PG still 77 unreviewed, no writes.'
+  - '2026-10-16 source-only code/docs published GitHub Draft stacked PR457 at 8862c909f292ffe55584dc14beffb80f0f72cc6e, GitVerse mirror38904858747 SUCCESS; GitHub PR CI38904914458 + push38904859093 in progress, all jobs except quality initially green.'
+  - '2026-10-16 PR457 exact head 751844151761d77e7710fd69fe2d144189464cee: GitHub pull request CI38905270288 SUCCESS, push CI38905264489 SUCCESS, GitVerse mirror38905264234 SUCCESS. Full 4060 pass/239 skip/1 known unrelated baseline R9 deselected; primary EIS ZIP/XML SHA 2/2 PASS. No model training, merges, deployments or new DB.'
+current_stage: 'completed_primary_official_outcomes_sha_verified_ci_green'
+remaining: []
+next_phase: 'Separate read-only official EIS event chronology audit and pending Museum Bread outcome after 2026-10-20; nine ETP source metadata events stay blocked from apply.'
+last_verified_commit: 751844151761d77e7710fd69fe2d144189464cee
+last_tests: 'Mac mini pytest 4060 PASS/239 SKIP/1 known baseline R9 DESELECTED (128s), no failures; focused official EIS 8 PASS, Ruff/YAML/diff checks PASS, primary source ZIP/XML SHA 2/2 PASS, Aksay RTS private new event dry-run PASS, canonical PG77 unchanged. PR457 exact-head GitHub PR/push and GitVerse mirror SUCCESS.'
+resume_instruction: 'Completed in Draft stacked PR457 exact head751844151761d77e7710fd69fe2d144189464cee, GitHub PR38905270288/push38905264489 and GitVerse38905264234 ALL SUCCESS. Full tests4060 pass/239 skip/1 baseline R9 deselected. Original EIS getDocsIP ZIP/XML SHA confirms Aksioma app3630084 399000 RUB appRating6 admitted, winner119000; Aksay app122031738 119000 RUB appRating38 admitted, winner28400; company-app attribution confirmed by distinct operator notices. Existing unified PG arvectum77 unreviewed; nine PRIVATE ETP metadata events blocked from apply; no gold/training. Next separate task should read-only inspect EIS official event chronology including Aksay cancellation and versioned placement XML, and check Museum after official results date2026-10-20. Parent Tender Agent task remains in_progress. No merge/deploy/ETP/new database or bypass.'

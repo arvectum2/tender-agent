@@ -162,11 +162,14 @@ def test_complete_synthetic_unit_test_is_always_pending_owner_if_proposed():
     assert out["regressions_total"] == 0
 
 
-def test_unit_test_only_approved_policy_all_metrics_pass():
+def test_self_attested_owner_policy_never_yields_commercial_acceptance():
     manifest = frozen_corpus()
     out = score(manifest, observations(manifest), approved(policy()))
-    assert out["status"] == "ACCEPTED"
+    assert out["status"] == "PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION"
     assert all(out["threshold_checks"].values())
+    assert out["owner_approval_authenticated"] is False
+    assert out["independent_official_eis_provenance_verified"] is False
+    assert out["commercial_release_authorized"] is False
     assert out["no_automatic_bid_or_payment"] is True
 
 
@@ -280,3 +283,90 @@ def test_false_go_no_go_and_corrections_must_be_regressions():
     obs[reg]["corrected_fields"] = 1
     obs[reg]["confirmed_defects"] = []
     assert score(manifest, obs, approved(policy()))["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+
+
+def test_one_unreviewed_application_package_blocks_full_corpus_acceptance():
+    """The rework-rate denominator cannot silently omit a partial case."""
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["application_package"] = {
+        "reviewed": False, "required_rework": False,
+    }
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    assert result["eligible_count"] == 27
+    assert any(
+        x["reg_number"] == reg and "package" in x["reason"]
+        for x in result["unreviewed_or_invalid"]
+    )
+
+
+def test_duplicate_citation_claim_id_fails_closed():
+    """Do not let repeated quoted evidence inflate citation coverage."""
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["claims"] = [
+        {"claim_id": "same-claim", "citation_verified": False},
+        {"claim_id": "same-claim", "citation_verified": True,
+         "source_ref": "test-only:source-1"},
+        {"claim_id": "same-claim", "citation_verified": True,
+         "source_ref": "test-only:source-1"},
+    ]
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    assert result["eligible_count"] == 27
+    assert any(
+        "duplicate report claim" in x["reason"]
+        for x in result["unreviewed_or_invalid"]
+    )
+
+
+def test_distinct_citation_claim_ids_are_allowed_but_bad_metric_fails():
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["claims"] = [
+        {"claim_id": f"uncited-{i}", "citation_verified": False}
+        for i in range(25)
+    ] + [
+        {"claim_id": "fact-2", "citation_verified": True,
+         "source_ref": "test-only:source-2"},
+    ]
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "FAILED_ACCEPTANCE"
+    assert 0 < result["metrics"]["citation_coverage"] < 1
+
+
+def test_unreviewed_package_with_rework_flag_is_not_a_review():
+    manifest = frozen_corpus()
+    obs = observations(manifest)
+    reg = manifest["cases"][0]["reg_number"]
+    obs[reg]["application_package"] = {
+        "reviewed": False, "required_rework": True,
+    }
+    result = score(manifest, obs, approved(policy()))
+    assert result["status"] == "INSUFFICIENT_REVIEW_EVIDENCE"
+    assert result["eligible_count"] == 27
+
+
+def test_cli_cannot_exit_success_on_invented_approved_review(tmp_path):
+    """Synthetic signatures and checksums may exercise metrics but not commercial GO."""
+    manifest = frozen_corpus()
+    manifest_path = tmp_path / "frozen.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    threshold_path = tmp_path / "thresholds.json"
+    threshold_path.write_text(json.dumps(approved(policy())), encoding="utf-8")
+    review_dir = tmp_path / "observations"
+    review_dir.mkdir()
+    for reg, item in observations(manifest).items():
+        (review_dir / f"{reg}.json").write_text(json.dumps(item), encoding="utf-8")
+    output = tmp_path / "score.json"
+    assert main(["score", "--manifest", str(manifest_path),
+                 "--thresholds", str(threshold_path),
+                 "--observations", str(review_dir), "--output", str(output)]) == 2
+    summary = json.loads(output.read_text(encoding="utf-8"))
+    assert summary["status"] == "PENDING_EXTERNAL_SOURCE_AND_OWNER_ATTESTATION"
+    assert summary["thresholds_approved"] is True
+    assert summary["commercial_release_authorized"] is False

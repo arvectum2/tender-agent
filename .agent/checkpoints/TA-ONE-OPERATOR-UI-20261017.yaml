@@ -1,0 +1,41 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-ONE-OPERATOR-UI-20261017
+status: completed
+goal: Deliver one canonical Tender Agent operator UI instead of independent Mac mini pilot wizard and operator workspace deployments.
+definition_of_done:
+- Document actual source/runtime UI duplication without inventing new UI components, ports, databases or endpoints.
+- Canonicalize private operator UI at /pilot/tender-agent/workspace and preserve /pilot/tender-agent entry as compatibility alias.
+- Remove obsolete separately rendered pilot wizard from active operator routes and stop linking to it.
+- Keep one loopback-only existing Mac mini operator API on port 18082 and retire stale duplicate preview container 18083 only after
+  safe in-place update, authenticated owner-workflow smoke and no live DB/volume loss.
+- Ensure current main code and original operator/customer data remain intact; run focused/full tests and GitHub exact-head checks before
+  merge.
+- Add permanent AGENTS/roadmap/operations source-of-truth guidance forbidding new competing Tender Agent pilot/workspace UIs.
+- Record verified commit, exact checks, runtime readiness and remaining owner acceptance.
+completed:
+- Canonical main 4497fd4acc08ff0de459fa87ca4e7b97816d5556 inspected; original dirty repo not altered; clean worktree on ArvectumSSD.
+- 'Read-only live audit: 18082 existing local-compose API c6c5fe9 pilot wizard HTML (76510 bytes) and /workspace 404, while separate
+  18083 preview a9f3bce returns same workspace HTML at /pilot/tender-agent and /workspace. Both share existing local Compose data volumes:
+  duplication is real.'
+- Canonical main source already serves /pilot/tender-agent and /workspace with the same HTML, but legacy /demo/tender-agent/wizard still
+  serves the separate old wizard template.
+- 2026-10-17 PR461 merged to main 66f7521f6ea572f634954be350cbd6c11c540f9b; exact-head GitHub CI all PASS; Mac mini full pytest 4936
+  PASS,285 SKIP,0 FAIL; focused36 PASS/10 SKIP.
+- Existing private Mac mini API 18082 and worker updated in place, OCI/source parity 1162 files PASS; 5 original Docker mounts preserved
+  SHA d82ed620..., loopback-only.
+- Existing PostgreSQL 16 Alembic migrated 106->107 after private 960845-byte backup SHA256 ed2d813f2816e357bcaa7b0d893585a6551f1d1a620e9bce02d8d3573c7d81d2.
+- Authenticated pilot and workspace HTML byte-identical SHA256 283b72f879d0b675b7362e79e1ea95bde0c3559bb28c63600f3821a2cd66d110; legacy
+  wizard 307 redirects; auth 401/200; registry and saved history 200.
+- Real Google Chrome headless confirms search/history/registry UI and zero JS exceptions; redundant 18083 preview stopped, no volumes
+  deleted.
+- AGENTS.md and architecture/roadmap/ops permanently disallow another pilot/workspace/staging duplicate. Owner real EIS acceptance and
+  legal gates still open.
+current_stage: completed
+remaining: []
+last_verified_commit: 66f7521f6ea572f634954be350cbd6c11c540f9b
+last_tests: Mac mini 4936 PASS/285 SKIP, 0 FAIL; 36 focused PASS/10 SKIP; exact-head PR461 GitHub CI PASS; runtime 1162 file parity;
+  Chrome 155 DOM PASS; auth/history/registry PASS; DB revision107.
+resume_instruction: Completed. Continue parent TA-ROADMAP-EXEC-20261012 from existing 18082 Operator Workspace on real owner-authorized
+  archived EIS case, then APR06/07 human-gold and B2B sources. Do not create another UI, stand or database. Human/legal/production/ETP
+  gates remain closed.

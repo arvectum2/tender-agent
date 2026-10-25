@@ -1,7 +1,9 @@
+from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, Response
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
+from pydantic import BaseModel, Field
 
 from src.modules.commercial_core.run_service import (
     evaluate_run_commercial_core,
@@ -12,8 +14,15 @@ from src.modules.tender_operator_agent_demo.fast_preanalysis import (
     fast_cited_preanalysis,
     preanalysis_from_public_search,
 )
-from src.modules.tender_operator_agent_demo.pilot_wizard_ui import (
-    render_tender_operator_pilot_wizard_html,
+from src.modules.tender_operator_agent_demo.operator_workspace_evidence import (
+    get_operator_source_evidence,
+)
+from src.modules.tender_operator_agent_demo.operator_workspace_service import (
+    import_eis_reference,
+    original_document,
+    parse_eis_reference,
+    registry_detail,
+    registry_records,
 )
 from src.modules.tender_operator_agent_demo.procurement_discovery import (
     build_public_search_url,
@@ -90,8 +99,106 @@ from src.modules.tender_operator_agent_demo.upload_service import (
     list_uploaded_demo_runs,
     load_demo_run_events,
 )
+from src.modules.tender_operator_agent_demo.verified_original_quote import (
+    verify_operator_run_quote,
+)
+from src.shared.api.middleware import _is_protected_path
+from src.shared.config.settings import get_settings
 
 router = APIRouter(tags=["tender-operator-agent-demo"])
+
+
+class OperatorWorkspaceImportRequest(BaseModel):
+    reference: str = Field(min_length=11, max_length=500)
+
+
+class OperatorWorkspaceQuoteVerifyRequest(BaseModel):
+    file_id: str = Field(pattern=r"^FILE-[0-9]{2,4}$")
+    exact_quote: str = Field(min_length=20, max_length=800)
+
+
+_WORKSPACE_ASSETS = Path(__file__).parent / "assets"
+
+
+def require_private_workspace() -> None:
+    settings = get_settings()
+    protected = tuple(settings.pilot_auth_protected_prefixes.split(","))
+    public = tuple(settings.pilot_auth_public_paths.split(","))
+    paths = ("/pilot/tender-agent/workspace", "/api/demo/tender-agent/workspace/registry")
+    if not (
+        settings.pilot_auth_is_enabled()
+        and settings.pilot_auth_password_safe()
+        and all(_is_protected_path(path, protected, public) for path in paths)
+    ):
+        raise HTTPException(status_code=503, detail="Private operator authentication must be configured")
+
+
+
+@router.get("/pilot/tender-agent/workspace", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_page() -> FileResponse:
+    return FileResponse(
+        _WORKSPACE_ASSETS / "operator_workspace.html",
+        media_type="text/html; charset=utf-8",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@router.get("/pilot/tender-agent/workspace/assets/{asset_name}", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_asset(asset_name: str) -> FileResponse:
+    allowed = {"workspace.css": "text/css", "workspace.js": "text/javascript"}
+    if asset_name not in allowed:
+        raise HTTPException(status_code=404, detail="Ресурс не найден")
+    return FileResponse(
+        _WORKSPACE_ASSETS / ("operator_" + asset_name),
+        media_type=allowed[asset_name],
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@router.post("/api/demo/tender-agent/workspace/import", response_model=SearchResultHandoffResponse, dependencies=[Depends(require_private_workspace)])
+def operator_workspace_import(request: OperatorWorkspaceImportRequest) -> SearchResultHandoffResponse:
+    try:
+        parse_eis_reference(request.reference)
+        return import_eis_reference(request.reference)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/demo/tender-agent/workspace/runs/{run_id}/evidence", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_source_evidence(run_id: str) -> dict:
+    return get_operator_source_evidence(run_id)
+
+
+@router.post(
+    "/api/demo/tender-agent/workspace/runs/{run_id}/verify-quote",
+    dependencies=[Depends(require_private_workspace)],
+)
+def operator_workspace_verify_quote(
+    run_id: str, request: OperatorWorkspaceQuoteVerifyRequest,
+) -> dict:
+    """No text is stored; only a literal occurrence in a hashed original is checked."""
+    return verify_operator_run_quote(
+        run_id=run_id, file_id=request.file_id, exact_quote=request.exact_quote,
+    )
+
+
+@router.get("/api/demo/tender-agent/workspace/registry", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_registry(
+    query: str = Query(default="", max_length=128),
+    limit: int = Query(default=25, ge=1, le=50),
+    offset: int = Query(default=0, ge=0),
+) -> dict:
+    return registry_records(query=query, limit=limit, offset=offset)
+
+
+@router.get("/api/demo/tender-agent/workspace/registry/{tender_id}", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_registry_detail(tender_id: str) -> dict:
+    return registry_detail(tender_id)
+
+
+@router.get("/api/demo/tender-agent/workspace/registry/{tender_id}/documents/{document_id}/download", dependencies=[Depends(require_private_workspace)])
+def operator_workspace_registry_document(tender_id: str, document_id: str) -> FileResponse:
+    return original_document(tender_id, document_id)
 
 
 @router.get("/demo/tender-agent", response_class=HTMLResponse)
@@ -99,14 +206,21 @@ def tender_operator_demo_page() -> str:
     return render_tender_operator_console_html()
 
 
-@router.get("/pilot/tender-agent", response_class=HTMLResponse)
-def tender_operator_pilot_wizard_page() -> str:
-    return render_tender_operator_pilot_wizard_html()
+@router.get("/pilot/tender-agent", dependencies=[Depends(require_private_workspace)])
+def tender_operator_pilot_wizard_page() -> FileResponse:
+    """Canonical operator entrypoint: preserve old search API, not a second wizard UI."""
+    return operator_workspace_page()
 
 
-@router.get("/demo/tender-agent/wizard", response_class=HTMLResponse)
-def tender_operator_pilot_wizard_demo_alias_page() -> str:
-    return render_tender_operator_pilot_wizard_html()
+@router.get(
+    "/demo/tender-agent/wizard",
+    response_class=RedirectResponse,
+    dependencies=[Depends(require_private_workspace)],
+    include_in_schema=False,
+)
+def tender_operator_pilot_wizard_demo_alias_page() -> RedirectResponse:
+    """One product UI: retire the old wizard without breaking bookmarked URLs."""
+    return RedirectResponse(url="/pilot/tender-agent/workspace", status_code=307)
 
 
 @router.get("/demo/tender-agent/runs/{run_id}", response_class=HTMLResponse)
@@ -336,6 +450,7 @@ def create_tender_operator_run_from_search_result(payload: SearchResultHandoffRe
 
 @router.post("/api/demo/tender-agent/runs", response_model=TenderOperatorUploadedRunCreateResponse)
 async def create_tender_operator_uploaded_run(
+    files: Annotated[list[UploadFile], File()],
     tender_title: str = Form(...),
     tender_category: str = Form(default="Электротехническое оборудование"),
     customer_name: str = Form(default="Промышленный заказчик"),
@@ -344,7 +459,6 @@ async def create_tender_operator_uploaded_run(
     logistics_reserve_percent: float = Form(default=3),
     risk_reserve_percent: float = Form(default=5),
     payment_delay_days: int = Form(default=45),
-    files: Annotated[list[UploadFile], File()] = ...,
 ) -> TenderOperatorUploadedRunCreateResponse:
     uploads: list[tuple[str, str, bytes]] = []
     for item in files:
@@ -365,7 +479,7 @@ async def create_tender_operator_uploaded_run(
 @router.post("/api/demo/tender-agent/runs/{run_id}/files", response_model=TenderOperatorUploadedRunCreateResponse)
 async def append_tender_operator_uploaded_files(
     run_id: str,
-    files: Annotated[list[UploadFile], File()] = ...,
+    files: Annotated[list[UploadFile], File()],
 ) -> TenderOperatorUploadedRunCreateResponse:
     uploads: list[tuple[str, str, bytes]] = []
     for item in files:
@@ -413,7 +527,7 @@ def analyze_tender_operator_uploaded_run(run_id: str) -> TenderOperatorUploadedR
 )
 async def evaluate_tender_operator_commercial_core(
     run_id: str,
-    catalog_file: Annotated[UploadFile, File()] = ...,
+    catalog_file: Annotated[UploadFile, File()],
     default_currency: str | None = Form(default=None),
     target_bid_amount: float | None = Form(default=None),
 ) -> CommercialCoreResponse:

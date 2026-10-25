@@ -1,0 +1,25 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-STATUS-GATE-20261013
+status: completed
+goal: Prevent a publicly indexed corporate opportunity with a terminal status and future printed deadline from being accepted as an actionable live procurement.
+definition_of_done:
+  - Introduce offline read-only status-first and freshness-first triage contract for corporate-source cards, with no network, bids or authenticated connectors.
+  - Cover terminal-before-deadline, missing status/identity, date-only same-day cutoff, mismatched source, stale evidence and no automatic commercial GO in unit tests.
+  - Document the Workspace 19004 real-source regression without claiming real-time external availability.
+  - Pass targeted tests, make check, and applicable CI; create PR without deployment.
+completed:
+  - Retrieved authoritative public Workspace status glossary and observed closed state for 19004 despite printed October 14 deadline.
+  - Created isolated worktree from main 70e5aff4; other feature worktrees preserved.
+  - Implemented pure corporate public-source status/clock/domain triage; no ETP connector/authenticated fetch or outgoing request.
+  - Added 26 negative and positive regressions including real Workspace 19004 closed despite future deadline, same-day unknown cutoff, stale status, spoofed host and unverified buyer.
+  - Targeted 26 tests PASS; Ruff PASS, make check PASS.
+  - Full PG16/Docker regression 4001 passed, 238 skipped, 0 failures, 328 warnings (182.76 sec).
+  - All four added Git blobs were independently verified equal to the locally tested Git tree 23646f91bf9f916865c4410edec8fa9c89cc7e45; PR392 exact head 845af2d1 push and PR GitHub CI 9/9 successful each; merged into main at 774705045a545236e64b838e5a5039c0143848fe.
+current: Completed bounded source-status triage integration as code only; corporate connectors and bids remain disabled.
+pending: []
+last_verified_commit: 774705045a545236e64b838e5a5039c0143848fe
+test_results:
+  - 26 new focused tests PASS, Ruff PASS, make check PASS.
+  - Full PG16/Docker pytest 4001 PASS, 238 SKIP, 0 FAIL in 182.76 sec.\n  - Exact-head push and PR CI GitHub 9/9 each SUCCESS; GitVerse mirror SUCCESS; merged as PR392.
+resume_instruction: 'TA-B2B-STATUS-GATE-20261013 DONE. PR392 merged as 77470504, exact local tested tree and CI success. Pure corporate_lead_gate remains no-network/no-ETP, refuses to authorize bids and requires original source, legal-entity status and freshness. Do not repeat implementation. Overall Tender Agent roadmap remains in progress in .agent/current-task.yaml: APR06/07 human-gold/production SLO blockers and 15-20 unique active B2B opportunities incomplete.'

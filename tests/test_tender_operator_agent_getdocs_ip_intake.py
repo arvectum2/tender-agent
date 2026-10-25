@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 from zipfile import ZipFile
@@ -110,6 +111,10 @@ def test_getdocs_archive_endpoint_creates_run_with_archive_metadata(client, monk
     assert metadata["token_owner"] == "individual"
     assert metadata["archive_url_present"] is True
     assert metadata["archive_downloaded"] is True
+    assert metadata["archive_stored_name"] == "documentation-archive.zip"
+    assert metadata["original_getdocs_archive_sha256"] == hashlib.sha256(
+        b"PK\x03\x04demo"
+    ).hexdigest()
     assert metadata["documents_extracted_count"] == 1
     assert metadata["soap_method"] == "getDocsByReestrNumber"
     assert metadata["archive_source_host"] == "int44.zakupki.gov.ru"
@@ -363,6 +368,12 @@ def test_getdocs_archive_can_auto_analyze_after_download(client, monkeypatch, tm
                 archive.writestr("notice.txt", "Извещение о закупке электротехнического оборудования.")
                 archive.writestr("technical_spec.txt", "Техническая спецификация: срок поставки 45 дней, гарантия 12 месяцев.")
                 archive.writestr("contract_draft.txt", "Проект договора: штрафы за просрочку, постоплата 45 дней.")
+                archive.writestr(
+                    "epNotificationEF2020_0888200000224000038_1_01A0B2C3.xml",
+                    "<export><epNotificationEF2020><commonInfo>"
+                    "<purchaseNumber>0888200000224000038</purchaseNumber>"
+                    "</commonInfo></epNotificationEF2020></export>",
+                )
             return DownloadedAttachment(
                 file_name="bundle.zip",
                 stored_name="documentation-archive.zip",

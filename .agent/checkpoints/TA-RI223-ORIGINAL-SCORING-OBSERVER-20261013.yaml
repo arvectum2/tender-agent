@@ -1,0 +1,34 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-RI223-ORIGINAL-SCORING-OBSERVER-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Add trustworthy read-only primary-source 223-FZ evaluation-criteria observation of RI223 #32616445795 without mistaking composite nonprice criteria for completed-contract reference score or inferring NO_GO.
+definition_of_done:
+  - Pin original real RI223 getDocsIP SOAP ZIP, EIS attachment UID and original RAR, nested PDF/DOC byte digests and stable source filenames.
+  - Extract 40/60 first-level and 20/20/60 optional non-price weights from actual 10-page PDF, distinguish reputation, finances and qualification, not claim single 60% qualification.
+  - Provide fail-closed offline observation tool with explicit unsupported scoring/eligibility, no legal or commercial GO/NO_GO output and no large unsafe files.
+  - Cover source tampering, extraction ambiguity, altered weights, missing criterion and wrong law/registry in regression tests; real Mac mini replay and CI.
+  - Keep source original binaries private, PR draft, no production/ETP/signed/paid action.
+completed:
+  - 'PR412 exact head 50f3a19a069333b1777858b9bd3c53da51230291 three GitHub workflows all SUCCESS, engineering child status COMPLETED.'
+  - Added pinned original RI223 source receipt JSON with SOAP ZIP digest 65004d53..., current purchaseNotice v1, official RAR contentUid E8D01839..., RAR SHA 36ef971b..., 10-page PDF SHA a44d9573... and parallel original legacy DOC SHA c74b98fd....
+  - Implemented pure source-bound original RI223 ZIP/RAR/PDF hash/UID validation and exact table observer for 40% cost, 60% nonprice with conditional nested 20% reputation/20% finances/60% qualification.
+  - Preserved supplier qualification total weight and completed contract weight as NULL because source language permits alternative nonprice weighting; always NOT_ASSESSED and no external action, never CZN-style NO_GO.
+  - Bounded offline CLI extracts verified original PDF from RAR and parses text without network, production mutation, signature claim or bidder decision; original byte files retained privately.
+  - Original Mac mini replay against preserved authentic getDocsIP ZIP/RAR/PDF successful, output source-correlated 40/60 and conditional 20/20/60, manual review required, signatures FALSE, human-gold FALSE.
+  - Tests cover exact SHA and EIS UID/notice/URL integrity, mutated ZIP/RAR/PDF, wrong registry and unsupported scoring weights; local combined regression source head 79dc168 103 pytest PASS, Ruff PASS, JSON and git diff checks PASS.
+  - Updated Russian evidence report, source receipt and MASTER_ROADMAP; stacked DRAFT PR412 on PR411; no production or ETP effects.
+  - Historical 44-FZ corpus PR411 exact head a9fdb20a GitHub PR/push 3/3 SUCCESS, child marked completed.
+  - Found independently stored original RI223 #32616445795 at /Users/master/arvectum-runtime/eis-223fz-corpus/2026-10-08/32616445795/; SOAP ZIP sha 65004d53..., RAR sha 36ef971b..., embedded PDF sha a44d9573... and legacy DOC sha c74b98fd....
+  - Verified original RI223 XML root purchaseNotice registrationNumber 32616445795 version 1 and contentUid E8D018399C8C4BC18A621DCB8CBB6F12 links RAR via official https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html.
+  - Actual PDF pdftotext shows cost criterion 40%, nonprice criterion 60%, subcriteria 20% reputation /20% financial /60% qualification, conditional phrasing means cannot treat nonprice as solely qualification.
+current: Original RI223 composite scoring read-only observer COMPLETED. PR412 exact head 50f3a19a069333b1777858b9bd3c53da51230291, PR38438694970 and pushes38438686614/38438686626 all GitHub CI SUCCESS. Draft unmerged.
+pending: []
+last_verified_commit: 'PR412 exact head 50f3a19a069333b1777858b9bd3c53da51230291, GitHub PR38438694970/push38438686614/push38438686626 all SUCCESS; local 103 pytest PASS, Ruff and original RI223 PDF replay PASS.'
+test_results:
+  - 'PR412 exact GitHub PR38438694970 and push38438686614/38438686626 all SUCCESS at 50f3a19; 103 local pytest PASS and Ruff PASS.'
+  - 'RI223 original private source SOAP ZIP sha 65004d53, RAR 36ef971b, PDF a44d9573 matched, observed first level price40/nonprice60 and conditional subweights 20/20/60; competitive NOT_ASSESSED; no signature/human gold.'
+  - 'Mac mini exact source 79dc168 combined 103 pytest PASS, Ruff PASS, original source replay PASS, source receipt JSON PASS, git diff --check PASS.'
+  - 'GitHub PR412 exact push/PR CI pending.'
+resume_instruction: 'RI223 original scoring observer child COMPLETED at PR412 exact head 50f3a19 GitHub PR/push 3/3 SUCCESS, local 103 PASS/Ruff PASS and authentic RI223 SOAP+RAR+PDF replay 40 price/60 nonprice, optional 20/20/60 nonprice split. Keep NOT_ASSESSED for 223 supplier due unconfirmed applicable formula. NEW separate authenticated original 44-FZ EOK #0173300009226000009 obtained via direct no-proxy getDocsIP from Mac mini: source ZIP SHA 655a3014..., latest XML v2 SHA c6805b5f..., award evaluation original PDF UID 01A0F69F0B337A1996519D98C9AA2046 SHA 6b0eca79..., 60% price/40% qualification, within qualification 5% completed relevant 1C contracts and 95% specialists; do not issue NO_GO simply from zero contract reference. Exact private directory /Volumes/ArvectumSSD/Arvectum/runtime/ta-scoring-alt-44-eok-20261013/0173300009226000009/. Start new separate source-bound PDF observer checkpoint/branch; preserve PR405/407/408/409/410/411/412 DRAFT, no prod SaaS/ETP/bids/payments/signed documents/watchdog, preserve main manual_override true.'

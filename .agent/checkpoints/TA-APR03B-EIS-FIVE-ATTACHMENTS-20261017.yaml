@@ -1,0 +1,51 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR03B-EIS-FIVE-ATTACHMENTS-20261017
+status: completed
+goal: Independently verify official EIS current notice status and provenance/completeness of the five non-ZIP Museum Bread documents,
+  in the existing 18082 workspace, without inventing source authority.
+definition_of_done:
+- Read latest parent checkpoint and actual git main/runtime; use single existing 18082 UI, isolated SSD worktree, no duplicate service.
+- Trace each saved external attachment to original first-party source evidence where available, preserving SHA, name, event and revision
+  with UNKNOWN on missing proof.
+- Check live official notice revision/status through authorized read-only channels; never infer live from historical ZIP or third-party
+  listings.
+- Implement any safe source-bounded ingestion/provenance gap and targeted tests without rewriting original files or old evidence.
+- Run relevant/full tests and exact-head CI, merge safe code, update canonical parent/checkpoint; note any true source/legal blocker
+  precisely.
+completed:
+- Read main 87ca50a84f5d148b6751e0d9ac9757dd7c4b71e7, CI green; former child original archive pin completed; existing 18082 API and
+  worker healthy.
+- Found prior 17041-byte original getDocsIP ZIP contains ONE official notice XML v1 and explicitly does NOT contain five separately
+  retained project documents.
+- Read-only official getDocsIP on Oct17 09:17 UTC again returned exact archived ZIP SHA35978ce4 from official host; does not prove independent
+  public legal status.
+- Archived notice XML references 5 official zakupki.gov.ru filestore attachments; all 5 full source URLs/names matched existing descriptors
+  and fresh byte-limited HTTP GET matched all 5 saved full SHA256.
+- Implemented bounded offline-first archived EIS source revalidation, optional live-only explicit operation and checksum receipt in
+  EXISTING run; existing evidence endpoint and single UI display date/count with legal current GO false.
+- 45 targeted pytest, existing Node simulated history UI, Ruff PASS. Full regression/CI pending.
+- Canonical parent .agent/current-task.yaml now links current child and accurately says archived six-file source integrity 6/6, live
+  public legal notice unknown; original 18082 receipt pending CI.
+- PR464 exact-head CI PASS, Mac mini 4961 passed/285 skipped, make check and Node UI simulation PASS.
+- Existing original 18082 API/worker upgraded in place to merged source; original Postgres/Redis/data mounts preserved, Docker source
+  manifest and image label validated.
+- Official live getDocsIP on Oct17 returned original archive SHA35978ce4 byte-identical to saved v1 XML; all five publicly linked filestore
+  files re-downloaded read-only with SHA equal to original saved binary; live private receipt stored in existing procurement/ without
+  query URLs, passwords, token or binary duplication.
+- Existing Operator Workspace shows 5/5 source bytes fresh receipt in real Chrome, vintage v1 notice and legal status NOT verified;
+  all six saved document SHA stable, archived pdf/docx 409 and 0 JS errors.
+current_stage: Technical first-party archived v1 original ZIP and 5 official external binary source checks complete, receipt displayed
+  in ONE existing Operator Workspace; live public legal notice status and owner review remain separate OPEN gates.
+remaining: []
+last_verified_commit: d8d8ff0b63e2568aff91eec862566637340a92af
+last_tests: Mac mini full 4961 PASS/285 SKIP, GitHub PR464 exact-head CI green, make check PASS, 45 targeted+Node UI PASS; existing
+  18082 actual 6 SHA downloads and 5 fresh EIS filestore reads PASS, real Chrome 0 JS errors, 409 archived exports retained.
+resume_instruction: Task complete, do NOT add another UI or repeat archived v1 source transfer. Parent TA-ROADMAP-EXEC-20261012 continues
+  with independent current LIVE legal/public EIS status, protocols/results and owner APR06/07 expert quality; source GET snapshot alone
+  is not legal current notice GO, no ETP/signature/payment/production.
+archived_six_sources_verified: true
+fresh_official_getdocs_archive_matching: true
+fresh_official_filestore_binary_matching: 5
+public_live_notice_legal_status_verified: false
+existing_18082_receipt_saved: true

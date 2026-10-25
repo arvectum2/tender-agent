@@ -1,0 +1,68 @@
+{
+  "registry_number": "0162300005826000156",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052421-b81ea5",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052421-b81ea5/input/documentation-archive.zip",
+  "archive_sha256": "445edafcd5ea57ece3e2e74de7a3bb2e84470fea0fc5709e16433a3817502d6d",
+  "selected_xml_sha256": "54530f2cdcf6f4e459f0b539d932ac5067e2ea026a956718cd8a69ce98955614",
+  "selected_notice_type": "epNotificationEF2020",
+  "selected_notice_version": 1,
+  "saved_metadata_sha256": "b47ba6c1e9a543ec4d11fd9764ba347490e3bfa47fee6962b437f5c0a64c409a",
+  "attachments": [
+    {
+      "source_uid": "C659D98262FC40F5A947FCFB6E0D5B9D",
+      "official_name": "Обоснование НМЦК.xlsx",
+      "bytes": 15604,
+      "sha256": "94ba8936295863a48a6fe665e31fd70678dc7dfae4b9fa0b80984e12a7aec263",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052421-b81ea5/input/01-attachment-1.xlsx",
+      "file_extension": ".xlsx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "01-attachment-1.xlsx",
+      "source_slot": 1
+    },
+    {
+      "source_uid": "28C0109241B641E09D60A65E1C651E05",
+      "official_name": "Проект контракта.docx",
+      "bytes": 78903,
+      "sha256": "64f1dd988630665dbca3f28ca8516408fccfe4cd6e40b76536b1175300783ce8",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052421-b81ea5/input/02-attachment-2.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "02-attachment-2.docx",
+      "source_slot": 2
+    },
+    {
+      "source_uid": "9A2461708992453389EA1E52197AF821",
+      "official_name": "Описание объекта закупки.doc",
+      "bytes": 137728,
+      "sha256": "84752ad82bec1c16106f04ec398584f81f1fc05ae314d34fa280d00a0525f78a",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052421-b81ea5/input/03-attachment-3.doc",
+      "file_extension": ".doc",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "03-attachment-3.doc",
+      "source_slot": 3
+    },
+    {
+      "source_uid": "805AEEAFD973435D980A7F4C887F3516",
+      "official_name": "SYS_REQUEST_PART_EA.docx",
+      "bytes": 28106,
+      "sha256": "d56b94802e3a5879ae1901e0f8424d2014d0c924a95a7451dbadfcf9c79a7559",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052421-b81ea5/input/04-sys_request_part_ea.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "04-sys_request_part_ea.docx",
+      "source_slot": 4
+    },
+    {
+      "source_uid": "850ABBE03A044A3E8484E74A4178FD70",
+      "official_name": "Приложение к извещению (ЗЗ)4762753.docx",
+      "bytes": 32106,
+      "sha256": "0f5530d01fda6dc0c3a6939b097cb404d5a85a55e968d20a865a8fe358c16410",
+      "source_root_relative_path": "tender_operator_demo/toa-run-20261009052421-b81ea5/input/05-4762753.docx",
+      "file_extension": ".docx",
+      "source_role": "oct09_first_party_saved_run",
+      "stored_name": "05-4762753.docx",
+      "source_slot": 5
+    }
+  ]
+}

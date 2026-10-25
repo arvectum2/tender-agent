@@ -1,0 +1,19 @@
+task_id: TDP-R5-POSITIVE-REPLACEMENTS-20261012
+status: completed
+goal: "Replace three officially confirmed noncompetitive price-information inquiries in R5 positive tender acceptance cohort with three distinct genuinely competitive 44-FZ IT procurements independently verified in official EIS original ZIP, preserving the three price inquiries as negative regression cases."
+definition_of_done:
+  - "Find at least three distinct candidate IT competitive tender numbers not among existing 17 source-bearing cases or three price inquiries."
+  - "Through configured existing EIS individual-token read-only getDocsIP retrieve original official notice XML and SHA-pinned ZIP; confirm competitive method in original content, not external aggregators."
+  - "Produce private SHA-bound first-party evidence receipts and a GitHub acceptance matrix with 20 positive + 3 negative, clear limited scope and zero legal GO."
+  - "Run checks; update canonical checkpoint and mark child completed, or blocked with exact missing official source."
+completed:
+  - "2026-10-12: read canonical checkpoint; PR #379 previously pending now merged a5ac24767dfa6dc31fab8e2dd3e7d100ad49e36e after 9/9 GitHub CI; PR #383 original first-party price-inquiry guard already merged (04863f797) and must not be repeated."
+current: 'COMPLETED: original 20 corrected to 16 official competitive (7 EF, 7 EZK, 2 EOK), 1 special single-supplier EZT art93(12) and 3 first-party pricereq. Five new official auction ZIP/XML verified; four added to positive R5 cohort, one reserved. Source-bound public SHA-only manifest and five offline tests merged via PR384 at 56670f1f56978c8b9eb020fdc548e427ce31a09c. Full local 3912 PASS/238 SKIP, Ruff PASS, exact-head CI 9/9 PASS; owner signoff and current legal status remain UNKNOWN.'
+remaining: []
+last_verified_commit: 56670f1f56978c8b9eb020fdc548e427ce31a09c
+test_results:
+  - 'All original 17 official ZIP SHA, first-party 9 price EIS HTML SHA and 5 new auction official ZIP/XML SHA and purchaseNumber verified in private evidence.'
+  - 'Five dedicated cohort tests PASS, Ruff PASS.'
+  - 'Full Mac mini no-exclusion 3912 passed, 238 skipped, 296 warnings in 149.95s, zero failed.'
+  - 'PR384 exact-head GitHub CI 38274076703 all nine of nine jobs successful and merged.'
+resume_instruction: 'Child COMPLETE, do not repeat official 25-source cohort verification or PR384. Positive 20=11 EF + 7 EZK + 2 EOK; negatives 4=3 pricereq + 1 epNotificationEZT2020 special sole supplier, reserve EF=0369100012826000157. Relevant docs/acceptance/TDP_R5_FIRST_PARTY_20_COMPETITIVE_4_NEGATIVE_2026-10-12.md and JSON SHA manifest. Separate ongoing child TDP-R5-NEW-COMPETITIVE-DOCS-20261012 handles the 21 official attachments and ChatGPT/Gemma review. No owner GO, no live legal attestation, no external API, bids, production, watchdog.'

@@ -1,0 +1,25 @@
+task_id: TA-PROCUREMENT-LLM-LEGACY-ARTIFACTS-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: 'Register two SHA-verified historical MD reports lacking saved run IDs as explicitly unlinked, unreviewed metadata candidates in the same existing PostgreSQL arvectum; no new DB or gold.'
+definition_of_done:
+  - 'Distinct legacy_report_artifact candidate type with strict source root/path/SHA/size constraints and no original text copying.'
+  - 'Operator-only guarded CLI, default dry-run; explicit apply after verified same PostgreSQL migration107, idempotent on replay.'
+  - 'Two known July historical originals linked by 19-digit registry and source SHA as unlinked historical metadata, clearly not genuine saved run IDs or training labels.'
+  - 'Focused tests, CI and roadmap/checkpoint evidence; Draft stacked PR, no merge/deploy/model training.'
+completed:
+  - '2026-10-16 source recovery PR454 code head 261f9973 currently running CI; two original July report files SHA verified on linked MacBook Air and existing SSD data/rag/reports, 168443 and 88832 bytes; neither equals the 20 missing historical run paths.'
+  - '2026-10-16 guarded distinct legacy_report_artifact event_kind implemented; metadata-only SHA/size/absolute-source/report-name/owner-internal, no run ID or training labels; CLI uses existing canonical Postgres arvectum and defaults dry-run.'
+  - '2026-10-16 both original reports SHA verified: a8285a58b68f2fda893312efbd81069a1fb174f79986195c4efd4011bfb03774 (168443 bytes) and b66ffb4fd4cb57a2a5224583f72fe89bc6ec865792fafdcd5df483ab6c5d8f38 (88832 bytes), both in existing Arvectum/data/rag/reports.'
+  - '2026-10-16 dry-run 2 candidates, then controlled append to same PG arvectum Alembic107: inserted 2; idempotent replay inserted0 existing2. Actual table 77 total: 45 saved analyses,20 DEV,10 manual,2 unlinked report artifacts, all candidate_unreviewed. Read-only audit --expect-total77 verifies both SHA, 45/45 run links, 22 missing old report paths still missing, no blind/gold/training-ready.'
+  - '2026-10-16 targeted 19 PASS/2 warnings, Ruff PASS and full regression 4045 PASS/239 SKIP/1 unrelated R9 DESELECTED/0 unexpected failed in 137.53s. Updated docs/roadmap and AGENTS; owner source-only 77-row corpus verified.'
+  - '2026-10-16 code, tests, docs pushed commit53646896a0e9492ffdd9acefe30d26b2010c2354 as stacked Draft PR455 based on PR454. Full Mac mini regression4045 pass/239 skip/1 unrelated baseline R9 excluded, focused19 pass, Ruff/YAML check PASS. GitVerse mirror38890969699 SUCCESS; PR CI38891019488 and push38890969806 in progress. Corpus 77 candidate-only.'
+  - '2026-10-16 separate corporate Gmail ETP evidence review discovered operator confirmation for Arvectum Museum Bread, Aksioma and Kaluga, 6 privacy-safe source metadata events passed dry-run, but apply blocked. Tracked independently as blocked child TA-PROCUREMENT-LLM-ETP-EMAIL-20261016. Corpus remains 77.'
+  - '2026-10-16 initial PR455 code head 53646896a0e9492ffdd9acefe30d26b2010c2354 GitHub PR run38891019488 SUCCESS, push38890969806 SUCCESS, GitVerse38890969699 SUCCESS. ETP Gmail operator evidence separately reconciled with 15 scoped messages across 4 procurements, 8 pending source-bound events dry-run successful, PG still 77.'
+  - '2026-10-16 Exact PR455 head 7d2537e07c3fb45570e80eb4521b24f8eb0c86d4 verified CI PR38892458326 SUCCESS, push38892453336 SUCCESS and GitVerse mirror38892453272 SUCCESS. Legacy source-only indexing complete; separate ETP intake remains blocked with eight pending events and zero confirmed imports.'
+current_stage: 'completed_verified_pr_ci_and_source_only_77_rows'
+remaining: []
+next_phase: 'Independently verify official outcomes and receipts, preserve separate blocked ETP intake. Parent roadmap remains in_progress.'
+last_verified_commit: 7d2537e07c3fb45570e80eb4521b24f8eb0c86d4
+last_tests: 'Mac mini full suite 4045 PASS/239 SKIP/1 independent baseline R9 DESELECTED/0 unexpected FAIL, 137.53s; focused new legacy+audit 19 PASS/2 warnings, Ruff/YAML/diff PASS; exact code PR455 GitHub PR38891019488 and push38890969806 CI green plus GitVerse38890969699 green. PG 77-row audit source SHA2/2 + 45/45 run IDs, replay2 existing/0 inserted. ETP 8 private candidates only DRY-RUN, DB unchanged.'
+resume_instruction: 'Legacy indexing completed in Draft PR455, exact code/head 7d2537e0 verified GitHub PR38892458326, push38892453336 and GitVerse mirror38892453272 all SUCCESS, tests 4045 PASS /239 SKIP/1 known baseline R9 DESELECTED. Existing PostgreSQL arvectum corpus 77 unreviewed (45 saved runs,20 DEV,10 manual,2 SHA-verified unlinked historical reports), replay inserted0. Eight privacy-safe ETP operator metadata events separately dry-run and blocked from application: do NOT retry through bypass; corpus still77. Parent Tender Agent roadmap in_progress; next independently source outcomes, no model training, new DB, merges or deployments.'

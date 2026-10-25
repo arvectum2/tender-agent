@@ -1,0 +1,31 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-MULTIFORMAT-RUN-ROUTING-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Add safe original 44-FZ composite PDF observation to tenant SaaS run report, preserving existing CZN DOCX and conservative NOT_ASSESSED.
+definition_of_done:
+  - Discover actual current EIS XML-linked DOCX or PDF from authenticated owned run and intake-time SHA.
+  - Parse original PDF scoring weights read-only, return no automatic qualification NO_GO for composite specialist criteria.
+  - Preserve CZN DOCX NO_GO and unsupported abstention with source/error labels.
+  - Include auth/viewer isolation and tampering/ambiguous source negative tests.
+  - Local tests plus GitHub exact-head CI green, PR draft and no production.
+completed:
+  - Exact PR414 source checkpoint head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 GitHub pull_request 38445274161 and pushes 38445262922/38445262896 all SUCCESS. Source integration engineering child completed; draft remains unmerged.
+  - Implemented independent original PDF discovery module for tenant-owned PRIZ 44-FZ runs, requiring getDocsIP at-ingest SOAP SHA, latest original EOK XML, official download UID/name/size/HTTPS and at-download PDF SHA.
+  - Existing CZN DOCX source-first qualification and owner reference list preserved; only missing-supported-DOCX route allows composite PDF observation. Tampered DOCX source fails closed without PDF override.
+  - Composite PDF 60% price/40% qualifications nested 5% executed related contracts and 95% specialists is information only, NEVER automatic commercial NO_GO when owner has zero contracts, and no legal/human/electronic signature conclusions.
+  - Existing authenticated SaaS report and independent qualification endpoint show composite source-confirmed criterion information; viewer private references redacted; JavaScript panel distinguishes unavailable original vs source-confirmed yet unassessed scores.
+  - Added positive/adversarial synthetic source-bound run tests (old/missing download SHA, mutated PDF, wrong PRIZ/RI223, untrusted HTTPS host, ambiguous duplicate PDF and DOCX integrity). Mac mini final code+report head 5ffda3c: 112 pytest PASS, Ruff PASS, embedded SaaS node --check PASS, git diff --check PASS.
+  - Russian evidence report and MASTER_ROADMAP committed; stacked DRAFT PR414 opened on PR413, no real tenant DB writes or SaaS/ETP/prod action.
+  - Parent PR413 original PDF observer full GitHub PR/push CI success.
+current: Completed source-bound SaaS DOCX/PDF routing with exact head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345, full PR/push CI 3/3 SUCCESS, local 112 tests/Ruff/Node PASS; not deployed.
+pending: []
+last_verified_commit: 'PR414 exact code/docs source head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345, GitHub PR38445274161 and pushes38445262922/38445262896 all SUCCESS; Mac mini 112 focused tests PASS, Ruff and embedded UI Node syntax PASS; no production activation.'
+test_results:
+  - 'PR414 exact head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345: full GitHub PR38445274161 and both pushes38445262922/38445262896 completed SUCCESS.'
+  - 'Mac mini exact source head 5ffda3c: 112 focused pytest PASS, Ruff PASS, SaaS node --check PASS, git diff --check PASS.'
+  - 'Synthetic owned-run source-bound PDF 60/40/5/95 => NOT_ASSESSED, malicious/old/duplicate/misrouted originals => NOT_ASSESSED; existing CZN DOCX source and SaaS tenant permission regressions PASS.'
+  - 'Standalone previous PR413 original source ZIP+PDF 60/40/5/95 replay PASS; do not misreport integrated PDF run as live tenant run.'
+  - 'PR414 GitHub exact-head CI pending.'
+resume_instruction: 'TA-QUALIFICATION-MULTIFORMAT-RUN-ROUTING-20261013 COMPLETED: PR414 source head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 exact three GitHub workflows SUCCESS, local 112 PASS/Ruff/Node PASS. Keep draft/unmerged and SaaS disabled. Next distinct child: validate new actual original 1C 44-FZ v2 ZIP/PDF through integrated source-bound report, using privately saved bytes on authorized Mac mini, without posting to production tenant; ensure actual replay NOT_ASSESSED and CZN DOCX path remains safe. Only then consider broader generalization or source selector. Preserve manual_override true/watchdog disabled, no ETP/bids/payments/signatures/deploy; APR06 independent human gold, owner KPIs, APR07 production SLO blocked.'

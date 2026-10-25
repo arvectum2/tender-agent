@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-APR06-NOTICE-REVISION-INTEGRITY-20261013
+status: completed
+parent_task_id: APR-06-COMMERCIAL-ACCEPTANCE-001
+goal: Independently inspect archived original 44-FZ EIS notice identities, edition chronology and attachment-provenance boundaries without claiming live EIS currentness.
+definition_of_done:
+  - Inspect archived XML notice records of all 20 APR06 44-FZ candidate runs from authorized read-only Docker source volume.
+  - Reconcile original notice number/edition/deadline across multiple XML candidates; fail closed on ambiguity, mismatch, cancellation or non-notice event.
+  - Record per-case source receipt and currentness limitations with no source bytes or private attachments committed.
+  - Add deterministic offline code and negative regression tests for version selection and unsafe assumptions, fix confirmed defects only.
+  - Pass isolated focused validation and exact-head CI, publish review-only PR and checkpoint complete or honest blocked reason.
+completed:
+  - Existing APR06 byte-integrity subtask 168/168 archived 44-FZ and 5/5 separate 223-FZ hashes completed in draft PR401, exact source-head CI green.
+  - Parsed genuine EIS epNotification XML from archived immutable original corpus, including Aksay v5, CZN v3 and another later edition; excluded epClarificationDoc event from notice versions.
+  - Reconciled 50 of 77 latest archived notice attachments by exact filename+size, source_url.uid ↔ original notice publishedContentId and archived SHA-256 bytes; 27 unmatched and not promoted, three original notices absent.
+  - Built reusable fail-closed offline checker, persisted original source-limited per-case JSON and Russian report, 16 new invariants/tests.
+  - Mac mini 94 APR06 focused PASS, Ruff PASS and review-only draft PR402 opened.
+  - Found original saved document source_url.uid in local original attachment index and cross-verified it to each archived epNotification.publishedContentId. Updated checker and artifact: all 50 prior filename+size links ALSO match UID and SHA-256 (50/77), remaining 27 unsigned/unmatched; no current EIS revision verified.
+  - Added UID domain/spoof mismatches as regression; reran 96 APR06 focused pytest PASS, Ruff PASS at report/head a29311e.
+  - Final checkpoint-only head 044b7b80 exact PR CI 38390827395 SUCCESS, push CI 38390820228 and 38390820231 SUCCESS. Archived source-limited evidence review task complete, not commercial acceptance.
+current: Completed original archived notice/attachment UID-to-SHA correlation evidence and all exact-head PR/push CI, draft PR402 remains review-only. Current online EIS still separate new task.
+pending: []
+last_verified_commit: 'PR402 checked checkpoint-head 044b7b80f91bb26bdf017499973059c64d3d8996, PR run 38390827395 SUCCESS, push 38390820228/38390820231 SUCCESS; later checkpoint metadata completion commit carries no source changes.'
+test_results:
+  - 'Offline network-none/read-only Docker original corpus: 20 historical 44-FZ runs, 17 archived notice XMLs, 3 no XML, 77 latest archived notice attachments, 50 correlated to SHA-verified local bytes by exact filename+size, 27 unmatched; 9 full name-size correlations, 7 incomplete, 1 deadline unknown.'
+  - 'CZN 0348100024426000039 v3: six of seven attachments correlated, last skipped due archived http_status:429; original bytes not re-downloaded.'
+  - 'Mac mini isolated APR06 suite 96 PASS, Ruff PASS; archived original EIS publishedContentId and source_url.uid bound to existing SHA for 50/77 source attachments; PR402 head 044b7b80 exact PR/push CI all SUCCESS.'
+resume_instruction: 'CHILD COMPLETED. PR402 archived EIS evidence checked head 044b7b80 CI all SUCCESS, 96 APR06 pytest PASS/Ruff PASS. Next task is online read-only HTTPS no-proxy verification from Russian IP. Do not infer current revision or automatically redownload previously saved material. No bids, signatures, payments, paid API, watchdog or production deployments.'

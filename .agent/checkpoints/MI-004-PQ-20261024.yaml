@@ -1,0 +1,65 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-004-PQ-20261024
+status: completed
+goal: Prevent project-stage/EPC duplicate financial counting and provide source-bound customer-readable report
+  artifacts independently of EIS SOAP.
+definition_of_done:
+- Implement evidence-backed equipment spend ledger distinguishing end buyer, EPC full envelope, upstream subcontract
+  and PИР/service.
+- Prevent duplicate equipment count across project lifecycle/contract stages and mirrored award records; conflicts
+  quarantined.
+- Report observed confirmed lower bound only and require verified coverage before national market size, shares
+  or interval claims.
+- Build safe read-only HTML and CSV customer preview exports of the existing Power Quality pilot without claiming
+  current open availability or verified winners.
+- Add tests for role/price conflicts, unknown amounts, malicious HTML/CSV injection, duplicate contracts and reproducibility;
+  commit/push draft PR.
+completed:
+- 'Designed source-reviewed legal contract fact contract: project/notice/lot/contract and supply-chain tiers,
+  explicit amount basis, contract document provenance, reviewer and original hash.'
+- Added latest-revision reconciliation, source-mirror dedup and quarantine for same-revision conflict or equipment
+  line amount exceeding contracted total.
+- Prevented false equipment TAM by separating priced hardware, total EPC contract envelopes, signed subcontract
+  flows, design/PИР services and published initial price ceiling.
+- Applied conservative maximum-contract amount per equipment family within project where multiple end-buyer contracts
+  may describe overlapping assets, with mandatory lifecycle-review warning.
+- National TAM/SAM/SOM always null pending actual registry/source completeness; observation refers to contracted
+  evidence, not paid or delivered volumes.
+- Added sanitized standalone static HTML customer preview, public HTTPS source links, 10 source-listed account
+  qualification hypotheses, CSV CRM precursor with spreadsheet formula guard.
+- Ran actual MI003 Power Quality source-limited report export, saved HTML and CSV, verified no unknown winner
+  or historical price promoted.
+- Ran 137 focused/integration tests PASS (1 conditional skip) and Ruff clean.
+current: MI004 bounded evidence-finance and static export complete; no production endpoint or customer portal,
+  historical SOAP remains blocked.
+pending:
+- 'MI-005: authenticated tenant-safe customer portal/download, request queue and actual end-to-end security/privacy/retrieval
+  review; static HTML is not an authenticated product.'
+- 'Data Platform PPTX PR #126 must be reviewed/merged/deployed before production PPTX feature or full customer
+  onboarding.'
+- Real EIS and commercial ETP historical source/contract/protocol collection with measured denominators, original
+  requirements, holdout EPC retrieval quality, cited winners and separate equipment line costs.
+- MI-004 true multi-year TAM/SAM/SOM bounds and industry shares require independently complete measured source
+  universe and signed contract pricing; current real market size still unknown.
+- 'EIS SOAP recovery status in isolated MI-002-SOAP-RECOVERY checkpoint PR #503; resume no sooner than after published
+  maintenance window.'
+last_verified_commit: 7fa9e195825904c0b9c0530c012f3170c2dd4cb8
+test_results:
+- 137 focused/integration pytest tests passed, 1 conditional skip, 1 inherited Starlette deprecation warning,
+  Ruff clean.
+- MI004 20 synthetic financial/security regression tests passed, no fictional amounts emitted as actual market
+  facts.
+- Real source-limited October 2026 pilot HTML+CSV export has 10 buyer orgs, 12 candidate procedures, 0 verified
+  winner figures and null national TAM.
+- All documentation, code, preview CSV/HTML are read-only and committed on isolated feature branch, no service
+  deployment.
+resume_instruction: MI004 deterministic finance and static client preview completed. Continue MI005 actual authenticated
+  portal/customer reports only after security, tenant rights, Data Platform live consumer acceptance and reviewed
+  PPTX deploy. EIS SOAP remains blocked during maintenance, do not retry until afterward. Maintain conservative
+  equipment line attribution and refuse to report Russian market TAM without official and ETP coverage measured.
+execution:
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi004-20261024
+  branch: feature/mi004-power-quality-evidence-finance-export-20261024
+  base: feature/mi003-power-quality-intake-20261024
+  code_commit: 7fa9e195825904c0b9c0530c012f3170c2dd4cb8

@@ -1,0 +1,38 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: TDP-R3-TENDER-SUMMARY-20261011
+status: completed
+goal: Isolate original 26-line tender summary data projection without fabricated submission
+  deadline or changed original documents/source metadata.
+definition_of_done:
+- Pure product-owned summary builder accepts injected timestamp/verified-deadline
+  helpers and preserves AST-equivalent dictionary projection
+- Tests for no-source unknown deadline, sourced date, document source signal counts,
+  non-text document, Run status and no invented data
+- Full relevant regression/make check and exact-head GitHub CI after main reconciliation,
+  merge PR
+- Bounded checkpoint completed, overarching TDP-REFACTOR in_progress until real EIS
+  source R2/R4/R5 acceptance
+completed:
+- Inspected latest origin/main 5becf696, identified 26-line tender_summary projection
+  and no source acceptance claims.
+- Full local Python3.12 pytest 3635 passed, 238 skipped, 295 warnings, zero failures;
+  make check/target Ruff PASS.
+- 'Reconciled main requirements PR #329 adb6551e5c46b4e0e2a1751e5bc1c1a948a29666 with
+  summary pure module; preliminary AST/value parity confirmed earlier.'
+- 'After #329 main merge: full Python3.12 pytest 3641 passed, 238 skipped, zero failures
+  and make check clean.'
+- All exact-head GitHub quality 9m07s/8m52s and Docker/Postgres/Redis/migrations/security
+  CI passed.
+- 'PR #330 merged main 5b12fb99be499c98d3c7ecf747f07e65323ac09b.'
+current: Completed and merged as 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+pending: []
+last_verified_commit: 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+test_results:
+- Full local 3635 passed, 238 skipped, zero failed; make check PASS
+- Combined full local 3641 passed / 238 skipped / zero failed
+- Two exact-head quality and all integration CI PASS
+- Merged main 5b12fb99be499c98d3c7ecf747f07e65323ac09b
+resume_instruction: 'TDP-R3-TENDER-SUMMARY-20261011 completed #330, do not repeat.
+  Continue R2 EIS archived notice selection PR #331 and open R2 original EIS official
+  revision, R4/R5 source-reviewed acceptance. Owner-disabled watchdog remains disabled.'

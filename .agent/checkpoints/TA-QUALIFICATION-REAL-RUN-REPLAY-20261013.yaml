@@ -1,0 +1,30 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-QUALIFICATION-REAL-RUN-REPLAY-20261013
+status: completed
+parent_task_id: TA-ROADMAP-EXEC-20261012
+goal: Verify end-to-end authenticated-run qualification service with private real original 44-FZ 1C EIS v2 SOAP ZIP + original PDF, without creating a production tenant, then harden source/original dispatch if evidence needs it.
+definition_of_done:
+  - Read only the confirmed private Mac mini original SOAP ZIP and EIS original PDF for 0173300009226000009; compare SHA/UID/version/deadline to committed receipt.
+  - Build temporary isolated run metadata fixture from actual EIS source receipts and invoke official integrated report qualification service with no tenant writes or external requests.
+  - Confirm 60/40 within qualification contracts5/specialists95 and commercial NOT_ASSESSED, no false NO_GO.
+  - Add independent reproducible regression harness/tests and source evidence documentation; run local focused tests and GitHub CI if code changed.
+  - Keep all PRs draft/unmerged, no SaaS production or ETP/bids/signing/payments.
+completed:
+  - 'PR415 exact source head 054c5e218eb5e8d26049211854a12fc26b422b28 full PR38448017188 and pushes38448007346/38448007308 3/3 GitHub CI SUCCESS; engineering child completed, draft remains unmerged.'
+  - On private authentic saved 44-FZ 0173300009226000009 original ZIP SHA655a3014 and attached evaluation PDF SHA6b0eca79 verified real integrated assess_owned_run_qualification: 60% price, 40% qualification, within qualification 5% completed 1C contracts / 95% specialists, NOT_ASSESSED and zero qualifying contracts not inferred. No tenant DB or browser auth.
+  - Flipped one byte in TEMPORARY COPY of original PDF, confirmed integrated report returned ORIGINAL_SOURCE_UNAVAILABLE_OR_UNSUPPORTED and NOT_ASSESSED; source originals remained intact.
+  - Added reproducible offline replay harness with ZIP/PDF source hashes and pinned receipt, temporary metadata/copies and explicit no-production semantics, no network/ETP/DB writes.
+  - Added independent synthetic-fixture unit tests for correct report observation, tamper rejection and source/receipt mismatch; Mac mini head cecf94c 58 focused pytest PASS, Ruff PASS, genuine ZIP/PDF replay PASS, diff clean.
+  - Russian evidence report and MASTER_ROADMAP updated, DRAFT stacked PR415 opened on completed PR414; source binaries private on Mac mini only.
+  - PR414 source-bound DOCX/PDF report routing exact source head 5a527b4ddb0cbb4e2e4bb47f574e07aa02c27345 had PR38445274161 and push38445262922/38445262896 full GitHub CI SUCCESS, child checkpoint completed.
+current: Completed PR415 genuine-source offline report replay and bit-flip defense, exact source head 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub full PR/push CI 3/3 SUCCESS.
+pending: []
+last_verified_commit: 'PR415 exact source head 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub pull_request38448017188 and pushes38448007346/38448007308 all completed SUCCESS. Mac mini 58 focused pytest PASS, Ruff PASS, original 44-FZ 1C v2 ZIP+PDF integrated report and bit-flip replay PASS.'
+test_results:
+  - 'PR415 exact source head 054c5e218eb5e8d26049211854a12fc26b422b28 full GitHub PR38448017188/push38448007346/push38448007308 3/3 SUCCESS.'
+  - 'Real original ZIP 655a3014 + evaluation PDF 6b0eca79 integrated run report generated 60/40/5/95 and NOT_ASSESSED; tampered TEMP PDF was rejected while originals unchanged, no real tenant DB login.'
+  - 'Mac mini exact code head cecf94c targeted pytest 58 PASS, Ruff PASS, git diff --check PASS; original offline CLI replay PASS.'
+  - 'PR415 exact GitHub full PR/push CI pending at docs/roadmap source head e6e2431.'
+
+resume_instruction: 'TA-QUALIFICATION-REAL-RUN-REPLAY-20261013 COMPLETED. PR415 exact verified source 054c5e218eb5e8d26049211854a12fc26b422b28 GitHub PR38448017188 and pushes38448007346/38448007308 all SUCCESS. Real private original EIS ZIP/PDF replay 44-FZ 1C case 0173300009226000009 via integrated qualification service 60/40/5/95 NOT_ASSESSED, temp PDF bit flip rejected, 58 local pytest PASS/Ruff PASS. All PRs draft/unmerged and SaaS production off. Follow canonical main .agent/current-task.yaml and docs/roadmap/MASTER_ROADMAP.md for unchecked priorities. Preserve manual_override true, watchdog disabled and no ETP/bid/payment/sign/deploy. APR06 human gold and owner KPI; APR07 production SLO remain blocked.'

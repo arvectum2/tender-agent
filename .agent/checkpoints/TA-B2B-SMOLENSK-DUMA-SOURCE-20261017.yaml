@@ -1,0 +1,53 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-B2B-SMOLENSK-DUMA-SOURCE-20261017
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: blocked
+goal: Evaluate real original source requirements, contractor eligibility and cashflow/financial risk for 44-FZ Smolensk Regional
+  Duma website modification 0163200000326005243, prioritizing legal source facts and strict no-GO without owner.
+definition_of_done:
+- Retrieve exact official getDocsIP original EOK notice v2 and first-party public filestore attachments (if accessible), source
+  SHA and archived metadata; handle contradictory revisions and clarification.
+- Extract actual SOW/project contract, code/IP, delivery, conditions, customer acceptance, bidder restrictions, application/performance
+  guarantee and experience criteria only when in documents.
+- Create dated concise owner triage and machine source receipt with SHA and question flags; avoid invented price quotes and legally
+  unverified live status.
+- Add offline factual consistency and fail-closed tests; Mac make check/full suite and exact-head GitHub CI/merge after PR471 source
+  observation is safely integrated.
+- Update parent and child canonical checkpoint; no new UI/DB, ETP access, registration, submission, payment or external mail.
+completed:
+- Previous independent 44FZ getDocsIP source receipt docs/roadmap/B2B_OCT17_OFFICIAL_44FZ_SNAPSHOTS.md records this exact case EOK2020
+  v2 official ZIP 48372 bytes SHA 4cec297f6bd040723105fab5ac03a3d10e986b3c03b03032a7da3c3769389d5d, selected notice SHA 36556189a1bb0aeead937e06e9c4186206a465ba139fc09023b4c1d08e7cb719,
+  source NMC497178.33 RUB, endDT 30 Oct 11 MSK, including archived v1/v2 and clarification doc.
+- Original EIS printForm URL HTTP200 82992 bytes as of Oct17, original card number and printed deadline 30 Oct 11 local matched
+  archived v2; current live legal stage still UNKNOWN; related printForm PR471 awaiting GH quality CI.
+- Official exact getDocsIP EOK2020 v2 Smolensk 0163200000326005243 original ZIP SHA4cec297f6b, pinned notice SHA36556189a1; v1/v2
+  and epClarificationDoc XML; six original external filestore files SHA and two embedded participant DOCX SHA read-only checked.
+- 'Actually reviewed original 273-line website SOW: existing 1C-Bitrix govt portal, accessibility, deputy search four tabs, responsive
+  CSS, site search/navigation, frontend fixes, local assets, redesign. Contract due 2026-12-08, warranty12mo, 7-business-day postacceptance
+  pay, 0.5pct final-price execution security.'
+- Original evaluation scoring PRICE30 and QUALIFICATION70, inside qualification performed comparable government IT contract total
+  value80 and count20 (cap10). Unsupported experience not counted; absence of qualification documentation does not itself disqualify
+  but loses points.
+- 'Official clarification 0109 DOCX from Oct16, SHA7526dbc755: buyer commits full code/test environment/remote access, all works
+  remotely no Smolensk visits, Bitrix Business perpetual nonexclusive license, acceptance on customer server, thirdparty rights
+  legal proof.'
+- Published participant ZIP documents require free Contract Execution Module/Fintender EDS during execution and explain optional
+  FNS extract. Original EOK v2 XML has contractGuarantee part0.5 and no attested applicationGuarantee amount. Current legal stage/owner
+  qualification UNKNOWN.
+current_stage: Source verification actually complete, but committing full owner report and machine receipt blocked by remote execution
+  security restriction; stop without bypass, preserve exact source facts and next deliverables in checkpoint.
+remaining:
+- Produce publishable concise original-source report/receipt through authorized channel only
+- Add conservative tests and full CI/merge with source limitations
+- Owner contract reference verification and current EIS/ETP stage
+last_verified_commit: 7918e3e606a97f89f3aec615564afc1068f2548a
+last_tests: Official first-party original ZIP v2 and six filestore files + clarification + two embedded DOCX read-only verified;
+  automated tests NOT RUN for this child; prior PR471 5036 PASS/285 SKIP.
+resume_instruction: 'Smolensk source child BLOCKED on remote report write tool security; do not bypass refused operation. Factual
+  original 44FZ 0163200000326005243 EOK v2 SHA4cec... and notice SHA365561..., original 6/6 attachment files plus separate clarification
+  0109 DOCX SHA7526..., 2 embedded participant DOCX. Existing site Bitrix, remote guaranteed, buyer owns perpetual Bitrix Business
+  license, Dec8 contract deadline, 12mo warranty, execution security0.5pct, paid 7 business days after acceptance; PRICE30 QUALIFICATION70
+  weighted value80/count20 on completed comparable government IS contracts. Technical scope 273 lines heavy at NMC497178.33; do
+  not promise ROI/owner GO. No current live legal stage. Next authorized path: source-grounded report/JSON/test and exact-head GH
+  merge after restriction lifted.'

@@ -1,0 +1,26 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-R4-17-ORIGINAL-SEMANTIC-20261014
+parent_task_id: TA-ROADMAP-EXEC-20261012
+status: blocked
+goal: Independently assess verifiable material facts and unsupported or stale LLM claims for the remaining 17 historical EIS source cases, using exact original bytes and citations, with strict separation of source coverage and legal decision.
+definition_of_done:
+  - Join exactly 17 historical EIS source cases from the existing 20-case protocol, excluding exactly three primary-verified noncompetitive price inquiries; do not assume all 17 archived notices constitute competitive bids.
+  - Verify direct archived ZIP SHA, notice edition, file identity and recoverable text coverage for each; link every cited substantive fact to original filename/SHA and page/section/table locator.
+  - Inspect all nine preserved historical model reports where available for model ID, wrong archive revision, deadline/NMCK contradictions and original-document entailment; refuse unsupported clause conclusions and quote mismatches.
+  - Classify per-case material contract risks and critical missing text separately as verified, conflicted or not checked; no automatic legal gold, eligibility, GO or inferences from missing archived ZIP.
+  - Create human-readable client review for all 17 without implementation codes or dump of private archived original documents, and separate audit JSON with machine provenance and unknown status.
+  - Add negative tests against wrong filename, mismatch SHA, cherry-picked quote, conflicting archived edition, and model ID; validate Mac mini original replay, relevant/full pytest/Ruff and exact draft PR CI.
+completed:
+  - '2026-10-14 original ZIP/semantic classification recheck identifies baseline 17 archived EIS notices are 16 type-verified competitive XML plus ONE article93 part12 single-supplier noncompetitive. Separate Oct12 saved firstparty selection 20 positive competitive and 4 negative cases with 4 new authentic competitors plus reserve identified. 21 original ZIP files SHA, 21 exact selected original XML SHA/type all independently rechecked PASS. Scope 17 is invalid, replaced with canonical 20 competitive task; no 17-competitive review should be claimed.'
+  - 'Predecessor independent official EIS three false-empty price inquiries PR431 completed source fcb568d1 full4100 pytest PASS/238 SKIP/0 fail and branch code+checkpoint ebd12584 exact 3/3 GitHub CI SUCCESS, child completed metadata7f585a21. Three official market-price inquiries excluded from these 17 notice cases.'
+  - '17 original official archived ZIP per R5 audit in private Mac mini evidence/tdp-r5/independent-20261012/<reg_number>/documentation-archive.zip; nine historic reports stored separately in private ai-expert-20261012/tender_operator_demo with persisted-facts 20-case CSV.'
+current: 'BLOCKED/SUPERSEDED: previous 17 archival sources are NOT 17 competitive notices; exactly 16 competitive plus 1 special single-supplier art93. Reconciled full verified 20 competitive (16 original +4 new) and4 negative (3 price inquiries +1 special), plus one reserve. Continue separate new canonical 20-competitive source semantic task, not this obsolete 17-cohort premise.'
+pending: []
+last_verified_commit: 'PR431 prior verified source+checkpoint ebd12584942790d51c36ce759787133b50e13a22 GitHub 3/3 SUCCESS, Mac mini prior full4100 pytest PASS; successor branch staged on completed predecessor.'
+test_results:
+  - 'Prior stage 4100 PASS/238 SKIP; independent seventeen-case semantic audit not yet implemented.'
+resume_instruction: 'DO NOT execute this obsolete 17-case semantic audit as if all 17 were competitive. Independent SHA checks 21/21 first-party ZIP plus 21/21 selected original type XML prove 16 source original competitive plus4 new positive replacements and1 original article93 part12 special negative; three previously false-empty are noncompetitive price inquiries. New task TA-R4-20-COMPETITIVE-SEMANTIC-20261014 owns twenty positive competitive and four negative original controls, one reserve, all legal human gold0. Parent main points successor. No ETP/bids/merges/watchdog.'
+execution:
+  branch: research/r4-17-semantic-claims-20261014
+  manual_override: true

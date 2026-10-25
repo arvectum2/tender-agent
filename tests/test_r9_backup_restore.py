@@ -192,3 +192,27 @@ def test_restore_database_uses_single_transaction(monkeypatch, tmp_path) -> None
     assert commands[0][0] == "pg_restore"
     assert "--single-transaction" in commands[0]
     assert "--exit-on-error" in commands[0]
+
+
+def test_restore_cli_failure_diagnostics_redact_connection_uri(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from types import SimpleNamespace
+
+    secret_uri = "postgresql://alice:secret@localhost:5432/test"
+    monkeypatch.setattr(
+        r9_recovery.subprocess,
+        "run",
+        lambda *args, **kwargs: SimpleNamespace(
+            returncode=1,
+            stderr=(
+                f"pg_restore: error at {secret_uri}: "
+                "unsupported transaction_timeout"
+            ),
+        ),
+    )
+    with pytest.raises(r9_recovery.RecoveryError) as exc:
+        r9_recovery._run(["pg_restore", "--dbname", secret_uri], {})
+    message = str(exc.value)
+    assert message == "pg_restore failed with exit code 1"
+    assert "secret" not in message

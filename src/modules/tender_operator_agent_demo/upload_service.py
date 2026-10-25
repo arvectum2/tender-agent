@@ -150,7 +150,7 @@ def _structured_quantity(node: ET.Element) -> str | None:
     if quantity is None:
         return None
     value_node = _first_xml_descendant(quantity, {"value", "concreteValue"})
-    raw = _xml_text(value_node or quantity)
+    raw = _xml_text(value_node if value_node is not None else quantity)
     return _legacy._normalize_quantity_value(raw) if re.search(r"\d", raw) else None
 
 
@@ -301,10 +301,9 @@ def _enrich_procurement_metadata_from_documents(
         merge_structured_metadata,
     )
 
-    candidates: list[tuple[int, str, int, dict[str, Any]]] = []
-    expected_number = str(
-        metadata.get("procurement_id") or source_procurement.get("procurement_number") or ""
-    ).strip()
+    candidates: list[tuple[int, dict[str, Any], bool, dict[str, str]]] = []
+    expected_number = str(metadata.get("procurement_id") or source_procurement.get("procurement_number") or "").strip()
+    from_getdocs = metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip"
     for document in documents:
         if str(getattr(document, "extension", "")).lower() != ".xml":
             continue
@@ -315,8 +314,8 @@ def _enrich_procurement_metadata_from_documents(
         if not parsed:
             continue
         revision = extract_notice_revision_info(text)
-        if revision and expected_number and revision["purchase_number"] != expected_number:
-            enriched["notice_revision_requires_review"] = True
+        verified = bool(revision and expected_number and revision["purchase_number"] == expected_number)
+        if from_getdocs and not verified:
             continue
         score = sum(
             1
@@ -332,16 +331,28 @@ def _enrich_procurement_metadata_from_documents(
         )
         if getattr(document, "role", "") == "notice":
             score += 10
-        candidates.append((
-            int(revision["version"]) if revision else 0,
-            str(revision["published_at"]) if revision else "",
-            score,
-            parsed,
-        ))
+        direct_xml: dict[str, str] = {}
+        if verified and "<!DOCTYPE" not in text.upper() and "<!ENTITY" not in text.upper():
+            try:
+                root = ET.fromstring(text)
+                from src.modules.tender_operator_agent_demo.eis_fact_values import (
+                    EIS_NOTICE_FACT_TAGS,
+                )
+
+                for field, tag in EIS_NOTICE_FACT_TAGS:
+                    values = list(dict.fromkeys(
+                        str(node.text).strip() for node in root.iter()
+                        if _local_xml_name(node.tag) == tag and node.text and str(node.text).strip()
+                    ))
+                    if len(values) == 1:
+                        direct_xml[field] = values[0]
+            except ET.ParseError:
+                pass
+        candidates.append((score, parsed, verified, direct_xml))
     if not candidates:
         return enriched
 
-    _, _, _, notice_meta = max(candidates, key=lambda item: item[:3])
+    _, notice_meta, verified_revision, direct_xml = max(candidates, key=lambda item: item[0])
     structured = merge_structured_metadata(notice_meta, {}, {})
     existing_procurement = (
         dict(enriched.get("procurement"))
@@ -354,6 +365,31 @@ def _enrich_procurement_metadata_from_documents(
         current = existing_procurement.get(key)
         if current in (None, "", [], {}):
             existing_procurement[key] = value
+    # The legacy textual heuristic may mistake a heading inside a contract for
+    # the title. Only a registry-matched original EIS XML can override it.
+    if from_getdocs and verified_revision:
+        official_title = str(notice_meta.get("procurement_subject") or "").strip()
+        if official_title:
+            existing_procurement["title"] = official_title
+            existing_procurement["procurement_subject"] = official_title
+            enriched["procurement_title"] = official_title
+            enriched["tender_title"] = official_title
+            refs = dict(enriched.get("_field_evidence") or {})
+            refs["procurement_title"] = "eis_notice:procurement_subject"
+            enriched["_field_evidence"] = refs
+            notice_files = [
+                f for f in enriched.get("files", [])
+                if isinstance(f, dict) and str(f.get("extension") or "").lower() == ".xml"
+            ]
+            if len(notice_files) == 1 and notice_files[0].get("file_id"):
+                from pathlib import Path
+                source_file = notice_files[0]
+                enriched["_verified_notice_facts"] = {
+                    "registry_number": expected_number,
+                    "file_id": str(source_file["file_id"]),
+                    "document": Path(str(source_file.get("display_name") or source_file.get("original_name") or "")).name,
+                    "values": direct_xml,
+                }
     enriched["procurement"] = existing_procurement
 
     root_map = {
@@ -724,15 +760,34 @@ def _persist_outputs(
         if metadata.get("analysis_mode") == "production_llm_r10_1"
         else _render_canonical_report_html
     )
+    from src.modules.tender_operator_agent_demo.operator_report_assembly import (
+        add_verified_notice_to_report_steps,
+    )
+
+    verified_steps = add_verified_notice_to_report_steps(metadata, steps)
     persist_frozen_r7_outputs(
         output_dir=_legacy._output_dir(run_id),
         run_id=run_id,
         metadata=metadata,
         outputs=outputs,
-        steps=steps,
+        steps=verified_steps,
         render_html=renderer,
         now_factory=_legacy._safe_datetime,
     )
+    if metadata.get("procurement_source") == "zakupki_gov_ru_getdocs_ip":
+        from src.modules.tender_operator_agent_demo.operator_eis_report_citations import (
+            append_official_eis_citations,
+        )
+
+        try:
+            append_official_eis_citations(
+                report_path=_legacy._report_html_path(run_id),
+                run_id=run_id,
+                metadata=metadata,
+            )
+        except (OSError, ValueError):
+            # Never invent or surface a citation if an original cannot be read.
+            pass
 
 
 _legacy._render_customer_report_html = _render_customer_report_html

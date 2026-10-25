@@ -437,7 +437,7 @@ def render_tender_operator_console_html(selected_run_id: str | None = None) -> s
                 <h1>Тендерный агент</h1>
                 <p class="subtitle">Как ИИ-агент разбирает закупку, готовит RFQ, показывает риски и оставляет критичные действия под контролем человека.</p>
                 <div class="header-actions">
-                  <a class="link-button" href="/pilot/tender-agent">Пошаговый мастер</a>
+                  <a class="link-button" href="/pilot/tender-agent/workspace">Открыть рабочий кабинет</a>
                 </div>
               </div>
               <div class="badge-row">

@@ -1,0 +1,306 @@
+"""Isolated real-EIS saved-run operator E2E, invoking the actual localhost LLM.
+
+Copy an earlier first-party read-only EIS run to a dedicated staging runs dir
+before execution. Never point this script at live production data or existing
+operator-run storage; it writes to the supplied private staging directory.
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import hashlib
+import json
+import os
+import time
+from pathlib import Path
+from secrets import token_urlsafe
+
+
+def verify_copy_source(saved: Path, pinned: dict) -> int:
+    """Fail closed on a tampered original, duplicated ID or unsafe archive path."""
+    if pinned.get("run_id") != saved.name or pinned.get("registry_number") not in {
+        "0162200011826003089", "0151600003226000011", "0152200004026000069",
+        "0348100024426000021", "0348100024426000039", "0127100008626000013",
+        "0360600005326000018", "0895100000126000897",
+        "0149200002326001555", "0148200000526000028",
+        "0349100009326000005",
+        "0158300034526000388", "0162300005826000156",
+        "0169300003326000181",
+        "0137200001226007700", "0169300008226000223",
+        "0169300008226000225", "0377100005726000128",
+    }:
+        raise ValueError("the pinned R4 historical case identity does not match")
+    rows = pinned.get("all_input_sha256")
+    xml_count = pinned.get("archive_xml_originals")
+    attachments = pinned.get("first_party_attachment_originals")
+    if (not isinstance(rows, list) or not isinstance(xml_count, int)
+            or not isinstance(attachments, list) or not 1 <= len(attachments) <= 12
+            or len(rows) != xml_count + len(attachments)):
+        raise ValueError("source inventory count does not match pinned archive XML and original attachments")
+    input_dir = (saved / "input").resolve()
+    checked = set()
+    for item in rows:
+        if not isinstance(item, dict):
+            raise TypeError("malformed saved official original")
+        file_id, stored, expected = item.get("file_id"), item.get("stored_name"), item.get("sha256")
+        if (not isinstance(file_id, str) or file_id in checked
+                or not isinstance(stored, str) or not isinstance(expected, str)
+                or len(expected) != 64):
+            raise ValueError("duplicate/unbound original")
+        checked.add(file_id)
+        path = input_dir / stored
+        if (path.is_symlink() or not path.resolve().is_relative_to(input_dir)
+                or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected):
+            raise ValueError("official original has changed")
+    archive = input_dir / "documentation-archive.zip"
+    if (archive.is_symlink() or not archive.is_file()
+            or hashlib.sha256(archive.read_bytes()).hexdigest() != pinned.get("archived_eis_zip_sha256")):
+        raise ValueError("original official source ZIP differs from the pinned archived copy")
+    return len(checked)
+
+
+
+def summarize_original_and_nested_extraction(files: list[dict]) -> dict:
+    """Keep ZIP source containers distinct from extracted nested PDF/DOCX.
+
+    Native text extraction is not the same operation as bounded ZIP inspection;
+    a completed ZIP counts as available source text only when all its included
+    substantive child documents yielded text without extraction failures.
+    """
+    direct = [f for f in files if f.get("extension") != ".zip"]
+    archived = [f for f in files if f.get("extension") == ".zip"]
+    good_statuses = {"extracted", "archive_extracted"}
+    statuses = [f.get("text_extraction_status") for f in files]
+    return {
+        "extracted_original_count": sum(f.get("extracted_text_available") is True
+                                        and f.get("text_extraction_status") in good_statuses
+                                        for f in files),
+        "failed_original_count": sum(status not in good_statuses for status in statuses),
+        "file_extraction_statuses": statuses,
+        "direct_original_text_extracted": sum(f.get("text_extraction_status") == "extracted" for f in direct),
+        "zip_original_containers": len(archived),
+        "zip_containers_with_extracted_children": sum(f.get("text_extraction_status") == "archive_extracted"
+                                                       for f in archived),
+        "zip_substantive_child_count": sum(int(f.get("nested_document_count") or 0)
+                                         for f in archived),
+        "zip_substantive_children_extracted": sum(int(f.get("nested_extracted_text_count") or 0)
+                                              for f in archived),
+        "zip_substantive_children_failed": sum(int(f.get("nested_failed_text_count") or 0)
+                                           for f in archived),
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--stage", type=Path, required=True)
+    parser.add_argument("--run-id", required=True)
+    parser.add_argument(
+        "--registry", choices=(
+            "0162200011826003089", "0151600003226000011",
+            "0152200004026000069", "0348100024426000021",
+            "0348100024426000039", "0127100008626000013",
+            "0360600005326000018", "0895100000126000897",
+            "0149200002326001555", "0148200000526000028",
+            "0349100009326000005",
+            "0158300034526000388", "0162300005826000156",
+            "0169300003326000181",
+            "0137200001226007700", "0169300008226000223",
+            "0169300008226000225", "0377100005726000128",
+        ), default="0162200011826003089",
+    )
+    parser.add_argument("--dp-port", choices=(18095, 18096, 18097, 18098, 18099, 18100, 18101, 18102, 18103), type=int, default=18095)
+    args = parser.parse_args()
+    allowed_stage = {
+        "0162200011826003089": "ta-apr067-r4-four-revisions-20261015",
+        "0151600003226000011": "ta-apr067-r4-fourth-distinct-20261015",
+        "0152200004026000069": "ta-apr067-r4-fifth-distinct-20261015",
+        "0348100024426000021": "ta-apr067-r4-sixth-signed-zips-20261015",
+        "0348100024426000039": "ta-apr067-r4-seventh-eok-revisions-20261015",
+        "0127100008626000013": "ta-apr067-r4-eighth-legacy-doc-20261015",
+        "0360600005326000018": "ta-apr067-r4-ninth-original-20261015",
+        "0895100000126000897": "ta-apr067-r4-tenth-original-20261015",
+        "0149200002326001555": "ta-apr067-r4-eleventh-quotation-20261016",
+        "0148200000526000028": "ta-apr067-r4-twelfth-auction-20261016",
+        "0349100009326000005": "ta-apr067-r4-thirteenth-eok-20261016",
+        "0158300034526000388": "ta-apr067-r4-fourteenth-ezk-five-revisions-20261016",
+        "0162300005826000156": "ta-apr067-r4-fifteenth-ef-20261016",
+        "0169300003326000181": "ta-apr067-r4-sixteenth-ef-20261016",
+        "0137200001226007700": "ta-apr067-r4-seventeenth-ezk-20261016",
+        "0169300008226000223": "ta-apr067-r4-eighteenth-ezk-20261016",
+        "0169300008226000225": "ta-apr067-r4-nineteenth-ezk-20261016",
+        "0377100005726000128": "ta-apr067-r4-twentieth-ef-20261016",
+    }[args.registry]
+    root = args.stage.resolve()
+    runs = root / "runs"
+    saved = runs / args.run_id
+    if not (saved / "metadata.json").is_file() or root.name != allowed_stage:
+        parser.error("Only the designated isolated historical R4 case copy is allowed")
+    meta = json.loads((saved / "metadata.json").read_text())
+    if (meta.get("mode") != "procurement_search_intake"
+            or meta.get("procurement_id") != args.registry):
+        parser.error("Expected seventeen firstparty official archived EIS original documents")
+    pinned = json.loads((root / "output/offline_archived_source_receipt.json").read_text())
+    if (pinned.get("registry_number") != args.registry
+            or len(meta.get("files", [])) != len(pinned.get("all_input_sha256", []))):
+        parser.error("original file inventory not bound to the specified case")
+    try:
+        verify_copy_source(saved, pinned)
+    except (TypeError, ValueError) as exc:
+        parser.error(str(exc))
+    password = token_urlsafe(32)
+    db = root / "e2e-only-llm.sqlite"
+    os.environ.update({
+        "AI_CORP_TENDER_OPERATOR_DEMO_RUNS_DIR": str(runs),
+        "AI_CORP_DATABASE_URL": "sqlite:///" + str(db),
+        "AI_CORP_LLM_PROVIDER": "openai_compatible",
+        "AI_CORP_OPENAI_API_KEY": "local-e2e-no-external-key",
+        "AI_CORP_OPENAI_BASE_URL": "http://127.0.0.1:8081/v1",
+        "AI_CORP_LLM_MODEL": "arvectum-gemma4-12b-it-qat-q4_0",
+        "AI_CORP_LOCAL_LLM_BASE_URL": "http://127.0.0.1:8081/v1",
+        "AI_CORP_RAG_DATA_PLATFORM_BASE_URL": "http://127.0.0.1:" + str(args.dp_port),
+        "AI_CORP_RAG_DATA_PLATFORM_TIMEOUT_SECONDS": "90",
+        "AI_CORP_LLM_TIMEOUT_SECONDS": "240",
+        "AI_CORP_LLM_MAX_RETRIES": "1",
+        "AI_CORP_LLM_STORE_RAW_RESPONSE": "false",
+        "AI_CORP_YANDEX_SEARCH_API_KEY": "",
+        "AI_CORP_YANDEX_SEARCH_FOLDER_ID": "",
+        "AI_CORP_PILOT_AUTH_ENABLED": "true",
+        "AI_CORP_PILOT_AUTH_USERNAME": "e2e-operator",
+        "AI_CORP_PILOT_AUTH_PASSWORD": password,
+    })
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+
+    from src.modules.tender_operator_agent_demo import router as operator_router
+    from src.shared.api.middleware import TenderPilotBasicAuthMiddleware
+    from src.shared.config.settings import get_settings
+
+    get_settings.cache_clear()
+    settings = get_settings()
+    assert settings.llm_provider == "openai_compatible"
+    assert settings.openai_base_url == "http://127.0.0.1:8081/v1"
+
+    app = FastAPI()
+    app.include_router(operator_router.router)
+    app.add_middleware(
+        TenderPilotBasicAuthMiddleware,
+        username="e2e-operator",
+        password=password,
+        protected=("/pilot/tender-agent", "/api/demo/tender-agent"),
+        public=("/health",),
+    )
+    prefix = "/api/demo/tender-agent/runs/" + args.run_id
+    auth = "Basic " + base64.b64encode(("e2e-operator:" + password).encode()).decode()
+    checked = {}
+    with TestClient(app) as client:
+        for path in ("/pilot/tender-agent/workspace", prefix + "/report",
+                     f"/api/demo/tender-agent/workspace/runs/{args.run_id}/evidence"):
+            resp = client.get(path)
+            checked["unauth_" + path.split("/")[-1]] = resp.status_code
+        ui = client.get("/pilot/tender-agent/workspace", headers={"Authorization": auth})
+        checked["authenticated_workspace"] = ui.status_code
+        run_before = client.get(prefix, headers={"Authorization": auth})
+        checked["saved_run_reopened_before"] = run_before.status_code
+        print("ISOLATED_START",args.run_id,"files",len(meta["files"]),"ui",ui.status_code,flush=True)
+        start = time.monotonic()
+        try:
+            result = client.post(prefix + "/analyze", headers={"Authorization": auth})
+            checked["analysis_http"] = result.status_code
+            if result.status_code == 200:
+                analysis = result.json()
+                checked["analysis_mode"] = analysis.get("analysis_mode")
+                checked["analysis_status"] = analysis.get("status")
+            else:
+                checked["analysis_error_kind"] = "HTTP_"+str(result.status_code)
+        except Exception as exc:  # noqa: BLE001 - log only exception class
+            checked["analysis_error_kind"] = type(exc).__name__
+            checked["analysis_http"] = 0
+        checked["analysis_elapsed_seconds"] = round(time.monotonic()-start,2)
+        print("MODEL_ANALYSIS_FINISHED",checked["analysis_http"],checked.get("analysis_mode"),
+              "duration",checked["analysis_elapsed_seconds"],flush=True)
+        for name,path in {
+            "reopen":prefix, "steps":prefix+"/steps",
+            "report_json":prefix+"/report",
+            "source_evidence":f"/api/demo/tender-agent/workspace/runs/{args.run_id}/evidence",
+            "history":"/api/demo/tender-agent/runs",
+            "read_only_registry":"/api/demo/tender-agent/workspace/registry",
+            "pdf_export":prefix+"/export/pdf", "docx_export":prefix+"/export/docx"
+        }.items():
+            try:
+                resp = client.get(path, headers={"Authorization":auth})
+                checked[name+"_http"] = resp.status_code
+                if resp.status_code==200 and name=="report_json":
+                    obj=resp.json()
+                    checked["report_keys"]=sorted(obj) if isinstance(obj,dict) else []
+                if resp.status_code==200 and name=="source_evidence":
+                    obj=resp.json()
+                    checked["source_evidence_keys"]=sorted(obj) if isinstance(obj,dict) else []
+            except Exception as exc:  # noqa: BLE001 - log only exception class
+                checked[name+"_error_kind"]=type(exc).__name__
+        savedmeta=json.loads((saved/"metadata.json").read_text())
+        checked["persisted_analysis_mode"]=savedmeta.get("analysis_mode")
+        checked["persisted_llm_invoked"]=savedmeta.get("ai_runtime_provenance",{}).get("llm_invoked")
+        checked["persisted_status"]=savedmeta.get("status")
+        checked["original_file_sha_preserved"] = all(
+            hashlib.sha256((saved / "input" / source["stored_name"]).read_bytes()).hexdigest()
+            == source["sha256"] for source in pinned["all_input_sha256"]
+        )
+        checked["official_zip_sha_preserved"] = (
+            hashlib.sha256((saved / "input/documentation-archive.zip").read_bytes()).hexdigest()
+            == pinned["archived_eis_zip_sha256"]
+        )
+        checked["registry_number"] = savedmeta.get("procurement_id")
+        checked["source_warning_count"] = len(savedmeta.get("warnings", []))
+        checked.update(summarize_original_and_nested_extraction(savedmeta.get("files", [])))
+        checked["warning_count"] = len(savedmeta.get("warnings", []))
+        report=saved/"output"/"report.html"
+        if report.exists():
+            checked["report_sha256"]=hashlib.sha256(report.read_bytes()).hexdigest()
+        for file in (saved/"output").glob("*.json"):
+            if file.name in {"requirements.json","trace.json"}:
+                document=json.loads(file.read_text())
+                checked[file.stem+"_top_level_keys"]=sorted(document) if isinstance(document,dict) else []
+        events=(saved/"events.jsonl")
+        if events.is_file():
+            event_types=[]
+            for line in events.read_text().splitlines():
+                try: event_types.append(json.loads(line).get("event_type"))
+                except ValueError: pass
+            checked["events_last_8"]=event_types[-8:]
+    receipt_name = (
+        "apr067_r4_four_version_replay.json" if args.registry == "0162200011826003089"
+        else "apr067_r4_fourth_distinct_e2e.json" if args.registry == "0151600003226000011"
+        else "apr067_r4_fifth_distinct_e2e.json" if args.registry == "0152200004026000069"
+        else "apr067_r4_sixth_signed_zips_e2e.json" if args.registry == "0348100024426000021"
+        else "apr067_r4_seventh_eok_revisions_e2e.json" if args.registry == "0348100024426000039"
+        else "apr067_r4_eighth_legacy_doc_e2e.json" if args.registry == "0127100008626000013"
+        else "apr067_r4_ninth_original_e2e.json" if args.registry == "0360600005326000018"
+        else "apr067_r4_tenth_original_e2e.json" if args.registry == "0895100000126000897"
+        else "apr067_r4_eleventh_quotation_e2e.json" if args.registry == "0149200002326001555"
+        else "apr067_r4_twelfth_auction_e2e.json" if args.registry == "0148200000526000028"
+        else "apr067_r4_thirteenth_eok_e2e.json" if args.registry == "0349100009326000005"
+        else "apr067_r4_fourteenth_ezk_v5_e2e.json" if args.registry == "0158300034526000388"
+        else "apr067_r4_fifteenth_ef_e2e.json" if args.registry == "0162300005826000156"
+        else "apr067_r4_sixteenth_ef_e2e.json" if args.registry == "0169300003326000181"
+        else "apr067_r4_seventeenth_ezk_e2e.json" if args.registry == "0137200001226007700"
+        else "apr067_r4_eighteenth_ezk_e2e.json" if args.registry == "0169300008226000223"
+        else "apr067_r4_nineteenth_ezk_e2e.json" if args.registry == "0169300008226000225"
+        else "apr067_r4_twentieth_ef_e2e.json"
+    )
+    output=root/"output"/receipt_name
+    output.parent.mkdir(parents=True,exist_ok=True)
+    output.write_text(json.dumps(checked,ensure_ascii=False,indent=2,sort_keys=True)+"\n")
+    print("E2E_RECEIPT",output,flush=True)
+    return 0 if (checked.get("analysis_http")==200
+                 and checked.get("persisted_analysis_mode")=="llm_tender_operator_provider"
+                 and checked.get("persisted_llm_invoked") is True
+                 and checked.get("extracted_original_count") == len(pinned["all_input_sha256"])
+                 and checked.get("failed_original_count") == 0
+                 and checked.get("original_file_sha_preserved") is True
+                 and checked.get("official_zip_sha_preserved") is True
+                 and checked.get("pdf_export_http") == 409
+                 and checked.get("docx_export_http") == 409) else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

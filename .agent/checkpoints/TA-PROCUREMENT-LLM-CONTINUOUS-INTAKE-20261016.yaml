@@ -1,0 +1,23 @@
+task_id: TA-PROCUREMENT-LLM-CONTINUOUS-INTAKE-20261016
+repository: arvectum2/tender-agent
+status: completed
+goal: 'Close missing analysis-run recording path in customer_pilot and supply an explicit secure chat-review operator intake path using the existing PostgreSQL arvectum (no new storage).'
+definition_of_done:
+  - 'Implement opt-in transactionally consistent customer_pilot completed-run capture using the existing procurement_learning_observations table without changing business state.'
+  - 'Support private stdin/manual message intake into the same DB, dry-run default, apply only with confirmation, no public write route.'
+  - 'Document mandatory ChatGPT-to-intake invocation pattern and explicit limitation: no global chat history subscription.'
+  - 'Prove tests for idempotency, tenant scopes, blind/gold gates, capture on completed runs, no-write when disabled, CI and docs.'
+completed:
+  - '2026-10-16 preceding PR451 code branch head 3c0c6e95, live arvectum PostgreSQL schema 107, 74 persisted candidates. PR451 exact-head 8/9 checks success and quality running; GitVerse mirror passed.'
+  - 'Audit: history_service.record_analysis_run is already gated by TENDER_LEARNING_CAPTURE_ENABLED=1; customer_pilot/router.py creates TenderAnalysisRun directly and completes it without candidate capture.'
+  - '2026-10-16 customer_pilot completed-run capture implemented under TENDER_LEARNING_CAPTURE_ENABLED=1 in same transaction as completed snapshot, tenant scoped, stable run ID; RAG existing code unchanged.'
+  - '2026-10-16 manual-stdin operator CLI accepts piped bounded JSON into existing PostgreSQL with dry-run default, source/holdout/legal-gold checks, no new API route or database. AGENTS and roadmap include explicit ChatGPT invocation rule and limitations.'
+  - '2026-10-16 first live manual-stdin backfill sourced from Aksay 0158300034526000388 saved original SHA8f5c776a..., inserted 1; live corpus 75 (45 analysis+20 dev+10 manual). Local full regression 4018 PASS/239 SKIP/1 known baseline R9 excluded.'
+  - '2026-10-16 code committed e0a0ab182249d579de736ad8dfc6b00baf270fe9, pushed and stacked Draft PR452 opened with base PR451 feature/procurement-llm-corpus-capture-20261016. GitVerse mirror SUCCESS, 8/9 CI jobs PASS in PR run38880295767; quality in progress. Parent PR451 exact-head 3417f7a3 CI PR/push and mirror SUCCESS.'
+  - '2026-10-16 GitHub exact code + checkpoint commit cd5b8927 CI successful PR run38881072900, push run38881066518 and GitVerse mirror run38881066534. Code full regression local 4018 PASS/239 SKIP/1 known baseline R9 deselected. Child completed; no merge/deploy.'
+current_stage: 'completed_readiness_in_draft_pr452_no_live_service_deploy'
+remaining: []
+next_phase: 'Track PR451/452 merge approval separately; deploy capture feature flag only under authorized change; provenance completion / remaining pipeline integration stay open in broader roadmap.'
+last_verified_commit: cd5b8927e17b6316c2f93c3182ea53b015101b4c
+last_tests: 'Mac mini full regression 4018 PASS/239 SKIP/1 known baseline R9 DESELECTED/0 unexpected failures 135.43s; focused 39 PASS/1 SKIP; Ruff PASS and YAML PASS. PR451 code+docs exact head 3c0c Github push/PR CI and GitVerse mirror SUCCESS.'
+resume_instruction: 'Completed in stacked Draft PR452 (base PR451): latest validated head cd5b8927, GitHub PR/push CI and GitVerse green. All 75 live PostgreSQL candidates preserved; source 0158300034526000388 added. Do not repeat pilot/stdin implementation or old backfill. Next roadmap scope is remaining manual histories, bids/outcome evidence intake, or deployment when independently authorized; parent Tender Agent roadmap remains in_progress. No standalone DB, model training, merge or automatic global chat subscription.'

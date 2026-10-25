@@ -1,0 +1,66 @@
+{
+  "registry_number": "0349100009326000005",
+  "source_role": "ORIGINAL_20_CORPUS",
+  "original_saved_run": "tender_operator_demo/toa-run-20261009052436-bf425a",
+  "archive_relative_path": "tender_operator_demo/toa-run-20261009052436-bf425a/input/documentation-archive.zip",
+  "archive_sha256": "47010a0f889a13b6caf78371254d5b0130ae73b7ef58c23a409c422c1cbe1b54",
+  "selected_xml_sha256": "02fb7a3e0bb7297417f715e2cae144d8a96dddfcfc5a4ec512a0fdd042213adf",
+  "selected_notice_version": 1,
+  "selected_notice_type": "epNotificationEOK2020",
+  "missing11_receipt_relative_path": "competitive-missing-11-originals-20261014/private-source-receipt.json",
+  "missing11_receipt_sha256": "ba641df2f40f480aa0b42166bcf6f2b429bcec31089530fa8f979478fadd2700",
+  "older4_receipt_relative_path": "competitive-older-missing-4-originals-20261014/four-older-contract-originals-private.json",
+  "older4_receipt_sha256": "6cf03e5fb6e6e64b27228a158a57c7fddebfa75dc90166d1ea48e5789c93c019",
+  "attachments": [
+    {
+      "source_uid": "5DD18DE3ED3D4ED3A45BF74B11EE2B4D",
+      "official_name": "Приложение  1_Обоснование НМЦК.doc",
+      "bytes": 50688,
+      "sha256": "59a9818f1d74c9191fcf955235642c04ecb1f05e446cb3f9d850972effe038f2",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0349100009326000005/attachment-01.doc",
+      "file_extension": ".doc",
+      "source_role": "missing11",
+      "slot": 1
+    },
+    {
+      "source_uid": "27837B3CF84D4BB095317757FCDC9B34",
+      "official_name": "Приложение 5_ Проект Контракта.docx",
+      "bytes": 56625,
+      "sha256": "aa2a235185682736cf3b04fa7a6149ca1e13f3a97995ed75b6be739d5ef3e9f7",
+      "source_root_relative_path": "competitive-older-missing-4-originals-20261014/0349100009326000005/slot-02.docx",
+      "file_extension": ".docx",
+      "source_role": "older4",
+      "slot": 2
+    },
+    {
+      "source_uid": "D45EDE8D002A4B7A8C0B99E34FA1F8F3",
+      "official_name": "Приложение  2_Описание обьекта закупки. Техническое задание. Сверенное - Актуальное 18.10.2024.doc",
+      "bytes": 79872,
+      "sha256": "44cf5037944f23432af1c6e904c12e10cf3167cd3a4632a83178c2b98e1c2678",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0349100009326000005/attachment-03.doc",
+      "file_extension": ".doc",
+      "source_role": "missing11",
+      "slot": 3
+    },
+    {
+      "source_uid": "5C2C02BE499646789F11F2967B4D2C76",
+      "official_name": "Приложение  3_ Требования к содержанию, составу заявки и инструкцию по ее заполнению..docx",
+      "bytes": 45210,
+      "sha256": "2ec9091585b1e82d4be175d2c5521ae7a1a6f6b72b80b0450b158426fbc389cd",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0349100009326000005/attachment-04.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 4
+    },
+    {
+      "source_uid": "AEA22843E5274FF3B08C6DD591AB2758",
+      "official_name": "Приложение 4_ Порядок рассмотрения и оценки заявок.docx",
+      "bytes": 49960,
+      "sha256": "9fa22bf6a2f10ca2e44eae21a6279810b975b3e68e9cb27d6949b24111285d3f",
+      "source_root_relative_path": "competitive-missing-11-originals-20261014/0349100009326000005/attachment-05.docx",
+      "file_extension": ".docx",
+      "source_role": "missing11",
+      "slot": 5
+    }
+  ]
+}

@@ -9,13 +9,15 @@ description = "Sprint 1 foundation for the AI Corporation tender business platfo
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "arvectum-data-client @ https://github.com/arvectum2/data-platform/releases/download/consumer-sdk-v0.3.0/arvectum_data_client-0.3.0-py3-none-any.whl",
+  "arvectum-data-client @ https://github.com/arvectum2/data-platform/releases/download/consumer-sdk-v0.4.0/arvectum_data_client-0.4.0-py3-none-any.whl",
   "alembic>=1.14,<2.0",
   "fastapi>=0.115,<1.0",
   "httpx[http2]>=0.27,<1.0",
   "openpyxl>=3.1,<4.0",
   "python-docx>=1.1,<2.0",
   "python-multipart>=0.0.9,<1.0",
+  # Keep Pydantic below 2.14 until Ellipsis OpenAPI defaults are fixed.
+  "pydantic>=2.13.5,<2.14",
   "pydantic-settings>=2.3,<3.0",
   "PyYAML>=6.0,<7.0",
   "psycopg[binary]>=3.1,<4.0",
