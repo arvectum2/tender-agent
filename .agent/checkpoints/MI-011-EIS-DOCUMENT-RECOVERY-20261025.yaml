@@ -1,5 +1,5 @@
 task_id: MI-011-EIS-DOCUMENT-RECOVERY-20261025
-status: in_progress
+status: completed
 goal: Reuse proven Tender Operator EIS document-page and attachment downloader to recover official original 44/223-FZ
   files for MI without 404-only XML-link failures, with safe SHA provenance and Data Platform ready manifest.
 definition_of_done:
@@ -14,6 +14,7 @@ definition_of_done:
 - Test deterministic fallback and security negative cases, run Ruff + full GitHub CI, merge only when green.
 - Complete canonical archived checkpoint and preserve unrelated global main current-task.
 completed:
+- '2026-10-25 exact GitHub CI PR #512 head 71c8ddadbf3124971181ec1e7762e2b8735d24f3: 5272 pass, 285 skip, all 9 jobs green; main merge 99ba85afe6ab23f96a1fdc812dddf537521b73ca.'
 - Recovered APR02 evidence: already proven in Tender Operator for four 223-FZ EIS procurements on Oct 8, 2026, 10
     original attachments downloaded SHA with no proxy and public official documents pages.
 - Identified MI010 only retained URL digest and separately did bare direct GET 404; no reuse of public detail parser/downloader.
@@ -45,16 +46,16 @@ completed:
   Tests include untrusted source/URL, invalid original SHA, revision uncertainty, ZIP bombs.'
 - Source and targeted existing Tender Operator/EIS procurement regressions all 148 passed, Ruff clean; uploaded
   no raw original ZIP or secret to Git.
-current: Implementation tested and real source binaries acquired; prepare review PR and run complete GitHub CI before
-  merge, preserving separate main TA-ROADMAP task.
-pending:
-- Commit new branch and publish PR; verify exact GitHub CI (all 9 jobs) and merge only on green.
-- Mark MI011 archived checkpoint completed in main without replacing unrelated canonical current-task.
-- 'Independent follow-up: authorized Data Platform tenant-scoped ingestion of SHA-verified binary and extracted
-  texts for EPC technical semantic search; opaque .7z supported only after separately bounded parser; official contract
-  award evidence remains separate.'
-last_verified_commit: c842683e732c05dcf78238404cf4aae938f8fd06
+current: Completed official source-grounded original 44/223-FZ annex downloader reuse; PR #512 merged with exact 5272 passed CI.
+pending: []
+remaining_independent_work:
+- Authorize and ingest original downloaded SHA-verified technical DOC/DOCX/XLSX/PDF and bounded ZIP members into tenant-scoped Data Platform collection; local extractor success is not deployed indexing.
+- Independently resolve the authoritative active 223-FZ notice revision when multiple notices exist; keep marked for manual review rather than promoting older documents as current.
+- Explicitly support bounded opaque .7z/rar annex extraction with separate provenance and security tests.
+- Expand 36-month EIS geographic/ETP source coverage and prove award winner/INN and signed contract price using original official documents.
+last_verified_commit: 99ba85afe6ab23f96a1fdc812dddf537521b73ca
 test_results:
+- 'Exact GitHub CI PR #512 complete success: 5272 passed, 285 skipped, all 9 jobs success, Ruff clean.'
 - 148 passed, Ruff clean, one pre-existing Starlette test-client deprecation.
 - 'Authenticated original source 223 pages 32313008364: 14 official links and 3 downloads; 32615969197: 4 links
   and 3 downloads; 44 control 0373200026426000249: 13 active-revision links and 3 downloads. All SHA recorded in
@@ -63,7 +64,4 @@ test_results:
   private byte-provenance stored.'
 - Real local Data Platform extractor extracted 13535, 76279, 3859, 3619 chars from original STATCOM/UKRM files,
   no production Data Platform ingestion asserted.
-resume_instruction: Continue isolated /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi011-attachments-20261025;
-  run GitHub CI on feature/mi011-reuse-eis-document-acquisition-20261025 and merge only if green. Main .agent/current-task.yaml
-  is unrelated active roadmap and must not be overwritten by MI011. Source PDFs/DOCX/ZIP remain on authorized Mac
-  mini private runtime.
+resume_instruction: 'MI-011 completed: PR #512 merged main at 99ba85afe6ab23f96a1fdc812dddf537521b73ca, exact CI 5272 pass, 285 skip, 9 jobs green. Preserve TA-ROADMAP global current task. Next independent stage: tenant-scoped Data Platform ingestion of SHA-verified original EIS attachments, search hidden Power Quality in EPC annexes. Existing Mac mini isolated worktree has an uncommitted optional script acquire_mi_eis_documents.py; do not call it merged/deployed until separately tested and committed. Do not conflate original file download with complete signed contract/award evidence.'
