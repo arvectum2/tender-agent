@@ -1,0 +1,50 @@
+task_id: MI-008-EIS-SOURCE-LEDGER-20261025
+status: in_progress
+goal: Convert source-verified EIS receipts and original 44/223-FZ XML documents into measurable historical coverage
+  and provenance-linked notice/protocol facts, without inventing awards.
+definition_of_done:
+- Daily region/subsystem coverage matrix records actual successful slices versus missing, failed, partial days
+  over a requested horizon, never equates XML revisions with unique purchases.
+- Offline source ledger parses source-verified original EIS ZIP notices and protocols using bounded XML, rejects
+  DTD and path traversal, retains document SHA-256 plus archive receipt SHA and source locator, and links by exact
+  number.
+- Winner and signed contract remain unverified absent explicit original evidence; no fake competitive or national
+  market statistics.
+- Focused tests for missing days, partial slices, duplicate protocol revisions, corrupted SHA, XML safety and
+  notice-protocol joins, plus genuine archived-source dry run.
+- Update docs and complete code in separate reviewed PR, CI green if available.
+completed:
+- MI-002 EIS SOAP recovery was merged in main
+- Independently confirmed source archive RI223 procurement 32616447910 contains one purchaseNotice and one purchaseProtocol
+  XML.
+- 'Implemented generic daily source coverage auditor: SHA checks, missing/incomplete/invalid distinct, daily and
+  monthly truthful count, strict year/region/subsystem limit.'
+- 'Ran on real region-isolated Mac mini EIS receipts from 2023-10-25 to 2026-10-25 for Moscow and Saint Petersburg
+  across RI223 and PRIZ: 4388 requested cells, 10 verified, 4378 missing; 49 original ZIPs/4440 XML SHA checked.'
+- Implemented original ZIP notice and protocol parser with DTD, ZIP/path/resource guards and per-member XML SHA
+  evidence; no implied contract price/winner.
+- 'Verified actual official RI223 #32616447910 primary ZIP: one purchaseNotice and one purchaseProtocol linked
+  by exact original number, one source application; no unreviewed winner or signed contract inferred.'
+- Saved evidence-limited source snapshot and exact runbook; no source ZIP, token, bidder PII or expiring download
+  URL checked into Git.
+- Ran 77 focused MI, source provenance, Data Platform boundary and duplicate-logic tests PASS; Ruff PASS; source
+  snapshot true and versioned.
+current: Code and real source smoke complete; create draft or review PR and run full CI before merging to current
+  main.
+pending:
+- Commit and push isolated feature branch while leaving TA-ROADMAP-EXEC canonical main .agent/current-task.yaml
+  unchanged.
+- Run PR exact SHA full GitHub CI and resolve any security/lint/compat failures before main merge.
+- After merge close MI008 checkpoint in main without replacing the unrelated TA product roadmap canonical state.
+- 'Next independent MI source research: systematically acquire original EPC annexes, full 36-month day/region
+  coverage, verified procurement protocols and award/contract facts. No unsupported claims.'
+last_verified_commit: 91994beb828ef4d7a559f1c1f3f013a57c9d2418
+test_results:
+- 77 passed, 1 existing StarletteDeprecationWarning; Ruff clean; diff check clean.
+- 'Real Mac mini original 44/223 EIS archive receipt coverage: 10 of 4388 2-region/day/subsystem cells SHA verified;
+  49 ZIP / 4440 XML documents.'
+- 'Real RI223 procurement 32616447910 original ZIP: one notice-protocol exact number link from two SHA verified
+  XML; no contract/winner verified.'
+resume_instruction: MI008 branch feature/mi008-eis-source-ledger-20261025. Review code-only PR after all CI green;
+  preserve main canonical TA-ROADMAP-EXEC in .agent/current-task.yaml when merging. Evidence snapshot 10/4388
+  source-day slots must never be presented as 36-month national EIS completeness, nor XML counts as unique tenders.
