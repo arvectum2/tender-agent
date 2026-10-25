@@ -176,3 +176,66 @@ def test_export_with_multiple_documents_does_not_guess_notice(tmp_path: Path):
     )
     assert docs[0]["record_kind"] == "other_primary_xml"
     assert docs[0]["notice_number"] is None
+
+def test_44fz_original_final_protocols_are_linked_not_awarded(tmp_path: Path):
+    number = "0373200026426000249"
+    notice = f"""<export><epNotificationEF2020><commonInfo>
+<purchaseNumber>{number}</purchaseNumber>
+</commonInfo></epNotificationEF2020></export>""".encode()
+    final = f"""<export><epProtocolEF2020Final>
+<commonInfo><purchaseNumber>{number}</purchaseNumber><docNumber>FINAL-2026</docNumber></commonInfo>
+<protocolInfo><applicationsInfo><applicationInfo><commonInfo><appNumber>7</appNumber></commonInfo>
+<finalPrice>150000.00</finalPrice></applicationInfo></applicationsInfo></protocolInfo>
+</epProtocolEF2020Final></export>""".encode()
+    placement = f"""<export><fcsPlacementResult>
+<purchaseNumber>{number}</purchaseNumber><foundationProtocolNumber>PLACEMENT-2026</foundationProtocolNumber>
+<applications><application><journalNumber>1</journalNumber><price>149000.00</price></application></applications>
+</fcsPlacementResult></export>""".encode()
+    proposals = f"""<export><fcsProposalsResult>
+<purchaseNumber>{number}</purchaseNumber><protocolNumber>PROPOSALS-2026</protocolNumber>
+<applications><application><appNumber>3</appNumber><price>148000.00</price></application></applications>
+</fcsProposalsResult></export>""".encode()
+    path = tmp_path / "44fz-originals.zip"
+    sha = _archive(path, [
+        ("notice.xml", notice), ("final.xml", final),
+        ("placement.xml", placement), ("proposals.xml", proposals),
+    ])
+    docs = extract_archive(
+        path, official_archive_sha256=sha, subsystem="PRIZ",
+        region="77", exact_date="2026-10-08",
+    )
+    assert len(docs) == 4
+    protocols = [row for row in docs if row["record_kind"] == "protocol"]
+    assert len(protocols) == 3
+    assert all(row["notice_number"] == number for row in protocols)
+    assert [row["applications"][0]["bid_price_text"] for row in protocols] == [
+        "150000.00", "149000.00", "148000.00",
+    ]
+    assert all(not row["applications"][0]["winner_verified"] for row in protocols)
+    linked = link_original_documents(docs)
+    assert len(linked["groups"]) == 1
+    assert len(linked["groups"][0]["protocols"]) == 3
+    assert linked["winner_verified"] is False
+    assert linked["contract_price_verified"] is False
+
+
+def test_actual_eis_sized_large_application_group_is_bounded(tmp_path: Path):
+    # Genuine 44-FZ protocols can contain 960 offers. Cap remains strict,
+    # but must not reject real large events solely due to low fixture sizes.
+    from src.modules.market_intelligence.eis_source_ledger import (
+        MAX_APPLICATIONS_PER_PROTOCOL,
+    )
+
+    assert MAX_APPLICATIONS_PER_PROTOCOL >= 960
+    too_many = "<application><appNumber>1</appNumber></application>" * (
+        MAX_APPLICATIONS_PER_PROTOCOL + 1
+    )
+    payload = ("<fcsProposalsResult><purchaseNumber>0373200026426000249</purchaseNumber>"
+               "<applications>" + too_many + "</applications></fcsProposalsResult>")
+    path = tmp_path / "large-applications.zip"
+    sha = _archive(path, [("proposals.xml", payload.encode())])
+    with pytest.raises(ValueError, match="applications exceed bound"):
+        extract_archive(
+            path, official_archive_sha256=sha, subsystem="PRIZ",
+            region="77", exact_date="2026-10-08",
+        )

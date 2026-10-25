@@ -34,6 +34,12 @@ completed:
 - 'Source acceptance: real Moscow 44-FZ 2026-10-08 one ZIP, all 100 XML documents yielded explicit primary-source
   purchaseNumber, zero inferred awards.'
 - Extended MI008 focused tests from 77 to 79, Ruff clean.
+- 'Source evidence: 44-FZ original getDocsByReestrNumber 0373200026426000249 ZIP contains 2 notices, 3 final/proposal/placement
+  protocols/results, and 3 other XML; linked exactly without winner assertions.'
+- Added actual EIS 44-FZ protocol record kinds and bounded application parse; real fcsProposalsResult contained
+  960 application rows, increased legitimate safe parser cap to 2000.
+- 'Extended synthetic regression and actual-data audit: 81+ focused tests expected, no raw bidder information
+  or signed-contract interpretation in committed data.'
 current: Code and real source smoke complete; create draft or review PR and run full CI before merging to current
   main.
 pending:
@@ -52,6 +58,8 @@ test_results:
   XML; no contract/winner verified.'
 - 'Real 44-FZ official ZIP: 100/100 original XML purchase number paths parsed; none treated as unique tenders
   or awarded contracts.'
+- 'Actual 44-FZ primary ZIP: 8 XML, 2 notice revisions, 3 linked protocol/result source documents; offer/application
+  rows 13, 1, 960, NOT unique bidders or contracts.'
 resume_instruction: MI008 branch feature/mi008-eis-source-ledger-20261025. Review code-only PR after all CI green;
   preserve main canonical TA-ROADMAP-EXEC in .agent/current-task.yaml when merging. Evidence snapshot 10/4388
   source-day slots must never be presented as 36-month national EIS completeness, nor XML counts as unique tenders.

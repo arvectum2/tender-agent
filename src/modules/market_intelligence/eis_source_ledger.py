@@ -17,7 +17,7 @@ MAX_ARCHIVE_BYTES = 200 * 1024 * 1024
 MAX_MEMBER_BYTES = 40 * 1024 * 1024
 MAX_XML_TOTAL = 500 * 1024 * 1024
 MAX_XML_MEMBERS = 10000
-MAX_APPLICATIONS_PER_PROTOCOL = 500
+MAX_APPLICATIONS_PER_PROTOCOL = 2000  # A real 44-FZ EIS protocol has 960 offers; hard bounded.
 
 
 def _local(tag: str) -> str:
@@ -92,6 +92,39 @@ def _applications(protocol: ET.Element) -> list[dict[str, Any]]:
     return rows
 
 
+def _applications_44(root: ET.Element) -> list[dict[str, Any]]:
+    kind = _local(root.tag)
+    if kind == "epProtocolEF2020Final":
+        holder = _first(root, "protocolInfo/applicationsInfo")
+        nodes = _named_children(holder, "applicationInfo") if holder is not None else []
+        rows = []
+        for app in nodes:
+            if len(rows) >= MAX_APPLICATIONS_PER_PROTOCOL:
+                raise ValueError("44-FZ protocol applications exceed bound")
+            rows.append({
+                "application_number": _text(app, "commonInfo/appNumber"),
+                "bid_price_text": _safe_decimal(_text(app, "finalPrice") or _text(app, "lastPriceOffer/price")),
+                "rating_raw": None,
+                "winner_verified": False,
+                "signed_contract_price_verified": False,
+            })
+        return rows
+    holder = _first(root, "applications")
+    nodes = _named_children(holder, "application") if holder is not None else []
+    rows = []
+    for app in nodes:
+        if len(rows) >= MAX_APPLICATIONS_PER_PROTOCOL:
+            raise ValueError("44-FZ legacy applications exceed bound")
+        rows.append({
+            "application_number": _text(app, "journalNumber") or _text(app, "appNumber"),
+            "bid_price_text": _safe_decimal(_text(app, "price")),
+            "rating_raw": None,
+            "winner_verified": False,
+            "signed_contract_price_verified": False,
+        })
+    return rows
+
+
 def _document_fields(root: ET.Element) -> dict[str, Any]:
     kind = _local(root.tag)
     if kind == "purchaseNotice":
@@ -108,6 +141,22 @@ def _document_fields(root: ET.Element) -> dict[str, Any]:
             "notice_number": _clean_number(_text(root, "body/item/purchaseProtocolData/purchaseInfo/purchaseNoticeNumber")),
             "protocol_number": _text(root, "body/item/purchaseProtocolData/registrationNumber"),
             "applications": _applications(root),
+        }
+    if kind in ("epProtocolEF2020Final", "fcsPlacementResult", "fcsProposalsResult"):
+        number = _clean_number(
+            _text(root, "commonInfo/purchaseNumber")
+            if kind == "epProtocolEF2020Final"
+            else _text(root, "purchaseNumber")
+        )
+        protocol_number = (
+            _text(root, "commonInfo/docNumber") if kind == "epProtocolEF2020Final"
+            else (_text(root, "foundationProtocolNumber") or _text(root, "protocolNumber"))
+        )
+        return {
+            "record_kind": "protocol",
+            "notice_number": number,
+            "protocol_number": protocol_number,
+            "applications": _applications_44(root),
         }
     if kind.startswith("epNotification"):
         # Actual 44-FZ document trees vary; never guess which generic number
@@ -178,6 +227,9 @@ def extract_archive(
                 payload = [
                     child for child in root
                     if _local(child.tag).startswith("epNotification")
+                    or _local(child.tag) in (
+                        "epProtocolEF2020Final", "fcsPlacementResult", "fcsProposalsResult"
+                    )
                 ]
                 if len(payload) == 1:
                     document_root = payload[0]

@@ -35,6 +35,12 @@ Read-only authenticated `getDocsByReestrNumber` call for **RI223 procurement 326
 
 On a distinct actual 44-FZ `PRIZ/epNotificationEF2020` archive for Moscow on 2026-10-08, **all 100 original XML members** had an explicit purchase number successfully extracted from `export/epNotificationEF2020/commonInfo/purchaseNumber`. The native `export` wrapper was discovered by examining the actual primary XML and is now supported. Zero winner or signed-contract claims were made. These 100 XML members may include revisions, so this is **not necessarily 100 unique tenders**.
 
+### First source-derived 44-FZ protocol linkage
+
+A separate **real** authenticated `getDocsByReestrNumber` ZIP for 44-FZ notice **0373200026426000249** contains eight original XML documents: two `epNotificationEF2020` notice revisions, `epProtocolEF2020Final`, `fcsPlacementResult`, `fcsProposalsResult`, and three other original XML types. The source-ledger parser linked the two notice revisions to **three original protocol/result documents** by exact EIS notice number. Its 44-FZ application collections contain 13, 1 and **960** rows respectively; these are offer entries across different document types and **must not be summed into unique bidders, winners or contracts**.
+
+The `fcsProposalsResult` example required increasing the per-document application guard to **2,000** (observed genuine count 960), while preserving the 40 MiB per-XML and 500 MiB cumulative decompression caps. All extracted offer prices remain `bid_price_text` with `signed_contract_price_verified=false`. The actual primary ZIP is retained on the authorized Mac mini outside Git; no bidder personal information is checked in.
+
 Both XMLs were parsed by `eis_source_ledger.extract_archive`, their own SHA-256 computed, and linked by `link_original_documents`. Exactly **one notice-protocol linkage**, zero unlinked numbers, **winner_verified=false**, **signed_contract_price_verified=false**. The protocol has typed application fields such as `price`, `accepted`, `rating`, `contractSigned`, but these alone **do not establish signed contracts, actual EPC roles or contract prices**. No personal bidder details were copied into tracked Git data.
 
 ## Technical and safety decisions
