@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import hashlib
 import re
+import stat
+import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
@@ -32,6 +34,7 @@ MIME = {
 MAX_DOCUMENTS = 24
 MAX_SINGLE_FILE = 20 * 1024 * 1024
 MAX_TOTAL = 96 * 1024 * 1024
+MAX_PARENT_ZIP = 160 * 1024 * 1024
 
 
 class EISIndexError(ValueError):
@@ -61,6 +64,59 @@ def _sha(value: Any, label: str) -> str:
     if not isinstance(value, str) or not SHA.fullmatch(value):
         raise EISIndexError(f"{label}: lowercase SHA-256 required")
     return value
+
+
+def _verify_nested_original(root: Path, row: dict[str, Any], expected_child: str) -> None:
+    """Check the parent ZIP and original member, not just the staged child."""
+    name = row["parent_zip_name"]
+    if not isinstance(name, str) or not NAME.fullmatch(name) or not name.endswith(".zip"):
+        raise EISIndexError("Invalid original ZIP filename")
+    if root.is_symlink() or not root.is_dir():
+        raise EISIndexError("Original ZIP directory missing or symlinked")
+    parent = root / name
+    if parent.is_symlink() or not parent.is_file():
+        raise EISIndexError("Original ZIP parent unavailable")
+    if not 0 < parent.stat().st_size <= MAX_PARENT_ZIP:
+        raise EISIndexError("Original ZIP exceeds source size limit")
+    digest = hashlib.sha256()
+    with parent.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    if digest.hexdigest() != row["parent_zip_sha"]:
+        raise EISIndexError("Original ZIP SHA mismatch")
+    try:
+        with zipfile.ZipFile(parent) as archive:
+            infos = archive.infolist()
+            if len(infos) > 300:
+                raise EISIndexError("Original ZIP has too many members")
+            matches = [
+                info for info in infos
+                if hashlib.sha256(info.filename.encode()).hexdigest()
+                == row["original_member_path_sha256"]
+            ]
+            if len(matches) != 1:
+                raise EISIndexError("Original ZIP member locator not unique")
+            member = matches[0]
+            if (
+                member.is_dir() or member.flag_bits & 1
+                or stat.S_ISLNK(member.external_attr >> 16)
+                or member.file_size > MAX_SINGLE_FILE
+                or (member.file_size and not member.compress_size)
+                or (member.compress_size > 0 and member.file_size > member.compress_size * 250)
+            ):
+                raise EISIndexError("Unsafe compressed original ZIP member")
+            size = 0
+            digest = hashlib.sha256()
+            with archive.open(member, "r") as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b""):
+                    size += len(block)
+                    if size > MAX_SINGLE_FILE:
+                        raise EISIndexError("ZIP member exceeds upload byte budget")
+                    digest.update(block)
+            if size != member.file_size or digest.hexdigest() != expected_child:
+                raise EISIndexError("Staged child differs from original ZIP")
+    except (zipfile.BadZipFile, OSError) as exc:
+        raise EISIndexError("Original ZIP unreadable") from exc
 
 
 def procurement_collection(tenant: str, run: str) -> str:
@@ -144,6 +200,9 @@ def _candidates(receipt: dict[str, Any]) -> list[dict[str, Any]]:
                     "url_sha": url_sha, "number": number,
                     "revision_review": bool(row.get("revision_requires_review")),
                     "source_kind": "zip_member",
+                    "parent_zip_name": row.get("stored_name"),
+                    "parent_zip_sha": content_sha,
+                    "original_member_path_sha256": _sha(child.get("original_member_path_sha256"), "original member path SHA"),
                 })
     if not candidates or len(candidates) > MAX_DOCUMENTS:
         raise EISIndexError("No supported bounded original document candidates")
@@ -198,6 +257,8 @@ def ingest_original_eis_documents(
             raise EISIndexError("Document revision requires explicit source review")
         if not isinstance(row["name"], str) or not row["name"].endswith(row["extension"]):
             raise EISIndexError("Original saved file name and extension mismatch")
+        if row["source_kind"] == "zip_member":
+            _verify_nested_original(original_files_dir, row, row["sha"])
         data = _read_source(
             original_files_dir, row["subdir"], row["name"], row["sha"],
         )
