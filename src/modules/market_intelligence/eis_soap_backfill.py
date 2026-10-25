@@ -10,7 +10,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 import tempfile
 import zipfile
 from collections.abc import Iterator
@@ -22,6 +21,7 @@ from xml.etree import ElementTree as ET
 
 import yaml
 
+from src.modules.market_intelligence.technical_matching import _matching_terms
 from src.modules.tender_operator_agent_demo.settings import ZakupkiSoapSettings
 from src.modules.tender_operator_agent_demo.zakupki_soap_client import ZakupkiSoapClient
 
@@ -29,7 +29,6 @@ MAX_ZIP_BYTES = 200 * 1024 * 1024
 MAX_MEMBERS = 10000
 MAX_XML_BYTES = 40 * 1024 * 1024  # Actual 44-FZ XML reaches 32.82 MiB; hard security cap.
 MAX_TOTAL_UNCOMPRESSED = 500 * 1024 * 1024
-AMBIGUOUS = frozenset({"SVG", "SVC", "PQ", "УКМ", "КРМ", "БСК", "СТК", "TSC", "TCR"})
 
 
 def _local_name(tag: str) -> str:
@@ -52,29 +51,6 @@ def _iterate_xml_candidates(root: ET.Element) -> Iterator[tuple[str, str]]:
             }))
             if relevant and node.text and node.text.strip():
                 yield f"{p}/{tag}", node.text.strip()
-
-
-def _matching_terms(text: str, ontology: dict[str, Any]) -> list[dict[str, str]]:
-    hits = []
-    normalized = text.casefold()
-    for family in ontology.get("families", []):
-        family_hits = []
-        for synonym in family.get("positive", []):
-            term = synonym.strip()
-            if not term:
-                continue
-            if not re.search(r"(?<!\w)" + re.escape(term.casefold()) + r"(?!\w)", normalized):
-                continue
-            if term.upper() in AMBIGUOUS and not any(
-                c.casefold() in normalized for c in family.get("contexts", [])
-            ):
-                continue
-            if any(ex.casefold() in normalized for ex in family.get("exclusions", [])):
-                continue
-            family_hits.append(term)
-        if family_hits:
-            hits.append({"family": str(family["id"]), "terms": sorted(set(family_hits))})
-    return hits
 
 
 def scan_archive(zip_path: Path, ontology: dict[str, Any]) -> dict[str, Any]:
