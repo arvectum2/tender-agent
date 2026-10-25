@@ -1,5 +1,5 @@
 task_id: MI-009-HISTORICAL-BACKFILL-20261025
-status: in_progress
+status: completed
 goal: Safely extend verified 44/223-FZ EIS source-day history using resumable quota-limited gap-first acquisition
   planner and original ZIP SHA receipts.
 definition_of_done:
@@ -13,6 +13,7 @@ definition_of_done:
   bounds and failure circuit breaker.
 - Publish reviewed PR, run exact CI and update checkpoint.
 completed:
+- '2026-10-25 exact CI PR #510 head c35c53c8127de5b26f622dc6571d36c3b8336342: 5245 pass, 285 skip; all 9 GitHub jobs green, merged main 48a98f2a17b691aeeaa924421dbdea2fcf5cd92d.'
 - MI008 PR
 - Canonical main TA-roadmap checkpoint preserved.
 - Implemented and tested generic source-day EIS historic gap planner; strict 12-call maximum, --execute gate, breadth-first
@@ -27,22 +28,20 @@ completed:
   circuit breaker; 95 focused regression tests PASS and Ruff clean.
 - Added versioned non-sensitive evidence snapshot eis_coverage_20261025_extended.v2.json and full reproducibility/runbook;
   no original ZIP, token, signed contract or bidder PII placed in Git.
-current: Source collection and deterministic tests done; publish PR and verify exact full GitHub CI; merge only
-  on green.
-pending:
-- Push feature branch; open PR against current main and verify exact-head GitHub CI/security and no comments.
-- After successful merge set canonical MI009 checkpoint completed in main while preserving TA-ROADMAP active current-task.
-- 'Next separate project stage: source-verified native EPC technical annex acquisition and Data Platform evidence
-  indexing, original award/contract proof, independent commercial ETP acquisition and exhaustive coverage.'
-last_verified_commit: 2fb0513ab2b5336c49ec1afd8d0686cfd8de2894
+current: Completed authentic 44/223-FZ historical source backfill planner and SHA-provenance acceptance; main PR #510 merged after exact full CI.
+pending: []
+remaining_independent_work:
+- Increase 36-month national EIS source coverage beyond the limited two-region/day sample with bounded EIS capacity.
+- Normalize source-proof alternate 223-FZ original XML types such as purchaseNoticeZKESMBO/purchaseProtocolSummingupZKESMBO and ZPESMBO variants.
+- Acquire original EPC technical annexes through verified official source links and ingest into Data Platform; historical filestore download links currently return HTTP 404 in unauthenticated probe.
+- Verify original contracting parties and signed contract amounts via independent original protocol/contract register, not raw application flags; expand external commercial ETP evidence.
+last_verified_commit: 48a98f2a17b691aeeaa924421dbdea2fcf5cd92d
 test_results:
+- 'Exact PR #510 full CI 5245 PASS, 285 SKIP, 346 existing warnings; 9 successful jobs, Ruff clean.'
 - 95 passed (MI009, MI008, SOAP source/hash, duplicate prevention, Data Platform boundary), 1 existing Starlette
   warning; Ruff check clean.
 - 'Live restored EIS SOAP original archive SHA replay: 21 verified cells in 4388 two-region/day/law slots, 85 official
   ZIP SHA, 7467 original XML members.'
 - 'New MI009 contribution: 11 genuine source-day cells, 36 source ZIPs, 3027 XML members; no verified market price
   or winner.'
-resume_instruction: 'PR for MI009 pending. Check GitHub CI for feature/mi009-historical-backfill-20261025 against
-  current main, merge only if all checks green. Preserve original main TA-ROADMAP-EXEC canonical current-task checkpoint.
-  Source runtime remains protected Mac mini region-isolated-v2, old common-region root remains quarantined. Next
-  step after MI009: source-hash-verified native EPC annex acquisition and Data Platform indexing.'
+resume_instruction: 'MI-009 completed: PR #510 merged at 48a98f2a17b691aeeaa924421dbdea2fcf5cd92d with exact 5245 pass / 285 skip and all 9 CI jobs success. Preserve canonical TA-ROADMAP current-task. Start a separate MI-010 task to normalize official 223-FZ ZKESMBO/ZPESMBO notice/protocol variants and source-controlled annex retrieval, then provide source-bound Power Quality awards/contract findings. Never treat 21/4388 sampled days as comprehensive 36-month coverage.'
