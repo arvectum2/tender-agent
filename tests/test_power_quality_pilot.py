@@ -21,7 +21,7 @@ DATA = ROOT / "data/market_intelligence/power_quality"
 
 @pytest.fixture
 def seed():
-    return json.loads((DATA / "verified_public_leads.v1.json").read_text(encoding="utf-8"))
+    return json.loads((DATA / "verified_public_leads_20261025.v2.json").read_text(encoding="utf-8"))
 
 
 @pytest.fixture
@@ -175,3 +175,10 @@ def test_pq_current_commercial_leads_not_falsely_claimed_open_or_awarded(seed, o
         assert row["nmck_rub"] is None
         assert row.get("winner") is None
     assert report["market_model"]["counts"]["open_opportunities"] == 0
+
+
+def test_original_20261024_source_and_report_baselines_are_preserved():
+    old_seed = json.loads((DATA / "verified_public_leads.v1.json").read_text(encoding="utf-8"))
+    old_report = json.loads((DATA / "pilot_report.v1.json").read_text(encoding="utf-8"))
+    assert old_seed["as_of"] == old_report["as_of"] == "2026-10-24"
+    assert len(old_seed["records"]) == old_report["distinct_procedure_lots"] == 12
