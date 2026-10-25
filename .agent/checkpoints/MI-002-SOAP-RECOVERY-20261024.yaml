@@ -1,0 +1,88 @@
+version: 2
+repository: arvectum2/tender-agent
+task_id: MI-002-SOAP-RECOVERY-20261024
+status: in_progress
+goal: Diagnose authenticated EIS getDocsIP access; deliver resume-safe read-only regional/date SOAP discovery for Power
+  Quality with provenance and explicit outage handling.
+definition_of_done:
+- Run real SOAP requests against previously verified 223-FZ and current Power Quality notice IDs without disclosing
+  token.
+- Distinguish official EIS maintenance/TLS failure from token or SOAP logic errors using evidence from alternative access
+  route.
+- Implement bounded resumable region+date getDocsByOrgRegion loader and safe archived XML candidate extraction, without
+  fake winners or estimated TAM.
+- Validate offline with real previously archived EIS SOAP ZIP and deterministic synthetic fixtures.
+- Run focused tests and lint, commit findings and preserve temporary block as retryable.
+completed:
+- Secure token configured via mode-0600 file; existing PROD getDocsIP endpoint verified.
+- 'Three authentic SOAP retrieval calls for two RI223 and one PRIZ notices: all TLS connection reset before HTTP response.'
+- TLS failure independently reproduced from Russian SSH hosting, no token transmitted.
+- 'EIS channel maintenance announcement: 24 Oct 20:00 to 25 Oct 01:00 MSK; integration host outage causation not proven.'
+- Implemented bounded and resumable getDocsByOrgRegion reader with ZIP/XML SHA256, safe limits, candidate classification,
+  atomic receipts, and network circuit breaker.
+- Parsed cached authentic 2026-10-08 region 77 EIS SOAP ZIP with 100 XML notices, zero PQ matches in that bounded archive.
+- Actual region 77 SOAP call recorded retryable_network_failure, archive_count=null outside Git.
+- 72 focused tests passed; 24 existing SOAP tests passed, 3 skipped; Ruff passed.
+- 2026-10-25 Mac mini official EIS public home HTTPS GET/HEAD returned HTTP200; integration getDocsIP unauthenticated
+  diagnostic TLS failed (certificate chain validation or SSL_ERROR_SYSCALL), so live SOAP is NOT verified restored.
+- '2026-10-25 after DP #128 + TA #508 main merges, rebased this SOAP recovery feature via explicit main merge, selecting
+  main canonical TA-ROADMAP checkpoint without source code conflicts.'
+- '2026-10-25 PR #503 retargeted from obsolete MI002 base to current main; draft remains unmerged pending real SOAP
+  acceptance; five changed files only, 48 focused local tests passed, Ruff clean.'
+- '2026-10-25 AFTER maintenance: real authenticated RI223 getDocsByReestrNumber 32616447910 completed with one archive
+  URL; no proxy, valid native-system TLS context and token remained in protected mode-0600 file.'
+- 2026-10-25 real RI223 and PRIZ getDocsByOrgRegion sampling for 77 Moscow and 78 St Petersburg and historical 2023-11-08/2024-10-08/2025-10-08/2026-10-08
+  dates completed.
+- '2026-10-25 detected/corrected XML size false-negative: genuine EIS 44-FZ notices up to 32.82 MiB now supported within
+  hard 40 MiB per-document bound; retained DTD, ZIP member and 500MiB decompression caps.'
+- '2026-10-25 SOAP route checker fixed to use the same certificate-verifying native OS trust context as the real client:
+  actual DNS/TCP/TLS/XSD/SOAP verified OK.'
+- 2026-10-25 first independent SHA replay found region/date ZIP overwrite despite SOAP success; fixed paths to region-scoped
+  archive-NNN; regression tests for 77+78 same day and tampering added.
+- 2026-10-25 marked old runtime root with UNTRUSTED_REGION_COLLISION.json (chmod600) and fail-closed both collection
+  and audit; no legacy source counts retained.
+- 2026-10-25 re-downloaded all ten source region-day samples into region-isolated-v2 with umask077; SHA independently
+  verified all 49 ZIPs, parsed 4440 XML documents, zero ontology matches in notice metadata (NOT national demand), no
+  source loss.
+- 2026-10-25 generated versioned non-sensitive 10-row source sample JSON and source-bound post-maintenance acceptance
+  report. Real XML extract locator samples confirm XML fields are parsed in both statutory subsystems.
+- '2026-10-25 focused source, regression, TLS diagnostics, market adapter, DP boundary tests: 82 passed, 2 skipped,
+  Ruff clean; no production flags/bids/outreach.'
+current: Commit source verified fixes and submit PR#503 for GitHub CI, then merge into current main only after all CI
+  checks succeed.
+pending:
+- Commit and push real-source parser, region-isolated receipt auditor, safer route check, 10-row SHA-proof report and
+  tests.
+- Confirm exact PR#503 GitHub CI including full quality suite green; merge into main if no blocker; preserve TA-ROADMAP
+  current-task main.
+- Independently pursue full 36-month EIS/ETP market coverage, original EPC annex search through Data Platform, original
+  signed contracts, winners and verifiable finance. The ten sampled days are only technical acceptance, not the market
+  study.
+last_verified_commit: bf32f085dd89f771c1a54e48f7187c07b64901d1
+test_results:
+- 72 focused tests PASS, Ruff PASS.
+- 24 legacy SOAP tests PASS, 3 SKIPPED.
+- 'Authentic SOAP: 3 known numbers TLS reset, one region/date TLS reset saved as retryable, null archive count.'
+- 'Cached authentic EIS ZIP: 100 XML notice documents inspected, 0 PQ candidates in this archive only.'
+- '2026-10-25 main-based branch: 48 focused tests passed, Ruff clean, no code merge conflicts.'
+- 'Mac mini public ЕИС HTTPS HEAD: 200 at /epz/main/public/home.html; int SOAP HEAD: TLS chain verification failed,
+  optional no-auth diagnostic: SSL_ERROR_SYSCALL; not evidence authenticated SOAP works.'
+- 2026-10-25 10/10 bounded dates/regions and both 44/223 subsystems authenticated SOAP completed.
+- 'Independent byte-for-byte SHA audit: 49/49 original ZIPs validated, 4440 XML inspected, 0 PQ notices metadata lexical
+  hits, zero monthly/national coverage assertions.'
+- 'Focused regression after safe-region change: 82 passed, 2 skipped, 1 pre-existing deprecation warning. Ruff pass,
+  git diff --check pending.'
+- 'Production-equivalent TLS route diagnostic: DNS/TCP/TLS/XSD ok; original getDocsByReestrNumber completed over certificate-verifying
+  direct connection.'
+resume_instruction: PR#503 draft on current main. Finish SHA audit/report commit, push and wait for exact GitHub CI
+  to pass; then merge code only, preserving existing TA-ROADMAP canonical current-task. Source runtime is /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/eis-region-isolated-v2.
+  OLD root /.../eis is quarantined and must not be reused. Next research task must obtain all original real EPC annexes/protocols,
+  verify winner and NMCK separately; 10 source-days/4440 XML is not full 2023-26 coverage.
+execution:
+  worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-soap-recovery
+  branch: feature/mi002-eis-soap-recovery-20261024
+  base_commit: d3023531759dafea4c021822906f58d0315bfb15
+  downstream_pr: 503
+  runtime_receipt: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/eis/RI223/purchaseNotice/2026-10-08/region-77.json
+  verified_runtime_root: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/eis-region-isolated-v2
+  legacy_runtime_root_status: quarantined_UNTRUSTED_REGION_COLLISION

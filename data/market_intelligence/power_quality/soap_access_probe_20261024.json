@@ -1,0 +1,28 @@
+{
+  "tested_at_utc": "2026-10-24T19:12:58.526275+00:00",
+  "method": "SOAP_getDocsIP_getDocsByReestrNumber read_only",
+  "token_present": true,
+  "results": [
+    {
+      "registry_number": "32616447910",
+      "subsystem": "RI223",
+      "status": "error",
+      "exception_type": "RuntimeError",
+      "seconds": 0.03
+    },
+    {
+      "registry_number": "32615969197",
+      "subsystem": "RI223",
+      "status": "error",
+      "exception_type": "RuntimeError",
+      "seconds": 0.02
+    },
+    {
+      "registry_number": "0372200172326000015",
+      "subsystem": "PRIZ",
+      "status": "error",
+      "exception_type": "RuntimeError",
+      "seconds": 0.02
+    }
+  ]
+}
