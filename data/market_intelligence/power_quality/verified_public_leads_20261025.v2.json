@@ -576,6 +576,262 @@
         }
       ],
       "notes": "На 25.10.2026 прием предложений заявлен до 05.11.2026 15:00 МСК; цена не задана. Площадка и допуск/аккредитация не проверены."
+    },
+    {
+      "id": "pq-2026-discovery---61005187",
+      "canonical_id": "discovery:РН61005187:lot1",
+      "publication_date": "2026-10-23",
+      "date_basis": "published",
+      "procedure_id": "РН61005187",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Харампурнефтегаз»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка ДФКУ, УКРМ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/category-region/raznoe-oborudovanie-komplektuyushhie-cyre-i-materialy/uralskij-federalnyj-okrug",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Поставка ДФКУ, УКРМ"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery---60802401",
+      "canonical_id": "discovery:РН60802401:lot1",
+      "publication_date": "2026-08-10",
+      "date_basis": "published",
+      "procedure_id": "РН60802401",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ПАО «Удмуртнефть» им. В. И. Кудинова",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Опрос рынка на изготовление и поставку УКРМ-6-1-А900-450+2х225-Л1Н2Х6",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/category-region/transformatory-transformatornye-podstancii-i-reaktory/udmurtia",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Опрос рынка на изготовление и поставку УКРМ-6-1-А900-450+2х225-Л1Н2Х6"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery-945712",
+      "canonical_id": "discovery:945712:lot1",
+      "publication_date": "2026-09-24",
+      "date_basis": "published",
+      "procedure_id": "945712",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "АО «НК «Конданефть»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка УКРМ по лоту 2600133105",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/customers/7718890240",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Поставка УКРМ по лоту 2600133105"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery---61001644",
+      "canonical_id": "discovery:РН61001644:lot1",
+      "publication_date": "2026-10-05",
+      "date_basis": "published",
+      "procedure_id": "РН61001644",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Севкомнефтегаз»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка УКРМ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/category-region/raznoe-oborudovanie-komplektuyushhie-cyre-i-materialy/gubkinskij",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Поставка УКРМ"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery---60804549",
+      "canonical_id": "discovery:РН60804549:lot1",
+      "publication_date": "2026-08-21",
+      "date_basis": "published",
+      "procedure_id": "РН60804549",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО «Севкомнефтегаз»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Поставка УКРМ для нужд ООО СКН",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/category-region/raznoe-oborudovanie-komplektuyushhie-cyre-i-materialy/gubkinskij",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Поставка УКРМ для нужд ООО СКН"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery-130233---",
+      "canonical_id": "discovery:130233-ТТ:lot1",
+      "publication_date": "2026-06-24",
+      "date_basis": "published",
+      "procedure_id": "130233-ТТ",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "АО «Учалинский ГОК»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Установка УКРМ-0,4-200 по ТЗ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/category-region/raznoe-oborudovanie-komplektuyushhie-cyre-i-materialy/uchaly",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Установка УКРМ-0,4-200 по ТЗ"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery-1216754",
+      "canonical_id": "discovery:1216754:lot1",
+      "publication_date": "2026-07-17",
+      "date_basis": "published",
+      "procedure_id": "1216754",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "Филиал ООО «Завод Технофлекс», Учалы",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Запрос цен на приобретение УКРМ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/category-region/raznoe-oborudovanie-komplektuyushhie-cyre-i-materialy/uchaly",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Запрос цен на приобретение УКРМ"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-discovery-364-959",
+      "canonical_id": "discovery:364-959:lot1",
+      "publication_date": "2026-08-18",
+      "date_basis": "published",
+      "procedure_id": "364-959",
+      "platform": "Коммерческая ЭТП (по карточке агрегатора)",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "ООО УК «Мега»",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": null,
+      "family": "ukrm",
+      "scope": "maintenance",
+      "description": "Техническое обслуживание дизель-генераторов, пожарных насосов и станций УКРМ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "unknown",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/customers/5047175485",
+          "source_tier": "third_party",
+          "locator": "Публичный индекс закупок Контур: предмет, заказчик, номер и дата",
+          "excerpt": "Техническое обслуживание дизель-генераторов, пожарных насосов и станций УКРМ"
+        }
+      ],
+      "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
     }
   ]
 }
