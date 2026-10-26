@@ -13,7 +13,7 @@ completed:
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: Corpus v2 expanded to 27 leads, including two direct Bidzaar primary-platform 6kV UKRM cases. Tests updated; CI pending. ARC Mac mini reachable but local tender-agent branch dirty and lacks MI data; avoid overwriting. Source documents listed on Bidzaar but downloads unavailable in this session.
+current: ARC official getDocsIP collected 22 verified source-days in two batches; 43/4388 verified total, 2 incomplete, 144 SHA verified official ZIP, 12088 XML. 147 total ZIP including 3 exact-primary, scanned 12101 XML with 16 lexical hits; new 44-FZ active harmonic filter candidate 0372100005626000037 (2026-05-15 region 78), requires original award/technical check.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
   - Acquire official originals and contract evidence under a separate read-only, source-bounded task.
@@ -23,7 +23,7 @@ test_results:
   - New deterministic expected 17 records / 0 verified awards; new tests added.
   - Initial CI run 40213600708: 5291 passed, 285 skipped, 3 failed in MI003 due in-place overwrite of frozen v1; root cause fixed by restoring pinned v1 and introducing v2.
   - Full exact-head CI rerun 40214539497 on updated v2 source/test/doc commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd is in_progress at checkpoint; never claim PASS until verified.
-resume_instruction: Check CI for 51a1967d62413890b7d82dc5b3f11cb6a6e03eea; fix test errors. Download four 306-644 and two 351-062 attachments via authenticated Bidzaar or ARC/browser if available; compute SHA256, extract technical specs, winners/contracts via primary records. Expand historical EIS coverage. Do not claim attachments downloaded until confirmed.
+resume_instruction: Continue ARC official EIS SOAP backfill via existing MI009 module with bounded 12-call runs, using /Volumes/ArvectumSSD/Arvectum/repos/tender-agent/.venv/bin/python and isolated root. Reconcile two provider_response_review incomplete days. Examine original XML 0372100005626000037 and download its attachments; extract technical specifications and awards, dedup. Do not claim nationwide completeness or winners without official proof.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -37,3 +37,15 @@ research_extension_primary_platform_20261026:
   code_commit: 51a1967d62413890b7d82dc5b3f11cb6a6e03eea
   attachment_status: listed_on_platform_not_downloaded
   arc_local_status: online_but_dirty_unrelated_branch
+
+arc_official_collection_20261026:
+  verified_source_days: 43
+  incomplete_days: 2
+  sha_verified_archives: 144
+  xml_inspected_verified_days: 12088
+  extra_exact_primary_archives: 3
+  total_archives_scanned: 147
+  total_xml_scanned: 12101
+  lexical_matches: 16
+  newly_detected_candidate: '0372100005626000037'
+  candidate_kind: 'active harmonic filter; primary 44-fz XML; voltage and award unverified'
