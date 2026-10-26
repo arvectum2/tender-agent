@@ -1,0 +1,86 @@
+{
+  "schema_version": "mi-eis-source-coverage/0.1",
+  "date_from": "2024-01-01",
+  "date_to": "2026-10-25",
+  "regions": [
+    "02",
+    "16",
+    "24",
+    "38",
+    "42",
+    "66",
+    "74",
+    "86"
+  ],
+  "subsystems": [
+    "RI223",
+    "PRIZ"
+  ],
+  "source_kind": "EIS_getDocsIP_region_day_notice",
+  "total_source_day_slots": 16464,
+  "verified_day_slots": 46,
+  "missing_day_slots": 16399,
+  "incomplete_day_slots": 19,
+  "invalid_evidence_day_slots": 0,
+  "sha_verified_archives": 59,
+  "xml_documents_inspected_not_unique_tenders": 3239,
+  "historical_exhaustiveness_verified": false,
+  "winner_contracts_verified": false,
+  "by_region": {
+    "02": {
+      "verified": 9,
+      "incomplete": 2,
+      "invalid": 0
+    },
+    "16": {
+      "verified": 7,
+      "incomplete": 0,
+      "invalid": 0
+    },
+    "24": {
+      "verified": 3,
+      "incomplete": 1,
+      "invalid": 0
+    },
+    "38": {
+      "verified": 0,
+      "incomplete": 3,
+      "invalid": 0
+    },
+    "42": {
+      "verified": 1,
+      "incomplete": 1,
+      "invalid": 0
+    },
+    "66": {
+      "verified": 12,
+      "incomplete": 2,
+      "invalid": 0
+    },
+    "74": {
+      "verified": 8,
+      "incomplete": 3,
+      "invalid": 0
+    },
+    "86": {
+      "verified": 6,
+      "incomplete": 7,
+      "invalid": 0
+    }
+  },
+  "by_year": {
+    "2024": {
+      "verified": 19,
+      "incomplete": 1
+    },
+    "2025": {
+      "verified": 15,
+      "incomplete": 9
+    },
+    "2026": {
+      "verified": 12,
+      "incomplete": 9
+    }
+  },
+  "note": "Source day coverage only. Original EIS ZIP verified; versions not unique tenders, no signed contract/winner claims."
+}
