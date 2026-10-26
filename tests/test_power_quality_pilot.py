@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 28
+    assert result["distinct_procedure_lots"] == 27
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 1, "2025": 3, "2026": 23
+        "2023": 1, "2024": 1, "2025": 3, "2026": 22
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 21, "statcom": 5, "harmonic_filter": 2}
+    assert result["category_counts"] == {"ukrm": 20, "statcom": 5, "harmonic_filter": 2}
     assert result["work_package_counts"] == {
-        "supply": 19, "maintenance": 3, "epc": 5, "design": 1
+        "supply": 19, "maintenance": 3, "epc": 4, "design": 1
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 29
-    assert report["distinct_procedure_lots"] == 28
+    assert report["seed_records"] == 28
+    assert report["distinct_procedure_lots"] == 27
     assert report["mirror_duplicates_removed"] == 1
 
 
@@ -188,7 +188,7 @@ def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(see
     dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text(encoding="utf-8"))
     cases = {case["number"]: case for case in dossiers["cases"]}
     assert set(cases) == {"32615614821", "32616120582", "0372100005626000037"}
-    assert len(seed["records"]) == 28
+    assert len(seed["records"]) == 27
     assert dossiers["verified_signed_contracts"] == 0
     assert dossiers["national_6_35kv_market_size_rub"] is None
     assert cases["32615614821"]["signed_contract_price_rub"] is None
@@ -214,3 +214,13 @@ def test_official_source_coverage_is_bounded_and_not_national_completeness():
         and x["invalid_evidence_day_slots"] == 0
         for x in (proof["industrial_eight_regions"], proof["moscow_spb"])
     )
+
+
+def test_karelia_alias_is_deduplicated_to_one_official_223fz_procedure(seed, ontology):
+    report = analyze_pilot(seed, ontology)
+    matches = [r for r in report["leads"] if r["procedure_id"] == "32616120582"]
+    assert len(matches) == 1
+    assert matches[0]["canonical_id"] == "223fz:32616120582:lot1"
+    assert matches[0]["source_aliases"] == ["26Т0110040.0017"]
+    assert len(matches[0]["evidence"]) == 3
+    assert not any(r["procedure_id"] == "26Т0110040.0017" for r in report["leads"])

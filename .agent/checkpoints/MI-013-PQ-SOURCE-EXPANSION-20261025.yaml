@@ -2,28 +2,35 @@ version: 2
 repository: arvectum2/tender-agent
 task_id: MI-013-PQ-SOURCE-EXPANSION-20261025
 status: in_progress
-goal: Extend source-bounded Power Quality tender research with five dated, deduplicated candidate tenders and fail-closed financial evidence.
+goal: Build auditable Russian medium-voltage 6-35kV Power Quality 2024-2026 procurement corpus with source archives, extracted technical annexes, protocols, suppliers, signed contract prices and bounded market estimates.
 definition_of_done:
   - Preserve 12 existing evidence leads and add five distinct externally traced cases for 2026.
   - Keep signed price, winner, tender status and equipment-specific amount unverified without primary proof.
   - Extend pure deterministic tests and publish source-bound research update.
   - Verify exact branch with GitHub CI; record test evidence and commit SHA, without merging under stale or uncertain AM-4.
+  - Independently verify signed contract registries, legal winner identities, financial amounts and equipment-specific attributions; never infer national totals from sparse source-days.
+  - Expand 2024-2026 original EIS/ETP regional evidence and technical annex semantic search sufficiently to support a qualified final market report, or retain in_progress with precise coverage gap.
 completed:
   - Confirmed Mac mini ARC online, isolated the dirty unrelated local APR-07 branch; repository main is the source of truth.
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: ARC third 12-call official EIS SOAP batch finished; independently verified 53 of 4388 source days, 4 incomplete, 176 original ZIPs, 14573 XML (nonunique). Original 44FZ XML 0372100005626000037 is Hermitage 15,027,344.11 RUB NMCK active harmonic filters but 208-415V, EXCLUDED from target 6-35kV TAM.
+current: New original-source official 223-FZ dossiers completed for 32615614821 and 32616120582; 7 original attachments for EACH downloaded with 13 nested 7z files (Nagornaya) and 18 nested ZIP files (Karelia); confirmed 6/6.3kV UKRM specification, named single bidder TechnoProm offer 1.8333583m ex VAT, Karelia winning application 4149972340 17m EPC offer (legal name unknown). 27 distinct discovery procedures after merging internal 26Т0110040.0017 alias to official 32616120582; no signed contract prices. Industrial eight-region 33 verified source-days/42 ZIP/2220 XML, 15 incomplete, plus Moscow-SPb 53/176/14573 and 4 incomplete; no national TAM.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
-  - Acquire official originals and contract evidence under a separate read-only, source-bounded task.
+  - Reconcile the actual official signed contract registers and winner INN for 32615614821 and 32616120582; do not promote selected bidder/app or bid offer to signed price.
+  - Expand source-day coverage to missing days and regions beyond the ten sampled regions; ingest original EPC technical annexes into source-bound Data Platform search.
+  - Verify official ETP protocols/contracts for the other 26 discovery candidates and classify each 6-35kV vs low-voltage or maintenance.
 last_verified_commit: null
-last_code_commit_before_checkpoint: cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd
+last_code_commit_before_checkpoint: a7beba9fd42eb9fc45c8de25079922152a2b30cf
 test_results:
   - New deterministic expected 17 records / 0 verified awards; new tests added.
   - Initial CI run 40213600708: 5291 passed, 285 skipped, 3 failed in MI003 due in-place overwrite of frozen v1; root cause fixed by restoring pinned v1 and introducing v2.
   - Full exact-head CI rerun 40214539497 on updated v2 source/test/doc commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd is in_progress at checkpoint; never claim PASS until verified.
-resume_instruction: Continue bounded official SOAP historical batches and independently SHA-audit. Expand beyond regions 77/78 once enough coverage. Reconcile four incomplete provider_response_review days; review target 6-35kV original technical documents and signed contract outcomes. Never count Hermitage 0372100005626000037 in medium-voltage TAM.
+  - 2026-10-26 full make test attempted with venv; 5298 PASS, 286 SKIP, one unrelated R9 backup/restore integration failure (pg_restore). Focused R9 rerun after PostgreSQL16 binary PATH passed 5/5; full suite green rerun still pending.
+  - 2026-10-26 targeted after source alias dedup: power_quality 25 PASS; MI013 combined 54 tests planned; Ruff clean.
+  - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
+resume_instruction: FIRST verify completed local full make test with venv PATH; then push isolated research branch and inspect exact GitHub CI for commits a75af741 and a7beba9f + latest checkpoint, fixing failures. Continue primary signed contract registry and full original 223/44-FZ documentation intake across 2024-2026 and Data Platform semantic EPC matching. No fabricated FGI wins, no national market size until source coverage and signed equipment contract lines are proven.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -61,3 +68,49 @@ arc_followup_20261026:
     nmck_rub: 15027344.11
     voltage: '208-415 V'
     target_6_35kv: false
+
+research_round_original_docs_20261026:
+  status: in_progress
+  branch: research/mi013-pq-source-expansion-20261025
+  isolated_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi013-pq-source-expansion
+  last_code_commit: a7beba9fd42eb9fc45c8de25079922152a2b30cf
+  corpus_discovery_count: 27
+  focused_test_count_passed: 54
+  original_archives_with_independent_scan: 224
+  deduplicated_alias: "26Т0110040.0017 => official 32616120582; preserve two third-party citations"
+  source_xml_documents_inspected_nonunique: 16816
+  distinct_procurement_family_lexical_candidates: 5
+  invalid_archives: 0
+  industrial_eight_regions:
+    verified_source_days: 33
+    incomplete_days: 15
+    sha_verified_original_zip: 42
+    xml_inspected_nonunique: 2220
+  moscow_st_petersburg:
+    verified_source_days: 53
+    incomplete_days: 4
+    sha_verified_original_zip: 176
+    xml_inspected_nonunique: 14573
+  source_cases:
+    '32615614821':
+      archived_xml_sha256: 2d5e1b593db24c211ad1d7f15f08e8e7147eb08c97934968a238c312a3b27072
+      files_official_downloaded: 7
+      original_7z_packages_extracted: 2
+      contract_signed_verified: false
+      single_participant: 'ООО ТЕХНОПРОМ'
+      offer_rub_ex_vat: '1833358.30'
+      equipment: 'УКРМ56-6,3-200-(1x50+2x75) 6.3kV 200kvar, owner supplied'
+    '32616120582':
+      archived_xml_sha256: 2359d6becf9cbe7a3f13dca141d0ccab4201966dc59aa0e8f3b336b053d06403
+      files_official_downloaded: 7
+      nested_zip_files_extracted: 18
+      selected_application: '4149972340'
+      epc_bid_offer_rub: '17000000.00'
+      winner_legal_entity_verified: false
+      signed_contract_verified: false
+  public_versioned_files:
+    - data/market_intelligence/power_quality/official_case_dossiers_20261026.v1.json
+    - data/market_intelligence/power_quality/official_source_coverage_20261026.v3.json
+    - docs/market_intelligence/MI013_ORIGINAL_DOCUMENT_RESEARCH_20261026.md
+  signed_contracts_verified: 0
+  equipment_market_tam_rub: null
