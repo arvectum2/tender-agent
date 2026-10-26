@@ -579,7 +579,7 @@
     },
     {
       "id": "pq-2026-discovery---61005187",
-      "canonical_id": "discovery:РН61005187:lot1",
+      "canonical_id": "commercial:РН61005187:lot1",
       "publication_date": "2026-10-23",
       "date_basis": "published",
       "procedure_id": "РН61005187",
@@ -611,7 +611,7 @@
     },
     {
       "id": "pq-2026-discovery---60802401",
-      "canonical_id": "discovery:РН60802401:lot1",
+      "canonical_id": "commercial:РН60802401:lot1",
       "publication_date": "2026-08-10",
       "date_basis": "published",
       "procedure_id": "РН60802401",
@@ -643,7 +643,7 @@
     },
     {
       "id": "pq-2026-discovery-945712",
-      "canonical_id": "discovery:945712:lot1",
+      "canonical_id": "commercial:945712:lot1",
       "publication_date": "2026-09-24",
       "date_basis": "published",
       "procedure_id": "945712",
@@ -675,7 +675,7 @@
     },
     {
       "id": "pq-2026-discovery---61001644",
-      "canonical_id": "discovery:РН61001644:lot1",
+      "canonical_id": "commercial:РН61001644:lot1",
       "publication_date": "2026-10-05",
       "date_basis": "published",
       "procedure_id": "РН61001644",
@@ -707,7 +707,7 @@
     },
     {
       "id": "pq-2026-discovery---60804549",
-      "canonical_id": "discovery:РН60804549:lot1",
+      "canonical_id": "commercial:РН60804549:lot1",
       "publication_date": "2026-08-21",
       "date_basis": "published",
       "procedure_id": "РН60804549",
@@ -739,7 +739,7 @@
     },
     {
       "id": "pq-2026-discovery-130233---",
-      "canonical_id": "discovery:130233-ТТ:lot1",
+      "canonical_id": "commercial:130233-ТТ:lot1",
       "publication_date": "2026-06-24",
       "date_basis": "published",
       "procedure_id": "130233-ТТ",
@@ -771,7 +771,7 @@
     },
     {
       "id": "pq-2026-discovery-1216754",
-      "canonical_id": "discovery:1216754:lot1",
+      "canonical_id": "commercial:1216754:lot1",
       "publication_date": "2026-07-17",
       "date_basis": "published",
       "procedure_id": "1216754",
@@ -803,7 +803,7 @@
     },
     {
       "id": "pq-2026-discovery-364-959",
-      "canonical_id": "discovery:364-959:lot1",
+      "canonical_id": "commercial:364-959:lot1",
       "publication_date": "2026-08-18",
       "date_basis": "published",
       "procedure_id": "364-959",
@@ -835,7 +835,7 @@
     },
     {
       "id": "pq-2026-sibsteklo-ukrm-6kv",
-      "canonical_id": "bidzaar:306-644:lot35",
+      "canonical_id": "commercial:306-644:lot35",
       "publication_date": "2026-03-13",
       "date_basis": "published",
       "procedure_id": "306-644",
@@ -867,7 +867,7 @@
     },
     {
       "id": "pq-2026-elga-ukrm-6kv",
-      "canonical_id": "bidzaar:351-062:lot1",
+      "canonical_id": "commercial:351-062:lot1",
       "publication_date": "2026-07-08",
       "date_basis": "published",
       "procedure_id": "351-062",
