@@ -189,14 +189,15 @@ def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(see
     cases = {case["number"]: case for case in dossiers["cases"]}
     assert set(cases) == {"32615614821", "32616120582", "32615969197", "32616103025", "32616497692", "32616433248", "32616412267", "32616280467", "0372100005626000037", "court:A75-24845/2025"}
     assert len(seed["records"]) == 45
-    assert dossiers["verified_signed_contracts"] == 3
+    assert dossiers["verified_signed_contracts"] == 4
     assert dossiers["national_6_35kv_market_size_rub"] is None
     assert cases["32615614821"]["signed_contract_price_rub"] == "1833358.30"
     assert cases["32615614821"]["owner_supplied_equipment_estimate_rub"] == "4900000"
     assert cases["32615614821"]["selected_offer_rub"] == "1833358.30"
     assert cases["32616120582"]["selected_bid_application"] == "4149972340"
     assert cases["32616120582"]["selected_bid_price_rub"] == "17000000.00"
-    assert cases["32616120582"]["signed_contract_verified"] is False
+    assert cases["32616120582"]["signed_contract_verified"] is True
+    assert cases["32616120582"]["signed_contract_price_rub"] == "17000000.00"
     assert cases["32616120582"]["equipment_contract_value_rub"] is None
     assert cases["0372100005626000037"]["target_6_35kv"] is False
     assert cases["32615969197"]["winner"] is None
@@ -225,7 +226,7 @@ def test_karelia_alias_is_deduplicated_to_one_official_223fz_procedure(seed, ont
     assert len(matches) == 1
     assert matches[0]["canonical_id"] == "223fz:32616120582:lot1"
     assert matches[0]["source_aliases"] == ["26Т0110040.0017"]
-    assert len(matches[0]["evidence"]) == 3
+    assert len(matches[0]["evidence"]) == 4
     assert not any(r["procedure_id"] == "26Т0110040.0017" for r in report["leads"])
 
 def test_20261026_extended_18_region_original_eis_coverage_snapshot():
@@ -454,8 +455,8 @@ def test_dynamic_pq_original_10kv_160kvar_design_procedure_keeps_hw_sales_null(s
 
 def test_rd223_original_registry_two_contracts_without_fake_hardware_revenue(seed,ontology):
     snapshot=json.loads((DATA/"official_registry_contracts_20261026.v1.json").read_text())
-    assert snapshot["registered_contract_count"] == 3
-    assert snapshot["primary_version_count"] == 4
+    assert snapshot["registered_contract_count"] == 4
+    assert snapshot["primary_version_count"] == 5
     assert snapshot["equipment_only_signed_contracts_verified"] == 0
     by={x["registry_number"]:x for x in snapshot["contracts"]}
     assert len(by["50277071467260002650000"]["official_revisions"]) == 2
@@ -476,8 +477,14 @@ def test_rd223_original_registry_two_contracts_without_fake_hardware_revenue(see
     assert service["registered_total_price_rub"]=="2639026.64"
     assert service["supplier_inn"] is None
     assert service["pq_equipment_sale_rub"] is None
+    sortavala=by["57802312751260008280000"]["contract_latest"]
+    assert sortavala["linked_procurement"]=="32616120582"
+    assert sortavala["contract_date"]=="2026-08-19"
+    assert sortavala["registered_total_price_rub"]=="17000000.00"
+    assert sortavala["supplier_inn"] is None
+    assert sortavala["pq_equipment_sale_rub"] is None
     rows=analyze_pilot(seed,ontology)["leads"]
-    for purchase in ("32615614821","32616280467","32616412267"):
+    for purchase in ("32615614821","32616280467","32616412267","32616120582"):
         r=next(x for x in rows if x["procedure_id"]==purchase)
         assert r["registry_contract"]["signed_contract_registry_verified"] is True
         assert r["registry_contract"]["equipment_price_component_rub"] is None
@@ -542,3 +549,17 @@ def test_gaysky_2026_two_procedures_but_unverified_two_independent_demands(seed,
     assert first["nmck_rub"] is None and second["nmck_rub"] is None
     assert all(x["evidence"][0]["source_tier"] == "third_party" for x in (first,second))
     assert r["market_size_rub"] is None
+
+
+def test_sortavala_6kv_epc_registry_contract_not_price_of_bank(seed):
+    registry=json.loads((DATA/"official_registry_contracts_20261026.v1.json").read_text())
+    contracts={x["registry_number"]:x for x in registry["contracts"]}
+    x=contracts["57802312751260008280000"]["contract_latest"]
+    assert x["registered_total_price_rub"]=="17000000.00"
+    assert x["buyer_inn"]=="7802312751"
+    assert x["supplier_inn"] is None
+    assert x["pq_equipment_sale_rub"] is None
+    row=next(r for r in seed["records"] if r["procedure_id"]=="32616120582")
+    assert row["registry_contract"]["signed_contract_registry_verified"] is True
+    assert row["registry_contract"]["equipment_price_component_rub"] is None
+    assert row["nmck_rub"] == "21120361.66"

@@ -76,8 +76,8 @@
       "other_bid_price_rub": "21120361.66",
       "winning_legal_entity": null,
       "winning_inn": null,
-      "signed_contract_price_rub": null,
-      "signed_contract_verified": false,
+      "signed_contract_price_rub": "17000000.00",
+      "signed_contract_verified": true,
       "equipment_contract_value_rub": null,
       "revision_review_required": true,
       "technical_requirements": [
@@ -109,7 +109,14 @@
       ],
       "official_downloads": 7,
       "nested_zip_children": 18,
-      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616120582&noticeGuid=da924227-1268-41a6-a180-76fc6b5e9098"
+      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616120582&noticeGuid=da924227-1268-41a6-a180-76fc6b5e9098",
+      "official_registered_contract_number": "57802312751260008280000",
+      "official_customer_contract_number": "КАР/00225/26",
+      "official_contract_date": "2026-08-19",
+      "official_execution_deadline": "2028-03-03",
+      "official_rd223_archive_sha256": "42e2cb76fb4a7919a46024ce1072d2cafbf51e375d8372d1d208da90286015ec",
+      "public_supplier_inn": null,
+      "price_attribution": "entire EPC including 6kV UKRM and lines, no separate device price"
     },
     {
       "number": "0372100005626000037",
@@ -415,7 +422,7 @@
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",
   "private_originals": "Stored on authorized Mac mini, outside Git.",
-  "verified_signed_contracts": 3,
+  "verified_signed_contracts": 4,
   "national_6_35kv_market_size_rub": null,
   "verified_signed_contracts_with_public_supplier_inn": 0,
   "verified_equipment_supply_contracts_by_judicial_records": 1

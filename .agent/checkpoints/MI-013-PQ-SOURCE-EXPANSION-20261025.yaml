@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Verify exact-head GitHub CI and local make test after latest 45-record/3-registered-RD223-1-judicial-hardware case commit. Expand 2024-2025 original EIS 223-FZ and commercial ETP primary tender attachments, true suppliers and registered total with proper VAT/price-type, maintain no national market TAM. RD223 case 32616412267 now signed with different contract value than bid, scope maintenance; do not double-count Gaysky two tenders as two fulfilled supplies. Stage in_progress until accurate market coverage, signed goods contracts and manufacturer qualification documented.
+resume_instruction: Verify exact-head CI and full regression for 45-lead/4-registered-RD223/1-judicial-physical-UKRM research. Next, find public signed contract register and EPC supplier for 32616433248 after 2026-10-19, supplement 2024-2025 original EIS and ETP annex market corpus, classify signed equipment prices separate from EPC/PIR/service. Preserve primary SHA lineage, no fake seller in contractCutted, no national TAM inferred from 45 biased records.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -498,3 +498,37 @@ pq_continuation_20261026_rd223_october_scan_and_possible_reissues:
     - final commit hash and checkpoint revision
     - find official manufacturer hardware sales and signed contract attachments
     - no-country-wide spend estimate until official source coverage adequate
+
+pq_continuation_20261026_sortavala_registered_contract:
+  task_status: in_progress
+  source_record_total: 45
+  source_case_dossier_total: 10
+  signed_rd223_total: 4
+  official_rd223_xml_revisions: 5
+  independently_proven_equipment_delivery_with_cost_count: 1
+  as_of: '2026-10-26'
+  contract:
+    original_notice: '32616120582'
+    buyer: ПАО Россети Северо-Запад
+    buyer_inn: '7802312751'
+    registry_number: '57802312751260008280000'
+    customer_internal_number: КАР/00225/26
+    signed_date: '2026-08-19'
+    registered_total_entire_epc_rub: '17000000.00'
+    original_nmck_epc_rub: '21120361.66'
+    contract_execution_until: '2028-03-03'
+    original_rd223_archive_sha256: 42e2cb76fb4a7919a46024ce1072d2cafbf51e375d8372d1d208da90286015ec
+    original_rd223_xml_sha256: bf53b19ea69a4990fd0dc433a5da86775e85839bae09ffaa2034b32af16c490b
+    equipment_ukrm_voltage_kv: 6
+    equipment_ukrm_separate_sale_price_rub: null
+    supplier_legal_identity_in_public_registry: redacted
+    outcome: signed_EPC_not_evidence_of_independent_equipment_revenue
+  full_test_previous_committed_head:
+    commit: 2a64e7605394e9c3545787bc6c41d680befffe29
+    local_pytest_passed: 5326
+    local_pytest_skipped: 286
+    local_test_warnings: 357
+    elapsed_seconds: 157.50
+    local_exit_code: 0
+  focused_tests_after_extra_contract: '47 pass, Ruff clean, awaiting final full suite after push'
+  resume_note: 'Current checkpoint status in_progress, no independent country-wide market estimate.'

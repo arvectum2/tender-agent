@@ -2,8 +2,8 @@
   "schema_version": "mi013-verified-rd223-contracts/0.1",
   "as_of": "2026-10-26",
   "data_sources": "official getDocsIP RD223 original public registry contractCutted XML archives, verified SHA256",
-  "registered_contract_count": 3,
-  "primary_version_count": 4,
+  "registered_contract_count": 4,
+  "primary_version_count": 5,
   "equipment_only_signed_contracts_verified": 0,
   "notes": [
     "The public RD223 XML contractCutted hides supplier identity; do not infer supplier from EIS registry.",
@@ -214,6 +214,65 @@
       "source_supplier_status": "redacted_in_contractCutted",
       "equipment_only_contract_value_rub": null,
       "source_retrieval": "RD223 by-region-date original archive 38 2026-10-19; direct getDocsByReestrNumber response archive link 404 (same XML preserved in official date-scoped archive)"
+    },
+    {
+      "registry_number": "57802312751260008280000",
+      "official_revisions": [
+        {
+          "registry_number": "57802312751260008280000",
+          "registered_revision_number": "57802312751260008280001",
+          "revision": "1",
+          "contract_number": "КАР/00225/26",
+          "contract_date": "2026-08-19",
+          "linked_procurement": "32616120582",
+          "registered_total_price_rub": "17000000.00",
+          "buyer_inn": "7802312751",
+          "buyer_name": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"РОССЕТИ СЕВЕРО-ЗАПАД\"",
+          "subject": "26Т0110040.0017. Выполнение полного комплекса работ под «ключ» по реализации инвестиционного проекта «Строительство ЛЭП 6 кВ (ориентировочной протяженностью 0,175 км, из них КЛ 6 кВ ГНБ - 0,125 км, КЛ 6 кВ в трубе в траншее - 0,05 км) от ВЛ-6 кВ Л-27",
+          "end_execution_date": "2028-03-03",
+          "modification_description": "Размещение договора системой asu_fhd.",
+          "verified_public_contract_registry": true,
+          "supplier_inn": null,
+          "supplier_identity_from_registry_verified": false,
+          "pq_equipment_sale_rub": null,
+          "equipment_price_verified": false,
+          "amount_paid_verified": false,
+          "document_type": "contractCutted",
+          "proof": {
+            "archive_sha256": "42e2cb76fb4a7919a46024ce1072d2cafbf51e375d8372d1d208da90286015ec",
+            "xml_member": "contractCutted_57802312751260008280000_1_01A01DE8501C71ED9FA4E5DE05E1198E.xml",
+            "xml_sha256": "bf53b19ea69a4990fd0dc433a5da86775e85839bae09ffaa2034b32af16c490b"
+          }
+        }
+      ],
+      "contract_latest": {
+        "registry_number": "57802312751260008280000",
+        "registered_revision_number": "57802312751260008280001",
+        "revision": "1",
+        "contract_number": "КАР/00225/26",
+        "contract_date": "2026-08-19",
+        "linked_procurement": "32616120582",
+        "registered_total_price_rub": "17000000.00",
+        "buyer_inn": "7802312751",
+        "buyer_name": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"РОССЕТИ СЕВЕРО-ЗАПАД\"",
+        "subject": "26Т0110040.0017. Выполнение полного комплекса работ под «ключ» по реализации инвестиционного проекта «Строительство ЛЭП 6 кВ (ориентировочной протяженностью 0,175 км, из них КЛ 6 кВ ГНБ - 0,125 км, КЛ 6 кВ в трубе в траншее - 0,05 км) от ВЛ-6 кВ Л-27",
+        "end_execution_date": "2028-03-03",
+        "modification_description": "Размещение договора системой asu_fhd.",
+        "verified_public_contract_registry": true,
+        "supplier_inn": null,
+        "supplier_identity_from_registry_verified": false,
+        "pq_equipment_sale_rub": null,
+        "equipment_price_verified": false,
+        "amount_paid_verified": false,
+        "document_type": "contractCutted",
+        "proof": {
+          "archive_sha256": "42e2cb76fb4a7919a46024ce1072d2cafbf51e375d8372d1d208da90286015ec",
+          "xml_member": "contractCutted_57802312751260008280000_1_01A01DE8501C71ED9FA4E5DE05E1198E.xml",
+          "xml_sha256": "bf53b19ea69a4990fd0dc433a5da86775e85839bae09ffaa2034b32af16c490b"
+        }
+      },
+      "source_supplier_status": "redacted_in_contractCutted",
+      "equipment_only_contract_value_rub": null
     }
   ]
 }
