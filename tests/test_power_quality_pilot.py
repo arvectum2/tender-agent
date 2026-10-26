@@ -224,3 +224,24 @@ def test_karelia_alias_is_deduplicated_to_one_official_223fz_procedure(seed, ont
     assert matches[0]["source_aliases"] == ["26Т0110040.0017"]
     assert len(matches[0]["evidence"]) == 3
     assert not any(r["procedure_id"] == "26Т0110040.0017" for r in report["leads"])
+
+def test_20261026_extended_18_region_original_eis_coverage_snapshot():
+    proof = json.loads((DATA / "official_source_coverage_20261026.v4.json").read_text(encoding="utf-8"))
+    totals = proof["sampled_cohort_totals_not_national_market"]
+    assert len(proof["cohorts"]) == 3
+    assert totals["verified_day_slots"] == 144
+    assert totals["sha_verified_archives"] == 298
+    assert totals["xml_documents_inspected_not_unique_tenders"] == 21183
+    assert totals["incomplete_day_slots"] == 45
+    assert totals["invalid_evidence_day_slots"] == 0
+    assert proof["assertions"]["national_market_census"] is False
+    assert proof["assertions"]["equipment_turnover_estimate_rub"] is None
+
+
+def test_fgi_portfolio_screen_does_not_assert_approved_substitution():
+    proof = json.loads((DATA / "fgi_fit_source_bound_20261026.v1.json").read_text(encoding="utf-8"))
+    assert proof["commercial_guardrails"]["direct_FGI_awards_verified"] == 0
+    assert proof["commercial_guardrails"]["claims_of_substitution_approved"] == 0
+    assert proof["commercial_guardrails"]["separate_PQ_hardware_TAM_rub"] is None
+    assert all(row["strict_equivalent_approved"] is False for row in proof["technical_fit"])
+    assert all(row["verified_FGI_vendor_award"] is False for row in proof["technical_fit"])

@@ -28,9 +28,12 @@ test_results:
   - Initial CI run 40213600708: 5291 passed, 285 skipped, 3 failed in MI003 due in-place overwrite of frozen v1; root cause fixed by restoring pinned v1 and introducing v2.
   - Full exact-head CI rerun 40214539497 on updated v2 source/test/doc commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd is in_progress at checkpoint; never claim PASS until verified.
   - 2026-10-26 full make test attempted with venv; 5298 PASS, 286 SKIP, one unrelated R9 backup/restore integration failure (pg_restore). Focused R9 rerun after PostgreSQL16 binary PATH passed 5/5; full suite green rerun still pending.
-  - 2026-10-26 targeted after source alias dedup: power_quality 25 PASS; MI013 combined 54 tests planned; Ruff clean.
+  - 2026-10-26 targeted after source alias dedup: 56 MI013 tests PASS, Ruff clean.
+  - 2026-10-26 full Mac mini make test after correct PostgreSQL16 PATH: 5300 PASS, 286 SKIP, 357 warnings, exit 0. No claims of signed contract or TAM completeness.
+  - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
+  - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Push isolated MI013 branch including industrial v4 and semantic v5, verify exact GitHub CI; continue primary EIS signed contract registry and attachment-derived equipment price/winner checks for 32615614821 and 32616120582, expand industrial region/date and commercial ETP source coverage. Keep incomplete SOAP cells fail-closed and 6-35kV scope, no unsupported TAM.
+resume_instruction: Push latest checkpoint + three-cohort 18-region coverage v4 + FGI source-bound fit and full 27-row original-evidence register; verify exact GitHub CI. Continue official EIS signed contract registry/true winner INN and technical annex equipment-only values for 32615614821 and 32616120582; expand source-days/ETPs/hidden EPC semantic matching. Do not infer national TAM from 144 sparse day cells.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -75,7 +78,7 @@ research_round_original_docs_20261026:
   isolated_worktree: /Volumes/ArvectumSSD/Arvectum/worktrees/tender-agent-mi013-pq-source-expansion
   last_code_commit: a7beba9fd42eb9fc45c8de25079922152a2b30cf
   corpus_discovery_count: 27
-  focused_test_count_passed: 54
+  focused_test_count_passed: 56
   original_archives_with_independent_scan: 224
   deduplicated_alias: "26Т0110040.0017 => official 32616120582; preserve two third-party citations"
   source_xml_documents_inspected_nonunique: 16816
@@ -113,6 +116,26 @@ research_round_original_docs_20261026:
     - data/market_intelligence/power_quality/official_source_coverage_20261026.v3.json
     - docs/market_intelligence/MI013_ORIGINAL_DOCUMENT_RESEARCH_20261026.md
   signed_contracts_verified: 0
+  additional_regions_20261026:
+    west_eight: ['02','16','52','63','66','74','86','89']
+    east_eight: ['14','24','38','42','54','61','72','75']
+    cumulative_regional_cohort_count: 18
+    source_day_cells_total: 37316
+    source_day_cells_verified: 144
+    source_day_cells_incomplete: 45
+    source_day_cells_missing: 37127
+    sha_verified_archives: 298
+    xml_versions_inspected: 21183
+    independent_archive_sha_invalid_count: 0
+    source_archives_full_scan_including_specific_cases: 304
+    source_xml_full_scan_including_specific_cases: 21206
+    epc_title_candidates_needing_pq_annex_check: 128
+    local_full_make_test: "5300 passed, 286 skipped, 357 warnings, exit 0"
+    focused_mi013_tests: "56 passed, Ruff clean"
+  new_versioned_research_artifacts:
+    - data/market_intelligence/power_quality/official_source_coverage_20261026.v4.json
+    - data/market_intelligence/power_quality/fgi_fit_source_bound_20261026.v1.json
+    - docs/market_intelligence/MI013_FULL_LEAD_REGISTER_20261026.md
   equipment_market_tam_rub: null
 
 research_industrial_rescan_20261026:

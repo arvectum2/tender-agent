@@ -1,0 +1,62 @@
+{
+  "schema_version": "mi013-fgi-technical-fit/0.1",
+  "as_of": "2026-10-26",
+  "manufacturer": "FGI / WindSun Science & Technology Co., Ltd.",
+  "manufacturer_sources": [
+    "https://www.fgi-energyrouter.com/products/power-quality.html",
+    "https://www.fgi-energyrouter.com/product/FGI-6kV-High-Voltage-Static-Var-Generator-SVG-STATCOM.html"
+  ],
+  "portfolio_verified": [
+    "SVG/STATCOM dynamic compensators marketed in 6–6.6 kV, 10 kV and 33–35 kV classes",
+    "Some models have harmonic-current compensation capability; this does not establish compliance with a fixed harmonic filter specification.",
+    "APF active filters are listed, but medium-voltage voltage class is unverified for these models."
+  ],
+  "technical_fit": [
+    {
+      "case": "32615614821",
+      "buyer": "Башкирэнерго / ПС Нагорная",
+      "actual_requirement": "One owner-supplied step capacitor bank УКРМ56, 6.3kV, 200kvar, 50+75+75 kvar",
+      "fgi_related": "6–6.6kV HV SVG/STATCOM",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "Engineering review of switched capacitor bank versus inverter-based dynamic SVG, response/control, harmonics, power, interlocks, topology, budget and tender substitution rules",
+      "verified_FGI_vendor_award": false
+    },
+    {
+      "case": "32616120582",
+      "buyer": "Россети Северо-Запад / ООО Прайм",
+      "actual_requirement": "EPC installation of 6kV capacitor bank with additional КРУН cell and protected 0.4kV meter, no stated cabinet supplier",
+      "fgi_related": "6kV medium-voltage SVG portfolio",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "Bill-of-materials final design, customer-approved substitute, connection scheme, relay protection/harmonic assessment, guaranteed budget and signed EIS contract",
+      "verified_FGI_vendor_award": false
+    },
+    {
+      "case": "32615969197",
+      "buyer": "Башкирэнерго / ПС Пионерская",
+      "actual_requirement": "Design work for 10kV УКРМ; original design amount only, not hardware sale",
+      "fgi_related": "10kV SVG product class",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "Project technical requirements and decision whether dynamic SVG alternative is permitted",
+      "verified_FGI_vendor_award": false
+    },
+    {
+      "case": "4302914",
+      "buyer": "Лебединский ГОК",
+      "actual_requirement": "Maintenance of installed RU-DRIVE SVG 6.3/5-3 Mvar",
+      "fgi_related": "6–6.6kV HV SVG",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "Not a replacement supply tender; retrofit business only after technical/legal request",
+      "verified_FGI_vendor_award": false
+    }
+  ],
+  "commercial_guardrails": {
+    "direct_equipment_sales_from_EPC_NMCK": null,
+    "direct_FGI_awards_verified": 0,
+    "claims_of_substitution_approved": 0,
+    "separate_PQ_hardware_TAM_rub": null
+  }
+}
