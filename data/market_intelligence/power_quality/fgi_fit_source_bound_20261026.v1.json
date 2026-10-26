@@ -77,6 +77,19 @@
       "equipment_estimate_in_original_bill_2025_rub": "10780666.67",
       "signed_equipment_price_verified": false,
       "known_sole_epc_applicant": "ООО «СТРОЙЭНЕРГОИМПОРТ» / INN 7801564611; not verified manufacturer"
+    },
+    {
+      "case": "32616280467",
+      "buyer": "Россети Волга / ВЛ10кВ Артскважина, Пензаэнерго",
+      "actual_requirement": "DESIGN ONLY of 10kV dynamic reactive power compensation >=160kvar inductive, active-dynamic filter cabinets АДФ-У in block modular housing, inbuilt matching transformer",
+      "fgi_related": "FGI dynamic SVG/STATCOM or active filter family: functionally adjacent, NOT specified АДФ-У technology or qualified equivalent automatically",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "OEM 160kvar dynamic unit with matched transformer, harmonic filtering vs reactive-only capacity, ambient -50..40C, own auxiliary supply TN-S, SCADA protocol and engineering approval. No evidence FGI was proposed or allowed as equivalent.",
+      "verified_FGI_vendor_award": false,
+      "tender_design_nmck_rub": "3683790.00",
+      "best_original_protocol_bid_for_design_rub": "3680106.21",
+      "equip_supply_tender_or_sale": false
     }
   ],
   "commercial_guardrails": {

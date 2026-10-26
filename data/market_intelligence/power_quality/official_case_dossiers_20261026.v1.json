@@ -1,7 +1,7 @@
 {
   "schema_version": "mi013-pq-original-dossiers/0.1",
   "as_of": "2026-10-26",
-  "case_count": 8,
+  "case_count": 9,
   "cases": [
     {
       "number": "32615614821",
@@ -305,6 +305,54 @@
       "signed_contract_price_rub": null,
       "market_6_35kv_new_equipment_tam_rub": null,
       "evidence_gate": "documented price offers for service contract; no manufacturer award, no signed registry contract or new installed UKRM purchases"
+    },
+    {
+      "number": "32616280467",
+      "regime": "223-fz",
+      "publication_date": "2026-08-11",
+      "buyer": "ПАО Россети Волга",
+      "buyer_inn": "6450925977",
+      "project": "Design of 10kV overhead feeder Artskvazhina dynamic reactive compensating station, Penza region",
+      "family": "power_quality_system",
+      "scope": "design_only",
+      "technology": {
+        "class": "dynamic_compensation_with_active_filters",
+        "nominal_network_kv": 10,
+        "required_reactive_inductive_compensation_kvar_min": 160,
+        "cabinet_type_named": "АДФ-У",
+        "site": "block modular housing with transformer and 10kV switchgear",
+        "remote_integration": "standard protocols to SCADA, project selection required",
+        "operating_temperature_C": [
+          -50,
+          40
+        ],
+        "supplier_equipment_confirmed": false
+      },
+      "original_technical_annex_sha256": "ec1edc6c1e849fe5bc8c774014994982b07db7ebaaf7c1381978ba8ceb7a8b75",
+      "source_xml_archive_sha256": "24ded1cb5f0197bcb2fc59bddc1867383f20a1ca3eb761ae9715b5b5f5dddad0",
+      "source_attachments_zip_sha256": "2a891a2084731216df5406806d6242f154498e16200514b55d9f1cfe477f21f6",
+      "source_final_protocol_pdf_sha256": "5c161c4cffcef27e525e47896b55e1adeacee4d26fcf903fec36c95db21b20b1",
+      "source_attachments_downloaded": 2,
+      "unpacked_annexes": 7,
+      "initial_design_nmck_rub": "3683790.00",
+      "primary_final_protocol": {
+        "best_application_number": "1",
+        "best_application_bid_rub": "3680106.21",
+        "second_application_number": "2",
+        "second_bid_rub": "3681948.11",
+        "winner_legal_entity_inn_verified": false,
+        "signed_contract_registry_verified": false
+      },
+      "secondary_contract_registry_claim": {
+        "reported_by": "Synapsenet",
+        "reported_contract_rub": "3680106",
+        "reported_signed_date": "2026-09-03",
+        "verified_original_signed_registry": false
+      },
+      "equipment_sale_rub": null,
+      "new_equipment_purchased_in_this_tender": false,
+      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616280467",
+      "evidence_gate": "Detailed primary dynamic filter design spec and winning bid PROPOSAL confirmed; legal supplier signed contract and equipment price not independently proven."
     }
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",

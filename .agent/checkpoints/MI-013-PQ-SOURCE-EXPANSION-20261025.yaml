@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Verify exact-head CI and full local make test for 41-procedure/8-first-party-case research; continue tracing signed 223-FZ contract register for 32616433248 sole bidder and 32616412267 top-ranked bidder, plus 32615614821/32616120582; obtain original ETP technical specs for secondary leads and 2024-2025 coverage. Preserve no false manufacturer wins or 6-35kV TAM and avoid altering unrelated .agent/current-task.yaml.
+resume_instruction: Verify latest pushed research head CI and full local make test for 42-source/9-dossier code, then continue 2024-2025 223-FZ original procurement search and contract registry for 32616280467/32616433248/32616412267. Extract verified hardware budget separate from projects/design/maintenance. Primary XML first-place bids alone are not signed contract evidence; do not attribute FGI awards or estimate national TAM from sparse source-days.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -337,3 +337,34 @@ pq_continuation_20261026_41_leads:
     verified_signed_contracts_for_new_cases: 0
     actual_ukrm_sales_verified: 0
     national_market_size_rub: null
+
+pq_continuation_20261026_dynamic_filter_design:
+  task_status: in_progress
+  procurement_number: '32616280467'
+  tender_regime: 223-fz
+  buyer_name: ПАО Россети Волга
+  buyer_inn: '6450925977'
+  topic: ПИР динамическая компенсация реактивной мощности ВЛ10кВ Артскважина
+  publication_date: '2026-08-11'
+  primary_xml_archive_sha256: 24ded1cb5f0197bcb2fc59bddc1867383f20a1ca3eb761ae9715b5b5f5dddad0
+  source_bound_attachments_downloaded: 2
+  attached_original_documents: 7
+  original_annex_sha256: ec1edc6c1e849fe5bc8c774014994982b07db7ebaaf7c1381978ba8ceb7a8b75
+  technical_voltage_kv: 10
+  technical_dynamic_compensation_min_kvar: 160
+  specified_filter_modules: АДФ-У
+  ambient_temperature_min_C: -50
+  original_initial_design_nmck_rub: '3683790.00'
+  official_first_application_bid_rub: '3680106.21'
+  official_second_application_bid_rub: '3681948.11'
+  signed_registry_record_verified: false
+  secondary_claim_signed_price_rub: '3680106'
+  component_hardware_purchase_verified: false
+  detailed_technical_fit_for_FGI_without_auto_equivalence: true
+  corpus_total_records: 42
+  original_case_dossiers: 9
+  focused_pilot_after_addition: '37 passed, Ruff clean'
+  next_goals:
+    - original signed contracts winner INNs and category disaggregation
+    - historic 2024-2025 source records with attachments and without secondary label promotion
+    - full source-date EIS sample coverage and new EPC annex crossmatch
