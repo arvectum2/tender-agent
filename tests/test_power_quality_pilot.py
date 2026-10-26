@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 35
+    assert result["distinct_procedure_lots"] == 36
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 5, "2025": 4, "2026": 25
+        "2023": 1, "2024": 5, "2025": 5, "2026": 25
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 28, "statcom": 5, "harmonic_filter": 2}
+    assert result["category_counts"] == {"ukrm": 29, "statcom": 5, "harmonic_filter": 2}
     assert result["work_package_counts"] == {
-        "supply": 25, "maintenance": 3, "epc": 6, "design": 1
+        "supply": 26, "maintenance": 3, "epc": 6, "design": 1
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 36
-    assert report["distinct_procedure_lots"] == 35
+    assert report["seed_records"] == 37
+    assert report["distinct_procedure_lots"] == 36
     assert report["mirror_duplicates_removed"] == 1
 
 
@@ -188,7 +188,7 @@ def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(see
     dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text(encoding="utf-8"))
     cases = {case["number"]: case for case in dossiers["cases"]}
     assert set(cases) == {"32615614821", "32616120582", "32615969197", "32616497692", "0372100005626000037"}
-    assert len(seed["records"]) == 35
+    assert len(seed["records"]) == 36
     assert dossiers["verified_signed_contracts"] == 0
     assert dossiers["national_6_35kv_market_size_rub"] is None
     assert cases["32615614821"]["signed_contract_price_rub"] is None
@@ -252,7 +252,7 @@ def test_fgi_portfolio_screen_does_not_assert_approved_substitution():
 
 def test_20261026_secondary_extension_preserves_real_world_risk_gates(seed, ontology):
     report = analyze_pilot(seed, ontology)
-    assert len(seed["records"]) == 35
+    assert len(seed["records"]) == 36
     ids = {r["procedure_id"] for r in report["leads"]}
     assert {"РН41205245", "895449", "77907981", "77795100", "86829457", "1190793", "1234013"} <= ids
     assert report["market_size_rub"] is None
@@ -318,4 +318,17 @@ def test_vyartsilya_primary_10kv_3mvar_source_and_epc_price_split(seed, ontology
     assert c["primary_budget_split_initial_with_vat"]["oktyabr_transformer_and_reconstruction_rub"] == "70146212.19"
     assert c["signed_contract"] is False
     assert c["manufacturer_verified"] is False
+    assert report["market_size_rub"] is None
+
+
+def test_2025_ukrm6kv_rosneft_index_keeps_invented_notice_id_and_award_closed(seed, ontology):
+    report=analyze_pilot(seed,ontology)
+    item=next(r for r in report["leads"] if r["id"] == "pq-2025-rosneft-block-box-ukrm6kv-secondary")
+    assert item["procedure_id"] is None
+    assert "unverified" in item["canonical_id"]
+    assert "6 кВ" in item["description"]
+    assert item["customer"]["inn"] is None
+    assert item["nmck_rub"] is None
+    assert item["status"] == "unknown"
+    assert item["evidence"][0]["source_tier"] == "third_party"
     assert report["market_size_rub"] is None

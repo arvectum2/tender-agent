@@ -15,7 +15,7 @@ completed:
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: Official original-source 10kV/3Mvar UKRM PS Vyartsilya and primary EPC budget split now verified; 35 discovery records (27 prior plus 7 secondary and 1 official); 202 verified region-source days, 381 ZIP, 25629 XML over 18 regions, still not national coverage. New original case 32616497692 is tender open at current observation with no awarded supplier; prior cases original-source official 223-FZ dossiers completed for 32615614821 and 32616120582; 7 original attachments for EACH downloaded with 13 nested 7z files (Nagornaya) and 18 nested ZIP files (Karelia); confirmed 6/6.3kV UKRM specification, named single bidder TechnoProm offer 1.8333583m ex VAT, Karelia winning application 4149972340 17m EPC offer (legal name unknown). 27 distinct discovery procedures after merging internal 26Т0110040.0017 alias to official 32616120582; no signed contract prices. Industrial eight-region 33 verified source-days/42 ZIP/2220 XML, 15 incomplete, plus Moscow-SPb 53/176/14573 and 4 incomplete; no national TAM.
+current: Official original-source 10kV/3Mvar UKRM PS Vyartsilya and primary EPC budget split now verified; 36 discovery records (27 prior plus 8 secondary and 1 official); 202 verified region-source days, 381 ZIP, 25629 XML over 18 regions, still not national coverage. New original case 32616497692 is tender open at current observation with no awarded supplier; prior cases original-source official 223-FZ dossiers completed for 32615614821 and 32616120582; 7 original attachments for EACH downloaded with 13 nested 7z files (Nagornaya) and 18 nested ZIP files (Karelia); confirmed 6/6.3kV UKRM specification, named single bidder TechnoProm offer 1.8333583m ex VAT, Karelia winning application 4149972340 17m EPC offer (legal name unknown). 27 distinct discovery procedures after merging internal 26Т0110040.0017 alias to official 32616120582; no signed contract prices. Industrial eight-region 33 verified source-days/42 ZIP/2220 XML, 15 incomplete, plus Moscow-SPb 53/176/14573 and 4 incomplete; no national TAM.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
   - Reconcile the actual official signed contract registers and winner INN for 32615614821 and 32616120582; do not promote selected bidder/app or bid offer to signed price.
@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Verify exact-head CI for newly committed 35-lead/5-case 2026-10-26 extended research. Continue original 44/223-FZ signed-contract registry to identify winner names/INNs and final contracts, prioritized 32615614821, 32616120582 and post-deadline 32616497692. Collect original annexes of commercial ETP seven discovered cases and FGI-relevant medium-voltage equipment, systematically sample dates/regions with audit and no national TAM until completeness is defensible. Do not auto-bid current open 32616497692 (prior framework prequalification).
+resume_instruction: Verify exact-head CI for newly committed 36-lead/5-case 2026-10-26 extended research. Continue original 44/223-FZ signed-contract registry to identify winner names/INNs and final contracts, prioritized 32615614821, 32616120582 and post-deadline 32616497692. Collect original annexes of commercial ETP seven discovered cases and FGI-relevant medium-voltage equipment, systematically sample dates/regions with audit and no national TAM until completeness is defensible. Do not auto-bid current open 32616497692 (prior framework prequalification).
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -190,10 +190,11 @@ pq_continue_20261026_run2:
   status: in_progress
   research_goal: independently expand 2024-2026 PQ discovery, source provenance and EPC component attribution
   discovery_before: 27
-  new_secondary_discovery_records: 7
+  new_secondary_discovery_records: 8
   new_first_party_eis_records: 1
-  unique_total_after: 35
-  source_year_counts: {2023: 1, 2024: 5, 2025: 4, 2026: 25}
+  unique_total_after: 36
+  extra_source_2025_after_initial_extension: "Роснефть 28.02.2025 UKRM in 6kV blockbox, energybase third_party, original purchase ID and signed price unknown."
+  source_year_counts: {2023: 1, 2024: 5, 2025: 5, 2026: 25}
   new_secondary_ids: [РН41205245, '895449', '77907981', '77795100', '86829457', '1190793', '1234013']
   new_first_party_number: '32616497692'
   first_party:
@@ -246,3 +247,13 @@ pq_continue_20261026_run2:
     signed_equipment_contract_prices_verified: 0
     manufacturer_to_award_verified: 0
     original_v1_baseline_immutable: true
+
+pq_continue_20261026_run2_historical_2025:
+  total_discovery: 36
+  new_case: '2025-02-28 Rosneft block-box UKRM 6kV'
+  source_url: https://energybase.ru/integrated/rosneft/tenders/condensers-compensators
+  source_tier: third_party
+  original_procurement_id: null
+  winning_supplier_and_inn: null
+  signed_contract_price: null
+  control: 'Discovered request for TKP only; not counted in equipment turnover.'
