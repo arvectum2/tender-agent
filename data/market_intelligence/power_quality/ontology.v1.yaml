@@ -34,7 +34,7 @@ families:
     exclusions: ['фильтрация звуковых гармоник', 'аудиофильтр', 'математические гармонические функции']
   - id: power_quality_system
     label: Complex PQ modernization and voltage stabilization
-    positive: ['качество электроэнергии', 'power quality', 'стабилизация напряжения', 'провалы напряжения', 'фликер', 'PQ', 'электромагнитная совместимость']
+    positive: ['качество электроэнергии', 'power quality', 'стабилизация напряжения', 'провалы напряжения', 'фликер', 'PQ', 'электромагнитная совместимость', 'устройств компенсации реактивной мощности', 'устройство компенсации реактивной мощности']
     contexts: ['модернизация подстанции', 'проектирование электроснабжения', 'главная понизительная подстанция', 'непрерывное производство']
     exclusions: ['PQ as a brand or unrelated abbreviation', 'power quality meter only unless scope needs compensator']
     ambiguous_aliases: ['PQ']

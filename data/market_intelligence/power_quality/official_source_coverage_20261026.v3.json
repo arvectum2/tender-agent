@@ -1,0 +1,51 @@
+{
+  "industrial_eight_regions": {
+    "date_from": "2024-01-01",
+    "date_to": "2026-10-25",
+    "regions": [
+      "02",
+      "16",
+      "52",
+      "63",
+      "66",
+      "74",
+      "86",
+      "89"
+    ],
+    "subsystems": [
+      "RI223",
+      "PRIZ"
+    ],
+    "total_source_day_slots": 16464,
+    "verified_day_slots": 33,
+    "missing_day_slots": 16416,
+    "incomplete_day_slots": 15,
+    "invalid_evidence_day_slots": 0,
+    "sha_verified_archives": 42,
+    "xml_documents_inspected_not_unique_tenders": 2220,
+    "historical_exhaustiveness_verified": false,
+    "winner_contracts_verified": false
+  },
+  "moscow_spb": {
+    "date_from": "2023-10-25",
+    "date_to": "2026-10-25",
+    "regions": [
+      "77",
+      "78"
+    ],
+    "subsystems": [
+      "RI223",
+      "PRIZ"
+    ],
+    "total_source_day_slots": 4388,
+    "verified_day_slots": 53,
+    "missing_day_slots": 4331,
+    "incomplete_day_slots": 4,
+    "invalid_evidence_day_slots": 0,
+    "sha_verified_archives": 176,
+    "xml_documents_inspected_not_unique_tenders": 14573,
+    "historical_exhaustiveness_verified": false,
+    "winner_contracts_verified": false
+  },
+  "note": "Two non-identical region/date sampling frames: never combine denominators into national coverage; missing days do not prove no tenders."
+}

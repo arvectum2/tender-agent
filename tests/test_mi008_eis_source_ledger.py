@@ -239,3 +239,35 @@ def test_actual_eis_sized_large_application_group_is_bounded(tmp_path: Path):
             path, official_archive_sha256=sha, subsystem="PRIZ",
             region="77", exact_date="2026-10-08",
         )
+
+def test_kesmbo_notice_and_summingup_protocol_originals_are_linked_without_award(tmp_path: Path):
+    number = "32616120582"
+    notice = f"""<purchaseNoticeKESMBO><body><item><purchaseNoticeKESMBOData>
+    <registrationNumber>{number}</registrationNumber>
+    <customer><mainInfo><fullName>ПАО Россети Северо-Запад</fullName><inn>7802312751</inn></mainInfo></customer>
+    <lots><lot><ordinalNumber>1</ordinalNumber><lotData>
+    <subject>Монтаж УКРМ 6 кВ в составе EPC</subject><initialSum>21120361.66</initialSum>
+    <currency><code>RUB</code></currency></lotData></lot></lots>
+    </purchaseNoticeKESMBOData></item></body></purchaseNoticeKESMBO>""".encode()
+    protocol = f"""<purchaseProtocolSummingupKESMBO><body><item>
+    <purchaseProtocolSummingupKESMBOData><purchaseInfo>
+    <purchaseNoticeNumber>{number}</purchaseNoticeNumber></purchaseInfo>
+    <registrationNumber>{number}-04</registrationNumber>
+    <lotApplicationsList><protocolLotApplications><lot><ordinalNumber>1</ordinalNumber></lot>
+    <application><applicationNumber>4149972340</applicationNumber><price>17000000.0</price>
+    <currency><code>RUB</code></currency><accepted>true</accepted>
+    <contractSigned>true</contractSigned></application>
+    </protocolLotApplications></lotApplicationsList>
+    </purchaseProtocolSummingupKESMBOData></item></body></purchaseProtocolSummingupKESMBO>""".encode()
+    p = tmp_path / "original-kesmbo.zip"
+    sha = _archive(p, [("notice.xml", notice), ("protocol.xml", protocol)])
+    docs = _extract(p, sha)
+    notice_record = next(x for x in docs if x["record_kind"] == "notice")
+    protocol_record = next(x for x in docs if x["record_kind"] == "protocol")
+    assert notice_record["notice_number"] == protocol_record["notice_number"] == number
+    assert notice_record["customer_inn_evidence"] == "7802312751"
+    assert notice_record["initial_lots"][0]["initial_sum_text"] == "21120361.66"
+    assert protocol_record["applications"][0]["bid_price_text"] == "17000000.0"
+    assert protocol_record["applications"][0]["contract_signed_flag_unverified"] is True
+    assert protocol_record["applications"][0]["winner_verified"] is False
+    assert link_original_documents(docs)["winner_verified"] is False

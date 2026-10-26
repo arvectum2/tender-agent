@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 27
+    assert result["distinct_procedure_lots"] == 28
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 1, "2025": 3, "2026": 22
+        "2023": 1, "2024": 1, "2025": 3, "2026": 23
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 20, "statcom": 5, "harmonic_filter": 2}
+    assert result["category_counts"] == {"ukrm": 21, "statcom": 5, "harmonic_filter": 2}
     assert result["work_package_counts"] == {
-        "supply": 19, "maintenance": 3, "epc": 4, "design": 1
+        "supply": 19, "maintenance": 3, "epc": 5, "design": 1
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 28
-    assert report["distinct_procedure_lots"] == 27
+    assert report["seed_records"] == 29
+    assert report["distinct_procedure_lots"] == 28
     assert report["mirror_duplicates_removed"] == 1
 
 
@@ -182,3 +182,35 @@ def test_original_20261024_source_and_report_baselines_are_preserved():
     old_report = json.loads((DATA / "pilot_report.v1.json").read_text(encoding="utf-8"))
     assert old_seed["as_of"] == old_report["as_of"] == "2026-10-24"
     assert len(old_seed["records"]) == old_report["distinct_procedure_lots"] == 12
+
+
+def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(seed):
+    dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text(encoding="utf-8"))
+    cases = {case["number"]: case for case in dossiers["cases"]}
+    assert set(cases) == {"32615614821", "32616120582", "0372100005626000037"}
+    assert len(seed["records"]) == 28
+    assert dossiers["verified_signed_contracts"] == 0
+    assert dossiers["national_6_35kv_market_size_rub"] is None
+    assert cases["32615614821"]["signed_contract_price_rub"] is None
+    assert cases["32615614821"]["owner_supplied_equipment_estimate_rub"] == "4900000"
+    assert cases["32615614821"]["selected_offer_rub"] == "1833358.30"
+    assert cases["32616120582"]["selected_bid_application"] == "4149972340"
+    assert cases["32616120582"]["selected_bid_price_rub"] == "17000000.00"
+    assert cases["32616120582"]["signed_contract_verified"] is False
+    assert cases["32616120582"]["equipment_contract_value_rub"] is None
+    assert cases["0372100005626000037"]["target_6_35kv"] is False
+
+
+def test_official_source_coverage_is_bounded_and_not_national_completeness():
+    proof = json.loads((DATA / "official_source_coverage_20261026.v3.json").read_text(encoding="utf-8"))
+    assert proof["industrial_eight_regions"]["verified_day_slots"] == 33
+    assert proof["industrial_eight_regions"]["sha_verified_archives"] == 42
+    assert proof["industrial_eight_regions"]["incomplete_day_slots"] == 15
+    assert proof["moscow_spb"]["verified_day_slots"] == 53
+    assert proof["moscow_spb"]["sha_verified_archives"] == 176
+    assert all(
+        x["historical_exhaustiveness_verified"] is False
+        and x["winner_contracts_verified"] is False
+        and x["invalid_evidence_day_slots"] == 0
+        for x in (proof["industrial_eight_regions"], proof["moscow_spb"])
+    )

@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import tempfile
 import zipfile
 from collections.abc import Iterator
@@ -79,12 +80,17 @@ def scan_archive(zip_path: Path, ontology: dict[str, Any]) -> dict[str, Any]:
                 raise ValueError("DTD/entities forbidden in SOAP XML")
             root = ET.fromstring(data)
             notice_number = None
+            # EIS 223-FZ uses 11 digits; 44-FZ uses 19-20 digits.
+            # Do not mistake internal short purchaseNumber fields for registry IDs.
             for node in root.iter():
-                if _local_name(node.tag) in {"registrationNumber", "purchaseNoticeNumber"}:
-                    candidate = (node.text or "").strip()
-                    if candidate:
-                        notice_number = candidate
-                        break
+                tag = _local_name(node.tag)
+                candidate = (node.text or "").strip()
+                if ((tag in {"registrationNumber", "purchaseNoticeNumber"}
+                     and re.fullmatch(r"[0-9]{11}", candidate))
+                    or (tag == "purchaseNumber"
+                        and re.fullmatch(r"[0-9]{19,20}", candidate))):
+                    notice_number = candidate
+                    break
             for locator, text in _iterate_xml_candidates(root):
                 for hit in _matching_terms(text, ontology):
                     matches.append({

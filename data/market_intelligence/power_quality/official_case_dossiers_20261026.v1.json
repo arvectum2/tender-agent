@@ -1,0 +1,123 @@
+{
+  "schema_version": "mi013-pq-original-dossiers/0.1",
+  "as_of": "2026-10-26",
+  "case_count": 3,
+  "cases": [
+    {
+      "number": "32615614821",
+      "regime": "223-fz",
+      "buyer": "ООО Башкирские распределительные электрические сети",
+      "buyer_inn": "0277071467",
+      "project": "Нагорная: реконструкция ПС / устройства компенсации 6.3 кВ",
+      "role": "epc installation, not equipment manufacturer",
+      "nmck_works_rub": "1432983.66",
+      "nmck_vat_basis": "excluding VAT",
+      "selected_company_from_protocol": "ООО ТЕХНОПРОМ",
+      "selected_company_inn": null,
+      "procedure": "one-compliant-application; unsuccessful competition; commission decided single-participant procurement",
+      "commission_date": "2026-03-03",
+      "selected_offer_rub": "1833358.30",
+      "selected_offer_vat_basis": "excluding VAT",
+      "signed_contract_price_rub": null,
+      "signed_contract_verified": false,
+      "equipment_contract_value_rub": null,
+      "equipment": "1 × УКРМ56-6,3-200-(1х50+2х75) М4, 5S; 6.3 kV; 200 kvar",
+      "owner_supplied_equipment_estimate_rub": "4900000",
+      "separate_cabinet_budget_rub": "3177000",
+      "note": "Owner-supplied 4.9m and separate cabinet estimate 3.177m are not additive/contractor sales. Notice says ПС 110кV, cost document says ПС 35кV / 6kV section.",
+      "primary_sources": [
+        {
+          "type": "eis_xml",
+          "sha256": "2d5e1b593db24c211ad1d7f15f08e8e7147eb08c97934968a238c312a3b27072"
+        },
+        {
+          "type": "final_commission_protocol_pdf",
+          "sha256": "31a9ea56be8205e2f011328ce24dd7f65a3aa56637a5a422cbdcba30643c4475"
+        },
+        {
+          "type": "montage_and_equipment_xlsx",
+          "sha256": "270eb3f5f890ec81a042ecf36f8b03e982416fb62cc3cc5152a774df23d3b5a6"
+        },
+        {
+          "type": "work_budget_summary_xlsx",
+          "sha256": "3d05f46a8a99f08c35d5ad29b153d91bf2606d27ccf4045929ac0cebc5e063a0"
+        }
+      ],
+      "official_downloads": 7,
+      "nested_7z_packages": 2,
+      "nested_children": 13,
+      "text_extractable_files": 23,
+      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615614821&noticeGuid=a93ca4df-2ce0-401c-9270-1a82aa8a7e93"
+    },
+    {
+      "number": "32616120582",
+      "regime": "223-fz",
+      "buyer": "ПАО Россети Северо-Запад",
+      "buyer_inn": "7802312751",
+      "beneficiary": "ООО Прайм, Карелия",
+      "publication_date": "2026-06-17",
+      "project": "Строительство ЛЭП 6 кВ 0.175км, монтаж УКРМ 6 кВ, КЛ 0.05км, прибор учёта 0.4 кВ",
+      "role": "EPC turnkey and design",
+      "nmck_full_epc_rub": "21120361.66",
+      "bid_count": 2,
+      "commission_meeting": "2026-08-04",
+      "final_protocol_signed": "2026-08-06",
+      "selected_bid_application": "4149972340",
+      "selected_bid_price_rub": "17000000.00",
+      "other_bid_application": "1914816005",
+      "other_bid_price_rub": "21120361.66",
+      "winning_legal_entity": null,
+      "winning_inn": null,
+      "signed_contract_price_rub": null,
+      "signed_contract_verified": false,
+      "equipment_contract_value_rub": null,
+      "revision_review_required": true,
+      "technical_requirements": [
+        "separate KРУН-6кВ cell",
+        "digital measurement with telecontrol",
+        "harmonic overcurrent protection",
+        "capacitor internal fault and imbalance protection",
+        "overvoltage and incomplete capacitor discharge interlocks",
+        "precommissioning network measurements by specialists"
+      ],
+      "cost_note": "The source budget XLSX has an installation/commissioning budget section in thousand RUB; not a component supplier price. Full EPC price must not be treated as equipment turnover.",
+      "primary_sources": [
+        {
+          "type": "eis_xml",
+          "sha256": "2359d6becf9cbe7a3f13dca141d0ccab4201966dc59aa0e8f3b336b053d06403"
+        },
+        {
+          "type": "technical_spec_docx",
+          "sha256": "2d3804e8da8163e449f949f5ce2410ae62bf6ff1b47953924d2274b26ff511f0"
+        },
+        {
+          "type": "final_protocol_docx",
+          "sha256": "0e25df1000d765d38a5445150d1a5637b39dd970438dbb627e68aa60b9222f26"
+        },
+        {
+          "type": "budget_xlsx",
+          "sha256": "741d0d720be7a96c29b7765940f9dbeeda01c0c1f44a091838c70f34cda8b551"
+        }
+      ],
+      "official_downloads": 7,
+      "nested_zip_children": 18,
+      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616120582&noticeGuid=da924227-1268-41a6-a180-76fc6b5e9098"
+    },
+    {
+      "number": "0372100005626000037",
+      "regime": "44-fz",
+      "buyer": "Государственный Эрмитаж",
+      "initial_nmck_rub": "15027344.11",
+      "description": "Активные фильтры гармоник",
+      "voltage_range_v": "208–415",
+      "target_6_35kv": false,
+      "exclusion": "Original EIS XML confirms low-voltage device, not medium-voltage PQ.",
+      "official_archive_sha256": "54bfaf5859b397fa5f5c6dcc2a2faed45f344306510da9cb718860fd6039aa54",
+      "official_xml_sha256": "b0d0ab3dbfc0ec28a922f40839ba0c7e8770ea576d20916face0180beb21387b"
+    }
+  ],
+  "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",
+  "private_originals": "Stored on authorized Mac mini, outside Git.",
+  "verified_signed_contracts": 0,
+  "national_6_35kv_market_size_rub": null
+}

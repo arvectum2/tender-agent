@@ -131,7 +131,7 @@ def _applications_44(root: ET.Element) -> list[dict[str, Any]]:
 
 def _document_fields(root: ET.Element) -> dict[str, Any]:
     kind = _local(root.tag)
-    if kind in ("purchaseNotice", "purchaseNoticeZKESMBO", "purchaseNoticeZPESMBO"):
+    if kind in ("purchaseNotice", "purchaseNoticeZKESMBO", "purchaseNoticeZPESMBO", "purchaseNoticeKESMBO"):
         original = _first(root, f"body/item/{kind}Data")
         if original is None:
             return {
@@ -174,7 +174,7 @@ def _document_fields(root: ET.Element) -> dict[str, Any]:
         }
     if kind in (
         "purchaseProtocol", "purchaseProtocolSummingupZKESMBO",
-        "purchaseProtocolRZ1ZPESMBO",
+        "purchaseProtocolRZ1ZPESMBO", "purchaseProtocolSummingupKESMBO",
     ):
         original = _first(root, f"body/item/{kind}Data")
         return {

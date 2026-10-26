@@ -56,6 +56,33 @@ def test_detects_ukrm_inside_223fz_xml_and_keeps_source_hash(tmp_path, ontology)
     assert all(x["source"]["xml_member"] == "notice.xml" for x in evidence["matches"])
 
 
+def test_44fz_source_notice_number_ignores_internal_short_id(tmp_path, ontology):
+    p = tmp_path / "eis44.zip"
+    xml = (
+        b"<export><epNotificationEF2020><commonInfo>"
+        b"<purchaseNumber>0372100005626000037</purchaseNumber>"
+        b"</commonInfo><purchaseObject><name>"
+        + "Активный фильтр гармоник".encode()
+        + b"</name><purchaseNumber>0048</purchaseNumber>"
+        b"</purchaseObject></epNotificationEF2020></export>"
+    )
+    _zip(p, [("epNotificationEF2020_0372100005626000037_1.xml", xml)])
+    result = scan_archive(p, ontology)
+    assert result["candidate_numbers"] == ["0372100005626000037"]
+    assert all(hit["number"] == "0372100005626000037" for hit in result["matches"])
+
+
+def test_generic_reactive_compensation_is_not_asserted_ukrm(tmp_path, ontology):
+    p = tmp_path / "generic.zip"
+    _zip(p, [("a.xml", _xml(
+        "Реконструкция ПС 110 кВ в части установки устройств компенсации реактивной мощности"
+    ))])
+    result = scan_archive(p, ontology)
+    assert result["candidate_numbers"] == ["32615969197"]
+    assert any(x["family"] == "power_quality_system" for x in result["matches"])
+    assert not any(x["family"] == "ukrm" for x in result["matches"])
+
+
 def test_statcom_inside_epc_lot_is_candidate_not_award(tmp_path, ontology):
     p = tmp_path / "epc.zip"
     _zip(p, [("a.xml", _xml("Комплексная модернизация подстанции с СТАТКОМ и фильтром гармоник"))])
