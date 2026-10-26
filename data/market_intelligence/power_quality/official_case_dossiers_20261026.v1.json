@@ -1,7 +1,7 @@
 {
   "schema_version": "mi013-pq-original-dossiers/0.1",
   "as_of": "2026-10-26",
-  "case_count": 4,
+  "case_count": 5,
   "cases": [
     {
       "number": "32615614821",
@@ -137,6 +137,52 @@
       "original_document_downloads": 4,
       "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615969197",
       "evidence_gate": "no bids; no award; not a 10kV equipment contract"
+    },
+    {
+      "number": "32616497692",
+      "regime": "223-fz",
+      "publication_date": "2026-10-22",
+      "notice_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616497692",
+      "original_notice_xml_archive_sha256": "cb9caa81c087160093dec95e72207add9aaf5f20c449c6205e12167b7e3ce2a2",
+      "original_source_bound_docs_zip_sha256": "95b59be1435f52da4ac039025824cabd6f0a944b1486585085ec41d05f67e629",
+      "original_ukrm_technical_docx_sha256": "28982223fc3f30dba1eefbfd0cf2c23200a192621b0b11b3d4f2e2fbf3ff272a",
+      "original_budget_xlsx_sha256": "edba9cbded1eb55ebdf111aba179dd4cc55a2eb2362f3fd4beb84887a81ccbd1",
+      "original_documents_in_zip": 10,
+      "buyer": "ПАО Россети Северо-Запад",
+      "buyer_inn": "7802312751",
+      "beneficiary": "ООО Охотничье хозяйство Черные камни, техприсоединение в Карелии",
+      "project": "Один EPC-лот: ПС 110кВ Вяртсиля (УКРМ 10кВ 3Мвар) + ПС 35кВ Октябрь замена трансформатора 1->4МВА",
+      "internal_alias": "26Т0210040.0015",
+      "prequalification_gate": "only winners of prior selection 26Т0210010.0001 may bid",
+      "ukrm": {
+        "voltage_kv": 10,
+        "reactive_power_mvar": 3,
+        "quantity": 1,
+        "technical_reference": "УКРЛ56 10,5-3150-900 У1 or equivalent",
+        "regulation": "stepped automatic by 10kV busbar voltage",
+        "additional_scope": "one KРУН 10kV cell with vacuum breaker, 0.05km 10kV cable, design and commissioning, specialist power measurements",
+        "materials_supplied_by": "EPC contractor",
+        "equipment_specific_price_rub": null
+      },
+      "initial_epc_nmck_rub_including_vat": "79101498.40",
+      "primary_budget_split_initial_with_vat": {
+        "vyartsilya_ukrm_plus_bay_plus_cable_plus_design_rub": "8955286.21",
+        "oktyabr_transformer_and_reconstruction_rub": "70146212.19",
+        "addition_matches_epc_nmck": true,
+        "vyartsilya_without_vat_rub": "7340398.53"
+      },
+      "ukrm_works_budget_prognosis_not_equipment_price": {
+        "montage_ukrm_category_rub": "4346793.32",
+        "commissioning_ukrm_category_rub": "153830.76",
+        "supplier_revenue_confirmed": false
+      },
+      "source_xlsx_note": "Budget cached values in thousands RUB sheet1 H24/H26, summary C18/D18/J18. Some intermediate sheet2 #REF! cached formulas; compare final budget sheet1 with official XML NMCK. Not contracted prices.",
+      "signed_contract": false,
+      "signed_contract_price_rub": null,
+      "winning_legal_entity": null,
+      "manufacturer_verified": false,
+      "market_equipment_tam_rub": null,
+      "evidence_gate": "primary procurement notice and source budget proven, open 2026-10-26; no winner or signed contract"
     }
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",

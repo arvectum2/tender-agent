@@ -15,7 +15,7 @@ completed:
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: New original-source official 223-FZ dossiers completed for 32615614821 and 32616120582; 7 original attachments for EACH downloaded with 13 nested 7z files (Nagornaya) and 18 nested ZIP files (Karelia); confirmed 6/6.3kV UKRM specification, named single bidder TechnoProm offer 1.8333583m ex VAT, Karelia winning application 4149972340 17m EPC offer (legal name unknown). 27 distinct discovery procedures after merging internal 26Т0110040.0017 alias to official 32616120582; no signed contract prices. Industrial eight-region 33 verified source-days/42 ZIP/2220 XML, 15 incomplete, plus Moscow-SPb 53/176/14573 and 4 incomplete; no national TAM.
+current: Official original-source 10kV/3Mvar UKRM PS Vyartsilya and primary EPC budget split now verified; 35 discovery records (27 prior plus 7 secondary and 1 official); 202 verified region-source days, 381 ZIP, 25629 XML over 18 regions, still not national coverage. New original case 32616497692 is tender open at current observation with no awarded supplier; prior cases original-source official 223-FZ dossiers completed for 32615614821 and 32616120582; 7 original attachments for EACH downloaded with 13 nested 7z files (Nagornaya) and 18 nested ZIP files (Karelia); confirmed 6/6.3kV UKRM specification, named single bidder TechnoProm offer 1.8333583m ex VAT, Karelia winning application 4149972340 17m EPC offer (legal name unknown). 27 distinct discovery procedures after merging internal 26Т0110040.0017 alias to official 32616120582; no signed contract prices. Industrial eight-region 33 verified source-days/42 ZIP/2220 XML, 15 incomplete, plus Moscow-SPb 53/176/14573 and 4 incomplete; no national TAM.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
   - Reconcile the actual official signed contract registers and winner INN for 32615614821 and 32616120582; do not promote selected bidder/app or bid offer to signed price.
@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Check CI exact-head after recording fourth primary case 32615969197 and source reports; resolve any test failures. Continue official EIS signed contract registry for 32615614821/32616120582, equipment-only prices and true winner INNs; pursue commercial primary source attachments and annex semantic search nationwide with user-approved limits. Preserve 27 deduplicated leads and do not infer TAM from 144 sparse official source-day cells.
+resume_instruction: Verify exact-head CI for newly committed 35-lead/5-case 2026-10-26 extended research. Continue original 44/223-FZ signed-contract registry to identify winner names/INNs and final contracts, prioritized 32615614821, 32616120582 and post-deadline 32616497692. Collect original annexes of commercial ETP seven discovered cases and FGI-relevant medium-voltage equipment, systematically sample dates/regions with audit and no national TAM until completeness is defensible. Do not auto-bid current open 32616497692 (prior framework prequalification).
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -185,3 +185,64 @@ mi013_final_local_acceptance_20261026:
   github_ci_completion_at_checkpoint: 'in_progress_not_claimed_green'
   task_status: in_progress
   blocker: 'Country-wide 2024-2026 coverage, signed contracts, true award winner INNs and PQ component prices remain unverified.'
+
+pq_continue_20261026_run2:
+  status: in_progress
+  research_goal: independently expand 2024-2026 PQ discovery, source provenance and EPC component attribution
+  discovery_before: 27
+  new_secondary_discovery_records: 7
+  new_first_party_eis_records: 1
+  unique_total_after: 35
+  source_year_counts: {2023: 1, 2024: 5, 2025: 4, 2026: 25}
+  new_secondary_ids: [РН41205245, '895449', '77907981', '77795100', '86829457', '1190793', '1234013']
+  new_first_party_number: '32616497692'
+  first_party:
+    buyer: 'ПАО Россети Северо-Запад'
+    buyer_inn: '7802312751'
+    region: Карелия
+    ukrm_voltage_kv: 10
+    ukrm_capacity_mvar: 3
+    ukrm_quantity: 1
+    model_in_technical_spec: 'УКРЛ56 10,5-3150-900 У1 or equivalent'
+    source_xml_sha256: cb9caa81c087160093dec95e72207add9aaf5f20c449c6205e12167b7e3ce2a2
+    original_attachment_zip_sha256: 95b59be1435f52da4ac039025824cabd6f0a944b1486585085ec41d05f67e629
+    original_ukrm_technical_docx_sha256: 28982223fc3f30dba1eefbfd0cf2c23200a192621b0b11b3d4f2e2fbf3ff272a
+    primary_budget_xlsx_sha256: edba9cbded1eb55ebdf111aba179dd4cc55a2eb2362f3fd4beb84887a81ccbd1
+    official_epc_nmck_rub_with_vat: '79101498.40'
+    ukrm_subproject_initial_ceiling_plus_krun_cable_design_rub: '8955286.21'
+    ps_oktyabr_transformer_initial_ceiling_rub: '70146212.19'
+    equipment_only_signed_contract_price: null
+    winner_identity: null
+    prior_framework_selection_gate: '26Т0210010.0001'
+    original_technical_annexes_and_sheets_extracted: 10
+  official_eis_2024_2025_extension:
+    calls_executed: 72
+    newly_verified_cells: 58
+    newly_incomplete_cells: 14
+    newly_verified_archives: 83
+    newly_scanned_original_xml: 4446
+    current_verified_cells: 202
+    current_incomplete_cells: 59
+    current_original_zip_sha_verified: 381
+    current_original_xml_nonunique: 25629
+    invalid_archive_count: 0
+    all_archive_lexical_scan_zips: 387
+    all_archive_lexical_scan_xml: 25652
+    all_archive_lexical_scan_distinct_tender_family_groups: 5
+    all_archive_lexical_scan_errors: 0
+  local_focused_checks: '60 passed, 1 warning, Ruff clean, git diff --check clean'
+  base_commit_exact_ci: 'c7f886d95e8c0ea6be46f35132625d807684bf6d; GitHub run 40304055660 success'
+  added_files:
+    - data/market_intelligence/power_quality/official_source_coverage_20261026.v5.json
+  updated_files:
+    - data/market_intelligence/power_quality/verified_public_leads_20261025.v2.json
+    - data/market_intelligence/power_quality/official_case_dossiers_20261026.v1.json
+    - data/market_intelligence/power_quality/fgi_fit_source_bound_20261026.v1.json
+    - docs/market_intelligence/MI013_FULL_LEAD_REGISTER_20261026.md
+    - docs/market_intelligence/MI013_ORIGINAL_DOCUMENT_RESEARCH_20261026.md
+    - tests/test_power_quality_pilot.py
+  stop_gates:
+    nationwide_tam_verified: false
+    signed_equipment_contract_prices_verified: 0
+    manufacturer_to_award_verified: 0
+    original_v1_baseline_immutable: true

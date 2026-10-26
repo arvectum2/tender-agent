@@ -1,0 +1,104 @@
+{
+  "schema_version": "mi013-source-coverage/0.5",
+  "as_of": "2026-10-26",
+  "cohorts": {
+    "moscow_st_petersburg": {
+      "date_from": "2023-10-25",
+      "date_to": "2026-10-25",
+      "regions": [
+        "77",
+        "78"
+      ],
+      "subsystems": [
+        "RI223",
+        "PRIZ"
+      ],
+      "total_source_day_slots": 4388,
+      "verified_day_slots": 53,
+      "missing_day_slots": 4331,
+      "incomplete_day_slots": 4,
+      "invalid_evidence_day_slots": 0,
+      "sha_verified_archives": 176,
+      "xml_documents_inspected_not_unique_tenders": 14573,
+      "historical_exhaustiveness_verified": false,
+      "winner_contracts_verified": false
+    },
+    "industrial_west_and_ural": {
+      "date_from": "2024-01-01",
+      "date_to": "2026-10-25",
+      "regions": [
+        "02",
+        "16",
+        "52",
+        "63",
+        "66",
+        "74",
+        "86",
+        "89"
+      ],
+      "subsystems": [
+        "RI223",
+        "PRIZ"
+      ],
+      "total_source_day_slots": 16464,
+      "verified_day_slots": 77,
+      "missing_day_slots": 16359,
+      "incomplete_day_slots": 28,
+      "invalid_evidence_day_slots": 0,
+      "sha_verified_archives": 105,
+      "xml_documents_inspected_not_unique_tenders": 5602,
+      "historical_exhaustiveness_verified": false,
+      "winner_contracts_verified": false
+    },
+    "industrial_east_and_siberia": {
+      "date_from": "2024-01-01",
+      "date_to": "2026-10-25",
+      "regions": [
+        "14",
+        "24",
+        "38",
+        "42",
+        "54",
+        "61",
+        "72",
+        "75"
+      ],
+      "subsystems": [
+        "RI223",
+        "PRIZ"
+      ],
+      "total_source_day_slots": 16464,
+      "verified_day_slots": 72,
+      "missing_day_slots": 16365,
+      "incomplete_day_slots": 27,
+      "invalid_evidence_day_slots": 0,
+      "sha_verified_archives": 100,
+      "xml_documents_inspected_not_unique_tenders": 5454,
+      "historical_exhaustiveness_verified": false,
+      "winner_contracts_verified": false
+    }
+  },
+  "sampled_cohort_totals_not_national_market": {
+    "total_source_day_slots": 37316,
+    "verified_day_slots": 202,
+    "missing_day_slots": 37055,
+    "incomplete_day_slots": 59,
+    "invalid_evidence_day_slots": 0,
+    "sha_verified_archives": 381,
+    "xml_documents_inspected_not_unique_tenders": 25629
+  },
+  "assertions": {
+    "no_source_day_evidence_errors": true,
+    "national_market_census": false,
+    "verified_contract_pricing": false,
+    "equipment_turnover_estimate_rub": null
+  },
+  "additional_2024_2025_official_collection": {
+    "executed_soap_calls": 72,
+    "reported_by_execution_verified": 58,
+    "reported_by_execution_incomplete": 14,
+    "reported_original_zip_sha_verified": 83,
+    "reported_original_xml_nonunique": 4446
+  },
+  "warning": "Three sparse regional/monthly cohorts have different start years; incomplete cells are not zeros. No signed contracts or national census."
+}

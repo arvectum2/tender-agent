@@ -51,6 +51,19 @@
       "strict_equivalent_approved": false,
       "needed": "Not a replacement supply tender; retrofit business only after technical/legal request",
       "verified_FGI_vendor_award": false
+    },
+    {
+      "case": "32616497692",
+      "buyer": "Россети Северо-Запад, ПС Вяртсиля (Карелия)",
+      "actual_requirement": "One stepped capacitor bank УКРМ 10кВ 3 Мвар (УКРЛ56 10,5-3150-900 У1 or equivalent), КРУН bay, cable, protection and measurements, EPC",
+      "fgi_related": "FGI 10kV SVG / STATCOM product class",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "Customer approval of replacement of switched passive capacitor bank with IGBT SVG, capacity 3Mvar, protection and staged control requirements, conformance and performance calculations. Only prior framework qualified bidders may submit.",
+      "verified_FGI_vendor_award": false,
+      "original_epc_total_nmck_rub": "79101498.40",
+      "original_vyartsilya_subproject_initial_ceiling_with_vat_rub": "8955286.21",
+      "fgi_equipment_specific_award_rub": null
     }
   ],
   "commercial_guardrails": {
