@@ -1,0 +1,51 @@
+{
+  "schema_version": "mi013-source-original-semantic-audit/0.1",
+  "as_of": "2026-10-26",
+  "total_original_zip_scanned": 284,
+  "total_xml_versions_scanned": 20141,
+  "lexical_hits_before_dedup": 16,
+  "distinct_procurement_family_candidates": 4,
+  "errors": [],
+  "pedestrian_reflector_false_positive_excluded": true,
+  "procurements": [
+    {
+      "procurement_number": "0372100005626000037",
+      "family": "harmonic_filter",
+      "decision": "excluded_low_voltage",
+      "evidence_excerpt": "Активный фильтр гармоник",
+      "source_xml_sha256": "b0d0ab3dbfc0ec28a922f40839ba0c7e8770ea576d20916face0180beb21387b",
+      "source_archive_relative": "PRIZ/epNotificationEF2020/2026-05-15/region-78/archive-002/documentation-archive.zip",
+      "notes": "208–415 V, original 44-FZ specification, Hermitage"
+    },
+    {
+      "procurement_number": "32313008364",
+      "family": "statcom",
+      "decision": "excluded_year_and_service",
+      "evidence_excerpt": "Выполнение работ по сервисному обслуживанию системы охлаждения блоков СТАТКОМ на ПС 220 кВ Могоча для нужд Забайкальского ПМЭС",
+      "source_xml_sha256": "09d044cfedd0847d783e949cf9c0240c52f0466860993ec8fbc76dacb2c2db50",
+      "source_archive_relative": "exact-primary-223/32313008364/archive-001/documentation-archive.zip",
+      "notes": "2023 STATCOM service; not 2024-26 new supply"
+    },
+    {
+      "procurement_number": "32615969197",
+      "family": "ukrm",
+      "decision": "medium_voltage_design_qualified",
+      "evidence_excerpt": "26-004167 Выполнение ПИР на установку УКРМ 10кВ ПС 35кВ Пионерская для ПО НЭС ООО \"Башкирэнерго\"",
+      "source_xml_sha256": "f26cb57cb915c10d7d79db896ce58c6ddfd9a499e9c2e48451e8dac1354b372e",
+      "source_archive_relative": "exact-primary-223/32615969197/archive-001/documentation-archive.zip",
+      "notes": "UKRM 10 kV design proposal; no signed price"
+    },
+    {
+      "procurement_number": "32616120582",
+      "family": "ukrm",
+      "decision": "medium_voltage_epc_qualified",
+      "evidence_excerpt": "26Т0110040.0017. Выполнение полного комплекса работ под «ключ» по реализации инвестиционного проекта «Строительство ЛЭП 6 кВ (ориентировочной протяженностью 0,175 км, из них КЛ 6 кВ ГНБ - 0,125 км, КЛ",
+      "source_xml_sha256": "1749d200846a22e87e1f1407516f3a36af69e1865f3da0fc6b8a7ef540a86695",
+      "source_archive_relative": "exact-primary-223/32616120582/archive-001/documentation-archive.zip",
+      "notes": "UKRM 6 kV in turnkey EPC; signed contract/equipment amount unknown"
+    }
+  ],
+  "market_value_rub": null,
+  "signed_contracts_proved_from_notice_xml": 0,
+  "caution": "Lexical coverage of sampled EIS notice XML only; does not replace technical annex/contract registry search."
+}
