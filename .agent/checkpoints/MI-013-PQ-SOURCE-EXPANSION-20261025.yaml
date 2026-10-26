@@ -13,7 +13,7 @@ completed:
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: 25 discovery records in v2, tests revised in acbfd98fdad44437c19252bd9224ac51b44f85a3. Await exact-head CI; official contract evidence and 6-35kV eligibility unresolved.
+current: Corpus v2 expanded to 27 leads, including two direct Bidzaar primary-platform 6kV UKRM cases. Tests updated; CI pending. ARC Mac mini reachable but local tender-agent branch dirty and lacks MI data; avoid overwriting. Source documents listed on Bidzaar but downloads unavailable in this session.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
   - Acquire official originals and contract evidence under a separate read-only, source-bounded task.
@@ -23,10 +23,17 @@ test_results:
   - New deterministic expected 17 records / 0 verified awards; new tests added.
   - Initial CI run 40213600708: 5291 passed, 285 skipped, 3 failed in MI003 due in-place overwrite of frozen v1; root cause fixed by restoring pinned v1 and introducing v2.
   - Full exact-head CI rerun 40214539497 on updated v2 source/test/doc commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd is in_progress at checkpoint; never claim PASS until verified.
-resume_instruction: Check exact-head GitHub CI for acbfd98fdad44437c19252bd9224ac51b44f85a3; repair any test failure. Continue collecting official EIS/ETP documents, winner and contract proof and verify 6-35kV before market totals. Never count discovery leads as awards.
+resume_instruction: Check CI for 51a1967d62413890b7d82dc5b3f11cb6a6e03eea; fix test errors. Download four 306-644 and two 351-062 attachments via authenticated Bidzaar or ARC/browser if available; compute SHA256, extract technical specs, winners/contracts via primary records. Expand historical EIS coverage. Do not claim attachments downloaded until confirmed.
 
 research_extension_20261026:
   new_discovery_records: 8
   total_v2_records: 25
   code_commit: e4cd35a8bb3c1d318ebe4b11dd4c437de22eda5f
   caution: Third-party listing only, voltage and awards unverified; tests still need revision for 25.
+
+research_extension_primary_platform_20261026:
+  corpus_total: 27
+  new_ids: [306-644, 351-062]
+  code_commit: 51a1967d62413890b7d82dc5b3f11cb6a6e03eea
+  attachment_status: listed_on_platform_not_downloaded
+  arc_local_status: online_but_dirty_unrelated_branch
