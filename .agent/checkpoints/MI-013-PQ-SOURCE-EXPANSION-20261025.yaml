@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Push latest checkpoint + three-cohort 18-region coverage v4 + FGI source-bound fit and full 27-row original-evidence register; verify exact GitHub CI. Continue official EIS signed contract registry/true winner INN and technical annex equipment-only values for 32615614821 and 32616120582; expand source-days/ETPs/hidden EPC semantic matching. Do not infer national TAM from 144 sparse day cells.
+resume_instruction: Check CI exact-head after recording fourth primary case 32615969197 and source reports; resolve any test failures. Continue official EIS signed contract registry for 32615614821/32616120582, equipment-only prices and true winner INNs; pursue commercial primary source attachments and annex semantic search nationwide with user-approved limits. Preserve 27 deduplicated leads and do not infer TAM from 144 sparse official source-day cells.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -137,6 +137,18 @@ research_round_original_docs_20261026:
     - data/market_intelligence/power_quality/fgi_fit_source_bound_20261026.v1.json
     - docs/market_intelligence/MI013_FULL_LEAD_REGISTER_20261026.md
   equipment_market_tam_rub: null
+  updated_original_case_dossiers: 4
+  original_design_case_pionerskaya:
+    source_number: '32615969197'
+    original_documents_downloaded: 4
+    original_zip_sha256: 341a5a38b23e359969490f49085b2ca4a922fd237eab01dbdcdb9061b16771c6
+    technical_doc_sha256: aa7a6d8613a8eb6ca418ff509501388a800ad7cc1b5cfdd57ec4869965bb589d
+    commission_protocol_sha256: 5d5e57e3b0b7cf9791e365c4f82f1b0b3e22c03d7103d82fdedc5cf2a16e713a
+    voltage_kv: 10
+    design_only_nmck_rub: '518960.00'
+    result: failed_no_applications
+    signed_contract_verified: false
+
 
 research_industrial_rescan_20261026:
   task_status: in_progress

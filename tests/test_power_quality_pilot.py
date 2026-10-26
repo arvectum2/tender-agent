@@ -187,7 +187,7 @@ def test_original_20261024_source_and_report_baselines_are_preserved():
 def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(seed):
     dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text(encoding="utf-8"))
     cases = {case["number"]: case for case in dossiers["cases"]}
-    assert set(cases) == {"32615614821", "32616120582", "0372100005626000037"}
+    assert set(cases) == {"32615614821", "32616120582", "32615969197", "0372100005626000037"}
     assert len(seed["records"]) == 27
     assert dossiers["verified_signed_contracts"] == 0
     assert dossiers["national_6_35kv_market_size_rub"] is None
@@ -199,6 +199,9 @@ def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(see
     assert cases["32616120582"]["signed_contract_verified"] is False
     assert cases["32616120582"]["equipment_contract_value_rub"] is None
     assert cases["0372100005626000037"]["target_6_35kv"] is False
+    assert cases["32615969197"]["winner"] is None
+    assert cases["32615969197"]["signed_contract"] is False
+    assert cases["32615969197"]["initial_design_nmck_rub"] == "518960.00"
 
 
 def test_official_source_coverage_is_bounded_and_not_national_completeness():

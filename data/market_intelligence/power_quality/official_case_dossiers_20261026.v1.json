@@ -1,7 +1,7 @@
 {
   "schema_version": "mi013-pq-original-dossiers/0.1",
   "as_of": "2026-10-26",
-  "case_count": 3,
+  "case_count": 4,
   "cases": [
     {
       "number": "32615614821",
@@ -114,6 +114,29 @@
       "exclusion": "Original EIS XML confirms low-voltage device, not medium-voltage PQ.",
       "official_archive_sha256": "54bfaf5859b397fa5f5c6dcc2a2faed45f344306510da9cb718860fd6039aa54",
       "official_xml_sha256": "b0d0ab3dbfc0ec28a922f40839ba0c7e8770ea576d20916face0180beb21387b"
+    },
+    {
+      "number": "32615969197",
+      "regime": "223-fz",
+      "buyer": "ООО Башкирские распределительные электрические сети",
+      "buyer_inn": "0277071467",
+      "customer_project": "ПС 35кВ Пионерская; устройство компенсации на ВЛ-10кВ Л-11601",
+      "voltage_kv": 10,
+      "type": "design_PIR_not_equipment_sold",
+      "initial_design_nmck_rub": "518960.00",
+      "vat_basis": "excluding VAT",
+      "commission_date": "2026-05-19",
+      "result": "failed_no_applications_lot_to_be_corrected",
+      "winner": null,
+      "signed_contract": false,
+      "equipment_price": null,
+      "technical_requirements": "Project team qualified NOPRIZ / SRO, 24-month design warranty, customer agreement for equipment type",
+      "official_source_archive_sha256": "341a5a38b23e359969490f49085b2ca4a922fd237eab01dbdcdb9061b16771c6",
+      "commission_protocol_pdf_sha256": "5d5e57e3b0b7cf9791e365c4f82f1b0b3e22c03d7103d82fdedc5cf2a16e713a",
+      "technical_requirement_doc_sha256": "aa7a6d8613a8eb6ca418ff509501388a800ad7cc1b5cfdd57ec4869965bb589d",
+      "original_document_downloads": 4,
+      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615969197",
+      "evidence_gate": "no bids; no award; not a 10kV equipment contract"
     }
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",
