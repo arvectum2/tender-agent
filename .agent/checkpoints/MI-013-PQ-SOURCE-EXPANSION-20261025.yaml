@@ -21,7 +21,7 @@ pending:
   - Reconcile the actual official signed contract registers and winner INN for 32615614821 and 32616120582; do not promote selected bidder/app or bid offer to signed price.
   - Expand source-day coverage to missing days and regions beyond the ten sampled regions; ingest original EPC technical annexes into source-bound Data Platform search.
   - Verify official ETP protocols/contracts for the other 26 discovery candidates and classify each 6-35kV vs low-voltage or maintenance.
-last_verified_commit: null
+last_verified_commit: 13f0bd320daae62ffa378b5eef5f3352dc9130b0
 last_code_commit_before_checkpoint: a7beba9fd42eb9fc45c8de25079922152a2b30cf
 test_results:
   - New deterministic expected 17 records / 0 verified awards; new tests added.
@@ -30,7 +30,7 @@ test_results:
   - 2026-10-26 full make test attempted with venv; 5298 PASS, 286 SKIP, one unrelated R9 backup/restore integration failure (pg_restore). Focused R9 rerun after PostgreSQL16 binary PATH passed 5/5; full suite green rerun still pending.
   - 2026-10-26 targeted after source alias dedup: power_quality 25 PASS; MI013 combined 54 tests planned; Ruff clean.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: FIRST verify completed local full make test with venv PATH; then push isolated research branch and inspect exact GitHub CI for commits a75af741 and a7beba9f + latest checkpoint, fixing failures. Continue primary signed contract registry and full original 223/44-FZ documentation intake across 2024-2026 and Data Platform semantic EPC matching. No fabricated FGI wins, no national market size until source coverage and signed equipment contract lines are proven.
+resume_instruction: Push isolated MI013 branch including industrial v4 and semantic v5, verify exact GitHub CI; continue primary EIS signed contract registry and attachment-derived equipment price/winner checks for 32615614821 and 32616120582, expand industrial region/date and commercial ETP source coverage. Keep incomplete SOAP cells fail-closed and 6-35kV scope, no unsupported TAM.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -114,3 +114,25 @@ research_round_original_docs_20261026:
     - docs/market_intelligence/MI013_ORIGINAL_DOCUMENT_RESEARCH_20261026.md
   signed_contracts_verified: 0
   equipment_market_tam_rub: null
+
+research_industrial_rescan_20261026:
+  task_status: in_progress
+  source_window: '2024-01-01 through 2026-10-25'
+  source_regions: ['02', '16', '24', '38', '42', '66', '74', '86']
+  source_subsystems: ['RI223', 'PRIZ']
+  source_day_slots_total: 16464
+  source_day_slots_sha_verified: 46
+  source_day_slots_incomplete: 19
+  official_zip_sha_verified: 59
+  original_xml_versions_inspected: 3239
+  actual_additional_soap_calls: 36
+  full_all_stored_original_zip_scan: 284
+  full_all_stored_original_xml_scan: 20141
+  lexical_hits_after_safety_guard: 16
+  distinct_family_registry_pairs: 4
+  false_positive: '0169300000325002833: pedestrian reflector Фликер; excluded by domain context'
+  new_coverage_file: 'data/market_intelligence/power_quality/official_industrial_coverage_20261026.v4.json'
+  new_scan_file: 'data/market_intelligence/power_quality/official_semantic_scan_20261026.v5.json'
+  last_checked_code_commit: '13f0bd320daae62ffa378b5eef5f3352dc9130b0'
+  focused_test_results: '142 passed, 1 warning, 0 failed'
+  integrity_note: 'Notice XML candidates only, no verified signed contract, award price or national TAM.'
