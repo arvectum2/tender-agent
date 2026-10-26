@@ -171,3 +171,17 @@ research_industrial_rescan_20261026:
   last_checked_code_commit: '13f0bd320daae62ffa378b5eef5f3352dc9130b0'
   focused_test_results: '142 passed, 1 warning, 0 failed'
   integrity_note: 'Notice XML candidates only, no verified signed contract, award price or national TAM.'
+
+mi013_final_local_acceptance_20261026:
+  tested_branch_commit: '8713b74762eba43aee8cfacdf2d7c29d906ef215'
+  method: 'PATH prepended venv and postgresql@16; make test'
+  local_pytest_passed: 5303
+  local_pytest_skipped: 286
+  local_pytest_failed: 0
+  warnings: 357
+  elapsed_seconds: 156.73
+  local_command_exit_code: 0
+  github_ci_run: 40303523905
+  github_ci_completion_at_checkpoint: 'in_progress_not_claimed_green'
+  task_status: in_progress
+  blocker: 'Country-wide 2024-2026 coverage, signed contracts, true award winner INNs and PQ component prices remain unverified.'
