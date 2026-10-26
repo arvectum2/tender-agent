@@ -1,0 +1,159 @@
+{
+  "schema_version": "mi013-verified-rd223-contracts/0.1",
+  "as_of": "2026-10-26",
+  "data_sources": "official getDocsIP RD223 original public registry contractCutted XML archives, verified SHA256",
+  "registered_contract_count": 2,
+  "primary_version_count": 3,
+  "equipment_only_signed_contracts_verified": 0,
+  "notes": [
+    "The public RD223 XML contractCutted hides supplier identity; do not infer supplier from EIS registry.",
+    "A total signed EPC or design price is not the standalone capacitor/SVG hardware price.",
+    "Amendment versions of same registry number count as one signed contract."
+  ],
+  "contracts": [
+    {
+      "registry_number": "50277071467260002650000",
+      "official_revisions": [
+        {
+          "registry_number": "50277071467260002650000",
+          "registered_revision_number": "50277071467260002650001",
+          "revision": "1",
+          "contract_number": "РЭС-1.16.7/Д-01325",
+          "contract_date": "2026-04-14",
+          "linked_procurement": "32615614821",
+          "registered_total_price_rub": "1833358.3",
+          "buyer_inn": "0277071467",
+          "buyer_name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"БАШКИРСКИЕ РАСПРЕДЕЛИТЕЛЬНЫЕ ЭЛЕКТРИЧЕСКИЕ СЕТИ\"",
+          "subject": "Реконструкция ПС 110кВ Нагорная в части установки устройств компенсации реактивной мощности ПО НЭС ООО \"Башкирэнерго\"",
+          "end_execution_date": "2026-08-30",
+          "modification_description": null,
+          "verified_public_contract_registry": true,
+          "supplier_inn": null,
+          "supplier_identity_from_registry_verified": false,
+          "pq_equipment_sale_rub": null,
+          "equipment_price_verified": false,
+          "amount_paid_verified": false,
+          "document_type": "contractCutted",
+          "proof": {
+            "archive_sha256": "689bd66076c493c40f76c84d757528374c1b3e19b2fb41f8ca08d09d14911640",
+            "xml_member": "contractCutted_50277071467260002650000_1_019D8AE7A674719B9FE8B1336850DEE7.xml",
+            "xml_sha256": "d6ad2467c9e7289ece47395181c986bb96393fc0af66962d573e3ce27c469701"
+          }
+        },
+        {
+          "registry_number": "50277071467260002650000",
+          "registered_revision_number": "50277071467260002650003",
+          "revision": "2",
+          "contract_number": "РЭС-1.16.7/Д-01325",
+          "contract_date": "2026-04-14",
+          "linked_procurement": "32615614821",
+          "registered_total_price_rub": "1833358.30",
+          "buyer_inn": "0277071467",
+          "buyer_name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"БАШКИРСКИЕ РАСПРЕДЕЛИТЕЛЬНЫЕ ЭЛЕКТРИЧЕСКИЕ СЕТИ\"",
+          "subject": "Реконструкция ПС 110кВ Нагорная в части установки устройств компенсации реактивной мощности ПО НЭС ООО \"Башкирэнерго\"",
+          "end_execution_date": "2026-12-31",
+          "modification_description": "изменение сроков выполнения работ",
+          "verified_public_contract_registry": true,
+          "supplier_inn": null,
+          "supplier_identity_from_registry_verified": false,
+          "pq_equipment_sale_rub": null,
+          "equipment_price_verified": false,
+          "amount_paid_verified": false,
+          "document_type": "contractCutted",
+          "proof": {
+            "archive_sha256": "689bd66076c493c40f76c84d757528374c1b3e19b2fb41f8ca08d09d14911640",
+            "xml_member": "contractCutted_50277071467260002650000_2_01A01990E64D7DD4B47CBB0FCDF2B3AE.xml",
+            "xml_sha256": "f431141106f0249a29657c4f329bd67e0789bfbf5ccb514f3e3038d1e627c808"
+          }
+        }
+      ],
+      "contract_latest": {
+        "registry_number": "50277071467260002650000",
+        "registered_revision_number": "50277071467260002650003",
+        "revision": "2",
+        "contract_number": "РЭС-1.16.7/Д-01325",
+        "contract_date": "2026-04-14",
+        "linked_procurement": "32615614821",
+        "registered_total_price_rub": "1833358.30",
+        "buyer_inn": "0277071467",
+        "buyer_name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"БАШКИРСКИЕ РАСПРЕДЕЛИТЕЛЬНЫЕ ЭЛЕКТРИЧЕСКИЕ СЕТИ\"",
+        "subject": "Реконструкция ПС 110кВ Нагорная в части установки устройств компенсации реактивной мощности ПО НЭС ООО \"Башкирэнерго\"",
+        "end_execution_date": "2026-12-31",
+        "modification_description": "изменение сроков выполнения работ",
+        "verified_public_contract_registry": true,
+        "supplier_inn": null,
+        "supplier_identity_from_registry_verified": false,
+        "pq_equipment_sale_rub": null,
+        "equipment_price_verified": false,
+        "amount_paid_verified": false,
+        "document_type": "contractCutted",
+        "proof": {
+          "archive_sha256": "689bd66076c493c40f76c84d757528374c1b3e19b2fb41f8ca08d09d14911640",
+          "xml_member": "contractCutted_50277071467260002650000_2_01A01990E64D7DD4B47CBB0FCDF2B3AE.xml",
+          "xml_sha256": "f431141106f0249a29657c4f329bd67e0789bfbf5ccb514f3e3038d1e627c808"
+        }
+      },
+      "source_supplier_status": "redacted_in_contractCutted",
+      "equipment_only_contract_value_rub": null
+    },
+    {
+      "registry_number": "56450925977260018070000",
+      "official_revisions": [
+        {
+          "registry_number": "56450925977260018070000",
+          "registered_revision_number": "56450925977260018070001",
+          "revision": "1",
+          "contract_number": "2640-004569",
+          "contract_date": "2026-09-03",
+          "linked_procurement": "32616280467",
+          "registered_total_price_rub": "3680106.21",
+          "buyer_inn": "6450925977",
+          "buyer_name": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"РОССЕТИ ВОЛГА\"",
+          "subject": "ПИР. Переустройство ВЛ-10 кВ Артскважина в части установки системы динамической компенсации реактивной мощности (1 шт.) (265811/76)",
+          "end_execution_date": "2026-12-04",
+          "modification_description": null,
+          "verified_public_contract_registry": true,
+          "supplier_inn": null,
+          "supplier_identity_from_registry_verified": false,
+          "pq_equipment_sale_rub": null,
+          "equipment_price_verified": false,
+          "amount_paid_verified": false,
+          "document_type": "contractCutted",
+          "proof": {
+            "archive_sha256": "836f40802ec4ae7386e060f6cd50282dfd927b8c10c8a6674ae700c802deebd9",
+            "xml_member": "contractCutted_56450925977260018070000_1_01A067079AFF7CC88D09A416126D0FE4.xml",
+            "xml_sha256": "a9ba89d17e9c49278b1230fb21515933bf741195e857cb1a36d21e88340952a1"
+          }
+        }
+      ],
+      "contract_latest": {
+        "registry_number": "56450925977260018070000",
+        "registered_revision_number": "56450925977260018070001",
+        "revision": "1",
+        "contract_number": "2640-004569",
+        "contract_date": "2026-09-03",
+        "linked_procurement": "32616280467",
+        "registered_total_price_rub": "3680106.21",
+        "buyer_inn": "6450925977",
+        "buyer_name": "ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО \"РОССЕТИ ВОЛГА\"",
+        "subject": "ПИР. Переустройство ВЛ-10 кВ Артскважина в части установки системы динамической компенсации реактивной мощности (1 шт.) (265811/76)",
+        "end_execution_date": "2026-12-04",
+        "modification_description": null,
+        "verified_public_contract_registry": true,
+        "supplier_inn": null,
+        "supplier_identity_from_registry_verified": false,
+        "pq_equipment_sale_rub": null,
+        "equipment_price_verified": false,
+        "amount_paid_verified": false,
+        "document_type": "contractCutted",
+        "proof": {
+          "archive_sha256": "836f40802ec4ae7386e060f6cd50282dfd927b8c10c8a6674ae700c802deebd9",
+          "xml_member": "contractCutted_56450925977260018070000_1_01A067079AFF7CC88D09A416126D0FE4.xml",
+          "xml_sha256": "a9ba89d17e9c49278b1230fb21515933bf741195e857cb1a36d21e88340952a1"
+        }
+      },
+      "source_supplier_status": "redacted_in_contractCutted",
+      "equipment_only_contract_value_rub": null
+    }
+  ]
+}

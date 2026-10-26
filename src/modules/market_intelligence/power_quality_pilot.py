@@ -25,14 +25,14 @@ class PilotEvidenceError(ValueError):
 
 
 DATE_BASES = {
-    "published", "receiving_from", "published_secondary",
+    "published", "receiving_from", "published_secondary", "judicial_contract_date",
     "reported_deadline_NOT_publication",
 }
 STATUSES = {
     "source_reports_closed", "no_bids_reported", "third_party_reports_contract",
     "unknown",
 }
-SOURCE_TIERS = {"primary_platform", "third_party"}
+SOURCE_TIERS = {"primary_platform", "primary_judicial", "third_party"}
 ALLOWED_SCOPES = {"supply", "design", "epc", "maintenance"}
 VALID_MONEY_TYPES = {
     None, "initial_price", "nmck", "zero_placeholder",
@@ -68,7 +68,7 @@ def _checked_source(value: Any) -> dict[str, Any]:
     ):
         raise PilotEvidenceError("source must be absolute HTTPS URL")
     if tier not in SOURCE_TIERS:
-        raise PilotEvidenceError("source_tier must be primary_platform or third_party")
+        raise PilotEvidenceError("source_tier must be primary_platform, primary_judicial or third_party")
     if not str(value.get("locator") or "").strip() or not str(value.get("excerpt") or "").strip():
         raise PilotEvidenceError("source locator and excerpt are required")
     return value
@@ -236,7 +236,10 @@ def analyze_pilot(
     by_scope = Counter(r["scope"] for r in canonical)
     by_tier = Counter(
         "primary_platform" if any(x["source_tier"] == "primary_platform"
-                                  for x in r["evidence"]) else "third_party_only"
+                                  for x in r["evidence"]) else (
+            "primary_judicial" if any(x["source_tier"] == "primary_judicial"
+                                       for x in r["evidence"]) else "third_party_only"
+        )
         for r in canonical
     )
     year_basis = Counter(r["date_basis"] for r in canonical)
@@ -282,8 +285,8 @@ def analyze_pilot(
         "leads": notices,
         "limitations": [
             "Curated examples are not a population sample and cannot measure Russian TAM or growth.",
-            "No verified winning bidder, EPC prime or named designer was established from a primary award protocol.",
-            "Secondary platform statements of a closed procurement or contract are not registry-verified awards.",
+            "The pilot MI-001 report intentionally does not promote discovered participants, contracts, or the judicial unit supply to a national equipment TAM or procurement award count; source-bound dossiers contain independently verified contracts.",
+            "Secondary platform statements of a closed procurement or contract are not registry-verified awards; RD223 official contract evidence is preserved in a separate auditable source file.",
             "An absent price or 0-ruble placeholder is unknown, not a 0-ruble contract.",
             "The 2026 dates include one deadline substituted for missing publication date and a secondary publication date; exclude those from pure publication-year trends.",
             "An EPC procurement envelope must not be counted as Power Quality hardware turnover.",

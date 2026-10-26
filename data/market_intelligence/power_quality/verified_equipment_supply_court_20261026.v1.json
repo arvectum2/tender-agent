@@ -1,0 +1,41 @@
+{
+  "schema_version": "mi013-judicial-verified-equipment-contracts/0.1",
+  "as_of": "2026-10-26",
+  "primary_judicial_case_count": 1,
+  "verified_price_of_specific_medium_voltage_equipment_rub": "21307585.20",
+  "not_national_equipment_market_size": true,
+  "supplier_id_source": "declared-company registry matched to court legal name/address; no tender-winning ID inferred",
+  "contracts": [
+    {
+      "number": "court:A75-24845/2025",
+      "evidence_type": "primary_public_arbitration_decision",
+      "court_case": "А75-24845/2025",
+      "court_decision_date": "2026-05-02",
+      "contract_number": "03/34-24",
+      "contract_date": "2024-10-29",
+      "original_purchase_notice_number": null,
+      "procurement_basis": "223-FZ original procurement mentioned by court; notice ID not given",
+      "seller_by_contract": "НАО «Электрощит»",
+      "seller_inn_by_independent_declaration": "1644023432",
+      "buyer_by_contract": "АО «Тюменьэнерго Инжиниринг»",
+      "buyer_inn_by_company_registrar": "8602177031",
+      "product": "УКРМ-10,5-13000-13х1000р У3 с БКМУ/БМЗ",
+      "unit_count": 1,
+      "voltage_kv_by_product_marking": 10.5,
+      "reactive_capacity_mvar_by_model_marking": 13,
+      "price_of_specified_equipment_as_modified_rub": "21307585.20",
+      "price_modification_date": "2025-06-10",
+      "modification_number": "2",
+      "delivery_document": "УПД ЦБ-359 от 2025-06-16",
+      "confirmed_delivery_from_court": true,
+      "claim_late_payment_dispute": true,
+      "rosseti_accreditation_breach_contested": true,
+      "vendor_manufactured_this_unit_verified": false,
+      "actual_paid_amount_verified": false,
+      "primary_court_html_sha256": "3611a5bec9d4668c6a3f5aaa737caaf0ef9e441370cfd704bfefdff96782e0c6",
+      "url": "https://sudact.ru/arbitral/doc/adOxeAqN4doN/",
+      "contract_price_category": "court-proven price of named delivered UKRM + metal box, NOT full EPC and not a 2026 award",
+      "separate_signed_registry_number": null
+    }
+  ]
+}

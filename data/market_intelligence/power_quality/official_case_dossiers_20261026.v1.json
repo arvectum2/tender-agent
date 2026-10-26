@@ -1,7 +1,7 @@
 {
   "schema_version": "mi013-pq-original-dossiers/0.1",
   "as_of": "2026-10-26",
-  "case_count": 9,
+  "case_count": 10,
   "cases": [
     {
       "number": "32615614821",
@@ -18,13 +18,13 @@
       "commission_date": "2026-03-03",
       "selected_offer_rub": "1833358.30",
       "selected_offer_vat_basis": "excluding VAT",
-      "signed_contract_price_rub": null,
-      "signed_contract_verified": false,
+      "signed_contract_price_rub": "1833358.30",
+      "signed_contract_verified": true,
       "equipment_contract_value_rub": null,
       "equipment": "1 × УКРМ56-6,3-200-(1х50+2х75) М4, 5S; 6.3 kV; 200 kvar",
       "owner_supplied_equipment_estimate_rub": "4900000",
       "separate_cabinet_budget_rub": "3177000",
-      "note": "Owner-supplied 4.9m and separate cabinet estimate 3.177m are not additive/contractor sales. Notice says ПС 110кV, cost document says ПС 35кV / 6kV section.",
+      "note": "Owner-supplied 4.9m and separate cabinet estimate 3.177m are not additive/contractor sales. Notice says ПС 110кV, cost document says ПС 35кV / 6kV section. Реестр RD223 подтвердил цену всего EPC 1 833 358,30 ₽, превышающую НМЦК работ 1 432 983,66 ₽: обе цены записаны раздельно, причина расхождения без оригинальных пояснений не устанавливается.",
       "primary_sources": [
         {
           "type": "eis_xml",
@@ -47,7 +47,15 @@
       "nested_7z_packages": 2,
       "nested_children": 13,
       "text_extractable_files": 23,
-      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615614821&noticeGuid=a93ca4df-2ce0-401c-9270-1a82aa8a7e93"
+      "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615614821&noticeGuid=a93ca4df-2ce0-401c-9270-1a82aa8a7e93",
+      "registered_contract_number": "50277071467260002650000",
+      "internal_contract_number": "РЭС-1.16.7/Д-01325",
+      "registered_contract_date": "2026-04-14",
+      "registered_revisions": 2,
+      "registered_price_basis": "entire EPC works, not equipment or separate manufacturer sale",
+      "public_registry_supplier_inn": null,
+      "contract_original_archive_sha256": "689bd66076c493c40f76c84d757528374c1b3e19b2fb41f8ca08d09d14911640",
+      "latest_change": "2026-08-19 changed execution deadline to 2026-12-31, price unchanged"
     },
     {
       "number": "32616120582",
@@ -341,7 +349,8 @@
         "second_application_number": "2",
         "second_bid_rub": "3681948.11",
         "winner_legal_entity_inn_verified": false,
-        "signed_contract_registry_verified": false
+        "signed_contract_registry_verified": true,
+        "legal_supplier_identified": false
       },
       "secondary_contract_registry_claim": {
         "reported_by": "Synapsenet",
@@ -352,11 +361,52 @@
       "equipment_sale_rub": null,
       "new_equipment_purchased_in_this_tender": false,
       "public_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616280467",
-      "evidence_gate": "Detailed primary dynamic filter design spec and winning bid PROPOSAL confirmed; legal supplier signed contract and equipment price not independently proven."
+      "evidence_gate": "Detailed primary dynamic filter design spec and winning bid PROPOSAL confirmed; legal supplier signed contract and equipment price not independently proven.",
+      "signed_contract_registry_verified": true,
+      "signed_contract_price_rub": "3680106.21",
+      "registered_contract_number": "56450925977260018070000",
+      "registered_contract_document_number": "2640-004569",
+      "registered_contract_date": "2026-09-03",
+      "public_registry_supplier_inn": null,
+      "registered_original_archive_sha256": "836f40802ec4ae7386e060f6cd50282dfd927b8c10c8a6674ae700c802deebd9",
+      "registered_value_is": "only PИР/design engineering, NOT dynamic system hardware"
+    },
+    {
+      "number": "court:A75-24845/2025",
+      "evidence_type": "primary_public_arbitration_decision",
+      "court_case": "А75-24845/2025",
+      "court_decision_date": "2026-05-02",
+      "contract_number": "03/34-24",
+      "contract_date": "2024-10-29",
+      "original_purchase_notice_number": null,
+      "procurement_basis": "223-FZ original procurement mentioned by court; notice ID not given",
+      "seller_by_contract": "НАО «Электрощит»",
+      "seller_inn_by_independent_declaration": "1644023432",
+      "buyer_by_contract": "АО «Тюменьэнерго Инжиниринг»",
+      "buyer_inn_by_company_registrar": "8602177031",
+      "product": "УКРМ-10,5-13000-13х1000р У3 с БКМУ/БМЗ",
+      "unit_count": 1,
+      "voltage_kv_by_product_marking": 10.5,
+      "reactive_capacity_mvar_by_model_marking": 13,
+      "price_of_specified_equipment_as_modified_rub": "21307585.20",
+      "price_modification_date": "2025-06-10",
+      "modification_number": "2",
+      "delivery_document": "УПД ЦБ-359 от 2025-06-16",
+      "confirmed_delivery_from_court": true,
+      "claim_late_payment_dispute": true,
+      "rosseti_accreditation_breach_contested": true,
+      "vendor_manufactured_this_unit_verified": false,
+      "actual_paid_amount_verified": false,
+      "primary_court_html_sha256": "3611a5bec9d4668c6a3f5aaa737caaf0ef9e441370cfd704bfefdff96782e0c6",
+      "url": "https://sudact.ru/arbitral/doc/adOxeAqN4doN/",
+      "contract_price_category": "court-proven price of named delivered UKRM + metal box, NOT full EPC and not a 2026 award",
+      "separate_signed_registry_number": null
     }
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",
   "private_originals": "Stored on authorized Mac mini, outside Git.",
-  "verified_signed_contracts": 0,
-  "national_6_35kv_market_size_rub": null
+  "verified_signed_contracts": 2,
+  "national_6_35kv_market_size_rub": null,
+  "verified_signed_contracts_with_public_supplier_inn": 0,
+  "verified_equipment_supply_contracts_by_judicial_records": 1
 }

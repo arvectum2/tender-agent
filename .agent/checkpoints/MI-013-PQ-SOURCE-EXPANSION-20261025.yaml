@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Verify latest pushed research head CI and full local make test for 42-source/9-dossier code, then continue 2024-2025 223-FZ original procurement search and contract registry for 32616280467/32616433248/32616412267. Extract verified hardware budget separate from projects/design/maintenance. Primary XML first-place bids alone are not signed contract evidence; do not attribute FGI awards or estimate national TAM from sparse source-days.
+resume_instruction: Verify GitHub CI and full make test after committing MI013 44-case RD223 and judicial dossier. Explore latest RD223 after October 8 for 32616412267 (ranked bid is not registered contract), plus supplier INNs in authenticated original contracts where available, retrieve 2024/2025 primary ETP award protocols for a broader supply set. Do not derive national market TAM from sparse observations. Preserve 2024 physical-delivery case as 1 hardware sale, and 2 EIS registered EPC/design contracts with supplier identity hidden in contractCutted.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -368,3 +368,79 @@ pq_continuation_20261026_dynamic_filter_design:
     - original signed contracts winner INNs and category disaggregation
     - historic 2024-2025 source records with attachments and without secondary label promotion
     - full source-date EIS sample coverage and new EPC annex crossmatch
+
+pq_continuation_20261026_official_signed_contracts_and_court:
+  task_status: in_progress
+  current_branch: research/mi013-pq-source-expansion-20261025
+  seed_records: 44
+  original_dossiers: 10
+  formal_signed_contract_registry_count: 2
+  original_rd223_xml_revisions: 3
+  signed_rd223_hardware_equipment_contracts: 0
+  court_confirmed_specific_6_35kv_hardware_supplies: 1
+  original_6_35kv_equipment_price_from_judicial_case_rub: '21307585.20'
+  court_contract_year: 2024
+  court_documented_hardware_delivery_year: 2025
+  national_market_size_estimate_rub: null
+  official_cases:
+    nagornaya:
+      procurement: '32615614821'
+      registry: '50277071467260002650000'
+      original_rd223_zip_sha256: 689bd66076c493c40f76c84d757528374c1b3e19b2fb41f8ca08d09d14911640
+      signed_date: '2026-04-14'
+      registered_total_epc_works_rub: '1833358.30'
+      original_nmck_only_works_rub: '1432983.66'
+      modification_date: '2026-08-19'
+      new_end_date: '2026-12-31'
+      supplier_in_contractCutted: hidden
+      pq_hardware_price_rub: null
+    artskvazhina:
+      procurement: '32616280467'
+      registry: '56450925977260018070000'
+      original_rd223_zip_sha256: 836f40802ec4ae7386e060f6cd50282dfd927b8c10c8a6674ae700c802deebd9
+      signed_date: '2026-09-03'
+      registered_price_design_pir_only_rub: '3680106.21'
+      contract_ends: '2026-12-04'
+      supplier_in_contractCutted: hidden
+      pq_hardware_price_rub: null
+    court_delivered_ukrm:
+      legal_case: 'А75-24845/2025'
+      original_judicial_html_sha256: 3611a5bec9d4668c6a3f5aaa737caaf0ef9e441370cfd704bfefdff96782e0c6
+      supplier: НАО Электрощит
+      supplier_inn_independent_registry: '1644023432'
+      buyer: АО Тюменьэнерго Инжиниринг
+      buyer_inn_independent_registry: '8602177031'
+      contract_number: '03/34-24'
+      contract_date: '2024-10-29'
+      price_amendment: '2025-06-10'
+      delivered: '2025-06-16'
+      equipment: 'УКРМ-10,5-13000-13х1000р У3 с БКМУ'
+      verified_single_ukrm_hardware_assembly_price_rub: '21307585.20'
+      eis_procurement_notice_number: null
+      manufacturer_verified: false
+      site_specific_rosseti_attestation_dispute: true
+  changed_primary_risk_control:
+    - Public RD223 supplier is redacted; keep official registry supplier null.
+    - No double counting RD223 revisions 1/2 of Nagornaya.
+    - Exactly one court 2024 signed equipment supply with modified 2025 price, not two annual contracts.
+    - Konddaneft 945712 is 9 low voltage UKRM (0.4kV), excluded from 6-35kV market.
+  additional_secondary_2026_procurement:
+    id: 119199-ТТ
+    buyer: Gaysky GOK
+    buyer_inn: '5604000700'
+    quantity_ukrm_6kv_600kvar: 2
+    manufacturer_and_actual_price_verified: false
+  source_registry_parser:
+    module: src/modules/market_intelligence/eis_contract223_registry.py
+    tests: tests/test_mi013_rd223_contract_registry.py
+    attributes: verified_SHA256_ZIP_path_DTD_bounds_preserves_revisions_separate_supplier_and_hardware_price
+  source_registry_sidecar: data/market_intelligence/power_quality/official_registry_contracts_20261026.v1.json
+  source_hardware_judicial_sidecar: data/market_intelligence/power_quality/verified_equipment_supply_court_20261026.v1.json
+  focused_tests: 77 passed with Ruff and git diff --check clean
+  last_verified_local_commit_before_changes: 16ec6ff41957968a53aa0f9810ec629cc811f114
+  next_steps:
+    - commit and push exact source-bound research and regression
+    - verify full make test and exact-head GitHub Actions
+    - continue RD223 signed contracts search by dates / original notice
+    - find exact historical 2024 contract EIS notice if available, otherwise preserve unknown
+    - expand original ТЗ and price disaggregation for other sites
