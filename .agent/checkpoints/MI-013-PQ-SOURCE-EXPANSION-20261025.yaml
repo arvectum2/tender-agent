@@ -1,7 +1,7 @@
 version: 2
 repository: arvectum2/tender-agent
 task_id: MI-013-PQ-SOURCE-EXPANSION-20261025
-status: blocked
+status: in_progress
 goal: Extend source-bounded Power Quality tender research with five dated, deduplicated candidate tenders and fail-closed financial evidence.
 definition_of_done:
   - Preserve 12 existing evidence leads and add five distinct externally traced cases for 2026.
@@ -13,7 +13,7 @@ completed:
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: New immutable 2026-10-25 v2 17-record seed and revised tests committed in Draft PR #514. Original 2026-10-24 v1 snapshot and report both remain 12. Full CI still processing; merge review gate remains.
+current: Research corpus v2 extended from 17 to 25 distinct sourced discovery records in commit e4cd35a8bb3c1d318ebe4b11dd4c437de22eda5f; original v1 stays pinned. Need tests and primary validation.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
   - Acquire official originals and contract evidence under a separate read-only, source-bounded task.
@@ -23,4 +23,10 @@ test_results:
   - New deterministic expected 17 records / 0 verified awards; new tests added.
   - Initial CI run 40213600708: 5291 passed, 285 skipped, 3 failed in MI003 due in-place overwrite of frozen v1; root cause fixed by restoring pinned v1 and introducing v2.
   - Full exact-head CI rerun 40214539497 on updated v2 source/test/doc commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd is in_progress at checkpoint; never claim PASS until verified.
-resume_instruction: First check branch research/mi013-pq-source-expansion-20261025 exact-head GitHub Actions and confirm v1=12 pinned, v2=17. CI 40214539497 started against source/test/document commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd; no full PASS yet. Do not overwrite dirty local feature/apr07-quality-slo-evidence. If all checks pass, keep review-gated until valid authority; separately reconcile official 223-FZ Nagornaya contract, EPC component value and 2024-2026 historical coverage.
+resume_instruction: Check exact-head CI after commit e4cd35a8bb3c1d318ebe4b11dd4c437de22eda5f; update tests that hardcode 17 if necessary. Preserve pinned v1=12, reconcile primary EIS/ETP protocols and 6-35 kV scope; expand real corpus, no invented winners or contract values.
+
+research_extension_20261026:
+  new_discovery_records: 8
+  total_v2_records: 25
+  code_commit: e4cd35a8bb3c1d318ebe4b11dd4c437de22eda5f
+  caution: Third-party listing only, voltage and awards unverified; tests still need revision for 25.
