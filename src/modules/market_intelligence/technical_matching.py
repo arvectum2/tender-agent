@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-AMBIGUOUS = frozenset({"SVG", "SVC", "PQ", "УКМ", "КРМ", "БСК", "СТК", "TSC", "TCR"})
+AMBIGUOUS = frozenset({"SVG", "SVC", "PQ", "УКМ", "КРМ", "БСК", "СТК", "TSC", "TCR", "ФЛИКЕР"})
 
 
 def _matching_terms(text: str, ontology: dict[str, Any]) -> list[dict[str, str]]:

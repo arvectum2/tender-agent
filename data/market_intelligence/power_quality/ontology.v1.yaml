@@ -37,7 +37,7 @@ families:
     positive: ['качество электроэнергии', 'power quality', 'стабилизация напряжения', 'провалы напряжения', 'фликер', 'PQ', 'электромагнитная совместимость', 'устройств компенсации реактивной мощности', 'устройство компенсации реактивной мощности']
     contexts: ['модернизация подстанции', 'проектирование электроснабжения', 'главная понизительная подстанция', 'непрерывное производство']
     exclusions: ['PQ as a brand or unrelated abbreviation', 'power quality meter only unless scope needs compensator']
-    ambiguous_aliases: ['PQ']
+    ambiguous_aliases: ['PQ', 'фликер']
 discovery_layers:
   - exact_primary_product
   - expanded_technical_synonym
