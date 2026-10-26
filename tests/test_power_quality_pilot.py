@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 25
+    assert result["distinct_procedure_lots"] == 27
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 1, "2025": 3, "2026": 20
+        "2023": 1, "2024": 1, "2025": 3, "2026": 22
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 18, "statcom": 5, "harmonic_filter": 2}
+    assert result["category_counts"] == {"ukrm": 20, "statcom": 5, "harmonic_filter": 2}
     assert result["work_package_counts"] == {
-        "supply": 18, "maintenance": 3, "epc": 3, "design": 1
+        "supply": 19, "maintenance": 3, "epc": 4, "design": 1
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 26
-    assert report["distinct_procedure_lots"] == 25
+    assert report["seed_records"] == 28
+    assert report["distinct_procedure_lots"] == 27
     assert report["mirror_duplicates_removed"] == 1
 
 
