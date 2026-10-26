@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 44
+    assert result["distinct_procedure_lots"] == 45
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 6, "2025": 7, "2026": 30
+        "2023": 1, "2024": 6, "2025": 7, "2026": 31
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 36, "statcom": 5, "harmonic_filter": 2, "power_quality_system": 1}
+    assert result["category_counts"] == {"ukrm": 37, "statcom": 5, "harmonic_filter": 2, "power_quality_system": 1}
     assert result["work_package_counts"] == {
-        "supply": 29, "maintenance": 5, "epc": 7, "design": 3
+        "supply": 30, "maintenance": 5, "epc": 7, "design": 3
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 45
-    assert report["distinct_procedure_lots"] == 44
+    assert report["seed_records"] == 46
+    assert report["distinct_procedure_lots"] == 45
     assert report["mirror_duplicates_removed"] == 1
 
 
@@ -188,8 +188,8 @@ def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(see
     dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text(encoding="utf-8"))
     cases = {case["number"]: case for case in dossiers["cases"]}
     assert set(cases) == {"32615614821", "32616120582", "32615969197", "32616103025", "32616497692", "32616433248", "32616412267", "32616280467", "0372100005626000037", "court:A75-24845/2025"}
-    assert len(seed["records"]) == 44
-    assert dossiers["verified_signed_contracts"] == 2
+    assert len(seed["records"]) == 45
+    assert dossiers["verified_signed_contracts"] == 3
     assert dossiers["national_6_35kv_market_size_rub"] is None
     assert cases["32615614821"]["signed_contract_price_rub"] == "1833358.30"
     assert cases["32615614821"]["owner_supplied_equipment_estimate_rub"] == "4900000"
@@ -252,7 +252,7 @@ def test_fgi_portfolio_screen_does_not_assert_approved_substitution():
 
 def test_20261026_secondary_extension_preserves_real_world_risk_gates(seed, ontology):
     report = analyze_pilot(seed, ontology)
-    assert len(seed["records"]) == 44
+    assert len(seed["records"]) == 45
     ids = {r["procedure_id"] for r in report["leads"]}
     assert {"РН41205245", "895449", "77907981", "77795100", "86829457", "1190793", "1234013"} <= ids
     assert report["market_size_rub"] is None
@@ -454,8 +454,8 @@ def test_dynamic_pq_original_10kv_160kvar_design_procedure_keeps_hw_sales_null(s
 
 def test_rd223_original_registry_two_contracts_without_fake_hardware_revenue(seed,ontology):
     snapshot=json.loads((DATA/"official_registry_contracts_20261026.v1.json").read_text())
-    assert snapshot["registered_contract_count"] == 2
-    assert snapshot["primary_version_count"] == 3
+    assert snapshot["registered_contract_count"] == 3
+    assert snapshot["primary_version_count"] == 4
     assert snapshot["equipment_only_signed_contracts_verified"] == 0
     by={x["registry_number"]:x for x in snapshot["contracts"]}
     assert len(by["50277071467260002650000"]["official_revisions"]) == 2
@@ -470,8 +470,14 @@ def test_rd223_original_registry_two_contracts_without_fake_hardware_revenue(see
     assert second["registered_total_price_rub"]=="3680106.21"
     assert second["supplier_inn"] is None
     assert second["pq_equipment_sale_rub"] is None
+    service=by["53801006828260000720000"]["contract_latest"]
+    assert service["linked_procurement"]=="32616412267"
+    assert service["contract_date"]=="2026-10-19"
+    assert service["registered_total_price_rub"]=="2639026.64"
+    assert service["supplier_inn"] is None
+    assert service["pq_equipment_sale_rub"] is None
     rows=analyze_pilot(seed,ontology)["leads"]
-    for purchase in ("32615614821","32616280467"):
+    for purchase in ("32615614821","32616280467","32616412267"):
         r=next(x for x in rows if x["procedure_id"]==purchase)
         assert r["registry_contract"]["signed_contract_registry_verified"] is True
         assert r["registry_contract"]["equipment_price_component_rub"] is None
@@ -508,3 +514,31 @@ def test_0p4kv_commercial_false_positive_removed_and_gaysky_gok_is_distinct(seed
     assert high["status"]=="source_reports_closed"
     assert "6 кВ" in high["description"]
     assert high["nmck_rub"] is None
+
+
+def test_angarsk_original_rd223_registered_service_total_is_not_best_offer_or_hardware(seed):
+    proof=json.loads((DATA/"official_case_dossiers_20261026.v1.json").read_text())
+    case=next(x for x in proof["cases"] if x["number"]=="32616412267")
+    assert case["official_registered_contract_number"]=="53801006828260000720000"
+    assert case["signed_contract_registry_verified"] is True
+    assert case["signed_contract_price_rub"]=="2639026.64"
+    assert case["official_final_protocol"]["first_place_offer_rub"]=="2590000.00"
+    assert case["protocol_best_bid_differs_from_registered_price"] is True
+    assert case["registered_value_is_service_not_new_ukrm"] is True
+    assert case["legal_executor_inn_from_public_registry"] is None
+    assert case["installed_ukrm"]["already_installed"] is True
+
+
+def test_gaysky_2026_two_procedures_but_unverified_two_independent_demands(seed,ontology):
+    r=analyze_pilot(seed,ontology)
+    first=next(row for row in r["leads"] if row["procedure_id"]=="119199-ТТ")
+    second=next(row for row in r["leads"] if row["procedure_id"]=="135171-ТТ")
+    assert first["canonical_id"] != second["canonical_id"]
+    assert first["project_equivalence_key"]==second["project_equivalence_key"]
+    assert first["possible_related_procedures"] == ["135171-ТТ"]
+    assert second["possible_related_procedures"] == ["119199-ТТ"]
+    assert first["customer"]["inn"] == second["customer"]["inn"]=="5604000700"
+    assert first["quantity"]==second["quantity"]==2
+    assert first["nmck_rub"] is None and second["nmck_rub"] is None
+    assert all(x["evidence"][0]["source_tier"] == "third_party" for x in (first,second))
+    assert r["market_size_rub"] is None

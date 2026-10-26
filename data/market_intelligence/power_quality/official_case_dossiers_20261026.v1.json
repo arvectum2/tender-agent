@@ -310,9 +310,19 @@
       "official_source_bound_files_downloaded": 12,
       "primary_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616412267",
       "actual_winner_name_inn": null,
-      "signed_contract_price_rub": null,
+      "signed_contract_price_rub": "2639026.64",
       "market_6_35kv_new_equipment_tam_rub": null,
-      "evidence_gate": "documented price offers for service contract; no manufacturer award, no signed registry contract or new installed UKRM purchases"
+      "evidence_gate": "documented price offers for service contract; no manufacturer award, no signed registry contract or new installed UKRM purchases",
+      "signed_contract_registry_verified": true,
+      "official_registered_contract_number": "53801006828260000720000",
+      "buyer_contract_number": "61/26кс/223",
+      "buyer_contract_signed_date": "2026-10-19",
+      "official_contract_registry_xml_sha256": "421c6e284592c1358f2b0a825bc4a4510473e2122f8881cd9b8f601c42757ecd",
+      "official_contract_registry_zip_sha256": "8f28cb626ed97722536de77cf73a83f9fb9858d3f8490bcfe12ec1b17b13340f",
+      "legal_executor_name_from_public_registry": null,
+      "legal_executor_inn_from_public_registry": null,
+      "registered_value_is_service_not_new_ukrm": true,
+      "protocol_best_bid_differs_from_registered_price": true
     },
     {
       "number": "32616280467",
@@ -405,7 +415,7 @@
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",
   "private_originals": "Stored on authorized Mac mini, outside Git.",
-  "verified_signed_contracts": 2,
+  "verified_signed_contracts": 3,
   "national_6_35kv_market_size_rub": null,
   "verified_signed_contracts_with_public_supplier_inn": 0,
   "verified_equipment_supply_contracts_by_judicial_records": 1

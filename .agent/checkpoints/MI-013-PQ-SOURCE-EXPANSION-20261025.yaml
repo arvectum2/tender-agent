@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Verify GitHub CI and full make test after committing MI013 44-case RD223 and judicial dossier. Explore latest RD223 after October 8 for 32616412267 (ranked bid is not registered contract), plus supplier INNs in authenticated original contracts where available, retrieve 2024/2025 primary ETP award protocols for a broader supply set. Do not derive national market TAM from sparse observations. Preserve 2024 physical-delivery case as 1 hardware sale, and 2 EIS registered EPC/design contracts with supplier identity hidden in contractCutted.
+resume_instruction: Verify exact-head GitHub CI and local make test after latest 45-record/3-registered-RD223-1-judicial-hardware case commit. Expand 2024-2025 original EIS 223-FZ and commercial ETP primary tender attachments, true suppliers and registered total with proper VAT/price-type, maintain no national market TAM. RD223 case 32616412267 now signed with different contract value than bid, scope maintenance; do not double-count Gaysky two tenders as two fulfilled supplies. Stage in_progress until accurate market coverage, signed goods contracts and manufacturer qualification documented.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -444,3 +444,57 @@ pq_continuation_20261026_official_signed_contracts_and_court:
     - continue RD223 signed contracts search by dates / original notice
     - find exact historical 2024 contract EIS notice if available, otherwise preserve unknown
     - expand original ТЗ and price disaggregation for other sites
+
+pq_continuation_20261026_rd223_october_scan_and_possible_reissues:
+  status: in_progress
+  local_verified_baseline_after_previous_commit:
+    commit: e2001cdd8ab938831f47799c9436fe714ee00c34
+    full_tests: '5324 passed, 286 skipped, 357 warnings, 164.73 s'
+  current_analytical_totals:
+    candidate_tender_records: 45
+    original_dossier_count: 10
+    signed_public_rd223_contracts: 3
+    rd223_original_contract_xml_revisions: 4
+    judicial_confirmed_2024_hardware_supply_contracts: 1
+    independently_confirmed_named_ukrm_supply_price_rub: '21307585.20'
+    national_market_tam_rub: null
+    official_contract_supplier_inn_verified_from_contractCutted: 0
+  newest_rd223_contract:
+    original_notice: '32616412267'
+    registry_number: '53801006828260000720000'
+    document_number: '61/26кс/223'
+    buyer_inn: '3801006828'
+    date: '2026-10-19'
+    registered_total_service_rub: '2639026.64'
+    protocol_first_ranked_offer_rub: '2590000.00'
+    reason_for_discrepancy_verified: false
+    already_installed_ukrm_units: 2
+    new_pq_hardware_purchase: false
+    region_code: '38'
+    region_day_archive_sha256: 8f28cb626ed97722536de77cf73a83f9fb9858d3f8490bcfe12ec1b17b13340f
+    official_contract_xml_sha256: 421c6e284592c1358f2b0a825bc4a4510473e2122f8881cd9b8f601c42757ecd
+    direct_registry_archive_retrieval: 'HTTP404, official region-date archive successfully saved and independently parsed'
+  scoped_source_registry_recon:
+    regions: ['38','78','10']
+    searched_region_days: 22
+    original_archives_checked: 49
+    watched_purchases: ['32616412267','32616433248','32616120582','32616497692']
+    matches_within_scoped_dates: 1
+    all_other_purchases_not_found_means_neither_cancelled_nor_uncontracted: true
+    stored_originals: pq-official-contracts/date-recon/recon-20261026.json
+  possible_duplicate_project:
+    buyer: Гайский ГОК
+    procedure_early: 119199-ТТ
+    procedure_late: 135171-ТТ
+    earlier_date: '2026-03-12'
+    latter_date: '2026-08-12'
+    identical_specification: '2 x УКРМ-6,3-600, 6kV 600kvar'
+    original_specs_compared: false
+    common_project_identity_confirmed: false
+    allow_double_count_delivered_equipment: false
+  checked_regressions_before_final_commit: '46 passed, Ruff clean'
+  pending_tasks:
+    - exact-head PR CI and full Python suite
+    - final commit hash and checkpoint revision
+    - find official manufacturer hardware sales and signed contract attachments
+    - no-country-wide spend estimate until official source coverage adequate

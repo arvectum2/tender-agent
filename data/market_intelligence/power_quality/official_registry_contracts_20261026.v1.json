@@ -2,8 +2,8 @@
   "schema_version": "mi013-verified-rd223-contracts/0.1",
   "as_of": "2026-10-26",
   "data_sources": "official getDocsIP RD223 original public registry contractCutted XML archives, verified SHA256",
-  "registered_contract_count": 2,
-  "primary_version_count": 3,
+  "registered_contract_count": 3,
+  "primary_version_count": 4,
   "equipment_only_signed_contracts_verified": 0,
   "notes": [
     "The public RD223 XML contractCutted hides supplier identity; do not infer supplier from EIS registry.",
@@ -154,6 +154,66 @@
       },
       "source_supplier_status": "redacted_in_contractCutted",
       "equipment_only_contract_value_rub": null
+    },
+    {
+      "registry_number": "53801006828260000720000",
+      "official_revisions": [
+        {
+          "registry_number": "53801006828260000720000",
+          "registered_revision_number": "53801006828260000720001",
+          "revision": "1",
+          "contract_number": "61/26кс/223",
+          "contract_date": "2026-10-19",
+          "linked_procurement": "32616412267",
+          "registered_total_price_rub": "2639026.64",
+          "buyer_inn": "3801006828",
+          "buyer_name": "МУНИЦИПАЛЬНОЕ УНИТАРНОЕ ПРЕДПРИЯТИЕ АНГАРСКОГО ГОРОДСКОГО ОКРУГА \"АНГАРСКИЙ ВОДОКАНАЛ\"",
+          "subject": "Выполнение работ по испытаниям оборудования, проверке и наладке микропроцессорной защиты восьми ячеек марки КМП-С-ШВВ6-04-630 и устройств компенсации реактивной мощности распределительного устройства напряжением 6кВ (РУ-6кВ) насосной станции 2 подъема.",
+          "end_execution_date": "2026-12-31",
+          "modification_description": null,
+          "verified_public_contract_registry": true,
+          "supplier_inn": null,
+          "supplier_identity_from_registry_verified": false,
+          "pq_equipment_sale_rub": null,
+          "equipment_price_verified": false,
+          "amount_paid_verified": false,
+          "document_type": "contractCutted",
+          "proof": {
+            "archive_sha256": "8f28cb626ed97722536de77cf73a83f9fb9858d3f8490bcfe12ec1b17b13340f",
+            "xml_member": "contractCutted_53801006828260000720000_1_01A1531D537D755DAFD8CD5441DD5C41.xml",
+            "xml_sha256": "421c6e284592c1358f2b0a825bc4a4510473e2122f8881cd9b8f601c42757ecd"
+          }
+        }
+      ],
+      "contract_latest": {
+        "registry_number": "53801006828260000720000",
+        "registered_revision_number": "53801006828260000720001",
+        "revision": "1",
+        "contract_number": "61/26кс/223",
+        "contract_date": "2026-10-19",
+        "linked_procurement": "32616412267",
+        "registered_total_price_rub": "2639026.64",
+        "buyer_inn": "3801006828",
+        "buyer_name": "МУНИЦИПАЛЬНОЕ УНИТАРНОЕ ПРЕДПРИЯТИЕ АНГАРСКОГО ГОРОДСКОГО ОКРУГА \"АНГАРСКИЙ ВОДОКАНАЛ\"",
+        "subject": "Выполнение работ по испытаниям оборудования, проверке и наладке микропроцессорной защиты восьми ячеек марки КМП-С-ШВВ6-04-630 и устройств компенсации реактивной мощности распределительного устройства напряжением 6кВ (РУ-6кВ) насосной станции 2 подъема.",
+        "end_execution_date": "2026-12-31",
+        "modification_description": null,
+        "verified_public_contract_registry": true,
+        "supplier_inn": null,
+        "supplier_identity_from_registry_verified": false,
+        "pq_equipment_sale_rub": null,
+        "equipment_price_verified": false,
+        "amount_paid_verified": false,
+        "document_type": "contractCutted",
+        "proof": {
+          "archive_sha256": "8f28cb626ed97722536de77cf73a83f9fb9858d3f8490bcfe12ec1b17b13340f",
+          "xml_member": "contractCutted_53801006828260000720000_1_01A1531D537D755DAFD8CD5441DD5C41.xml",
+          "xml_sha256": "421c6e284592c1358f2b0a825bc4a4510473e2122f8881cd9b8f601c42757ecd"
+        }
+      },
+      "source_supplier_status": "redacted_in_contractCutted",
+      "equipment_only_contract_value_rub": null,
+      "source_retrieval": "RD223 by-region-date original archive 38 2026-10-19; direct getDocsByReestrNumber response archive link 404 (same XML preserved in official date-scoped archive)"
     }
   ]
 }
