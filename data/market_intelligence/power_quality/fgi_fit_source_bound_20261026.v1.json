@@ -64,6 +64,19 @@
       "original_epc_total_nmck_rub": "79101498.40",
       "original_vyartsilya_subproject_initial_ceiling_with_vat_rub": "8955286.21",
       "fgi_equipment_specific_award_rub": null
+    },
+    {
+      "case": "32616433248",
+      "buyer": "Россети Северо-Запад, ПС Кяппесельга",
+      "actual_requirement": "One 35kV stepped capacitor bank at least 3.5Mvar; 1000kvar base stage, increments 500kvar, EPC upgrade PS Kyaeppeselga/Velikaya Guba",
+      "fgi_related": "FGI medium voltage SVG/STATCOM product classes (35kV possible), requires actual model datasheet and approved design change",
+      "voltage_family_overlap": true,
+      "strict_equivalent_approved": false,
+      "needed": "Technical FGI 35kV series datasheet and 3.5Mvar continuous rating, applicability as capacitor bank replacement, equipment voltage architecture, inrush/step controller, relay protection, installation and feasibility of customer approval",
+      "verified_FGI_vendor_award": false,
+      "equipment_estimate_in_original_bill_2025_rub": "10780666.67",
+      "signed_equipment_price_verified": false,
+      "known_sole_epc_applicant": "ООО «СТРОЙЭНЕРГОИМПОРТ» / INN 7801564611; not verified manufacturer"
     }
   ],
   "commercial_guardrails": {

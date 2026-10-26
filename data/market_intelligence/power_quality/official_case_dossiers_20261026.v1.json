@@ -1,7 +1,7 @@
 {
   "schema_version": "mi013-pq-original-dossiers/0.1",
   "as_of": "2026-10-26",
-  "case_count": 6,
+  "case_count": 8,
   "cases": [
     {
       "number": "32615614821",
@@ -208,6 +208,103 @@
       "source_bound_originals_downloaded": 3,
       "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616103025",
       "note": "Both 19 May and 23 June commissions found no commercial bids; this is a second procedure, same need, not independent money."
+    },
+    {
+      "number": "32616433248",
+      "regime": "223-fz",
+      "publication_date": "2026-10-02",
+      "buyer": "ПАО «Россети Северо-Запад»",
+      "buyer_inn": "7802312751",
+      "beneficiary": "ООО «БИОЭН Трейд», технологическое присоединение",
+      "corporate_lot": "26Т0210040.0017",
+      "project": "Реконструкция ПС Кяппесельга и Великая Губа, Карелия",
+      "original_eis_xml_zip_sha256": "f152e5209ae447f1e2c268f820ccf628e30540b952559a5dedaddae88b2a255b",
+      "original_first_attachment_zip_sha256": "5a40a25595b7e12050acedfec723857f5fd14cbdd2520932ce9389006e0579ca",
+      "original_second_attachment_zip_sha256": "842c06f3d0944e8266fd2aefaeb538ab04b19a5195fe91172fbad923684ad861",
+      "original_final_protocol_zip_sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e",
+      "official_source_bound_files_downloaded": 3,
+      "nested_original_document_members": 11,
+      "ukrm": {
+        "voltage_kv": 35,
+        "rated_mvar_min": 3.5,
+        "quantity": 1,
+        "step_primary_kvar": 1000,
+        "additional_step_kvar": 500,
+        "location": "35kV busbar, PС Кяппесельга",
+        "technology": "stepped capacitor bank (not automatically equivalent to SVG)",
+        "source": "ТЗ ПИР ПС 35 кВ Кяппесельга, clause 3.1.1.2",
+        "equipment_estimate_2025_base_rub": "10780666.67",
+        "equipment_estimate_is_not_signed_hardware_sale": true,
+        "ukrm_total_project_budget_line_2025_base_rub": "11802087.10"
+      },
+      "initial_epc_nmck_rub": "56330673.93",
+      "protocol_applicant": {
+        "name": "ООО «СТРОЙЭНЕРГОИМПОРТ»",
+        "inn": "7801564611",
+        "ogrn": "1117847714742",
+        "applications_submitted": 1,
+        "bid_offer_rub": "56330673.93"
+      },
+      "commission_result": {
+        "date_signed": "2026-10-19",
+        "failed_competition_due_to_one_bid": true,
+        "single_bidder_contract_recommended": true,
+        "upper_offer_for_contract_rub": "56330673.93",
+        "pre_contract_price_reduction_negotiations_recommended": true
+      },
+      "signed_contract_verified": false,
+      "signed_contract_price_rub": null,
+      "manufacturer_of_UKRM_verified": false,
+      "equipment_only_final_price_rub": null,
+      "xml_contract_signed_flag_not_independent_registry_proof": true,
+      "first_party_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616433248",
+      "evidence_gate": "identity of sole bidder and initial ERP project equipment budget source-confirmed, contract and actual PQ component sales unverified"
+    },
+    {
+      "number": "32616412267",
+      "regime": "223-fz",
+      "publication_date": "2026-09-28",
+      "buyer": "МУП АГО Ангарский Водоканал",
+      "buyer_inn": "3801006828",
+      "project": "Испытания и наладка 8 ячеек РУ6кВ + 2 уже действующих УКРМ на насосной станции второго подъема",
+      "family": "ukrm",
+      "scope": "maintenance_testing_not_purchase",
+      "installed_ukrm": {
+        "count": 2,
+        "each_model": "УКРМ-6,3-900",
+        "voltage_kv": 6.3,
+        "each_kvar": 900,
+        "already_installed": true,
+        "new_equipment_purchase_verified": false
+      },
+      "initial_nmck_rub": "4295282.00",
+      "official_final_protocol": {
+        "number": "32616412267-03",
+        "published": "2026-10-08",
+        "submitted_applications": 3,
+        "first_place_application": "2",
+        "first_place_offer_rub": "2590000.00",
+        "second_application": "1",
+        "second_offer_rub": "3225756.78",
+        "third_application": "3",
+        "third_offer_rub": "3843800.00",
+        "winning_legal_entity_verified": false,
+        "signed_contract_price_verified": false,
+        "app_xml_contract_signed_flag_not_registry_confirmation": true
+      },
+      "cost_estimate": {
+        "official_budget_xlsx_sha256": "2b7891779dc1043ef3b14bcca5217b52fa0d205ee190bdac1c288a817804c05d",
+        "both_installed_ukrm_testing_section_rub": "702878.82",
+        "section": "Sheet1 row407, Раздел 3 УКРМ №1, №2 6кВ",
+        "not_new_equipment_sales": true
+      },
+      "official_xml_zip_sha256": "bdf9dc0e6cb54eddaffbed86e1ef9f2d658b07837bb8ea501f06e2da08fa65c9",
+      "official_source_bound_files_downloaded": 12,
+      "primary_source": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616412267",
+      "actual_winner_name_inn": null,
+      "signed_contract_price_rub": null,
+      "market_6_35kv_new_equipment_tam_rub": null,
+      "evidence_gate": "documented price offers for service contract; no manufacturer award, no signed registry contract or new installed UKRM purchases"
     }
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",

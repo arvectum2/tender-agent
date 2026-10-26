@@ -33,7 +33,7 @@ test_results:
   - Extended 16 industrial regions plus Moscow/SPb source cohorts: 144/37316 SHA-audited day cells, 298 archives and 21183 XML, 45 incomplete, zero invalid.
   - 128 generic EPC titles identified in separate original notice XML screen, NOT counted PQ without equipment specs.
   - Prior GitHub CI job 121464244794 failed on mismatch commercial vs discovery/bidzaar canonical_id; FIXED in isolated branch commit a75af741, regression passed.
-resume_instruction: Verify exact-head CI for newly committed 37-procedure/6-original-case 2026-10-26 extended research. Continue original 44/223-FZ signed-contract registry to identify winner names/INNs and final contracts, prioritized 32615614821, 32616120582 and post-deadline 32616497692. Collect original annexes of commercial ETP seven discovered cases and FGI-relevant medium-voltage equipment, systematically sample dates/regions with audit and no national TAM until completeness is defensible. Do not auto-bid current open 32616497692 (prior framework prequalification).
+resume_instruction: Verify exact-head CI and full local make test for 41-procedure/8-first-party-case research; continue tracing signed 223-FZ contract register for 32616433248 sole bidder and 32616412267 top-ranked bidder, plus 32615614821/32616120582; obtain original ETP technical specs for secondary leads and 2024-2025 coverage. Preserve no false manufacturer wins or 6-35kV TAM and avoid altering unrelated .agent/current-task.yaml.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -277,3 +277,63 @@ pq_continue_20261026_run2_repeat_procurement:
   current_status: in_progress
   focused_test_results_after_new_case: '62 passed, Ruff clean'
   next_exact_work: 'Verify GitHub CI, full local regression, then continue signed contract registry and commercial ETP annexes; no national TAM or fictitious supplier wins.'
+
+pq_continuation_20261026_41_leads:
+  status: in_progress
+  expanded_discovery_count: 41
+  additional_first_party_eis_cases: 2
+  updated_original_case_dossiers_count: 8
+  latest_code_base_before_commit: b03e0142205047a19224c5dec3c5b5ae10fefc6d
+  checked_base_ci_run: 40308646097
+  checked_base_ci_status: success
+  checked_base_local_test: '5309 passed, 286 skipped, 357 warnings'
+  source_35kv:
+    procurement: '32616433248'
+    customer_inn: '7802312751'
+    first_party_applicant_name: ООО СТРОЙЭНЕРГОИМПОРТ
+    applicant_inn: '7801564611'
+    applicant_ogrn: '1117847714742'
+    medium_voltage_kv: 35
+    reactance_compensation_min_mvar: '3.5'
+    unit_count: 1
+    step_base_kvar: 1000
+    step_additional_kvar: 500
+    full_epc_initial_nmck_rub: '56330673.93'
+    sole_bid_offer_rub: '56330673.93'
+    ukrm_equipment_estimate_2025_baseline_rub: '10780666.67'
+    ukrm_installation_budget_line_all_2025_rub: '11802087.10'
+    original_source_xml_zip_sha256: f152e5209ae447f1e2c268f820ccf628e30540b952559a5dedaddae88b2a255b
+    original_source_attached_archives_downloaded: 3
+    commission_oct19_result: sole_bid_failed_competition_contract_recommended_with_renegotiation
+    signed_contract_registered_verified: false
+    pq_equipment_supplier_verified: false
+  source_6kv_service:
+    procurement: '32616412267'
+    customer_inn: '3801006828'
+    voltage_kv: '6.3'
+    existing_ukrm_model: УКРМ-6,3-900
+    preexisting_ukrm_count: 2
+    kvar_per_unit: 900
+    scope: testing_and_relay_commissioning_of_existing_devices
+    original_xml_sha256: bdf9dc0e6cb54eddaffbed86e1ef9f2d658b07837bb8ea501f06e2da08fa65c9
+    originals_attached_downloaded: 12
+    initial_nmck_full_service_rub: '4295282.00'
+    first_ranked_application: '2'
+    first_ranked_bid_rub: '2590000.00'
+    second_ranked_bid_rub: '3225756.78'
+    third_ranked_bid_rub: '3843800.00'
+    ukrm_specific_testing_estimate_rub: '702878.82'
+    selected_legal_company: null
+    signed_contract_verified: false
+    excluded_from_new_equipment_tam: true
+  extra_2025_secondary:
+    - 'B2B Center 4256170: two UKRM 10kV, ООО Прогазстрой, buyer INN 9709099564, no manufacturer or signed price.'
+    - 'TEK-Torg РН51202455: RN-Burenie 6kV UKRM technical support, service not new supply.'
+  bugfixes:
+    - 'Parse official 223-FZ supplierInfo for applicant name/INN/OGRN (provider is boolean in originals).'
+    - 'Extract purchaseProtocolSummingupZPESMBO and purchaseProtocolRZ2ZPESMBO instead of labeling other_primary_xml.'
+  last_focus_acceptance: '69 passed, 1 warning, Ruff and git diff --check clean'
+  open_gates:
+    verified_signed_contracts_for_new_cases: 0
+    actual_ukrm_sales_verified: 0
+    national_market_size_rub: null

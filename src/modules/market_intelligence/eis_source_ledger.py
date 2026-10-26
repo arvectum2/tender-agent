@@ -77,15 +77,38 @@ def _applications(protocol: ET.Element) -> list[dict[str, Any]]:
         for app in _named_children(lots, "application"):
             if len(rows) >= MAX_APPLICATIONS_PER_PROTOCOL:
                 raise ValueError("Protocol application count exceeds safe limit")
-            inn = _text(app, "provider/mainInfo/inn") or _text(app, "provider/inn")
+            # Original EIS 223-FZ purchaseProtocol uses supplierInfo for the
+            # applicant legal entity (provider may be a BOOLEAN marker, not
+            # a supplier object). Record that identity as bid evidence only.
+            inn = (
+                _text(app, "supplierInfo/inn")
+                or _text(app, "provider/mainInfo/inn")
+                or _text(app, "provider/inn")
+            )
             if inn is not None and not re.fullmatch(r"[0-9]{10}|[0-9]{12}", inn):
                 inn = None
+            provider_name = (
+                _text(app, "supplierInfo/name")
+                or _text(app, "provider/mainInfo/fullName")
+            )
+            if provider_name is not None:
+                provider_name = provider_name[:300]
+            provider_ogrn = _text(app, "supplierInfo/ogrn")
+            if provider_ogrn is not None and not re.fullmatch(r"[0-9]{13}|[0-9]{15}", provider_ogrn):
+                provider_ogrn = None
             rows.append({
                 "lot_ordinal": ordinal,
                 "application_number": _text(app, "applicationNumber"),
                 "bid_price_text": _safe_decimal(_text(app, "price")),
                 "currency_code": _text(app, "currency/code"),
                 "provider_inn_evidence": inn,
+                "provider_name_evidence": provider_name,
+                "provider_ogrn_evidence": provider_ogrn,
+                "accepted_raw": _text(app, "accepted"),
+                "consideration_accepted_raw": _text(app, "considerationResultInfo/accepted"),
+                "winner_indication_raw": _text(app, "winnerIndication"),
+                "commission_decision_place_raw": _text(app, "commissionDecisionPlace"),
+                "assessment_result_raw": _text(app, "assessmentResult"),
                 "accepted_flag": _literal_bool(_text(app, "accepted")),
                 "consideration_accepted_flag": _literal_bool(_text(app, "considerationResultInfo/accepted")),
                 "contract_signed_flag_unverified": _literal_bool(_text(app, "contractSigned")),
@@ -174,7 +197,8 @@ def _document_fields(root: ET.Element) -> dict[str, Any]:
         }
     if kind in (
         "purchaseProtocol", "purchaseProtocolSummingupZKESMBO",
-        "purchaseProtocolRZ1ZPESMBO", "purchaseProtocolSummingupKESMBO",
+        "purchaseProtocolRZ1ZPESMBO", "purchaseProtocolRZ2ZPESMBO",
+        "purchaseProtocolSummingupZPESMBO", "purchaseProtocolSummingupKESMBO",
     ):
         original = _first(root, f"body/item/{kind}Data")
         return {

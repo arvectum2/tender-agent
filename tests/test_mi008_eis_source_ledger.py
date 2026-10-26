@@ -271,3 +271,82 @@ def test_kesmbo_notice_and_summingup_protocol_originals_are_linked_without_award
     assert protocol_record["applications"][0]["contract_signed_flag_unverified"] is True
     assert protocol_record["applications"][0]["winner_verified"] is False
     assert link_original_documents(docs)["winner_verified"] is False
+
+def test_real_223_supplier_info_is_applicant_evidence_not_signed_award(tmp_path: Path):
+    original = b"""<purchaseProtocol><body><item><purchaseProtocolData>
+    <purchaseInfo><purchaseNoticeNumber>32616433248</purchaseNoticeNumber></purchaseInfo>
+    <registrationNumber>32616433248-02</registrationNumber>
+    <lotApplicationsList><protocolLotApplications><lot><ordinalNumber>1</ordinalNumber></lot>
+    <application><applicationNumber>1</applicationNumber><provider>true</provider>
+    <supplierInfo><name>STROYENERGOIMPORT LLC</name><inn>7801564611</inn>
+    <ogrn>1117847714742</ogrn></supplierInfo>
+    <price>56330673.93</price><currency><code>RUB</code></currency>
+    <accepted>T</accepted><considerationResultInfo><accepted>N</accepted></considerationResultInfo>
+    <contractSigned>true</contractSigned><commissionDecisionPlace>1</commissionDecisionPlace>
+    </application></protocolLotApplications></lotApplicationsList>
+    </purchaseProtocolData></item></body></purchaseProtocol>"""
+    p = tmp_path / "official-223-protocol.zip"
+    sha = _archive(p, [("purchaseProtocol_32616433248.xml", original)])
+    rows = _extract(p, sha)
+    a = rows[0]["applications"][0]
+    assert a["provider_name_evidence"] == "STROYENERGOIMPORT LLC"
+    assert a["provider_inn_evidence"] == "7801564611"
+    assert a["provider_ogrn_evidence"] == "1117847714742"
+    assert a["accepted_raw"] == "T"
+    assert a["consideration_accepted_raw"] == "N"
+    assert a["commission_decision_place_raw"] == "1"
+    assert a["bid_price_text"] == "56330673.93"
+    assert a["contract_signed_flag_unverified"] is True
+    assert a["winner_verified"] is False
+    assert a["signed_contract_price_verified"] is False
+    assert link_original_documents(rows)["winner_verified"] is False
+
+
+def test_invalid_223_applicant_ogrn_inn_not_promoted_to_legal_identity(tmp_path: Path):
+    original = _protocol().replace(b"1234567890", b"NOT-AN-INN").replace(
+        b"<price>", b"<supplierInfo><name>Some applicant</name><inn>INVALID</inn>"
+        b"<ogrn>INVALID</ogrn></supplierInfo><price>"
+    )
+    p = tmp_path / "bad-identity.zip"
+    sha = _archive(p, [("protocol.xml", original)])
+    a = _extract(p, sha)[0]["applications"][0]
+    assert a["provider_inn_evidence"] is None
+    assert a["provider_ogrn_evidence"] is None
+    assert a["provider_name_evidence"] == "Some applicant"
+    assert a["winner_verified"] is False
+
+
+@pytest.mark.parametrize("root_name", [
+    "purchaseProtocolRZ2ZPESMBO", "purchaseProtocolSummingupZPESMBO",
+])
+def test_223_msme_second_review_and_final_protocol_apps_are_not_discarded(tmp_path: Path, root_name: str):
+    xml = f"""<{root_name}><body><item><{root_name}Data>
+    <registrationNumber>32616412267-03</registrationNumber>
+    <purchaseInfo><purchaseNoticeNumber>32616412267</purchaseNoticeNumber></purchaseInfo>
+    <lotApplicationsList><protocolLotApplications><lot><ordinalNumber>1</ordinalNumber></lot>
+    <application><applicationNumber>2</applicationNumber><price>2590000.00</price>
+    <accepted>T</accepted><contractSigned>true</contractSigned>
+    <assessmentResult>100</assessmentResult><commissionDecisionPlace>1</commissionDecisionPlace>
+    </application>
+    <application><applicationNumber>1</applicationNumber><price>3225756.78</price>
+    <accepted>T</accepted><contractSigned>false</contractSigned>
+    <assessmentResult>98.77</assessmentResult><commissionDecisionPlace>2</commissionDecisionPlace>
+    </application>
+    </protocolLotApplications></lotApplicationsList>
+    </{root_name}Data></item></body></{root_name}>""".encode()
+    p=tmp_path/"original-msme.xml.zip"
+    sha=_archive(p,[("original.xml",xml)])
+    records=_extract(p,sha)
+    assert len(records)==1
+    proto=records[0]
+    assert proto["record_kind"]=="protocol"
+    assert proto["notice_number"]=="32616412267"
+    assert proto["protocol_number"]=="32616412267-03"
+    assert [a["application_number"] for a in proto["applications"]]==["2","1"]
+    assert [a["bid_price_text"] for a in proto["applications"]]==["2590000.00","3225756.78"]
+    assert proto["applications"][0]["assessment_result_raw"]=="100"
+    assert proto["applications"][0]["commission_decision_place_raw"]=="1"
+    assert proto["applications"][0]["contract_signed_flag_unverified"] is True
+    assert proto["applications"][0]["winner_verified"] is False
+    assert proto["applications"][0]["signed_contract_price_verified"] is False
+    assert link_original_documents(records)["contract_price_verified"] is False
