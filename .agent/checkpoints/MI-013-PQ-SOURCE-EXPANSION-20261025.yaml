@@ -13,7 +13,7 @@ completed:
   - Identified 21 of 4388 verified selected EIS source-day cells and existing MI-008 through MI-012 integration path.
   - Independently located five new public procurement cards and reviewed the anomalous Nagornaya contract claim and mixed-lot filter scope.
   - Preserved immutable 2026-10-24 baseline v1 (12 records), moved 17-record research snapshot to verified_public_leads_20261025.v2.json, and switched tests to v2; deterministic cross-file checks pass for 12/17 counts, identities and zero award claims.
-current: ARC official getDocsIP collected 22 verified source-days in two batches; 43/4388 verified total, 2 incomplete, 144 SHA verified official ZIP, 12088 XML. 147 total ZIP including 3 exact-primary, scanned 12101 XML with 16 lexical hits; new 44-FZ active harmonic filter candidate 0372100005626000037 (2026-05-15 region 78), requires original award/technical check.
+current: ARC third 12-call official EIS SOAP batch finished; independently verified 53 of 4388 source days, 4 incomplete, 176 original ZIPs, 14573 XML (nonunique). Original 44FZ XML 0372100005626000037 is Hermitage 15,027,344.11 RUB NMCK active harmonic filters but 208-415V, EXCLUDED from target 6-35kV TAM.
 pending:
   - Verify fresh exact-head CI on the final checkpoint-only commit and reproducible report/test results; resolve any failures.
   - Acquire official originals and contract evidence under a separate read-only, source-bounded task.
@@ -23,7 +23,7 @@ test_results:
   - New deterministic expected 17 records / 0 verified awards; new tests added.
   - Initial CI run 40213600708: 5291 passed, 285 skipped, 3 failed in MI003 due in-place overwrite of frozen v1; root cause fixed by restoring pinned v1 and introducing v2.
   - Full exact-head CI rerun 40214539497 on updated v2 source/test/doc commit cfbbb2fd0cd11b2c09e2905923d6d0ab6b43abfd is in_progress at checkpoint; never claim PASS until verified.
-resume_instruction: Continue ARC official EIS SOAP backfill via existing MI009 module with bounded 12-call runs, using /Volumes/ArvectumSSD/Arvectum/repos/tender-agent/.venv/bin/python and isolated root. Reconcile two provider_response_review incomplete days. Examine original XML 0372100005626000037 and download its attachments; extract technical specifications and awards, dedup. Do not claim nationwide completeness or winners without official proof.
+resume_instruction: Continue bounded official SOAP historical batches and independently SHA-audit. Expand beyond regions 77/78 once enough coverage. Reconcile four incomplete provider_response_review days; review target 6-35kV original technical documents and signed contract outcomes. Never count Hermitage 0372100005626000037 in medium-voltage TAM.
 
 research_extension_20261026:
   new_discovery_records: 8
@@ -49,3 +49,15 @@ arc_official_collection_20261026:
   lexical_matches: 16
   newly_detected_candidate: '0372100005626000037'
   candidate_kind: 'active harmonic filter; primary 44-fz XML; voltage and award unverified'
+
+arc_followup_20261026:
+  verified_source_days: 53
+  incomplete_source_days: 4
+  verified_archives: 176
+  verified_xml: 14573
+  low_voltage_exclusion:
+    registry: '0372100005626000037'
+    buyer: 'Государственный Эрмитаж'
+    nmck_rub: 15027344.11
+    voltage: '208-415 V'
+    target_6_35kv: false
