@@ -832,6 +832,73 @@
         }
       ],
       "notes": "Discovery-only. Проверить прямую карточку и ТЗ, напряжение, исходные протоколы и результаты; не включать в расчёт рынка 6–35 кВ без подтверждения."
+    },
+    {
+      "id": "pq-2026-sibsteklo-ukrm-6kv",
+      "canonical_id": "bidzaar:306-644:lot35",
+      "publication_date": "2026-03-13",
+      "date_basis": "published",
+      "procedure_id": "306-644",
+      "platform": "Bidzaar",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "СИБСТЕКЛО",
+        "inn": null
+      },
+      "beneficiary": null,
+      "project": "Новосибирск, ул. Даргомыжского, 8а, стр. 20",
+      "family": "ukrm",
+      "scope": "epc",
+      "description": "Монтаж, подключение и ПНР установок УКРМ 6 кВ в СК-3, лот 35; опубликованы ТЗ DOCX 42.1 КБ, приложение PDF 81.3 КБ, форма КП XLS 68 КБ и проект договора DOC 121 КБ.",
+      "quantity": 1,
+      "quantity_unit": "усл.ед",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af",
+          "source_tier": "primary_platform",
+          "locator": "Карточка Bidzaar 306-644, документы, спецификация и сроки",
+          "excerpt": "Установка, подключение и пусконаладка УКРМ 6 кВ, 1 усл.ед; завершен 17.04.2026"
+        }
+      ],
+      "notes": "Платформа подтверждает 6 кВ и наличие четырёх файлов; сами вложения пока не скачаны и не разобраны. Победитель и цена не опубликованы в доступной карточке."
+    },
+    {
+      "id": "pq-2026-elga-ukrm-6kv",
+      "canonical_id": "bidzaar:351-062:lot1",
+      "publication_date": "2026-07-08",
+      "date_basis": "published",
+      "procedure_id": "351-062",
+      "platform": "Bidzaar",
+      "procurement_regime": "commercial",
+      "customer": {
+        "name": "АО «ГК «Электрощит»-ТМ Самара»",
+        "inn": null
+      },
+      "beneficiary": {
+        "name": "ООО «УК «ЭЛЬГА»",
+        "inn": null
+      },
+      "project": "Самара / Тольятти, поставка для ЭЛЬГА",
+      "family": "ukrm",
+      "scope": "supply",
+      "description": "Анализ цен двух конденсаторных установок УКРМ 6 кВ, заявка 300240128; приложены ОЛ УКРМ 6 кВ DOC и технический файл DOCX.",
+      "quantity": 2,
+      "quantity_unit": "шт",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "source_reports_closed",
+      "evidence": [
+        {
+          "url": "https://bidzaar.com/app/process/light/019f415c-8a7a-7c91-bb3f-68da7b9413ea",
+          "source_tier": "primary_platform",
+          "locator": "Карточка Bidzaar 351-062, описание, документы и сроки",
+          "excerpt": "Анализ цен конденсаторных установок, 2 шт.; ОЛ УКРМ 6 кВ; мониторинг рынка завершён 21.07.2026"
+        }
+      ],
+      "notes": "Мониторинг рынка, не подтверждённая закупка с договором. ТЗ доступно по карточке, файлы ещё не получены. Не включать в сумму присуждённых контрактов."
     }
   ]
 }
