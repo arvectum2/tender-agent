@@ -31,17 +31,17 @@ def ontology():
 
 def test_real_seed_is_bounded_and_has_no_invented_winners(seed, ontology):
     result = analyze_pilot(seed, ontology)
-    assert result["distinct_procedure_lots"] == 36
+    assert result["distinct_procedure_lots"] == 37
     assert result["period_sample_counts"] == {
-        "2023": 1, "2024": 5, "2025": 5, "2026": 25
+        "2023": 1, "2024": 5, "2025": 5, "2026": 26
     }
     assert result["verified_award_count"] == 0
     assert result["verified_winner_count"] == 0
     assert result["market_size_rub"] is None
     assert result["population_completeness"] == "UNKNOWN"
-    assert result["category_counts"] == {"ukrm": 29, "statcom": 5, "harmonic_filter": 2}
+    assert result["category_counts"] == {"ukrm": 30, "statcom": 5, "harmonic_filter": 2}
     assert result["work_package_counts"] == {
-        "supply": 26, "maintenance": 3, "epc": 6, "design": 1
+        "supply": 26, "maintenance": 3, "epc": 6, "design": 2
     }
 
 
@@ -101,8 +101,8 @@ def test_duplicate_source_mirror_consolidates_with_evidence(seed, ontology):
     row["evidence"][0]["url"] = "https://example.org/source/mirror"
     seed["records"].append(row)
     report = analyze_pilot(seed, ontology)
-    assert report["seed_records"] == 37
-    assert report["distinct_procedure_lots"] == 36
+    assert report["seed_records"] == 38
+    assert report["distinct_procedure_lots"] == 37
     assert report["mirror_duplicates_removed"] == 1
 
 
@@ -187,8 +187,8 @@ def test_original_20261024_source_and_report_baselines_are_preserved():
 def test_primary_original_case_dossiers_keep_award_contract_and_tam_separate(seed):
     dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text(encoding="utf-8"))
     cases = {case["number"]: case for case in dossiers["cases"]}
-    assert set(cases) == {"32615614821", "32616120582", "32615969197", "32616497692", "0372100005626000037"}
-    assert len(seed["records"]) == 36
+    assert set(cases) == {"32615614821", "32616120582", "32615969197", "32616103025", "32616497692", "0372100005626000037"}
+    assert len(seed["records"]) == 37
     assert dossiers["verified_signed_contracts"] == 0
     assert dossiers["national_6_35kv_market_size_rub"] is None
     assert cases["32615614821"]["signed_contract_price_rub"] is None
@@ -252,7 +252,7 @@ def test_fgi_portfolio_screen_does_not_assert_approved_substitution():
 
 def test_20261026_secondary_extension_preserves_real_world_risk_gates(seed, ontology):
     report = analyze_pilot(seed, ontology)
-    assert len(seed["records"]) == 36
+    assert len(seed["records"]) == 37
     ids = {r["procedure_id"] for r in report["leads"]}
     assert {"РН41205245", "895449", "77907981", "77795100", "86829457", "1190793", "1234013"} <= ids
     assert report["market_size_rub"] is None
@@ -332,3 +332,24 @@ def test_2025_ukrm6kv_rosneft_index_keeps_invented_notice_id_and_award_closed(se
     assert item["status"] == "unknown"
     assert item["evidence"][0]["source_tier"] == "third_party"
     assert report["market_size_rub"] is None
+
+
+def test_pionerskaya_2026_two_procurements_one_unfulfilled_project(seed, ontology):
+    report = analyze_pilot(seed, ontology)
+    first = next(x for x in report["leads"] if x["procedure_id"] == "32615969197")
+    repeat = next(x for x in report["leads"] if x["procedure_id"] == "32616103025")
+    assert first["project_equivalence_key"] == repeat["project_equivalence_key"]
+    assert first["canonical_id"] != repeat["canonical_id"]
+    assert repeat["related_procedures"] == ["32615969197"]
+    assert first["status"] == repeat["status"] == "no_bids_reported"
+    assert first["nmck_rub"] == "518960"
+    assert repeat["nmck_rub"] == "518960.00"
+    assert repeat["evidence"][0]["source_tier"] == "primary_platform"
+    assert repeat["quantity"] is None
+    assert report["market_size_rub"] is None
+    dossiers = json.loads((DATA / "official_case_dossiers_20261026.v1.json").read_text())
+    p = next(x for x in dossiers["cases"] if x["number"] == "32616103025")
+    assert p["unique_market_project_count_increment"] == 0
+    assert p["separate_procurement_procedure_count_increment"] == 1
+    assert p["winner_in_original_protocol"] is None
+    assert p["signed_contract_price_rub"] is None

@@ -1,7 +1,7 @@
 {
   "schema_version": "mi013-pq-original-dossiers/0.1",
   "as_of": "2026-10-26",
-  "case_count": 5,
+  "case_count": 6,
   "cases": [
     {
       "number": "32615614821",
@@ -183,6 +183,31 @@
       "manufacturer_verified": false,
       "market_equipment_tam_rub": null,
       "evidence_gate": "primary procurement notice and source budget proven, open 2026-10-26; no winner or signed contract"
+    },
+    {
+      "number": "32616103025",
+      "regime": "223-fz",
+      "date": "2026-06-10",
+      "buyer": "ООО Башкирские распределительные электрические сети",
+      "buyer_inn": "0277071467",
+      "object": "Repeat tender design of UKRM 10kV PS35kV Pionerskaya",
+      "related_original_procedure": "32615969197",
+      "corporate_project_lot": "26-004167",
+      "same_project_as_original": true,
+      "unique_market_project_count_increment": 0,
+      "separate_procurement_procedure_count_increment": 1,
+      "initial_design_nmck_rub": "518960.00",
+      "only_design_no_equipment_revenue": true,
+      "protocol_date": "2026-06-23",
+      "commission_result": "failed_no_bids_lot_to_correction",
+      "winner_in_original_protocol": null,
+      "signed_contract_price_rub": null,
+      "official_xml_zip_sha256": "6ae80094a20fe66525cdfd8c7adc7161d32d25097b1ded827e7daec8af3e2bc3",
+      "official_documents_zip_sha256": "e61b41878b0d8ddff997d8806b38d8809f3f8f4a219151b5ce187ef5229ed48d",
+      "official_final_protocol_pdf_sha256": "65d7a2b412eab6161b04b929b51fbe755fff623e3040c7c9297f3dc574aae867",
+      "source_bound_originals_downloaded": 3,
+      "source_url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616103025",
+      "note": "Both 19 May and 23 June commissions found no commercial bids; this is a second procedure, same need, not independent money."
     }
   ],
   "evidence_policy": "These are original XML/technical annex/protocol observations. No signed original contract registry yet. Whole EPC values never count as equipment TAM.",
