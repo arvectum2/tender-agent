@@ -1,0 +1,96 @@
+{
+  "schema_version": "pq-market-source-candidates/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v23",
+  "base_manifest": "verified_public_leads_20261027.v22.manifest.json",
+  "append_only_new_records": 1,
+  "source_verified_first_party": true,
+  "records": [
+    {
+      "id": "pq-2026-rosseti-ntc-components-2026",
+      "canonical_id": "223fz:32616355390:lot1",
+      "publication_date": "2026-09-07",
+      "date_basis": "official_notice",
+      "procedure_id": "32616355390",
+      "platform": "РТС-тендер / ЕИС 223-ФЗ",
+      "platform_procedure_id": "4023544",
+      "procurement_regime": "223-fz",
+      "customer": {
+        "name": "АО «Россети Научно-технический центр»",
+        "inn": "7728589190"
+      },
+      "beneficiary": "Опытно-экспериментальное производство АО «Россети НТЦ»",
+      "project": "Трёхлетняя поставка комплектующих для КВУ, систем управления и охлаждения и оборудования, включая компенсацию реактивной мощности",
+      "family": "pq_adjacent_manufacturing_components",
+      "scope": "three_year_supply_framework_not_finished_PQ_equipment",
+      "description": "Поставка сырья, материалов и комплектующих по заявкам для производства КВУ/тиристорных систем и прочего электрооборудования; не отдельный контракт на STATCOM/UKRM 6–35кВ",
+      "quantity": null,
+      "quantity_unit": null,
+      "nmck_rub": "399120963.00",
+      "reported_price_kind": "initial_maximum_contract_ceiling_inc_vat_22pct",
+      "status": "original_final_protocol_competition_failed_one_admitted_joint_bid_commission_decided_to_contract",
+      "original_final_protocol_date": "2026-10-20",
+      "original_source_bid_amount_inc_vat_rub": "399120560.00",
+      "original_source_bid_amount_ex_vat_rub": "327148000.00",
+      "original_source_initial_max_amount_ex_vat_rub": "327148330.33",
+      "original_bid_count": 1,
+      "protocol_result": "failed_sole_bid_but_commission_decided_to_conclude_with_collective_participant",
+      "original_selected_bidder": {
+        "lead": {
+          "name": "ООО «КАМЭЛЕКТРОЦЕНТР»",
+          "inn": "1650327380"
+        },
+        "collective_member": {
+          "name": "ООО «ЭН ЭЙЧ ИНЖИНИРИНГ»",
+          "inn": "7716584575"
+        }
+      },
+      "actual_signed_contract_verified": false,
+      "registered_contract_number": null,
+      "actual_revenue_rub": null,
+      "pq_equipment_portion_rub": null,
+      "manufacturer_verified": false,
+      "target_voltage_6_35kv_proven": false,
+      "related_underlying_need_group": "rosseti_ntc_components_2025_2026",
+      "related_existing_notice": "223fz:32515218366:lot1",
+      "relationship": "Separate official notice and original final protocol. SAME buyer & subject class and same two companies that competed separately in 2025; in 2026 joined one bid. Underlying 3yr ordering needs may overlap. Both NMC must not sum as independent PQ sales.",
+      "possible_duplicate_of": "223fz:32515218366:lot1",
+      "excluded_from_market_value_aggregation": true,
+      "evidence": [
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=C3F84B482EE34CF294EB7B95AEC46D97",
+          "source_tier": "primary_EIS_final_commission_protocol_DOC_sha256_verified",
+          "sha256": "e29e23cc07f68cc09515aabe5b54fee62a6dd8bd9094d03db9bd364b0f1f5fe2",
+          "locator": "Оригинальный протокол №10 от 20.10.2026: one bid, lead participant and collective member, offer 399120560 incl VAT22, decision to conclude contract, no signed contract proof"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=71883E3051E94D95A66E5D733B6C921A",
+          "source_tier": "primary_EIS_TZ_DOCX_sha256_verified",
+          "sha256": "adb23fc968ed66ce5a7b94873e7dab353e7bcb77f64929def36f2e45e191726a",
+          "locator": "Техническая часть: supply of components on individual calls, warehouse acceptance, equipment for converter/valve control, 6mo warranty; no 6-35kV product output specified"
+        },
+        {
+          "url": "https://poisktenderov.ru/item/223/32616355390/",
+          "source_tier": "secondary_document_index_with_original_eis_file_references",
+          "locator": "Notice published 07.09.2026, 2026-09-23 changed appendices, originals available from filestore"
+        },
+        {
+          "url": "https://energybase.ru/tender/01a0804c-95e6-71ed-81b8-da1af0d911f8",
+          "source_tier": "secondary_independent_2026_399m_notice_listing",
+          "locator": "Card NMC 399120963 RUB"
+        }
+      ],
+      "notes": "Separate procurement publication added to source-ledger, but flagged as potentially same underlying component supply need as №32515218366; exclude from independent finished PQ hardware TAM; protocol decision does not equal signed contract."
+    }
+  ],
+  "linked_cases": [
+    {
+      "canonical_id": "223fz:32616355390:lot1",
+      "related_notice": "223fz:32515218366:lot1",
+      "link_type": "same_buyer_subject_competitors_become_collective_bidder",
+      "possible_overlapping_framework_spend": true,
+      "independent_market_sales": false
+    }
+  ],
+  "notes": "The 2026 official notice was not already in previous ~100-card source ledger according to current git grep. It is one DISTINCT notice with original 2026 commission DOC, but do NOT add 399m to TAM or infer a new OEM sale."
+}
