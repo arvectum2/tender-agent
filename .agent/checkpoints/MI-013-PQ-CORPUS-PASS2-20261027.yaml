@@ -1,0 +1,41 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: MI-013-PQ-CORPUS-PASS2-20261027
+status: in_progress
+goal: Expand traceable Russian Power Quality 6-35 kV procurement corpus, 2024-2026, for FGI go-to-market and reconcile original ЕИС/ЭТП protocols.
+definition_of_done:
+  - Enumerate and source-link new procurement notices not in v3.
+  - Preserve baseline and separate procurement notices from unique buyer demand.
+  - Extract original ЕИС or ЭТП protocols and verify awards, supplier/EPC/project designer roles and contracts where publicly available.
+  - Normalize amounts, VAT, voltage, Mvar, families, scope and exclusion flags.
+  - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
+  - Publish auditable methods, tests, and checkpoint with exact commits.
+completed:
+  - Read actual research branch v3 (48 records), checked canonical IDs and active project checkpoint.
+  - Researched secondary public listings for Bashkirenergo 32515582393 / B2B 4283612, NMC 5880000 RUB VAT included; voltage and award unverified.
+  - Found B2B 4535313 Sagan-Nur 6kV 630 kvar; customer and price unverified.
+  - Found three 10kV AUKRM MGOK procedures 4561228, 4561243, 4565274 and explicit earlier-reference 4538400; modelled possible repeat demand.
+  - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
+  - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
+  - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
+current: Secondary discovery update committed as version v4; pending external original protocol/contract verifications and canonical database migration.
+pending:
+  - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
+  - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
+  - Resolve MGOK 4538400→4565274 and possible overlap 4561228 before volume statistics.
+  - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
+  - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
+  - Execute QA tests against checked-out branch and review CI.
+last_verified_commit: 72fc8731d5db90f466ff42c063011445b03ebb37
+test_results:
+  - In-memory 54 unique canonical IDs, 48 unchanged v3 and 6 new source-linked leads.
+  - All six new entries have secondary public URLs; no suppliers attributed.
+  - Exactly one newly known NMC, 5880000 RUB including VAT, zero confirmed contract prices.
+  - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
+resume_instruction: Read data/market_intelligence/power_quality/verified_public_leads_20261027.v4.json; run tests/test_mi013_pq_corpus_v4.py; fetch original 223-FZ contract registry for 32515582393, original B2B notices 4535313/4561228/4561243/4565274; resolve repeated equipment demand before estimating market. Keep existing TA-ROADMAP-EXEC-20261012 current-task checkpoint intact; this is a child market-intelligence task in a separate branch.
+execution:
+  branch: research/mi013-pq-corpus-20261027-pass2
+  source_branch: research/mi013-pq-source-expansion-20261025
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v4.json
+  current_task_main_parent_untouched: true
+  database_postgresql_import_executed: false
