@@ -1,0 +1,115 @@
+"""Bounded public procurement card audit across known ETP and mirror URLs.
+
+Only probes URLs present in the source retrieval queue. No guessed URLs,
+automatic bidding or claim that aggregator pricing is a signed award.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import os
+import tempfile
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+ALLOW = frozenset({"poisktenderov.ru","zakupki.tochka.com","synapsenet.ru",
+                   "uds-group.ru","b2b.house","energybase.ru","zakupki.kontur.ru",
+                   "tendik.ru"})
+PRIMARY = frozenset({"uds-group.ru"})
+MAX_HTML_BYTES = 512 * 1024
+
+
+class _StrictRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if urllib.parse.urlsplit(newurl).hostname != urllib.parse.urlsplit(req.full_url).hostname:
+            raise urllib.error.URLError("cross-host redirect")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def _fetch(url: str, timeout: int = 10) -> dict:
+    p = urllib.parse.urlsplit(url)
+    if (p.scheme != "https" or p.hostname not in ALLOW or
+            p.username or p.password or p.port not in (None, 443)):
+        raise ValueError("Not an allowlisted HTTPS source")
+    opener = urllib.request.build_opener(_StrictRedirect())
+    request = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (compatible; ArvectumResearch/1.0)",
+        "Accept": "text/html,application/xhtml+xml"})
+    with opener.open(request, timeout=timeout) as response:
+        typ = response.headers.get("Content-Type", "")
+        raw = response.read(MAX_HTML_BYTES + 1)
+        if len(raw) > MAX_HTML_BYTES:
+            return {"status": "body_budget_exceeded", "http_status": response.status}
+        if "text/html" not in typ.lower():
+            return {"status": "non_html", "http_status": response.status,
+                    "content_type": typ[:100]}
+        text = raw.decode("utf-8", errors="replace")
+        return {"status": "html_fetched", "http_status": response.status,
+                "html_sha256": hashlib.sha256(raw).hexdigest(),
+                "text": text}
+
+
+def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,
+          retry_hours: int = 12, fetch=None) -> dict:
+    if not 1 <= max_tasks <= 30 or not 1 <= retry_hours <= 720:
+        raise ValueError("Invalid probe limits")
+    fetcher = fetch or _fetch
+    tasks = json.loads(queue_file.read_text(encoding="utf-8"))["tasks"]
+    state = json.loads(journal.read_text(encoding="utf-8")) if journal.exists() else {
+        "schema_version": "pq-etp-card-attempts/1", "attempts": []}
+    now = datetime.now(timezone.utc)
+    new = []
+    for task in tasks:
+        if len(new) >= max_tasks:
+            break
+        url = task.get("mirror")
+        identity = str(task.get("procedure_id") or task.get("owner") or "")
+        if not isinstance(url, str) or not url or not identity:
+            continue
+        host = urllib.parse.urlsplit(url).hostname
+        if host not in ALLOW:
+            continue
+        latest = next((a for a in reversed(state["attempts"])
+                       if a["procedure_id"] == identity and a["url"] == url), None)
+        if latest and (now - datetime.fromisoformat(latest["timestamp"])).total_seconds() < retry_hours * 3600:
+            continue
+        try:
+            result = fetcher(url)
+            html = result.pop("text", "")
+            result["identity_mentioned"] = identity.casefold() in html.casefold()
+            result["pq_term_mentioned"] = any(t in html.casefold() for t in
+                                               ("укрм","компенсац","статком","конденсатор","фильтр гармоник"))
+        except (OSError, ValueError, urllib.error.URLError) as exc:
+            result = {"status": "fetch_error", "error_type": type(exc).__name__}
+        record = {"timestamp": now.isoformat(), "procedure_id": identity, "url": url,
+                  "host": host, "source_tier": "original_corporate" if host in PRIMARY else "secondary_index",
+                  **result, "signed_contract_verified": False, "winner_verified": False}
+        state["attempts"].append(record)
+        new.append(record)
+        journal.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=journal.parent,
+                                         prefix=".etp-", delete=False) as f:
+            tmp = Path(f.name)
+            json.dump(state, f, ensure_ascii=False, indent=2)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, journal)
+    return {"probes": len(new), "total_attempts": len(state["attempts"]),
+            "html_fetched": sum(a["status"] == "html_fetched" for a in new),
+            "results": new}
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--queue-file", type=Path, required=True)
+    p.add_argument("--journal", type=Path, required=True)
+    p.add_argument("--max-tasks", type=int, default=5)
+    args = p.parse_args()
+    result = audit(queue_file=args.queue_file,journal=args.journal,max_tasks=args.max_tasks)
+    print(json.dumps(result, ensure_ascii=False))
+
+
+if __name__ == "__main__": main()
