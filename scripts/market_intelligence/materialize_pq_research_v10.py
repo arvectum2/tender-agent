@@ -43,7 +43,7 @@ def materialize() -> dict:
             "date_basis": "secondary_public_procurement_index",
             "procedure_id": raw["procedure_id"],
             "platform": raw["platform"],
-            "procurement_regime": "223-fz",
+            "procurement_regime": raw.get("procurement_regime", "223-fz"),
             "customer": {"name": raw["buyer"], "inn": raw["buyer_inn"]},
             "beneficiary": None,
             "project": raw["project"],
@@ -92,16 +92,16 @@ def materialize() -> dict:
             "prior_records": len(old["records"]),
             "added_records": len(new["records"]),
             "total_records": len(rows),
-            "new_initial_prices_known_count": 3,
-            "new_contract_outcomes_reported_secondary": 2,
+            "new_initial_prices_known_count": sum(r["nmck_rub"] is not None for r in new["records"]),
+            "new_contract_outcomes_reported_secondary": sum(r.get("reported_signed_contract_rub") is not None for r in new["records"]),
             "new_contract_outcomes_verified_original_rd223": 0,
             "newly_confirmed_equipment_only_sales_rub": "0",
         },
         "seed_completeness": "discovered_examples_only_not_population",
         "delta_note": (
-            "64 earlier IDs preserved + 3 EIS procurements: one contracted 10kV BSK EPC "
-            "and 2 separate attempted PИР procurement notices within same Tyazhinskaya 52Mvar project. "
-            "Do not count repeat design tenders as independent installed systems."
+            "64 earlier IDs preserved + 4 procurement notices: one contracted 10kV BSK EPC, "
+            "two related 52Mvar design attempts at Tyazhinskaya, and one commercial 35kV BSK EPC. "
+            "Do not treat repeated PИР or mixed EPC values as new equipment revenue."
         ),
     }
 
