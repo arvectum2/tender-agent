@@ -10,19 +10,27 @@ from .pq_source_recovery import run as search_eis
 from .pq_indexed_recovery import recover_indexed
 from .pq_queue_seed import seed
 from .pq_dp_ingest import ingest
+from .pq_verified_stage import stage
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               runtime: Path, ontology: Path, dp_source: Path,
-              max_cases: int = 8, network: bool = True) -> dict:
+              max_cases: int = 8, network: bool = True, verified_reestr: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
     queue = runtime / "review-queue"
     originals = runtime / "recovered-originals"
     roots = [*source_roots, originals]
+    staged = None
+    if verified_reestr:
+        staged = runtime / 'verified-official-originals'
+        staging_result = stage(source_root=verified_reestr, output_root=staged, max_cases=max_cases)
+        roots.append(staged)
     gaps = runtime / "evidence-gaps-cycle.json"
     report = {"schema_version": "pq-recovery-cycle/1", "network_enabled": network}
+    if staged:
+        report["verified_originals"] = staging_result
     report["inventory"] = inventory(leads_file=leads, source_roots=roots,
                                     queue_dir=queue, output=gaps)
     if network:
@@ -46,6 +54,8 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
         ingest(sources=originals, output=runtime / "dp-extracted.json",
                dp_source=dp_source, max_files=max_cases * 8)
         if originals.is_dir() else {"files_inspected": 0, "status": "no_recovered_originals"})
+    if staged:
+        report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8)
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
@@ -61,11 +71,12 @@ def main() -> None:
     p.add_argument("--dp-source", type=Path, required=True)
     p.add_argument("--max-cases", type=int, default=8)
     p.add_argument("--offline", action="store_true")
+    p.add_argument("--verified-reestr", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
                        ontology=a.ontology, dp_source=a.dp_source,
-                       max_cases=a.max_cases, network=not a.offline)
+                       max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr)
     print(json.dumps(result, ensure_ascii=False))
 
 
