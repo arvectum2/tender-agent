@@ -11,6 +11,12 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass12 expanded research from 71 PostgreSQL-imported lot cards to 82 GitHub-source-linked research candidates for rolling date window 2023-10-27..2026-10-27, eight sourced v13 IDs plus three sourced v14 IDs. No production DB mutations; 11 new findings pending later controlled import.
+  - Pass12 new EIS/commercial notices: 231994 and 231994-2 (Apatit/Kirovsky PS352 design one demand); 32615794236 (Chadan 110kV BSK design secondary signed 3579778.90); 32413708738 (Turan 220kV EPC outside 6-35kV); 32514944142 (SVC design related 32515225588); 32616339168 (24 BSK capacitors 6807600); 32515584863/32615760238 (Hani/Lopcha reissue PS SКРМ 128/154Mvar).
+  - Pass12 added 32615966040 (Nikitskaya 10kV bay reactive EPC, secondary contract 5273764), COM20082600016 (Lukoil commercial market-sounding UKRM one комплект), 1351/ОАЭ-ЦДКС/26 (RZD 36.289595m auxiliary second supply infrastructure).
+  - Pass12 report docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v14.md contains 82 source-linked cards, years 1/7/20/52 + 2 undated, 31 initial-price cards, four originally verified signed contract records; 11 GitHub-only postproduction discoveries.
+  - Pass12 supplemented source grouping to avoid counting FosAgro additional notice, Hani-Lopcha projects or 220kV high voltage equipment as multiple 6-35kV sales. No unverified vendor fabricated.
+  - Pass12 v13/v14 Python materializers and 8 regression tests authored in repository; CI green not yet verified, prior v12 72 MI013 local tests passed.
   - Pass11, 2026-10-27: owner's renewed explicit instruction led to the same previously approved ARC run_command successfully executing v12 importer (not via alternate channel). Correct Data Platform DB arvectum_data, only new collection arvectum-market-pq-6-35kv touched.
   - Pass11: independent production backup BEFORE SQL verified 37362424 bytes, SHA256 d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43, filename data-platform-arvectum_data-20261027T125522Z.dump.
   - Pass11: production SQL transaction COMMIT exit_code=0, created 1 collection / 71 dp_resources / 71 dp_records; original 26 other collections, 2192 other resources and 2192 dp_documents retained.
@@ -69,7 +75,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass11: production Data Platform STRUCTURED import COMPLETED and independently verified. 71 resource and 71 structured record rows in new collection arvectum-market-pq-6-35kv, db arvectum_data, backup SHA256 d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43, 37362424 bytes. Other 26 collections, 2192 resources and 2192 documents unchanged. Remaining MI013 research DoD not fully completed: original bid protocols/winners, PQ equipment contract amounts, and native Data Platform document/chunk/vector indexing.'
+current: 'Pass12 research expansion: 82 source-linked lot/procedure-level cases found in rolling 2023-10-27..2026-10-27; 31 have published NMC, four old primary RD223 contracts, many winners unknown, 2023 1 / 2024 7 / 2025 20 / 2026 52 / undated 2. New 11 records in GitHub v13/v14, only earlier 71 v12 records imported and readback PASS in arvectum_data. Full 34KB auditable report v14 published; still NOT defensible as all-Russia census. EIS/ETP full archives, winners, hidden EPC TЗ remain objective research gaps. CI v13/v14 pending.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -81,8 +87,11 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: 059d6adfbbf93a6c3335f9136627be4478583237
+last_verified_commit: 39e48d61cb70005c3a52c92e4cd62d9c6805751c
 test_results:
+  - Pass12 baseline 71 materializer read-only inventory: 2023=1 2024=6 2025=18 2026=44 undated=2, four original RD223 contracts, existing 23 NMC.
+  - Pass12 v13 added 8 IDs, v14 3, all distinct in source ledger; rolling 82 report with 31 NMC and 4 original contracts; new v13/v14 tests authored but CI/local run NOT yet confirmed.
+  - Pass12 Data Platform production unchanged since successful v12 71+71 import; new 11 records only versioned in GitHub.
   - Pass11 production backup verified: 37362424 bytes, SHA256 d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43.
   - Pass11 PostgreSQL commit exit code 0; dp_collections +1, dp_resources +71, dp_records +71; no schema or other collection changes.
   - Pass11 postwrite read-only acceptance PASS 71/71, two BESK lots, original MPU BOM, no missing provenance; baseline other 26 collections, 2192 resources and documents unchanged.
@@ -112,11 +121,11 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Production structured DB import is VERIFIED DONE. DO NOT rerun importer, backup or recreate collection; source-of-truth audit receipt data/market_intelligence/power_quality/mi013_production_import_receipt_20261027.json. Resume MI013 with unverified original tender protocols and 18-item queue primary_evidence_retrieval_queue_20261027.v5.json, particularly signed contracts Ufimka 32514476448 and Tyazhinskaya 32616354211 and amended Rosseti 32616435269 notice. Plan separate Data Platform text/chunk/vector ingestion using its native APIs and verify semantic search when separately authorized; structured 71 records are already present and shouldn't be duplicated. Review GitHub CI and keep PR #515 draft until source research DoD, preserve parent .agent/current-task.yaml.
+resume_instruction: Start from docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v14.md and data/market_intelligence/power_quality/verified_public_leads_20261027.v14.manifest.json, 82 observations. Run new materialize_pq_research_v13.py/v14.py and MI013 regression tests in isolated worktree when authorized; verify 71 v12 records unchanged, v13+8 and v14+3 added, 82 unique. Independently harvest 223/44-FZ ЕИС and commercial ETP tender catalogs from 2023-10-27 through 2026-10-27 with original attachments, check winners, repeat demand and contract amounts, prioritizing 2023/24 which have low discovery coverage. Do not claim national census or TAM; date and source gaps persist. Previous v12 PostgreSQL import 71+71 readback PASS and should not be rerun. New 11 are GitHub-only, require separately vetted and explicitly authorized DB merge. Parent current-task untouched.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v12.manifest.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v14.manifest.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: true
   database_postgresql_import_verified: true
@@ -126,4 +135,8 @@ execution:
   backup_sha256: d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43
 
   quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v12.json
+  research_report: docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v14.md
+  research_stage_rows: 82
+  production_rows_verified: 71
+  pending_import_rows: 11
   context_dataset: data/market_intelligence/power_quality/market_context_20261027.v3.json
