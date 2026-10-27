@@ -1,5 +1,6 @@
 """Regression tests for canonical MI-013 Power Quality research binding."""
 import json
+import os
 from pathlib import Path
 
 import pytest
@@ -8,7 +9,7 @@ from src.modules.market_intelligence.autonomous_research import run
 
 
 def test_read_only_corpus_and_resume(tmp_path):
-    corpus = Path("data/market_intelligence/power_quality")
+    corpus = Path(os.environ.get("MI013_PQ_CORPUS", "data/market_intelligence/power_quality"))
     if not (corpus / "verified_public_leads_20261027.v20.manifest.json").exists():
         pytest.skip("MI-013 v20 corpus not mounted in this checkout")
     out = tmp_path / "run"
