@@ -51,8 +51,8 @@ def run(*, corpus: Path, output: Path) -> dict:
     contracts, _ = _load(corpus / INPUTS[1])
     # Do not upgrade the seed's secondary leads into confirmed awards.
     signed_equipment = contracts.get("equipment_only_signed_contracts_verified")
-    if not isinstance(signed_equipment, int) or signed_equipment < 0:
-        raise ValueError("Signed equipment verification count missing")
+    if signed_equipment is not None and (type(signed_equipment) is not int or signed_equipment < 0):
+        raise ValueError("Invalid signed equipment verification count")
     manifest = {"study_id": "PQ-RU-MI013", "corpus_mode": "read_only_existing",
                 "source_manifest": sources, "discovery_record_count": len(records),
                 "latest_mi013_manifest": LATEST_MANIFEST,
