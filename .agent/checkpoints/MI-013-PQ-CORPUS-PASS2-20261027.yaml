@@ -11,6 +11,10 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Indexed historical UDSgroup original corporate archive: 5534/1866-УДСН BSK 10kV, 2024-11-26 bid deadline; 5631/018-Ял BSK 6/10kV, 2025-01-13 bid deadline; final award unknown.
+  - Added additive source delta, deterministic v8 manifest/materializer (58+2=60 canonical IDs) and focused regression tests.
+  - Added manufacturer-origin second Korbalikha mining PQ reference 2025-05-27: 6kV FCU 2035kvar plus IGBT dynamic ±3600kvar, deliberately separated from procured contracts.
+  - Revised evidence snapshot: 60 candidate identifiers, 13 NMC-known, 11 with primary EIS/ETP evidence, 4 registered contracts original-confirmed; 4 nonprocurement context cases.
   - Read actual research branch v3 (48 records), checked canonical IDs and active project checkpoint.
   - Researched secondary public listings for Bashkirenergo 32515582393 / B2B 4283612, NMC 5880000 RUB VAT included; voltage and award unverified.
   - Found B2B 4535313 Sagan-Nur 6kV 630 kvar; customer and price unverified.
@@ -18,27 +22,29 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'v7 expanded example corpus 55→58 procedures; separate installed-base/plan/vendor context (3 non-procurement records); 58-case evidence-quality snapshot and tests authored. Previous GitHub CI quality failed at v6 Python test collection caused by escaped literal backslash-n; fixed in 8d496002; exact-head CI rerun pending. First-party EIS/ETP award verification and production DB import remain open.'
+current: 'Pass4: source-backed UDSgroup archive 2024/25 added as two source-delta records; reproducible v8 manifest+materializer yields 60 logical procedure IDs. 2025 Korbalikha second ERASIB 6kV FCU/dynamic reactor recorded as fourth nonprocurement context, evidence-quality v8 60 source IDs. Baseline prior exact-head CI 40485406505 green, new v8 test CI awaiting verification; first-party protocols and production PostgreSQL import remain pending.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
   - Resolve MGOK 4538400→4565274 and possible overlap 4561228 before volume statistics.
   - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
   - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
-  - Execute exact-head CI rerun after fixing escaped newline in v6 test (previous quality failed at pytest collection).
-last_verified_commit: 48d8ad0e83c2d2748bd5384ced81a590a9148fa6
+  - Verify exact-head CI for v8 manifest/materializer/tests and repair any failures.
+last_verified_commit: b1c188293aae48f1427d39370cc9bbc38252715b
 test_results:
+  - Prior exact-head CI workflow 40485406505 SUCCESS on pre-v8 commit; v8 CI not yet reported green.
+  - v8 versioned dataset is manifest + deterministic source delta, not a second 100KB duplicated snapshot.
   - In-memory 54 unique canonical IDs, 48 unchanged v3 and 6 new source-linked leads.
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Review v7 at data/market_intelligence/power_quality/verified_public_leads_20261027.v7.json, context and evidence snapshot. Check exact-head CI after v6 newline fix, then run all MI-013 regressions. Continue acquisition of first-party GP630876/32515218366/5747901 protocols and resolve repeat equipment demand; review PostgreSQL schema and obtain exact-command ARC consent before production import. Preserve parent TA-ROADMAP-EXEC checkpoint.
+resume_instruction: Review v8 manifest and udsgroup_archive_2024_2025.json; materialize using scripts/market_intelligence/materialize_pq_research.py, check exact-head CI and 60-ID dedup. Then seek primary protocols of 32515218366, GP630876 and remaining B2B/223-FZ cases; establish awarded counterparties and invoices. Keep parent checkpoint intact; no live PostgreSQL writes without approved exact command.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v7.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v8.manifest.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: false
 
-  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.json
-  context_dataset: data/market_intelligence/power_quality/market_context_20261027.json
+  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v8.json
+  context_dataset: data/market_intelligence/power_quality/market_context_20261027.v2.json
