@@ -17,6 +17,9 @@ from .pq_etp_card_audit import audit as audit_etp
 from .pq_contract_xml_index import scan as scan_contracts
 from .pq_contract_outcome_audit import audit as audit_contracts
 from .pq_commission_candidate_audit import extract as extract_commission_candidates
+from .pq_public_223_acquire import batch as fetch_public_223
+from .pq_public_223_expand import expand as expand_public_223
+from .pq_public_223_canonical import canonicalize as canonicalize_public_223
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -24,7 +27,8 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               max_cases: int = 8, network: bool = True, verified_reestr: Path | None = None,
               etp_queue: Path | None = None,
               contract_root: Path | None = None,
-              contract_day_scan: Path | None = None) -> dict:
+              contract_day_scan: Path | None = None,
+              public223_source: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -76,6 +80,29 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
         report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8, ocr_empty=True)
     if zip_staged:
         report["zip_data_platform"] = resume_zip_ingest(source_root=zip_staged, runtime=runtime, dp_source=dp_source, max_files=min(max_cases * 2, 48))
+    if public223_source is not None:
+        if network:
+            report["public223_fetch"] = fetch_public_223(
+                gaps=gaps, target_root=public223_source,
+                journal=runtime / "public223-attempts.json",
+                max_cases=min(max_cases, 2))
+        else:
+            report["public223_fetch"] = {"status": "skipped_offline"}
+        if public223_source.is_dir():
+            expanded = runtime / "public223-expanded"
+            report["public223_expansion"] = expand_public_223(
+                source_root=public223_source, output_root=expanded,
+                max_cases=max_cases)
+            canonical = runtime / "public223-canonical"
+            report["public223_canonical"] = canonicalize_public_223(
+                staged=expanded, output=canonical, max_files=max_cases * 16)
+            report["public223_data_platform"] = ingest(
+                sources=canonical, output=runtime / "dp-public223-canonical.json",
+                dp_source=dp_source, max_files=max_cases * 16)
+            report["public223_review_source_tier"] = "public_eis_page_not_original_soap_xml"
+            report["review_queues"].append(seed(
+                sources=canonical, ontology=ontology, queue_dir=queue,
+                max_cases=max_cases))
     if contract_root is not None:
         contract_index_path = runtime / "contract-xml-evidence.json"
         contract_index = scan_contracts(contract_root, leads)
@@ -125,12 +152,14 @@ def main() -> None:
     p.add_argument("--etp-queue", type=Path)
     p.add_argument("--contract-root", type=Path)
     p.add_argument("--contract-day-scan", type=Path)
+    p.add_argument("--public223-source", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
                        ontology=a.ontology, dp_source=a.dp_source,
                        max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue,
-                       contract_root=a.contract_root, contract_day_scan=a.contract_day_scan)
+                       contract_root=a.contract_root, contract_day_scan=a.contract_day_scan,
+                       public223_source=a.public223_source)
     print(json.dumps(result, ensure_ascii=False))
 
 
