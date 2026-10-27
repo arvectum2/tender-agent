@@ -57,3 +57,20 @@ def test_unsafe_member_path_is_not_extracted(tmp_path: Path):
     result = expand(source_root=source, output_root=output)
     assert result["errors"] == 1
     assert not (tmp_path / "escape.pdf").exists()
+
+
+def test_invalid_zip_payload_is_recorded_not_aborted(tmp_path: Path):
+    source = _fixture(tmp_path)
+    archive = source / NUMBER / "notice.zip"
+    archive.write_bytes(b"This is not a zip file")
+    new_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+    receipt = source / NUMBER / "public-page-receipt.json"
+    item = json.loads(receipt.read_text())
+    item["files"][0]["sha256"] = new_sha
+    receipt.write_text(json.dumps(item))
+    output = tmp_path / "output"
+    result = expand(source_root=source, output_root=output)
+    assert result["members_staged"] == 0
+    assert result["errors"] == 1
+    details = json.loads((output / "public-members-manifest.json").read_text())
+    assert details["errors"][0]["error_type"] == "BadZipFile"
