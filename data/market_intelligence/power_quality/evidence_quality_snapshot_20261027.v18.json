@@ -1,0 +1,75 @@
+{
+  "schema_version": "pq-market-evidence-quality/1.0",
+  "date": "2026-10-27",
+  "dataset_version": "v18",
+  "manifest": "verified_public_leads_20261027.v18.manifest.json",
+  "total_unique_canonical_research_cards": 101,
+  "year_by_publication_date": {
+    "2023": 3,
+    "2024": 17,
+    "2025": 23,
+    "2026": 55,
+    "no_verified_publication_date": 3
+  },
+  "procurement_regime_record_labels": {
+    "223-fz": 40,
+    "commercial": 61
+  },
+  "scope_counts": {
+    "maintenance": 7,
+    "supply": 43,
+    "epc": 11,
+    "design": 14,
+    "adjacent_epc": 1,
+    "supply_candidate": 1,
+    "supply_with_mixed_work": 1,
+    "supply_components": 6,
+    "mixed_epc": 4,
+    "market_sounding": 10,
+    "electrical_auxiliary_works": 1,
+    "request_for_quotation": 1,
+    "mixed_MTR_market_sounding_with_PQ_component": 1
+  },
+  "family_counts": {
+    "statcom": 6,
+    "ukrm": 61,
+    "harmonic_filter": 4,
+    "power_quality_system": 1,
+    "filter_compensation": 1,
+    "pq_components": 1,
+    "capacitor_bank": 6,
+    "svc": 1,
+    "reactive_compensation_system": 10,
+    "capacitor_components": 3,
+    "hybrid_reactive_power_source": 1,
+    "dynamic_reactive_compensation": 2,
+    "reactive_compensation_epc_220kv": 1,
+    "svc_thyristor": 1,
+    "hybrid_reactive_power_source_candidate": 1,
+    "harmonic_filter_reactor": 1
+  },
+  "records_with_nmc_not_null": 36,
+  "records_with_individual_scalar_equipment_voltage_confirmed_6_to_35kv": 12,
+  "records_with_primary_Rd223_contract_sum_verified": 4,
+  "records_with_secondary_contract_price_and_no_primary": 7,
+  "records_with_secondary_final_price_not_contract": 1,
+  "primary_original_technical_archive_verified_count": 1,
+  "distinct_nonnull_demand_group_keys": 29,
+  "source_quality_caveats": [
+    "101 are lot-level/research signals, not unique official EIS numbers or all-Russian procurement population",
+    "Only 12 records have numeric scalar 6–35kV equipment_voltage_kv in normalized rows; other records may include nominal voltage in description or a multi-voltage set",
+    "Contract source tier is not automatically supplier identity; verified original RD223 contracts often lack readable winner",
+    "Market price surveys and requests for quotation do not imply sale or signed contract",
+    "High-voltage 110/220kV mixed EPC projects cannot be summed as 6–35kV equipment revenue",
+    "One original Rosseti 26-1174 BOM is SHA-verified, many secondary sources lack original attachments",
+    "Prior 71 Data Platform v12 records production imported, 30 new v13-v18 research observations not production imported",
+    "No comprehensive raw EIS 44/223-FZ and commercial ETP tender universe export yet"
+  ],
+  "production": {
+    "database": "arvectum_data",
+    "collection": "arvectum-market-pq-6-35kv",
+    "last_independently_verified_rows": 71,
+    "pending_research_rows": 30,
+    "physical_changes_in_pass14": 0
+  }
+}
