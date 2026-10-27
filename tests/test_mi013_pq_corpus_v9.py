@@ -51,3 +51,5 @@ def test_v9_financial_and_technical_uncertainty_is_preserved():
         assert r["reported_price_kind"] == "initial_price_not_contract"
         assert r["evidence"][0]["url"].startswith("https://")
     assert all(r["family"] == "harmonic_filter" for r in rows[:2])
+    assert next(r for r in rows if r["procedure_id"] == "32515225588")["family"] == "svc"
+    assert not any(r["family"] == "statcom" for r in rows)
