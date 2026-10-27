@@ -162,11 +162,9 @@ FROM mi013_stage
 ON CONFLICT (resource_id) DO UPDATE
  SET content_hash=EXCLUDED.content_hash,
      metadata=EXCLUDED.metadata,
-     status=EXCLUDED.status,
      updated_at=now(),last_seen_at=now()
  WHERE dp_resources.content_hash IS DISTINCT FROM EXCLUDED.content_hash
-    OR dp_resources.metadata IS DISTINCT FROM EXCLUDED.metadata
-    OR dp_resources.status IS DISTINCT FROM EXCLUDED.status;
+    OR dp_resources.metadata IS DISTINCT FROM EXCLUDED.metadata;
 INSERT INTO dp_records
  (record_id,resource_id,record_type,data,revision,review_status,
   metadata,created_at,updated_at)
@@ -203,16 +201,66 @@ SELECT 'records='||count(*) FROM dp_records WHERE resource_id IN
 """
 
 
-def backup(directory: Path) -> None:
-    if not directory.is_absolute() or not BACKUP.is_file():
-        raise RuntimeError("official backup helper / absolute path required")
+def backup(directory: Path) -> dict[str, str]:
+    """Create and independently verify the official pre-import PostgreSQL backup.
+
+    Require dump + manifest + separate checksum file to agree before applying SQL.
+    """
+    if not directory.is_absolute() or not directory.is_dir() or not BACKUP.is_file():
+        raise RuntimeError("official backup helper / existing absolute directory required")
     p = subprocess.run(
         [str(BACKUP), "--container", CONTAINER, "--database", DATABASE,
          "--output-dir", str(directory)],
         capture_output=True, text=True, timeout=180,
     )
-    if p.returncode or "SHA256=" not in p.stdout or "MANIFEST=" not in p.stdout:
+    if p.returncode:
         raise RuntimeError("backup failed, refusing database mutation")
+
+    fields = {}
+    for line in p.stdout.splitlines():
+        key, sep, value = line.partition("=")
+        if sep and key in {"BACKUP", "SHA256", "BYTES", "MANIFEST"}:
+            if key in fields:
+                raise RuntimeError("duplicate backup output key")
+            fields[key] = value
+    if set(fields) != {"BACKUP", "SHA256", "BYTES", "MANIFEST"}:
+        raise RuntimeError("backup missing official path or checksum metadata")
+    digest = fields["SHA256"]
+    if len(digest) != 64 or any(ch not in "0123456789abcdef" for ch in digest):
+        raise RuntimeError("invalid backup checksum")
+    root = directory.resolve()
+    dump = Path(fields["BACKUP"]).resolve()
+    manifest_file = Path(fields["MANIFEST"]).resolve()
+    if not dump.is_relative_to(root) or not manifest_file.is_relative_to(root):
+        raise RuntimeError("backup output outside approved directory")
+    if not dump.is_file() or not manifest_file.is_file():
+        raise RuntimeError("backup file or manifest not created")
+    checksum_file = Path(str(dump) + ".sha256")
+    if not checksum_file.is_file():
+        raise RuntimeError("backup checksum companion file missing")
+    from_disk = checksum_file.read_text(encoding="utf-8").strip()
+    if from_disk != digest:
+        raise RuntimeError("backup SHA256 companion disagrees with stdout")
+    declared = json.loads(manifest_file.read_text(encoding="utf-8"))
+    if (
+        declared.get("database") != DATABASE
+        or declared.get("container") != CONTAINER
+        or declared.get("backup_file") != dump.name
+        or declared.get("sha256") != digest
+    ):
+        raise RuntimeError("backup manifest metadata mismatch")
+    actual_size = dump.stat().st_size
+    if actual_size <= 0 or actual_size != int(fields["BYTES"]):
+        raise RuntimeError("backup size mismatch")
+    if actual_size != declared.get("bytes"):
+        raise RuntimeError("backup manifest size mismatch")
+    actual_hash = hashlib.sha256()
+    with dump.open("rb") as file:
+        for part in iter(lambda: file.read(1024 * 1024), b""):
+            actual_hash.update(part)
+    if actual_hash.hexdigest() != digest:
+        raise RuntimeError("backup SHA256 verification failed")
+    return {"path": str(dump), "sha256": digest, "bytes": str(actual_size)}
 
 
 def main() -> int:
@@ -237,7 +285,8 @@ def main() -> int:
     pre = result["preflight"]
     if pre["pq_resources"] not in (0, 71) or pre["pq_records"] not in (0, 71):
         raise SystemExit("Existing target contains unexpected partial data")
-    backup(args.backup_directory)
+    verified_backup = backup(args.backup_directory)
+    print(json.dumps({"backup_verified": verified_backup}, sort_keys=True), flush=True)
     print(query(build_apply_sql(rows)))
     return 0
 
