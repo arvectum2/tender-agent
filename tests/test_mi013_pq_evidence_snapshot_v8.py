@@ -28,7 +28,7 @@ def test_v8_statistical_denominators():
         for r in base
     )
     assert quality["context_nonprocurement_records"] == len(
-        read("market_context_20261027.v2.json")["records"]
+        read("market_context_20261027.v3.json")["records"]
     ) == 4
 
 
