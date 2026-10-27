@@ -1,0 +1,200 @@
+{
+  "schema_version": "pq-market-context/0.1",
+  "as_of": "2026-10-27",
+  "window_from": "2024-01-01",
+  "window_to": "2026-10-27",
+  "status": "non_procurement_market_context_not_market_population",
+  "records": [
+    {
+      "id": "pq-context-2024-korbalikha-erasib-fcu-statcom",
+      "kind": "commissioned_reference",
+      "event_date": "2024-05-27",
+      "source_date_basis": "manufacturer_publication",
+      "customer_or_site": "Корбалихинский рудник, шахтная подъёмная машина 3,25×4",
+      "actor": {
+        "name": "ЗАО «ЭРАСИБ»",
+        "role": "комплексный поставщик согласно собственному сообщению; не доказан изготовитель каждого компонента",
+        "inn": null
+      },
+      "project": "Ввод комплекса силового оборудования ШПМ 3,25×4",
+      "equipment": [
+        {
+          "family": "filter_compensation",
+          "model": "ФКУ-6-885-5/7/11/13/23/25-IP21-УХЛ3.1",
+          "voltage_kv": 6,
+          "reactive_compensation_kvar": 885,
+          "harmonic_orders": [
+            5,
+            7,
+            11,
+            13,
+            23,
+            25
+          ]
+        },
+        {
+          "family": "dynamic_reactive_compensation",
+          "model": "ЭРАТОН-В-УКРМ-200-6-50-IP21-УХЛ3.1",
+          "voltage_kv": 6,
+          "reported_compensation_range_kvar": "±2000",
+          "technology": "IGBT voltage source inverter transformerless"
+        }
+      ],
+      "contract_total_rub": null,
+      "procurement_number": null,
+      "market_scope": "installed_base_and_technology_competition_not_procurement",
+      "evidence": [
+        {
+          "url": "https://erasib.ru/company/novosty/SPM-325x4/",
+          "source_tier": "manufacturer_original",
+          "locator": "27 мая 2024; поставленный и сданный комплекс; схема и измерения; названия ФКУ и УКРМ",
+          "excerpt": "ФКУ 6 кВ 885 кВАр; динамическая УКРМ 6 кВ ±2000 кВАр"
+        }
+      ],
+      "notes": "Достоверно как заявление участника поставки о реализованном проекте, не как независимая приёмка заказчика. Цена, контракт и дата закупки не известны. Не включать в реестр процедур/объём рынка."
+    },
+    {
+      "id": "pq-context-2025-rosseti-ural-mikhailovskaya-bsk",
+      "kind": "procurement_plan_not_notice",
+      "event_date": "2025",
+      "source_date_basis": "scheduled_2025_plan",
+      "customer_or_site": "ПАО «Россети Урал» / ПС 110/6 кВ «Михайловская», Свердловская область",
+      "actor": {
+        "name": "ПАО «Россети Урал»",
+        "role": "плановый заказчик",
+        "inn": null
+      },
+      "project": "Техперевооружение ПС Михайловская, замена БСК",
+      "equipment": [
+        {
+          "family": "capacitor_bank_replacement",
+          "voltage_kv": null,
+          "quantity": 1,
+          "quantity_unit": "БСК",
+          "note": "Номинал подстанции 110/6 кВ НЕ доказывает напряжение БСК; исторически на объекте использовались низковольтные батареи."
+        }
+      ],
+      "planned_value_rub": "41730480",
+      "planned_value_tax": "incl_vat",
+      "actual_contract_total_rub": null,
+      "procurement_number": null,
+      "plan_number": "2250848128",
+      "market_scope": "planned_project_only_voltage_unconfirmed_excluded_from_procurement_and_SAM",
+      "evidence": [
+        {
+          "url": "https://synapsenet.ru/plan/fz223/2250848128%231980--sverdlovskaya-obl-pirsmr-tehnicheskoe-perevooruzhenie-ps-1106",
+          "source_tier": "third_party_plan_listing",
+          "locator": "2025 плановая позиция №1980, план №2250848128, цена с НДС 41 730 480 ₽",
+          "excerpt": "ПИР+СМР. Техперевооружение ПС 110/6 кВ Михайловская. Замена БСК 1 шт"
+        },
+        {
+          "url": "https://report2023.rosseti-ural.ru/wp-content/uploads/2024/05/55_ohrana-okruzhayushhej-sredy.pdf",
+          "source_tier": "company_original_historical",
+          "locator": "годовой отчёт за 2023 год: замена 2314 элементов БСК включена в инвестпрограмму",
+          "excerpt": "Замена 2314 элементов БСК на ПС Михайловская включена в инвестиционную программу"
+        }
+      ],
+      "notes": "Не подтверждено наличие нового конкурсного извещения в 2025, ссылку на соседнюю процедуру 2026 на странице плана НЕ использовать как закупку Михайловской. Более ранние 2023 СМР уже существовали; не удваивать."
+    },
+    {
+      "id": "pq-context-unknown-energyzapad-pes-ukrm63",
+      "kind": "supplier_award_aggregator_unmatched_date",
+      "event_date": null,
+      "source_date_basis": "unavailable",
+      "customer_or_site": "ООО «Подпорожские электрические сети» (агрегатор), Ленинградская область",
+      "actor": {
+        "name": "ООО «ЭНЕРГОЗАПАД»",
+        "inn": "7819319755",
+        "role": "сообщаемый агрегатором победитель/поставщик одного комплекта"
+      },
+      "project": "Поставка УКРМ-6,3-300-УХЛ1-IP54",
+      "equipment": [
+        {
+          "family": "ukrm",
+          "model": "УКРМ-6,3-300-УХЛ1-IP54",
+          "voltage_kv": 6.3,
+          "reactive_compensation_kvar": 300,
+          "quantity": 1,
+          "quantity_unit": "шт"
+        }
+      ],
+      "reported_award_total_rub": "293080",
+      "award_source_grade": "aggregator_only_no_notice_date_number_or_original_contract",
+      "procurement_number": null,
+      "market_scope": "supplier_intelligence_no_date_not_counted_in_2024_26_market",
+      "evidence": [
+        {
+          "url": "https://b2b.house/company/OOO-ENERGOZAPAD_5798ff19-5211-40b9-9abb-d179ec363666/",
+          "source_tier": "third_party_company_aggregator",
+          "locator": "участие в 1 закупке, победа в 1; наименование УКРМ-6,3-300, 1 шт, 293080 ₽",
+          "excerpt": "Поставка конденсаторной установки УКРМ-6,3-300-УХЛ1-IP54; 1; сумма по договорам 293080 ₽"
+        },
+        {
+          "url": "https://b2b.house/company/OOO-PES_01eef801-88e4-41db-aa2e-30d823b0a109/",
+          "source_tier": "third_party_company_aggregator",
+          "locator": "Блок 'Компания закупала': Поставка УКРМ-6,3-300-УХЛ1-IP54, количество 1, заказчик ООО «ПЭС», ИНН 4711011840",
+          "excerpt": "Подпорожские электрические сети закупали установку УКРМ-6,3-300-УХЛ1-IP54, 1 единица"
+        }
+      ],
+      "notes": "Значимый кандидат для карты конкурентов, но нельзя считать датированной контрактной статистикой 2024-2026 до получения номера закупки и даты подписания. Доказательство только агрегатор, официальный договор не получен. Сверка 27.10.2026: карточка контрагента ООО «Подпорожские электрические сети» ИНН 4711011840 повторяет ТОЧНУЮ модель и количество 1 шт, что согласуется с продавцом ООО «ЭНЕРГОЗАПАД». Это правдоподобная buyer→supplier связь, но не первичный протокол. Номер и дата закупки, дата договора не установлены, период 2024–2026 не подтверждён.",
+      "customer_candidates": [
+        {
+          "name": "ООО «Подпорожские электрические сети»",
+          "inn": "4711011840",
+          "evidence_grade": "secondary_company_card_matching_exact_item",
+          "confidence": "probable_match_not_official_contract_identification"
+        }
+      ]
+    },
+    {
+      "id": "pq-context-2025-korbalikha-second-erasib-fcu-dynamic",
+      "kind": "commissioned_reference",
+      "event_date": "2025-05-27",
+      "source_date_basis": "manufacturer_publication",
+      "customer_or_site": "АО «Сибирь-Полиметаллы», Корбалихинский рудник, скиповая подъёмная машина 5×4, УГМК",
+      "actor": {
+        "name": "ЗАО «ЭРАСИБ»",
+        "role": "поставщик и исполнитель ПНР по собственному сообщению",
+        "inn": null
+      },
+      "project": "Второй комплекс электрооборудования шахтной подъёмной машины 5×4",
+      "equipment": [
+        {
+          "family": "filter_compensation",
+          "model": "ФКУ-6-2035-5/7/11/13/23/25-IP21-УХЛ3.1",
+          "voltage_kv": 6,
+          "reactive_compensation_kvar": 2035,
+          "harmonic_orders": [
+            5,
+            7,
+            11,
+            13,
+            23,
+            25
+          ]
+        },
+        {
+          "family": "dynamic_reactive_compensation",
+          "model": "ЭРАТОН-В-УКРМ-350-6-50-IP21-УХЛ3.1",
+          "voltage_kv": 6,
+          "reported_compensation_range_kvar": "±3600",
+          "technology": "IGBT transformerless voltage-source inverter"
+        }
+      ],
+      "contract_total_rub": null,
+      "procurement_number": null,
+      "market_scope": "installed_base_and_technology_competition_not_procurement",
+      "evidence": [
+        {
+          "url": "https://erasib.ru/company/novosty/Shpm%205x4/",
+          "source_tier": "manufacturer_original",
+          "locator": "Компания, дата 27 мая 2025, ФКУ 2035 кВАр и регулируемый компенсатор 6 кВ ±3600 кВАр",
+          "excerpt": "ФКУ-6-2035 с подавлением 5,7,11,13,23,25 гармоник; IGBT компенсация ±3600 квар в сети 6 кВ"
+        }
+      ],
+      "notes": "Второй отдельно введённый в работу комплект на том же Корбалихинском руднике после комплекса 2024 года. По заявлению поставщика, а не по независимому акту закупки; невозможно выводить цену продажи, заказчика по договору и дату торгов."
+    }
+  ],
+  "supersedes": "market_context_20261027.v2.json",
+  "delta_note": "Same four nonprocurement context signals; supplier ЭНЕРГОЗАПАД cross-linked by exact equipment model to likely buyer Подпорожские электрические сети (B2B.house secondary both sides), 293080 RUB aggregated reported; contract ID/date still unknown."
+}
