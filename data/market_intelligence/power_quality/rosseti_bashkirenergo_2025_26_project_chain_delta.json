@@ -2,7 +2,7 @@
   "schema_version": "pq-source-delta/0.3",
   "as_of": "2026-10-27",
   "parent_dataset": "verified_public_leads_20261027.v9.manifest.json",
-  "scope": "223-FZ project chains and one contracted 10kV capacitor bank EPC in 2025-26",
+  "scope": "Three 223-FZ 2025-26 10kV BSK/EPC and repeated 52Mvar design tenders, plus 2026 commercial BSK 35kV from DRSK",
   "evidence_grade": "secondary public procurement indexes; original signed contract XML not downloaded for new IDs",
   "records": [
     {
@@ -126,6 +126,46 @@
         }
       ],
       "notes": "Ранее 32616354211 ошибочно исключён как 110кВ. Возвращён в АДЖАСЕНТНЫЙ проектный корпус: 110/35/10 кВ это номиналы ПС, БСК-110 — исходное устройство. Напряжение нового СКРМ не подтверждено, 52 Мвар не доказывает класс 6–35кВ. Договорная сумма только вторичная; нельзя смешивать разные года, разных заказчиков и повторные конкурсы."
+    },
+    {
+      "procedure_id": "RAD260049805",
+      "canonical_id": "commercial:RAD260049805:lot1",
+      "procurement_regime": "commercial",
+      "publication_date": "2026-10-06",
+      "buyer": "АО «Дальневосточная распределительная сетевая компания», филиал «Приморские электрические сети»",
+      "buyer_inn": "2801108200",
+      "platform": "РАД / Lot-Online (коммерческая закупка)",
+      "family": "capacitor_bank",
+      "scope": "epc",
+      "project": "ПС 35/10 кВ Пограничная, Приморский край, интерес ОАО «РЖД»",
+      "title": "СМР и рабочая документация: реконструкция ПС Пограничная, монтаж линейной ячейки 35 кВ — 1 шт. и БСК 35 кВ — 1 шт.",
+      "equipment_voltage_kv": 35,
+      "equipment_reactive_power_mvar_total": null,
+      "quantity": 1,
+      "quantity_unit": "БСК 35 кВ",
+      "nmck_rub": null,
+      "reported_signed_contract_rub": null,
+      "contract_registry_number": null,
+      "reported_contract_date": null,
+      "contract_source_tier": null,
+      "supplier_inn": null,
+      "supplier_verified": false,
+      "market_scope": "strict_35kV_BSK_in_mixed_EPC_purchase_not_equipment_price",
+      "demand_group": "DRSK-POGRANICHNAYA-BSK35-2026",
+      "related_procedure_ids": [],
+      "sources": [
+        {
+          "url": "https://zakupki.kontur.ru/IS79649770",
+          "tier": "third_party",
+          "locator": "Закупка РАД №RAD260049805, опубликовано 06.10.2026, заявки до 09.10.2026, заказчик ИНН 2801108200, БСК 35 кВ 1шт, РД+СМР и ячейка 35 кВ; сумма не задана"
+        },
+        {
+          "url": "https://zakupki.kontur.ru/category-region/proektnye-raboty/primorskij-kraj",
+          "tier": "third_party",
+          "locator": "поиск Контур по Приморью: №RAD260049805 от 06.10.2026"
+        }
+      ],
+      "notes": "Полная мощность БСК не опубликована в открытой карточке. Номинал оборудования подтверждён текстом БСК 35 кВ, но закупка включает РД, СМР и ячейку: стоимость батареи нельзя выделить без сметы/договора. Отсутствие опубликованной НМЦ не означает нулевую стоимость; нет доказательств заключения договора."
     }
   ],
   "non_procurement_related_index": [
