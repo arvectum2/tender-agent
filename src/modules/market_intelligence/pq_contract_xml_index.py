@@ -78,6 +78,17 @@ def scan(root: Path, leads: Path, max_archives: int = 100) -> dict:
                         "subject": _value(contract, "subjectContract"),
                         "price_text": _value(contract, "price"),
                         "ruble_price_text": _value(contract, "rubPrice"),
+                        "currency_code": _value(contract, "currency", "code"),
+                        "currency_numeric_code": _value(contract, "currency", "digitalCode"),
+                        "ruble_price_recovered_from_rub_currency": (
+                            _value(contract, "price")
+                            if not _value(contract, "rubPrice")
+                            and _value(contract, "currency", "code") == "RUB"
+                            and _value(contract, "currency", "digitalCode") == "643"
+                            else None),
+                        "protocol_document_number": _value(
+                            contract, "contractConfirmingDocs", "contractDoc", "docNum"),
+                        "contract_xml_status_not_signature_proof": True,
                         "record_status_code": _value(contract, "status"),
                         "customer_name": _value(contract, "customer", "mainInfo", "fullName"),
                         "customer_inn": _value(contract, "customer", "mainInfo", "inn"),
