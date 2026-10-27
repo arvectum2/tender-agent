@@ -1,0 +1,57 @@
+{
+  "schema_version": "mi013-primary-etp-new-notice-postgres/1.0",
+  "as_of": "2026-10-27",
+  "task_id": "MI-013-PQ-CORPUS-PASS3-20261027",
+  "source_manifest": "verified_public_leads_20261027.v33.manifest.json",
+  "new_source_file": "original_b2b_capacitor_vtu_20261027.v33.json",
+  "importer": "scripts/market_intelligence/import_pq_b2b_original_v33.py",
+  "materializer": "scripts/market_intelligence/materialize_pq_research_v33.py",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "new_notice": "commercial:4643332:lot1",
+  "source_original_etp": "https://www.b2b-center.ru/market/808-kondensator-kep3-10-5-150-3u2/tender-4643332/",
+  "buyer_original": "АО ВТУ",
+  "buyer_verified_legal_name": "АО Ванинотрансуголь",
+  "buyer_inn": "2709015787",
+  "organizer": "ООО УК Колмар",
+  "original_procurement_outcome": "0 applications, failed, decided 22Oct2026",
+  "initial_budget_rub": null,
+  "final_signed_contract_price_rub": null,
+  "registered_signed_contract_added": 0,
+  "before": {
+    "resources": 101,
+    "records": 101
+  },
+  "after": {
+    "resources": 102,
+    "records": 102,
+    "unique_external_ids": 102,
+    "versions": {
+      "v29": 98,
+      "v31": 1,
+      "v32": 2,
+      "v33": 1
+    },
+    "original_source_enriched_cases": 15,
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "new_resource_content_hash": "e6bdaaf1768467f4688ed098a6790bba79210dadfc987f3c0169b3e1ff1c8983",
+  "verified_official_backup": {
+    "file": "data-platform-arvectum_data-20261027T200242Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37467998,
+    "sha256": "71cfc2b274c3d3d7d1af8873a4aab031656554a4de499d4663473d45ef2ac61d",
+    "verification": "official pg_dump -Fc, file SHA + manifest and companion checksum validated by backup() before SQL"
+  },
+  "transaction": "guarded single-record PostgreSQL INSERT (dp_resources + dp_records), COMMIT and independent read-back PASS",
+  "checks": [
+    "new canonical key absent from existing 101 baseline",
+    "original first party ETP page confirms zero bids and failed",
+    "full source replay materialize_pq_research_v33 exact hashes 102/102 against production",
+    "101 previous resource hashes unchanged",
+    "other Data Platform collections and documents unaffected"
+  ],
+  "market_population_complete": false
+}
