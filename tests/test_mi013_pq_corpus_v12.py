@@ -66,3 +66,13 @@ def test_design_and_supply_notice_share_one_project_not_one_contract():
     assert sum(r["scope"]=="design" for r in matching)==2
     assert sum(r["scope"]=="supply" for r in matching)==1
     assert sum(r.get("supplier_verified") is True for r in matching)==0
+
+
+def test_design_contract_date_remains_secondary_and_awardee_unverified():
+    r=next(r for r in load(12)["records"] if r["canonical_id"]=="223fz:32616354211:lot1")
+    assert r["reported_contract_date"]=="2026-09-23"
+    assert r["reported_contract_date_source_tier"].startswith("third_party")
+    assert r["reported_contract_total_rub"]=="7406851.40"
+    assert r["supplier_verified"] is False
+    assert not (r.get("registry_contract") or {}).get("signed_contract_registry_verified")
+    assert any("tendem.ru" in e["url"] for e in r["evidence"])
