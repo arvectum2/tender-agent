@@ -114,7 +114,7 @@ BEGIN
        AND r.content_hash='{baseline}'
        AND d.record_type='pq_procurement_notice_lot'
        AND d.review_status='unreviewed'
-       AND NOT(d.data->'mi013_source_enrichments'?'v31'))<>1 THEN
+       AND NOT(COALESCE(d.data->'mi013_source_enrichments'?'v31',false)))<>1 THEN
    RAISE EXCEPTION 'original single record mismatch, refusing to apply';
  END IF;
 END $guard$;
