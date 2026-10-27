@@ -5,13 +5,13 @@
   "base_manifest": "verified_public_leads_20261027.v9.manifest.json",
   "base_count": 64,
   "append_dataset": "rosseti_bashkirenergo_2025_26_project_chain_delta.json",
-  "append_count": 3,
-  "total_count": 67,
+  "append_count": 4,
+  "total_count": 68,
   "unique_key": "canonical_id",
   "linked_demand_group_count": 2,
   "related_noncanonical_index_count": 1,
   "existing_context": "market_context_20261027.v3.json",
   "context_count": 4,
   "scope": "sourced research candidate procedures, not signed PQ equipment contracts",
-  "methodology_note": "Ufimka BSK 10kV 2x0.9Mvar: separate EPC contract outcome verified secondhand; Tyazhinskaya 2025 and 2026 proposals represent related design attempts for same 52Mvar technology transition, NOT separate 52Mvar installations; 110kV legacy BSK not automatically 6-35kV of replacement"
+  "methodology_note": "Ufimka BSK 10kV 2x0.9Mvar: separate EPC contract outcome verified secondhand; Tyazhinskaya 2025 and 2026 proposals represent related design attempts for same 52Mvar technology transition, NOT separate 52Mvar installations; 110kV legacy BSK not automatically 6-35kV of replacement Plus RAD260049805 commercial BSK 35kV with 1 battery in mixed EPC, price and winner unverified."
 }
