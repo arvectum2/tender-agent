@@ -71,8 +71,7 @@ def run(*, corpus: Path, output: Path) -> dict:
             raise ValueError("Existing run has different source hashes; choose another output")
     else:
         temp = target.with_suffix(".tmp")
-        temp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "
-", encoding="utf-8")
+        temp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         os.replace(temp, target)
     events = output / "research_events.jsonl"
     if not events.exists():
@@ -87,8 +86,7 @@ def run(*, corpus: Path, output: Path) -> dict:
                          if stage in ("S3_ACQUIRE", "S4_EXTRACT") else "accepted"},
                          "reason": "Offline source-bound baseline; live collection not executed",
                          "review_status": "unreviewed", "training_eligible": False}
-                handle.write(json.dumps(event, ensure_ascii=False) + "
-")
+                handle.write(json.dumps(event, ensure_ascii=False) + "\n")
     return manifest
 
 
