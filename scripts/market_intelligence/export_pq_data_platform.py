@@ -16,8 +16,8 @@ COLLECTION_ID = "arvectum-market-pq-6-35kv"
 SOURCE_TYPE = "market_intelligence_procurement_research"
 
 
-def export_records() -> list[dict]:
-    data = materialize()
+def export_records(dataset: dict | None = None) -> list[dict]:
+    data = materialize() if dataset is None else dataset
     output = []
     ids = set()
     uris = set()
@@ -36,7 +36,7 @@ def export_records() -> list[dict]:
         content = json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
         metadata = {
-            "data_version": "v8",
+            "data_version": data.get("data_version", "v8"),
             "procurement_id": key,
             "procedure_id": row.get("procedure_id"),
             "date_basis": row.get("date_basis"),
