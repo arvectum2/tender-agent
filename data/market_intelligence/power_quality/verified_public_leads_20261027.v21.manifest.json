@@ -1,0 +1,22 @@
+{
+  "schema_version": "pq-research-notice-manifest/1.3",
+  "as_of": "2026-10-27",
+  "data_version": "v21",
+  "period": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v20.manifest.json",
+  "base_rows": 100,
+  "original_evidence_file": "primary_spec_protocol_enrichment_20261027.v21.json",
+  "existing_records_enriched": 1,
+  "new_records": 0,
+  "total_active_rows": 100,
+  "number_of_named_original_protocol_bidders": 2,
+  "number_of_original_registry_signed_contracts_total": 4,
+  "production_imported_v12_rows": 71,
+  "new_git_only_rows": 29,
+  "new_source_grade_protocols_with_anonymous_first_rank": 1,
+  "note": "Meleuz 32616296475 original ETP DOCX+final PDF enriched. First ranked application offer 3,865,725.99 RUB is not signed equipment-only contract. Names and original signed contract still unknown. No new demand row.",
+  "market_census_complete": false
+}
