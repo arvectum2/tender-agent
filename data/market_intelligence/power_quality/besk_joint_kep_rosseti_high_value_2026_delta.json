@@ -1,0 +1,140 @@
+{
+  "schema_version": "pq-source-delta/0.4",
+  "as_of": "2026-10-27",
+  "parent_dataset": "verified_public_leads_20261027.v10.manifest.json",
+  "raw_notice_count": 2,
+  "lot_level_records": 3,
+  "source_scope": "Two EIS 223-FZ notices: one two-lot joint capacitor procurement and one very high value capacitor bank supply under evolving published terms.",
+  "records": [
+    {
+      "canonical_id": "223fz:32616474682:lot1",
+      "procedure_id": "32616474682",
+      "b2b_id": "4642507",
+      "lot_number": 1,
+      "publication_date": "2026-10-15",
+      "organizer": "АО «Башкирская электросетевая компания»",
+      "organizer_inn": "0276143694",
+      "buyer": "ООО «Башкирская сетевая компания»",
+      "buyer_inn": "0273056757",
+      "project": "Совместная поставка конденсаторов КЭП, закупка 27-000090 — лот 1 для ООО БСК",
+      "family": "capacitor_components",
+      "scope": "supply_components",
+      "description": "Конденсаторы КЭП, код ОКПД2 27.90.51.000; 11 шт. для ООО БСК.",
+      "quantity": 11,
+      "quantity_unit": "шт",
+      "equipment_voltage_kv": null,
+      "nmck_rub": "981354.33",
+      "reported_price_kind": "initial_price_excluding_vat",
+      "joint_notice_nmck_ex_vat_rub": "2452650.41",
+      "bid_deadline": "2026-10-27T10:00:00",
+      "bid_deadline_timezone": "Europe/Moscow",
+      "planned_results_date": "2026-12-03",
+      "status": "b2b_original_tender_unawarded_as_of_2026_10_27",
+      "supplier_verified": false,
+      "contract_total_rub": null,
+      "notes": "Один из двух лотов ЕИС 32616474682 и B2B 4642507. 11 шт — по оригинальной позиции ЭТП. Напряжение КЭП не установлено; не считать строгим PQ 6–35 кВ. Поданная участником общая цена 2 424 000 ₽ за оба лота является предложением, не подписанным договором. Не добавлять общую НМЦ извещения дополнительно к лотовым.",
+      "evidence": [
+        {
+          "url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions",
+          "source_tier": "primary_platform",
+          "locator": "Original B2B-Center purchasing positions, lot1 11 шт for ООО БСК, lot2 16 шт for Башкирэнерго"
+        },
+        {
+          "url": "https://zakupki.kontur.ru/32616474682",
+          "source_tier": "third_party",
+          "locator": "EIS notice and two lots, lot1 NMC 981354.33 RUB ex-VAT stated original B2B tender"
+        }
+      ]
+    },
+    {
+      "canonical_id": "223fz:32616474682:lot2",
+      "procedure_id": "32616474682",
+      "b2b_id": "4642507",
+      "lot_number": 2,
+      "publication_date": "2026-10-15",
+      "organizer": "АО «Башкирская электросетевая компания»",
+      "organizer_inn": "0276143694",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "buyer_inn": "0277071467",
+      "project": "Совместная поставка конденсаторов КЭП, закупка 27-000090 — лот 2 для ООО Башкирэнерго",
+      "family": "capacitor_components",
+      "scope": "supply_components",
+      "description": "Конденсаторы КЭП, код ОКПД2 27.90.51.000; 16 шт. для ООО Башкирэнерго.",
+      "quantity": 16,
+      "quantity_unit": "шт",
+      "equipment_voltage_kv": null,
+      "nmck_rub": "1471296.08",
+      "reported_price_kind": "initial_price_excluding_vat",
+      "joint_notice_nmck_ex_vat_rub": "2452650.41",
+      "bid_deadline": "2026-10-27T10:00:00",
+      "bid_deadline_timezone": "Europe/Moscow",
+      "planned_results_date": "2026-12-03",
+      "status": "b2b_original_tender_unawarded_as_of_2026_10_27",
+      "supplier_verified": false,
+      "contract_total_rub": null,
+      "notes": "Второй лот того же ЕИС 32616474682. В TenderMedia ошибочно выведено 1 471 296,16 ₽ (+8 коп.); значение 1 471 296,08 ₽ согласуется с Контур и общей НМЦ 2 452 650,41 ₽ оригинала B2B: 981354.33+1471296.08=2452650.41. Не считать два лота двумя независимыми извещениями/договорами; напряжение КЭП неизвестно.",
+      "evidence": [
+        {
+          "url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/?action=positions",
+          "source_tier": "primary_platform",
+          "locator": "Original B2B-Center lot2 16 units, buyer Bashkirenergo"
+        },
+        {
+          "url": "https://zakupki.kontur.ru/32616474682",
+          "source_tier": "third_party",
+          "locator": "Lot2 NMC 1471296.08 RUB and buyer INN 0277071467"
+        },
+        {
+          "url": "https://tendermedia.ru/lot/show/62238452",
+          "source_tier": "third_party_conflict",
+          "locator": "Alternative listing states 1471296.16 RUB causing 0.08 RUB discrepancy; DO NOT use to sum financial total"
+        }
+      ]
+    },
+    {
+      "canonical_id": "223fz:32616435269:lot1",
+      "procedure_id": "32616435269",
+      "lot_number": 1,
+      "publication_date": "2026-10-05",
+      "organizer": "ПАО «Россети Сибирь»",
+      "organizer_inn": "2460069527",
+      "buyer": "ПАО «Россети Сибирь», филиал «Кузбассэнерго-РЭС»",
+      "buyer_inn": "2460069527",
+      "project": "Конкурс 26-1174, поставка батарей статических конденсаторов",
+      "family": "capacitor_bank",
+      "scope": "supply",
+      "description": "Поставка батарей статических конденсаторов для Кузбассэнерго-РЭС. Открытые позиции ЕИС: ОКПД2 27.12.31.000 (панели электрической аппаратуры до 1 кВ) и ОКПД2 27.90.51.000 (конденсаторы); заявленные количества 1 шт в каждой агрегированной позиции, спецификация в архиве 7z не прочитана.",
+      "quantity": null,
+      "quantity_unit": null,
+      "equipment_voltage_kv": null,
+      "nmck_rub": "452016000.01",
+      "reported_price_kind": "initial_price_latest_amendment_vat_unverified",
+      "initial_nmck_original_rub": "452016000.00",
+      "published_deadline_original": "2026-10-21T12:00:00",
+      "published_deadline_current": "2026-10-30T12:00:00",
+      "results_expected": "2026-12-14",
+      "status": "amended_open_as_of_2026_10_27_award_not_possible",
+      "supplier_verified": false,
+      "contract_total_rub": null,
+      "notes": "Высокая начальная цена не доказанная стоимость PQ 6-35кВ! Открытые классификации включают панель до 1 кВ; номиналы, количество и полные ТЗ не прочитаны. Контендус фиксирует изменение НМЦ 452016000.00→452016000.01, дедлайн 21.10→30.10 и 2 новых архива по состоянию 21.10.2026. Устаревшие индексы оставили 21.10/07.12 — использовать более свежие данные 30.10/14.12. Это тот же номер, что присутствовал в старом аудитном XLSX, но в v10 JSON corpus отсутствовал.",
+      "evidence": [
+        {
+          "url": "https://kontendus.ru/tender/32616435269",
+          "source_tier": "third_party_amendment_log",
+          "locator": "EIS notice 32616435269, NMC revision 452016000.00→452016000.01, deadline extension to 2026-10-30, new 7z files as of 2026-10-21"
+        },
+        {
+          "url": "https://tendik.ru/tender/eis223/32616435269",
+          "source_tier": "third_party",
+          "locator": "Published total 452016000.01, application deadline 2026-10-30, two generic goods classifications"
+        },
+        {
+          "url": "https://energybase.ru/tender/01a130e4-75f3-7201-a146-d8b2f33f8259",
+          "source_tier": "third_party_stale",
+          "locator": "Earlier notice version and initial price, not latest submission deadline"
+        }
+      ]
+    }
+  ],
+  "note": "Three lot-level rows describe only two unique EIS procurement notices; avoid inflating tender counts and adding joint notice NMC to the sum of both lots. Contract winning data absent."
+}
