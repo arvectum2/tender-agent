@@ -71,3 +71,30 @@ def test_held_lease_does_not_mutate(tmp_path):
         assert not (tmp_path / "out/last_cycle.json").exists()
     finally:
         assert mod.release(lease)
+
+
+def test_indexed_original_recovery_seeds_downloaded_root(tmp_path, monkeypatch):
+    leads, source, ontology = setup_inputs(tmp_path)
+    stub_sources(monkeypatch)
+    monkeypatch.setattr(mod, "next_packet", lambda **kw: {"status": "empty"})
+    calls = []
+    monkeypatch.setattr(mod, "recover_indexed", lambda **kw: (
+        calls.append(kw) or {"cases_attempted": 1, "documents_downloaded": 2}))
+    archive = tmp_path / "index.json"
+    archive.write_text('{"schema_version":"pq-official-archive-index/1"}')
+    target = tmp_path / "downloaded"
+    target.mkdir()
+    result = mod.cycle(leads_file=leads, source_roots=[source], ontology=ontology,
+                       queue_dir=tmp_path / "queue", output_dir=tmp_path / "out",
+                       archive_index=archive, archive_target=target)
+    assert result["indexed_original_recovery"]["documents_downloaded"] == 2
+    assert len(result["queue_seed"]) == 2
+    assert calls[0]["index_path"] == archive
+
+
+def test_archive_paths_must_be_paired(tmp_path):
+    leads, source, ontology = setup_inputs(tmp_path)
+    with pytest.raises(ValueError, match="together"):
+        mod.cycle(leads_file=leads, source_roots=[source], ontology=ontology,
+                  queue_dir=tmp_path / "queue", output_dir=tmp_path / "out",
+                  archive_index=tmp_path / "index.json")
