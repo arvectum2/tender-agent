@@ -1,0 +1,17 @@
+{
+  "schema_version": "pq-research-notice-manifest/0.7",
+  "as_of": "2026-10-27",
+  "data_version": "v14",
+  "rolling_window": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v13.manifest.json",
+  "base_lot_level_rows": 79,
+  "delta": "discovery_2023_2026_v14_delta.json",
+  "delta_lot_level_rows": 3,
+  "total_lot_level_rows": 82,
+  "source_quality": "three public EIS+commercial/platform leads, signed-price in one record secondary only",
+  "production_database_import_status": "Only 71 previous v12 resources are in production DB; 11 research-stage v13-v14 records in GitHub and not imported",
+  "market_census_complete": false
+}
