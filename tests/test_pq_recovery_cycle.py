@@ -62,3 +62,28 @@ def test_cycle_contract_register_stage(tmp_path: Path):
     assert (runtime / "contract-outcome-audit.json").exists()
     assert (runtime / "commission-candidates.json").exists()
     assert result["commission_candidates"]["supplier_verified"] == 0
+
+
+def test_cycle_audits_source_anchored_commission_facts(tmp_path: Path):
+    source = tmp_path / "source"
+    source.mkdir()
+    runtime = tmp_path / "runtime"
+    facts = tmp_path / "commission_facts.json"
+    with patch("src.modules.market_intelligence.pq_recovery_cycle.inventory",
+               return_value={"lead_count": 2}), patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.seed",
+        return_value={"created": []}), patch(
+        "src.modules.market_intelligence.pq_recovery_cycle.verify_commission_facts",
+        return_value={"facts_accepted": 1,
+                      "verified_signed_contracts": 0,
+                      "records": [{"source_sha256": "a" * 64}]}) as audit:
+        result = run_cycle(
+            leads=tmp_path / "leads.json", source_roots=[source],
+            archive_index=tmp_path / "index", runtime=runtime,
+            ontology=tmp_path / "ontology", dp_source=tmp_path,
+            network=False, commission_facts=facts,
+        )
+    assert audit.call_count == 1
+    assert result["commission_facts_verified"]["source_bound_facts"] == 1
+    assert result["commission_facts_verified"]["signed_contracts_verified"] == 0
+    assert (runtime / "verified-commission-facts.json").is_file()
