@@ -6,11 +6,11 @@
   "base_dataset": "verified_public_leads_20261027.v7.json",
   "append_dataset": "rosseti_bashkirenergo_2025_26_project_chain_delta.json",
   "description": "RESEARCH CORPUS COVERAGE METRICS, NOT TOTAL RUSSIAN MARKET SIZE, SALES OR MARKET SHARE",
-  "procurement_records": 67,
-  "canonical_ids_unique": 67,
+  "procurement_records": 68,
+  "canonical_ids_unique": 68,
   "regime_counts": {
     "223-fz": 22,
-    "commercial": 45
+    "commercial": 46
   },
   "family_counts": {
     "filter_compensation": 1,
@@ -19,14 +19,14 @@
     "pq_components": 1,
     "statcom": 5,
     "ukrm": 48,
-    "capacitor_bank": 3,
+    "capacitor_bank": 4,
     "reactive_compensation_system": 3,
     "svc": 1
   },
   "scope_counts": {
     "adjacent_epc": 1,
     "design": 7,
-    "epc": 10,
+    "epc": 11,
     "maintenance": 6,
     "supply": 39,
     "supply_candidate": 1,
@@ -34,12 +34,12 @@
     "supply_components": 2
   },
   "nmck_any_non_null_count": 20,
-  "explicit_scalar_equipment_voltage_6_to_35kv_count": 9,
+  "explicit_scalar_equipment_voltage_6_to_35kv_count": 10,
   "records_with_primary_platform_evidence_count": 11,
   "registered_contract_primary_verified_count": 4,
-  "records_without_primary_platform_evidence_count": 56,
+  "records_without_primary_platform_evidence_count": 57,
   "context_nonprocurement_records": 4,
-  "caveat": "The 2024 and 2025 UDS tender dates are submission DEADLINES, not publication dates; inferred manufacturer quantities and MW ratings prohibited. The 2025 6+10 kV item is one notice with two voltage models; its scalar equipment_voltage_kv intentionally null, both values in equipment_voltage_kv_set. Most older records do not normalize voltage even if described in text. NMC cannot be summed as PQ sales because mixed and non-target notices coexist. The four new Rosseti procedures include two purchases of filter capacitor components with unknown nominal voltage and two projects at 220kV substations; 220kV is substation rating, not necessarily PQ voltage. 90,672,176 RUB is a sum of initial procurement prices, NOT total PQ equipment sales or 6-35kV market. New Ufimka (10kV 1.8Mvar) EPC has contract amount from Kontur but no original signed contract XML supplier. Tyazhinskaya two design tenders share SAME 52Mvar project; 110kV is the legacy capacitor bank/substation rating, not evidence new SKRM nominal voltage. Do not sum planned/reactive MW across requests.",
+  "caveat": "The 2024 and 2025 UDS tender dates are submission DEADLINES, not publication dates; inferred manufacturer quantities and MW ratings prohibited. The 2025 6+10 kV item is one notice with two voltage models; its scalar equipment_voltage_kv intentionally null, both values in equipment_voltage_kv_set. Most older records do not normalize voltage even if described in text. NMC cannot be summed as PQ sales because mixed and non-target notices coexist. The four new Rosseti procedures include two purchases of filter capacitor components with unknown nominal voltage and two projects at 220kV substations; 220kV is substation rating, not necessarily PQ voltage. 90,672,176 RUB is a sum of initial procurement prices, NOT total PQ equipment sales or 6-35kV market. New Ufimka (10kV 1.8Mvar) EPC has contract amount from Kontur but no original signed contract XML supplier. Tyazhinskaya two design tenders share SAME 52Mvar project; 110kV is the legacy capacitor bank/substation rating, not evidence new SKRM nominal voltage. Do not sum planned/reactive MW across requests. RAD260049805 is a 35kV BSK EPC with unknown initial and actual prices, not a free contract.",
   "base_manifest": "verified_public_leads_20261027.v9.manifest.json",
   "source_discovery_note": "Four added 2025 Rosseti 223-FZ records are indexed source leads; none of their original protocols has been read or primary contract prices confirmed.",
   "added_nmck_sum_rub_not_market_value": "90672176",
