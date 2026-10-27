@@ -17,6 +17,7 @@ completed:
   - Revised evidence snapshot: 60 candidate identifiers, 13 NMC-known, 11 with primary EIS/ETP evidence, 4 registered contracts original-confirmed; 4 nonprocurement context cases.
   - Cross-checked exact UKRM-6.3-300 item of Energozapad against PES buyer profile; likely buyer INN 4711011840, original contract/date not available.
   - Created prioritized eight-item read-only primary evidence retrieval queue including original EIS download IDs (both HTTP404 as of 27.10).
+  - Inspected actual Data Platform dp_resources collection/source/URI schema via read-only GitHub, prepared 60-ID deterministic JSONL source staging export script and regression tests; no production DB effects.
   - Read actual research branch v3 (48 records), checked canonical IDs and active project checkpoint.
   - Researched secondary public listings for Bashkirenergo 32515582393 / B2B 4283612, NMC 5880000 RUB VAT included; voltage and award unverified.
   - Found B2B 4535313 Sagan-Nur 6kV 630 kvar; customer and price unverified.
@@ -24,23 +25,25 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass4 v8: 60 research procedure IDs (58 baseline v7 + 2 UDS BSK archival notices), four nonprocurement market-context records (ERASIB second 2025 6kV commission), and buyer/supplier secondhand cross-match for Energozapad/PES. Eight primary-evidence retrieval targets queued. Industrial PostgreSQL unaffected; new exact-head CI pending.'
+current: 'V8 append-only 60 research procurement IDs, four separate nonprocurement market references, prioritized eight-target primary-document queue. Cross-sourced Energozapad/PES probable contract relationship; winner/date unverified. Data Platform staging JSONL exporter with stable resource keys added, NO production writes. Prior CI green through v7, exact-head v8 CI queued/in_progress; follow original protocols and commission staged DB import only after guarded approval.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
   - Resolve MGOK 4538400→4565274 and possible overlap 4561228 before volume statistics.
   - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
   - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
-  - Verify exact-head CI for v8 manifest/materializer/tests and repair any failures.
-last_verified_commit: a024713024d8df72732f5b8a4609d3d49fcfc596
+  - Verify exact-head CI for v8 manifest/materializer/tests/offline Data Platform staging and repair any failures.
+  - Compare 60-row staging against existing collection in read-only mode before proposing a transactional import.
+last_verified_commit: df3bbec501fe4b8b593a28d4b616b2b6d026c0d6
 test_results:
   - Prior exact-head CI workflow 40485406505 SUCCESS on pre-v8 commit; v8 tests and integration CI queued, not yet verified green.
   - v8 versioned dataset is manifest + deterministic source delta, not a second 100KB duplicated snapshot.
+  - New staging output deterministic by canonical_id SHA256; includes evidence, status, content SHA256 and recorded financial uncertainty. Tests committed, CI pending.
   - In-memory 54 unique canonical IDs, 48 unchanged v3 and 6 new source-linked leads.
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Begin from v8 manifest and primary_evidence_retrieval_queue_20261027.json. Check exact-head CI for v8 materializer/tests, repair failures if present. Retrieve original technical docs and primary contract/protocol for 32515218366, 32616296475 and GP630876; resolve B2B 4538400/4561228/4565274 and 4158439/5747901 repetition; obtain legal buyer and published protocol for UDS tenders; find official buyer/winner/date for Energozapad/PES. No live DB mutation without exact approved write path. Parent checkpoint must stay intact.
+resume_instruction: Check exact-head CI for v8 materializer + tests + offline export (current branch research/mi013-pq-corpus-20261027-pass2). If quality fails, inspect job logs, fix and retest. Continue eight-item primary_evidence_retrieval_queue_20261027.json to establish real buyers, winners and signed prices, particularly original documents 32515218366, 32616296475, GP630876. Then dry-run staged import against Data Platform collection schema; do NOT mutate PostgreSQL or overwrite parent checkpoint without approved exact write path.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
