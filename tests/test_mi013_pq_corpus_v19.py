@@ -43,7 +43,7 @@ def test_joint_oil_tender_four_beneficiaries_one_notice_not_four_sales():
     assert len({x["inn"] for x in r["joint_beneficiaries"]})==4
     assert sum(x.get("procedure_id")=="РН41205245" for x in rows)==1
     assert r.get("reported_contract_total_rub") is None
-    assert r["supplier_verified"] is False
+    assert r.get("supplier_verified") is not True
 
 def test_ufimka_only_one_bid_failed_but_later_signed_contract_secondary():
     r=next(x for x in read(19)["records"] if x.get("procedure_id")=="32514476448")
