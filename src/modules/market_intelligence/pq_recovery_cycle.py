@@ -5,24 +5,24 @@ import argparse
 import json
 from pathlib import Path
 
-from .pq_gap_recovery import inventory
-from .pq_source_recovery import run as search_eis
-from .pq_indexed_recovery import recover_indexed
-from .pq_queue_seed import seed
+from .pq_commission_candidate_audit import extract as extract_commission_candidates
+from .pq_commission_fact_audit import verify as verify_commission_facts
+from .pq_contract_outcome_audit import audit as audit_contracts
+from .pq_contract_xml_index import scan as scan_contracts
 from .pq_dp_ingest import ingest
+from .pq_etp_card_audit import audit as audit_etp
+from .pq_gap_recovery import inventory
+from .pq_indexed_recovery import recover_indexed
+from .pq_public_223_acquire import batch as fetch_public_223
+from .pq_public_223_canonical import canonicalize as canonicalize_public_223
+from .pq_public_223_direct import merge_direct
+from .pq_public_223_expand import expand as expand_public_223
+from .pq_public_dp_resume import run as resume_public_dp
+from .pq_queue_seed import seed
+from .pq_source_recovery import run as search_eis
 from .pq_verified_stage import stage
 from .pq_verified_zip_expand import expand
 from .pq_zip_dp_resume import run as resume_zip_ingest
-from .pq_etp_card_audit import audit as audit_etp
-from .pq_contract_xml_index import scan as scan_contracts
-from .pq_contract_outcome_audit import audit as audit_contracts
-from .pq_commission_candidate_audit import extract as extract_commission_candidates
-from .pq_public_223_acquire import batch as fetch_public_223
-from .pq_public_223_expand import expand as expand_public_223
-from .pq_public_223_canonical import canonicalize as canonicalize_public_223
-from .pq_public_dp_resume import run as resume_public_dp
-from .pq_public_223_direct import merge_direct
-from .pq_commission_fact_audit import verify as verify_commission_facts
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -96,7 +96,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             expanded = runtime / "public223-expanded"
             report["public223_expansion"] = expand_public_223(
                 source_root=public223_source, output_root=expanded,
-                max_cases=30, max_archives=60)
+                max_cases=60, max_archives=120)
             canonical = runtime / "public223-canonical"
             report["public223_canonical"] = canonicalize_public_223(
                 staged=expanded, output=canonical, max_files=500)

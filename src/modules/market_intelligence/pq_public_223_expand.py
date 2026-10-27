@@ -4,8 +4,8 @@ Uses existing hardened ZIP member extraction; maintains the weaker public-page
 provenance tier (never mislabels files as SOAP-XML-bound originals).
 """
 from __future__ import annotations
+
 import argparse
-import hashlib
 import json
 import os
 import re
@@ -29,10 +29,40 @@ def _atomic(path: Path, payload: dict) -> None:
 
 def expand(*, source_root: Path, output_root: Path,
            max_cases: int = 12, max_archives: int = 20) -> dict:
-    if (not 1 <= max_cases <= 30 or not 1 <= max_archives <= 60
+    if (not 1 <= max_cases <= 60 or not 1 <= max_archives <= 120
             or source_root.is_symlink() or output_root.is_symlink()
             or not source_root.is_dir()):
         raise ValueError("Invalid source or extraction scope")
+    # This manifest is replaced atomically on each invocation. Refuse a
+    # partial enumeration instead of silently forgetting prior SHA-bound
+    # originals when the growing corpus exceeds a bounded run budget.
+    eligible_cases = 0
+    eligible_archives = 0
+    for case in source_root.iterdir():
+        if not case.is_dir() or case.is_symlink() or not re.fullmatch(r"[0-9]{11}", case.name):
+            continue
+        receipt_file = case / "public-page-receipt.json"
+        if not receipt_file.is_file() or receipt_file.is_symlink():
+            continue
+        receipt = json.loads(receipt_file.read_text(encoding="utf-8"))
+        if (receipt.get("schema_version") != "pq-223-public-page-download/1"
+                or receipt.get("registry_number") != case.name):
+            continue
+        eligible_cases += 1
+        eligible_archives += sum(
+            isinstance(file.get("filename"), str)
+            and Path(file["filename"]).name == file["filename"]
+            and file["filename"].lower().endswith(".zip")
+            and isinstance(file.get("sha256"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", file["sha256"]) is not None
+            for file in receipt.get("files", [])
+        )
+    if eligible_cases > max_cases or eligible_archives > max_archives:
+        raise ValueError(
+            "Public EIS source enumeration would truncate a SHA-bound manifest; "
+            f"need {eligible_cases} cases/{eligible_archives} archives, "
+            f"budget {max_cases}/{max_archives}"
+        )
     manifest = {"schema_version": "pq-public-eis-zip-members/1",
                 "source_level": "verified_public_eis_page_not_original_soap_xml",
                 "records": [], "errors": []}

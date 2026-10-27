@@ -3,8 +3,9 @@ import json
 import zipfile
 from pathlib import Path
 
-from src.modules.market_intelligence.pq_public_223_expand import expand
+import pytest
 
+from src.modules.market_intelligence.pq_public_223_expand import expand
 
 NUMBER = "32615969197"
 
@@ -74,3 +75,38 @@ def test_invalid_zip_payload_is_recorded_not_aborted(tmp_path: Path):
     assert result["errors"] == 1
     details = json.loads((output / "public-members-manifest.json").read_text())
     assert details["errors"][0]["error_type"] == "BadZipFile"
+
+
+
+def test_manifest_refuses_silent_case_truncation(tmp_path: Path):
+    source = _fixture(tmp_path)
+    output = tmp_path / "output"
+    expand(source_root=source, output_root=output, max_cases=1)
+    previous = (output / "public-members-manifest.json").read_bytes()
+    original = source / NUMBER
+    second = source / "32615969198"
+    second.mkdir()
+    (second / "notice.zip").write_bytes((original / "notice.zip").read_bytes())
+    receipt = json.loads((original / "public-page-receipt.json").read_text())
+    receipt["registry_number"] = second.name
+    (second / "public-page-receipt.json").write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match="would truncate"):
+        expand(source_root=source, output_root=output, max_cases=1)
+    assert (output / "public-members-manifest.json").read_bytes() == previous
+    result = expand(source_root=source, output_root=output, max_cases=2)
+    assert result["cases_checked"] == 2
+    assert result["members_staged"] == 2
+
+
+def test_manifest_refuses_silent_archive_truncation(tmp_path: Path):
+    source = _fixture(tmp_path)
+    case = source / NUMBER
+    (case / "another.zip").write_bytes((case / "notice.zip").read_bytes())
+    receipt_file = case / "public-page-receipt.json"
+    receipt = json.loads(receipt_file.read_text())
+    receipt["files"].append({"filename": "another.zip", "sha256": receipt["files"][0]["sha256"]})
+    receipt_file.write_text(json.dumps(receipt))
+    output = tmp_path / "output"
+    with pytest.raises(ValueError, match="would truncate"):
+        expand(source_root=source, output_root=output, max_archives=1)
+    assert not (output / "public-members-manifest.json").exists()
