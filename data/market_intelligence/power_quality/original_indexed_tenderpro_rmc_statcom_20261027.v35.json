@@ -1,0 +1,88 @@
+{
+  "schema_version": "mi013-original-search-indexed-commercial-notice/1.0",
+  "data_version": "v35",
+  "as_of": "2026-10-27",
+  "parent_manifest": "verified_public_leads_20261027.v34.manifest.json",
+  "source_grade": "original_ETP_page_indexed_by_search_2026_direct_HTTP503_original_archive_not_verified",
+  "original_notice_count_added": 1,
+  "signed_contract_count_added": 0,
+  "original_award_protocol_present": false,
+  "records": [
+    {
+      "id": "mi013-2023-tenderpro-834269-rmc-sphere-statcom-four-kits",
+      "canonical_id": "commercial:834269:lot1",
+      "publication_date": "2023-12-06",
+      "date_basis": "original_platform_indexed_creation_date",
+      "procedure_id": "834269",
+      "source_aliases": [
+        "Tender.Pro tenderid=834269"
+      ],
+      "platform": "Tender.Pro original public card (search-indexed, live original HTTP503)",
+      "procurement_regime": "commercial",
+      "organizer": {
+        "name": "АО «Русская медная компания»",
+        "inn": null
+      },
+      "customer": {
+        "name": null,
+        "inn": null
+      },
+      "beneficiary": null,
+      "buyer_original_label": "АО Русская медная компания, организатор",
+      "organizer_original_label": "АО Русская медная компания",
+      "project": "Производство мелющих стальных шаров, ГПП 110/35/10 кВ «Сфера», Свердловская обл., г. Алапаевск, ул. Московская, д. 20, лит. К",
+      "family": "statcom",
+      "scope": "equipment_supply_request",
+      "market_scope": "medium_voltage_PQ_product_possible_unit_voltage_unknown_not_yet_count_in_strict_6_35kv",
+      "description": "ЭТП Tender.Pro №834269, создан 06.12.2023: лот №1 на 4 комплекта устройств улучшения качества электроэнергии («Статком») по опросному листу на УУКЭ для комплекса мелющих шаров, ГПП «Сфера» 110/35/10 кВ, поставка до 30.04.2024. Лот №2 касается монтажных и пусконаладочных работ (1 позиция). Номинальное напряжение самих СТАТКОМ, мощность, изготовитель, победитель и подписанный договор не известны; 110/35/10 кВ относится к ГПП, а не паспортным напряжениям устройств.",
+      "quantity": 4,
+      "quantity_unit": "компл",
+      "equipment": {
+        "type": "Устройства улучшения качества электроэнергии (СТАТКОМ), по опросному листу УУКЭ",
+        "requested_units": 4,
+        "nominal_voltage_kv": null,
+        "nameplate_kvar": null,
+        "manufacturer": null,
+        "complete_systems_requested": true,
+        "installed_verified": false
+      },
+      "associated_work_lot": {
+        "same_procedure": true,
+        "lot": 2,
+        "description": "Монтажные и пусконаладочные работы комплектов устройств улучшения качества электроэнергии",
+        "quantity": 1,
+        "unit": "шт",
+        "separate_award_verified": false
+      },
+      "deadline_date": "2023-12-25",
+      "deadline_local_clock": "08:00",
+      "planned_delivery_by": "2024-04-30",
+      "nmck_rub": null,
+      "reported_price_kind": null,
+      "status": "original_ETP_indexed_notice_only_no_original_award",
+      "original_bids_submitted": null,
+      "commission_winner": null,
+      "supplier_verified": false,
+      "supplier_inn": null,
+      "registered_signed_contract_verified": false,
+      "actual_signed_contract_price_rub": null,
+      "realized_hardware_revenue_rub": null,
+      "source_grade": "original_ETP_public_page_cached_by_search_engine_not_directly_retrieved",
+      "direct_first_party_http_result": "503 Service Temporarily Unavailable across five first-party URLs on authorized Mac mini, 2026-10-27",
+      "evidence": [
+        {
+          "url": "https://www.tender.pro/api/tender/834269/view_public",
+          "source_tier": "first_party_ETP_original_public_card_search_engine_indexed",
+          "locator": "Indexed Tender.Pro card ID834269 dated06Dec2023; goods lot1 STATCOM quantity4 kits, lot2 assembly/startup works one position; delivery Apr2024; original platform site currently HTTP503",
+          "last_search_index_verified": "2026-10-27"
+        },
+        {
+          "url": "https://www.tender.pro/view_tender_public.shtml?tenderid=834269",
+          "source_tier": "first_party_original_alternate_url_inaccessible",
+          "locator": "Historical Tender.Pro canonical alternate route; request returned HTTP503, not independent verification"
+        }
+      ],
+      "notes": "Tender.Pro original page indexed but live first-party page inaccessible. Original question-sheet documents, device 6–35kV nominal class and awards unavailable. Do not count as four verified installed medium-voltage devices or signed equipment sales. This is ONE commercial 2023 procedure with separate equipment and service work lines, not four procurement notices. Possible project overlap with later RMC electrical procurement must be investigated before counting realized delivery."
+    }
+  ]
+}
