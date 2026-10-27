@@ -47,6 +47,11 @@ def materialize():
                 if name=="canonical_id" or name=="procedure_id":
                     raise ValueError("cannot edit canonical identifier")
                 item[name]=value
+            if item.get("source_original_docs_verified") is True:
+                item["notes"]=(item.get("notes") or "").replace(
+                    "номиналы, количество и полные ТЗ не прочитаны.",
+                    "оригинальные ТЗ и поэлементная смета прочитаны; МПУ 10 кВ, БСК 110 кВ, по 1 шт.; классификация ОКПД2 до 1 кВ не является фактическим номиналом МПУ."
+                )
             item["notes"]=(item.get("notes") or "")+patch.get("notes_append","")
             item["evidence"]=item.get("evidence",[])+patch.get("evidence_append",[])
         rows.append(item)
