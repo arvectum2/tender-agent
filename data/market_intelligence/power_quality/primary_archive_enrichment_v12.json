@@ -34,7 +34,9 @@
         "boq_bsk_110kv_net_rub": "33723435.46",
         "boq_supervision_net_rub": "1429508.20",
         "supplier_verified": false,
-        "pq_equipment_only_contract_rub": null
+        "pq_equipment_only_contract_rub": null,
+        "reported_price_kind": "initial_price_including_vat22_original_notice_verified",
+        "source_original_notice_vat_rub": "81511081.97"
       },
       "evidence_append": [
         {
@@ -44,7 +46,7 @@
           "excerpt": "МПУ 30000/10 УХЛ1 335351974.38 без НДС; БСК-110-26 ХЛ1 33723435.46; шеф-инженер 1429508.20; НМЦ 452016000.01 с НДС"
         }
       ],
-      "notes_append": " 27.10.2026 ORIGINAL SOURCE READ: 7z archive SHA256 verified. 10kV modular converter is 90.51% of NET initial price (335351974.38 rub); 110kV BSK 33723435.46 rub; supervisor 1429508.20; VAT22 exact stated in notice; this is a 110kV system with 10kV MPU, not a pure low-voltage battery. Individual nominal voltages proven; 452m is initial price, not contract."
+      "notes_append": " 27.10.2026 ORIGINAL SOURCE READ: 7z archive SHA256 verified. 10kV modular converter is 90.51% of NET initial price (335351974.38 rub); 110kV BSK 33723435.46 rub; supervisor 1429508.20; VAT22 exact stated in notice; this is a 110kV system with 10kV MPU, not a pure low-voltage battery. Individual nominal voltages proven; 452m is initial price, not contract. Original notice itself confirms 370504918.04 net, 22 percent VAT, 452016000.01 gross. Any earlier phrase about unread specifications is superseded by SHA-verified original documents."
     },
     {
       "canonical_id": "223fz:32515044454:lot1",
