@@ -467,7 +467,7 @@
       "quantity_unit": "работа",
       "nmck_rub": "1432983.66",
       "reported_price_kind": "nmck",
-      "status": "single_applicant_competitive_stage_failed_secondary_contract_registered",
+      "status": "official_223fz_contract_registry_verified_one_bid_failed_competition",
       "evidence": [
         {
           "url": "https://zakupki.kontur.ru/32615614821",
@@ -494,7 +494,7 @@
           "excerpt": "Признана несостоявшейся; одна заявка; договор №50277071467260002650000 от 14.04.2026"
         }
       ],
-      "notes": "ПЕРВИЧНЫЕ ДОКУМЕНТЫ ЕИС: официальный архив 223-ФЗ SHA256 2d5e1b593db24c211ad1d7f15f08e8e7147eb08c97934968a238c312a3b27072; комиссия 03.03.2026 признала процедуру несостоявшейся (одна заявка) и решила закупить у единственного участника ООО «ТЕХНОПРОМ» по предложению 1 833 358,30 ₽ БЕЗ НДС; PDF протокола SHA256 31a9ea56be8205e2f011328ce24dd7f65a3aa56637a5a422cbdcba30643c4475. Это цена ПРЕДЛОЖЕНИЯ, а не подтверждённый подписанный договор. Смета ЭП: УКРМ56-6,3-200-(1х50+2х75) М4 (6 кВ, 200 квар) в разделе давальческого оборудования 4 900 000 ₽, а свод ЛСР содержит отдельные шкафы 3 177 000 ₽; это независимые сметные позиции, НЕ выручка подрядчика и НЕ аддитивная стоимость PQ. Роль: реконструкция/монтаж EPC, не производство/поставка УКРМ. Базовая НМЦК 1 432 983,66 ₽ без НДС применима только к работам. Регистр подписанного договора не сверён. Подтверждена официальная реестровая запись договора 50277071467260002650000 с ценой 1833358.30 ₽, публичная RD223 contractCutted. Договорная цена всего комплекса не относится автоматически к стоимости оборудования, поставщик скрыт в реестровой записи. Дополнение 27.10: карточка Контура сообщает несостоявшуюся конкурентную стадию (единственная заявка), но договор от 14.04.2026 №50277071467260002650000 на 1 833 358,30 ₽. Договор на 400 374,64 ₽ выше НМЦ 1 432 983,66 ₽ по данным одного агрегатора; до оригинала RD223 и изменений НМЦ нельзя делать вывод о нарушении или приросте стоимости. Напряжение устройства компенсации не определено: «ПС 110 кВ» описывает подстанцию.",
+      "notes": "ПЕРВИЧНЫЕ ДОКУМЕНТЫ ЕИС: официальный архив 223-ФЗ SHA256 2d5e1b593db24c211ad1d7f15f08e8e7147eb08c97934968a238c312a3b27072; комиссия 03.03.2026 признала процедуру несостоявшейся (одна заявка) и решила закупить у единственного участника ООО «ТЕХНОПРОМ» по предложению 1 833 358,30 ₽ БЕЗ НДС; PDF протокола SHA256 31a9ea56be8205e2f011328ce24dd7f65a3aa56637a5a422cbdcba30643c4475. Это цена ПРЕДЛОЖЕНИЯ, а не подтверждённый подписанный договор. Смета ЭП: УКРМ56-6,3-200-(1х50+2х75) М4 (6 кВ, 200 квар) в разделе давальческого оборудования 4 900 000 ₽, а свод ЛСР содержит отдельные шкафы 3 177 000 ₽; это независимые сметные позиции, НЕ выручка подрядчика и НЕ аддитивная стоимость PQ. Роль: реконструкция/монтаж EPC, не производство/поставка УКРМ. Базовая НМЦК 1 432 983,66 ₽ без НДС применима только к работам. Регистр подписанного договора не сверён. Подтверждена официальная реестровая запись договора 50277071467260002650000 с ценой 1833358.30 ₽, публичная RD223 contractCutted. Договорная цена всего комплекса не относится автоматически к стоимости оборудования, поставщик скрыт в реестровой записи. ДОПОЛНЕНИЕ 27.10: вторичная карточка Контур указывает дату 14.04.2026 для зарегистрированного договора. Официальный RD223 уже подтверждает сумму 1 833 358,30 ₽, но контрагент договора не раскрыт; ООО «ТЕХНОПРОМ» идентифицировано лишь в решении комиссии как единственный участник, с которым постановлено заключить договор. Не путать подтверждённую договорную сумму и отдельную стоимость самой УКРМ, которая в комплексной EPC-сметe определяется отдельно.",
       "registry_contract": {
         "registry_number": "50277071467260002650000",
         "official_registered_total_rub": "1833358.30",
@@ -504,14 +504,19 @@
         "source": "getDocsIP RD223 original contractCutted public XML SHA256 receipt"
       },
       "reported_contract_total_rub": "1833358.30",
-      "reported_contract_total_source_tier": "third_party_only_not_verified_original_rd223",
+      "reported_contract_total_source_tier": "primary_platform_verified_RD223_getDocsIP",
       "linked_contract_registry_number": "50277071467260002650000",
       "contract_date": "2026-04-14",
       "supplier_verified": false,
       "supplier_inn": null,
       "pq_equipment_only_contract_rub": null,
       "equipment_voltage_kv": null,
-      "market_scope": "110kV_substation_project_PQ_equipment_voltage_unconfirmed"
+      "market_scope": "110kV_substation_project_PQ_equipment_voltage_unconfirmed",
+      "supplier_identity_from_registry_verified": false,
+      "award_decision_vendor": "ООО «ТЕХНОПРОМ»",
+      "award_decision_original_protocol_verified": true,
+      "bid_price_ex_vat_rub": "1833358.30",
+      "contract_date_source_tier": "third_party"
     },
     {
       "id": "pq-2026-melcombinat-ukrm",
@@ -2017,7 +2022,7 @@
     }
   ],
   "supersedes": "verified_public_leads_20261027.v5.json",
-  "delta_note": "No new procurement IDs since v5. Enriched existing 223fz:32615614821:lot1 with secondary report of one-bid failed competition and subsequent 14 April 2026 registered contract (1 833 358.30 RUB; NMC 1 432 983.66 RUB). 55 distinct canonical IDs preserved. First-party RD223, supplier and compensated equipment voltage unverified.",
+  "delta_note": "No new IDs over v5. Existing official-EIS primary evidence for 32615614821 reclassified: single-bid competition declared failed, but original RD223 confirms registered contract number 50277071467260002650000 at 1 833 358.30 RUB; official protocol names intended vendor ООО «ТЕХНОПРОМ» but contract register counterparty masked. New secondary aggregator source supplies contract date 2026-04-14 only. No claim supplier of signed contract verified. 55 unique canonical IDs retained.",
   "verification_summary": {
     "prior_records": 55,
     "added_records": 0,
@@ -2030,7 +2035,8 @@
     "equipment_voltage_unconfirmed": 1,
     "enriched_procedure_id": "32615614821",
     "reported_contract_value_rub": "1833358.30",
-    "reported_contract_value_source_tier": "third_party_not_primary_verified",
-    "primary_protocol_or_supplier_verified": false
+    "reported_contract_value_source_tier": "primary_platform_original_RD223_verifiable_by_prior_SHA_receipt",
+    "primary_protocol_or_supplier_verified": "primary_protocol_award_decision_yes_registry_supplier_identity_no",
+    "signed_contract_registry_verified": true
   }
 }
