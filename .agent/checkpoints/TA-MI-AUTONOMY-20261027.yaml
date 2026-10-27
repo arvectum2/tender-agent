@@ -130,3 +130,13 @@ chatgpt_review_queue_20261027:
   tests: "2 focused passed, broader regression was blocked by ARC safety gateway"
   remaining: "Automated model execution integration, batch PQ ranking and source-bound Data Platform ingestion, EIS signed outcomes, ETP and final report"
   resume_instruction: "Use existing controlled OpenAI-compatible LLM provider in Tender Agent after verifying configured credentials without exposing secrets. Connect approved model execution to durable queue with strict source quote validation, retry and budget controls. Then ingest verified documents in tenant scope and run end-to-end tests."
+
+api_reviewer_20261027:
+  status: in_progress
+  last_verified_commit: bea342d0b80631db7db0475045794252bf901f46
+  component: src/modules/market_intelligence/pq_api_reviewer.py
+  achieved: "Explicit official OpenAI HTTPS model executor with bounded request/response, credential fail-closed, source excerpt quote validation, durable reviewed status; five focused tests passed"
+  credential_preflight: "OPENAI_API_KEY absent in Mac mini ARC process environment; LLM_PROVIDER and LLM_MODEL unset. No live model call made"
+  runtime: "Existing reviewed MOSGAZ queue replay returns already_reviewed"
+  limitation: "This is OpenAI API integration, not guaranteed identical to GPT-6 ChatGPT chat configuration; no full unattended model or Data Platform E2E without credential"
+  resume_instruction: "Add mocked provider response acceptance test, secure credential provisioning if authorized, batch PQ relevance prioritization, source-qualified Data Platform ingestion and signed outcome linkage; do not invent market totals."
