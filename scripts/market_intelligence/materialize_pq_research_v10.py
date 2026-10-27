@@ -53,7 +53,7 @@ def materialize() -> dict:
             "quantity": raw["quantity"],
             "quantity_unit": raw["quantity_unit"],
             "nmck_rub": raw["nmck_rub"],
-            "reported_price_kind": "initial_price_not_contract",
+            "reported_price_kind": "initial_price_not_contract" if raw["nmck_rub"] is not None else None,
             "status": (
                 "secondary_signed_contract_after_one_bid_failed_procedure"
                 if raw.get("reported_signed_contract_rub") is not None
