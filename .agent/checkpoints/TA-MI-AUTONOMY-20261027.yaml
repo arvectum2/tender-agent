@@ -1,0 +1,37 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: TA-MI-AUTONOMY-20261027
+status: in_progress
+goal: >-
+  Convert source-grounded PQ market research into a documented, auditable,
+  durable and eventually end-to-end autonomous Tender Agent workflow,
+  accumulating reviewed training examples for Procurement LLM.
+definition_of_done:
+  - "Published versioned market-research methodology S0-S11, documented PQ casebook, trace schema and safe candidate examples."
+  - "Implement read-only durable S0-S11 research orchestration, including source retry/fallback, coverage tracking, evidence linking and restart without user iterations."
+  - "Integrate approved EIS/223-FZ/commercial ETP discovery and original protocols through Tender Agent, reusable extraction through Data Platform."
+  - "Verify dedup notice/lot/project/contract, outcome and EPC financial allocations on audited PQ fixture corpus, including 2024 backfill."
+  - "Publish one-request-to-final-report E2E acceptance with source evidence, no invented winners, honest coverage limits, and a separate permissioned training gold pipeline."
+  - "Record final verification/test commands, exact git commit and status completed."
+completed:
+  - "2026-10-27: Inspected current unrelated .agent/current-task.yaml and left it untouched; inspected Tender Agent original research pipeline and Data Platform boundary."
+  - "2026-10-27: Recovered prior PQ scratch-history method from git: 20 candidate notices, mixed EPC and repeat tender caveats, 2024 source gap; duplicate draft removed from main in favor of MI-013 v20."
+  - "2026-10-27: Published AUTONOMOUS_RESEARCH_PROTOCOL.md (S0-S11), PQ_CASEBOOK_20261027.md, RESEARCH_EVENT_SCHEMA.json and 3 example records in PQ_TRAINING_CANDIDATES.jsonl."
+  - "2026-10-27: Fetched all 4 new files back from GitHub; parsed JSON Schema and all 3 example JSONL entries; verified required fields and all examples marked non-gold."
+  - "2026-10-27: Added a stable Market Intelligence README index."
+current_step: "Implement durable runtime research event recorder and a fixture-driven one-shot orchestrator after inspecting existing MI-013 v20 canonical datasets and task queues."
+remaining:
+  - "Locate and confirm MI-013 v20 canonical corpus and actual source provenance; avoid restoring previously deleted parallel study CSV/Markdown."
+  - "Build event recorder for source attempts/decisions, immutable evidence references, coverage matrix and fail-closed gold labels."
+  - "Build or adapt S0-S11 orchestration/worker with source-plan expansion, legal retries/fallbacks, checkpoint/resume and self-audit."
+  - "Enrich original PQ outcomes and 2024 months and create expert-reviewed procurement gold fixtures for repeat notices, mixed EPC, unknown winner and false positives."
+  - "Run relevant pytest/integration tests and source-anchored E2E; document limitations and final owner-facing report."
+last_verified_commit: "GitHub main 57678ca15e0bcef31f925100d310ed5d00c84ff2 (first 4 files); README/checkpoint later in same task"
+last_test_results: "GitHub fetch verified 4 files; schema parsed with 24 properties and 13 required keys; 3 JSONL training candidates parsed and all training_eligible=false; no runtime tests performed because no application code changed."
+resume_instruction: >-
+  Inspect the canonical MI-013 v20 corpus location and current branch status.
+  Start from docs/tender_research/market_intelligence/README.md.
+  Implement the durable research_events.jsonl writer and fixture tests first,
+  without disturbing the existing unrelated .agent/current-task.yaml or
+  the dirty local Mac mini checkout. After each milestone update this
+  checkpoint with actual verified commit and test outcomes.
