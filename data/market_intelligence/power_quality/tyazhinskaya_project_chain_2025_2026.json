@@ -1,0 +1,86 @@
+{
+  "schema_version": "pq-project-demand-chain/1.0",
+  "as_of": "2026-10-27",
+  "project_id": "TYAZHINSKAYA-SKRM52-2025-2026",
+  "object": "ПС 110/35/10 кВ «Тяжинская», реконструкция системы компенсации, БСК-110→СКРМ/источник реактивной мощности, 52 Мвар",
+  "project_count_notices_confident": 3,
+  "related_platform_internal_leads_not_canonical": 1,
+  "stages": [
+    {
+      "stage": "design_initial",
+      "date": "2025-07-16",
+      "canonical_id": "223fz:32515044454:lot1",
+      "eis_notice_id": "32515044454",
+      "buyer": "ПАО «Россети Сибирь»",
+      "nmck_rub": "3031988",
+      "amount_type": "initial_price",
+      "voltage_class_of_new_converter": "unknown_from_design_notice",
+      "contract_award_verified": false,
+      "source_url": "https://energybase.ru/tender/32515044454"
+    },
+    {
+      "stage": "design_additional_possible_repeat",
+      "date": "2026-04-22",
+      "platform_internal_id": "rts:3865534",
+      "eis_notice_id": null,
+      "buyer": "АО «Россети Научно-технический центр» (из вторичной карточки)",
+      "nmck_rub": "3050000",
+      "amount_type": "initial_price_including_vat_secondary",
+      "scope": "Проектно-изыскательские работы, корректировка ПД",
+      "voltage_class_of_new_converter": "unknown",
+      "contract_award_verified": false,
+      "canonical_counted_in_core": false,
+      "source_url": "https://synapsenet.ru/zakupki/rts/3865534%231--kemerovskaya-obl-vipolnenie-proektnih-i-iziskatelskih-rabot-po",
+      "notes": "Индекс площадки РТС ≠ ЕИС; без проверки оригинального ЕИС номера не добавлять в lot-level источник как новую федеральную закупку. Вероятно отдельное размещение того же проекта, а не оборудование."
+    },
+    {
+      "stage": "design_correction",
+      "date": "2026-09-07",
+      "canonical_id": "223fz:32616354211:lot1",
+      "eis_notice_id": "32616354211",
+      "buyer": "АО «Энергосервисная компания Сибири»",
+      "nmck_rub": "7519646.09",
+      "secondary_reported_contract_rub": "7406851.40",
+      "contract_award_verified_original": false,
+      "scope": "Известное повторное проектирование СКРМ 52 Мвар, без поставки оборудования",
+      "source_url": "https://zakupki.tochka.com/search/22899277-1/"
+    },
+    {
+      "stage": "equipment_supply",
+      "date": "2026-10-05",
+      "canonical_id": "223fz:32616435269:lot1",
+      "eis_notice_id": "32616435269",
+      "buyer": "ПАО «Россети Сибирь» / Кузбассэнерго-РЭС",
+      "nmck_rub": "452016000.01",
+      "nmck_net_rub": "370504918.04",
+      "source_archive_sha256": "5f9e406c56254891514dec2e9f8689417782bce298e5e4cb433375d1806cbb65",
+      "equipment": [
+        {
+          "model": "МПУ-30000/10 УХЛ1",
+          "nominal_voltage_kv": 10,
+          "reactive_power_mvar": 30,
+          "net_initial_price_rub": "335351974.38"
+        },
+        {
+          "model": "БСК-110-26 ХЛ1",
+          "nominal_voltage_kv": 110,
+          "net_initial_price_rub": "33723435.46"
+        }
+      ],
+      "supervision_net_initial_price_rub": "1429508.20",
+      "contract_award_verified_original": false,
+      "source_url": "https://kontendus.ru/tender/32616435269",
+      "original_source_file": "verified_32616435269_original_archive_20261027.json"
+    }
+  ],
+  "rules": [
+    "1 investment project != number of tenders",
+    "design amounts and supply NMC are different purchases, never accumulate as equipment sales",
+    "RTS 3865534 has only platform internal ID and may repeat an EIS notice",
+    "price line for MПУ 10 kV is original NET initial item not an award/revenue",
+    "110 kV legacy BSK and 110 kV complete system must not be misclassified as strict medium-voltage sales",
+    "supplier remains unverified for all stages",
+    "All stages are historical as of Oct 27 2026 except supply awaiting submission deadline Oct 30"
+  ],
+  "commercial_implication": "Potential 10kV modular electronic reactive power solution under 110kV grid integration, with manufacturer service center in RF, 5-year warranty and reaction time <=20ms; qualification gap for any overseas manufacturer not assessed."
+}
