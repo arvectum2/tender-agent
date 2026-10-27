@@ -120,3 +120,13 @@ chatgpt_reasoning_pilot_20261027:
   tests: "22 passed"
   blocker: "Unattended LLM invocation from backend requires an authenticated OpenAI API integration; current chat model cannot be directly called as a background process without such integration"
   resume_instruction: "Wire review packet to approved authenticated ChatGPT/OpenAI API executor or interactive review queue, then batch-rank attachments, ingest source-verified text into tenant-scoped Data Platform and verify original signed contract outcomes; do not claim fully unattended model execution until tested."
+
+chatgpt_review_queue_20261027:
+  status: in_progress
+  last_verified_commit: 1631f7b9f611a4e0f4dc6e7009c314efd4e23e2b
+  component: src/modules/market_intelligence/pq_review_queue.py
+  completed: "Durable deterministic packet queue, source SHA review verification, idempotent replay, immutable accepted reviews; real MOSGAZ case reviewed as irrelevant"
+  verified_runtime: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/review-queue
+  tests: "2 focused passed, broader regression was blocked by ARC safety gateway"
+  remaining: "Automated model execution integration, batch PQ ranking and source-bound Data Platform ingestion, EIS signed outcomes, ETP and final report"
+  resume_instruction: "Use existing controlled OpenAI-compatible LLM provider in Tender Agent after verifying configured credentials without exposing secrets. Connect approved model execution to durable queue with strict source quote validation, retry and budget controls. Then ingest verified documents in tenant scope and run end-to-end tests."
