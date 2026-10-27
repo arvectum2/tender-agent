@@ -55,7 +55,7 @@ def materialize():
             "publication_date":date,
             "date_basis":raw["date_basis"],
             "source_event_date":event_date,
-            "procurement_regime":"commercial" if "rosneft" in cid or raw["scope"]=="request_for_quotation" else "223-fz",
+            "procurement_regime":"commercial" if (raw["scope"] in ("market_sounding","request_for_quotation") or "rosneft" in cid) else "223-fz",
             "platform":"ТЭК-Торг / корпоративный архив Роснефти" if "rosneft" in cid else "отраслевой каталог закупок",
             "customer":{"name":raw["customer"],"inn":None},
             "beneficiary":raw["beneficiary"],
