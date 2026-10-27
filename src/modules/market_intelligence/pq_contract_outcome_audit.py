@@ -111,7 +111,13 @@ def audit(*, leads_path: Path, contracts_path: Path, contract_root: Path,
             "supplier": None,
             "winner": None,
             "signed_contract_verified": False,
+            "public_register_entry_verified": root_status == "local_xml_verified",
+            "public_register_price_kind": "contract_register_price_not_payment_or_PQ_equipment_only",
             "supplier_verified": False,
+            "supplier_disclosure": "223fz_public_contract_register_excludes_supplier_rule_1132_p19",
+            "supplier_recovery_channels": [
+                "original_award_protocol", "original_primary_etp", "buyer_public_disclosure",
+            ],
             "equipment_only_amount": None,
             "reason_unsigned": "Registry XML alone does not prove signature or supplier",
         })
