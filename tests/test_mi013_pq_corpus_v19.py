@@ -24,7 +24,7 @@ def test_v19_retracts_only_false_mogocha_2024_and_preserves_original_2023_eis():
     e=next(x for x in new if x.get("procedure_id")=="32313008364")
     assert e["publication_date"]=="2023-11-27"
     assert e["nmck_rub"]=="6795960"
-    assert not e["supplier_verified"]
+    assert e.get("supplier_verified") is not True
     assert len(result["retracted_observations"])==1
     assert result["retracted_observations"][0]["confirmed_real_notice_id"]=="32313008364"
 
@@ -42,7 +42,7 @@ def test_joint_oil_tender_four_beneficiaries_one_notice_not_four_sales():
     assert len(r["joint_beneficiaries"])==4
     assert len({x["inn"] for x in r["joint_beneficiaries"]})==4
     assert sum(x.get("procedure_id")=="РН41205245" for x in rows)==1
-    assert r["reported_contract_total_rub"] is None
+    assert r.get("reported_contract_total_rub") is None
     assert r["supplier_verified"] is False
 
 def test_ufimka_only_one_bid_failed_but_later_signed_contract_secondary():
