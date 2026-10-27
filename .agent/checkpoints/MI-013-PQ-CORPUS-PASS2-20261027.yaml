@@ -11,6 +11,14 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass13 reviewed industry Energybase catalog with >2700 category-indexed (many irrelevant) leads; publication ID and award grade require content filtering, no national census confirmed.
+  - Pass13 found original Rosseti Siberia 26-1149 EIS 32616400421 dated 2026-09-23 NMC 452016000.01, CANCELLED with published cancellation archive; linked as earlier notice of October 26-1174 EIS 32616435269 so initial price not counted twice as equipment sale.
+  - Pass13 recovered 2024 Rosseti Yug Volgogradenergo 7 BSK supply (June 24 2024, NMC 10880835, secondhand signed 10880835 on Aug 15) with masked EIS and seller identities, recorded source UUID only.
+  - Pass13 discovered early 2024 two large mixed EPC lot notices on one Hani/Lopcha investment title: lot1 1571458880 RUB secondary signed, masked official EIS, and lot2 EIS 32413581034 initial 1518147770 RUB, both include SKRM 154Mvar/128Mvar but entire amount is high voltage EPC not 6-35kV device price.
+  - Pass13 discovered EIS 32616506708, published 2026-10-26, Rosseti NTC redesign PS Vanino SKRM>=150Mvar, initial 13523603.17 RUB, bidding open until 2026-10-29 and no awarded supplier.
+  - Published v15 and v16 source deltas, deterministic read-only materializer chains and unit tests, final corpus 87 source-backed lot/research entries, 36 with initial prices, years 1/10/20/54 and 2 undated.
+  - Published extensive 41KB 87-row consolidated three-year research report docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v16.md with original links, contract source grades and anti-double-counting methodology.
+  - Preserved v12 source-of-truth in Data Platform production 71 resources+71 records already verified; extra 16 leads GitHub-only pending their own approved import. No SQL writes in Pass12/13.
   - Pass12 expanded research from 71 PostgreSQL-imported lot cards to 82 GitHub-source-linked research candidates for rolling date window 2023-10-27..2026-10-27, eight sourced v13 IDs plus three sourced v14 IDs. No production DB mutations; 11 new findings pending later controlled import.
   - Pass12 new EIS/commercial notices: 231994 and 231994-2 (Apatit/Kirovsky PS352 design one demand); 32615794236 (Chadan 110kV BSK design secondary signed 3579778.90); 32413708738 (Turan 220kV EPC outside 6-35kV); 32514944142 (SVC design related 32515225588); 32616339168 (24 BSK capacitors 6807600); 32515584863/32615760238 (Hani/Lopcha reissue PS SКРМ 128/154Mvar).
   - Pass12 added 32615966040 (Nikitskaya 10kV bay reactive EPC, secondary contract 5273764), COM20082600016 (Lukoil commercial market-sounding UKRM one комплект), 1351/ОАЭ-ЦДКС/26 (RZD 36.289595m auxiliary second supply infrastructure).
@@ -75,7 +83,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass12 research expansion: 82 source-linked lot/procedure-level cases found in rolling 2023-10-27..2026-10-27; 31 have published NMC, four old primary RD223 contracts, many winners unknown, 2023 1 / 2024 7 / 2025 20 / 2026 52 / undated 2. New 11 records in GitHub v13/v14, only earlier 71 v12 records imported and readback PASS in arvectum_data. Full 34KB auditable report v14 published; still NOT defensible as all-Russia census. EIS/ETP full archives, winners, hidden EPC TЗ remain objective research gaps. CI v13/v14 pending.'
+current: 'Pass13: 87 source-linked PQ/adjacent lot-level opportunities over 2023-10-27..2026-10-27 (2023=1, 2024=10, 2025=20, 2026=54, undated=2), 36 initial-price entries, 4 original RD223 signed registry receipts and many missing winners. Critical Rosseti Siberia 452m cancelled prior tender 32616400421 linked to new 32616435269, 2024 Hani/Lopcha 2 mixed EPC lots 1.57/1.52bn excluded from strict PQ SAM, 2026 Vanino SKRM150 design. 71 v12 records in production Data Platform, new 16 research sources versioned in Github v13-v16 only. 41KB source-linked report v16 available. National 223/44-FZ + all commercial ETP procurement census and original contract/winner extraction NOT completed; do not claim complete-market TAM.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -87,8 +95,10 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: 39e48d61cb70005c3a52c92e4cd62d9c6805751c
+last_verified_commit: e98931dcbceda21ac55b39042ca564d16b7bf4a0
 test_results:
+  - Pass13 independent GitHub JSON check: v13 +8, v14 +3, v15 +2, v16 +3 vs v12 71, total 87 canonical research identifiers. 36 with NMC after 13 new with price (v13 6 v14 2 v15 2 v16 3) plus original 23.
+  - Pass13 CI for v15/v16 not yet verified green, regression test functions in GitHub are authored only; no claim local v16 execution.
   - Pass12 baseline 71 materializer read-only inventory: 2023=1 2024=6 2025=18 2026=44 undated=2, four original RD223 contracts, existing 23 NMC.
   - Pass12 v13 added 8 IDs, v14 3, all distinct in source ledger; rolling 82 report with 31 NMC and 4 original contracts; new v13/v14 tests authored but CI/local run NOT yet confirmed.
   - Pass12 Data Platform production unchanged since successful v12 71+71 import; new 11 records only versioned in GitHub.
@@ -121,11 +131,11 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Start from docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v14.md and data/market_intelligence/power_quality/verified_public_leads_20261027.v14.manifest.json, 82 observations. Run new materialize_pq_research_v13.py/v14.py and MI013 regression tests in isolated worktree when authorized; verify 71 v12 records unchanged, v13+8 and v14+3 added, 82 unique. Independently harvest 223/44-FZ ЕИС and commercial ETP tender catalogs from 2023-10-27 through 2026-10-27 with original attachments, check winners, repeat demand and contract amounts, prioritizing 2023/24 which have low discovery coverage. Do not claim national census or TAM; date and source gaps persist. Previous v12 PostgreSQL import 71+71 readback PASS and should not be rerun. New 11 are GitHub-only, require separately vetted and explicitly authorized DB merge. Parent current-task untouched.
+resume_instruction: Read docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v16.md and data/market_intelligence/power_quality/verified_public_leads_20261027.v16.manifest.json; 87 lot/research cards, 16 new GitHub-only since 71 production v12. Do not silently write 87 to DB; previous authorization was exactly 71 rows, which were already imported and verified. Run v13-v16 materializer tests when local branch is fetched with owner's approval, check PR CI. For genuinely full Russian census, arrange reproducible historical EIS 223/44-FZ document+registered contract extraction and multiple commercial ETP crawls, original technical archives and bidder/winner protocols. Prioritize 2023/24 undercovered; resolve masked 2024 Rosseti Yug seven BSK and Hani/Lopcha lot1 EIS IDs and original signed contract, compare cancelled 32616400421 with 32616435269 original docs. Group procurement notices, lots, investment projects, reissues before financial sums; never call initial EPC NMC equipment-only market revenue. Keep parent current-task and old production dataset untouched.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v14.manifest.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v16.manifest.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: true
   database_postgresql_import_verified: true
@@ -135,8 +145,8 @@ execution:
   backup_sha256: d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43
 
   quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v12.json
-  research_report: docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v14.md
-  research_stage_rows: 82
+  research_report: docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v16.md
+  research_stage_rows: 87
   production_rows_verified: 71
-  pending_import_rows: 11
+  pending_import_rows: 16
   context_dataset: data/market_intelligence/power_quality/market_context_20261027.v3.json
