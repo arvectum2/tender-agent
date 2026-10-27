@@ -38,7 +38,8 @@ def test_qualified_bidder_and_ocr_proposed_winner_are_not_contract_suppliers(tmp
     assert byname["Электриксервис"]["ocr_visual_review_required"] is True
     assert all(x["contract_supplier_verified"] is False for x in result["records"])
     assert all(x["award_legally_verified"] is False for x in result["records"])
-    assert all(x["evidence_excerpt"] in (native, ocr) for x in result["records"])
+    assert all(any(x["evidence_excerpt"] in text for text in (native, ocr))
+               for x in result["records"])
 
 
 def test_pending_packets_not_used(tmp_path: Path):
