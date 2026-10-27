@@ -1,0 +1,138 @@
+{
+  "schema_version": "pq-commercial-secondary-board-position-enrichment/1.0",
+  "data_version": "v34",
+  "date": "2026-10-27",
+  "parent_manifest": "verified_public_leads_20261027.v33.manifest.json",
+  "source_grade": "secondary_aggregator_public_original_etp_position_replica_not_original_etp_archive",
+  "changes_count": 1,
+  "new_procurement_notices": 0,
+  "new_signed_contracts": 0,
+  "patches": [
+    {
+      "canonical_id": "commercial:ГП630876:lot1",
+      "procedure_id": "ГП630876",
+      "buying_organisation": "ООО «НОВАТЭК-Усть-Луга»",
+      "buyer_inn": "4707026057",
+      "purchase_subject": "Поставка оборудования с выполнением работ по модернизации установки компенсации реактивной мощности 10 кВ в распределительной трансформаторной подстанции",
+      "notice_publication_date": "2026-06-22",
+      "bids_closed": "2026-08-07",
+      "original_platform": "ЭТП Газпромбанка",
+      "scope": "modernization_existing_equipment_and_supply_components",
+      "separate_new_UKRM_sets_proven": 0,
+      "nominal_system_voltage_kv": 10,
+      "source_board_visible_positions_count": 10,
+      "bill_of_quantities_visible_board": [
+        {
+          "type": "engineering",
+          "name": "Разработка РКД",
+          "quantity": null,
+          "unit": null
+        },
+        {
+          "type": "switching_reactor",
+          "name": "Реактор включения трехфазный внутренней установки для ступени 450 квар",
+          "quantity": 3,
+          "unit": "шт",
+          "step_label_kvar": 450,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "switching_contactor",
+          "name": "Контактор вакуумный трехфазный 400 А, 10,5 кВ, управление 220 В AC",
+          "quantity": 3,
+          "unit": "шт",
+          "nominal_voltage_kv": 10.5,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "capacitor",
+          "name": "Конденсатор трехфазный по типу КЭПЗ-10,5-150-3У2",
+          "quantity": 1,
+          "unit": "шт",
+          "nominal_voltage_kv": 10.5,
+          "nameplate_kvar": 150,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "work",
+          "name": "Демонтаж, монтаж, настройка контроллеров по 1490-2025-12-99.1-ЭМ",
+          "quantity": null,
+          "unit": null
+        },
+        {
+          "type": "switching_reactor",
+          "name": "Реактор включения трехфазный внутренней установки для ступени 150 квар",
+          "quantity": 1,
+          "unit": "шт",
+          "step_label_kvar": 150,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "switching_reactor",
+          "name": "Реактор включения трехфазный внутренней установки для ступени 300 квар",
+          "quantity": 4,
+          "unit": "шт",
+          "step_label_kvar": 300,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "fuse",
+          "name": "Предохранитель ПКТ-VK 31,5 А / 20 кВ",
+          "quantity": 3,
+          "unit": "шт",
+          "nominal_voltage_kv": 20,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "fuse",
+          "name": "Предохранитель ПКТ-VK 63 А / 20 кВ",
+          "quantity": 12,
+          "unit": "шт",
+          "nominal_voltage_kv": 20,
+          "individual_UKRM_units": false
+        },
+        {
+          "type": "fuse",
+          "name": "Предохранитель ПКТ-VK 80 А / 20 кВ",
+          "quantity": 3,
+          "unit": "шт",
+          "nominal_voltage_kv": 20,
+          "individual_UKRM_units": false
+        }
+      ],
+      "quantity_cross_checks": {
+        "switching_reactors_total": 8,
+        "reactor_stages_by_label": {
+          "150": 1,
+          "300": 4,
+          "450": 3
+        },
+        "vacuum_contactors_total": 3,
+        "three_phase_capacitors_10p5kv_total": 1,
+        "fuses_total": 18
+      },
+      "equipment_voltage_caution": "10 kV is the existing UKRM modernization context; 20 kV fuse ratings are not the system's nominal voltage; reactor step labels cannot be summed to infer capacity without original electrical drawings.",
+      "source": [
+        {
+          "url": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+          "tier": "secondary_aggregator_republication_of_position_data_from_original_ETP",
+          "locator": "Section «Позиции» / «С сайта площадки», 10 first visible rows only; 2026-10-27 HTTP200 HTML 51926 bytes SHA256 e23a11d035ed01fbbe972942c9343d2116172af08ce861fef07c73b1043d735e; source archive not obtained.",
+          "sha256_of_retrieved_html": "e23a11d035ed01fbbe972942c9343d2116172af08ce861fef07c73b1043d735e"
+        }
+      ],
+      "source_original_ETP_7z_files_verified": false,
+      "supplier_name_verified": false,
+      "signed_contract_verified": false,
+      "signed_contract_rub": null,
+      "hardware_only_price_rub": null,
+      "winning_offer_rub": null,
+      "result_interpretation": "Tender board marked procurement ended / bidding closed. Does not prove winner, signed amount or delivered retrofit.",
+      "dedup_project_cluster": "НОВАТЭК-Усть-Луга existing UKRM10kv retrofit may relate to withdrawn predecessor ГП628666; not two independent delivered upgrades without plans.",
+      "pending_research": [
+        "Retrieve source original ЭТП ГПБ 2._Форма_4_Технические_требования_.xlsx, 4._Модернизация_УКРМ.7z, 3._Заводская_документация_на_УКРМ.7z with SHA256 and original protocol",
+        "Determine exact existing UKRM architecture, selected supplier and signed retrofitting price, separate installation engineering from device cost",
+        "Identify whether 20kV fuses spec nominal and 10.5kV capacitors match manufacturer technical requirements, and whether first and second original procurement numbers are same physical site."
+      ]
+    }
+  ]
+}
