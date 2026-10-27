@@ -1,0 +1,27 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: MI-013-PQ-CORPUS-PASS3-20261027
+status: in_progress
+goal: "Continue the existing 100-case Power Quality Russia procurement corpus; enrich from original 223-FZ/ETP sources and real PostgreSQL without restarting independent research."
+definition_of_done:
+  - "Preserve the 100-case source ledger, correction chain v3-v20, documented de-duplication and historical source snapshots."
+  - "Resolve priority first-party protocol, specification and signed-contract acquisition tasks; record verified bidder/supplier role and actual prices or unknown."
+  - "Continue stage-aware discovery across 2024-2026 and 6-35kV EPC attachments; improve evidence coverage without artificially inflating procedure counts."
+  - "Update reproducible source-grounded manifests and report to owner; retain correct 71/29 database vs GitHub-only distinction."
+completed:
+  - "2026-10-27: Recovered branch research/mi013-pq-corpus-20261027-pass2 at e7479f66721d85cfd7f9e6f1b45737a3146abd40 and verified v20: 100 active, 71 imported, 29 new Git only, 4 official signed registry cases, 2 named primary-protocol bidders."
+  - "2026-10-27: Independently checked live Mac mini postgres arvectum_data collection: 71 dp_resources and 71 dp_records, total resources 2263."
+  - "2026-10-27: Removed three erroneously created competing 20-row research files/checkpoint from GitHub main without affecting canonical corpus."
+  - "2026-10-27: Downloaded source ETP-Region original #32616296475 28,240-byte DOCX and 4-page 1,655,628-byte scanned final PDF, SHA256 checked. Source-grade tech: 6.3kV 500kvar, TCR+filter, IP54, -40..+45C, response <=5ms."
+  - "2026-10-27: Extracted Russian scan (native text empty) with last-resort macOS Vision and visually checked PDF page3: application 79410 first 3865725.99 RUB, application 79376 second 3885249.86 RUB; legal names hidden and no signed contract proof."
+  - "2026-10-27: Published v21 append-only one-row enrichment and 100-case manifest. Validated 9 JSON invariants via independent GitHub fetch; original source data is preserved."
+  - "2026-10-27: Wrote evidence note docs/market_intelligence/MI013_PQ_PASS3_MELEUZ_PRIMARY_20261027.md."
+current_step: "Find original final protocol and registered contract for priority queue #32515218366 and #32616296475, plus other cases; only then author new enrichment."
+remaining:
+  - "Verify original signed RD223 contract for Meleuz and legally identified supplier; do not infer from anonymised winning application."
+  - "Acquire 32515218366 exact EIS/ETP archived final protocol and component specification."
+  - "Acquire NOVATEK GP630876 archives, Meleuz auction itemised budget and other original source documents; de-duplicate Mikhailovsky 4565274/4538400/4561228."
+  - "Expand sparse date-region coverage and 2024 awards; update original source QA and eventual separate authorized 29-row PostgreSQL import."
+last_verified_commit: "v21 manifest on canonical GitHub branch 5eacf0133335b301e2c69ccfb140d682e19638fe (before checkpoint/docs); local working checkout fc41e652 dirty, left untouched"
+last_test_results: "Original SHA256 docx/pdf verified, OCR protocol page3 visually confirmed; JSON schema/counters/core invariants 9/9 PASS; PostgreSQL select 71 resources/71 records; no code tests modified."
+resume_instruction: "Read branch research/mi013-pq-corpus-20261027-pass2 v21 manifest, source evidence v21, queue v5 and this checkpoint. Continue first-party official procurement documents and contract verification. Do not recreate a new 20-row independent study. Leave main/local dirty working tree and DB unchanged absent separately scoped import approval."
