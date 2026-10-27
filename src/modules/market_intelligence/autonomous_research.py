@@ -12,7 +12,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_CORPUS = Path("data/market_intelligence/power_quality")
-DEFAULT_SEED = "verified_public_leads_20261025.v2.json"\nLATEST_MANIFEST = "verified_public_leads_20261027.v20.manifest.json"
+DEFAULT_SEED = "verified_public_leads_20261025.v2.json"
+LATEST_MANIFEST = "verified_public_leads_20261027.v20.manifest.json"
 STAGES = ("S0_SCOPE", "S1_SOURCE_MAP", "S2_DISCOVERY", "S3_ACQUIRE",
           "S4_EXTRACT", "S5_TRIAGE", "S6_RESOLVE", "S7_OUTCOME",
           "S8_ENTITY_GRAPH", "S9_METRICS", "S10_AUDIT", "S11_PUBLISH")
@@ -42,7 +43,8 @@ def run(*, corpus: Path, output: Path) -> dict:
         value, digest = _load(path)
         sources[name] = {"sha256": digest, "path": str(path),
                          "schema_version": value.get("schema_version")}
-    seed, _ = _load(corpus / DEFAULT_SEED)\n    latest, _ = _load(corpus / LATEST_MANIFEST)
+    seed, _ = _load(corpus / DEFAULT_SEED)
+    latest, _ = _load(corpus / LATEST_MANIFEST)
     records = seed.get("records")
     if not isinstance(records, list):
         raise ValueError("Missing records in PQ seed")
@@ -52,7 +54,9 @@ def run(*, corpus: Path, output: Path) -> dict:
     if not isinstance(signed_equipment, int) or signed_equipment < 0:
         raise ValueError("Signed equipment verification count missing")
     manifest = {"study_id": "PQ-RU-MI013", "corpus_mode": "read_only_existing",
-                "source_manifest": sources, "discovery_record_count": len(records),\n                "latest_mi013_manifest": LATEST_MANIFEST,\n                "latest_mi013_manifest_metadata": latest,
+                "source_manifest": sources, "discovery_record_count": len(records),
+                "latest_mi013_manifest": LATEST_MANIFEST,
+                "latest_mi013_manifest_metadata": latest,
                 "verified_equipment_only_signed_contracts": signed_equipment,
                 "market_total_rub": None,
                 "status": "completed_with_gaps",
@@ -67,7 +71,8 @@ def run(*, corpus: Path, output: Path) -> dict:
             raise ValueError("Existing run has different source hashes; choose another output")
     else:
         temp = target.with_suffix(".tmp")
-        temp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "
+", encoding="utf-8")
         os.replace(temp, target)
     events = output / "research_events.jsonl"
     if not events.exists():
@@ -82,7 +87,8 @@ def run(*, corpus: Path, output: Path) -> dict:
                          if stage in ("S3_ACQUIRE", "S4_EXTRACT") else "accepted"},
                          "reason": "Offline source-bound baseline; live collection not executed",
                          "review_status": "unreviewed", "training_eligible": False}
-                handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+                handle.write(json.dumps(event, ensure_ascii=False) + "
+")
     return manifest
 
 
