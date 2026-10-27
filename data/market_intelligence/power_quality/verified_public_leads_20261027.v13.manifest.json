@@ -1,0 +1,21 @@
+{
+  "schema_version": "pq-research-notice-manifest/0.6",
+  "as_of": "2026-10-27",
+  "data_version": "v13",
+  "rolling_window": {
+    "from": "2023-10-27",
+    "to": "2026-10-27",
+    "end_inclusive": true
+  },
+  "base_manifest": "verified_public_leads_20261027.v12.manifest.json",
+  "base_lot_level_rows": 71,
+  "delta": "discovery_2023_2026_v13_delta.json",
+  "delta_lot_level_rows": 8,
+  "total_lot_level_rows": 79,
+  "delta_unique_notice_ids": 8,
+  "scope": "Russian 223-FZ / commercial PQ and related supply, design, EPC, maintenance research corpus",
+  "buyer_demand_grouping": "Do not interpret 79 as independent investment projects or contracts; FosAgro 231994/-2 repeated PS-352 design; 32514944142/32515225588 SVC related, 32515584863/32615760238/32515208744 common Hani-Lopcha project",
+  "source_quality": "new eight records indexed EIS/ETP and secondary press/catalog pages; only original signed contract for Chadan not read, and secondary registry contract amount only",
+  "production_database_import_status": "base v12 71 imported, appended v13 8 not imported; no production SQL mutation approved for these new eight",
+  "market_census_complete": false
+}
