@@ -1,0 +1,110 @@
+{
+  "schema_version": "pq-primary-competitor-award-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v22",
+  "base_manifest": "verified_public_leads_20261027.v21.manifest.json",
+  "patches": [
+    {
+      "canonical_id": "223fz:32515218366:lot1",
+      "procedure_id": "32515218366",
+      "customer": "АО «Россети Научно-технический центр»",
+      "customer_inn": "7728589190",
+      "epatform": "РТС-тендер",
+      "commercial_platform_id": "3611904",
+      "procurement_scope": "3-year call-off supply framework of materials and components for manufacturing converter/valve units, DC facilities, controls, cooling and reactive compensation systems, NOT full STATCOM/UKRM supply",
+      "scope_classification": "pq_manufacturing_components_framework_adjacent",
+      "initial_nmck_rub_including_vat": "49900000.00",
+      "initial_nmck_rub_excluding_vat": "41583333.33",
+      "original_protocol_date": "2025-10-27",
+      "original_protocol_number": "13",
+      "bid_count": 2,
+      "admitted_bid_count": 2,
+      "rejected_bid_count": 0,
+      "original_protocol_participants": [
+        {
+          "rank": 1,
+          "legal_entity": "ООО «КАМЭЛЕКТРОЦЕНТР»",
+          "inn": "1650327380",
+          "role": "component_supply_competition_winner",
+          "bid_ceiling_rub_with_vat": "49900000.00",
+          "experience_points": 20
+        },
+        {
+          "rank": 2,
+          "legal_entity": "ООО «ЭН ЭЙЧ ИНЖИНИРИНГ»",
+          "inn": "7716584575",
+          "role": "component_supply_runner_up",
+          "bid_ceiling_rub_with_vat": "49900000.00",
+          "experience_points": 0
+        }
+      ],
+      "original_commission_decision": "Award tender to ООО КАМЭЛЕКТРОЦЕНТР, INN 1650327380; initiate contract signing 10-20 days after protocol (and not earlier than 10 days since its EIS publication).",
+      "original_signed_registry_contract_verified": false,
+      "registered_contract_number": null,
+      "signed_contract_price_rub": null,
+      "actual_calloff_deliveries_rub": null,
+      "equipment_revenue_attributable_to_PQ_rub": null,
+      "contract_ceiling_is_purchase_amount": false,
+      "contract_term": "3 years from signing when/if completed",
+      "annex_catalog_numbered_line_items": 4145,
+      "annex_item_examples": [
+        "DIN rails",
+        "cables",
+        "IGBT drivers/modules",
+        "capacitors",
+        "reactors",
+        "diodes",
+        "fasteners"
+      ],
+      "annex_technical_voltage_class_6_35_kv_verified": false,
+      "manufacturer_of_complete_statcom_verified": false,
+      "evidence": [
+        {
+          "tier": "original_EIS_commission_protocol_DOC_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=106226852",
+          "sha256": "8807d4b056bbb1346f0e8bc04de9e85918ae8b2b922a974562873fb3eb2e8d1a",
+          "bytes": 110592,
+          "locator": "Протокол №13 от 27.10.2025, second-stage table explicitly names two bidders, INNs, scores, ranking and ceiling; machine-text via macOS textutil"
+        },
+        {
+          "tier": "original_EIS_technical_DOCX_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=105316477",
+          "sha256": "af9741d81be8e3ce0465ee72c0ddaa90e9a3401feab89e69c1a5016870e6d5bd",
+          "bytes": 30798,
+          "locator": "V_Техническая часть, goods supplied by requests, 6-month warranty, equivalent substitutions"
+        },
+        {
+          "tier": "original_EIS_annex_XLSX_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=105316478",
+          "sha256": "379e55fd9a167d2b85c7cde6870f567b1bed8837c961d25fb098b3e9e8b0b976",
+          "bytes": 161811,
+          "locator": "Приложение 1, sheet1 rows numbered 1-4145 with sku labels, units; not claimed 4145 distinct unique products"
+        },
+        {
+          "tier": "original_EIS_NMC_XLSX_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=105316476",
+          "sha256": "e4ec98e7aec429ec0fb5215f7d28bc590b21320b41afe71cb7289270acec5128",
+          "bytes": 11573,
+          "locator": "VI_Расчет НМЦ, three preliminary price offers, approved cap exVAT 41583333.33 and incVAT 49900000"
+        },
+        {
+          "tier": "original_EIS_scanned_protocol_PDF_sha256_verified_binary_only",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=106226851",
+          "sha256": "60d8765af9a5506a5a1fa629ca019b51b0d3a67b996edc205ffeca6a76f12ed3",
+          "bytes": 1059188,
+          "locator": "PDF image-only; factual extraction based on corresponding official DOC file instead"
+        },
+        {
+          "tier": "secondary_procurement_index_report_not_signed_legal_proof",
+          "url": "https://vsem-podryad.ru/purchase/84366c27-43ba-4762-9d9b-65093e023265/",
+          "locator": "A mirror calls it concluded 29.10.2025 but original 27.10.2025 protocol says no earlier than 10 days from official result publication; do not mark registered signature verified."
+        }
+      ],
+      "interpretation": "One original-source identified PQ-adjacent component framework tender, 2 named bidders with one winner. 49.9m VAT-included is maximum framework/call-off ceiling over three years, not proof of purchases, vendor revenue or complete PQ equipment.",
+      "due_diligence_next": "Acquire original RD223 signed contract, vendor identity, amendments, actual delivery call-offs; investigate independent 32616355390 same buyer large 2026 component framework for project identity and potential overlap, without doubling."
+    }
+  ],
+  "original_source_case_additions": 0,
+  "original_source_bidder_names_new": 2,
+  "full_market_census_complete": false
+}
