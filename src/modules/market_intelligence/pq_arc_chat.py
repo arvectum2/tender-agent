@@ -31,10 +31,11 @@ def next_packet(*, queue_dir: Path, max_chars: int = MAX_DISPLAY_CHARS) -> dict:
             continue
         docs = []
         remaining = max_chars
-        for document in packet["documents"]:
+        for index, document in enumerate(packet["documents"]):
             if remaining <= 0:
                 break
-            snippet = document["text"][:remaining]
+            fair_share = max(1, remaining // (len(packet["documents"]) - index))
+            snippet = document["text"][:fair_share]
             remaining -= len(snippet)
             docs.append({
                 "filename": document["filename"],
