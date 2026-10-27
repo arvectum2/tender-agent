@@ -317,3 +317,53 @@ verified_eis_223_public_discovery_20261028_final:
   last_test_results: "38 focused tests passed, 1 external Starlette deprecation warning; 32/32 223 source attempted, 30 original case folders downloaded, 217 distinct canonical source files processed, 3 quote-bound commission outcomes."
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   resume_instruction: "Inspect latest GitHub main & ARC isolated worktree and status, recover queued original documents for non-11-digit commercial and 44-FZ v29 leads, avoid rerunning 32 completed official EIS searches until 12h retry, correlate commission selections with legitimate supplier/contract source, and publish source-verified deduplicated study. Preserve single existing hourly Watchdog and unrelated .agent/current-task.yaml; update checkpoint after every milestone."
+
+watchdog_public223_manifest_integrity_20261028_0136:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  implementation_branch: fix/mi-public223-badzip-20261028
+  verified_base_commit: 4f175d48
+  change: >-
+    Refuse silent partial replacement of the public EIS 223-FZ SHA-bound ZIP
+    manifest when case/archive limits are exceeded; keep bounded 60-case /
+    120-archive coverage sufficient for the current 32-case original corpus.
+  observed_regression: >-
+    At the previous hardcoded 30-case limit, a full replay fell from
+    124 to 113 staged ZIP members and from 228 to 217 canonical SHA files,
+    despite 32 acquired cases. No signed-outcome inference was involved.
+  verified_recovery: >-
+    Offline unified recovery on Mac mini after the fix: 32 public-page
+    cases, 33 archives checked, 135 member records, 124 staged ZIP members,
+    228 distinct canonical source SHA files, Data Platform cursor 228/228
+    complete, 0 ingestion errors; 4 per-archive failures safely isolated.
+  corpus_coverage: >-
+    100 real v20 research leads, 48 with local documents and 28 with
+    reviewed packets at the observed checkpoint. 32 unique 11-digit
+    public EIS 223 identifiers attempted; 2 had no downloadable files.
+  source_reviews: >-
+    This ChatGPT/ARC invocation accepted 17 additional exact-quote and
+    SHA-bound reviews. No award protocol was promoted to a signed contract;
+    one scanned PDF packet remains unreadable pending visual verification.
+  tests: >-
+    15 focused tests passed (public EIS ZIP expansion/acquisition and
+    unified recovery cycle), Ruff clean, git diff --check clean.
+    One upstream StarletteDeprecationWarning.
+  ci_gate: >-
+    Existing main/PR #517 quality baseline fails the separate
+    test_tdp_architecture_audit because pq_dp_ingest.py imports
+    arvectum_data.documents.ingest directly. No architectural audit
+    bypass or automatic merge is authorized by this MI fix.
+  remaining:
+    - Verify the PR against current exact-head CI and preserve REVIEW if baseline architecture gate remains red.
+    - Recover original signed-contract supplier proof and exact contract amounts; 3 contract-register XML values do not establish signed supplier.
+    - Cover 44-FZ and commercial ETP original sources among the non-11-digit research leads.
+    - Reattempt 2 no-files public EIS cases only after the bounded retry interval; do not repeat the 32-case first pass.
+    - Visually verify OCR-provisional 32616280467 and publish only source-audited deduplicated 2024-2026 findings.
+  resume_instruction: >-
+    Check latest main and PR for this manifest-integrity fix; run focused
+    tests and exact-head CI, fail closed on existing TDP architecture
+    audit. Inspect source attempt journal and 228/228 canonical SHA cursor;
+    do not repeat completed 32-case public EIS first pass. Resume native
+    commercial ETP and 44-FZ source acquisition, verified signed-contract
+    outcomes and unreadable OCR packet; update this task-specific checkpoint
+    without modifying unrelated .agent/current-task.yaml.
