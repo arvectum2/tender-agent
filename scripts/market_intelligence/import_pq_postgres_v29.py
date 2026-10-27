@@ -215,11 +215,11 @@ SELECT jsonb_build_object(
 )::text;
 COMMIT;"""
     out = json.loads(query(sql))
-    if out != {
-        "original_match": 71, "other_owned": 0,
-        "foreign_record": 0, "staged_existing": 71,
-    }:
+    if (out["original_match"] != 71 or out["other_owned"] != 0
+            or out["foreign_record"] != 0
+            or out["staged_existing"] not in (71, 101)):
         raise RuntimeError(f"unsafe SQL preflight: {out}")
+    out["new_missing"] = len(rows) - out["staged_existing"]
     return out
 
 
@@ -239,9 +239,9 @@ BEGIN
  (SELECT owner FROM dp_collections WHERE collection_id='{COLLECTION}')<>'tender-agent' THEN
    RAISE EXCEPTION 'wrong target tenant';
  END IF;
- IF (SELECT count(*) FROM dp_resources WHERE collection_id='{COLLECTION}')<>71 OR
+ IF (SELECT count(*) FROM dp_resources WHERE collection_id='{COLLECTION}')<>{other_before['resources']} OR
     (SELECT count(*) FROM dp_records WHERE resource_id IN
-    (SELECT resource_id FROM dp_resources WHERE collection_id='{COLLECTION}'))<>71 THEN
+    (SELECT resource_id FROM dp_resources WHERE collection_id='{COLLECTION}'))<>{other_before['records']} THEN
     RAISE EXCEPTION 'unexpected changed initial PQ count';
  END IF;
 END $guard$;
@@ -256,7 +256,7 @@ BEGIN
    RAISE EXCEPTION 'staged ids/count invalid';
  END IF;
  IF (SELECT count(*) FROM mi013_stage a JOIN dp_resources r ON r.resource_id=a.item->>'resource_id'
-     WHERE r.collection_id='{COLLECTION}' AND r.source_type='{SOURCE}' AND r.canonical_uri=a.item->>'canonical_uri')<>71 THEN
+     WHERE r.collection_id='{COLLECTION}' AND r.source_type='{SOURCE}' AND r.canonical_uri=a.item->>'canonical_uri')<>{other_before['resources']} THEN
    RAISE EXCEPTION 'old 71 identity mismatch';
  END IF;
  IF EXISTS(SELECT 1 FROM mi013_stage a JOIN dp_resources r ON r.resource_id=a.item->>'resource_id'
@@ -370,7 +370,8 @@ def main() -> int:
     }
     if args.check_db or args.apply:
         report["db_before"] = snapshot()
-        if report["db_before"]["resources"] != 71 or report["db_before"]["records"] != 71:
+        if (report["db_before"]["resources"] not in (71, 101)
+                or report["db_before"]["records"] != report["db_before"]["resources"]):
             raise RuntimeError("refuse unexpected DB state")
         report["sql_stage"] = stage_db_check(rows)
     print(json.dumps(report,ensure_ascii=False,sort_keys=True),flush=True)
