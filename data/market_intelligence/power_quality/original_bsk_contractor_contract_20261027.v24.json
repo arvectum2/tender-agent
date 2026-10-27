@@ -1,0 +1,141 @@
+{
+  "schema_version": "pq-original-protocol-and-registered-contract-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v24",
+  "parent_manifest": "verified_public_leads_20261027.v23.manifest.json",
+  "new_procedures": 0,
+  "existing_records_enriched": 1,
+  "patches": [
+    {
+      "canonical_id": "223fz:32514476448:lot1",
+      "procedure_id": "32514476448",
+      "customer": "ООО «Башкирские распределительные электрические сети»",
+      "customer_inn": "0277071467",
+      "project": "Реконструкция ПС 35/10 кВ Уфимка, БСК 10 кВ 2×0,9 Мвар",
+      "equipment_voltage_kv": 10,
+      "requested_bsk_count": 2,
+      "total_mvar": 1.8,
+      "buyer_initial_max_price_ex_vat_rub": "3176527.55",
+      "original_protocol_number": "2025.ЗК-000531/03",
+      "original_protocol_date": "2025-03-06",
+      "tender_admitted_count": 1,
+      "competition_legally_valid": false,
+      "competition_status": "failed_one_bid_commission_selected_single_conforming_bidder",
+      "original_protocol_selected_company": "ООО «Уральская электроинженерная компания ТЭЛПРО»",
+      "original_protocol_selected_company_inn": null,
+      "externally_correlated_company_name": "ООО «ТЭЛПРО-УРАЛ»",
+      "externally_correlated_company_inn": "6670226212",
+      "external_registry_reconciliation_method": "Full legal name in original commission PDF matches live SRO record and own Rostekhnadzor certificate; INN is from external source, NOT original commission PDF.",
+      "original_protocol_final_offer_ex_vat_rub": "2922405.35",
+      "original_EIS_machine_protocol_bid_inc_vat_rub": "3506886.42",
+      "vat_basis_conflict_note": "Official machine HTML lists 3506886.42 RUB including VAT, equal to 2922405.35×1.20, while original commission PDF gives 2922405.35 excluding VAT; these are the same bid on different bases, NOT two offers. The public RD223 card reports 2922405.35 without explicit VAT basis: do not infer contract tax treatment.",
+      "original_registry_verified": true,
+      "registered_contract_number": "50277071467250001900000",
+      "registered_customer_contract_number": "РЭС-1.16.7/Д-01408",
+      "registered_date": "2025-03-26",
+      "registered_total_price_rub": "2922405.35",
+      "original_registry_status": "Исполнение завершено",
+      "registered_execution_period": "2025-06-02—2025-12-30",
+      "original_registry_supplier_legal_identity_displayed": false,
+      "original_registry_supplier_inn": null,
+      "contract_supplier_identity_from_primary_registry_verified": false,
+      "original_registry_paid_amount_verified": false,
+      "equipment_only_supply_rub": null,
+      "manufacturer_of_bsk_verified": false,
+      "market_role": "EPC_contractor_selected_in_protocol; NOT verified BSK manufacturer",
+      "warranty_months": 36,
+      "payment_terms": "within seven working days of approved KS2/KS3 and invoices",
+      "evidence": [
+        {
+          "tier": "original_EIS_final_commission_PDF_text_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=100970521",
+          "sha256": "6aad26d79ae29136cca5214b44f2aae9fdd4fe45dd0cd3f8ab2fe0e74d524554",
+          "bytes": 179843,
+          "locator": "Original 2+ page commission protocol 06.03.2025, names TELPRO, one conforming offer, final amount 2922405.35 ex VAT, payment/warranty"
+        },
+        {
+          "tier": "original_EIS_machine_final_protocol_HTML_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=100970523",
+          "sha256": "973bad52e54604c62f353c391c9cd42723d663f39e76997d3eb8a9cff751014d",
+          "bytes": 16101,
+          "locator": "HTML protocol identifies 1 application #590316, initial price 3176527.55, 3506886.42 incl VAT in application (same 2922405.35 ×1.20)"
+        },
+        {
+          "tier": "original_EIS_public_registered_contract_HTML_sha256_verified",
+          "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467250001900000",
+          "sha256": "8162f01dee6578dfa1255724dfa2ed93428d937df8b8ffb70d7d108c831ba05b",
+          "bytes": 136186,
+          "locator": "EIS public contract card: contract РЭС-1.16.7/Д-01408, 26.03.2025, 2922405.35 RUB, status Исполнение завершено, links notice 32514476448, no supplier in public card"
+        },
+        {
+          "tier": "external_independent_company_registry_correlations_SRO",
+          "url": "https://www.sro-mri.ru/reestr/v/2841",
+          "locator": "Full legal ООО Уральская электроинженерная компания ТЭЛПРО and INN6670226212; register identity external to original EIS PDF"
+        },
+        {
+          "tier": "original_legal_entity_own_source_license_copy",
+          "url": "https://telpro-ural.ru/upload/iblock/c28/tnwhulyfc8qnt3i8rfbb7eupspzjrau8.pdf",
+          "locator": "Rostekhnadzor laboratory certificate includes full TELPRO-URAL entity and INN6670226212"
+        }
+      ],
+      "interpretation": "Original EIS PDF identifies EPC bidder; original public contract confirms signed total and completed execution, but registered vendor identity is hidden and 10kV BSK equipment-only price/OEM not proven. Avoid counting 2922405.35 as 10kV capacitor bank sale."
+    }
+  ],
+  "secondary_research_existing_case_notes": [
+    {
+      "canonical_id": "commercial:ГП630876:lot1",
+      "source_tier": "secondary_platform_reproduction_only",
+      "link": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+      "parts_reported": [
+        {
+          "item": "three-phase internal switching reactor for stage 450 kvar",
+          "qty": 3
+        },
+        {
+          "item": "three-phase vacuum contactor 400A 10.5kV 220VAC",
+          "qty": 3
+        },
+        {
+          "item": "three-phase capacitor KЭПЗ-10.5-150-3У2",
+          "qty": 1
+        },
+        {
+          "item": "three-phase reactor for stage 150kvar",
+          "qty": 1
+        },
+        {
+          "item": "three-phase reactor for stage 300kvar",
+          "qty": 4
+        }
+      ],
+      "note": "Existing installed 10kV UKRM retrofit; reported list not original XLSX; without a one-line diagram do not sum stage rated power as retrofit Mvar. No winner/price confirmed."
+    },
+    {
+      "demand_group": "MGOK-MGBZH-UK1-UK2",
+      "ids": [
+        "4561228",
+        "4565274",
+        "4538400"
+      ],
+      "source_tier": "mutual_independent_secondary_listings",
+      "evidence": [
+        "https://zakupki.kontur.ru/4561228_4",
+        "https://synapsenet.ru/zakupki/b2b/4565274--kurskaya-obl-zakupka-kondensatornoj-ustanovki-10-kv-aukrm-uk1-uk2-dlya"
+      ],
+      "interpretation": "Same 2 physical UK1/UK2 positions in secondary listings; 4565274 explicitly replacement of 4538400. Counting three announcements as 6 sold installations is unsupported."
+    },
+    {
+      "demand_group": "MGOK-MGBZH-UK3-UK4",
+      "ids": [
+        "4561243"
+      ],
+      "source_tier": "secondary_independent_listings",
+      "evidence": [
+        "https://zakupki.kontur.ru/4561243_4",
+        "https://synapsenet.ru/zakupki/b2b/4561243--kurskaya-obl-zakupka-kondensatornih-ustanovok-10-kv-aukrm-uk3-uk4-dlya"
+      ],
+      "interpretation": "Separate two item designations UK3/UK4; distinct from UK1/UK2 demand, but supply contract/winner unknown."
+    }
+  ],
+  "market_census_complete": false
+}
