@@ -265,3 +265,27 @@ public_223_primary_recovery_20261028:
   last_test_results: "29 passed, 1 warning; 26 downloads in 4 notices; 30 unique ZIP children; 27 native Data Platform extractions; 2 deliberate 2023 ZIP safety refusals."
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   resume_instruction: "Inspect actual HEAD, checkpoint and primary-source receipts. Continue bounded pq_public_223_acquire from public223-attempts.json on uncovered 2024-2026 cases, then rerun safe ZIP expansion/canonical extraction, Data Platform ingest and source-quoted ChatGPT reviews. Do not repeat completed SHA-bound batches. Inspect ETP-specific official original documents and 44-FZ contracts, update this checkpoint, preserve hourly Tender Agent Watchdog and unrelated current-task.yaml."
+
+public_223_incremental_direct_v2_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Recover and classify source-grounded PQ tender evidence while keeping supplier, award and paid price unknown until independently proven"
+  definition_of_done: "Verified source bytes, source coverage, original lot/contract outcomes and final 2024-2026 report with tests"
+  completed:
+    - "Added SHA-keyed incremental Data Platform resume; new source files don't reprocess already ingested exact byte digests."
+    - "Added receipt-verified direct PDF/DOC/DOCX files to canonical source corpus, alongside original safe ZIP members."
+    - "12 official 223 notice cards downloaded and checked, 107 distinct canonical SHA files, all 107 ingested or marked empty; 2 guarded 2023 STATCOM ZIPs over member budget left unexpanded."
+    - "Reviewed source-bound newly found PQ cases: 32616497692 mixed EPC 10kV UKRM; 32616103025 reissued 26-004167 design no bids; 32616433248 mixed 35kV UKRM EPC, one-bid failed tender, commission proposal only; 32615852898 design PAR/N voltage regulator with reactive compensation."
+    - "Excluded new PQ sales inference from 32616412267 (pump commissioning with installed УКРМ-6,3-900), review classified uncertain rather than equipment supply."
+    - "Recovered two distinct equipment-only supply notices: 32515582393 one capacitor bank УКРМ Bashkirenergo, source initial 4,900,000 RUB ex VAT; 32616296475 automated compensation device for Vodokanal at 6 kV Meleuz treatment plant."
+    - "17 targeted tests passed on latest direct+incremental modules; 2 direct staging tests and journal safety checks; source review quote hashes validated."
+  current_step: "Expand remaining 223-FZ official source cases, primary ETP supplier/protocol evidence and outcome-price separation."
+  remaining:
+    - "21 of 33 numeric valid EIS lead IDs not yet downloaded via public-page fallback (some may be unavailable); source discovery searches exist for all 33."
+    - "Many commercial/ETP 68 nonstandard leads without verified native original protocols; build adapters and record honest gaps."
+    - "Improve source revision selection and safety handling for older >100-member ZIP (no safety bypass)."
+    - "Original proof of supplier, execution and signed contract still unavailable for three local 223 contract register entries."
+    - "Complete 44-FZ contract original XML matching, validate OCR, dedup reissues and issue source-backed 2024-2026 report."
+  last_verified_commit: "9df3f1e1308505a0d4c4f3d6d99f1bebdb7b3647"
+  last_test_results: "17 targeted passed after direct stage; 107 canonical SHA files across 12 cases processed by Data Platform in runtime; checkpointed resumes succeeded; 3 source-contract register prices confirmed and 0 signed supplier identities proven."
+  resume_instruction: "Check main and isolated worktree, then continue pq_public_223_acquire bounded batches against evidence-gaps-cycle.json using public223-attempts journal. Re-run pq_recovery_cycle offline with public223-source for incremental extraction, inspect and source-review new packets. Extend commercial original ETP sources, signed contract/lot reconciliation and final audit. Update checkpoint after each milestone, keep single Tender Agent Watchdog."
