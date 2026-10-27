@@ -1,0 +1,173 @@
+{
+  "schema_version": "pq-original-protocol-boq-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v25",
+  "base_manifest": "verified_public_leads_20261027.v24.manifest.json",
+  "original_case_enriched": 1,
+  "new_procedures_in_canonical_corpus": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32615966040:lot1",
+      "procedure_number": "32615966040",
+      "platform_id": "RAD260020676",
+      "buyer": "ПАО «Россети Московский регион»",
+      "project": "Модернизация ПС 110кВ №655 Никитская, ячейки №16 и №22 2-й секции КРУ-10кВ, включая работы по компенсации реактивной мощности",
+      "original_admission_protocol": "МВС-56/26",
+      "original_admission_meeting": "2026-05-12",
+      "original_admission_protocol_signing": "2026-05-15",
+      "original_final_protocol": "МВС-61/26",
+      "original_final_meeting": "2026-05-19",
+      "original_final_protocol_signing": "2026-05-21",
+      "allowed_bids": 1,
+      "rejected_bids": 0,
+      "sole_application_number": "490997",
+      "original_protocol_named_bidder": "ООО «ЭНЕРГОСЕТЬ»",
+      "original_protocol_bidder_address": "119435, г. Москва, ул. Малая Пироговская, д.18, стр.1, помещение XI, комн.19",
+      "original_protocol_bidder_inn": null,
+      "independently_verified_company_inn": "5001061220",
+      "independently_verified_company_ogrn": "1075001001580",
+      "independently_verified_holding": "ООО «Эв-Групп»",
+      "selected_bidder_role": "integrated_EPC_contractor_selected_by_commission_not_verified_PQ_equipment_manufacturer",
+      "initial_nmck_in_admission_protocol_incl_vat_rub": "5564090.57",
+      "revised_nmck_in_final_protocol_incl_vat_rub": "5273763.77",
+      "final_commission_total_offer_incl_vat_rub": "5273763.77",
+      "applicable_final_vat_rate_percent": 22,
+      "budget_change_not_competition_discount": true,
+      "budget_change_note": "Commission admission 12.05.2026 text uses 5,564,090.57 RUB VAT22 and expiry 30.01.2027; final 19.05.2026 uses 5,273,763.77 RUB and deadline 30.12.2026; do not interpret 290,326.80 difference as competitive price drop or a second contract.",
+      "final_commission_decision": "failed competitive procedure because one valid bid; decision to contract with ООО ЭНЕРГОСЕТЬ",
+      "original_signed_registry_contract_verified": false,
+      "registered_contract_number": null,
+      "actual_signed_price_rub": null,
+      "secondary_reported_contract_signed_on": "2026-06-03",
+      "secondary_reported_signed_total_rub": "5273764",
+      "signed_contract_supplier_primary_verified": false,
+      "original_BOQ_disaggregated": {
+        "document": "РВ (утв.) Никитская.pdf",
+        "origin": "original EIS RAR subdocument author-signed and screenshot visually inspected",
+        "title": "Разделительная ведомость по оборудованию и МТР, поставляемых Подрядчиком",
+        "documented_budget_basis": "без учета НДС 20% in pre-tender BOQ, not the final EPC total",
+        "equipment_and_materials_ex_vat_rub": "2948531.63",
+        "equipment_items_ex_vat_rub": "2888306.62",
+        "material_items_ex_vat_rub": "60225.01",
+        "list_electrical_equipment": [
+          {
+            "item": "Однофазный трансформатор тока 10 кВ",
+            "quantity": 6,
+            "cost_ex_vat_rub": "538537.80"
+          },
+          {
+            "item": "Трансформатор тока нулевой последовательности",
+            "quantity": 4,
+            "cost_ex_vat_rub": "98000.00"
+          },
+          {
+            "item": "Выкатной элемент с вакуумным выключателем 10 кВ 1000 А",
+            "quantity": 2,
+            "cost_ex_vat_rub": "2053768.82"
+          },
+          {
+            "item": "Трёхфазный счётчик активной и реактивной энергии",
+            "quantity": 2,
+            "cost_ex_vat_rub": "198000.00"
+          }
+        ],
+        "standalone_ukrm_statcom_bsk_hardware_explicit_in_this_BOQ": false,
+        "classification": "No direct separable PQ compensation equipment line in source-verified four-item equipment list. Project title claims reactive compensation works; exact solution and tangible device cost remain to be proven from full technical/electrical diagrams, NOT from title."
+      },
+      "original_explanatory_note": {
+        "file": "Пояснительная записка.pdf",
+        "remark": "All listed equipment and contractor-supplied inventory included in contract; calculation excludes own site management/construction supervision, design/author supervision; adds 3% transportation, 1.2/2% handling and 1.5% contingency. Image-only original PDF reviewed visually.",
+        "price_scope": "construction-installation + commissioning + materials + equipment and design components; not a pure PQ hardware sale"
+      },
+      "original_evidence": [
+        {
+          "tier": "official_EIS_archive_sha256_original",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110931276",
+          "sha256": "86a6d2605f575465feebfb5cb84eae1d90f7f4ed56bd178588061dc200273744",
+          "bytes": 2896411,
+          "locator": "Final protocol №МВС-61/26 RAR with DOCX and PDF"
+        },
+        {
+          "tier": "official_EIS_inner_final_DOCX_sha256",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110931276",
+          "sha256": "c4259db4db81d2d0af153acf2fc56ac6e3ac354999c84b9248431bb6814338d6",
+          "bytes": 133367,
+          "locator": "Original DOCX names ООО ЭНЕРГОСЕТЬ applicant #490997, 5273763.77RUB VAT22, and 19May single-bid commission decision"
+        },
+        {
+          "tier": "official_EIS_archive_sha256_original",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110758020",
+          "sha256": "92676bcfcd00a25cc3d90b9a5d29ba97ca0a9b6b6cefa5b9a28203a02bf66db7",
+          "bytes": 1637122,
+          "locator": "Admission original RAR"
+        },
+        {
+          "tier": "official_EIS_inner_admission_DOCX_sha256",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110758020",
+          "sha256": "cfd166eadd678712739f160de7184a3acc47d5ea805817609cd7a8d28b8bee73",
+          "bytes": 44450,
+          "locator": "12May signed15May original, first 5564090.57 NMC and admitted named applicant"
+        },
+        {
+          "tier": "official_EIS_original_tender_docs_RAR_sha256",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110412149",
+          "sha256": "0d1b4730cf2ce43237c79ad7175063a528a40e611a6d8c2caa50264e346f42e3",
+          "bytes": 10188225,
+          "locator": "14 RAR entries, technically relevant BOQ original PDF visually inspected"
+        },
+        {
+          "tier": "official_EIS_inner_RV_BOQ_PDF_sha256",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110412149",
+          "sha256": "0d659868ec0aed8b33d6e815d548c892c7ff984dca4803f969db696d409455da",
+          "bytes": 393634,
+          "locator": "Single-page Разделительная ведомость, equipment 2888306.62 and materials 60225.01 exVAT; 4 electrotechnical item rows, no explicit capacitor/reactor/SVG"
+        },
+        {
+          "tier": "official_EIS_inner_explanatory_PDF_sha256",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110412149",
+          "sha256": "f179a69b65ce44241a699cadc2dab086cc738ef659d45befcc4653ce93204218",
+          "bytes": 715812,
+          "locator": "Пояснительная записка к расчету стоимости лота, one-page original scan reviewed visually"
+        },
+        {
+          "tier": "external_independent_legal_identification",
+          "url": "https://companies.rbc.ru/id/1075001001580-ooo-energoset/",
+          "locator": "INN5001061220, OGRN1075001001580 and exact legal address matches original commission document"
+        },
+        {
+          "tier": "company_holding_first_party",
+          "url": "https://ev.group/contacts/",
+          "locator": "ЭнергоСеть is EV Group subsidiary; group role not an OEM attribution"
+        }
+      ],
+      "evidence_interpretation": "Original commission names EPC; original equipment list has no discrete PQ compensation device despite project title. The secondary signed contract price 5273764 is rounded from offer 5273763.77; this must NOT count as primary verified signed contract or PQ hardware. VAT bases differ across original pre-tender BOQ and revised 2026 NMC."
+    }
+  ],
+  "linked_not_counted_procurement_notices": [
+    {
+      "procedure_number": "ГП628666",
+      "consumer": "ООО «НОВАТЭК-УСТЬ-ЛУГА»",
+      "published": "2026-04-12",
+      "original_data_level": "secondary_energybase_procurement_listing",
+      "status": "cancelled",
+      "subject": "Модернизация существующей УКРМ 10кВ",
+      "followup_procedure": "ГП630876",
+      "followup_published": "2026-06-22",
+      "relationship": "Probable re-tender of substantially same 10kV UKRM refurbishment. Item-document names overlap, but no primary ETP archive proving identical technical scope. Exclude cancelled previous notice from additional physical demand count.",
+      "evidence": [
+        {
+          "url": "https://energybase.ru/tender/019d85e1-073d-7222-8421-390b2fbaae67",
+          "source_tier": "secondary_commercial_index",
+          "locator": "ГП628666 12.04.2026 cancelled, customer NOVATEK, UKRM 10kV, document 3.Заводская документация and 4.Модернизация УКРМ"
+        },
+        {
+          "url": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+          "source_tier": "secondary_commercial_index",
+          "locator": "ГП630876 22.06.2026 same buyer and theme, 10kV UKRM retrofit; winner and price unknown"
+        }
+      ]
+    }
+  ],
+  "new_verified_signed_contracts": 0,
+  "new_verified_standalone_PQ_equipment_prices": 0
+}
