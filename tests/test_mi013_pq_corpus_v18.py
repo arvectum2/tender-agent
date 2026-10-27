@@ -48,3 +48,33 @@ def test_total_years_and_initial_prices_unchanged():
         years[y]=years.get(y,0)+1
     assert years=={"2023":3,"2024":17,"2025":23,"2026":55,"unda":3}
     assert all(x["source_identifier_masked"] is True for x in rows[-1:])
+
+
+def test_v18_independent_quality_audit_matches_actual_materialized_101():
+    from collections import Counter
+    root=Path(__file__).resolve().parents[1]
+    snap=json.loads(
+        (root/"data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v18.json").read_text(encoding="utf-8")
+    )
+    records=corpus(18)["records"]
+    assert len(records)==snap["total_unique_canonical_research_cards"]==101
+    assert dict(Counter(x["procurement_regime"] for x in records))==snap["procurement_regime_record_labels"]
+    assert dict(Counter(x["scope"] for x in records))==snap["scope_counts"]
+    assert dict(Counter(x["family"] for x in records))==snap["family_counts"]
+    assert sum(x.get("nmck_rub") is not None for x in records)==snap["records_with_nmc_not_null"]
+    assert sum(
+        isinstance(x.get("equipment_voltage_kv"), (int,float))
+        and 6<=x["equipment_voltage_kv"]<=35
+        for x in records
+    )==snap["records_with_individual_scalar_equipment_voltage_confirmed_6_to_35kv"]
+    assert sum(
+        bool((x.get("registry_contract") or {}).get("signed_contract_registry_verified"))
+        for x in records
+    )==snap["records_with_primary_Rd223_contract_sum_verified"]
+    assert sum(
+        x.get("reported_contract_total_rub") is not None
+        and not (x.get("registry_contract") or {}).get("signed_contract_registry_verified")
+        for x in records
+    )==snap["records_with_secondary_contract_price_and_no_primary"]
+    assert snap["production"]["last_independently_verified_rows"]==71
+    assert snap["production"]["pending_research_rows"]==30
