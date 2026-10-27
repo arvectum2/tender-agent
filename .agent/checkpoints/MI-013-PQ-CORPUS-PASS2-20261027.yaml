@@ -11,6 +11,15 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass15 2026-10-27 corrected two old v19 tests for missing optional supplier/contract fields and verified v19 source retraction in all MI013 local checks.
+  - Pass15 live source review 32514476448 Ufimka EIS, 32616354211 Tyazhinskaya EIS, 106044-TT, RN41205245; aggregators hide actual suppliers for two outstanding contract cases, so no invented winner.
+  - Pass15 linked original primary 2026 EIS protocols with recorded SHA in official_case_dossiers_20261026.v1.json to a five-case roles matrix. Named sole EPC bidder ООО СТРОЙЭНЕРГОИМПОРТ INN7801564611 in 32616433248 original and public independent page; named sole EPC bidder ООО ТЕХНОПРОМ in 32615614821; supplier manufacturer role remains unverified.
+  - Pass15 preserved RD223-original 17m complete EPC 32616120582, 1.8333583m works 32615614821, and 2.63902664m maintenance 32616412267 as distinct signed sums, not device-only sales.
+  - Pass15 detected original official bid 2590000 on Angarsk Vodokanal 32616412267 differs from registered RD223 contracted 2639026.64; no invented explanation for discrepancy.
+  - Pass15 original Pionerskaya 32615969197 zero bids, repeat 32616103025 zero bids; explicit non-award status protected against procurement count as contract.
+  - Pass15 created original_protocol_participant_enrichment_20261027.v20.json, verified_public_leads_20261027.v20.manifest.json, materialize_pq_research_v20.py and five regression tests.
+  - Pass15 published docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v20.md (59KB) with authoritative 100 ACTIVE source cases and full 101-discovery v18 historical audit trail identifying corrected Mogocha duplicate.
+  - Pass15 Mac mini isolated worktree e7479f66: full MI013 suite 107 passed, 1 third-party Starlette deprecation warning. Data Platform production 71 previously verified records, 29 research only. No production SQL writes in Pass15.
   - Pass14 extended audit: created evidence_quality_snapshot_20261027.v18.json from full 101-record materialization, reconciled regimes 40 223-fz/61 commercial, NMC 36, exactly 12 numeric 6–35 kV equipment voltage fields, 4 primary RD223 contract prices, 7 secondary reported contract prices, 1 reported noncontract final price.
   - Pass14 added regression test against independent scope/family/source-grade denominator and appended section 13 quality caveats to 52KB v18 report; avoids converting source-wide labels into a spurious market TAM.
   - Pass14 MAC MINI separate worktree refreshed to 290afb1afcdc07bee124632bda2a86076fa28d87; full pytest tests/test_mi013_pq_*.py 97 passed, one external StarletteDeprecationWarning; no SQL/database writes.
@@ -95,7 +104,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass14 complete 2026-10-27: 101 source-linked PQ and adjacent market research observations for 2023-10-27..2026-10-27, 36 initial-price records, 4 independently original RD223 contract amounts, 7 secondary reported contract amounts, 1 secondary final price not registered contract. Of all 101, only 12 have scalar equipment voltage 6-35kV in normalized record: others may have text/unknown voltage; do not use all as FGI medium-voltage TAM. Year by publication 2023=3, 2024=17, 2025=23, 2026=55, undated=3. Original production Data Platform import remains 71 rows, 30 v13-v18 new records GitHub-only. Complete 52KB report v18 and quality snapshot committed. Mac mini isolated worktree all 97 MI013 tests passed (1 third-party warning). National census, 44-FZ/ETP history and contract/winner verification not complete; status in_progress.'
+current: 'Pass15 MI013: v19 one unverified Mogocha April2024 source retracted; current v20 100 active source-linked opportunities 2023-10-27..2026-10-27 with year cohorts 2023=3 2024=16 2025=23 2026=55 undated=3; 36 NMC, four original RD223 contract amounts, 12 individual numeric rated 6–35kV, five original-protocol role dossiers. Two named EPC participants (STROYENERGOIMPORT INN7801564611, TECHNOPROM INN not verified) are not proven signed original registered equipment supplier/OEM. Angarsk Vodokanal first bid 2.59m vs registry 2.63902664m; not silently reconciled. Production Data Platform remains 71 rows verified, 29 GitHub-only new records not imported. Latest full Mac mini pytest 107 passed at commit e7479f66. v20 59KB report, v20 evidence and manifests in research branch; all-Russia census and most original award/supplier records still incomplete.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -107,8 +116,11 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: 290afb1afcdc07bee124632bda2a86076fa28d87
+last_verified_commit: e7479f66721d85cfd7f9e6f1b45737a3146abd40
 test_results:
+  - Pass15 Mac mini isolated worktree e7479f66 exact-head: 107 MI013 tests passed, 1 StarletteDeprecationWarning.
+  - Pass15 v19 100 active records with unsupported 2024 Mogocha pseudo-duplicate physically excluded by materializer; v20 100 stable identities with 5 original protocol role enrichments, zero new notices.
+  - Pass15 no production SQL writes; previously verified Data Platform 71 sources and 71 dp_records unchanged, 29 GitHub-only pending.
   - Pass14 latest independent v18 snapshot regression and complete MAC MINI MI013 suite at exact-head 290afb1a: 97 passed, 1 third-party StarletteDeprecationWarning.
   - v18 quality denominators reconciled from source: 101 total; 40 labelled 223-fz, 61 commercial; 36 NMC; 12 scalar equipment_voltage_kv 6–35; 4 original RD223 contract amounts, 7 secondary contract amounts, one secondary final price without contract.
   - Pass14 Mac mini worktree HEAD 3bd509e9: all tests/test_mi013_pq_*.py 96 passed, one third-party StarletteDeprecationWarning; source chain 71 +8 +3 +2 +3 +12 +2 = 101 records verified.
@@ -148,11 +160,11 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Resume from docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v18.md and data/market_intelligence/power_quality/verified_public_leads_20261027.v18.manifest.json. 101 unique observation IDs, 36 NMC, 4 original RD223 contracts, 12 scalar rated 6-35kV devices, 30 new GitHub-only vs 71 imported production records. All 97 MI013 tests passed on 2026-10-27 Mac mini isolated worktree at commit 290afb1a. Continue source-first retrieval of original 2023–2024 EIS 223/44-FZ and commercial ETP tender attachments, winner protocols and named suppliers. Prioritize Rosneft Kharampur surveys and Samara GRES 2024 original tender ID/registered contract, 2024 Mogocha STATCOM service, Toboлск 2025 reactor, Argos B2B 4559984 original technical 6.3kV specification. Dedup buyer demand groups and cancelled 452m EIS 32616400421 vs 32616435269. Current Data Platform v12 71 records verified imported—do not rerun importer; new 30 research records require separate reviewed authorization. Do not claim market TAM/completeness; preserve parent current-task.yaml.
+resume_instruction: Read v20 source-of-truth docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v20.md and data/market_intelligence/power_quality/verified_public_leads_20261027.v20.manifest.json; current 100 ACTIVE distinct lot/opportunity index observations (historical v18 had 101 but 2024 Mogocha false duplicate retracted). Read new original_protocol_participant_enrichment_20261027.v20.json for five protocol role dossiers and original verified SHA evidence. Last Mac mini MI013 suite 107 passed; continue source-bound full historical EIS 44/223-FZ and commercial ETP extracts 2023-10-27..2026-10-27. Find actual original supplier/INN in 32514476448 Ufimka signed 2922405.35, 32616354211 Tyazhinskaya design 7406851.40 secondary, 2024 Hani/Lopcha EPC and 2024 seven BSK Volgogradenergo; compare 2026 32616433248 EPC single bidder STROYENERGOIMPORT against future signed contract (not yet verified). Never declare named EPC bidder OEM unless original manufacturer documents prove. Distinguish 2590000 selected bid vs 2639026.64 signed RD223 in 32616412267. v12 71 already in production; new 29 GitHub-only not automatically imported. Do not claim full census or robust TAM. Preserve parent current-task.yaml.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v18.manifest.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v20.manifest.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: true
   database_postgresql_import_verified: true
@@ -162,8 +174,9 @@ execution:
   backup_sha256: d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43
 
   quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v18.json
-  research_report: docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v18.md
-  research_stage_rows: 101
+  research_report: docs/research/MI013_POWER_QUALITY_RUSSIA_3Y_REGISTER_20261027.v20.md
+  original_protocol_role_evidence: data/market_intelligence/power_quality/original_protocol_participant_enrichment_20261027.v20.json
+  research_stage_rows: 100
   production_rows_verified: 71
-  pending_import_rows: 30
+  pending_import_rows: 29
   context_dataset: data/market_intelligence/power_quality/market_context_20261027.v3.json
