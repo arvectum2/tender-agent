@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: MI-013-PQ-CORPUS-PASS2-20261027
-status: blocked
+status: in_progress
 goal: Expand traceable Russian Power Quality 6-35 kV procurement corpus, 2024-2026, for FGI go-to-market and reconcile original ЕИС/ЭТП protocols.
 definition_of_done:
   - Enumerate and source-link new procurement notices not in v3.
@@ -11,6 +11,11 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass11, 2026-10-27: owner's renewed explicit instruction led to the same previously approved ARC run_command successfully executing v12 importer (not via alternate channel). Correct Data Platform DB arvectum_data, only new collection arvectum-market-pq-6-35kv touched.
+  - Pass11: independent production backup BEFORE SQL verified 37362424 bytes, SHA256 d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43, filename data-platform-arvectum_data-20261027T125522Z.dump.
+  - Pass11: production SQL transaction COMMIT exit_code=0, created 1 collection / 71 dp_resources / 71 dp_records; original 26 other collections, 2192 other resources and 2192 dp_documents retained.
+  - Pass11: separate verify_pq_postgres_v12.py --expect-import PASSED, proving 71 unique keys, 71 records, zero missing URLs, 2 BESK joint lots and original 10kV MPU/110kV BOM.
+  - Pass11: import receipt committed to data/market_intelligence/power_quality/mi013_production_import_receipt_20261027.json; structured import COMPLETE, embeddings/semantic indexing and original protocol enrichment not completed.
   - Pass10 reviewed official data-platform backup-postgres.sh source, validated exact BACKUP/SHA256/BYTES/MANIFEST output contract, and strengthened importer backup() to compare manifest, separate checksum companion file and streaming actual dump SHA256.
   - Pass10 fixed rerun idempotence: status on existing dp_resources is preserved if reviewed/ready; review_status on existing dp_records is preserved. New rows start staged_unreviewed/unreviewed.
   - Pass10 added read-only postimport verifier for 71 unique IDs/records, BESK joint notice two lots, original MPU 10kV/BSK110 BoQ and evidence URLs; 13 acceptance tests for wrong counts and wrong DB.
@@ -64,7 +69,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass10 importer hardening completed without bypassing remote safety block: v12 shared exporter and live preflight bugs fixed, additional SHA256 manifest/dump backup validation and reviewed-state idempotence in importer; separate read-only verify_pq_postgres_v12.py accepts 71 matched resources/records, 2 BESK lots and 10kV MPU BOM. Mac mini separate worktree updated to a030170f for 72/72 MI013 pytest success; production arvectum_data verified unchanged, 26 other collections, 2192 other resources/docs, MI013 collection/resources/records zero. Actual --apply still BLOCKED by remote safety and NOT rerun.'
+current: 'Pass11: production Data Platform STRUCTURED import COMPLETED and independently verified. 71 resource and 71 structured record rows in new collection arvectum-market-pq-6-35kv, db arvectum_data, backup SHA256 d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43, 37362424 bytes. Other 26 collections, 2192 resources and 2192 documents unchanged. Remaining MI013 research DoD not fully completed: original bid protocols/winners, PQ equipment contract amounts, and native Data Platform document/chunk/vector indexing.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -76,8 +81,11 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: cd07bf2d90ff526e1a51d12de71aebc6adefa92d
+last_verified_commit: 059d6adfbbf93a6c3335f9136627be4478583237
 test_results:
+  - Pass11 production backup verified: 37362424 bytes, SHA256 d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43.
+  - Pass11 PostgreSQL commit exit code 0; dp_collections +1, dp_resources +71, dp_records +71; no schema or other collection changes.
+  - Pass11 postwrite read-only acceptance PASS 71/71, two BESK lots, original MPU BOM, no missing provenance; baseline other 26 collections, 2192 resources and documents unchanged.
   - Pass10 Mac mini worktree a030170f: all 72 MI013 tests passed, one Starlette deprecation warning (unchanged environment).
   - Pass10 read-only verified DB snapshot: database arvectum_data, target PQ collection/resources/records=0; other_collections=26, other_resources=2192, all_documents=2192.
   - Pass10 importer independent verified-backup test and intentional corrupted-backup failure test both passed; review-state on rerun is retained.
@@ -104,13 +112,18 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Check PR #515 CI after commit cd07bf2d and latest code tests: Mac mini 72/72 MI013 tests passed on worktree a030170f, later commits only runbook. Existing live arvectum_data MI013 collection/resources/records zero. Production --apply was blocked by remote execution safety; DO NOT retry via alternate ARC, SSH, cron, GitHub Actions, or any other way around the safety block. For an authorized operator-run local import, review docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md: backup helper must output verifiable SHA256 manifest/dump; run exactly limited collection-scoped 71+71 transaction and read-only verify_pq_postgres_v12.py --expect-import to confirm. User consent does not negate safety block. Continue original procurement research/reconciliation independently. Parent .agent/current-task.yaml remains untouched.
+resume_instruction: Production structured DB import is VERIFIED DONE. DO NOT rerun importer, backup or recreate collection; source-of-truth audit receipt data/market_intelligence/power_quality/mi013_production_import_receipt_20261027.json. Resume MI013 with unverified original tender protocols and 18-item queue primary_evidence_retrieval_queue_20261027.v5.json, particularly signed contracts Ufimka 32514476448 and Tyazhinskaya 32616354211 and amended Rosseti 32616435269 notice. Plan separate Data Platform text/chunk/vector ingestion using its native APIs and verify semantic search when separately authorized; structured 71 records are already present and shouldn't be duplicated. Review GitHub CI and keep PR #515 draft until source research DoD, preserve parent .agent/current-task.yaml.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
   dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v12.manifest.json
   current_task_main_parent_untouched: true
-  database_postgresql_import_executed: false
+  database_postgresql_import_executed: true
+  database_postgresql_import_verified: true
+  database: arvectum_data
+  collection: arvectum-market-pq-6-35kv
+  import_receipt: data/market_intelligence/power_quality/mi013_production_import_receipt_20261027.json
+  backup_sha256: d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43
 
   quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v12.json
   context_dataset: data/market_intelligence/power_quality/market_context_20261027.v3.json
