@@ -30,6 +30,14 @@ def _value(node: ET.Element | None, *path: str) -> str | None:
     return text or None
 
 
+def _decimal(value: str | None) -> str | None:
+    from decimal import Decimal, InvalidOperation
+    try:
+        return str(Decimal(value).normalize()) if value is not None else None
+    except InvalidOperation:
+        return None
+
+
 def scan(root: Path, leads: Path, max_archives: int = 100) -> dict:
     if root.is_symlink() or not root.is_dir() or not 1 <= max_archives <= 500:
         raise ValueError("Invalid contract source scope")
@@ -83,9 +91,27 @@ def scan(root: Path, leads: Path, max_archives: int = 100) -> dict:
                     })
         except (OSError, ValueError, zipfile.BadZipFile, ET.ParseError) as exc:
             problems.append({"archive": str(archive), "reason": type(exc).__name__})
+    # Multiple official XML members can be revisions of one contract.
+    # Preserve all source hashes; never add their prices together.
+    unique: dict[tuple[str, str, str], dict] = {}
+    for row in found:
+        key = (row["procedure_id"], row["contract_register_number"],
+               row["lot_number"])
+        source = {"source_archive_sha256": row["source_archive_sha256"],
+                  "source_xml_sha256": row["source_xml_sha256"],
+                  "source_xml_member": row["source_xml_member"]}
+        if key not in unique:
+            unique[key] = {**row, "source_revisions": [source],
+                           "revision_price_conflict": False}
+        else:
+            previous = unique[key]
+            previous["source_revisions"].append(source)
+            if _decimal(previous["price_text"]) != _decimal(row["price_text"]):
+                previous["revision_price_conflict"] = True
     return {"schema_version": "pq-contract-register-xml-evidence/1",
             "lead_count": len(lead_rows), "archives_inspected": inspected,
-            "records": found, "errors": problems,
+            "records": list(unique.values()), "raw_records": len(found),
+            "distinct_contract_lots": len(unique), "errors": problems,
             "scope": "local_registry_xml_only_not_all_awards"}
 
 
