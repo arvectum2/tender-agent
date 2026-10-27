@@ -160,3 +160,29 @@ continuation_20261027_latest:
   last_verified_commit: "fafb5fcfce4eddaf2c1087abf0572579165c9ab4"
   last_test_results: "4 focused tests passed on Mac mini; PDF extracted with fallback; 0 exact overlaps for 58 cases in 9074 archived notice numbers"
   resume_instruction: "Implement and test idempotent pq_recovery_cycle orchestration per docs/market_intelligence/PQ_RECOVERY_RUNBOOK_20261027.md; use ARC isolated worktree, never modify dirty main checkout; run bounded real case batches and persist receipts."
+
+watchdog_cycle_20261027_2330_msk:
+  status: in_progress
+  branch: agent/ta-mi-pq-recovery-cycle-20261027
+  last_tested_commit: b4c03ac600ab844b679f4bc24eabad532882ff2c
+  tested: "16 focused MI tests PASS on isolated Mac mini worktree, one inherited Starlette deprecation warning"
+  implementation: "pq_recovery_cycle.py: bounded lease, materialized lead inventory, official EIS notice retries, SHA-indexed attachment recovery, original-document queue seeding and ARC next handoff; fail closed on manifest-only v29"
+  real_runtime:
+    source: "v7 58-record materialized subset, NOT all v29 101 active rows"
+    gap_inventory: "58 cases; 9 have local source files; 2 have reviewed packets"
+    official_eis_search: "5 additional exact notice matches this invocation, total 13/13 eligible numeric cases searched and logged in source-attempts.json"
+    indexed_archive_recovery: "0 exact overlap in existing 9074-notice index; 0 downloaded originals"
+    queue: "2 existing reviewed cases, 0 new pending review packets"
+    verified_new_signed_contracts: 0
+    verified_new_winners: 0
+    data_platform_ingest: "not attempted; no newly reviewed original"
+    commercial_etp: "not attempted; no approved live adapter"
+  protections: "No ETP mutation, procurement action, local/API LLM, production ingestion, fabricated prices, or unrelated current-task edit. Lease released."
+  resume_instruction: >-
+    Materialize the complete 101-row v29 MI-013 corpus as source-bound lead records
+    (v29 manifest alone has no records), reconcile with the existing 58-row v7
+    subset without duplicates, and rerun bounded pq_recovery_cycle via ARC.
+    Next implement approved official contract-registry/protocol retrieval and
+    commercial ETP source adapters with per-attempt receipts; acquire original
+    technical specifications, queue newly verified documents for ChatGPT review,
+    and ingest only after SHA/quote/tenant authorization checks.
