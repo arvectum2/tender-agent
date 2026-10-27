@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .pq_arc_chat import next_packet
+from .pq_indexed_recovery import recover_indexed
 from .pq_gap_recovery import inventory
 from .pq_queue_seed import seed
 from .pq_run_lease import acquire, inspect, release
@@ -33,10 +34,15 @@ def _atomic_json(path: Path, data: dict) -> None:
 
 def cycle(*, leads_file: Path, source_roots: list[Path], ontology: Path,
           queue_dir: Path, output_dir: Path, max_cases: int = 8,
-          live_search: bool = False) -> dict:
+          live_search: bool = False, archive_index: Path | None = None,
+          archive_target: Path | None = None) -> dict:
     if not 1 <= max_cases <= 20 or not source_roots:
         raise ValueError("Invalid bounded cycle scope")
-    if any(p.is_symlink() for p in (leads_file, ontology, queue_dir, output_dir, *source_roots)):
+    if (archive_index is None) != (archive_target is None):
+        raise ValueError("Archive index and target must be supplied together")
+    if any(p.is_symlink() for p in (leads_file, ontology, queue_dir, output_dir,
+                                    *source_roots, *([archive_index, archive_target]
+                                                     if archive_index else []))):
         raise ValueError("Symlinked cycle path")
     leads = json.loads(leads_file.read_text(encoding="utf-8"))
     if not isinstance(leads.get("records"), list) or not leads["records"]:
@@ -56,8 +62,16 @@ def cycle(*, leads_file: Path, source_roots: list[Path], ontology: Path,
                                 max_cases=max_cases)
                   if live_search else {"status": "not_attempted",
                                        "reason": "live_search_disabled"})
+        indexed = (recover_indexed(index_path=archive_index, gaps_path=gaps,
+                                   target_root=archive_target,
+                                   journal=output_dir / "indexed-recovery-attempts.json",
+                                   max_cases=max_cases)
+                   if archive_index else {"status": "not_attempted_no_archive_index"})
+        review_roots = [*source_roots]
+        if archive_target and archive_target.is_dir() and archive_target not in review_roots:
+            review_roots.append(archive_target)
         seeded = [seed(sources=root, ontology=ontology, queue_dir=queue_dir,
-                       max_cases=max_cases) for root in source_roots]
+                       max_cases=max_cases) for root in review_roots]
         pending = next_packet(queue_dir=queue_dir, max_chars=6000)
         result = {
             "schema_version": "pq-recovery-cycle/1",
@@ -67,6 +81,7 @@ def cycle(*, leads_file: Path, source_roots: list[Path], ontology: Path,
             "lead_count": inv["lead_count"],
             "inventory": inv,
             "official_notice_search": search,
+            "indexed_original_recovery": indexed,
             "queue_seed": [
                 {"source_root": row["source_root"], "created": row["created"],
                  "existing": row["existing"], "skipped_count": len(row["skipped"]),
@@ -98,11 +113,14 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--max-cases", type=int, default=8)
     parser.add_argument("--live-search", action="store_true")
+    parser.add_argument("--archive-index", type=Path)
+    parser.add_argument("--archive-target", type=Path)
     args = parser.parse_args()
     print(json.dumps(cycle(leads_file=args.leads_file, source_roots=args.source_root,
                            ontology=args.ontology, queue_dir=args.queue_dir,
                            output_dir=args.output_dir, max_cases=args.max_cases,
-                           live_search=args.live_search), ensure_ascii=False))
+                           live_search=args.live_search, archive_index=args.archive_index,
+                           archive_target=args.archive_target), ensure_ascii=False))
 
 
 if __name__ == "__main__":
