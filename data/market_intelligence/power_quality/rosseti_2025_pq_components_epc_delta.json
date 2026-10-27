@@ -55,7 +55,7 @@
       "publication_date": "2025-09-18",
       "deadline_date": "2025-10-06",
       "customer": "ПАО «Федеральная сетевая компания — Россети»",
-      "family": "statcom",
+      "family": "svc",
       "scope": "design",
       "description": "Разработка проектной документации по реконструкции системы компенсации реактивной мощности на ПС 220 кВ Славянская и Афипская; в составе проекта замена 3 СТК.",
       "nmck_rub": "27175270",
@@ -69,7 +69,8 @@
       "registered_contract_verified": false,
       "award_winner_verified": false,
       "official_tz_verified": false,
-      "notes": "Dates: publication and deadline; financial amount is entire procedure NMC, not equipment-only or signed price. Rated voltage of PQ component remains unverified."
+      "notes": "Dates: publication and deadline; financial amount is entire procedure NMC, not equipment-only or signed price. Rated voltage of PQ component remains unverified. СТК — статический тиристорный компенсатор (SVC), не путать со СТАТКОМ (STATCOM на преобразователе напряжения).",
+      "technology_group": "thyristor_controlled_SVC_STK_NOT_IGBT_STATCOM"
     },
     {
       "procedure_id": "32515208744",
@@ -94,5 +95,9 @@
       "notes": "Dates: publication and deadline; financial amount is entire procedure NMC, not equipment-only or signed price. Rated voltage of PQ component remains unverified."
     }
   ],
-  "count": 4
+  "count": 4,
+  "quality_notes": [
+    "According to FSK Rosseti FACTS industry nomenclature СТК/SVC is thyristor-controlled, separate from STATCOM.",
+    "Nominal voltage 220 kV pertains to the substations, not verified compensation device voltage."
+  ]
 }
