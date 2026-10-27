@@ -11,6 +11,8 @@ from .pq_indexed_recovery import recover_indexed
 from .pq_queue_seed import seed
 from .pq_dp_ingest import ingest
 from .pq_verified_stage import stage
+from .pq_verified_zip_expand import expand
+from .pq_zip_dp_resume import run as resume_zip_ingest
 from .pq_etp_card_audit import audit as audit_etp
 
 
@@ -25,14 +27,19 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
     originals = runtime / "recovered-originals"
     roots = [*source_roots, originals]
     staged = None
+    zip_staged = None
     if verified_reestr:
         staged = runtime / 'verified-official-originals'
         staging_result = stage(source_root=verified_reestr, output_root=staged, max_cases=max_cases)
         roots.append(staged)
+        zip_staged = runtime / "verified-zip-members"
+        zip_expansion = expand(source_root=verified_reestr, output_root=zip_staged, max_cases=max_cases)
+        roots.append(zip_staged)
     gaps = runtime / "evidence-gaps-cycle.json"
     report = {"schema_version": "pq-recovery-cycle/1", "network_enabled": network}
     if staged:
         report["verified_originals"] = staging_result
+        report["verified_zip_members"] = zip_expansion
     report["inventory"] = inventory(leads_file=leads, source_roots=roots,
                                     queue_dir=queue, output=gaps)
     if network:
@@ -62,6 +69,8 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
         if originals.is_dir() else {"files_inspected": 0, "status": "no_recovered_originals"})
     if staged:
         report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8, ocr_empty=True)
+    if zip_staged:
+        report["zip_data_platform"] = resume_zip_ingest(source_root=zip_staged, runtime=runtime, dp_source=dp_source, max_files=min(max_cases * 2, 48))
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
