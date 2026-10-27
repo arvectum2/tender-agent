@@ -339,3 +339,15 @@ etp_secondary_recovery_20261028:
   last_test_results: "6 focused tests PASS, Ruff PASS, git diff --check PASS; full CI known blocked by preexisting direct arvectum_data import in pq_dp_ingest.py."
   source_receipts: "data/market_intelligence/power_quality/etp_secondary_candidate_receipts_20261028.json and docs/market_intelligence/PQ_ETP_SECONDARY_SOURCE_20261028.md"
   resume_instruction: "Inspect main, PR #518/#519 exact-head CI and runtime lease. Resume from 100-row v20 evidence-gaps-refresh-20261028.json and etp-native-source-attempts.json without repeating SHA-verified GETs. Prioritize native B2B-Center originals for 4561228/4561243/4565274 and RAD chges24621PR, compare original lot/project/reissue keys, then obtain signed contract and supplier evidence. Keep source-tier secondary and UNKNOWN financial outcomes until first-party proof. Continue other 69 non-11-digit v29 candidates and existing 223 cases only when retries eligible; do not alter unrelated .agent/current-task.yaml or single Watchdog."
+
+etp_source_schema_recovery_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  completed:
+    - "Fixed gap inventory to preserve source URLs from evidence, sources, source_url, source and supporting_source; discovery URLs now present for 100/100 v20 leads, up from 68/100."
+    - "Rebuilt bounded ETP discovery queue from 28 to 38 source-specific candidates; URL coverage is not original evidence or market census."
+    - "Verified exact HTML/SHA for commercial 4559984 6.3kV UKRM component in mixed price-sounding request, and 231994-2 dynamic compensation design-documentation; neither signed equipment contract."
+    - "Recorded corporate UDS TLS failure and recko.ru HTTP403 without insecure TLS fallback or false negative claims."
+  last_verified_commit: "3694f1b900936742537ef3cf5b109470de770964"
+  last_test_results: "7 focused tests PASS, Ruff PASS, diff check PASS; CI architecture audit still fails on preexisting direct Data Platform import."
+  resume_instruction: "Inspect PR #519 exact-head CI and main; retain its DRAFT/REVIEW state while direct Data Platform import audit remains red. Resume from 100-row v20 refreshed inventory and 38-item ETP source queue, with 12-hour per-URL dedup. Prioritize lawful native B2B-Center originals and PhosAgro/RAD ETP source docs for 4559984, 231994-2, 4561228, 4561243, 4565274, chges24621PR; reconcile 4565274 reissue against 4538400 and possible 4561228 overlap. No supplier, signed contract or final price without independent original. Avoid rerunning verified sources; do not overwrite unrelated .agent/current-task.yaml or change single Watchdog."

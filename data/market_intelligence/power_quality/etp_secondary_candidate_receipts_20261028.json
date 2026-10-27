@@ -50,6 +50,40 @@
       "initial_price_rub": null,
       "original_etp_documents_verified": false,
       "project_overlap_status": "unresolved_uk1_uk2_reissue"
+    },
+    {
+      "procedure_id": "4559984",
+      "source_url": "https://synapsenet.ru/zakupki/b2b/4559984--hantimansijskij-ao-zapros-kommercheskih-predlozhenij-na-postavku-mtr",
+      "source_sha256": "ada4603533dc44ef864c7defd498b790b8b16e0e3914878ed5557fe8b2e3e07d",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "Автоматическая установка компенсации реактивной мощности АУКРМ - 6,3 - 1350 - 450 - 12 УХЛ4",
+      "candidate_voltage_kv": 6.3,
+      "candidate_quantity_units": 1,
+      "quantity_status": "secondary_page_only",
+      "scope": "mixed_MTR_market_sounding_with_PQ_component",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "not_established"
+    },
+    {
+      "procedure_id": "231994-2",
+      "source_url": "https://synapsenet.ru/zakupki/fosagro/231994-2--murmanskaya-obl-2319942-dopolnenie-rd-ps352-sistema-dinamicheskoj",
+      "source_sha256": "19645ca3cff5ddf1e517201b9898ba1e47bd4d5e33b44b1e5db332d0c42cd899",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "№ 231994-2 ДОПОЛНЕНИЕ. РД. ПС-352 Система динамической компенсации реактивной мощности",
+      "candidate_voltage_kv": null,
+      "candidate_quantity_units": null,
+      "quantity_status": "unknown",
+      "scope": "design_documentation_not_equipment_supply",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "not_established"
     }
   ]
 }
