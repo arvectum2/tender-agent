@@ -5,7 +5,7 @@
   "delta_rows": 2,
   "records": [
     {
-      "canonical_id": "commercial:4559984:pq-component-auk rm-6p3-1350",
+      "canonical_id": "commercial:4559984:ukrm-6p3-component",
       "procedure_id": "4559984",
       "publication_date": "2026-08-12",
       "date_basis": "original_ETP_cross_checked_secondary",
@@ -25,7 +25,7 @@
       "reported_final_price_rub": null,
       "demand_group": "ARGOS-STROY-PS28-TEVLINSKO-RUSSKINSK-6KV-2026",
       "deadline_date": "2026-08-28",
-      "source_tier": "original_ETP_positions_reprinted_with_independent_secondary_cross_check",
+      "source_tier": "secondary_indices_with_ETP_positions_reproduced",
       "sources": [
         {
           "url": "https://synapsenet.ru/zakupki/b2b/4559984--hantimansijskij-ao-zapros-kommercheskih-predlozhenij-na-postavku-mtr",
