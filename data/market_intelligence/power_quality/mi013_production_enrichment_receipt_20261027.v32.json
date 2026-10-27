@@ -1,0 +1,53 @@
+{
+  "schema_version": "mi013-live-pq-v32-original-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "source_version": "v32",
+  "source_sidecar": "primary_sibsteklo_turan_docs_20261027.v32.json",
+  "installer": "scripts/market_intelligence/apply_pq_evidence_v32.py",
+  "two_original_cases": [
+    "223fz:32413708738:lot1",
+    "commercial:306-644:lot35"
+  ],
+  "new_procurements": 0,
+  "new_signed_contracts": 0,
+  "backup": {
+    "file": "data-platform-arvectum_data-20261027T193025Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37465965,
+    "sha256": "08ab9e98ffdda7fd97668d97a3df5b30dc2aec06bc9119ab2543b7b448b8b67f",
+    "verification": "SHA256 digest and metadata manifest and companion checksum verified before SQL"
+  },
+  "transaction": "atomic COMMIT with original resource ownership, prehash and no-v32 guards, postwrite counts",
+  "postwrite": {
+    "resources": 101,
+    "records": 101,
+    "unique_ids": 101,
+    "metadata_versions": {
+      "v29": 98,
+      "v31": 1,
+      "v32": 2
+    },
+    "source_enriched_cases": 15,
+    "external_resources": 2192,
+    "external_records": 0,
+    "documents": 2192
+  },
+  "updated_hashes": {
+    "223fz:32413708738:lot1": "8a73257b95615bf10f53dc7d459a75f9e57e0b129763a2aef800aeec26191048",
+    "commercial:306-644:lot35": "66ab9438cb123bf292b4ba488a7c6f32a600aa9126590ba8bc8e0da06c52e894"
+  },
+  "checks": [
+    "read_only --check-db immediately after commit => already_enriched=2 pending=0",
+    "Independent SQL readback returned correct source outcome and buyer-owned hardware true",
+    "101 resources, 101 records, 98 v29+1 v31+2 v32",
+    "Other 2192 resources and 2192 documents unchanged",
+    "8 previous v29 source unit tests PASS before run"
+  ],
+  "caveats": [
+    "Source status is research unreviewed; no owner license or manufacturer certification inference",
+    "Original selected offer != legally signed registered contract; neither new case proves signed deal",
+    "The new 2025 Kogalym Rostender signal remains an excluded candidate without original ETP ID"
+  ]
+}
