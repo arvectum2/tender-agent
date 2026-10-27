@@ -95,3 +95,21 @@ def test_batch_journal_does_not_redownload(tmp_path: Path):
                   provider=_provider(), download=downloader)
     assert again["cases_attempted"] == 0
     assert downloader.call_count == 1
+
+
+def test_final_protocol_precedes_other_attachments(tmp_path: Path):
+    provider = _provider()
+    other = SimpleNamespace(file_name="Итоговый протокол.pdf",
+                            url=FILE_URL.replace("a" * 32, "b" * 32))
+    detail = provider.fetch_detail.return_value
+    detail.document_links.append(other)
+    downloader = _downloader()
+    result = acquire(registry_number=NUMBER, target_root=tmp_path,
+                     provider=provider, max_files=1, download=downloader)
+    assert result["files_saved"] == 1
+    forwarded = downloader.call_args.args[0]
+    assert forwarded[0].name == "Итоговый протокол.pdf"
+    receipt = json.loads((tmp_path / NUMBER / "public-page-receipt.json").read_text())
+    assert receipt["source_links_discovered"] == 2
+    assert receipt["source_links_selected"] == 1
+    assert receipt["coverage_incomplete"] is True
