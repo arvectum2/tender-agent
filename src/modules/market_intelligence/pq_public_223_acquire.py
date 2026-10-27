@@ -153,15 +153,17 @@ def acquire(*, registry_number: str, target_root: Path,
 
 
 def batch(*, gaps: Path, target_root: Path, journal: Path,
-          max_cases: int = 3, provider=None, download=download_procurement_attachments,
-          transport=None) -> dict:
-    if not 1 <= max_cases <= 12:
-        raise ValueError("Case budget exceeded")
+          max_cases: int = 3, retry_hours: int = 12, provider=None,
+          download=download_procurement_attachments, transport=None) -> dict:
+    if not 1 <= max_cases <= 12 or not 1 <= retry_hours <= 720:
+        raise ValueError("Case or retry budget exceeded")
     cases = json.loads(gaps.read_text(encoding="utf-8"))["cases"]
     state = json.loads(journal.read_text(encoding="utf-8")) if journal.exists() else {
         "schema_version": "pq-223-public-page-attempts/1", "attempts": []}
     tried = {str(x["registry_number"]) for x in state["attempts"]
              if x.get("status") in ("public_page_files_downloaded", "existing_receipt")}
+    latest = {str(x.get("registry_number")): x for x in state["attempts"]}
+    now = datetime.now(timezone.utc)
     new = []
     for case in cases:
         if len(new) >= max_cases:
@@ -169,9 +171,21 @@ def batch(*, gaps: Path, target_root: Path, journal: Path,
         number = str(case.get("procedure_id") or "")
         if not re.fullmatch(r"[0-9]{11}", number) or number in tried:
             continue
-        result = acquire(registry_number=number, target_root=target_root,
-                         provider=provider, download=download, transport=transport)
-        record = {"timestamp": datetime.now(timezone.utc).isoformat(), **result}
+        prior = latest.get(number)
+        if prior:
+            try:
+                age = (now - datetime.fromisoformat(prior["timestamp"])).total_seconds()
+                if age < retry_hours * 3600:
+                    continue
+            except (KeyError, TypeError, ValueError):
+                pass
+        try:
+            result = acquire(registry_number=number, target_root=target_root,
+                             provider=provider, download=download, transport=transport)
+        except (OSError, ValueError, RuntimeError) as exc:
+            result = {"registry_number": number, "status": "acquisition_error",
+                      "error_type": type(exc).__name__, "files_saved": 0}
+        record = {"timestamp": now.isoformat(), **result}
         state["attempts"].append(record)
         _atomic(journal, state)
         new.append(record)
@@ -187,9 +201,10 @@ def main() -> None:
     p.add_argument("--target-root", type=Path, required=True)
     p.add_argument("--journal", type=Path, required=True)
     p.add_argument("--max-cases", type=int, default=3)
+    p.add_argument("--retry-hours", type=int, default=12)
     a = p.parse_args()
     print(json.dumps(batch(gaps=a.gaps, target_root=a.target_root,
-                           journal=a.journal, max_cases=a.max_cases),
+                           journal=a.journal, max_cases=a.max_cases, retry_hours=a.retry_hours),
                      ensure_ascii=False))
 
 
