@@ -20,8 +20,8 @@ SUPPORTED = {".pdf", ".docx", ".doc", ".xlsx", ".xls", ".txt", ".xml"}
 
 def ingest(*, sources: Path, output: Path, dp_source: Path,
            max_files: int = 30, max_bytes: int = 20 * 1024 * 1024,
-           ocr_empty: bool = False) -> dict:
-    if not 1 <= max_files <= 500 or sources.is_symlink() or not sources.is_dir():
+           ocr_empty: bool = False, start_offset: int = 0) -> dict:
+    if not 1 <= max_files <= 500 or not 0 <= start_offset <= 10000 or sources.is_symlink() or not sources.is_dir():
         raise ValueError("Invalid source scope")
     if not (dp_source / "arvectum_data" / "documents" / "ingest.py").is_file():
         raise ValueError("Data Platform source tree not found")
@@ -30,7 +30,7 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
     records = []
     files = sorted(p for p in sources.rglob("*") if p.is_file() and not p.is_symlink()
                    and p.suffix.lower() in SUPPORTED)
-    for path in files[:max_files]:
+    for path in files[start_offset:start_offset + max_files]:
         if path.stat().st_size > max_bytes:
             records.append({"path": str(path), "status": "oversized"})
             continue
@@ -90,9 +90,10 @@ def main() -> None:
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--max-files", type=int, default=30)
     p.add_argument("--ocr-empty", action="store_true")
+    p.add_argument("--start-offset", type=int, default=0)
     a = p.parse_args()
     print(json.dumps(ingest(sources=a.sources, dp_source=a.dp_source,
-                            output=a.output, max_files=a.max_files, ocr_empty=a.ocr_empty),
+                            output=a.output, max_files=a.max_files, ocr_empty=a.ocr_empty, start_offset=a.start_offset),
                      ensure_ascii=False))
 
 
