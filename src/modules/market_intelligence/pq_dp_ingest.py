@@ -20,7 +20,8 @@ SUPPORTED = {".pdf", ".docx", ".doc", ".xlsx", ".xls", ".txt", ".xml"}
 
 def ingest(*, sources: Path, output: Path, dp_source: Path,
            max_files: int = 30, max_bytes: int = 20 * 1024 * 1024,
-           ocr_empty: bool = False, start_offset: int = 0) -> dict:
+           ocr_empty: bool = False, start_offset: int = 0,
+           include_relative_paths: frozenset[str] | None = None) -> dict:
     if not 1 <= max_files <= 500 or not 0 <= start_offset <= 10000 or sources.is_symlink() or not sources.is_dir():
         raise ValueError("Invalid source scope")
     if not (dp_source / "arvectum_data" / "documents" / "ingest.py").is_file():
@@ -30,6 +31,11 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
     records = []
     files = sorted(p for p in sources.rglob("*") if p.is_file() and not p.is_symlink()
                    and p.suffix.lower() in SUPPORTED)
+    if include_relative_paths is not None:
+        if any(name.startswith("/") or ".." in Path(name).parts for name in include_relative_paths):
+            raise ValueError("Unsafe selected document paths")
+        files = [f for f in files
+                 if f.relative_to(sources).as_posix() in include_relative_paths]
     for path in files[start_offset:start_offset + max_files]:
         if path.stat().st_size > max_bytes:
             records.append({"path": str(path), "status": "oversized"})
