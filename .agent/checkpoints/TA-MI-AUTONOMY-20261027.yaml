@@ -73,3 +73,16 @@ verified_live_eis_20261027:
   tests: 16 passed against mounted canonical MI-013 v20 and EIS history plan
   limitations: not 936 distinct tenders; no ETP live acquisition; no signed award verification from these source-days
   resume_instruction: Continue bounded 2024 historical EIS source-day rounds, parse evidence from archived XML, acquire original attachments and verify award outcomes; extend commercial ETP coverage; publish report only when provenance checks complete.
+
+continuation_source_audit_20261027:
+  status: in_progress
+  last_verified_commit: 6118866694df1a0968bda33e7541b633faceb928
+  live_2024_additional:
+    - "2024-11-15 region 78 RI223: 2 ZIP, 102 XML, verified_day"
+    - "2024-07-15 region 78 PRIZ: 4 ZIP, 360 XML, verified_day"
+    - "2024-04-15 region 77 RI223: 5 ZIP, 406 XML, verified_day"
+  full_2024_audit: "26 verified source-days, 1438 missing cells, 92 SHA-verified ZIP, 7563 XML inspected, 2 regions and 2 statutory subsystems"
+  audit_file: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/autonomous-mi013-20261027/eis_2024_source_audit.json
+  tests: "31 passed: PQ source audit, autonomous MI-013, EIS history plan, original source ledger"
+  remaining: original annex downloads and PQ-specific evidence, signed contract/winner verification, commercial ETP acquisition, wider source coverage and final evidence-backed market report
+  resume_instruction: Inspect 2024 official ZIP receipts and extract candidate PQ notices with source SHA, then attach original technical annexes; resolve official contract outcomes; continue bounded live source acquisition, update independent coverage audit, and never infer market TAM from XML counts.
