@@ -1,0 +1,134 @@
+{
+  "schema_version": "pq-primary-EIS-direct-component-evidence/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v27",
+  "base_manifest": "verified_public_leads_20261027.v26.manifest.json",
+  "new_procurements": 0,
+  "existing_cases_enriched": 3,
+  "source_cases": [
+    {
+      "id": "223fz:32514947144:lot1",
+      "date": "2025-07-04",
+      "buyer": "Россети Кузбасское ПМЭС",
+      "site": "ПС 500кВ Ново-Анжерская; номинал комплектующих 12кВ",
+      "equipment": "Конденсаторы КЭПФ-12-450-2 УХЛ1 или эквивалент",
+      "nominal_kv": 12,
+      "quantity": 14,
+      "each_kvar": 450,
+      "total_nominal_kvar": 6300,
+      "nominal_is_installed_PQ_capacity": false,
+      "nmc_vat20_rub": "3186960.00",
+      "winner": "ООО «Торговый дом «Усть-Каменогорский конденсатор»",
+      "offer_vat20_rub": "3158400.00",
+      "other_bids": [
+        {
+          "company": "ООО «Алмаз Инжиниринг»",
+          "offer_vat20_rub": "3179988.00",
+          "rank": 2
+        },
+        {
+          "company": "ООО «ТД «Сибэнерго»",
+          "offer_vat20_rub": "3186960.00",
+          "rank": 3
+        }
+      ],
+      "status": "original commission decision to award; signed registry contract not independently verified",
+      "tender_original": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103365127",
+        "sha256": "5aee81a7a8dc65d4314ba718ab7621293ca3d708448958fd22c1cd5bdeb2f94c",
+        "bytes": 28552
+      },
+      "protocol_original": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103806743",
+        "sha256": "1f3cde0fa95d5187b707e978108553894dea2c1377ca0123b5a3d7b08a113fd8",
+        "bytes": 44133
+      }
+    },
+    {
+      "id": "223fz:32515029641:lot1",
+      "date": "2025-08-19",
+      "buyer": "Россети МЭС Юга",
+      "site": "Аварийный запас, доставка Пятигорск",
+      "equipment": "Конденсаторы КЭПФ-12-450-2УХЛ1",
+      "nominal_kv": 12,
+      "quantity": 12,
+      "each_kvar": 450,
+      "total_nominal_kvar": 5400,
+      "nmc_vat20_rub": "3621456.00",
+      "winner": "ООО «ЭСК ЮГ»",
+      "offer_vat20_rub": "3490560.00",
+      "other_bids": [
+        {
+          "company": "ООО «РегионИнжиниринг»",
+          "status": "rejected 900 vs 950mm body and terminal dimensions mismatch"
+        },
+        {
+          "company": "ООО «ГК Армада»",
+          "status": "rejected missing technical proposal table"
+        }
+      ],
+      "technical_ambient_c": "-60..+45",
+      "body_height_mm": 950,
+      "full_height_mm": 1190,
+      "technical_rosseti_approval_required": true,
+      "source_anomaly": "First 18 July original heading says seven bidders but lists three, later 19 August final says three; use 3.",
+      "status": "Initially failed due one conforming bid, later 19 Aug ordered contract at 3,490,560 incl VAT; signed registry contract unverified",
+      "original_tender_archive": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103949308",
+        "sha256": "821667469efbadd92ad3196c3ecadce12578df23087ee907d84383e2972e40e9",
+        "bytes": 1346219
+      },
+      "inner_tz_sha256": "e8a7ff6662469ca0685c1bfc656158ac70424376fefc89ecbc59b876542623c6",
+      "initial_protocol": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=104750727",
+        "sha256": "e4e5a46396842c35f7cbf2b26844c2614ab5c3213f91ed27e1e978f44c10437a"
+      },
+      "final_protocol": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=104750729",
+        "sha256": "b3571212f38a646f3686d30974ce3a4fd6df904e2a5b22a1cd51c3b9363ed0c6"
+      }
+    },
+    {
+      "id": "223fz:32515582393:lot1",
+      "date": "2026-02-16",
+      "buyer": "АО «БЭСК» / ПО НЭС ООО «Башкирэнерго»",
+      "site": "ПС 35кВ Нагорная, Башкортостан",
+      "equipment": "УКРМ56-6,3-200-(1x50+2x75) М4.5S",
+      "nominal_kv": 6,
+      "quantity": 1,
+      "nominal_kvar": 200,
+      "stages_kvar": [
+        50,
+        75,
+        75
+      ],
+      "frequency_hz": 50,
+      "interface": "RS-485",
+      "control_unit": "Novar",
+      "protection": "Сириус-БСК",
+      "selected_supplier": "ООО «УК КОНДЕНСАТОР»",
+      "initial_offer_ex_vat_rub": "4900000.00",
+      "negotiated_offer_ex_vat_rub": "4850000.00",
+      "warranty_months": 60,
+      "payment": "7 working days after delivery and inward inspection",
+      "status": "Single applicant 12Feb commission decided sole source, 16Feb 2026 pre-contract negotiated 4.85m exVAT; no original signed contract or delivery verified",
+      "source_questionnaire_1st_page_visually_checked": true,
+      "original_questionnaire_scan_pdf_sha256": "48ceaa3f94c353f638dbab29951d3ec6dd5b32e79114fa0641800831715333a9",
+      "archive_original": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=107793261",
+        "sha256": "97e9a248467ffe91efb33cecfc069b29afb14feabbd3562a13b28253ce58d1f0",
+        "bytes": 15010934
+      },
+      "protocols_archive": {
+        "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=108626473",
+        "sha256": "842cfe42c4ad5f797cf6d4d104015406ea43d246ecc8c1cf60364861ea69ffae",
+        "bytes": 657694
+      },
+      "inner_predcontract_pdf_sha256": "a5d0232672daf75f602b1cfe8dc60d0b1cff30e8605f17d2c7dac539132151e7",
+      "inner_final_pdf_sha256": "028b7c02597f2f5adb7b4881334b9e4f13dc39d5e8b4a54c660c2ea7dd66298f"
+    }
+  ],
+  "cross_case_signal": "Two 12kV capacitor procurements from different Rosseti regional operators 14+12=26 units of 450kvar each (11.7Mvar combined nominal component nameplates) but do NOT equate to delivered installed filter Mvar. Distinct third case is stepped 6kV 200kvar UKRM. All reported values are commission offers; signed prices not verified.",
+  "supplier_role_note": "Winning trading house is not automatically manufacturer. ESK YUG and UK KONDENSATOR legal INNs not identified from these originals. No new OEM evidence.",
+  "original_signed_contracts_added": 0
+}
