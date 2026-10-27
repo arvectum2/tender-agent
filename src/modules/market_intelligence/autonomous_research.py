@@ -48,7 +48,7 @@ def run(*, corpus: Path, output: Path) -> dict:
     records = seed.get("records")
     if not isinstance(records, list):
         raise ValueError("Missing records in PQ seed")
-    contracts, _ = _load(corpus / INPUTS[1])
+    contracts, _ = _load(corpus / "official_registry_contracts_20261026.v1.json")
     # Do not upgrade the seed's secondary leads into confirmed awards.
     signed_equipment = contracts.get("equipment_only_signed_contracts_verified")
     if signed_equipment is not None and (type(signed_equipment) is not int or signed_equipment < 0):
@@ -88,6 +88,21 @@ def run(*, corpus: Path, output: Path) -> dict:
                          "review_status": "unreviewed", "training_eligible": False}
                 handle.write(json.dumps(event, ensure_ascii=False) + "\n")
     return manifest
+
+
+def run_eis_batch(*, root: Path, ontology: Path, first, last, regions: list[str],
+                  subsystems: list[str], max_calls: int = 4, execute: bool = False,
+                  client=None) -> dict:
+    """Bounded EIS source-day discovery; execute=True uses existing audited collector."""
+    from .eis_history_plan import execute_plan, plan_history
+    import yaml
+    plan = plan_history(root=root, first=first, last=last, regions=regions,
+                        subsystems=subsystems, max_calls=max_calls)
+    if not execute:
+        return {"plan": plan, "outcomes": [], "live_executed": False}
+    terms = yaml.safe_load(ontology.read_text(encoding="utf-8"))
+    outcomes = execute_plan(plan=plan, root=root, ontology=terms, client=client)
+    return {"plan": plan, "outcomes": outcomes, "live_executed": True}
 
 
 def main() -> None:
