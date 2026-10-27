@@ -169,3 +169,28 @@ recovery_cycle_verified_20261027:
   remaining: "Broader official 2024-2026 archive acquisition, commercial ETP originals, signed contract/winner verification, queue-driven review of newly recovered documents"
   last_test_results: "6 focused pytest passed, one external Starlette deprecation warning"
   resume_instruction: "Inspect full MI-013 corpus versions and provenance; expand bounded live EIS and commercial ETP discovery, acquire verified original documents, feed Data Platform and ChatGPT ARC queue; retain source-attempt journal and don't count already attempted searches as new."
+
+v20_source_recovery_acceptance_20261027:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Restore exact original evidence across EIS 223/44 FZ and commercial ETP and produce a procurement outcome study without invented awards"
+  definition_of_done: "Complete 100-case v20 source review and acquisition, verified protocols and signed-contract amounts, dedup across lots/projects/reissues, robust ETP adapters, full test and owner-readable evidence report"
+  completed:
+    - "Reconstructed 100 active v20 research rows from 15 immutable source inputs with SHA checks, stage counts and v19 unsupported duplicate retraction."
+    - "Audited 8 official EIS receipt-backed case folders: 39 of 39 downloaded attachment bytes matched receipt SHA256; staged 19 supported originals, 20 HTML/ZIP deferred, no SHA errors."
+    - "Data Platform read 19 staged files; 16 text extracted, 3 scanned PDFs recognized by bounded rus+eng OCR and flagged unverified."
+    - "Added source-SHA bound provisional OCR review queue with visual-check marker; reviewed 10 total queue packets, retained 1 unreadable old native-PDF packet."
+    - "Audited all 18 known commercial/ETP reference tasks with bounded HTTPS probes, preserving observed source tier, status and exact HTML SHA; journal 22 total entries including prior runs."
+    - "Unified pq_recovery_cycle supports verified-reestr, etp-queue, SHA staging, cached OCR, source gap inventory and ARC review packets."
+    - "Existing hourly Tender Agent Watchdog updated in place, preserved enabled and schedule; no duplicate Scheduled Task."
+  current_step: "Expand original ZIP attachment children, follow official tender/contract registry endpoints and reconcile signed supplier/price with commission protocols."
+  remaining:
+    - "Securely extract and SHA-bind 15 existing ZIP annexes and process PDF/DOCX/XLSX source files within; no unverified ZIP trust."
+    - "Expand primary live EIS search on all 100 cases and missing 2024-2026 source dates; retry only on journal schedule."
+    - "Resolve signed RD223 or 44-FZ contract registry records and winning supplier at lot level; de-duplicate reissues and mixed EPC budgets."
+    - "Add platform-specific original commercial ETP acquisition beyond public-card HTTP checks."
+    - "Finalize deduplicated source-backed market report with category, buyer, winner, EPC/supplier/designer, NMCK, contract sum and honest unknown coverage."
+  last_verified_commit: "c09c1b968286196775f3c4108092384c0d7adfe8"
+  last_test_results: "13 targeted pytest passed on Mac mini, 1 external Starlette deprecation warning. Full 100-row offline cycle: 8 official case folders, 19 staged documents, 16 extracted + 3 unverified OCR, no staging errors."
+  source_quality: "Selection/recommendation in original commission protocol is NOT a verified signed contract; OCR winner/amount remains provisional pending original visual and contract check."
+  resume_instruction: "Inspect git main and this checkpoint. Use isolated MI worktree, v20 leads at runtime/market-intelligence/pq-agent-pilot-live/leads-v20-materialized.json and docs/market_intelligence/PQ_RECOVERY_RUNBOOK_20261027.md. Extract safe source-bound ZIP children, index into Data Platform and ChatGPT queue. Then search EIS+ETP, retrieve original signed outcomes and cite exact source bytes. Preserve per-stage receipts, watchdog and worktree isolation; mark completed only after E2E report and tests."
