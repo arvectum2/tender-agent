@@ -351,3 +351,14 @@ etp_source_schema_recovery_20261028:
   last_verified_commit: "3694f1b900936742537ef3cf5b109470de770964"
   last_test_results: "7 focused tests PASS, Ruff PASS, diff check PASS; CI architecture audit still fails on preexisting direct Data Platform import."
   resume_instruction: "Inspect PR #519 exact-head CI and main; retain its DRAFT/REVIEW state while direct Data Platform import audit remains red. Resume from 100-row v20 refreshed inventory and 38-item ETP source queue, with 12-hour per-URL dedup. Prioritize lawful native B2B-Center originals and PhosAgro/RAD ETP source docs for 4559984, 231994-2, 4561228, 4561243, 4565274, chges24621PR; reconcile 4565274 reissue against 4538400 and possible 4561228 overlap. No supplier, signed contract or final price without independent original. Avoid rerunning verified sources; do not overwrite unrelated .agent/current-task.yaml or change single Watchdog."
+
+etp_source_classification_followup_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  completed:
+    - "Retrieved and SHA-bound 3 more public ETP secondary pages: 4302914 installed STATCOM 6.3kV maintenance, COM20082600016 UKRM price-information request, 1351/OAE-C DKS/26 second power-feed construction."
+    - "Preserved distinctions maintenance vs supply enquiry vs construction; no equipment sale, signed supplier, original specification or contract price verified."
+    - "Eight secondary source receipts now carry exact quotes and SHA in data/market_intelligence/power_quality/etp_secondary_candidate_receipts_20261028.json."
+  last_verified_commit: "3694f1b900936742537ef3cf5b109470de770964"
+  last_test_results: "7 focused tests PASS; no new executable code changed in this follow-up."
+  resume_instruction: "Resume source acquisition from original Roseltorg questionnaire OL.3 UKRM, B2B-Center native STATCOM 4302914, 6.3kV mixed MTR 4559984, and 10kV UK1-UK4 projects; keep maintenance/price inquiry/second-feed construction separate from supply. Continue first-party signed contract and award evidence recovery, 12h retries and dedup; preserve single Watchdog and unrelated current-task."

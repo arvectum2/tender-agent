@@ -84,6 +84,57 @@
       "initial_price_rub": null,
       "original_etp_documents_verified": false,
       "project_overlap_status": "not_established"
+    },
+    {
+      "procedure_id": "4302914",
+      "source_url": "https://synapsenet.ru/zakupki/b2b/4302914--belgorodskaya-obl-tehnicheskoe-obsluzhivanie-oborudovaniya",
+      "source_sha256": "8aa28af24df79f7a5425256eea51b04c84a336ee693d523f1d1030f6e02878e6",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "Техническое обслуживание оборудования конденсаторной установки «СТАТКОМ RU-DRIVE SVG 6,3/5-3 МВар»",
+      "candidate_voltage_kv": 6.3,
+      "candidate_quantity_units": null,
+      "quantity_status": "unknown",
+      "scope": "maintenance_existing_statcom",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "not_established"
+    },
+    {
+      "procedure_id": "COM20082600016",
+      "source_url": "https://synapsenet.ru/zakupki/roseltorg/com20082600016%231--hantimansijskij-ao-postavka-ustanovki-kompensacii",
+      "source_sha256": "a6d4a6e1942e00c3db8ba007e39f210e1038a2466a71380e81e70cf6378efa77",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "Поставка установки компенсации реактивной мощности (УКРМ)",
+      "candidate_voltage_kv": null,
+      "candidate_quantity_units": 1,
+      "quantity_status": "secondary_page_only",
+      "scope": "commercial_price_information_request_not_award",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "not_established"
+    },
+    {
+      "procedure_id": "1351/ОАЭ-ЦДКС/26",
+      "source_url": "https://synapsenet.ru/zakupki/rts/1351%D0%BE%D0%B0%D1%8D-%D1%86%D0%B4%D0%BA%D1%8126%231--irkutskaya-obl-otkritij",
+      "source_sha256": "0550b97178f64f662334a4c5143e22fd36f01e253fe304b6ea42f9c90f924305",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "выполнения строительно-монтажных работ по устройству вторых питаний устройств компенсации реактивной мощности",
+      "candidate_voltage_kv": null,
+      "candidate_quantity_units": null,
+      "quantity_status": "unknown",
+      "scope": "second_power_feed_construction_not_equipment_supply",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "not_established"
     }
   ]
 }

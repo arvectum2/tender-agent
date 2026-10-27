@@ -32,3 +32,11 @@ Two more SHA-verified secondary pages were downloaded and exact quoted text chec
 * `231994-2`, HTML SHA-256 `19645ca3cff5ddf1e517201b9898ba1e47bd4d5e33b44b1e5db332d0c42cd899`: «№ 231994-2 ДОПОЛНЕНИЕ. РД. ПС-352 Система динамической компенсации реактивной мощности». Source is a **working-design/documentation candidate**, not a verified SVC/STATCOM supply. The substation label ПС-352 does not establish 35 kV voltage. Native original technical ZIP and award remain unrecovered.
 
 First-party UDS corporate archive could not be acquired: TLS verification failed (`curl` exit 60, verify result 18), and a second verified-TLS path failed likewise; **no `-k`/insecure fallback**. A separate corporate PDF on recko.ru returned HTTP 403, so no original was promoted. All attempts and failure types remain in `etp-native-source-attempts.json`.
+
+## Three further SHA-bound secondary-source classifications
+
+* `4302914` — SHA-256 `8aa28af24df79f7a5425256eea51b04c84a336ee693d523f1d1030f6e02878e6`; exact quote «Техническое обслуживание оборудования конденсаторной установки «СТАТКОМ RU-DRIVE SVG 6,3/5-3 МВар»». A potentially useful **installed-base/maintenance** signal for 6.3 kV STATCOM equipment at Lebedinsky GOK, **not** a new STATCOM sale or equipment procurement outcome.
+* `COM20082600016` — SHA-256 `a6d4a6e1942e00c3db8ba007e39f210e1038a2466a71380e81e70cf6378efa77`; exact quote «Поставка установки компенсации реактивной мощности (УКРМ)». Lukoil-West Siberia commercial **request for price information**, source shows a technical questionnaire name `ОЛ.3 УКРМ` but the original is not retrieved. Voltage, award and contract amount UNKNOWN.
+* `1351/ОАЭ-ЦДКС/26` — SHA-256 `0550b97178f64f662334a4c5143e22fd36f01e253fe304b6ea42f9c90f924305`; exact quote «выполнения строительно-монтажных работ по устройству вторых питаний устройств компенсации реактивной мощности». This is **second power-feed construction for existing compensation devices**, not an equipment-only supply. The secondary page reports a starting budget, but without original notice it is not promoted as verified NMCK or contract price.
+
+All three public HTML bytes were acquired over verified TLS and remain in the runtime source receipt journal. No original attachments or signed supplier/contract outcome was acquired. Do not aggregate these as equipment sales.
