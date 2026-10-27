@@ -1,0 +1,57 @@
+{
+  "schema_version": "mi013-primary-original-itemized-cost-pg-sync/1.0",
+  "as_of": "2026-10-28",
+  "source_version": "v36",
+  "canonical_id": "223fz:32616296475:lot1",
+  "source_sidecar": "original_meles_6kv_itemized_cost_and_regime_20261028.v36.json",
+  "primary_origins": [
+    "https://torgi.etp-region.ru/app/OfferCard/page?OfferCard.offerUUID=Scorebofs002080000q03ju2cimtcd2js",
+    "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4c7au8vf4",
+    "https://zakaz.etp-region.ru/fx/gpms/etpGetFileServlet?fileUUID=dbfilefs002080000q03kmh4j5tmvv6g"
+  ],
+  "importer": "scripts/market_intelligence/apply_pq_evidence_v36.py",
+  "materializer": "scripts/market_intelligence/materialize_pq_research_v36.py",
+  "source_grade": "FIRST_PARTY downloaded original ETP buyer Excel NMC pricing and DOCX technical and unsigned contract template",
+  "before": {
+    "resources": 103,
+    "records": 103,
+    "version_v29": 97
+  },
+  "after": {
+    "resources": 103,
+    "records": 103,
+    "unique_external_ids": 103,
+    "versions": {
+      "v29": 96,
+      "v31": 1,
+      "v32": 2,
+      "v33": 1,
+      "v34": 1,
+      "v35": 1,
+      "v36": 1
+    },
+    "first_party_original_enriched_cases": 15,
+    "any_additional_evidence_cases": 16,
+    "other_resources": 2192,
+    "other_records": 0,
+    "documents": 2192
+  },
+  "backup": {
+    "file": "data-platform-arvectum_data-20261027T214653Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37472843,
+    "sha256": "4bec2cc377ac9c804940bd140c74a72fa57e8bab92ac8bbd5d414c20987c8867",
+    "verified_before_SQL": true
+  },
+  "transaction": "one existing resource + one structured JSONB case updated atomically under source hash and tenant guards, commit and independent source replay verified",
+  "new_source_hash": "cdcc71359739f3d9f2d613f50ca8d9c220b6605e3a8a6456111ad0562e995afd",
+  "source_exact_hash_replay": "103/103, zero difference",
+  "tests": "33/33 PASS (v29 8, v32 4, v33 6, v34 5, v35 5, v36 5)",
+  "signed_contracts_new": 0,
+  "hardware_new_sales": 0,
+  "source_equipment_only_NMCD_rub": "3524107.07",
+  "original_total_NMCD_rub": "3904773.73",
+  "quoted_reference_count": 3,
+  "non_equipment_cost_rub": "380666.66",
+  "legal_1875_label": "buyer source marked limitation, not prohibition"
+}
