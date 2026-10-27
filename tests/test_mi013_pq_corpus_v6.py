@@ -33,5 +33,6 @@ def test_original_rd223_and_protocol_evidence_distinct_from_supplier_identity() 
     assert row["supplier_identity_from_registry_verified"] is False
     assert row["supplier_verified"] is False
     assert row["pq_equipment_only_contract_rub"] is None
-    assert row["equipment_voltage_kv"] == 6\n    assert row["equipment_reactive_power_mvar"] == 0.2
+    assert row["equipment_voltage_kv"] == 6
+    assert row["equipment_reactive_power_mvar"] == 0.2
     assert sum(e["source_tier"] == "primary_platform" for e in row["evidence"]) >= 2
