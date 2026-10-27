@@ -18,6 +18,7 @@ MAX_DISPLAY_CHARS = 12000
 def next_packet(*, queue_dir: Path, max_chars: int = MAX_DISPLAY_CHARS) -> dict:
     if not 1000 <= max_chars <= MAX_DISPLAY_CHARS or queue_dir.is_symlink():
         raise ValueError("Invalid ARC handoff budget")
+    unreadable = 0
     for path in sorted(queue_dir.glob("*.json")):
         if path.is_symlink():
             continue
@@ -25,6 +26,9 @@ def next_packet(*, queue_dir: Path, max_chars: int = MAX_DISPLAY_CHARS) -> dict:
         if item.get("schema_version") != "pq-review-queue/1" or item.get("state") != "pending_review":
             continue
         packet = item["packet"]
+        if not any(len(" ".join(d.get("text", "").split())) >= 12 for d in packet["documents"]):
+            unreadable += 1
+            continue
         docs = []
         remaining = max_chars
         for document in packet["documents"]:
@@ -52,7 +56,8 @@ def next_packet(*, queue_dir: Path, max_chars: int = MAX_DISPLAY_CHARS) -> dict:
             },
             "reviewer": "current_chatgpt_conversation_via_arc",
         }
-    return {"status": "empty", "reviewer": "current_chatgpt_conversation_via_arc"}
+    return {"status": "empty", "reviewer": "current_chatgpt_conversation_via_arc",
+            "pending_unreadable": unreadable}
 
 
 def main() -> None:
