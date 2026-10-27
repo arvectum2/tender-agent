@@ -3,7 +3,7 @@
   "as_of": "2026-10-27",
   "base_manifest": "verified_public_leads_20261027.v16.manifest.json",
   "new_rows": 12,
-  "market_scope": "10 market sounding signals, one 2024 STATCOM service procedure, one 2024 Samara supply priced result; two market-sounding cohorts span 2023/24",
+  "market_scope": "9 Rosneft-related market-sounding observations, 1 Rosneft quotation, 1 2024 STATCOM cooling maintenance opportunity and 1 2024 Samara GRES reactive-power hardware supply final-price listing",
   "records": [
     {
       "canonical_id": "index:energybase:rosneft-pq-20231109-kharampur",
@@ -265,5 +265,11 @@
     "Synthetic date and buyer keys are index identifiers not official procurement IDs",
     "Do not add prices of market sounding to estimated revenue",
     "Petersen arc-suppression compensation (capacitive earth fault current) is excluded from PQ reactive-power procurement unless original TЗ confirms PQ functions"
-  ]
+  ],
+  "stage_counts": {
+    "market_sounding": 9,
+    "request_for_quotation": 1,
+    "maintenance": 1,
+    "supply": 1
+  }
 }
