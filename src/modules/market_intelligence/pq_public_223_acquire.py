@@ -45,6 +45,25 @@ def _atomic(path: Path, payload: dict) -> None:
     os.replace(temp, path)
 
 
+def _attachment_priority(name: str) -> int:
+    label = " ".join(name.casefold().split())
+    if "протокол" in label and ("итогов" in label or "результат" in label):
+        return 0
+    if "протокол" in label:
+        return 1
+    if "техническое задание" in label or "техзадан" in label:
+        return 2
+    if label.endswith(".zip"):
+        return 3
+    if "закупочная документация" in label:
+        return 4
+    if "извещен" in label or "уведомлен" in label:
+        return 5
+    if "договор" in label:
+        return 6
+    return 7
+
+
 def _source_documents_url(card_url: str, number: str) -> str | None:
     """Only a real EIS source card's exact notice number and GUID authorize this URL."""
     parts = urlsplit(card_url)
@@ -124,6 +143,7 @@ def acquire(*, registry_number: str, target_root: Path,
     if directory.exists() and any(directory.iterdir()):
         return {"registry_number": registry_number, "status": "unreceipted_files",
                 "files_saved": 0}
+    attachments.sort(key=lambda item: _attachment_priority(item.name))
     result = download(
         attachments, target_dir=directory, max_attachments=max_files,
         max_file_size_bytes=max_file_bytes,
@@ -143,6 +163,10 @@ def acquire(*, registry_number: str, target_root: Path,
         "source_level": "verified_public_page_not_original_soap_xml",
         "public_page_sha256": page_sha, "files_saved": len(source_files),
         "files": source_files,
+        "source_links_discovered": len(attachments),
+        "source_links_selected": min(len(attachments), max_files),
+        "source_selection": "commission_protocol_first_then_technical",
+        "coverage_incomplete": len(attachments) > max_files or bool(result.skipped),
         "skipped": [{"name": x.name, "reason": x.error} for x in result.skipped[:max_files]],
         "revision_review_required": True,
         "award_verified": False, "signed_contract_verified": False,
