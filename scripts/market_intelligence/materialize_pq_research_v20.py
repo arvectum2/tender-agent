@@ -30,7 +30,7 @@ def materialize():
         cid=row["canonical_id"]
         if cid in lookup:
             new=lookup[cid]
-            if not all(x["url"].startswith("https://") and x["sha256"] for x in new["source_evidence"]):
+            if not all(x["url"].startswith("https://") and (x.get("sha256") or x["tier"].startswith("independent_secondary")) for x in new["source_evidence"]):
                 raise ValueError("missing original source certificate")
             if any(x in new["fields"] for x in ("canonical_id","procedure_id","nmck_rub","publication_date","supplier_verified","scope","family")):
                 raise ValueError("attempt to overwrite stable procurement facts")
