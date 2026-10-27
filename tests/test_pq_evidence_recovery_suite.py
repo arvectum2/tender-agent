@@ -197,3 +197,41 @@ def test_etp_direct_tls_response_hash_and_incomplete_response_fail_closed():
     with patch("src.modules.market_intelligence.pq_etp_card_audit.subprocess.run",
                side_effect=too_large_curl):
         assert _fetch_direct_verified_tls(url)["status"] == "body_budget_exceeded"
+
+
+def test_sha_bound_secondary_candidates_are_not_signed_awards():
+    root = Path(__file__).resolve().parents[1]
+    path = root / "data/market_intelligence/power_quality/etp_secondary_candidate_receipts_20261028.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    assert data["schema_version"] == "pq-etp-secondary-candidates/1"
+    assert data["market_population_complete"] is False
+    assert data["signed_contracts_verified"] == 0
+    assert len(data["records"]) >= 8
+    assert len({row["procedure_id"] for row in data["records"]}) == len(data["records"])
+    for row in data["records"]:
+        assert len(row["source_sha256"]) == 64
+        assert row["source_tier"] == "secondary_public_index"
+        assert row["source_url"].startswith("https://")
+        assert len(row["exact_quote"]) >= 12
+        assert row["winner_verified"] is False
+        assert row["signed_contract_verified"] is False
+        assert row["original_etp_documents_verified"] is False
+        assert row["contract_price_rub"] is None
+        assert row["initial_price_rub"] is None
+
+
+def test_scanned_commission_candidate_cannot_be_promoted_as_signed_supply():
+    root = Path(__file__).resolve().parents[1]
+    path = root / "data/market_intelligence/power_quality/ocr_provisional_commission_32616280467.json"
+    row = json.loads(path.read_text(encoding="utf-8"))
+    assert row["schema_version"] == "pq-visual-ocr-provisional-commission-candidate/1"
+    assert row["procedure_id"] == "32616280467"
+    assert len(row["original_pdf_sha256"]) == 64
+    assert len(row["derived_ocr_sha256"]) == 64
+    assert len(row["visual_page_jpeg_sha256"]) == 5
+    assert row["ocr_requires_visual_verification"] is True
+    assert row["signed_contract_verified"] is False
+    assert row["supplier_of_signed_contract_verified"] is False
+    assert row["executed_contract_price_verified"] is False
+    assert row["equipment_supply_verified"] is False
+    assert row["market_total_eligible"] is False
