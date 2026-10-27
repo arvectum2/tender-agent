@@ -1,8 +1,6 @@
 """MI-013 production importer must stay read-only by default and fail closed."""
 from __future__ import annotations
 
-import importlib.util
-import subprocess
 import sys
 from pathlib import Path
 from unittest.mock import patch
