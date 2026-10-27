@@ -66,9 +66,19 @@
         "project_demand_group": "TYAZHINSKAYA-SKRM52-2025-2026",
         "related_supply_procedure_ids": [
           "32616435269"
-        ]
+        ],
+        "reported_contract_date": "2026-09-23",
+        "reported_contract_date_source_tier": "third_party_tendem_reports_EIS_contract_signed"
       },
-      "notes_append": " Cross-check original 2026 supply tender №32616435269 includes MPU 10kV and BSK110 for Tyazhinskaya with 52Mvar. Treat this 2026 PИР as separate service procurement on same project, not distinct installation."
+      "notes_append": " Cross-check original 2026 supply tender №32616435269 includes MPU 10kV and BSK110 for Tyazhinskaya with 52Mvar. Treat this 2026 PИР as separate service procurement on same project, not distinct installation. Portal Tendem independently reports contract date 23.09.2026 and rounded 7406851 RUB, but underlying RD223 registry and contractor are not read/verified; previously stored exact secondary total 7406851.40 RUB remains unchanged.",
+      "evidence_append": [
+        {
+          "url": "https://tendem.ru/tenders/7557863",
+          "source_tier": "third_party_indexed_contract",
+          "locator": "Тендем: Договор заключён (по данным ЕИС) 23.09.2026; цена договора 7 406 851 ₽, поставщик по ЕИС не раскрыт.",
+          "excerpt": "23.09.2026 signed design-service contract reported by portal; winner masked"
+        }
+      ]
     }
   ],
   "provenance": "original archive sha verified 27.10.2026 on authorized ARC Mac mini read-only; first-party authored documents hosted by third-party mirror; system-changing commands and database writes NOT performed"
