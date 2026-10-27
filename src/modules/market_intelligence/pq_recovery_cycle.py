@@ -5,15 +5,15 @@ import argparse
 import json
 from pathlib import Path
 
+from .pq_dp_ingest import ingest
+from .pq_etp_card_audit import audit as audit_etp
 from .pq_gap_recovery import inventory
-from .pq_source_recovery import run as search_eis
 from .pq_indexed_recovery import recover_indexed
 from .pq_queue_seed import seed
-from .pq_dp_ingest import ingest
+from .pq_source_recovery import run as search_eis
 from .pq_verified_stage import stage
 from .pq_verified_zip_expand import expand
 from .pq_zip_dp_resume import run as resume_zip_ingest
-from .pq_etp_card_audit import audit as audit_etp
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
