@@ -1,0 +1,28 @@
+{
+  "schema_version": "pq-research-notice-manifest/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v17",
+  "period": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v16.manifest.json",
+  "base_rows": 87,
+  "delta_file": "discovery_2023_2026_v17_delta.json",
+  "delta_rows": 12,
+  "total_rows": 99,
+  "with_published_initial_price": 36,
+  "with_secondary_final_price_only_new": 1,
+  "with_original_Rd223_signed_contracts": 4,
+  "production_imported_v12_rows": 71,
+  "new_research_only_rows": 28,
+  "year_distribution_publication_only": {
+    "2023": 3,
+    "2024": 17,
+    "2025": 22,
+    "2026": 54,
+    "undated": 3
+  },
+  "market_census_complete": false,
+  "critical_note": "Rosneft archive market-sounding entries and 2024 Samara final-price-only lead have no official procedure number, source quality from index; repeated solicitations do not mean award or independent installed equipment; excluded earth-fault capacitive-current compensation (Petersen coil) from PQ."
+}
