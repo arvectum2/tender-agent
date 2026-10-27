@@ -1,0 +1,59 @@
+{
+  "schema_version": "mi013-postgresql-source-indexed-commercial-notice/1.0",
+  "as_of": "2026-10-27",
+  "task_id": "MI-013-PQ-CORPUS-PASS3-20261027",
+  "source_version": "v35",
+  "source_document": "original_indexed_tenderpro_rmc_statcom_20261027.v35.json",
+  "source_materializer": "scripts/market_intelligence/materialize_pq_research_v35.py",
+  "importer": "scripts/market_intelligence/import_pq_tenderpro_statcom_v35.py",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "canonical_id": "commercial:834269:lot1",
+  "new_procurement_notices": 1,
+  "source_grade": "first-party indexed search snapshot, direct original Tender.Pro HTTP503",
+  "no_primary_bid_award_verified": true,
+  "device_nominal_voltage_kv": null,
+  "planned_statcom_kits": 4,
+  "actual_installed_statcom_kits": null,
+  "contract_price_rub": null,
+  "original_signed_contract_delta": 0,
+  "before": {
+    "resources": 102,
+    "records": 102
+  },
+  "after": {
+    "resources": 103,
+    "records": 103,
+    "unique_external_ids": 103,
+    "source_versions": {
+      "v29": 97,
+      "v31": 1,
+      "v32": 2,
+      "v33": 1,
+      "v34": 1,
+      "v35": 1
+    },
+    "source_enriched_cases": 16,
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "resource_content_hash": "69118a20481e938a0c68762e8ed20477609585050cbebaa3287d720734cd90d0",
+  "backup": {
+    "file": "data-platform-arvectum_data-20261027T205522Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37471012,
+    "sha256": "739df1bd82b09d5964a16772d0cfa023644989cf4004a2e803969380449f9e74",
+    "verified_before_SQL": true
+  },
+  "post_commit_checks": [
+    "Postgres 103 resources 103 records and 103 unique canonical IDs",
+    "102 prior case resource hashes unchanged",
+    "Original source recorded with explicit indexed grade and unknown device nominal voltage",
+    "Five v35 tests + previous23 = 28 unit tests passed",
+    "Full materialized original-source GitHub v35 to PostgreSQL 103/103 content hash replay no drift",
+    "Non-PQ 2192 resources 2192 documents unchanged",
+    "Post-import --check-db idempotent: already_imported"
+  ],
+  "source_original_url": "https://www.tender.pro/api/tender/834269/view_public"
+}
