@@ -67,6 +67,11 @@ def inventory(*, leads_file: Path, source_roots: list[Path],
         number = str(lead.get("procedure_id") or "")
         docs = []
         for root in source_roots:
+            # An unnumbered index lead is not a procurement folder. root / ""
+            # would otherwise scan the entire source root and count manifests
+            # as case-specific original documents.
+            if not number:
+                continue
             folder = root / number
             if folder.is_dir() and not folder.is_symlink():
                 docs.extend(str(p) for p in folder.iterdir()

@@ -235,3 +235,24 @@ def test_scanned_commission_candidate_cannot_be_promoted_as_signed_supply():
     assert row["executed_contract_price_verified"] is False
     assert row["equipment_supply_verified"] is False
     assert row["market_total_eligible"] is False
+
+
+def test_unnumbered_lead_never_inherits_source_root_manifests(tmp_path):
+    from src.modules.market_intelligence.pq_gap_recovery import inventory
+    root = tmp_path / "originals"
+    root.mkdir()
+    (root / "canonical-manifest.json").write_text("{}")
+    leads = tmp_path / "leads.json"
+    leads.write_text(json.dumps({"records": [{
+        "procedure_id": None, "canonical_id": "index:ukrm:unresolved",
+        "source_url": "https://example.org/lead",
+    }]}))
+    result = inventory(leads_file=leads, source_roots=[root],
+                       queue_dir=tmp_path / "queue", output=tmp_path / "gaps.json")
+    row = json.loads((tmp_path / "gaps.json").read_text())["cases"][0]
+    assert result["lead_count"] == 1
+    assert result["with_local_documents"] == 0
+    assert row["procedure_id"] == ""
+    assert row["evidence_urls"] == ["https://example.org/lead"]
+    assert row["source_documents_local"] == []
+    assert "original_notice" in row["missing_or_unverified"]
