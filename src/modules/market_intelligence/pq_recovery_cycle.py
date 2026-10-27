@@ -14,12 +14,16 @@ from .pq_verified_stage import stage
 from .pq_verified_zip_expand import expand
 from .pq_zip_dp_resume import run as resume_zip_ingest
 from .pq_etp_card_audit import audit as audit_etp
+from .pq_contract_xml_index import scan as scan_contracts
+from .pq_contract_outcome_audit import audit as audit_contracts
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               runtime: Path, ontology: Path, dp_source: Path,
               max_cases: int = 8, network: bool = True, verified_reestr: Path | None = None,
-              etp_queue: Path | None = None) -> dict:
+              etp_queue: Path | None = None,
+              contract_root: Path | None = None,
+              contract_day_scan: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -71,6 +75,25 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
         report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8, ocr_empty=True)
     if zip_staged:
         report["zip_data_platform"] = resume_zip_ingest(source_root=zip_staged, runtime=runtime, dp_source=dp_source, max_files=min(max_cases * 2, 48))
+    if contract_root is not None:
+        contract_index_path = runtime / "contract-xml-evidence.json"
+        contract_index = scan_contracts(contract_root, leads)
+        contract_index_path.write_text(
+            json.dumps(contract_index, ensure_ascii=False, indent=2), encoding="utf-8")
+        contract_audit_path = runtime / "contract-outcome-audit.json"
+        contract_audit = audit_contracts(
+            leads_path=leads, contracts_path=contract_index_path,
+            contract_root=contract_root, day_scan_path=contract_day_scan)
+        contract_audit_path.write_text(
+            json.dumps(contract_audit, ensure_ascii=False, indent=2), encoding="utf-8")
+        report["contract_register"] = {
+            "records_matched": contract_audit["distinct_contract_lots_matched"],
+            "rub_prices_verified": contract_audit["contract_lots_with_rub_price"],
+            "signed_contracts_verified": contract_audit["signed_contracts_verified"],
+            "suppliers_verified": contract_audit["suppliers_verified"],
+            "outcome_audit": str(contract_audit_path),
+            "source_index": str(contract_index_path),
+        }
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
@@ -88,11 +111,14 @@ def main() -> None:
     p.add_argument("--offline", action="store_true")
     p.add_argument("--verified-reestr", type=Path)
     p.add_argument("--etp-queue", type=Path)
+    p.add_argument("--contract-root", type=Path)
+    p.add_argument("--contract-day-scan", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
                        ontology=a.ontology, dp_source=a.dp_source,
-                       max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue)
+                       max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue,
+                       contract_root=a.contract_root, contract_day_scan=a.contract_day_scan)
     print(json.dumps(result, ensure_ascii=False))
 
 
