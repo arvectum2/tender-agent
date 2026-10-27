@@ -133,9 +133,11 @@ def main() -> None:
                               regions=args.region, subsystems=args.subsystem,
                               max_calls=args.max_calls, execute=args.execute_eis)
         result["eis_batch"] = batch
-        target = args.output.resolve() / "eis_batch.json"
+        import hashlib as _hashlib
+        batch_id = _hashlib.sha256(json.dumps(batch["plan"]["selected"], sort_keys=True).encode()).hexdigest()[:16]
+        target = args.output.resolve() / f"eis_batch_{batch_id}.json"
         if target.exists() and json.loads(target.read_text(encoding="utf-8")) != batch:
-            raise ValueError("EIS batch differs from previous run; use another output directory")
+            raise ValueError("Source batch outcome changed; investigate existing receipt")
         target.write_text(json.dumps(batch, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
