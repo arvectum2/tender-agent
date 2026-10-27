@@ -19,8 +19,8 @@ from .pq_etp_card_audit import audit as audit_etp
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               runtime: Path, ontology: Path, dp_source: Path,
               max_cases: int = 8, network: bool = True, verified_reestr: Path | None = None,
-              etp_queue: Path | None = None) -> dict:
-    if not 1 <= max_cases <= 30 or not source_roots:
+              etp_queue: Path | None = None, verified_max_cases: int = 100) -> dict:
+    if not 1 <= max_cases <= 30 or not 1 <= verified_max_cases <= 100 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
     queue = runtime / "review-queue"
@@ -28,12 +28,14 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
     roots = [*source_roots, originals]
     staged = None
     zip_staged = None
+    # Source manifests are independent of network batch size. A smaller search
+    # budget must never truncate verified ZIP evidence or reset its resume cursor.
     if verified_reestr:
         staged = runtime / 'verified-official-originals'
-        staging_result = stage(source_root=verified_reestr, output_root=staged, max_cases=max_cases)
+        staging_result = stage(source_root=verified_reestr, output_root=staged, max_cases=verified_max_cases)
         roots.append(staged)
         zip_staged = runtime / "verified-zip-members"
-        zip_expansion = expand(source_root=verified_reestr, output_root=zip_staged, max_cases=max_cases)
+        zip_expansion = expand(source_root=verified_reestr, output_root=zip_staged, max_cases=verified_max_cases)
         roots.append(zip_staged)
     gaps = runtime / "evidence-gaps-cycle.json"
     report = {"schema_version": "pq-recovery-cycle/1", "network_enabled": network}
@@ -85,6 +87,7 @@ def main() -> None:
     p.add_argument("--ontology", type=Path, required=True)
     p.add_argument("--dp-source", type=Path, required=True)
     p.add_argument("--max-cases", type=int, default=8)
+    p.add_argument("--verified-max-cases", type=int, default=100)
     p.add_argument("--offline", action="store_true")
     p.add_argument("--verified-reestr", type=Path)
     p.add_argument("--etp-queue", type=Path)
@@ -92,7 +95,7 @@ def main() -> None:
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
                        ontology=a.ontology, dp_source=a.dp_source,
-                       max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue)
+                       max_cases=a.max_cases, verified_max_cases=a.verified_max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue)
     print(json.dumps(result, ensure_ascii=False))
 
 
