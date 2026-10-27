@@ -1,0 +1,43 @@
+{
+  "schema_version": "pq-source-delta/0.1",
+  "base": "verified_public_leads_20261027.v7.json",
+  "as_of": "2026-10-27",
+  "records": [
+    {
+      "canonical_id": "commercial:5534/1866-УДСН:lot1",
+      "procedure_id": "5534/1866-УДСН",
+      "deadline_date": "2024-11-26",
+      "publication_date": null,
+      "customer": "UDSgroup (exact legal buyer unverified)",
+      "item": "BСК-10-5 УХЛ1; delivery Izhevsk",
+      "equipment_voltage_kv": 10,
+      "nmck_rub": null,
+      "contract_rub": null,
+      "winner": null,
+      "source_tier": "original_corporate_search_index_cached",
+      "source_url": "https://uds-group.ru/tenders/oil-production/?sphrase_id=10398"
+    },
+    {
+      "canonical_id": "commercial:5631/018-Ял:lot1",
+      "procedure_id": "5631/018-Ял",
+      "deadline_date": "2025-01-13",
+      "publication_date": null,
+      "customer": "UDSgroup (exact legal buyer unverified)",
+      "item": "BСК10-0.5 and БСК6-0.5; delivery Ялыкское месторождение",
+      "equipment_voltage_kv_set": [
+        6,
+        10
+      ],
+      "nmck_rub": null,
+      "contract_rub": null,
+      "winner": null,
+      "source_tier": "original_corporate_search_index_cached",
+      "source_url": "https://uds-group.ru/tenders/oil-production/?sphrase_id=10398"
+    }
+  ],
+  "quality_notes": [
+    "Dates are deadlines, NOT publication dates",
+    "Original corporate page indexed but live unavailable, no protocol or signed contract verified",
+    "Do not infer installed capacity from model suffix and do not count as sales"
+  ]
+}
