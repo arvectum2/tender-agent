@@ -1,0 +1,20 @@
+{
+  "schema_version": "pq-research-notice-manifest/0.9",
+  "as_of": "2026-10-27",
+  "data_version": "v16",
+  "period": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v15.manifest.json",
+  "base_rows": 84,
+  "delta_file": "discovery_2023_2026_v16_delta.json",
+  "delta_rows": 3,
+  "total_rows": 87,
+  "known_prices_count": 36,
+  "original_signed_contract_xml_known_count": 4,
+  "production_imported_v12_rows": 71,
+  "new_research_only_rows": 16,
+  "census_complete": false,
+  "critical_caveat": "1.571bn and 1.518bn Rub values are whole 220kV EPC project costs not nominal PQ compensation equipment sales; do not sum Hani Lopcha title multiple times"
+}
