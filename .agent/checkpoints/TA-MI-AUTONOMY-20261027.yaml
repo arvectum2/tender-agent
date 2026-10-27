@@ -26,8 +26,8 @@ remaining:
   - "Build or adapt S0-S11 orchestration/worker with source-plan expansion, legal retries/fallbacks, checkpoint/resume and self-audit."
   - "Enrich original PQ outcomes and 2024 months and create expert-reviewed procurement gold fixtures for repeat notices, mixed EPC, unknown winner and false positives."
   - "Run relevant pytest/integration tests and source-anchored E2E; document limitations and final owner-facing report."
-last_verified_commit: "GitHub main 57678ca15e0bcef31f925100d310ed5d00c84ff2 (first 4 files); README/checkpoint later in same task"
-last_test_results: "GitHub fetch verified 4 files; schema parsed with 24 properties and 13 required keys; 3 JSONL training candidates parsed and all training_eligible=false; no runtime tests performed because no application code changed."
+last_verified_commit: "GitHub main 552a8bf48815c4c010d6c24b791f651edebf3a8d (six files published and fetched; last tested commit before final checkpoint metadata update)"
+last_test_results: "Six new files fetched/verified from GitHub; JSON Schema parses (24 properties, 13 required); three JSONL samples parse and meet required-field checks, all training_eligible=false; runtime tests not run because no application code changed. Autonomous executor not yet implemented."
 resume_instruction: >-
   Inspect the canonical MI-013 v20 corpus location and current branch status.
   Start from docs/tender_research/market_intelligence/README.md.
