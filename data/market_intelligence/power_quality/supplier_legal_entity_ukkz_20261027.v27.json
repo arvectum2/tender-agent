@@ -1,0 +1,103 @@
+{
+  "schema_version": "pq-supplier-OEM-affiliation/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v27",
+  "scope": "Supplier/Manufacturer identity graph — keep independently registered legal entities, no assertion that same address implies same contract counterparty.",
+  "entities": [
+    {
+      "id": "kz:bin:921240000477",
+      "name": "ТОО «Усть-Каменогорский конденсаторный завод»",
+      "country": "KZ",
+      "bin": "921240000477",
+      "role": "manufacturing_OEM",
+      "evidence": [
+        {
+          "url": "https://procurement.gov.kz/ru/registry/show_supplier/80179",
+          "tier": "Kazakhstan official state supplier register"
+        },
+        {
+          "url": "https://ukkz.com/ru/",
+          "tier": "company's official product and contact site"
+        }
+      ],
+      "market_relation": "Official manufacturer catalogue contains passive HV capacitor assemblies, thyristor SVC 10-35kV, STATCOM 6.6/10/11kV, active harmonic filters; presence in catalog NOT evidence of contracts won or independently localized Chinese/European controller origin."
+    },
+    {
+      "id": "ru:inn:7719766728",
+      "name": "ООО «Торговый дом «Усть-Каменогорский конденсатор»",
+      "short_name": "ООО ТД «УК Конденсатор»",
+      "country": "RU",
+      "inn": "7719766728",
+      "ogrn": "5107746012809",
+      "address": "Москва, Барабанный пер., д.4, офис IXа",
+      "role": "Russian trading-house channel; selected original EIS supplier in case 32514947144",
+      "links_to_OEM": "UKKZ factory own footer and partner pages publicly label TD UK Kondensator as Russian representation; not direct purchase from foreign factory",
+      "evidence": [
+        {
+          "url": "https://companies.rbc.ru/id/5107746012809-ooo-obschestvo-s-ogranichennoj-otvetstvennostyu-torgovyij-dom-ust-kamenogorskij-kondensator/",
+          "tier": "Russian independent registry mirror, INN OGRN name address"
+        },
+        {
+          "url": "https://ukkz.com/ru/institutam.html",
+          "tier": "factory own website: ТД УК Конденсатор representation"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103806743",
+          "tier": "original EIS 2025 Kusbass supplier winner protocol"
+        }
+      ]
+    },
+    {
+      "id": "ru:inn:7719863288",
+      "name": "ООО «Усть-Каменогорский конденсатор»",
+      "short_name": "ООО «УК КОНДЕНСАТОР»",
+      "country": "RU",
+      "inn": "7719863288",
+      "ogrn": "5137746153694",
+      "address": "Москва, Барабанный пер., д.4, помещение IXа",
+      "role": "distinct Russian supplier/distributor applicant in declaration of active filters, capacitors, BSK (do not equate with TD)",
+      "possible_named_offer_case": "32515582393",
+      "possible_case_INN_verification_status": "Unconfirmed: original commission PDF contains company name ООО УК КОНДЕНСАТОР but not INN; name/address match externally; do not assert RD223 identity without original supplier INN",
+      "evidence": [
+        {
+          "url": "https://b2b.house/company/OOO-UK-KONDENSATOR_226bfc07-d2c6-4f35-b88c-2c5368d5d684/",
+          "tier": "independent Russian legal entity lookup"
+        },
+        {
+          "url": "https://www.xn----7sbajahheyaepn1ca0aveqcb0fxl.xn--p1acf/kompaniya/ooo-uk-kondensator-5137746153694/",
+          "tier": "external product compliance declarations, not signed procurement contract"
+        }
+      ]
+    },
+    {
+      "id": "ru:inn:5029064895",
+      "name": "ООО «Усть-Каменогорский конденсатор» (старое)",
+      "country": "RU",
+      "inn": "5029064895",
+      "status": "liquidated",
+      "role": "historical legal name collision, NEVER use for 2025-2026 active winners",
+      "evidence": [
+        {
+          "url": "https://companies.rbc.ru/id/1025003514788-obschestvo-s-ogranichennoj-otvetstvennostyu-ust-kamenogorskij-kondensator/",
+          "tier": "historical independent company registry"
+        }
+      ]
+    }
+  ],
+  "industrial_competitor_opportunity": {
+    "company": "UKKZ",
+    "relevant_to_FGI": true,
+    "products": [
+      "HV passive capacitors",
+      "UKRM 6-35kV",
+      "SVC 10-35kV",
+      "STATCOM catalog 6.6/10/11kV",
+      "Active harmonic filters"
+    ],
+    "market_demand_verified_for_company": "Kuzbass trade-house won primary EIS commission in 2025 filter capacitor supply; Bashkirenergo named vendor likely another Russian entity but not yet INN-matched",
+    "manufacturer_site_statcom": "https://ukkz.com/ru/catalog/novinka-staticheskij-generator-reaktivnoj-mosh-nosti-statcom.html",
+    "manufacturer_site_svc": "https://ukkz.com/ru/catalog/staticheskie-tiristornye-kompensatory-reaktivnoj-moshchnosti.html",
+    "manufacturer_site_ahf": "https://ukkz.com/ru/catalog/aktivnye-filtry-garmonik.html",
+    "limitation": "Technical web claims not factory acceptance evidence. Specific 6-35kV certified series, TЗ acceptance and historical shipments require separate verification; catalog product marketing must not substitute protocol data."
+  }
+}
