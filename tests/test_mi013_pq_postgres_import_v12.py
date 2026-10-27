@@ -84,3 +84,9 @@ def test_preflight_requires_correct_database_and_three_tables() -> None:
             assert "schema not verified" in str(exc)
         else:
             raise AssertionError("wrong database accepted")
+
+
+def test_psql_command_tags_are_not_counted_as_preflight_results() -> None:
+    with patch.object(importer, "query", return_value="BEGIN\narvectum_data\n3\n0\n0\nCOMMIT\n"):
+        assert importer.inspect_target()["required_tables"] == 3
+        assert importer.inspect_target()["pq_resources"] == 0
