@@ -58,3 +58,18 @@ continuation_after_reauthorization_20261027:
   improvements: canonical corpus regression via MI013_PQ_CORPUS; offline stages pending not accepted; resume journal validation
   blockers: live EIS collection and original-document outcomes not yet executed; recursive filesystem search killed by host; no verified commercial ETP live acquisition
   resume_instruction: Find configured bounded EIS archive root using known configuration (avoid recursive filesystem scan); run source plan dry-run; run explicitly authorized bounded live collection; audit receipts; connect verified evidence to outcome graph; produce source-bound final report; keep status in_progress until E2E verified.
+
+verified_live_eis_20261027:
+  status: in_progress
+  last_verified_commit: 9df83849f75d27261be0f79368d61c018910b696
+  execution: real authenticated EIS SOAP via existing history collector on Mac mini
+  batches:
+    - "2024-04-15 region 78 PRIZ: 6 ZIP, 539 XML, verified_day"
+    - "2024-06-15 region 77 PRIZ: 1 ZIP, 3 XML, verified_day"
+    - "2024-03-15 region 78 RI223: 1 ZIP, 99 XML, verified_day"
+    - "2024-08-15 region 78 PRIZ: 3 ZIP, 295 XML, verified_day"
+  total_new_verified: 11 ZIP archives and 936 XML documents across 4 source-days
+  runtime: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/autonomous-mi013-20261027
+  tests: 16 passed against mounted canonical MI-013 v20 and EIS history plan
+  limitations: not 936 distinct tenders; no ETP live acquisition; no signed award verification from these source-days
+  resume_instruction: Continue bounded 2024 historical EIS source-day rounds, parse evidence from archived XML, acquire original attachments and verify award outcomes; extend commercial ETP coverage; publish report only when provenance checks complete.
