@@ -237,3 +237,31 @@ contract_register_xml_20261028:
   last_verified_commit: "7d5b7a77b9491010f167badf8f1eb2c6e49554f2"
   last_test_results: "12 tests passed; one upstream Starlette deprecation warning; 3 contract archives, 4 revisions, 3 unique contract records, zero parse errors."
   resume_instruction: "Extend pq_contract_xml_index to actual verified signature/supplier and 44-FZ sources, but never infer signed contract from a status code or contract date. Add exact notice+lot+contract dedup tests and run against 101 v29 cases; preserve the single hourly Watchdog and unrelated current-task checkpoint."
+
+public_223_primary_recovery_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Build source-grounded full-cycle Power Quality procurement analysis without inventing suppliers, contracts or prices"
+  definition_of_done: "Broader 2024-2026 primary documents, deduplicated contracts/lots, independent supplier evidence, researched roles and amounts, full acceptance tests and report"
+  completed:
+    - "Verified 3 original 223-FZ contract-register entries from 4 XML revisions across 101 v29 candidate leads; original SHA rechecked; source-day scan matches one."
+    - "Legal restriction documented: Rule 1132 paragraph 19 excludes supplier fields and signed contract copy from open 223-FZ contract registry."
+    - "Extracted 2 conservative commission participant candidates from original reviewed minutes: Technoprom qualified bidder for 32615614821; Elektrikservis commission-proposed winner for 32616280467 (OCR unverified)."
+    - "Added official 223 public EIS document page fallback with exact search-result notice number + GUID, strict URL validation, binary SHA, redacted receipts and bounded retry journal."
+    - "Downloaded 26 public-page source files for four 223 notices (32313008364, 32615969197, 32616120582, 32615614821); 2023 case is not in core 2024-2026 window."
+    - "Expanded 11 public-page ZIP attachments across these cases; 30 unique safe files staged, 2 oversized-entry-count 2023 ZIP attempts rejected by guard, 0 source compromise."
+    - "Canonicalized files by SHA, 30 unique files read by Data Platform, 27 extracted, 3 scanned PDFs unresolved; first scanned 32615969197 PDF OCR 2 pages produced 2509 provisional characters."
+    - "Confirmed exact SHA match between newly downloaded EIS protocols and previously known original documents; reviewed 3 public-page sourced ChatGPT packets, no signed awards inferred."
+    - "Unified pq_recovery_cycle includes contract audit, commission candidates, public EIS fallback ZIP canonical extraction, Data Platform and ARC review queue."
+    - "29 focused tests passed, one third-party Starlette deprecation warning."
+  current_step: "Expand source documents for remaining 2024-2026 notice cases and reconcile platform-specific procurement outcomes"
+  remaining:
+    - "Get original procurement/evaluation protocols and native ETP originals for remaining leads, using primary sources and bounded retries."
+    - "Separate bidder selection, registry-reported contract value, supplier identity and paid equipment-only value; review OCR source visually."
+    - "Improve public EIS attachment revision completeness and source-tier tagging inside individual review queue records."
+    - "Run 44-FZ original contract registry matching and wider 2024 historical source-day coverage."
+    - "Publish final deduplicated market study across 101-case v29 corpus only after coverage and evidence checks, otherwise explicitly state omissions."
+  last_verified_commit: "cba2e02cf1140b97ecd927fe51999169446ad68d"
+  last_test_results: "29 passed, 1 warning; 26 downloads in 4 notices; 30 unique ZIP children; 27 native Data Platform extractions; 2 deliberate 2023 ZIP safety refusals."
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  resume_instruction: "Inspect actual HEAD, checkpoint and primary-source receipts. Continue bounded pq_public_223_acquire from public223-attempts.json on uncovered 2024-2026 cases, then rerun safe ZIP expansion/canonical extraction, Data Platform ingest and source-quoted ChatGPT reviews. Do not repeat completed SHA-bound batches. Inspect ETP-specific official original documents and 44-FZ contracts, update this checkpoint, preserve hourly Tender Agent Watchdog and unrelated current-task.yaml."
