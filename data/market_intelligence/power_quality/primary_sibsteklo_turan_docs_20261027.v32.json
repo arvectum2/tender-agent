@@ -1,0 +1,119 @@
+{
+  "schema_version": "pq-first-party-technical-outcome-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v32",
+  "parent_manifest": "verified_public_leads_20261027.v31.manifest.json",
+  "existing_notice_records_enriched": 2,
+  "new_procurement_notices": 0,
+  "additional_primary_protocol_bidder_occurrences": 2,
+  "original_registered_signed_contracts_added": 0,
+  "source_patches": [
+    {
+      "canonical_id": "commercial:306-644:lot35",
+      "etp_code": "306-644",
+      "platform": "Bidzaar",
+      "organizer": "ООО «Сибирское стекло» (СИБСТЕКЛО)",
+      "publication_date": "2026-03-13",
+      "bid_deadline": "2026-03-31",
+      "platform_marked_completed_at": "2026-04-17",
+      "original_buyers_device_provided": true,
+      "scope_stage": "installation_and_commissioning_of_customer_furnished_6kv_ukrm_not_equipment_procurement",
+      "project": "СК-3, КТП №17 и РП №30, Новосибирск, ул. Даргомыжского, 8а",
+      "original_technical": {
+        "devices_to_install": 2,
+        "each_voltage_kv": 6,
+        "each_power_kvar": 900,
+        "total_power_kvar": 1800,
+        "unit_model": null,
+        "contractor_work": "Install two customer-supplied 6kV 900kvar UKRM in KTP-17 on fabricated frames, connect from existing 6kV buses in adjacent RP-30 and perform commissioning. Install Tavrida Electric KSO-272 modernization kit in RP-30 bay 8.",
+        "equipment_owner_before_work": "customer, in original chapter 2.1",
+        "contractor_provides": "mounting frames, KSO-272 modernization kit, relay protection, current transformers, wiring, labour, tools",
+        "onsite_visit_mandatory": true,
+        "duration_from_contract": "start within 5 calendar days, finish within 35 working days from work start",
+        "acceptance": "KS-2, KS-3, test reports and commissioning certificate",
+        "warranty_months": 24
+      },
+      "source_grade": "original_first_party_commercial_ETP_technical_DOCX_binary_sha256_verified",
+      "commission_selected_supplier_verified": false,
+      "original_signed_contract_verified": false,
+      "signed_amount_rub": null,
+      "hardware_new_sale_count": 0,
+      "classification_correction": "Original broader EPC category should be interpreted as works only on two customer-owned UKRM devices. 2×900kvar is commissioning scope, not volume of new UKRM sales or two awarded devices.",
+      "evidence": [
+        {
+          "tier": "original_Bidzaar_buyer_technical_DOCX_SHA256",
+          "url": "https://bidzaar.com/api/filestorage/files/download/8042258e-bd58-4efc-9f98-b00db6113f82",
+          "sha256": "28c970162cc7b36cff91df3b64ea4168c5717cc43554aea162440e6d10272516",
+          "bytes": 43070,
+          "locator": "Original ТЗ: 2 units UKRM 6kV 900kvar buyer-furnished, chapter 1.1 and 2.1, installation scope; 8,724 extracted characters"
+        },
+        {
+          "tier": "first_party_Bidzaar_procurement_page",
+          "url": "https://bidzaar.com/app/process/light/019ce668-617b-7b1a-861e-113ed78182af",
+          "locator": "Code 306-644, lot35, organizer СИБСТЕКЛО, 13Mar publication, 17Apr completed stage; no public winner or signed price"
+        }
+      ]
+    },
+    {
+      "canonical_id": "223fz:32413708738:lot1",
+      "original_notice": "32413708738",
+      "original_commission_protocol": "4/3119384",
+      "commission_date": "2024-07-26",
+      "commission_protocol_signed": "2024-07-29",
+      "project": "2024 Tyva PS220kV Turan grid expansion with 220kV shunt reactor (UShR) 40Mvar, 220kV capacitor bank (BSK) 110Mvar and 220kV lines",
+      "nominal_pq_device_voltage_kv": 220,
+      "target_voltage_6_35kV_device_in_lot_verified": false,
+      "nmc_ex_vat_rub": "688519316.67",
+      "nmc_inc_vat20_rub": "826223180.00",
+      "original_submitted_bids": 2,
+      "original_admitted_bids": 0,
+      "original_rejected_bids": 2,
+      "named_original_bidders": [
+        {
+          "company": "ООО «ЛЭМ»",
+          "inn": null,
+          "initial_offer_ex_vat_rub": "688519128.87",
+          "initial_offer_inc_vat20_rub": "826222954.64",
+          "commission_outcome": "rejected",
+          "reason": "Design/author supervision schedule contradicts project contract timeline; author supervision needed throughout construction but participant begins RD later than site start"
+        },
+        {
+          "company": "ООО «ЭНЕРГЕТИЧЕСКОЕ СТРОИТЕЛЬСТВО»",
+          "inn": null,
+          "initial_offer_ex_vat_rub": "688519316.67",
+          "initial_offer_inc_vat20_rub": "826223180.00",
+          "commission_outcome": "rejected",
+          "reason": "Schedule places design and author supervision after construction start, conflicts with original tender contracts"
+        }
+      ],
+      "final_commission_outcome": "tender_failed_all_bids_rejected",
+      "winner": null,
+      "original_registered_signed_contract_verified": false,
+      "actual_signed_contract_price_rub": null,
+      "source_quality": "Original EIS signed 29.07.2024 protocol says all two applications rejected and recommends new procurement if required. Duplicate indexed EIS IDs 95895747 and 95895888 are byte-identical (same SHA), NOT two original protocols.",
+      "market_scope_note": "This is 220kV compensation / lines mixed EPC and original tender FAILED. NMC 826.2m must not be counted as awarded PQ sales, signed revenues or target voltage 6–35kV investment.",
+      "evidence": [
+        {
+          "tier": "original_EIS_2024_admission_FINAL_DOCX",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=95895747",
+          "sha256": "692c0c546d581257a9855d7f5038a2f9f7147f2b9277b726c20303f0dbc1e25e",
+          "bytes": 40701,
+          "locator": "Original Протокол №4/3119384 26Jul signed29Jul, two named bidders, both rejected for schedule contradictions"
+        },
+        {
+          "tier": "original_EIS_binary_duplicate",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=95895888",
+          "sha256": "692c0c546d581257a9855d7f5038a2f9f7147f2b9277b726c20303f0dbc1e25e",
+          "bytes": 40701,
+          "locator": "Exactly same DOCX as id 95895747; no second signed award"
+        }
+      ]
+    }
+  ],
+  "research_population_limit": "Two existing procurement signals, no extra legal notices, no original signed contracts; first 6kV case is buyer-furnished equipment installation, second is failed 220kV EPC not relevant to strict medium voltage device hardware.",
+  "need": [
+    "For Sibsteklo search prior procurement for customer's owned 2×6kV900kvar device purchase from technical original chain, and selected installer if public",
+    "For Turan search independently verified retender / registered signed RD223 contract for same stage; do not equate 2024 failed competition with later EPC award",
+    "Continue 2024/2025 original direct 6-35kV hardware orders, original signed contracts"
+  ]
+}
