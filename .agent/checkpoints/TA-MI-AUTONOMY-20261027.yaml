@@ -194,3 +194,20 @@ v20_source_recovery_acceptance_20261027:
   last_test_results: "13 targeted pytest passed on Mac mini, 1 external Starlette deprecation warning. Full 100-row offline cycle: 8 official case folders, 19 staged documents, 16 extracted + 3 unverified OCR, no staging errors."
   source_quality: "Selection/recommendation in original commission protocol is NOT a verified signed contract; OCR winner/amount remains provisional pending original visual and contract check."
   resume_instruction: "Inspect git main and this checkpoint. Use isolated MI worktree, v20 leads at runtime/market-intelligence/pq-agent-pilot-live/leads-v20-materialized.json and docs/market_intelligence/PQ_RECOVERY_RUNBOOK_20261027.md. Extract safe source-bound ZIP children, index into Data Platform and ChatGPT queue. Then search EIS+ETP, retrieve original signed outcomes and cite exact source bytes. Preserve per-stage receipts, watchdog and worktree isolation; mark completed only after E2E report and tests."
+
+source_manifest_budget_guard_20261028:
+  status: in_progress
+  date_moscow: '2026-10-28'
+  task_id: TA-MI-AUTONOMY-20261027
+  reviewed_this_run: 7
+  reviewed_registry_ids: ['32615614821', '32615969197', '32616103025', '32616120582', '32616280467', '32616433248', '32616497692']
+  review_evidence: 'Seven new ChatGPT/ARC SHA-validated exact-source reviews persisted to private review queue; all relevant PQ with separate EPC/design and unknown signed outcomes; unreadable old PDF packet left pending.'
+  source_attempts: 'Bounded live cycle invoked with v20 100-row leads, verified-reestr and ETP queue; zero new eligible EIS or ETP probes because 33 official searches and 22 ETP attempts remain within retry windows. No new original signed contract or winner verified.'
+  incident_and_recovery: 'Network quantum max_cases=2 unintentionally rewrote 8-case verified ZIP manifest to 2 cases and reset ZIP cursor. Restaged 8 cases (19 SHA-verified originals, 64 ZIP members), matched original manifest SHA, independently rechecked 64 extracted-file SHA against two complete prior extraction receipts, and restored cursor to 64 without re-extraction.'
+  verified_zip_manifest_sha256: e14907200cdb0d65db019201f92860ba3bcc1b76dac906ceefc5b2b9f9079fcf
+  zip_data_platform_cursor: 64/64
+  code_fix_branch: agent/ta-mi-stable-source-manifest-20261028
+  code_fix_head: 88eed30f693b9d5152f6a4988091c3cf6aa56be8
+  tests: '6 targeted tests passed on isolated Mac mini worktree, 1 inherited warning.'
+  merge_gate: REVIEW
+  resume_instruction: 'Keep draft PR #516 unmerged due to overlapping main runner. Review narrow manifest-budget fix on this branch; run exact-head CI, preserve AM-4 and owner gates. In runtime resume one unreadable pending packet only if original PDF text/visual source becomes available. Search signed RD223/44-FZ contract registry and original protocols using permitted official adapters with durable receipts, respecting 6h EIS and 12h ETP retry windows; do not repeat verified 64 ZIP extractions or count EPC prices as device sales.'
