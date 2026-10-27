@@ -239,6 +239,11 @@ BEGIN
  (SELECT owner FROM dp_collections WHERE collection_id='{COLLECTION}')<>'tender-agent' THEN
    RAISE EXCEPTION 'wrong target tenant';
  END IF;
+ IF EXISTS (SELECT 1 FROM dp_resources
+    WHERE collection_id='{COLLECTION}'
+      AND metadata ? 'research_last_primary_enrichment') THEN
+   RAISE EXCEPTION 'refusing to overwrite newer original-source enrichment with v29';
+ END IF;
  IF (SELECT count(*) FROM dp_resources WHERE collection_id='{COLLECTION}')<>{other_before['resources']} OR
     (SELECT count(*) FROM dp_records WHERE resource_id IN
     (SELECT resource_id FROM dp_resources WHERE collection_id='{COLLECTION}'))<>{other_before['records']} THEN
@@ -379,6 +384,8 @@ def main() -> int:
         return 0
     if args.approved_command != ACK or args.backup_directory is None:
         raise SystemExit("explicit owner-approved per-command token and backup dir required")
+    if int(query("SELECT count(*) FROM dp_resources WHERE collection_id='arvectum-market-pq-6-35kv' AND metadata ? 'research_last_primary_enrichment';")):
+        raise RuntimeError("refuse v29 re-apply: newer original primary evidence exists; use v31+ incremental importer")
     full_backup = backup(args.backup_directory)
     print(json.dumps({"verified_pre_import_backup":full_backup},ensure_ascii=False),flush=True)
     response = query(make_sql(rows,report["db_before"]),timeout=160)
