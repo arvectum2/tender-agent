@@ -1,0 +1,170 @@
+{
+  "schema_version": "pq-original-award-role-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "parent_manifest": "verified_public_leads_20261027.v19.manifest.json",
+  "original_evidence_corpus": "data/market_intelligence/power_quality/official_case_dossiers_20261026.v1.json",
+  "status": "original_tender_protocols_and_contract_registry_source_grade_carefully_separated",
+  "patches": [
+    {
+      "canonical_id": "223fz:32616433248:lot1",
+      "fields": {
+        "original_protocol_named_bidder": "ООО «СТРОЙЭНЕРГОИМПОРТ»",
+        "original_protocol_named_bidder_inn": "7801564611",
+        "original_protocol_bidder_role": "sole_admitted_EPC_bidder_selected_for_possible_direct_contract",
+        "bid_submission_count": 1,
+        "original_protocol_accepted_bid_rub": "56330673.93",
+        "original_protocol_final_date": "2026-10-19",
+        "reported_contract_total_rub": null,
+        "original_registry_contract_verified": false,
+        "original_protocol_equipment_voltage_kv": 35,
+        "original_protocol_ukrm_min_mvar": 3.5,
+        "original_equipment_cost_base_year_2025_rub": "10780666.67",
+        "original_ukrm_project_cost_base_year_2025_rub": "11802087.10",
+        "equipment_cost_is_signed_sale": false
+      },
+      "source_evidence": [
+        {
+          "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616433248",
+          "tier": "original_EIS_protocol_and_technical_BoQ_sha_verified",
+          "sha256": "98062c8f6bb47d177c7630374a8f57193dcf4177e7fd37f3204cf140de05de4e",
+          "locator": "ПРОТОКОЛ итоги 19.10.2026 03-3_-_5147.zip; original LOT 26Т0210040.0017; admitted sole bidder name/ИНН"
+        },
+        {
+          "url": "https://poisktenderov.ru/item/223/32616433248/",
+          "tier": "independent_secondary_page_explicit_vendor_name_and_inn",
+          "locator": "Winner ООО СтройЭнергоИмпорт ИНН7801564611, procurement NMC 56330673.93"
+        }
+      ],
+      "interpretation": "Original protocol does not confirm signed contract; competition FAILED as only one offer; original commission recommends contracting sole participant at or below offer after possible price negotiations. Contractor is EPC bidder, not verified OEM manufacturer; UKRM 35kV>=3.5Mvar has only base-year 2025 estimated equipment price not contract sale."
+    },
+    {
+      "canonical_id": "223fz:32615614821:lot1",
+      "fields": {
+        "original_protocol_named_bidder": "ООО «ТЕХНОПРОМ»",
+        "original_protocol_named_bidder_inn": null,
+        "original_protocol_bidder_role": "sole_admitted_EPC_participant_commission_direct_procurement_decision",
+        "bid_submission_count": 1,
+        "original_protocol_accepted_bid_rub": "1833358.30",
+        "original_protocol_bid_basis": "without_VAT",
+        "original_protocol_final_date": "2026-03-03",
+        "original_registry_contract_verified": true,
+        "original_registry_contract_number": "50277071467260002650000",
+        "original_registry_contract_price_rub": "1833358.30",
+        "original_registry_supplier_identity_verified": false,
+        "original_equipment_model": "УКРМ56-6,3-200-(1х50+2х75) М4",
+        "original_equipment_voltage_kv": 6.3,
+        "original_equipment_power_kvar": 200
+      },
+      "source_evidence": [
+        {
+          "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615614821",
+          "tier": "original_final_commission_protocol_sha_verified",
+          "sha256": "31a9ea56be8205e2f011328ce24dd7f65a3aa56637a5a422cbdcba30643c4475",
+          "locator": "Commission 03.03.2026; named sole participant ООО ТЕХНОПРОМ, offer exVAT 1833358.30"
+        },
+        {
+          "url": "https://zakupki.gov.ru/epz/contractfz223/",
+          "tier": "RD223_original_contractCutted_sha_verified",
+          "sha256": "689bd66076c493c40f76c84d757528374c1b3e19b2fb41f8ca08d09d14911640",
+          "locator": "Contract registry 50277071467260002650000, 14.04.2026, 1833358.30, supplier identity redacted"
+        }
+      ],
+      "interpretation": "Original protocol identifies selected bidder ООО ТЕХНОПРОМ, but original contract registry XML hides registered vendor. Do not assert signed counterparty same entity without original unredacted contract; EPC installation price is NOT 6.3kV capacitor bank equipment revenue."
+    },
+    {
+      "canonical_id": "223fz:32616120582:lot1",
+      "fields": {
+        "original_protocol_named_bidder": null,
+        "original_protocol_named_bidder_inn": null,
+        "original_protocol_bidder_role": "selected_bid_application_only_identity_hidden",
+        "original_protocol_accepted_bid_rub": "17000000.00",
+        "original_protocol_other_bid_rub": "21120361.66",
+        "original_protocol_winning_application_id": "4149972340",
+        "original_protocol_other_application_id": "1914816005",
+        "bid_submission_count": 2,
+        "original_registry_contract_verified": true,
+        "original_registry_contract_number": "57802312751260008280000",
+        "original_registry_contract_price_rub": "17000000.00",
+        "original_registry_supplier_identity_verified": false,
+        "original_equipment_revenue_verified": false
+      },
+      "source_evidence": [
+        {
+          "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616120582",
+          "tier": "original_protocol_docx_sha_verified",
+          "sha256": "0e25df1000d765d38a5445150d1a5637b39dd970438dbb627e68aa60b9222f26",
+          "locator": "Accepted application 4149972340, proposed 17m EPC; 2 bids"
+        },
+        {
+          "url": "https://zakupki.gov.ru/epz/contractfz223/",
+          "tier": "original_RD223_XML_sha_verified",
+          "sha256": "42e2cb76fb4a7919a46024ce1072d2cafbf51e375d8372d1d208da90286015ec",
+          "locator": "Contract 57802312751260008280000 dated 19.08.2026 total 17m, supplier hidden"
+        }
+      ],
+      "interpretation": "Real contract total 17m and winning bid application identified, but vendor not. Whole 6kV line project with UKRM; not 17m manufacturer revenue."
+    },
+    {
+      "canonical_id": "223fz:32616412267:lot1",
+      "fields": {
+        "original_protocol_named_bidder": null,
+        "original_protocol_named_bidder_inn": null,
+        "original_protocol_bidder_role": "ranked_bidder_anonymous",
+        "bid_submission_count": 3,
+        "original_protocol_winning_application_id": "2",
+        "original_protocol_lowest_bid_rub": "2590000.00",
+        "original_protocol_second_bid_rub": "3225756.78",
+        "original_protocol_third_bid_rub": "3843800.00",
+        "original_registry_contract_verified": true,
+        "original_registry_contract_number": "53801006828260000720000",
+        "original_registry_contract_price_rub": "2639026.64",
+        "bid_vs_signed_price_not_equal": true,
+        "already_installed_ukrm_count": 2,
+        "already_installed_ukrm_model": "УКРМ-6,3-900",
+        "new_equipment_purchase_verified": false
+      },
+      "source_evidence": [
+        {
+          "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32616412267",
+          "tier": "original_protocol_xml_sha_verified",
+          "sha256": "bdf9dc0e6cb54eddaffbed86e1ef9f2d658b07837bb8ea501f06e2da08fa65c9",
+          "locator": "Three anonymous proposals 2590000 / 3225756.78 / 3843800; final protocol Oct8 2026"
+        },
+        {
+          "url": "https://zakupki.gov.ru/epz/contractfz223/",
+          "tier": "original_RD223_XML_sha_verified",
+          "sha256": "8f28cb626ed97722536de77cf73a83f9fb9858d3f8490bcfe12ec1b17b13340f",
+          "locator": "Registry 53801006828260000720000 Oct19 price 2639026.64"
+        }
+      ],
+      "interpretation": "Signed original total 2639026.64 differs from first-ranked 2590000.00: do not silently replace one with the other; works are maintenance/testing of already installed two 6.3kV UKRM, not new equipment sales."
+    },
+    {
+      "canonical_id": "223fz:32615969197:lot1",
+      "fields": {
+        "original_protocol_named_bidder": null,
+        "bid_submission_count": 0,
+        "original_protocol_final_date": "2026-05-19",
+        "original_protocol_result": "failed_zero_applications",
+        "signed_contract_verified": false,
+        "original_equipment_voltage_kv": 10,
+        "scope_not_equipment_sale": true,
+        "related_repeat_procedure": "32616103025"
+      },
+      "source_evidence": [
+        {
+          "url": "https://zakupki.gov.ru/epz/order/notice/notice223/documents.html?purchaseNoticeNumber=32615969197",
+          "tier": "original_commission_protocol_pdf_sha_verified",
+          "sha256": "5d5e57e3b0b7cf9791e365c4f82f1b0b3e22c03d7103d82fdedc5cf2a16e713a",
+          "locator": "No bidders Pionerskaya design 10kV, commission May19, original 518960 NMC"
+        }
+      ],
+      "interpretation": "No bids means zero award, no design contract from this notice; second 32616103025 again no bidders Jun23, one underlying Pionerskaya need."
+    }
+  ],
+  "no_new_cards": true,
+  "active_source_rows": 100,
+  "original_protocols_with_named_company": 2,
+  "original_registered_signed_contracts_in_these_cases": 3,
+  "manufacturer_identity_confirmed_in_these_cases": 0
+}
