@@ -35,7 +35,7 @@ Expected before import: 71 staged rows, database `arvectum_data`, 3 required tab
 
 ```sh
 cd /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import
-/Volumes/ArvectumSSD/arvectum/repos/tender-agent/.venv/bin/python -m pytest -q tests/test_mi013_pq_\*.py
+/Volumes/ArvectumSSD/arvectum/repos/tender-agent/.venv/bin/python -m pytest -q tests/test_mi013_pq_*.py
 ```
 
 If pytest unavailable, run the standard pinned `uv` venv from Tender repo only after confirming its dependencies; NEVER install packages as a side effect of preflight.
