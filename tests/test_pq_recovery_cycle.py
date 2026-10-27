@@ -49,7 +49,7 @@ def test_cycle_contract_register_stage(tmp_path: Path):
         return_value={"distinct_contract_lots_matched": 0,
                       "contract_lots_with_rub_price": 0,
                       "signed_contracts_verified": 0,
-                      "suppliers_verified": 0}) as audit:
+                      "suppliers_verified": 0, "records": []}) as audit:
         result = run_cycle(leads=tmp_path / "leads.json", source_roots=[source],
                            archive_index=tmp_path / "index.json",
                            runtime=runtime, ontology=tmp_path / "ontology.yaml",
@@ -60,3 +60,5 @@ def test_cycle_contract_register_stage(tmp_path: Path):
     assert result["contract_register"]["records_matched"] == 0
     assert (runtime / "contract-xml-evidence.json").exists()
     assert (runtime / "contract-outcome-audit.json").exists()
+    assert (runtime / "commission-candidates.json").exists()
+    assert result["commission_candidates"]["supplier_verified"] == 0
