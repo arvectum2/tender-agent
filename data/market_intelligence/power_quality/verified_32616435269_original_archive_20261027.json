@@ -1,0 +1,125 @@
+{
+  "schema_version": "pq-original-procurement-evidence/1.0",
+  "as_of": "2026-10-27",
+  "procurement_id": "32616435269",
+  "canonical_id": "223fz:32616435269:lot1",
+  "source_tier": "original_signed_official_procurement_document_rehosted_public_mirror",
+  "source_host": "cdn.kontendus.ru",
+  "original_doc_bundle_url": "https://cdn.kontendus.ru/documents/32616435269/da0fadde-1019-5aef-85fd-9343c3928a35/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F_%D0%BE_%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B5_26-1174.7z",
+  "original_archive_sha256": "5f9e406c56254891514dec2e9f8689417782bce298e5e4cb433375d1806cbb65",
+  "original_archive_bytes": 695885,
+  "archive_download_verified": true,
+  "archive_extracted_verified": true,
+  "documents": [
+    {
+      "path": "Извещение о закупке 26-1174.docx",
+      "sha256": "d11c45774d2fb8010cf6c639c231b451387acdba3c2aaeb6586215d66cd35eeb",
+      "support": "paragraph 37: exact initial price ex VAT 370504918.04, VAT explicitly 22 percent; paragraph 38: 452016000.01 incl VAT"
+    },
+    {
+      "path": "Приложение 2 - Техническое задание/Приложение 1.xlsx",
+      "sha256": "acd196f12cc911bb8ab59a2a95f760c17dc85a5f5e8a9fb7b4fcddf3dab06e80",
+      "support": "sheet1!B9:J12 supply lines and NET procurement total"
+    },
+    {
+      "path": "Приложение 3 - Обоснование НМЦ/СО 6.3140 Приложение Расчет стоимости (1).xlsx",
+      "sha256": "e8973af7e7427b9a286f1bed8c5d16583c0c7a62a60b752b7af41d762346a097",
+      "support": "sheet1!B8:J10 price calculation for MPU and BSK hardware net 369075409.84"
+    },
+    {
+      "path": "Приложение 2 - Техническое задание/Приложение 2.docx",
+      "sha256": "79c87c8ac562139cde971db8b2aff9ce83ba8fed7c838d43f745cad6be778458",
+      "support": "technical characteristic rows: entire 110kV reactive power source, MPU 30000/10 10kV, -30 Mvar inductive and 52 Mvar capacitive, automatic settings 90-125kV and 20ms reaction."
+    },
+    {
+      "path": "Приложение 2 - Техническое задание/ТЗ на поставку.docx",
+      "sha256": "8ccecf8a3c18158ed4f2cf7ce864cf40bcf8b7254de1b163c5e1b0f655bbcb63",
+      "support": "location: Tяжинский РЭС ПО СВЭС, equipment supply 365 days on order; 5y warranty, service center in RF"
+    }
+  ],
+  "buyer": "ПАО Россети Сибирь / Кузбассэнерго-РЭС",
+  "project": "ПС Тяжинская, комплект источника реактивной мощности 110 кВ",
+  "plan_type": "procurement_notice_initial_cost_not_awarded_contract",
+  "bid_deadline_reported": "2026-10-30T12:00:00+03:00",
+  "status_as_of_date": "open_bid_period",
+  "equipment_components": [
+    {
+      "line_id": "1",
+      "sap": "1000024773",
+      "model": "ПС Тяжинская МПУ 30000/10 УХЛ1",
+      "category": "medium_voltage_modular_power_converter",
+      "nominal_voltage_kv": 10,
+      "qty": 1,
+      "unit": "шт",
+      "net_rub": "335351974.38",
+      "source": "Приложение 2 - Техническое задание/Приложение 1.xlsx",
+      "range": "B9:J9"
+    },
+    {
+      "line_id": "2",
+      "sap": "1000024770",
+      "model": "Батарея БСК-110-26 ХЛ1",
+      "category": "110kv_shunt_capacitor_bank_outside_strict_voltage",
+      "nominal_voltage_kv": 110,
+      "qty": 1,
+      "unit": "шт",
+      "net_rub": "33723435.46",
+      "source": "Приложение 2 - Техническое задание/Приложение 1.xlsx",
+      "range": "B10:J10"
+    },
+    {
+      "line_id": "3",
+      "sap": null,
+      "model": "Услуги шеф-инженера при монтаже за 1 трансформатор",
+      "category": "engineering_service_not_hardware",
+      "nominal_voltage_kv": null,
+      "qty": 1,
+      "unit": "услуга",
+      "net_rub": "1429508.20",
+      "source": "Приложение 2 - Техническое задание/Приложение 1.xlsx",
+      "range": "C11:J11"
+    }
+  ],
+  "summary": {
+    "quantity_lines": 3,
+    "component_net_total_rub": "370504918.04",
+    "hardware_only_net_rub": "369075409.84",
+    "net_initial_price_rub": "370504918.04",
+    "vat_percent": "22",
+    "gross_initial_price_rub": "452016000.01",
+    "medium_voltage_power_converter_net_rub": "335351974.38",
+    "medium_voltage_power_converter_share_of_initial_net_percent": "90.51",
+    "shunt_capacitor_bank_110kv_net_rub": "33723435.46",
+    "supervision_net_rub": "1429508.20",
+    "contract_price_rub": null,
+    "contract_awardee": null,
+    "contract_supplier_verified": false
+  },
+  "technical_parameters": {
+    "complete_system_nominal_voltage_kv": 110,
+    "complete_system_max_working_voltage_kv": 126,
+    "converter": "МПУ-30000/10 УХЛ1",
+    "converter_nominal_voltage_kv": 10,
+    "converter_max_working_voltage_kv": 12,
+    "converter_reactive_power_inductive_mvar": 30,
+    "converter_reactive_power_capacitive_mvar": 30,
+    "complete_system_reactive_power_inductive_mvar": 30,
+    "complete_system_reactive_power_capacitive_mvar": 52,
+    "regulation_range_original_string": "−30…+56 Мвар with 110kV BSK switched",
+    "selective_harmonic_filtering_required": true,
+    "reaction_ms_max": 20
+  },
+  "related_project_procedures": [
+    "32515044454",
+    "32616354211"
+  ],
+  "project_demand_group": "TYAZHINSKAYA-SKRM52-2025-2026",
+  "evidence_limits": [
+    "Original archived notice available through third-party mirror, not directly through government EIS endpoint; SHA256 and original content verified.",
+    "NMC is not actual signed contract/revenue, and supplier cannot be inferred.",
+    "10kV MPU is an actual priced line, but its use in a 110kV overall power quality complex must be described separately for strict 6-35kV market segmentation.",
+    "BSK-110 battery has 110kV nominal voltage and is outside strict 6-35kV equipment market.",
+    "Excel NMC cost breakdown is underlying tender line price, not vendor actual selling price.",
+    "Source archive is the initial file and a later amended version may adjust details; final original amended attachment remains to review."
+  ]
+}
