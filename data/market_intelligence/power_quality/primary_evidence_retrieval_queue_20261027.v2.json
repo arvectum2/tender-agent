@@ -1,0 +1,183 @@
+{
+  "schema_version": "pq-evidence-retrieval-queue/0.2",
+  "as_of": "2026-10-27",
+  "purpose": "Acquire primary technical specs, contracts, participant decisions for sourcing leads. Read-only retrieval. No bid submission, contracts or production writes.",
+  "tasks": [
+    {
+      "priority": 1,
+      "procedure_id": "32515218366",
+      "owner": "АО Россети НТЦ",
+      "document_targets": [
+        {
+          "name": "Итоговый протокол_13 от 27.10.2025.pdf",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=106226851"
+        },
+        {
+          "name": "V_Техническая часть.docx",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=105316477"
+        }
+      ],
+      "mirror": "https://poisktenderov.ru/item/223/32515218366/",
+      "last_attempt": "2026-10-27",
+      "last_result": "EIS files HTTP404 from Mac mini, mirror HTML reveals both exact document IDs; attachments not read",
+      "need": [
+        "protocol award winner, whether contract signed",
+        "extract PQ components share from mixed 49.9m initial price"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "32616296475",
+      "owner": "ООО Водоканал, Мелеуз",
+      "document_targets": [],
+      "mirror": "https://zakupki.tochka.com/search/22844514-1/",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary listing reports contract 07.09.2026, original signed contract amount/supplier masked",
+      "need": [
+        "original document TЗ voltage",
+        "RD223 registered contract number, supplier and signed total"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "ГП630876",
+      "owner": "ООО НОВАТЭК-УСТЬ-ЛУГА",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary equipment list indicates modernisation of existing UKRM 10kV; original archives not read",
+      "need": [
+        "Технические требования.xlsx; Модернизация УКРМ.7z; Заводская документация на УКРМ.7z",
+        "award supplier, price, number of reactive stages"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "4565274",
+      "owner": "Михайловский ГОК",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/b2b/4565274--kurskaya-obl-zakupka-kondensatornoj-ustanovki-10-kv-aukrm-uk1-uk2-dlya",
+      "last_attempt": "2026-10-27",
+      "last_result": "Explicitly replaces previous contest 4538400, overlap with 4561228 possible",
+      "need": [
+        "decision protocol and original spec for 4538400, 4561228, 4565274",
+        "confirm whether UK1/UK2 are one need, avoid triple counting"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "5747901",
+      "owner": "ООО Эльбрус Дриллинг",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/zakupkimosru/5747901--neneckij-aokr-modernizaciya-ustanovki-kompensacii-reaktivnoj",
+      "last_attempt": "2026-10-27",
+      "last_result": "One UKRM modernization listed; compare 4158439 September 2025 no bids",
+      "need": [
+        "original ТЗ_Т45",
+        "same-demand group and result/winner"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "5534/1866-УДСН;5631/018-Ял",
+      "owner": "UDSgroup",
+      "document_targets": [],
+      "mirror": "https://uds-group.ru/tenders/oil-production/?sphrase_id=10398",
+      "last_attempt": "2026-10-27",
+      "last_result": "Only indexed corporate archive; names, bid deadlines and voltage models found; live page not reverified",
+      "need": [
+        "full procurement PDFs",
+        "buyer legal INN",
+        "lot quantity, contract outcome, prices"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": null,
+      "owner": "ООО Подпорожские электрические сети / ООО ЭНЕРГОЗАПАД",
+      "document_targets": [],
+      "mirror": "https://b2b.house/company/OOO-PES_01eef801-88e4-41db-aa2e-30d823b0a109/",
+      "last_attempt": "2026-10-27",
+      "last_result": "Cross-source item match UKRM-6,3-300-УХЛ1-IP54, 1 pc, aggregated supplier total 293080 RUB, no tender date",
+      "need": [
+        "original procurement number and date",
+        "buyer-supplier official registry verification",
+        "buyer-specific signed contract total"
+      ]
+    },
+    {
+      "priority": 3,
+      "procedure_id": "32515582393",
+      "owner": "ООО Башкирэнерго",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/b2b/4283612--bashkortostan-resp-postavka-ustanovki-kondensatornoj-ukrm-dlya-po-nes",
+      "last_attempt": "2026-10-27",
+      "last_result": "NMC 5880000 RUB VAT included; voltage, actual contract, winner unavailable",
+      "need": [
+        "contract registry",
+        "UKRM voltage/capacity/quantity"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515029641",
+      "owner": "ПАО Россети / МЭС Юга",
+      "document_targets": [],
+      "mirror": "https://energybase.ru/distribution/fsk-ees/tenders/condensers-compensators",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary industry category reveals tender number, 2025-07-10 published, NMC 3621456 ₽ and supply of capacitors for power filters; primary specs unavailable",
+      "need": [
+        "Nominal voltage/harmonic filter specification",
+        "winner, signed contract and detailed capacitor supplier/brand"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32514947144",
+      "owner": "ПАО Россети / Кузбасское ПМЭС",
+      "document_targets": [],
+      "mirror": "https://energybase.ru/distribution/fsk-ees/tenders/condensers-compensators",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary industry category reveals tender number, 2025-06-17 published, NMC 3186960 ₽ and supply of capacitors for power filters",
+      "need": [
+        "Nominal voltage and quantity of filter capacitors",
+        "EIS original award protocol and signed contract"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515225588",
+      "owner": "ПАО Россети / ПС Славянская и Афипская",
+      "document_targets": [],
+      "mirror": "https://energybase.ru/distribution/fsk-ees/tenders/condensers-compensators",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary industry category: 2025-09-18 design of replacement of three SVC/СТК, NMC 27175270 ₽, 220kV PS rating; supplier/design firm unknown",
+      "need": [
+        "Original design tender SVC technology voltage, including if 6–35 kV coupling stage",
+        "Project designer winner, registered engineering contract",
+        "Check relation to older PС Кирилловская/Славянская/Афипская tender"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515208744",
+      "owner": "ПАО Россети / ПС Юктали и Хорогочи",
+      "document_targets": [],
+      "mirror": "https://poisktenderov.ru/item/223/32515208744/",
+      "last_attempt": "2026-10-27",
+      "last_result": "223-FZ indexed detailed notice 2025-09-12 NMC 56688490 ₽, no original RAR read, mixed EPC title includes 128/154Mvar SKRM at adjacent PS",
+      "need": [
+        "Actual EPC bill of quantity to distinguish Yuктали/Horogochi from named 128/154 Mvar SKRM sites",
+        "Original protocol and awarded EPC, signed contract and project engineer",
+        "Do not attribute full EPC NMC to PQ devices"
+      ]
+    }
+  ],
+  "metrics": {
+    "open_tasks": 12,
+    "source_urls_direct": 2,
+    "confirmed_primary_protocol_new_in_this_queue": 0,
+    "commercial_effects_performed": 0
+  },
+  "supersedes": "primary_evidence_retrieval_queue_20261027.json"
+}
