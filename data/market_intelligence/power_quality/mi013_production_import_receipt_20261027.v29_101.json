@@ -1,0 +1,68 @@
+{
+  "schema_version": "mi013-postgres-incremental-import/1.0",
+  "as_of": "2026-10-27",
+  "task_id": "MI-013-PQ-CORPUS-PASS3-20261027",
+  "source_branch": "research/mi013-pq-corpus-20261027-pass2",
+  "corpus_version": "v29",
+  "manifest": "verified_public_leads_20261027.v29.manifest.json",
+  "importer": "scripts/market_intelligence/import_pq_postgres_v29.py",
+  "tested_commit": "2527d306b53ac53d4c798f10bb150e25a8f7bf56",
+  "database": "arvectum_data",
+  "container": "arvectum-postgres",
+  "collection": "arvectum-market-pq-6-35kv",
+  "source_type": "market_intelligence_procurement_research",
+  "stage_rows": 101,
+  "previous_resources": 71,
+  "previous_records": 71,
+  "added_resources": 30,
+  "added_records": 30,
+  "updated_preexisting_resource_contents": 71,
+  "unchanged_other_collections": 26,
+  "backup": {
+    "file": "data-platform-arvectum_data-20261027T185330Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37423404,
+    "sha256": "55a31201d7d2620bba64e28e578ba325938a0613a33309f52fed1558c4819d7b"
+  },
+  "backup_verified_before_apply": true,
+  "stage_sha256": "5ed3a0ec5508bc65912d5743d141e7dfb7715cbae755712a8514b8ab652ea1e4",
+  "apply": "single PostgreSQL transaction committed; live readback PASS",
+  "after": {
+    "resources": 101,
+    "records": 101,
+    "unique_external_ids": 101,
+    "metadata_data_version_v29": 101,
+    "review_unreviewed": 101,
+    "revision_distribution": {
+      "1": 30,
+      "2": 71
+    },
+    "existing_primary_enrichment_records": 12,
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "pre": {
+    "other_resources": 2192,
+    "other_records": 0,
+    "all_documents": 2192
+  },
+  "engineering_stage_elga_imported_as_procurement": false,
+  "source_quality": {
+    "primary_registered_signed_contracts_verified": 5,
+    "original_named_company_appearances": 28,
+    "market_population_complete": false
+  },
+  "tests": {
+    "unittest": "8 passed",
+    "post_import_idempotence_read_only": "101 existing staged, zero missing, no collision",
+    "source_integrity_validation": "101 unique, 71 original ids, 30 new, v28 mixed voltage two lots preserved",
+    "live_SQL": "101/101 and 71 old revision2+30 new revision1"
+  },
+  "notes": [
+    "Do not confuse procurement signals with 101 distinct awarded/signed contracts or market TAM.",
+    "All original 71 resource IDs and record review_status preserved; source record content and metadata refreshed by deterministic materialisation from v20 + original append-only v21-28 source sidecars.",
+    "Original v29 manifest 71/30 is a pre-import observation; v30 publication supersedes operational counts.",
+    "Production SQL only touched the target pq collection in a single guarded transaction, and did not create dp_documents or embeddings."
+  ]
+}
