@@ -1,0 +1,69 @@
+{
+  "schema_version": "pq-original-2024-engineering-leads/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v29",
+  "base_manifest": "verified_public_leads_20261027.v28.manifest.json",
+  "added_procurement_notices": 0,
+  "added_primary_engineering_design_needs": 1,
+  "projects": [
+    {
+      "id": "engineering:2024:ps-elga-35-6kv-600kvar",
+      "title": "Строительство ВЛ 35кВ Вахтовый поселок – Эльга; ПС 35/6кВ Эльга",
+      "original_document": "Д-00001-ТМ-2024-ИЛО5.1.1",
+      "document_date": "2024-09-30",
+      "original_file_revision": "02.10.2024 изм.0",
+      "role_at_original_titlepage": "ООО Албынский рудник as general designer, not equipment supplier",
+      "scope_stage": "original engineering design only",
+      "tech": {
+        "voltage_kv": 6,
+        "reactive_kvar": 600,
+        "stage_kvar": [
+          200,
+          200,
+          200
+        ],
+        "automation": "automated factory-built compensator with multifunction control",
+        "placement": "indoor OPU, KРУН 6kV"
+      },
+      "source": {
+        "url": "https://etp.metal-it.ru/files/get/887fjTd5bkcxpDUVom6f4xnhpi5ckc7fAoLfrqRfYwazHE1fTNkT9shm7XVC3vdh3L/%D0%94-00001-%D0%A2%D0%9C-2024-%D0%98%D0%9B%D0%9E5.1.1_%D0%B8%D0%B7%D0%BC.0_02.10.24.pdf",
+        "sha256": "358293efaea44266e32a291a21bfcc87554fe4f404b02633d125df68975bf208",
+        "bytes": 5936108,
+        "pdf_pages": 65,
+        "page_1_based": 20,
+        "source_kind": "original ETP posted 2024 65-page project design PDF, visual+text verified"
+      },
+      "original_notice_number": null,
+      "signed_contract": null,
+      "supplier": null,
+      "OEM": null,
+      "contract_price_rub": null,
+      "installed_verified": false,
+      "count_in_procurement_census": false,
+      "next": "Link this primary engineering project to an independent ETP procurement notice or signed equipment contract before counting as sourced procurement or turnover."
+    }
+  ],
+  "historical_triage": [
+    {
+      "old_canonical_id": "223fz:chges24621PR:lot1",
+      "note": "2024 chirkheygestroy four UKRM for kiosks KTP400/630kVA, voltage unknown, could be low voltage: not proven 6-35kV",
+      "url": "https://synapsenet.ru/zakupki/lotonline/chges24621pr--stavropolskij-kraj-postavka-4-chetireh-shtuk-avtomaticheskih"
+    },
+    {
+      "old_canonical_id": "commercial:895449:lot1",
+      "note": "2024 RMC EPC 6 UKRM for 10/0.4kV TP, UKRM voltage not in secondary offer; exclude as proven MV capacity until original forms reveal.",
+      "url": "https://zakupki.kontur.ru/IS44114609"
+    },
+    {
+      "old_canonical_id": "commercial:РН41205245:lot1",
+      "note": "2024 TEK-Torg multiple Rosneft recipients in one procedure; equipment nominal voltage and 6-35kV price not sourced.",
+      "url": "https://zakupki.kontur.ru/IS48834468"
+    },
+    {
+      "old_canonical_id": "223fz:judicial-contract-03-34-24:lot1",
+      "note": "Prior primary court case established 2024 contracted 10.5kV 13Mvar UKRM with 2025 amended equipment price RUB 21307585.20 and signed June2025 UПД. Do NOT count again.",
+      "url": "https://sudact.ru/arbitral/doc/adOxeAqN4doN/"
+    }
+  ],
+  "quality_note": "Do not convert technical engineering demand into 223-FZ award or 6-35kV delivered equipment; venue name Elga does not identify procurement winner."
+}
