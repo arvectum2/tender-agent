@@ -1,0 +1,21 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: PQ-MARKET-20261027
+status: in_progress
+goal: "Verify Russia Power Quality procurement market for FGI product portfolio, 2024-10-27 to 2026-10-27, spanning EIS 223-FZ/44-FZ and commercial platforms and semantic substation scopes."
+definition_of_done:
+  - "Collect traceable tender identifiers and deduplicate repeated procedures, lots and duplicate mirrors."
+  - "Separate pure PQ equipment supply from designing, installing, commissioning and bundled EPC."
+  - "Verify customer, initial budget, final price, winner/company roles against protocols or official first-party sources where possible; mark unknown explicitly."
+  - "Publish consolidated Russian-language findings in user chat including actual procurement links, boundaries, coverage and evidence gaps."
+completed:
+  - "2026-10-27: Checked previous current-task.yaml (other roadmap task) and local checkout; preserved existing tracked/uncommitted work."
+  - "2026-10-27: Identified Rossseti source listings including 2025 STK project design, filter capacitors and 2026 reactive compensation engineering; initial source-screening performed."
+current_step: "Source verification and expanded exact-ID search, focusing on winning protocol evidence and 6-35kV applicability."
+remaining:
+  - "Find exact EIS notice IDs/official ETPS, distinguish NMC, contracted price, winner evidence."
+  - "Search independent industrial buyers and 2024/2026 windows."
+  - "Publish source-grounded consolidated summary, excluding non-PQ neutral compensation and generic substation projects."
+last_verified_commit: "local fc41e652 (checkout dirty), GitHub default head not independently captured"
+last_test_results: "Read-only source searches; no code changed or tests run."
+resume_instruction: "Continue FGI market procurement research: verify exact notices and protocols; do not overwrite active roadmap current-task or the user's dirty local checkout. Update this child checkpoint and report with citations."
