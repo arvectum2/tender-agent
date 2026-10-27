@@ -97,3 +97,14 @@ automated_methodology_alignment_20261027:
   tests: "19 passed with mounted v20 corpus"
   remaining: "download original technical annexes, text/OCR if required, classify 6-35kV equipment demand, dedup rebids, verify signed contracts and bidder roles, commercial ETP coverage, end-to-end report"
   resume_instruction: "Implement bounded secure original attachment acquisition from 12603 source-bound references; extract native PDF/DOCX/XLSX technical text, match ontology and preserve source SHA and exact location; then join contracts and review results."
+
+agent_orchestrator_20261027:
+  status: in_progress
+  last_verified_commit: f913108764c5db4c5911d881c8fad69466e4d30a
+  component: src/modules/market_intelligence/pq_research_agent.py
+  achieved: "Original SHA-verified EIS 223 notice discovery, bounded official attachment acquisition through Tender Agent, per-notice durable receipts and idempotent resume"
+  real_pilot: "2024-04-15 region77 RI223: 384 original notice numbers discovered; 1 notice executed; 8 original attachments downloaded"
+  runtime: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live
+  tests: "21 passed, one third-party deprecation warning"
+  scope_limitations: "Pilot notice was deterministic sample, not proven PQ relevant; no semantic attachment reading or Data Platform ingestion yet; no winner/price verification"
+  resume_instruction: "Inspect actual downloaded file manifest and text formats, implement safe text extraction and semantic ranking across verified attachments, invoke authenticated tenant-scoped Data Platform ingest, deduplicate procedure chains, verify signed outcomes, test E2E and produce sourced report."
