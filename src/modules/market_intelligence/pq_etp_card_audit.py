@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import json
 import os
+import subprocess
 import tempfile
 import urllib.error
 import urllib.parse
@@ -30,6 +31,59 @@ class _StrictRedirect(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
+def _fetch_direct_verified_tls(url: str, *, timeout: int = 10) -> dict:
+    """Bounded direct-HTTPS fallback for a proxy transport failure, never 401/403.
+
+    curl verifies the server certificate by default. No redirects, credentials,
+    insecure TLS flags or guessed attachment URLs are permitted.
+    """
+    parsed = urllib.parse.urlsplit(url)
+    if (parsed.scheme != "https" or parsed.hostname not in ALLOW
+            or parsed.username or parsed.password or parsed.port not in (None, 443)):
+        raise ValueError("Not an allowlisted HTTPS source")
+    with tempfile.TemporaryDirectory(prefix="pq-etp-direct-") as directory:
+        body = Path(directory) / "body"
+        headers = Path(directory) / "headers"
+        try:
+            process = subprocess.run([
+                "curl", "--noproxy", "*", "--proto", "=https",
+                "--max-time", str(timeout), "--max-filesize", str(MAX_HTML_BYTES),
+                "--silent", "--show-error", "--dump-header", str(headers),
+                "--output", str(body), "--write-out",
+                "%{http_code}|%{ssl_verify_result}|%{url_effective}", url,
+            ], capture_output=True, text=True, timeout=timeout + 3, check=False)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise urllib.error.URLError("direct TLS transport unavailable") from exc
+        fields = process.stdout.strip().split("|")
+        code = int(fields[0]) if fields and fields[0].isdigit() else 0
+        if (len(fields) != 3 or fields[1] != "0" or fields[2] != url
+                or process.returncode not in (0, 56, 63)):
+            raise urllib.error.URLError("direct TLS validation failed")
+        if code in (401, 403):
+            return {"status": "inaccessible", "http_status": code}
+        if code == 404:
+            return {"status": "not_found", "http_status": code}
+        if code != 200:
+            return {"status": "retryable_http_error" if code in (408, 429, 500, 502, 503, 504)
+                    else "http_error", "http_status": code}
+        if (process.returncode == 63 or
+                (body.exists() and body.stat().st_size > MAX_HTML_BYTES) or
+                (process.returncode == 56 and body.exists()
+                 and body.stat().st_size >= MAX_HTML_BYTES)):
+            return {"status": "body_budget_exceeded", "http_status": code}
+        if process.returncode != 0:
+            raise urllib.error.URLError("incomplete direct TLS response")
+        if not body.is_file() or not headers.is_file():
+            raise urllib.error.URLError("missing direct TLS response")
+        typ = headers.read_text(encoding="utf-8", errors="replace").lower()
+        if "text/html" not in typ:
+            return {"status": "non_html", "http_status": code}
+        raw = body.read_bytes()
+        return {"status": "html_fetched", "http_status": code,
+                "html_sha256": hashlib.sha256(raw).hexdigest(),
+                "text": raw.decode("utf-8", errors="replace")}
+
+
 def _fetch(url: str, timeout: int = 10) -> dict:
     p = urllib.parse.urlsplit(url)
     if (p.scheme != "https" or p.hostname not in ALLOW or
@@ -39,18 +93,24 @@ def _fetch(url: str, timeout: int = 10) -> dict:
     request = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (compatible; ArvectumResearch/1.0)",
         "Accept": "text/html,application/xhtml+xml"})
-    with opener.open(request, timeout=timeout) as response:
-        typ = response.headers.get("Content-Type", "")
-        raw = response.read(MAX_HTML_BYTES + 1)
-        if len(raw) > MAX_HTML_BYTES:
-            return {"status": "body_budget_exceeded", "http_status": response.status}
-        if "text/html" not in typ.lower():
-            return {"status": "non_html", "http_status": response.status,
-                    "content_type": typ[:100]}
-        text = raw.decode("utf-8", errors="replace")
-        return {"status": "html_fetched", "http_status": response.status,
-                "html_sha256": hashlib.sha256(raw).hexdigest(),
-                "text": text}
+    try:
+        with opener.open(request, timeout=timeout) as response:
+            typ = response.headers.get("Content-Type", "")
+            raw = response.read(MAX_HTML_BYTES + 1)
+            if len(raw) > MAX_HTML_BYTES:
+                return {"status": "body_budget_exceeded", "http_status": response.status}
+            if "text/html" not in typ.lower():
+                return {"status": "non_html", "http_status": response.status,
+                        "content_type": typ[:100]}
+            text = raw.decode("utf-8", errors="replace")
+            return {"status": "html_fetched", "http_status": response.status,
+                    "html_sha256": hashlib.sha256(raw).hexdigest(),
+                    "text": text}
+    except urllib.error.HTTPError:
+        # Access controls and explicit HTTP errors are never bypassed.
+        raise
+    except urllib.error.URLError:
+        return _fetch_direct_verified_tls(url, timeout=timeout)
 
 
 def audit(*, queue_file: Path, journal: Path, max_tasks: int = 5,

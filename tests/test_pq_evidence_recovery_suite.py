@@ -141,3 +141,59 @@ def test_gap_inventory_preserves_all_v20_source_delta_variants(tmp_path):
         "https://example.org/secondary"]
     assert rows[1]["evidence_urls"] == ["https://example.org/other"]
     assert "signed_contract" in rows[0]["missing_or_unverified"]
+
+
+def test_etp_verified_tls_fallback_only_on_transport_failure():
+    from unittest.mock import MagicMock
+    from urllib.error import HTTPError, URLError
+
+    from src.modules.market_intelligence.pq_etp_card_audit import _fetch
+    opener = MagicMock()
+    opener.open.side_effect = URLError("proxy certificate failed")
+    with patch("src.modules.market_intelligence.pq_etp_card_audit.urllib.request.build_opener",
+               return_value=opener), patch(
+        "src.modules.market_intelligence.pq_etp_card_audit._fetch_direct_verified_tls",
+        return_value={"status": "html_fetched", "text": "UKRM 10 kV"}) as direct:
+        assert _fetch("https://synapsenet.ru/zakupki/b2b/4561228")["text"] == "UKRM 10 kV"
+        direct.assert_called_once()
+        opener.open.side_effect = HTTPError("https://synapsenet.ru/", 403, "forbidden", {}, None)
+        with pytest.raises(HTTPError):
+            _fetch("https://synapsenet.ru/zakupki/b2b/4561228")
+        direct.assert_called_once()
+    with pytest.raises(ValueError, match="allowlisted"):
+        _fetch("https://127.0.0.1/secret")
+
+
+def test_etp_direct_tls_response_hash_and_incomplete_response_fail_closed():
+    from urllib.error import URLError
+
+    from src.modules.market_intelligence.pq_etp_card_audit import (
+        MAX_HTML_BYTES,
+        _fetch_direct_verified_tls,
+    )
+    url = "https://synapsenet.ru/zakupki/b2b/4561228"
+    payload = b"<html>10kV UKRM source</html>"
+    def fake_curl(args, **_kwargs):
+        Path(args[args.index("--output") + 1]).write_bytes(payload)
+        Path(args[args.index("--dump-header") + 1]).write_text(
+            "HTTP/1.1 200 OK\nContent-Type: text/html\n")
+        return SimpleNamespace(returncode=0, stdout=f"200|0|{url}")
+    with patch("src.modules.market_intelligence.pq_etp_card_audit.subprocess.run",
+               side_effect=fake_curl):
+        result = _fetch_direct_verified_tls(url)
+    assert result["html_sha256"] == hashlib.sha256(payload).hexdigest()
+    assert result["status"] == "html_fetched"
+
+    def incomplete_curl(args, **_kwargs):
+        Path(args[args.index("--output") + 1]).write_bytes(payload)
+        return SimpleNamespace(returncode=56, stdout=f"200|0|{url}")
+    with patch("src.modules.market_intelligence.pq_etp_card_audit.subprocess.run",
+               side_effect=incomplete_curl), pytest.raises(URLError):
+        _fetch_direct_verified_tls(url)
+
+    def too_large_curl(args, **_kwargs):
+        Path(args[args.index("--output") + 1]).write_bytes(b"x" * MAX_HTML_BYTES)
+        return SimpleNamespace(returncode=56, stdout=f"200|0|{url}")
+    with patch("src.modules.market_intelligence.pq_etp_card_audit.subprocess.run",
+               side_effect=too_large_curl):
+        assert _fetch_direct_verified_tls(url)["status"] == "body_budget_exceeded"
