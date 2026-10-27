@@ -17,13 +17,13 @@ completed:
   - 'Grouped 3 Gaysky GOK 600kvar 6kV notices for later repeat procurement determination.'
 current: '48 case discovery v3 committed in isolated MI-013 branch, additional original-source and full-coverage validation outstanding.'
 pending:
-  - 'Check exact-head MI-013 regression/CI for this documentation and dataset update.'
+  - 'Run tests/test_mi013_discovery_corpus_v3.py on isolated MI-013 branch and confirm fresh CI on head.'
   - 'Verify Sosnovskaya RD223 contract №52460069527260006170000 from original EIS registry; supplier may be masked.'
   - 'Collect first-party EuroChem UKK technical specifications and Gaysky GOK re-tender protocols.'
   - 'Continue official 223-FZ source-day coverage and other ETP original docs.'
   - 'Only merge existing PR514 after its normal review; do not auto-merge.'
-last_verified_commit: 6043460d39095ea8b8e243be7a3ca7151e329d17
+last_verified_commit: 49d32d976b1b5a3b718547fe5ce5660202f84ed9
 test_results:
   - 'In-memory assertions: baseline 45, merged 48, 48 unique canonical IDs, untouched original 45 objects.'
-  - 'No local pytest or CI rerun for this change; branch CI still requires verification.'
+  - 'Three focused regression tests committed in tests/test_mi013_discovery_corpus_v3.py; not executed locally; PR CI status has no check results at observation.'
 resume_instruction: 'On research/mi013-pq-source-expansion-20261025, inspect v3 48 records; verify CI and run focused tests; obtain official RD223 for Sosnovskaya and first-party TЗ for UKK, Gaysky. Keep the parent .agent/current-task.yaml (TA-ROADMAP-EXEC-20261012) undisturbed.'
