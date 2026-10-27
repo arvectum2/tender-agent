@@ -1,0 +1,60 @@
+{
+  "schema_version": "arvectum-mi013-prod-import-receipt/1.0",
+  "import_date": "2026-10-27",
+  "task_id": "MI-013-PQ-CORPUS-PASS2-20261027",
+  "environment": "Mac mini / Arvectum Data Platform / production",
+  "database": "arvectum_data",
+  "docker_container": "arvectum-postgres",
+  "collection": "arvectum-market-pq-6-35kv",
+  "source_dataset": "data/market_intelligence/power_quality/verified_public_leads_20261027.v12.manifest.json",
+  "source_worktree_version": "a030170f",
+  "method": "scripts/market_intelligence/import_pq_postgres_v12.py --apply with user-approved command MI013-71-20261027 and SHA256-verified backup",
+  "idempotence": "UPSERT in single PostgreSQL transaction; preserves status/review_state of existing entries",
+  "backup": {
+    "format": "pg_dump -Fc",
+    "file": "data-platform-arvectum_data-20261027T125522Z.dump",
+    "base_directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37362424,
+    "sha256": "d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43",
+    "integrity_verified_before_sql": true
+  },
+  "apply": {
+    "exit_code": 0,
+    "transaction": "COMMIT",
+    "rows_staged": 71,
+    "collection_inserted": 1,
+    "resources_inserted": 71,
+    "structured_records_inserted": 71,
+    "reported": "resources=71; records=71"
+  },
+  "independent_live_readback": {
+    "status": "PASS",
+    "collection_count": 1,
+    "pq_resources": 71,
+    "pq_records": 71,
+    "unique_canonical_ids": 71,
+    "unreviewed_records": 71,
+    "missing_source_urls": 0,
+    "joint_besk_lot_count": 2,
+    "joint_besk_distinct_lots": 2,
+    "original_10kv_mpu_evidence": 1,
+    "other_collections": 26,
+    "other_resources": 2192,
+    "all_documents": 2192
+  },
+  "previous_baseline": {
+    "other_collections": 26,
+    "other_resources": 2192,
+    "all_documents": 2192
+  },
+  "local_regression": {
+    "result": "72 passed, 1 warning",
+    "tool": "pytest tests/test_mi013_pq_*.py"
+  },
+  "source_quality_limits": [
+    "71 are procurement research lot-level signals; not 71 distinct contracts or verified awards",
+    "22% VAT 452m Rosseti initial NMC is not signed revenue",
+    "Semantic search embeddings and dp_documents ingestion have not been executed"
+  ],
+  "parent_checkpoint_untouched": true
+}
