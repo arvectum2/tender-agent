@@ -1,0 +1,389 @@
+{
+  "schema_version": "pq-evidence-retrieval-queue/0.9",
+  "as_of": "2026-10-27",
+  "purpose": "Acquire primary technical specs, contracts, participant decisions for sourcing leads. Read-only retrieval. No bid submission, contracts or production writes.",
+  "tasks": [
+    {
+      "priority": 1,
+      "procedure_id": "32515218366",
+      "owner": "АО Россети НТЦ",
+      "document_targets": [
+        {
+          "name": "Итоговый протокол_13 от 27.10.2025.pdf",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=106226851",
+          "status": "original_download_restored_http200"
+        },
+        {
+          "name": "V_Техническая часть.docx",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=105316477",
+          "status": "original_download_restored_http200"
+        }
+      ],
+      "mirror": "https://poisktenderov.ru/item/223/32515218366/",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS: four original EIS DOC/DOCX/XLSX files and image-only PDF downloaded SHA-verified. Original commission protocol DOC confirms named winner ООО КАМЭЛЕКТРОЦЕНТР INN1650327380 and runner-up ООО ЭН ЭЙЧ ИНЖИНИРИНГ INN7716584575, both ceiling 49.9m rub 3-year call-off, not actual sales. 4145 numbered items in original annex.",
+      "need": [
+        "original RD223 signed contract registry and supplier legal identity",
+        "actual drawdown/delivery values by 3-year framework",
+        "PQ-only portion of ordered component SKUs (not total 49.9m)"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "32616296475",
+      "owner": "ООО Водоканал, Мелеуз",
+      "document_targets": [],
+      "mirror": "https://zakupki.tochka.com/search/22844514-1/",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary listing reports contract 07.09.2026, original signed contract amount/supplier masked",
+      "need": [
+        "original document TЗ voltage",
+        "RD223 registered contract number, supplier and signed total"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "ГП630876",
+      "owner": "ООО НОВАТЭК-УСТЬ-ЛУГА",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+      "last_attempt": "2026-10-27",
+      "last_result": "Synaps secondary ETGPB source rechecked, specific 10kV UKRM refurbishment bill includes 450kvar three-phase switching reactors 3; 300kvar reactors 4; 150kvar reactor 1; 400A 10.5kV vacuum contactors 3, capacitor KEPZ10.5-150 1. Actual originals 7z/XLSX remain unavailable publicly; cannot count 3*450+4*300+150 as installed new Mvar.",
+      "need": [
+        "Retrieve first party etpgpb.ru document archive 4.Модернизация_УКРМ.7z and 3.Заводская документация.7z",
+        "Confirm award counterparty, final contract value, 10kV reactor bank scheme and unit loads",
+        "Correlate GP628666 cancelled April 2026 predecessor with new GP630876 June 2026; do not count twice"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "4565274",
+      "owner": "Михайловский ГОК",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/b2b/4565274--kurskaya-obl-zakupka-kondensatornoj-ustanovki-10-kv-aukrm-uk1-uk2-dlya",
+      "last_attempt": "2026-10-27",
+      "last_result": "Confirmed in 3 independent B2B secondary indexes 4565274 UK1/UK2 10kV 2 pcs expressly 'взамен 4538400'; earlier 4561228 same UK1/UK2 must be treated as possible repeat, while 4561243 UK3/UK4 is separate 2-pc demand already in v7. No award prices known. Do not add these previously recorded tenders as new.",
+      "need": [
+        "Official B2B-Center original result protocols for 4565274, 4561228, 4538400 and 4561243",
+        "Resolve if same UK1/2 order was ultimately contracted once, and whether UK3/UK4 has independent signed contract"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "5747901",
+      "owner": "ООО Эльбрус Дриллинг",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/zakupkimosru/5747901--neneckij-aokr-modernizaciya-ustanovki-kompensacii-reaktivnoj",
+      "last_attempt": "2026-10-27",
+      "last_result": "One UKRM modernization listed; compare 4158439 September 2025 no bids",
+      "need": [
+        "original ТЗ_Т45",
+        "same-demand group and result/winner"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "5534/1866-УДСН;5631/018-Ял",
+      "owner": "UDSgroup",
+      "document_targets": [],
+      "mirror": "https://uds-group.ru/tenders/oil-production/?sphrase_id=10398",
+      "last_attempt": "2026-10-27",
+      "last_result": "Only indexed corporate archive; names, bid deadlines and voltage models found; live page not reverified",
+      "need": [
+        "full procurement PDFs",
+        "buyer legal INN",
+        "lot quantity, contract outcome, prices"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": null,
+      "owner": "ООО Подпорожские электрические сети / ООО ЭНЕРГОЗАПАД",
+      "document_targets": [],
+      "mirror": "https://b2b.house/company/OOO-PES_01eef801-88e4-41db-aa2e-30d823b0a109/",
+      "last_attempt": "2026-10-27",
+      "last_result": "Cross-source item match UKRM-6,3-300-УХЛ1-IP54, 1 pc, aggregated supplier total 293080 RUB, no tender date",
+      "need": [
+        "original procurement number and date",
+        "buyer-supplier official registry verification",
+        "buyer-specific signed contract total"
+      ]
+    },
+    {
+      "priority": 3,
+      "procedure_id": "32515582393",
+      "owner": "ООО Башкирэнерго",
+      "document_targets": [],
+      "mirror": "https://synapsenet.ru/zakupki/b2b/4283612--bashkortostan-resp-postavka-ustanovki-kondensatornoj-ukrm-dlya-po-nes",
+      "last_attempt": "2026-10-27",
+      "last_result": "NMC 5880000 RUB VAT included; voltage, actual contract, winner unavailable",
+      "need": [
+        "contract registry",
+        "UKRM voltage/capacity/quantity"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515029641",
+      "owner": "ПАО Россети / МЭС Юга",
+      "document_targets": [],
+      "mirror": "https://energybase.ru/distribution/fsk-ees/tenders/condensers-compensators",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary industry category reveals tender number, 2025-07-10 published, NMC 3621456 ₽ and supply of capacitors for power filters; primary specs unavailable",
+      "need": [
+        "Nominal voltage/harmonic filter specification",
+        "winner, signed contract and detailed capacitor supplier/brand"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32514947144",
+      "owner": "ПАО Россети / Кузбасское ПМЭС",
+      "document_targets": [],
+      "mirror": "https://energybase.ru/distribution/fsk-ees/tenders/condensers-compensators",
+      "last_attempt": "2026-10-27",
+      "last_result": "Secondary industry category reveals tender number, 2025-06-17 published, NMC 3186960 ₽ and supply of capacitors for power filters",
+      "need": [
+        "Nominal voltage and quantity of filter capacitors",
+        "EIS original award protocol and signed contract"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515225588",
+      "owner": "ПАО Россети / ПС Славянская и Афипская",
+      "document_targets": [
+        {
+          "name": "Primary final commission 3/3614155.docx, 30.10.2025",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=106305968",
+          "sha256": "6d81b62143fd3523fbe172d2c62feb612e5b9cd1953fe12549c793600f3e4424",
+          "status": "read_sha256_verified"
+        }
+      ],
+      "mirror": "https://energybase.ru/distribution/fsk-ees/tenders/condensers-compensators",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS original EIS final DOCX id106305968 SHA6d81b621: four conforming bidders, winner ООО ПЦ СИБИРИ (INN 5402574460 independently by own site), 20107269.94 RUB VAT20, runner-up ООО ТЭП 17793360.90 VAT5, other firms ООО МОДЭНС ГРУПП and ООО ПЦ ЭКРА. Contract signature independently UNVERIFIED.",
+      "need": [
+        "Official RD223 signed actual project contract and verified counterparty",
+        "Technical specification distinguishing 220kV design vs target 6–35kV equipment"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515208744",
+      "owner": "ПАО Россети / ПС Юктали и Хорогочи",
+      "document_targets": [],
+      "mirror": "https://poisktenderov.ru/item/223/32515208744/",
+      "last_attempt": "2026-10-27",
+      "last_result": "223-FZ indexed detailed notice 2025-09-12 NMC 56688490 ₽, no original RAR read, mixed EPC title includes 128/154Mvar SKRM at adjacent PS",
+      "need": [
+        "Actual EPC bill of quantity to distinguish Yuктали/Horogochi from named 128/154 Mvar SKRM sites",
+        "Original protocol and awarded EPC, signed contract and project engineer",
+        "Do not attribute full EPC NMC to PQ devices"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "32514476448",
+      "owner": "ООО Башкирэнерго / ПС Уфимка",
+      "document_targets": [
+        {
+          "name": "Протокол 06.03.2025",
+          "url": "https://zakupki.kontur.ru/32514476448"
+        },
+        {
+          "name": "Original EIS commission protocol PDF 06.03.2025",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=100970521",
+          "status": "original_pdf_read_sha256_verified"
+        },
+        {
+          "name": "Original signed public RD223 registry contract 50277071467250001900000",
+          "url": "https://zakupki.gov.ru/epz/contractfz223/card/contract-info.html?reestrNumber=50277071467250001900000",
+          "status": "original_public_contract_html_read_sha256_verified"
+        }
+      ],
+      "mirror": "https://zakupki.kontur.ru/32514476448",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS: downloaded original EIS commission PDF id100970521 SHA256 6aad26..., machine HTML id100970523 SHA256 973bad..., official public signed contract 50277071467250001900000 HTML SHA256 8162f0...; original bid selected ООО Уральская электроинженерная компания ТЭЛПРО, INN6670226212 confirmed separately in SRO. Signed registry total 2922405.35 RUB 26.03.2025, status Исполнение завершено. Supplier name remains redacted IN PUBLIC REGISTRY; OEM of BSK not proven.",
+      "need": [
+        "Find actual 10kV capacitor bank hardware cost within integrated EPC contract and original bill of quantities, if public",
+        "Determine independently whether the registered vendor name matches original selected bidder (public registry withholds supplier info)",
+        "Do not misinterpret protocol bid inclusive VAT 3506886.42 versus base 2922405.35 or assume paid amount equals signed amount"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "RAD260049805",
+      "owner": "АО ДРСК / ПЭС, ПС Пограничная",
+      "document_targets": [],
+      "mirror": "https://zakupki.kontur.ru/IS79649770",
+      "last_attempt": "2026-10-27",
+      "last_result": "Commercial tender 06.10.2026 for BSK 35kV 1 unit + 35kV bay + engineering, no visible amount or result",
+      "need": [
+        "Original Lot-Online specification and vendor",
+        "35kV BSK Mvar, contract price, materials vs works split"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32515044454",
+      "owner": "ПАО Россети Сибирь / ПС Тяжинская",
+      "document_targets": [],
+      "mirror": "https://energybase.ru/tender/32515044454",
+      "last_attempt": "2026-10-27",
+      "last_result": "2025 contest NMC 3,031,988 ₽ for 52Mvar project design; multiple revisions but no independently confirmed signed contract",
+      "need": [
+        "Original 2025 final award protocol and outcomes",
+        "TЗ of SKRM voltage, who was project engineer, relation to subsequent EIS 32616354211"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32616354211",
+      "owner": "АО ЭСК Сибири / ПС Тяжинская",
+      "document_targets": [
+        {
+          "name": "Original RAR final protocol 26-5011/32616354211/4",
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DA341AB568084928B96A457AD02938D4",
+          "sha256": "5ebf2889ecca1fe28dfbdf90ffe2b4a187aa75511c4b5ae8511f4a2fef1fcf2e",
+          "status": "read_sha256_verified"
+        }
+      ],
+      "mirror": "https://zakupki.tochka.com/search/22899277-1/",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS original EIS final protocol RAR and RTF SHA5ebf... and 4169...: one collective bid with lead СВЭТ-ПРОЕКТ INN2465200905; member СИБЭЛЕКТРОПРОЕКТ INN2465189948; member ВЕКТОР INN5402052777; member АСК Барс INN3812057503. Sole offer 6071189.67 exVAT, signed registry NOT VERIFIED.",
+      "need": [
+        "Original RD223 signed contract supplier and price",
+        "Original one-line project study: exact medium/high voltage of replacement SKRM 52Mvar"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "32616474682",
+      "owner": "АО БЭСК, ООО БСК / ООО Башкирэнерго",
+      "document_targets": [
+        {
+          "name": "Лот №27-000090.zip",
+          "url": "https://www.b2b-center.ru/market/postavka-kondensatorov-kep-dlia-ooo-bashkirenergo-ooo-bsk-27-000090/tender-4642507/"
+        }
+      ],
+      "mirror": "https://zakupki.kontur.ru/32616474682",
+      "last_attempt": "2026-10-27",
+      "last_result": "Original ETP B2B 4642507 confirms one joint EIS notice with two lots, 11+16 capacitors KЭП, combined 2452650.41 RUB without VAT. No awarded contract; original specification nominal voltage not read.",
+      "need": [
+        "Read original B2B/EIS lot №27-000090.zip to verify capacitor rated voltage, Mvar and manufacturer model",
+        "Confirm 2026-12-03 results and award per lot after publication; do not infer from unsigned 2424000 RUB bid",
+        "Resolve reported 8-kopeck conflict for lot2 at source document level"
+      ]
+    },
+    {
+      "priority": 1,
+      "procedure_id": "32616435269",
+      "owner": "ПАО Россети Сибирь / Кузбассэнерго-РЭС",
+      "document_targets": [
+        {
+          "name": "Original archive 26-1174.7z SHA256 5f9e406c56254891514dec2e9f8689417782bce298e5e4cb433375d1806cbb65",
+          "url": "https://cdn.kontendus.ru/documents/32616435269/da0fadde-1019-5aef-85fd-9343c3928a35/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F_%D0%BE_%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B5_26-1174.7z",
+          "status": "read_and_sha256_verified"
+        },
+        {
+          "name": "Изменённая Документация_о_закупке_26-1174_от_20.10.2026.7z",
+          "url": "https://kontendus.ru/tender/32616435269",
+          "status": "attachment_not_retrieved"
+        }
+      ],
+      "mirror": "https://tendik.ru/tender/eis223/32616435269",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS: primary-authored ORIGINAL procurement archive 7z SHA256 5f9e406c..bb65 downloaded from public Kontendus CDN, unarchived and 6 original relevant files read; net NMC 370504918.04 RUB: MPU-30000/10 10kV 335351974.38; BSK-110-26 110kV 33723435.46; supervisor 1429508.20. VAT22 exact original notice gross 452016000.01. Original amended Oct20 7z and award after Oct30 not yet verified.",
+      "need": [
+        "Find revised 20 Oct 2026 archive and diff original 10/110kV BOM against revised conditions.",
+        "Recheck results protocol after bids close 30 Oct 2026 and outcome expected 14 Dec 2026.",
+        "Verify awarded vendor, award amount and medium-voltage share of any signed contract; never infer from NMC.",
+        "Evaluate relevance of supplier RF-service-center, 5y warranty, -60C ambient, 20ms regulator response."
+      ],
+      "original_archive_verified": true,
+      "original_archive_evidence_file": "verified_32616435269_original_archive_20261027.json",
+      "verified_boq_net_rub": "370504918.04",
+      "nominal_voltage_components_kv": [
+        10,
+        110
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32616355390",
+      "owner": "АО Россети НТЦ",
+      "document_targets": [
+        {
+          "name": "Оригинальный итоговый протокол_10.doc 20.10.2026",
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=C3F84B482EE34CF294EB7B95AEC46D97",
+          "sha256": "e29e23cc07f68cc09515aabe5b54fee62a6dd8bd9094d03db9bd364b0f1f5fe2",
+          "status": "read_sha256_verified"
+        }
+      ],
+      "mirror": "https://energybase.ru/tender/01a0804c-95e6-71ed-81b8-da1af0d911f8",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS: original EIS file protocol #10 dated 20.10.2026 verified SHA e29e23cc; one collective bid: lead ООО КАМЭЛЕКТРОЦЕНТР INN1650327380, member ООО ЭН ЭЙЧ ИНЖИНИРИНГ INN7716584575. One bid = formal failed competition but commission decided direct contract for offer 399120560 incVAT22; signed RD223 not verified. Source-linked v23 new publication, potential same demand as 2025 32515218366, do not sum.",
+      "need": [
+        "Confirm whether 2026 framework supersedes or independently supplements 2025 framework",
+        "Original registered signed contract and actual call-off delivery totals",
+        "Equipment-only PQ content from actual orders, not ceiling"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32514944142",
+      "mirror": "https://poisktenderov.ru/item/223/32514944142/",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS original EIS DOCX id103756668 SHA769552aa: June-July2025 bidding 7 named applicants, 6 excluded, only AO Rosseti NTC admitted; tender failed, commission says rerun if needed. Partial project overlap with 32515225588 (remove Kirillovskaya), exact one-to-one rerun not proven. DOCX header says signed 02.07.2026 while body says 02.07.2025; source internal date inconsistency retained.",
+      "document_targets": [
+        {
+          "name": "Official commission DOCX 2/3514049",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103756668",
+          "sha256": "769552aa0bad2d7b96dbcd64d886b80ad7d5c796b42efecd3fb36d3cd569c1d6",
+          "status": "read_sha256_verified"
+        }
+      ],
+      "need": [
+        "Verify exact scope/supplier contracting relationship to later 32515225588, not double count three substations",
+        "Clarify original document 2026/2025 date inconsistency from independently time-stamped EIS notice"
+      ]
+    },
+    {
+      "priority": 2,
+      "procedure_id": "32615966040",
+      "mirror": "https://poisktenderov.ru/item/223/32615966040/",
+      "last_attempt": "2026-10-27",
+      "last_result": "SUCCESS original EIS final/admission RAR+DOCX and source scanned original BOQ. Selected ООО ЭНЕРГОСЕТЬ INN5001061220 cross FSTEC address, final offer 5273763.77 VAT22 vs previous budget 5564090.57; original BOQ 2948531.63 EX VAT20 includes no standalone STATCOM/UKRM/BSK device line. Mixed EPC, do not count full price as PQ sale. Signed contract only secondary-reported.",
+      "document_targets": [
+        {
+          "name": "Original final RAR №МВС-61/26",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110931276",
+          "sha256": "86a6d2605f575465feebfb5cb84eae1d90f7f4ed56bd178588061dc200273744",
+          "status": "read_sha256_verified"
+        },
+        {
+          "name": "Original EPC tender documents with BOQ",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=110412149",
+          "sha256": "0d1b4730cf2ce43237c79ad7175063a528a40e611a6d8c2caa50264e346f42e3",
+          "status": "read_sha256_verified"
+        }
+      ],
+      "need": [
+        "Find original registered signed RD223 contract, supplier, actual price; do not trust only rounded aggregator reported 5273764",
+        "Clarify PQ standalone compensation equipment: original contractor-supplied BOQ contains CTs/breakers/meters but not capacitor/reactor",
+        "Record difference between earlier and revised NMC as rebaselining, not bid saving"
+      ]
+    }
+  ],
+  "metrics": {
+    "open_tasks": 18,
+    "source_urls_direct": 2,
+    "confirmed_primary_protocol_new_in_this_queue": 0,
+    "commercial_effects_performed": 0,
+    "original_archive_hard_evidence_verified_count": 1,
+    "open_signoff_requirements_for_32616435269": 4
+  },
+  "supersedes": "primary_evidence_retrieval_queue_20261027.v4.json",
+  "notes_append": "v9: 3 existing original design-protocol dossiers source SHA verified (STK 2025 winner PC Sibiri, Tyazhinskaya 52Mvar consortium, failed original 3-STK 2025 seven bidders), plus Nikitskaya contract source and canceled Novatek lineage. No extra source rows from these existing notices."
+}
