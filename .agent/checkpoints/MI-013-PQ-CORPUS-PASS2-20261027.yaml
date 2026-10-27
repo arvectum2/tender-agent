@@ -1,7 +1,7 @@
 version: 1
 repository: arvectum2/tender-agent
 task_id: MI-013-PQ-CORPUS-PASS2-20261027
-status: in_progress
+status: blocked
 goal: Expand traceable Russian Power Quality 6-35 kV procurement corpus, 2024-2026, for FGI go-to-market and reconcile original ЕИС/ЭТП protocols.
 definition_of_done:
   - Enumerate and source-link new procurement notices not in v3.
@@ -11,6 +11,9 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - 2026-10-27 authorized git fetch origin research/mi013-pq-corpus-20261027-pass2 succeeded on Mac mini.
+  - 2026-10-27 authorized isolated worktree creation succeeded at /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import, detached commit d8476953; existing dirty main worktree preserved.
+  - First --check-db failed before any SQL because old staging export expected verification_summary.total_records; v12 uses total_lot_level_records. Stopped immediately per user directive; no tests or backup/apply were attempted.
   - Pass9 corrected false DB-unavailable conclusion: official Data Platform runtime on Mac mini localhost:8094 is healthy; correct PostgreSQL DB arvectum_data inside arvectum-postgres exists with all dp_* tables.
   - Read-only live PostgreSQL baseline: 26 collections, 2192 resources, 2192 documents, 0 dp_records; dedicated MI013 collection arvectum-market-pq-6-35kv not present and 0 resources.
   - Confirmed existing Tender Agent checkout feature/apr07-quality-slo-evidence is dirty (4 tracked files); must not change checkout branch while staging research worktree.
@@ -49,7 +52,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass9: FOUND LIVE Data Platform on Mac mini: :8094 production healthy; arvectum-postgres/arvectum_data has dp_collections/resources/records schema, 26 collections / 2192 resources / 0 structured records, MI013 target nonexistent. v12 loader added to tender-agent PR branch: exactly 71 source-verified lot-level resources and 71 dp_records, SHA-stable, transaction, backup, idempotence + readback. Dry-run is default. Existing checkout dirty and research branch not fetched locally. No SQL writes performed; must obtain per-exact-command owner consent for ARC state changes and QA. CI pending.'
+current: 'Mac mini user-authorized Git fetch and isolated worktree creation succeeded at commit d8476953. The first requested --check-db command exited 1 before opening DB: KeyError total_records in export_pq_data_platform.py:74, because v12 materializer verification_summary exposes total_lot_level_records. User explicitly ordered STOP on any error; no tests, backup, apply, SQL mutation, or new attempt conducted.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -63,6 +66,8 @@ pending:
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
 last_verified_commit: e695bdaeee8fdd49101b76de43edd81ada97c824
 test_results:
+  - Mac mini importer --check-db: FAILED exit 1 KeyError total_records in export_pq_data_platform.py line 74; failed in stage before DB preflight.
+  - PostgreSQL modifications: NONE; production apply not attempted.
   - Pass9 live read-only DB probe confirmed PostgreSQL database arvectum_data has dp_* tables, target MI013 collection absent; 26 collections/2192 resources/2192 documents/0 structured records; health status production OK.
   - New exporter/importer tests committed; GitHub CI exact-head not yet verified green; dry-run on Mac mini branch worktree still not executed.
   - Pass8 JS read-back independent audit of Github JSON: same 71 IDs, 3 unique patched targets, 370504918.04 RUB net, 452016000.01 RUB incl VAT22, 71 family denominator, 3 Tyazhinskaya EIS IDs and 18 evidence tasks all PASS.
@@ -79,7 +84,7 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Read docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md and scripts/market_intelligence/import_pq_postgres_v12.py, inspect exact-head CI and run five offline importer tests. Real Data Platform DB is arvectum_data in Docker arvectum-postgres on Mac mini; do NOT repeat prior wrong-db probes. Obtain owner consent for exact ARC command to git fetch research/mi013-pq-corpus-20261027-pass2 and create isolated worktree (existing checkout has four dirty files); run --check-db and targeted pytest, then separate command-level consent for --apply and backup to existing /Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups. Expect 71 dp_resources + 71 dp_records in new collection, no other collections modified. Once imported verify readback, then plan separate Data Platform native document/chunk/embedding ingestion. Continue original tender protocol research. Preserve parent .agent/current-task.yaml.
+resume_instruction: User asked stop on ANY error. Do not retry automatically. With fresh explicit user authorization, patch scripts/market_intelligence/export_pq_data_platform.py to accept verification_summary.total_lot_level_records (v12) and earlier total_records, add regression test, run CI. Then rerun only preflight (--check-db) in isolated Mac mini worktree and targeted pytest. If all pass and user authorizes exact production apply again, only then do backup + 71-record transactional import. Existing Mac mini worktree remains /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import at d8476953; live arvectum_data unchanged.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
