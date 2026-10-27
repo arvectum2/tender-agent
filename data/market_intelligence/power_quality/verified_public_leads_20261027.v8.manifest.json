@@ -11,6 +11,6 @@
   "provenance_policy": "Preserve all 58 v7 records in their original ordering; append new records with source URL and explicit deadline-only date_basis. Do not infer winners, prices or market size.",
   "materializer": "scripts/market_intelligence/materialize_pq_research.py",
   "quality_limit": "Original UDS corporate archive surfaced via indexed snapshot; no primary procurement attachments or awards checked. 60 research IDs are not 60 contracts.",
-  "context_dataset": "market_context_20261027.v2.json",
+  "context_dataset": "market_context_20261027.v3.json",
   "context_record_count": 4
 }
