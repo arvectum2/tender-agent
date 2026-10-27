@@ -21,6 +21,7 @@ from .pq_public_223_acquire import batch as fetch_public_223
 from .pq_public_223_expand import expand as expand_public_223
 from .pq_public_223_canonical import canonicalize as canonicalize_public_223
 from .pq_public_dp_resume import run as resume_public_dp
+from .pq_public_223_direct import merge_direct
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -97,6 +98,9 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             canonical = runtime / "public223-canonical"
             report["public223_canonical"] = canonicalize_public_223(
                 staged=expanded, output=canonical, max_files=500)
+            report["public223_direct"] = merge_direct(
+                source_root=public223_source, canonical=canonical,
+                max_cases=35, max_files=200)
             report["public223_data_platform"] = resume_public_dp(
                 source_root=canonical, runtime=runtime, dp_source=dp_source,
                 max_files=min(max_cases * 3, 60))
