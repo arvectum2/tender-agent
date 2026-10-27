@@ -11,6 +11,11 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass10 reviewed official data-platform backup-postgres.sh source, validated exact BACKUP/SHA256/BYTES/MANIFEST output contract, and strengthened importer backup() to compare manifest, separate checksum companion file and streaming actual dump SHA256.
+  - Pass10 fixed rerun idempotence: status on existing dp_resources is preserved if reviewed/ready; review_status on existing dp_records is preserved. New rows start staged_unreviewed/unreviewed.
+  - Pass10 added read-only postimport verifier for 71 unique IDs/records, BESK joint notice two lots, original MPU 10kV/BSK110 BoQ and evidence URLs; 13 acceptance tests for wrong counts and wrong DB.
+  - Pass10 Mac mini isolated worktree updated without disturbing parent checkout; full MI013 suite 72 passed, one third-party Starlette deprecation warning, at HEAD a030170f.
+  - Pass10 read-only verifier against LIVE arvectum_data showed target MI013 collection=0/resources=0/records=0, other collections=26, other resources=2192, documents=2192; no import.
   - Fixed export_pq_data_platform.py shared version mismatch KeyError total_records by accepting legacy total_records and v12 total_lot_level_records and checking conflicts; added four targeted tests.
   - Fixed import_pq_postgres_v12.py read-only psql output parser to ignore BEGIN/COMMIT tags; added regression test.
   - Updated authorized Mac mini isolated worktree only, preserving dirty canonical checkout, to commit 06cf5ad8.
@@ -59,7 +64,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Importer v12 compatibility fixed and verified on Mac mini isolated worktree at 06cf5ad8. Legacy total_records and v12 total_lot_level_records both supported; psql BEGIN/COMMIT tags filtered. Read-only --check-db SUCCESS: database arvectum_data, 3 dp tables, 71 staged, 0 existing PQ records. Full MI013 local regression 57 passed, one third-party Starlette warning. Exact owner-authorized --apply production command was BLOCKED by OpenAI remote execution safety before any successful write; do not bypass. Postattempt independent read-only database check: PQ collections=0, resources=0, records=0. NO production mutations or backup observed.'
+current: 'Pass10 importer hardening completed without bypassing remote safety block: v12 shared exporter and live preflight bugs fixed, additional SHA256 manifest/dump backup validation and reviewed-state idempotence in importer; separate read-only verify_pq_postgres_v12.py accepts 71 matched resources/records, 2 BESK lots and 10kV MPU BOM. Mac mini separate worktree updated to a030170f for 72/72 MI013 pytest success; production arvectum_data verified unchanged, 26 other collections, 2192 other resources/docs, MI013 collection/resources/records zero. Actual --apply still BLOCKED by remote safety and NOT rerun.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -71,8 +76,12 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: 06cf5ad8e435fa8294cf66cbd28ea265c5933434
+last_verified_commit: cd07bf2d90ff526e1a51d12de71aebc6adefa92d
 test_results:
+  - Pass10 Mac mini worktree a030170f: all 72 MI013 tests passed, one Starlette deprecation warning (unchanged environment).
+  - Pass10 read-only verified DB snapshot: database arvectum_data, target PQ collection/resources/records=0; other_collections=26, other_resources=2192, all_documents=2192.
+  - Pass10 importer independent verified-backup test and intentional corrupted-backup failure test both passed; review-state on rerun is retained.
+  - Pass10 production SQL not executed; remote safety block still authoritative; no alternate channel used.
   - 2026-10-27 Mac mini isolated 06cf5ad8: test_mi013_pq_staging_versions.py + importer + corpus v12 + exporter v12: 18 passed, 1 warning.
   - 2026-10-27 all tests/test_mi013_pq_*.py: 57 passed, 1 Starlette deprecation warning.
   - 2026-10-27 live Data Platform --check-db: success, target arvectum_data, 3 required tables, pq_resources=0, pq_records=0, staged_records=71.
@@ -95,7 +104,7 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: No automatic retry or alternate path around remote execution safety block. Branch and isolated Mac mini worktree contain approved importer code at 06cf5ad8, all 57 MI013 tests pass, DB preflight passes with 0 existing PQ records. User/operator must run explicitly approved import in authorized local session after reviewing script and backup plan; exact command in docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md. Verify backup SHA256, 71 dp_resources and 71 dp_records, 1 new collection, unchanged preexisting 26 collections/2192 resources and docs. If safe access path is restored legitimately, resume only with approval and safety compliance. Keep parent current-task untouched; continue source verification separately.
+resume_instruction: Check PR #515 CI after commit cd07bf2d and latest code tests: Mac mini 72/72 MI013 tests passed on worktree a030170f, later commits only runbook. Existing live arvectum_data MI013 collection/resources/records zero. Production --apply was blocked by remote execution safety; DO NOT retry via alternate ARC, SSH, cron, GitHub Actions, or any other way around the safety block. For an authorized operator-run local import, review docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md: backup helper must output verifiable SHA256 manifest/dump; run exactly limited collection-scoped 71+71 transaction and read-only verify_pq_postgres_v12.py --expect-import to confirm. User consent does not negate safety block. Continue original procurement research/reconciliation independently. Parent .agent/current-task.yaml remains untouched.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
