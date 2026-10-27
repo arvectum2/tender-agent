@@ -289,3 +289,31 @@ public_223_incremental_direct_v2_20261028:
   last_verified_commit: "9df3f1e1308505a0d4c4f3d6d99f1bebdb7b3647"
   last_test_results: "17 targeted passed after direct stage; 107 canonical SHA files across 12 cases processed by Data Platform in runtime; checkpointed resumes succeeded; 3 source-contract register prices confirmed and 0 signed supplier identities proven."
   resume_instruction: "Check main and isolated worktree, then continue pq_public_223_acquire bounded batches against evidence-gaps-cycle.json using public223-attempts journal. Re-run pq_recovery_cycle offline with public223-source for incremental extraction, inspect and source-review new packets. Extend commercial original ETP sources, signed contract/lot reconciliation and final audit. Update checkpoint after each milestone, keep single Tender Agent Watchdog."
+
+verified_eis_223_public_discovery_20261028_final:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Finish source-backed 2024-2026 Power Quality procurement, supplier/contract/price and EPC-vs-supply market analysis"
+  definition_of_done: "Original EIS+ETP documents, deduplicated procurement/lot/contract graph, verified signed economic outcomes and honest source-audited market report"
+  completed:
+    - "Finished bounded first-pass EIS public-page source acquisition for all 32 valid eleven-digit 223-FZ notices in current 101-case v29 research corpus."
+    - "Journal: 32 attempted, 29 downloaded statuses + one existing source receipt + 2 no-files-saved statuses; 30 actual case directories with downloaded source bytes; 69 v29 leads require other identifiers, 44-FZ or commercial primary ETP."
+    - "Unified original EIS public-page ZIP and direct PDF/DOC/XLS inputs with SHA, source-page SHA, strict allowlist, bounded extraction and 12-hour retry receipts."
+    - "Current canonical 223 EIS corpus: 217 distinct source-SHA files, all 217 Data Platform cursor complete, no extraction crash; source tier remains public EIS page rather than original SOAP XML binding."
+    - "Recovered two direct 2025 filter-capacitor supplies: 32514947144 Kузбасское ПМЭС commission awarded Ust-Kamenogorsky Capacitor Trading House 3,158,400 RUB incl VAT vs 3,186,960 NMCK; 32515029641 MES Yuga failed tender due sole qualified bidder, commission recommended signing with ESK YUG at 3,490,560 incl VAT vs 3,621,456 NMCK."
+    - "Recovered 32514476448 Ufimka 10kV 2x0.9Mvar BSK installation mixed EPC: procurement failed as one qualifying bidder, commission selects Ural Electroengineering Company Telpro at 2,922,405.35 RUB excluding VAT vs NMCK 3,176,527.55 excluding VAT; not equipment-only or signed final contract."
+    - "Three original commission fact records now source quote/SHA-verified in data/market_intelligence/power_quality/commission_facts.v1.json and runtime verified-commission-facts.json; neither is treated as signed supplier proof."
+    - "Classified several further source-grounded cases: 32515225588 design reactive-compensation reconstruction, 32515208744 unproven PQ subproject, 32616433248 UKRM 35 kV mixed EPC one-bid failed, 32616412267 merely mentions existing УКРМ-6,3-900 in pump commissioning; preserve unknown labels."
+    - "Resolved invalid ZIPs with guarded per-archive BadZipFile handling; 4 quarantined ZIP attempts remain in staging errors, including 2 2023 archives exceeding member-count budget and 2 32515044454 invalid payloads. Other archives continue."
+    - "Added incremental SHA-keyed Data Platform ingestion, public direct attachments, validated commission fact stage and tests; 38 tests passed, one upstream Starlette warning."
+  current_step: "Add native commercial ETP primary attachment discovery, signed contract supplier confirmation and source-bound duplicate project/lot graph; produce audited report."
+  remaining:
+    - "Recover 2 EIS notices with no public files on first pass under bounded retry; do not confuse no_files_saved with no procurement."
+    - "Cover remaining 69 non-11-digit leads, including commercial ETP identifiers and 44-FZ notices, using primary original protocols and lawful access."
+    - "Independently corroborate supplier and signed contract economic amounts for 223-FZ (public registry excludes suppliers and contract copies under No.1132 p19)."
+    - "Verify 2025 commission winner/or sole bidder vs executed contract; separate equipment-only economics from mixed EPC, design and maintenance."
+    - "Full 2024-2026 final dedup procurement/outcome report; ensure reviewed OCR pages confirmed if affecting award/price."
+  last_verified_commit: "6a52acf4526d159e54d51d16916ef64532d8eccf"
+  last_test_results: "38 focused tests passed, 1 external Starlette deprecation warning; 32/32 223 source attempted, 30 original case folders downloaded, 217 distinct canonical source files processed, 3 quote-bound commission outcomes."
+  runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
+  resume_instruction: "Inspect latest GitHub main & ARC isolated worktree and status, recover queued original documents for non-11-digit commercial and 44-FZ v29 leads, avoid rerunning 32 completed official EIS searches until 12h retry, correlate commission selections with legitimate supplier/contract source, and publish source-verified deduplicated study. Preserve single existing hourly Watchdog and unrelated .agent/current-task.yaml; update checkpoint after every milestone."
