@@ -1,0 +1,74 @@
+{
+  "schema_version": "pq-source-delta/1.0",
+  "as_of": "2026-10-27",
+  "base_manifest": "verified_public_leads_20261027.v17.manifest.json",
+  "delta_rows": 2,
+  "records": [
+    {
+      "canonical_id": "commercial:4559984:pq-component-auk rm-6p3-1350",
+      "procedure_id": "4559984",
+      "publication_date": "2026-08-12",
+      "date_basis": "original_ETP_cross_checked_secondary",
+      "customer": "ООО «Аргос-Строй» / филиал «Прометей»",
+      "buyer_inn": "8608063577",
+      "beneficiary": "ПС №28 Тевлинско-Русскинского месторождения, Когалым",
+      "title": "Запрос КП на МТР для ПС 35/6кВ Тевлинско-Русскинского: 1 АУКРМ-6,3-1350-450-12 УХЛ4",
+      "family": "ukrm",
+      "scope": "mixed_MTR_market_sounding_with_PQ_component",
+      "equipment_voltage_kv": 6.3,
+      "quantity": 1,
+      "unit": "комплект",
+      "model": "АУКРМ-6,3-1350-450-12 УХЛ4",
+      "mvar_if_model_exact": null,
+      "nmck_rub": null,
+      "reported_contract_total_rub": null,
+      "reported_final_price_rub": null,
+      "demand_group": "ARGOS-STROY-PS28-TEVLINSKO-RUSSKINSK-6KV-2026",
+      "deadline_date": "2026-08-28",
+      "source_tier": "original_ETP_positions_reprinted_with_independent_secondary_cross_check",
+      "sources": [
+        {
+          "url": "https://synapsenet.ru/zakupki/b2b/4559984--hantimansijskij-ao-zapros-kommercheskih-predlozhenij-na-postavku-mtr",
+          "role": "B2B positions reproduced by SynaPs plus buyer INN and dates"
+        },
+        {
+          "url": "https://zakupki.kontur.ru/4559984_459",
+          "role": "Kontur commercial ID and one complete АУКРМ 6.3 kV position"
+        }
+      ],
+      "notes": "Проектная ПС 35/6 кВ, техническое наименование явно указывает номинал установки 6.3 кВ и количество 1 комплект; мощность по части индекса 1350 может означать 1350 кВАр, но без исходного опросного листа не утверждать. В одном смешанном запросе МТР также КРУН, два реклоузера и др. Запрос исключительно для определения ориентировочной цены, не выигранный контракт; стоимость АУКРМ не выделена."
+    },
+    {
+      "canonical_id": "index:rostender:88416730",
+      "procedure_id": null,
+      "platform_index_id": "88416730",
+      "publication_date": "2025-12-02",
+      "date_basis": "third_party_tender_listing",
+      "customer": "Не раскрыт в индексированной выдаче",
+      "buyer_inn": null,
+      "beneficiary": "Промплощадка г. Тобольск (уточнить ТЗ)",
+      "title": "Поставка трехфазного фильтр-реактора для фильтра гармоник тока в сети 10 кВ",
+      "family": "harmonic_filter_reactor",
+      "scope": "supply_components",
+      "equipment_voltage_kv": 10,
+      "quantity": null,
+      "unit": null,
+      "model": "Трёхфазный сухой фильтр-реактор с железным сердечником, AN, 10 кВ",
+      "mvar_if_model_exact": null,
+      "nmck_rub": null,
+      "reported_contract_total_rub": null,
+      "reported_final_price_rub": null,
+      "demand_group": "TOBOLSK-10KV-HARMONIC-FILTER-REACTOR-2025",
+      "deadline_date": "2025-12-10",
+      "source_tier": "secondary_index_original_procurement_and_buyer_unknown",
+      "sources": [
+        {
+          "url": "https://rostender.info/category/tendery-na-vozdushnye-filtry?page=327&scrollto=table-constructor",
+          "role": "Rostender archive tender 88416730, Dec2 2025, Tobolsk; exact 10kV harmonic filter reactor description"
+        }
+      ],
+      "notes": "Индексированный номер 88416730 — номер каталога Ростендер, НЕ номер ЕИС. Заказчик, цена, победитель и исходное ТЗ не получены. В отличие от компрессорных/вентиляционных фильтров, точно указан реактор гармонического фильтра в сети 10кВ. Нулевая цена в агрегаторе трактуется как НЕРАСКРЫТА, не 0 рублей."
+    }
+  ],
+  "caveat": "One 6.3kV UKRM line in a mixed market-price survey, not a contract; one confirmed 10kV filter reactor tender lead, buyer and official tender number missing. No production data writes."
+}
