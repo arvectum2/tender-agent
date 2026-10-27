@@ -128,4 +128,5 @@ def validate_review(*, packet: dict, review: dict) -> dict:
         "signed_contract_verified": False,
         "winner_verified": False,
         "market_total_rub": None,
+        "ocr_requires_visual_verification": any(d.get("method") == "ocr_unverified" for d in packet["documents"]),
     }
