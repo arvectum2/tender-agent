@@ -11,6 +11,13 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass6: discovered 223-FZ 32514476448 Ufimka BSK 10kV 2x0.9Mvar (NMC 3176527.55, Kontur reports contract 2922405.35 dated 2025-03-26, original registry not yet fetched).
+  - Pass6: discovered 32515044454 (2025) and reclassified formerly excluded 32616354211 (2026), both design contests on one Tyazhinskaya 52Mvar BSK110-to-SKRM project; secondary reported 2026 design contract 7406851.40, supplier unknown.
+  - Pass6: discovered commercial RAD260049805 (2026-10-06), one BSK rated explicitly 35kV on DRSK Pogranichnaya EPC with no NMC or supplier.
+  - Pass6: verified separate 32616409318 is INFORMATION SECURITY design, not Tyazhinskaya PQ, and indexed TenderGuru 93843219 lacks EIS procurement ID; neither counted as extra matching procurement.
+  - Added v10 append delta + manifest (64->68), materializer and offline 68-ID staging export with regressions; no production DB write.
+  - In-memory consistency read-back of 58+2+4+4 Github source records: 68 unique IDs, 20 with NMC, 10 scalar rated equipment voltages within 6-35kV, 11 primary-platform evidence, 4 preexisting primary verified registered contracts; no denominator drift.
+  - Expanded primary evidence queue v3 from 12 to 16 tasks and documented distinct 10kV/35kV EPC and repeated 52Mvar design projects.
   - Indexed historical UDSgroup original corporate archive: 5534/1866-УДСН BSK 10kV, 2024-11-26 bid deadline; 5631/018-Ял BSK 6/10kV, 2025-01-13 bid deadline; final award unknown.
   - Added additive source delta, deterministic v8 manifest/materializer (58+2=60 canonical IDs) and focused regression tests.
   - Added manufacturer-origin second Korbalikha mining PQ reference 2025-05-27: 6kV FCU 2035kvar plus IGBT dynamic ±3600kvar, deliberately separated from procured contracts.
@@ -21,7 +28,7 @@ completed:
   - Pass5 added four 2025 Rosseti EIS IDs: 32515029641 (filter capacitors 3621456 RUB NMC); 32514947144 (filter capacitors 3186960); 32515225588 (three SVC replacement engineering 27175270); 32515208744 (adjacent mixed 220kV EPC 56688490); published total 90672176 RUB NMC not PQ market size.
   - Created v9 append delta, 64-ID materializer, 64-row offline Data Platform export with stable resource IDs, tests, v9 quality snapshot (17 NMC-known, 11 with primary evidence, 4 registered contracts); separated SVC from STATCOM technical family.
   - Read-only ARC inspected Mac mini Docker arvectum-postgres/arvectum and Homebrew DBs; none hosted dp_collections/dp_resources/dp_records. No table created, no PostgreSQL writes.
-  - Expanded primary-evidence queue from 8 to 12 targets (v2) for new Rosseti protocols and hardware voltage.
+  - Expanded primary-evidence queue from 8 to 12 targets (v2) for Rosseti, and then 16 targets (v3) covering Ufimka, Tyazhinskaya, Pogranichnaya.
   - Read actual research branch v3 (48 records), checked canonical IDs and active project checkpoint.
   - Researched secondary public listings for Bashkirenergo 32515582393 / B2B 4283612, NMC 5880000 RUB VAT included; voltage and award unverified.
   - Found B2B 4535313 Sagan-Nur 6kV 630 kvar; customer and price unverified.
@@ -29,7 +36,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass5 v9: 64 unique research procedure IDs (v8 60 + 4 Rosseti 2025), 17 NMC-known across heterogeneous procurements, four separate non-procurement market references and 12 pending primary-document retrievals. SVC/СТК separated from STATCOM. Offline 64-row Data Platform JSONL exporter prepared, but inspected Docker and Homebrew Postgres databases contain no dp_* collection schema; no production ingestion. CI runs for this head queued; full regression pass still pending.'
+current: 'Pass6 v10: 68 deduplicated research IDs, 20 with published NMC, 11 with primary-platform source material and four previously verified RD223 registered contracts. New 10kV Ufimka and 35kV Pogranichnaya EPC tenders; 2025/2026 Tyazhinskaya 52Mvar single-demand design group (voltage of replacement device unverified). Materialized source counts 58+2+4+4 independently reconciled via GitHub fetch. 16 first-party verification targets pending; PostgreSQL Data Platform schema not deployed in inspected DBs. CI pending.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -37,9 +44,12 @@ pending:
   - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
   - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
   - Verify exact-head CI for v8 manifest/materializer/tests/offline Data Platform staging and repair any failures.
-  - Identify actual Data Platform deployment DB (not the inspected Docker or local Homebrew DBs), then dry-run 64-row staging with primary evidence policy before approved transactional import.
-last_verified_commit: 2e4de593bfe325eb1ed37d7ae408a63cf45ed2c6
+  - Identify actual Data Platform DB (none of inspected databases has dp_collections) and dry-run 68-row staging against live schema before approved import.
+  - Verify exact-head v10 CI or reproduce pytest; review source-provenance tests and validate all 68 imported resource candidates.
+last_verified_commit: f6d008f1f7832c7f68eefff86fb66fb82134ce84
 test_results:
+  - Pass6 read-only Github source merge: 68 unique canonical IDs, regime 22 223-FZ / 46 commercial, family/scope counts sum to 68; NMC=20, numeric voltage 6-35kV=10, primary links=11, primary registry contracts=4; snapshot equality confirmed in Code Mode.
+  - CI for v10 exact head is queued or not yet verified green. Previous v7 success not assumed to cover v10.
   - Prior exact-head CI workflow 40485406505 SUCCESS on pre-v8 commit; v8 tests and integration CI queued, not yet verified green.
   - v8 versioned dataset is manifest + deterministic source delta, not a second 100KB duplicated snapshot.
   - New staging output deterministic by canonical_id SHA256; includes evidence, status, content SHA256 and recorded financial uncertainty. V9 tests committed; CI pending.
@@ -48,13 +58,13 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Start from v9 manifest and 12-item primary_evidence_retrieval_queue_20261027.v2.json. Review exact-head CI, fix any failing test and run local or workflow regression. Retrieve official 223-FZ protocols for 32515029641, 32514947144, 32515225588, 32515208744 and earlier high-priority IDs. Keep SVC distinct from STATCOM and 220kV PS distinct from PQ nominal voltage. Locate valid Data Platform DB deployment/schema; dry-run 64-row staged export and obtain explicit approved exact remote DB write path before any migration or SQL INSERT. Preserve parent canonical task and existing changes.
+resume_instruction: Read verified_public_leads_20261027.v10.manifest.json and primary_evidence_retrieval_queue_20261027.v3.json; verify exact-head CI (tests/test_mi013_pq_corpus_v10.py and tests/test_mi013_pq_data_platform_export_v10.py). Retrieve original RD223 for signed Ufimka 32514476448/registry 50277071467250001900000 and Tyazhinskaya 32616354211, original 2025 notice 32515044454 and Lot-Online RAD260049805; resolve winning vendor and equipment-only bills of quantities. Keep Tyazhinskaya two tenders as one 52Mvar project, not sales; inspect Data Platform DB connection/schema in read-only mode before proposed import; leave current-task parent untouched.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v9.manifest.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v10.manifest.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: false
 
-  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v9.json
+  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v10.json
   context_dataset: data/market_intelligence/power_quality/market_context_20261027.v3.json
