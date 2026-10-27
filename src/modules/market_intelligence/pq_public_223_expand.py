@@ -10,6 +10,7 @@ import json
 import os
 import re
 import tempfile
+import zipfile
 from pathlib import Path
 
 from .eis_zip_members import stage_official_zip_children
@@ -86,7 +87,7 @@ def expand(*, source_root: Path, output_root: Path,
                         "status": child["status"],
                         "original_xml_binding_verified": False,
                     })
-            except (ValueError, OSError, RuntimeError) as exc:
+            except (ValueError, OSError, RuntimeError, zipfile.BadZipFile) as exc:
                 manifest["errors"].append({"registry_number": case.name,
                                           "archive_sha256": expected_sha,
                                           "error_type": type(exc).__name__})
