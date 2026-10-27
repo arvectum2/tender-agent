@@ -149,3 +149,14 @@ arc_chatgpt_architecture_20261027:
   achieved: "Bounded ARC handoff next/accept, SHA-grounded immutable review queue; 3 focused tests passed; live queue empty because prior MOSGAZ sample already reviewed"
   api_integration: "pq_api_reviewer.py remains optional unused code; not part of active execution"
   resume_instruction: "Enqueue source-prioritized relevant procurement technical documents from v29 lead corpus, use ARC next to present exact original excerpts to current ChatGPT, classify in conversation and ARC accept each review, then Data Platform ingest and signed-contract verification; repeat within active turn."
+
+continuation_20261027_latest:
+  status: in_progress
+  goal: "Restore missing official PQ procurement evidence across EIS, commercial ETP and Data Platform"
+  definition_of_done: "Source-backed complete-corpus discovery, bounded retry journal, downloaded originals, extracted text, reviewed decisions and signed contract reconciliation with tests"
+  completed: "58-lead gap inventory; 8 live EIS searches matched; 156 ZIP indexed to 9074 exact notice numbers; Data Platform PDF fallback verified at 2685 characters; 4 tests passed"
+  current_step: "Unify source search, indexed acquisition, Data Platform ingestion and ARC review queue into one durable runner"
+  remaining: "Full v29 corpus integration; reliable ETP adapters; missing annex recovery; signed contract and winner reconciliation; full E2E tests"
+  last_verified_commit: "fafb5fcfce4eddaf2c1087abf0572579165c9ab4"
+  last_test_results: "4 focused tests passed on Mac mini; PDF extracted with fallback; 0 exact overlaps for 58 cases in 9074 archived notice numbers"
+  resume_instruction: "Implement and test idempotent pq_recovery_cycle orchestration per docs/market_intelligence/PQ_RECOVERY_RUNBOOK_20261027.md; use ARC isolated worktree, never modify dirty main checkout; run bounded real case batches and persist receipts."
