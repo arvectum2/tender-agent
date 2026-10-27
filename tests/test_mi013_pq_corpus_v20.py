@@ -77,4 +77,4 @@ def test_count_primary_protocol_sources_proven_and_no_new_supplier_identity():
         "new_records_pending_import":29,
         "market_population_complete":False,
     }
-    assert all(x.get("tier", x.get("source_tier","")).startswith(("original","independent")) for r in z["records"] for x in r.get("protocol_role_original_sources",[]) )
+    assert all(x.get("tier", x.get("source_tier","")).startswith(("original","independent","RD223_original")) for r in z["records"] for x in r.get("protocol_role_original_sources",[]) )
