@@ -317,3 +317,25 @@ verified_eis_223_public_discovery_20261028_final:
   last_test_results: "38 focused tests passed, 1 external Starlette deprecation warning; 32/32 223 source attempted, 30 original case folders downloaded, 217 distinct canonical source files processed, 3 quote-bound commission outcomes."
   runtime_root: "/Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live"
   resume_instruction: "Inspect latest GitHub main & ARC isolated worktree and status, recover queued original documents for non-11-digit commercial and 44-FZ v29 leads, avoid rerunning 32 completed official EIS searches until 12h retry, correlate commission selections with legitimate supplier/contract source, and publish source-verified deduplicated study. Preserve single existing hourly Watchdog and unrelated .agent/current-task.yaml; update checkpoint after every milestone."
+
+etp_secondary_recovery_20261028:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: in_progress
+  goal: "Recover native ETP documents and prevent double counting of 10 kV compensation equipment reissues"
+  completed:
+    - "Refreshed 100-row v20 gap inventory: 48 cases with local source files and 30 with reviewed packets; 0 new review packets after idempotent seed."
+    - "Expanded ETP source queue to 28 bounded exact secondary-card candidates; 4 new urllib attempts logged, HTTP/transport failures not misreported as absent procurements."
+    - "Direct verified-TLS public HTML acquired for chges24621PR, 4561228, 4561243, 4565274; exact original SHA and excerpts preserved in runtime and repository evidence note."
+    - "Identified 10 kV AUКРМ УК1/УК2 vs УК3/УК4 source claims, flagged 4565274 reissue of 4538400 and unresolved possible overlap with 4561228; no equipment sales or signed award inferred."
+    - "Original B2B-Center/RAD technical attachments not obtained; secondary source only."
+    - "ETP audit now preserves inaccessible/not_found/retryable statuses and 12-hour retry timestamps; 6 focused tests and Ruff pass."
+  current_step: "Acquire original commercial ETP notices/protocols and resolve source-bound project/lot reissue links; CI architecture blocker remains independent."
+  remaining:
+    - "Resolve native B2B-Center source documents for 4561228, 4561243, 4565274 and primary RAD source for chges24621PR, without authentication bypass."
+    - "Reconcile 4565274 with explicitly referenced 4538400, and separately 4561228; no double counting before primary lot evidence."
+    - "Obtain signed supplier and contract price from independent first-party proof; preserve UNKNOWN for all four secondary-only cases."
+    - "Repair existing Data Platform architecture import violation in pq_dp_ingest.py through approved SDK/service boundary, not an audit bypass; PR #518 and PR #519 require exact-head green CI and REVIEW."
+  last_verified_commit: "53a698647c3d3f60aca8e5a54d2f351c917a8951"
+  last_test_results: "6 focused tests PASS, Ruff PASS, git diff --check PASS; full CI known blocked by preexisting direct arvectum_data import in pq_dp_ingest.py."
+  source_receipts: "data/market_intelligence/power_quality/etp_secondary_candidate_receipts_20261028.json and docs/market_intelligence/PQ_ETP_SECONDARY_SOURCE_20261028.md"
+  resume_instruction: "Inspect main, PR #518/#519 exact-head CI and runtime lease. Resume from 100-row v20 evidence-gaps-refresh-20261028.json and etp-native-source-attempts.json without repeating SHA-verified GETs. Prioritize native B2B-Center originals for 4561228/4561243/4565274 and RAD chges24621PR, compare original lot/project/reissue keys, then obtain signed contract and supplier evidence. Keep source-tier secondary and UNKNOWN financial outcomes until first-party proof. Continue other 69 non-11-digit v29 candidates and existing 223 cases only when retries eligible; do not alter unrelated .agent/current-task.yaml or single Watchdog."

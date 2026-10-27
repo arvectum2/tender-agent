@@ -1,0 +1,55 @@
+{
+  "schema_version": "pq-etp-secondary-candidates/1",
+  "market_population_complete": false,
+  "signed_contracts_verified": 0,
+  "records": [
+    {
+      "procedure_id": "4561228",
+      "source_url": "https://synapsenet.ru/zakupki/b2b/4561228--kurskaya-obl-zakupka-kondensatornih-ustanovok-10-kv-aukrm-uk1-uk2-dlya",
+      "source_sha256": "e57d2f6b0d8b02f31662815ae3d2984f1cd85a0efd29cb889ad73c58fbc2d220",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "Конденсаторная установка 10 кВ АУКРМ (УК1, УК2)",
+      "candidate_voltage_kv": 10,
+      "candidate_quantity_units": 2,
+      "quantity_status": "secondary_page_only",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "unresolved_uk1_uk2_reissue"
+    },
+    {
+      "procedure_id": "4561243",
+      "source_url": "https://synapsenet.ru/zakupki/b2b/4561243--kurskaya-obl-zakupka-kondensatornih-ustanovok-10-kv-aukrm-uk3-uk4-dlya",
+      "source_sha256": "654fecab5dd900cb5c0dddd055c08c5678d681439fc1e375ccb613ff84db0322",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "Конденсаторная установка 10 кВ АУКРМ (УК3, УК4)",
+      "candidate_voltage_kv": 10,
+      "candidate_quantity_units": 2,
+      "quantity_status": "secondary_page_only",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "distinct_uk3_uk4_label_unconfirmed"
+    },
+    {
+      "procedure_id": "4565274",
+      "source_url": "https://synapsenet.ru/zakupki/b2b/4565274--kurskaya-obl-zakupka-kondensatornoj-ustanovki-10-kv-aukrm-uk1-uk2-dlya",
+      "source_sha256": "85380726233389d57a6fceb798ee57db01534420374f129d66720e0ffc9d4332",
+      "source_tier": "secondary_public_index",
+      "exact_quote": "Конденсаторная установка 10 кВ АУКРМ (УК1, УК2)",
+      "candidate_voltage_kv": 10,
+      "candidate_quantity_units": 2,
+      "quantity_status": "secondary_page_only",
+      "winner_verified": false,
+      "signed_contract_verified": false,
+      "contract_price_rub": null,
+      "initial_price_rub": null,
+      "original_etp_documents_verified": false,
+      "project_overlap_status": "unresolved_uk1_uk2_reissue"
+    }
+  ]
+}
