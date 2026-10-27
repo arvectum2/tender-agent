@@ -186,3 +186,34 @@ watchdog_cycle_20261027_2330_msk:
     commercial ETP source adapters with per-attempt receipts; acquire original
     technical specifications, queue newly verified documents for ChatGPT review,
     and ingest only after SHA/quote/tenant authorization checks.
+
+watchdog_v29_full_corpus_20261027_2340_msk:
+  status: in_progress
+  materialization:
+    source: "read-only canonical scripts/market_intelligence/import_pq_postgres_v29.py::materialize_v29 in isolated v29 checkout"
+    manifest_sha256: e5bb18a1fffc0ca806e73f5ee69d62aae85174227611ad7439696c803b0d82f6
+    records: 101
+    unique_canonical_ids: 101
+    output: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live/v29-materialized-leads.json
+    production_mutation: false
+  verified:
+    source_attempts: "33 distinct eligible numeric official EIS exact-notice searches, 33 returned matching notice cards; NOT original signed outcomes"
+    complete_gap_inventory: "101 cases, 9 with local original files before B2B capture, 2 previously reviewed packets"
+    archive_index: "0 exact matches and 0 new original attachment downloads"
+    commercial_etp: "4 actual public ETP GET HTTP 200, 3 Bidzaar and 1 B2B-Center; per-URL SHA/status receipts at runtime/etp-source-attempts.json, no award verification"
+    chatgpt_arc_review: "B2B-Center tender #4642507 / research EIS mapping 32616474682; HTML original SHA 4a6a837f7319c0eab077b0b1383e64e699bc82c3375969ebf7fce23d60468a3e, extracted text SHA d8d94d4a3c1237f172239494e068d3e029b95ad2b50d101fc19796ce20c69116; exact quote validated; classification uncertain because voltage and signed outcome absent; ARC accept reviewed; queue now empty"
+    tests: "16 focused MI pytest passed on PR branch; 8 v29 corpus importer tests passed separately; one inherited Starlette warning each"
+    leases: "acquired and released, no stale takeover"
+  concurrency_notice: >-
+    During this invocation another process updated canonical main and the
+    isolated ta-mi-autonomy worktree to commit 1c7fc25b with its own
+    pq_recovery_cycle implementation. PR #516 is draft and must be reconciled
+    against current main; do not merge or overwrite the concurrent work.
+  resume_instruction: >-
+    Inspect current main and draft PR #516 together; preserve the newer main
+    runner and integrate only nonduplicative guards/lease/ARC handoff after
+    deterministic tests. Resume full 101-row v29 gap inventory, attempt
+    official signed contract/protocol and commercial ETP originals with
+    source receipts, and review only newly recovered documents via ChatGPT ARC.
+    Do not rerun the 33 already logged official notice searches before their
+    retry window, infer winners, or mutate production.
