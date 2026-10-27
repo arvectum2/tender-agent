@@ -1,0 +1,93 @@
+{
+  "schema_version": "pq-source-delta/0.8",
+  "as_of": "2026-10-27",
+  "base_manifest": "verified_public_leads_20261027.v15.manifest.json",
+  "total_new_lot_level_rows": 3,
+  "records": [
+    {
+      "canonical_id": "index:vsempodryad:9d4a58cf-6c10-4485-8537-53e550c24269",
+      "procedure_id": null,
+      "publication_date": "2024-06-03",
+      "customer": "ПАО «Федеральная сетевая компания – Россети»",
+      "buyer_inn": "4716016979",
+      "title": "Лот 1 — ПС 220 кВ Лопча, РД/СМР/ПНР/МТРиО; инвестиционный проект СКРМ 154 Мвар Лопча и 128 Мвар Хани",
+      "family": "reactive_compensation_system",
+      "scope": "mixed_epc",
+      "voltage_kv": null,
+      "nmc_rub": "1571458880.00",
+      "secondary_contract_rub": "1571458880.00",
+      "secondary_contract_date": "2024-07-22",
+      "identifier_quality": "EIS_notice_masked_by_secondary_public_card",
+      "demand_group": "ROSSETI-HANI-LOPCHA-SKRM-128-154-2024-26",
+      "evidence": [
+        {
+          "url": "https://vsem-podryad.ru/purchase/9d4a58cf-6c10-4485-8537-53e550c24269/",
+          "tier": "third_party_procurement_masked_eis_and_contract",
+          "locator": "2024-06-03 original card, 1571458880 RUB NMC and reported signed, masked contract number; lot1 PS Lopcha"
+        },
+        {
+          "url": "https://energybase.ru/substation/PS_220_kV_Lopcha/tenders",
+          "tier": "third_party_industry_catalog",
+          "locator": "2024-07-22 catalog update; lot1 1571458880 RUB; mixed SCADA grid EPC"
+        }
+      ],
+      "notes": "Full-project EPC at PS 220kV Lopcha: headline mentions 154Mvar SKRM Lopcha and 128Mvar Hani. This tender is distinct lot1 within one investment project; 1571458880 RUB is NOT device-only price. Source hides original EIS notice and vendor; secondhand report of contract not independently confirmed. Disagreement earliest date 03 Jun vs energybase updated date 22 Jul retained as source dates."
+    },
+    {
+      "canonical_id": "223fz:32413581034:lot2",
+      "procedure_id": "32413581034",
+      "publication_date": "2024-07-16",
+      "customer": "ПАО «Федеральная сетевая компания – Россети»",
+      "buyer_inn": "4716016979",
+      "title": "Лот 2 — ПС 220 кВ Хани, РД/СМР/ПНР/МТРиО по инвестпроекту СКРМ 128 Мвар Хани и 154 Мвар Лопча",
+      "family": "reactive_compensation_system",
+      "scope": "mixed_epc",
+      "voltage_kv": null,
+      "nmc_rub": "1518147770.00",
+      "secondary_contract_rub": null,
+      "secondary_contract_date": null,
+      "identifier_quality": "public_223fz_EIS_id_industry_index",
+      "demand_group": "ROSSETI-HANI-LOPCHA-SKRM-128-154-2024-26",
+      "evidence": [
+        {
+          "url": "https://energybase.ru/tender/32413581034",
+          "tier": "third_party_industry_catalog_references_original_documents",
+          "locator": "№32413581034, lot2 PS Hani; price 1518147770 RUB, Energybase lists date 16 July 2024 but title month May and docs 23.05; official protocol listed but not extracted"
+        }
+      ],
+      "notes": "Один инвестиционный проект с лотом №1 на ПС Лопча; номинал новой СКРМ не установлен, 220 кВ в названии относится к ПС. Энергетическая часть НМЦ отсутствует, стоимость комплекса EPC нельзя считать рынком оборудования PQ. Источник противоречив о дате публикации (title May, catalog July 16) — дата записана по явному поле объявления с пометкой."
+    },
+    {
+      "canonical_id": "223fz:32616506708:lot1",
+      "procedure_id": "32616506708",
+      "publication_date": "2026-10-26",
+      "customer": "АО «Россети Научно-Технический Центр»",
+      "buyer_inn": "7728589190",
+      "title": "Корректировка ПСД этапа 3 реконструкции ПС 220 кВ Ванино с установкой СКРМ не менее 150 Мвар, проект РЖД",
+      "family": "reactive_compensation_system",
+      "scope": "design",
+      "voltage_kv": null,
+      "nmc_rub": "13523603.17",
+      "secondary_contract_rub": null,
+      "secondary_contract_date": null,
+      "deadline": "2026-10-29",
+      "identifier_quality": "public_223fz_EIS_id",
+      "demand_group": "ROSSETI-VANINO-PS220-SKRM150MVAR-2026",
+      "evidence": [
+        {
+          "url": "https://zakupki.kontur.ru/32616506708",
+          "tier": "third_party_EIS_card",
+          "locator": "Official EIS 32616506708 Oct26 2026, NMC 13523603.17 RUB, bidding until Oct29, 1 unit design correction, supplier unknown"
+        },
+        {
+          "url": "https://kpshka.ru/eis/tender-32616506708",
+          "tier": "third_party_independent_confirmation",
+          "locator": "223-FZ named project and 150Mvar SKRM linked to 220kV PS Vanino"
+        }
+      ],
+      "notes": "Включено как смежный проектный спрос, без подтверждения номинального напряжения самого СКРМ. Договор, победитель и стоимость оборудования неизвестны, речь только о корректировке проектно-сметной документации. Заказчик НТЦ Россети, выгодоприобретатель инфраструктурный проект РЖД."
+    }
+  ],
+  "source_caveat": "2024 220kV EPC project amounts are not 6-35kV PQ equipment revenue; 2026 Vanino design not installed equipment",
+  "quality_note": "Lot1 EIS identifier masked, source UUID retained, lot2 verified indexed EIS number 32413581034; staged 3 new candidates not imported."
+}
