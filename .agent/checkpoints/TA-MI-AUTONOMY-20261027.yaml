@@ -140,3 +140,12 @@ api_reviewer_20261027:
   runtime: "Existing reviewed MOSGAZ queue replay returns already_reviewed"
   limitation: "This is OpenAI API integration, not guaranteed identical to GPT-6 ChatGPT chat configuration; no full unattended model or Data Platform E2E without credential"
   resume_instruction: "Add mocked provider response acceptance test, secure credential provisioning if authorized, batch PQ relevance prioritization, source-qualified Data Platform ingestion and signed outcome linkage; do not invent market totals."
+
+arc_chatgpt_architecture_20261027:
+  status: in_progress
+  last_verified_commit: d6942cab9bd8476f9e5ed18ffa6f28b01fe436f2
+  owner_instruction: "Use GPT-6 in the active ChatGPT conversation via ARC, NOT OpenAI API"
+  component: src/modules/market_intelligence/pq_arc_chat.py
+  achieved: "Bounded ARC handoff next/accept, SHA-grounded immutable review queue; 3 focused tests passed; live queue empty because prior MOSGAZ sample already reviewed"
+  api_integration: "pq_api_reviewer.py remains optional unused code; not part of active execution"
+  resume_instruction: "Enqueue source-prioritized relevant procurement technical documents from v29 lead corpus, use ARC next to present exact original excerpts to current ChatGPT, classify in conversation and ARC accept each review, then Data Platform ingest and signed-contract verification; repeat within active turn."
