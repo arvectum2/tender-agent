@@ -1,0 +1,47 @@
+{
+  "schema_version": "mi013-postgres-v34-secondary-commercial-bom/1.0",
+  "as_of": "2026-10-27",
+  "database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "canonical_id": "commercial:ГП630876:lot1",
+  "source_grade": "secondary_ETP_positions_republished_not_primary_buyer_TZ",
+  "new_procurement_notices": 0,
+  "records_enriched": 1,
+  "source_sidecar": "secondary_etgpb_novatek_bom_20261027.v34.json",
+  "importer": "scripts/market_intelligence/apply_pq_evidence_v34.py",
+  "source_materializer": "scripts/market_intelligence/materialize_pq_research_v34.py",
+  "backup": {
+    "file": "data-platform-arvectum_data-20261027T204416Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37469593,
+    "sha256": "29e9743d62ef540a1da960810cb64322cdd7d04b678ea5113fe027deed5ef1c7",
+    "sha_and_original_manifest_verified": true
+  },
+  "transaction": "single-case original source identity/content-hash-guarded SQL transaction COMMIT",
+  "postwrite": {
+    "resources": 102,
+    "records": 102,
+    "unique_ids": 102,
+    "metadata_versions": {
+      "v29": 97,
+      "v31": 1,
+      "v32": 2,
+      "v33": 1,
+      "v34": 1
+    },
+    "any_enriched_cases": 16,
+    "original_first_party_enriched_cases": 15,
+    "external_resources": 2192,
+    "all_documents": 2192
+  },
+  "new_content_hash": "c37d6384d32702e6d871793e46520a330dba0e7c10efbf161f9d1fd9b865f122",
+  "all_canonical_source_replay_match_db": "102/102; 0 drift",
+  "signed_contracts_added": 0,
+  "pending_original_documents": [
+    "4._Модернизация_УКРМ.7z",
+    "3._Заводская_документация_на_УКРМ.7z",
+    "2._Форма_4_Технические_требования_.xlsx"
+  ],
+  "evidence_url": "https://synapsenet.ru/zakupki/gazprombank/%D0%B3%D0%BF630876%231344734--leningradskaya-obl-postavka-oborudovaniya-s",
+  "notes": "10 visible list positions are a SECONDARY excerpt of platform's sourced component list. No original 7z attached, no original signed ETP result. No OEM or signed prices."
+}
