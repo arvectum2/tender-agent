@@ -1,0 +1,20 @@
+{
+  "schema_version": "power-quality-append-manifest/0.4",
+  "as_of": "2026-10-27",
+  "data_version": "v11",
+  "base_manifest": "verified_public_leads_20261027.v10.manifest.json",
+  "base_lot_level_records": 68,
+  "append_dataset": "besk_joint_kep_rosseti_high_value_2026_delta.json",
+  "append_lot_level_records": 3,
+  "total_lot_level_records": 71,
+  "additional_unique_eis_notice_numbers": 2,
+  "lot_grouping_rule": "32616474682 is one EIS notice, two independent lots/beneficiaries; procedure value equals sum two lot NMC, never add header value again",
+  "joined_procurement_ids": [
+    "32616474682",
+    "32616435269"
+  ],
+  "primary_award_count_added": 0,
+  "commercial_result_status": "neither confirmed awarded as of Oct 27 2026",
+  "source_scope": "research candidates not market census or equipment-only revenue",
+  "next": "retrieve full attachments and PQ rated voltage, compare KЭП lot sum vs parent published header"
+}
