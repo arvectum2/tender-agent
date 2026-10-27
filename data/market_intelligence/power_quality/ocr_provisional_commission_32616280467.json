@@ -1,0 +1,43 @@
+{
+  "schema_version": "pq-visual-ocr-provisional-commission-candidate/1",
+  "procedure_id": "32616280467",
+  "queue_id": "32616280467-2c28b41f95ccecad34e79229",
+  "original_pdf_sha256": "5c161c4cffcef27e525e47896b55e1adeacee4d26fcf903fec36c95db21b20b1",
+  "source_xml_sha256": "1ac22e633eecb6afcbf35a964bdf78161e3438248c25c81f2f059d10cd8fe49f",
+  "derived_ocr_sha256": "7992f2737a365a5449e9638088b5700263c8f0f7b0f748177f14d2ae5ba6a59d",
+  "visual_page_jpeg_sha256": {
+    "1": "eb90c9c636475859c6fcbe835ab999ab1a56171706eb3a565429eeaa6f93e139",
+    "2": "7500c89b0fd17c834977489ffba12c7017447b11b9a4767e42358dd14691263d",
+    "3": "5d2d4e572e53b7457f6486dcc337ac13cb6a911f466bf609f5ccca4cf404e413",
+    "4": "24059a673ee7b6bf6ea59189c99821de2d02977a623d7cd96c241a7175c50660",
+    "5": "d6d87840b21b0209ddd86d9112388a4a80ac45510ba2ce7c9b8670485a5515af"
+  },
+  "visual_pages_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "classification": "relevant_PIR_dynamic_reactive_compensation_VL10kV_not_equipment_supply",
+  "source_evidence_grade": "original_EIS_scan_with_visual_review_and_OCR_provisional",
+  "commission_selected_participant": "ООО «Электриксервис»",
+  "commission_offer_rub": "3680106.21",
+  "commission_offer_vat_percent": 22,
+  "reported_nmck_rub": "3683790.00",
+  "reported_nmck_vat_percent": 22,
+  "commission_second_ranked_participant": "ООО «Энергосвязьсервис»",
+  "signed_contract_verified": false,
+  "supplier_of_signed_contract_verified": false,
+  "executed_contract_price_verified": false,
+  "equipment_supply_verified": false,
+  "market_total_eligible": false,
+  "ocr_requires_visual_verification": true,
+  "source_bound_ocr_quotes": [
+    "ПИР. Переустройство ВЛ-10",
+    "первое место, а именно: ООО «Электриксервис»",
+    "3 680 106,21",
+    "3683 790,00 руб. с учетом"
+  ],
+  "note": "Visually confirmed on scanned pages 1-5 by ChatGPT; OCR text is derived, not native. Commission selects first-ranked bidder for PИР/VL10kV project; signed contract, equipment manufacturer and delivery not established."
+}

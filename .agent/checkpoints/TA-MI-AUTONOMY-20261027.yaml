@@ -362,3 +362,18 @@ etp_source_classification_followup_20261028:
   last_verified_commit: "3694f1b900936742537ef3cf5b109470de770964"
   last_test_results: "7 focused tests PASS; no new executable code changed in this follow-up."
   resume_instruction: "Resume source acquisition from original Roseltorg questionnaire OL.3 UKRM, B2B-Center native STATCOM 4302914, 6.3kV mixed MTR 4559984, and 10kV UK1-UK4 projects; keep maintenance/price inquiry/second-feed construction separate from supply. Continue first-party signed contract and award evidence recovery, 12h retries and dedup; preserve single Watchdog and unrelated current-task."
+
+visual_ocr_provisional_review_32616280467:
+  task_id: TA-MI-AUTONOMY-20261027
+  status: reviewed_provisional
+  source_sha256: "5c161c4cffcef27e525e47896b55e1adeacee4d26fcf903fec36c95db21b20b1"
+  queue_id: "32616280467-2c28b41f95ccecad34e79229"
+  completed:
+    - "Visually inspected all 5 pages of original scanned commission protocol and compared bounded OCR quote strings with original page images."
+    - "Accepted distinct OCR-provisional ChatGPT ARC packet with exact source SHA and ocr_requires_visual_verification=true; original native unreadable packet preserved."
+    - "Commission selected ООО Электриксервис for PИР/VL10kV compensation project, bid 3,680,106.21 RUB incl VAT vs protocol NMCK 3,683,790 RUB incl VAT; signed contract and equipment supply unverified."
+    - "Persisted source and visual-page SHA-bound provisional candidate outside canonical signed/commission-facts promotion list."
+  remaining:
+    - "Find original signed contract and final supplier/contract price independently; do not infer from commission decision."
+    - "Resolve canonical commission-fact promotion policy for OCR+visual proof, retaining provisional flag; do not count design works as equipment-only supply."
+  resume_instruction: "Use already reviewed OCR packet 32616280467-2c28b41f95ccecad34e79229 and SHA-bound visual candidate; do not rerun OCR or re-review. Continue signed contract recovery for 32616280467 and other v20 leads, and review new native ETP sources. Keep original unreadable packet unchanged and OCR provisional."
