@@ -43,7 +43,9 @@
       "secondary_reported_contract_rub": "7406851.40",
       "contract_award_verified_original": false,
       "scope": "Известное повторное проектирование СКРМ 52 Мвар, без поставки оборудования",
-      "source_url": "https://zakupki.tochka.com/search/22899277-1/"
+      "source_url": "https://zakupki.tochka.com/search/22899277-1/",
+      "secondary_reported_contract_date": "2026-09-23",
+      "secondary_source_url": "https://tendem.ru/tenders/7557863"
     },
     {
       "stage": "equipment_supply",
