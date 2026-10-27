@@ -74,7 +74,11 @@ def run(*, corpus: Path, output: Path) -> dict:
         temp.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         os.replace(temp, target)
     events = output / "research_events.jsonl"
-    if not events.exists():
+    if events.exists():
+        existing_events = [json.loads(line) for line in events.read_text(encoding="utf-8").splitlines()]
+        if len(existing_events) != len(STAGES) or [event.get("stage") for event in existing_events] != list(STAGES):
+            raise ValueError("Existing research event journal is incomplete or corrupt")
+    else:
         with events.open("x", encoding="utf-8") as handle:
             for i, stage in enumerate(STAGES):
                 event = {"schema_version": "1.0", "event_id": f"pq-mi013-{i:02}",
@@ -83,7 +87,7 @@ def run(*, corpus: Path, output: Path) -> dict:
                          "stage": stage, "action": "offline_corpus_stage",
                          "candidate_id": None, "source_tier": "none",
                          "evidence": [], "decision": {"label": stage, "status": "pending"
-                         if stage in ("S3_ACQUIRE", "S4_EXTRACT") else "accepted"},
+                         if stage not in ("S0_SCOPE", "S1_SOURCE_MAP") else "accepted"},
                          "reason": "Offline source-bound baseline; live collection not executed",
                          "review_status": "unreviewed", "training_eligible": False}
                 handle.write(json.dumps(event, ensure_ascii=False) + "\n")
