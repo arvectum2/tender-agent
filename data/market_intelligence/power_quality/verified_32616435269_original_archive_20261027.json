@@ -121,5 +121,16 @@
     "BSK-110 battery has 110kV nominal voltage and is outside strict 6-35kV equipment market.",
     "Excel NMC cost breakdown is underlying tender line price, not vendor actual selling price.",
     "Source archive is the initial file and a later amended version may adjust details; final original amended attachment remains to review."
-  ]
+  ],
+  "technical_qualification_requirements": {
+    "manufacturer_service_center_in_russia_required": true,
+    "product_year_of_manufacture": "year of supply or preceding year",
+    "warranty_years_minimum": 5,
+    "equipment_delivery_trigger": "based on buyer purchase order within 365-calendar-day supply arrangement",
+    "onsite_supervision_after_start_of_installation_days": 7,
+    "max_response_time_of_reactive_power_regulator_ms": 20,
+    "input_operational_conditions": "ambient upper +40 C, lower -60 C (MPU section of technical requirements)",
+    "notes": "From ТЗ на поставку.docx paragraphs on manufacturing, service center, warranty and supervised installation; response/temperature from Приложение 2.docx characteristics. These are procurement requirements, not supplier compliance verification."
+  },
+  "methodology_warning": "Because manufacturer qualification and actual system topology require technical review, the presence of a 10kV converter-priced BOM line does not establish equipment-alone revenue or award. 110kV BSK must be excluded from strict <=35kV nominal voltage aggregation."
 }
