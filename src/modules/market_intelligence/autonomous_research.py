@@ -12,11 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_CORPUS = Path("data/market_intelligence/power_quality")
-DEFAULT_SEED = "verified_public_leads_20261025.v2.json"
+DEFAULT_SEED = "verified_public_leads_20261025.v2.json"\nLATEST_MANIFEST = "verified_public_leads_20261027.v20.manifest.json"
 STAGES = ("S0_SCOPE", "S1_SOURCE_MAP", "S2_DISCOVERY", "S3_ACQUIRE",
           "S4_EXTRACT", "S5_TRIAGE", "S6_RESOLVE", "S7_OUTCOME",
           "S8_ENTITY_GRAPH", "S9_METRICS", "S10_AUDIT", "S11_PUBLISH")
-INPUTS = (DEFAULT_SEED, "official_registry_contracts_20261026.v1.json",
+INPUTS = (LATEST_MANIFEST, DEFAULT_SEED, "official_registry_contracts_20261026.v1.json",
           "official_case_dossiers_20261026.v1.json",
           "official_source_coverage_20261026.v5.json")
 
@@ -42,7 +42,7 @@ def run(*, corpus: Path, output: Path) -> dict:
         value, digest = _load(path)
         sources[name] = {"sha256": digest, "path": str(path),
                          "schema_version": value.get("schema_version")}
-    seed, _ = _load(corpus / DEFAULT_SEED)
+    seed, _ = _load(corpus / DEFAULT_SEED)\n    latest, _ = _load(corpus / LATEST_MANIFEST)
     records = seed.get("records")
     if not isinstance(records, list):
         raise ValueError("Missing records in PQ seed")
@@ -52,7 +52,7 @@ def run(*, corpus: Path, output: Path) -> dict:
     if not isinstance(signed_equipment, int) or signed_equipment < 0:
         raise ValueError("Signed equipment verification count missing")
     manifest = {"study_id": "PQ-RU-MI013", "corpus_mode": "read_only_existing",
-                "source_manifest": sources, "discovery_record_count": len(records),
+                "source_manifest": sources, "discovery_record_count": len(records),\n                "latest_mi013_manifest": LATEST_MANIFEST,\n                "latest_mi013_manifest_metadata": latest,
                 "verified_equipment_only_signed_contracts": signed_equipment,
                 "market_total_rub": None,
                 "status": "completed_with_gaps",
