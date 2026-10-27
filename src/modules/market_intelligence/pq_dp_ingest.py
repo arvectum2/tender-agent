@@ -12,6 +12,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from .pq_dp_fallback import pdf_text_fallback
+
 SUPPORTED = {".pdf", ".docx", ".doc", ".xlsx", ".xls", ".txt", ".xml"}
 
 
@@ -35,12 +37,16 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
             result = ingest_file(path, collection_id="arvectum-pq-evidence",
                                  source_type="official_local_document",
                                  max_chars=100000)
+            fallback = (pdf_text_fallback(path) if path.suffix.lower() == ".pdf"
+                        and not result.document.text.strip() else None)
+            extracted_text = fallback["text"] if fallback and fallback["status"] == "extracted" else result.document.text
             records.append({"path": str(path), "sha256": sha,
                             "document_id": result.document.document_id,
-                            "extraction_status": result.document.extraction_status,
-                            "characters": len(result.document.text),
+                            "extraction_status": "extracted" if extracted_text.strip() else result.document.extraction_status,
+                            "extraction_method": fallback["method"] if fallback else "data_platform",
+                            "characters": len(extracted_text),
                             "chunks": len(result.chunks),
-                            "text_excerpt": result.document.text[:2500]})
+                            "text_excerpt": extracted_text[:2500]})
         except Exception as exc:
             records.append({"path": str(path), "sha256": sha,
                             "status": "extraction_error",
