@@ -18,6 +18,10 @@ completed:
   - Cross-checked exact UKRM-6.3-300 item of Energozapad against PES buyer profile; likely buyer INN 4711011840, original contract/date not available.
   - Created prioritized eight-item read-only primary evidence retrieval queue including original EIS download IDs (both HTTP404 as of 27.10).
   - Inspected actual Data Platform dp_resources collection/source/URI schema via read-only GitHub, prepared 60-ID deterministic JSONL source staging export script and regression tests; no production DB effects.
+  - Pass5 added four 2025 Rosseti EIS IDs: 32515029641 (filter capacitors 3621456 RUB NMC); 32514947144 (filter capacitors 3186960); 32515225588 (three SVC replacement engineering 27175270); 32515208744 (adjacent mixed 220kV EPC 56688490); published total 90672176 RUB NMC not PQ market size.
+  - Created v9 append delta, 64-ID materializer, 64-row offline Data Platform export with stable resource IDs, tests, v9 quality snapshot (17 NMC-known, 11 with primary evidence, 4 registered contracts); separated SVC from STATCOM technical family.
+  - Read-only ARC inspected Mac mini Docker arvectum-postgres/arvectum and Homebrew DBs; none hosted dp_collections/dp_resources/dp_records. No table created, no PostgreSQL writes.
+  - Expanded primary-evidence queue from 8 to 12 targets (v2) for new Rosseti protocols and hardware voltage.
   - Read actual research branch v3 (48 records), checked canonical IDs and active project checkpoint.
   - Researched secondary public listings for Bashkirenergo 32515582393 / B2B 4283612, NMC 5880000 RUB VAT included; voltage and award unverified.
   - Found B2B 4535313 Sagan-Nur 6kV 630 kvar; customer and price unverified.
@@ -25,7 +29,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'V8 append-only 60 research procurement IDs, four separate nonprocurement market references, prioritized eight-target primary-document queue. Cross-sourced Energozapad/PES probable contract relationship; winner/date unverified. Data Platform staging JSONL exporter with stable resource keys added, NO production writes. Prior CI green through v7, exact-head v8 CI queued/in_progress; follow original protocols and commission staged DB import only after guarded approval.'
+current: 'Pass5 v9: 64 unique research procedure IDs (v8 60 + 4 Rosseti 2025), 17 NMC-known across heterogeneous procurements, four separate non-procurement market references and 12 pending primary-document retrievals. SVC/СТК separated from STATCOM. Offline 64-row Data Platform JSONL exporter prepared, but inspected Docker and Homebrew Postgres databases contain no dp_* collection schema; no production ingestion. CI runs for this head queued; full regression pass still pending.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -33,23 +37,24 @@ pending:
   - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
   - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
   - Verify exact-head CI for v8 manifest/materializer/tests/offline Data Platform staging and repair any failures.
-  - Compare 60-row staging against existing collection in read-only mode before proposing a transactional import.
-last_verified_commit: df3bbec501fe4b8b593a28d4b616b2b6d026c0d6
+  - Identify actual Data Platform deployment DB (not the inspected Docker or local Homebrew DBs), then dry-run 64-row staging with primary evidence policy before approved transactional import.
+last_verified_commit: 2e4de593bfe325eb1ed37d7ae408a63cf45ed2c6
 test_results:
   - Prior exact-head CI workflow 40485406505 SUCCESS on pre-v8 commit; v8 tests and integration CI queued, not yet verified green.
   - v8 versioned dataset is manifest + deterministic source delta, not a second 100KB duplicated snapshot.
-  - New staging output deterministic by canonical_id SHA256; includes evidence, status, content SHA256 and recorded financial uncertainty. Tests committed, CI pending.
+  - New staging output deterministic by canonical_id SHA256; includes evidence, status, content SHA256 and recorded financial uncertainty. V9 tests committed; CI pending.
+  - Pass5: in-memory new canonical IDs unique against 58 baseline and 2 corporate append records; v9 manifest totals 64 and incremental initial NMC 90672176, cannot treat as 6-35kV sales.
   - In-memory 54 unique canonical IDs, 48 unchanged v3 and 6 new source-linked leads.
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Check exact-head CI for v8 materializer + tests + offline export (current branch research/mi013-pq-corpus-20261027-pass2). If quality fails, inspect job logs, fix and retest. Continue eight-item primary_evidence_retrieval_queue_20261027.json to establish real buyers, winners and signed prices, particularly original documents 32515218366, 32616296475, GP630876. Then dry-run staged import against Data Platform collection schema; do NOT mutate PostgreSQL or overwrite parent checkpoint without approved exact write path.
+resume_instruction: Start from v9 manifest and 12-item primary_evidence_retrieval_queue_20261027.v2.json. Review exact-head CI, fix any failing test and run local or workflow regression. Retrieve official 223-FZ protocols for 32515029641, 32514947144, 32515225588, 32515208744 and earlier high-priority IDs. Keep SVC distinct from STATCOM and 220kV PS distinct from PQ nominal voltage. Locate valid Data Platform DB deployment/schema; dry-run 64-row staged export and obtain explicit approved exact remote DB write path before any migration or SQL INSERT. Preserve parent canonical task and existing changes.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v8.manifest.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v9.manifest.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: false
 
-  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v8.json
+  quality_snapshot: data/market_intelligence/power_quality/evidence_quality_snapshot_20261027.v9.json
   context_dataset: data/market_intelligence/power_quality/market_context_20261027.v3.json
