@@ -13,12 +13,14 @@ import tempfile
 from pathlib import Path
 
 from .pq_dp_fallback import pdf_text_fallback
+from .pq_scan_ocr import ocr_pdf
 
 SUPPORTED = {".pdf", ".docx", ".doc", ".xlsx", ".xls", ".txt", ".xml"}
 
 
 def ingest(*, sources: Path, output: Path, dp_source: Path,
-           max_files: int = 30, max_bytes: int = 20 * 1024 * 1024) -> dict:
+           max_files: int = 30, max_bytes: int = 20 * 1024 * 1024,
+           ocr_empty: bool = False) -> dict:
     if not 1 <= max_files <= 500 or sources.is_symlink() or not sources.is_dir():
         raise ValueError("Invalid source scope")
     if not (dp_source / "arvectum_data" / "documents" / "ingest.py").is_file():
@@ -40,10 +42,23 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
             fallback = (pdf_text_fallback(path) if path.suffix.lower() == ".pdf"
                         and not result.document.text.strip() else None)
             extracted_text = fallback["text"] if fallback and fallback["status"] == "extracted" else result.document.text
+            ocr = None
+            if ocr_empty and path.suffix.lower() == ".pdf" and not extracted_text.strip():
+                cache = output.parent / "ocr-cache" / (sha + ".json")
+                if cache.is_file() and not cache.is_symlink():
+                    ocr = json.loads(cache.read_text(encoding="utf-8"))
+                    if ocr.get("source_sha256") != sha:
+                        raise ValueError("OCR cache checksum mismatch")
+                else:
+                    ocr = ocr_pdf(path)
+                    cache.parent.mkdir(parents=True, exist_ok=True)
+                    cache.write_text(json.dumps(ocr, ensure_ascii=False), encoding="utf-8")
+                if ocr.get("status") == "ocr_unverified":
+                    extracted_text = ocr["text"]
             records.append({"path": str(path), "sha256": sha,
                             "document_id": result.document.document_id,
-                            "extraction_status": "extracted" if extracted_text.strip() else result.document.extraction_status,
-                            "extraction_method": fallback["method"] if fallback else "data_platform",
+                            "extraction_status": ("ocr_unverified" if ocr and ocr.get("status") == "ocr_unverified" else "extracted" if extracted_text.strip() else result.document.extraction_status),
+                            "extraction_method": ocr.get("method") if ocr and ocr.get("status") == "ocr_unverified" else fallback["method"] if fallback else "data_platform",
                             "characters": len(extracted_text),
                             "chunks": len(result.chunks),
                             "text_excerpt": extracted_text[:2500]})
@@ -64,7 +79,8 @@ def ingest(*, sources: Path, output: Path, dp_source: Path,
     os.replace(temp, output)
     return {"files_inspected": len(records), "extracted": sum(
         r.get("extraction_status") == "extracted" for r in records),
-        "errors": sum(r.get("status") == "extraction_error" for r in records)}
+        "errors": sum(r.get("status") == "extraction_error" for r in records),
+        "ocr_unverified": sum(r.get("extraction_status") == "ocr_unverified" for r in records)}
 
 
 def main() -> None:
@@ -73,9 +89,10 @@ def main() -> None:
     p.add_argument("--dp-source", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--max-files", type=int, default=30)
+    p.add_argument("--ocr-empty", action="store_true")
     a = p.parse_args()
     print(json.dumps(ingest(sources=a.sources, dp_source=a.dp_source,
-                            output=a.output, max_files=a.max_files),
+                            output=a.output, max_files=a.max_files, ocr_empty=a.ocr_empty),
                      ensure_ascii=False))
 
 
