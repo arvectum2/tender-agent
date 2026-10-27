@@ -11,11 +11,13 @@ from .pq_indexed_recovery import recover_indexed
 from .pq_queue_seed import seed
 from .pq_dp_ingest import ingest
 from .pq_verified_stage import stage
+from .pq_etp_card_audit import audit as audit_etp
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               runtime: Path, ontology: Path, dp_source: Path,
-              max_cases: int = 8, network: bool = True, verified_reestr: Path | None = None) -> dict:
+              max_cases: int = 8, network: bool = True, verified_reestr: Path | None = None,
+              etp_queue: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -44,6 +46,10 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
     else:
         report["official_search"] = {"status": "skipped_offline"}
         report["indexed_recovery"] = {"status": "skipped_offline"}
+    if etp_queue is not None:
+        report["etp_cards"] = (audit_etp(queue_file=etp_queue,
+            journal=runtime / "etp-source-attempts.json",
+            max_tasks=min(max_cases, 3)) if network else {"status": "skipped_offline"})
     report["review_queues"] = []
     for root in roots:
         if root.is_dir():
@@ -52,7 +58,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
                 max_cases=max_cases))
     report["data_platform"] = (
         ingest(sources=originals, output=runtime / "dp-extracted.json",
-               dp_source=dp_source, max_files=max_cases * 8)
+               dp_source=dp_source, max_files=max_cases * 8, ocr_empty=True)
         if originals.is_dir() else {"files_inspected": 0, "status": "no_recovered_originals"})
     if staged:
         report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8)
@@ -72,11 +78,12 @@ def main() -> None:
     p.add_argument("--max-cases", type=int, default=8)
     p.add_argument("--offline", action="store_true")
     p.add_argument("--verified-reestr", type=Path)
+    p.add_argument("--etp-queue", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
                        ontology=a.ontology, dp_source=a.dp_source,
-                       max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr)
+                       max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue)
     print(json.dumps(result, ensure_ascii=False))
 
 
