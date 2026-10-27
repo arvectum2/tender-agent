@@ -1,0 +1,240 @@
+{
+  "schema_version": "pq-primary-design-contract-protocol-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v26",
+  "base_manifest": "verified_public_leads_20261027.v25.manifest.json",
+  "existing_cases_enriched": 3,
+  "new_procurements": 0,
+  "patches": [
+    {
+      "canonical_id": "223fz:32515225588:lot1",
+      "procedure_number": "32515225588",
+      "buyer": "По документации заказчик проекта Россети, организатор АО «Россети Центр закупок»",
+      "subject": "Проектная документация реконструкции компенсации на ПС 220 кВ Славянская и Афипская, замена трёх СТК",
+      "role_scope": "adjacent_high_voltage_design_only_no_new_equipment_supply",
+      "original_protocol_date": "2025-10-30",
+      "original_protocol_number": "3/3614155",
+      "registered_signed_contract_verified": false,
+      "source_published_initial_nmck_inc_vat_rub": "27175270.00",
+      "vat_rate_percent": 20,
+      "admitted_bids": 4,
+      "rejected_bids": 0,
+      "retrade_event": "2025-10-23",
+      "ranking": [
+        {
+          "rank": 1,
+          "company": "ООО «ПЦ СИБИРИ»",
+          "inn": "5402574460",
+          "inn_source": "manufacturer's own public site pcsib.com; not printed in EIS commission DOCX",
+          "bid_after_retrade_inc_vat_rub": "20107269.94",
+          "bid_after_retrade_ex_vat_rub": "16756058.28",
+          "role": "selected_design_firm"
+        },
+        {
+          "rank": 2,
+          "company": "ООО «ТЭП»",
+          "inn": null,
+          "bid_after_retrade_inc_vat_rub": "17793360.90",
+          "bid_after_retrade_ex_vat_rub": "16946058.00",
+          "vat_rate_percent": 5,
+          "role": "runner_up_designer"
+        },
+        {
+          "rank": 3,
+          "company": "ООО «МОДЭНС ГРУПП»",
+          "inn": "7724417137",
+          "inn_source": "independent bank corporate register TBank, not original protocol",
+          "bid_after_retrade_inc_vat_rub": "25758834.00",
+          "bid_after_retrade_ex_vat_rub": "21465695.00",
+          "role": "rank3_designer"
+        },
+        {
+          "rank": 4,
+          "company": "ООО ПЦ «ЭКРА»",
+          "inn": "2130110311",
+          "inn_source": "official first party company contact details pc-ekra.ru, not original protocol",
+          "bid_after_retrade_inc_vat_rub": "27175270.00",
+          "bid_after_retrade_ex_vat_rub": "22646058.33",
+          "role": "rank4_designer_no_retrade"
+        }
+      ],
+      "commission_decision": "Winner ООО ПЦ СИБИРИ at offer 20107269.94 RUB incl VAT. Two lower total-inc-VAT offers differ in tax regimes and weighted project experience; nominal lowest offer is not winning quote.",
+      "pq_equipment_sale_verified": false,
+      "pq_hardware_revenue_rub": null,
+      "evidence": [
+        {
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=106305968",
+          "tier": "original_EIS_final_protocol_DOCX_sha256_verified",
+          "sha256": "6d81b62143fd3523fbe172d2c62feb612e5b9cd1953fe12549c793600f3e4424",
+          "bytes": 46100,
+          "locator": "Протокол №3/3614155 30.10.2025, all four named offers, second stage, comparative weighted rank and selection"
+        },
+        {
+          "url": "https://www.pcsib.com/",
+          "tier": "company_own_site_legal_identity",
+          "locator": "ООО ПЦ Сибири ИНН5402574460; own published legal details"
+        },
+        {
+          "url": "https://www.pc-ekra.ru/kontaktyi-i-rekvizityi",
+          "tier": "company_own_site_legal_identity",
+          "locator": "ООО ПЦ ЭКРА ИНН2130110311"
+        },
+        {
+          "url": "https://www.tbank.ru/business/contractor/legal/1177746851006/",
+          "tier": "external_legal_registry",
+          "locator": "ООО МОДЭНС ГРУПП ИНН7724417137"
+        }
+      ]
+    },
+    {
+      "canonical_id": "223fz:32616354211:lot1",
+      "procedure_number": "32616354211",
+      "buyer": "АО «Энергосервисная компания Сибири»",
+      "subject": "Корректировка ПД и инженерные изыскания ПС 110/35/10 кВ Тяжинская: замена БСК-110 на СКРМ мощностью 52 Мвар",
+      "role_scope": "adjacent_high_voltage_project_design_not_PQ_equipment_sale_voltage_of_replacement_unverified",
+      "commission_date": "2026-09-18",
+      "original_protocol": "26-5011/32616354211/4",
+      "initial_nmck_ex_vat_rub": "6163644.34",
+      "initial_nmck_inc_vat_rub": "7519646.09",
+      "admitted_joint_application_count": 1,
+      "competition_result": "failed_single_application_commission_says_sign_with_collective_participant",
+      "collective_selected_bidder": {
+        "lead": {
+          "company": "ООО «СВЭТ-ПРОЕКТ»",
+          "inn": "2465200905",
+          "role": "lead_project_designer"
+        },
+        "members": [
+          {
+            "company": "ООО «СИБЭЛЕКТРОПРОЕКТ»",
+            "inn": "2465189948"
+          },
+          {
+            "company": "ООО «ВЕКТОР»",
+            "inn": "5402052777"
+          },
+          {
+            "company": "ООО «АСК «Барс»",
+            "inn": "3812057503"
+          }
+        ]
+      },
+      "sole_joint_application_offer_ex_vat_rub": "6071189.67",
+      "calculated_offer_inc_vat_22percent_rub": "7406851.40",
+      "retrade_price_decreased": false,
+      "original_signed_registry_contract_verified": false,
+      "pq_equipment_sale_verified": false,
+      "evidence": [
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DA341AB568084928B96A457AD02938D4",
+          "tier": "original_EIS_final_protocol_RAR_sha256_verified",
+          "sha256": "5ebf2889ecca1fe28dfbdf90ffe2b4a187aa75511c4b5ae8511f4a2fef1fcf2e",
+          "bytes": 668627,
+          "locator": "RAR contains 2026-09-18 original 26-5011.4.rtf and scanned PDF"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DA341AB568084928B96A457AD02938D4",
+          "tier": "original_EIS_inner_RTF_sha256_verified",
+          "sha256": "4169c08123d77454829d1ec304241d1d9cfd7d96e734c478e6da413279d20d20",
+          "bytes": 140552,
+          "locator": "Official RTF has all four legal names and INNs, one collective bid, exVAT price, failed procedure, decision to sign"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/filestore/public/1.0/download/fz223/file.html?uid=DA341AB568084928B96A457AD02938D4",
+          "tier": "original_EIS_inner_scanned_PDF_sha256_verified",
+          "sha256": "b53293949281ee4350e8642c12be034d2f33bc0192c57effe9eb64d21da5f14f",
+          "bytes": 781322,
+          "locator": "parallel 3-page original PDF image, verified binary, content extracted from corresponding RTF"
+        }
+      ]
+    },
+    {
+      "canonical_id": "223fz:32514944142:lot1",
+      "procedure_number": "32514944142",
+      "original_notice_window": "2025-06-16 — 2025-06-23",
+      "subject": "Проектирование замены 3 СТК на ПС Кирилловская, Славянская и Афипская (все ПС 220 кВ)",
+      "initial_nmck_inc_vat_rub": "18668690.00",
+      "original_protocol_no": "2/3514049",
+      "original_protocol_body_final_decision_date": "2025-07-02",
+      "date_inconsistency": "Original DOCX header declares signed/published 02.07.2026, but body says bid period June 2025 and commission result 02.07.2025; provenance anomaly, do not silently rewrite either date.",
+      "applicant_count": 7,
+      "admitted_count": 1,
+      "rejected_count": 6,
+      "applications": [
+        {
+          "rank_as_submission": 1,
+          "company": "ООО «АЭСП»",
+          "admitted": false,
+          "reason": "missing required technical/other documentation"
+        },
+        {
+          "rank_as_submission": 2,
+          "company": "ООО «УРАЛПРОЕКТИНЖИНИРИНГ»",
+          "admitted": false,
+          "reason": "missing technical proposal"
+        },
+        {
+          "rank_as_submission": 3,
+          "company": "ООО «ПРОФЭНЕРГО»",
+          "admitted": false,
+          "reason": "offer exceeds maximum"
+        },
+        {
+          "rank_as_submission": 4,
+          "company": "ООО «ЭНЕРГЕТИЧЕСКОЕ СТРОИТЕЛЬСТВО»",
+          "admitted": false,
+          "reason": "offer exceeds maximum"
+        },
+        {
+          "rank_as_submission": 5,
+          "company": "ООО «КПЭИ»",
+          "admitted": false,
+          "reason": "offer exceeds maximum"
+        },
+        {
+          "rank_as_submission": 6,
+          "company": "ООО «ЛЭМ»",
+          "admitted": false,
+          "reason": "offer exceeds maximum, schedule inconsistent"
+        },
+        {
+          "rank_as_submission": 7,
+          "company": "АО «РОССЕТИ НАУЧНО-ТЕХНИЧЕСКИЙ ЦЕНТР»",
+          "admitted": true,
+          "reason": null
+        }
+      ],
+      "original_award_verified": false,
+      "selected_bidder": null,
+      "competitive_result": "failed_only_one_admitted_no_decision_to_sign_no_contract_in_protocol",
+      "possible_followup": "223fz:32515225588:lot1",
+      "demand_chain_comment": "Later 2025 winner PЦ СИБИРИ contract is for PS Slavyanskaya and Afipskaya and replacement of three STK; earlier original notice includes Kirillovskaya. Overlap exists but technical/contract scope differs. Group as related program, not literally identical contract, and do NOT assume 32514944142 created awarded volume.",
+      "pq_equipment_sale_verified": false,
+      "evidence": [
+        {
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103756668",
+          "tier": "original_EIS_final_protocol_DOCX_sha256_verified",
+          "sha256": "769552aa0bad2d7b96dbcd64d886b80ad7d5c796b42efecd3fb36d3cd569c1d6",
+          "bytes": 23355,
+          "locator": "Original 2/3514049 7 named applicants, 6 rejected, 1 admitted, competition failed; note inconsistent header dates"
+        },
+        {
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=103756742",
+          "tier": "original_EIS_second_link_same_source_SHA_verified",
+          "sha256": "769552aa0bad2d7b96dbcd64d886b80ad7d5c796b42efecd3fb36d3cd569c1d6",
+          "bytes": 23355,
+          "locator": "Two index IDs refer to exactly same DOCX sha; no double count"
+        }
+      ]
+    }
+  ],
+  "new_named_primary_original_company_occurrences": 15,
+  "new_relevant_bid_applications_seen": 12,
+  "new_original_signed_registry_contracts": 0,
+  "next_actions": [
+    "Original RD223 signed contract for 32515225588 and 32616354211; do not convert commission decision to legal signature",
+    "Check technical drawings for exact voltage and model of replacement SKRM at Tyazhinskaya",
+    "Obtain exact documentation for earlier Kirillovskaya designs and possible post-rebid scope, do not double count",
+    "Actual FGI-compatible equipment purchase line remains unverified; project design fees are not hardware sales"
+  ]
+}
