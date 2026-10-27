@@ -1,0 +1,29 @@
+version: 1
+repository: arvectum2/tender-agent
+task_id: MI-013-PQ-CORPUS-20261027
+status: in_progress
+goal: 'Continue Russian Power Quality 6–35kV market discovery and strengthen evidence-linked 2024–2026 case corpus.'
+definition_of_done:
+  - 'Expand discovery beyond existing 45 records with traceable sources and exact IDs.'
+  - 'Deduplicate against current MI-013 v2 and preserve v2 source history.'
+  - 'Classify medium-voltage equipment, adjacent EPC, RFI, re-tenders, and 0.4kV exclusions.'
+  - 'Verify official contracts, winner identities, equipment-only cost when source permits.'
+  - 'Complete original EIS and commercial ETP coverage and rerun relevant MI-013 tests.'
+completed:
+  - '2026-10-27: compared 18 research candidates with all 45 existing MI-013 v2 records; 15 overlap, 3 not previously present.'
+  - 'Created append-only MI-013 v3 corpus with 48 unique canonical IDs, including Sosnovskaya 223-FZ PИР, EuroChem UKK adjacent EPC and Gaysky GOK December 2025 UKRM 6kV.'
+  - 'All previous 45 objects byte-equivalent after JSON parsing; no invented winner, no mixed contract treated as equipment price.'
+  - 'Corrected interpretation of Angarsk 32616412267 official RD223 contract 2,639,026.64 RUB vs secondary bid 2,590,000 RUB; already stored in separate original-source contract registry.'
+  - 'Grouped 3 Gaysky GOK 600kvar 6kV notices for later repeat procurement determination.'
+current: '48 case discovery v3 committed in isolated MI-013 branch, additional original-source and full-coverage validation outstanding.'
+pending:
+  - 'Check exact-head MI-013 regression/CI for this documentation and dataset update.'
+  - 'Verify Sosnovskaya RD223 contract №52460069527260006170000 from original EIS registry; supplier may be masked.'
+  - 'Collect first-party EuroChem UKK technical specifications and Gaysky GOK re-tender protocols.'
+  - 'Continue official 223-FZ source-day coverage and other ETP original docs.'
+  - 'Only merge existing PR514 after its normal review; do not auto-merge.'
+last_verified_commit: 6043460d39095ea8b8e243be7a3ca7151e329d17
+test_results:
+  - 'In-memory assertions: baseline 45, merged 48, 48 unique canonical IDs, untouched original 45 objects.'
+  - 'No local pytest or CI rerun for this change; branch CI still requires verification.'
+resume_instruction: 'On research/mi013-pq-source-expansion-20261025, inspect v3 48 records; verify CI and run focused tests; obtain official RD223 for Sosnovskaya and first-party TЗ for UKK, Gaysky. Keep the parent .agent/current-task.yaml (TA-ROADMAP-EXEC-20261012) undisturbed.'
