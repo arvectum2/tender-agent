@@ -1,0 +1,40 @@
+{
+  "schema_version": "pq-commission-facts/1",
+  "source_scope": "original_eis_public_223_protocol_documents_sha",
+  "facts": [
+    {
+      "procedure_id": "32514947144",
+      "lot": "1",
+      "queue_id": "32514947144-f812a22e43c7c6cae61af960",
+      "source_sha256": "1f3cde0fa95d5187b707e978108553894dea2c1377ca0123b5a3d7b08a113fd8",
+      "source_quote": "Признать заявку участника ООО «ТОРГОВЫЙ ДОМ «УСТЬ-КАМЕНОГОРСКИЙ КОНДЕНСАТОР» лучшей",
+      "amount_quote": "3 158 400,00",
+      "nmck_quote": "3 186 960,00",
+      "proposed_or_selected_participant": "ООО «ТОРГОВЫЙ ДОМ «УСТЬ-КАМЕНОГОРСКИЙ КОНДЕНСАТОР»",
+      "decision_type": "commission_winner_selected",
+      "price_kind": "commission_winning_offer_vat_included",
+      "offer_rub": "3158400.00",
+      "nmck_rub": "3186960.00",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "filter_capacitor_supply"
+    },
+    {
+      "procedure_id": "32515029641",
+      "lot": "1",
+      "queue_id": "32515029641-3757c270b5756c1cefe7149b",
+      "source_sha256": "b3571212f38a646f3686d30974ce3a4fd6df904e2a5b22a1cd51c3b9363ed0c6",
+      "source_quote": "заключить с ООО \"ЭСК ЮГ\" договор поставки конденсаторов для силовых фильтров",
+      "amount_quote": "3 490 560",
+      "nmck_quote": "3 621 456,00",
+      "proposed_or_selected_participant": "ООО \"ЭСК ЮГ\"",
+      "decision_type": "failed_tender_commission_instructs_single_bidder_contract",
+      "price_kind": "commission_proposed_single_bidder_amount_vat_included",
+      "offer_rub": "3490560.00",
+      "nmck_rub": "3621456.00",
+      "signed_contract_verified": false,
+      "supplier_of_signed_contract_verified": false,
+      "market_category": "filter_capacitor_supply"
+    }
+  ]
+}
