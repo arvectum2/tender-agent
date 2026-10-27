@@ -18,7 +18,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: Research dataset v5 (55 records) committed: after v4's six, 223-FZ Mелеуз notice 32616296475 (NMC 3 904 773.73 RUB) added, secondary source reports a signed contract but not supplier/actual price/voltage; primary protocol verification and canonical database ingestion remain pending.
+current: Research dataset v6 (55 records) committed, based on v5: after v4's six, 223-FZ Mелеуз notice 32616296475 (NMC 3 904 773.73 RUB) added, secondary source reports a signed contract but not supplier/actual price/voltage; primary protocol verification and canonical database ingestion remain pending.
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -26,16 +26,16 @@ pending:
   - Expand discovery into 2024-2025 and hidden EPC attachments, not just title hits.
   - Review existing PostgreSQL ingestion schema and obtain exact-command authorization before ARC remote DB mutation.
   - Execute QA tests against checked-out branch and review CI.
-last_verified_commit: 683a8b6c94389c23cf18ebd68fffe2bef49faabe
+last_verified_commit: e9fbd96e8f9023c2fb378e6a701ff281edcf681b
 test_results:
   - In-memory 54 unique canonical IDs, 48 unchanged v3 and 6 new source-linked leads.
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Read data/market_intelligence/power_quality/verified_public_leads_20261027.v5.json; run tests/test_mi013_pq_corpus_v4.py and tests/test_mi013_pq_corpus_v5.py; fetch original 223-FZ contract registry for 32515582393, original B2B notices 4535313/4561228/4561243/4565274; resolve repeated equipment demand before estimating market. Keep existing TA-ROADMAP-EXEC-20261012 current-task checkpoint intact; this is a child market-intelligence task in a separate branch.
+resume_instruction: Read data/market_intelligence/power_quality/verified_public_leads_20261027.v6.json; run tests/test_mi013_pq_corpus_v4.py, tests/test_mi013_pq_corpus_v5.py and tests/test_mi013_pq_corpus_v6.py; fetch original 223-FZ contract registry for 32515582393, original B2B notices 4535313/4561228/4561243/4565274; resolve repeated equipment demand before estimating market. Keep existing TA-ROADMAP-EXEC-20261012 current-task checkpoint intact; this is a child market-intelligence task in a separate branch.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
-  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v5.json
+  dataset: data/market_intelligence/power_quality/verified_public_leads_20261027.v6.json
   current_task_main_parent_untouched: true
   database_postgresql_import_executed: false
