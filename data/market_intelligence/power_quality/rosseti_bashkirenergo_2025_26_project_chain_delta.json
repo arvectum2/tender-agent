@@ -1,0 +1,142 @@
+{
+  "schema_version": "pq-source-delta/0.3",
+  "as_of": "2026-10-27",
+  "parent_dataset": "verified_public_leads_20261027.v9.manifest.json",
+  "scope": "223-FZ project chains and one contracted 10kV capacitor bank EPC in 2025-26",
+  "evidence_grade": "secondary public procurement indexes; original signed contract XML not downloaded for new IDs",
+  "records": [
+    {
+      "procedure_id": "32514476448",
+      "canonical_id": "223fz:32514476448:lot1",
+      "publication_date": "2025-02-04",
+      "buyer": "ООО «Башкирские распределительные электрические сети»",
+      "buyer_inn": "0277071467",
+      "platform": "ZakazRF (АГЗРТ) / ЕИС 223-ФЗ",
+      "family": "capacitor_bank",
+      "scope": "epc",
+      "project": "ПС 35/10 кВ Уфимка, ПО СЭС, Башкортостан",
+      "title": "25-000705 Реконструкция ПС Уфимка с установкой БСК 10 кВ, 2×0,9 Мвар",
+      "equipment_voltage_kv": 10,
+      "equipment_reactive_power_mvar_total": 1.8,
+      "quantity": 2,
+      "quantity_unit": "БСК по 0,9 Мвар",
+      "nmck_rub": "3176527.55",
+      "initial_price_vat_status": "not_established",
+      "reported_signed_contract_rub": "2922405.35",
+      "contract_registry_number": "50277071467250001900000",
+      "reported_contract_date": "2025-03-26",
+      "contract_source_tier": "third_party_kontur_not_original_rd223",
+      "final_protocol_date": "2025-03-06",
+      "competitive_result": "one_application_competitive_procedure_declared_failed_but_later_contract_listed",
+      "supplier_inn": null,
+      "supplier_verified": false,
+      "market_scope": "strict_10kV_BSK_EPC_contract_total_not_equipment_only",
+      "demand_group": "UFIMKA-BSK-10KV-2x0.9-2025",
+      "sources": [
+        {
+          "url": "https://zakupki.kontur.ru/32514476448",
+          "tier": "third_party",
+          "locator": "№32514476448, 04.02.2025, 10кВ 2x0,9 Мвар, НМЦ 3 176 527,55 ₽, договор 2 922 405,35 ₽ №50277071467250001900000 от 26.03.2025, одна заявка"
+        },
+        {
+          "url": "https://zakupki.kontur.ru/category-region/stroitelstvo-remont-i-rekonstrukciya-linij-elektroperedachi-elektrotexnicheskix-obektov/sibaj",
+          "tier": "third_party",
+          "locator": "индекс заказов района Сибай, строка 25-000705, НМЦ и зарегистрированная договорная сумма"
+        }
+      ],
+      "notes": "Процедура конкурентных предложений НЕ состоялась из-за одной заявки, но агрегатор указывает позднейший договор. Нельзя считать сумму EPC работ отдельной продажей батарей, а ненайденного поставщика нельзя назвать победителем подписанного договора."
+    },
+    {
+      "procedure_id": "32515044454",
+      "canonical_id": "223fz:32515044454:lot1",
+      "publication_date": "2025-07-16",
+      "buyer": "ПАО «Россети Сибирь»",
+      "buyer_inn": "2460069527",
+      "platform": "ЕИС 223-ФЗ / конкурс МСП",
+      "family": "reactive_compensation_system",
+      "scope": "design",
+      "project": "ПС 110/35/10 кВ Тяжинская, замена БСК-110 на СКРМ 52 Мвар, коррекция проекта 2021-01-1",
+      "title": "ПИР, корректировка ПД/РД для ПС Тяжинская с заменой БСК-110 на СКРМ 52 Мвар",
+      "equipment_voltage_kv": null,
+      "equipment_reactive_power_mvar_total": 52,
+      "quantity": 1,
+      "quantity_unit": "проектная работа",
+      "nmck_rub": "3031988",
+      "reported_signed_contract_rub": null,
+      "contract_registry_number": null,
+      "contract_source_tier": null,
+      "supplier_inn": null,
+      "supplier_verified": false,
+      "market_scope": "adjacent_EPC_design_hv_substation_technology_nominal_voltage_unverified",
+      "demand_group": "TYAZHINSKAYA-BSK110-TO-SKRM52-DESIGN-2025-26",
+      "related_procedure_ids": [
+        "32616354211"
+      ],
+      "sources": [
+        {
+          "url": "https://energybase.ru/tender/32515044454",
+          "tier": "third_party",
+          "locator": "16.07.2025, НМЦ 3 031 988 ₽, 52 Мвар, конкурс МСП, документация и протоколы перечислены"
+        }
+      ],
+      "notes": "Цена за проектирование, а не поставку СКРМ. БСК-110 явно исходный объект замены, но напряжение вновь проектируемого СКРМ из карточки неизвестно. Эта процедура, более поздний конкурс 2026 и апрельское сообщение 2026 относятся к той же потребности, не трём продажам."
+    },
+    {
+      "procedure_id": "32616354211",
+      "canonical_id": "223fz:32616354211:lot1",
+      "publication_date": "2026-09-07",
+      "buyer": "АО «Энергосервисная компания Сибири»",
+      "buyer_inn": "5501231424",
+      "platform": "ЕИС 223-ФЗ / Росэлторг",
+      "family": "reactive_compensation_system",
+      "scope": "design",
+      "project": "ПС 110/35/10 кВ Тяжинская, БСК-110→СКРМ 52 Мвар, корректировка ПД/РД 2021-01-1",
+      "title": "Изыскания и разработка ПД реконструкции ПС Тяжинская с заменой БСК-110 на СКРМ 52 Мвар",
+      "equipment_voltage_kv": null,
+      "equipment_reactive_power_mvar_total": 52,
+      "quantity": 1,
+      "quantity_unit": "проектная работа",
+      "nmck_rub": "7519646.09",
+      "reported_signed_contract_rub": "7406851.40",
+      "contract_registry_number": null,
+      "reported_contract_date": null,
+      "contract_source_tier": "third_party_tochka_not_official_rd223",
+      "supplier_inn": null,
+      "supplier_verified": false,
+      "market_scope": "adjacent_EPC_design_hv_substation_technology_nominal_voltage_unverified",
+      "demand_group": "TYAZHINSKAYA-BSK110-TO-SKRM52-DESIGN-2025-26",
+      "related_procedure_ids": [
+        "32515044454"
+      ],
+      "sources": [
+        {
+          "url": "https://energybase.ru/tender/01a08049-5098-7347-9eff-5553da0043ea",
+          "tier": "third_party",
+          "locator": "ЕИС 32616354211, опубликовано 07.09.2026, НМЦ ≈7 519 646 ₽, 52 Мвар и сканы названий протоколов"
+        },
+        {
+          "url": "https://zakupki.tochka.com/search/22899277-1/",
+          "tier": "third_party",
+          "locator": "НМЦ 7 519 646,09 ₽, в агрегаторе обозначен договор 7 406 851,40 ₽, документация и итоговые протоколы; поставщик и реестровая запись скрыты"
+        },
+        {
+          "url": "https://synapsenet.ru/zakupki/fz223/32616354211%231--krasnoyarskij-kraj-vipolnenie-rabot-po-provedeniyu-inzhenernih",
+          "tier": "third_party",
+          "locator": "показан протокол от 18.09.2026; работы ПИР 23.09.2026–30.03.2027"
+        }
+      ],
+      "notes": "Ранее 32616354211 ошибочно исключён как 110кВ. Возвращён в АДЖАСЕНТНЫЙ проектный корпус: 110/35/10 кВ это номиналы ПС, БСК-110 — исходное устройство. Напряжение нового СКРМ не подтверждено, 52 Мвар не доказывает класс 6–35кВ. Договорная сумма только вторичная; нельзя смешивать разные года, разных заказчиков и повторные конкурсы."
+    }
+  ],
+  "non_procurement_related_index": [
+    {
+      "indexed_id": "tenderguru:93843219",
+      "date": "2026-04-22",
+      "buyer": "АО «Россети Научно-технический центр»",
+      "buyer_inn": "7728589190",
+      "reported_initial_price_rub": "3050000",
+      "url": "https://www.tenderguru.ru/tender/93843219",
+      "notes": "Апрельский тендер на тот же Тяжинский проект, но ЕИС procurement number НЕ установлен; не добавлять как ещё один канонический номер ЕИС и не считать независимым выполненным контрактом."
+    }
+  ]
+}
