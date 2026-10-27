@@ -20,6 +20,7 @@ from .pq_commission_candidate_audit import extract as extract_commission_candida
 from .pq_public_223_acquire import batch as fetch_public_223
 from .pq_public_223_expand import expand as expand_public_223
 from .pq_public_223_canonical import canonicalize as canonicalize_public_223
+from .pq_public_dp_resume import run as resume_public_dp
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -92,17 +93,20 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             expanded = runtime / "public223-expanded"
             report["public223_expansion"] = expand_public_223(
                 source_root=public223_source, output_root=expanded,
-                max_cases=max_cases)
+                max_cases=30, max_archives=60)
             canonical = runtime / "public223-canonical"
             report["public223_canonical"] = canonicalize_public_223(
-                staged=expanded, output=canonical, max_files=max_cases * 16)
-            report["public223_data_platform"] = ingest(
-                sources=canonical, output=runtime / "dp-public223-canonical.json",
-                dp_source=dp_source, max_files=max_cases * 16)
+                staged=expanded, output=canonical, max_files=500)
+            report["public223_data_platform"] = resume_public_dp(
+                source_root=canonical, runtime=runtime, dp_source=dp_source,
+                max_files=min(max_cases * 3, 60))
             report["public223_review_source_tier"] = "public_eis_page_not_original_soap_xml"
             report["review_queues"].append(seed(
                 sources=canonical, ontology=ontology, queue_dir=queue,
-                max_cases=max_cases))
+                max_cases=200))
+            report["inventory_after_public223"] = inventory(
+                leads_file=leads, source_roots=[*roots, canonical],
+                queue_dir=queue, output=runtime / "evidence-gaps-with-public223.json")
     if contract_root is not None:
         contract_index_path = runtime / "contract-xml-evidence.json"
         contract_index = scan_contracts(contract_root, leads)
