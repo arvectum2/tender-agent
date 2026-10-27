@@ -31,6 +31,7 @@ def run(*, source_root: Path, runtime: Path, dp_source: Path,
     if (source_root.is_symlink() or not source_root.is_dir()
             or not 1 <= max_files <= 100):
         raise ValueError("Invalid source or ingestion budget")
+    runtime.mkdir(parents=True, exist_ok=True)
     manifest = json.loads((source_root / "canonical-manifest.json").read_text(encoding="utf-8"))
     if manifest.get("schema_version") != "pq-public-canonical/1":
         raise ValueError("Unrecognized canonical source provenance")
