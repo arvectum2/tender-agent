@@ -64,8 +64,8 @@ def triage(*, root: Path, ontology: Path, first: date, last: date,
                     attachments = attachment_manifest(
                         archive_path=archive, official_archive_sha256=digest,
                         subsystem=subsystem, region=region, exact_date=day.isoformat())
-                    attachment_counts["references"] += len(attachments.get("attachments", []))
-                    attachment_counts["rejected"] += attachments.get("rejected_count", 0)
+                    attachment_counts["references"] += len(attachments["records"])
+                    attachment_counts["rejected"] += attachments["rejected_untrusted_reference_count"]
                     inspected += 1
         day += timedelta(days=1)
     linkage = link_original_documents(records)
