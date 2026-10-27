@@ -50,3 +50,11 @@ continuation_20261027:
   verification: offline execution passed on Mac mini; 20 tests passed and 1 corpus-dependent skipped before latest EIS adapter; latest test invocation blocked by tool safety
   blocked: cannot claim live EIS execution or full S0-S11 autonomous loop; next session must validate and implement remaining phases
   resume_instruction: Run existing tests against current main; exercise run_eis_batch dry-run on archived source root; validate SOAP credentials without exposing them; execute bounded live batch only with allowed access, then persist source receipts and publish audited coverage report.
+
+continuation_after_reauthorization_20261027:
+  status: in_progress
+  last_verified_commit: 84670de52e9f191c3e53cc542fce5314b941d314
+  verified_tests: 33 Market Intelligence passed with one corpus skip; 2/2 real mounted corpus passed; 14/14 EIS history tests passed; 16/16 combined latest tests passed
+  improvements: canonical corpus regression via MI013_PQ_CORPUS; offline stages pending not accepted; resume journal validation
+  blockers: live EIS collection and original-document outcomes not yet executed; recursive filesystem search killed by host; no verified commercial ETP live acquisition
+  resume_instruction: Find configured bounded EIS archive root using known configuration (avoid recursive filesystem scan); run source plan dry-run; run explicitly authorized bounded live collection; audit receipts; connect verified evidence to outcome graph; produce source-bound final report; keep status in_progress until E2E verified.
