@@ -61,7 +61,7 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
                dp_source=dp_source, max_files=max_cases * 8, ocr_empty=True)
         if originals.is_dir() else {"files_inspected": 0, "status": "no_recovered_originals"})
     if staged:
-        report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8)
+        report["verified_data_platform"] = ingest(sources=staged, output=runtime / "dp-verified-official-extract.json", dp_source=dp_source, max_files=max_cases * 8, ocr_empty=True)
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
