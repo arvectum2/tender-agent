@@ -1,0 +1,114 @@
+{
+  "schema_version": "pq-dedup-and-source-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "parent_manifest": "verified_public_leads_20261027.v18.manifest.json",
+  "remove": [
+    {
+      "canonical_id": "index:energybase:mogocha-statcom-cooling-20240415",
+      "reason": "Energybase PS Mogocha listing date 15 Apr 2024 belongs to adjacent LocoTech specialized equipment auction, while STATCOM cooling service belongs to dated Nov/Dec 2023 EIS 32313008364. External DV Tender confirms 2023-11-27 source notice 32313008364 and 6795960 NMC; no independent 2024 tender number found.",
+      "supported_sources": [
+        {
+          "url": "https://energybase.ru/substation/PS_220_kV-Mogocha/tenders",
+          "source_tier": "secondary_industry_list_reading_corrected"
+        },
+        {
+          "url": "https://www.dv-tender.ru/details/500280907",
+          "source_tier": "independent_eis_cross_reference_32313008364"
+        }
+      ],
+      "confirmed_real_notice_id": "32313008364",
+      "was_duplicate_of": "223fz:32313008364:lot1",
+      "flag": "RETRACTED_UNSUPPORTED_2024_SEPARATE_PROCUREMENT"
+    }
+  ],
+  "enrich": [
+    {
+      "canonical_id": "commercial:106044-ТТ:lot1",
+      "fields": {
+        "reported_equipment_quantity": 3,
+        "reported_equipment_quantity_unit": "шт",
+        "equipment_split": [
+          {
+            "beneficiary": "Калтанский угольный разрез",
+            "quantity": 2
+          },
+          {
+            "beneficiary": "Талдинский угольный разрез",
+            "quantity": 1
+          }
+        ],
+        "quantity_verification_tier": "third_party_reproduces_ETP_lot_positions",
+        "underlying_supplier_contract_verified": false
+      },
+      "evidence_append": [
+        {
+          "url": "https://zakupki.kontur.ru/IS55137357",
+          "source_tier": "ETP_original_positions_reproduced_secondary",
+          "locator": "B2B 106044-ТТ, 28.10.2025, Kuzbassrazrezugol; 2 STATCOM Kaltansky + 1 Taldinsky, buyer INN4205049090; deadline 07.11.2025",
+          "excerpt": "2шт статические генераторы реактивной мощности для Калтанского; 1шт для Талдинского"
+        }
+      ],
+      "notes_append": " Equipment positions confirm 3 demanded units within ONE commercial tender. Voltage/model/nmc/winner and actually delivered quantity remain unknown."
+    },
+    {
+      "canonical_id": "commercial:РН41205245:lot1",
+      "fields": {
+        "joint_beneficiaries": [
+          {
+            "name": "ООО «Тагульское»",
+            "inn": "2464051552"
+          },
+          {
+            "name": "АО «Ванкорнефть»",
+            "inn": "2437261631"
+          },
+          {
+            "name": "АО «Сузун»",
+            "inn": "8401005829"
+          },
+          {
+            "name": "ООО «Восток Ойл»",
+            "inn": "7727568649"
+          }
+        ],
+        "joint_buyers_count": 4,
+        "original_ETP_reference": "РН41205245",
+        "procurement_price_visible": false,
+        "underlying_supplier_contract_verified": false
+      },
+      "evidence_append": [
+        {
+          "url": "https://zakupki.kontur.ru/IS48834468",
+          "source_tier": "ETP_joint_procurement_secondary_reproduction",
+          "locator": "25.12.2024 14:47 Moscow time, TEK-Torg procurement РН41205245, RN-V-24-MTR-2600065317, 4 separate named beneficiary buyers, deadline 13.01.2025",
+          "excerpt": "Поставка установок компенсации реактивной мощности с разработкой конструкторской документации, совместно для Тагульское, Ванкорнефть, Сузун и Восток Ойл"
+        }
+      ],
+      "notes_append": " Four buyers are associated with ONE combined 2024 procedure, not four tender IDs or awarded contracts. The original technical XLS/RAR attachments are not yet retrieved, so no count of systems or voltage asserted."
+    },
+    {
+      "canonical_id": "223fz:32514476448:lot1",
+      "fields": {
+        "tender_results_procedure_status": "competitive_procedure_failed_only_one_admitted_bid",
+        "contract_conclusion_reported_secondary": true,
+        "reported_registered_contract_number": "50277071467250001900000",
+        "reported_registered_contract_date": "2025-03-26",
+        "winning_supplier_identity_primary_verified": false
+      },
+      "evidence_append": [
+        {
+          "url": "https://zakupki.kontur.ru/32514476448",
+          "source_tier": "secondary_platform_indicates_protocol_outcome_and_contract",
+          "locator": "Ufimka 10kV BSK 2x0.9Mvar tender, EIS 32514476448, one-bid no-competition outcome, signed contract 26.03.2025 number 50277071467250001900000",
+          "excerpt": "Извещение признано несостоявшимся из-за одной заявки; позднее договор на 2 922 405,35 ₽, первоначальная НМЦ 3 176 527,55 ₽"
+        }
+      ],
+      "notes_append": " One-bid competitive procedure failed, but a subsequent signed contract is secondary-reported. Never equate competition failure to zero procurement; winner/contractor's identity remains unverified."
+    }
+  ],
+  "new_records_count": 0,
+  "expected_parent_count": 101,
+  "expected_active_count": 100,
+  "financial_counts_no_change": true,
+  "production_sql_mutations": false
+}
