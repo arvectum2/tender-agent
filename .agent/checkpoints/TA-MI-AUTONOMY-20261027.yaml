@@ -108,3 +108,15 @@ agent_orchestrator_20261027:
   tests: "21 passed, one third-party deprecation warning"
   scope_limitations: "Pilot notice was deterministic sample, not proven PQ relevant; no semantic attachment reading or Data Platform ingestion yet; no winner/price verification"
   resume_instruction: "Inspect actual downloaded file manifest and text formats, implement safe text extraction and semantic ranking across verified attachments, invoke authenticated tenant-scoped Data Platform ingest, deduplicate procedure chains, verify signed outcomes, test E2E and produce sourced report."
+
+chatgpt_reasoning_pilot_20261027:
+  status: in_progress
+  last_verified_commit: 82c81154ffff25a60daaa646d1a58c045a536e46
+  extraction: "Native text extracted from eight original EIS PDFs, each SHA256-bound; source packet saved locally"
+  model: "GPT-6 in ChatGPT conversation, not local Qwen; no autonomous ChatGPT API credential or backend model invocation assumed"
+  validated_case: "223-FZ 32313113128, AO MOSGAZ vehicle purchase, irrelevant to PQ; false positive ambiguous STK"
+  evidence_review: "Quote validated against original PDF extracted text, review saved locally"
+  runtime: /Volumes/ArvectumSSD/Arvectum/runtime/market-intelligence/pq-agent-pilot-live
+  tests: "22 passed"
+  blocker: "Unattended LLM invocation from backend requires an authenticated OpenAI API integration; current chat model cannot be directly called as a background process without such integration"
+  resume_instruction: "Wire review packet to approved authenticated ChatGPT/OpenAI API executor or interactive review queue, then batch-rank attachments, ingest source-verified text into tenant-scoped Data Platform and verify original signed contract outcomes; do not claim fully unattended model execution until tested."
