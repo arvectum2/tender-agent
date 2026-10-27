@@ -22,6 +22,7 @@ from .pq_public_223_expand import expand as expand_public_223
 from .pq_public_223_canonical import canonicalize as canonicalize_public_223
 from .pq_public_dp_resume import run as resume_public_dp
 from .pq_public_223_direct import merge_direct
+from .pq_commission_fact_audit import verify as verify_commission_facts
 
 
 def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
@@ -30,7 +31,8 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
               etp_queue: Path | None = None,
               contract_root: Path | None = None,
               contract_day_scan: Path | None = None,
-              public223_source: Path | None = None) -> dict:
+              public223_source: Path | None = None,
+              commission_facts: Path | None = None) -> dict:
     if not 1 <= max_cases <= 30 or not source_roots:
         raise ValueError("Invalid cycle scope")
     runtime.mkdir(parents=True, exist_ok=True)
@@ -141,6 +143,16 @@ def run_cycle(*, leads: Path, source_roots: list[Path], archive_index: Path,
             "outcome_audit": str(contract_audit_path),
             "source_index": str(contract_index_path),
         }
+    if commission_facts is not None:
+        verified_facts = verify_commission_facts(facts=commission_facts, queue=queue)
+        verified_file = runtime / "verified-commission-facts.json"
+        verified_file.write_text(
+            json.dumps(verified_facts, ensure_ascii=False, indent=2), encoding="utf-8")
+        report["commission_facts_verified"] = {
+            "source_bound_facts": verified_facts["facts_accepted"],
+            "signed_contracts_verified": verified_facts["verified_signed_contracts"],
+            "artifact": str(verified_file),
+        }
     (runtime / "last-recovery-cycle.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return report
@@ -161,13 +173,15 @@ def main() -> None:
     p.add_argument("--contract-root", type=Path)
     p.add_argument("--contract-day-scan", type=Path)
     p.add_argument("--public223-source", type=Path)
+    p.add_argument("--commission-facts", type=Path)
     a = p.parse_args()
     result = run_cycle(leads=a.leads, source_roots=a.source_root,
                        archive_index=a.archive_index, runtime=a.runtime,
                        ontology=a.ontology, dp_source=a.dp_source,
                        max_cases=a.max_cases, network=not a.offline, verified_reestr=a.verified_reestr, etp_queue=a.etp_queue,
                        contract_root=a.contract_root, contract_day_scan=a.contract_day_scan,
-                       public223_source=a.public223_source)
+                       public223_source=a.public223_source,
+                       commission_facts=a.commission_facts)
     print(json.dumps(result, ensure_ascii=False))
 
 
