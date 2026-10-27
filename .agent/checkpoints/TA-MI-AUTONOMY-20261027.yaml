@@ -160,3 +160,12 @@ continuation_20261027_latest:
   last_verified_commit: "fafb5fcfce4eddaf2c1087abf0572579165c9ab4"
   last_test_results: "4 focused tests passed on Mac mini; PDF extracted with fallback; 0 exact overlaps for 58 cases in 9074 archived notice numbers"
   resume_instruction: "Implement and test idempotent pq_recovery_cycle orchestration per docs/market_intelligence/PQ_RECOVERY_RUNBOOK_20261027.md; use ARC isolated worktree, never modify dirty main checkout; run bounded real case batches and persist receipts."
+
+recovery_cycle_verified_20261027:
+  status: in_progress
+  last_verified_commit: "1c7fc25b21a8f0188708bf3d70870a08a357febe"
+  completed: "Unified pq_recovery_cycle implemented and run offline + online; 58 leads inventoried, 2 reviewed packets reused, 33 durable EIS attempts previously logged, 0 new downloads in this run"
+  current_step: "Expand complete corpus and source acquisition beyond exact indexed XML overlap"
+  remaining: "Broader official 2024-2026 archive acquisition, commercial ETP originals, signed contract/winner verification, queue-driven review of newly recovered documents"
+  last_test_results: "6 focused pytest passed, one external Starlette deprecation warning"
+  resume_instruction: "Inspect full MI-013 corpus versions and provenance; expand bounded live EIS and commercial ETP discovery, acquire verified original documents, feed Data Platform and ChatGPT ARC queue; retain source-attempt journal and don't count already attempted searches as new."
