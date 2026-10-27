@@ -17,10 +17,11 @@
     "harmonic_filter": 4,
     "power_quality_system": 1,
     "pq_components": 1,
-    "statcom": 6,
+    "statcom": 5,
     "ukrm": 48,
     "capacitor_bank": 2,
-    "reactive_compensation_system": 1
+    "reactive_compensation_system": 1,
+    "svc": 1
   },
   "scope_counts": {
     "adjacent_epc": 1,
@@ -41,5 +42,6 @@
   "caveat": "The 2024 and 2025 UDS tender dates are submission DEADLINES, not publication dates; inferred manufacturer quantities and MW ratings prohibited. The 2025 6+10 kV item is one notice with two voltage models; its scalar equipment_voltage_kv intentionally null, both values in equipment_voltage_kv_set. Most older records do not normalize voltage even if described in text. NMC cannot be summed as PQ sales because mixed and non-target notices coexist. The four new Rosseti procedures include two purchases of filter capacitor components with unknown nominal voltage and two projects at 220kV substations; 220kV is substation rating, not necessarily PQ voltage. 90,672,176 RUB is a sum of initial procurement prices, NOT total PQ equipment sales or 6-35kV market.",
   "base_manifest": "verified_public_leads_20261027.v8.manifest.json",
   "source_discovery_note": "Four added 2025 Rosseti 223-FZ records are indexed source leads; none of their original protocols has been read or primary contract prices confirmed.",
-  "added_nmck_sum_rub_not_market_value": "90672176"
+  "added_nmck_sum_rub_not_market_value": "90672176",
+  "technical_family_note": "СТК/SVC (thyristor controlled) distinct from СТАТКОМ/STATCOM (voltage-source converter), confirmed by Russian FACTS standard СТО 56947007-29.240.019-2009."
 }
