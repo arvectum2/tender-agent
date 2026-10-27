@@ -1,0 +1,23 @@
+{
+  "schema_version": "pq-research-notice-manifest/0.8",
+  "as_of": "2026-10-27",
+  "data_version": "v15",
+  "period": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v14.manifest.json",
+  "base_rows": 82,
+  "delta_file": "discovery_2023_2026_v15_delta.json",
+  "delta_rows": 2,
+  "total_rows": 84,
+  "known_prices_count": 33,
+  "original_signed_contract_xml_known_count": 4,
+  "source_ledger": "lot-level observed opportunities not market population",
+  "source_id_masking_warning": "2024 Rossseti Yug Volgogradenergo has a masked EIS tender number; retaining unique evidence UUID prevents inventing a number",
+  "reissue_warning": "Rosseti Siberia 26-1149 EIS 32616400421 cancelled and replaced with EIS 32616435269 26-1174; both 452016000.01 NMC, one investment project",
+  "production_db": "arvectum_data",
+  "production_imported_v12_rows": 71,
+  "research_only_new_rows": 13,
+  "status": "in_progress_not_complete_census"
+}
