@@ -1,0 +1,30 @@
+{
+  "schema_version": "pq-research-notice-manifest/1.3",
+  "as_of": "2026-10-27",
+  "data_version": "v25",
+  "period": {
+    "from": "2023-10-27",
+    "to": "2026-10-27"
+  },
+  "base_manifest": "verified_public_leads_20261027.v24.manifest.json",
+  "base_rows": 101,
+  "original_evidence_file": "original_nikitskaya_epc_protocol_boq_20261027.v25.json",
+  "existing_records_enriched": 1,
+  "new_records": 0,
+  "total_active_rows": 101,
+  "number_of_named_original_protocol_bidders": 6,
+  "number_of_original_registry_signed_contracts_total": 5,
+  "production_imported_v12_rows": 71,
+  "new_git_only_rows": 30,
+  "new_source_grade_protocols_with_anonymous_first_rank": 1,
+  "note": "v25: Original RAR/DOCX protocols 32615966040 identify EPC participant ООО ЭНЕРГОСЕТЬ, legally linked to INN5001061220 external exact-address registry. Revised final NMC / sole bid 5273763.77 inc VAT22; earlier admission NMC 5564090.57 incVAT22 is not bid savings. Scanned original RV BoQ 2948531.63 ex VAT20% consists 4 types of electrical switching/metrology and ancillary materials, no explicit standalone STATCOM/UKRM/BSK. GP628666 cancelled likely re-tender to GP630876, uncounted. 101 source signals, 71PG+30Git only.",
+  "market_census_complete": false,
+  "new_named_participants_in_v22": 2,
+  "registered_supplier_from_this_case_verified": false,
+  "new_source_grade_primary_protocols_with_named_rank": 1,
+  "source_delta_file": "new_rosseti_ntc_components_framework_20261027.v23.json",
+  "possible_duplicate_chain_count_added": 1,
+  "new_verified_completed_contracts": 0,
+  "new_verified_equipment_only_sales": 0,
+  "uncounted_cancelled_rebid_candidates_added": 1
+}
