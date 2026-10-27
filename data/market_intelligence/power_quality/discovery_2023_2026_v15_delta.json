@@ -1,0 +1,77 @@
+{
+  "schema_version": "pq-source-delta/0.7",
+  "as_of": "2026-10-27",
+  "parent": "verified_public_leads_20261027.v14.manifest.json",
+  "new_lot_level_rows": 2,
+  "rolling_window": "2023-10-27..2026-10-27",
+  "records": [
+    {
+      "canonical_id": "223fz:32616400421:lot1",
+      "procedure_id": "32616400421",
+      "publication_date": "2026-09-23",
+      "buyer": "ПАО «Россети Сибирь», Кузбассэнерго-РЭС",
+      "buyer_inn": "2460069527",
+      "family": "hybrid_reactive_power_source_candidate",
+      "scope": "supply",
+      "title": "Конкурс №26-1149: поставка батарей статических конденсаторов, Кузбассэнерго-РЭС",
+      "equipment_voltage_kv": null,
+      "nmck_rub": "452016000.01",
+      "nmck_kind": "initial_price_including_vat_secondary",
+      "quantity": null,
+      "reported_contract_total_rub": null,
+      "award_verified": false,
+      "procedure_result": "CANCELLED",
+      "cancellation_source_tier": "industry_procurement_portal",
+      "deadline": "2026-10-09",
+      "demand_group": "TYAZHINSKAYA-SKRM52-2025-2026",
+      "same_demand_as": [
+        "32616435269"
+      ],
+      "evidence": [
+        {
+          "url": "https://energybase.ru/tender/01a0d2b3-4a2d-71cc-a3c9-231192b45751",
+          "source_tier": "secondary_industry_portal_explicit_cancel_status",
+          "locator": "№32616400421 «26-1149» 23.09.2026; закупка отменена; архив Протокол отмены 26-1149.7z; NMC 452016000"
+        },
+        {
+          "url": "https://b2b.house/activepurchase/f482fab9-ec46-43e7-b0f8-3b7b9e00bb7f_23308e86/",
+          "source_tier": "secondary_procurement_card",
+          "locator": "EIS 32616400421, tender 26-1149, 2026-09-23, NMC 452016000.01 including VAT, 2 aggregate listed positions"
+        }
+      ],
+      "notes": "Исходный №26-1149 отменён. Следующий №26-1174, ЕИС 32616435269, тот же покупатель/предмет/начальная цена и объект ПС Тяжинская; вероятная перевыставленная потребность, но документацию отмены и техническое совпадение файлов полностью не сравнивали. НЕ считать 904 млн ₽ спроса, НЕ считать подписанным договором."
+    },
+    {
+      "canonical_id": "index:vsempodryad:ea5a381b-31b1-4c37-962f-9fddf1761b74",
+      "procedure_id": null,
+      "source_id": "ea5a381b-31b1-4c37-962f-9fddf1761b74",
+      "publication_date": "2024-06-24",
+      "buyer": "ПАО «Россети Юг», филиал «Волгоградэнерго»",
+      "buyer_inn": "6164266561",
+      "family": "capacitor_bank",
+      "scope": "supply",
+      "title": "Поставка батарей статических конденсаторов БСК, 7 шт. для «Волгоградэнерго»",
+      "equipment_voltage_kv": null,
+      "quantity": 7,
+      "unit": "шт",
+      "nmck_rub": "10880835.00",
+      "nmck_kind": "initial_price_aggregator_no_vat_class",
+      "reported_contract_total_rub": "10880835.00",
+      "reported_contract_date": "2024-08-15",
+      "contract_source_tier": "secondary_contract_card_with_masked_number_and_vendor",
+      "source_contract_masked": "░░164266561240007250░░░",
+      "award_verified": false,
+      "procedure_result": "secondary_reports_signed_contract",
+      "demand_group": "ROSSETI-YUG-VOLGOGRADENERGO-7-BSK-2024",
+      "evidence": [
+        {
+          "url": "https://vsem-podryad.ru/purchase/ea5a381b-31b1-4c37-962f-9fddf1761b74/",
+          "source_tier": "third_party_procurement_card_masked_eis_id",
+          "locator": "2024-06-24 ПАО Россети Юг, 7 шт БСК, НМЦ/окончательная цена 10880835 RUB, договор со скрытым номером 2024-08-15, протокол 2024-08-15; EIS ID masked."
+        }
+      ],
+      "notes": "Реальный ЕИС номер скрыт (только фрагмент ░░413734░░░); НЕЛЬЗЯ выдавать внутренний UUID индекса за официальное ЕИС. Есть сообщение о договоре 10880835, оригинальная регистрация/исполнитель и номинал БСК не подтверждены. Возможное совпадение с иной закупкой нельзя оценить без ЕИС номера; 7 БСК не равно 7 signed contracts."
+    }
+  ],
+  "denominator_caveat": "84 research lead observations (83 with stable EIS/ETP/internal ID; one masked EIS UUID) are not Russian market procurement census; cancellation of 26-1149 means 452m NMC must not be summed as independent sale when also 26-1174 exists."
+}
