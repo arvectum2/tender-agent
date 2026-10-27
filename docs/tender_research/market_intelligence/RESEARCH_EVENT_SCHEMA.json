@@ -1,0 +1,317 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arvectum.com/schemas/market-intelligence-research-event-v1.json",
+  "title": "Tender Agent Market Intelligence research trace event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "study_id",
+    "occurred_at",
+    "stage",
+    "action",
+    "candidate_id",
+    "source_tier",
+    "evidence",
+    "decision",
+    "reason",
+    "review_status",
+    "training_eligible"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 4
+    },
+    "study_id": {
+      "type": "string",
+      "minLength": 4
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "stage": {
+      "enum": [
+        "S0_SCOPE",
+        "S1_SOURCE_MAP",
+        "S2_DISCOVERY",
+        "S3_ACQUIRE",
+        "S4_EXTRACT",
+        "S5_TRIAGE",
+        "S6_RESOLVE",
+        "S7_OUTCOME",
+        "S8_ENTITY_GRAPH",
+        "S9_METRICS",
+        "S10_AUDIT",
+        "S11_PUBLISH"
+      ]
+    },
+    "action": {
+      "type": "string",
+      "minLength": 2
+    },
+    "candidate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "query": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_tier": {
+      "enum": [
+        "A_primary",
+        "B_secondary",
+        "C_hypothesis",
+        "none"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_url",
+          "document_sha256",
+          "location",
+          "quote",
+          "retrieved_at"
+        ],
+        "properties": {
+          "source_url": {
+            "type": "string"
+          },
+          "document_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "location": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "quote": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retrieved_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "status"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "rejected",
+            "unknown",
+            "blocked",
+            "pending"
+          ]
+        },
+        "amount_rub": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "amount_type": {
+          "enum": [
+            "nmck",
+            "winning_offer",
+            "signed_contract",
+            "pq_component",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "role": {
+          "enum": [
+            "buyer",
+            "organizer",
+            "EPC",
+            "designer",
+            "OEM",
+            "dealer",
+            "service",
+            "unknown"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 5
+    },
+    "rule_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "raw_input_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "network_status": {
+      "enum": [
+        "success",
+        "blocked",
+        "timeout",
+        "http_error",
+        "parse_error",
+        "not_attempted",
+        "not_applicable"
+      ]
+    },
+    "review_status": {
+      "enum": [
+        "unreviewed",
+        "expert_accepted",
+        "expert_rejected"
+      ]
+    },
+    "training_eligible": {
+      "type": "boolean"
+    },
+    "training_split_group": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rights_checked": {
+      "type": "boolean"
+    },
+    "privacy_checked": {
+      "type": "boolean"
+    },
+    "source_kind": {
+      "enum": [
+        "original_document",
+        "official_card",
+        "aggregator",
+        "vendor_claim",
+        "analyst_note",
+        "synthetic"
+      ]
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "training_eligible": {
+            "const": true
+          }
+        },
+        "required": [
+          "training_eligible"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review_status": {
+            "const": "expert_accepted"
+          },
+          "rights_checked": {
+            "const": true
+          },
+          "privacy_checked": {
+            "const": true
+          },
+          "source_tier": {
+            "const": "A_primary"
+          }
+        },
+        "required": [
+          "rights_checked",
+          "privacy_checked",
+          "training_split_group"
+        ],
+        "not": {
+          "properties": {
+            "training_split_group": {
+              "type": "null"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_tier": {
+            "const": "A_primary"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}
