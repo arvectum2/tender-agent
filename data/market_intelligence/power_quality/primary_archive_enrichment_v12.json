@@ -1,0 +1,73 @@
+{
+  "schema_version": "pq-evidence-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "base_manifest": "verified_public_leads_20261027.v11.manifest.json",
+  "new_procurement_ids": 0,
+  "existing_lot_record_count": 71,
+  "related_project_id": "TYAZHINSKAYA-SKRM52-2025-2026",
+  "patches": [
+    {
+      "canonical_id": "223fz:32616435269:lot1",
+      "operation": "enrich_existing_without_changing_id",
+      "fields": {
+        "family": "hybrid_reactive_power_source",
+        "market_scope": "mixed_10kv_modular_converter_and_110kv_BSK_for_110kv_substation_not_equipment_only_6_35kv",
+        "equipment_voltage_kv": null,
+        "equipment_voltage_kv_set": [
+          10,
+          110
+        ],
+        "nominal_converter_voltage_kv": 10,
+        "complete_system_voltage_kv": 110,
+        "nominal_reactive_power_inductive_mvar": 30,
+        "nominal_reactive_power_capacitive_mvar": 52,
+        "demand_group": "TYAZHINSKAYA-IRМ110-MPU10-2026",
+        "project_demand_group": "TYAZHINSKAYA-SKRM52-2025-2026",
+        "source_archive_sha256": "5f9e406c56254891514dec2e9f8689417782bce298e5e4cb433375d1806cbb65",
+        "source_original_docs_verified": true,
+        "original_document_type": "original_procurement_attachments_third_party_mirror_sha_verified",
+        "nmc_net_rub": "370504918.04",
+        "nmc_gross_rub": "452016000.01",
+        "nmc_vat_rate_pct": 22,
+        "boq_components_ref": "verified_32616435269_original_archive_20261027.json",
+        "boq_mpu_10kv_net_rub": "335351974.38",
+        "boq_bsk_110kv_net_rub": "33723435.46",
+        "boq_supervision_net_rub": "1429508.20",
+        "supplier_verified": false,
+        "pq_equipment_only_contract_rub": null
+      },
+      "evidence_append": [
+        {
+          "url": "https://cdn.kontendus.ru/documents/32616435269/da0fadde-1019-5aef-85fd-9343c3928a35/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F_%D0%BE_%D0%B7%D0%B0%D0%BA%D1%83%D0%BF%D0%BA%D0%B5_26-1174.7z",
+          "source_tier": "primary_original_document_rehosted_sha256_verified",
+          "locator": "Original file SHA256 5f9e406c…65. ТЗ Приложение1.xlsx sheet1 H9:J12, Приложение2.docx: 10kV MPU and 110kV hybrid, notice: VAT22 and full NMC.",
+          "excerpt": "МПУ 30000/10 УХЛ1 335351974.38 без НДС; БСК-110-26 ХЛ1 33723435.46; шеф-инженер 1429508.20; НМЦ 452016000.01 с НДС"
+        }
+      ],
+      "notes_append": " 27.10.2026 ORIGINAL SOURCE READ: 7z archive SHA256 verified. 10kV modular converter is 90.51% of NET initial price (335351974.38 rub); 110kV BSK 33723435.46 rub; supervisor 1429508.20; VAT22 exact stated in notice; this is a 110kV system with 10kV MPU, not a pure low-voltage battery. Individual nominal voltages proven; 452m is initial price, not contract."
+    },
+    {
+      "canonical_id": "223fz:32515044454:lot1",
+      "operation": "link_existing_same_project",
+      "fields": {
+        "project_demand_group": "TYAZHINSKAYA-SKRM52-2025-2026",
+        "related_supply_procedure_ids": [
+          "32616435269"
+        ]
+      },
+      "notes_append": " Cross-check original tender №32616435269 technical documents: supply MPU 10kV and BSK110 for Tyazhinskaya, 110kV complete system, 52Mvar capacitive. Link as downstream supply project, not same signed contract as 2025 PИР."
+    },
+    {
+      "canonical_id": "223fz:32616354211:lot1",
+      "operation": "link_existing_same_project",
+      "fields": {
+        "project_demand_group": "TYAZHINSKAYA-SKRM52-2025-2026",
+        "related_supply_procedure_ids": [
+          "32616435269"
+        ]
+      },
+      "notes_append": " Cross-check original 2026 supply tender №32616435269 includes MPU 10kV and BSK110 for Tyazhinskaya with 52Mvar. Treat this 2026 PИР as separate service procurement on same project, not distinct installation."
+    }
+  ],
+  "provenance": "original archive sha verified 27.10.2026 on authorized ARC Mac mini read-only; first-party authored documents hosted by third-party mirror; system-changing commands and database writes NOT performed"
+}
