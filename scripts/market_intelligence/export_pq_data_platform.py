@@ -71,7 +71,13 @@ def export_records(dataset: dict | None = None) -> list[dict]:
             "text": row.get("description") or "",
             "source_record": row,
         })
-    if len(output) != data["verification_summary"]["total_records"]:
+    summary = data["verification_summary"]
+    traditional_total = summary.get("total_records")
+    lot_total = summary.get("total_lot_level_records")
+    if traditional_total is not None and lot_total is not None and traditional_total != lot_total:
+        raise ValueError("inconsistent total_records and total_lot_level_records")
+    expected_total = traditional_total if traditional_total is not None else lot_total
+    if expected_total is None or len(output) != expected_total:
         raise ValueError("export count mismatch")
     return output
 
