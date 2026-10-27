@@ -11,6 +11,13 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Fixed export_pq_data_platform.py shared version mismatch KeyError total_records by accepting legacy total_records and v12 total_lot_level_records and checking conflicts; added four targeted tests.
+  - Fixed import_pq_postgres_v12.py read-only psql output parser to ignore BEGIN/COMMIT tags; added regression test.
+  - Updated authorized Mac mini isolated worktree only, preserving dirty canonical checkout, to commit 06cf5ad8.
+  - Mac mini / import_pq_postgres_v12.py --check-db: SUCCESS, correct arvectum_data, 3 tables, zero PQ records, 71 staged.
+  - Mac mini Tender Agent venv: targeted 18/18 passed, full 57/57 MI013 tests passed (one Starlette library deprecation warning), no dependency installation.
+  - Owner-authorized production --apply attempted once; OpenAI remote-execution safety BLOCKED tool call. Did not reroute through other tools.
+  - Confirmed postblock read-only DB: collection 0, PQ resources 0, all dp_records 0, so no import and backup did not run.
   - 2026-10-27 authorized git fetch origin research/mi013-pq-corpus-20261027-pass2 succeeded on Mac mini.
   - 2026-10-27 authorized isolated worktree creation succeeded at /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import, detached commit d8476953; existing dirty main worktree preserved.
   - First --check-db failed before any SQL because old staging export expected verification_summary.total_records; v12 uses total_lot_level_records. Stopped immediately per user directive; no tests or backup/apply were attempted.
@@ -52,7 +59,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Mac mini user-authorized Git fetch and isolated worktree creation succeeded at commit d8476953. The first requested --check-db command exited 1 before opening DB: KeyError total_records in export_pq_data_platform.py:74, because v12 materializer verification_summary exposes total_lot_level_records. User explicitly ordered STOP on any error; no tests, backup, apply, SQL mutation, or new attempt conducted.'
+current: 'Importer v12 compatibility fixed and verified on Mac mini isolated worktree at 06cf5ad8. Legacy total_records and v12 total_lot_level_records both supported; psql BEGIN/COMMIT tags filtered. Read-only --check-db SUCCESS: database arvectum_data, 3 dp tables, 71 staged, 0 existing PQ records. Full MI013 local regression 57 passed, one third-party Starlette warning. Exact owner-authorized --apply production command was BLOCKED by OpenAI remote execution safety before any successful write; do not bypass. Postattempt independent read-only database check: PQ collections=0, resources=0, records=0. NO production mutations or backup observed.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -64,8 +71,12 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: e695bdaeee8fdd49101b76de43edd81ada97c824
+last_verified_commit: 06cf5ad8e435fa8294cf66cbd28ea265c5933434
 test_results:
+  - 2026-10-27 Mac mini isolated 06cf5ad8: test_mi013_pq_staging_versions.py + importer + corpus v12 + exporter v12: 18 passed, 1 warning.
+  - 2026-10-27 all tests/test_mi013_pq_*.py: 57 passed, 1 Starlette deprecation warning.
+  - 2026-10-27 live Data Platform --check-db: success, target arvectum_data, 3 required tables, pq_resources=0, pq_records=0, staged_records=71.
+  - 2026-10-27 authorized production --apply: BLOCKED by remote tool safety, no execution receipt. Subsequent read-only DB counts pq_collections=0, pq_resources=0, dp_records=0.
   - Mac mini importer --check-db: FAILED exit 1 KeyError total_records in export_pq_data_platform.py line 74; failed in stage before DB preflight.
   - PostgreSQL modifications: NONE; production apply not attempted.
   - Pass9 live read-only DB probe confirmed PostgreSQL database arvectum_data has dp_* tables, target MI013 collection absent; 26 collections/2192 resources/2192 documents/0 structured records; health status production OK.
@@ -84,7 +95,7 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: User asked stop on ANY error. Do not retry automatically. With fresh explicit user authorization, patch scripts/market_intelligence/export_pq_data_platform.py to accept verification_summary.total_lot_level_records (v12) and earlier total_records, add regression test, run CI. Then rerun only preflight (--check-db) in isolated Mac mini worktree and targeted pytest. If all pass and user authorizes exact production apply again, only then do backup + 71-record transactional import. Existing Mac mini worktree remains /Volumes/ArvectumSSD/arvectum/runtime/mi013-pq-import at d8476953; live arvectum_data unchanged.
+resume_instruction: No automatic retry or alternate path around remote execution safety block. Branch and isolated Mac mini worktree contain approved importer code at 06cf5ad8, all 57 MI013 tests pass, DB preflight passes with 0 existing PQ records. User/operator must run explicitly approved import in authorized local session after reviewing script and backup plan; exact command in docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md. Verify backup SHA256, 71 dp_resources and 71 dp_records, 1 new collection, unchanged preexisting 26 collections/2192 resources and docs. If safe access path is restored legitimately, resume only with approval and safety compliance. Keep parent current-task untouched; continue source verification separately.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
