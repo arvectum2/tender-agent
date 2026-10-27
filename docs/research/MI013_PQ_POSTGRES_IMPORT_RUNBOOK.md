@@ -81,3 +81,15 @@ A custom-format backup of `arvectum_data` precedes Gate B. Do not restore the en
 This query runs **`BEGIN READ ONLY`**, asserts 71 resource keys, 71 structured records, distinct 71 canonical identifiers, 71 initial `unreviewed` records, zero missing provenance URLs, the two lots of EIS notice `32616474682`, and original 10 kV MPU / 110 kV BSK price components from `32616435269`. It also reports counts outside the research collection for comparing against the baseline; these should be evaluated for legitimate concurrent changes, not automatically ascribed to the import.
 
 Do not report ingestion as complete until the exact approved import has actually executed and this read-back passes. Fulltext and vector indexing are a **separate operation**.
+
+## Production execution receipt — 2026-10-27
+
+**STATUS: COMPLETED AND VERIFIED (structured PostgreSQL import only).** The earlier remote safety block and the blocked note above are historical: after the owner's new explicit instruction the same approved `run_command` was executed successfully through the normal ARC tool, without alternate-channel routing. The operator-approved transaction used the preflighted script and backup path exactly as documented.
+
+The production import returned `exit_code=0`, `INSERT 0 1` new collection, `INSERT 0 71` new resources, `INSERT 0 71` structured records, `COMMIT`, followed by `resources=71` / `records=71`.
+
+Before the SQL transaction, the backup helper generated and the importer independently verified `data-platform-arvectum_data-20261027T125522Z.dump`, **37,362,424 bytes**, SHA-256 `d5a118b2f4545413e2230120a35c7e3207613aede9dd9f1bd77b439ec433ba43`, within the existing approved directory `/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups`.
+
+Independent read-only post-import script `verify_pq_postgres_v12.py --expect-import` returned **PASS**: 1 MI013 collection; 71 resources; 71 structured records; 71 unique canonical keys; 71 unreviewed statuses; 0 missing source links; two distinct BESK joint procurement lots; original 10kV MPU/110kV BSK price breakdown present. Existing **26 other collections**, **2,192 other resources**, **2,192 documents** were unchanged from the preflight baseline. This verifies *structured SQL import*, not searchable full-text chunks or embeddings.
+
+Audit artifact: [mi013_production_import_receipt_20261027.json](../../data/market_intelligence/power_quality/mi013_production_import_receipt_20261027.json). Source v12 and PR #515 remain draft while original tender protocols and full market research continue; production import itself is complete and need not be repeated.
