@@ -20,7 +20,7 @@ def materialize():
     arr.append(r)
     if len(arr)!=103 or len({x["canonical_id"] for x in arr})!=103:
         raise ValueError("103 independent original notice keys expected")
-    return {**old,"records":arr,"data_version":"v35","materialization_manifest":"verified_public_leads_20261027.v35.manifest.json"}
+    return {**old,"records":arr,"data_version":"v35","materialization_manifest":"verified_public_leads_20261027.v35.manifest.json", "verification_summary":{**old["verification_summary"],"total_lot_level_records":103}}
 
 if __name__=="__main__":
     d=materialize()
