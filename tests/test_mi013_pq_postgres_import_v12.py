@@ -90,3 +90,77 @@ def test_psql_command_tags_are_not_counted_as_preflight_results() -> None:
     with patch.object(importer, "query", return_value="BEGIN\narvectum_data\n3\n0\n0\nCOMMIT\n"):
         assert importer.inspect_target()["required_tables"] == 3
         assert importer.inspect_target()["pq_resources"] == 0
+
+
+def test_upsert_does_not_reset_existing_review_status() -> None:
+    sql = importer.build_apply_sql(importer.stage())
+    assert "status=EXCLUDED.status" not in sql
+    assert "dp_resources.status IS DISTINCT FROM EXCLUDED.status" not in sql
+    assert "'staged_unreviewed'" in sql  # first insert only
+    assert "review_status=EXCLUDED.review_status" not in sql
+
+
+def test_official_backup_bytes_manifest_and_checksum_verified(tmp_path: Path) -> None:
+    import hashlib
+    import json
+    from types import SimpleNamespace
+
+    dump = tmp_path / "data-platform-arvectum_data-TEST.dump"
+    contents = b"PGDMP" + b"verified-backup-test"
+    dump.write_bytes(contents)
+    checksum = hashlib.sha256(contents).hexdigest()
+    (tmp_path / (dump.name + ".sha256")).write_text(checksum + "\n")
+    manifest = tmp_path / (dump.name + ".manifest.json")
+    manifest.write_text(json.dumps({
+        "database": importer.DATABASE,
+        "container": importer.CONTAINER,
+        "backup_file": dump.name,
+        "sha256": checksum,
+        "bytes": len(contents),
+        "format": "postgres-custom",
+    }))
+    helper = tmp_path / "backup-postgres.sh"
+    helper.write_text("#!/bin/sh\nexit 0\n")
+    message = (
+        f"BACKUP={dump}\nSHA256={checksum}\n"
+        f"BYTES={len(contents)}\nMANIFEST={manifest}\n"
+    )
+    with patch.object(importer, "BACKUP", helper):
+        with patch.object(importer.subprocess, "run",
+                          return_value=SimpleNamespace(returncode=0, stdout=message, stderr="")):
+            response = importer.backup(tmp_path)
+    assert response["sha256"] == checksum
+    assert response["path"] == str(dump)
+    assert response["bytes"] == str(len(contents))
+
+
+def test_mismatching_dump_checksum_blocks_post_backup_import(tmp_path: Path) -> None:
+    import hashlib
+    import json
+    from types import SimpleNamespace
+
+    dump = tmp_path / "backup.dump"
+    contents = b"bad content"
+    dump.write_bytes(contents)
+    fake_sha = hashlib.sha256(b"different contents").hexdigest()
+    (tmp_path / "backup.dump.sha256").write_text(fake_sha)
+    manifest = tmp_path / "backup.manifest.json"
+    manifest.write_text(json.dumps({
+        "database": importer.DATABASE,
+        "container": importer.CONTAINER,
+        "backup_file": dump.name,
+        "sha256": fake_sha,
+        "bytes": len(contents),
+    }))
+    helper = tmp_path / "backup-postgres.sh"
+    helper.write_text("echo fake")
+    message = (
+        f"BACKUP={dump}\nSHA256={fake_sha}\n"
+        f"BYTES={len(contents)}\nMANIFEST={manifest}\n"
+    )
+    with patch.object(importer, "BACKUP", helper):
+        with patch.object(importer.subprocess, "run",
+                          return_value=SimpleNamespace(returncode=0, stdout=message, stderr="")):
+            import pytest
+            with pytest.raises(RuntimeError, match="SHA256 verification failed"):
+                importer.backup(tmp_path)
