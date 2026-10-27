@@ -1,0 +1,80 @@
+{
+  "schema_version": "pq-original-2024-epc-award-enrichment/1.0",
+  "as_of": "2026-10-27",
+  "data_version": "v31",
+  "base_manifest": "verified_public_leads_20261027.v30.manifest.json",
+  "new_legal_procurement_notices": 0,
+  "existing_notices_enriched": 1,
+  "patches": [
+    {
+      "canonical_id": "223fz:32413581034:lot2",
+      "procedure_id": "32413581034",
+      "original_project_name": "ПС 220 кВ Хани: разработка рабочей документации, СМР, ПНР и МТРиО в программе реконструкции ВЛ 220кВ Лопча-Юктали, установки СКРМ 128/154 Мвар на ПС Хани/Лопча",
+      "broad_program_title_mvars": [
+        128,
+        154
+      ],
+      "nominal_voltage_of_separate_pq_device_6_35kv_proven": false,
+      "high_voltage_adjacent_220kv_epc": true,
+      "original_notice_nmck_ex_vat_rub": "1265123141.67",
+      "original_notice_nmck_inc_20percent_vat_rub": "1518147770.00",
+      "original_admission_protocol": "3/3081547",
+      "original_admission_protocol_date": "2024-07-05",
+      "admitted_bids": 2,
+      "rejected_bids": 0,
+      "original_final_protocol": "4/3081547",
+      "final_commission_date": "2024-07-11",
+      "final_commission_signed_date": "2024-07-16",
+      "original_bidders": [
+        {
+          "rank": 1,
+          "company": "ООО «ДИАПАЗОН»",
+          "inn": null,
+          "original_offer_inc_20percent_vat_rub": "1518092443.50",
+          "final_offer_inc_20percent_vat_rub": "1517360443.50",
+          "final_offer_ex_vat_rub": "1264467036.25",
+          "role": "selected_EPC_contract_candidate_not_proven_PQ_OEM"
+        },
+        {
+          "rank": 2,
+          "company": "ООО «Строй Монтаж Инжиниринг»",
+          "inn": null,
+          "original_offer_inc_20percent_vat_rub": "1518146869.36",
+          "final_offer_inc_20percent_vat_rub": "1517414869.36",
+          "final_offer_ex_vat_rub": "1264512391.13",
+          "role": "runner_up_EPC"
+        }
+      ],
+      "award_decision": "Original commission identified ООО ДИАПАЗОН as winning bidder, invited pre-contract downward negotiations and instructed signing only after 10-20 day publication waiting period. This proves procurement winner, not registered signed contract.",
+      "signed_original_rd223_contract_verified": false,
+      "actual_registered_signed_price_rub": null,
+      "actual_PQ_equipment_only_contract_value_rub": null,
+      "actual_6_35kv_supply_verified": false,
+      "possible_related_2025_design_notices": [
+        "32515208744",
+        "32515584863",
+        "32615760238"
+      ],
+      "relationship_caveat": "Same PS Hani / Lopcha program may recur as engineering design, modification or construction notice; no double-counting installed compensator capacity. Original lot label within commission is 1 while tender title says lot 2 PS Hani — retain canonical existing 223fz:32413581034:lot2.",
+      "sources": [
+        {
+          "tier": "official_EIS_original_admission_DOCX_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=95400196",
+          "sha256": "40dc3e115650d6523c2935c4ddbabdcffb15e6d70391a679389750828284ecb3",
+          "bytes": 33206,
+          "locator": "Протокол 3/3081547 05.07.2024, two legal applicants original prices, admissibility and next 08.07 rebid"
+        },
+        {
+          "tier": "official_EIS_original_final_DOCX_sha256_verified",
+          "url": "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=95621445",
+          "sha256": "f66c98a826fbfb7ede23ae18883614947c0fb74110d8579f4d20779707d1d545",
+          "bytes": 44306,
+          "locator": "Протокол 4/3081547 11.07.2024 signed 16.07.2024, after-rebid price 1517360443.50 RUB inc VAT20 winner ООО ДИАПАЗОН, second ООО Строй Монтаж Инжиниринг, weighted points 1.24 vs0.33"
+        }
+      ]
+    }
+  ],
+  "new_named_original_protocol_company_appearances": 2,
+  "new_first_party_signed_RD223_contracts": 0,
+  "national_market_tam_added_rub": 0
+}
