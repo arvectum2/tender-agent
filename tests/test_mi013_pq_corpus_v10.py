@@ -24,9 +24,9 @@ def test_v10_append_only_preserves_v9_and_unique_keys():
     before = run_script("materialize_pq_research_v9.py")
     after = run_script("materialize_pq_research_v10.py")
     assert len(before["records"]) == 64
-    assert len(after["records"]) == 67
+    assert len(after["records"]) == 68
     assert after["records"][:64] == before["records"]
-    assert len({r["canonical_id"] for r in after["records"]}) == 67
+    assert len({r["canonical_id"] for r in after["records"]}) == 68
     assert after["seed_completeness"] == "discovered_examples_only_not_population"
 
 
@@ -65,4 +65,18 @@ def test_v10_noncanonical_april_2026_index_not_counted_as_procurement():
     delta = json.loads((DATA / "rosseti_bashkirenergo_2025_26_project_chain_delta.json").read_text())
     assert len(delta["non_procurement_related_index"]) == 1
     assert delta["non_procurement_related_index"][0]["indexed_id"] == "tenderguru:93843219"
-    assert len(delta["records"]) == 3
+    assert len(delta["records"]) == 4
+
+
+def test_v10_pogranichnaya_is_commercial_bsk35_and_unknown_price():
+    r = next(r for r in run_script("materialize_pq_research_v10.py")["records"] if r["procedure_id"] == "RAD260049805")
+    assert r["canonical_id"] == "commercial:RAD260049805:lot1"
+    assert r["procurement_regime"] == "commercial"
+    assert r["equipment_voltage_kv"] == 35
+    assert r["family"] == "capacitor_bank"
+    assert r["scope"] == "epc"
+    assert r["nmck_rub"] is None
+    assert r["quantity"] == 1
+    assert r["supplier_verified"] is False
+    assert r["reported_contract_total_rub"] is None
+    assert r["pq_equipment_only_contract_rub"] is None
