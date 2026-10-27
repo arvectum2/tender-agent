@@ -11,6 +11,12 @@ definition_of_done:
   - Safely import the verified cohort to existing Arvectum data store with read-back/rollback plan.
   - Publish auditable methods, tests, and checkpoint with exact commits.
 completed:
+  - Pass9 corrected false DB-unavailable conclusion: official Data Platform runtime on Mac mini localhost:8094 is healthy; correct PostgreSQL DB arvectum_data inside arvectum-postgres exists with all dp_* tables.
+  - Read-only live PostgreSQL baseline: 26 collections, 2192 resources, 2192 documents, 0 dp_records; dedicated MI013 collection arvectum-market-pq-6-35kv not present and 0 resources.
+  - Confirmed existing Tender Agent checkout feature/apr07-quality-slo-evidence is dirty (4 tracked files); must not change checkout branch while staging research worktree.
+  - Added guarded v12 importer scripts/market_intelligence/import_pq_postgres_v12.py targeting arvectum_data only, 71 stable resource/record pairs, preflight, conflicts, transactional UPSERT, backup manifest and repeatable source checks.
+  - Added five regression tests and exact command/runbook docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md with offline/read-only/apply modes; no actual production PostgreSQL write yet.
+  - User explicit per-command consent required by ARC before state-changing worktree checkout and production SQL apply; requested exact approval before execution.
   - Pass8 fetched original Rosseti Siberia 32616435269 public procurement 7z (695885 bytes, SHA256 5f9e406c56254891514dec2e9f8689417782bce298e5e4cb433375d1806cbb65); examined ZIP/DOCX/XLSX internally read-only.
   - Verified original 32616435269 notice NMC net 370504918.04, VAT22 and gross 452016000.01; priced bill of materials MPU 30000/10 10kV 335351974.38 net, BSK-110-26 110kV 33723435.46, supervision 1429508.20.
   - Original technical appendix confirms complete system 110kV, converter MPU10kV +-30Mvar, 52Mvar capacitive system, regulation response <=20 ms; supplier RF service center, min five year warranty and -60 C operating environment.
@@ -43,7 +49,7 @@ completed:
   - Found secondary aggregator 6kV UKRL 1.8-UKRL (identifier 2418411721); no source-platform ID.
   - Added six source-backed records to versioned corpus v4, retained 48 unchanged.
   - Local Mac mini noproxy probe returned ЕИС HTTP404, B2B 404 on guessed generic URL, Kontur 403; do not assert original protocols.
-current: 'Pass8 v12 checkpointed: 71 unchanged canonical lot IDs, 3 original-doc enrichment patches, one SHA256-verified original 32616435269 7z, BOM MPU 10kV net 335351974.38 plus BSK110 net 33723435.46 plus supervision 1429508.20. VAT22 original 452016000.01 NMC. Three known Tyazhinskaya EIS stages grouped; Apr RTS 3865534 uncounted pending crosswalk. Design contract dated 2026-09-23 in secondary Tendem, signed vendor not confirmed. 18 first-party queue tasks; v12 exact-head CI queued; Data Platform PostgreSQL still unmodified/not located.'
+current: 'Pass9: FOUND LIVE Data Platform on Mac mini: :8094 production healthy; arvectum-postgres/arvectum_data has dp_collections/resources/records schema, 26 collections / 2192 resources / 0 structured records, MI013 target nonexistent. v12 loader added to tender-agent PR branch: exactly 71 source-verified lot-level resources and 71 dp_records, SHA-stable, transaction, backup, idempotence + readback. Dry-run is default. Existing checkout dirty and research branch not fetched locally. No SQL writes performed; must obtain per-exact-command owner consent for ARC state changes and QA. CI pending.'
 pending:
   - Acquire EIS registry/protocol using the actual source endpoint, not deprecated guessed notice paths.
   - Determine buyer/winner/contract/voltage for Bashkirenergo, Sagan-Nur, UKRL, MGOK.
@@ -55,8 +61,10 @@ pending:
   - Verify exact-head v12 CI for 71-entry research staging, SHA-verified source enrichment and bidder-result handling.
   - Retrieve revised Oct20 26-1174 7z tender archive and compare original BOM; original Oct2 7z already read and verified.
   - Retrieve signed awarded contracts for 32514476448 Ufimka and 32616354211 Tyazhinskaya; winner still unverified.
-last_verified_commit: 4354fe105c34ab3849a4558b2f96ab1ee6b9f429
+last_verified_commit: e695bdaeee8fdd49101b76de43edd81ada97c824
 test_results:
+  - Pass9 live read-only DB probe confirmed PostgreSQL database arvectum_data has dp_* tables, target MI013 collection absent; 26 collections/2192 resources/2192 documents/0 structured records; health status production OK.
+  - New exporter/importer tests committed; GitHub CI exact-head not yet verified green; dry-run on Mac mini branch worktree still not executed.
   - Pass8 JS read-back independent audit of Github JSON: same 71 IDs, 3 unique patched targets, 370504918.04 RUB net, 452016000.01 RUB incl VAT22, 71 family denominator, 3 Tyazhinskaya EIS IDs and 18 evidence tasks all PASS.
   - Original archive and individual XLSX/DOCX SHA256 verified via read-only ARC Mac mini; procurement notice original confirms exact NMC and VAT22.
   - Python regression tests for v12 authored (5 corpus tests + 3 export tests); GitHub CI PR workflow queued as of current verification, not yet green.
@@ -71,7 +79,7 @@ test_results:
   - All six new entries have secondary public URLs; no suppliers attributed.
   - V4 added one NMC 5880000 RUB including VAT; v5 added another NMC 3904773.73 RUB; zero newly confirmed signed contract prices.
   - Explicit MGOK re-tender/related-demand grouping; no claimed award on this source set.
-resume_instruction: Start from v12 manifest, original SHA ledger and 18-item primary_evidence_retrieval_queue_20261027.v5.json. The 695885-byte 32616435269 original 7z is already extracted and verified, do NOT repeat initial source retrieval. Check GitHub CI exact head on PR #515 for 5 tests in tests/test_mi013_pq_corpus_v12.py and 3 tests in tests/test_mi013_pq_data_platform_export_v12.py, fix any failures. Get Oct20 amended tender 26-1174 archive if accessible and diff BOM. Source winner and signed contract only after Oct30 bid close/result expected Dec14. Obtain original Ufimka and Tyazhinskaya 2026 design contracts, map dates/suppliers. Preserve project-level dedup and 71 lot IDs, no Data Platform PostgreSQL write without approved exact command; parent .agent/current-task.yaml untouched.
+resume_instruction: Read docs/research/MI013_PQ_POSTGRES_IMPORT_RUNBOOK.md and scripts/market_intelligence/import_pq_postgres_v12.py, inspect exact-head CI and run five offline importer tests. Real Data Platform DB is arvectum_data in Docker arvectum-postgres on Mac mini; do NOT repeat prior wrong-db probes. Obtain owner consent for exact ARC command to git fetch research/mi013-pq-corpus-20261027-pass2 and create isolated worktree (existing checkout has four dirty files); run --check-db and targeted pytest, then separate command-level consent for --apply and backup to existing /Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups. Expect 71 dp_resources + 71 dp_records in new collection, no other collections modified. Once imported verify readback, then plan separate Data Platform native document/chunk/embedding ingestion. Continue original tender protocol research. Preserve parent .agent/current-task.yaml.
 execution:
   branch: research/mi013-pq-corpus-20261027-pass2
   source_branch: research/mi013-pq-source-expansion-20261025
