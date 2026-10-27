@@ -14,7 +14,7 @@ def test_pdf_native_fallback(tmp_path: Path):
                return_value=SimpleNamespace(returncode=0, stdout=b"STATCOM original technical text")):
         result = pdf_text_fallback(file)
     assert result["status"] == "extracted"
-    assert result["characters"] == 30
+    assert result["characters"] == len("STATCOM original technical text")
 
 
 def test_non_pdf_rejected(tmp_path: Path):
