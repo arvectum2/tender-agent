@@ -1,0 +1,42 @@
+{
+  "schema_version": "mi013-single-original-evidence-postgres/1.0",
+  "as_of": "2026-10-27",
+  "case": "223fz:32413581034:lot2",
+  "source": "primary_2024_khani_epc_original_award_20261027.v31.json",
+  "target_database": "arvectum_data",
+  "collection": "arvectum-market-pq-6-35kv",
+  "original_procedure_id": "32413581034",
+  "stage": "primary 2024 original EIS committee ranking",
+  "record_id": "dea6132153df7c69f50400c59f3fa8a82a04b42391114941",
+  "expected_pre_hash": "f15659d4add392cd8983b12e71f40d0855f6b344d5861fe7f3dd34f89454ebf7",
+  "verified_post_hash": "361287c26ced10912de724ed5f76bfe5915b82dc84ffab897d9fb265c8b61094",
+  "backup": {
+    "file": "data-platform-arvectum_data-20261027T190324Z.dump",
+    "directory": "/Volumes/ArvectumSSD/Arvectum/runtime/data-platform-backups",
+    "bytes": 37464672,
+    "sha256": "18a269110cd46747b3c4286dcf83ae826a00be882540557d79286cd8a8ba22ef",
+    "verified": true
+  },
+  "apply": {
+    "transaction": "COMMIT",
+    "result": "PASS",
+    "target_records_updated": 1,
+    "new_procurement_notices": 0,
+    "new_primary_named_companies": 2,
+    "new_primary_signed_contracts": 0,
+    "resource_records_total_after": 101,
+    "unique_ids_total_after": 101,
+    "other_resources_after": 2192,
+    "all_documents_after": 2192,
+    "other_records_after": 0
+  },
+  "source_quality": "Original July 16 2024 signed committee protocol proves winning bidder, NOT signed registered contract; 220kV EPC adjacent only",
+  "guard_notes": [
+    "First attempt failed before any SQL modification due to SQL NULL logic in original evidence absence check, and rolled back. Guard corrected to COALESCE(...,false), followed by independently read-back verified transaction.",
+    "Legacy v29 importer now guards against overwriting later evidence v31. All other 100 records still at base source data_version v29."
+  ],
+  "evidence_urls": [
+    "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=95400196",
+    "https://zakupki.gov.ru/223/purchase/public/download/download.html?id=95621445"
+  ]
+}
